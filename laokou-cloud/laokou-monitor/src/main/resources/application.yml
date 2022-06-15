@@ -1,0 +1,36 @@
+server:
+  port: 5000
+  address: 192.168.62.1
+  servlet:
+    context-path: /monitor
+spring:
+  profiles:
+    active: test
+  boot:
+    admin:
+      ui:
+        title: 服务监控中心
+      routes:
+        endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream,activiti
+      notify:
+        pagerduty:
+          client:
+            username: ${spring.security.user.name}
+            password: ${spring.security.user.password}
+            url: http://192.168.62.1:${server.port}
+  application:
+    name: laokou-monitor
+  security:
+    user:
+      name: root
+      password: koushenhai
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: false

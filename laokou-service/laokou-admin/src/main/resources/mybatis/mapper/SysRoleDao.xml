@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.laokou.admin.domain.sys.repository.dao.SysRoleDao">
+
+    <select id="getRoleIds" resultType="long">
+        SELECT distinct id FROM boot_sys_role
+        order by update_date desc
+    </select>
+
+    <select id="getRoleIdsByUserId" resultType="long">
+        SELECT distinct boot_sys_role.id FROM boot_sys_role
+        ,boot_sys_user
+        ,boot_sys_user_role
+        <where>
+            and boot_sys_user.id = boot_sys_user_role.user_id
+            AND boot_sys_role.id = boot_sys_user_role.role_id
+            <if test="userId != null">
+                AND boot_sys_user.id = #{userId}
+            </if>
+        </where>
+        order by boot_sys_role.update_date desc
+    </select>
+
+    <select id="getRoleNameList" resultType="string">
+        SELECT
+        role_name
+        FROM
+        (
+        SELECT
+        CASE
+        WHEN super_admin = 1 THEN
+        '超级管理员'
+        ELSE
+        ''
+        END role_name
+        FROM
+        boot_sys_user
+        WHERE
+        id = #{userId}
+        UNION
+        SELECT
+        boot_sys_role.`name` AS role_name
+        FROM
+        boot_sys_role,
+        boot_sys_user_role
+        WHERE
+        boot_sys_role.id = boot_sys_user_role.role_id
+        AND boot_sys_user_role.user_id = #{userId}
+        ) tmp
+        WHERE
+        role_name <![CDATA[ <> ]]> ''
+    </select>
+
+    <select id="getRolePage" resultType="io.laokou.admin.interfaces.vo.RoleVO">
+        select id,`name`,`tag`,sort from boot_sys_role
+        where del_flag = '0'
+         <if test="qo.name != '' and qo.name != null">
+             and `name` like concat('%',#{qo.name},'%')
+         </if>
+        <if test="qo.tag != '' and qo.tag != null">
+            and `tag` like concat('%',#{qo.tag},'%')
+        </if>
+        order by sort desc
+    </select>
+
+    <select id="getRoleById" resultType="io.laokou.admin.interfaces.vo.RoleVO">
+        select id,`name`,`tag`,sort from boot_sys_role
+        where id = #{id}
+    </select>
+
+    <update id="deleteRole">
+        update boot_sys_role set del_flag = '1'
+        where id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,4 @@
+Grafana：localhost:9091
+Prometheus：localhost:9090
+
+admin/koushenhai

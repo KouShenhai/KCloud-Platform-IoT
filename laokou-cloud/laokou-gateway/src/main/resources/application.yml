@@ -1,0 +1,148 @@
+server:
+  address: 192.168.62.1
+  port: 5555
+  max-http-header-size: -1
+  tomcat:
+    max-http-post-size: -1
+
+spring:
+  application:
+    name: laokou-gateway
+  messages:
+    encoding: UTF-8
+    basename: i18n/messages
+  profiles:
+    active: test
+  servlet:
+    multipart:
+      max-file-size: -1
+      enabled: true
+      max-request-size: -1
+      file-size-threshold: -1
+  cloud:
+    gateway:
+      routes:
+        - id: LAOKOU-ADMIN
+          uri: lb://laokou-admin
+          predicates:
+          - Path=/admin/**
+          filters:
+          - SwaggerHeaderFilter
+          - StripPrefix=1
+          - name: RequestRateLimiter #请求数限流
+            args:
+              key-resolver: "#{@ipKeyResolver}"
+              redis-rate-limiter.replenishRate: 1000
+              redis-rate-limiter.burstCapacity: 3000
+        - id: LAOKOU-OSS
+          uri: lb://laokou-oss
+          predicates:
+            - Path=/oss/**
+          filters:
+          - SwaggerHeaderFilter
+          - StripPrefix=1
+        - id: LAOKOU-ELASTICSEARCH
+          uri: lb://laokou-elasticsearch
+          predicates:
+            - Path=/elasticsearch/**
+          filters:
+          - SwaggerHeaderFilter
+          - StripPrefix=1
+        - id: LAOKOU-RESOURCE
+          uri: lb://laokou-resource
+          predicates:
+            - Path=/resource/**
+          filters:
+          - SwaggerHeaderFilter
+          - StripPrefix=1
+        - id: LAOKOU-ACTIVITI
+          uri: lb://laokou-activiti
+          predicates:
+            - Path=/activiti/**
+          filters:
+          - SwaggerHeaderFilter
+          - StripPrefix=1
+        - id: LAOKOU-QUERY
+          uri: lb://laokou-query
+          predicates:
+            - Path=/query/**
+          filters:
+            - SwaggerHeaderFilter
+            - StripPrefix=1
+        - id: LAOKOU-MONGODB
+          uri: lb://laokou-mongodb
+          predicates:
+            - Path=/mongodb/**
+          filters:
+            - SwaggerHeaderFilter
+            - StripPrefix=1
+        - id: LAOKOU-HBASE
+          uri: lb://laokou-hbase
+          predicates:
+            - Path=/hbase/**
+          filters:
+            - SwaggerHeaderFilter
+            - StripPrefix=1
+laokou:
+  uris:
+    - /sys/auth/api/captcha
+    - /sys/auth/api/login
+    - /sys/auth/api/codeLogin
+    - /sys/auth/api/zfbLogin
+    - /sys/auth/api/wxgzhLogin
+    - /sys/auth/api/wxgzhTicket
+    - /sys/auth/api/wxgzhSign
+    - /sys/auth/api/wxQRCode
+    - /weixin/callback
+    - /*/res/preview
+    - /*/swagger/api-docs
+    - /*/swagger-resources/**
+    - /*/swagger-ui.html
+    - /*/v2/api-docs
+    - /*/webjars/**
+    - /*/druid/**
+    - /*/css/**
+    - /*/js/**
+    - /*/ws/**
+    - /actuator/**
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000 #缺省为1000
+          #hystrix配置单线程策略
+          strategy: SEMAPHORE
+          #增加并发量设置（默认是10）
+          semaphore:
+            maxConcurrentRequests: 30000
+
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 15000
+
+#ribbon的超时时间
+ribbon:
+  ReadTimeout: 30000
+  ConnectTimeout: 30000
+  eager-load:
+    enabled: true
+
+# actuator相关配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true

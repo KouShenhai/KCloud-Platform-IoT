@@ -1,0 +1,115 @@
+server:
+  port: 8160
+  address: 192.168.62.1
+  connection-timeout: 5000ms
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+    session:
+      cookie:
+        http-only: true
+#spring
+spring:
+  application:
+    name: laokou-admin
+  profiles:
+    # 环境 dev|test|prod
+    active: test
+  messages:
+    encoding: UTF-8
+    basename: i18n/messages
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+      enabled: true
+  http:
+    encoding:
+      charset: UTF-8
+
+management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    export:
+      prometheus:
+        enabled: true
+      jmx:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mybatis/mapper/**/*.xml
+  #实体类扫描，多个package用头号或分号分隔
+  type-aliases-package: io.laokou.admin.domain.**.entity
+  global-config:
+    #数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID"
+      id-type: ID_WORKER
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: NOT_NULL
+      #驼峰下划线转换
+      column-underline: true
+      #db-type:mysql
+      logic-delete-value: 1 #逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 #逻辑未删除值（默认为 0）
+    banner: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+sso:
+  shiro:
+    - permission: anon
+      url: /sys/auth/api/login
+    - permission: anon
+      url: /webjars/**
+    - permission: anon
+      url: /swagger/**
+    - permission: anon
+      url: /actuator/**
+    - permission: anon
+      url: /v2/api-docs
+    - permission: anon
+      url: /swagger-ui.html/**
+    - permission: anon
+      url: /swagger-resources/**
+    - permission: anon
+      url: /sys/auth/api/captcha
+    - permission: anon
+      url: /druid/**
+    - permission: anon
+      url: /sys/auth/api/userInfo
+    - permission: anon
+      url: /sys/auth/api/logout
+    - permission: anon
+      url: /sys/auth/api/codeLogin
+    - permission: anon
+      url: /sys/auth/api/zfbLogin
+    - permission: anon
+      url: /sys/auth/api/wxgzhSign
+    - permission: anon
+      url: /sys/auth/api/wxgzhLogin
+    - permission: anon
+      url: /sys/auth/api/wxgzhTicket
+    - permission: anon
+      url: /weixin/callback
+    - permission: anon
+      url: /sys/auth/api/wxQRCode

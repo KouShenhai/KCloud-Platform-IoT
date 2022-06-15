@@ -10,10 +10,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.laokou</groupId>
-    <artifactId>LaoKou-Cloud</artifactId>
+    <artifactId>laokou-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <description>parent配置</description>
     <packaging>pom</packaging>
+    <modules>
+        <module>../laokou-base</module>
+        <module>../laokou-cloud</module>
+        <module>../laokou-service</module>
+    </modules>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
