@@ -1,11 +1,8 @@
 package io.laokou.admin.infrastructure.common.user;
-
 import io.laokou.admin.infrastructure.common.password.TokenUtil;
 import io.laokou.common.constant.Constant;
 import org.apache.commons.lang.StringUtils;
-
 import javax.servlet.http.HttpServletRequest;
-
 public class SecurityUser {
 
     public static Long getUserId(HttpServletRequest request) {

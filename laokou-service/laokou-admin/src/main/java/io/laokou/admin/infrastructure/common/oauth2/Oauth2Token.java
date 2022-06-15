@@ -1,10 +1,7 @@
 package io.laokou.admin.infrastructure.common.oauth2;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.shiro.authc.AuthenticationToken;
-
 /**
  * authorize
  * @author Kou Shenhai
@@ -13,17 +10,16 @@ import org.apache.shiro.authc.AuthenticationToken;
 @AllArgsConstructor
 public class Oauth2Token implements AuthenticationToken {
 
-    @JsonProperty("Authorization")
-    private String Authorization;
+    private String token;
 
     @Override
     public Object getPrincipal() {
-        return Authorization;
+        return token;
     }
 
     @Override
     public Object getCredentials() {
-        return Authorization;
+        return token;
     }
 
 }

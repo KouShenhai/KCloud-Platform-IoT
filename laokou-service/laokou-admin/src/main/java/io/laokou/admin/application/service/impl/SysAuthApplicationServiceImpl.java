@@ -151,7 +151,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         }
         //获取Authorization
         String Authorization = getAuthorization(userDetail);
-        return LoginVO.builder().Authorization(Authorization).build();
+        return LoginVO.builder().token(Authorization).build();
     }
 
     private String getAuthorization(UserDetail userDetail) {
@@ -328,7 +328,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         if (StringUtils.isNotBlank(username)) {
             final LoginVO loginInfo = getLoginInfo(username, null, false);
             if (loginInfo != null) {
-                params += "?" + Constant.AUTHORIZATION_HEADER + "=" + loginInfo.getAuthorization();
+                params += "?" + Constant.AUTHORIZATION_HEADER + "=" + loginInfo.getToken();
             }
         }
         response.sendRedirect(LOGIN_URL + params);
