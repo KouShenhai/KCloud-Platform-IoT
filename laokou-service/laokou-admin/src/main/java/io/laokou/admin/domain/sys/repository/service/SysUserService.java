@@ -42,4 +42,6 @@ public interface SysUserService extends IService<SysUserDO> {
      */
     IPage<UserVO> getUserPage(IPage<UserVO> page,UserQO qo);
 
+    void deleteUser(Long id);
+
 }

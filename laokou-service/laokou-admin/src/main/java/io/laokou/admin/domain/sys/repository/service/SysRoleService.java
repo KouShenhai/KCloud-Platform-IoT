@@ -21,7 +21,7 @@ public interface SysRoleService extends IService<SysRoleDO> {
      */
     List<Long> getRoleIdsByUserId(Long userId);
 
-    List<String> getRoleNameList(Long userId);
+    List<RoleVO> getRoleListByUserId(Long userId);
 
     /**
      * 分页查询角色
@@ -30,6 +30,8 @@ public interface SysRoleService extends IService<SysRoleDO> {
      * @return
      */
     IPage<RoleVO> getRolePage(IPage<RoleVO> page, RoleQO qo);
+
+    List<RoleVO> getRoleList(RoleQO qo);
 
     RoleVO getRoleById(Long id);
 

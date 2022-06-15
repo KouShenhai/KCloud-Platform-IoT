@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 系统角色控制器
@@ -33,6 +34,12 @@ public class SysRoleApiController {
         return new HttpResultUtil<IPage<RoleVO>>().ok(sysRoleApplicationService.getRolePage(qo));
     }
 
+    @PostMapping("/list")
+    @ApiOperation("系统角色>列表")
+    @CrossOrigin()
+    public HttpResultUtil<List<RoleVO>> list(@RequestBody RoleQO qo) {
+        return new HttpResultUtil<List<RoleVO>>().ok(sysRoleApplicationService.getRoleList(qo));
+    }
 
     @GetMapping("/detail")
     @ApiOperation("系统角色>详情")

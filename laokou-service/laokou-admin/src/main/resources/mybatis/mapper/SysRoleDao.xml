@@ -21,9 +21,9 @@
         order by boot_sys_role.update_date desc
     </select>
 
-    <select id="getRoleNameList" resultType="string">
+    <select id="getRoleListByUserId" resultType="io.laokou.admin.interfaces.vo.RoleVO">
         SELECT
-        role_name
+        name,id,tag,sort
         FROM
         (
         SELECT
@@ -32,14 +32,20 @@
         '超级管理员'
         ELSE
         ''
-        END role_name
+        END name,
+        '1' as id,
+        'super_admin_role' as tag,
+        9999 as sort
         FROM
         boot_sys_user
         WHERE
         id = #{userId}
         UNION
         SELECT
-        boot_sys_role.`name` AS role_name
+        boot_sys_role.`name`,
+        boot_sys_role.id,
+        boot_sys_role.tag,
+        boot_sys_role.sort
         FROM
         boot_sys_role,
         boot_sys_user_role
@@ -48,10 +54,10 @@
         AND boot_sys_user_role.user_id = #{userId}
         ) tmp
         WHERE
-        role_name <![CDATA[ <> ]]> ''
+        name <![CDATA[ <> ]]> ''
     </select>
 
-    <select id="getRolePage" resultType="io.laokou.admin.interfaces.vo.RoleVO">
+    <select id="getRoleList" resultType="io.laokou.admin.interfaces.vo.RoleVO">
         select id,`name`,`tag`,sort from boot_sys_role
         where del_flag = '0'
          <if test="qo.name != '' and qo.name != null">

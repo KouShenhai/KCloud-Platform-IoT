@@ -32,6 +32,6 @@ public class UserInfoVO implements Serializable {
     private List<String> permissionList;
 
     @ApiModelProperty(name = "roles",value = "拥有角色",required = true,example = "['超级管理员']")
-    private List<String> roles;
+    private List<RoleVO> roles;
 
 }

@@ -6,10 +6,13 @@ import io.laokou.admin.interfaces.qo.RoleQO;
 import io.laokou.admin.interfaces.vo.RoleVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface SysRoleApplicationService {
 
     IPage<RoleVO> getRolePage(RoleQO qo);
+
+    List<RoleVO> getRoleList(RoleQO qo);
 
     RoleVO getRoleById(Long id);
 

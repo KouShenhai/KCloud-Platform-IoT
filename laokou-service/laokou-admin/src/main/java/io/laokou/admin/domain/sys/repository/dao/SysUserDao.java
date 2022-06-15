@@ -47,4 +47,5 @@ public interface SysUserDao extends BaseDao<SysUserDO> {
      */
     void updateUser(@Param("dto") UserDTO dto);
 
+    void deleteUser(@Param("id") Long id);
 }

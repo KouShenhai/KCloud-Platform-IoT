@@ -45,4 +45,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserDO> imple
         return this.baseMapper.getUserPage(page, qo);
     }
 
+    @Override
+    public void deleteUser(Long id) {
+        this.baseMapper.deleteUser(id);
+    }
+
 }

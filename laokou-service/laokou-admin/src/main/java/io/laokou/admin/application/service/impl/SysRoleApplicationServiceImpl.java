@@ -12,6 +12,7 @@ import io.laokou.admin.interfaces.dto.RoleDTO;
 import io.laokou.admin.interfaces.qo.RoleQO;
 import io.laokou.admin.interfaces.vo.RoleVO;
 import io.laokou.common.utils.ConvertUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,11 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     }
 
     @Override
+    public List<RoleVO> getRoleList(RoleQO qo) {
+        return sysRoleService.getRoleList(qo);
+    }
+
+    @Override
     public RoleVO getRoleById(Long id) {
         return sysRoleService.getRoleById(id);
     }
@@ -46,14 +52,17 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     }
 
     private Boolean saveOrUpdate(Long roleId,List<Long> menuIds) {
-        List<SysRoleMenuDO> roleMenuList = Lists.newArrayList();
-        for (Long menuId : menuIds) {
-            SysRoleMenuDO roleMenuDO = new SysRoleMenuDO();
-            roleMenuDO.setMenuId(menuId);
-            roleMenuDO.setRoleId(roleId);
-            roleMenuList.add(roleMenuDO);
+        if (CollectionUtils.isNotEmpty(menuIds)) {
+            List<SysRoleMenuDO> roleMenuList = Lists.newArrayList();
+            for (Long menuId : menuIds) {
+                SysRoleMenuDO roleMenuDO = new SysRoleMenuDO();
+                roleMenuDO.setMenuId(menuId);
+                roleMenuDO.setRoleId(roleId);
+                roleMenuList.add(roleMenuDO);
+            }
+            return sysRoleMenuService.saveBatch(roleMenuList);
         }
-        return sysRoleMenuService.saveBatch(roleMenuList);
+        return Boolean.FALSE;
     }
 
     @Override

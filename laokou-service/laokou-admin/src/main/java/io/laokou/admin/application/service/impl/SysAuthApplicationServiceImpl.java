@@ -270,7 +270,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         return UserInfoVO.builder().imgUrl(userDetail.getImgUrl())
                         .username(userDetail.getUsername())
                         .userId(userDetail.getId())
-                        .roles(sysRoleService.getRoleNameList(userId))
+                        .roles(sysRoleService.getRoleListByUserId(userId))
                         .permissionList(userDetail.getPermissionsList()).build();
     }
 

@@ -15,6 +15,12 @@ public interface SysUserApplicationService {
      */
     Boolean updateUser(UserDTO dto, HttpServletRequest request);
 
+    Boolean insertUser(UserDTO dto, HttpServletRequest request);
+
     IPage<UserVO> getUserPage(UserQO qo);
+
+    UserVO getUserById(Long id);
+
+    Boolean deleteUser(Long id);
 
 }

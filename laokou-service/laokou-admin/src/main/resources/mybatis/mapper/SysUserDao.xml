@@ -76,4 +76,9 @@
         </set>
     </update>
 
+    <update id="deleteUser">
+        update boot_sys_user set del_flag = '1'
+        where id = #{id}
+    </update>
+
 </mapper>

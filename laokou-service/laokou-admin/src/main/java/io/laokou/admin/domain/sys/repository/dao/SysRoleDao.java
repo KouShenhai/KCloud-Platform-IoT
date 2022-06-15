@@ -34,7 +34,7 @@ public interface SysRoleDao extends BaseDao<SysRoleDO> {
      * @param userId
      * @return
      */
-    List<String> getRoleNameList(@Param("userId")Long userId);
+    List<RoleVO> getRoleListByUserId(@Param("userId")Long userId);
 
     /**
      * 分页查询角色
@@ -42,10 +42,12 @@ public interface SysRoleDao extends BaseDao<SysRoleDO> {
      * @param qo
      * @return
      */
-    IPage<RoleVO> getRolePage(IPage<RoleVO> page, @Param("qo") RoleQO qo);
+    IPage<RoleVO> getRoleList(IPage<RoleVO> page, @Param("qo") RoleQO qo);
 
     RoleVO getRoleById(@Param("id") Long id);
 
     void deleteRole(@Param("id") Long id);
+
+    List<RoleVO> getRoleList(@Param("qo")RoleQO qo);
 
 }

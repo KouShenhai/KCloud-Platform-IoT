@@ -31,6 +31,27 @@ public class SysUserApiController {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
     }
 
+    @PostMapping("/insert")
+    @ApiOperation("系统用户>新增")
+    @CrossOrigin()
+    public HttpResultUtil<Boolean> insert(@RequestBody UserDTO dto, HttpServletRequest request) {
+        return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.insertUser(dto,request));
+    }
+
+    @GetMapping("/detail")
+    @ApiOperation("系统用户>详情")
+    @CrossOrigin()
+    public HttpResultUtil<UserVO> detail(@RequestParam("id") Long id) {
+        return new HttpResultUtil<UserVO>().ok(sysUserApplicationService.getUserById(id));
+    }
+
+    @DeleteMapping("/delete")
+    @ApiOperation("系统用户>删除")
+    @CrossOrigin()
+    public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id) {
+        return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.deleteUser(id));
+    }
+
     @PostMapping("/page")
     @ApiOperation("系统用户>分页")
     @CrossOrigin()
