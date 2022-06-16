@@ -34,55 +34,7 @@ spring:
               key-resolver: "#{@ipKeyResolver}"
               redis-rate-limiter.replenishRate: 1000
               redis-rate-limiter.burstCapacity: 3000
-        - id: LAOKOU-OSS
-          uri: lb://laokou-oss
-          predicates:
-            - Path=/oss/**
-          filters:
-          - SwaggerHeaderFilter
-          - StripPrefix=1
-        - id: LAOKOU-ELASTICSEARCH
-          uri: lb://laokou-elasticsearch
-          predicates:
-            - Path=/elasticsearch/**
-          filters:
-          - SwaggerHeaderFilter
-          - StripPrefix=1
-        - id: LAOKOU-RESOURCE
-          uri: lb://laokou-resource
-          predicates:
-            - Path=/resource/**
-          filters:
-          - SwaggerHeaderFilter
-          - StripPrefix=1
-        - id: LAOKOU-ACTIVITI
-          uri: lb://laokou-activiti
-          predicates:
-            - Path=/activiti/**
-          filters:
-          - SwaggerHeaderFilter
-          - StripPrefix=1
-        - id: LAOKOU-QUERY
-          uri: lb://laokou-query
-          predicates:
-            - Path=/query/**
-          filters:
-            - SwaggerHeaderFilter
-            - StripPrefix=1
-        - id: LAOKOU-MONGODB
-          uri: lb://laokou-mongodb
-          predicates:
-            - Path=/mongodb/**
-          filters:
-            - SwaggerHeaderFilter
-            - StripPrefix=1
-        - id: LAOKOU-HBASE
-          uri: lb://laokou-hbase
-          predicates:
-            - Path=/hbase/**
-          filters:
-            - SwaggerHeaderFilter
-            - StripPrefix=1
+
 laokou:
   uris:
     - /sys/auth/api/captcha
@@ -94,17 +46,15 @@ laokou:
     - /sys/auth/api/wxgzhSign
     - /sys/auth/api/wxQRCode
     - /weixin/callback
-    - /*/res/preview
-    - /*/swagger/api-docs
-    - /*/swagger-resources/**
-    - /*/swagger-ui.html
-    - /*/v2/api-docs
-    - /*/webjars/**
-    - /*/druid/**
-    - /*/css/**
-    - /*/js/**
-    - /*/ws/**
     - /actuator/**
+    - /swagger/api-docs
+    - /swagger-resources/**
+    - /swagger-ui.html
+    - /v2/api-docs
+    - /webjars/**
+    - /druid/**
+    - /css/**
+    - /js/**
 
 hystrix:
   command:
