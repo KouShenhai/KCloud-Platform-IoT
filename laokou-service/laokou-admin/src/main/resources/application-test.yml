@@ -48,8 +48,8 @@ spring:
       time-between-eviction-runs-millis: 60000
       min-evictable-idle-time-millis: 300000
       test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
+      test-on-borrow: true
+      test-on-return: true
       web-stat-filter:
         enabled: true
         url-pattern: /**
@@ -63,7 +63,7 @@ spring:
         stat:
           log-slow-sql: true
           slow-sql-millis: 1000
-          merge-sql: false
+          merge-sql: true
         wall:
           config:
             multi-statement-allow: true

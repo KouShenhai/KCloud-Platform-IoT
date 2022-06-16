@@ -34,4 +34,4 @@ RUN yum -y install gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel exp
     && make install
 EXPOSE 8016
 VOLUME /data
-ENTRYPOINT java -Xms256m -Xmx512m -Djava.library.path=/usr/local/apr/lib -Djasypt.encryptor.password=koushenhai5201314wumeihua -Denv=DEV -Dapollo.configService=http://192.168.62.132:8080 -jar /opt/sso.jar > /opt/sso.log
+ENTRYPOINT java -Xms256m -Xmx512m -Ddruid.filters=mergeStat -Ddruid.useGlobalDataSourceStat=true -Djava.library.path=/usr/local/apr/lib -Djasypt.encryptor.password=koushenhai5201314wumeihua -Denv=DEV -Dapollo.configService=http://192.168.62.132:8080 -jar /opt/sso.jar > /opt/sso.log
