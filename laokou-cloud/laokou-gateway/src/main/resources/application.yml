@@ -53,8 +53,6 @@ laokou:
     - /v2/api-docs
     - /webjars/**
     - /druid/**
-    - /css/**
-    - /js/**
 
 hystrix:
   command:
