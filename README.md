@@ -30,7 +30,6 @@
 #### 技术栈
 * mysql
 * redis
-* docker-compose
 * mybatis-plus
 * apollo
 
