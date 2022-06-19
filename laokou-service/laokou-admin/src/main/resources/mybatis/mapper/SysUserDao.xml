@@ -30,12 +30,6 @@
         <if test="zfbOpenid != null and zfbOpenid != ''">
             and zfb_openid = #{zfbOpenid}
         </if>
-        <if test="wxgzhOpenid != null and wxgzhOpenid != ''">
-            and wxgzh_openid = #{wxgzhOpenid}
-        </if>
-        <if test="wxOpenid != null and wxOpenid != ''">
-            and wx_openid = #{wxOpenid}
-        </if>
     </select>
 
     <select id="getUserPage" resultType="io.laokou.admin.interfaces.vo.UserVO">

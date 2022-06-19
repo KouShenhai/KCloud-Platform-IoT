@@ -27,11 +27,10 @@ public interface SysUserDao extends BaseDao<SysUserDO> {
 
     /**
      * 根据openid获取username
-     * @param zfbOpenid
-     * @param wxgzhOpenid
+     * @param zfbOpenid 支付宝用户唯一标识
      * @return
      */
-    String getUsernameByOpenid(@Param("zfbOpenid")String zfbOpenid,@Param("wxgzhOpenid")String wxgzhOpenid,@Param("wxOpenid")String wxOpenid);
+    String getUsernameByOpenid(@Param("zfbOpenid")String zfbOpenid);
 
     /**
      * 分页查询用户

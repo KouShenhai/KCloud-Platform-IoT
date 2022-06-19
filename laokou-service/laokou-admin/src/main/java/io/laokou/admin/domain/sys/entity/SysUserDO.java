@@ -74,22 +74,6 @@ public class SysUserDO extends BaseDO implements Serializable {
     private String mobile;
 
     /**
-     * 微信唯一用户标识
-     */
-    @ApiModelProperty(value = "微信唯一用户标识",name = "wxOpenid",example = "oO9-25rJHC9hLy6-D9ZJ9r88PNDI")
-    @TableField("wx_openid")
-    @JsonProperty("wxOpenid")
-    private String wxOpenid;
-
-    /**
-     * 微信公众号唯一用户标识
-     */
-    @ApiModelProperty(value = "微信公众号唯一用户标识",name = "wxOpenid",example = "SC52h-Lu3jauyRBWN6wT8rZfg")
-    @TableField("wxgzh_openid")
-    @JsonProperty("wxgzhOpenid")
-    private String wxgzhOpenid;
-
-    /**
      * 支付宝唯一用户标识
      */
     @ApiModelProperty(value = "支付宝唯一用户标识",name = "zfbOpenid",example = "2088722720196501")

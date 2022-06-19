@@ -36,8 +36,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserDO> imple
     }
 
     @Override
-    public String getUsernameByOpenid(String zfbOpenid, String wxgzhOpenid,String wxOpenid) {
-        return this.baseMapper.getUsernameByOpenid(zfbOpenid, wxgzhOpenid,wxOpenid);
+    public String getUsernameByOpenid(String zfbOpenid) {
+        return this.baseMapper.getUsernameByOpenid(zfbOpenid);
     }
 
     @Override

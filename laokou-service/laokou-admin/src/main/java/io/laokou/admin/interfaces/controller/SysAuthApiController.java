@@ -1,5 +1,4 @@
 package io.laokou.admin.interfaces.controller;
-import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import io.laokou.admin.infrastructure.common.user.SecurityUser;
 import io.laokou.admin.interfaces.vo.LoginVO;
@@ -9,7 +8,6 @@ import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.admin.interfaces.vo.UserInfoVO;
 import io.laokou.admin.application.service.SysAuthApplicationService;
 import io.laokou.admin.interfaces.dto.LoginDTO;
-import io.laokou.admin.interfaces.dto.CodeAuthDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -38,25 +36,11 @@ public class SysAuthApiController {
         sysAuthApplicationService.captcha(uuid,response);
     }
 
-    @GetMapping("/weixin/callback")
-    @CrossOrigin()
-    @ApiOperation("系统认证>微信回调")
-    public void callback(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        sysAuthApplicationService.wxLogin(request,response);
-    }
-
     @PostMapping("/sys/auth/api/login")
     @ApiOperation("登录API")
     @CrossOrigin()
     public HttpResultUtil<LoginVO> login(@RequestBody LoginDTO loginDTO) throws Exception {
         return new HttpResultUtil<LoginVO>().ok(sysAuthApplicationService.login(loginDTO));
-    }
-
-    @PostMapping("/sys/auth/api/codeLogin")
-    @ApiOperation("系统认证>登录(邮箱号/手机号)API")
-    @CrossOrigin()
-    public HttpResultUtil<LoginVO> codeLogin(@RequestBody CodeAuthDTO codeAuthDTO) {
-        return new HttpResultUtil<LoginVO>().ok(sysAuthApplicationService.codeLogin(codeAuthDTO));
     }
 
     @GetMapping("/sys/auth/api/zfbLogin")
@@ -65,34 +49,6 @@ public class SysAuthApiController {
     public void zfbLogin(HttpServletRequest request,HttpServletResponse response) throws IOException, AlipayApiException {
         sysAuthApplicationService.zfbLogin(request, response);
     }
-
-    @RequestMapping(value = "/sys/auth/api/wxgzhSign",method = {RequestMethod.POST,RequestMethod.GET})
-    @ApiOperation("系统认证>微信公众号签名")
-    @CrossOrigin()
-    public String wxgzhSign(HttpServletRequest request) throws IOException {
-        return sysAuthApplicationService.wxgzhSign(request);
-    }
-
-    @GetMapping("/sys/auth/api/wxgzhLogin")
-    @ApiOperation("系统认证>微信公众号登录")
-    @CrossOrigin()
-    public HttpResultUtil<LoginVO> wxgzhLogin(HttpServletRequest request) throws IOException {
-        return new HttpResultUtil<LoginVO>().ok(sysAuthApplicationService.wxgzhLogin(request));
-    }
-
-    @GetMapping("/sys/auth/api/wxgzhTicket")
-    @ApiOperation("系统认证>微信公众号凭证")
-    @CrossOrigin()
-    public HttpResultUtil<JSONObject> wxgzhTicket() throws IOException {
-        return new HttpResultUtil<JSONObject>().ok(sysAuthApplicationService.getWxgzhTicket());
-    }
-
-     @GetMapping("/sys/auth/api/wxQRCode")
-     @ApiOperation("系统认证>微信二维码")
-     @CrossOrigin()
-     public void wxQRCode(HttpServletResponse response) throws IOException {
-         sysAuthApplicationService.getWxQRCode(response);
-     }
 
     @GetMapping("/sys/auth/api/resource")
     @CrossOrigin()

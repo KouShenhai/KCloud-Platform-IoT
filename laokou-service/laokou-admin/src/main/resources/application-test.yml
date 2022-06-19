@@ -77,13 +77,4 @@ oauth:
     charset: utf-8
     sign_type: json
     gateway_url: https://openapi.alipay.com/gateway.do
-  wxgzh:
-    app_id: wx93f1df79dbb1b0ad
-    app_secret: c3ec157b8fa2531762a306cf636af925
-    access_token_url: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
-    user_info_url: https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
-    qr_code_url: https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=TOKEN
-  wx:
-    app_id: wxed9954c01bb89b47
-    app_secret: a7482517235173ddb4083788de60b90e
-    redirect_url: http://localhost:8160/weixin/callback
+    login_url: http://localhost:9999

@@ -1,7 +1,5 @@
 package io.laokou.admin.application.service.impl;
-import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
@@ -11,11 +9,7 @@ import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
 import io.laokou.admin.application.service.CaptchaApplicationService;
 import io.laokou.admin.application.service.SysAuthApplicationService;
-import io.laokou.admin.domain.sys.entity.WxUserDO;
-import io.laokou.admin.domain.sys.entity.WxgzhUserDO;
 import io.laokou.admin.domain.sys.entity.ZfbUserDO;
-import io.laokou.admin.domain.sys.repository.dao.WxUserDao;
-import io.laokou.admin.domain.sys.repository.dao.WxgzhUserDao;
 import io.laokou.admin.domain.sys.repository.dao.ZfbUserDao;
 import io.laokou.admin.domain.sys.repository.service.SysRoleService;
 import io.laokou.admin.domain.sys.repository.service.SysUserService;
@@ -23,7 +17,6 @@ import io.laokou.admin.domain.sys.repository.service.SysMenuService;
 import io.laokou.admin.infrastructure.common.password.PasswordUtil;
 import io.laokou.admin.infrastructure.common.password.TokenUtil;
 import io.laokou.admin.interfaces.dto.LoginDTO;
-import io.laokou.admin.interfaces.dto.CodeAuthDTO;
 import io.laokou.admin.interfaces.vo.LoginVO;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.enums.AuthTypeEnum;
@@ -38,18 +31,13 @@ import io.laokou.admin.interfaces.vo.MenuVO;
 import io.laokou.admin.interfaces.vo.UserInfoVO;
 import io.laokou.redis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.client.RestTemplate;
 import javax.crypto.BadPaddingException;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -57,8 +45,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 /**
  * sso实现类
@@ -86,15 +72,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     private ZfbOauth zfbOauth;
 
     @Autowired
-    private WxgzhOauth wxgzhOauth;
-
-    @Autowired
-    private WxOauth wxOauth;
-
-    @Autowired
     private SysRoleService sysRoleService;
-
-    private static final String LOGIN_URL = "https://1.com/im/login.html";
 
     @Override
     public LoginVO login(LoginDTO loginDTO) throws Exception {
@@ -123,11 +101,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         log.info("解密后，密码：{}", password);
         return getLoginInfo(username,password,true);
         //endregion
-    }
-
-    @Override
-    public LoginVO codeLogin(CodeAuthDTO codeAuthDTO) {
-        return getLoginInfo(null,null,false);
     }
 
     private LoginVO getLoginInfo(String username,String password,boolean isUserPasswordFlag) {
@@ -319,56 +292,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     @Override
     public void zfbLogin(HttpServletRequest request, HttpServletResponse response) throws AlipayApiException, IOException {
-        final String username = zfbOauth.getUsername(request);
-        sendRedirectLogin(username,response);
-    }
-
-    private void sendRedirectLogin(String username,HttpServletResponse response) throws IOException {
-        String params = "";
-        if (StringUtils.isNotBlank(username)) {
-            final LoginVO loginInfo = getLoginInfo(username, null, false);
-            if (loginInfo != null) {
-                params += "?" + Constant.AUTHORIZATION_HEADER + "=" + loginInfo.getToken();
-            }
-        }
-        response.sendRedirect(LOGIN_URL + params);
-    }
-
-    @Override
-    public String wxgzhSign(HttpServletRequest request) throws IOException {
-       return wxgzhOauth.wxgzhSign(request);
-    }
-
-    @Override
-    public LoginVO wxgzhLogin(HttpServletRequest request) {
-        final String sceneId = request.getParameter("sceneId");
-        final String wxOpenidKey = RedisKeyUtil.getWxOpenidKey(sceneId);
-        final String openid = redisUtil.get(wxOpenidKey);
-        if (StringUtils.isBlank(openid)) {
-            throw new CustomException("用户未扫码，请稍后再试");
-        }
-        redisUtil.delete(wxOpenidKey);
-        String username = sysUserService.getUsernameByOpenid("",openid,"");
-        if (StringUtils.isBlank(username)) {
-            throw new CustomException("微信账号未绑定，请绑定后再试");
-        }
-        return getLoginInfo(username,null,false);
-    }
-
-    @Override
-    public JSONObject getWxgzhTicket() throws IOException {
-        return wxgzhOauth.getWxgzhTicket();
-    }
-
-    @Override
-    public void getWxQRCode(HttpServletResponse response) throws IOException {
-        wxOauth.getWxQRCode(response);
-    }
-
-    @Override
-    public void wxLogin(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        String username = wxOauth.callbackInfo(request);
-        sendRedirectLogin(username,response);
+        zfbOauth.sendRedirectLogin(request,response);
     }
 
     private UserDetail getUserDetail(String username) {
@@ -406,11 +330,13 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         private String GATEWAY_URL;
         @Value("${oauth.zfb.encrypt_type}")
         private String ENCRYPT_TYPE;
+        @Value("${oauth.zfb.login_url}")
+        private String LOGIN_URL;
 
         @Autowired
         private ZfbUserDao zfbUserDao;
 
-        public String getUsername(HttpServletRequest request) throws AlipayApiException {
+        public void sendRedirectLogin(HttpServletRequest request,HttpServletResponse response) throws AlipayApiException, IOException {
             final String authCode = request.getParameter("auth_code");
             log.info("appId:{}",APP_ID);
             log.info("authCode:{}",authCode);
@@ -441,197 +367,19 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                     entity.setGender(gender);
                     zfbUserDao.deleteById(userId);
                     zfbUserDao.insert(entity);
-                    return sysUserService.getUsernameByOpenid(userId,"","");
+                    sendRedirectLogin(sysUserService.getUsernameByOpenid(userId),response);
                 }
             }
-            return null;
         }
-
-    }
-
-    @Component
-    public class WxgzhOauth {
-
-        @Value("${oauth.wxgzh.app_id}")
-        private String APP_ID;
-        @Value("${oauth.wxgzh.app_secret}")
-        private String APP_SECRET;
-        @Value("${oauth.wxgzh.access_token_url}")
-        private String ACCESS_TOKEN_URL;
-        @Value("${oauth.wxgzh.user_info_url}")
-        private String USER_INFO_URL;
-        @Value("${oauth.wxgzh.qr_code_url}")
-        private String QR_CODE_URL;
-
-        @Autowired
-        private RedisUtil redisUtil;
-
-        @Autowired
-        private RestTemplate restTemplate;
-
-        @Autowired
-        private WxgzhUserDao wxgzhUserDao;
-
-        private final Long EXPIRE_DATE = 30 * 24 * 3600L;
-
-        private String getAccessToken() throws IOException {
-            String wxTokenKey = RedisKeyUtil.getWxTokenKey();
-            String wxTokenJson = redisUtil.get(wxTokenKey);
-            if (wxTokenJson == null) {
-                String tokenUri = ACCESS_TOKEN_URL.replace("APPID", APP_ID).replace("APPSECRET", APP_SECRET);
-                String resultJson = HttpUtil.doGet(tokenUri, new HashMap<>(0));
-                if (StringUtils.isNotBlank(resultJson)) {
-                    JSONObject jsonObject = JSONObject.parseObject(resultJson);
-                    String accessToken = jsonObject.getString(Constant.ACCESS_TOKEN);
-                    Long expireIn = jsonObject.getLong(Constant.EXPIRES_IN);
-                    redisUtil.set(wxTokenKey,accessToken,expireIn);
-                    return accessToken;
+        private void sendRedirectLogin(String username,HttpServletResponse response) throws IOException {
+            String params = "";
+            if (StringUtils.isNotBlank(username)) {
+                final LoginVO loginInfo = getLoginInfo(username, null, false);
+                if (loginInfo != null) {
+                    params += "?" + Constant.AUTHORIZATION_HEADER + "=" + loginInfo.getToken();
                 }
             }
-            return wxTokenJson;
+            response.sendRedirect(LOGIN_URL + params);
         }
-
-        public JSONObject getWxgzhTicket() throws IOException {
-            String accessToken = getAccessToken();
-            String qrCodeUrl = QR_CODE_URL.replace("TOKEN", accessToken);
-            String sceneId = IdUtil.simpleUUID();
-            String params = "{\"expire_seconds\": " + EXPIRE_DATE + ", \"action_name\": \"QR_STR_SCENE\"" +", \"action_info\": {\"scene\": {\"scene_str\": \"" + sceneId + "\"}}}";
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-            HttpEntity<String> requestEntity = new HttpEntity<>(params, headers);
-            String resultJson = restTemplate.postForEntity(qrCodeUrl, requestEntity, String.class).getBody();
-            JSONObject jsonObject = JSONObject.parseObject(resultJson);
-            jsonObject.put("sceneId",sceneId);
-            return jsonObject;
-        }
-
-        private String callbackInfo(HttpServletRequest request) throws IOException {
-            WxMpXmlMessage message = WxMpXmlMessage.fromXml(request.getInputStream());
-            log.info("message：{}",message);
-            String eventKey = message.getEventKey();
-            String type = message.getMsgType();
-            String openid = message.getFromUser();
-            String accessToken = getAccessToken();
-            if ("event".equals(type)) {
-                //获取用户信息
-                String userInfoUrl = USER_INFO_URL.replace("OPENID",openid).replace("ACCESS_TOKEN",accessToken);
-                log.info("userInfoUrl:{}",userInfoUrl);
-                String resultJson = HttpUtil.doGet(userInfoUrl, new HashMap<>(0));
-                final JSONObject jsonObject = JSONObject.parseObject(resultJson);
-                String nickname = jsonObject.getString("nickname");
-                Integer sex = jsonObject.getInteger("sex");
-                String province = jsonObject.getString("province");
-                String city = jsonObject.getString("city");
-                String country = jsonObject.getString("country");
-                String headimgurl = jsonObject.getString("headimgurl");
-                final String remark = jsonObject.getString("remark");
-                WxgzhUserDO entity = new WxgzhUserDO();
-                entity.setId(openid);
-                entity.setCity(city);
-                entity.setCountry(country);
-                entity.setProvince(province);
-                entity.setRemark(remark);
-                entity.setSex(sex);
-                entity.setNickname(nickname);
-                entity.setHeadimgurl(headimgurl);
-                wxgzhUserDao.deleteById(openid);
-                wxgzhUserDao.insert(entity);
-                String wxOpenidKey = RedisKeyUtil.getWxOpenidKey(eventKey);
-                redisUtil.set(wxOpenidKey,openid);
-                return resultJson;
-            }
-            return null;
-        }
-
-        public String wxgzhSign(HttpServletRequest request) throws IOException {
-           /*开发者提交信息后，微信服务器将发送GET请求到填写的服务器地址URL上，GET请求携带参数如下表所示：
-            参数	描述
-            signature	微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数。
-            timestamp	时间戳
-            nonce	随机数
-            echostr	随机字符串*/
-            final String signature = request.getParameter("signature");
-            final String timestamp = request.getParameter("timestamp");
-            final String nonce = request.getParameter("nonce");
-            final String echostr = request.getParameter("echostr");
-            log.info("获取相关request：{}", JSON.toJSONString(request.getParameterMap()));
-            return WxgzhUtils.CheckSignature(signature,timestamp,nonce) && StringUtils.isNotBlank(echostr) ? echostr : callbackInfo(request);
-        }
-    }
-
-    @Component
-    /**
-     *  简单来说 三个请求url的含义分辨为
-     *  第一个：根据回调地址（就是用户扫描登录确以后微信平台会自己调用的接口）和 appid(微信密钥id) 请求二维码
-     *  第二个：根据返回的code（临时票据，可理解是一个微信用户授权给你后，返回的一个code）、
-     *  appid(微信密钥id)、appsecret（微信密钥secret） 获取 access_token（可以理解为接口调用凭证，有了这个才能去请求成功第三个url）、和openid（微信id）
-     *  第三个：根据access_token和openid查询用户基本信息。
-     */
-    public class WxOauth {
-        @Value("${oauth.wx.app_id}")
-        private String APP_ID;
-        @Value("${oauth.wx.app_secret}")
-        private String APP_SECRET;
-        @Value("${oauth.wx.redirect_url}")
-        private String REDIRECT_URL;
-
-        @Autowired
-        private WxUserDao wxUserDao;
-
-        private static final String STATE = "123";
-
-        private static final String BASE_URI = "https://open.weixin.qq.com/connect/qrconnect" +
-                "?appid=%s" +
-                "&redirect_uri=%s" +
-                "&response_type=code" +
-                "&scope=snsapi_login" +
-                "&state=%s" +
-                "#wechat_redirect";
-
-        private static final String BASE_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token" +
-                "?appid=%s" +
-                "&secret=%s" +
-                "&code=%s" +
-                "&grant_type=authorization_code";
-
-        private static final String BASE_USER_INFO_URL = "https://api.weixin.qq.com/sns/userinfo" +
-                "?access_token=%s" +
-                "&openid=%s";
-
-        public void getWxQRCode(HttpServletResponse response) throws IOException {
-            String redirectUrl = URLEncoder.encode(REDIRECT_URL, StandardCharsets.UTF_8.name());
-            response.sendRedirect(String.format(BASE_URI,APP_ID,redirectUrl,STATE));
-        }
-
-        public String callbackInfo(HttpServletRequest request) throws IOException {
-            String code = request.getParameter("code");
-            String resultToken = HttpUtil.doGet(String.format(BASE_TOKEN_URL, APP_ID, APP_SECRET, code), new HashMap<>(0));
-            log.info("获取返回数据：{}",resultToken);
-            JSONObject jsonObject = JSONObject.parseObject(resultToken);
-            String accessToken = jsonObject.getString("access_token");
-            String openid = jsonObject.getString("openid");
-            //获取用户信息
-            String resultUserInfo = HttpUtil.doGet(String.format(BASE_USER_INFO_URL, accessToken, openid), new HashMap<>(0));
-            log.info("获取返回数据：{}",resultUserInfo);
-            JSONObject json = JSONObject.parseObject(resultUserInfo);
-            String nickname = json.getString("nickname");
-            Integer sex = json.getInteger("sex");
-            String province = json.getString("province");
-            String city = json.getString("city");
-            String country = json.getString("country");
-            String headimgurl = json.getString("headimgurl");
-            WxUserDO entity = new WxUserDO();
-            entity.setId(openid);
-            entity.setCity(city);
-            entity.setCountry(country);
-            entity.setProvince(province);
-            entity.setSex(sex);
-            entity.setNickname(nickname);
-            entity.setHeadimgurl(headimgurl);
-            wxUserDao.deleteById(openid);
-            wxUserDao.insert(entity);
-            return sysUserService.getUsernameByOpenid("","",openid);
-        }
-
     }
 }

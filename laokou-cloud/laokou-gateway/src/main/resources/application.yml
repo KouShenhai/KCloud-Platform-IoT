@@ -39,13 +39,7 @@ laokou:
   uris:
     - /sys/auth/api/captcha
     - /sys/auth/api/login
-    - /sys/auth/api/codeLogin
     - /sys/auth/api/zfbLogin
-    - /sys/auth/api/wxgzhLogin
-    - /sys/auth/api/wxgzhTicket
-    - /sys/auth/api/wxgzhSign
-    - /sys/auth/api/wxQRCode
-    - /weixin/callback
     - /actuator/**
     - /swagger/api-docs
     - /swagger-resources/**

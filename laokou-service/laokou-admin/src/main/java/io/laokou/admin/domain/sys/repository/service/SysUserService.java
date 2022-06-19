@@ -28,11 +28,10 @@ public interface SysUserService extends IService<SysUserDO> {
 
     /**
      * 根据openid获取username
-     * @param zfbOpenid
-     * @param wxgzhOpenid
+     * @param zfbOpenid 支付宝唯一用户标识
      * @return
      */
-    String getUsernameByOpenid(String zfbOpenid,String wxgzhOpenid,String wxOpenid);
+    String getUsernameByOpenid(String zfbOpenid);
 
     /**
      * 分页查询用户
