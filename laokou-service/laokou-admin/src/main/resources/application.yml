@@ -32,14 +32,6 @@ spring:
       charset: UTF-8
 
 management:
-  metrics:
-    tags:
-      application: ${spring.application.name}
-    export:
-      prometheus:
-        enabled: true
-      jmx:
-        enabled: true
   endpoints:
     web:
       exposure:
@@ -47,8 +39,6 @@ management:
   endpoint:
     health:
       show-details: always
-    shutdown:
-      enabled: true
 
 #mybatis
 mybatis-plus:
