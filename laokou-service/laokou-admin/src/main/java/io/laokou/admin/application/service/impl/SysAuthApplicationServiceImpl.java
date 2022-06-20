@@ -122,18 +122,18 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         if (CollectionUtils.isEmpty(userDetail.getRoleIds()) && SuperAdminEnum.NO.value().equals(userDetail.getSuperAdmin())) {
             throw new CustomException(ErrorCode.ROLE_NOT_EXIST);
         }
-        //获取Authorization
-        String Authorization = getAuthorization(userDetail);
-        return LoginVO.builder().token(Authorization).build();
+        //获取token
+        String token = getToken(userDetail);
+        return LoginVO.builder().token(token).build();
     }
 
-    private String getAuthorization(UserDetail userDetail) {
+    private String getToken(UserDetail userDetail) {
         //region Description
         //编号
         Long userId = userDetail.getId();
         //登录成功 > 生成token
-        String Authorization = TokenUtil.getToken(TokenUtil.getClaims(userId));
-        log.info("Authorization is：{}", Authorization);
+        String token = TokenUtil.getToken(TokenUtil.getClaims(userId));
+        log.info("Token is：{}", token);
         //资源列表放到redis中
         String userResourceKey = RedisKeyUtil.getUserResourceKey(userId);
         List<MenuVO> resourceList = sysMenuService.getMenuList(userDetail,true,1);
@@ -146,8 +146,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         redisUtil.set(userInfoKey,JSON.toJSONString(userDetail));
         redisUtil.set(userResourceKey, JSON.toJSONString(resourceList));
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-        request.setAttribute(Constant.AUTHORIZATION_HEADER, Authorization);
-        return Authorization;
+        request.setAttribute(Constant.AUTHORIZATION_HEADER, token);
+        return token;
         //endregion
     }
 
@@ -376,7 +376,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             if (StringUtils.isNotBlank(username)) {
                 final LoginVO loginInfo = getLoginInfo(username, null, false);
                 if (loginInfo != null) {
-                    params += "?" + Constant.AUTHORIZATION_HEADER + "=" + loginInfo.getToken();
+                    params += "?" + Constant.ACCESS_TOKEN + "=" + loginInfo.getToken();
                 }
             }
             response.sendRedirect(LOGIN_URL + params);
