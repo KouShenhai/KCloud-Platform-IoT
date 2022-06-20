@@ -105,12 +105,12 @@ public class RsaCoder {
     }
 
     public static String getPrivateKey(Map<String, Key> keyMap) throws Exception {
-        Key key = (Key)keyMap.get("RSAPrivateKey");
+        Key key = keyMap.get("RSAPrivateKey");
         return encryptBASE64(key.getEncoded());
     }
 
     public static String getPublicKey(Map<String, Key> keyMap) throws Exception {
-        Key key = (Key)keyMap.get("RSAPublicKey");
+        Key key = keyMap.get("RSAPublicKey");
         return encryptBASE64(key.getEncoded());
     }
 
