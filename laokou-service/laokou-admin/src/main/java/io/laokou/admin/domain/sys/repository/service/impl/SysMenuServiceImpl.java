@@ -69,7 +69,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuDO> imple
 
     private List<MenuVO> getMenuList(Long userId, Integer superAdmin,Integer type) {
         //region Description
-        if (SuperAdminEnum.YES.value().equals(superAdmin)) {
+        if (SuperAdminEnum.YES.ordinal() == superAdmin) {
             return getMenuList(null,type);
         } else {
             return getMenuList(userId,type);

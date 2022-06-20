@@ -116,10 +116,10 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         if(isUserPasswordFlag && !PasswordUtil.matches(password, userDetail.getPassword())){
             throw new CustomException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
-        if (UserStatusEnum.DISABLE.getValue().equals(userDetail.getStatus())) {
+        if (UserStatusEnum.DISABLE.ordinal() == userDetail.getStatus()) {
             throw new CustomException(ErrorCode.ACCOUNT_DISABLE);
         }
-        if (CollectionUtils.isEmpty(userDetail.getRoleIds()) && SuperAdminEnum.NO.value().equals(userDetail.getSuperAdmin())) {
+        if (CollectionUtils.isEmpty(userDetail.getRoleIds()) && SuperAdminEnum.NO.ordinal() == userDetail.getSuperAdmin()) {
             throw new CustomException(ErrorCode.ROLE_NOT_EXIST);
         }
         //获取token
@@ -153,8 +153,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     private List<String> getPermissionList(UserDetail userDetail) {
         //region Description
-        boolean isSuperAdmin = userDetail.getSuperAdmin().equals(SuperAdminEnum.YES.value());
-        if (isSuperAdmin){
+        if (SuperAdminEnum.YES.ordinal() == userDetail.getSuperAdmin()){
             return sysMenuService.getPermissionsList();
         }else{
             return sysMenuService.getPermissionsListByUserId(userDetail.getId());
@@ -211,11 +210,11 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         //3.判断资源是否在资源列表列表里
         MenuVO resource = pathMatcher(uri, method, resourceList);
         //4.无需认证
-        if (resource != null && resource.getAuthLevel().equals(AuthTypeEnum.NO_AUTH.value())) {
+        if (resource != null && AuthTypeEnum.NO_AUTH.ordinal() == resource.getAuthLevel()) {
             return userDetail;
         }
         //5.登录认证
-        if (resource != null && resource.getAuthLevel().equals(AuthTypeEnum.LOGIN_AUTH.value())) {
+        if (resource != null && AuthTypeEnum.LOGIN_AUTH.ordinal() == resource.getAuthLevel()) {
             return userDetail;
         }
         //6.不在资源列表，只要登录了，就能访问
@@ -223,7 +222,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             return userDetail;
         }
         //7.当前登录用户为超级管理员
-        if (userDetail.getSuperAdmin().equals(SuperAdminEnum.YES.value())) {
+        if (SuperAdminEnum.YES.ordinal() == userDetail.getSuperAdmin()) {
             return userDetail;
         }
         //8. 需要鉴权，获取用户资源列表
@@ -306,7 +305,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     private List<Long> getRoleIds(UserDetail userDetail) {
         Integer superAdmin = userDetail.getSuperAdmin();
         Long userId = userDetail.getId();
-        if (SuperAdminEnum.YES.value().equals(superAdmin)) {
+        if (SuperAdminEnum.YES.ordinal() == superAdmin) {
             return sysRoleService.getRoleIds();
         } else {
             return sysRoleService.getRoleIdsByUserId(userId);
