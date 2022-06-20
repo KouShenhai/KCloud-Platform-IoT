@@ -1,5 +1,7 @@
 package io.laokou.admin.infrastructure.common.password;
 
+import io.laokou.common.exception.CustomException;
+
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
@@ -228,7 +230,7 @@ public class BCrypt {
 		int c1, c2;
 
 		if (len <= 0 || len > d.length) {
-			throw new IllegalArgumentException("Invalid len");
+			throw new CustomException("Invalid len");
 		}
 
 		while (off < len) {
@@ -281,7 +283,7 @@ public class BCrypt {
 		byte c1, c2, c3, c4, o;
 
 		if (maxolen <= 0) {
-			throw new IllegalArgumentException("Invalid maxolen");
+			throw new CustomException("Invalid maxolen");
 		}
 
 		while (off < slen - 1 && olen < maxolen) {
@@ -434,7 +436,7 @@ public class BCrypt {
 
 	static long roundsForLogRounds(int log_rounds) {
 		if (log_rounds < 4 || log_rounds > 31) {
-			throw new IllegalArgumentException("Bad number of rounds");
+			throw new CustomException("Bad number of rounds");
 		}
 		return 1L << log_rounds;
 	}
@@ -492,17 +494,17 @@ public class BCrypt {
 		StringBuilder rs = new StringBuilder();
 
 		if (salt == null) {
-			throw new IllegalArgumentException("salt cannot be null");
+			throw new CustomException("salt cannot be null");
 		}
 
 		int saltLength = salt.length();
 
 		if (saltLength < 28) {
-			throw new IllegalArgumentException("Invalid salt");
+			throw new CustomException("Invalid salt");
 		}
 
 		if (salt.charAt(0) != '$' || salt.charAt(1) != '2') {
-			throw new IllegalArgumentException("Invalid salt version");
+			throw new CustomException("Invalid salt version");
 		}
 		if (salt.charAt(2) == '$') {
 			off = 3;
@@ -510,18 +512,18 @@ public class BCrypt {
 		else {
 			minor = salt.charAt(2);
 			if (minor != 'a' || salt.charAt(3) != '$') {
-				throw new IllegalArgumentException("Invalid salt revision");
+				throw new CustomException("Invalid salt revision");
 			}
 			off = 4;
 		}
 
 		if (saltLength - off < 25) {
-			throw new IllegalArgumentException("Invalid salt");
+			throw new CustomException("Invalid salt");
 		}
 
 		// Extract number of rounds
 		if (salt.charAt(off + 2) > '$') {
-			throw new IllegalArgumentException("Missing salt rounds");
+			throw new CustomException("Missing salt rounds");
 		}
 		rounds = Integer.parseInt(salt.substring(off, off + 2));
 
@@ -530,7 +532,7 @@ public class BCrypt {
 			passwordb = (password + (minor >= 'a' ? "\000" : "")).getBytes("UTF-8");
 		}
 		catch (UnsupportedEncodingException uee) {
-			throw new AssertionError("UTF-8 is not supported");
+			throw new CustomException("UTF-8 is not supported");
 		}
 
 		saltb = decode_base64(real_salt, BCRYPT_SALT_LEN);
@@ -562,7 +564,7 @@ public class BCrypt {
 	 */
 	public static String gensalt(int log_rounds, SecureRandom random) {
 		if (log_rounds < MIN_LOG_ROUNDS || log_rounds > MAX_LOG_ROUNDS) {
-			throw new IllegalArgumentException("Bad number of rounds");
+			throw new CustomException("Bad number of rounds");
 		}
 		StringBuilder rs = new StringBuilder();
 		byte rnd[] = new byte[BCRYPT_SALT_LEN];

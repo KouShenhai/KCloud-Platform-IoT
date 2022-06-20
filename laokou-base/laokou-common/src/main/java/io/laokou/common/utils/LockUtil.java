@@ -1,5 +1,7 @@
 package io.laokou.common.utils;
 
+import io.laokou.common.exception.CustomException;
+
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -35,7 +37,7 @@ public class LockUtil {
             //把字符串所有小写都改成大写成为正规的mac地址并返回
             return sb.toString().toUpperCase().replaceAll("-","");
         } catch (UnknownHostException | SocketException e) {
-            throw new IllegalStateException("getLocalMAC error");
+            throw new CustomException("getLocalMAC error");
         }
     }
 
@@ -46,7 +48,7 @@ public class LockUtil {
             pid = pid.substring(0,indexOf);
             return pid;
         }
-        throw new IllegalStateException("ManagementFactory error");
+        throw new CustomException("ManagementFactory error");
     }
 
 }

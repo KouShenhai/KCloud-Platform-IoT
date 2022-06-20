@@ -1,5 +1,6 @@
 package io.laokou.admin.infrastructure.common.password;
 
+import io.laokou.common.exception.CustomException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -42,7 +43,7 @@ public class BCryptPasswordEncoder implements PasswordEncoder {
 	 */
 	public BCryptPasswordEncoder(int strength, SecureRandom random) {
 		if (strength != -1 && (strength < BCrypt.MIN_LOG_ROUNDS || strength > BCrypt.MAX_LOG_ROUNDS)) {
-			throw new IllegalArgumentException("Bad strength");
+			throw new CustomException("Bad strength");
 		}
 		this.strength = strength;
 		this.random = random;

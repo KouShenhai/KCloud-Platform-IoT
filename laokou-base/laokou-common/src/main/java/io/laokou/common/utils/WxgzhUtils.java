@@ -1,5 +1,7 @@
 package io.laokou.common.utils;
 
+import io.laokou.common.exception.CustomException;
+
 import java.security.MessageDigest;
 import java.util.Arrays;
 
@@ -30,7 +32,7 @@ public class WxgzhUtils {
             messageDigest.update(str.getBytes());
             return getFormattedText(messageDigest.digest());
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new CustomException(e.getMessage());
         }
 	}
 

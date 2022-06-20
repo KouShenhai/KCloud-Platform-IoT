@@ -1,5 +1,7 @@
 package io.laokou.common.utils;
 
+import io.laokou.common.exception.CustomException;
+
 /**
  * @author Kou Shenhai
  */
@@ -56,10 +58,10 @@ public class SnowFlakeShortUtil {
      */
     public SnowFlakeShortUtil(long dataCenterId, long machineId) {
         if (dataCenterId > MAX_DATA_CENTER_NUM || dataCenterId < 0) {
-            throw new IllegalArgumentException("DtaCenterId can't be greater than MAX_DATA_CENTER_NUM or less than 0！");
+            throw new CustomException("DtaCenterId can't be greater than MAX_DATA_CENTER_NUM or less than 0！");
         }
         if (machineId > MAX_MACHINE_NUM || machineId < 0) {
-            throw new IllegalArgumentException("MachineId can't be greater than MAX_MACHINE_NUM or less than 0！");
+            throw new CustomException("MachineId can't be greater than MAX_MACHINE_NUM or less than 0！");
         }
         this.dataCenterId = dataCenterId;
         this.machineId = machineId;
@@ -73,7 +75,7 @@ public class SnowFlakeShortUtil {
     public synchronized long nextId() {
         long currTimeStamp = getNewTimeStamp();
         if (currTimeStamp < lastTimeStamp) {
-            throw new RuntimeException("Clock moved backwards.  Refusing to generate id");
+            throw new CustomException("Clock moved backwards.  Refusing to generate id");
         }
 
         if (currTimeStamp == lastTimeStamp) {

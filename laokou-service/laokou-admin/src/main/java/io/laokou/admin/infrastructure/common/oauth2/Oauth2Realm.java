@@ -1,6 +1,7 @@
 package io.laokou.admin.infrastructure.common.oauth2;
 
 import com.alibaba.fastjson.JSON;
+import io.laokou.common.exception.CustomException;
 import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.MessageUtil;
@@ -61,7 +62,7 @@ public class Oauth2Realm extends AuthorizingRealm {
         //token失效
         boolean expiration = TokenUtil.isExpiration(accessToken);
         if (expiration) {
-            throw new IncorrectCredentialsException(MessageUtil.getMessage(ErrorCode.AUTHORIZATION_INVALID));
+            throw new CustomException(MessageUtil.getMessage(ErrorCode.AUTHORIZATION_INVALID));
         }
         //查询用户信息
         Long userId = TokenUtil.getUserId(accessToken);

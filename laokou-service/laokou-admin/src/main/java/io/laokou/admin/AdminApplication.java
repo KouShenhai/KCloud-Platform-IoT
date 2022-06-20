@@ -14,6 +14,7 @@ import org.springframework.boot.web.server.WebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 /**
  * 架构演变
@@ -22,10 +23,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * DDD分层架构(分布式微服务架构) > 用户接口层 应用层 领域层 基础层
  * @author Kou Shenhai
  */
-@SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.admin","io.laokou.redis"})
+@SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.admin","io.laokou.redis","io.laokou.log"})
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableApolloConfig
+@EnableAspectJAutoProxy
 @Slf4j
 @EnableEncryptableProperties
 @EnableScheduling

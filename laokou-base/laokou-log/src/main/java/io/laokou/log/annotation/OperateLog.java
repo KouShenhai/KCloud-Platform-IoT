@@ -9,4 +9,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface OperateLog {
+
+    String module() default "";
+
+    String name() default "";
+
 }

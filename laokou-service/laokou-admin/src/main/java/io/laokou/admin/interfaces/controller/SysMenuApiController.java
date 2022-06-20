@@ -4,6 +4,7 @@ import io.laokou.admin.interfaces.dto.MenuDTO;
 import io.laokou.admin.interfaces.qo.MenuQO;
 import io.laokou.admin.interfaces.vo.MenuVO;
 import io.laokou.common.utils.HttpResultUtil;
+import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,7 @@ public class SysMenuApiController {
     @PostMapping("/query")
     @ApiOperation("系统菜单>查询")
     @CrossOrigin()
+    @OperateLog(module = "系统菜单",name = "查询")
     public HttpResultUtil<List<MenuVO>> query(@RequestBody MenuQO qo) {
         return new HttpResultUtil<List<MenuVO>>().ok(sysMenuApplicationService.queryMenuList(qo));
     }
