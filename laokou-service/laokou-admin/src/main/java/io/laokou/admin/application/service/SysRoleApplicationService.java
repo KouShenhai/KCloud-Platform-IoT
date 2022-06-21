@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface SysRoleApplicationService {
 
-    IPage<RoleVO> getRolePage(RoleQO qo);
+    IPage<RoleVO> queryRolePage(RoleQO qo);
 
     List<RoleVO> getRoleList(RoleQO qo);
 

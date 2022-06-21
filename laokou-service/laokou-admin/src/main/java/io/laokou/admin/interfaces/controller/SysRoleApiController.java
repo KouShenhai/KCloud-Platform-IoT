@@ -25,11 +25,11 @@ public class SysRoleApiController {
     @Autowired
     private SysRoleApplicationService sysRoleApplicationService;
 
-    @PostMapping("/page")
-    @ApiOperation("系统角色>分页")
+    @PostMapping("/query")
+    @ApiOperation("系统角色>查询")
     @CrossOrigin()
-    public HttpResultUtil<IPage<RoleVO>> page(@RequestBody RoleQO qo) {
-        return new HttpResultUtil<IPage<RoleVO>>().ok(sysRoleApplicationService.getRolePage(qo));
+    public HttpResultUtil<IPage<RoleVO>> query(@RequestBody RoleQO qo) {
+        return new HttpResultUtil<IPage<RoleVO>>().ok(sysRoleApplicationService.queryRolePage(qo));
     }
 
     @PostMapping("/list")

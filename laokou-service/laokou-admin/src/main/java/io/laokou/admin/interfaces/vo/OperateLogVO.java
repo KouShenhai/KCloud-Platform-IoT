@@ -6,6 +6,8 @@ import java.util.Date;
 
 @Data
 public class OperateLogVO {
+
+    private Long id;
     /**
      * 模块名称，如：系统菜单
      */

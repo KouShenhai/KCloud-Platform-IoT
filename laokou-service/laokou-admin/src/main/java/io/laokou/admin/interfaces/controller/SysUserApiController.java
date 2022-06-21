@@ -54,11 +54,11 @@ public class SysUserApiController {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.deleteUser(id));
     }
 
-    @PostMapping("/page")
-    @ApiOperation("系统用户>分页")
+    @PostMapping("/query")
+    @ApiOperation("系统用户>查询")
     @CrossOrigin()
-    public HttpResultUtil<IPage<UserVO>> page(@RequestBody UserQO qo) {
-        return new HttpResultUtil<IPage<UserVO>>().ok(sysUserApplicationService.getUserPage(qo));
+    public HttpResultUtil<IPage<UserVO>> query(@RequestBody UserQO qo) {
+        return new HttpResultUtil<IPage<UserVO>>().ok(sysUserApplicationService.queryUserPage(qo));
     }
 
 }

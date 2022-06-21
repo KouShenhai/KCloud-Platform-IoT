@@ -17,7 +17,7 @@ public interface SysUserApplicationService {
 
     Boolean insertUser(UserDTO dto, HttpServletRequest request);
 
-    IPage<UserVO> getUserPage(UserQO qo);
+    IPage<UserVO> queryUserPage(UserQO qo);
 
     UserVO getUserById(Long id);
 

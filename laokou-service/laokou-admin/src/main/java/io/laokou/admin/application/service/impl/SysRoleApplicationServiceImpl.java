@@ -28,7 +28,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     private SysRoleMenuService sysRoleMenuService;
 
     @Override
-    public IPage<RoleVO> getRolePage(RoleQO qo) {
+    public IPage<RoleVO> queryRolePage(RoleQO qo) {
         IPage<RoleVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysRoleService.getRolePage(page,qo);
     }

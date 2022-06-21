@@ -57,7 +57,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 
     @Override
-    public IPage<UserVO> getUserPage(UserQO qo) {
+    public IPage<UserVO> queryUserPage(UserQO qo) {
         IPage<UserVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysUserService.getUserPage(page,qo);
     }
