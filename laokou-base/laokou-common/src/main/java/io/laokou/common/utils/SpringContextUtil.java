@@ -1,8 +1,10 @@
 package io.laokou.common.utils;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @author  Kou Shenhai
  */
 @Component
-public class SpringContextUtil implements ApplicationContextAware {
+public class SpringContextUtil implements ApplicationContextAware, DisposableBean {
 
     private static ApplicationContext applicationContext;
 
@@ -43,4 +45,12 @@ public class SpringContextUtil implements ApplicationContextAware {
         return applicationContext.getType(name);
     }
 
+    @Override
+    public void destroy() throws Exception {
+
+    }
+
+    public static void publishEvent(ApplicationEvent event) {
+        applicationContext.publishEvent(event);
+    }
 }

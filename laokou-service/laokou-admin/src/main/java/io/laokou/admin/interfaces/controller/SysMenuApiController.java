@@ -7,7 +7,6 @@ import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ import java.util.List;
 @RestController
 @Api(value = "系统菜单API",protocols = "http",tags = "系统菜单API")
 @RequestMapping("/sys/menu/api")
-@Slf4j
 public class SysMenuApiController {
 
     @Autowired
@@ -35,7 +33,6 @@ public class SysMenuApiController {
     @PostMapping("/query")
     @ApiOperation("系统菜单>查询")
     @CrossOrigin()
-    @OperateLog(module = "系统菜单",name = "查询")
     public HttpResultUtil<List<MenuVO>> query(@RequestBody MenuQO qo) {
         return new HttpResultUtil<List<MenuVO>>().ok(sysMenuApplicationService.queryMenuList(qo));
     }
@@ -50,6 +47,7 @@ public class SysMenuApiController {
     @PutMapping("/update")
     @ApiOperation("系统菜单>修改")
     @CrossOrigin()
+    @OperateLog(module = "系统菜单",name = "修改菜单")
     public HttpResultUtil<Boolean> update(@RequestBody MenuDTO dto,HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysMenuApplicationService.updateMenu(dto,request));
     }
@@ -57,6 +55,7 @@ public class SysMenuApiController {
     @PostMapping("/insert")
     @ApiOperation("系统菜单>新增")
     @CrossOrigin()
+    @OperateLog(module = "系统菜单",name = "新增菜单")
     public HttpResultUtil<Boolean> insert(@RequestBody MenuDTO dto,HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysMenuApplicationService.insertMenu(dto,request));
     }
@@ -64,6 +63,7 @@ public class SysMenuApiController {
     @DeleteMapping("/delete")
     @ApiOperation("系统菜单>删除")
     @CrossOrigin()
+    @OperateLog(module = "系统菜单",name = "删除菜单")
     public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id) {
         return new HttpResultUtil<Boolean>().ok(sysMenuApplicationService.deleteMenu(id));
     }

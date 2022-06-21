@@ -5,9 +5,9 @@ import io.laokou.admin.interfaces.qo.UserQO;
 import io.laokou.admin.interfaces.vo.UserVO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.admin.application.service.SysUserApplicationService;
+import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @Api(value = "系统用户API",protocols = "http",tags = "系统用户API")
 @RequestMapping("/sys/user/api")
-@Slf4j
 public class SysUserApiController {
 
     @Autowired
@@ -27,6 +26,7 @@ public class SysUserApiController {
     @PutMapping("/update")
     @ApiOperation("系统用户>修改")
     @CrossOrigin()
+    @OperateLog(module = "系统用户",name = "修改用户")
     public HttpResultUtil<Boolean> update(@RequestBody UserDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
     }
@@ -34,6 +34,7 @@ public class SysUserApiController {
     @PostMapping("/insert")
     @ApiOperation("系统用户>新增")
     @CrossOrigin()
+    @OperateLog(module = "系统用户",name = "新增用户")
     public HttpResultUtil<Boolean> insert(@RequestBody UserDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.insertUser(dto,request));
     }
@@ -48,6 +49,7 @@ public class SysUserApiController {
     @DeleteMapping("/delete")
     @ApiOperation("系统用户>删除")
     @CrossOrigin()
+    @OperateLog(module = "系统用户",name = "删除用户")
     public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.deleteUser(id));
     }

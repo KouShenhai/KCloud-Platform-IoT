@@ -5,12 +5,11 @@ import io.laokou.admin.interfaces.dto.RoleDTO;
 import io.laokou.admin.interfaces.qo.RoleQO;
 import io.laokou.admin.interfaces.vo.RoleVO;
 import io.laokou.common.utils.HttpResultUtil;
+import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -21,7 +20,6 @@ import java.util.List;
 @RestController
 @Api(value = "系统角色API",protocols = "http",tags = "系统角色API")
 @RequestMapping("/sys/role/api")
-@Slf4j
 public class SysRoleApiController {
 
     @Autowired
@@ -51,6 +49,7 @@ public class SysRoleApiController {
     @PostMapping("/insert")
     @ApiOperation("系统角色>新增")
     @CrossOrigin()
+    @OperateLog(module = "系统角色",name = "新增角色")
     public HttpResultUtil<Boolean> insert(@RequestBody RoleDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysRoleApplicationService.insertRole(dto, request));
     }
@@ -58,6 +57,7 @@ public class SysRoleApiController {
     @PutMapping("/update")
     @ApiOperation("系统角色>修改")
     @CrossOrigin()
+    @OperateLog(module = "系统角色",name = "修改角色")
     public HttpResultUtil<Boolean> update(@RequestBody RoleDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysRoleApplicationService.updateRole(dto, request));
     }
@@ -65,6 +65,7 @@ public class SysRoleApiController {
     @DeleteMapping("/delete")
     @ApiOperation("系统角色>删除")
     @CrossOrigin()
+    @OperateLog(module = "系统角色",name = "删除角色")
     public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id) {
         return new HttpResultUtil<Boolean>().ok(sysRoleApplicationService.deleteRole(id));
     }

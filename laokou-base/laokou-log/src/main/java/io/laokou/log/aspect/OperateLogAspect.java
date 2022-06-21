@@ -7,7 +7,9 @@ import io.laokou.common.enums.ResultStatusEnum;
 import io.laokou.common.utils.AddressUtil;
 import io.laokou.common.utils.HttpContextUtil;
 import io.laokou.common.utils.IpUtil;
+import io.laokou.common.utils.SpringContextUtil;
 import io.laokou.log.annotation.OperateLog;
+import io.laokou.log.event.OperateLogEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -18,8 +20,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.assertj.core.util.Lists;
 import org.springframework.stereotype.Component;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -63,7 +65,7 @@ public class OperateLogAspect {
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
-        List<?> params = Lists.newArrayList(Arrays.asList(args)).stream().filter(p -> !(p instanceof ServletResponse)).collect(Collectors.toList());
+        List<?> params = Lists.newArrayList(Arrays.asList(args)).stream().filter(arg -> (!(arg instanceof HttpServletRequest) && !(arg instanceof HttpServletResponse))).collect(Collectors.toList());
         OperateLogDTO dto = new OperateLogDTO();
         dto.setModule(operateLog.module());
         dto.setOperation(operateLog.name());
@@ -82,6 +84,8 @@ public class OperateLogAspect {
         dto.setMethodName(className + "." + methodName + "()");
         dto.setRequestMethod(request.getMethod());
         dto.setRequestParams(JSON.toJSONString(params,true));
+        //发布事件
+        SpringContextUtil.publishEvent(new OperateLogEvent(dto));
     }
 
 }

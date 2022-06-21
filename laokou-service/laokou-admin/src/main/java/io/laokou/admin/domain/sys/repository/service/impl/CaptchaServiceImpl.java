@@ -1,6 +1,6 @@
-package io.laokou.admin.application.service.impl;
+package io.laokou.admin.domain.sys.repository.service.impl;
 import com.google.code.kaptcha.Producer;
-import io.laokou.admin.application.service.CaptchaApplicationService;
+import io.laokou.admin.domain.sys.repository.service.CaptchaService;
 import io.laokou.common.utils.RedisKeyUtil;
 import io.laokou.redis.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
  * @date 2020/12/19 0019 下午 7:23
  */
 @Service
-public class CaptchaApplicationServiceImpl implements CaptchaApplicationService {
+public class CaptchaServiceImpl implements CaptchaService {
 
     @Autowired
     private Producer producer;

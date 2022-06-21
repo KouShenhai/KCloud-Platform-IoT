@@ -1,11 +1,11 @@
-package io.laokou.admin.application.service;
+package io.laokou.admin.domain.sys.repository.service;
 
 import java.awt.image.BufferedImage;
 
 /**
  * @author Kou Shenhai
  */
-public interface CaptchaApplicationService {
+public interface CaptchaService {
 
     /**
      * 图片验证码

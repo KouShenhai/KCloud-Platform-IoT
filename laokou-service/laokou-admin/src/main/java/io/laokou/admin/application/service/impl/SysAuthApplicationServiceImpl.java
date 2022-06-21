@@ -7,13 +7,13 @@ import com.alipay.api.request.AlipaySystemOauthTokenRequest;
 import com.alipay.api.request.AlipayUserInfoShareRequest;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
-import io.laokou.admin.application.service.CaptchaApplicationService;
+import io.laokou.admin.domain.sys.repository.service.CaptchaService;
 import io.laokou.admin.application.service.SysAuthApplicationService;
 import io.laokou.admin.domain.sys.entity.ZfbUserDO;
-import io.laokou.admin.domain.sys.repository.dao.ZfbUserDao;
 import io.laokou.admin.domain.sys.repository.service.SysRoleService;
 import io.laokou.admin.domain.sys.repository.service.SysUserService;
 import io.laokou.admin.domain.sys.repository.service.SysMenuService;
+import io.laokou.admin.domain.sys.repository.service.ZfbUserService;
 import io.laokou.admin.infrastructure.common.password.PasswordUtil;
 import io.laokou.admin.infrastructure.common.password.TokenUtil;
 import io.laokou.admin.interfaces.dto.LoginDTO;
@@ -54,7 +54,7 @@ import java.util.*;
 @Slf4j
 public class SysAuthApplicationServiceImpl implements SysAuthApplicationService {
 
-    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+    private final static AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @Autowired
     private SysMenuService sysMenuService;
@@ -66,7 +66,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     private RedisUtil redisUtil;
 
     @Autowired
-    private CaptchaApplicationService captchaApplicationService;
+    private CaptchaService captchaService;
 
     @Autowired
     private ZfbOauth zfbOauth;
@@ -82,7 +82,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         String uuid = loginDTO.getUuid();
         String captcha = loginDTO.getCaptcha();
         //验证码是否正确
-        boolean validate = captchaApplicationService.validate(uuid, captcha);
+        boolean validate = captchaService.validate(uuid, captcha);
         if (!validate) {
             throw new CustomException(ErrorCode.CAPTCHA_ERROR);
         }
@@ -190,7 +190,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         if (StringUtils.isBlank(uuid)) {
             throw new CustomException(ErrorCode.IDENTIFIER_NOT_NULL);
         }
-        BufferedImage image = captchaApplicationService.createImage(uuid);
+        BufferedImage image = captchaService.createImage(uuid);
         response.setHeader("Cache-Control", "no-store, no-cache");
         response.setContentType("image/jpeg");
         ServletOutputStream out = response.getOutputStream();
@@ -314,7 +314,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     @Component
     public class ZfbOauth{
-
+        @Autowired
+        private ZfbUserService zfbUserService;
         @Value("${oauth.zfb.app_id}")
         private String APP_ID;
         @Value("${oauth.zfb.merchant_private_key}")
@@ -331,9 +332,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         private String ENCRYPT_TYPE;
         @Value("${oauth.zfb.login_url}")
         private String LOGIN_URL;
-
-        @Autowired
-        private ZfbUserDao zfbUserDao;
 
         public void sendRedirectLogin(HttpServletRequest request,HttpServletResponse response) throws AlipayApiException, IOException {
             final String authCode = request.getParameter("auth_code");
@@ -364,8 +362,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                     entity.setProvince(province);
                     entity.setCity(city);
                     entity.setGender(gender);
-                    zfbUserDao.deleteById(userId);
-                    zfbUserDao.insert(entity);
+                    zfbUserService.removeById(userId);
+                    zfbUserService.save(entity);
                     sendRedirectLogin(sysUserService.getUsernameByOpenid(userId),response);
                 }
             }
