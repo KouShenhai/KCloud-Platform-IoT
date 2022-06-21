@@ -2,6 +2,8 @@ package io.laokou.log.aspect;
 import com.alibaba.fastjson.JSON;
 import com.google.common.net.HttpHeaders;
 import io.laokou.common.constant.Constant;
+import io.laokou.common.dto.OperateLogDTO;
+import io.laokou.common.enums.ResultStatusEnum;
 import io.laokou.common.utils.AddressUtil;
 import io.laokou.common.utils.HttpContextUtil;
 import io.laokou.common.utils.IpUtil;
@@ -62,19 +64,24 @@ public class OperateLogAspect {
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
         List<?> params = Lists.newArrayList(Arrays.asList(args)).stream().filter(p -> !(p instanceof ServletResponse)).collect(Collectors.toList());
-        System.out.println(operateLog.module());
-        System.out.println(operateLog.name());
-        System.out.println(request.getRequestURI());
-        System.out.println(ip);
-        System.out.println(AddressUtil.getRealAddress(ip));
-        System.out.println(request.getHeader(Constant.USERNAME_HEAD));
+        OperateLogDTO dto = new OperateLogDTO();
+        dto.setModule(operateLog.module());
+        dto.setOperation(operateLog.name());
+        dto.setRequestUri(request.getRequestURI());
+        dto.setRequestIp(ip);
+        dto.setRequestAddress(AddressUtil.getRealAddress(ip));
+        dto.setOperator(request.getHeader(Constant.USERNAME_HEAD));
+        dto.setCreator(Long.valueOf(request.getHeader(Constant.USER_KEY_HEAD)));
         if (null != e) {
-            System.out.println(e.getMessage());
+            dto.setRequestStatus(ResultStatusEnum.FAIL.ordinal());
+            dto.setErrorMsg(e.getMessage());
+        } else {
+            dto.setRequestStatus(ResultStatusEnum.SUCCESS.ordinal());
         }
-        System.out.println(request.getHeader(HttpHeaders.USER_AGENT));
-        System.out.println(className + "." + methodName + "()");
-        System.out.println(request.getMethod());
-        System.out.println(JSON.toJSONString(params,true));
+        dto.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
+        dto.setMethodName(className + "." + methodName + "()");
+        dto.setRequestMethod(request.getMethod());
+        dto.setRequestParams(JSON.toJSONString(params,true));
     }
 
 }

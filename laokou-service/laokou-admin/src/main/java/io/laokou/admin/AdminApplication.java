@@ -13,6 +13,7 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.server.WebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -31,6 +32,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Slf4j
 @EnableEncryptableProperties
 @EnableScheduling
+@EnableFeignClients(basePackages = "io.laokou.log")
 public class AdminApplication implements CommandLineRunner, WebServerFactoryCustomizer<WebServerFactory> {
 
 	public static void main(String[] args) {
