@@ -60,9 +60,9 @@ CREATE TABLE `boot_sys_user` (
   `mobile` varchar(11) DEFAULT NULL COMMENT '手机号',
   `zfb_openid` varchar(32) DEFAULT NULL COMMENT '支付宝用户唯一标识',
   PRIMARY KEY (`id`,`username`) USING BTREE,
-  UNIQUE KEY `ik_email` (`email`) USING BTREE,
-  UNIQUE KEY `ik_mobile` (`mobile`) USING BTREE,
-  UNIQUE KEY `ik_zfb` (`zfb_openid`) USING BTREE
+  UNIQUE KEY `idx_email` (`email`) USING BTREE,
+  UNIQUE KEY `idx_mobile` (`mobile`) USING BTREE,
+  UNIQUE KEY `idx_zfb` (`zfb_openid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户';
 
 CREATE TABLE `boot_zfb_user` (
@@ -73,6 +73,29 @@ CREATE TABLE `boot_zfb_user` (
   `avatar` varchar(400) DEFAULT NULL COMMENT '图像',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='支付宝用户';
+
+CREATE TABLE `boot_sys_operate_log` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `module` varchar(32) DEFAULT NULL COMMENT '模块名称，如：系统菜单',
+  `operation` varchar(50) DEFAULT NULL COMMENT '操作名称',
+  `request_uri` varchar(200) DEFAULT NULL COMMENT '请求URI',
+  `method_name` varchar(1000) DEFAULT NULL COMMENT '方法名称',
+  `request_method` varchar(20) DEFAULT NULL COMMENT '请求方式',
+  `request_params` text COMMENT '请求参数',
+  `user_agent` varchar(500) DEFAULT NULL COMMENT '浏览器版本',
+  `request_ip` varchar(50) DEFAULT NULL COMMENT 'IP地址',
+  `request_address` varchar(200) DEFAULT NULL COMMENT '归属地',
+  `request_status` tinyint(1) unsigned NOT NULL COMMENT '状态  0：成功   1：失败',
+  `operator` varchar(50) DEFAULT NULL COMMENT '操作人',
+  `error_msg` text COMMENT '错误信息',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建者',
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  PRIMARY KEY (`id`),
+  KEY `idx_module` (`module`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1535878154046939137', '0', 'sys:view', '0', '系统管理', '/sys', '0', 'GET', 'system', '1341620898007281665', '1341620898007281665', '2022-06-12 22:54:52', '2022-06-12 14:55:53', '0', '9000');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1535859588534923265', '1391677542887788567', 'sys:menu:delete', '1', '菜单删除', '/sys/menu/api/delete', '0', 'DELETE', 'delete', '1341620898007281665', NULL, '2022-06-12 13:40:35', '2022-06-12 13:40:35', '0', '10');
