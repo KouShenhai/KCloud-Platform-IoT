@@ -20,7 +20,7 @@ public class AdminException {
      * 处理自定义异常
      */
     @ExceptionHandler({IncorrectCredentialsException.class})
-    public HttpResultUtil<Boolean> handleRenException(IncorrectCredentialsException ex){
+    public HttpResultUtil<Boolean> handleRenException(){
         return new HttpResultUtil<Boolean>().error(ErrorCode.AUTHORIZATION_INVALID);
     }
 

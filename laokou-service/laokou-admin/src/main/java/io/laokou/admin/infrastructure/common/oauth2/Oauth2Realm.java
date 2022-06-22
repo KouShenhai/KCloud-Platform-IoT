@@ -1,10 +1,6 @@
 package io.laokou.admin.infrastructure.common.oauth2;
-
 import com.alibaba.fastjson.JSON;
-import io.laokou.common.exception.CustomException;
-import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.UserDetail;
-import io.laokou.common.utils.MessageUtil;
 import io.laokou.admin.infrastructure.common.password.TokenUtil;
 import io.laokou.admin.application.service.SysAuthApplicationService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +11,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.HashSet;
 import java.util.Set;
-
 /**
  * 认证授权
  * @author Kou Shenhai
@@ -62,7 +56,7 @@ public class Oauth2Realm extends AuthorizingRealm {
         //token失效
         boolean expiration = TokenUtil.isExpiration(accessToken);
         if (expiration) {
-            throw new IncorrectCredentialsException(MessageUtil.getMessage(ErrorCode.AUTHORIZATION_INVALID));
+            throw new IncorrectCredentialsException();
         }
         //查询用户信息
         Long userId = TokenUtil.getUserId(accessToken);
