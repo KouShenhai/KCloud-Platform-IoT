@@ -20,6 +20,10 @@ public class UserDTO implements Serializable {
 
     private String imgUrl;
 
+    private String email;
+
+    private String mobile;
+
     private Long editor;
 
 }

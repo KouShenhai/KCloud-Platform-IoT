@@ -61,6 +61,12 @@
             <if test="dto.imgUrl != null and dto.imgUrl != ''">
                 img_url = #{dto.imgUrl},
             </if>
+            <if test="dto.email != null and dto.email != ''">
+                email = #{dto.email},
+            </if>
+            <if test="dto.mobile != null and dto.mobile != ''">
+                mobile = #{dto.mobile},
+            </if>
             <if test="dto.editor != null">
                 editor = #{dto.editor}
             </if>

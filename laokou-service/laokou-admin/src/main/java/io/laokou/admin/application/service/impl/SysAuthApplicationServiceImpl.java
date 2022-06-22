@@ -252,6 +252,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         return UserInfoVO.builder().imgUrl(userDetail.getImgUrl())
                         .username(userDetail.getUsername())
                         .userId(userDetail.getId())
+                        .mobile(userDetail.getMobile())
+                        .email(userDetail.getEmail())
                         .roles(sysRoleService.getRoleListByUserId(userId))
                         .permissionList(userDetail.getPermissionsList()).build();
     }
@@ -340,8 +342,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         private String GATEWAY_URL;
         @Value("${oauth.zfb.encrypt_type}")
         private String ENCRYPT_TYPE;
-        @Value("${oauth.zfb.login_url}")
-        private String LOGIN_URL;
+        @Value("${oauth.zfb.redirect_url}")
+        private String REDIRECT_URL;
 
         public void sendRedirectLogin(HttpServletRequest request,HttpServletResponse response) throws AlipayApiException, IOException {
             final String authCode = request.getParameter("auth_code");
@@ -386,7 +388,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                     params += "?" + Constant.ACCESS_TOKEN + "=" + loginInfo.getToken();
                 }
             }
-            response.sendRedirect(LOGIN_URL + params);
+            response.sendRedirect(REDIRECT_URL + params);
         }
     }
 }

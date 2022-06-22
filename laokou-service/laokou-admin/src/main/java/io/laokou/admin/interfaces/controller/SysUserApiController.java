@@ -31,6 +31,21 @@ public class SysUserApiController {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
     }
 
+    @PutMapping("/updateInfo")
+    @ApiOperation("系统用户>修改个人信息")
+    @CrossOrigin()
+    public HttpResultUtil<Boolean> updateInfo(@RequestBody UserDTO dto, HttpServletRequest request) {
+        return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
+    }
+
+    @PutMapping("/password")
+    @ApiOperation("系统用户>重置")
+    @CrossOrigin()
+    @OperateLog(module = "系统用户",name = "重置密码")
+    public HttpResultUtil<Boolean> password(@RequestBody UserDTO dto, HttpServletRequest request) {
+        return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
+    }
+
     @PostMapping("/insert")
     @ApiOperation("系统用户>新增")
     @CrossOrigin()

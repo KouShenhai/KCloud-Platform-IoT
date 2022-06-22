@@ -48,7 +48,11 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
         roleDO.setCreator(SecurityUser.getUserId(request));
         sysRoleService.save(roleDO);
-        return saveOrUpdate(roleDO.getId(),dto.getMenuIds());
+        List<Long> menuIds = dto.getMenuIds();
+        if (CollectionUtils.isNotEmpty(menuIds)) {
+            saveOrUpdate(roleDO.getId(),menuIds);
+        }
+        return Boolean.TRUE;
     }
 
     private Boolean saveOrUpdate(Long roleId,List<Long> menuIds) {
@@ -70,9 +74,13 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
         roleDO.setEditor(SecurityUser.getUserId(request));
         sysRoleService.updateById(roleDO);
-        //删除中间表
-        sysRoleMenuService.remove(new LambdaQueryWrapper<SysRoleMenuDO>().eq(SysRoleMenuDO::getRoleId,dto.getId()));
-        return saveOrUpdate(roleDO.getId(),dto.getMenuIds());
+        List<Long> menuIds = dto.getMenuIds();
+        if (CollectionUtils.isNotEmpty(menuIds)) {
+            //删除中间表
+            sysRoleMenuService.remove(new LambdaQueryWrapper<SysRoleMenuDO>().eq(SysRoleMenuDO::getRoleId,dto.getId()));
+            saveOrUpdate(roleDO.getId(),dto.getMenuIds());
+        }
+        return Boolean.TRUE;
     }
 
     @Override

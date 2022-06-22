@@ -41,9 +41,13 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         }
         dto.setEditor(SecurityUser.getUserId(request));
         sysUserService.updateUser(dto);
-        //删除中间表
-        sysUserRoleService.remove(new LambdaQueryWrapper<SysUserRoleDO>().eq(SysUserRoleDO::getUserId,dto.getId()));
-        return saveOrUpdate(dto.getId(),dto.getRoleIds());
+        List<Long> roleIds = dto.getRoleIds();
+        if (CollectionUtils.isNotEmpty(roleIds)) {
+            //删除中间表
+            sysUserRoleService.remove(new LambdaQueryWrapper<SysUserRoleDO>().eq(SysUserRoleDO::getUserId, dto.getId()));
+            saveOrUpdate(dto.getId(),roleIds);
+        }
+        return Boolean.TRUE;
     }
 
     @Override
@@ -53,7 +57,10 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         sysUserDO.setPassword(PasswordUtil.encode(dto.getPassword()));
         sysUserService.save(sysUserDO);
         List<Long> roleIds = dto.getRoleIds();
-        return saveOrUpdate(sysUserDO.getId(),roleIds);
+        if (CollectionUtils.isNotEmpty(roleIds)) {
+            saveOrUpdate(sysUserDO.getId(),roleIds);
+        }
+        return Boolean.TRUE;
     }
 
     @Override

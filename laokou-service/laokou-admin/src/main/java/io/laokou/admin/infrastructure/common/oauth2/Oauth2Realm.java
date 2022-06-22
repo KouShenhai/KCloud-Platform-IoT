@@ -62,7 +62,7 @@ public class Oauth2Realm extends AuthorizingRealm {
         //token失效
         boolean expiration = TokenUtil.isExpiration(accessToken);
         if (expiration) {
-            throw new CustomException(MessageUtil.getMessage(ErrorCode.AUTHORIZATION_INVALID));
+            throw new IncorrectCredentialsException(MessageUtil.getMessage(ErrorCode.AUTHORIZATION_INVALID));
         }
         //查询用户信息
         Long userId = TokenUtil.getUserId(accessToken);

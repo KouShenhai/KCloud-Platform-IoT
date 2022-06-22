@@ -50,9 +50,9 @@ public class SysUserDO extends BaseDO implements Serializable {
     private String imgUrl;
 
     /**
-     * 邮箱号
+     * 电子邮箱
      */
-    @ApiModelProperty(value = "邮箱号",name = "email",example = "2413176044@qq.com")
+    @ApiModelProperty(value = "电子邮箱",name = "email",example = "2413176044@qq.com")
     @TableField("email")
     @JsonProperty("email")
     private String email;

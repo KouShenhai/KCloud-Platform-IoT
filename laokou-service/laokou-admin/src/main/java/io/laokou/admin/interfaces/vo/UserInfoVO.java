@@ -28,10 +28,16 @@ public class UserInfoVO implements Serializable {
     @ApiModelProperty(name = "username",value = "用户名",required = true,example = "admin")
     private String username;
 
-    @ApiModelProperty(name = "permissionList",value = "资源标识",required = true,example = "['sys:act:audit']")
+    @ApiModelProperty(name = "mobile",value = "手机号",example = "18974432576")
+    private String mobile;
+
+    @ApiModelProperty(name = "email",value = "电子邮箱",example = "2413176044@qq.com")
+    private String email;
+
+    @ApiModelProperty(name = "permissionList",value = "资源标识",required = true,example = "['sys:user:query']")
     private List<String> permissionList;
 
-    @ApiModelProperty(name = "roles",value = "拥有角色",required = true,example = "['超级管理员']")
+    @ApiModelProperty(name = "roles",value = "角色集合",required = true,example = "['超级管理员']")
     private List<RoleVO> roles;
 
 }

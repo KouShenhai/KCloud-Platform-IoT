@@ -77,4 +77,4 @@ oauth:
     charset: utf-8
     sign_type: json
     gateway_url: https://openapi.alipay.com/gateway.do
-    login_url: http://localhost:9999
+    redirect_url: http://localhost:9999
