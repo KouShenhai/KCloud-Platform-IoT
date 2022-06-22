@@ -1,5 +1,5 @@
 ### 项目备注
-* 项目：LaoKou-Cloud
+* 项目：KCloud
 * 作者：老寇
 * 语言：Java
 * 职位：Java工程师
@@ -20,6 +20,8 @@
 * 用户管理
 * 角色管理
 * 菜单管理
+* 日志管理
+* 系统监控
 
 ### 技术体系
 #### 基础框架
@@ -40,18 +42,19 @@
 ~~~
 |--laokou-base
    |--laokou-common -- 公共组件
+   |--laokou-common -- 日志组件
 |--laokou-cloud
    |--laokou-gateway -- 服务网关
    |--laokou-monitor -- 服务监控
    |--laokou-register -- 服务治理
 |--laokou-parent -- 版本依赖
 |--laokou-service
-   |--laokou-admin -- 后管管理模块
-   |--laokou-redis -- redis模块
+   |--laokou-admin -- 管理模块
+   |--laokou-redis -- 缓存模块
 ~~~
 ### 项目配置
 * 安装jdk1.8、mysql5.7、redis、apollo
-* 创建数据库 > 见db文件夹
+* 创建数据库
 * 修改第三方相关配置
 * 修改中间件相关配置
 
