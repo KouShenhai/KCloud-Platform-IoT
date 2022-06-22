@@ -2,8 +2,11 @@ package io.laokou.admin.interfaces.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysLogApplicationService;
+import io.laokou.admin.interfaces.qo.LoginLogQO;
 import io.laokou.admin.interfaces.qo.OperateLogQO;
+import io.laokou.admin.interfaces.vo.LoginLogVO;
 import io.laokou.admin.interfaces.vo.OperateLogVO;
+import io.laokou.common.dto.LoginLogDTO;
 import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.swagger.annotations.Api;
@@ -35,6 +38,20 @@ public class SysLogApiController {
     @ApiOperation("系统日志>操作日志>查询")
     public HttpResultUtil<IPage<OperateLogVO>> queryOperateLog(@RequestBody OperateLogQO qo) {
         return new HttpResultUtil<IPage<OperateLogVO>>().ok(sysLogApplicationService.queryOperateLogPage(qo));
+    }
+
+    @PostMapping(value = "/login/insert")
+    @CrossOrigin()
+    @ApiOperation("系统日志>登录日志>新增")
+    public HttpResultUtil<Boolean> insertLoginLog(@RequestBody LoginLogDTO dto) {
+        return new HttpResultUtil<Boolean>().ok(sysLogApplicationService.insertLoginLog(dto));
+    }
+
+    @PostMapping(value = "/login/query")
+    @CrossOrigin()
+    @ApiOperation("系统日志>登录日志>查询")
+    public HttpResultUtil<IPage<LoginLogVO>> queryLoginLog(@RequestBody LoginLogQO qo) {
+        return new HttpResultUtil<IPage<LoginLogVO>>().ok(sysLogApplicationService.queryLoginLogPage(qo));
     }
 
 }

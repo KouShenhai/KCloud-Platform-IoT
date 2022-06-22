@@ -93,3 +93,5 @@ sso:
       url: /sys/auth/api/zfbLogin
     - permission: anon
       url: /sys/log/api/operate/insert
+    - permission: anon
+      url: /sys/log/api/login/insert

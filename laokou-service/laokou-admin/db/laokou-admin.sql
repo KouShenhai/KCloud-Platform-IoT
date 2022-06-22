@@ -97,6 +97,23 @@ CREATE TABLE `boot_sys_operate_log` (
   KEY `idx_module` (`module`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
 
+CREATE TABLE `boot_sys_login_log` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建者',
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `login_name` varchar(20) DEFAULT NULL COMMENT '登录用户',
+  `request_ip` varchar(50) DEFAULT NULL COMMENT 'IP地址',
+  `request_address` varchar(200) DEFAULT NULL COMMENT '归属地',
+  `browser` varchar(50) DEFAULT NULL COMMENT '浏览器',
+  `os` varchar(50) DEFAULT NULL COMMENT '操作系统',
+  `request_status` tinyint(1) unsigned NOT NULL COMMENT '状态  0：成功   1：失败',
+  `msg` varchar(500) DEFAULT NULL COMMENT '提示信息',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1391677542887788567', '1535878154046939137', 'sys:menu:view', '0', '菜单管理', '/sys/menu/view', '0', 'GET', 'treeTable', '1341620898007281665', '1341620898007281665', '2022-06-12 23:36:44', '2022-06-12 23:36:44', '0', '3000');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1535858679453085698', '1391677542887788567', 'sys:menu:query', '1', '菜单查询', '/sys/menu/api/query', '0', 'POST', 'search', '1341620898007281665', '1341620898007281665', '2022-06-22 07:09:59', '2022-06-21 23:11:00', '0', '10');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1535859148908949506', '1391677542887788567', 'sys:menu:insert', '1', '菜单新增', '/sys/menu/api/insert', '0', 'POST', 'plus', '1341620898007281665', NULL, '2022-06-12 21:59:41', '2022-06-12 21:59:41', '0', '10');
@@ -119,6 +136,8 @@ INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, 
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1539250224424394753', '1535878154046939137', 'log:view', '0', '日志管理', '/log', '0', 'GET', 'log', '1341620898007281665', '1341620898007281665', '2022-06-22 06:14:56', '2022-06-21 22:15:57', '0', '500');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1539251440843857922', '1539250224424394753', 'log:operate:view', '0', '操作日志', '/sys/log/operate/view', '0', 'GET', 'form', '1341620898007281665', '1341620898007281665', '2022-06-22 06:19:49', '2022-06-21 22:20:50', '0', '200');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1539265093588545538', '1539251440843857922', 'log:operate:query', '1', '查询日志', '/sys/log/api/operate/query', '0', 'POST', 'search', '1341620898007281665', '1341620898007281665', '2022-06-22 07:22:19', '2022-06-21 23:23:19', '0', '30');
+INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1539396453854629890', '1539250224424394753', 'log:login:view', '0', '登录日志', '/sys/log/login/view', '0', 'GET', 'logininfor', '1341620898007281665', '1341620898007281665', '2022-06-22 15:54:12', '2022-06-22 07:55:13', '0', '100');
+INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1539402478934646785', '1539396453854629890', 'log:login:query', '1', '查询日志', '/sys/log/api/login/query', '0', 'POST', 'search', '1341620898007281665', NULL, '2022-06-22 08:18:46', '2022-06-22 08:18:46', '0', '30');
 
 INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `tag`) VALUES ('139167754288778857', '管理员', '0', '1341620898007281665', '2021-11-27 17:11:19', '2022-06-13 00:59:48', '0', '100', 'admin_role');
 INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `tag`) VALUES ('1535949666183573505', '测试', '1341620898007281665', '1341620898007281665', '2022-06-12 19:38:32', '2022-06-13 00:55:32', '0', '50', 'test_role');

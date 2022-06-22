@@ -1,6 +1,8 @@
 package io.laokou.admin.infrastructure.common.user;
 import io.laokou.admin.infrastructure.common.password.TokenUtil;
 import io.laokou.common.constant.Constant;
+import io.laokou.common.exception.CustomException;
+import io.laokou.common.exception.ErrorCode;
 import org.apache.commons.lang.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 public class SecurityUser {
@@ -10,7 +12,7 @@ public class SecurityUser {
         if (StringUtils.isBlank(userIdHeader)) {
             String authHeader = request.getHeader(Constant.AUTHORIZATION_HEADER);
             if (StringUtils.isBlank(authHeader)) {
-                return null;
+                throw new CustomException(ErrorCode.UNAUTHORIZED);
             }
             return TokenUtil.getUserId(authHeader);
         }

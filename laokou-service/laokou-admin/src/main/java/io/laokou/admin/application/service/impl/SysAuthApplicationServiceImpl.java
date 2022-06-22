@@ -20,6 +20,7 @@ import io.laokou.admin.interfaces.dto.LoginDTO;
 import io.laokou.admin.interfaces.vo.LoginVO;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.enums.AuthTypeEnum;
+import io.laokou.common.enums.ResultStatusEnum;
 import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.common.enums.UserStatusEnum;
 import io.laokou.common.exception.CustomException;
@@ -29,6 +30,7 @@ import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.*;
 import io.laokou.admin.interfaces.vo.MenuVO;
 import io.laokou.admin.interfaces.vo.UserInfoVO;
+import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -80,14 +82,9 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         //效验数据
         ValidatorUtil.validateEntity(loginDTO);
         String uuid = loginDTO.getUuid();
-        String captcha = loginDTO.getCaptcha();
-        //验证码是否正确
-        boolean validate = captchaService.validate(uuid, captcha);
-        if (!validate) {
-            throw new CustomException(ErrorCode.CAPTCHA_ERROR);
-        }
         String username = loginDTO.getUsername();
         String password = loginDTO.getPassword();
+        String captcha = loginDTO.getCaptcha();
         log.info("解密前，用户名：{}", username);
         log.info("解密前，密码：{}", password);
         //SRA私钥解密
@@ -95,33 +92,46 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             username = RsaCoder.decryptByPrivateKey(username);
             password = RsaCoder.decryptByPrivateKey(password);
         } catch (BadPaddingException e) {
+            PublishFactory.recordLogin("未知用户", ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
             throw new CustomException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
         log.info("解密后，用户名：{}", username);
         log.info("解密后，密码：{}", password);
+        //验证码是否正确
+        boolean validate = captchaService.validate(uuid, captcha);
+        if (!validate) {
+            PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR));
+            throw new CustomException(ErrorCode.CAPTCHA_ERROR);
+        }
         return getLoginInfo(username,password,true);
         //endregion
     }
 
-    private LoginVO getLoginInfo(String username,String password,boolean isUserPasswordFlag) {
+    private LoginVO getLoginInfo(String username,String password,boolean isUserPasswordFlag) throws IOException {
         //查询数据库
         UserDetail userDetail = getUserDetail(username);
         log.info("查询的数据：{}",userDetail);
         if (!isUserPasswordFlag && null == userDetail) {
+            PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.ACCOUNT_NOT_EXIST));
             throw new CustomException(ErrorCode.ACCOUNT_NOT_EXIST);
         }
         if (isUserPasswordFlag && null == userDetail){
+            PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
             throw new CustomException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
         if(isUserPasswordFlag && !PasswordUtil.matches(password, userDetail.getPassword())){
+            PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
             throw new CustomException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
         if (UserStatusEnum.DISABLE.ordinal() == userDetail.getStatus()) {
+            PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.ACCOUNT_DISABLE));
             throw new CustomException(ErrorCode.ACCOUNT_DISABLE);
         }
         if (CollectionUtils.isEmpty(userDetail.getRoleIds()) && SuperAdminEnum.NO.ordinal() == userDetail.getSuperAdmin()) {
+            PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.ROLE_NOT_EXIST));
             throw new CustomException(ErrorCode.ROLE_NOT_EXIST);
         }
+        PublishFactory.recordLogin(username, ResultStatusEnum.SUCCESS.ordinal(),"登录成功");
         //获取token
         String token = getToken(userDetail);
         return LoginVO.builder().token(token).build();

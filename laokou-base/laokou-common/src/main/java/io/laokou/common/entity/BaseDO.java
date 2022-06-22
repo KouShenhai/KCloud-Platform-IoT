@@ -3,14 +3,13 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import java.io.Serializable;
 import java.util.Date;
 /**
  * 基础实体类，所有实体都需要继承
  * @author Kou Shenhai
  */
 @Data
-public abstract class BaseDO implements Serializable {
+public abstract class BaseDO {
 
     /**
      * id

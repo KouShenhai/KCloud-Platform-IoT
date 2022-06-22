@@ -1,5 +1,7 @@
 package io.laokou.log.listener;
+import io.laokou.common.dto.LoginLogDTO;
 import io.laokou.common.dto.OperateLogDTO;
+import io.laokou.log.event.LoginLogEvent;
 import io.laokou.log.event.OperateLogEvent;
 import io.laokou.log.feign.admin.AdminApiFeignClient;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,14 @@ public class LogListener {
     public void listenOperateLog(OperateLogEvent event) {
         OperateLogDTO dto = (OperateLogDTO) event.getSource();
         adminApiFeignClient.insertOperateLog(dto);
+    }
+
+    @Async
+    @Order
+    @EventListener(LoginLogEvent.class)
+    public void listenLoginLog(LoginLogEvent event) {
+        LoginLogDTO dto = (LoginLogDTO) event.getSource();
+        adminApiFeignClient.insertLoginLog(dto);
     }
 
 }

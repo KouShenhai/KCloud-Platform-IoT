@@ -1,4 +1,5 @@
 package io.laokou.log.feign.admin.fallback;
+import io.laokou.common.dto.LoginLogDTO;
 import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.feign.admin.AdminApiFeignClient;
@@ -18,6 +19,12 @@ public class AdminApiFeignClientFallback implements AdminApiFeignClient {
 
     @Override
     public HttpResultUtil<Boolean> insertOperateLog(OperateLogDTO dto) {
+        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
+        return new HttpResultUtil<Boolean>().error("服务调用失败，请联系管理员");
+    }
+
+    @Override
+    public HttpResultUtil<Boolean> insertLoginLog(LoginLogDTO dto) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
         return new HttpResultUtil<Boolean>().error("服务调用失败，请联系管理员");
     }
