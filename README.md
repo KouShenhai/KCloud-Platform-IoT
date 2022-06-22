@@ -42,7 +42,7 @@
 ~~~
 |--laokou-base
    |--laokou-common -- 公共组件
-   |--laokou-common -- 日志组件
+   |--laokou-log -- 日志组件
 |--laokou-cloud
    |--laokou-gateway -- 服务网关
    |--laokou-monitor -- 服务监控
