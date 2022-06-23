@@ -55,6 +55,7 @@
         ) tmp
         WHERE
         name <![CDATA[ <> ]]> ''
+        order by sort desc
     </select>
 
     <select id="getRoleList" resultType="io.laokou.admin.interfaces.vo.RoleVO">
