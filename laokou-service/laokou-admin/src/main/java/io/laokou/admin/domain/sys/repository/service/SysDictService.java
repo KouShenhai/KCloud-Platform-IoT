@@ -1,5 +1,6 @@
 package io.laokou.admin.domain.sys.repository.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.laokou.admin.domain.sys.entity.SysDictDO;
 import io.laokou.admin.interfaces.qo.DictQO;
@@ -15,5 +16,7 @@ import java.util.List;
 public interface SysDictService extends IService<SysDictDO> {
 
     List<DictVO> getDictList(DictQO qo);
+
+    IPage<DictVO> getDictList(IPage<DictVO> page, DictQO qo);
 
 }

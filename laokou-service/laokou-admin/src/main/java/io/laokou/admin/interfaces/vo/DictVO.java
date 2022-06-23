@@ -3,6 +3,7 @@ package io.laokou.admin.interfaces.vo;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 public class DictVO implements Serializable {
@@ -32,6 +33,11 @@ public class DictVO implements Serializable {
     /**
      * 创建时间
      */
-    private Data createDate;
+    private Date createDate;
+
+    /**
+     * 排序
+     */
+    private Integer sort;
 
 }

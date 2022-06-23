@@ -1,5 +1,6 @@
 package io.laokou.admin.domain.sys.repository.dao;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.domain.sys.entity.SysDictDO;
 import io.laokou.admin.interfaces.qo.DictQO;
 import io.laokou.admin.interfaces.vo.DictVO;
@@ -20,5 +21,7 @@ import java.util.List;
 public interface SysDictDao extends BaseDao<SysDictDO> {
 
     List<DictVO> getDictList(@Param("qo") DictQO qo);
+
+    IPage<DictVO> getDictList(IPage<DictVO> page, @Param("qo") DictQO qo);
 
 }

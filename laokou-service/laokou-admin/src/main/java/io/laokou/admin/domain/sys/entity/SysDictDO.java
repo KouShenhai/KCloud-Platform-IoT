@@ -3,7 +3,6 @@ package io.laokou.admin.domain.sys.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.laokou.common.entity.BaseDO;
 import lombok.Data;
-
 import java.io.Serializable;
 
 /**
@@ -34,5 +33,9 @@ public class SysDictDO extends BaseDO implements Serializable {
      * 备注
      */
     private String remark;
+    /**
+     * 排序
+     */
+    private Integer sort;
 
 }

@@ -1,5 +1,6 @@
 package io.laokou.admin.domain.sys.repository.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.domain.sys.entity.SysDictDO;
 import io.laokou.admin.domain.sys.repository.dao.SysDictDao;
@@ -23,5 +24,10 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictDao,SysDictDO> implem
     @Override
     public List<DictVO> getDictList(DictQO qo) {
         return this.baseMapper.getDictList(qo);
+    }
+
+    @Override
+    public IPage<DictVO> getDictList(IPage<DictVO> page, DictQO qo) {
+        return this.baseMapper.getDictList(page,qo);
     }
 }
