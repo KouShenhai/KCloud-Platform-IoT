@@ -7,7 +7,7 @@ import com.alipay.api.request.AlipaySystemOauthTokenRequest;
 import com.alipay.api.request.AlipayUserInfoShareRequest;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
-import io.laokou.admin.domain.sys.repository.service.CaptchaService;
+import io.laokou.admin.domain.sys.repository.service.SysCaptchaService;
 import io.laokou.admin.application.service.SysAuthApplicationService;
 import io.laokou.admin.domain.sys.entity.ZfbUserDO;
 import io.laokou.admin.domain.sys.repository.service.SysRoleService;
@@ -68,7 +68,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     private RedisUtil redisUtil;
 
     @Autowired
-    private CaptchaService captchaService;
+    private SysCaptchaService sysCaptchaService;
 
     @Autowired
     private ZfbOauth zfbOauth;
@@ -98,7 +98,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         log.info("解密后，用户名：{}", username);
         log.info("解密后，密码：{}", password);
         //验证码是否正确
-        boolean validate = captchaService.validate(uuid, captcha);
+        boolean validate = sysCaptchaService.validate(uuid, captcha);
         if (!validate) {
             PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR));
             throw new CustomException(ErrorCode.CAPTCHA_ERROR);
@@ -200,7 +200,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         if (StringUtils.isBlank(uuid)) {
             throw new CustomException(ErrorCode.IDENTIFIER_NOT_NULL);
         }
-        BufferedImage image = captchaService.createImage(uuid);
+        BufferedImage image = sysCaptchaService.createImage(uuid);
         response.setHeader("Cache-Control", "no-store, no-cache");
         response.setContentType("image/jpeg");
         ServletOutputStream out = response.getOutputStream();

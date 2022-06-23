@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 /**
  * @author Kou Shenhai
  */
-public interface CaptchaService {
+public interface SysCaptchaService {
 
     /**
      * 图片验证码
