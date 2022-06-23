@@ -121,7 +121,7 @@ CREATE TABLE `boot_sys_dict` (
   `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
   `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `dict_value` varchar(100) DEFAULT NULL COMMENT '值',
+  `dict_value` text COMMENT '值',
   `dict_label` varchar(100) DEFAULT NULL COMMENT '标签',
   `type` varchar(100) DEFAULT NULL COMMENT '类型',
   `status` tinyint(1) DEFAULT NULL COMMENT '状态 0正常 1停用',

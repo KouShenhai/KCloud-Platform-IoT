@@ -1,4 +1,5 @@
 package io.laokou.common.utils;
+import cn.hutool.core.thread.ThreadUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -9,9 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 /**
@@ -25,6 +24,16 @@ public class FileUtil extends FileUtils {
     // 定义允许上传的文件扩展名
     private static final Map<String, String> extMap = new HashMap<>();
 
+    private static final ThreadPoolExecutor executorService = new ThreadPoolExecutor(
+            8,
+            16,
+            60,
+            TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>(512),
+            ThreadUtil.newNamedThreadFactory("laokou-admin-service",true),
+            new ThreadPoolExecutor.CallerRunsPolicy()
+    );
+
     static {
         // 其中images,flashs,medias,files,对应文件夹名称,对应dirName
         // key文件夹名称
@@ -36,6 +45,7 @@ public class FileUtil extends FileUtils {
         extMap.put("sensitive", "txt,TXT");
         extMap.put("pdf", "pdf");
     }
+
 
     /**
      * 获取文件后缀
@@ -64,10 +74,6 @@ public class FileUtil extends FileUtils {
             final File newFile = uploadBefore(rootPath,directoryPath,fileName);
             //文件通道
             inChannel = ((FileInputStream)inputStream).getChannel();
-            //cpu核数
-            final int cores = Runtime.getRuntime().availableProcessors();
-            //创建线程池
-            final ExecutorService executor = Executors.newFixedThreadPool(cores * 2);
             //需要分多少个片
             final Long chunkCount = (fileSize / chunkSize) + (fileSize % chunkSize == 0 ? 0 : 1);
             //同步工具，允许1或N个线程等待其他线程完成执行
@@ -78,12 +84,11 @@ public class FileUtil extends FileUtils {
                 final Long finalPosition = position;
                 //读通道
                 final FileChannel finalInChannel = inChannel;
-                executor.execute(() -> new RandomFileChannelRun(finalPosition,finalEndSize, fileSize, newFile, finalInChannel,latch).start());
+                executorService.execute(() -> new RandomFileChannelRun(finalPosition,finalEndSize, fileSize, newFile, finalInChannel,latch).start());
             }
             //等待其他线程
             latch.await();
             //关闭线程池
-            executor.shutdown();
             log.info("文件传输结束...");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
