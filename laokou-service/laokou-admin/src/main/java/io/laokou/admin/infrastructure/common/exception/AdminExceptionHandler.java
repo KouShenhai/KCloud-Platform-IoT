@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
- * base异常处理器
+ * admin异常处理器
  * @author Kou Shenhai
  * @since 1.0.0
  */
 @RestControllerAdvice
 @ResponseBody
 @Component
-public class AdminException {
+public class AdminExceptionHandler {
 
     /**
      * 处理自定义异常
