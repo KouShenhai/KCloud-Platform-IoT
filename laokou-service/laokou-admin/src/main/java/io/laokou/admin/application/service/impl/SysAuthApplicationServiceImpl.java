@@ -127,7 +127,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.ACCOUNT_DISABLE));
             throw new CustomException(ErrorCode.ACCOUNT_DISABLE);
         }
-        if (CollectionUtils.isEmpty(userDetail.getRoleIds()) && SuperAdminEnum.NO.ordinal() == userDetail.getSuperAdmin()) {
+        if (CollectionUtils.isEmpty(getRoleIds(userDetail)) && SuperAdminEnum.NO.ordinal() == userDetail.getSuperAdmin()) {
             PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.ROLE_NOT_EXIST));
             throw new CustomException(ErrorCode.ROLE_NOT_EXIST);
         }
@@ -293,7 +293,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             if (Objects.isNull(userDetail)) {
                 throw new CustomException(ErrorCode.ACCOUNT_NOT_EXIST);
             }
-            userDetail.setRoleIds(getRoleIds(userDetail));
             userDetail.setPermissionsList(getPermissionList(userDetail));
             redisUtil.set(userInfoKey, JSON.toJSONString(userDetail));
         }
@@ -307,11 +306,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     }
 
     private UserDetail getUserDetail(String username) {
-        UserDetail userDetail = sysUserService.getUserDetail(null, username);
-        if (userDetail != null) {
-            userDetail.setRoleIds(getRoleIds(userDetail));
-        }
-        return userDetail;
+        return sysUserService.getUserDetail(null, username);
     }
 
     private List<Long> getRoleIds(UserDetail userDetail) {

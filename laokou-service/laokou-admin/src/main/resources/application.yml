@@ -65,6 +65,9 @@ mybatis-plus:
     jdbc-type-for-null: 'null'
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+logging:
+  file: logs/${spring.application.name}/info.log
+
 sso:
   shiro:
     - permission: anon

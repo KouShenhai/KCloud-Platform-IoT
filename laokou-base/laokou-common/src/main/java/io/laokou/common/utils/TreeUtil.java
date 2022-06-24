@@ -1,4 +1,6 @@
 package io.laokou.common.utils;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.google.common.collect.Lists;
 import io.laokou.common.exception.CustomException;
 import lombok.Data;
@@ -55,8 +57,10 @@ public class TreeUtil<T> implements Serializable {
         return null;
     }
     public static class TreeNo<T> implements Serializable {
+        @JSONField(serializeUsing = ToStringSerializer.class)
         private Long id;
         private String name;
+        @JSONField(serializeUsing = ToStringSerializer.class)
         private Long pid;
         private String icon;
         private List<T> children;

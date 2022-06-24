@@ -8,18 +8,12 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.ByteArrayHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.ResourceHttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.TimeZone;
 /**
  * web mvc配置
@@ -43,15 +37,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedHeaders(CorsConfiguration.ALL)
                 .allowedMethods(CorsConfiguration.ALL)
                 .maxAge(3600);
-    }
-
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(new ByteArrayHttpMessageConverter());
-        converters.add(new StringHttpMessageConverter());
-        converters.add(new ResourceHttpMessageConverter());
-        converters.add(new AllEncompassingFormHttpMessageConverter());
-        converters.add(jackson2HttpMessageConverter());
     }
 
     @Bean

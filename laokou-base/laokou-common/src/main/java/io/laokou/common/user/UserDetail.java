@@ -1,4 +1,6 @@
 package io.laokou.common.user;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
 import lombok.Data;
 import java.io.Serializable;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.List;
 @Data
 public class UserDetail implements Serializable {
     private static final long serialVersionUID = 1L;
+    @JSONField(serializeUsing = ToStringSerializer.class)
     private Long id;
     private String username;
     private String imgUrl;
@@ -17,7 +20,6 @@ public class UserDetail implements Serializable {
     private String mobile;
     private String password;
     private String zfbOpenid;
-    private List<Long> roleIds;
     private List<String> permissionsList;
 
 }
