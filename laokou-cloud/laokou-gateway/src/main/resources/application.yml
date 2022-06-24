@@ -21,6 +21,14 @@ spring:
       file-size-threshold: -1
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowed-methods: "*"
+            allowed-headers: "*"
+            allow-credentials: true
+            exposedHeaders: "Content-Disposition,Content-Type,Cache-Control"
       routes:
         - id: LAOKOU-ADMIN
           uri: lb://laokou-admin
@@ -29,11 +37,18 @@ spring:
           filters:
           - SwaggerHeaderFilter
           - StripPrefix=1
+          # 限流
           - name: RequestRateLimiter #请求数限流
             args:
               key-resolver: "#{@ipKeyResolver}"
               redis-rate-limiter.replenishRate: 1000
               redis-rate-limiter.burstCapacity: 3000
+          # 降级
+          - name: Hystrix
+            args:
+              name: default
+              # 降级接口地址
+              fallbackUri: 'forward:/fallback'
 
 laokou:
   uris:
