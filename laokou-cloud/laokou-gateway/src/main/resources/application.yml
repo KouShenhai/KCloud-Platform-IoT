@@ -55,7 +55,7 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 60000 #缺省为1000
-          #hystrix配置单线程策略
+          #hystrix配置隔离策略为信号量模式
           strategy: SEMAPHORE
           #增加并发量设置（默认是10）
           semaphore:
