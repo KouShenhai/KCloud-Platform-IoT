@@ -30,4 +30,15 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictDao,SysDictDO> implem
     public IPage<DictVO> getDictList(IPage<DictVO> page, DictQO qo) {
         return this.baseMapper.getDictList(page,qo);
     }
+
+    @Override
+    public DictVO getDictById(Long id) {
+        return this.baseMapper.getDictById(id);
+    }
+
+    @Override
+    public void deleteDict(Long id) {
+        this.baseMapper.deleteDict(id);
+    }
+
 }

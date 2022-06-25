@@ -19,4 +19,8 @@ public interface SysDictService extends IService<SysDictDO> {
 
     IPage<DictVO> getDictList(IPage<DictVO> page, DictQO qo);
 
+    DictVO getDictById(Long id);
+
+    void deleteDict(Long id);
+
 }

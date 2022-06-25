@@ -24,4 +24,8 @@ public interface SysDictDao extends BaseDao<SysDictDO> {
 
     IPage<DictVO> getDictList(IPage<DictVO> page, @Param("qo") DictQO qo);
 
+    DictVO getDictById(@Param("id") Long id);
+
+    void deleteDict(@Param("id") Long id);
+
 }
