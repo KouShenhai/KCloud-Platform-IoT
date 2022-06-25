@@ -1,0 +1,1 @@
+cd /opt/laokou && nohup java -Xms256m -Xmx512m -jar monitor.jar --spring.profiles.active=prod > monitor.log &

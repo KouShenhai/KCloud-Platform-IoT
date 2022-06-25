@@ -1,6 +1,6 @@
 server:
   port: 9999
-  address: 192.168.62.1
+  address: 10.0.8.7
   connection-timeout: 5000ms
   tomcat:
     uri-encoding: UTF-8
@@ -13,7 +13,7 @@ server:
 app:
   id: admin # 应用全局唯一的身份标识
 apollo:
-  meta: http://120.79.93.23:8080 # Apollo Meta Server 地址
+  meta: http://124.222.196.51:8080 # Apollo Meta Server 地址
   cacheDir: /opt/config # 自定义本地配置文件缓存路径
   bootstrap:
     enabled: true # 设置在应用启动阶段就加载 Apollo 配置
@@ -27,17 +27,17 @@ spring:
   boot:
     admin:
       client:
-        url: http://192.168.62.1:5000/monitor
+        url: http://10.0.8.7:5000/monitor
         username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
         password: ENC(nj35dMcOWEmR5EASEZR3yfaT4IdT9TPm)
         instance:
-          service-base-url: http://192.168.62.1:${server.port}
+          service-base-url: http://10.0.8.7:${server.port}
           prefer-ip: true
   redis:
     database: 0
     host: 124.222.196.51
     port: 6379
-    password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=)
+    password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=) # 密码：koushenhai123456
     timeout: 6000ms #连接超时时长（毫秒）
     jedis:
       pool:
@@ -51,7 +51,7 @@ spring:
       driver-class-name: com.mysql.jdbc.Driver
       url: jdbc:mysql://124.222.196.51:3306/kcloud?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
       username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
-      password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=)
+      password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=) # 密码：koushenhai123456
       initial-size: 10
       max-active: 100
       min-idle: 10
@@ -93,4 +93,4 @@ oauth:
     redirect_url: http://localhost:9999
 
 logging:
-  file: /opt/logs/${spring.application.name}/info.log
+  file: logs/${spring.application.name}/info.log

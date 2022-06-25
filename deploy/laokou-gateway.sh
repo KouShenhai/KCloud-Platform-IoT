@@ -1,0 +1,1 @@
+cd /opt/laokou && nohup java -Xms256m -Xmx512m -jar gateway.jar --spring.profiles.active=prod > gateway.log &
