@@ -1,14 +1,3 @@
-server:
-  port: 9999
-  address: 192.168.62.1
-  connection-timeout: 5000ms
-  tomcat:
-    uri-encoding: UTF-8
-    max-threads: 1000
-    min-spare-threads: 30
-    session:
-      cookie:
-        http-only: true
 #spring
 spring:
   application:
@@ -64,9 +53,6 @@ mybatis-plus:
     call-setters-on-nulls: true
     jdbc-type-for-null: 'null'
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-logging:
-  file: logs/${spring.application.name}/info.log
 
 sso:
   shiro:

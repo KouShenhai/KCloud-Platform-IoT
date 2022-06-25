@@ -1,5 +1,17 @@
+server:
+  port: 9999
+  address: 192.168.62.1
+  connection-timeout: 5000ms
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+    session:
+      cookie:
+        http-only: true
+
 app:
-  id: sso # 应用全局唯一的身份标识
+  id: admin # 应用全局唯一的身份标识
 apollo:
   meta: http://120.79.93.23:8080 # Apollo Meta Server 地址
   cacheDir: ./config # 自定义本地配置文件缓存路径
@@ -78,3 +90,6 @@ oauth:
     sign_type: json
     gateway_url: https://openapi.alipay.com/gateway.do
     redirect_url: http://localhost:9999
+
+logging:
+  file: /opt/logs/${spring.application.name}/info.log

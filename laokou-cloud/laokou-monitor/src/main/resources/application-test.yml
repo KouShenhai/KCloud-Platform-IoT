@@ -1,0 +1,11 @@
+server:
+  port: 5000
+  address: 192.168.62.1
+  servlet:
+    context-path: /monitor
+  connection-timeout: 60000
+  tomcat:
+    max-http-header-size: -1
+    max-connections: -1
+    max-http-post-size: -1
+    max-threads: -1

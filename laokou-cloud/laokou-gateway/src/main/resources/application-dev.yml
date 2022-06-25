@@ -1,3 +1,15 @@
+server:
+  compression:
+    # 开启压缩
+    enabled: true
+    # 配置支持压缩 MIME-TYPE
+    mime-types: text/html,text/xml,text/plain,application/xml,application/json,application/x-www-form-urlencoded
+  address: 127.0.0.1
+  port: 5555
+  max-http-header-size: -1
+  tomcat:
+    max-http-post-size: -1
+
 spring:
   redis:
     database: 0
@@ -19,3 +31,6 @@ spring:
         instance:
           service-base-url: http://127.0.0.1:${server.port}
           prefer-ip: true
+
+logging:
+  file: logs/${spring.application.name}/info.log
