@@ -1,4 +1,4 @@
-package io.laokou.monitor.config;
+package io.laokou.monitor.component;
 
 import de.codecentric.boot.admin.server.domain.entities.Instance;
 import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
