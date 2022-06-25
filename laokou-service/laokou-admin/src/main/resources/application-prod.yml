@@ -14,7 +14,7 @@ app:
   id: admin # 应用全局唯一的身份标识
 apollo:
   meta: http://120.79.93.23:8080 # Apollo Meta Server 地址
-  cacheDir: ./config # 自定义本地配置文件缓存路径
+  cacheDir: /opt/config # 自定义本地配置文件缓存路径
   bootstrap:
     enabled: true # 设置在应用启动阶段就加载 Apollo 配置
     eagerLoad:
@@ -35,8 +35,9 @@ spring:
           prefer-ip: true
   redis:
     database: 0
-    host: 192.168.62.128
+    host: 124.222.196.51
     port: 6379
+    password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=)
     timeout: 6000ms #连接超时时长（毫秒）
     jedis:
       pool:
@@ -48,9 +49,9 @@ spring:
     druid:
       db-type: mysql
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.62.128:3306/kcloud?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+      url: jdbc:mysql://124.222.196.51:3306/kcloud?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
       username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
-      password: ENC(SX9kPzLDaZb9kGOl2QBziw==)
+      password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=)
       initial-size: 10
       max-active: 100
       min-idle: 10
