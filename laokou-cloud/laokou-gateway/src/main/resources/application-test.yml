@@ -13,7 +13,8 @@ server:
 spring:
   redis:
     database: 0
-    host: 192.168.62.128
+    host: 124.222.196.51
+    password: koushenhai123456
     port: 6379
     timeout: 6000ms #连接超时时长（毫秒）
     jedis:

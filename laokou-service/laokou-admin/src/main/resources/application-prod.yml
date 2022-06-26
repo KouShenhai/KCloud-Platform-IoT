@@ -94,3 +94,8 @@ oauth:
 
 logging:
   file: logs/${spring.application.name}/info.log
+
+fdfs:
+  connect-timeout: 6000
+  so-timeout: 600000
+  tracker-list: 124.222.196.51:22122
