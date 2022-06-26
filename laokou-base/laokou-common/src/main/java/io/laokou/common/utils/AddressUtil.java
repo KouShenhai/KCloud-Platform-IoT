@@ -21,7 +21,7 @@ public class AddressUtil {
         params.put("accessKey",ACCESS_KEY);
         String ipJsonData = HttpUtil.transformerUnderHumpData(HttpUtil.doGet(IP_URI,params));
         if (StringUtils.isNotBlank(ipJsonData)) {
-            JSONObject jsonObject = JSONObject.parseObject(ipJsonData);
+            JSONObject jsonObject = JSONObject.parseObject(ipJsonData).getJSONObject("data");
             return jsonObject.getString("country") + " " + jsonObject.getString("city");
         }
         return "XX XX";
