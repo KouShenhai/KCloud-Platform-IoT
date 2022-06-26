@@ -14,14 +14,6 @@ spring:
       file-size-threshold: -1
   cloud:
     gateway:
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOriginPatterns: "*"
-            allowed-methods: "*"
-            allowed-headers: "*"
-            allow-credentials: true
-            exposedHeaders: "Content-Disposition,Content-Type,Cache-Control"
       routes:
         - id: LAOKOU-ADMIN
           uri: lb://laokou-admin
@@ -42,7 +34,6 @@ spring:
               name: default
               # 降级接口地址
               fallbackUri: 'forward:/fallback'
-
 laokou:
   uris:
     - /sys/auth/api/captcha
