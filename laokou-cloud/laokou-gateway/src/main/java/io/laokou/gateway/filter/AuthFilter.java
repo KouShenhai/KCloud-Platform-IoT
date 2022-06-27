@@ -39,7 +39,8 @@ import java.util.List;
 @ConfigurationProperties(prefix = "laokou")
 public class AuthFilter implements GlobalFilter,Ordered {
 
-    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+    private static final AntPathMatcher antPathMatcher = new AntPathMatcher();
+
     /**
      * 不拦截的urls
      */

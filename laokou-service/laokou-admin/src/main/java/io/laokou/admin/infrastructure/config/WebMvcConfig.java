@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
@@ -22,21 +22,29 @@ import java.util.TimeZone;
 @Configuration
 @Slf4j
 @Data
-public class WebMvcConfig implements WebMvcConfigurer {
+public class WebMvcConfig{
 
     /**
      * SimpleDateFormat线程不安全
      */
     private static final ThreadLocal<DateFormat> df = ThreadLocal.withInitial(() -> new SimpleDateFormat(DateUtil.DATE_TIME_PATTERN));
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins(CorsConfiguration.ALL)
-                .allowCredentials(true)
-                .allowedHeaders(CorsConfiguration.ALL)
-                .allowedMethods(CorsConfiguration.ALL)
-                .maxAge(3600);
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        // 允许所有域名跨域
+        config.addAllowedOrigin(CorsConfiguration.ALL);
+        // 允许证书
+        config.setAllowCredentials(true);
+        // 允许所有方法
+        config.addAllowedMethod(CorsConfiguration.ALL);
+        // 允许任何头
+        config.addAllowedHeader(CorsConfiguration.ALL);
+        // 每一个小时，异步请求都发起预检请求 => 发送两次请求 第一次OPTION 第二次GET/POT/PUT/DELETE
+        config.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
+        configurationSource.registerCorsConfiguration("/**",config);
+        return new CorsFilter(configurationSource);
     }
 
     @Bean

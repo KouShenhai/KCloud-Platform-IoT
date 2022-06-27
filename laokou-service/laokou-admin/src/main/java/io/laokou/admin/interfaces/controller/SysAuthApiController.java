@@ -29,7 +29,6 @@ public class SysAuthApiController {
     private SysAuthApplicationService sysAuthApplicationService;
 
     @GetMapping("/sys/auth/api/captcha")
-    @CrossOrigin()
     @ApiOperation("系统认证>验证码")
     @ApiImplicitParam(name = "uuid",value = "唯一标识",required = true,paramType = "query",dataType = "String")
     public void captcha(@RequestParam(Constant.UUID)String uuid, HttpServletResponse response) throws IOException {
@@ -38,20 +37,17 @@ public class SysAuthApiController {
 
     @PostMapping("/sys/auth/api/login")
     @ApiOperation("登录API")
-    @CrossOrigin()
     public HttpResultUtil<LoginVO> login(@RequestBody LoginDTO loginDTO) throws Exception {
         return new HttpResultUtil<LoginVO>().ok(sysAuthApplicationService.login(loginDTO));
     }
 
     @GetMapping("/sys/auth/api/zfbLogin")
     @ApiOperation("系统认证>支付宝登录")
-    @CrossOrigin()
     public void zfbLogin(HttpServletRequest request,HttpServletResponse response) throws IOException, AlipayApiException {
         sysAuthApplicationService.zfbLogin(request, response);
     }
 
     @GetMapping("/sys/auth/api/resource")
-    @CrossOrigin()
     @ApiOperation("系统认证>资源权限")
     @ApiImplicitParams({
             @ApiImplicitParam(name = Constant.AUTHORIZATION_HEADER,value = "授权码",required = true,paramType = "query",dataType = "String"),
@@ -66,13 +62,11 @@ public class SysAuthApiController {
 
     @GetMapping("/sys/auth/api/logout")
     @ApiOperation("系统认证>退出登录")
-    @CrossOrigin()
     public HttpResultUtil<Boolean> logout(HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysAuthApplicationService.logout(SecurityUser.getUserId(request)));
     }
 
     @GetMapping("/sys/auth/api/userInfo")
-    @CrossOrigin
     @ApiOperation("系统认证>用户信息")
     public HttpResultUtil<UserInfoVO> userInfo(HttpServletRequest request) {
         return new HttpResultUtil<UserInfoVO>().ok(sysAuthApplicationService.userInfo(SecurityUser.getUserId(request)));

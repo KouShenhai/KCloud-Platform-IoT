@@ -52,7 +52,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
         if (CollectionUtils.isNotEmpty(menuIds)) {
             saveOrUpdate(roleDO.getId(),menuIds);
         }
-        return Boolean.TRUE;
+        return true;
     }
 
     private Boolean saveOrUpdate(Long roleId,List<Long> menuIds) {
@@ -80,13 +80,13 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
             sysRoleMenuService.remove(new LambdaQueryWrapper<SysRoleMenuDO>().eq(SysRoleMenuDO::getRoleId,dto.getId()));
             saveOrUpdate(roleDO.getId(),dto.getMenuIds());
         }
-        return Boolean.TRUE;
+        return true;
     }
 
     @Override
     public Boolean deleteRole(Long id) {
         sysRoleService.deleteRole(id);
-        return Boolean.TRUE;
+        return true;
     }
 
 }

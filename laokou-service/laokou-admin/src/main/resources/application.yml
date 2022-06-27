@@ -54,6 +54,18 @@ mybatis-plus:
     jdbc-type-for-null: 'null'
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+feign:
+  httpclient:
+    # 开启httpclient
+    enable: ture
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 15000
+
 sso:
   shiro:
     - permission: anon

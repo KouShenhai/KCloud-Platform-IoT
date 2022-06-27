@@ -1,9 +1,7 @@
 package io.laokou.admin.infrastructure.common.oauth2;
-
 import com.google.gson.Gson;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.exception.ErrorCode;
-import io.laokou.common.utils.HttpContextUtil;
 import io.laokou.common.utils.HttpResultUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -12,13 +10,14 @@ import org.apache.http.HttpStatus;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.cors.CorsConfiguration;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 /**
  * oauth2过滤器
  * @author Kou Shenhai
@@ -53,12 +52,8 @@ public class Oauth2Filter extends AuthenticatingFilter {
         log.info("Authorization:{}",Authorization);
         if(StringUtils.isBlank(Authorization)){
             HttpServletResponse httpResponse = (HttpServletResponse) response;
-            httpResponse.setContentType("application/json;charset=utf-8");
-            httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-            httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtil.getOrigin());
-            int unauthorized = ErrorCode.UNAUTHORIZED;
-            HttpResultUtil<String> result = new HttpResultUtil().error(unauthorized);
-            String json = new Gson().toJson(result);
+            httpResponse.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+            String json = new Gson().toJson(new HttpResultUtil<Boolean>().error(ErrorCode.UNAUTHORIZED));
             httpResponse.getWriter().print(json);
             return false;
         }
@@ -69,13 +64,10 @@ public class Oauth2Filter extends AuthenticatingFilter {
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        httpResponse.setContentType("application/json;charset=utf-8");
-        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-        httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtil.getOrigin());
+        log.info("Authorization:{}",token.getPrincipal());
+        httpResponse.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         //处理登录失败的异常
-        Throwable throwable = e.getCause() == null ? e : e.getCause();
-        HttpResultUtil result = new HttpResultUtil().error(HttpStatus.SC_UNAUTHORIZED, throwable.getMessage());
-        String json = new Gson().toJson(result);
+        String json = new Gson().toJson(new HttpResultUtil().error(ErrorCode.UNAUTHORIZED, e.getCause() == null ? e.getMessage() : e.getCause().getMessage()));
         httpResponse.getWriter().print(json);
         return false;
     }
@@ -87,10 +79,12 @@ public class Oauth2Filter extends AuthenticatingFilter {
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        httpServletResponse.setHeader("Access-control-Allow-Origin", HttpContextUtil.getOrigin());
-        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
         // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
+        httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, CorsConfiguration.ALL);
+        httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, CorsConfiguration.ALL);
+        httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, CorsConfiguration.ALL);
+        httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+        httpServletResponse.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3600");
         if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
             httpServletResponse.setStatus(HttpStatus.SC_OK);
             return false;
@@ -104,12 +98,10 @@ public class Oauth2Filter extends AuthenticatingFilter {
     private String getAuthorization(HttpServletRequest httpRequest){
         //从header中获取token
         String Authorization = httpRequest.getHeader(Constant.AUTHORIZATION_HEADER);
-
         //如果header中不存在Authorization，则从参数中获取Authorization
         if(StringUtils.isBlank(Authorization)){
             Authorization = httpRequest.getParameter(Constant.AUTHORIZATION_HEADER);
         }
-
         return Authorization;
     }
 

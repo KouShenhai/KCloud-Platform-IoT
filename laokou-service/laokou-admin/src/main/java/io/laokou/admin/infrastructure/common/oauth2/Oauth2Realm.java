@@ -1,8 +1,10 @@
 package io.laokou.admin.infrastructure.common.oauth2;
 import com.alibaba.fastjson.JSON;
+import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.UserDetail;
 import io.laokou.admin.infrastructure.common.password.TokenUtil;
 import io.laokou.admin.application.service.SysAuthApplicationService;
+import io.laokou.common.utils.MessageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -30,12 +32,9 @@ public class Oauth2Realm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         UserDetail user = (UserDetail) principalCollection.getPrimaryPrincipal();
-
         //用户权限列表
         Set<String> permsSet = new HashSet<>(user.getPermissionsList());
-
         log.info("获取权限标识:{}", JSON.toJSONString(permsSet));
-
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(permsSet);
         return info;
@@ -56,7 +55,7 @@ public class Oauth2Realm extends AuthorizingRealm {
         //token失效
         boolean expiration = TokenUtil.isExpiration(accessToken);
         if (expiration) {
-            throw new IncorrectCredentialsException();
+            throw new IncorrectCredentialsException(MessageUtil.getMessage(ErrorCode.AUTHORIZATION_INVALID));
         }
         //查询用户信息
         Long userId = TokenUtil.getUserId(accessToken);

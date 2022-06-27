@@ -59,7 +59,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     @Override
     public Boolean deleteMenu(Long id) {
         sysMenuService.deleteMenu(id);
-        return Boolean.TRUE;
+        return true;
     }
 
     @Override

@@ -23,7 +23,6 @@ public class OssApiController {
     private OssApplicationService ossApplicationService;
 
     @PostMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @CrossOrigin
     @ApiOperation("对象存储>上传")
     public HttpResultUtil<UploadVO> upload(@RequestPart("file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {

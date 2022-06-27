@@ -26,21 +26,18 @@ public class SysDictApiController {
     private SysDictApplicationService sysDictApplicationService;
 
     @PostMapping(value = "/query")
-    @CrossOrigin()
     @ApiOperation("系统字典>查询")
     public HttpResultUtil<IPage<DictVO>> query(@RequestBody DictQO qo) {
         return new HttpResultUtil<IPage<DictVO>>().ok(sysDictApplicationService.queryDictPage(qo));
     }
 
     @GetMapping(value = "/detail")
-    @CrossOrigin()
     @ApiOperation("系统字典>详情")
     public HttpResultUtil<DictVO> detail(@RequestParam("id") Long id) {
         return new HttpResultUtil<DictVO>().ok(sysDictApplicationService.getDictById(id));
     }
 
     @PostMapping(value = "/insert")
-    @CrossOrigin()
     @ApiOperation("系统字典>新增")
     @OperateLog(module = "系统字典",name = "新增字典")
     public HttpResultUtil<Boolean> insert(@RequestBody DictDTO dto, HttpServletRequest request) {
@@ -48,7 +45,6 @@ public class SysDictApiController {
     }
 
     @PutMapping(value = "/update")
-    @CrossOrigin()
     @ApiOperation("系统字典>修改")
     @OperateLog(module = "系统字典",name = "修改字典")
     public HttpResultUtil<Boolean> update(@RequestBody DictDTO dto, HttpServletRequest request) {
@@ -56,7 +52,6 @@ public class SysDictApiController {
     }
 
     @DeleteMapping(value = "/delete")
-    @CrossOrigin()
     @ApiOperation("系统字典>删除")
     @OperateLog(module = "系统字典",name = "删除字典")
     public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id) {

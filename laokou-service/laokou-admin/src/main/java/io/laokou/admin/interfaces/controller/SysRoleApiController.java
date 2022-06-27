@@ -27,28 +27,24 @@ public class SysRoleApiController {
 
     @PostMapping("/query")
     @ApiOperation("系统角色>查询")
-    @CrossOrigin()
     public HttpResultUtil<IPage<RoleVO>> query(@RequestBody RoleQO qo) {
         return new HttpResultUtil<IPage<RoleVO>>().ok(sysRoleApplicationService.queryRolePage(qo));
     }
 
     @PostMapping("/list")
     @ApiOperation("系统角色>列表")
-    @CrossOrigin()
     public HttpResultUtil<List<RoleVO>> list(@RequestBody RoleQO qo) {
         return new HttpResultUtil<List<RoleVO>>().ok(sysRoleApplicationService.getRoleList(qo));
     }
 
     @GetMapping("/detail")
     @ApiOperation("系统角色>详情")
-    @CrossOrigin()
     public HttpResultUtil<RoleVO> detail(@RequestParam("id") Long id) {
         return new HttpResultUtil<RoleVO>().ok(sysRoleApplicationService.getRoleById(id));
     }
 
     @PostMapping("/insert")
     @ApiOperation("系统角色>新增")
-    @CrossOrigin()
     @OperateLog(module = "系统角色",name = "新增角色")
     public HttpResultUtil<Boolean> insert(@RequestBody RoleDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysRoleApplicationService.insertRole(dto, request));
@@ -56,7 +52,6 @@ public class SysRoleApiController {
 
     @PutMapping("/update")
     @ApiOperation("系统角色>修改")
-    @CrossOrigin()
     @OperateLog(module = "系统角色",name = "修改角色")
     public HttpResultUtil<Boolean> update(@RequestBody RoleDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysRoleApplicationService.updateRole(dto, request));
@@ -64,7 +59,6 @@ public class SysRoleApiController {
 
     @DeleteMapping("/delete")
     @ApiOperation("系统角色>删除")
-    @CrossOrigin()
     @OperateLog(module = "系统角色",name = "删除角色")
     public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id) {
         return new HttpResultUtil<Boolean>().ok(sysRoleApplicationService.deleteRole(id));

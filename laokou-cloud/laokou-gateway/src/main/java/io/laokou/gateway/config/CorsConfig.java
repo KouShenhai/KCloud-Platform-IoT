@@ -1,5 +1,4 @@
 package io.laokou.gateway.config;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +13,6 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
-
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -23,8 +21,6 @@ import reactor.core.publisher.Mono;
 @Configuration
 @Slf4j
 public class CorsConfig{
-
-    private final static String MAX_AGE = "18000L";
 
     @Bean
     public WebFilter corsFilter() {
@@ -42,19 +38,24 @@ public class CorsConfig{
             HttpMethod requestMethod = requestHeaders.getAccessControlRequestMethod();
             //获取响应头
             HttpHeaders responseHeaders = response.getHeaders();
+            // 允许跨域
             responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, requestHeaders.getOrigin());
+            // 允许请求头
             responseHeaders.addAll(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, requestHeaders.getAccessControlRequestHeaders());
+            // 允许方法
             if (requestMethod != null) {
                 responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, requestMethod.name());
             }
-            responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, Boolean.TRUE.toString());
+            // 允许证书
+            responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+            // 暴露响应头
             responseHeaders.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, CorsConfiguration.ALL);
-            responseHeaders.add(HttpHeaders.ACCESS_CONTROL_MAX_AGE, MAX_AGE);
+            // 每1个小时发送一次预请求
+            responseHeaders.add(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3600");
             //获取方法
             HttpMethod method = request.getMethod();
             if (method == HttpMethod.OPTIONS) {
                 response.setStatusCode(HttpStatus.OK);
-                log.info("header：{}",request.getHeaders());
                 return Mono.empty();
             }
             return webFilterChain.filter(serverWebExchange);

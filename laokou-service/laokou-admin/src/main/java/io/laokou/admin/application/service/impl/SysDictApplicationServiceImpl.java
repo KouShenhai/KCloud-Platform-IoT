@@ -49,6 +49,6 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     @Override
     public Boolean deleteDict(Long id) {
         sysDictService.deleteDict(id);
-        return Boolean.TRUE;
+        return true;
     }
 }

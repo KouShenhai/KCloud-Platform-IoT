@@ -47,7 +47,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
             sysUserRoleService.remove(new LambdaQueryWrapper<SysUserRoleDO>().eq(SysUserRoleDO::getUserId, dto.getId()));
             saveOrUpdate(dto.getId(),roleIds);
         }
-        return Boolean.TRUE;
+        return true;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (CollectionUtils.isNotEmpty(roleIds)) {
             saveOrUpdate(sysUserDO.getId(),roleIds);
         }
-        return Boolean.TRUE;
+        return true;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @Override
     public Boolean deleteUser(Long id) {
         sysUserService.deleteUser(id);
-        return Boolean.TRUE;
+        return true;
     }
 
     private Boolean saveOrUpdate(Long userId,List<Long> roleIds) {

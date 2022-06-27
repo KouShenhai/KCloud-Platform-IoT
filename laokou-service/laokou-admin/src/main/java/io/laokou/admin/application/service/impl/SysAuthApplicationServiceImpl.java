@@ -177,7 +177,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         //删除相关信息
         removeInfo(request,userId);
-        return Boolean.TRUE;
+        return true;
         //endregion
     }
 
