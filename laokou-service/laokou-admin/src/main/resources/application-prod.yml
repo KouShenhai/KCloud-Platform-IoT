@@ -93,7 +93,7 @@ oauth:
     redirect_url: http://localhost:9999
 
 logging:
-  file: logs/${spring.application.name}/info.log
+  file: /opt/logs/${spring.application.name}/info.log
 
 fdfs:
   connect-timeout: 6000

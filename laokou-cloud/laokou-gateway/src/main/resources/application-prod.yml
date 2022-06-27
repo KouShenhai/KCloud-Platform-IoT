@@ -34,4 +34,4 @@ spring:
           prefer-ip: true
 
 logging:
-  file: logs/${spring.application.name}/info.log
+  file: /opt/logs/${spring.application.name}/info.log
