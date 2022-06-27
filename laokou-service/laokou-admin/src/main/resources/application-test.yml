@@ -13,8 +13,8 @@ server:
 app:
   id: admin # 应用全局唯一的身份标识
 apollo:
-  meta: http://192.168.62.132:8080 # Apollo Meta Server 地址
-  cacheDir: ./config # 自定义本地配置文件缓存路径
+  meta: http://124.222.196.51:8080 # Apollo Meta Server 地址
+  cacheDir: config # 自定义本地配置文件缓存路径
   bootstrap:
     enabled: true # 设置在应用启动阶段就加载 Apollo 配置
     eagerLoad:
