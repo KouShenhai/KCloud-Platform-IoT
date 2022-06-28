@@ -40,6 +40,7 @@
 		<dependency>
 			<groupId>com.aliyun.oss</groupId>
 			<artifactId>aliyun-sdk-oss</artifactId>
+			<version>3.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alipay.sdk</groupId>
