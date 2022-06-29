@@ -7,11 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
-
 /**
  * sso
  * @author Kou Shenhai
@@ -19,13 +17,15 @@ import java.util.Map;
  * @date 2020/9/13 0013 下午 2:34
  */
 @Component
-@ConfigurationProperties(prefix = "sso")
+@ConfigurationProperties(prefix = "admin")
 @RefreshScope
 @Data
 @Slf4j
-public class AuthHandler {
+public class AdminHandler {
 
-    private List<Map<String,String>> shiro;
+    private List<Map<String,String>> auth;
+
+    private String oss;
 
     @Resource
     private org.springframework.cloud.context.scope.refresh.RefreshScope refreshScope;

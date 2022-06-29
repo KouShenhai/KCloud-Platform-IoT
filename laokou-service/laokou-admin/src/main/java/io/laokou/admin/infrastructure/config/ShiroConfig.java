@@ -1,7 +1,7 @@
 package io.laokou.admin.infrastructure.config;
 import io.laokou.admin.infrastructure.common.oauth2.Oauth2Filter;
 import io.laokou.admin.infrastructure.common.oauth2.Oauth2Realm;
-import io.laokou.admin.infrastructure.component.AuthHandler;
+import io.laokou.admin.infrastructure.component.AdminHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -30,7 +30,7 @@ import java.util.Map;
 public class ShiroConfig {
 
     @Autowired
-    private AuthHandler authHandler;
+    private AdminHandler adminHandler;
 
     @Bean("sessionManager")
     public DefaultWebSessionManager sessionManager(){
@@ -58,10 +58,10 @@ public class ShiroConfig {
         filter.put("oauth2", new Oauth2Filter());
         shiroFilter.setFilters(filter);
         Map<String, String> filterMap = new LinkedHashMap<>();
-        List<Map<String, String>> shiro = authHandler.getShiro();
-        log.info("map:{}",shiro);
-        if (!CollectionUtils.isEmpty(shiro)) {
-            shiro.forEach(item -> {
+        List<Map<String, String>> auth = adminHandler.getAuth();
+        log.info("map:{}",auth);
+        if (!CollectionUtils.isEmpty(auth)) {
+            auth.forEach(item -> {
                 String url = item.get("url");
                 String permission = item.get("permission");
                 log.info("{} > {}",url,permission);

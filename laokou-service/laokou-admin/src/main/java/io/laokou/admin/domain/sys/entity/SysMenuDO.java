@@ -38,7 +38,7 @@ public class SysMenuDO extends BaseDO implements Serializable {
 	 * 菜单URL
 	 */
     @TableField("url")
-    @ApiModelProperty(value = "菜单URL",name = "url",required = false,example = "/*/res")
+    @ApiModelProperty(value = "菜单URL",name = "url", example = "/sys/user/api/login")
 	private String url;
 
 	/**
