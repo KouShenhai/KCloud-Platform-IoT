@@ -35,3 +35,16 @@ spring:
 
 logging:
   file: logs/${spring.application.name}/info.log
+
+laokou:
+  uris:
+    - /sys/auth/api/captcha
+    - /sys/auth/api/login
+    - /sys/auth/api/zfbLogin
+    - /actuator/**
+    - /swagger/api-docs
+    - /swagger-resources/**
+    - /swagger-ui.html
+    - /v2/api-docs
+    - /webjars/**
+    - /druid/**

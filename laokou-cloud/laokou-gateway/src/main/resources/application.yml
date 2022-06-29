@@ -34,18 +34,6 @@ spring:
               name: default
               # 降级接口地址
               fallbackUri: 'forward:/fallback'
-laokou:
-  uris:
-    - /sys/auth/api/captcha
-    - /sys/auth/api/login
-    - /sys/auth/api/zfbLogin
-    - /actuator/**
-    - /swagger/api-docs
-    - /swagger-resources/**
-    - /swagger-ui.html
-    - /v2/api-docs
-    - /webjars/**
-    - /druid/**
 
 hystrix:
   command:

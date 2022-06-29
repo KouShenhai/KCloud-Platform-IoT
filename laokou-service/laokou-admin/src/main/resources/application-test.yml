@@ -98,3 +98,37 @@ fdfs:
   connect-timeout: 6000
   so-timeout: 600000
   tracker-list: 124.222.196.51:22122
+
+admin:
+  oss: {"fastdfsDomain":"http://124.222.196.51","fastdfsGroup":"group1","localDomain":"http://175.178.69.253","localPath":"/opt/temp","localPrefix":"upload","type":0,"aliyunDomain":"https://koushenhai.oss-cn-shenzhen.aliyuncs.com","aliyunPrefix":"laokou","aliyunEndPoint":"https://oss-cn-shenzhen.aliyuncs.com","aliyunAccessKeyId":"LTAIPIOiuCK4ZK3o","aliyunAccessKeySecret":"dtYg8khtfEUM3FlV2FvVH6bHyezdqi","aliyunBucketName":"koushenhai"}
+  auth:
+    - permission: anon
+      url: /sys/auth/api/login
+    - permission: anon
+      url: /webjars/**
+    - permission: anon
+      url: /swagger/**
+    - permission: anon
+      url: /actuator/**
+    - permission: anon
+      url: /v2/api-docs
+    - permission: anon
+      url: /swagger-ui.html/**
+    - permission: anon
+      url: /swagger-resources/**
+    - permission: anon
+      url: /sys/auth/api/captcha
+    - permission: anon
+      url: /druid/**
+    - permission: anon
+      url: /sys/auth/api/userInfo
+    - permission: anon
+      url: /sys/auth/api/logout
+    - permission: anon
+      url: /sys/auth/api/zfbLogin
+    - permission: anon
+      url: /sys/log/api/operate/insert
+    - permission: anon
+      url: /sys/log/api/login/insert
+    - permission: anon
+      url: /sys/log/api/login/insert
