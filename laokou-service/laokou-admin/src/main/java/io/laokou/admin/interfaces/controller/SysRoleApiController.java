@@ -60,7 +60,7 @@ public class SysRoleApiController {
     @DeleteMapping("/delete")
     @ApiOperation("系统角色>删除")
     @OperateLog(module = "系统角色",name = "删除角色")
-    public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id) {
+    public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id,HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysRoleApplicationService.deleteRole(id));
     }
 

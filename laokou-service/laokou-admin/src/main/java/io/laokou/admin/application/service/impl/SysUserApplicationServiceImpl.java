@@ -13,7 +13,9 @@ import io.laokou.admin.infrastructure.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.UserDTO;
 import io.laokou.admin.interfaces.qo.UserQO;
 import io.laokou.admin.interfaces.vo.UserVO;
+import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.common.exception.CustomException;
+import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.ConvertUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.assertj.core.util.Lists;
@@ -21,6 +23,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+/**
+ * @author Kou Shenhai
+ */
 @Service
 public class SysUserApplicationServiceImpl implements SysUserApplicationService {
 
@@ -39,7 +44,17 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (null == id) {
             throw new CustomException("主键不存在");
         }
-        dto.setEditor(SecurityUser.getUserId(request));
+        Long userId = SecurityUser.getUserId(request);
+        UserDetail userDetail = sysUserService.getUserDetail(id, null);
+        UserDetail userDetail2 = sysUserService.getUserDetail(userId, null);
+        if (SuperAdminEnum.YES.ordinal() == userDetail.getSuperAdmin() && SuperAdminEnum.YES.ordinal() != userDetail2.getSuperAdmin()) {
+            throw new CustomException("只有超级管理员才能修改");
+        }
+        int count = sysUserService.count(new LambdaQueryWrapper<SysUserDO>().eq(SysUserDO::getUsername, dto.getUsername()).ne(SysUserDO::getId,id));
+        if (count > 0) {
+            throw new CustomException("账号已存在，请重新填写");
+        }
+        dto.setEditor(userId);
         sysUserService.updateUser(dto);
         List<Long> roleIds = dto.getRoleIds();
         if (CollectionUtils.isNotEmpty(roleIds)) {
@@ -53,6 +68,10 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @Override
     public Boolean insertUser(UserDTO dto, HttpServletRequest request) {
         SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
+        int count = sysUserService.count(new LambdaQueryWrapper<SysUserDO>().eq(SysUserDO::getUsername, sysUserDO.getUsername()));
+        if (count > 0) {
+            throw new CustomException("账号已存在，请重新填写");
+        }
         sysUserDO.setCreator(SecurityUser.getUserId(request));
         sysUserDO.setPassword(PasswordUtil.encode(dto.getPassword()));
         sysUserService.save(sysUserDO);
@@ -78,7 +97,13 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 
     @Override
-    public Boolean deleteUser(Long id) {
+    public Boolean deleteUser(Long id,HttpServletRequest request) {
+        Long userId = SecurityUser.getUserId(request);
+        UserDetail userDetail = sysUserService.getUserDetail(id, null);
+        UserDetail userDetail2 = sysUserService.getUserDetail(userId, null);
+        if (SuperAdminEnum.YES.ordinal() == userDetail.getSuperAdmin() && SuperAdminEnum.YES.ordinal() != userDetail2.getSuperAdmin()) {
+            throw new CustomException("只有超级管理员才能删除");
+        }
         sysUserService.deleteUser(id);
         return true;
     }

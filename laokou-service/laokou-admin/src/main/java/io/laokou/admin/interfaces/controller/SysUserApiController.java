@@ -59,8 +59,8 @@ public class SysUserApiController {
     @DeleteMapping("/delete")
     @ApiOperation("系统用户>删除")
     @OperateLog(module = "系统用户",name = "删除用户")
-    public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id) {
-        return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.deleteUser(id));
+    public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id,HttpServletRequest request) {
+        return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.deleteUser(id,request));
     }
 
     @PostMapping("/query")

@@ -21,6 +21,6 @@ public interface SysUserApplicationService {
 
     UserVO getUserById(Long id);
 
-    Boolean deleteUser(Long id);
+    Boolean deleteUser(Long id,HttpServletRequest request);
 
 }

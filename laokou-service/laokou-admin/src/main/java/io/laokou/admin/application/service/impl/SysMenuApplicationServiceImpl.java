@@ -1,4 +1,5 @@
 package io.laokou.admin.application.service.impl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.laokou.admin.application.service.SysAuthApplicationService;
 import io.laokou.admin.application.service.SysMenuApplicationService;
 import io.laokou.admin.domain.sys.entity.SysMenuDO;
@@ -8,6 +9,7 @@ import io.laokou.admin.interfaces.dto.MenuDTO;
 import io.laokou.admin.interfaces.qo.MenuQO;
 import io.laokou.admin.interfaces.vo.MenuVO;
 import io.laokou.common.constant.Constant;
+import io.laokou.common.exception.CustomException;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.TreeUtil;
@@ -45,6 +47,10 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     @Override
     public Boolean updateMenu(MenuDTO dto,HttpServletRequest request) {
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
+        int count = sysMenuService.count(new LambdaQueryWrapper<SysMenuDO>().eq(SysMenuDO::getName, menuDO.getName()).ne(SysMenuDO::getId,menuDO.getId()));
+        if (count > 0) {
+            throw new CustomException("菜单名已存在，请重新输入");
+        }
         menuDO.setEditor(SecurityUser.getUserId(request));
         return sysMenuService.updateById(menuDO);
     }
@@ -52,6 +58,10 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     @Override
     public Boolean insertMenu(MenuDTO dto,HttpServletRequest request) {
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
+        int count = sysMenuService.count(new LambdaQueryWrapper<SysMenuDO>().eq(SysMenuDO::getName, menuDO.getName()));
+        if (count > 0) {
+            throw new CustomException("菜单名已存在，请重新输入");
+        }
         menuDO.setCreator(SecurityUser.getUserId(request));
         return sysMenuService.save(menuDO);
     }

@@ -11,6 +11,7 @@ import io.laokou.admin.infrastructure.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.RoleDTO;
 import io.laokou.admin.interfaces.qo.RoleQO;
 import io.laokou.admin.interfaces.vo.RoleVO;
+import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.ConvertUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.assertj.core.util.Lists;
@@ -46,6 +47,10 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     @Override
     public Boolean insertRole(RoleDTO dto, HttpServletRequest request) {
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
+        int count = sysRoleService.count(new LambdaQueryWrapper<SysRoleDO>().eq(SysRoleDO::getName, roleDO.getName()));
+        if (count > 0) {
+            throw new CustomException("角色已存在，请重新输入");
+        }
         roleDO.setCreator(SecurityUser.getUserId(request));
         sysRoleService.save(roleDO);
         List<Long> menuIds = dto.getMenuIds();
@@ -72,7 +77,12 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     @Override
     public Boolean updateRole(RoleDTO dto, HttpServletRequest request) {
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
-        roleDO.setEditor(SecurityUser.getUserId(request));
+        int count = sysRoleService.count(new LambdaQueryWrapper<SysRoleDO>().eq(SysRoleDO::getName, roleDO.getName()).ne(SysRoleDO::getId,roleDO.getId()));
+        if (count > 0) {
+            throw new CustomException("角色已存在，请重新输入");
+        }
+        Long userId = SecurityUser.getUserId(request);
+        roleDO.setEditor(userId);
         sysRoleService.updateById(roleDO);
         List<Long> menuIds = dto.getMenuIds();
         if (CollectionUtils.isNotEmpty(menuIds)) {
