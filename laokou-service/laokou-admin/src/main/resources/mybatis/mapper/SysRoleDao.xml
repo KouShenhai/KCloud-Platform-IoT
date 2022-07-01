@@ -23,7 +23,7 @@
 
     <select id="getRoleListByUserId" resultType="io.laokou.admin.interfaces.vo.RoleVO">
         SELECT
-        name,id,tag,sort
+        name,id,sort
         FROM
         (
         SELECT
@@ -34,7 +34,6 @@
         ''
         END name,
         '1' as id,
-        'super_admin_role' as tag,
         9999 as sort
         FROM
         boot_sys_user
@@ -44,7 +43,6 @@
         SELECT
         boot_sys_role.`name`,
         boot_sys_role.id,
-        boot_sys_role.tag,
         boot_sys_role.sort
         FROM
         boot_sys_role,
@@ -59,19 +57,16 @@
     </select>
 
     <select id="getRoleList" resultType="io.laokou.admin.interfaces.vo.RoleVO">
-        select id,`name`,`tag`,sort from boot_sys_role
+        select id,`name`,sort from boot_sys_role
         where del_flag = '0'
          <if test="qo.name != '' and qo.name != null">
              and `name` like concat('%',#{qo.name},'%')
          </if>
-        <if test="qo.tag != '' and qo.tag != null">
-            and `tag` like concat('%',#{qo.tag},'%')
-        </if>
         order by sort desc
     </select>
 
     <select id="getRoleById" resultType="io.laokou.admin.interfaces.vo.RoleVO">
-        select id,`name`,`tag`,sort from boot_sys_role
+        select id,`name`,sort from boot_sys_role
         where id = #{id}
     </select>
 

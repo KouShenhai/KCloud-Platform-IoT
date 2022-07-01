@@ -28,13 +28,6 @@ public class SysRoleDO extends BaseDO implements Serializable {
     private String name;
 
     /**
-     * 角色标识
-     */
-    @TableField("tag")
-    @ApiModelProperty(value = "角色标识",name = "tag",required = true,example = "admin_role")
-    private String tag;
-
-    /**
      * 角色排序
      */
     @TableField("sort")

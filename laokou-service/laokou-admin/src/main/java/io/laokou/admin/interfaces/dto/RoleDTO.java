@@ -12,8 +12,6 @@ public class RoleDTO implements Serializable {
 
     private String name;
 
-    private String tag;
-
     private Integer sort;
 
     private List<Long> menuIds;

@@ -7,8 +7,6 @@ public class RoleVO implements Serializable {
 
     private String name;
 
-    private String tag;
-
     private Integer sort;
 
 }

@@ -33,7 +33,6 @@ CREATE TABLE `boot_sys_role` (
   `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
   `sort` int(11) DEFAULT '1' COMMENT '排序',
-  `tag` varchar(50) DEFAULT NULL COMMENT '角色标识',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色';
 
@@ -161,9 +160,9 @@ INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, 
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1540001809446211586', '1539989085181972481', 'sys:dict:update', '1', '字典修改', '/sys/dict/api/update', '0', 'PUT', 'edit', '1341620898007281665', NULL, '2022-06-24 00:00:18', '2022-06-24 00:00:18', '0', '10');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1540001992288505857', '1539989085181972481', 'sys:dict:delete', '1', '字典删除', '/sys/dict/api/delete', '0', 'DELETE', 'delete', '1341620898007281665', '1341620898007281665', '2022-06-24 07:33:59', '2022-06-24 00:01:26', '0', '10');
 
-INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `tag`) VALUES ('139167754288778857', '管理员', '0', '1341620898007281665', '2021-11-27 17:11:19', '2022-06-13 00:59:48', '0', '100', 'admin_role');
-INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `tag`) VALUES ('1535949666183573505', '测试', '1341620898007281665', '1341620898007281665', '2022-06-12 19:38:32', '2022-06-13 00:55:32', '0', '50', 'test_role');
-INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `tag`) VALUES ('139167754288778856', '游客', '0', '1341620898007281665', '2021-11-27 17:11:15', '2022-06-13 00:59:04', '0', '10', 'tourist_role');
+INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('139167754288778856', '游客', '0', '1341620898007281665', '2021-11-27 17:11:15', '2022-06-13 00:59:04', '0', '10');
+INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('139167754288778857', '管理员', '0', '1341620898007281665', '2021-11-27 17:11:19', '2022-07-01 07:49:02', '0', '100');
+INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1535949666183573505', '测试', '1341620898007281665', '1341620898007281665', '2022-06-12 19:38:32', '2022-06-13 00:55:32', '0', '50');
 
 INSERT INTO `boot_sys_user` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `email`, `status`, `img_url`, `mobile`, `zfb_openid`) VALUES ('1341620898007281665', 'admin', '$2a$10$JH4rLaMdK9KBCa8oBL9Tz.zMSYKn/8OEheFUMKLdTC1SFIVwjgQXO', '1', '1341620898007281665', '1341623527018004481', '2021-11-29 20:13:11', '2022-06-20 01:36:58', '0', '2413176044@qq.com', '0', 'https://1.com//upload/node3/7904fff1c08a4883b40f1ee0336017dc.webp', '18974432576', '2088722720196501');
 INSERT INTO `boot_sys_user` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `email`, `status`, `img_url`, `mobile`, `zfb_openid`) VALUES ('1341623527018004481', 'test', '$2a$10$Nrnb0lwgMMvuq5lC.nO/pO5S2dCT2ZoStcf8Iho3NqyTedTgIcu9W', '0', '1341620898007281665', '1341620898007281665', '2020-12-23 13:55:50', '2022-06-20 02:52:18', '0', 'XX@qq.com', '0', 'https://1.com/upload/node2/b4e5bb3944a046a6bb54f8bfd2c830c1.webp', 'xxx', NULL);
