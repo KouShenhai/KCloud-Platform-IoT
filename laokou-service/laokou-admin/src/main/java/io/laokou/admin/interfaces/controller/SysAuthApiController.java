@@ -74,8 +74,8 @@ public class SysAuthApiController {
         return new HttpResultUtil<UserInfoVO>().ok(sysAuthApplicationService.userInfo(SecurityUser.getUserId(request)));
     }
 
-    public String fallback() {
-        return "服务已被降级熔断";
+    public HttpResultUtil<UserDetail> fallback(String Authorization, String uri, String method) {
+        return new HttpResultUtil<UserDetail>().error("服务已被降级熔断");
     }
 
 }
