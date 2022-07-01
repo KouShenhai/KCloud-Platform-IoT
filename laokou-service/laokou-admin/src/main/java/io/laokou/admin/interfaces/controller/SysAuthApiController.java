@@ -1,5 +1,6 @@
 package io.laokou.admin.interfaces.controller;
 import com.alipay.api.AlipayApiException;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.laokou.admin.infrastructure.common.user.SecurityUser;
 import io.laokou.admin.interfaces.vo.LoginVO;
 import io.laokou.common.constant.Constant;
@@ -54,6 +55,7 @@ public class SysAuthApiController {
             @ApiImplicitParam(name = Constant.URI,value = "请求路径",required = true,paramType = "query",dataType = "String"),
             @ApiImplicitParam(name = Constant.METHOD,value = "请求方法",required = true,paramType = "query",dataType = "String")
     })
+    @HystrixCommand(fallbackMethod = "fallback")
     public HttpResultUtil<UserDetail>  resource(@RequestParam(Constant.AUTHORIZATION_HEADER) String Authorization,
                                                 @RequestParam(Constant.URI)String uri,
                                                 @RequestParam(Constant.METHOD)String method) {
@@ -70,6 +72,10 @@ public class SysAuthApiController {
     @ApiOperation("系统认证>用户信息")
     public HttpResultUtil<UserInfoVO> userInfo(HttpServletRequest request) {
         return new HttpResultUtil<UserInfoVO>().ok(sysAuthApplicationService.userInfo(SecurityUser.getUserId(request)));
+    }
+
+    public String fallback() {
+        return "服务已被降级熔断";
     }
 
 }
