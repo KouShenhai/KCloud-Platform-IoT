@@ -1,8 +1,8 @@
+jasypt:
+  encryptor:
+    password: koushenhai5201314wumeihua
 #spring
 spring:
-  jasypt:
-    encryptor:
-      password: koushenhai5201314wumeihua
   application:
     name: laokou-admin
   profiles:

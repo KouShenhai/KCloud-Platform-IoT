@@ -1,3 +1,6 @@
+jasypt:
+  encryptor:
+    password: koushenhai5201314wumeihua
 spring:
   application:
     name: laokou-gateway
