@@ -1,5 +1,4 @@
 package io.laokou.redis;
-import io.laokou.common.utils.LockUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisCallback;
@@ -25,9 +24,6 @@ public final class RedisUtil {
     public final static long HOUR_SIX_EXPIRE = 60 * 60 * 6L;
     /**  不设置过期时长 */
     public final static long NOT_EXPIRE = -1L;
-    /**  分布式锁前缀 */
-    public final static String PROCESS_PREFIX = LockUtil.getLocalMAC() + LockUtil.getJvmPid();
-
     public final void set(String key, String value, long expire){
         redisTemplate.opsForValue().set(key, value);
         if(expire != NOT_EXPIRE){
