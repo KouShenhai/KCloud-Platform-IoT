@@ -1,5 +1,6 @@
 package io.laokou.gateway;
 
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +16,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableHystrix
 @EnableEncryptableProperties
+@EnableApolloConfig
 public class GatewayApplication {
 
     public static void main(String[] args) {
