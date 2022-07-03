@@ -6,6 +6,6 @@ LABEL description="laokou-gateway"
 # 暴露端口
 EXPOSE 5555
 # 复制文件
-ADD gateway.jar /opt/gateway.jar
+COPY gateway.jar /opt/gateway.jar
 # 执行命令
 ENTRYPOINT java -Xms256m -Xmx512m -jar /opt/gateway.jar > /opt/gateway.log

@@ -1,7 +1,7 @@
 FROM jdk:1.8
 LABEL maintainer="koushenhai"
 LABEL description="laokou-admin"
-ADD sso.jar /opt/sso.jar
+COPY sso.jar /opt/sso.jar
 COPY apr-1.7.0.tar.gz /opt/apr-1.7.0.tar.gz
 COPY apr-iconv-1.2.2.tar.gz /opt/apr-iconv-1.2.2.tar.gz
 COPY apr-util-1.6.1.tar.gz /opt/apr-util-1.6.1.tar.gz
