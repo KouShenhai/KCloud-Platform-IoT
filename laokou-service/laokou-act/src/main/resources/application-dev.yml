@@ -1,0 +1,23 @@
+server:
+  port: 9000
+  address: 127.0.0.1
+  connection-timeout: 5000ms
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+    session:
+      cookie:
+        http-only: true
+
+spring:
+  datasource:
+    druid:
+      db-type: mysql
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/kcloud?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+      username: root
+      password: 123456
+
+logging:
+  file: logs/${spring.application.name}/info.log

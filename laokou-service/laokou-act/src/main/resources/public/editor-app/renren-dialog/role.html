@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>选择角色</title>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" type="text/css" href="../libs/layui/css/layui.css" media="all">
+	<script type="text/javascript" src="../libs/jquery_1.11.0/jquery.min.js"></script>
+	<script type="text/javascript" src="../libs/layui/layui.all.js"></script>
+	<script type="text/javascript" src="renren.js"></script>
+</head>
+<body class="ren-body">
+<div>
+	<blockquote class="layui-elem-quote quoteBox">
+		<form class="layui-form">
+			<div class="layui-inline">
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input searchVal" id="name" placeholder="角色名" />
+				</div>
+				<a class="layui-btn search_btn" id="query">查询</a>
+			</div>
+		</form>
+	</blockquote>
+	<table class="layui-hide" id="grid" lay-filter="grid"></table>
+</div>
+
+<script type="application/javascript">
+var gridTable;
+$(function () {
+	gridTable = layui.table.render({
+		id: "gridid",
+		elem: '#grid',
+		url: '../../sys/role/page?token=' + T.p('token'),
+		parseData: function(res){ //res 即为原始返回的数据
+			return {
+				"code": res.code,
+				"msg": res.msg,
+				"count": res.data.total,
+				"data": res.data.list
+			};
+		},
+		cols: [[
+			{type: 'checkbox'},
+			{field: 'id', minWidth: 100, title: '角色ID'},
+			{field: 'name', minWidth: 100, title: '角色名'},
+			{field: 'remark', minWidth: 100, title: '备注'}
+		]],
+		page: true,
+		loading: true,
+		limits: [20, 50, 100, 200],
+		limit: 20
+	});
+
+	$("#query").on("click", function () {
+		layui.table.reload('gridid', {
+			page: {
+				curr: 1
+			},
+			where: {
+				name: $("#name").val()
+			}
+		});
+	});
+
+
+});
+
+function getIds() {
+	var list = layui.table.checkStatus('gridid').data;
+	if(list.length == 0){
+		alert("请选择一条记录");
+		return ;
+	}else if(list.length > 1){
+		alert("只能选择一条记录");
+		return ;
+	}
+
+	var ids = [];
+	$.each(list, function(index, item) {
+		ids.push(item.id);
+	});
+	return ids;
+}
+</script>
+</body>
+</html>

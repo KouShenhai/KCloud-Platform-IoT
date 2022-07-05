@@ -1,0 +1,54 @@
+<div class="modal" ng-controller="KisBpmAssignmentPopupCtrl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()">&times;</button>
+                <h2 translate>PROPERTY.ASSIGNMENT.TITLE</h2>
+            </div>
+            <div class="modal-body">
+
+            	<div class="row row-no-gutter">
+            		<div class="form-group">
+                        <label for="assigneeField">{{'PROPERTY.ASSIGNMENT.ASSIGNEE' | translate}}</label>
+                        <div class="row">
+                            <div class="col-sm-9"><input type="text" id="assigneeField" class="form-control" ng-model="assignment.assignee" placeholder="{{'PROPERTY.ASSIGNMENT.ASSIGNEE_PLACEHOLDER' | translate}}" /></div>
+                            <div class="col-sm-3"><button ng-click="selectUserDialog(-1)"  class="btn btn-outline btn-primary" title="选择用户"><i class="fa fa-plus-circle"></i> 选择用户</button></div>
+                        </div>
+                    </div>
+
+            	</div>
+            	
+                <div class="row row-no-gutter">
+                    <div class="form-group">
+                        <label for="userField">{{'PROPERTY.ASSIGNMENT.CANDIDATE_USERS' | translate}}</label>
+                        <div ng-repeat="candidateUser in assignment.candidateUsers">
+                            <div class="row">
+                                <div class="col-sm-9"> <input id="userField" class="form-control" type="text" ng-model="candidateUser.value" /></div>
+                                <div class="col-sm-3"> <button ng-click="selectUserDialog($index)"   class="btn btn-outline btn-primary" title="选择用户"><i class="fa fa-plus-circle"></i> 选择用户</button></div>
+                            </div>
+                            <i class="glyphicon glyphicon-minus clickable-property" ng-click="removeCandidateUserValue($index)"></i>
+                            <i ng-if="$index == (assignment.candidateUsers.length - 1)" class="glyphicon glyphicon-plus clickable-property" ng-click="addCandidateUserValue($index)"></i>
+                        </div>
+                   	</div>
+
+                    <div class="form-group">
+                        <label for="groupField">{{'PROPERTY.ASSIGNMENT.CANDIDATE_GROUPS' | translate}}</label>
+                        <div ng-repeat="candidateGroup in assignment.candidateGroups">
+                            <div class="row">
+                                <div class="col-sm-9"> <input id="groupField" class="form-control" type="text" ng-model="candidateGroup.value" /></div>
+                                <div class="col-sm-3">  <button ng-click="selectRoleDialog($index)" class="btn btn-outline btn-primary" title="选择角色"><i class="fa fa-plus-circle"></i> 选择角色</button></div>
+                            </div>
+                            <i class="glyphicon glyphicon-minus clickable-property" ng-click="removeCandidateGroupValue($index)"></i>
+                            <i ng-if="$index == (assignment.candidateGroups.length - 1)" class="glyphicon glyphicon-plus clickable-property" ng-click="addCandidateGroupValue($index)"></i>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div class="modal-footer">
+                <button ng-click="close()" class="btn btn-primary" translate>ACTION.CANCEL</button>
+                <button ng-click="save()" class="btn btn-primary" translate>ACTION.SAVE</button>
+            </div>
+        </div>
+    </div>
+</div>
