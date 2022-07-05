@@ -15,6 +15,5 @@
     <modules>
         <module>laokou-admin</module>
         <module>laokou-redis</module>
-        <module>laokou-act</module>
     </modules>
 </project>
