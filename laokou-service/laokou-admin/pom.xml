@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>io.laokou</groupId>
 	<artifactId>laokou-admin</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>laokou-admin</name>
 	<description>admin管理</description>
 	<properties>
@@ -138,6 +138,10 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.flowable</groupId>
+			<artifactId>flowable-spring-boot-starter-process</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

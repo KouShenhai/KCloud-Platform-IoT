@@ -34,7 +34,7 @@ management:
 
 #mybatis
 mybatis-plus:
-  mapper-locations: classpath:/mapper/*.xml
+  mapper-locations: classpath:/mapper/**/*.xml
   #实体类扫描，多个package用头号或分号分隔
   type-aliases-package: io.laokou.admin.domain.**.entity
   global-config:
@@ -122,3 +122,6 @@ admin:
       url: /sys/log/api/login/insert
     - permission: anon
       url: /sys/log/api/login/insert
+
+flowable:
+  database-schema-update: true

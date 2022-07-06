@@ -71,7 +71,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
             }
             return sysRoleMenuService.saveBatch(roleMenuList);
         }
-        return Boolean.FALSE;
+        return false;
     }
 
     @Override

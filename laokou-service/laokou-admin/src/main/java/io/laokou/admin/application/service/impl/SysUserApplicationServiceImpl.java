@@ -119,7 +119,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
             }
             sysUserRoleService.saveBatch(doList);
         }
-        return Boolean.FALSE;
+        return false;
     }
 
 }
