@@ -3,10 +3,13 @@ package io.laokou.admin.application.service.impl;
 import io.laokou.admin.application.service.FlowableDefinitionApplicationService;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.DeploymentBuilder;
+import org.flowable.engine.repository.ProcessDefinition;
+import org.flowable.engine.repository.ProcessDefinitionQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author Kou Shenhai
@@ -28,6 +31,15 @@ public class FlowableDefinitionApplicationServiceImpl implements FlowableDefinit
                 .addInputStream(processName, in);
         deploymentBuilder.deploy();
         return true;
+    }
+
+    @Override
+    public void query() {
+        ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery()
+                .latestVersion()
+                .orderByProcessDefinitionKey().asc();
+        long pageTotal = processDefinitionQuery.count();
+        List<ProcessDefinition> definitionList = processDefinitionQuery.listPage(0, 100);
     }
 
 }

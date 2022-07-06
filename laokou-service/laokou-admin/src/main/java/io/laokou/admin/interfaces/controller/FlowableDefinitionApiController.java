@@ -29,4 +29,10 @@ public class FlowableDefinitionApiController {
         return new HttpResultUtil<Boolean>().ok(flowableDefinitionApplicationService.importFile(name, file.getInputStream()));
     }
 
+    @PostMapping("/query")
+    @ApiOperation("流程定义>分页")
+    public void query() {
+        flowableDefinitionApplicationService.query();
+    }
+
 }

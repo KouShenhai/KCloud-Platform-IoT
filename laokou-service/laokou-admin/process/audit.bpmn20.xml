@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:flowable="http://flowable.org/bpmn" id="diagram_Process_1657119032467" targetNamespace="http://flowable.org/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="Process_1657119032467" name="审核流程" isExecutable="true">
+    <bpmn2:startEvent id="laokou-start" name="开始">
+      <bpmn2:outgoing>Flow_0mqfnvf</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:userTask id="laokou-sign" name="会签" flowable:assignee="1537114827246292994">
+      <bpmn2:incoming>Flow_0mqfnvf</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_156vnq9</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="Flow_0mqfnvf" sourceRef="laokou-start" targetRef="laokou-sign" />
+    <bpmn2:userTask id="laokou-audit-1" name="项目经理审核" flowable:assignee="1341623527018004481">
+      <bpmn2:incoming>Flow_156vnq9</bpmn2:incoming>
+      <bpmn2:incoming>laokou-no-2</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1wqdzbn</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="Flow_156vnq9" sourceRef="laokou-sign" targetRef="laokou-audit-1" />
+    <bpmn2:exclusiveGateway id="laokou-gateway-1" name="网关1">
+      <bpmn2:incoming>Flow_1wqdzbn</bpmn2:incoming>
+      <bpmn2:outgoing>laokou-yes-1</bpmn2:outgoing>
+      <bpmn2:outgoing>laokou-no-1</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="Flow_1wqdzbn" sourceRef="laokou-audit-1" targetRef="laokou-gateway-1" />
+    <bpmn2:userTask id="laokou-audit-2" name="项目总监审批" flowable:assignee="1341620898007281665">
+      <bpmn2:incoming>laokou-yes-1</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1yjuyra</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="laokou-yes-1" name="同意" sourceRef="laokou-gateway-1" targetRef="laokou-audit-2">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${auditStatus==1}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:exclusiveGateway id="laokou-gateway-2" name="网关2">
+      <bpmn2:incoming>Flow_1yjuyra</bpmn2:incoming>
+      <bpmn2:outgoing>laokou-yes-2</bpmn2:outgoing>
+      <bpmn2:outgoing>laokou-no-2</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="Flow_1yjuyra" sourceRef="laokou-audit-2" targetRef="laokou-gateway-2" />
+    <bpmn2:endEvent id="laokou-end" name="结束">
+      <bpmn2:incoming>laokou-yes-2</bpmn2:incoming>
+      <bpmn2:incoming>laokou-no-1</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="laokou-yes-2" name="同意" sourceRef="laokou-gateway-2" targetRef="laokou-end">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${auditStatus==1}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="laokou-no-1" name="拒绝" sourceRef="laokou-gateway-1" targetRef="laokou-end">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${auditStatus==0}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="laokou-no-2" name="拒绝" sourceRef="laokou-gateway-2" targetRef="laokou-audit-1">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${auditStatus==0}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1657119032467">
+      <bpmndi:BPMNEdge id="Flow_0mqfnvf_di" bpmnElement="Flow_0mqfnvf">
+        <di:waypoint x="258" y="300" />
+        <di:waypoint x="310" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_156vnq9_di" bpmnElement="Flow_156vnq9">
+        <di:waypoint x="410" y="300" />
+        <di:waypoint x="470" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wqdzbn_di" bpmnElement="Flow_1wqdzbn">
+        <di:waypoint x="570" y="300" />
+        <di:waypoint x="635" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="laokou-yes-1_di" bpmnElement="laokou-yes-1">
+        <di:waypoint x="685" y="300" />
+        <di:waypoint x="750" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="706" y="282" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yjuyra_di" bpmnElement="Flow_1yjuyra">
+        <di:waypoint x="850" y="300" />
+        <di:waypoint x="915" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="laokou-yes-2_di" bpmnElement="laokou-yes-2">
+        <di:waypoint x="965" y="300" />
+        <di:waypoint x="1032" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="987" y="282" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="laokou-no-1_di" bpmnElement="laokou-no-1">
+        <di:waypoint x="660" y="325" />
+        <di:waypoint x="660" y="410" />
+        <di:waypoint x="1050" y="410" />
+        <di:waypoint x="1050" y="318" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="844" y="392" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="laokou-no-2_di" bpmnElement="laokou-no-2">
+        <di:waypoint x="940" y="275" />
+        <di:waypoint x="940" y="220" />
+        <di:waypoint x="520" y="220" />
+        <di:waypoint x="520" y="260" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="719" y="202" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="laokou-start_di" bpmnElement="laokou-start">
+        <dc:Bounds x="222" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="229" y="325" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="laokou-sign_di" bpmnElement="laokou-sign">
+        <dc:Bounds x="310" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="laokou-audit-1_di" bpmnElement="laokou-audit-1">
+        <dc:Bounds x="470" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="laokou-gateway-1_di" bpmnElement="laokou-gateway-1" isMarkerVisible="true">
+        <dc:Bounds x="635" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="645" y="251" width="29" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="laokou-audit-2_di" bpmnElement="laokou-audit-2">
+        <dc:Bounds x="750" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="laokou-gateway-2_di" bpmnElement="laokou-gateway-2" isMarkerVisible="true">
+        <dc:Bounds x="915" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="926" y="332" width="29" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="laokou-end_di" bpmnElement="laokou-end">
+        <dc:Bounds x="1032" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1038" y="258" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

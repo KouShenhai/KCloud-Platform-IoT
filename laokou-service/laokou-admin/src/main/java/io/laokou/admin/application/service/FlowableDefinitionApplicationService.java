@@ -9,8 +9,10 @@ import java.io.InputStream;
  */
 public interface FlowableDefinitionApplicationService {
 
-    static final String BPMN_FILE_SUFFIX = ".bpmn";
+    String BPMN_FILE_SUFFIX = ".bpmn";
 
     Boolean importFile(String name, InputStream in);
+
+    void query();
 
 }
