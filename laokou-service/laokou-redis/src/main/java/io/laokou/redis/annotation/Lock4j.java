@@ -2,6 +2,9 @@ package io.laokou.redis.annotation;
 
 import java.lang.annotation.*;
 
+/**
+ * @author Kou Shenhai
+ */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
