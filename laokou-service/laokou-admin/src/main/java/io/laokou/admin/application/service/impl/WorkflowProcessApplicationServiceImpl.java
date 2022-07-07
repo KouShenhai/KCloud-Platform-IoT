@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.WorkflowProcessApplicationService;
 import io.laokou.admin.infrastructure.common.user.SecurityUser;
-import io.laokou.admin.interfaces.qo.TodoQO;
-import io.laokou.admin.interfaces.vo.TodoVO;
+import io.laokou.admin.interfaces.qo.TaskQO;
+import io.laokou.admin.interfaces.vo.TaskVO;
 import io.laokou.common.exception.CustomException;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.RepositoryService;
@@ -50,7 +50,7 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
     }
 
     @Override
-    public IPage<TodoVO> todoTaskPage(TodoQO qo, HttpServletRequest request) {
+    public IPage<TaskVO> taskPage(TaskQO qo, HttpServletRequest request) {
         final Integer pageNum = qo.getPageNum();
         final Integer pageSize = qo.getPageSize();
         final Long userId = SecurityUser.getUserId(request);
@@ -61,12 +61,12 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
                 .taskCandidateOrAssigned(userId.toString())
                 .orderByTaskCreateTime().desc();
         final long pageTotal = taskQuery.count();
-        IPage<TodoVO> page = new Page<>(pageNum,pageSize,pageTotal);
+        IPage<TaskVO> page = new Page<>(pageNum,pageSize,pageTotal);
         int  pageIndex = pageSize * (pageNum - 1);
         final List<Task> taskList = taskQuery.listPage(pageIndex, pageSize);
-        List<TodoVO> voList = Lists.newArrayList();
+        List<TaskVO> voList = Lists.newArrayList();
         for (Task task : taskList) {
-            TodoVO vo = new TodoVO();
+            TaskVO vo = new TaskVO();
             vo.setTaskId(task.getId());
             vo.setTaskDefinitionKey(task.getTaskDefinitionKey());
             vo.setProcessInstanceId(task.getProcessInstanceId());

@@ -7,6 +7,7 @@ import io.laokou.admin.interfaces.qo.DefinitionQO;
 import io.laokou.admin.interfaces.vo.DefinitionVO;
 import io.laokou.common.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.DeploymentBuilder;
@@ -52,8 +53,10 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
     public IPage<DefinitionVO> queryDefinitionPage(DefinitionQO qo) {
         ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery()
                 .latestVersion()
-                .processDefinitionNameLike("%" + qo.getProcessName() + "%")
                 .orderByProcessDefinitionKey().asc();
+        if (StringUtils.isNotBlank(qo.getProcessName())) {
+            processDefinitionQuery = processDefinitionQuery.processDefinitionNameLike("%" + qo.getProcessName() + "%");
+        }
         long pageTotal = processDefinitionQuery.count();
         Integer pageNum = qo.getPageNum();
         Integer pageSize = qo.getPageSize();
@@ -64,7 +67,7 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
         for (ProcessDefinition processDefinition : definitionList) {
             DefinitionVO vo = new DefinitionVO();
             vo.setDefinitionId(processDefinition.getId());
-            vo.setProcessName(processDefinition.getKey());
+            vo.setProcessKey(processDefinition.getKey());
             vo.setProcessName(processDefinition.getName());
             vo.setDeploymentId(processDefinition.getDeploymentId());
             vo.setSuspended(processDefinition.isSuspended());

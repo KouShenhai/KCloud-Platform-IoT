@@ -10,7 +10,7 @@ import java.util.Date;
  * @date 2022/7/7 0007 下午 5:34
  */
 @Data
-public class TodoVO {
+public class TaskVO {
 
     /**
      * 任务id
