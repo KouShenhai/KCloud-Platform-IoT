@@ -43,7 +43,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
 			log.error("远程调用失败：{}",e.getMessage());
 			result = parseFeignException(e);
 		} else if (e instanceof NotFoundException || e instanceof RuntimeException){
-			log.error("服务未启动：{}",e.getMessage());
+			log.error("服务未启动或服务运行异常");
 			result = result.error("服务正在维护，请联系管理员");
 		}
 		threadLocal.set(result);

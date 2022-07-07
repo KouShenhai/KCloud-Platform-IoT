@@ -1,7 +1,9 @@
 package io.laokou.admin.application.service;
-
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.laokou.admin.interfaces.qo.DefinitionQO;
+import io.laokou.admin.interfaces.vo.DefinitionVO;
+import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
-
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -13,6 +15,10 @@ public interface FlowableDefinitionApplicationService {
 
     Boolean importFile(String name, InputStream in);
 
-    void query();
+    IPage<DefinitionVO> queryDefinitionPage(DefinitionQO qo);
+
+    void imageProcess(String definitionId, HttpServletResponse response);
+
+    Boolean deleteDefinition(String deploymentId);
 
 }

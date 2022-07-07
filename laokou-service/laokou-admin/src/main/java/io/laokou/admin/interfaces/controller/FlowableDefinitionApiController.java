@@ -1,15 +1,16 @@
 package io.laokou.admin.interfaces.controller;
-
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.FlowableDefinitionApplicationService;
+import io.laokou.admin.interfaces.qo.DefinitionQO;
+import io.laokou.admin.interfaces.vo.DefinitionVO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -31,8 +32,20 @@ public class FlowableDefinitionApiController {
 
     @PostMapping("/query")
     @ApiOperation("流程定义>分页")
-    public void query() {
-        flowableDefinitionApplicationService.query();
+    public HttpResultUtil<IPage<DefinitionVO>> query(@RequestBody DefinitionQO qo) {
+        return new HttpResultUtil<IPage<DefinitionVO>>().ok(flowableDefinitionApplicationService.queryDefinitionPage(qo));
+    }
+
+    @GetMapping("/image")
+    @ApiOperation("流程定义>图片")
+    public void image(@RequestParam("definitionId")String definitionId, HttpServletResponse response) {
+        flowableDefinitionApplicationService.imageProcess(definitionId,response);
+    }
+
+    @DeleteMapping("/delete")
+    @ApiOperation("流程定义>删除")
+    public HttpResultUtil<Boolean> delete(@RequestParam("deploymentId")String deploymentId) {
+        return new HttpResultUtil<Boolean>().ok(flowableDefinitionApplicationService.deleteDefinition(deploymentId));
     }
 
 }

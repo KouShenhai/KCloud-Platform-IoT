@@ -85,6 +85,7 @@ laokou:
     - /sys/auth/api/captcha
     - /sys/auth/api/login
     - /sys/auth/api/zfbLogin
+    - /flowable/definition/api/image
     - /actuator/**
     - /swagger/api-docs
     - /swagger-resources/**
