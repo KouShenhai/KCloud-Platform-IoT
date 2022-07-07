@@ -9,7 +9,7 @@ import java.io.InputStream;
  * @version 1.0
  * @date 2022/7/6 0006 下午 6:10
  */
-public interface FlowableDefinitionApplicationService {
+public interface WorkflowDefinitionApplicationService {
 
     String BPMN_FILE_SUFFIX = ".bpmn";
 

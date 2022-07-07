@@ -123,7 +123,7 @@ admin:
     - permission: anon
       url: /sys/log/api/login/insert
     - permission: anon
-      url: /flowable/definition/api/image
+      url: /workflow/definition/api/image
 
 flowable:
   database-schema-update: true

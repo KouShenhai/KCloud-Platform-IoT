@@ -2,7 +2,7 @@ package io.laokou.admin.application.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
-import io.laokou.admin.application.service.FlowableDefinitionApplicationService;
+import io.laokou.admin.application.service.WorkflowDefinitionApplicationService;
 import io.laokou.admin.interfaces.qo.DefinitionQO;
 import io.laokou.admin.interfaces.vo.DefinitionVO;
 import io.laokou.common.exception.CustomException;
@@ -32,7 +32,7 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor = Exception.class)
 @Slf4j
-public class FlowableDefinitionApplicationServiceImpl implements FlowableDefinitionApplicationService {
+public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinitionApplicationService {
 
     @Autowired
     private RepositoryService repositoryService;
