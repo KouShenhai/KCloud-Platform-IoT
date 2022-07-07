@@ -17,9 +17,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class SysRoleApplicationServiceImpl implements SysRoleApplicationService {
 
     @Autowired

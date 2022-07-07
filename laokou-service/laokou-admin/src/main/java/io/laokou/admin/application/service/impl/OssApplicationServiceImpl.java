@@ -6,11 +6,13 @@ import io.laokou.admin.interfaces.vo.UploadVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
 
 @Service
 @Slf4j
+@Transactional(rollbackFor = Exception.class)
 public class OssApplicationServiceImpl implements OssApplicationService {
 
     @Autowired

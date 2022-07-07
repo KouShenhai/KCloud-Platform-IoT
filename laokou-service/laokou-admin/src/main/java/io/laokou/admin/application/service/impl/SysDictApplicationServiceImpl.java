@@ -12,10 +12,12 @@ import io.laokou.admin.interfaces.vo.DictVO;
 import io.laokou.common.utils.ConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class SysDictApplicationServiceImpl implements SysDictApplicationService {
 
     @Autowired

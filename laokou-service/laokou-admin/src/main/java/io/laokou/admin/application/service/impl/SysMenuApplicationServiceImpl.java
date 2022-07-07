@@ -15,9 +15,12 @@ import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.TreeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class SysMenuApplicationServiceImpl implements SysMenuApplicationService {
 
     @Autowired

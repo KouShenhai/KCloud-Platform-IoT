@@ -38,6 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
 import javax.crypto.BadPaddingException;
@@ -54,6 +55,7 @@ import java.util.*;
  */
 @Service
 @Slf4j
+@Transactional(rollbackFor = Exception.class)
 public class SysAuthApplicationServiceImpl implements SysAuthApplicationService {
 
     private final static AntPathMatcher antPathMatcher = new AntPathMatcher();

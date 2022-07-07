@@ -16,8 +16,10 @@ import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.common.utils.ConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class SysLogApplicationServiceImpl implements SysLogApplicationService {
 
     @Autowired
