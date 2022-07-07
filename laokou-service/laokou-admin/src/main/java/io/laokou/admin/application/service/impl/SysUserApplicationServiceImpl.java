@@ -13,7 +13,7 @@ import io.laokou.admin.infrastructure.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.UserDTO;
 import io.laokou.admin.interfaces.qo.UserQO;
 import io.laokou.admin.interfaces.vo.UserVO;
-import io.laokou.common.enums.SuperAdminEnum;
+import io.laokou.admin.infrastructure.common.enums.SuperAdminEnum;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.ConvertUtil;

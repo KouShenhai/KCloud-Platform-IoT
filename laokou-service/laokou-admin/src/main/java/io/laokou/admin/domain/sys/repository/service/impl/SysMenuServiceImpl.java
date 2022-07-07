@@ -7,7 +7,7 @@ import io.laokou.admin.domain.sys.repository.dao.SysMenuDao;
 import io.laokou.admin.interfaces.qo.MenuQO;
 import io.laokou.admin.interfaces.vo.MenuVO;
 import io.laokou.admin.domain.sys.repository.service.SysMenuService;
-import io.laokou.common.enums.SuperAdminEnum;
+import io.laokou.admin.infrastructure.common.enums.SuperAdminEnum;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.RedisKeyUtil;
 import io.laokou.redis.RedisUtil;

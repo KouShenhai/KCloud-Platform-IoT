@@ -2,7 +2,7 @@ package io.laokou.admin.infrastructure.common.cloud;
 import com.alibaba.fastjson.JSON;
 import io.laokou.admin.infrastructure.component.AdminHandler;
 import io.laokou.admin.infrastructure.config.CloudStorageConfig;
-import io.laokou.common.enums.CloudTypeEnum;
+import io.laokou.admin.infrastructure.common.enums.CloudTypeEnum;
 import io.laokou.common.exception.CustomException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @Api(value = "流程任务API",protocols = "http",tags = "流程任务API")
 @RequestMapping("/workflow/task/api")
@@ -19,8 +22,8 @@ public class WorkflowTaskApiController {
 
     @PostMapping(value = "/audit")
     @ApiOperation(value = "流程任务>审批")
-    public HttpResultUtil<Boolean> audit(@RequestBody AuditDTO dto) {
-        return new HttpResultUtil<Boolean>().ok(workflowTaskApplicationService.auditTask(dto));
+    public HttpResultUtil<Boolean> audit(@RequestBody AuditDTO dto, HttpServletRequest request) {
+        return new HttpResultUtil<Boolean>().ok(workflowTaskApplicationService.auditTask(dto,request));
     }
 
 }

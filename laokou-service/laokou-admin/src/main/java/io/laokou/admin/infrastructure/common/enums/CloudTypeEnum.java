@@ -1,4 +1,4 @@
-package io.laokou.common.enums;
+package io.laokou.admin.infrastructure.common.enums;
 
 /**
  * @author Kou Shenhai
