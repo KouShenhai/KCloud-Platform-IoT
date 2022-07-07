@@ -9,4 +9,7 @@ import java.io.Serializable;
  */
 @Data
 public class DefinitionQO extends BasePage implements Serializable {
+
+    private String processName;
+
 }

@@ -21,4 +21,7 @@ public interface FlowableDefinitionApplicationService {
 
     Boolean deleteDefinition(String deploymentId);
 
+    Boolean suspendDefinition(String definitionId);
+
+    Boolean activateDefinition(String definitionId);
 }

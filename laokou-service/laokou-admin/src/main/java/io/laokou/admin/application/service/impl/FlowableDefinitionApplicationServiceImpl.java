@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.FlowableDefinitionApplicationService;
 import io.laokou.admin.interfaces.qo.DefinitionQO;
 import io.laokou.admin.interfaces.vo.DefinitionVO;
+import io.laokou.common.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.RepositoryService;
@@ -51,6 +52,7 @@ public class FlowableDefinitionApplicationServiceImpl implements FlowableDefinit
     public IPage<DefinitionVO> queryDefinitionPage(DefinitionQO qo) {
         ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery()
                 .latestVersion()
+                .processDefinitionNameLike(qo.getProcessName())
                 .orderByProcessDefinitionKey().asc();
         long pageTotal = processDefinitionQuery.count();
         Integer pageNum = qo.getPageNum();
@@ -108,6 +110,30 @@ public class FlowableDefinitionApplicationServiceImpl implements FlowableDefinit
     public Boolean deleteDefinition(String deploymentId) {
         // true允许级联删除 不设置会导致数据库关联异常
         repositoryService.deleteDeployment(deploymentId,true);
+        return true;
+    }
+
+    @Override
+    public Boolean suspendDefinition(String definitionId) {
+        final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(definitionId).singleResult();
+        if (processDefinition.isSuspended()) {
+            throw new CustomException("挂起失败，流程已挂起");
+        } else {
+            // 挂起
+            repositoryService.suspendProcessDefinitionById(definitionId, true, null);
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean activateDefinition(String definitionId) {
+        final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(definitionId).singleResult();
+        if (processDefinition.isSuspended()) {
+            // 激活
+            repositoryService.activateProcessDefinitionById(definitionId, true, null);
+        } else {
+            throw new CustomException("激活失败，流程已激活");
+        }
         return true;
     }
 

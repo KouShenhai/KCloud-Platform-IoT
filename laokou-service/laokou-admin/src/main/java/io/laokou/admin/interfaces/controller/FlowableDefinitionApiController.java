@@ -48,4 +48,16 @@ public class FlowableDefinitionApiController {
         return new HttpResultUtil<Boolean>().ok(flowableDefinitionApplicationService.deleteDefinition(deploymentId));
     }
 
+    @PutMapping("/suspend")
+    @ApiOperation("流程定义>挂起")
+    public HttpResultUtil<Boolean> suspend(@RequestParam("definitionId")String definitionId) {
+        return new HttpResultUtil<Boolean>().ok(flowableDefinitionApplicationService.suspendDefinition(definitionId));
+    }
+
+    @PutMapping("/activate")
+    @ApiOperation("流程定义>激活")
+    public HttpResultUtil<Boolean> activate(@RequestParam("definitionId")String definitionId) {
+        return new HttpResultUtil<Boolean>().ok(flowableDefinitionApplicationService.activateDefinition(definitionId));
+    }
+
 }
