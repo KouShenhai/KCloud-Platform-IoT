@@ -28,9 +28,10 @@ public class TokenUtil {
         return EXPIRE;
     }
 
-    public static Map<String,Object> getClaims(Long userId) {
+    public static Map<String,Object> getClaims(Long userId,String username) {
         Map<String,Object> claims = new HashMap<>(1);
         claims.put(Constant.USER_KEY_HEAD, userId);
+        claims.put(Constant.USERNAME_HEAD,username);
         return claims;
     }
 
@@ -90,6 +91,10 @@ public class TokenUtil {
 
     public static Long getUserId(String token) {
         return getClaimsBody(token).get(Constant.USER_KEY_HEAD,Long.class);
+    }
+
+    public static String getUsername(String token) {
+        return getClaimsBody(token).get(Constant.USERNAME_HEAD,String.class);
     }
 
     public static Jws<Claims> getJws(String token){

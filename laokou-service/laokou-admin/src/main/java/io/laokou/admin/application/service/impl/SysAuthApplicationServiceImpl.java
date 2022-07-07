@@ -142,9 +142,10 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     private String getToken(UserDetail userDetail) {
         //region Description
         //编号
-        Long userId = userDetail.getId();
+        final Long userId = userDetail.getId();
+        final String username = userDetail.getUsername();
         //登录成功 > 生成token
-        String token = TokenUtil.getToken(TokenUtil.getClaims(userId));
+        String token = TokenUtil.getToken(TokenUtil.getClaims(userId,username));
         log.info("Token is：{}", token);
         //资源列表放到redis中
         String userResourceKey = RedisKeyUtil.getUserResourceKey(userId);

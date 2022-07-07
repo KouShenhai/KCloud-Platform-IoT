@@ -52,15 +52,12 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
     public IPage<DefinitionVO> queryDefinitionPage(DefinitionQO qo) {
         ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery()
                 .latestVersion()
-                .processDefinitionNameLike(qo.getProcessName())
+                .processDefinitionNameLike("%" + qo.getProcessName() + "%")
                 .orderByProcessDefinitionKey().asc();
         long pageTotal = processDefinitionQuery.count();
         Integer pageNum = qo.getPageNum();
         Integer pageSize = qo.getPageSize();
         IPage<DefinitionVO> page = new Page<>(pageNum,pageSize,pageTotal);
-        if (pageTotal == 0) {
-            return page;
-        }
         int pageIndex = pageSize * (pageNum - 1);
         List<ProcessDefinition> definitionList = processDefinitionQuery.listPage(pageIndex, pageSize);
         List<DefinitionVO> definitions = Lists.newArrayList();

@@ -19,4 +19,16 @@ public class SecurityUser {
         return Long.valueOf(userIdHeader);
     }
 
+    public static String getUsername(HttpServletRequest request) {
+        String userNameHeader = request.getHeader(Constant.USERNAME_HEAD);
+        if (StringUtils.isBlank(userNameHeader)) {
+            String authHeader = request.getHeader(Constant.AUTHORIZATION_HEADER);
+            if (StringUtils.isBlank(authHeader)) {
+                throw new CustomException(ErrorCode.UNAUTHORIZED);
+            }
+            return TokenUtil.getUsername(authHeader);
+        }
+        return userNameHeader;
+    }
+
 }
