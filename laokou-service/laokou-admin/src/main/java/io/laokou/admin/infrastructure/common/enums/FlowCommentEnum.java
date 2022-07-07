@@ -1,8 +1,13 @@
 package io.laokou.admin.infrastructure.common.enums;
 
+/**
+ * @author Kou Shenhai
+ */
+
 public enum  FlowCommentEnum {
 
-    NORMAL("1","正常");
+    NORMAL("1","正常"),
+    DELEGATE("4","委派");
 
     private final String type;
 
