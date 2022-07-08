@@ -1,11 +1,7 @@
 package io.laokou.admin.interfaces.dto;
-
 import lombok.Data;
-
-import java.io.Serializable;
-
 @Data
-public class DictDTO implements Serializable {
+public class DictDTO {
 
     private Long id;
     /**

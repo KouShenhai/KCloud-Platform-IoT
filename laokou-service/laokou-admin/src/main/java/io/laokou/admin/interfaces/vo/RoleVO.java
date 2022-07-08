@@ -1,8 +1,7 @@
 package io.laokou.admin.interfaces.vo;
 import lombok.Data;
-import java.io.Serializable;
 @Data
-public class RoleVO implements Serializable {
+public class RoleVO {
     private Long id;
 
     private String name;

@@ -1,13 +1,9 @@
 package io.laokou.admin.interfaces.vo;
-
 import lombok.Data;
-
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 @Data
-public class UserVO implements Serializable {
+public class UserVO{
 
     private Long id;
 

@@ -2,7 +2,6 @@ package io.laokou.admin.interfaces.vo;
 import io.laokou.common.utils.TreeUtil;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import java.io.Serializable;
 /**
  * 系统菜单VO
  * @author Kou Shenhai
@@ -11,7 +10,7 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel("系统菜单VO")
-public class MenuVO extends TreeUtil.TreeNo<MenuVO> implements Serializable {
+public class MenuVO extends TreeUtil.TreeNo<MenuVO> {
 
     /**
      * 类型   0：菜单   1：按钮

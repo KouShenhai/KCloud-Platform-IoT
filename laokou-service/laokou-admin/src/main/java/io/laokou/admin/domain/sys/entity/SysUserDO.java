@@ -1,5 +1,4 @@
 package io.laokou.admin.domain.sys.entity;
-
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,17 +6,14 @@ import io.laokou.common.entity.BaseDO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
-
 /**
  * 用户管理
  * @author  Kou Shenhai
  */
 @Data
 @TableName("boot_sys_user")
-public class SysUserDO extends BaseDO implements Serializable {
+public class SysUserDO extends BaseDO {
 
     @NotBlank(message = "{sys.user.password.require}")
     @ApiModelProperty(value = "密码",name = "password",required = true,example = "123456")

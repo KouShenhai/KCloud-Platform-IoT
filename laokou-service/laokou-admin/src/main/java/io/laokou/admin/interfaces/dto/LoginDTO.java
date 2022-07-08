@@ -3,14 +3,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 /**
  * 账号密码DTO
  * @author Kou Shenhai
  */
 @Data
 @ApiModel(value = "账号密码DTO")
-public class LoginDTO implements Serializable {
+public class LoginDTO {
 
     @NotBlank(message = "{sys.user.username.require}")
     @ApiModelProperty(value = "用户名",name = "username",required = true,example = "admin")

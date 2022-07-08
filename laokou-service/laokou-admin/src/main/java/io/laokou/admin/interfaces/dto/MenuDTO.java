@@ -1,11 +1,7 @@
 package io.laokou.admin.interfaces.dto;
-
 import lombok.Data;
-
-import java.io.Serializable;
-
 @Data
-public class MenuDTO implements Serializable {
+public class MenuDTO {
 
     /**
      * 类型   0：菜单   1：按钮

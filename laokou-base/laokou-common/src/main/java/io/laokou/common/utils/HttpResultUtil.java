@@ -1,19 +1,15 @@
 package io.laokou.common.utils;
-
 import io.laokou.common.exception.ErrorCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.io.Serializable;
-
 /**
  * 统一返回结果类
  * @author  Kou Shenhai
  */
 @Data
 @ApiModel("响应")
-public class HttpResultUtil<T> implements Serializable {
+public class HttpResultUtil<T> {
     /**
      * 编码：0标识成功，其他值表示失败
      */

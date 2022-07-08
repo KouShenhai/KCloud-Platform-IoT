@@ -1,15 +1,12 @@
 package io.laokou.admin.domain.sys.entity;
-
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.laokou.common.entity.BaseDO;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-
-import java.io.Serializable;
 @Data
 @TableName("boot_sys_login_log")
 @ApiModel("系统日志>登录日志DO")
-public class SysLoginLogDO extends BaseDO implements Serializable {
+public class SysLoginLogDO extends BaseDO {
 
     /**
      * 登录用户

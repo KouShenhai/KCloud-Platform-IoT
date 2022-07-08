@@ -5,7 +5,6 @@ import com.google.common.collect.Lists;
 import io.laokou.common.exception.CustomException;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
-import java.io.Serializable;
 import java.util.*;
 /**
  * 构造树
@@ -14,7 +13,7 @@ import java.util.*;
  * @date 2022/5/20 0020 下午 8:20
  */
 @Data
-public class TreeUtil<T> implements Serializable {
+public class TreeUtil<T> {
     public static <T extends TreeNo> TreeNo<T> rootRootNode(String name,String icon){
         return new TreeNo(0L,name,null,icon, Lists.newArrayList());
     }
@@ -56,7 +55,7 @@ public class TreeUtil<T> implements Serializable {
         }
         return null;
     }
-    public static class TreeNo<T> implements Serializable {
+    public static class TreeNo<T> {
         @JSONField(serializeUsing = ToStringSerializer.class)
         private Long id;
         private String name;

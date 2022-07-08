@@ -1,15 +1,11 @@
 package io.laokou.admin.infrastructure.config;
-
 import lombok.Data;
-
-import java.io.Serializable;
-
 /**
  * 云存储配置信息
  * @author  Kou Shenhai
  */
 @Data
-public class CloudStorageConfig implements Serializable {
+public class CloudStorageConfig {
 
     /**
      * l：阿里云

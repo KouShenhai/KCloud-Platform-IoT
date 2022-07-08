@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 /**
  * 菜单管理
  *
@@ -15,7 +14,7 @@ import java.io.Serializable;
 @Data
 @TableName("boot_sys_menu")
 @ApiModel("菜单")
-public class SysMenuDO extends BaseDO implements Serializable {
+public class SysMenuDO extends BaseDO {
 	private static final long serialVersionUID = 1L;
 
 	/**

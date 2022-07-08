@@ -1,9 +1,8 @@
 package io.laokou.admin.interfaces.dto;
 import lombok.Data;
-import java.io.Serializable;
 import java.util.Map;
 @Data
-public class AuditDTO implements Serializable {
+public class AuditDTO {
 
     /**
      * 任务id

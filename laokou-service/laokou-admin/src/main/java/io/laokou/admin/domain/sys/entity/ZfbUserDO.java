@@ -1,13 +1,9 @@
 package io.laokou.admin.domain.sys.entity;
-
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-
-import java.io.Serializable;
-
 @Data
 @TableName("boot_zfb_user")
-public class ZfbUserDO implements Serializable {
+public class ZfbUserDO {
 
     /**
      * 支付宝用户唯一标识

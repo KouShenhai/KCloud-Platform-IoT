@@ -2,13 +2,12 @@ package io.laokou.common.user;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 import lombok.Data;
-import java.io.Serializable;
 import java.util.List;
 /**
  * @author Kou Shenhai
  */
 @Data
-public class UserDetail implements Serializable {
+public class UserDetail {
     private static final long serialVersionUID = 1L;
     @JSONField(serializeUsing = ToStringSerializer.class)
     private Long id;

@@ -1,12 +1,8 @@
 package io.laokou.admin.interfaces.qo;
-
 import io.laokou.common.entity.BasePage;
 import lombok.Data;
-
-import java.io.Serializable;
-
 @Data
-public class LoginLogQO extends BasePage implements Serializable {
+public class LoginLogQO extends BasePage {
 
     private String loginName;
 

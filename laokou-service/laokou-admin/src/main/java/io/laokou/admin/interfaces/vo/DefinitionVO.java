@@ -1,16 +1,12 @@
 package io.laokou.admin.interfaces.vo;
-
 import lombok.Data;
-
-import java.io.Serializable;
-
 /**
  * @author Kou Shenhai
  * @version 1.0
  * @date 2022/7/7 0007 上午 8:56
  */
 @Data
-public class DefinitionVO implements Serializable {
+public class DefinitionVO {
 
     /**
      * 流程定义id

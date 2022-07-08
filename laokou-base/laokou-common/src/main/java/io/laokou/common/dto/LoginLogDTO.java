@@ -1,11 +1,7 @@
 package io.laokou.common.dto;
-
 import lombok.Data;
-
-import java.io.Serializable;
-
 @Data
-public class LoginLogDTO implements Serializable {
+public class LoginLogDTO {
 
     /**
      * 登录用户

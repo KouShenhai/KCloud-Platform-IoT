@@ -1,8 +1,7 @@
 package io.laokou.common.dto;
 import lombok.Data;
-import java.io.Serializable;
 @Data
-public class OperateLogDTO implements Serializable {
+public class OperateLogDTO {
 
     /**
      * 模块名称，如：系统菜单

@@ -1,15 +1,11 @@
 package io.laokou.admin.domain.sys.entity;
-
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.laokou.common.entity.BaseDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
-
 /**
  * 角色管理
  * @author Kou Shenhai
@@ -17,7 +13,7 @@ import java.io.Serializable;
 @Data
 @TableName("boot_sys_role")
 @ApiModel("系统角色DO")
-public class SysRoleDO extends BaseDO implements Serializable {
+public class SysRoleDO extends BaseDO {
 
     /**
      * 角色名称

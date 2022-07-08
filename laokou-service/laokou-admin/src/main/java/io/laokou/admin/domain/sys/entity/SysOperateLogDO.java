@@ -3,11 +3,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.laokou.common.entity.BaseDO;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import java.io.Serializable;
 @Data
 @TableName("boot_sys_operate_log")
 @ApiModel("系统日志>操作日志DO")
-public class SysOperateLogDO extends BaseDO implements Serializable {
+public class SysOperateLogDO extends BaseDO {
 
     /**
      * 模块名称，如：系统菜单

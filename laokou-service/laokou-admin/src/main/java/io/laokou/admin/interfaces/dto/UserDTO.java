@@ -1,12 +1,8 @@
 package io.laokou.admin.interfaces.dto;
-
 import lombok.Data;
-
-import java.io.Serializable;
 import java.util.List;
-
 @Data
-public class UserDTO implements Serializable {
+public class UserDTO {
 
     private Long id;
 

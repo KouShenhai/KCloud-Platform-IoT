@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.io.Serializable;
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -16,7 +15,7 @@ import java.io.Serializable;
 @ApiModel(value = "登录VO")
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginVO implements Serializable {
+public class LoginVO {
 
     @ApiModelProperty(value = "令牌",example = "1234567abcdefgABCDEFG")
     private String token;
