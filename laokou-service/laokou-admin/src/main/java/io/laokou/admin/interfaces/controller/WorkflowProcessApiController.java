@@ -4,6 +4,7 @@ import io.laokou.admin.application.service.WorkflowProcessApplicationService;
 import io.laokou.admin.interfaces.qo.TaskQO;
 import io.laokou.admin.interfaces.vo.TaskVO;
 import io.laokou.common.utils.HttpResultUtil;
+import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class WorkflowProcessApiController {
 
     @PostMapping("/start")
     @ApiOperation("流程处理>开始")
+    @OperateLog(module = "流程处理",name = "流程发起")
     public HttpResultUtil<Boolean> start(@RequestParam("definitionId")String definitionId) {
         return new HttpResultUtil<Boolean>().ok(workflowProcessApplicationService.startProcess(definitionId));
     }

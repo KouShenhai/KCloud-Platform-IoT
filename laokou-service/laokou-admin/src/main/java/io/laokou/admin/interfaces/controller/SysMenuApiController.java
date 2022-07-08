@@ -43,21 +43,21 @@ public class SysMenuApiController {
 
     @PutMapping("/update")
     @ApiOperation("系统菜单>修改")
-    @OperateLog(module = "系统菜单",name = "修改菜单")
+    @OperateLog(module = "系统菜单",name = "菜单修改")
     public HttpResultUtil<Boolean> update(@RequestBody MenuDTO dto,HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysMenuApplicationService.updateMenu(dto,request));
     }
 
     @PostMapping("/insert")
     @ApiOperation("系统菜单>新增")
-    @OperateLog(module = "系统菜单",name = "新增菜单")
+    @OperateLog(module = "系统菜单",name = "菜单新增")
     public HttpResultUtil<Boolean> insert(@RequestBody MenuDTO dto,HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysMenuApplicationService.insertMenu(dto,request));
     }
 
     @DeleteMapping("/delete")
     @ApiOperation("系统菜单>删除")
-    @OperateLog(module = "系统菜单",name = "删除菜单")
+    @OperateLog(module = "系统菜单",name = "菜单删除")
     public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id) {
         return new HttpResultUtil<Boolean>().ok(sysMenuApplicationService.deleteMenu(id));
     }

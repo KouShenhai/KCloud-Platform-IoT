@@ -39,21 +39,21 @@ public class SysDictApiController {
 
     @PostMapping(value = "/insert")
     @ApiOperation("系统字典>新增")
-    @OperateLog(module = "系统字典",name = "新增字典")
+    @OperateLog(module = "系统字典",name = "字典新增")
     public HttpResultUtil<Boolean> insert(@RequestBody DictDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysDictApplicationService.insertDict(dto,request));
     }
 
     @PutMapping(value = "/update")
     @ApiOperation("系统字典>修改")
-    @OperateLog(module = "系统字典",name = "修改字典")
+    @OperateLog(module = "系统字典",name = "字典修改")
     public HttpResultUtil<Boolean> update(@RequestBody DictDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysDictApplicationService.updateDict(dto,request));
     }
 
     @DeleteMapping(value = "/delete")
     @ApiOperation("系统字典>删除")
-    @OperateLog(module = "系统字典",name = "删除字典")
+    @OperateLog(module = "系统字典",name = "字典删除")
     public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id) {
         return new HttpResultUtil<Boolean>().ok(sysDictApplicationService.deleteDict(id));
     }

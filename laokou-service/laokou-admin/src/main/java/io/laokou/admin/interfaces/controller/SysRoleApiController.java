@@ -45,21 +45,21 @@ public class SysRoleApiController {
 
     @PostMapping("/insert")
     @ApiOperation("系统角色>新增")
-    @OperateLog(module = "系统角色",name = "新增角色")
+    @OperateLog(module = "系统角色",name = "角色新增")
     public HttpResultUtil<Boolean> insert(@RequestBody RoleDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysRoleApplicationService.insertRole(dto, request));
     }
 
     @PutMapping("/update")
     @ApiOperation("系统角色>修改")
-    @OperateLog(module = "系统角色",name = "修改角色")
+    @OperateLog(module = "系统角色",name = "角色修改")
     public HttpResultUtil<Boolean> update(@RequestBody RoleDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysRoleApplicationService.updateRole(dto, request));
     }
 
     @DeleteMapping("/delete")
     @ApiOperation("系统角色>删除")
-    @OperateLog(module = "系统角色",name = "删除角色")
+    @OperateLog(module = "系统角色",name = "角色删除")
     public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id,HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysRoleApplicationService.deleteRole(id));
     }
