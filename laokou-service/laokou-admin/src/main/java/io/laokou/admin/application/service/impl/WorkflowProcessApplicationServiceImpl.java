@@ -48,7 +48,7 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
     }
 
     @Override
-    public IPage<TaskVO> taskPage(TaskQO qo, HttpServletRequest request) {
+    public IPage<TaskVO> queryTaskPage(TaskQO qo, HttpServletRequest request) {
         final Integer pageNum = qo.getPageNum();
         final Integer pageSize = qo.getPageSize();
         final Long userId = SecurityUser.getUserId(request);

@@ -23,10 +23,10 @@ public class WorkflowProcessApiController {
         return new HttpResultUtil<Boolean>().ok(workflowProcessApplicationService.startProcess(definitionId));
     }
 
-    @PostMapping("/task")
+    @PostMapping("/query")
     @ApiOperation("流程处理>任务")
-    public HttpResultUtil<IPage<TaskVO>> task(@RequestBody TaskQO qo, HttpServletRequest request) {
-        return new HttpResultUtil<IPage<TaskVO>>().ok(workflowProcessApplicationService.taskPage(qo,request));
+    public HttpResultUtil<IPage<TaskVO>> query(@RequestBody TaskQO qo, HttpServletRequest request) {
+        return new HttpResultUtil<IPage<TaskVO>>().ok(workflowProcessApplicationService.queryTaskPage(qo,request));
     }
 
 }

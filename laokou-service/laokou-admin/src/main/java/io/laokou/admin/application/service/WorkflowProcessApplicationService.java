@@ -10,6 +10,6 @@ public interface WorkflowProcessApplicationService {
 
     Boolean startProcess(String definitionId);
 
-    IPage<TaskVO> taskPage(TaskQO qo, HttpServletRequest request);
+    IPage<TaskVO> queryTaskPage(TaskQO qo, HttpServletRequest request);
 
 }
