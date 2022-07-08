@@ -19,9 +19,9 @@ import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +30,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
 /**
  * @author Kou Shenhai
  */
@@ -50,6 +49,7 @@ public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicati
     @Autowired
     private RepositoryService repositoryService;
 
+    @Qualifier("processEngine")
     @Autowired
     private ProcessEngine processEngine;
 

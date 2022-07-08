@@ -7,7 +7,7 @@ import io.laokou.admin.infrastructure.common.user.SecurityUser;
 import io.laokou.admin.interfaces.qo.TaskQO;
 import io.laokou.admin.interfaces.vo.TaskVO;
 import io.laokou.common.exception.CustomException;
-import org.flowable.engine.HistoryService;
+import org.apache.commons.lang3.StringUtils;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
@@ -32,9 +32,6 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
     @Autowired
     private TaskService taskService;
 
-    @Autowired
-    private HistoryService historyService;
-
     @Override
     public Boolean startProcess(String definitionId) {
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
@@ -51,13 +48,17 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
     public IPage<TaskVO> queryTaskPage(TaskQO qo, HttpServletRequest request) {
         final Integer pageNum = qo.getPageNum();
         final Integer pageSize = qo.getPageSize();
+        String processName = qo.getProcessName();
         final Long userId = SecurityUser.getUserId(request);
         final String username = SecurityUser.getUsername(request);
-        final TaskQuery taskQuery = taskService.createTaskQuery()
+        TaskQuery taskQuery = taskService.createTaskQuery()
                 .active()
                 .includeProcessVariables()
                 .taskCandidateOrAssigned(userId.toString())
                 .orderByTaskCreateTime().desc();
+        if (StringUtils.isNotBlank(processName)) {
+            taskQuery = taskQuery.processDefinitionNameLike("%" + processName + "%");
+        }
         final long pageTotal = taskQuery.count();
         IPage<TaskVO> page = new Page<>(pageNum,pageSize,pageTotal);
         int  pageIndex = pageSize * (pageNum - 1);
@@ -68,7 +69,12 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
             vo.setTaskId(task.getId());
             vo.setTaskDefinitionKey(task.getTaskDefinitionKey());
             vo.setProcessInstanceId(task.getProcessInstanceId());
+            ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                    .processDefinitionId(task.getProcessDefinitionId())
+                    .singleResult();
             vo.setTaskName(task.getName());
+            vo.setDefinitionId(processDefinition.getId());
+            vo.setProcessName(processDefinition.getName());
             vo.setAssigneeName(username);
             vo.setCreateTime(task.getCreateTime());
             voList.add(vo);

@@ -39,4 +39,14 @@ public class TaskVO {
      */
     private Date createTime;
 
+    /**
+     * 流程定义id
+     */
+    private String definitionId;
+
+    /**
+     * 流程名称
+     */
+    private String processName;
+
 }

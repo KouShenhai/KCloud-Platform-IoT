@@ -9,4 +9,6 @@ import lombok.Data;
 @Data
 public class TaskQO extends BasePage {
 
+    private String processName;
+
 }
