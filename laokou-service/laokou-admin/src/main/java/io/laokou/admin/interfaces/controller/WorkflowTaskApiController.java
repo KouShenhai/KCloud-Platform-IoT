@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 /**
  * @author Kou Shenhai
  */
@@ -42,6 +44,12 @@ public class WorkflowTaskApiController {
     @ApiOperation(value = "流程任务>删除")
     public HttpResultUtil<Boolean> delete(@RequestParam("taskId")String taskId) {
         return new HttpResultUtil<Boolean>().ok(workflowTaskApplicationService.deleteTask(taskId));
+    }
+
+    @GetMapping(value = "/diagram")
+    @ApiOperation(value = "流程任务>流程图")
+    public void diagram(@RequestParam("processInstanceId")String processInstanceId, HttpServletResponse response) throws IOException {
+        workflowTaskApplicationService.diagramProcess(processInstanceId, response);
     }
 
 }

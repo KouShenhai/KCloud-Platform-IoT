@@ -131,7 +131,7 @@ public class FileUtil extends FileUtils {
      * @param closeables 流数组
      * @throws IOException
      */
-    private static void closeStream(Closeable...closeables) throws IOException {
+    public static void closeStream(Closeable...closeables) throws IOException {
         for (Closeable closeable : closeables) {
             if (closeable != null) {
                 closeable.close();

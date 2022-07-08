@@ -5,6 +5,8 @@ import io.laokou.admin.interfaces.dto.ClaimDTO;
 import io.laokou.admin.interfaces.dto.UnClaimDTO;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public interface WorkflowTaskApplicationService {
 
@@ -15,4 +17,6 @@ public interface WorkflowTaskApplicationService {
     Boolean unClaimTask(UnClaimDTO dto);
 
     Boolean deleteTask(String taskId);
+
+    void diagramProcess(String processInstanceId, HttpServletResponse response) throws IOException;
 }

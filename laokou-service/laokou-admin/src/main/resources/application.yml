@@ -124,6 +124,8 @@ admin:
       url: /sys/log/api/login/insert
     - permission: anon
       url: /workflow/definition/api/image
+    - permission: anon
+      url: /workflow/task/api/diagram
 
 flowable:
   database-schema-update: true

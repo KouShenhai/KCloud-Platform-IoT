@@ -14,13 +14,11 @@ import org.flowable.engine.TaskService;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
-import org.flowable.task.api.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApplicationService {
@@ -73,23 +71,10 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
             vo.setTaskName(task.getName());
             vo.setAssigneeName(username);
             vo.setCreateTime(task.getCreateTime());
-            vo.setProcessVariables(this.getProcessVariables(task.getId()));
             voList.add(vo);
         }
         page.setRecords(voList);
         return page;
-    }
-
-    private Map<String,Object> getProcessVariables(String taskId) {
-        final HistoricTaskInstance historicTaskInstance = historyService.createHistoricTaskInstanceQuery()
-                .includeTaskLocalVariables()
-                .finished()
-                .taskId(taskId)
-                .singleResult();
-        if (null != historicTaskInstance) {
-            return historicTaskInstance.getProcessVariables();
-        }
-        return taskService.getVariables(taskId);
     }
 
 }

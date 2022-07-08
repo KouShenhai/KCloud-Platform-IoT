@@ -93,3 +93,4 @@ laokou:
     - /v2/api-docs
     - /webjars/**
     - /druid/**
+    - /workflow/task/api/diagram

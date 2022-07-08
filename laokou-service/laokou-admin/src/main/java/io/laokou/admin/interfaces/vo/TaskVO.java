@@ -1,9 +1,6 @@
 package io.laokou.admin.interfaces.vo;
-
 import lombok.Data;
-
 import java.util.Date;
-
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -41,10 +38,5 @@ public class TaskVO {
      * 创建时间
      */
     private Date createTime;
-
-    /**
-     * 流程变量
-     */
-    private Object processVariables;
 
 }
