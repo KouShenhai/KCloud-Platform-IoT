@@ -8,7 +8,6 @@ import java.util.List;
  */
 @Data
 public class UserDetail {
-    private static final long serialVersionUID = 1L;
     @JSONField(serializeUsing = ToStringSerializer.class)
     private Long id;
     private String username;

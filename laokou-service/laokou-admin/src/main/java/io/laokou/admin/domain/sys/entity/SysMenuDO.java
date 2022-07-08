@@ -15,7 +15,6 @@ import javax.validation.constraints.NotBlank;
 @TableName("boot_sys_menu")
 @ApiModel("菜单")
 public class SysMenuDO extends BaseDO {
-	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 父菜单ID，一级菜单为0
