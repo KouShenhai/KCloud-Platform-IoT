@@ -29,7 +29,7 @@ public class TokenUtil {
     }
 
     public static Map<String,Object> getClaims(Long userId,String username) {
-        Map<String,Object> claims = new HashMap<>(1);
+        Map<String,Object> claims = new HashMap<>(2);
         claims.put(Constant.USER_KEY_HEAD, userId);
         claims.put(Constant.USERNAME_HEAD,username);
         return claims;
