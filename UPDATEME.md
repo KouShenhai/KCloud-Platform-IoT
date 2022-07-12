@@ -14,4 +14,6 @@
 ###### 4.其他组件
 * Flowable
 * Jasypt
-* 
+
+###### 5.版本管理
+* laokou-parent统一管理maven版本
