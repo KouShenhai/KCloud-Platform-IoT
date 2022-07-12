@@ -9,7 +9,7 @@
     </parent>
     <groupId>io.laokou</groupId>
     <artifactId>laokou-gateway</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${laokou.version}</version>
     <description>API网关</description>
 
     <properties>
@@ -25,23 +25,23 @@
         <dependency>
             <groupId>io.github.mweirauch</groupId>
             <artifactId>micrometer-jvm-extras</artifactId>
-            <version>0.2.0</version>
+            <version>${micrometer-jvm-extras.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>2.1.0</version>
+            <version>${jasypt.version}</version>
         </dependency>
         <!--apollo客户端依赖     -->
         <dependency>
             <groupId>com.ctrip.framework.apollo</groupId>
             <artifactId>apollo-client</artifactId>
-            <version>1.6.0</version>
+            <version>${apollo-client.version}</version>
         </dependency>
         <dependency>
             <groupId>io.laokou</groupId>
             <artifactId>laokou-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${laokou.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>

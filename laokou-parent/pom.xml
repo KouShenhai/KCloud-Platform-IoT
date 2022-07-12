@@ -20,6 +20,7 @@
         <module>../laokou-service</module>
     </modules>
     <properties>
+        <laokou.version>1.0-SNAPSHOT</laokou.version>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -36,6 +37,58 @@
         <spring-boot-admin.version>2.2.2</spring-boot-admin.version>
         <!--flowable版本-->
         <flowable.version>6.6.0</flowable.version>
+        <!--mybatis-plus版本 -->
+        <mybatis-plus.version>3.0.5</mybatis-plus.version>
+        <!--fastjson版本-->
+        <fastjson.version>1.2.83</fastjson.version>
+        <!--commons-httpclient版本-->
+        <commons-httpclient.version>3.1</commons-httpclient.version>
+        <!--commons-configuration版本-->
+        <commons-configuration.version>1.10</commons-configuration.version>
+        <!--redisson版本-->
+        <redisson.version>3.15.5</redisson.version>
+        <!--UserAgentUtils版本-->
+        <UserAgentUtils.version>1.21</UserAgentUtils.version>
+        <!--jsoup版本-->
+        <jsoup.version>1.12.1</jsoup.version>
+        <!--commons-collections版本-->
+        <commons-collections.version>3.2.1</commons-collections.version>
+        <!--hutool-all版本-->
+        <hutool-all.version>5.3.2</hutool-all.version>
+        <!--commons-lang版本-->
+        <commons-lang.version>2.6</commons-lang.version>
+        <!--commons-beanutils版本-->
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <!--commons-io版本-->
+        <commons-io.version>2.7</commons-io.version>
+        <!--commons-logging版本-->
+        <commons-logging.version>1.1.1</commons-logging.version>
+        <!--commons-fileupload版本-->
+        <commons-fileupload.version>1.3.3</commons-fileupload.version>
+        <!--joda-time版本-->
+        <joda-time.version>2.10</joda-time.version>
+        <!--micrometer-jvm-extras版本-->
+        <micrometer-jvm-extras.version>0.2.0</micrometer-jvm-extras.version>
+        <!--jasypt版本-->
+        <jasypt.version>2.1.0</jasypt.version>
+        <!--apollo-client版本-->
+        <apollo-client.version>1.6.0</apollo-client.version>
+        <!--fastdfs-client版本-->
+        <fastdfs-client.version>1.26.2</fastdfs-client.version>
+        <!--aliyun-sdk-oss版本-->
+        <aliyun-sdk-oss.version>3.8.0</aliyun-sdk-oss.version>
+        <!--alipay-sdk-java版本-->
+        <alipay-sdk-java.version>4.22.34.ALL</alipay-sdk-java.version>
+        <!--shiro版本-->
+        <shiro.version>1.4.0</shiro.version>
+        <!--druid版本-->
+        <druid.version>1.1.17</druid.version>
+        <!--kaptcha版本-->
+        <kaptcha.version>0.0.9</kaptcha.version>
+        <!--guava版本-->
+        <guava.version>19.0</guava.version>
+        <!--jjwt版本-->
+        <jjwt.version>0.7.0</jjwt.version>
     </properties>
     <dependencyManagement>
         <dependencies>

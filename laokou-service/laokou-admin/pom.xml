@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>io.laokou</groupId>
 	<artifactId>laokou-admin</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>${laokou.version}</version>
 	<name>laokou-admin</name>
 	<description>admin管理</description>
 	<properties>
@@ -19,12 +19,12 @@
 		<dependency>
 			<groupId>io.laokou</groupId>
 			<artifactId>laokou-redis</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${laokou.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.laokou</groupId>
 			<artifactId>laokou-log</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${laokou.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>io.laokou</groupId>
@@ -39,17 +39,17 @@
 		<dependency>
 			<groupId>com.github.tobato</groupId>
 			<artifactId>fastdfs-client</artifactId>
-			<version>1.26.2</version>
+			<version>${fastdfs-client.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.aliyun.oss</groupId>
 			<artifactId>aliyun-sdk-oss</artifactId>
-			<version>3.8.0</version>
+			<version>${aliyun-sdk-oss.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alipay.sdk</groupId>
 			<artifactId>alipay-sdk-java</artifactId>
-			<version>4.22.34.ALL</version>
+			<version>${alipay-sdk-java.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.micrometer</groupId>
@@ -59,7 +59,7 @@
 		<dependency>
 			<groupId>io.github.mweirauch</groupId>
 			<artifactId>micrometer-jvm-extras</artifactId>
-			<version>0.2.0</version>
+			<version>${micrometer-jvm-extras.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.codecentric</groupId>
@@ -80,17 +80,17 @@
 		<dependency>
 			<groupId>com.ctrip.framework.apollo</groupId>
 			<artifactId>apollo-client</artifactId>
-			<version>1.6.0</version>
+			<version>${apollo-client.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
-			<version>1.4.0</version>
+			<version>${shiro.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring</artifactId>
-			<version>1.4.0</version>
+			<version>${shiro.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -99,11 +99,7 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.1.17</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpcore</artifactId>
+			<version>${druid.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -117,27 +113,27 @@
 		<dependency>
 			<groupId>com.github.axet</groupId>
 			<artifactId>kaptcha</artifactId>
-			<version>0.0.9</version>
+			<version>${kaptcha.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.ulisesbocchio</groupId>
 			<artifactId>jasypt-spring-boot-starter</artifactId>
-			<version>2.1.0</version>
+			<version>${jasypt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>19.0</version>
+			<version>${guava.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
-			<version>3.0.5</version>
+			<version>${mybatis-plus.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
-			<version>0.7.0</version>
+			<version>${jjwt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.flowable</groupId>
