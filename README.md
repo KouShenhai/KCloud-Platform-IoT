@@ -52,6 +52,7 @@
    |--laokou-admin -- 管理模块
    |--laokou-redis -- 缓存模块
 ~~~
+
 ### 项目配置
 * 安装jdk1.8、mysql5.7、redis、apollo
 * 创建数据库
@@ -68,4 +69,14 @@
       username: root
       # 密码
       password: XXXXXX
+  # redis
+  redis:
+    #数据库索引
+    database: 0
+    #主机
+    host: 127.0.0.1
+    #端口
+    port: 6379
+    #连接超时时长（毫秒）
+    timeout: 6000ms 
 ```
