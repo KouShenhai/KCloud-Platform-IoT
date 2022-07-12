@@ -1,7 +1,6 @@
 server:
   port: 9999
   address: 10.0.8.7
-  connection-timeout: 5000ms
   tomcat:
     uri-encoding: UTF-8
     max-threads: 1000
@@ -9,6 +8,7 @@ server:
     session:
       cookie:
         http-only: true
+    connection-timeout: 5000ms
 
 app:
   id: admin # 应用全局唯一的身份标识

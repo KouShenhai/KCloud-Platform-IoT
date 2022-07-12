@@ -1,5 +1,4 @@
 package io.laokou.monitor.component;
-
 import de.codecentric.boot.admin.server.domain.entities.Instance;
 import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
 import de.codecentric.boot.admin.server.domain.events.InstanceEvent;
@@ -8,7 +7,6 @@ import de.codecentric.boot.admin.server.notify.AbstractStatusChangeNotifier;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-
 /**
  * 通知配置
  */

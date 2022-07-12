@@ -6,9 +6,8 @@ server:
     mime-types: text/html,text/xml,text/plain,application/xml,application/json,application/x-www-form-urlencoded
   address: 10.0.8.7
   port: 5555
-  max-http-header-size: -1
   tomcat:
-    max-http-post-size: -1
+    max-http-form-post-size: -1
 
 spring:
   redis:
