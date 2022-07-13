@@ -1,6 +1,5 @@
 package io.laokou.log.publish;
 
-import com.google.common.net.HttpHeaders;
 import eu.bitwalker.useragentutils.UserAgent;
 import io.laokou.common.dto.LoginLogDTO;
 import io.laokou.common.utils.AddressUtil;
@@ -8,6 +7,7 @@ import io.laokou.common.utils.HttpContextUtil;
 import io.laokou.common.utils.IpUtil;
 import io.laokou.common.utils.SpringContextUtil;
 import io.laokou.log.event.LoginLogEvent;
+import org.apache.http.HttpHeaders;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;

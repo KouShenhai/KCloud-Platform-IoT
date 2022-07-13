@@ -86,6 +86,7 @@ laokou:
     - /sys/auth/api/login
     - /sys/auth/api/zfbLogin
     - /workflow/definition/api/image
+    - /workflow/task/api/diagram
     - /actuator/**
     - /swagger/api-docs
     - /swagger-resources/**
@@ -93,4 +94,3 @@ laokou:
     - /v2/api-docs
     - /webjars/**
     - /druid/**
-    - /workflow/task/api/diagram

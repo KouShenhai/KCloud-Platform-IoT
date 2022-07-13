@@ -97,13 +97,13 @@ admin:
     - permission: anon
       url: /webjars/**
     - permission: anon
-      url: /swagger/**
+      url: /swagger/api-docs
     - permission: anon
       url: /actuator/**
     - permission: anon
       url: /v2/api-docs
     - permission: anon
-      url: /swagger-ui.html/**
+      url: /swagger-ui.html
     - permission: anon
       url: /swagger-resources/**
     - permission: anon
@@ -126,6 +126,8 @@ admin:
       url: /workflow/definition/api/image
     - permission: anon
       url: /workflow/task/api/diagram
+    - permission: anon
+      url: /favicon.ico
 
 flowable:
   database-schema-update: true

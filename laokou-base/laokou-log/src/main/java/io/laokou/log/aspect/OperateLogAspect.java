@@ -1,6 +1,5 @@
 package io.laokou.log.aspect;
 import com.alibaba.fastjson.JSON;
-import com.google.common.net.HttpHeaders;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.common.enums.ResultStatusEnum;
@@ -11,6 +10,7 @@ import io.laokou.common.utils.SpringContextUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.laokou.log.event.OperateLogEvent;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpHeaders;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
