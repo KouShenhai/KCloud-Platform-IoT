@@ -2,8 +2,8 @@ package io.laokou.admin.domain.sys.repository.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.laokou.admin.domain.sys.entity.SysRoleDO;
-import io.laokou.admin.interfaces.qo.RoleQO;
-import io.laokou.admin.interfaces.vo.RoleVO;
+import io.laokou.admin.interfaces.qo.SysRoleQO;
+import io.laokou.admin.interfaces.vo.SysRoleVO;
 
 import java.util.List;
 public interface SysRoleService extends IService<SysRoleDO> {
@@ -21,7 +21,7 @@ public interface SysRoleService extends IService<SysRoleDO> {
      */
     List<Long> getRoleIdsByUserId(Long userId);
 
-    List<RoleVO> getRoleListByUserId(Long userId);
+    List<SysRoleVO> getRoleListByUserId(Long userId);
 
     /**
      * 分页查询角色
@@ -29,11 +29,11 @@ public interface SysRoleService extends IService<SysRoleDO> {
      * @param qo
      * @return
      */
-    IPage<RoleVO> getRolePage(IPage<RoleVO> page, RoleQO qo);
+    IPage<SysRoleVO> getRolePage(IPage<SysRoleVO> page, SysRoleQO qo);
 
-    List<RoleVO> getRoleList(RoleQO qo);
+    List<SysRoleVO> getRoleList(SysRoleQO qo);
 
-    RoleVO getRoleById(Long id);
+    SysRoleVO getRoleById(Long id);
 
     void deleteRole(Long id);
 

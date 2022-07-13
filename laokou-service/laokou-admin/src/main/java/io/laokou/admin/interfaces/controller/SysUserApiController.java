@@ -1,8 +1,8 @@
 package io.laokou.admin.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import io.laokou.admin.interfaces.dto.UserDTO;
-import io.laokou.admin.interfaces.qo.UserQO;
-import io.laokou.admin.interfaces.vo.UserVO;
+import io.laokou.admin.interfaces.dto.SysUserDTO;
+import io.laokou.admin.interfaces.qo.SysUserQO;
+import io.laokou.admin.interfaces.vo.SysUserVO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.admin.application.service.SysUserApplicationService;
 import io.laokou.log.annotation.OperateLog;
@@ -26,34 +26,34 @@ public class SysUserApiController {
     @PutMapping("/update")
     @ApiOperation("系统用户>修改")
     @OperateLog(module = "系统用户",name = "用户修改")
-    public HttpResultUtil<Boolean> update(@RequestBody UserDTO dto, HttpServletRequest request) {
+    public HttpResultUtil<Boolean> update(@RequestBody SysUserDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
     }
 
     @PutMapping("/updateInfo")
     @ApiOperation("系统用户>修改个人信息")
-    public HttpResultUtil<Boolean> updateInfo(@RequestBody UserDTO dto, HttpServletRequest request) {
+    public HttpResultUtil<Boolean> updateInfo(@RequestBody SysUserDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
     }
 
     @PutMapping("/password")
     @ApiOperation("系统用户>重置")
     @OperateLog(module = "系统用户",name = "重置密码")
-    public HttpResultUtil<Boolean> password(@RequestBody UserDTO dto, HttpServletRequest request) {
+    public HttpResultUtil<Boolean> password(@RequestBody SysUserDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
     }
 
     @PostMapping("/insert")
     @ApiOperation("系统用户>新增")
     @OperateLog(module = "系统用户",name = "用户新增")
-    public HttpResultUtil<Boolean> insert(@RequestBody UserDTO dto, HttpServletRequest request) {
+    public HttpResultUtil<Boolean> insert(@RequestBody SysUserDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.insertUser(dto,request));
     }
 
     @GetMapping("/detail")
     @ApiOperation("系统用户>详情")
-    public HttpResultUtil<UserVO> detail(@RequestParam("id") Long id) {
-        return new HttpResultUtil<UserVO>().ok(sysUserApplicationService.getUserById(id));
+    public HttpResultUtil<SysUserVO> detail(@RequestParam("id") Long id) {
+        return new HttpResultUtil<SysUserVO>().ok(sysUserApplicationService.getUserById(id));
     }
 
     @DeleteMapping("/delete")
@@ -65,8 +65,8 @@ public class SysUserApiController {
 
     @PostMapping("/query")
     @ApiOperation("系统用户>查询")
-    public HttpResultUtil<IPage<UserVO>> query(@RequestBody UserQO qo) {
-        return new HttpResultUtil<IPage<UserVO>>().ok(sysUserApplicationService.queryUserPage(qo));
+    public HttpResultUtil<IPage<SysUserVO>> query(@RequestBody SysUserQO qo) {
+        return new HttpResultUtil<IPage<SysUserVO>>().ok(sysUserApplicationService.queryUserPage(qo));
     }
 
 }

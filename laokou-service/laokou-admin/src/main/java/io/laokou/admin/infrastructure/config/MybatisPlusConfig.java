@@ -1,12 +1,11 @@
 package io.laokou.admin.infrastructure.config;
-import com.baomidou.mybatisplus.core.injector.ISqlInjector;
-import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import io.laokou.admin.infrastructure.interceptor.DataFilterInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-
 /**
  * mybatis-plus的配置
  * @author Kou Shenhai
@@ -14,30 +13,18 @@ import org.springframework.core.annotation.Order;
 @Configuration
 public class MybatisPlusConfig {
 
-    /**
-     * 配置分页
-     */
     @Bean
-    @Order(0)
-    public PaginationInterceptor paginationInterceptor(){
-        return new PaginationInterceptor();
-    }
-
-    /**
-     *  mybatis-plus SQL执行效率插件【生产环境可以关闭】
-     */
-    @Bean
-    public PerformanceInterceptor performanceInterceptor() {
-        return new PerformanceInterceptor();
-    }
-
-    /**
-     * sql注入
-     * @return
-     */
-    @Bean
-    public ISqlInjector sqlInjector() {
-        return new LogicSqlInjector();
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+        // 数据权限
+        mybatisPlusInterceptor.addInnerInterceptor(new DataFilterInterceptor());
+        // 分页插件
+        mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        // 乐观锁
+        mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        // 防止全表更新与删除
+        mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+        return mybatisPlusInterceptor;
     }
 
 }

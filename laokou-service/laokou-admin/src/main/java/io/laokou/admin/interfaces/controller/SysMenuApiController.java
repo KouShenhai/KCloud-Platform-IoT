@@ -1,8 +1,8 @@
 package io.laokou.admin.interfaces.controller;
 import io.laokou.admin.application.service.SysMenuApplicationService;
-import io.laokou.admin.interfaces.dto.MenuDTO;
-import io.laokou.admin.interfaces.qo.MenuQO;
-import io.laokou.admin.interfaces.vo.MenuVO;
+import io.laokou.admin.interfaces.dto.SysMenuDTO;
+import io.laokou.admin.interfaces.qo.SysMenuQO;
+import io.laokou.admin.interfaces.vo.SysMenuVO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;
@@ -25,33 +25,33 @@ public class SysMenuApiController {
 
     @GetMapping("/list")
     @ApiOperation("系统菜单>列表")
-    public HttpResultUtil<MenuVO> list(HttpServletRequest request) {
-        return new HttpResultUtil<MenuVO>().ok(sysMenuApplicationService.getMenuList(request));
+    public HttpResultUtil<SysMenuVO> list(HttpServletRequest request) {
+        return new HttpResultUtil<SysMenuVO>().ok(sysMenuApplicationService.getMenuList(request));
     }
 
     @PostMapping("/query")
     @ApiOperation("系统菜单>查询")
-    public HttpResultUtil<List<MenuVO>> query(@RequestBody MenuQO qo) {
-        return new HttpResultUtil<List<MenuVO>>().ok(sysMenuApplicationService.queryMenuList(qo));
+    public HttpResultUtil<List<SysMenuVO>> query(@RequestBody SysMenuQO qo) {
+        return new HttpResultUtil<List<SysMenuVO>>().ok(sysMenuApplicationService.queryMenuList(qo));
     }
 
     @GetMapping("/detail")
     @ApiOperation("系统菜单>详情")
-    public HttpResultUtil<MenuVO> detail(@RequestParam("id")Long id) {
-        return new HttpResultUtil<MenuVO>().ok(sysMenuApplicationService.getMenuById(id));
+    public HttpResultUtil<SysMenuVO> detail(@RequestParam("id")Long id) {
+        return new HttpResultUtil<SysMenuVO>().ok(sysMenuApplicationService.getMenuById(id));
     }
 
     @PutMapping("/update")
     @ApiOperation("系统菜单>修改")
     @OperateLog(module = "系统菜单",name = "菜单修改")
-    public HttpResultUtil<Boolean> update(@RequestBody MenuDTO dto,HttpServletRequest request) {
+    public HttpResultUtil<Boolean> update(@RequestBody SysMenuDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysMenuApplicationService.updateMenu(dto,request));
     }
 
     @PostMapping("/insert")
     @ApiOperation("系统菜单>新增")
     @OperateLog(module = "系统菜单",name = "菜单新增")
-    public HttpResultUtil<Boolean> insert(@RequestBody MenuDTO dto,HttpServletRequest request) {
+    public HttpResultUtil<Boolean> insert(@RequestBody SysMenuDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysMenuApplicationService.insertMenu(dto,request));
     }
 
@@ -64,8 +64,8 @@ public class SysMenuApiController {
 
     @GetMapping("/tree")
     @ApiOperation("系统菜单>树菜单")
-    public HttpResultUtil<MenuVO> tree(@RequestParam(required = false,value = "roleId")Long roleId) {
-        return new HttpResultUtil<MenuVO>().ok(sysMenuApplicationService.treeMenu(roleId));
+    public HttpResultUtil<SysMenuVO> tree(@RequestParam(required = false,value = "roleId")Long roleId) {
+        return new HttpResultUtil<SysMenuVO>().ok(sysMenuApplicationService.treeMenu(roleId));
     }
 
     @GetMapping("/get")

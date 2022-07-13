@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.domain.sys.entity.SysRoleDO;
 import io.laokou.admin.domain.sys.repository.dao.SysRoleDao;
 import io.laokou.admin.domain.sys.repository.service.SysRoleService;
-import io.laokou.admin.interfaces.qo.RoleQO;
-import io.laokou.admin.interfaces.vo.RoleVO;
+import io.laokou.admin.interfaces.qo.SysRoleQO;
+import io.laokou.admin.interfaces.vo.SysRoleVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,22 +25,22 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleDO> imple
     }
 
     @Override
-    public List<RoleVO> getRoleListByUserId(Long userId) {
+    public List<SysRoleVO> getRoleListByUserId(Long userId) {
         return this.baseMapper.getRoleListByUserId(userId);
     }
 
     @Override
-    public IPage<RoleVO> getRolePage(IPage<RoleVO> page, RoleQO qo) {
+    public IPage<SysRoleVO> getRolePage(IPage<SysRoleVO> page, SysRoleQO qo) {
         return this.baseMapper.getRoleList(page, qo);
     }
 
     @Override
-    public List<RoleVO> getRoleList(RoleQO  qo) {
+    public List<SysRoleVO> getRoleList(SysRoleQO qo) {
         return this.baseMapper.getRoleList(qo);
     }
 
     @Override
-    public RoleVO getRoleById(Long id) {
+    public SysRoleVO getRoleById(Long id) {
         return this.baseMapper.getRoleById(id);
     }
 

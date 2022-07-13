@@ -5,9 +5,9 @@ import io.laokou.admin.application.service.SysMenuApplicationService;
 import io.laokou.admin.domain.sys.entity.SysMenuDO;
 import io.laokou.admin.domain.sys.repository.service.SysMenuService;
 import io.laokou.admin.infrastructure.common.user.SecurityUser;
-import io.laokou.admin.interfaces.dto.MenuDTO;
-import io.laokou.admin.interfaces.qo.MenuQO;
-import io.laokou.admin.interfaces.vo.MenuVO;
+import io.laokou.admin.interfaces.dto.SysMenuDTO;
+import io.laokou.admin.interfaces.qo.SysMenuQO;
+import io.laokou.admin.interfaces.vo.SysMenuVO;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.user.UserDetail;
@@ -30,25 +30,25 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     private SysAuthApplicationService sysAuthApplicationService;
 
     @Override
-    public MenuVO getMenuList(HttpServletRequest request) {
+    public SysMenuVO getMenuList(HttpServletRequest request) {
         Long userId = Long.valueOf(request.getHeader(Constant.USER_KEY_HEAD));
         UserDetail userDetail = sysAuthApplicationService.getUserDetail(userId);
-        List<MenuVO> menuList = sysMenuService.getMenuList(userDetail, true,0);
+        List<SysMenuVO> menuList = sysMenuService.getMenuList(userDetail, true,0);
         return buildMenu(menuList);
     }
 
     @Override
-    public List<MenuVO> queryMenuList(MenuQO qo) {
+    public List<SysMenuVO> queryMenuList(SysMenuQO qo) {
         return sysMenuService.queryMenuList(qo);
     }
 
     @Override
-    public MenuVO getMenuById(Long id) {
+    public SysMenuVO getMenuById(Long id) {
         return sysMenuService.getMenuById(id);
     }
 
     @Override
-    public Boolean updateMenu(MenuDTO dto,HttpServletRequest request) {
+    public Boolean updateMenu(SysMenuDTO dto, HttpServletRequest request) {
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
         int count = sysMenuService.count(new LambdaQueryWrapper<SysMenuDO>().eq(SysMenuDO::getName, menuDO.getName()).ne(SysMenuDO::getId,menuDO.getId()));
         if (count > 0) {
@@ -59,7 +59,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     }
 
     @Override
-    public Boolean insertMenu(MenuDTO dto,HttpServletRequest request) {
+    public Boolean insertMenu(SysMenuDTO dto, HttpServletRequest request) {
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
         int count = sysMenuService.count(new LambdaQueryWrapper<SysMenuDO>().eq(SysMenuDO::getName, menuDO.getName()));
         if (count > 0) {
@@ -76,10 +76,10 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     }
 
     @Override
-    public MenuVO treeMenu(Long roleId) {
-        List<MenuVO> menuList;
+    public SysMenuVO treeMenu(Long roleId) {
+        List<SysMenuVO> menuList;
         if (null == roleId) {
-            menuList = queryMenuList(new MenuQO());
+            menuList = queryMenuList(new SysMenuQO());
         } else {
             menuList = sysMenuService.getMenuListByRoleId(roleId);
         }
@@ -96,9 +96,9 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
      * @param menuList
      * @return
      */
-    private MenuVO buildMenu(List<MenuVO> menuList) {
+    private SysMenuVO buildMenu(List<SysMenuVO> menuList) {
         TreeUtil.TreeNo<TreeUtil.TreeNo> rootNode = TreeUtil.rootRootNode();
-        MenuVO rootMenuNode = ConvertUtil.sourceToTarget(rootNode, MenuVO.class);
+        SysMenuVO rootMenuNode = ConvertUtil.sourceToTarget(rootNode, SysMenuVO.class);
         return TreeUtil.buildTreeNode(menuList,rootMenuNode);
     }
 }

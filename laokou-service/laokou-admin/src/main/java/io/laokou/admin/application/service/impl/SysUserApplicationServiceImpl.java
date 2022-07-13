@@ -10,9 +10,9 @@ import io.laokou.admin.domain.sys.repository.service.SysUserRoleService;
 import io.laokou.admin.domain.sys.repository.service.SysUserService;
 import io.laokou.admin.infrastructure.common.password.PasswordUtil;
 import io.laokou.admin.infrastructure.common.user.SecurityUser;
-import io.laokou.admin.interfaces.dto.UserDTO;
-import io.laokou.admin.interfaces.qo.UserQO;
-import io.laokou.admin.interfaces.vo.UserVO;
+import io.laokou.admin.interfaces.dto.SysUserDTO;
+import io.laokou.admin.interfaces.qo.SysUserQO;
+import io.laokou.admin.interfaces.vo.SysUserVO;
 import io.laokou.admin.infrastructure.common.enums.SuperAdminEnum;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.user.UserDetail;
@@ -42,7 +42,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     private SysUserRoleService sysUserRoleService;
 
     @Override
-    public Boolean updateUser(UserDTO dto, HttpServletRequest request) {
+    public Boolean updateUser(SysUserDTO dto, HttpServletRequest request) {
         Long id = dto.getId();
         if (null == id) {
             throw new CustomException("主键不存在");
@@ -69,7 +69,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 
     @Override
-    public Boolean insertUser(UserDTO dto, HttpServletRequest request) {
+    public Boolean insertUser(SysUserDTO dto, HttpServletRequest request) {
         SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
         int count = sysUserService.count(new LambdaQueryWrapper<SysUserDO>().eq(SysUserDO::getUsername, sysUserDO.getUsername()));
         if (count > 0) {
@@ -86,17 +86,17 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 
     @Override
-    public IPage<UserVO> queryUserPage(UserQO qo) {
-        IPage<UserVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+    public IPage<SysUserVO> queryUserPage(SysUserQO qo) {
+        IPage<SysUserVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysUserService.getUserPage(page,qo);
     }
 
     @Override
-    public UserVO getUserById(Long id) {
+    public SysUserVO getUserById(Long id) {
         SysUserDO sysUserDO = sysUserService.getById(id);
-        UserVO userVO = ConvertUtil.sourceToTarget(sysUserDO, UserVO.class);
-        userVO.setRoleIds(sysRoleService.getRoleIdsByUserId(userVO.getId()));
-        return userVO;
+        SysUserVO sysUserVO = ConvertUtil.sourceToTarget(sysUserDO, SysUserVO.class);
+        sysUserVO.setRoleIds(sysRoleService.getRoleIdsByUserId(sysUserVO.getId()));
+        return sysUserVO;
     }
 
     @Override

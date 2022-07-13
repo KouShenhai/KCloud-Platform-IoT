@@ -1,27 +1,27 @@
 package io.laokou.admin.application.service;
 
-import io.laokou.admin.interfaces.dto.MenuDTO;
-import io.laokou.admin.interfaces.qo.MenuQO;
-import io.laokou.admin.interfaces.vo.MenuVO;
+import io.laokou.admin.interfaces.dto.SysMenuDTO;
+import io.laokou.admin.interfaces.qo.SysMenuQO;
+import io.laokou.admin.interfaces.vo.SysMenuVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface SysMenuApplicationService {
 
-    MenuVO getMenuList(HttpServletRequest request);
+    SysMenuVO getMenuList(HttpServletRequest request);
 
-    List<MenuVO> queryMenuList(MenuQO dto);
+    List<SysMenuVO> queryMenuList(SysMenuQO dto);
 
-    MenuVO getMenuById(Long id);
+    SysMenuVO getMenuById(Long id);
 
-    Boolean updateMenu(MenuDTO dto,HttpServletRequest request);
+    Boolean updateMenu(SysMenuDTO dto, HttpServletRequest request);
 
-    Boolean insertMenu(MenuDTO dto,HttpServletRequest request);
+    Boolean insertMenu(SysMenuDTO dto, HttpServletRequest request);
 
     Boolean deleteMenu(Long id);
 
-    MenuVO treeMenu(Long roleId);
+    SysMenuVO treeMenu(Long roleId);
 
     List<Long> getMenuIdsByRoleId(Long roleId);
 }

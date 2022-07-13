@@ -1,8 +1,8 @@
 package io.laokou.admin.domain.sys.repository.dao;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.domain.sys.entity.SysRoleDO;
-import io.laokou.admin.interfaces.qo.RoleQO;
-import io.laokou.admin.interfaces.vo.RoleVO;
+import io.laokou.admin.interfaces.qo.SysRoleQO;
+import io.laokou.admin.interfaces.vo.SysRoleVO;
 import io.laokou.common.dao.BaseDao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -34,7 +34,7 @@ public interface SysRoleDao extends BaseDao<SysRoleDO> {
      * @param userId
      * @return
      */
-    List<RoleVO> getRoleListByUserId(@Param("userId")Long userId);
+    List<SysRoleVO> getRoleListByUserId(@Param("userId")Long userId);
 
     /**
      * 分页查询角色
@@ -42,12 +42,12 @@ public interface SysRoleDao extends BaseDao<SysRoleDO> {
      * @param qo
      * @return
      */
-    IPage<RoleVO> getRoleList(IPage<RoleVO> page, @Param("qo") RoleQO qo);
+    IPage<SysRoleVO> getRoleList(IPage<SysRoleVO> page, @Param("qo") SysRoleQO qo);
 
-    RoleVO getRoleById(@Param("id") Long id);
+    SysRoleVO getRoleById(@Param("id") Long id);
 
     void deleteRole(@Param("id") Long id);
 
-    List<RoleVO> getRoleList(@Param("qo")RoleQO qo);
+    List<SysRoleVO> getRoleList(@Param("qo") SysRoleQO qo);
 
 }

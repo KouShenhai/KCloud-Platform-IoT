@@ -2,8 +2,8 @@ package io.laokou.admin.domain.sys.repository.dao;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.domain.sys.entity.SysDictDO;
-import io.laokou.admin.interfaces.qo.DictQO;
-import io.laokou.admin.interfaces.vo.DictVO;
+import io.laokou.admin.interfaces.qo.SysDictQO;
+import io.laokou.admin.interfaces.vo.SysDictVO;
 import io.laokou.common.dao.BaseDao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,11 +20,11 @@ import java.util.List;
 @Mapper
 public interface SysDictDao extends BaseDao<SysDictDO> {
 
-    List<DictVO> getDictList(@Param("qo") DictQO qo);
+    List<SysDictVO> getDictList(@Param("qo") SysDictQO qo);
 
-    IPage<DictVO> getDictList(IPage<DictVO> page, @Param("qo") DictQO qo);
+    IPage<SysDictVO> getDictList(IPage<SysDictVO> page, @Param("qo") SysDictQO qo);
 
-    DictVO getDictById(@Param("id") Long id);
+    SysDictVO getDictById(@Param("id") Long id);
 
     void deleteDict(@Param("id") Long id);
 

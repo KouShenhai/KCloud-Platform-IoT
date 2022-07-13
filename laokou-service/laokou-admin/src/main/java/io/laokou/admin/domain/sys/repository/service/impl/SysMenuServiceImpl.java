@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.domain.sys.entity.SysMenuDO;
 import io.laokou.admin.domain.sys.repository.dao.SysMenuDao;
-import io.laokou.admin.interfaces.qo.MenuQO;
-import io.laokou.admin.interfaces.vo.MenuVO;
+import io.laokou.admin.interfaces.qo.SysMenuQO;
+import io.laokou.admin.interfaces.vo.SysMenuVO;
 import io.laokou.admin.domain.sys.repository.service.SysMenuService;
 import io.laokou.admin.infrastructure.common.enums.SuperAdminEnum;
 import io.laokou.common.user.UserDetail;
@@ -28,8 +28,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuDO> imple
     private RedisUtil redisUtil;
 
     @Override
-    public List<MenuVO> getMenuList(Long userId,Integer type) {
-        List<MenuVO> menuList;
+    public List<SysMenuVO> getMenuList(Long userId, Integer type) {
+        List<SysMenuVO> menuList;
         if (userId == null) {
             menuList = this.baseMapper.getMenuList(type);
         } else {
@@ -49,16 +49,16 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuDO> imple
     }
 
     @Override
-    public List<MenuVO> getMenuList(UserDetail userDetail, boolean noCache, Integer type) {
+    public List<SysMenuVO> getMenuList(UserDetail userDetail, boolean noCache, Integer type) {
         //region Description
         if (noCache) {
             return getMenuList(userDetail.getId(),userDetail.getSuperAdmin(),type);
         }
         String userResourceKey = RedisKeyUtil.getUserResourceKey(userDetail.getId());
         String json = redisUtil.get(userResourceKey);
-        List<MenuVO> resourceList;
+        List<SysMenuVO> resourceList;
         if (StringUtils.isNotBlank(json)) {
-            resourceList = JSONObject.parseArray(json, MenuVO.class);
+            resourceList = JSONObject.parseArray(json, SysMenuVO.class);
         } else {
             resourceList = getMenuList(userDetail.getId(),userDetail.getSuperAdmin(),type);
             redisUtil.set(userResourceKey, JSON.toJSONString(resourceList));
@@ -67,7 +67,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuDO> imple
         //endregion
     }
 
-    private List<MenuVO> getMenuList(Long userId, Integer superAdmin,Integer type) {
+    private List<SysMenuVO> getMenuList(Long userId, Integer superAdmin, Integer type) {
         //region Description
         if (SuperAdminEnum.YES.ordinal() == superAdmin) {
             return getMenuList(null,type);
@@ -78,12 +78,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuDO> imple
     }
 
     @Override
-    public List<MenuVO> queryMenuList(MenuQO qo) {
+    public List<SysMenuVO> queryMenuList(SysMenuQO qo) {
         return this.baseMapper.queryMenuList(qo);
     }
 
     @Override
-    public MenuVO getMenuById(Long id) {
+    public SysMenuVO getMenuById(Long id) {
         return this.baseMapper.getMenuById(id);
     }
 
@@ -93,7 +93,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuDO> imple
     }
 
     @Override
-    public List<MenuVO> getMenuListByRoleId(Long roleId) {
+    public List<SysMenuVO> getMenuListByRoleId(Long roleId) {
         return this.baseMapper.getMenuListByRoleId(roleId);
     }
 

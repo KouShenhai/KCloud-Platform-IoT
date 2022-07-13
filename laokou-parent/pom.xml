@@ -36,7 +36,7 @@
         <!--flowable版本-->
         <flowable.version>6.6.0</flowable.version>
         <!--mybatis-plus版本 -->
-        <mybatis-plus.version>3.0.5</mybatis-plus.version>
+        <mybatis-plus.version>3.4.3</mybatis-plus.version>
         <!--fastjson版本-->
         <fastjson.version>1.2.83</fastjson.version>
         <!--commons-httpclient版本-->
@@ -89,6 +89,8 @@
         <jjwt.version>0.7.0</jjwt.version>
         <!--knife4j版本-->
         <knife4j.version>2.0.9</knife4j.version>
+        <!--weixin-java-mp版本-->
+        <weixin-java-mp.version>4.2.0</weixin-java-mp.version>
     </properties>
     <dependencyManagement>
         <dependencies>

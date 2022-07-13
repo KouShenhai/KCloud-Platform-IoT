@@ -1,8 +1,8 @@
 package io.laokou.admin.domain.sys.repository.dao;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import io.laokou.admin.interfaces.dto.UserDTO;
-import io.laokou.admin.interfaces.qo.UserQO;
-import io.laokou.admin.interfaces.vo.UserVO;
+import io.laokou.admin.interfaces.dto.SysUserDTO;
+import io.laokou.admin.interfaces.qo.SysUserQO;
+import io.laokou.admin.interfaces.vo.SysUserVO;
 import io.laokou.common.dao.BaseDao;
 import io.laokou.common.user.UserDetail;
 import io.laokou.admin.domain.sys.entity.SysUserDO;
@@ -38,13 +38,13 @@ public interface SysUserDao extends BaseDao<SysUserDO> {
      * @param qo
      * @return
      */
-    IPage<UserVO> getUserPage(IPage<UserVO> page,@Param("qo") UserQO qo);
+    IPage<SysUserVO> getUserPage(IPage<SysUserVO> page, @Param("qo") SysUserQO qo);
 
     /**
      * 更新用户信息
      * @param dto
      */
-    void updateUser(@Param("dto") UserDTO dto);
+    void updateUser(@Param("dto") SysUserDTO dto);
 
     void deleteUser(@Param("id") Long id);
 }

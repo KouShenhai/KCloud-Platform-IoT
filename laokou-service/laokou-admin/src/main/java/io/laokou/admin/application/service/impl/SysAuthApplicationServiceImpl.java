@@ -9,13 +9,14 @@ import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
 import io.laokou.admin.domain.sys.repository.service.SysCaptchaService;
 import io.laokou.admin.application.service.SysAuthApplicationService;
-import io.laokou.admin.domain.sys.entity.ZfbUserDO;
 import io.laokou.admin.domain.sys.repository.service.SysRoleService;
 import io.laokou.admin.domain.sys.repository.service.SysUserService;
 import io.laokou.admin.domain.sys.repository.service.SysMenuService;
-import io.laokou.admin.domain.sys.repository.service.ZfbUserService;
+import io.laokou.admin.domain.zfb.entity.ZfbUserDO;
+import io.laokou.admin.domain.zfb.repository.service.ZfbUserService;
 import io.laokou.admin.infrastructure.common.password.PasswordUtil;
 import io.laokou.admin.infrastructure.common.password.TokenUtil;
+import io.laokou.admin.infrastructure.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.LoginDTO;
 import io.laokou.admin.interfaces.vo.LoginVO;
 import io.laokou.common.constant.Constant;
@@ -28,7 +29,7 @@ import io.laokou.common.exception.ErrorCode;
 import io.laokou.admin.infrastructure.common.password.RsaCoder;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.*;
-import io.laokou.admin.interfaces.vo.MenuVO;
+import io.laokou.admin.interfaces.vo.SysMenuVO;
 import io.laokou.admin.interfaces.vo.UserInfoVO;
 import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
@@ -149,7 +150,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         log.info("Token is：{}", token);
         //资源列表放到redis中
         String userResourceKey = RedisKeyUtil.getUserResourceKey(userId);
-        List<MenuVO> resourceList = sysMenuService.getMenuList(userDetail,true,1);
+        List<SysMenuVO> resourceList = sysMenuService.getMenuList(userDetail,true,1);
         List<String> permissionList = getPermissionList(userDetail);
         userDetail.setPermissionsList(permissionList);
         //用户信息
@@ -219,9 +220,9 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         Long userId = getUserId(Authorization);
         UserDetail userDetail = getUserDetail(userId);
         //2.获取所有资源列表
-        List<MenuVO> resourceList = sysMenuService.getMenuList(null,null);
+        List<SysMenuVO> resourceList = sysMenuService.getMenuList(null,null);
         //3.判断资源是否在资源列表列表里
-        MenuVO resource = pathMatcher(uri, method, resourceList);
+        SysMenuVO resource = pathMatcher(uri, method, resourceList);
         //4.无需认证
         if (resource != null && AuthTypeEnum.NO_AUTH.ordinal() == resource.getAuthLevel()) {
             return userDetail;
@@ -261,9 +262,9 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                         .permissionList(userDetail.getPermissionsList()).build();
     }
 
-    private MenuVO pathMatcher(String url, String method, List<MenuVO> resourceList) {
+    private SysMenuVO pathMatcher(String url, String method, List<SysMenuVO> resourceList) {
         //region Description
-        for (MenuVO resource : resourceList) {
+        for (SysMenuVO resource : resourceList) {
             if (StringUtils.isNotEmpty(url) && antPathMatcher.match(resource.getUrl(), url)
                     && method.equalsIgnoreCase(resource.getMethod())) {
                 log.info("匹配成功");
@@ -367,11 +368,12 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                     final String gender = userInfoResponse.getGender();
                     final String avatar = userInfoResponse.getAvatar();
                     ZfbUserDO entity = new ZfbUserDO();
-                    entity.setId(userId);
+                    entity.setOpenid(userId);
                     entity.setAvatar(avatar);
                     entity.setProvince(province);
                     entity.setCity(city);
                     entity.setGender(gender);
+                    entity.setCreator(SecurityUser.getUserId(request));
                     zfbUserService.removeById(userId);
                     zfbUserService.save(entity);
                     sendRedirectLogin(sysUserService.getUsernameByOpenid(userId),response);

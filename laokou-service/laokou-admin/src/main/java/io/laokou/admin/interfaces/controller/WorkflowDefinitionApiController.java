@@ -33,7 +33,7 @@ public class WorkflowDefinitionApiController {
     }
 
     @PostMapping("/query")
-    @ApiOperation("流程定义>分页")
+    @ApiOperation("流程定义>查询")
     public HttpResultUtil<IPage<DefinitionVO>> query(@RequestBody DefinitionQO qo) {
         return new HttpResultUtil<IPage<DefinitionVO>>().ok(workflowDefinitionApplicationService.queryDefinitionPage(qo));
     }

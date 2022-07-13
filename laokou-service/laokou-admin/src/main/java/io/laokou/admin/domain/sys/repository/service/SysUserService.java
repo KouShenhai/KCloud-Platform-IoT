@@ -1,9 +1,9 @@
 package io.laokou.admin.domain.sys.repository.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import io.laokou.admin.interfaces.dto.UserDTO;
-import io.laokou.admin.interfaces.qo.UserQO;
-import io.laokou.admin.interfaces.vo.UserVO;
+import io.laokou.admin.interfaces.dto.SysUserDTO;
+import io.laokou.admin.interfaces.qo.SysUserQO;
+import io.laokou.admin.interfaces.vo.SysUserVO;
 import io.laokou.common.user.UserDetail;
 import io.laokou.admin.domain.sys.entity.SysUserDO;
 /**
@@ -16,7 +16,7 @@ public interface SysUserService extends IService<SysUserDO> {
      * 修改用户信息
      * @param
      */
-    void updateUser(UserDTO dto);
+    void updateUser(SysUserDTO dto);
 
     /**
      * 获取用户信息
@@ -39,7 +39,7 @@ public interface SysUserService extends IService<SysUserDO> {
      * @param qo
      * @return
      */
-    IPage<UserVO> getUserPage(IPage<UserVO> page,UserQO qo);
+    IPage<SysUserVO> getUserPage(IPage<SysUserVO> page, SysUserQO qo);
 
     void deleteUser(Long id);
 

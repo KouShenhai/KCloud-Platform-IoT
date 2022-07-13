@@ -45,7 +45,7 @@ spring:
     druid:
       db-type: mysql
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.62.128:3306/kcloud?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+      url: jdbc:mysql://192.168.62.128:3306/kcloud?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
       username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
       password: ENC(SX9kPzLDaZb9kGOl2QBziw==)
       initial-size: 10

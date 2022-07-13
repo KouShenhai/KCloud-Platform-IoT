@@ -8,9 +8,9 @@ import io.laokou.admin.domain.sys.entity.SysOperateLogDO;
 import io.laokou.admin.domain.sys.repository.service.SysLoginLogService;
 import io.laokou.admin.domain.sys.repository.service.SysOperateLogService;
 import io.laokou.admin.interfaces.qo.LoginLogQO;
-import io.laokou.admin.interfaces.qo.OperateLogQO;
-import io.laokou.admin.interfaces.vo.LoginLogVO;
-import io.laokou.admin.interfaces.vo.OperateLogVO;
+import io.laokou.admin.interfaces.qo.SysOperateLogQO;
+import io.laokou.admin.interfaces.vo.SysLoginLogVO;
+import io.laokou.admin.interfaces.vo.SysOperateLogVO;
 import io.laokou.common.dto.LoginLogDTO;
 import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.common.utils.ConvertUtil;
@@ -41,14 +41,14 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     }
 
     @Override
-    public IPage<OperateLogVO> queryOperateLogPage(OperateLogQO qo) {
-        IPage<OperateLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+    public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQO qo) {
+        IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysOperateLogService.operateLogPage(page,qo);
     }
 
     @Override
-    public IPage<LoginLogVO> queryLoginLogPage(LoginLogQO qo) {
-        IPage<LoginLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+    public IPage<SysLoginLogVO> queryLoginLogPage(LoginLogQO qo) {
+        IPage<SysLoginLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysLoginLogService.loginLogPage(page,qo);
     }
 

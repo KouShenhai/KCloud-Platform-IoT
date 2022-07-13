@@ -6,9 +6,9 @@ import io.laokou.admin.application.service.SysDictApplicationService;
 import io.laokou.admin.domain.sys.entity.SysDictDO;
 import io.laokou.admin.domain.sys.repository.service.SysDictService;
 import io.laokou.admin.infrastructure.common.user.SecurityUser;
-import io.laokou.admin.interfaces.dto.DictDTO;
-import io.laokou.admin.interfaces.qo.DictQO;
-import io.laokou.admin.interfaces.vo.DictVO;
+import io.laokou.admin.interfaces.dto.SysDictDTO;
+import io.laokou.admin.interfaces.qo.SysDictQO;
+import io.laokou.admin.interfaces.vo.SysDictVO;
 import io.laokou.common.utils.ConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,25 +24,25 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     private SysDictService sysDictService;
 
     @Override
-    public IPage<DictVO> queryDictPage(DictQO qo) {
-        IPage<DictVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+    public IPage<SysDictVO> queryDictPage(SysDictQO qo) {
+        IPage<SysDictVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysDictService.getDictList(page,qo);
     }
 
     @Override
-    public DictVO getDictById(Long id) {
+    public SysDictVO getDictById(Long id) {
         return sysDictService.getDictById(id);
     }
 
     @Override
-    public Boolean insertDict(DictDTO dto, HttpServletRequest request) {
+    public Boolean insertDict(SysDictDTO dto, HttpServletRequest request) {
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
         dictDO.setCreator(SecurityUser.getUserId(request));
         return sysDictService.save(dictDO);
     }
 
     @Override
-    public Boolean updateDict(DictDTO dto, HttpServletRequest request) {
+    public Boolean updateDict(SysDictDTO dto, HttpServletRequest request) {
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
         dictDO.setEditor(SecurityUser.getUserId(request));
         return sysDictService.updateById(dictDO);

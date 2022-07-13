@@ -21,7 +21,7 @@
         order by boot_sys_role.update_date desc
     </select>
 
-    <select id="getRoleListByUserId" resultType="io.laokou.admin.interfaces.vo.RoleVO">
+    <select id="getRoleListByUserId" resultType="io.laokou.admin.interfaces.vo.SysRoleVO">
         SELECT
         name,id,sort
         FROM
@@ -56,7 +56,7 @@
         order by sort desc
     </select>
 
-    <select id="getRoleList" resultType="io.laokou.admin.interfaces.vo.RoleVO">
+    <select id="getRoleList" resultType="io.laokou.admin.interfaces.vo.SysRoleVO">
         select id,`name`,sort from boot_sys_role
         where del_flag = '0'
          <if test="qo.name != '' and qo.name != null">
@@ -65,7 +65,7 @@
         order by sort desc
     </select>
 
-    <select id="getRoleById" resultType="io.laokou.admin.interfaces.vo.RoleVO">
+    <select id="getRoleById" resultType="io.laokou.admin.interfaces.vo.SysRoleVO">
         select id,`name`,sort from boot_sys_role
         where id = #{id}
     </select>

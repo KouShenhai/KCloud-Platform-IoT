@@ -30,7 +30,7 @@
         </if>
     </select>
 
-    <select id="getUserPage" resultType="io.laokou.admin.interfaces.vo.UserVO">
+    <select id="getUserPage" resultType="io.laokou.admin.interfaces.vo.SysUserVO">
         select
             id
             ,username

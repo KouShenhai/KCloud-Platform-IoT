@@ -40,8 +40,8 @@ mybatis-plus:
   global-config:
     #数据库相关配置
     db-config:
-      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID"
-      id-type: ID_WORKER
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID",ASSIGN_ID:"分布式ID"
+      id-type: ASSIGN_ID
       #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
       field-strategy: NOT_NULL
       #驼峰下划线转换

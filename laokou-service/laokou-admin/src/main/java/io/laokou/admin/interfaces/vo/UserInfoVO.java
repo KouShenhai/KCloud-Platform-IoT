@@ -37,6 +37,6 @@ public class UserInfoVO {
     private List<String> permissionList;
 
     @ApiModelProperty(name = "roles",value = "角色集合",required = true,example = "['超级管理员']")
-    private List<RoleVO> roles;
+    private List<SysRoleVO> roles;
 
 }

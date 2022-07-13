@@ -1,8 +1,7 @@
 package io.laokou.admin.domain.sys.repository.dao;
 
-import io.laokou.admin.interfaces.dto.MenuDTO;
-import io.laokou.admin.interfaces.qo.MenuQO;
-import io.laokou.admin.interfaces.vo.MenuVO;
+import io.laokou.admin.interfaces.qo.SysMenuQO;
+import io.laokou.admin.interfaces.vo.SysMenuVO;
 import io.laokou.common.dao.BaseDao;
 import io.laokou.admin.domain.sys.entity.SysMenuDO;
 import org.apache.ibatis.annotations.Mapper;
@@ -36,28 +35,28 @@ public interface SysMenuDao extends BaseDao<SysMenuDO> {
      * 获取所有的资源列表
      * @return
      */
-    List<MenuVO> getMenuList(@Param("type")Integer type);
+    List<SysMenuVO> getMenuList(@Param("type")Integer type);
 
     /**
      * 通过userId查询资源权限
      * @param userId
      * @return
      */
-    List<MenuVO> getMenuListByUserId(@Param("userId") Long userId,@Param("type")Integer type);
+    List<SysMenuVO> getMenuListByUserId(@Param("userId") Long userId, @Param("type")Integer type);
 
     /**
      * 查询菜单列表
      * @param qo
      * @return
      */
-    List<MenuVO> queryMenuList(@Param("qo") MenuQO qo);
+    List<SysMenuVO> queryMenuList(@Param("qo") SysMenuQO qo);
 
     /**
      * 根据id查询菜单
      * @param id
      * @return
      */
-    MenuVO getMenuById(@Param("id") Long id);
+    SysMenuVO getMenuById(@Param("id") Long id);
 
     /**
      * 逻辑删除
@@ -70,7 +69,7 @@ public interface SysMenuDao extends BaseDao<SysMenuDO> {
      * @param roleId
      * @return
      */
-    List<MenuVO> getMenuListByRoleId(@Param("roleId") Long roleId);
+    List<SysMenuVO> getMenuListByRoleId(@Param("roleId") Long roleId);
 
     List<Long> getMenuIdsByRoleId(@Param("roleId") Long roleId);
 

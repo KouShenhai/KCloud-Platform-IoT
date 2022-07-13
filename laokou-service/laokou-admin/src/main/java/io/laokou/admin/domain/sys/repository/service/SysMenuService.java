@@ -1,8 +1,8 @@
 package io.laokou.admin.domain.sys.repository.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.laokou.admin.domain.sys.entity.SysMenuDO;
-import io.laokou.admin.interfaces.qo.MenuQO;
-import io.laokou.admin.interfaces.vo.MenuVO;
+import io.laokou.admin.interfaces.qo.SysMenuQO;
+import io.laokou.admin.interfaces.vo.SysMenuVO;
 import io.laokou.common.user.UserDetail;
 import java.util.List;
 /**
@@ -16,7 +16,7 @@ public interface SysMenuService extends IService<SysMenuDO> {
      * @param userId
      * @return
      */
-    List<MenuVO> getMenuList(Long userId,Integer type);
+    List<SysMenuVO> getMenuList(Long userId, Integer type);
 
     /**
      * 查询所有权限列表
@@ -38,21 +38,21 @@ public interface SysMenuService extends IService<SysMenuDO> {
      * @param type
      * @return
      */
-    List<MenuVO> getMenuList(UserDetail userDetail, boolean noCache, Integer type);
+    List<SysMenuVO> getMenuList(UserDetail userDetail, boolean noCache, Integer type);
 
     /**
      * 查询列表
      * @param qo
      * @return
      */
-    List<MenuVO> queryMenuList(MenuQO qo);
+    List<SysMenuVO> queryMenuList(SysMenuQO qo);
 
     /**
      * 根据id查询
      * @param id
      * @return
      */
-    MenuVO getMenuById(Long id);
+    SysMenuVO getMenuById(Long id);
 
     /**
      * 逻辑删除
@@ -64,7 +64,7 @@ public interface SysMenuService extends IService<SysMenuDO> {
      * @param roleId
      * @return
      */
-    List<MenuVO> getMenuListByRoleId(Long roleId);
+    List<SysMenuVO> getMenuListByRoleId(Long roleId);
 
     List<Long> getMenuIdsByRoleId(Long roleId);
 

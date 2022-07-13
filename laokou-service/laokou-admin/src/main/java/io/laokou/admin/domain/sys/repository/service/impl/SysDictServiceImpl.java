@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.domain.sys.entity.SysDictDO;
 import io.laokou.admin.domain.sys.repository.dao.SysDictDao;
 import io.laokou.admin.domain.sys.repository.service.SysDictService;
-import io.laokou.admin.interfaces.qo.DictQO;
-import io.laokou.admin.interfaces.vo.DictVO;
+import io.laokou.admin.interfaces.qo.SysDictQO;
+import io.laokou.admin.interfaces.vo.SysDictVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,17 +22,17 @@ import java.util.List;
 public class SysDictServiceImpl extends ServiceImpl<SysDictDao,SysDictDO> implements SysDictService {
 
     @Override
-    public List<DictVO> getDictList(DictQO qo) {
+    public List<SysDictVO> getDictList(SysDictQO qo) {
         return this.baseMapper.getDictList(qo);
     }
 
     @Override
-    public IPage<DictVO> getDictList(IPage<DictVO> page, DictQO qo) {
+    public IPage<SysDictVO> getDictList(IPage<SysDictVO> page, SysDictQO qo) {
         return this.baseMapper.getDictList(page,qo);
     }
 
     @Override
-    public DictVO getDictById(Long id) {
+    public SysDictVO getDictById(Long id) {
         return this.baseMapper.getDictById(id);
     }
 
