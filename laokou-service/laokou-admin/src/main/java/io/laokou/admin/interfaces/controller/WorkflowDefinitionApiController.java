@@ -27,7 +27,6 @@ public class WorkflowDefinitionApiController {
 
     @PostMapping("/insert")
     @ApiOperation("流程定义>新增")
-    @OperateLog(module = "流程定义",name = "流程新增")
     public HttpResultUtil<Boolean> insert(@RequestParam("name")String name, @RequestPart("file") MultipartFile file) throws IOException {
         return new HttpResultUtil<Boolean>().ok(workflowDefinitionApplicationService.importFile(name, file.getInputStream()));
     }
