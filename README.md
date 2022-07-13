@@ -49,7 +49,7 @@
    |--laokou-register -- 服务治理
 |--laokou-parent -- 版本依赖
 |--laokou-service
-   |--laokou-admin -- 管理模块
+   |--laokou-admin -- 后台管理模块
    |--laokou-redis -- 缓存模块
 ~~~
 
