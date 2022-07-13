@@ -1,4 +1,5 @@
 package io.laokou.admin.infrastructure.config;
+import com.google.common.collect.Lists;
 import io.laokou.common.constant.Constant;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
@@ -10,21 +11,26 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import static com.google.common.collect.Lists.newArrayList;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
+import java.util.List;
 /**
  * Swagger
  * @author Kou Shenhai
  * @date 2019/09/01
  */
 @Configuration
-@EnableSwagger2
+@EnableSwagger2WebMvc
 public class SwaggerConfig {
 
     @Bean
     public Docket createRestApi() {
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        List<Parameter> pars = Lists.newArrayList();
+        tokenPar.name(Constant.AUTHORIZATION_HEADER).description(Constant.AUTHORIZATION_HEADER).modelRef(new ModelRef("string")).parameterType(Constant.HEADER).required(false).build();
+        pars.add(tokenPar.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
@@ -33,15 +39,7 @@ public class SwaggerConfig {
                 //包下的类，才生成接口文档
                 .paths(PathSelectors.any())
                 .build()
-                .globalOperationParameters(newArrayList(
-                        new ParameterBuilder()
-                        .name(Constant.AUTHORIZATION_HEADER)
-                        .description("Auth")
-                        .modelRef(new ModelRef("string"))
-                        .parameterType(Constant.HEADER)
-                        .required(false)
-                       .build()
-                ));
+                .globalOperationParameters(pars);
     }
 
     private ApiInfo apiInfo() {

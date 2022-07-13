@@ -23,7 +23,6 @@ spring:
           predicates:
           - Path=/admin/**
           filters:
-          - SwaggerHeaderFilter
           - StripPrefix=1
           # 限流
           - name: RequestRateLimiter #请求数限流
@@ -81,6 +80,10 @@ management:
       show-details: always
 
 laokou:
+  swagger:
+    routes:
+      - name: 管理模块
+        location: /admin
   uris:
     - /sys/auth/api/captcha
     - /sys/auth/api/login
@@ -90,7 +93,7 @@ laokou:
     - /actuator/**
     - /swagger/api-docs
     - /swagger-resources/**
-    - /swagger-ui.html
+    - /doc.html
     - /v2/api-docs
     - /webjars/**
     - /druid/**

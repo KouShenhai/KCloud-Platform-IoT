@@ -103,7 +103,7 @@ admin:
     - permission: anon
       url: /v2/api-docs
     - permission: anon
-      url: /swagger-ui.html
+      url: /doc.html
     - permission: anon
       url: /swagger-resources/**
     - permission: anon
