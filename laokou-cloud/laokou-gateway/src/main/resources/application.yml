@@ -82,7 +82,7 @@ management:
 laokou:
   swagger:
     routes:
-      - name: 后台管理模块
+      - name: laokou-admin
         location: /admin
   uris:
     - /sys/auth/api/captcha
