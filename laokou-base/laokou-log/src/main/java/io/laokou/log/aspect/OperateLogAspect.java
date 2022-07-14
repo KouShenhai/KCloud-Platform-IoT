@@ -2,6 +2,7 @@ package io.laokou.log.aspect;
 import com.alibaba.fastjson.JSON;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.dto.OperateLogDTO;
+import io.laokou.common.enums.DataTypeEnum;
 import io.laokou.common.enums.ResultStatusEnum;
 import io.laokou.common.utils.AddressUtil;
 import io.laokou.common.utils.HttpContextUtil;
@@ -65,7 +66,8 @@ public class OperateLogAspect {
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
-        List<?> params = Lists.newArrayList(Arrays.asList(args)).stream().filter(arg -> (!(arg instanceof HttpServletRequest) && !(arg instanceof HttpServletResponse))).collect(Collectors.toList());
+        List<?> params = Lists.newArrayList(Arrays.asList(args)).stream().filter(arg -> (!(arg instanceof HttpServletRequest)
+                && !(arg instanceof HttpServletResponse))).collect(Collectors.toList());
         OperateLogDTO dto = new OperateLogDTO();
         dto.setModule(operateLog.module());
         dto.setOperation(operateLog.name());
@@ -83,7 +85,9 @@ public class OperateLogAspect {
         dto.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
         dto.setMethodName(className + "." + methodName + "()");
         dto.setRequestMethod(request.getMethod());
-        dto.setRequestParams(JSON.toJSONString(params,true));
+        if (DataTypeEnum.TEXT.equals(operateLog.type())) {
+            dto.setRequestParams(JSON.toJSONString(params, true));
+        }
         //发布事件
         SpringContextUtil.publishEvent(new OperateLogEvent(dto));
     }

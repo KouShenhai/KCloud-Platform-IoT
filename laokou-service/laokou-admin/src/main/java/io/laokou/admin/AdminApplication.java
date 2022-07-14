@@ -43,7 +43,6 @@ public class AdminApplication implements CommandLineRunner, WebServerFactoryCust
 	public void run(String... args){
 		log.info("日志乱码 > -Dfile.encoding=UTF-8");
 		log.info("开启APR模式 > -Djava.library.path=./lib");
-		log.info("服务已启动 > http://192.168.62.1:9999/swagger-ui.html");
 	}
 
 	/**

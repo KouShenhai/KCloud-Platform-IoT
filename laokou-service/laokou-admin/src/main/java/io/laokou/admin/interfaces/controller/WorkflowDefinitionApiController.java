@@ -3,6 +3,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.WorkflowDefinitionApplicationService;
 import io.laokou.admin.interfaces.qo.DefinitionQO;
 import io.laokou.admin.interfaces.vo.DefinitionVO;
+import io.laokou.common.enums.DataTypeEnum;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;
@@ -27,6 +28,7 @@ public class WorkflowDefinitionApiController {
 
     @PostMapping("/insert")
     @ApiOperation("流程定义>新增")
+    @OperateLog(module = "流程定义",name = "流程新增",type = DataTypeEnum.FILE)
     public HttpResultUtil<Boolean> insert(@RequestParam("name")String name, @RequestPart("file") MultipartFile file) throws IOException {
         return new HttpResultUtil<Boolean>().ok(workflowDefinitionApplicationService.importFile(name, file.getInputStream()));
     }
