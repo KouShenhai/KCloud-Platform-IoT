@@ -91,8 +91,6 @@
         <knife4j.version>2.0.9</knife4j.version>
         <!--weixin-java-mp版本-->
         <weixin-java-mp.version>4.2.0</weixin-java-mp.version>
-        <!--dynamic-datasource版本-->
-        <dynamic-datasource.version>2.5.6</dynamic-datasource.version>
     </properties>
     <dependencyManagement>
         <dependencies>

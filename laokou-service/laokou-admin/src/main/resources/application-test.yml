@@ -42,48 +42,40 @@ spring:
         max-idle: 10 #连接池最大空闲连接
         min-idle: 5 #连接池最小空间连接
   datasource:
-    dynamic:
-      primary: master
-      datasource:
-        master:
-          driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://192.168.62.128:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
-          username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
-          password: ENC(SX9kPzLDaZb9kGOl2QBziw==)
-        slave:
-          driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://192.168.62.128:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
-          username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
-          password: ENC(SX9kPzLDaZb9kGOl2QBziw==)
-      druid:
-        initial-size: 10
-        max-active: 100
-        min-idle: 10
-        max-wait: 60000
-        pool-prepared-statements: true
-        max-pool-prepared-statement-per-connection-size: 20
-        time-between-eviction-runs-millis: 60000
-        min-evictable-idle-time-millis: 300000
-        test-while-idle: true
-        test-on-borrow: true
-        test-on-return: true
-        web-stat-filter:
-          enabled: true
-          url-pattern: /**
-        stat-view-servlet:
-          enabled: true
-          url-pattern: /druid/*
-          login-username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
-          login-password: ENC(nj35dMcOWEmR5EASEZR3yfaT4IdT9TPm)
-          allow:
-        filter:
-          stat:
-            log-slow-sql: true
-            slow-sql-millis: 1000
-            merge-sql: true
-          wall:
-            config:
-              multi-statement-allow: true
+    druid:
+      db-type: mysql
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.62.128:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+      username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
+      password: ENC(SX9kPzLDaZb9kGOl2QBziw==)
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      test-while-idle: true
+      test-on-borrow: true
+      test-on-return: true
+      web-stat-filter:
+        enabled: true
+        url-pattern: /**
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
+        login-password: ENC(nj35dMcOWEmR5EASEZR3yfaT4IdT9TPm)
+        allow:
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
 
 oauth:
   zfb:
