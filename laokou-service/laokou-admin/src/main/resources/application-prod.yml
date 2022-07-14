@@ -43,40 +43,48 @@ spring:
         max-idle: 10 #连接池最大空闲连接
         min-idle: 5 #连接池最小空间连接
   datasource:
-    druid:
-      db-type: mysql
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://124.222.196.51:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
-      username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
-      password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=) # 密码：koushenhai123456
-      initial-size: 10
-      max-active: 100
-      min-idle: 10
-      max-wait: 60000
-      pool-prepared-statements: true
-      max-pool-prepared-statement-per-connection-size: 20
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      web-stat-filter:
-        enabled: true
-        url-pattern: /**
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
-        login-username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
-        login-password: ENC(nj35dMcOWEmR5EASEZR3yfaT4IdT9TPm)
-        allow:
-      filter:
-        stat:
-          log-slow-sql: true
-          slow-sql-millis: 1000
-          merge-sql: false
-        wall:
-          config:
-            multi-statement-allow: true
+    dynamic:
+      primary: master
+      datasource:
+        master:
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://124.222.196.51:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+          username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
+          password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=) # 密码：koushenhai123456
+        slave:
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://124.222.196.51:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+          username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
+          password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=) # 密码：koushenhai123456
+      druid:
+        initial-size: 10
+        max-active: 100
+        min-idle: 10
+        max-wait: 60000
+        pool-prepared-statements: true
+        max-pool-prepared-statement-per-connection-size: 20
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        web-stat-filter:
+          enabled: true
+          url-pattern: /**
+        stat-view-servlet:
+          enabled: true
+          url-pattern: /druid/*
+          login-username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
+          login-password: ENC(nj35dMcOWEmR5EASEZR3yfaT4IdT9TPm)
+          allow:
+        filter:
+          stat:
+            log-slow-sql: true
+            slow-sql-millis: 1000
+            merge-sql: false
+          wall:
+            config:
+              multi-statement-allow: true
 
 oauth:
   zfb:
@@ -90,7 +98,8 @@ oauth:
     redirect_url: http://localhost:9999
 
 logging:
-  file: /opt/logs/${spring.application.name}/info.log
+  file:
+    name: /opt/logs/${spring.application.name}/info.log
 
 fdfs:
   connect-timeout: 6000

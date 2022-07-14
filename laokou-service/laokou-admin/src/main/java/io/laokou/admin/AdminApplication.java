@@ -1,4 +1,5 @@
 package io.laokou.admin;
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -24,7 +25,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * DDD分层架构(分布式微服务架构) > 用户接口层 应用层 领域层 基础层
  * @author Kou Shenhai
  */
-@SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.admin","io.laokou.redis","io.laokou.log"})
+@SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.admin","io.laokou.redis","io.laokou.log"},exclude = DruidDataSourceAutoConfigure.class)
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableApolloConfig
