@@ -6,6 +6,7 @@ import io.laokou.admin.application.service.WorkflowDefinitionApplicationService;
 import io.laokou.admin.interfaces.qo.DefinitionQO;
 import io.laokou.admin.interfaces.vo.DefinitionVO;
 import io.laokou.common.exception.CustomException;
+import io.laokou.datasource.annotation.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.BpmnModel;
@@ -16,6 +17,7 @@ import org.flowable.engine.repository.ProcessDefinitionQuery;
 import org.flowable.image.impl.DefaultProcessDiagramGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -31,7 +33,7 @@ import java.util.List;
  * @date 2022/7/6 0006 下午 6:11
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 @Slf4j
 public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinitionApplicationService {
 
@@ -39,6 +41,7 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
     private RepositoryService repositoryService;
 
     @Override
+    @DataSource("master")
     public Boolean importFile(String name, InputStream in) {
         String processName = name + BPMN_FILE_SUFFIX;
         DeploymentBuilder deploymentBuilder = repositoryService.createDeployment()
@@ -50,6 +53,7 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
     }
 
     @Override
+    @DataSource("master")
     public IPage<DefinitionVO> queryDefinitionPage(DefinitionQO qo) {
         ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery()
                 .latestVersion()
@@ -78,6 +82,7 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
     }
 
     @Override
+    @DataSource("master")
     public void imageProcess(String definitionId, HttpServletResponse response) {
         //获取图片流
         DefaultProcessDiagramGenerator diagramGenerator = new DefaultProcessDiagramGenerator();
@@ -107,6 +112,7 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
     }
 
     @Override
+    @DataSource("master")
     public Boolean deleteDefinition(String deploymentId) {
         // true允许级联删除 不设置会导致数据库关联异常
         repositoryService.deleteDeployment(deploymentId,true);
@@ -114,6 +120,7 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
     }
 
     @Override
+    @DataSource("master")
     public Boolean suspendDefinition(String definitionId) {
         final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(definitionId).singleResult();
         if (processDefinition.isSuspended()) {
@@ -126,6 +133,7 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
     }
 
     @Override
+    @DataSource("master")
     public Boolean activateDefinition(String definitionId) {
         final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(definitionId).singleResult();
         if (processDefinition.isSuspended()) {

@@ -96,3 +96,11 @@ fdfs:
   connect-timeout: 6000
   so-timeout: 600000
   tracker-list: 124.222.196.51:22122
+
+dynamic:
+  datasource:
+    slave:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.62.128:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+      username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
+      password: ENC(SX9kPzLDaZb9kGOl2QBziw==)
