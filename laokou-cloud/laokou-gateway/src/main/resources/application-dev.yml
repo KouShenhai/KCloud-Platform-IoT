@@ -32,7 +32,8 @@ spring:
           prefer-ip: true
 
 logging:
-  file: logs/${spring.application.name}/info.log
+  file:
+    name: logs/${spring.application.name}/info.log
 
 app:
   id: gateway # 应用全局唯一的身份标识
