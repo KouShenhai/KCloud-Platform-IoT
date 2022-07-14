@@ -128,6 +128,3 @@ admin:
       url: /workflow/task/api/diagram
     - permission: anon
       url: /favicon.ico
-
-flowable:
-  database-schema-update: true

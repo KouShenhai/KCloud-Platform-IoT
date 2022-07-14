@@ -15,6 +15,7 @@
     <modules>
         <module>laokou-common</module>
         <module>laokou-log</module>
+        <module>laokou-dynamic-datasource</module>
     </modules>
 
 </project>

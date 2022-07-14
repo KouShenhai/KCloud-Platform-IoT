@@ -24,11 +24,11 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * DDD分层架构(分布式微服务架构) > 用户接口层 应用层 领域层 基础层
  * @author Kou Shenhai
  */
-@SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.admin","io.laokou.redis","io.laokou.log"})
+@SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.admin","io.laokou.redis","io.laokou.log","io.laokou.datasource"})
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableApolloConfig
-@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy(exposeProxy = true)
 @Slf4j
 @EnableEncryptableProperties
 @EnableHystrix
