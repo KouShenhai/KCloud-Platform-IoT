@@ -7,6 +7,7 @@ import io.laokou.admin.infrastructure.common.user.SecurityUser;
 import io.laokou.admin.interfaces.qo.TaskQO;
 import io.laokou.admin.interfaces.vo.TaskVO;
 import io.laokou.common.exception.CustomException;
+import io.laokou.datasource.annotation.DataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
@@ -16,11 +17,12 @@ import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 @Service
-@Transactional(rollbackFor = Exception.class)
+@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApplicationService {
 
     @Autowired
@@ -33,6 +35,7 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
     private TaskService taskService;
 
     @Override
+    @DataSource("master")
     public Boolean startProcess(String definitionId) {
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
                 .processDefinitionId(definitionId)
@@ -45,6 +48,7 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
     }
 
     @Override
+    @DataSource("master")
     public IPage<TaskVO> queryTaskPage(TaskQO qo, HttpServletRequest request) {
         final Integer pageNum = qo.getPageNum();
         final Integer pageSize = qo.getPageSize();

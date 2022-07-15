@@ -31,6 +31,7 @@ import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.*;
 import io.laokou.admin.interfaces.vo.SysMenuVO;
 import io.laokou.admin.interfaces.vo.UserInfoVO;
+import io.laokou.datasource.annotation.DataSource;
 import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
@@ -56,7 +58,7 @@ import java.util.*;
  */
 @Service
 @Slf4j
-@Transactional(rollbackFor = Exception.class)
+@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysAuthApplicationServiceImpl implements SysAuthApplicationService {
 
     private final static AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -80,6 +82,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     private SysRoleService sysRoleService;
 
     @Override
+    @DataSource("master")
     public LoginVO login(LoginDTO loginDTO) throws Exception {
         //region Description
         //效验数据
@@ -214,6 +217,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     }
 
     @Override
+    @DataSource("master")
     public UserDetail resource(String Authorization, String uri, String method) {
         //region Description
         //1.获取用户信息
@@ -251,6 +255,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     }
 
     @Override
+    @DataSource("master")
     public UserInfoVO userInfo(Long userId) {
         UserDetail userDetail = getUserDetail(userId);
         return UserInfoVO.builder().imgUrl(userDetail.getImgUrl())
@@ -285,6 +290,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     }
 
     @Override
+    @DataSource("master")
     public UserDetail getUserDetail(Long userId) {
         //region Description
         String userInfoKey = RedisKeyUtil.getUserInfoKey(userId);

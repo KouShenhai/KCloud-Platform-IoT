@@ -9,6 +9,7 @@ import io.laokou.admin.interfaces.dto.ClaimDTO;
 import io.laokou.admin.interfaces.dto.UnClaimDTO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.FileUtil;
+import io.laokou.datasource.annotation.DataSource;
 import org.apache.commons.collections.MapUtils;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.*;
@@ -21,6 +22,7 @@ import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -34,7 +36,7 @@ import java.util.List;
  * @author Kou Shenhai
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicationService {
 
     @Autowired
@@ -54,6 +56,7 @@ public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicati
     private ProcessEngine processEngine;
 
     @Override
+    @DataSource("master")
     public Boolean auditTask(AuditDTO dto, HttpServletRequest request) {
         Task task = taskService.createTaskQuery().taskId(dto.getTaskId()).singleResult();
         if (null == task) {
@@ -76,6 +79,7 @@ public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicati
     }
 
     @Override
+    @DataSource("master")
     public Boolean claimTask(ClaimDTO dto,HttpServletRequest request) {
         final Task task = taskService.createTaskQuery()
                 .taskId(dto.getTaskId())
@@ -88,18 +92,21 @@ public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicati
     }
 
     @Override
+    @DataSource("master")
     public Boolean unClaimTask(UnClaimDTO dto) {
         taskService.unclaim(dto.getTaskId());
         return true;
     }
 
     @Override
+    @DataSource("master")
     public Boolean deleteTask(String taskId) {
         taskService.deleteTask(taskId);
         return true;
     }
 
     @Override
+    @DataSource("master")
     public void diagramProcess(String processInstanceId, HttpServletResponse response) throws IOException {
         final InputStream inputStream = getInputStream(processInstanceId);
         final BufferedImage image = ImageIO.read(inputStream);

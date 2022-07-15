@@ -42,6 +42,7 @@
 ~~~
 |--laokou-base
    |--laokou-common -- 公共组件
+   |--laokou-dynamic-datasource 多数据源组件
    |--laokou-log -- 日志组件
 |--laokou-cloud
    |--laokou-gateway -- 服务网关

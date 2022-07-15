@@ -13,14 +13,16 @@ import io.laokou.common.exception.CustomException;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.TreeUtil;
+import io.laokou.datasource.annotation.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 @Service
-@Transactional(rollbackFor = Exception.class)
+@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysMenuApplicationServiceImpl implements SysMenuApplicationService {
 
     @Autowired
@@ -30,6 +32,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     private SysAuthApplicationService sysAuthApplicationService;
 
     @Override
+    @DataSource("master")
     public SysMenuVO getMenuList(HttpServletRequest request) {
         Long userId = Long.valueOf(request.getHeader(Constant.USER_KEY_HEAD));
         UserDetail userDetail = sysAuthApplicationService.getUserDetail(userId);
@@ -38,16 +41,19 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     }
 
     @Override
+    @DataSource("master")
     public List<SysMenuVO> queryMenuList(SysMenuQO qo) {
         return sysMenuService.queryMenuList(qo);
     }
 
     @Override
+    @DataSource("master")
     public SysMenuVO getMenuById(Long id) {
         return sysMenuService.getMenuById(id);
     }
 
     @Override
+    @DataSource("master")
     public Boolean updateMenu(SysMenuDTO dto, HttpServletRequest request) {
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
         int count = sysMenuService.count(new LambdaQueryWrapper<SysMenuDO>().eq(SysMenuDO::getName, menuDO.getName()).ne(SysMenuDO::getId,menuDO.getId()));
@@ -59,6 +65,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     }
 
     @Override
+    @DataSource("master")
     public Boolean insertMenu(SysMenuDTO dto, HttpServletRequest request) {
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
         int count = sysMenuService.count(new LambdaQueryWrapper<SysMenuDO>().eq(SysMenuDO::getName, menuDO.getName()));
@@ -70,12 +77,14 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     }
 
     @Override
+    @DataSource("master")
     public Boolean deleteMenu(Long id) {
         sysMenuService.deleteMenu(id);
         return true;
     }
 
     @Override
+    @DataSource("master")
     public SysMenuVO treeMenu(Long roleId) {
         List<SysMenuVO> menuList;
         if (null == roleId) {
@@ -87,6 +96,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     }
 
     @Override
+    @DataSource("master")
     public List<Long> getMenuIdsByRoleId(Long roleId) {
         return sysMenuService.getMenuIdsByRoleId(roleId);
     }

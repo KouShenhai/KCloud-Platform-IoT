@@ -7,7 +7,7 @@ spring:
     name: laokou-admin
   profiles:
     # 环境 dev|test|prod
-    active: dev
+    active: test
   messages:
     encoding: UTF-8
     basename: i18n/messages

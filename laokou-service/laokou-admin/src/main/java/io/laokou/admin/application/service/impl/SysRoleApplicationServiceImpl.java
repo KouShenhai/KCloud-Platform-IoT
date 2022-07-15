@@ -13,16 +13,17 @@ import io.laokou.admin.interfaces.qo.SysRoleQO;
 import io.laokou.admin.interfaces.vo.SysRoleVO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.ConvertUtil;
+import io.laokou.datasource.annotation.DataSource;
 import org.apache.commons.collections.CollectionUtils;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 @Service
-@Transactional(rollbackFor = Exception.class)
+@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysRoleApplicationServiceImpl implements SysRoleApplicationService {
 
     @Autowired
@@ -32,22 +33,26 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     private SysRoleMenuService sysRoleMenuService;
 
     @Override
+    @DataSource("master")
     public IPage<SysRoleVO> queryRolePage(SysRoleQO qo) {
         IPage<SysRoleVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysRoleService.getRolePage(page,qo);
     }
 
     @Override
+    @DataSource("master")
     public List<SysRoleVO> getRoleList(SysRoleQO qo) {
         return sysRoleService.getRoleList(qo);
     }
 
     @Override
+    @DataSource("master")
     public SysRoleVO getRoleById(Long id) {
         return sysRoleService.getRoleById(id);
     }
 
     @Override
+    @DataSource("master")
     public Boolean insertRole(SysRoleDTO dto, HttpServletRequest request) {
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
         int count = sysRoleService.count(new LambdaQueryWrapper<SysRoleDO>().eq(SysRoleDO::getName, roleDO.getName()));
@@ -78,6 +83,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     }
 
     @Override
+    @DataSource("master")
     public Boolean updateRole(SysRoleDTO dto, HttpServletRequest request) {
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
         int count = sysRoleService.count(new LambdaQueryWrapper<SysRoleDO>().eq(SysRoleDO::getName, roleDO.getName()).ne(SysRoleDO::getId,roleDO.getId()));
@@ -97,6 +103,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     }
 
     @Override
+    @DataSource("master")
     public Boolean deleteRole(Long id) {
         sysRoleService.deleteRole(id);
         return true;
