@@ -13,4 +13,6 @@
 
 * [centos7 安装中文字体](https://kcloud.blog.csdn.net/article/details/106575947)
 
+* [centos7 安装jenkins](https://kcloud.blog.csdn.net/article/details/112171878)
+
 * [centos7 开启apr](https://kcloud.blog.csdn.net/article/details/125473896)
