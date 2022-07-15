@@ -134,29 +134,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <!--配置maven阿里云仓库开始,不用去改maven的setting -->
-    <repositories>
-        <repository>
-            <id>public</id>
-            <name>local private nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>public</id>
-            <name>local private nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-    <!--配置maven阿里云结束 -->
 </project>
