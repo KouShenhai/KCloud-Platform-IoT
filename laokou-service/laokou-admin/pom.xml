@@ -9,7 +9,6 @@
 	</parent>
 	<groupId>io.laokou</groupId>
 	<artifactId>laokou-admin</artifactId>
-	<version>${laokou.version}</version>
 	<name>laokou-admin</name>
 	<description>后台管理模块</description>
 	<properties>
@@ -119,11 +118,6 @@
 			<groupId>com.github.ulisesbocchio</groupId>
 			<artifactId>jasypt-spring-boot-starter</artifactId>
 			<version>${jasypt.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>${guava.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>

@@ -1,4 +1,5 @@
 package io.laokou.common.utils;
+
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 import io.laokou.common.exception.CustomException;
@@ -6,7 +7,10 @@ import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
 import org.assertj.core.util.Lists;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.StringJoiner;
 /**
  * 构造树
  * @author Kou Shenhai

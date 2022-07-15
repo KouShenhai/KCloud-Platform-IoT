@@ -9,7 +9,6 @@
     </parent>
     <groupId>io.laokou</groupId>
     <artifactId>laokou-gateway</artifactId>
-    <version>${laokou.version}</version>
     <description>API网关</description>
 
     <properties>
