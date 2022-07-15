@@ -1,5 +1,6 @@
 package io.laokou.log.aspect;
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.common.enums.DataTypeEnum;
@@ -19,7 +20,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.assertj.core.util.Lists;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
