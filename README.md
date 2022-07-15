@@ -50,6 +50,9 @@
 #### 一键部署
 * docker-compose
 
+### 持续交付
+* jenkins
+
 #### 项目结构
 ~~~
 |-- laokou-base
