@@ -52,23 +52,24 @@
 
 #### 项目结构
 ~~~
-|--laokou-base
-   |--laokou-common -- 公共组件
-   |--laokou-dynamic-datasource 多数据源组件
-   |--laokou-log -- 日志组件
-|--laokou-cloud
-   |--laokou-gateway -- 服务网关
-   |--laokou-monitor -- 服务监控
-   |--laokou-register -- 服务治理
-|--laokou-parent -- 版本依赖
-|--laokou-service
-   |--laokou-admin -- 后台管理模块
-   |--laokou-redis -- 缓存模块
+|-- laokou-base
+   |-- laokou-common -- 公共组件
+   |-- laokou-dynamic-datasource 多数据源组件
+   |-- laokou-log -- 日志组件
+|-- laokou-cloud
+   |-- laokou-gateway -- 服务网关
+   |-- laokou-monitor -- 服务监控
+   |-- laokou-register -- 服务治理
+|-- laokou-parent -- 版本依赖
+|-- laokou-service
+   |-- laokou-admin -- 后台管理模块
+   |-- laokou-redis -- 缓存模块
 ~~~
 
 ### 项目配置
 * 安装jdk1.8、mysql5.7、redis、apollo
 * 创建数据库
+* 开启apr模式
 * 修改第三方相关配置
 * 修改中间件相关配置
 

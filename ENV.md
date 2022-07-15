@@ -8,3 +8,9 @@
 * [centos7 安装apollo](https://kcloud.blog.csdn.net/article/details/124957353)
 
 * [centos7 安装redis](https://kcloud.blog.csdn.net/article/details/82589349)
+
+* [centos7 安装fastdfs](https://kcloud.blog.csdn.net/article/details/116423931)
+
+* [centos7 安装中文字体](https://kcloud.blog.csdn.net/article/details/106575947)
+
+* [centos7 开启apr](https://kcloud.blog.csdn.net/article/details/125473896)
