@@ -10,16 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.laokou</groupId>
     <artifactId>laokou-common</artifactId>
-    <version>${laokou.version}</version>
     <dependencies>
         <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>

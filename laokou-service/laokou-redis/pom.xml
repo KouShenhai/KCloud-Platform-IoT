@@ -10,7 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.laokou</groupId>
     <artifactId>laokou-redis</artifactId>
-    <version>${laokou.version}</version>
     <description>redis工具</description>
     <dependencies>
         <dependency>
