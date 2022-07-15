@@ -10,4 +10,4 @@ VOLUME /data
 # 复制文件
 COPY register.jar /opt/register.jar
 # 执行命令
-ENTRYPOINT java -Xms256m -Xmx512m -jar /opt/register.jar > /opt/register.log
+ENTRYPOINT java -Xms256m -Xmx512m -jar /opt/register.jar --spring.profiles.active=prod > /opt/register.log

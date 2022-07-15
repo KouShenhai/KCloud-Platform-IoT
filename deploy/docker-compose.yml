@@ -1,0 +1,77 @@
+version: '3.8'
+services:
+  laokou-apollo-service:
+    image: apollo:1.0
+    container_name: laokou-apollo
+    environment:
+      - TZ="Asia/Shanghai"
+    ports:
+      - 8070:8070
+      - 8090:8090
+      - 8080:8080
+    networks:
+      - laokou
+    restart: on-failure:10
+    depends_on:
+      - laokou-register-service
+  laokou-gateway-service:
+    image: gateway:1.0
+    container_name: laokou-gateway
+    environment:
+      - TZ="Asia/Shanghai"
+    restart: on-failure:10
+    networks:
+      - laokou
+    ports:
+      - 5555:5555
+    depends_on:
+      - laokou-register-service
+  laokou-register-service:
+    image: register:1.0
+    container_name: laokou-register
+    environment:
+      - TZ="Asia/Shanghai"
+    networks:
+      - laokou
+    ports:
+      - 1111:1111
+    restart: on-failure:10
+  laokou-sso-service:
+    image: sso:1.0
+    container_name: laokou-sso
+    environment:
+      - TZ="Asia/Shanghai"
+    networks:
+      - laokou
+    ports:
+      - 9999:9999
+    restart: on-failure:10
+    depends_on:
+      - laokou-register-service
+  laokou-activiti-service:
+    image: activiti:1.0
+    container_name: laokou-activiti
+    environment:
+      - TZ="Asia/Shanghai"
+    networks:
+      - laokou
+    ports:
+      - 9019:9019
+    restart: on-failure:10
+    depends_on:
+      - laokou-register-service
+  laokou-resource-service:
+    image: resource:1.0
+    container_name: laokou-resource
+    environment:
+      - TZ="Asia/Shanghai"
+    networks:
+      - laokou
+    ports:
+      - 9025:9025
+    restart: on-failure:10
+    depends_on:
+      - laokou-register-service
+networks:
+  laokou:
+    driver: bridge

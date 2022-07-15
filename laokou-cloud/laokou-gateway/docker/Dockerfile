@@ -8,4 +8,4 @@ EXPOSE 5555
 # 复制文件
 COPY gateway.jar /opt/gateway.jar
 # 执行命令
-ENTRYPOINT java -Xms256m -Xmx512m -jar /opt/gateway.jar > /opt/gateway.log
+ENTRYPOINT java -Xms256m -Xmx512m -Djasypt.encryptor.password=koushenhai5201314wumeihua -Denv=DEV -Dapollo.configService=http://124.222.196.51:8080 /opt/gateway.jar --spring.profiles.active=prod > /opt/gateway.log
