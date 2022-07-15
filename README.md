@@ -86,3 +86,32 @@
     #连接超时时长（毫秒）
     timeout: 6000ms 
 ```
+
+### 多数据源配置
+##### 代码引入
+```java
+@Service
+@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+public class SysUserApplicationServiceImpl implements SysUserApplicationService {
+
+    @Autowired
+    private SysUserService sysUserService;
+
+    @Override
+    @DataSource("master")
+    public IPage<SysUserVO> queryUserPage(SysUserQO qo) {
+        IPage<SysUserVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+        return sysUserService.getUserPage(page,qo);
+    }
+}
+```
+##### 配置文件
+```yaml
+  dynamic:
+    datasource:
+      slave:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+        username: root
+        password: 123456
+```
