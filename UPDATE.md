@@ -1,4 +1,4 @@
-###### 2022.07.12
+###### 2022.07.12 更新日志
 ###### 1.版本升级
 * SpringBoot 2.0.0 => SpringBoot 2.2.5
 * SpringCloud Finchley.SR1 => SpringCloud Hoxton.SR6
@@ -18,9 +18,12 @@
 ###### 5.版本管理
 * laokou-parent统一管理maven版本
 
-###### 2022.07.14
+###### 2022.07.14 更新日志
 ###### 1.增加组件
 * 多数据源组件
 
 ###### 2.部署脚本
 * docker-compose.yml
+
+###### 3.持续交付
+* Jenkins
