@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/wx/mp/portal/api/{appId}")
-@Api(tags="API",value = "API",protocols = "http")
+@Api(tags="微信认证API",value = "微信认证API",protocols = "http")
 public class WXMpPortalApiController {
 
 //    /**

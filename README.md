@@ -29,6 +29,13 @@
 * 服务监控
 
 ### 技术体系
+
+#### 四层架构
+* application <=> 应用层
+* domain <=> 领域层
+* infrastructure <=> 基础层
+* interfaces <=> 用户接口层
+
 #### 基础框架
 * Shiro
 * SpringBoot
@@ -107,11 +114,11 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 ```
 ##### 配置文件
 ```yaml
-  dynamic:
-    datasource:
-      slave:
-        driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
-        username: root
-        password: 123456
+dynamic:
+  datasource:
+    slave:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+      username: root
+      password: 123456
 ```
