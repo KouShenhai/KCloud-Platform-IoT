@@ -48,6 +48,18 @@ services:
     restart: on-failure:10
     depends_on:
       - laokou-register-service
+  laokou-monitor-service:
+    image: monitor:1.0
+    container_name: laokou-monitor
+    environment:
+      - TZ="Asia/Shanghai"
+    networks:
+      - laokou
+    ports:
+      - 5000:5000
+    restart: on-failure:10
+    depends_on:
+      - laokou-register-service
 networks:
   laokou:
     driver: bridge
