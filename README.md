@@ -126,3 +126,29 @@ dynamic:
       username: root
       password: 123456
 ```
+
+### 数据权限
+##### 代码引入
+```java
+@Service
+@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+public class SysUserApplicationServiceImpl implements SysUserApplicationService {
+
+    @Autowired
+    private SysUserService sysUserService;
+
+    @Override
+    @DataFilter(tableAlias = "boot_sys_user")
+    public IPage<SysUserVO> queryUserPage(SysUserQO qo) {
+        IPage<SysUserVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+        return sysUserService.getUserPage(page,qo);
+    }
+}
+```
+##### 配置文件
+```xml
+            <if test="qo.sqlFilter != null and qo.sqlFilter != ''">
+                and ${qo.sqlFilter}
+            </if>
+```
+
