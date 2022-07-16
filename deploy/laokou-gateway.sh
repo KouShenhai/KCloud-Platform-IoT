@@ -1,1 +1,1 @@
-cd /opt/laokou && nohup java -Xms256m -Xmx512m -Djasypt.encryptor.password=koushenhai5201314wumeihua -Denv=DEV -Dapollo.configService=http://124.222.196.51:8080 -jar gateway.jar --spring.profiles.active=prod > gateway.log &
+cd /opt/laokou && sudo nohup java -Xms256m -Xmx512m -Djasypt.encryptor.password=koushenhai5201314wumeihua -Denv=DEV -Dapollo.configService=http://124.222.196.51:8080 -jar gateway.jar --spring.profiles.active=prod > gateway.log &
