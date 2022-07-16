@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #参数
-target_path="/var/lib/jenkins/workspace/laokou-yun/laokou-cloud/laokou-gateway/target"
 project_path="/opt/laokou"
 admin="admin"
 gateway="gateway"

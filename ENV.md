@@ -15,4 +15,4 @@
 
 * [centos7 安装jenkins](https://kcloud.blog.csdn.net/article/details/112171878)
 
-* [centos7 开启apr](https://kcloud.blog.csdn.net/article/details/125473896)
+* [centos7 安装apr](https://kcloud.blog.csdn.net/article/details/125473896)
