@@ -1,14 +1,15 @@
 package io.laokou.datasource.aspect;
-import cn.hutool.core.collection.CollUtil;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.entity.BasePage;
 import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.common.exception.CustomException;
+import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpContextUtil;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.feign.admin.AdminApiFeignClient;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -21,8 +22,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Map;
-
+import java.util.stream.Collectors;
 @Component
 @Aspect
 public class DataFilterAspect {
@@ -53,16 +53,21 @@ public class DataFilterAspect {
             if (userDetail.getSuperAdmin() == SuperAdminEnum.YES.ordinal()) {
                 return;
             }
-            //否则进行数据过滤
-            Map map = (Map)params;
-
+            try {
+                //否则进行数据过滤
+                BasePage page = (BasePage)params;
+                String sqlFilter = getSqlFilter(userDetail, point);
+                page.setSqlFilter(sqlFilter);
+            }catch (Exception e){}
+            return;
         }
+        throw new CustomException("服务正在维护，请联系管理员");
     }
 
     /**
      * 获取数据过滤的SQL
      */
-    private String getSqlFilter(UserDetail user, JoinPoint point) throws Exception {
+    private String getSqlFilter(UserDetail userDetail, JoinPoint point) throws Exception {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = point.getTarget().getClass().getDeclaredMethod(signature.getName(), signature.getParameterTypes());
         DataFilter dataFilter = method.getAnnotation(DataFilter.class);
@@ -72,15 +77,13 @@ public class DataFilterAspect {
         if(StringUtils.isNotBlank(tableAlias)){
             tableAlias +=  ".";
         }
-
         StringBuilder sqlFilter = new StringBuilder();
-//        //部门ID列表
-//        List<Long> deptIdList = user.getDeptIdList();
-//        if(CollUtil.isNotEmpty(deptIdList)){
-//            sqlFilter.append(tableAlias).append(dataFilter.deptId());
-//
-//            sqlFilter.append(" in(").append(StringUtils.join(deptIdList, ",")).append(")");
-//        }
+        //用户列表
+        List<Long> userIds = userDetail.getUsers().stream().map(item -> item.getId()).collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(userIds)) {
+            throw new CustomException(ErrorCode.ROLE_NOT_EXIST);
+        }
+        sqlFilter.append(" find_in_set(").append(tableAlias).append(dataFilter.userId()).append(",").append("'").append(StringUtils.join(userIds,",")).append("'").append(")");
         return sqlFilter.toString();
     }
 

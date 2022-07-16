@@ -156,6 +156,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         List<SysMenuVO> resourceList = sysMenuService.getMenuList(userDetail,true,1);
         List<String> permissionList = getPermissionList(userDetail);
         userDetail.setPermissionsList(permissionList);
+        userDetail.setUsers(getUserList(userDetail));
+        userDetail.setRoles(sysRoleService.getRoleListByUserId(userDetail.getId()));
         //用户信息
         String userInfoKey = RedisKeyUtil.getUserInfoKey(userId);
         redisUtil.delete(userInfoKey);

@@ -1,5 +1,4 @@
 package io.laokou.admin.application.service.impl;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.laokou.admin.application.service.SysLogApplicationService;
@@ -14,12 +13,12 @@ import io.laokou.admin.interfaces.vo.SysOperateLogVO;
 import io.laokou.common.dto.LoginLogDTO;
 import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.common.utils.ConvertUtil;
+import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 @Service
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysLogApplicationServiceImpl implements SysLogApplicationService {
@@ -46,6 +45,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
 
     @Override
     @DataSource("master")
+    @DataFilter(tableAlias = "boot_sys_operate_log")
     public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQO qo) {
         IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysOperateLogService.operateLogPage(page,qo);

@@ -10,6 +10,7 @@ import io.laokou.admin.interfaces.dto.SysDictDTO;
 import io.laokou.admin.interfaces.qo.SysDictQO;
 import io.laokou.admin.interfaces.vo.SysDictVO;
 import io.laokou.common.utils.ConvertUtil;
+import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
 
     @Override
     @DataSource("master")
+    @DataFilter(tableAlias = "boot_sys_dict")
     public IPage<SysDictVO> queryDictPage(SysDictQO qo) {
         IPage<SysDictVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysDictService.getDictList(page,qo);

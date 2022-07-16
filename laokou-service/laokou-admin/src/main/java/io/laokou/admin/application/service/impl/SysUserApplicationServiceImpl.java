@@ -18,6 +18,7 @@ import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.ConvertUtil;
+import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
     @Override
     @DataSource("master")
+    @DataFilter(tableAlias = "boot_sys_user")
     public IPage<SysUserVO> queryUserPage(SysUserQO qo) {
         IPage<SysUserVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysUserService.getUserPage(page,qo);

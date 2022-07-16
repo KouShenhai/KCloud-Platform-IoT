@@ -14,6 +14,7 @@ import io.laokou.admin.interfaces.qo.SysRoleQO;
 import io.laokou.common.vo.SysRoleVO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.ConvertUtil;
+import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 
     @Override
     @DataSource("master")
+    @DataFilter(tableAlias = "boot_sys_role")
     public IPage<SysRoleVO> queryRolePage(SysRoleQO qo) {
         IPage<SysRoleVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysRoleService.getRolePage(page,qo);

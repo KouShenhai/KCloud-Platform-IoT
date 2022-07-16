@@ -62,6 +62,9 @@
          <if test="qo.name != '' and qo.name != null">
              and `name` like concat('%',#{qo.name},'%')
          </if>
+        <if test="qo.sqlFilter != null and qo.sqlFilter != ''">
+            and ${qo.sqlFilter}
+        </if>
         order by sort desc
     </select>
 
