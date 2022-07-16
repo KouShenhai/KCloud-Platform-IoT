@@ -1,7 +1,7 @@
 package io.laokou.admin.interfaces.controller;
 import com.alipay.api.AlipayApiException;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import io.laokou.admin.infrastructure.common.user.SecurityUser;
+import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.vo.LoginVO;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.user.UserDetail;

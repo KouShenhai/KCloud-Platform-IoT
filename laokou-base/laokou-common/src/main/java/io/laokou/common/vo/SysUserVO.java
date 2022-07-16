@@ -1,10 +1,12 @@
-package io.laokou.admin.interfaces.vo;
+package io.laokou.common.vo;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
 import lombok.Data;
 import java.util.Date;
 import java.util.List;
 @Data
 public class SysUserVO {
-
+    @JSONField(serializeUsing = ToStringSerializer.class)
     private Long id;
 
     private Date createDate;

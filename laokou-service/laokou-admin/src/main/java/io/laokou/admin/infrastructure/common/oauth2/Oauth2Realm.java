@@ -2,7 +2,7 @@ package io.laokou.admin.infrastructure.common.oauth2;
 import com.alibaba.fastjson.JSON;
 import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.UserDetail;
-import io.laokou.admin.infrastructure.common.password.TokenUtil;
+import io.laokou.common.utils.TokenUtil;
 import io.laokou.admin.application.service.SysAuthApplicationService;
 import io.laokou.common.utils.MessageUtil;
 import lombok.extern.slf4j.Slf4j;

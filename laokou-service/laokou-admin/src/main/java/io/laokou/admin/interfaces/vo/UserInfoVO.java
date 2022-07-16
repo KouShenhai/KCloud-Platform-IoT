@@ -1,4 +1,5 @@
 package io.laokou.admin.interfaces.vo;
+import io.laokou.common.vo.SysRoleVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

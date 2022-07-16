@@ -1,4 +1,4 @@
-package io.laokou.admin.infrastructure.common.enums;
+package io.laokou.common.enums;
 
 /**
  * 超级管理员枚举

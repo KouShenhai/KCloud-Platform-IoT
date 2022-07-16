@@ -1,6 +1,8 @@
 package io.laokou.common.user;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
+import io.laokou.common.vo.SysRoleVO;
+import io.laokou.common.vo.SysUserVO;
 import lombok.Data;
 import java.util.List;
 /**
@@ -19,5 +21,6 @@ public class UserDetail {
     private String password;
     private String zfbOpenid;
     private List<String> permissionsList;
-
+    private List<SysRoleVO> roles;
+    private List<SysUserVO> users;
 }

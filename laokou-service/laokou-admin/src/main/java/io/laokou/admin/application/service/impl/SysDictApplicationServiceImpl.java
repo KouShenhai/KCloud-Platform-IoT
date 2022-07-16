@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.laokou.admin.application.service.SysDictApplicationService;
 import io.laokou.admin.domain.sys.entity.SysDictDO;
 import io.laokou.admin.domain.sys.repository.service.SysDictService;
-import io.laokou.admin.infrastructure.common.user.SecurityUser;
+import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.SysDictDTO;
 import io.laokou.admin.interfaces.qo.SysDictQO;
 import io.laokou.admin.interfaces.vo.SysDictVO;

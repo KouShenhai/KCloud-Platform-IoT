@@ -3,7 +3,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysRoleApplicationService;
 import io.laokou.admin.interfaces.dto.SysRoleDTO;
 import io.laokou.admin.interfaces.qo.SysRoleQO;
-import io.laokou.admin.interfaces.vo.SysRoleVO;
+import io.laokou.common.vo.SysRoleVO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;

@@ -15,22 +15,22 @@ import io.laokou.admin.domain.sys.repository.service.SysMenuService;
 import io.laokou.admin.domain.zfb.entity.ZfbUserDO;
 import io.laokou.admin.domain.zfb.repository.service.ZfbUserService;
 import io.laokou.admin.infrastructure.common.password.PasswordUtil;
-import io.laokou.admin.infrastructure.common.password.TokenUtil;
-import io.laokou.admin.infrastructure.common.user.SecurityUser;
+import io.laokou.common.utils.*;
+import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.LoginDTO;
 import io.laokou.admin.interfaces.vo.LoginVO;
 import io.laokou.common.constant.Constant;
 import io.laokou.admin.infrastructure.common.enums.AuthTypeEnum;
 import io.laokou.common.enums.ResultStatusEnum;
-import io.laokou.admin.infrastructure.common.enums.SuperAdminEnum;
+import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.admin.infrastructure.common.enums.UserStatusEnum;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.exception.ErrorCode;
 import io.laokou.admin.infrastructure.common.password.RsaCoder;
 import io.laokou.common.user.UserDetail;
-import io.laokou.common.utils.*;
 import io.laokou.admin.interfaces.vo.SysMenuVO;
 import io.laokou.admin.interfaces.vo.UserInfoVO;
+import io.laokou.common.vo.SysUserVO;
 import io.laokou.datasource.annotation.DataSource;
 import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
@@ -98,7 +98,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             username = RsaCoder.decryptByPrivateKey(username);
             password = RsaCoder.decryptByPrivateKey(password);
         } catch (BadPaddingException e) {
-            PublishFactory.recordLogin("未知用户", ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
+            PublishFactory.recordLogin("未知用户", ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
             throw new CustomException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
         log.info("解密后，用户名：{}", username);
@@ -263,7 +263,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                         .userId(userDetail.getId())
                         .mobile(userDetail.getMobile())
                         .email(userDetail.getEmail())
-                        .roles(sysRoleService.getRoleListByUserId(userId))
+                        .roles(userDetail.getRoles())
                         .permissionList(userDetail.getPermissionsList()).build();
     }
 
@@ -304,6 +304,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                 throw new CustomException(ErrorCode.ACCOUNT_NOT_EXIST);
             }
             userDetail.setPermissionsList(getPermissionList(userDetail));
+            userDetail.setRoles(sysRoleService.getRoleListByUserId(userId));
+            userDetail.setUsers(getUserList(userDetail));
             redisUtil.set(userInfoKey, JSON.toJSONString(userDetail));
         }
         return userDetail;
@@ -326,6 +328,16 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             return sysRoleService.getRoleIds();
         } else {
             return sysRoleService.getRoleIdsByUserId(userId);
+        }
+    }
+
+    private List<SysUserVO> getUserList(UserDetail userDetail) {
+        Integer superAdmin = userDetail.getSuperAdmin();
+        Long userId = userDetail.getId();
+        if (SuperAdminEnum.YES.ordinal() == superAdmin) {
+            return sysUserService.getUserList();
+        } else {
+            return sysUserService.getUserListByUserId(userId);
         }
     }
 

@@ -2,7 +2,7 @@ package io.laokou.log.feign.admin.fallback;
 import io.laokou.common.dto.LoginLogDTO;
 import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.common.utils.HttpResultUtil;
-import io.laokou.log.feign.admin.AdminApiFeignClient;
+import io.laokou.log.feign.admin.LogApiFeignClient;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 /**
@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @AllArgsConstructor
-public class AdminApiFeignClientFallback implements AdminApiFeignClient {
+public class LogApiFeignClientFallback implements LogApiFeignClient {
 
     private Throwable throwable;
 

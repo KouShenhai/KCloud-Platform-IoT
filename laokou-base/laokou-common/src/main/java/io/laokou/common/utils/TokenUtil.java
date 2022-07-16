@@ -1,4 +1,4 @@
-package io.laokou.admin.infrastructure.common.password;
+package io.laokou.common.utils;
 
 import cn.hutool.core.util.IdUtil;
 import io.jsonwebtoken.*;

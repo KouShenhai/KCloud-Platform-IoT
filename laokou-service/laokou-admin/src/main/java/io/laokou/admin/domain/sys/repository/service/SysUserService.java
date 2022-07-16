@@ -3,9 +3,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
-import io.laokou.admin.interfaces.vo.SysUserVO;
+import io.laokou.common.vo.SysUserVO;
 import io.laokou.common.user.UserDetail;
 import io.laokou.admin.domain.sys.entity.SysUserDO;
+
+import java.util.List;
+
 /**
  * 用户类
  * @author Kou Shenhai
@@ -47,4 +50,7 @@ public interface SysUserService extends IService<SysUserDO> {
      */
     void deleteUser(Long id);
 
+    List<SysUserVO> getUserList();
+
+    List<SysUserVO> getUserListByUserId(Long id);
 }

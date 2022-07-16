@@ -4,7 +4,7 @@ import io.laokou.admin.application.service.SysAuthApplicationService;
 import io.laokou.admin.application.service.SysMenuApplicationService;
 import io.laokou.admin.domain.sys.entity.SysMenuDO;
 import io.laokou.admin.domain.sys.repository.service.SysMenuService;
-import io.laokou.admin.infrastructure.common.user.SecurityUser;
+import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.SysMenuDTO;
 import io.laokou.admin.interfaces.qo.SysMenuQO;
 import io.laokou.admin.interfaces.vo.SysMenuVO;

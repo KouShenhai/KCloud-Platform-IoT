@@ -1,4 +1,4 @@
-package io.laokou.admin.infrastructure.interceptor;
+package io.laokou.datasource.interceptor;
 /**
  * 数据范围
  *

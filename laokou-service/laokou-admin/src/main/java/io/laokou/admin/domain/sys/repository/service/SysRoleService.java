@@ -3,7 +3,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.laokou.admin.domain.sys.entity.SysRoleDO;
 import io.laokou.admin.interfaces.qo.SysRoleQO;
-import io.laokou.admin.interfaces.vo.SysRoleVO;
+import io.laokou.common.vo.SysRoleVO;
 
 import java.util.List;
 public interface SysRoleService extends IService<SysRoleDO> {

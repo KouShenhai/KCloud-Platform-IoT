@@ -3,7 +3,7 @@ import io.laokou.common.dto.LoginLogDTO;
 import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.log.event.LoginLogEvent;
 import io.laokou.log.event.OperateLogEvent;
-import io.laokou.log.feign.admin.AdminApiFeignClient;
+import io.laokou.log.feign.admin.LogApiFeignClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -19,14 +19,14 @@ import org.springframework.stereotype.Component;
 public class LogListener {
 
     @Autowired
-    private AdminApiFeignClient adminApiFeignClient;
+    private LogApiFeignClient logApiFeignClient;
 
     @Async
     @Order
     @EventListener(OperateLogEvent.class)
     public void listenOperateLog(OperateLogEvent event) {
         OperateLogDTO dto = (OperateLogDTO) event.getSource();
-        adminApiFeignClient.insertOperateLog(dto);
+        logApiFeignClient.insertOperateLog(dto);
     }
 
     @Async
@@ -34,7 +34,7 @@ public class LogListener {
     @EventListener(LoginLogEvent.class)
     public void listenLoginLog(LoginLogEvent event) {
         LoginLogDTO dto = (LoginLogDTO) event.getSource();
-        adminApiFeignClient.insertLoginLog(dto);
+        logApiFeignClient.insertLoginLog(dto);
     }
 
 }

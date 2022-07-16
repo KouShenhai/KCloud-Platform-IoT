@@ -1,8 +1,8 @@
-package io.laokou.admin.infrastructure.common.user;
-import io.laokou.admin.infrastructure.common.password.TokenUtil;
+package io.laokou.common.user;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.exception.ErrorCode;
+import io.laokou.common.utils.TokenUtil;
 import org.apache.commons.lang.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 public class SecurityUser {

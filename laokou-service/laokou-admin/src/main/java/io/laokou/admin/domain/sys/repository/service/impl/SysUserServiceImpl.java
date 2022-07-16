@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.infrastructure.common.password.PasswordUtil;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
-import io.laokou.admin.interfaces.vo.SysUserVO;
+import io.laokou.common.vo.SysUserVO;
 import io.laokou.common.user.UserDetail;
 import io.laokou.admin.domain.sys.entity.SysUserDO;
 import io.laokou.admin.domain.sys.repository.dao.SysUserDao;
@@ -16,6 +16,9 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 /**
  * @author Kou Shenhai
  */
@@ -56,6 +59,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserDO> imple
     @Override
     public void deleteUser(Long id) {
         this.baseMapper.deleteUser(id);
+    }
+
+    @Override
+    public List<SysUserVO> getUserList() {
+        return this.baseMapper.getUserList();
+    }
+
+    @Override
+    public List<SysUserVO> getUserListByUserId(Long id) {
+        return this.baseMapper.getUserListByUserId(id);
     }
 
 }

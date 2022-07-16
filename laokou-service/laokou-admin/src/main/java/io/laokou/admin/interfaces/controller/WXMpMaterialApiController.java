@@ -1,16 +1,6 @@
 package io.laokou.admin.interfaces.controller;
 
-import io.laokou.common.utils.HttpResultUtil;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.mp.api.WxMpMaterialService;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

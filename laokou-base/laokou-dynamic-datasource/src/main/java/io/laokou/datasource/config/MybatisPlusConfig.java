@@ -1,9 +1,9 @@
-package io.laokou.admin.infrastructure.config;
+package io.laokou.datasource.config;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import io.laokou.admin.infrastructure.interceptor.DataFilterInterceptor;
+import io.laokou.datasource.interceptor.DataFilterInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 /**

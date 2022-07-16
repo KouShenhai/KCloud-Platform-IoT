@@ -32,7 +32,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Slf4j
 @EnableEncryptableProperties
 @EnableHystrix
-@EnableFeignClients(basePackages = "io.laokou.log")
+@EnableFeignClients(basePackages = {"io.laokou.log","io.laokou.datasource"})
 public class AdminApplication implements CommandLineRunner, WebServerFactoryCustomizer<WebServerFactory> {
 
 	public static void main(String[] args) {

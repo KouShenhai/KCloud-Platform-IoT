@@ -5,7 +5,7 @@ import io.laokou.admin.domain.sys.entity.SysRoleDO;
 import io.laokou.admin.domain.sys.repository.dao.SysRoleDao;
 import io.laokou.admin.domain.sys.repository.service.SysRoleService;
 import io.laokou.admin.interfaces.qo.SysRoleQO;
-import io.laokou.admin.interfaces.vo.SysRoleVO;
+import io.laokou.common.vo.SysRoleVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,4 +1,4 @@
-package io.laokou.admin.infrastructure.interceptor;
+package io.laokou.datasource.interceptor;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;

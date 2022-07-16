@@ -2,13 +2,16 @@ package io.laokou.admin.domain.sys.repository.dao;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
-import io.laokou.admin.interfaces.vo.SysUserVO;
+import io.laokou.common.vo.SysUserVO;
 import io.laokou.common.dao.BaseDao;
 import io.laokou.common.user.UserDetail;
 import io.laokou.admin.domain.sys.entity.SysUserDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
  * 用户类
  * @author  Kou Shenhai
@@ -47,4 +50,8 @@ public interface SysUserDao extends BaseDao<SysUserDO> {
     void updateUser(@Param("dto") SysUserDTO dto);
 
     void deleteUser(@Param("id") Long id);
+
+    List<SysUserVO> getUserListByUserId(@Param("id") Long id);
+
+    List<SysUserVO> getUserList();
 }

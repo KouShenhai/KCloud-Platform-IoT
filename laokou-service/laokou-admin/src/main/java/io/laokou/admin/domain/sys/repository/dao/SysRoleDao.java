@@ -2,7 +2,7 @@ package io.laokou.admin.domain.sys.repository.dao;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.domain.sys.entity.SysRoleDO;
 import io.laokou.admin.interfaces.qo.SysRoleQO;
-import io.laokou.admin.interfaces.vo.SysRoleVO;
+import io.laokou.common.vo.SysRoleVO;
 import io.laokou.common.dao.BaseDao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

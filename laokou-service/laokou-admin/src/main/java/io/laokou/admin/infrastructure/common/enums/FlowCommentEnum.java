@@ -1,23 +1,14 @@
 package io.laokou.admin.infrastructure.common.enums;
-
 /**
  * @author Kou Shenhai
  */
-
 public enum  FlowCommentEnum {
-
-    NORMAL("1","正常"),
-    DELEGATE("4","委派");
-
+    NORMAL("1"),
+    DELEGATE("4");
     private final String type;
-
-    private final String remark;
-
-    FlowCommentEnum(String type,String remark) {
+    FlowCommentEnum(String type) {
         this.type = type;
-        this.remark = remark;
     }
-
     public String getType() {
         return type;
     }

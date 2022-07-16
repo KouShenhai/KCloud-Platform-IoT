@@ -2,7 +2,7 @@ package io.laokou.admin.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
-import io.laokou.admin.interfaces.vo.SysUserVO;
+import io.laokou.common.vo.SysUserVO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.admin.application.service.SysUserApplicationService;
 import io.laokou.log.annotation.OperateLog;

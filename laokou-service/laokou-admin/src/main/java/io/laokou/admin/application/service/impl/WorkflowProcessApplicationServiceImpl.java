@@ -3,7 +3,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.WorkflowProcessApplicationService;
-import io.laokou.admin.infrastructure.common.user.SecurityUser;
+import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.qo.TaskQO;
 import io.laokou.admin.interfaces.vo.TaskVO;
 import io.laokou.common.exception.CustomException;
