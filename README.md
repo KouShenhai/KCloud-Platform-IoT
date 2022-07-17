@@ -39,7 +39,7 @@
 #### 基础框架
 * Shiro
 * SpringBoot
-* SpringCloud
+* SpringCloud Netflix
 
 #### 技术栈
 * mysql
