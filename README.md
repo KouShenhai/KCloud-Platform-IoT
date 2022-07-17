@@ -147,8 +147,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 ```
 ##### 配置文件
 ```xml
-            <if test="qo.sqlFilter != null and qo.sqlFilter != ''">
-                and ${qo.sqlFilter}
-            </if>
+<if test="qo.sqlFilter != null and qo.sqlFilter != ''">
+    and ${qo.sqlFilter}
+</if>
 ```
 
