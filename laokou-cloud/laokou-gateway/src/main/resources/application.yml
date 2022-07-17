@@ -106,6 +106,8 @@ gateway:
     routes:
       - name: laokou-admin
         location: /admin
+      - name: laokou-auth
+        location: /auth
   uris:
     - /sys/auth/api/captcha
     - /sys/auth/api/login
