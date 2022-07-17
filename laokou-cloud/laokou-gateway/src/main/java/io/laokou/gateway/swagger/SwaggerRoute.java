@@ -8,7 +8,7 @@ import java.util.List;
  */
 @Data
 @Configuration
-@ConfigurationProperties("laokou.swagger")
+@ConfigurationProperties("gateway.swagger")
 public class SwaggerRoute {
     private List<SwaggerRouteProperties> routes;
 }

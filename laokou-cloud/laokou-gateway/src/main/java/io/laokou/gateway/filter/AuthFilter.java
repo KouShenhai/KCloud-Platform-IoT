@@ -3,7 +3,7 @@ import com.alibaba.fastjson.JSON;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpResultUtil;
-import io.laokou.gateway.feign.admin.AdminApiFeignClient;
+import io.laokou.gateway.feign.auth.AuthApiFeignClient;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -36,7 +36,7 @@ import java.util.List;
 @Component
 @Slf4j
 @Data
-@ConfigurationProperties(prefix = "laokou")
+@ConfigurationProperties(prefix = "gateway")
 public class AuthFilter implements GlobalFilter,Ordered {
 
     private static final AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -47,7 +47,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
     private List<String> uris;
 
     @Autowired
-    private AdminApiFeignClient adminApiFeignClient;
+    private AuthApiFeignClient authApiFeignClient;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -71,7 +71,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
         //获取访问资源的权限
         //资源访问权限
         String language = request.getHeaders().getFirst(HttpHeaders.ACCEPT_LANGUAGE);
-        HttpResultUtil<UserDetail> result = adminApiFeignClient.resource(language,Authorization,requestUri,method);
+        HttpResultUtil<UserDetail> result = authApiFeignClient.resource(language,Authorization,requestUri,method);
         log.info("result:{}",result);
         if (!result.success()) {
             return response(exchange,result);

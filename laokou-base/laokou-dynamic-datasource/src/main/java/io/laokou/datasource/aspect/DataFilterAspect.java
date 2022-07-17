@@ -8,7 +8,7 @@ import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpContextUtil;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.datasource.annotation.DataFilter;
-import io.laokou.datasource.feign.admin.AdminApiFeignClient;
+import io.laokou.datasource.feign.admin.AuthApiFeignClient;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class DataFilterAspect {
 
     @Autowired
-    private AdminApiFeignClient adminApiFeignClient;
+    private AuthApiFeignClient authApiFeignClient;
 
     @Pointcut("@annotation(io.laokou.datasource.annotation.DataFilter)")
     public void dataFilterCut() {
@@ -44,7 +44,7 @@ public class DataFilterAspect {
             String language = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
             String method = request.getMethod();
             String uri = request.getRequestURI();
-            HttpResultUtil<UserDetail> result = adminApiFeignClient.resource(language, Authorization, uri, method);
+            HttpResultUtil<UserDetail> result = authApiFeignClient.resource(language, Authorization, uri, method);
             if (!result.success()) {
                 throw new CustomException(result.getCode(),result.getMsg());
             }

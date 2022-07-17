@@ -1,9 +1,9 @@
 package io.laokou.admin.application.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import io.laokou.admin.application.service.SysAuthApplicationService;
 import io.laokou.admin.application.service.SysMenuApplicationService;
 import io.laokou.admin.domain.sys.entity.SysMenuDO;
 import io.laokou.admin.domain.sys.repository.service.SysMenuService;
+import io.laokou.admin.domain.sys.repository.service.SysUserService;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.SysMenuDTO;
 import io.laokou.admin.interfaces.qo.SysMenuQO;
@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 @Service
@@ -29,13 +28,13 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     private SysMenuService sysMenuService;
 
     @Autowired
-    private SysAuthApplicationService sysAuthApplicationService;
+    private SysUserService sysUserService;
 
     @Override
     @DataSource("master")
     public SysMenuVO getMenuList(HttpServletRequest request) {
         Long userId = Long.valueOf(request.getHeader(Constant.USER_KEY_HEAD));
-        UserDetail userDetail = sysAuthApplicationService.getUserDetail(userId);
+        UserDetail userDetail = sysUserService.getUserDetail(userId,null);
         List<SysMenuVO> menuList = sysMenuService.getMenuList(userDetail, true,0);
         return buildMenu(menuList);
     }

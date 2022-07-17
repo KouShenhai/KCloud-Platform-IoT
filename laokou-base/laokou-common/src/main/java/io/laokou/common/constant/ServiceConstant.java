@@ -6,5 +6,6 @@ package io.laokou.common.constant;
 public interface ServiceConstant {
 
     String LAOKOU_ADMIN = "laokou-admin";
+    String LAOKOU_AUTH = "laokou-auth";
 
 }

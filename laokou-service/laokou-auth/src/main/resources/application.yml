@@ -1,0 +1,126 @@
+jasypt:
+  encryptor:
+    password: koushenhai5201314wumeihua
+#spring
+spring:
+  application:
+    name: laokou-auth
+  profiles:
+    # 环境 dev|test|prod
+    active: test
+  messages:
+    encoding: UTF-8
+    basename: i18n/messages
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+      enabled: true
+  http:
+    encoding:
+      charset: UTF-8
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    inetutils:
+      ignoredInterfaces:
+        - docker0
+        - veth.*
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  #实体类扫描，多个package用头号或分号分隔
+  type-aliases-package: io.laokou.auth.domain.**.entity
+  global-config:
+    #数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID",ASSIGN_ID:"分布式ID"
+      id-type: ASSIGN_ID
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: NOT_NULL
+      #驼峰下划线转换
+      column-underline: true
+      #db-type:mysql
+      logic-delete-value: 1 #逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 #逻辑未删除值（默认为 0）
+    banner: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000 #缺省为1000
+          #hystrix配置隔离策略为信号量模式
+          strategy: SEMAPHORE
+          #增加并发量设置（默认是10）
+          semaphore:
+            maxConcurrentRequests: 30000
+
+feign:
+  httpclient:
+    # 开启httpclient
+    enable: ture
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 15000
+
+#ribbon的超时时间
+ribbon:
+  ReadTimeout: 30000
+  ConnectTimeout: 30000
+  eager-load:
+    enabled: true
+
+auth:
+  uris:
+    - permission: anon
+      url: /sys/auth/api/login
+    - permission: anon
+      url: /webjars/**
+    - permission: anon
+      url: /swagger/api-docs
+    - permission: anon
+      url: /actuator/**
+    - permission: anon
+      url: /v2/api-docs
+    - permission: anon
+      url: /doc.html
+    - permission: anon
+      url: /swagger-resources/**
+    - permission: anon
+      url: /sys/auth/api/captcha
+    - permission: anon
+      url: /druid/**
+    - permission: anon
+      url: /sys/auth/api/userInfo
+    - permission: anon
+      url: /sys/auth/api/logout
+    - permission: anon
+      url: /sys/auth/api/zfbLogin
+    - permission: anon
+      url: /favicon.ico

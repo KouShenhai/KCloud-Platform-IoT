@@ -8,10 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
 /**
- * sso
+ * admin
  * @author Kou Shenhai
  * @version 1.0
  * @date 2020/9/13 0013 下午 2:34
@@ -22,8 +20,6 @@ import java.util.Map;
 @Data
 @Slf4j
 public class AdminHandler {
-
-    private List<Map<String,String>> auth;
 
     private String oss;
 
