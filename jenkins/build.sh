@@ -1,11 +1,12 @@
 #!/bin/bash
 
 #参数
+target_path="/var/lib/jenkins/workspace/laokou-yun/laokou-cloud/laokou-gateway/target"
 project_path="/opt/laokou"
 admin="admin"
 gateway="gateway"
 register="register"
-monitor="monitor"
+auth="auth"
 
 #运行
 run() {
@@ -18,7 +19,7 @@ run() {
   sudo cp /var/lib/jenkins/workspace/laokou-yun/laokou-service/laokou-${admin}/target/${admin}.jar ${project_path}
   sudo cp /var/lib/jenkins/workspace/laokou-yun/laokou-cloud/laokou-${gateway}/target/${gateway}.jar ${project_path}
   sudo cp /var/lib/jenkins/workspace/laokou-yun/laokou-cloud/laokou-${register}/target/${register}.jar ${project_path}
-  sudo cp /var/lib/jenkins/workspace/laokou-yun/laokou-cloud/laokou-${monitor}/target/${monitor}.jar ${project_path}
+  sudo cp /var/lib/jenkins/workspace/laokou-yun/laokou-service/laokou-${auth}/target/${auth}.jar ${project_path}
 
   echo "run ${admin}..."
   sudo sh laokou-${admin}.sh
@@ -29,8 +30,8 @@ run() {
   echo "run ${register}..."
   sudo sh laokou-${register}.sh
 
-  echo "run ${monitor}..."
-  sudo sh laokou-${monitor}.sh
+  echo "run ${auth}..."
+  sudo sh laokou-${auth}.sh
 }
 
 #打包
@@ -59,12 +60,12 @@ build() {
        sudo kill  ${register_pid}
   fi
 
-  echo "stop ${monitor}..."
-  monitor_pid=`ps -ef|grep ${monitor}.jar|grep -v grep|awk '{print $2}'`
-  if [ -z ${monitor_pid} ]; then
-      echo "${monitor} is already stopped..."
+  echo "stop ${auth}..."
+  auth_pid=`ps -ef|grep ${auth}.jar|grep -v grep|awk '{print $2}'`
+  if [ -z ${auth_pid} ]; then
+      echo "${auth} is already stopped..."
   else
-       sudo kill  ${monitor_pid}
+       sudo kill  ${auth_pid}
   fi
 
 }
