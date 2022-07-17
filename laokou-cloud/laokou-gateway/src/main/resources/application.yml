@@ -36,6 +36,10 @@ spring:
               name: default
               # 降级接口地址
               fallbackUri: 'forward:/fallback'
+    inetutils:
+      ignoredInterfaces:
+        - docker0
+        - veth.*
 
 hystrix:
   command:

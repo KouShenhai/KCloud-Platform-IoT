@@ -61,7 +61,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuDO> imple
             resourceList = JSONObject.parseArray(json, SysMenuVO.class);
         } else {
             resourceList = getMenuList(userDetail.getId(),userDetail.getSuperAdmin(),type);
-            redisUtil.set(userResourceKey, JSON.toJSONString(resourceList));
+            redisUtil.set(userResourceKey, JSON.toJSONString(resourceList),RedisUtil.HOUR_ONE_EXPIRE);
         }
         return resourceList;
         //endregion

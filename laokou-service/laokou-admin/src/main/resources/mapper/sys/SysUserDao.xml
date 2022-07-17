@@ -82,7 +82,7 @@
         where id = #{id}
     </update>
 
-    <select id="getUserListByUserId" resultType="io.laokou.common.vo.SysUserVO">
+    <select id="getUserListByUserId" resultType="io.laokou.common.vo.SysUserVO" flushCache="true">
         select
              distinct
              c.id
@@ -97,7 +97,7 @@
         and c.super_admin <![CDATA[ <> ]]> 1 and c.del_flag = '0' and c.`status` = 0
     </select>
 
-    <select id="getUserList" resultType="io.laokou.common.vo.SysUserVO">
+    <select id="getUserList" resultType="io.laokou.common.vo.SysUserVO" flushCache="true">
         select
             id
             ,username

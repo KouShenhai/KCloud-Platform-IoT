@@ -162,8 +162,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         String userInfoKey = RedisKeyUtil.getUserInfoKey(userId);
         redisUtil.delete(userInfoKey);
         redisUtil.delete(userResourceKey);
-        redisUtil.set(userInfoKey,JSON.toJSONString(userDetail));
-        redisUtil.set(userResourceKey, JSON.toJSONString(resourceList));
+        redisUtil.set(userInfoKey,JSON.toJSONString(userDetail),RedisUtil.HOUR_ONE_EXPIRE);
+        redisUtil.set(userResourceKey, JSON.toJSONString(resourceList),RedisUtil.HOUR_ONE_EXPIRE);
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         request.setAttribute(Constant.AUTHORIZATION_HEADER, token);
         return token;
@@ -308,7 +308,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             userDetail.setPermissionsList(getPermissionList(userDetail));
             userDetail.setRoles(sysRoleService.getRoleListByUserId(userId));
             userDetail.setUsers(getUserList(userDetail));
-            redisUtil.set(userInfoKey, JSON.toJSONString(userDetail));
+            redisUtil.set(userInfoKey, JSON.toJSONString(userDetail),RedisUtil.HOUR_ONE_EXPIRE);
         }
         return userDetail;
         //endregion

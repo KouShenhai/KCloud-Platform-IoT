@@ -42,7 +42,6 @@ public class RegexUtil {
         return Pattern.matches(SCORE_REGEX,score);
     }
 
-
     /**
      * 正整数验证
      * @param grade
@@ -50,16 +49,6 @@ public class RegexUtil {
      */
     public static boolean gradeRegex(String grade) {
         return Pattern.matches(GRADE_REGEX,grade);
-    }
-
-
-
-    public static void main(String[] args) {
-        System.out.println(gradeRegex("0.8"));
-        System.out.println(gradeRegex("0.0"));
-        System.out.println(gradeRegex("10"));
-        System.out.println(gradeRegex("11"));
-        System.out.println(gradeRegex("-10"));
     }
 
 }

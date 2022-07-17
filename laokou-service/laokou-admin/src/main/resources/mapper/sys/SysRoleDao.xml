@@ -21,7 +21,7 @@
         order by boot_sys_role.update_date desc
     </select>
 
-    <select id="getRoleListByUserId" resultType="io.laokou.common.vo.SysRoleVO">
+    <select id="getRoleListByUserId" resultType="io.laokou.common.vo.SysRoleVO" flushCache="true">
         SELECT
         name,id,sort
         FROM
