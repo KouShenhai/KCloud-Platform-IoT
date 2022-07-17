@@ -24,11 +24,6 @@ spring:
       charset: UTF-8
   main:
     allow-bean-definition-overriding: true
-  cloud:
-    inetutils:
-      ignoredInterfaces:
-        - docker0
-        - veth.*
 
 management:
   endpoints:
