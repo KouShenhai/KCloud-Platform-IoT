@@ -49,7 +49,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("API文档")
                 .version("2.0.0")
-                .description("后台管理API")
+                .description("认证授权API")
                 //作者信息
                 .contact(new Contact("寇申海", "https://blog.csdn.net/qq_39893313", "2413176044@qq.com"))
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
