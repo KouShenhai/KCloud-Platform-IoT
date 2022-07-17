@@ -29,7 +29,7 @@ spring:
         username: root
         password: koushenhai
         instance:
-          service-base-url: http://10.0.8.7:${server.port}
+          service-base-url: http://175.178.69.253/laokou
           prefer-ip: true
 
 logging:
