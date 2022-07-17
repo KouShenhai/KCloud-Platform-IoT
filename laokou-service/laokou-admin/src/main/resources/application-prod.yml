@@ -27,7 +27,7 @@ spring:
         username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
         password: ENC(nj35dMcOWEmR5EASEZR3yfaT4IdT9TPm)
         instance:
-          service-base-url: http://175.178.69.253/laokou/admin
+          service-base-url: http://175.178.69.253:${server.port}
           prefer-ip: true
   redis:
     database: 0
