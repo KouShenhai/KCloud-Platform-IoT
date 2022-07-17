@@ -8,22 +8,20 @@ import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
-
 /**
  * 系统字典控制器
  * @author Kou Shenhai
  */
 @RestController
+@AllArgsConstructor
 @Api(value = "系统字典API",protocols = "http",tags = "系统字典API")
 @RequestMapping("/sys/dict/api")
 public class SysDictApiController {
 
-    @Autowired
-    private SysDictApplicationService sysDictApplicationService;
+    private final SysDictApplicationService sysDictApplicationService;
 
     @PostMapping(value = "/query")
     @ApiOperation("系统字典>查询")

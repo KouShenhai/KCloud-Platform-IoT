@@ -9,6 +9,7 @@ import io.laokou.common.utils.HttpContextUtil;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.feign.admin.AuthApiFeignClient;
+import lombok.AllArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -16,7 +17,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
@@ -25,10 +25,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Component
 @Aspect
+@AllArgsConstructor
 public class DataFilterAspect {
 
-    @Autowired
-    private AuthApiFeignClient authApiFeignClient;
+    private final AuthApiFeignClient authApiFeignClient;
 
     @Pointcut("@annotation(io.laokou.datasource.annotation.DataFilter)")
     public void dataFilterCut() {

@@ -12,7 +12,7 @@ import io.laokou.admin.interfaces.vo.SysDictVO;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 
 @Service
+@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysDictApplicationServiceImpl implements SysDictApplicationService {
 
-    @Autowired
-    private SysDictService sysDictService;
+    private final SysDictService sysDictService;
 
     @Override
     @DataSource("master")

@@ -7,6 +7,7 @@ import io.laokou.admin.interfaces.qo.DefinitionQO;
 import io.laokou.admin.interfaces.vo.DefinitionVO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.datasource.annotation.DataSource;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.BpmnModel;
@@ -15,7 +16,6 @@ import org.flowable.engine.repository.DeploymentBuilder;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.repository.ProcessDefinitionQuery;
 import org.flowable.image.impl.DefaultProcessDiagramGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,10 +35,10 @@ import java.util.List;
 @Service
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 @Slf4j
+@AllArgsConstructor
 public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinitionApplicationService {
 
-    @Autowired
-    private RepositoryService repositoryService;
+    private final RepositoryService repositoryService;
 
     @Override
     @DataSource("master")

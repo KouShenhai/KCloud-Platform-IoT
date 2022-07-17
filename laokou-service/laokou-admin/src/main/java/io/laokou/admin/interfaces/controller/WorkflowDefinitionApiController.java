@@ -8,7 +8,7 @@ import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
@@ -19,12 +19,12 @@ import java.io.IOException;
  * @date 2022/7/6 0006 下午 5:59
  */
 @RestController
+@AllArgsConstructor
 @Api(value = "流程定义API",protocols = "http",tags = "流程定义API")
 @RequestMapping("/workflow/definition/api")
 public class WorkflowDefinitionApiController {
 
-    @Autowired
-    private WorkflowDefinitionApplicationService workflowDefinitionApplicationService;
+    private final WorkflowDefinitionApplicationService workflowDefinitionApplicationService;
 
     @PostMapping("/insert")
     @ApiOperation("流程定义>新增")

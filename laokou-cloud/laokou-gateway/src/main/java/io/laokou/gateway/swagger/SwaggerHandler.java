@@ -1,6 +1,5 @@
 package io.laokou.gateway.swagger;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +17,9 @@ import java.util.Optional;
 @AllArgsConstructor
 @RequestMapping("/swagger-resources")
 public class SwaggerHandler {
-    private SecurityConfiguration securityConfiguration;
-    private UiConfiguration uiConfiguration;
+    private final SecurityConfiguration securityConfiguration;
+    private final UiConfiguration uiConfiguration;
     private final SwaggerResourcesProvider swaggerResources;
-
-    @Autowired
-    public SwaggerHandler(SwaggerResourcesProvider swaggerResources) {
-        this.swaggerResources = swaggerResources;
-    }
 
     @GetMapping("/configuration/security")
     public Mono<ResponseEntity<SecurityConfiguration>> securityConfiguration() {

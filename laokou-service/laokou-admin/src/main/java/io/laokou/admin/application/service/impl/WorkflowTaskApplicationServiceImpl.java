@@ -10,6 +10,7 @@ import io.laokou.admin.interfaces.dto.UnClaimDTO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.FileUtil;
 import io.laokou.datasource.annotation.DataSource;
+import lombok.AllArgsConstructor;
 import org.apache.commons.collections.MapUtils;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.*;
@@ -19,7 +20,6 @@ import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -36,24 +36,20 @@ import java.util.List;
  * @author Kou Shenhai
  */
 @Service
+@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicationService {
 
-    @Autowired
-    private TaskService taskService;
+    private final TaskService taskService;
 
-    @Autowired
-    private RuntimeService runtimeService;
+    private final RuntimeService runtimeService;
 
-    @Autowired
-    private HistoryService historyService;
+    private final HistoryService historyService;
 
-    @Autowired
-    private RepositoryService repositoryService;
+    private final RepositoryService repositoryService;
 
     @Qualifier("processEngine")
-    @Autowired
-    private ProcessEngine processEngine;
+    private final ProcessEngine processEngine;
 
     @Override
     @DataSource("master")

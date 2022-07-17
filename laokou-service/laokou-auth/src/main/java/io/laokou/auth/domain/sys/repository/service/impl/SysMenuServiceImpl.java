@@ -9,8 +9,8 @@ import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.RedisKeyUtil;
 import io.laokou.redis.RedisUtil;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,14 +20,13 @@ import java.util.List;
  * @author Kou Shenhai
  */
 @Service
+@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class SysMenuServiceImpl implements SysMenuService {
 
-    @Autowired
-    private RedisUtil redisUtil;
+    private final RedisUtil redisUtil;
 
-    @Autowired
-    private SysMenuDao sysMenuDao;
+    private final SysMenuDao sysMenuDao;
 
     @Override
     public List<SysMenuVO> getMenuList(Long userId, Integer type) {

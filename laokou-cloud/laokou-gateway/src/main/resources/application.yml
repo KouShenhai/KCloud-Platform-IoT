@@ -9,6 +9,8 @@ spring:
     basename: i18n/messages
   profiles:
     active: test
+  main:
+    lazy-initialization: true
   servlet:
     multipart:
       max-file-size: -1
@@ -16,6 +18,10 @@ spring:
       max-request-size: -1
       file-size-threshold: -1
   cloud:
+    inetutils:
+      ignoredInterfaces:
+        - docker0
+        - veth.*
     gateway:
       routes:
         - id: LAOKOU-ADMIN

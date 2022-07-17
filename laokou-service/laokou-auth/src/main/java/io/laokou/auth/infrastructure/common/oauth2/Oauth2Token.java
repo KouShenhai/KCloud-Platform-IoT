@@ -11,7 +11,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 @AllArgsConstructor
 public class Oauth2Token implements AuthenticationToken {
 
-    private String token;
+    private final String token;
 
     @Override
     public Object getPrincipal() {

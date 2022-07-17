@@ -20,8 +20,8 @@ import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
+import lombok.AllArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,17 +32,15 @@ import java.util.List;
  * @author Kou Shenhai
  */
 @Service
+@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysUserApplicationServiceImpl implements SysUserApplicationService {
 
-    @Autowired
-    private SysUserService sysUserService;
+    private final SysUserService sysUserService;
 
-    @Autowired
-    private SysRoleService sysRoleService;
+    private final SysRoleService sysRoleService;
 
-    @Autowired
-    private SysUserRoleService sysUserRoleService;
+    private final SysUserRoleService sysUserRoleService;
 
     @Override
     @DataSource("master")

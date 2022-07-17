@@ -14,21 +14,20 @@ import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.TreeUtil;
 import io.laokou.datasource.annotation.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 @Service
+@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysMenuApplicationServiceImpl implements SysMenuApplicationService {
 
-    @Autowired
-    private SysMenuService sysMenuService;
+    private final SysMenuService sysMenuService;
 
-    @Autowired
-    private SysUserService sysUserService;
+    private final SysUserService sysUserService;
 
     @Override
     @DataSource("master")

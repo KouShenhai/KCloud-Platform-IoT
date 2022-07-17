@@ -8,6 +8,7 @@ import io.laokou.admin.interfaces.qo.TaskQO;
 import io.laokou.admin.interfaces.vo.TaskVO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.datasource.annotation.DataSource;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
@@ -15,24 +16,21 @@ import org.flowable.engine.TaskService;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 @Service
+@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApplicationService {
 
-    @Autowired
-    private RepositoryService repositoryService;
+    private final RepositoryService repositoryService;
 
-    @Autowired
-    private RuntimeService runtimeService;
+    private final RuntimeService runtimeService;
 
-    @Autowired
-    private TaskService taskService;
+    private final TaskService taskService;
 
     @Override
     @DataSource("master")

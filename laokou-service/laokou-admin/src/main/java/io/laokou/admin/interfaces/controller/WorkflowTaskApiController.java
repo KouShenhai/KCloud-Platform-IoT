@@ -7,7 +7,7 @@ import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,12 +16,12 @@ import java.io.IOException;
  * @author Kou Shenhai
  */
 @RestController
+@AllArgsConstructor
 @Api(value = "流程任务API",protocols = "http",tags = "流程任务API")
 @RequestMapping("/workflow/task/api")
 public class WorkflowTaskApiController {
 
-    @Autowired
-    private WorkflowTaskApplicationService workflowTaskApplicationService;
+    private final WorkflowTaskApplicationService workflowTaskApplicationService;
 
     @PostMapping(value = "/audit")
     @ApiOperation(value = "流程任务>审批")

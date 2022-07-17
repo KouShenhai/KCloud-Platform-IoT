@@ -34,9 +34,9 @@ import io.laokou.common.vo.SysUserVO;
 import io.laokou.datasource.annotation.DataSource;
 import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -59,23 +59,28 @@ import java.util.Objects;
  */
 @Service
 @Slf4j
-@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysAuthApplicationServiceImpl implements SysAuthApplicationService {
 
-    private final static AntPathMatcher antPathMatcher = new AntPathMatcher();
+    private static AntPathMatcher antPathMatcher = new AntPathMatcher();
 
-    private final SysMenuService sysMenuService;
+    @Autowired
+    private SysMenuService sysMenuService;
 
-    private final SysUserService sysUserService;
+    @Autowired
+    private SysUserService sysUserService;
 
-    private final RedisUtil redisUtil;
+    @Autowired
+    private RedisUtil redisUtil;
 
-    private final SysCaptchaService sysCaptchaService;
+    @Autowired
+    private SysCaptchaService sysCaptchaService;
 
-    private final ZfbOauth zfbOauth;
+    @Autowired
+    private ZfbOauth zfbOauth;
 
-    private final SysRoleService sysRoleService;
+    @Autowired
+    private SysRoleService sysRoleService;
 
     @Override
     @DataSource("master")
@@ -340,9 +345,9 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     }
 
     @Component
-    @AllArgsConstructor
     public class ZfbOauth{
-        private final ZfbUserService zfbUserService;
+        @Autowired
+        private ZfbUserService zfbUserService;
         @Value("${oauth.zfb.app_id}")
         private String APP_ID;
         @Value("${oauth.zfb.merchant_private_key}")

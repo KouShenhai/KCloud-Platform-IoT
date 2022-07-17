@@ -28,7 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
 /**
- * 鉴权Filter
+ * 认证Filter
  * @author Kou Shenhai
  * @version 1.0
  * @date 2020/9/4 0004 下午 9:10
