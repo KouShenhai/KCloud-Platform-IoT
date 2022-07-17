@@ -1,6 +1,6 @@
 server:
   port: 9000
-  address: 10.0.8.7
+  address: 10.0.16.16
   tomcat:
     uri-encoding: UTF-8
     max-threads: 1000
@@ -23,11 +23,11 @@ spring:
   boot:
     admin:
       client:
-        url: http://10.0.8.7:5000/monitor
+        url: http://175.178.69.253:5000/monitor
         username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
         password: ENC(nj35dMcOWEmR5EASEZR3yfaT4IdT9TPm)
         instance:
-          service-base-url: http://10.0.8.7:${server.port}
+          service-base-url: http://10.0.16.16:${server.port}
           prefer-ip: true
   redis:
     database: 0

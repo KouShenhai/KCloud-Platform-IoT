@@ -1,6 +1,5 @@
 server:
   port: 5000
-  address: 10.0.8.7
   servlet:
     context-path: /monitor
   tomcat:

@@ -25,7 +25,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://10.0.8.7:5000/monitor
+        url: http://175.178.69.253:5000/monitor
         username: root
         password: koushenhai
         instance:
