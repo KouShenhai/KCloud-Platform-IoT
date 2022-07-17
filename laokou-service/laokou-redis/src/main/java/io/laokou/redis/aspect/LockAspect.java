@@ -1,6 +1,7 @@
 package io.laokou.redis.aspect;
 
 import io.laokou.redis.annotation.Lock4j;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -10,7 +11,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
@@ -18,10 +18,10 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Aspect
 @Slf4j
+@AllArgsConstructor
 public class LockAspect {
 
-    @Autowired
-    private RedissonClient redissonClient;
+    private final RedissonClient redissonClient;
 
     /**
      * 配置切入点

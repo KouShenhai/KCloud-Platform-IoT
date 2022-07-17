@@ -1,4 +1,5 @@
 package io.laokou.gateway.swagger;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,10 @@ import java.util.Optional;
  * @since 1.0.0
  */
 @RestController
+@AllArgsConstructor
 @RequestMapping("/swagger-resources")
 public class SwaggerHandler {
-    @Autowired(required = false)
     private SecurityConfiguration securityConfiguration;
-    @Autowired(required = false)
     private UiConfiguration uiConfiguration;
     private final SwaggerResourcesProvider swaggerResources;
 

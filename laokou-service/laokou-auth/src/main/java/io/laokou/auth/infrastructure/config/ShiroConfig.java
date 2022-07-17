@@ -2,6 +2,7 @@ package io.laokou.auth.infrastructure.config;
 import io.laokou.auth.infrastructure.common.oauth2.Oauth2Filter;
 import io.laokou.auth.infrastructure.common.oauth2.Oauth2Realm;
 import io.laokou.auth.infrastructure.component.AuthHandler;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -10,7 +11,6 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -27,10 +27,10 @@ import org.apache.shiro.mgt.SecurityManager;
  */
 @Configuration
 @Slf4j
+@AllArgsConstructor
 public class ShiroConfig {
 
-    @Autowired
-    private AuthHandler authHandler;
+    private final AuthHandler authHandler;
 
     @Bean("sessionManager")
     public DefaultWebSessionManager sessionManager(){

@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class LogApiFeignClientFallback implements LogApiFeignClient {
 
-    private Throwable throwable;
+    private final Throwable throwable;
 
     @Override
     public HttpResultUtil<Boolean> insertOperateLog(OperateLogDTO dto) {

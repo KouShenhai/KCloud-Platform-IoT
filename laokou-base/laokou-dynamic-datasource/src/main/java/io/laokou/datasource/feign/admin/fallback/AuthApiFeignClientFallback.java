@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class AuthApiFeignClientFallback implements AuthApiFeignClient {
 
-    private Throwable throwable;
+    private final Throwable throwable;
 
     @Override
     public HttpResultUtil<UserDetail> resource(String language, String Authorization, String uri, String method) {

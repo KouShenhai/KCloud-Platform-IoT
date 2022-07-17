@@ -6,13 +6,13 @@ import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.MessageUtil;
 import io.laokou.common.utils.TokenUtil;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -24,10 +24,10 @@ import java.util.Set;
  */
 @Component
 @Slf4j
+@AllArgsConstructor
 public class Oauth2Realm extends AuthorizingRealm {
 
-    @Autowired
-    private SysAuthApplicationService sysAuthApplicationService;
+    private final SysAuthApplicationService sysAuthApplicationService;
 
     /**
      * 授权(验证权限时调用)

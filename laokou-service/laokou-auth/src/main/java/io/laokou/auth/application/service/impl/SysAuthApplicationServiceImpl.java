@@ -1,5 +1,4 @@
 package io.laokou.auth.application.service.impl;
-
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
@@ -35,9 +34,9 @@ import io.laokou.common.vo.SysUserVO;
 import io.laokou.datasource.annotation.DataSource;
 import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -60,28 +59,23 @@ import java.util.Objects;
  */
 @Service
 @Slf4j
+@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysAuthApplicationServiceImpl implements SysAuthApplicationService {
 
     private final static AntPathMatcher antPathMatcher = new AntPathMatcher();
 
-    @Autowired
-    private SysMenuService sysMenuService;
+    private final SysMenuService sysMenuService;
 
-    @Autowired
-    private SysUserService sysUserService;
+    private final SysUserService sysUserService;
 
-    @Autowired
-    private RedisUtil redisUtil;
+    private final RedisUtil redisUtil;
 
-    @Autowired
-    private SysCaptchaService sysCaptchaService;
+    private final SysCaptchaService sysCaptchaService;
 
-    @Autowired
-    private ZfbOauth zfbOauth;
+    private final ZfbOauth zfbOauth;
 
-    @Autowired
-    private SysRoleService sysRoleService;
+    private final SysRoleService sysRoleService;
 
     @Override
     @DataSource("master")
@@ -346,9 +340,9 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     }
 
     @Component
+    @AllArgsConstructor
     public class ZfbOauth{
-        @Autowired
-        private ZfbUserService zfbUserService;
+        private final ZfbUserService zfbUserService;
         @Value("${oauth.zfb.app_id}")
         private String APP_ID;
         @Value("${oauth.zfb.merchant_private_key}")

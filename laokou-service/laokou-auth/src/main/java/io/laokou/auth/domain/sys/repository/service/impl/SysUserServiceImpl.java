@@ -1,11 +1,10 @@
 package io.laokou.auth.domain.sys.repository.service.impl;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.auth.domain.sys.repository.dao.SysUserDao;
 import io.laokou.auth.domain.sys.repository.service.SysUserService;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.vo.SysUserVO;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -14,11 +13,11 @@ import java.util.List;
  */
 @Service
 @Slf4j
+@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class SysUserServiceImpl implements SysUserService {
 
-    @Autowired
-    private SysUserDao sysUserDao;
+    private final SysUserDao sysUserDao;
 
     @Override
     public UserDetail getUserDetail(Long id, String username) {

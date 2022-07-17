@@ -15,19 +15,18 @@ import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 @Service
+@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysLogApplicationServiceImpl implements SysLogApplicationService {
 
-    @Autowired
-    private SysOperateLogService sysOperateLogService;
+    private final SysOperateLogService sysOperateLogService;
 
-    @Autowired
-    private SysLoginLogService sysLoginLogService;
+    private final SysLoginLogService sysLoginLogService;
 
     @Override
     @DataSource("master")

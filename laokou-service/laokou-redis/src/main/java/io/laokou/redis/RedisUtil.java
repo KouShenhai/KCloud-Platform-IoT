@@ -1,5 +1,5 @@
 package io.laokou.redis;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -11,9 +11,9 @@ import java.util.concurrent.TimeUnit;
  * @author  Kou Shenhai
  */
 @Component
+@AllArgsConstructor
 public final class RedisUtil {
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
     /**  默认过期时长为24小时，单位：秒 */
     public final static long DEFAULT_EXPIRE = 60 * 60 * 24L;
     /**  过期时长为1小时，单位：秒 */

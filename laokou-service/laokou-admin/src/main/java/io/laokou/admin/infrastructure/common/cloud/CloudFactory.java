@@ -4,17 +4,17 @@ import io.laokou.admin.infrastructure.component.AdminHandler;
 import io.laokou.admin.infrastructure.config.CloudStorageConfig;
 import io.laokou.admin.infrastructure.common.enums.CloudTypeEnum;
 import io.laokou.common.exception.CustomException;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 /**
  * @author Kou Shenhai
  */
 @Component
+@AllArgsConstructor
 public class CloudFactory {
 
-   @Autowired
-   private AdminHandler adminHandler;
+   private final AdminHandler adminHandler;
 
    public  AbstractCloudStorageService build(){
        String oss = adminHandler.getOss();
