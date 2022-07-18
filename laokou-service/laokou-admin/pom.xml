@@ -16,6 +16,10 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>io.laokou</groupId>
 			<artifactId>laokou-redis</artifactId>
 			<version>${laokou.version}</version>
