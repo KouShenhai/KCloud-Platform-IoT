@@ -152,5 +152,27 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     and ${qo.sqlFilter}
 </if>
 ```
+
+### 服务认证
+##### 代码引入
+说明：@PreAuthorize 根据请求头携带的ticket判断，ticket有值且等于ticket，则说明已经在网关认证过了直接跳过，否则需要认证
+```java
+@RestController
+@AllArgsConstructor
+@Api(value = "系统用户API",protocols = "http",tags = "系统用户API")
+@RequestMapping("/sys/user/api")
+public class SysUserApiController {
+
+    private final SysUserApplicationService sysUserApplicationService;
+
+    @PostMapping("/query")
+    @ApiOperation("系统用户>查询")
+    @PreAuthorize("sys:user:query")
+    public HttpResultUtil<IPage<SysUserVO>> query(@RequestBody SysUserQO qo) {
+        return new HttpResultUtil<IPage<SysUserVO>>().ok(sysUserApplicationService.queryUserPage(qo));
+    }
+}
+```
+
 ### 联系
 后端技术交流群 [![加入QQ群](https://img.shields.io/badge/Q群-218686225-blue.svg)](https://qm.qq.com/cgi-bin/qm/qr?k=WFANTXDEjrDw6UxsrRFCv_rQsEu6LTxH&jump_from=webapi)
