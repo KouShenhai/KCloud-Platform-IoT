@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @Service
 public interface LogApiFeignClient {
 
-    @PostMapping(value = "/operate/insert",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/operate/insert",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     HttpResultUtil<Boolean> insertOperateLog(@RequestBody OperateLogDTO dto);
 
-    @PostMapping(value = "/login/insert",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/login/insert",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     HttpResultUtil<Boolean> insertLoginLog(@RequestBody LoginLogDTO dto);
 }

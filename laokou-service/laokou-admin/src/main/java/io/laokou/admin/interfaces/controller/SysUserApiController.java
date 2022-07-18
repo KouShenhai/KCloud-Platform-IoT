@@ -27,7 +27,7 @@ public class SysUserApiController {
     @PutMapping("/update")
     @ApiOperation("系统用户>修改")
     @OperateLog(module = "系统用户",name = "用户修改")
-    @PreAuthorize("sys:user:update1")
+    @PreAuthorize("sys:user:update")
     public HttpResultUtil<Boolean> update(@RequestBody SysUserDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
     }
@@ -40,6 +40,7 @@ public class SysUserApiController {
 
     @PutMapping("/password")
     @ApiOperation("系统用户>重置")
+    @PreAuthorize("sys:user:password")
     @OperateLog(module = "系统用户",name = "重置密码")
     public HttpResultUtil<Boolean> password(@RequestBody SysUserDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
@@ -47,6 +48,7 @@ public class SysUserApiController {
 
     @PostMapping("/insert")
     @ApiOperation("系统用户>新增")
+    @PreAuthorize("sys:user:insert")
     @OperateLog(module = "系统用户",name = "用户新增")
     public HttpResultUtil<Boolean> insert(@RequestBody SysUserDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.insertUser(dto,request));
@@ -60,6 +62,7 @@ public class SysUserApiController {
 
     @DeleteMapping("/delete")
     @ApiOperation("系统用户>删除")
+    @PreAuthorize("sys:user:delete")
     @OperateLog(module = "系统用户",name = "用户删除")
     public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id,HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.deleteUser(id,request));
@@ -67,6 +70,7 @@ public class SysUserApiController {
 
     @PostMapping("/query")
     @ApiOperation("系统用户>查询")
+    @PreAuthorize("sys:user:query")
     public HttpResultUtil<IPage<SysUserVO>> query(@RequestBody SysUserQO qo) {
         return new HttpResultUtil<IPage<SysUserVO>>().ok(sysUserApplicationService.queryUserPage(qo));
     }

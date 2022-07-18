@@ -8,6 +8,7 @@ import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.security.annotation.PreAuthorize;
 import io.laokou.security.feign.auth.AuthApiFeignClient;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -37,12 +38,12 @@ public class PreAuthorizeAspect {
     public void authorizePointCut() {}
 
     @Around("authorizePointCut()")
-    public void authorizePoint(JoinPoint point) throws NoSuchMethodException {
+    public Object around(ProceedingJoinPoint point) throws Throwable {
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         final String ticket = request.getHeader(Constant.TICKET);
         //网关如果已经认证，则无需认证
         if (Constant.TICKET.equals(ticket)) {
-            return;
+            return point.proceed();
         }
         String Authorization = request.getHeader(Constant.AUTHORIZATION_HEADER);
         String language = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
@@ -54,7 +55,7 @@ public class PreAuthorizeAspect {
         }
         UserDetail userDetail = result.getData();
         if (checkPermission(userDetail,point)) {
-            return;
+            point.proceed();
         }
         throw new CustomException(ErrorCode.FORBIDDEN);
     }

@@ -9,6 +9,7 @@ import io.laokou.admin.interfaces.vo.SysOperateLogVO;
 import io.laokou.common.dto.LoginLogDTO;
 import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.common.utils.HttpResultUtil;
+import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,7 @@ public class SysLogApiController {
     }
 
     @PostMapping(value = "/operate/query")
+    @PreAuthorize("sys:log:operate:query")
     @ApiOperation("系统日志>操作日志>查询")
     public HttpResultUtil<IPage<SysOperateLogVO>> queryOperateLog(@RequestBody SysOperateLogQO qo) {
         return new HttpResultUtil<IPage<SysOperateLogVO>>().ok(sysLogApplicationService.queryOperateLogPage(qo));
@@ -45,6 +47,7 @@ public class SysLogApiController {
 
     @PostMapping(value = "/login/query")
     @ApiOperation("系统日志>登录日志>查询")
+    @PreAuthorize("sys:log:login:query")
     public HttpResultUtil<IPage<SysLoginLogVO>> queryLoginLog(@RequestBody LoginLogQO qo) {
         return new HttpResultUtil<IPage<SysLoginLogVO>>().ok(sysLogApplicationService.queryLoginLogPage(qo));
     }

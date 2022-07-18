@@ -5,6 +5,7 @@ import io.laokou.admin.interfaces.dto.ClaimDTO;
 import io.laokou.admin.interfaces.dto.UnClaimDTO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
+import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class WorkflowTaskApiController {
     @PostMapping(value = "/audit")
     @ApiOperation(value = "流程任务>审批")
     @OperateLog(module = "流程任务",name = "任务审批")
+    @PreAuthorize("workflow:task:audit")
     public HttpResultUtil<Boolean> audit(@RequestBody AuditDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(workflowTaskApplicationService.auditTask(dto,request));
     }
@@ -53,6 +55,7 @@ public class WorkflowTaskApiController {
 
     @GetMapping(value = "/diagram")
     @ApiOperation(value = "流程任务>流程图")
+    @PreAuthorize("workflow:task:diagram")
     public void diagram(@RequestParam("processInstanceId")String processInstanceId, HttpServletResponse response) throws IOException {
         workflowTaskApplicationService.diagramProcess(processInstanceId, response);
     }
