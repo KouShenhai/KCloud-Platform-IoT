@@ -79,7 +79,10 @@ public class AuthFilter implements GlobalFilter,Ordered {
         UserDetail userDetail = result.getData();
         final String userId = userDetail.getId().toString();
         final String username = userDetail.getUsername();
-        ServerHttpRequest build = exchange.getRequest().mutate().header(Constant.USER_KEY_HEAD,userId ).header(Constant.USERNAME_HEAD,username).build();
+        ServerHttpRequest build = exchange.getRequest().mutate()
+                .header(Constant.TICKET,Constant.TICKET)
+                .header(Constant.USER_KEY_HEAD,userId )
+                .header(Constant.USERNAME_HEAD,username).build();
         return chain.filter(exchange.mutate().request(build).build());
     }
 
@@ -96,7 +99,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
 
     private Mono<Void> response(ServerWebExchange exchange,Object data){
         DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(JSON.toJSONString(data).getBytes(StandardCharsets.UTF_8));
-        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
+        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
         exchange.getResponse().setStatusCode(HttpStatus.OK);
         return exchange.getResponse().writeWith(Flux.just(buffer));
     }

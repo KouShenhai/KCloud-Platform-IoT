@@ -9,9 +9,9 @@ import java.lang.annotation.*;
 @Documented
 public @interface OperateLog {
 
-    String module() default "";
+    String module();
 
-    String name() default "";
+    String name();
 
     /**
      * TEXT文本
@@ -19,4 +19,5 @@ public @interface OperateLog {
      * @return
      */
     DataTypeEnum type() default DataTypeEnum.TEXT;
+
 }

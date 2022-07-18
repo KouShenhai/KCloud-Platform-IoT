@@ -1,7 +1,7 @@
-package io.laokou.datasource.feign.admin.fallback;
+package io.laokou.security.feign.auth.fallback;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpResultUtil;
-import io.laokou.datasource.feign.admin.AuthApiFeignClient;
+import io.laokou.security.feign.auth.AuthApiFeignClient;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

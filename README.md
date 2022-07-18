@@ -103,11 +103,11 @@
 ##### 代码引入
 ```java
 @Service
-@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysUserApplicationServiceImpl implements SysUserApplicationService {
 
-    private final SysUserService sysUserService;
+    @Autowired
+    private SysUserService sysUserService;
 
     @Override
     @DataSource("master")
@@ -132,11 +132,11 @@ dynamic:
 ##### 代码引入
 ```java
 @Service
-@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysUserApplicationServiceImpl implements SysUserApplicationService {
 
-    private final SysUserService sysUserService;
+    @Autowired
+    private SysUserService sysUserService;
 
     @Override
     @DataFilter(tableAlias = "boot_sys_user")

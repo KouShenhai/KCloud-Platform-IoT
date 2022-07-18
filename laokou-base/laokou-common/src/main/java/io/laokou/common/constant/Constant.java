@@ -54,4 +54,8 @@ public interface Constant {
      * yes
      */
     Integer YES = 0;
+    /**
+     * 认证标识
+     */
+    String TICKET = "ticket";
 }

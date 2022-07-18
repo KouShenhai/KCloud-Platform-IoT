@@ -117,10 +117,6 @@ auth:
     - permission: anon
       url: /druid/**
     - permission: anon
-      url: /sys/auth/api/userInfo
-    - permission: anon
-      url: /sys/auth/api/logout
-    - permission: anon
       url: /sys/auth/api/zfbLogin
     - permission: anon
       url: /favicon.ico

@@ -24,7 +24,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * DDD分层架构(分布式微服务架构) > 用户接口层 应用层 领域层 基础层
  * @author Kou Shenhai
  */
-@SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.admin","io.laokou.redis","io.laokou.log","io.laokou.datasource"})
+@SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.admin","io.laokou.redis","io.laokou.log","io.laokou.security","io.laokou.datasource"})
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableApolloConfig
@@ -32,7 +32,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Slf4j
 @EnableEncryptableProperties
 @EnableHystrix
-@EnableFeignClients(basePackages = {"io.laokou.log","io.laokou.datasource"})
+@EnableFeignClients(basePackages = {"io.laokou.log","io.laokou.datasource","io.laokou.security"})
 public class AdminApplication implements CommandLineRunner, WebServerFactoryCustomizer<WebServerFactory> {
 
 	public static void main(String[] args) {

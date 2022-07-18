@@ -14,7 +14,7 @@ public @interface DataFilter {
     /**
      * 表别名
      */
-    String tableAlias() default "";
+    String tableAlias();
 
     /**
      * 用户ID

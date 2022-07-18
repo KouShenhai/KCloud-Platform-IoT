@@ -13,25 +13,10 @@ import java.util.List;
 public interface SysRoleDao {
 
     /**
-     * 查询角色Ids
-     * @return
-     */
-    List<Long> getRoleIds();
-
-    /**
-     * 通过userId查询角色Ids
-     * @param userId
-     * @return
-     */
-    List<Long> getRoleIdsByUserId(@Param("userId") Long userId);
-
-    /**
      * 根据userId获取角色名称
      * @param userId
      * @return
      */
     List<SysRoleVO> getRoleListByUserId(@Param("userId")Long userId);
-
-    SysRoleVO getRoleById(@Param("id") Long id);
 
 }

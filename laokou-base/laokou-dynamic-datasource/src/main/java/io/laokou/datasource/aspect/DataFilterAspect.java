@@ -8,8 +8,7 @@ import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpContextUtil;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.datasource.annotation.DataFilter;
-import io.laokou.datasource.feign.admin.AuthApiFeignClient;
-import lombok.AllArgsConstructor;
+import io.laokou.security.feign.auth.AuthApiFeignClient;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -17,6 +16,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
@@ -25,18 +25,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Component
 @Aspect
-@AllArgsConstructor
 public class DataFilterAspect {
 
-    private final AuthApiFeignClient authApiFeignClient;
+    @Autowired
+    private AuthApiFeignClient authApiFeignClient;
 
     @Pointcut("@annotation(io.laokou.datasource.annotation.DataFilter)")
-    public void dataFilterCut() {
+    public void dataFilterPointCut() {
 
     }
 
-    @Before("dataFilterCut()")
-    public void dataFilter(JoinPoint point) {
+    @Before("dataFilterPointCut()")
+    public void dataFilterPoint(JoinPoint point) {
         Object params = point.getArgs()[0];
         if (params != null && params instanceof BasePage) {
             HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
@@ -71,7 +71,6 @@ public class DataFilterAspect {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = point.getTarget().getClass().getDeclaredMethod(signature.getName(), signature.getParameterTypes());
         DataFilter dataFilter = method.getAnnotation(DataFilter.class);
-
         //获取表的别名
         String tableAlias = dataFilter.tableAlias();
         if(StringUtils.isNotBlank(tableAlias)){
@@ -81,7 +80,7 @@ public class DataFilterAspect {
         //用户列表
         List<Long> userIds = userDetail.getUsers().stream().map(item -> item.getId()).collect(Collectors.toList());
         if (CollectionUtils.isEmpty(userIds)) {
-            throw new CustomException(ErrorCode.ROLE_NOT_EXIST);
+            throw new CustomException(ErrorCode.NOT_PERMISSIONS);
         }
         sqlFilter.append(" find_in_set(").append(tableAlias).append(dataFilter.userId()).append(",").append("'").append(StringUtils.join(userIds,",")).append("'").append(")");
         return sqlFilter.toString();

@@ -6,6 +6,7 @@ import io.laokou.common.vo.SysUserVO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.admin.application.service.SysUserApplicationService;
 import io.laokou.log.annotation.OperateLog;
+import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class SysUserApiController {
     @PutMapping("/update")
     @ApiOperation("系统用户>修改")
     @OperateLog(module = "系统用户",name = "用户修改")
+    @PreAuthorize("sys:user:update1")
     public HttpResultUtil<Boolean> update(@RequestBody SysUserDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
     }

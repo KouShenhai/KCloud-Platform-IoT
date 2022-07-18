@@ -134,17 +134,18 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.ACCOUNT_DISABLE));
             throw new CustomException(ErrorCode.ACCOUNT_DISABLE);
         }
-        if (CollectionUtils.isEmpty(getRoleIds(userDetail)) && SuperAdminEnum.NO.ordinal() == userDetail.getSuperAdmin()) {
-            PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.ROLE_NOT_EXIST));
-            throw new CustomException(ErrorCode.ROLE_NOT_EXIST);
+        List<SysMenuVO> resourceList = sysMenuService.getMenuList(userDetail,true,1);
+        if (CollectionUtils.isEmpty(resourceList) && SuperAdminEnum.NO.ordinal() == userDetail.getSuperAdmin()) {
+            PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.NOT_PERMISSIONS));
+            throw new CustomException(ErrorCode.NOT_PERMISSIONS);
         }
         PublishFactory.recordLogin(username, ResultStatusEnum.SUCCESS.ordinal(),"登录成功");
         //获取token
-        String token = getToken(userDetail);
+        String token = getToken(userDetail,resourceList);
         return LoginVO.builder().token(token).build();
     }
 
-    private String getToken(UserDetail userDetail) {
+    private String getToken(UserDetail userDetail,List<SysMenuVO> resourceList) {
         //region Description
         //编号
         final Long userId = userDetail.getId();
@@ -154,7 +155,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         log.info("Token is：{}", token);
         //资源列表放到redis中
         String userResourceKey = RedisKeyUtil.getUserResourceKey(userId);
-        List<SysMenuVO> resourceList = sysMenuService.getMenuList(userDetail,true,1);
         List<String> permissionList = getPermissionList(userDetail);
         userDetail.setPermissionsList(permissionList);
         userDetail.setUsers(getUserList(userDetail));
@@ -322,16 +322,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     private UserDetail getUserDetail(String username) {
         return sysUserService.getUserDetail(null, username);
-    }
-
-    private List<Long> getRoleIds(UserDetail userDetail) {
-        Integer superAdmin = userDetail.getSuperAdmin();
-        Long userId = userDetail.getId();
-        if (SuperAdminEnum.YES.ordinal() == superAdmin) {
-            return sysRoleService.getRoleIds();
-        } else {
-            return sysRoleService.getRoleIdsByUserId(userId);
-        }
     }
 
     private List<SysUserVO> getUserList(UserDetail userDetail) {

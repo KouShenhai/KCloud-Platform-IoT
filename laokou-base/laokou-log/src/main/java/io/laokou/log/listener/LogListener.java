@@ -4,8 +4,8 @@ import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.log.event.LoginLogEvent;
 import io.laokou.log.event.OperateLogEvent;
 import io.laokou.log.feign.admin.LogApiFeignClient;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
@@ -15,11 +15,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @EnableAsync
-@AllArgsConstructor
 @ConditionalOnWebApplication
 public class LogListener {
 
-    private final LogApiFeignClient logApiFeignClient;
+    @Autowired
+    private LogApiFeignClient logApiFeignClient;
 
     @Async
     @Order

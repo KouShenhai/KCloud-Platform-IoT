@@ -1,9 +1,10 @@
-package io.laokou.datasource.feign.admin;
+package io.laokou.security.feign.auth;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.constant.ServiceConstant;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpResultUtil;
-import io.laokou.datasource.feign.admin.factory.AuthApiFeignClientFallbackFactory;
+import io.laokou.security.config.FeignMultipartSupportConfig;
+import io.laokou.security.feign.auth.factory.AuthApiFeignClientFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * @author Kou Shenhai
  */
-@FeignClient(name = ServiceConstant.LAOKOU_AUTH, fallbackFactory = AuthApiFeignClientFallbackFactory.class)
+@FeignClient(name = ServiceConstant.LAOKOU_AUTH,configuration = FeignMultipartSupportConfig.class, fallbackFactory = AuthApiFeignClientFallbackFactory.class)
 @Service
 public interface AuthApiFeignClient {
 
