@@ -114,8 +114,6 @@ gateway:
     - /sys/auth/api/captcha
     - /sys/auth/api/login
     - /sys/auth/api/zfbLogin
-    - /workflow/definition/api/image
-    - /workflow/task/api/diagram
     - /actuator/**
     - /swagger/api-docs
     - /swagger-resources/**

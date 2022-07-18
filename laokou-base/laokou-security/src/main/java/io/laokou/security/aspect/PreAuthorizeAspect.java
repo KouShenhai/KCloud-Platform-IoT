@@ -7,6 +7,7 @@ import io.laokou.common.utils.HttpContextUtil;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.security.annotation.PreAuthorize;
 import io.laokou.security.feign.auth.AuthApiFeignClient;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -45,7 +46,7 @@ public class PreAuthorizeAspect {
         if (Constant.TICKET.equals(ticket)) {
             return point.proceed();
         }
-        String Authorization = request.getHeader(Constant.AUTHORIZATION_HEADER);
+        String Authorization = getAuthorization(request);
         String language = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
         String method = request.getMethod();
         String uri = request.getRequestURI();
@@ -70,6 +71,19 @@ public class PreAuthorizeAspect {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 获取请求的token
+     */
+    private String getAuthorization(HttpServletRequest request){
+        //从header中获取token
+        String Authorization = request.getHeader(Constant.AUTHORIZATION_HEADER);
+        //如果header中不存在Authorization，则从参数中获取Authorization
+        if(StringUtils.isBlank(Authorization)){
+            Authorization = request.getParameter(Constant.AUTHORIZATION_HEADER);
+        }
+        return Authorization;
     }
 
 }
