@@ -1,5 +1,5 @@
 package io.laokou.admin.infrastructure.config;
-import io.laokou.admin.interfaces.vo.MsgVO;
+import io.laokou.admin.interfaces.vo.MessageVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -17,7 +17,7 @@ public class WebsocketStompServer {
      * 一对多推送
      */
     @MessageMapping("/one-to-many")
-    public void oneToMany(MsgVO vo) {
+    public void oneToMany(MessageVO vo) {
         template.convertAndSend("/one-to-many", vo);
     }
 
@@ -25,7 +25,7 @@ public class WebsocketStompServer {
      * 一对一推送
      */
     @MessageMapping("/one-to-one")
-    public void oneToOne(String userId, MsgVO vo) {
+    public void oneToOne(String userId, MessageVO vo) {
         template.convertAndSendToUser(userId, "/one-to-one", vo);
     }
 }
