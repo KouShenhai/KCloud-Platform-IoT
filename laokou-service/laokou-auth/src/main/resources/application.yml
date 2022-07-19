@@ -7,7 +7,7 @@ spring:
     name: laokou-auth
   profiles:
     # 环境 dev|test|prod
-    active: test
+    active: @profile.active@
   messages:
     encoding: UTF-8
     basename: i18n/messages

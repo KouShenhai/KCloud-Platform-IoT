@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: test
+    active: @profile.active@
   application:
     name: laokou-monitor
   security:

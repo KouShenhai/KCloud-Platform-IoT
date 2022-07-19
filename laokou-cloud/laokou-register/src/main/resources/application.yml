@@ -8,4 +8,4 @@ spring:
       name: root
       password:  koushenhai
   profiles:
-    active: test
+    active: @profile.active@

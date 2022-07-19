@@ -8,7 +8,7 @@ spring:
     encoding: UTF-8
     basename: i18n/messages
   profiles:
-    active: test
+    active: @profile.active@
   main:
     lazy-initialization: true
   servlet:
