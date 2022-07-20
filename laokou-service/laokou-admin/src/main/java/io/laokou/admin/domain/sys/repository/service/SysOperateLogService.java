@@ -8,6 +8,6 @@ import io.laokou.admin.interfaces.vo.SysOperateLogVO;
 
 public interface SysOperateLogService extends IService<SysOperateLogDO> {
 
-    IPage<SysOperateLogVO> operateLogPage(IPage<SysOperateLogVO> page, SysOperateLogQO qo);
+    IPage<SysOperateLogVO> getOperateLogList(IPage<SysOperateLogVO> page, SysOperateLogQO qo);
 
 }

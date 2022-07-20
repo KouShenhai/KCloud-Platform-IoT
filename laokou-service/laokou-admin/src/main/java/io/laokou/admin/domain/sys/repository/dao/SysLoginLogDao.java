@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface SysLoginLogDao extends BaseDao<SysLoginLogDO> {
 
-    IPage<SysLoginLogVO> loginLogPage(IPage<SysLoginLogVO> page, @Param("qo") LoginLogQO qo);
+    IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, @Param("qo") LoginLogQO qo);
 
 }

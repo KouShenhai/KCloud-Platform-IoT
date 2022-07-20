@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.laokou.admin.domain.sys.repository.dao.SysMessageDao">
+
+    <select id="getMessageList" resultType="io.laokou.admin.interfaces.vo.MessageVO">
+         select id,username,create_date,title
+         from boot_sys_message
+         where del_flag = '0'
+    </select>
+
+    <select id="getMessageById" resultType="io.laokou.admin.interfaces.vo.MessageDetailVO">
+        select title,content from boot_sys_message where id = #{id}
+    </select>
+
+    <select id="getUnReadList" resultType="io.laokou.admin.interfaces.vo.MessageVO">
+        SELECT b.id,a.title,a.content,a.create_date from boot_sys_message a
+join boot_sys_message_detail b on b.message_id = a.id
+where a.del_flag = '0' and b.read_flag = '0' and b.user_id = #{userId}
+    </select>
+
+    <update id="readMessage">
+        update boot_sys_message_detail set read_flag = '1' where id = #{id}
+    </update>
+</mapper>

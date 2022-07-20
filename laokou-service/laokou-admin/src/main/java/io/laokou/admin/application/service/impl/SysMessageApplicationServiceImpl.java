@@ -1,5 +1,7 @@
 package io.laokou.admin.application.service.impl;
-
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.SysMessageApplicationService;
 import io.laokou.admin.domain.sys.entity.SysMessageDO;
@@ -12,7 +14,11 @@ import io.laokou.admin.infrastructure.component.run.Task;
 import io.laokou.admin.infrastructure.component.run.TaskPendingHolder;
 import io.laokou.admin.infrastructure.config.WebsocketStompServer;
 import io.laokou.admin.interfaces.dto.MessageDTO;
+import io.laokou.admin.interfaces.qo.MessageQO;
+import io.laokou.admin.interfaces.vo.MessageDetailVO;
+import io.laokou.admin.interfaces.vo.MessageVO;
 import io.laokou.admin.interfaces.vo.MsgVO;
+import io.laokou.common.constant.Constant;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.SpringContextUtil;
@@ -23,7 +29,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-
 @Service
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysMessageApplicationServiceImpl implements SysMessageApplicationService {
@@ -91,6 +96,36 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             sysMessageDetailService.saveBatch(detailDOList);
         }
         return true;
+    }
+
+    @Override
+    public IPage<MessageVO> queryMessagePage(MessageQO qo) {
+        IPage<MessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+        return sysMessageService.getMessageList(page,qo);
+    }
+
+    @Override
+    public MessageDetailVO getMessageById(Long id) {
+        return sysMessageService.getMessageById(id);
+    }
+
+    @Override
+    public IPage<MessageVO> getUnReadList(HttpServletRequest request, MessageQO qo) {
+        IPage<MessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+        final Long userId = SecurityUser.getUserId(request);
+        return sysMessageService.getUnReadList(page,userId);
+    }
+
+    @Override
+    public Boolean readMessage(Long id) {
+        return sysMessageService.readMessage(id);
+    }
+
+    @Override
+    public Integer unReadCount(HttpServletRequest request) {
+        final Long userId = SecurityUser.getUserId(request);
+        return sysMessageDetailService.count(Wrappers.lambdaQuery(SysMessageDetailDO.class).eq(SysMessageDetailDO::getUserId,userId)
+                .eq(SysMessageDetailDO::getReadFlag, Constant.NO));
     }
 
 }

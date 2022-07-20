@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogDao, SysLoginLogDO> implements SysLoginLogService {
     @Override
-    public IPage<SysLoginLogVO> loginLogPage(IPage<SysLoginLogVO> page, LoginLogQO qo) {
-        return this.baseMapper.loginLogPage(page,qo);
+    public IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, LoginLogQO qo) {
+        return this.baseMapper.getLoginLogList(page,qo);
     }
 }

@@ -47,14 +47,14 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     @DataFilter(tableAlias = "boot_sys_operate_log")
     public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQO qo) {
         IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysOperateLogService.operateLogPage(page,qo);
+        return sysOperateLogService.getOperateLogList(page,qo);
     }
 
     @Override
     @DataSource("master")
     public IPage<SysLoginLogVO> queryLoginLogPage(LoginLogQO qo) {
         IPage<SysLoginLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysLoginLogService.loginLogPage(page,qo);
+        return sysLoginLogService.getLoginLogList(page,qo);
     }
 
 }

@@ -7,5 +7,5 @@ import io.laokou.admin.interfaces.qo.LoginLogQO;
 import io.laokou.admin.interfaces.vo.SysLoginLogVO;
 
 public interface SysLoginLogService extends IService<SysLoginLogDO> {
-    IPage<SysLoginLogVO> loginLogPage(IPage<SysLoginLogVO> page, LoginLogQO qo);
+    IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, LoginLogQO qo);
 }

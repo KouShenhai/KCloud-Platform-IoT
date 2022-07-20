@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysOperateLogDao extends BaseDao<SysOperateLogDO> {
 
-    IPage<SysOperateLogVO> operateLogPage(IPage<SysOperateLogVO> page, @Param("qo") SysOperateLogQO qo);
+    IPage<SysOperateLogVO> getOperateLogList(IPage<SysOperateLogVO> page, @Param("qo") SysOperateLogQO qo);
 
 }
