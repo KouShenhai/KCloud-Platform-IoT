@@ -16,9 +16,6 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class RedisSessionConfig {
 
-    @Value("${spring.redis.database}")
-    private Integer DATABASE;
-
     @Value("${spring.redis.host}")
     private String HOST;
 
@@ -34,7 +31,6 @@ public class RedisSessionConfig {
         SingleServerConfig server = config.useSingleServer();
         server.setAddress("redis://" + HOST + ":" + PORT);
         server.setPassword(PASSWORD);
-        server.setDatabase(DATABASE);
         return Redisson.create(config);
     }
 
