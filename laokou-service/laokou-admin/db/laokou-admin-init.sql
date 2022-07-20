@@ -52,7 +52,7 @@ CREATE TABLE `boot_sys_user` (
   `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL COMMENT '1已删除 0未删除',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
   `email` varchar(50) DEFAULT NULL COMMENT '电子邮箱',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 0正常 1停用',
   `img_url` varchar(400) NOT NULL DEFAULT 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi.qqkou.com%2Fi%2F1a3626475345x3078425090b26.jpg&refer=http%3A%2F%2Fi.qqkou.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657902941&t=73f98a243f12f3eabe1dce87d2b6401b' COMMENT '头像url',
@@ -146,7 +146,7 @@ CREATE TABLE `boot_wx_mp_account` (
   `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL COMMENT '1已删除 0未删除',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='微信公众号账号';
 
@@ -158,7 +158,7 @@ CREATE TABLE `boot_wx_mp_menu` (
   `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL COMMENT '1已删除 0未删除',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `uk_app_id` (`app_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='微信公众号自定义菜单';
@@ -173,7 +173,7 @@ CREATE TABLE `boot_sys_message` (
   `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL COMMENT '1已删除 0未删除',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息';
 
@@ -185,7 +185,7 @@ CREATE TABLE `boot_sys_message_detail` (
   `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL COMMENT '1已删除 0未删除',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
   `read_flag` tinyint(1) DEFAULT '0' COMMENT '是否已读 0未读 1已读',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息详情';

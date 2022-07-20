@@ -10,9 +10,6 @@ public class PreParamCheckAction implements BusinessProcess<MessageDTO> {
 
     @Override
     public void process(MessageDTO dto) {
-        if (null == dto) {
-            throw new CustomException("数据不存在");
-        }
         ValidatorUtil.validateEntity(dto);
         if (CollectionUtils.isEmpty(dto.getReceiver())) {
             throw new CustomException("请选择接收用户");
