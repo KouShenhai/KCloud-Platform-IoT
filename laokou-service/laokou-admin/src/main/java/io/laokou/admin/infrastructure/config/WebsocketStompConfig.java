@@ -1,6 +1,5 @@
 package io.laokou.admin.infrastructure.config;
 import io.laokou.common.constant.Constant;
-import io.laokou.common.utils.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Configuration;
@@ -46,11 +45,11 @@ public class WebsocketStompConfig implements WebSocketMessageBrokerConfigurer {
                     @Override
                     public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Map<String, Object> map) throws IOException {
                         ServletServerHttpRequest request = (ServletServerHttpRequest) serverHttpRequest;
-                        String Authorization = request.getServletRequest().getParameter(Constant.AUTHORIZATION_HEADER);
-                        if (StringUtils.isBlank(Authorization) || (StringUtils.isNotBlank(Authorization) && TokenUtil.isExpiration(Authorization))) {
+                        String userId = request.getServletRequest().getParameter(Constant.USER_KEY_HEAD);
+                        if (StringUtils.isBlank(userId)) {
                             return false;
                         }
-                        map.put(Constant.USER_KEY_HEAD, TokenUtil.getUserId(Authorization));
+                        map.put(Constant.USER_KEY_HEAD, userId);
                         return true;
                     }
                     /**
@@ -86,7 +85,7 @@ public class WebsocketStompConfig implements WebSocketMessageBrokerConfigurer {
         taskScheduler.setThreadNamePrefix("websocket-thread-");
         taskScheduler.initialize();
         //定义一个（或多个）客户端地址的前缀信息，也就是客户端接收服务端发送消息的前缀信息
-        registry.enableSimpleBroker("/face-to-face","/one-to-many", "/user")
+        registry.enableSimpleBroker("/one-to-one","/one-to-many", "/user")
                 .setHeartbeatValue(new long[]{HEART_BEAT, HEART_BEAT})
                 .setTaskScheduler(taskScheduler);
         //websocket请求前缀

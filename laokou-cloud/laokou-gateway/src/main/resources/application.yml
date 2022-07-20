@@ -121,3 +121,4 @@ gateway:
     - /v2/api-docs
     - /webjars/**
     - /druid/**
+    - /ws/**
