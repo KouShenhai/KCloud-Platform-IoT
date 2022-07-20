@@ -12,7 +12,7 @@ import io.laokou.admin.infrastructure.component.event.SaveMessageEvent;
 import io.laokou.admin.infrastructure.component.pipeline.ProcessController;
 import io.laokou.admin.infrastructure.component.run.Task;
 import io.laokou.admin.infrastructure.component.run.TaskPendingHolder;
-import io.laokou.admin.infrastructure.config.WebsocketStompServer;
+import io.laokou.admin.infrastructure.config.WebSocketServer;
 import io.laokou.admin.interfaces.dto.MessageDTO;
 import io.laokou.admin.interfaces.qo.MessageQO;
 import io.laokou.admin.interfaces.vo.MessageDetailVO;
@@ -28,13 +28,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.*;
 @Service
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysMessageApplicationServiceImpl implements SysMessageApplicationService {
 
     @Autowired
-    private WebsocketStompServer websocketStompServer;
+    private WebSocketServer webSocketServer;
 
     @Autowired
     private TaskPendingHolder taskPendingHolder;
@@ -53,7 +54,13 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         Iterator<String> iterator = dto.getReceiver().iterator();
         while (iterator.hasNext()) {
             String next = iterator.next();
-            taskPendingHolder.route().execute(() -> websocketStompServer.oneToOne(next, MsgVO.builder().data(String.format("%s发来一条消息",dto.getUsername())).build()));
+            taskPendingHolder.route().execute(() -> {
+                try {
+                    webSocketServer.sendMessages(String.format("%s发来一条消息",dto.getUsername()),Long.valueOf(next));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
         return true;
     }
