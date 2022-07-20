@@ -3,7 +3,7 @@ import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
 import io.laokou.admin.infrastructure.common.enums.FlowCommentEnum;
 import io.laokou.common.user.SecurityUser;
-import io.laokou.admin.infrastructure.component.CustomProcessDiagramGenerator;
+import io.laokou.admin.infrastructure.config.CustomProcessDiagramGenerator;
 import io.laokou.admin.interfaces.dto.AuditDTO;
 import io.laokou.admin.interfaces.dto.ClaimDTO;
 import io.laokou.admin.interfaces.dto.UnClaimDTO;

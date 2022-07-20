@@ -89,6 +89,8 @@
         <weixin-java-mp.version>4.2.0</weixin-java-mp.version>
         <!--commons-codec版本-->
         <commons-codec.version>1.15</commons-codec.version>
+        <!--ynamic-tp-->
+        <dynamic-tp.version>1.0.7</dynamic-tp.version>
     </properties>
     <dependencyManagement>
         <dependencies>

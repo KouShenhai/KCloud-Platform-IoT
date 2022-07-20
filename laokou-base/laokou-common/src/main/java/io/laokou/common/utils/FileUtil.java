@@ -30,7 +30,7 @@ public class FileUtil extends FileUtils {
             60,
             TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(512),
-            ThreadUtil.newNamedThreadFactory("laokou-admin-service",true),
+            ThreadUtil.newNamedThreadFactory("laokou-service",true),
             new ThreadPoolExecutor.CallerRunsPolicy()
     );
 

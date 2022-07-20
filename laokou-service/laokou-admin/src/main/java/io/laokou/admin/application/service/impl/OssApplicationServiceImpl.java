@@ -1,7 +1,7 @@
 package io.laokou.admin.application.service.impl;
 
 import io.laokou.admin.application.service.OssApplicationService;
-import io.laokou.admin.infrastructure.common.cloud.CloudFactory;
+import io.laokou.admin.infrastructure.component.cloud.CloudFactory;
 import io.laokou.admin.interfaces.vo.UploadVO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

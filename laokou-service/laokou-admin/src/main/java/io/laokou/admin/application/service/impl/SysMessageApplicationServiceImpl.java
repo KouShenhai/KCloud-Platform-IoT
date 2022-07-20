@@ -10,9 +10,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysMessageApplicationServiceImpl implements SysMessageApplicationService {
 
+
+
     @Override
-    public Boolean send(MessageDTO dto) {
-        return null;
+    public Boolean pushMessage(MessageDTO dto) {
+        return true;
+    }
+
+    @Override
+    public void consumeMessage(MessageDTO dto) {
+        //1.插入日志
+        //2.推送消息
+
+    }
+
+    @Override
+    public Boolean insertMessage(MessageDTO dto) {
+        return true;
     }
 
 }
