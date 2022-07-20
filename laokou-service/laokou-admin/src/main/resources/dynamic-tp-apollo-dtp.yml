@@ -1,0 +1,44 @@
+spring:
+  dynamic:
+    tp:
+      enabled: true
+      enabledBanner: true           # 是否开启banner打印，默认true
+      enabledCollect: true          # 是否开启监控指标采集，默认false
+      collectorType: micrometer     # 监控数据采集器类型（jsonlog | micrometer），默认logging
+      monitorInterval: 5            # 监控时间间隔（报警判断、指标采集），默认5s
+      apollo:                       # apollo配置，不配置默认拿apollo配置第一个namespace
+        namespace: dynamic-tp-apollo-dtp.yml
+      configType: yml               # 配置文件类型，非cloud nacos 和 apollo需配置，其他不用配
+      tomcatTp:                                    # tomcat webserver线程池配置
+        corePoolSize: 100
+        maximumPoolSize: 200
+        keepAliveTime: 60
+      hystrixTp:                                   # hystrix 线程池配置
+        - threadPoolName: hystrix1
+          corePoolSize: 100
+          maximumPoolSize: 200
+          keepAliveTime: 60
+      executors:                                   # 动态线程池配置，都有默认值，采用默认值的可以不配置该项，减少配置量
+        - threadPoolName: admin-service
+          corePoolSize: 6
+          maximumPoolSize: 8
+          queueCapacity: 200
+          queueType: VariableLinkedBlockingQueue   # 任务队列，查看源码QueueTypeEnum枚举类
+          rejectedHandlerType: CallerRunsPolicy    # 拒绝策略，查看RejectedTypeEnum枚举类
+          keepAliveTime: 50
+          allowCoreThreadTimeOut: false                  # 是否允许核心线程池超时
+          threadNamePrefix: laokou-                         # 线程名前缀
+          awaitTerminationSeconds: 5                     # 单位（s）
+          preStartAllCoreThreads: false                  # 是否预热所有核心线程，默认false
+          runTimeout: 200                                # 任务执行超时阈值，目前只做告警用，单位（ms）
+          queueTimeout: 100                              # 任务在队列等待超时阈值，目前只做告警用，单位（ms）
+          taskWrapperNames: ["ttl"]                          # 任务包装器名称，集成TaskWrapper接口
+          notifyItems:                     # 报警项，不配置自动会按默认值配置（变更通知、容量报警、活性报警、拒绝报警、任务超时报警）
+            - type: change
+              enabled: true
+            - type: liveness
+              enabled: true
+              threshold: 80
+            - type: reject
+              enabled: true
+              threshold: 1
