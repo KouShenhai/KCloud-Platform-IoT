@@ -10,6 +10,7 @@ import io.laokou.admin.domain.sys.repository.service.SysRoleService;
 import io.laokou.admin.domain.sys.repository.service.SysUserRoleService;
 import io.laokou.admin.domain.sys.repository.service.SysUserService;
 import io.laokou.admin.infrastructure.common.password.PasswordUtil;
+import io.laokou.admin.interfaces.vo.OptionVO;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
@@ -116,6 +117,12 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         }
         sysUserService.deleteUser(id);
         return true;
+    }
+
+    @Override
+    @DataSource("master")
+    public List<OptionVO> getOptionList() {
+        return sysUserService.getOptionList();
     }
 
     private Boolean saveOrUpdate(Long userId,List<Long> roleIds) {

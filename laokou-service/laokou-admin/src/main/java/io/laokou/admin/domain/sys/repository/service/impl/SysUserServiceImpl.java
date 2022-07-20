@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.infrastructure.common.password.PasswordUtil;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
+import io.laokou.admin.interfaces.vo.OptionVO;
 import io.laokou.common.vo.SysUserVO;
 import io.laokou.common.user.UserDetail;
 import io.laokou.admin.domain.sys.entity.SysUserDO;
@@ -67,6 +68,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserDO> imple
     @Override
     public List<SysUserVO> getUserListByUserId(Long id) {
         return this.baseMapper.getUserListByUserId(id);
+    }
+
+    @Override
+    public List<OptionVO> getOptionList() {
+        return this.baseMapper.getOptionList();
     }
 
 }

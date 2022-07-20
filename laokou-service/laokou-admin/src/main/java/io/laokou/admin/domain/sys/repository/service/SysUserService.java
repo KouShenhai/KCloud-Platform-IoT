@@ -3,6 +3,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
+import io.laokou.admin.interfaces.vo.OptionVO;
 import io.laokou.common.vo.SysUserVO;
 import io.laokou.common.user.UserDetail;
 import io.laokou.admin.domain.sys.entity.SysUserDO;
@@ -50,7 +51,22 @@ public interface SysUserService extends IService<SysUserDO> {
      */
     void deleteUser(Long id);
 
+    /**
+     * 获取用户列表
+     * @return
+     */
     List<SysUserVO> getUserList();
 
+    /**
+     * 根据id获取用户列表
+     * @param id
+     * @return
+     */
     List<SysUserVO> getUserListByUserId(Long id);
+
+    /**
+     * 获取用户列表下拉框
+     * @return
+     */
+    List<OptionVO> getOptionList();
 }

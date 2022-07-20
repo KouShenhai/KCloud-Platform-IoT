@@ -2,6 +2,7 @@ package io.laokou.admin.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
+import io.laokou.admin.interfaces.vo.OptionVO;
 import io.laokou.common.vo.SysUserVO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.admin.application.service.SysUserApplicationService;
@@ -12,6 +13,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
 /**
  * 系统用户控制器
  * @author Kou Shenhai
@@ -30,6 +33,12 @@ public class SysUserApiController {
     @PreAuthorize("sys:user:update")
     public HttpResultUtil<Boolean> update(@RequestBody SysUserDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
+    }
+
+    @PutMapping("/option/list")
+    @ApiOperation("系统用户>下拉框列表")
+    public HttpResultUtil<List<OptionVO>> optionList() {
+        return new HttpResultUtil<List<OptionVO>>().ok(sysUserApplicationService.getOptionList());
     }
 
     @PutMapping("/updateInfo")

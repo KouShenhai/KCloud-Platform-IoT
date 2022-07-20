@@ -12,7 +12,7 @@ import io.laokou.admin.infrastructure.component.run.Task;
 import io.laokou.admin.infrastructure.component.run.TaskPendingHolder;
 import io.laokou.admin.infrastructure.config.WebsocketStompServer;
 import io.laokou.admin.interfaces.dto.MessageDTO;
-import io.laokou.admin.interfaces.vo.MessageVO;
+import io.laokou.admin.interfaces.vo.MsgVO;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.SpringContextUtil;
@@ -48,7 +48,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         Iterator<String> iterator = dto.getReceiver().iterator();
         while (iterator.hasNext()) {
             String next = iterator.next();
-            taskPendingHolder.route().execute(() -> websocketStompServer.oneToOne(next, MessageVO.builder().data(String.format("%s发来一条消息",dto.getUsername())).build()));
+            taskPendingHolder.route().execute(() -> websocketStompServer.oneToOne(next, MsgVO.builder().data(String.format("%s发来一条消息",dto.getUsername())).build()));
         }
         return true;
     }

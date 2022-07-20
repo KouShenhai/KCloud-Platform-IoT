@@ -2,6 +2,7 @@ package io.laokou.admin.domain.sys.repository.dao;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
+import io.laokou.admin.interfaces.vo.OptionVO;
 import io.laokou.common.vo.SysUserVO;
 import io.laokou.common.dao.BaseDao;
 import io.laokou.common.user.UserDetail;
@@ -54,4 +55,6 @@ public interface SysUserDao extends BaseDao<SysUserDO> {
     List<SysUserVO> getUserListByUserId(@Param("id") Long id);
 
     List<SysUserVO> getUserList();
+
+    List<OptionVO> getOptionList();
 }

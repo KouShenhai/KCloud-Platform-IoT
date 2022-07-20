@@ -3,9 +3,11 @@ package io.laokou.admin.application.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
+import io.laokou.admin.interfaces.vo.OptionVO;
 import io.laokou.common.vo.SysUserVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface SysUserApplicationService {
 
@@ -22,5 +24,7 @@ public interface SysUserApplicationService {
     SysUserVO getUserById(Long id);
 
     Boolean deleteUser(Long id,HttpServletRequest request);
+
+    List<OptionVO> getOptionList();
 
 }
