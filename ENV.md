@@ -16,3 +16,8 @@
 * [centos7 安装jenkins](https://kcloud.blog.csdn.net/article/details/112171878)
 
 * [centos7 安装apr](https://kcloud.blog.csdn.net/article/details/125473896)
+
+#### 安装包
+[百度网盘](https://pan.baidu.com/s/1swrV9ffJnmz4S0mfkuBbIw)
+
+提取码：1111
