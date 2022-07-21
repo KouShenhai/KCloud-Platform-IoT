@@ -37,7 +37,7 @@ public class SysAuthApiController {
     }
 
     @PostMapping("/sys/auth/api/login")
-    @ApiOperation("登录API")
+    @ApiOperation("系统认证>登录")
     public HttpResultUtil<LoginVO> login(@RequestBody LoginDTO loginDTO) throws Exception {
         return new HttpResultUtil<LoginVO>().ok(sysAuthApplicationService.login(loginDTO));
     }
