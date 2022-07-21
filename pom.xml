@@ -99,6 +99,7 @@
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!-- 定义 spring boot 版本 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
@@ -106,6 +107,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- 定义 spring boot admin 版本 -->
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-dependencies</artifactId>
@@ -217,7 +219,6 @@
                 <includes>
                     <include>application.yml</include>
                     <include>application-${profile.active}.yml</include>
-                    <!--<include>**/application-${profile.active}.yml</include>-->
                 </includes>
             </resource>
         </resources>
