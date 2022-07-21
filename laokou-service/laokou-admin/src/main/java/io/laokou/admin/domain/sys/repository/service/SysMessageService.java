@@ -11,10 +11,12 @@ public interface SysMessageService extends IService<SysMessageDO> {
 
     IPage<MessageVO> getMessageList(IPage<MessageVO> page, MessageQO qo);
 
-    MessageDetailVO getMessageById(Long id);
+    MessageDetailVO getMessageByDetailId(Long id);
 
     IPage<MessageVO> getUnReadList(IPage<MessageVO> page,Long userId);
 
     Boolean readMessage(Long id);
+
+    MessageDetailVO getMessageById(Long id);
 
 }

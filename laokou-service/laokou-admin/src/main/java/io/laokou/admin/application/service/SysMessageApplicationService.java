@@ -20,11 +20,11 @@ public interface SysMessageApplicationService {
 
     IPage<MessageVO> queryMessagePage(MessageQO qo);
 
+    MessageDetailVO getMessageByDetailId(Long id);
+
     MessageDetailVO getMessageById(Long id);
 
     IPage<MessageVO> getUnReadList(HttpServletRequest request, MessageQO qo);
-
-    Boolean readMessage(Long id);
 
     Integer unReadCount(HttpServletRequest request);
 

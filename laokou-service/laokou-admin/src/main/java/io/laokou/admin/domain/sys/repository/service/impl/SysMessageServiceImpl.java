@@ -20,8 +20,8 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageDao, SysMessage
     }
 
     @Override
-    public MessageDetailVO getMessageById(Long id) {
-        return this.baseMapper.getMessageById(id);
+    public MessageDetailVO getMessageByDetailId(Long id) {
+        return this.baseMapper.getMessageByDetailId(id);
     }
 
     @Override
@@ -33,5 +33,10 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageDao, SysMessage
     public Boolean readMessage(Long id) {
         this.baseMapper.readMessage(id);
         return true;
+    }
+
+    @Override
+    public MessageDetailVO getMessageById(Long id) {
+        return this.baseMapper.getMessageById(id);
     }
 }

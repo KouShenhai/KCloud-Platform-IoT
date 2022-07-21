@@ -14,7 +14,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
 /**
  * 系统用户控制器
  * @author Kou Shenhai
@@ -35,7 +34,7 @@ public class SysUserApiController {
         return new HttpResultUtil<Boolean>().ok(sysUserApplicationService.updateUser(dto,request));
     }
 
-    @PutMapping("/option/list")
+    @GetMapping("/option/list")
     @ApiOperation("系统用户>下拉框列表")
     public HttpResultUtil<List<OptionVO>> optionList() {
         return new HttpResultUtil<List<OptionVO>>().ok(sysUserApplicationService.getOptionList());

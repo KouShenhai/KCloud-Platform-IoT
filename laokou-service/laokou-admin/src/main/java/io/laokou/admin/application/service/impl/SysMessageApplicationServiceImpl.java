@@ -122,6 +122,12 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
+    public MessageDetailVO getMessageByDetailId(Long id) {
+        sysMessageService.readMessage(id);
+        return sysMessageService.getMessageByDetailId(id);
+    }
+
+    @Override
     public MessageDetailVO getMessageById(Long id) {
         return sysMessageService.getMessageById(id);
     }
@@ -131,11 +137,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         IPage<MessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         final Long userId = SecurityUser.getUserId(request);
         return sysMessageService.getUnReadList(page,userId);
-    }
-
-    @Override
-    public Boolean readMessage(Long id) {
-        return sysMessageService.readMessage(id);
     }
 
     @Override

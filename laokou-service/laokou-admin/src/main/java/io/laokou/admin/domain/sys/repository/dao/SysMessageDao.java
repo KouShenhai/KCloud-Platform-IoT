@@ -16,9 +16,11 @@ public interface SysMessageDao extends BaseDao<SysMessageDO> {
 
     IPage<MessageVO> getMessageList(IPage<MessageVO> page, @Param("qo") MessageQO qo);
 
-    MessageDetailVO getMessageById(@Param("id") Long id);
+    MessageDetailVO getMessageByDetailId(@Param("id") Long id);
 
     IPage<MessageVO> getUnReadList(IPage<MessageVO> page, @Param("userId") Long userId);
 
     void readMessage(Long id);
+
+    MessageDetailVO getMessageById(@Param("id")Long id);
 }

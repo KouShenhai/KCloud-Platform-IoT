@@ -10,4 +10,7 @@ import lombok.Data;
  */
 @Data
 public class MessageQO extends BasePage {
+
+    private String username;
+    private String title;
 }

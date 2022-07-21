@@ -6,16 +6,30 @@
          select id,username,create_date,title
          from boot_sys_message
          where del_flag = '0'
+         <if test="qo.username != null and qo.username != ''">
+             and username like concat('%',#{qo.username},'%')
+         </if>
+        <if test="qo.title != null and qo.title != ''">
+            and title like concat('%',#{qo.title},'%')
+        </if>
+         order by create_date desc
+    </select>
+
+    <select id="getMessageByDetailId" resultType="io.laokou.admin.interfaces.vo.MessageDetailVO">
+SELECT a.title,a.content from boot_sys_message a
+join boot_sys_message_detail b on b.message_id = a.id
+where b.id = #{id}
     </select>
 
     <select id="getMessageById" resultType="io.laokou.admin.interfaces.vo.MessageDetailVO">
-        select title,content from boot_sys_message where id = #{id}
+SELECT a.title,a.content from boot_sys_message a where a.id = #{id}
     </select>
 
     <select id="getUnReadList" resultType="io.laokou.admin.interfaces.vo.MessageVO">
-        SELECT b.id,a.title,a.content,a.create_date from boot_sys_message a
+        SELECT b.id,a.title,a.create_date from boot_sys_message a
 join boot_sys_message_detail b on b.message_id = a.id
 where a.del_flag = '0' and b.read_flag = '0' and b.user_id = #{userId}
+order by a.create_date desc
     </select>
 
     <update id="readMessage">

@@ -22,10 +22,10 @@ public class SysMessageApiController {
     @Autowired
     private SysMessageApplicationService sysMessageApplicationService;
 
-    @PostMapping("/send")
-    @ApiOperation("系统消息>发送")
-    @PreAuthorize("sys:message:send")
-    public HttpResultUtil<Boolean> send(@RequestBody MessageDTO dto, HttpServletRequest request) {
+    @PostMapping("/insert")
+    @ApiOperation("系统消息>新增")
+    @PreAuthorize("sys:message:insert")
+    public HttpResultUtil<Boolean> insert(@RequestBody MessageDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysMessageApplicationService.sendMessage(dto,request));
     }
 
@@ -36,17 +36,17 @@ public class SysMessageApiController {
         return new HttpResultUtil<IPage<MessageVO>>().ok(sysMessageApplicationService.queryMessagePage(qo));
     }
 
+    @GetMapping("/get")
+    @ApiOperation("系统消息>查看")
+    public HttpResultUtil<MessageDetailVO> get(@RequestParam("id")Long id) {
+        return new HttpResultUtil<MessageDetailVO>().ok(sysMessageApplicationService.getMessageByDetailId(id));
+    }
+
     @GetMapping("/detail")
     @ApiOperation("系统消息>详情")
     @PreAuthorize("sys:message:detail")
     public HttpResultUtil<MessageDetailVO> detail(@RequestParam("id")Long id) {
         return new HttpResultUtil<MessageDetailVO>().ok(sysMessageApplicationService.getMessageById(id));
-    }
-
-    @PutMapping("/read")
-    @ApiOperation("系统消息>已读")
-    public HttpResultUtil<Boolean> read(@RequestParam("id")Long id) {
-        return new HttpResultUtil<Boolean>().ok(sysMessageApplicationService.readMessage(id));
     }
 
     @PostMapping("/unread/list")
