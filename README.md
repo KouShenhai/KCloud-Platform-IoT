@@ -67,6 +67,7 @@
 |-- laokou-service
    |-- laokou-admin -- 后台管理模块
    |-- laokou-auth -- 认证模块
+   |-- laokou-generator --代码生成模块
    |-- laokou-redis -- 缓存模块
 ~~~
 
