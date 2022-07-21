@@ -130,15 +130,16 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.2.5</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.2.5.RELEASE</version>
+				<version>${spring-boot.version}</version>
 				<configuration>
 					<!-- main方法的地址 只需要修改这个地址-->
 					<mainClass>io.laokou.admin.AdminApplication</mainClass>
