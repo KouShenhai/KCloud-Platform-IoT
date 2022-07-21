@@ -16,21 +16,22 @@ import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
-import lombok.AllArgsConstructor;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 @Service
-@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysRoleApplicationServiceImpl implements SysRoleApplicationService {
 
-    private final SysRoleService sysRoleService;
+    @Autowired
+    private SysRoleService sysRoleService;
 
-    private final SysRoleMenuService sysRoleMenuService;
+    @Autowired
+    private SysRoleMenuService sysRoleMenuService;
 
     @Override
     @DataSource("master")

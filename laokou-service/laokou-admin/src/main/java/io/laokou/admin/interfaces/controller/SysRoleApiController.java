@@ -9,7 +9,7 @@ import io.laokou.log.annotation.OperateLog;
 import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -18,12 +18,12 @@ import java.util.List;
  * @author Kou Shenhai
  */
 @RestController
-@AllArgsConstructor
 @Api(value = "系统角色API",protocols = "http",tags = "系统角色API")
 @RequestMapping("/sys/role/api")
 public class SysRoleApiController {
 
-    private final SysRoleApplicationService sysRoleApplicationService;
+    @Autowired
+    private SysRoleApplicationService sysRoleApplicationService;
 
     @PostMapping("/query")
     @ApiOperation("系统角色>查询")

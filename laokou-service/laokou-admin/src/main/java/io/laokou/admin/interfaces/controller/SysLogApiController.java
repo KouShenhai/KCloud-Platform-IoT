@@ -12,19 +12,19 @@ import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 /**
  * 系统日志控制器
  * @author Kou Shenhai
  */
 @RestController
-@AllArgsConstructor
 @Api(value = "系统日志API",protocols = "http",tags = "系统日志API")
 @RequestMapping("/sys/log/api")
 public class SysLogApiController {
 
-    private final SysLogApplicationService sysLogApplicationService;
+    @Autowired
+    private SysLogApplicationService sysLogApplicationService;
 
     @PostMapping(value = "/operate/insert")
     @ApiOperation("系统日志>操作日志>新增")

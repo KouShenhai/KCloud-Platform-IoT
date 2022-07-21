@@ -8,7 +8,7 @@ import io.laokou.log.annotation.OperateLog;
 import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -17,12 +17,12 @@ import java.util.List;
  * @author Kou Shenhai
  */
 @RestController
-@AllArgsConstructor
 @Api(value = "系统菜单API",protocols = "http",tags = "系统菜单API")
 @RequestMapping("/sys/menu/api")
 public class SysMenuApiController {
 
-    private final SysMenuApplicationService sysMenuApplicationService;
+    @Autowired
+    private SysMenuApplicationService sysMenuApplicationService;
 
     @GetMapping("/list")
     @ApiOperation("系统菜单>列表")

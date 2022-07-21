@@ -12,9 +12,9 @@ import io.laokou.admin.domain.sys.repository.dao.SysUserDao;
 import io.laokou.admin.domain.sys.repository.service.SysUserService;
 import io.laokou.common.utils.RedisKeyUtil;
 import io.laokou.redis.RedisUtil;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -23,11 +23,11 @@ import java.util.List;
  */
 @Service
 @Slf4j
-@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserDO> implements SysUserService {
 
-    private final RedisUtil redisUtil;
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public void updateUser(SysUserDTO dto) {

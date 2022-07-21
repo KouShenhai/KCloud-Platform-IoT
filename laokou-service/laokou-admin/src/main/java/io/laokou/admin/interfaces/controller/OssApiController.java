@@ -5,7 +5,7 @@ import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.HttpResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,12 +15,12 @@ import java.io.InputStream;
  * @author Kou Shenhai
  */
 @RestController
-@AllArgsConstructor
 @Api(value = "对象存储API",protocols = "http",tags = "对象存储API")
 @RequestMapping("/oss/api")
 public class OssApiController {
 
-    private final OssApplicationService ossApplicationService;
+    @Autowired
+    private OssApplicationService ossApplicationService;
 
     @PostMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation("对象存储>上传")

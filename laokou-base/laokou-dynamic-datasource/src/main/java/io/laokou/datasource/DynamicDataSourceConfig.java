@@ -1,7 +1,7 @@
 package io.laokou.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -17,10 +17,11 @@ import java.util.Map;
  * @since 1.0.0
  */
 @Configuration
-@AllArgsConstructor
 @EnableConfigurationProperties(DynamicDataSourceProperties.class)
 public class DynamicDataSourceConfig {
-    private final DynamicDataSourceProperties properties;
+
+    @Autowired
+    private  DynamicDataSourceProperties properties;
 
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.druid")

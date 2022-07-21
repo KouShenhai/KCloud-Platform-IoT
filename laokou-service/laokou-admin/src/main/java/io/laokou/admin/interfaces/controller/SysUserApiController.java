@@ -10,7 +10,7 @@ import io.laokou.log.annotation.OperateLog;
 import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -19,12 +19,12 @@ import java.util.List;
  * @author Kou Shenhai
  */
 @RestController
-@AllArgsConstructor
 @Api(value = "系统用户API",protocols = "http",tags = "系统用户API")
 @RequestMapping("/sys/user/api")
 public class SysUserApiController {
 
-    private final SysUserApplicationService sysUserApplicationService;
+    @Autowired
+    private SysUserApplicationService sysUserApplicationService;
 
     @PutMapping("/update")
     @ApiOperation("系统用户>修改")
