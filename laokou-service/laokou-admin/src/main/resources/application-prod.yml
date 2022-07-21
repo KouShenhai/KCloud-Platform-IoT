@@ -20,7 +20,7 @@ apollo:
     eagerLoad:
       enabled: true
 
-
+spring:
   boot:
     admin:
       client:
