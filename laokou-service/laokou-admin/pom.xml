@@ -11,9 +11,6 @@
 	<artifactId>laokou-admin</artifactId>
 	<name>laokou-admin</name>
 	<description>后台管理模块</description>
-	<properties>
-		<java.version>1.8</java.version>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>io.github.lyh200</groupId>

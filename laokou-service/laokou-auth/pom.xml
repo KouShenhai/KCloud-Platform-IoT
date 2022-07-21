@@ -11,9 +11,6 @@
     <artifactId>laokou-auth</artifactId>
     <name>laokou-auth</name>
     <description>认证模块</description>
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>io.laokou</groupId>
