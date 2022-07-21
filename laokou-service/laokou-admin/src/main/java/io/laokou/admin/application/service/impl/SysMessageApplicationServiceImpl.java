@@ -17,7 +17,6 @@ import io.laokou.admin.interfaces.dto.MessageDTO;
 import io.laokou.admin.interfaces.qo.MessageQO;
 import io.laokou.admin.interfaces.vo.MessageDetailVO;
 import io.laokou.admin.interfaces.vo.MessageVO;
-import io.laokou.admin.interfaces.vo.MsgVO;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.common.utils.ConvertUtil;
@@ -27,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
@@ -37,7 +37,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     @Autowired
     private WebSocketServer webSocketServer;
 
-    @Autowired
+    @Resource
     private TaskPendingHolder taskPendingHolder;
 
     @Autowired
