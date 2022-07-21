@@ -10,7 +10,7 @@
     <groupId>io.laokou</groupId>
     <artifactId>laokou-generator</artifactId>
     <name>laokou-generator</name>
-    <description>代码生成器</description>
+    <description>代码生成模块</description>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
