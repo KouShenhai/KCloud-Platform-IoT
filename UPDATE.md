@@ -11,7 +11,7 @@
 * laokou-security => 服务认证模块
 
 ###### 2.其他组件
-* Websocket + Stomp
+* Websocket
 
 ### 2022.07.17 更新日志
 ###### 1.增加模板
