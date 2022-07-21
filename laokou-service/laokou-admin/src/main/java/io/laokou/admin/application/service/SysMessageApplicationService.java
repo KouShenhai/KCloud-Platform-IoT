@@ -7,10 +7,11 @@ import io.laokou.admin.interfaces.vo.MessageDetailVO;
 import io.laokou.admin.interfaces.vo.MessageVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 public interface SysMessageApplicationService {
 
-    Boolean pushMessage(MessageDTO dto);
+    Boolean pushMessage(MessageDTO dto) throws IOException;
 
     Boolean sendMessage(MessageDTO dto, HttpServletRequest request);
 
