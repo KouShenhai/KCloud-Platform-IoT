@@ -24,13 +24,13 @@ public class FileUtil extends FileUtils {
     // 定义允许上传的文件扩展名
     private static final Map<String, String> extMap = new HashMap<>();
 
-    private static final ThreadPoolExecutor executorService = new ThreadPoolExecutor(
+    public static final ThreadPoolExecutor executorService = new ThreadPoolExecutor(
             8,
             16,
             60,
             TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(512),
-            ThreadUtil.newNamedThreadFactory("laokou-service",true),
+            ThreadUtil.newNamedThreadFactory("laokou-oss-service",true),
             new ThreadPoolExecutor.CallerRunsPolicy()
     );
 

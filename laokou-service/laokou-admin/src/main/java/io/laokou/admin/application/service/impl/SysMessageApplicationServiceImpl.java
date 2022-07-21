@@ -1,4 +1,5 @@
 package io.laokou.admin.application.service.impl;
+import cn.hutool.core.thread.ThreadUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,7 +12,6 @@ import io.laokou.admin.domain.sys.repository.service.SysMessageService;
 import io.laokou.admin.infrastructure.component.event.SaveMessageEvent;
 import io.laokou.admin.infrastructure.component.pipeline.ProcessController;
 import io.laokou.admin.infrastructure.component.run.Task;
-import io.laokou.admin.infrastructure.component.run.TaskPendingHolder;
 import io.laokou.admin.infrastructure.config.WebSocketServer;
 import io.laokou.admin.interfaces.dto.MessageDTO;
 import io.laokou.admin.interfaces.qo.MessageQO;
@@ -26,19 +26,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 @Service
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysMessageApplicationServiceImpl implements SysMessageApplicationService {
 
+    public static final ThreadPoolExecutor executorService = new ThreadPoolExecutor(
+            8,
+            16,
+            60,
+            TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>(512),
+            ThreadUtil.newNamedThreadFactory("laokou-message-service",true),
+            new ThreadPoolExecutor.CallerRunsPolicy()
+    );
+
     @Autowired
     private WebSocketServer webSocketServer;
-
-    @Resource
-    private TaskPendingHolder taskPendingHolder;
 
     @Autowired
     private ProcessController processController;
@@ -54,7 +64,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         Iterator<String> iterator = dto.getReceiver().iterator();
         while (iterator.hasNext()) {
             String next = iterator.next();
-            taskPendingHolder.route().execute(() -> {
+            executorService.execute(() -> {
                 try {
                     webSocketServer.sendMessages(String.format("%s发来一条消息",dto.getUsername()),Long.valueOf(next));
                 } catch (IOException e) {
@@ -79,7 +89,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         SpringContextUtil.publishEvent(new SaveMessageEvent(dto));
         //2.推送消息
         Task task = SpringContextUtil.getBean(Task.class).setDto(dto);
-        taskPendingHolder.route().execute(task);
+        executorService.execute(task);
     }
 
     @Override
