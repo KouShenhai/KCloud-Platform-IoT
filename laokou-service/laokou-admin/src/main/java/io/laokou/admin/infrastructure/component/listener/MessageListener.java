@@ -10,6 +10,9 @@ import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+
 @Component
 @ConditionalOnWebApplication
 public class MessageListener {
@@ -28,7 +31,7 @@ public class MessageListener {
     @Async
     @Order
     @EventListener(value = PushMessageEvent.class)
-    public void listenPush(PushMessageEvent event) {
+    public void listenPush(PushMessageEvent event) throws IOException {
         MessageDTO dto = (MessageDTO) event.getSource();
         sysMessageApplicationService.pushMessage(dto);
     }
