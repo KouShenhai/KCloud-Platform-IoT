@@ -34,7 +34,7 @@
 * application <=> 应用层
 * domain <=> 领域层
 * infrastructure <=> 基础层
-* interfaces <=> 用户接口层
+* interfaces <=> 表现层
 
 #### 基础框架
 * Shiro

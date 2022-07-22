@@ -23,7 +23,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * 架构演变
  * 单机架构（两层架构）
  * 三层架构（集中式架构）
- * DDD分层架构(分布式微服务架构) > 用户接口层 应用层 领域层 基础层
+ * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
  * @author Kou Shenhai
  */
 @SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.admin","io.laokou.redis","io.laokou.log","io.laokou.security","io.laokou.datasource"})
