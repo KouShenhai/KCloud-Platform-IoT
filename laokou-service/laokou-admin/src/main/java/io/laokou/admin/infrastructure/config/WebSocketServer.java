@@ -102,7 +102,7 @@ public class WebSocketServer {
      * @param userId
      * @throws IOException
      */
-    public void sendMessages(String message,Long userId)throws IOException{
+    public synchronized void sendMessages(String message,Long userId)throws IOException{
         for (WebSocketServer webSocketServer : webSocketServerCopyOnWriteArraySet){
                 if (userId == null) {
                     log.info("推送消息给:{}" , webSocketServer.userId + ",推送内容：{}" , message);

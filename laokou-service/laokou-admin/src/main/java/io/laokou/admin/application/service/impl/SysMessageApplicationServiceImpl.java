@@ -60,10 +60,16 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     private SysMessageDetailService sysMessageDetailService;
 
     @Override
-    public Boolean pushMessage(MessageDTO dto) throws IOException {
+    public Boolean pushMessage(MessageDTO dto) {
         Iterator<String> iterator = dto.getReceiver().iterator();
         while (iterator.hasNext()) {
-            webSocketServer.sendMessages(String.format("%s发来一条消息",dto.getUsername()),Long.valueOf(iterator.next()));
+            executorService.execute(() -> {
+                try {
+                    webSocketServer.sendMessages(String.format("%s发来一条消息",dto.getUsername()),Long.valueOf(iterator.next()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
         return true;
     }
