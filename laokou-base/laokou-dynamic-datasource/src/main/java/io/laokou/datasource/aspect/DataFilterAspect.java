@@ -1,14 +1,12 @@
 package io.laokou.datasource.aspect;
-import io.laokou.common.constant.Constant;
 import io.laokou.common.entity.BasePage;
 import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpContextUtil;
-import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.datasource.annotation.DataFilter;
-import io.laokou.security.feign.auth.AuthApiFeignClient;
+import io.laokou.security.utils.UserDetailUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -27,27 +25,17 @@ import java.util.stream.Collectors;
 public class DataFilterAspect {
 
     @Autowired
-    private AuthApiFeignClient authApiFeignClient;
+    private UserDetailUtil userDetailUtil;
 
     @Pointcut("@annotation(io.laokou.datasource.annotation.DataFilter)")
-    public void dataFilterPointCut() {
-
-    }
+    public void dataFilterPointCut() {}
 
     @Before("dataFilterPointCut()")
     public void dataFilterPoint(JoinPoint point) {
         Object params = point.getArgs()[0];
         if (params != null && params instanceof BasePage) {
             HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-            String Authorization = getAuthorization(request);
-            String language = HttpContextUtil.getLanguage();
-            String method = request.getMethod();
-            String uri = request.getRequestURI();
-            HttpResultUtil<UserDetail> result = authApiFeignClient.resource(language, Authorization, uri, method);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(),result.getMsg());
-            }
-            UserDetail userDetail = result.getData();
+            UserDetail userDetail = userDetailUtil.getUserDetail(request);
             //如果是超级管理员，不进行数据过滤
             if (userDetail.getSuperAdmin() == SuperAdminEnum.YES.ordinal()) {
                 return;
@@ -83,19 +71,6 @@ public class DataFilterAspect {
         }
         sqlFilter.append(" find_in_set(").append(tableAlias).append(dataFilter.userId()).append(",").append("'").append(StringUtils.join(userIds,",")).append("'").append(")");
         return sqlFilter.toString();
-    }
-
-    /**
-     * 获取请求的token
-     */
-    private String getAuthorization(HttpServletRequest request){
-        //从header中获取token
-        String Authorization = request.getHeader(Constant.AUTHORIZATION_HEADER);
-        //如果header中不存在Authorization，则从参数中获取Authorization
-        if(StringUtils.isBlank(Authorization)){
-            Authorization = request.getParameter(Constant.AUTHORIZATION_HEADER);
-        }
-        return Authorization;
     }
 
 }

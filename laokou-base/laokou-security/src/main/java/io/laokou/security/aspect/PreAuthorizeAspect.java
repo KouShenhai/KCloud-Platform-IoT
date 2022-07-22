@@ -4,10 +4,8 @@ import io.laokou.common.exception.CustomException;
 import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpContextUtil;
-import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.security.annotation.PreAuthorize;
-import io.laokou.security.feign.auth.AuthApiFeignClient;
-import org.apache.commons.lang3.StringUtils;
+import io.laokou.security.utils.UserDetailUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -15,7 +13,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -30,7 +27,7 @@ import java.util.List;
 public class PreAuthorizeAspect {
 
     @Autowired
-    private AuthApiFeignClient authApiFeignClient;
+    private UserDetailUtil userDetailUtil;
 
     /**
      * 配置切入点
@@ -46,16 +43,7 @@ public class PreAuthorizeAspect {
         if (Constant.TICKET.equals(ticket)) {
             return point.proceed();
         }
-        String Authorization = getAuthorization(request);
-        String language = HttpContextUtil.getLanguage();
-        String method = request.getMethod();
-        String uri = request.getRequestURI();
-        HttpResultUtil<UserDetail> result = authApiFeignClient.resource(language, Authorization, uri, method);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(),result.getMsg());
-        }
-        UserDetail userDetail = result.getData();
-        if (checkPermission(userDetail,point)) {
+        if (checkPermission(userDetailUtil.getUserDetail(request),point)) {
             point.proceed();
         }
         throw new CustomException(ErrorCode.FORBIDDEN);
@@ -71,19 +59,6 @@ public class PreAuthorizeAspect {
             return true;
         }
         return false;
-    }
-
-    /**
-     * 获取请求的token
-     */
-    private String getAuthorization(HttpServletRequest request){
-        //从header中获取token
-        String Authorization = request.getHeader(Constant.AUTHORIZATION_HEADER);
-        //如果header中不存在Authorization，则从参数中获取Authorization
-        if(StringUtils.isBlank(Authorization)){
-            Authorization = request.getParameter(Constant.AUTHORIZATION_HEADER);
-        }
-        return Authorization;
     }
 
 }
