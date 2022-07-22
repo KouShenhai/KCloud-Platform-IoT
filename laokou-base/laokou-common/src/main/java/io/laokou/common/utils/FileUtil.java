@@ -84,7 +84,7 @@ public class FileUtil extends FileUtils {
                 final Long finalPosition = position;
                 //读通道
                 final FileChannel finalInChannel = inChannel;
-                executorService.execute(() -> new RandomFileChannelRun(finalPosition,finalEndSize, fileSize, newFile, finalInChannel,latch).start());
+                executorService.execute(new RandomFileChannelRun(finalPosition,finalEndSize, fileSize, newFile, finalInChannel,latch));
             }
             //等待其他线程
             latch.await();
