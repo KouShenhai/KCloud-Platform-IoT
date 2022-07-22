@@ -1,10 +1,10 @@
 package io.laokou.log.aspect;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import io.laokou.common.constant.Constant;
 import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.common.enums.DataTypeEnum;
 import io.laokou.common.enums.ResultStatusEnum;
+import io.laokou.common.user.SecurityUser;
 import io.laokou.common.utils.AddressUtil;
 import io.laokou.common.utils.HttpContextUtil;
 import io.laokou.common.utils.IpUtil;
@@ -74,8 +74,8 @@ public class OperateLogAspect {
         dto.setRequestUri(request.getRequestURI());
         dto.setRequestIp(ip);
         dto.setRequestAddress(AddressUtil.getRealAddress(ip));
-        dto.setOperator(request.getHeader(Constant.USERNAME_HEAD));
-        dto.setCreator(Long.valueOf(request.getHeader(Constant.USER_KEY_HEAD)));
+        dto.setOperator(SecurityUser.getUsername(request));
+        dto.setCreator(SecurityUser.getUserId(request));
         if (null != e) {
             dto.setRequestStatus(ResultStatusEnum.FAIL.ordinal());
             dto.setErrorMsg(e.getMessage());

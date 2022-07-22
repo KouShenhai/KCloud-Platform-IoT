@@ -17,6 +17,8 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableAsync;
+
 /**
  * 架构演变
  * 单机架构（两层架构）
@@ -28,8 +30,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableApolloConfig
-@EnableAspectJAutoProxy(exposeProxy = true)
+@EnableAspectJAutoProxy
 @Slf4j
+@EnableAsync
 @EnableEncryptableProperties
 @EnableHystrix
 @EnableFeignClients(basePackages = {"io.laokou.log","io.laokou.datasource","io.laokou.security"})

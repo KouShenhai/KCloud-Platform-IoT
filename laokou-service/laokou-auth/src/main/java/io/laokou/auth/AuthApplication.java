@@ -28,7 +28,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableApolloConfig
-@EnableAspectJAutoProxy(exposeProxy = true)
+@EnableAspectJAutoProxy
 @Slf4j
 @EnableEncryptableProperties
 @EnableHystrix

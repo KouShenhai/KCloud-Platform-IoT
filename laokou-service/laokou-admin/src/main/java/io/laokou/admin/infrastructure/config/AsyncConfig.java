@@ -1,4 +1,4 @@
-package io.laokou.log.config;
+package io.laokou.admin.infrastructure.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.AsyncTaskExecutor;

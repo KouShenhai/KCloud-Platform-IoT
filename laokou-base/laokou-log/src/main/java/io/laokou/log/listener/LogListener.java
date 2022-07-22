@@ -9,19 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 @Slf4j
 @Component
-@EnableAsync
 @ConditionalOnWebApplication
 public class LogListener {
 
     @Autowired
     private LogApiFeignClient logApiFeignClient;
 
-    @Async
     @Order
     @EventListener(OperateLogEvent.class)
     public void listenOperateLog(OperateLogEvent event) {
@@ -29,7 +25,6 @@ public class LogListener {
         logApiFeignClient.insertOperateLog(dto);
     }
 
-    @Async
     @Order
     @EventListener(LoginLogEvent.class)
     public void listenLoginLog(LoginLogEvent event) {

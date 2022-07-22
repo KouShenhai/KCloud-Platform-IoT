@@ -13,11 +13,6 @@ spring:
         corePoolSize: 100
         maximumPoolSize: 200
         keepAliveTime: 60
-      hystrixTp:                                   # hystrix 线程池配置
-        - threadPoolName: hystrix1
-          corePoolSize: 100
-          maximumPoolSize: 200
-          keepAliveTime: 60
       executors:                                   # 动态线程池配置，都有默认值，采用默认值的可以不配置该项，减少配置量
         - threadPoolName: admin-service
           corePoolSize: 6

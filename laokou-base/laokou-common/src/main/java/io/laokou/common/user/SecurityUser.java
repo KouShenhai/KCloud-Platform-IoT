@@ -14,6 +14,9 @@ public class SecurityUser {
             if (StringUtils.isBlank(authHeader)) {
                 throw new CustomException(ErrorCode.UNAUTHORIZED);
             }
+            if (TokenUtil.isExpiration(authHeader)) {
+                throw new CustomException(ErrorCode.AUTHORIZATION_INVALID);
+            }
             return TokenUtil.getUserId(authHeader);
         }
         return Long.valueOf(userIdHeader);
@@ -25,6 +28,9 @@ public class SecurityUser {
             String authHeader = getAuthorization(request);
             if (StringUtils.isBlank(authHeader)) {
                 throw new CustomException(ErrorCode.UNAUTHORIZED);
+            }
+            if (TokenUtil.isExpiration(authHeader)) {
+                throw new CustomException(ErrorCode.AUTHORIZATION_INVALID);
             }
             return TokenUtil.getUsername(authHeader);
         }

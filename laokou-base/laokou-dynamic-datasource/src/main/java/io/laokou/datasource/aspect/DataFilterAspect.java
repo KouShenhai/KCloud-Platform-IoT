@@ -17,7 +17,6 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -40,8 +39,8 @@ public class DataFilterAspect {
         Object params = point.getArgs()[0];
         if (params != null && params instanceof BasePage) {
             HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-            String Authorization = request.getHeader(Constant.AUTHORIZATION_HEADER);
-            String language = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
+            String Authorization = getAuthorization(request);
+            String language = HttpContextUtil.getLanguage();
             String method = request.getMethod();
             String uri = request.getRequestURI();
             HttpResultUtil<UserDetail> result = authApiFeignClient.resource(language, Authorization, uri, method);
@@ -84,6 +83,19 @@ public class DataFilterAspect {
         }
         sqlFilter.append(" find_in_set(").append(tableAlias).append(dataFilter.userId()).append(",").append("'").append(StringUtils.join(userIds,",")).append("'").append(")");
         return sqlFilter.toString();
+    }
+
+    /**
+     * 获取请求的token
+     */
+    private String getAuthorization(HttpServletRequest request){
+        //从header中获取token
+        String Authorization = request.getHeader(Constant.AUTHORIZATION_HEADER);
+        //如果header中不存在Authorization，则从参数中获取Authorization
+        if(StringUtils.isBlank(Authorization)){
+            Authorization = request.getParameter(Constant.AUTHORIZATION_HEADER);
+        }
+        return Authorization;
     }
 
 }

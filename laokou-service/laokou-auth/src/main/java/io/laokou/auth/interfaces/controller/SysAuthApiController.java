@@ -6,6 +6,7 @@ import io.laokou.auth.interfaces.dto.LoginDTO;
 import io.laokou.auth.interfaces.vo.LoginVO;
 import io.laokou.auth.interfaces.vo.UserInfoVO;
 import io.laokou.common.constant.Constant;
+import io.laokou.common.exception.CustomException;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpResultUtil;
@@ -55,7 +56,7 @@ public class SysAuthApiController {
             @ApiImplicitParam(name = Constant.URI,value = "请求路径",required = true,paramType = "query",dataType = "String"),
             @ApiImplicitParam(name = Constant.METHOD,value = "请求方法",required = true,paramType = "query",dataType = "String")
     })
-    @HystrixCommand(fallbackMethod = "fallback")
+    @HystrixCommand(fallbackMethod = "fallback",ignoreExceptions = {CustomException.class})
     public HttpResultUtil<UserDetail>  resource(@RequestParam(Constant.AUTHORIZATION_HEADER) String Authorization,
                                                 @RequestParam(Constant.URI)String uri,
                                                 @RequestParam(Constant.METHOD)String method) {

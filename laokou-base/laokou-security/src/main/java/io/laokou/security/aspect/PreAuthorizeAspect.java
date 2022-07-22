@@ -47,7 +47,7 @@ public class PreAuthorizeAspect {
             return point.proceed();
         }
         String Authorization = getAuthorization(request);
-        String language = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
+        String language = HttpContextUtil.getLanguage();
         String method = request.getMethod();
         String uri = request.getRequestURI();
         HttpResultUtil<UserDetail> result = authApiFeignClient.resource(language, Authorization, uri, method);
