@@ -27,6 +27,15 @@
             <version>${druid.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>${oracle.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.laokou</groupId>
             <artifactId>laokou-security</artifactId>
             <version>${laokou.version}</version>

@@ -23,5 +23,4 @@ public class MybatisPlusConfig {
         mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         return mybatisPlusInterceptor;
     }
-
 }

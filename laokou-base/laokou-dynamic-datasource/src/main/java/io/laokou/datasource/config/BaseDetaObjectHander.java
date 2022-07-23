@@ -1,4 +1,4 @@
-package io.laokou.admin.infrastructure.component.handler.impl;
+package io.laokou.datasource.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import io.laokou.common.constant.Constant;
 import lombok.extern.slf4j.Slf4j;
