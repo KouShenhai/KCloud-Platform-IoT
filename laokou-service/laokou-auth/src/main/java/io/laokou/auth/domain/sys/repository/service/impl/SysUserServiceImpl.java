@@ -1,5 +1,5 @@
 package io.laokou.auth.domain.sys.repository.service.impl;
-import io.laokou.auth.domain.sys.repository.dao.SysUserDao;
+import io.laokou.auth.domain.sys.repository.mapper.SysUserMapper;
 import io.laokou.auth.domain.sys.repository.service.SysUserService;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.vo.SysUserVO;
@@ -17,26 +17,26 @@ import java.util.List;
 public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
-    private SysUserDao sysUserDao;
+    private SysUserMapper sysUserMapper;
 
     @Override
     public UserDetail getUserDetail(Long id, String username) {
-        return sysUserDao.getUserDetail(id, username);
+        return sysUserMapper.getUserDetail(id, username);
     }
 
     @Override
     public String getUsernameByOpenid(String zfbOpenid) {
-        return sysUserDao.getUsernameByOpenid(zfbOpenid);
+        return sysUserMapper.getUsernameByOpenid(zfbOpenid);
     }
 
     @Override
     public List<SysUserVO> getUserList() {
-        return sysUserDao.getUserList();
+        return sysUserMapper.getUserList();
     }
 
     @Override
     public List<SysUserVO> getUserListByUserId(Long id) {
-        return sysUserDao.getUserListByUserId(id);
+        return sysUserMapper.getUserListByUserId(id);
     }
 
 }

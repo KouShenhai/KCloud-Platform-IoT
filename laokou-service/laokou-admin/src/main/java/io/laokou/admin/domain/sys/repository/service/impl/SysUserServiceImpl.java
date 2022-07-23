@@ -8,7 +8,7 @@ import io.laokou.admin.interfaces.vo.OptionVO;
 import io.laokou.common.vo.SysUserVO;
 import io.laokou.common.user.UserDetail;
 import io.laokou.admin.domain.sys.entity.SysUserDO;
-import io.laokou.admin.domain.sys.repository.dao.SysUserDao;
+import io.laokou.admin.domain.sys.repository.mapper.SysUserMapper;
 import io.laokou.admin.domain.sys.repository.service.SysUserService;
 import io.laokou.common.utils.RedisKeyUtil;
 import io.laokou.redis.RedisUtil;
@@ -24,7 +24,7 @@ import java.util.List;
 @Service
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
-public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserDO> implements SysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserDO> implements SysUserService {
 
     @Autowired
     private RedisUtil redisUtil;

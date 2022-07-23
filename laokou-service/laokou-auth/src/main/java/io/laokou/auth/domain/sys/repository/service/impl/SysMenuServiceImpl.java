@@ -2,7 +2,7 @@ package io.laokou.auth.domain.sys.repository.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import io.laokou.auth.domain.sys.repository.dao.SysMenuDao;
+import io.laokou.auth.domain.sys.repository.mapper.SysMenuMapper;
 import io.laokou.auth.domain.sys.repository.service.SysMenuService;
 import io.laokou.auth.interfaces.vo.SysMenuVO;
 import io.laokou.common.enums.SuperAdminEnum;
@@ -27,27 +27,27 @@ public class SysMenuServiceImpl implements SysMenuService {
     private RedisUtil redisUtil;
 
     @Autowired
-    private SysMenuDao sysMenuDao;
+    private SysMenuMapper sysMenuMapper;
 
     @Override
     public List<SysMenuVO> getMenuList(Long userId, Integer type) {
         List<SysMenuVO> menuList;
         if (userId == null) {
-            menuList = sysMenuDao.getMenuList(type);
+            menuList = sysMenuMapper.getMenuList(type);
         } else {
-            menuList = sysMenuDao.getMenuListByUserId(userId,type);
+            menuList = sysMenuMapper.getMenuListByUserId(userId,type);
         }
         return menuList;
     }
 
     @Override
     public List<String> getPermissionsList() {
-        return sysMenuDao.getPermissionsList();
+        return sysMenuMapper.getPermissionsList();
     }
 
     @Override
     public List<String> getPermissionsListByUserId(Long userId) {
-        return sysMenuDao.getPermissionsListByUserId(userId);
+        return sysMenuMapper.getPermissionsListByUserId(userId);
     }
 
     @Override

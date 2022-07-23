@@ -1,5 +1,5 @@
 package io.laokou.auth.domain.sys.repository.service.impl;
-import io.laokou.auth.domain.sys.repository.dao.SysRoleDao;
+import io.laokou.auth.domain.sys.repository.mapper.SysRoleMapper;
 import io.laokou.auth.domain.sys.repository.service.SysRoleService;
 import io.laokou.common.vo.SysRoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,10 @@ import java.util.List;
 public class SysRoleServiceImpl implements SysRoleService {
 
     @Autowired
-    private SysRoleDao sysRoleDao;
+    private SysRoleMapper sysRoleMapper;
 
     @Override
     public List<SysRoleVO> getRoleListByUserId(Long userId) {
-        return sysRoleDao.getRoleListByUserId(userId);
+        return sysRoleMapper.getRoleListByUserId(userId);
     }
 }

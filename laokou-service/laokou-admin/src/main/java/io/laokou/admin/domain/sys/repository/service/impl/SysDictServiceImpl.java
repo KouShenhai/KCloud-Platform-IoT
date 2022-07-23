@@ -3,7 +3,7 @@ package io.laokou.admin.domain.sys.repository.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.domain.sys.entity.SysDictDO;
-import io.laokou.admin.domain.sys.repository.dao.SysDictDao;
+import io.laokou.admin.domain.sys.repository.mapper.SysDictMapper;
 import io.laokou.admin.domain.sys.repository.service.SysDictService;
 import io.laokou.admin.interfaces.qo.SysDictQO;
 import io.laokou.admin.interfaces.vo.SysDictVO;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class SysDictServiceImpl extends ServiceImpl<SysDictDao,SysDictDO> implements SysDictService {
+public class SysDictServiceImpl extends ServiceImpl<SysDictMapper,SysDictDO> implements SysDictService {
 
     @Override
     public List<SysDictVO> getDictList(SysDictQO qo) {

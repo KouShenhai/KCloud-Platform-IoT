@@ -3,7 +3,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.domain.sys.entity.SysMenuDO;
-import io.laokou.admin.domain.sys.repository.dao.SysMenuDao;
+import io.laokou.admin.domain.sys.repository.mapper.SysMenuMapper;
 import io.laokou.admin.interfaces.qo.SysMenuQO;
 import io.laokou.admin.interfaces.vo.SysMenuVO;
 import io.laokou.admin.domain.sys.repository.service.SysMenuService;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class SysMenuServiceImpl extends ServiceImpl<SysMenuDao, SysMenuDO> implements SysMenuService {
+public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> implements SysMenuService {
 
     @Autowired
     private RedisUtil redisUtil;

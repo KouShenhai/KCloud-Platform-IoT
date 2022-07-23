@@ -1,7 +1,7 @@
 package io.laokou.admin.domain.wx.repository.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.domain.wx.entity.WXMpMenuDO;
-import io.laokou.admin.domain.wx.repository.dao.WXMpMenuDao;
+import io.laokou.admin.domain.wx.repository.mapper.WXMpMenuMapper;
 import io.laokou.admin.domain.wx.repository.service.WXMpMenuService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class WXMpMenuServiceImpl extends ServiceImpl<WXMpMenuDao, WXMpMenuDO> implements WXMpMenuService {
+public class WXMpMenuServiceImpl extends ServiceImpl<WXMpMenuMapper, WXMpMenuDO> implements WXMpMenuService {
 
 //    @Override
 //    public QueryWrapper<WXMpMenuDO> getWrapper(Map<String, Object> params){

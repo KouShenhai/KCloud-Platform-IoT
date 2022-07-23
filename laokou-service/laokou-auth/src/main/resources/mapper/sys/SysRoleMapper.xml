@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.laokou.auth.domain.sys.repository.mapper.SysRoleMapper">
+
+    <select id="getRoleListByUserId" resultType="io.laokou.common.vo.SysRoleVO" flushCache="true">
+        SELECT
+        name,id,sort
+        FROM
+        (
+        SELECT
+        CASE
+        WHEN super_admin = 1 THEN
+        '超级管理员'
+        ELSE
+        ''
+        END name,
+        '1' as id,
+        9999 as sort
+        FROM
+        boot_sys_user
+        WHERE
+        id = #{userId}
+        UNION
+        SELECT
+        boot_sys_role.`name`,
+        boot_sys_role.id,
+        boot_sys_role.sort
+        FROM
+        boot_sys_role,
+        boot_sys_user_role
+        WHERE
+        boot_sys_role.id = boot_sys_user_role.role_id
+        AND boot_sys_user_role.user_id = #{userId}
+        ) tmp
+        WHERE
+        name <![CDATA[ <> ]]> ''
+        order by sort desc
+    </select>
+
+</mapper>

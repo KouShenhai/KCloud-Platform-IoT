@@ -1,7 +1,7 @@
 package io.laokou.admin.infrastructure.config;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.laokou.admin.domain.wx.entity.WXMpAccountDO;
-import io.laokou.admin.domain.wx.repository.dao.WXMpAccountDao;
+import io.laokou.admin.domain.wx.repository.mapper.WXMpAccountMapper;
 import io.laokou.admin.infrastructure.component.handler.impl.*;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.api.WxConsts;
@@ -22,7 +22,7 @@ import static me.chanjar.weixin.mp.constant.WxMpEventConstants.POI_CHECK_NOTIFY;
 @Configuration
 public class WXMpConfig {
 
-    private final WXMpAccountDao WXMpAccountDao;
+    private final WXMpAccountMapper WXMpAccountMapper;
     private final LogHandler logHandler;
     private final NullHandler nullHandler;
     private final KfSessionHandler kfSessionHandler;
@@ -38,7 +38,7 @@ public class WXMpConfig {
     public WxMpService wxMpService() {
         WxMpService service = new WxMpServiceImpl();
 
-        List<WXMpAccountDO> mpList = WXMpAccountDao.selectList(Wrappers.emptyWrapper());
+        List<WXMpAccountDO> mpList = WXMpAccountMapper.selectList(Wrappers.emptyWrapper());
         if(mpList.size() == 0){
             return service;
         }

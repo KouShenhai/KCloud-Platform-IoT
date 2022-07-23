@@ -2,7 +2,7 @@ package io.laokou.admin.domain.sys.repository.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.domain.sys.entity.SysRoleDO;
-import io.laokou.admin.domain.sys.repository.dao.SysRoleDao;
+import io.laokou.admin.domain.sys.repository.mapper.SysRoleMapper;
 import io.laokou.admin.domain.sys.repository.service.SysRoleService;
 import io.laokou.admin.interfaces.qo.SysRoleQO;
 import io.laokou.common.vo.SysRoleVO;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleDO> implements SysRoleService {
+public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleDO> implements SysRoleService {
 
     @Override
     public List<Long> getRoleIds() {

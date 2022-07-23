@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.laokou.auth.domain.sys.repository.mapper.SysUserMapper">
+
+    <select id="getUserDetail" resultType="io.laokou.common.user.UserDetail" flushCache="true">
+     SELECT a.id as id
+    ,a.username as username
+    ,a.img_url as imgUrl
+    ,a.super_admin as superAdmin
+    ,a.status as status
+    ,a.email as email
+    ,a.mobile as mobile
+    ,a.password as password
+    ,a.zfb_openid as zfbOpenid
+    FROM `boot_sys_user` a
+    where a.del_flag = '0'
+    <if test="userId != null">
+        and a.id = #{userId}
+    </if>
+    <if test="username != null and username != ''">
+        and a.username = #{username}
+    </if>
+    </select>
+
+    <select id="getUsernameByOpenid" resultType="string">
+        select username from boot_sys_user
+        where del_flag = '0'
+        <if test="zfbOpenid != null and zfbOpenid != ''">
+            and zfb_openid = #{zfbOpenid}
+        </if>
+    </select>
+
+    <select id="getUserListByUserId" resultType="io.laokou.common.vo.SysUserVO" flushCache="true">
+        select
+             distinct
+             c.id
+            ,c.username
+            ,c.super_admin
+            ,c.create_date
+            ,c.img_url
+            ,c.`status`
+            from boot_sys_user_role a
+        join boot_sys_user c on c.id = a.user_id
+        where EXISTS (select 1 from boot_sys_user_role b where b.user_id = #{id} and a.role_id = b.role_id)
+        and c.super_admin <![CDATA[ <> ]]> 1 and c.del_flag = '0' and c.`status` = 0
+    </select>
+
+    <select id="getUserList" resultType="io.laokou.common.vo.SysUserVO" flushCache="true">
+        select
+            id
+            ,username
+            ,super_admin
+            ,create_date
+            ,img_url
+            ,`status`
+            FROM boot_sys_user
+            where del_flag = '0' and `status` = 0
+            order by create_date desc
+    </select>
+
+</mapper>
