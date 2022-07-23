@@ -1,8 +1,5 @@
 package io.laokou.admin.application.service.impl;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.application.service.WXMpAccountApplicationService;
-import io.laokou.admin.domain.wx.entity.WXMpAccountDO;
-import io.laokou.admin.domain.wx.repository.dao.WXMpAccountDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
-public class WXMpAccountApplicationServiceImpl extends ServiceImpl<WXMpAccountDao,WXMpAccountDO> implements WXMpAccountApplicationService {
+public class WXMpAccountApplicationServiceImpl implements WXMpAccountApplicationService {
 
 }

@@ -1,6 +1,6 @@
 package io.laokou.auth.infrastructure.common.xss;
 
-import io.laokou.common.utils.XssUtils;
+import io.laokou.common.utils.XssUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -117,7 +117,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     }
 
     private String xssEncode(String input) {
-        return XssUtils.filter(input);
+        return XssUtil.filter(input);
     }
 
     /**
