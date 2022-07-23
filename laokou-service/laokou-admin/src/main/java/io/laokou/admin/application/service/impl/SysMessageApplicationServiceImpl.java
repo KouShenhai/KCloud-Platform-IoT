@@ -60,16 +60,10 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     private SysMessageDetailService sysMessageDetailService;
 
     @Override
-    public Boolean pushMessage(MessageDTO dto) {
+    public Boolean pushMessage(MessageDTO dto) throws IOException {
         Iterator<String> iterator = dto.getReceiver().iterator();
         while (iterator.hasNext()) {
-            executorService.execute(() -> {
-                try {
-                    webSocketServer.sendMessages(String.format("%s发来一条消息",dto.getUsername()),Long.valueOf(iterator.next()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            webSocketServer.sendMessages(String.format("%s发来一条消息",dto.getUsername()),Long.valueOf(iterator.next()));
         }
         return true;
     }
@@ -142,6 +136,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     public Integer unReadCount(HttpServletRequest request) {
         final Long userId = SecurityUser.getUserId(request);
         return sysMessageDetailService.count(Wrappers.lambdaQuery(SysMessageDetailDO.class).eq(SysMessageDetailDO::getUserId,userId)
+                .eq(SysMessageDetailDO::getDelFlag,Constant.NO)
                 .eq(SysMessageDetailDO::getReadFlag, Constant.NO));
     }
 
