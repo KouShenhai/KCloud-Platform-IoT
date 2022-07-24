@@ -55,20 +55,20 @@
 
 #### 项目结构
 ~~~
-|-- laokou-base
-   |-- laokou-common -- 公共组件
-   |-- laokou-dynamic-datasource 多数据源组件
-   |-- laokou-log -- 日志组件
-|-- laokou-cloud
-   |-- laokou-gateway -- API网关
-   |-- laokou-monitor -- 服务监控
-   |-- laokou-register -- 服务治理
-|-- laokou-parent -- 版本依赖
-|-- laokou-service
-   |-- laokou-admin -- 后台管理模块
-   |-- laokou-auth -- 认证模块
-   |-- laokou-generator --代码生成模块
-   |-- laokou-redis -- 缓存模块
+├── laokou-base
+        └── laokou-common -- 公共组件
+        └── laokou-dynamic-datasource 多数据源组件
+        └── laokou-log -- 日志组件
+├── laokou-cloud
+        └── laokou-gateway -- API网关
+        └── laokou-monitor -- 服务监控
+        └── laokou-register -- 服务治理
+├── laokou-parent -- 版本依赖
+├── laokou-service
+        └── laokou-admin -- 后台管理模块
+        └── laokou-auth -- 认证模块
+        └── laokou-generator --代码生成模块
+        └── laokou-redis -- 缓存模块
 ~~~
 
 ### 项目配置

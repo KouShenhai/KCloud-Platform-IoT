@@ -1,0 +1,34 @@
+import { axios } from '@/utils/request'
+
+const api = {
+  ${className}: '/${moduleName}/${className}'
+}
+
+export function get${ClassName}List (parameter) {
+  return axios({
+    url: api.${className} + '/list',
+    method: 'get',
+    params: parameter
+  })
+}
+
+export function save${ClassName} (parameter) {
+  return axios({
+    url: api.${className} + (parameter.${pkColumn.javaField} > 0 ? '/update' : '/save'),
+    method: 'post',
+    data: parameter,
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+
+export function del${ClassName} (parameter) {
+  return axios({
+    url: api.${className} + '/remove',
+    method: 'post',
+    params: parameter
+  })
+}
+
+export const ${className}Export = api.${className} + '/export'

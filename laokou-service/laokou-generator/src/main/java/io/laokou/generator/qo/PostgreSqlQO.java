@@ -1,6 +1,5 @@
 package io.laokou.generator.qo;
 
-import io.laokou.generator.utils.DbType;
 import org.apache.commons.lang.StringUtils;
 
 /**

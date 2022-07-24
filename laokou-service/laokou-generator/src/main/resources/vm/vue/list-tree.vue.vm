@@ -1,0 +1,188 @@
+<template>
+  <a-card :bordered="false">
+    <div class="table-page-search-wrapper">
+      <a-form layout="inline">
+        <a-row :gutter="48">
+#foreach($column in $columns)
+#if($column.query)
+#set($dictType=$column.dictType)
+#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+#set($parentheseIndex=$column.columnComment.indexOf("（"))
+#if($parentheseIndex != -1)
+#set($comment=$column.columnComment.substring(0, $parentheseIndex))
+#else  
+#set($comment=$column.columnComment)
+#end  
+#if($column.htmlType == "input")
+          <a-col :md="5" :sm="15">
+            <a-form-item label="${comment}">
+              <a-input placeholder="请输入${comment}" v-model="queryParam.${column.javaField}"/>
+            </a-form-item>
+          </a-col>
+#else
+#end
+#end
+#end	
+          <a-col :md="8" :sm="24">
+            <span class="table-page-search-submitButtons">
+              <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
+              <a-button style="margin-left: 8px" @click="() => queryParam = {}">重置</a-button>
+            </span>
+          </a-col>
+        </a-row>
+      </a-form>
+    </div>
+     <div class="table-operator">
+      <a-button v-if="addEnable" type="primary" icon="plus" @click="$refs.modal.add()">新建</a-button>
+      <a-dropdown v-if="removeEnable&&selectedRowKeys.length > 0">
+        <a-button type="danger" icon="delete" @click="delByIds(selectedRowKeys)">删除</a-button>
+      </a-dropdown>
+    </div>
+    <s-table
+      size="default"
+      ref="table"
+      rowKey="${pkColumn.javaField}"
+      :pagination="pagination"
+      :loading="loading"
+      :columns="columns"
+      :data="data"
+    >
+      <span slot="action" slot-scope="text, record">
+        <a v-if="editEnabel" @click="handleEdit(record)">编辑</a>
+        <a-divider type="vertical" />
+        <a v-if="addEnable" @click="handleAdd(record.${pkColumn.javaField})">新增</a>
+        <a-divider type="vertical" />
+        <a v-if="removeEnable" @click="delByIds([record.${pkColumn.javaField}])">删除</a>
+      </span>
+    </s-table>
+    <${className}-modal ref="modal" @ok="handleOk"/>
+  </a-card>
+</template>
+
+<script>
+import { Table as T } from 'ant-design-vue'
+import { get${ClassName}List, del${ClassName} } from '@/api/${moduleName}/${className}'
+import ${ClassName}Modal from './modules/${ClassName}Modal.vue'
+import { treeData } from '@/utils/treeutil'
+import { checkPermission } from '@/utils/permissions'
+
+export default {
+  name: '${ClassName}List',
+  components: {
+    T,
+    ${ClassName}Modal
+  },
+  data () {
+    return {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 5 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 }
+      },
+      form: this.$form.createForm(this),
+      mdl: {},
+      // 高级搜索 展开/关闭
+      advanced: false,
+      // 查询参数
+      queryParam: {},
+      // 表头
+      columns: [
+#foreach($column in $columns)
+#set($dictType=$column.dictType)
+#set($javaField=$column.javaField)
+#set($parentheseIndex=$column.columnComment.indexOf("（"))
+#if($parentheseIndex != -1)
+#set($comment=$column.columnComment.substring(0, $parentheseIndex))
+#else
+#set($comment=$column.columnComment)
+#end
+#if($column.list)
+#if($column.htmlType == "datetime")
+        {
+          title: '${comment}',
+          dataIndex: '${javaField}',
+          sorter: true
+        },
+#else
+        {
+          title: '${comment}',
+          dataIndex: '${javaField}'
+        },
+#end
+#end
+#end
+        {
+          title: '操作',
+          width: '200px',
+          dataIndex: 'action',
+          scopedSlots: { customRender: 'action' }
+        }
+      ],
+      data: [],
+      pagination: false,
+      loading: false,
+      addEnable: checkPermission('${moduleName}:${className}:add'),
+      editEnabel: checkPermission('${moduleName}:${className}:edit'),
+      removeEnable: checkPermission('${moduleName}:${className}:remove')
+    }
+  },
+  filters: {
+  },
+  created () {
+    this.fetch()
+  },
+  methods: {
+    onSelectChange (selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys
+      this.selectedRows = selectedRows
+    },
+    handleAdd () {
+      this.$refs.modal.add()
+    },
+    handleEdit (record) {
+      this.$refs.modal.edit(record)
+    },
+    handleOk () {
+      this.$refs.table.refresh(true)
+      console.log('handleSaveOk')
+    },
+#set($foo="$")
+    delByIds (ids) {
+      del${className}({ ids: ids.join(',') }).then(res => {
+        if (res.code === 0) {
+          this.${foo}message.success('删除成功')
+          this.handleOk()
+        } else {
+          this.${foo}message.error(res.msg)
+        }
+        this.selectedRowKeys = []
+      })
+    },
+    fetch () {
+      this.loading = true
+      get${ClassName}List(Object.assign(this.queryParam)).then(res => {
+        this.data = treeData(res.rows, '${treeCode}','${treeParentCode}')
+        this.loading = false
+        console.log(this.data)
+      })
+    }
+  },
+  watch: {
+    /*
+      'selectedRows': function (selectedRows) {
+        this.needTotalList = this.needTotalList.map(item => {
+          return {
+            ...item,
+            total: selectedRows.reduce( (sum, val) => {
+              return sum + val[item.dataIndex]
+            }, 0)
+          }
+        })
+      }
+      */
+  }
+}
+</script>
