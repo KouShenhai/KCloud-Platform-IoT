@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.laokou.generator.dao.FieldTypeDao">
+    <select id="getPackageListByTableId" resultType="String">
+        select t1.package_name from gen_field_type t1, gen_table_field t2
+           where t1.attr_type = t2.attr_type and t2.table_id = #{value}
+    </select>
+
+    <select id="list" resultType="String">
+        select attr_type from gen_field_type
+    </select>
+</mapper>
