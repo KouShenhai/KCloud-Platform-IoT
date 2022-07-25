@@ -2,7 +2,7 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: LAOKOU-ADMIN
+        - id: laokou-admin
           uri: lb://laokou-admin
           predicates:
             - Path=/admin/**
@@ -20,7 +20,7 @@ spring:
                 name: default
                 # 降级接口地址
                 fallbackUri: 'forward:/fallback'
-        - id: LAOKOU-AUTH
+        - id: laokou-auth
           uri: lb://laokou-auth
           predicates:
             - Path=/auth/**

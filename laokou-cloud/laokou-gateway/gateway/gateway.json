@@ -1,6 +1,6 @@
 [
   {
-    "id": "LAOKOU-ADMIN",
+    "id": "laokou-admin",
     "uri": "lb://laokou-admin",
     "predicates": [
       {
@@ -37,7 +37,7 @@
     "order": 0
   },
   {
-    "id": "LAOKOU-AUTH",
+    "id": "laokou-auth",
     "uri": "lb://laokou-auth",
     "predicates": [
       {
