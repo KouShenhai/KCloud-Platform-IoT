@@ -7,6 +7,7 @@ COPY apr-iconv-1.2.2.tar.gz /opt/apr-iconv-1.2.2.tar.gz
 COPY apr-util-1.6.1.tar.gz /opt/apr-util-1.6.1.tar.gz
 COPY tomcat-native-1.2.33-src.tar.gz /opt/tomcat-native-1.2.33-src.tar.gz
 ENV LD_LIBRARY_PATH /usr/local/apr/lib
+RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime && echo Asia/Shanghai > /etc/timezone
 RUN yum -y install gcc pcre pcre-devel zlib zlib-devel openssl openssl-devel expat-devel \
     && cd /opt \
     && tar -xvzf /opt/apr-1.7.0.tar.gz \
