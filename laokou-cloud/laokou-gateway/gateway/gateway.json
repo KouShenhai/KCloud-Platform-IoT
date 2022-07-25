@@ -1,0 +1,76 @@
+[
+  {
+    "id": "LAOKOU-ADMIN",
+    "uri": "lb://laokou-admin",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/admin/**"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RequestRateLimiter",
+        "args": {
+          "key-resolver": "#{@ipKeyResolver}",
+          "redis-rate-limiter.replenishRate": "1000",
+          "redis-rate-limiter.burstCapacity": "3000"
+        }
+      },
+      {
+        "name": "Hystrix",
+        "args": {
+          "name": "default",
+          "fallbackUri": "forward:/fallback"
+        }
+      }
+    ],
+    "metadata": {},
+    "order": 0
+  },
+  {
+    "id": "LAOKOU-AUTH",
+    "uri": "lb://laokou-auth",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/auth/**"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RequestRateLimiter",
+        "args": {
+          "key-resolver": "#{@ipKeyResolver}",
+          "redis-rate-limiter.replenishRate": "1000",
+          "redis-rate-limiter.burstCapacity": "3000"
+        }
+      },
+      {
+        "name": "Hystrix",
+        "args": {
+          "name": "default",
+          "fallbackUri": "forward:/fallback"
+        }
+      }
+    ],
+    "metadata": {},
+    "order": 0
+  }
+]
