@@ -95,7 +95,6 @@
         <oracle.version>11.2.0.3</oracle.version>
         <!--freemarker模板引擎依赖-->
         <freemarker.version>2.3.31</freemarker.version>
-
     </properties>
     <dependencyManagement>
         <dependencies>
