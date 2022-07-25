@@ -1,6 +1,6 @@
 package io.laokou.generator.service;
 
-import com.ruoyi.generator.domain.GenTableColumn;
+import io.laokou.generator.entity.GenTableColumn;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * 
  * @author ruoyi
  */
-public interface IGenTableColumnService
+public interface GenTableColumnService
 {
     /**
      * 查询业务字段列表

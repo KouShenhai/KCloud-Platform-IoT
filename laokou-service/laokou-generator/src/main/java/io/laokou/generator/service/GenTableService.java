@@ -1,6 +1,6 @@
 package io.laokou.generator.service;
 
-import com.ruoyi.generator.domain.GenTable;
+import io.laokou.generator.entity.GenTable;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
  * 
  * @author ruoyi
  */
-public interface IGenTableService
+public interface GenTableService
 {
     /**
      * 查询业务列表
@@ -74,7 +74,7 @@ public interface IGenTableService
      * @param tableId 表编号
      * @return 预览数据列表
      */
-    public Map<String, String> previewCode(Long tableId);
+    public Map<String, String> previewCode(Long tableId) throws Exception;
 
     /**
      * 生成代码
@@ -82,7 +82,7 @@ public interface IGenTableService
      * @param tableName 表名称
      * @return 数据
      */
-    public byte[] generatorCode(String tableName);
+    public byte[] generatorCode(String tableName) throws Exception;
 
     /**
      * 批量生成代码
@@ -90,7 +90,7 @@ public interface IGenTableService
      * @param tableNames 表数组
      * @return 数据
      */
-    public byte[] generatorCode(String[] tableNames);
+    public byte[] generatorCode(String[] tableNames) throws Exception;
 
     /**
      * 修改保存参数校验

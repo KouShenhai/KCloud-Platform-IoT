@@ -6,6 +6,8 @@ package io.laokou.common.constant;
  */
 public interface Constant {
 
+    String UTF8 = "UTF-8";
+
     /**
      * Bearer
      */

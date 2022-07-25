@@ -1,9 +1,10 @@
 package io.laokou.generator.service.impl;
 
-import com.ruoyi.common.core.text.Convert;
-import com.ruoyi.generator.domain.GenTableColumn;
-import com.ruoyi.generator.mapper.GenTableColumnMapper;
-import com.ruoyi.generator.service.IGenTableColumnService;
+
+import cn.hutool.core.convert.Convert;
+import io.laokou.generator.entity.GenTableColumn;
+import io.laokou.generator.mapper.GenTableColumnMapper;
+import io.laokou.generator.service.GenTableColumnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * @author ruoyi
  */
 @Service
-public class GenTableColumnServiceImpl implements com.ruoyi.generator.service.IGenTableColumnService
+public class GenTableColumnServiceImpl implements GenTableColumnService
 {
     @Autowired
     private GenTableColumnMapper genTableColumnMapper;

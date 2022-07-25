@@ -1,26 +1,23 @@
 package io.laokou.generator.service.impl;
 
-import com.alibaba.fastjson.JSON;
+import cn.hutool.core.convert.Convert;
 import com.alibaba.fastjson.JSONObject;
-import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.core.text.Convert;
-import com.ruoyi.common.exception.BusinessException;
-import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.generator.constant.GenConstants;
-import com.ruoyi.generator.domain.GenTable;
-import com.ruoyi.generator.domain.GenTableColumn;
-import com.ruoyi.generator.mapper.GenTableColumnMapper;
-import com.ruoyi.generator.mapper.GenTableMapper;
-import com.ruoyi.generator.util.GenUtils;
-import com.ruoyi.generator.util.VelocityInitializer;
-import com.ruoyi.generator.util.VelocityUtils;
-import io.laokou.generator.service.IGenTableService;
+import io.laokou.common.constant.Constant;
+import io.laokou.common.utils.StringUtil;
+import io.laokou.generator.constant.GenConstants;
+import io.laokou.generator.entity.GenTable;
+import io.laokou.generator.entity.GenTableColumn;
+import io.laokou.generator.mapper.GenTableColumnMapper;
+import io.laokou.generator.mapper.GenTableMapper;
+import io.laokou.generator.service.GenTableService;
+import io.laokou.generator.utils.GenUtil;
+import io.laokou.generator.utils.VelocityInitializer;
+import io.laokou.generator.utils.VelocityUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,10 +37,9 @@ import java.util.zip.ZipOutputStream;
  * @author ruoyi
  */
 @Service
-public class GenTableServiceImpl implements IGenTableService
+@Slf4j
+public class GenTableServiceImpl implements GenTableService
 {
-    private static final Logger log = LoggerFactory.getLogger(com.ruoyi.generator.service.impl.GenTableServiceImpl.class);
-
     @Autowired
     private GenTableMapper genTableMapper;
 
@@ -108,16 +104,16 @@ public class GenTableServiceImpl implements IGenTableService
     @Transactional
     public void updateGenTable(GenTable genTable)
     {
-        String options = JSON.toJSONString(genTable.getParams());
-        genTable.setOptions(options);
-        int row = genTableMapper.updateGenTable(genTable);
-        if (row > 0)
-        {
-            for (GenTableColumn cenTableColumn : genTable.getColumns())
-            {
-                genTableColumnMapper.updateGenTableColumn(cenTableColumn);
-            }
-        }
+//        String options = JSON.toJSONString(genTable.getParams());
+//        genTable.setOptions(options);
+//        int row = genTableMapper.updateGenTable(genTable);
+//        if (row > 0)
+//        {
+//            for (GenTableColumn cenTableColumn : genTable.getColumns())
+//            {
+//                genTableColumnMapper.updateGenTableColumn(cenTableColumn);
+//            }
+//        }
     }
 
     /**
@@ -149,7 +145,7 @@ public class GenTableServiceImpl implements IGenTableService
             try
             {
                 String tableName = table.getTableName();
-                GenUtils.initTable(table, operName);
+                GenUtil.initTable(table);
                 int row = genTableMapper.insertGenTable(table);
                 if (row > 0)
                 {
@@ -157,7 +153,7 @@ public class GenTableServiceImpl implements IGenTableService
                     List<GenTableColumn> genTableColumns = genTableColumnMapper.selectDbTableColumnsByName(tableName);
                     for (GenTableColumn column : genTableColumns)
                     {
-                        GenUtils.initColumnField(column, table);
+                        GenUtil.initColumnField(column, table);
                         genTableColumnMapper.insertGenTableColumn(column);
                     }
                 }
@@ -175,8 +171,7 @@ public class GenTableServiceImpl implements IGenTableService
      * @param tableId 表编号
      * @return 预览数据列表
      */
-    public Map<String, String> previewCode(Long tableId)
-    {
+    public Map<String, String> previewCode(Long tableId) throws Exception {
         Map<String, String> dataMap = new LinkedHashMap<>();
         // 查询表信息
         GenTable table = genTableMapper.selectGenTableById(tableId);
@@ -185,15 +180,15 @@ public class GenTableServiceImpl implements IGenTableService
         setPkColumn(table, columns);
         VelocityInitializer.initVelocity();
 
-        VelocityContext context = VelocityUtils.prepareContext(table);
+        VelocityContext context = VelocityUtil.prepareContext(table);
 
         // 获取模板列表
-        List<String> templates = VelocityUtils.getTemplateList(table.getTplCategory());
+        List<String> templates = VelocityUtil.getTemplateList(table.getTplCategory());
         for (String template : templates)
         {
             // 渲染模板
             StringWriter sw = new StringWriter();
-            Template tpl = Velocity.getTemplate(template, Constants.UTF8);
+            Template tpl = Velocity.getTemplate(template, Constant.UTF8);
             tpl.merge(context, sw);
             dataMap.put(template, sw.toString());
         }
@@ -207,8 +202,7 @@ public class GenTableServiceImpl implements IGenTableService
      * @return 数据
      */
     @Override
-    public byte[] generatorCode(String tableName)
-    {
+    public byte[] generatorCode(String tableName) throws Exception {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ZipOutputStream zip = new ZipOutputStream(outputStream);
         generatorCode(tableName, zip);
@@ -223,8 +217,7 @@ public class GenTableServiceImpl implements IGenTableService
      * @return 数据
      */
     @Override
-    public byte[] generatorCode(String[] tableNames)
-    {
+    public byte[] generatorCode(String[] tableNames) throws Exception {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ZipOutputStream zip = new ZipOutputStream(outputStream);
         for (String tableName : tableNames)
@@ -238,8 +231,7 @@ public class GenTableServiceImpl implements IGenTableService
     /**
      * 查询表信息并生成代码
      */
-    private void generatorCode(String tableName, ZipOutputStream zip)
-    {
+    private void generatorCode(String tableName, ZipOutputStream zip) throws Exception {
         // 查询表信息
         GenTable table = genTableMapper.selectGenTableByName(tableName);
         // 查询列信息
@@ -248,21 +240,21 @@ public class GenTableServiceImpl implements IGenTableService
 
         VelocityInitializer.initVelocity();
 
-        VelocityContext context = VelocityUtils.prepareContext(table);
+        VelocityContext context = VelocityUtil.prepareContext(table);
 
         // 获取模板列表
-        List<String> templates = VelocityUtils.getTemplateList(table.getTplCategory());
+        List<String> templates = VelocityUtil.getTemplateList(table.getTplCategory());
         for (String template : templates)
         {
             // 渲染模板
             StringWriter sw = new StringWriter();
-            Template tpl = Velocity.getTemplate(template, Constants.UTF8);
+            Template tpl = Velocity.getTemplate(template, Constant.UTF8);
             tpl.merge(context, sw);
             try
             {
                 // 添加到zip
-                zip.putNextEntry(new ZipEntry(VelocityUtils.getFileName(template, table)));
-                IOUtils.write(sw.toString(), zip, Constants.UTF8);
+                zip.putNextEntry(new ZipEntry(VelocityUtil.getFileName(template, table)));
+                IOUtils.write(sw.toString(), zip, Constant.UTF8);
                 IOUtils.closeQuietly(sw);
                 zip.closeEntry();
             }
@@ -282,40 +274,40 @@ public class GenTableServiceImpl implements IGenTableService
     {
         if (GenConstants.TPL_TREE.equals(genTable.getTplCategory()))
         {
-            String options = JSON.toJSONString(genTable.getParams());
-            JSONObject paramsObj = JSONObject.parseObject(options);
-            if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_CODE)))
-            {
-                throw new BusinessException("树编码字段不能为空");
-            }
-            else if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_PARENT_CODE)))
-            {
-                throw new BusinessException("树父编码字段不能为空");
-            }
-            else if (StringUtils.isEmpty(paramsObj.getString(GenConstants.TREE_NAME)))
-            {
-                throw new BusinessException("树名称字段不能为空");
-            }
+//            String options = JSON.toJSONString(genTable.getParams());
+//            JSONObject paramsObj = JSONObject.parseObject(options);
+//            if (StringUtil.isEmpty(paramsObj.getString(GenConstants.TREE_CODE)))
+//            {
+//                throw new CustomException("树编码字段不能为空");
+//            }
+//            else if (StringUtil.isEmpty(paramsObj.getString(GenConstants.TREE_PARENT_CODE)))
+//            {
+//                throw new CustomException("树父编码字段不能为空");
+//            }
+//            else if (StringUtil.isEmpty(paramsObj.getString(GenConstants.TREE_NAME)))
+//            {
+//                throw new CustomException("树名称字段不能为空");
+//            }
         }
     }
 
     /**
      * 设置主键列信息
      * 
-     * @param genTable 业务表信息
+     * @param table 业务表信息
      * @param columns 业务字段列表
      */
     public void setPkColumn(GenTable table, List<GenTableColumn> columns)
     {
         for (GenTableColumn column : columns)
         {
-            if (column.isPk())
+            if (true)
             {
                 table.setPkColumn(column);
                 break;
             }
         }
-        if (StringUtils.isNull(table.getPkColumn()))
+        if (StringUtil.isNull(table.getPkColumn()))
         {
             table.setPkColumn(columns.get(0));
         }
@@ -329,7 +321,7 @@ public class GenTableServiceImpl implements IGenTableService
     public void setTableFromOptions(GenTable genTable)
     {
         JSONObject paramsObj = JSONObject.parseObject(genTable.getOptions());
-        if (StringUtils.isNotNull(paramsObj))
+        if (StringUtil.isNotNull(paramsObj))
         {
             String treeCode = paramsObj.getString(GenConstants.TREE_CODE);
             String treeParentCode = paramsObj.getString(GenConstants.TREE_PARENT_CODE);

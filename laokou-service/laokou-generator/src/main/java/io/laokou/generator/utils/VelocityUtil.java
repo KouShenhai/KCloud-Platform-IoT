@@ -1,15 +1,15 @@
 package io.laokou.generator.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.generator.config.GenConfig;
-import com.ruoyi.generator.constant.GenConstants;
-import com.ruoyi.generator.domain.GenTable;
-import com.ruoyi.generator.domain.GenTableColumn;
+import io.laokou.common.utils.DateUtil;
+import io.laokou.common.utils.StringUtil;
+import io.laokou.generator.constant.GenConstants;
+import io.laokou.generator.entity.GenTable;
+import io.laokou.generator.entity.GenTableColumn;
 import org.apache.velocity.VelocityContext;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -36,21 +36,21 @@ public class VelocityUtil
         VelocityContext velocityContext = new VelocityContext();
         velocityContext.put("tplCategory", genTable.getTplCategory());
         velocityContext.put("tableName", genTable.getTableName());
-        velocityContext.put("functionName", StringUtils.isNotEmpty(functionName) ? functionName : "【请填写功能名称】");
+        velocityContext.put("functionName", StringUtil.isNotEmpty(functionName) ? functionName : "【请填写功能名称】");
         velocityContext.put("ClassName", genTable.getClassName());
-        velocityContext.put("className", StringUtils.uncapitalize(genTable.getClassName()));
+        velocityContext.put("className", StringUtil.uncapitalize(genTable.getClassName()));
         velocityContext.put("moduleName", genTable.getModuleName());
         velocityContext.put("businessName", genTable.getBusinessName());
         velocityContext.put("basePackage", getPackagePrefix(packageName));
         velocityContext.put("packageName", packageName);
         velocityContext.put("author", genTable.getFunctionAuthor());
-        velocityContext.put("datetime", DateUtils.getDate());
+        velocityContext.put("datetime", DateUtil.format(new Date()));
         velocityContext.put("pkColumn", genTable.getPkColumn());
         velocityContext.put("importList", getImportList(genTable.getColumns()));
         velocityContext.put("permissionPrefix", getPermissionPrefix(moduleName, businessName));
         velocityContext.put("columns", genTable.getColumns());
         velocityContext.put("table", genTable);
-        velocityContext.put("nowDate", DateUtils.getTime());
+        velocityContext.put("nowDate", DateUtil.format(new Date()));
         if (GenConstants.TPL_TREE.equals(tplCategory))
         {
             setTreeVelocityContext(velocityContext, genTable);
@@ -122,55 +122,55 @@ public class VelocityUtil
         // 大写类名
         String ClassName = genTable.getClassName();
         // 小写类名
-        String className = StringUtils.uncapitalize(ClassName);
+        String className = StringUtil.uncapitalize(ClassName);
         // 业务名称
         // String businessName = genTable.getBusinessName();
-        String javaPath = PROJECT_PATH + "/" + StringUtils.replace(packageName, ".", "/");
+        String javaPath = PROJECT_PATH + "/" + StringUtil.replace(packageName, ".", "/");
         String mybatisPath = MYBATIS_PATH + "/" + moduleName;
         String vuePath = "vue";
         if (template.contains("domain.java.vm"))
         {
-            fileName = StringUtils.format("{}/domain/{}.java", javaPath, ClassName);
+            fileName = StringUtil.format("{}/domain/{}.java", javaPath, ClassName);
         }
         else if (template.contains("io.laokou.generator.mapper.java.vm"))
         {
-            fileName = StringUtils.format("{}/io.laokou.generator.mapper/{}Mapper.java", javaPath, ClassName);
+            fileName = StringUtil.format("{}/io.laokou.generator.mapper/{}Mapper.java", javaPath, ClassName);
         }
         else if (template.contains("service.java.vm"))
         {
-            fileName = StringUtils.format("{}/service/I{}Service.java", javaPath, ClassName);
+            fileName = StringUtil.format("{}/service/I{}Service.java", javaPath, ClassName);
         }
         else if (template.contains("serviceImpl.java.vm"))
         {
-            fileName = StringUtils.format("{}/service/impl/{}ServiceImpl.java", javaPath, ClassName);
+            fileName = StringUtil.format("{}/service/impl/{}ServiceImpl.java", javaPath, ClassName);
         }
         else if (template.contains("controller.java.vm"))
         {
-            fileName = StringUtils.format("{}/controller/{}Controller.java", javaPath, ClassName);
+            fileName = StringUtil.format("{}/controller/{}Controller.java", javaPath, ClassName);
         }
         else if (template.contains("io.laokou.generator.mapper.xml.vm"))
         {
-            fileName = StringUtils.format("{}/{}Mapper.xml", mybatisPath, ClassName);
+            fileName = StringUtil.format("{}/{}Mapper.xml", mybatisPath, ClassName);
         }
         else if (template.contains("list.vue.vm"))
         {
-            fileName = StringUtils.format("{}/views/{}/{}List.vue", vuePath, moduleName, ClassName);
+            fileName = StringUtil.format("{}/views/{}/{}List.vue", vuePath, moduleName, ClassName);
         }
         else if (template.contains("modal.vue.vm"))
         {
-            fileName = StringUtils.format("{}/views/{}/modules/{}Modal.vue", vuePath, moduleName, ClassName);
+            fileName = StringUtil.format("{}/views/{}/modules/{}Modal.vue", vuePath, moduleName, ClassName);
         }
         else if (template.contains("list-tree.vue.vm"))
         {
-            fileName = StringUtils.format("{}/views/{}/{}List.vue", vuePath, moduleName, ClassName);
+            fileName = StringUtil.format("{}/views/{}/{}List.vue", vuePath, moduleName, ClassName);
         }
         else if (template.contains("modal-tree.vue.vm"))
         {
-            fileName = StringUtils.format("{}/views/{}/modules/{}Modal.vue", vuePath, moduleName, ClassName);
+            fileName = StringUtil.format("{}/views/{}/modules/{}Modal.vue", vuePath, moduleName, ClassName);
         }
         else if (template.contains("api.js.vm"))
         {
-            fileName = StringUtils.format("{}/api/{}/{}.js", vuePath, moduleName, className);
+            fileName = StringUtil.format("{}/api/{}/{}.js", vuePath, moduleName, className);
         }
         else if (template.contains("sql.vm"))
         {
@@ -186,7 +186,7 @@ public class VelocityUtil
      */
     public static String getProjectPath()
     {
-        String packageName = GenConfig.getPackageName();
+        String packageName = "io.laokou.test";
         StringBuffer projectPath = new StringBuffer();
         projectPath.append("main/java/");
         projectPath.append(packageName.replace(".", "/"));
@@ -203,14 +203,14 @@ public class VelocityUtil
     public static String getPackagePrefix(String packageName)
     {
         int lastIndex = packageName.lastIndexOf(".");
-        String basePackage = StringUtils.substring(packageName, 0, lastIndex);
+        String basePackage = StringUtil.substring(packageName, 0, lastIndex);
         return basePackage;
     }
 
     /**
      * 根据列类型获取导入包
      * 
-     * @param column 列集合
+     * @param columns 列集合
      * @return 返回需要导入的包列表
      */
     public static HashSet<String> getImportList(List<GenTableColumn> columns)
@@ -239,20 +239,20 @@ public class VelocityUtil
      */
     public static String getPermissionPrefix(String moduleName, String businessName)
     {
-        return StringUtils.format("{}:{}", moduleName, businessName);
+        return StringUtil.format("{}:{}", moduleName, businessName);
     }
 
     /**
      * 获取树编码
      * 
-     * @param options 生成其他选项
+     * @param paramsObj 生成其他选项
      * @return 树编码
      */
     public static String getTreecode(JSONObject paramsObj)
     {
         if (paramsObj.containsKey(GenConstants.TREE_CODE))
         {
-            return StringUtils.toCamelCase(paramsObj.getString(GenConstants.TREE_CODE));
+            return StringUtil.toCamelCase(paramsObj.getString(GenConstants.TREE_CODE));
         }
         return "";
     }
@@ -260,14 +260,14 @@ public class VelocityUtil
     /**
      * 获取树父编码
      * 
-     * @param options 生成其他选项
+     * @param paramsObj 生成其他选项
      * @return 树父编码
      */
     public static String getTreeParentCode(JSONObject paramsObj)
     {
         if (paramsObj.containsKey(GenConstants.TREE_PARENT_CODE))
         {
-            return StringUtils.toCamelCase(paramsObj.getString(GenConstants.TREE_PARENT_CODE));
+            return StringUtil.toCamelCase(paramsObj.getString(GenConstants.TREE_PARENT_CODE));
         }
         return "";
     }
@@ -275,14 +275,14 @@ public class VelocityUtil
     /**
      * 获取树名称
      * 
-     * @param options 生成其他选项
+     * @param paramsObj 生成其他选项
      * @return 树名称
      */
     public static String getTreeName(JSONObject paramsObj)
     {
         if (paramsObj.containsKey(GenConstants.TREE_NAME))
         {
-            return StringUtils.toCamelCase(paramsObj.getString(GenConstants.TREE_NAME));
+            return StringUtil.toCamelCase(paramsObj.getString(GenConstants.TREE_NAME));
         }
         return "";
     }

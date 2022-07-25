@@ -1,6 +1,8 @@
 package io.laokou.generator.mapper;
 
-import com.ruoyi.generator.domain.GenTableColumn;
+import io.laokou.generator.entity.GenTableColumn;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -9,6 +11,8 @@ import java.util.List;
  * 
  * @author ruoyi
  */
+@Mapper
+@Repository
 public interface GenTableColumnMapper
 {
     /**

@@ -1,16 +1,14 @@
 package io.laokou.generator.mapper;
-
-import com.ruoyi.generator.domain.GenTable;
-
-import java.util.List;
-
+import java.util.*;
+import io.laokou.generator.entity.GenTable;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 /**
  * 业务 数据层
- * 
- * @author ruoyi
  */
-public interface GenTableMapper
-{
+@Mapper
+@Repository
+public interface GenTableMapper {
     /**
      * 查询业务列表
      * 
