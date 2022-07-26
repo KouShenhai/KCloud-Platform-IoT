@@ -175,14 +175,25 @@ public class SysUserApiController {
 }
 ```
 
-### 致谢
-####### [人人社区](https://www.renren.io)
-####### [若依社区](http://www.ruoyi.vip)
+### 演示地址
+[http://175.178.69.253](http://175.178.69.253)
+* test/test123
+* laok5/test123
 
-### 说明
+### 项目说明
 * 代码不可商用及二次开源，仅供学习使用
 * 代码不可商用及二次开源，仅供学习使用
 * 代码不可商用及二次开源，仅供学习使用
+
+### 参与贡献
+欢迎各路英雄好汉参与KCloud-Platform代码贡献，期待您的加入！Fork本仓库 新建Feat_xxx分支提交代码，新建Pull Request
+
+### 加入仓库
+[https://gitee.com/laokou-yun?invite=af23e9108ac2450f324a37ebfde7364432d403c8ff96ab388e7cde0b62298f89d0f128ae41c0fbdba3913bda53efc7e3e6616f3d00909d16](https://gitee.com/laokou-yun?invite=af23e9108ac2450f324a37ebfde7364432d403c8ff96ab388e7cde0b62298f89d0f128ae41c0fbdba3913bda53efc7e3e6616f3d00909d16)
+
+### 致谢
+* [人人社区](https://www.renren.io)
+* [若依社区](http://www.ruoyi.vip)
 
 ### 联系
 后端技术交流群 [![加入QQ群](https://img.shields.io/badge/Q群-218686225-blue.svg)](https://qm.qq.com/cgi-bin/qm/qr?k=WFANTXDEjrDw6UxsrRFCv_rQsEu6LTxH&jump_from=webapi)
