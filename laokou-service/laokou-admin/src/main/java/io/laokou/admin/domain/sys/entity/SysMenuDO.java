@@ -29,7 +29,7 @@ public class SysMenuDO extends BaseDO {
 	 */
     @NotBlank(message = "{sys.menu.name.require}")
     @TableField("name")
-    @ApiModelProperty(value = "菜单名称",name = "name",required = true,example = "资源天堂")
+    @ApiModelProperty(value = "菜单名称",name = "name",required = true,example = "用户管理")
 	private String name;
 
 	/**

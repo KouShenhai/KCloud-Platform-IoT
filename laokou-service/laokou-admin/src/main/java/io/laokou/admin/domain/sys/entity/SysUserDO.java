@@ -77,4 +77,12 @@ public class SysUserDO extends BaseDO {
     @JsonProperty("zfbOpenid")
     private String zfbOpenid;
 
+    /**
+     * 部门id
+     */
+    @ApiModelProperty(value = "部门id",name = "deptId",example = "0")
+    @TableField("dept_id")
+    @JsonProperty("deptId")
+    private Long deptId;
+
 }
