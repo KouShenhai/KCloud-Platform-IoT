@@ -26,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 /**
@@ -65,9 +64,9 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         dto.setEditor(userId);
         sysUserService.updateUser(dto);
         List<Long> roleIds = dto.getRoleIds();
+        //删除中间表
+        sysUserRoleService.remove(new LambdaQueryWrapper<SysUserRoleDO>().eq(SysUserRoleDO::getUserId, dto.getId()));
         if (CollectionUtils.isNotEmpty(roleIds)) {
-            //删除中间表
-            sysUserRoleService.remove(new LambdaQueryWrapper<SysUserRoleDO>().eq(SysUserRoleDO::getUserId, dto.getId()));
             saveOrUpdate(dto.getId(),roleIds);
         }
         return true;

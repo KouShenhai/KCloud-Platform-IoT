@@ -96,9 +96,9 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
         roleDO.setEditor(userId);
         sysRoleService.updateById(roleDO);
         List<Long> menuIds = dto.getMenuIds();
+        //删除中间表
+        sysRoleMenuService.remove(new LambdaQueryWrapper<SysRoleMenuDO>().eq(SysRoleMenuDO::getRoleId,dto.getId()));
         if (CollectionUtils.isNotEmpty(menuIds)) {
-            //删除中间表
-            sysRoleMenuService.remove(new LambdaQueryWrapper<SysRoleMenuDO>().eq(SysRoleMenuDO::getRoleId,dto.getId()));
             saveOrUpdate(roleDO.getId(),dto.getMenuIds());
         }
         return true;
