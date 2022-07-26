@@ -175,5 +175,14 @@ public class SysUserApiController {
 }
 ```
 
+### 致谢
+####### [人人社区](https://www.renren.io)
+####### [若依社区](http://www.ruoyi.vip)
+
+### 说明
+* 代码不可商用及二次开源，仅供学习使用
+* 代码不可商用及二次开源，仅供学习使用
+* 代码不可商用及二次开源，仅供学习使用
+
 ### 联系
 后端技术交流群 [![加入QQ群](https://img.shields.io/badge/Q群-218686225-blue.svg)](https://qm.qq.com/cgi-bin/qm/qr?k=WFANTXDEjrDw6UxsrRFCv_rQsEu6LTxH&jump_from=webapi)
