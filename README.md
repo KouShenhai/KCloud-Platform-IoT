@@ -191,6 +191,11 @@ public class SysUserApiController {
 ### 加入仓库
 [https://gitee.com/laokou-yun?invite=af23e9108ac2450f324a37ebfde7364432d403c8ff96ab388e7cde0b62298f89d0f128ae41c0fbdba3913bda53efc7e3e6616f3d00909d16](https://gitee.com/laokou-yun?invite=af23e9108ac2450f324a37ebfde7364432d403c8ff96ab388e7cde0b62298f89d0f128ae41c0fbdba3913bda53efc7e3e6616f3d00909d16)
 
+### 开源协议
+KCloud-Platform 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html)
+务必保留作者、Copyright信息
+![](https://minio.pigx.vip/oss/1655474288.jpg)
+
 ### 致谢
 * [人人社区](https://www.renren.io)
 * [若依社区](http://www.ruoyi.vip)
