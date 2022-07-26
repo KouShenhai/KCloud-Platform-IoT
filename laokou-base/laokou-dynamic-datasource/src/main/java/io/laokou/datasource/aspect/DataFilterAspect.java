@@ -65,11 +65,11 @@ public class DataFilterAspect {
         }
         StringBuilder sqlFilter = new StringBuilder();
         //用户列表
-        List<Long> userIds = userDetail.getUsers().stream().map(item -> item.getId()).collect(Collectors.toList());
-        if (CollectionUtils.isEmpty(userIds)) {
-            throw new CustomException(ErrorCode.NOT_PERMISSIONS);
-        }
-        sqlFilter.append(" find_in_set(").append(tableAlias).append(dataFilter.userId()).append(",").append("'").append(StringUtils.join(userIds,",")).append("'").append(")");
+//        List<Long> userIds = userDetail.getUsers().stream().map(item -> item.getId()).collect(Collectors.toList());
+//        if (CollectionUtils.isEmpty(userIds)) {
+//            throw new CustomException(ErrorCode.NOT_PERMISSIONS);
+//        }
+//        sqlFilter.append(" find_in_set(").append(tableAlias).append(dataFilter.userId()).append(",").append("'").append(StringUtils.join(userIds,",")).append("'").append(")");
         return sqlFilter.toString();
     }
 

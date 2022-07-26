@@ -1,7 +1,5 @@
 package io.laokou.auth.domain.sys.repository.service;
 import io.laokou.common.user.UserDetail;
-import io.laokou.common.vo.SysUserVO;
-import java.util.List;
 /**
  * 用户类
  * @author Kou Shenhai
@@ -23,7 +21,4 @@ public interface SysUserService {
      */
     String getUsernameByOpenid(String zfbOpenid);
 
-    List<SysUserVO> getUserList();
-
-    List<SysUserVO> getUserListByUserId(Long id);
 }

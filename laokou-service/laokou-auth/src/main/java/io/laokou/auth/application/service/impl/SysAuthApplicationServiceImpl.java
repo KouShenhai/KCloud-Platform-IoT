@@ -30,7 +30,6 @@ import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.*;
-import io.laokou.common.vo.SysUserVO;
 import io.laokou.datasource.annotation.DataSource;
 import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
@@ -157,7 +156,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         String userResourceKey = RedisKeyUtil.getUserResourceKey(userId);
         List<String> permissionList = getPermissionList(userDetail);
         userDetail.setPermissionsList(permissionList);
-        userDetail.setUsers(getUserList(userDetail));
         userDetail.setRoles(sysRoleService.getRoleListByUserId(userDetail.getId()));
         //用户信息
         String userInfoKey = RedisKeyUtil.getUserInfoKey(userId);
@@ -308,7 +306,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             }
             userDetail.setPermissionsList(getPermissionList(userDetail));
             userDetail.setRoles(sysRoleService.getRoleListByUserId(userId));
-            userDetail.setUsers(getUserList(userDetail));
             redisUtil.set(userInfoKey, JSON.toJSONString(userDetail),RedisUtil.HOUR_ONE_EXPIRE);
         }
         return userDetail;
@@ -322,16 +319,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     private UserDetail getUserDetail(String username) {
         return sysUserService.getUserDetail(null, username);
-    }
-
-    private List<SysUserVO> getUserList(UserDetail userDetail) {
-        Integer superAdmin = userDetail.getSuperAdmin();
-        Long userId = userDetail.getId();
-        if (SuperAdminEnum.YES.ordinal() == superAdmin) {
-            return sysUserService.getUserList();
-        } else {
-            return sysUserService.getUserListByUserId(userId);
-        }
     }
 
     @Component

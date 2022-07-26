@@ -2,12 +2,10 @@ package io.laokou.auth.domain.sys.repository.service.impl;
 import io.laokou.auth.domain.sys.repository.mapper.SysUserMapper;
 import io.laokou.auth.domain.sys.repository.service.SysUserService;
 import io.laokou.common.user.UserDetail;
-import io.laokou.common.vo.SysUserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
 /**
  * @author Kou Shenhai
  */
@@ -27,16 +25,6 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public String getUsernameByOpenid(String zfbOpenid) {
         return sysUserMapper.getUsernameByOpenid(zfbOpenid);
-    }
-
-    @Override
-    public List<SysUserVO> getUserList() {
-        return sysUserMapper.getUserList();
-    }
-
-    @Override
-    public List<SysUserVO> getUserListByUserId(Long id) {
-        return sysUserMapper.getUserListByUserId(id);
     }
 
 }

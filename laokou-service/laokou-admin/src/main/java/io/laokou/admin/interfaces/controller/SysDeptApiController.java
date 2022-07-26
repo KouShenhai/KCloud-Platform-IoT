@@ -1,9 +1,15 @@
 package io.laokou.admin.interfaces.controller;
-
+import io.laokou.admin.application.service.SysDeptApplicationService;
+import io.laokou.common.utils.HttpResultUtil;
+import io.laokou.common.vo.SysDeptVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.util.*;
 /**
  * 系统部门
  * @author Kou Shenhai
@@ -15,6 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/sys/dept/api")
 public class SysDeptApiController {
 
+    @Autowired
+    private SysDeptApplicationService sysDeptApplicationService;
 
+    @GetMapping("/list")
+    @ApiOperation("系统部门>列表")
+    public HttpResultUtil<SysDeptVO> list() {
+        return new HttpResultUtil<SysDeptVO>().ok(sysDeptApplicationService.getDeptList());
+    }
+
+    @PostMapping("/query")
+    @ApiOperation("系统部门>查询")
+    public HttpResultUtil<List<SysDeptVO>> query() {
+        return new HttpResultUtil<List<SysDeptVO>>().ok(sysDeptApplicationService.queryDeptList());
+    }
 
 }

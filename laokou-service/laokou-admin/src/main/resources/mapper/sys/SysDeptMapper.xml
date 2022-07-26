@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.laokou.admin.domain.sys.repository.mapper.SysDeptMapper">
+    <select id="getDeptList" resultType="io.laokou.common.vo.SysDeptVO">
+   select id,pid,`name`,status from boot_sys_dept
+   where del_flag = '0' and status = '0'
+    </select>
+
+</mapper>

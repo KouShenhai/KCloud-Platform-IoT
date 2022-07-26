@@ -1,10 +1,8 @@
 package io.laokou.auth.domain.sys.repository.mapper;
 import io.laokou.common.user.UserDetail;
-import io.laokou.common.vo.SysUserVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 /**
  * 用户类
  * @author  Kou Shenhai
@@ -28,7 +26,4 @@ public interface SysUserMapper {
      */
     String getUsernameByOpenid(@Param("zfbOpenid")String zfbOpenid);
 
-    List<SysUserVO> getUserListByUserId(@Param("id") Long id);
-
-    List<SysUserVO> getUserList();
 }

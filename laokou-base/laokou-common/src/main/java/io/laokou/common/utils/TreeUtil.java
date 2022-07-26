@@ -1,12 +1,10 @@
 package io.laokou.common.utils;
-
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.google.common.collect.Lists;
 import io.laokou.common.exception.CustomException;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,11 +17,8 @@ import java.util.StringJoiner;
  */
 @Data
 public class TreeUtil<T> {
-    public static <T extends TreeNo> TreeNo<T> rootRootNode(String name,String icon){
-        return new TreeNo(0L,name,null,icon, Lists.newArrayList());
-    }
     public static <T extends TreeNo> TreeNo<T> rootRootNode(String name) {
-        return rootRootNode(name,"");
+        return new TreeNo(0L,name,null, Lists.newArrayList());
     }
     public static <T extends TreeNo> TreeNo<T> rootRootNode() {
         return rootRootNode("根节点");
@@ -66,14 +61,12 @@ public class TreeUtil<T> {
         private String name;
         @JSONField(serializeUsing = ToStringSerializer.class)
         private Long pid;
-        private String icon;
         private List<T> children;
         public TreeNo() {}
-        public TreeNo(Long id, String name, Long pid, String icon, List<T> children) {
+        public TreeNo(Long id, String name, Long pid, List<T> children) {
             this.id = id;
             this.name = name;
             this.pid = pid;
-            this.icon = icon;
             this.children = children;
         }
         @Override
@@ -82,7 +75,6 @@ public class TreeUtil<T> {
                     .add("id='" + id + "'")
                     .add("name='" + name + "'")
                     .add("pid='" + pid + "'")
-                    .add("icon='" + icon + "'")
                     .add("children=" + children)
                     .toString();
         }
@@ -109,12 +101,6 @@ public class TreeUtil<T> {
         }
         public void setChildren(List<T> children) {
             this.children = children;
-        }
-        public String getIcon() {
-            return icon;
-        }
-        public void setIcon(String icon) {
-            this.icon = icon;
         }
     }
 }

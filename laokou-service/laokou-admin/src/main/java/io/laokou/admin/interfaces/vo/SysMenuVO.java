@@ -13,6 +13,11 @@ import lombok.Data;
 public class SysMenuVO extends TreeUtil.TreeNo<SysMenuVO> {
 
     /**
+     * 图标
+     */
+    private String icon;
+
+    /**
      * 类型   0：菜单   1：按钮
      */
     private Integer type;

@@ -30,32 +30,4 @@
         </if>
     </select>
 
-    <select id="getUserListByUserId" resultType="io.laokou.common.vo.SysUserVO" flushCache="true">
-        select
-             distinct
-             c.id
-            ,c.username
-            ,c.super_admin
-            ,c.create_date
-            ,c.img_url
-            ,c.`status`
-            from boot_sys_user_role a
-        join boot_sys_user c on c.id = a.user_id
-        where EXISTS (select 1 from boot_sys_user_role b where b.user_id = #{id} and a.role_id = b.role_id)
-        and c.super_admin <![CDATA[ <> ]]> 1 and c.del_flag = '0' and c.`status` = 0
-    </select>
-
-    <select id="getUserList" resultType="io.laokou.common.vo.SysUserVO" flushCache="true">
-        select
-            id
-            ,username
-            ,super_admin
-            ,create_date
-            ,img_url
-            ,`status`
-            FROM boot_sys_user
-            where del_flag = '0' and `status` = 0
-            order by create_date desc
-    </select>
-
 </mapper>
