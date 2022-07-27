@@ -1,4 +1,4 @@
-package io.laokou.common.vo;
+package io.laokou.admin.interfaces.vo;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.ToStringSerializer;
 import io.laokou.common.utils.DateUtil;
@@ -13,6 +13,7 @@ public class SysUserVO {
     private Date createDate;
     private String username;
     private String imgUrl;
+    private Long deptId;
     private Integer superAdmin;
     private Integer status;
     private List<Long> roleIds;

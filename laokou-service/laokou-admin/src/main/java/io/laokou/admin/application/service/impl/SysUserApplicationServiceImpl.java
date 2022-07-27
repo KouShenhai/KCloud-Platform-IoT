@@ -15,7 +15,7 @@ import io.laokou.common.constant.Constant;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
-import io.laokou.common.vo.SysUserVO;
+import io.laokou.admin.interfaces.vo.SysUserVO;
 import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.user.UserDetail;

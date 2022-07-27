@@ -1,3 +1,4 @@
+------------------------------------菜单------------------------------------
 CREATE TABLE `boot_sys_menu` (
   `id` bigint(20) NOT NULL COMMENT 'id',
   `pid` bigint(20) NOT NULL COMMENT '父节点',
@@ -16,201 +17,6 @@ CREATE TABLE `boot_sys_menu` (
   `sort` int(11) DEFAULT '1' COMMENT '排序',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='菜单';
-
-CREATE TABLE `boot_sys_role_menu` (
-  `role_id` bigint(20) NOT NULL COMMENT '角色id',
-  `menu_id` bigint(20) NOT NULL COMMENT '菜单id',
-  KEY `role_id` (`role_id`) USING BTREE,
-  KEY `menu_id` (`menu_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色-菜单';
-
-CREATE TABLE `boot_sys_role` (
-  `id` bigint(20) NOT NULL COMMENT 'id',
-  `name` varchar(50) NOT NULL COMMENT '角色名称',
-  `creator` bigint(20) NOT NULL COMMENT '创建人',
-  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `create_date` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
-  `sort` int(11) DEFAULT '1' COMMENT '排序',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色';
-
-CREATE TABLE `boot_sys_user_role` (
-  `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `role_id` bigint(20) NOT NULL COMMENT '角色id',
-  KEY `user_id` (`user_id`) USING BTREE,
-  KEY `role_id` (`role_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户-角色';
-
-CREATE TABLE `boot_sys_user` (
-  `id` bigint(20) NOT NULL COMMENT 'id',
-  `username` varchar(20) NOT NULL COMMENT '用户名',
-  `password` varchar(100) NOT NULL COMMENT '密码',
-  `super_admin` tinyint(1) NOT NULL DEFAULT '0' COMMENT '超级管理员：0否 1是',
-  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
-  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
-  `email` varchar(50) DEFAULT NULL COMMENT '电子邮箱',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 0正常 1停用',
-  `img_url` varchar(400) NOT NULL DEFAULT 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi.qqkou.com%2Fi%2F1a3626475345x3078425090b26.jpg&refer=http%3A%2F%2Fi.qqkou.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657902941&t=73f98a243f12f3eabe1dce87d2b6401b' COMMENT '头像url',
-  `mobile` varchar(11) DEFAULT NULL COMMENT '手机号',
-  `zfb_openid` varchar(32) DEFAULT NULL COMMENT '支付宝用户唯一标识',
-  PRIMARY KEY (`id`,`username`) USING BTREE,
-  UNIQUE KEY `idx_email` (`email`) USING BTREE,
-  UNIQUE KEY `idx_mobile` (`mobile`) USING BTREE,
-  UNIQUE KEY `idx_zfb` (`zfb_openid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户';
-
-CREATE TABLE `boot_sys_operate_log` (
-  `id` bigint(20) NOT NULL COMMENT 'id',
-  `module` varchar(32) DEFAULT NULL COMMENT '模块名称，如：系统菜单',
-  `operation` varchar(50) DEFAULT NULL COMMENT '操作名称',
-  `request_uri` varchar(200) DEFAULT NULL COMMENT '请求URI',
-  `method_name` varchar(1000) DEFAULT NULL COMMENT '方法名称',
-  `request_method` varchar(20) DEFAULT NULL COMMENT '请求方式',
-  `request_params` text COMMENT '请求参数',
-  `user_agent` varchar(500) DEFAULT NULL COMMENT '浏览器版本',
-  `request_ip` varchar(50) DEFAULT NULL COMMENT 'IP地址',
-  `request_address` varchar(200) DEFAULT NULL COMMENT '归属地',
-  `request_status` tinyint(1) unsigned NOT NULL COMMENT '状态  0：成功   1：失败',
-  `operator` varchar(50) DEFAULT NULL COMMENT '操作人',
-  `error_msg` text COMMENT '错误信息',
-  `creator` bigint(20) DEFAULT NULL COMMENT '创建者',
-  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
-  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  PRIMARY KEY (`id`),
-  KEY `idx_module` (`module`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
-
-CREATE TABLE `boot_sys_login_log` (
-  `id` bigint(20) NOT NULL COMMENT 'id',
-  `creator` bigint(20) DEFAULT NULL COMMENT '创建者',
-  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
-  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `login_name` varchar(20) DEFAULT NULL COMMENT '登录用户',
-  `request_ip` varchar(50) DEFAULT NULL COMMENT 'IP地址',
-  `request_address` varchar(200) DEFAULT NULL COMMENT '归属地',
-  `browser` varchar(50) DEFAULT NULL COMMENT '浏览器',
-  `os` varchar(50) DEFAULT NULL COMMENT '操作系统',
-  `request_status` tinyint(1) unsigned NOT NULL COMMENT '状态  0：成功   1：失败',
-  `msg` varchar(500) DEFAULT NULL COMMENT '提示信息',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
-
-CREATE TABLE `boot_sys_dict` (
-  `id` bigint(20) NOT NULL COMMENT 'id',
-  `creator` bigint(20) DEFAULT NULL COMMENT '创建者',
-  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
-  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `dict_value` text COMMENT '值',
-  `dict_label` varchar(100) DEFAULT NULL COMMENT '标签',
-  `type` varchar(100) DEFAULT NULL COMMENT '类型',
-  `status` tinyint(1) DEFAULT NULL COMMENT '状态 0正常 1停用',
-  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
-  `sort` int(11) DEFAULT '1' COMMENT '排序',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='字典';
-
-CREATE TABLE `boot_zfb_user` (
-  `id` bigint(20) NOT NULL COMMENT 'id',
-  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
-  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
-  `openid` varchar(32) NOT NULL COMMENT '支付宝用户唯一标识',
-  `gender` varchar(1) DEFAULT NULL COMMENT '性别',
-  `province` varchar(10) DEFAULT NULL COMMENT '省份',
-  `city` varchar(10) DEFAULT NULL COMMENT '城市',
-  `avatar` varchar(400) DEFAULT NULL COMMENT '头像',
-  PRIMARY KEY (`id`,`openid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='支付宝用户';
-
-CREATE TABLE `boot_wx_mp_account` (
-  `id` bigint(20) NOT NULL COMMENT 'id',
-  `name` varchar(100) DEFAULT NULL COMMENT '名称',
-  `app_id` varchar(100) DEFAULT NULL COMMENT 'AppID',
-  `app_secret` varchar(100) DEFAULT NULL COMMENT 'AppSecret',
-  `token` varchar(100) DEFAULT NULL COMMENT 'Token',
-  `aes_key` varchar(100) DEFAULT NULL COMMENT 'EncodingAESKey',
-  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
-  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='微信公众号账号';
-
-CREATE TABLE `boot_wx_mp_menu` (
-  `id` bigint(20) NOT NULL COMMENT 'id',
-  `menu` varchar(2000) DEFAULT NULL COMMENT '菜单json数据',
-  `app_id` varchar(100) DEFAULT NULL COMMENT 'AppID',
-  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
-  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `uk_app_id` (`app_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='微信公众号自定义菜单';
-
-CREATE TABLE `boot_sys_message` (
-  `id` bigint(20) NOT NULL COMMENT 'id',
-  `username` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT '发送用户',
-  `title` varchar(400) DEFAULT NULL COMMENT '标题',
-  `content` longtext COMMENT '内容',
-  `send_channel` tinyint(1) DEFAULT NULL COMMENT '发送渠道：0平台 1微信公众号 2邮箱',
-  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
-  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息';
-
-CREATE TABLE `boot_sys_message_detail` (
-  `id` bigint(20) NOT NULL COMMENT 'id',
-  `message_id` bigint(20) DEFAULT NULL COMMENT '消息id',
-  `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',
-  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
-  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
-  `read_flag` tinyint(1) DEFAULT '0' COMMENT '是否已读 0未读 1已读',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息详情';
-
-CREATE TABLE `boot_sys_dept` (
-  `id` bigint(20) NOT NULL COMMENT 'id',
-  `pid` bigint(20) NOT NULL COMMENT '父节点',
-  `name` varchar(100) DEFAULT NULL COMMENT '名称',
-  `status` tinyint(1) DEFAULT NULL COMMENT '0正常 1停用',
-  `sort` int(11) DEFAULT '1' COMMENT '排序',
-  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
-  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) DEFAULT '0' COMMENT '1已删除 0未删除',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='部门';
-
-CREATE TABLE `boot_sys_role_dept` (
-  `role_id` bigint(20) NOT NULL COMMENT '角色id',
-  `dept_id` bigint(20) NOT NULL COMMENT '部门id',
-  KEY `role_id` (`role_id`) USING BTREE,
-  KEY `menu_id` (`dept_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色-部门';
-
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1535881096963563522', '1535878154046939137', 'sys:user:view', '0', '用户管理', '/sys/user/view', '0', 'GET', 'user', '1341620898007281665', '1341620898007281665', '2022-06-16 04:04:56', '2022-06-15 20:05:57', '0', '1000');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1391677542887788567', '1535878154046939137', 'sys:menu:view', '0', '菜单管理', '/sys/menu/view', '0', 'GET', 'treeTable', '1341620898007281665', '1341620898007281665', '2022-06-12 23:36:44', '2022-06-12 23:36:44', '0', '3000');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1545035717690912769', '0', 'workflow:view', '0', '工作流程', '/workflow', '0', 'GET', 'tree', '1341620898007281665', NULL, '2022-07-07 21:23:15', '2022-07-07 21:23:15', '0', '7000');
@@ -262,13 +68,230 @@ INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, 
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1545443828113113090', '1545036486288732162', 'workflow:definition:delete', '1', '流程删除', '/workflow/definition/api/delete', '0', 'DELETE', 'delete', '1537114827246292994', NULL, '2022-07-09 00:24:56', '2022-07-09 00:24:56', '0', '10');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1545444494848065538', '1545036486288732162', 'workflow:process:start', '1', '流程发起', '/workflow/process/api/start', '0', 'POST', 'cluster', '1537114827246292994', NULL, '2022-07-09 00:27:35', '2022-07-09 00:27:35', '0', '10');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1545445208781520897', '1545037580289044482', 'workflow:task:audit', '1', '任务审核', '/workflow/task/api/audit', '0', 'POST', 'audit', '1537114827246292994', '1537114827246292994', '2022-07-09 00:40:59', '2022-07-09 00:40:59', '0', '10');
+------------------------------------菜单------------------------------------
 
-INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('139167754288778856', '游客', '0', '1341620898007281665', '2021-11-27 17:11:15', '2022-06-13 00:59:04', '0', '10');
-INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('139167754288778857', '管理员', '0', '1341620898007281665', '2021-11-27 17:11:19', '2022-07-01 07:49:02', '0', '100');
-INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1535949666183573505', '测试', '1341620898007281665', '1341620898007281665', '2022-06-12 19:38:32', '2022-06-13 00:55:32', '0', '50');
+------------------------------------角色菜单------------------------------------
+CREATE TABLE `boot_sys_role_menu` (
+  `role_id` bigint(20) NOT NULL COMMENT '角色id',
+  `menu_id` bigint(20) NOT NULL COMMENT '菜单id',
+  KEY `role_id` (`role_id`) USING BTREE,
+  KEY `menu_id` (`menu_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色-菜单';
+------------------------------------角色菜单------------------------------------
 
-INSERT INTO `boot_sys_user` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `email`, `status`, `img_url`, `mobile`, `zfb_openid`) VALUES ('1341620898007281665', 'admin', '$2a$10$JH4rLaMdK9KBCa8oBL9Tz.zMSYKn/8OEheFUMKLdTC1SFIVwjgQXO', '1', '1341620898007281665', '1341623527018004481', '2021-11-29 20:13:11', '2022-06-20 01:36:58', '0', '2413176044@qq.com', '0', 'https://1.com//upload/node3/7904fff1c08a4883b40f1ee0336017dc.webp', '18974432576', '2088722720196501');
-INSERT INTO `boot_sys_user` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `email`, `status`, `img_url`, `mobile`, `zfb_openid`) VALUES ('1341623527018004481', 'test', '$2a$10$Nrnb0lwgMMvuq5lC.nO/pO5S2dCT2ZoStcf8Iho3NqyTedTgIcu9W', '0', '1341620898007281665', '1341620898007281665', '2020-12-23 13:55:50', '2022-06-20 02:52:18', '0', 'XX@qq.com', '0', 'https://1.com/upload/node2/b4e5bb3944a046a6bb54f8bfd2c830c1.webp', 'xxx', NULL);
-INSERT INTO `boot_sys_user` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `email`, `status`, `img_url`, `mobile`, `zfb_openid`) VALUES ('1421312053736804354', 'koush5', '$2a$10$sy6boUKxyUGApAE0aJUJHuSVm5a21Yb6XQ.Y/bGueiZQ41JSxibZu', '0', '1341620898007281665', '1421312053736804354', '2021-07-31 11:29:35', '2022-06-14 20:28:43', '0', 'YY@qq.com', '0', 'https://ruoyi.setworld.net/img/profile.473f5971.jpg', 'xxxxx', NULL);
-INSERT INTO `boot_sys_user` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `email`, `status`, `img_url`, `mobile`, `zfb_openid`) VALUES ('1537111101311844353', 'wumh5', '$2a$10$A/iY2ZSmiQ1SqEZkAj8vzucGZwCsRvfe2zP7DeLGDdH4KW4OvEw92', '0', '1341620898007281665', '1341620898007281665', '2022-06-16 00:33:39', '2022-06-20 02:46:43', '0', NULL, '0', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi.qqkou.com%2Fi%2F1a3626475345x3078425090b26.jpg&amp;refer=http%3A%2F%2Fi.qqkou.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1657902941&amp;t=73f98a243f12f3eabe1dce87d2b6401b', NULL, NULL);
-INSERT INTO `boot_sys_user` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `email`, `status`, `img_url`, `mobile`, `zfb_openid`) VALUES ('1537114827246292994', 'laok5', '$2a$10$0YO/xdMa0Gcs7CQGengZy.BKTFLRZyRSjhOIawdEIfeIOgepH/gem', '0', '1341620898007281665', '1537114827246292994', '2022-06-16 00:48:28', '2022-06-16 09:14:26', '0', NULL, '0', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi.qqkou.com%2Fi%2F1a3626475345x3078425090b26.jpg&amp;refer=http%3A%2F%2Fi.qqkou.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1657902941&amp;t=73f98a243f12f3eabe1dce87d2b6401b', NULL, NULL);
+------------------------------------角色------------------------------------
+CREATE TABLE `boot_sys_role` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `name` varchar(50) NOT NULL COMMENT '角色名称',
+  `creator` bigint(20) NOT NULL COMMENT '创建人',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  `sort` int(11) DEFAULT '1' COMMENT '排序',
+  `dept_id` bigint(20) DEFAULT NULL COMMENT '部门id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色';
+INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `dept_id`) VALUES ('139167754288778856', '游客', '0', '1341620898007281665', '2021-11-27 17:11:15', '2022-07-26 20:30:09', '0', '10', NULL);
+INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `dept_id`) VALUES ('139167754288778857', '管理员', '0', '1341620898007281665', '2021-11-27 17:11:19', '2022-07-26 20:26:49', '0', '100', NULL);
+INSERT INTO `boot_sys_role` (`id`, `name`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `dept_id`) VALUES ('1535949666183573505', '测试', '1341620898007281665', '1341620898007281665', '2022-06-12 19:38:32', '2022-07-21 22:50:46', '0', '50', NULL);
+------------------------------------角色------------------------------------
+
+------------------------------------用户角色------------------------------------
+CREATE TABLE `boot_sys_user_role` (
+  `user_id` bigint(20) NOT NULL COMMENT '用户id',
+  `role_id` bigint(20) NOT NULL COMMENT '角色id',
+  KEY `user_id` (`user_id`) USING BTREE,
+  KEY `role_id` (`role_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户-角色';
+------------------------------------用户角色------------------------------------
+
+------------------------------------用户------------------------------------
+CREATE TABLE `boot_sys_user` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `username` varchar(20) NOT NULL COMMENT '用户名',
+  `password` varchar(100) NOT NULL COMMENT '密码',
+  `super_admin` tinyint(1) NOT NULL DEFAULT '0' COMMENT '超级管理员：0否 1是',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  `email` varchar(50) DEFAULT NULL COMMENT '电子邮箱',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 0正常 1停用',
+  `img_url` varchar(400) NOT NULL DEFAULT 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi.qqkou.com%2Fi%2F1a3626475345x3078425090b26.jpg&refer=http%3A%2F%2Fi.qqkou.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1657902941&t=73f98a243f12f3eabe1dce87d2b6401b' COMMENT '头像url',
+  `mobile` varchar(11) DEFAULT NULL COMMENT '手机号',
+  `zfb_openid` varchar(32) DEFAULT NULL COMMENT '支付宝用户唯一标识',
+  PRIMARY KEY (`id`,`username`) USING BTREE,
+  UNIQUE KEY `idx_email` (`email`) USING BTREE,
+  UNIQUE KEY `idx_mobile` (`mobile`) USING BTREE,
+  UNIQUE KEY `idx_zfb` (`zfb_openid`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户';
+INSERT INTO `boot_sys_user` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `email`, `status`, `img_url`, `mobile`, `zfb_openid`, `dept_id`) VALUES ('1341620898007281665', 'admin', '$2a$10$n94v8BWjCb5zcvUwxxi9COKDS7Fn2n3WXbVs0Qeg5B1AkkagK1qO6', '1', '1341620898007281665', '1341620898007281665', '2021-11-29 20:13:11', '2022-07-27 22:10:26', '0', '2413176044@qq.com', '0', 'http://175.178.69.253/upload/node3/7904fff1c08a4883b40f1ee0336017dc.webp', '18974432576', '2088722720196501', '1535887940687765505');
+INSERT INTO `boot_sys_user` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `email`, `status`, `img_url`, `mobile`, `zfb_openid`, `dept_id`) VALUES ('1341623527018004481', 'test', '$2a$10$cdEXE9uaSqkqoKa.73.XBuhHFPiOLomStfzUlmkuVqfA2wldqEfIG', '0', '1341620898007281665', '1341620898007281665', '2020-12-23 13:55:50', '2022-07-27 22:20:39', '0', '2314176044@qq.com', '0', 'http://175.178.69.253/upload/node2/b4e5bb3944a046a6bb54f8bfd2c830c1.webp', '18888888888', NULL, '1535881356595175426');
+INSERT INTO `boot_sys_user` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `email`, `status`, `img_url`, `mobile`, `zfb_openid`, `dept_id`) VALUES ('1421312053736804354', 'koush5', '$2a$10$ysAmruc249SiAUpIqQzrpeM8wcdpgIJ6nEdtsXQnDrBgvLZkt7tJ6', '0', '1341620898007281665', '1341620898007281665', '2021-07-31 11:29:35', '2022-07-27 22:20:12', '0', 'YY@qq.com', '0', 'https://ruoyi.setworld.net/img/profile.473f5971.jpg', 'xxxxx', NULL, '1535881356595175426');
+INSERT INTO `boot_sys_user` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `email`, `status`, `img_url`, `mobile`, `zfb_openid`, `dept_id`) VALUES ('1537111101311844353', 'wumh5', '$2a$10$KZHkKBF2jUGaOJDp4YcgeuVt1gBhteJC990OQWuOoRmyYQILBzQlG', '0', '1341620898007281665', '1341620898007281665', '2022-06-16 00:33:39', '2022-07-27 22:20:30', '0', NULL, '0', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi.qqkou.com%2Fi%2F1a3626475345x3078425090b26.jpg&amp;refer=http%3A%2F%2Fi.qqkou.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1657902941&amp;t=73f98a243f12f3eabe1dce87d2b6401b', NULL, NULL, '1535858679453085698');
+INSERT INTO `boot_sys_user` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `email`, `status`, `img_url`, `mobile`, `zfb_openid`, `dept_id`) VALUES ('1537114827246292994', 'laok5', '$2a$10$b.40TGb7W19z5Jryo3FBuOEDaX2c0OAqZHnRnCkXCPI67ru5G7Nha', '0', '1341620898007281665', '1341620898007281665', '2022-06-16 00:48:28', '2022-07-27 22:20:23', '0', NULL, '0', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi.qqkou.com%2Fi%2F1a3626475345x3078425090b26.jpg&amp;refer=http%3A%2F%2Fi.qqkou.com&amp;app=2002&amp;size=f9999,10000&amp;q=a80&amp;n=0&amp;g=0n&amp;fmt=auto?sec=1657902941&amp;t=73f98a243f12f3eabe1dce87d2b6401b', NULL, NULL, '1535881356595175426');
+------------------------------------用户------------------------------------
+
+------------------------------------日志------------------------------------
+CREATE TABLE `boot_sys_operate_log` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `module` varchar(32) DEFAULT NULL COMMENT '模块名称，如：系统菜单',
+  `operation` varchar(50) DEFAULT NULL COMMENT '操作名称',
+  `request_uri` varchar(200) DEFAULT NULL COMMENT '请求URI',
+  `method_name` varchar(1000) DEFAULT NULL COMMENT '方法名称',
+  `request_method` varchar(20) DEFAULT NULL COMMENT '请求方式',
+  `request_params` text COMMENT '请求参数',
+  `user_agent` varchar(500) DEFAULT NULL COMMENT '浏览器版本',
+  `request_ip` varchar(50) DEFAULT NULL COMMENT 'IP地址',
+  `request_address` varchar(200) DEFAULT NULL COMMENT '归属地',
+  `request_status` tinyint(1) unsigned NOT NULL COMMENT '状态  0：成功   1：失败',
+  `operator` varchar(50) DEFAULT NULL COMMENT '操作人',
+  `error_msg` text COMMENT '错误信息',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  PRIMARY KEY (`id`),
+  KEY `idx_module` (`module`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
+CREATE TABLE `boot_sys_login_log` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `login_name` varchar(20) DEFAULT NULL COMMENT '登录用户',
+  `request_ip` varchar(50) DEFAULT NULL COMMENT 'IP地址',
+  `request_address` varchar(200) DEFAULT NULL COMMENT '归属地',
+  `browser` varchar(50) DEFAULT NULL COMMENT '浏览器',
+  `os` varchar(50) DEFAULT NULL COMMENT '操作系统',
+  `request_status` tinyint(1) unsigned NOT NULL COMMENT '状态  0：成功   1：失败',
+  `msg` varchar(500) DEFAULT NULL COMMENT '提示信息',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
+------------------------------------日志------------------------------------
+
+------------------------------------字典------------------------------------
+CREATE TABLE `boot_sys_dict` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `dict_value` text COMMENT '值',
+  `dict_label` varchar(100) DEFAULT NULL COMMENT '标签',
+  `type` varchar(100) DEFAULT NULL COMMENT '类型',
+  `status` tinyint(1) DEFAULT NULL COMMENT '状态 0正常 1停用',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `sort` int(11) DEFAULT '1' COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='字典';
+------------------------------------字典------------------------------------
+
+------------------------------------支付宝用户------------------------------------
+CREATE TABLE `boot_zfb_user` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  `openid` varchar(32) NOT NULL COMMENT '支付宝用户唯一标识',
+  `gender` varchar(1) DEFAULT NULL COMMENT '性别',
+  `province` varchar(10) DEFAULT NULL COMMENT '省份',
+  `city` varchar(10) DEFAULT NULL COMMENT '城市',
+  `avatar` varchar(400) DEFAULT NULL COMMENT '头像',
+  PRIMARY KEY (`id`,`openid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='支付宝用户';
+------------------------------------支付宝用户------------------------------------
+
+------------------------------------微信公众号------------------------------------
+CREATE TABLE `boot_wx_mp_account` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `app_id` varchar(100) DEFAULT NULL COMMENT 'AppID',
+  `app_secret` varchar(100) DEFAULT NULL COMMENT 'AppSecret',
+  `token` varchar(100) DEFAULT NULL COMMENT 'Token',
+  `aes_key` varchar(100) DEFAULT NULL COMMENT 'EncodingAESKey',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='微信公众号账号';
+CREATE TABLE `boot_wx_mp_menu` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `menu` varchar(2000) DEFAULT NULL COMMENT '菜单json数据',
+  `app_id` varchar(100) DEFAULT NULL COMMENT 'AppID',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `uk_app_id` (`app_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='微信公众号自定义菜单';
+------------------------------------微信公众号------------------------------------
+
+------------------------------------消息------------------------------------
+CREATE TABLE `boot_sys_message` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `username` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT '发送用户',
+  `title` varchar(400) DEFAULT NULL COMMENT '标题',
+  `content` longtext COMMENT '内容',
+  `send_channel` tinyint(1) DEFAULT NULL COMMENT '发送渠道：0平台 1微信公众号 2邮箱',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息';
+CREATE TABLE `boot_sys_message_detail` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `message_id` bigint(20) DEFAULT NULL COMMENT '消息id',
+  `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  `read_flag` tinyint(1) DEFAULT '0' COMMENT '是否已读 0未读 1已读',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息详情';
+------------------------------------消息------------------------------------
+
+------------------------------------部门------------------------------------
+CREATE TABLE `boot_sys_dept` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `pid` bigint(20) NOT NULL COMMENT '父节点',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `status` tinyint(1) DEFAULT NULL COMMENT '0正常 1停用',
+  `sort` int(11) DEFAULT '1' COMMENT '排序',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) DEFAULT '0' COMMENT '1已删除 0未删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='部门';
+INSERT INTO `boot_sys_dept` (`id`, `pid`, `name`, `status`, `sort`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`) VALUES ('1535858679453085698', '1535887940687765505', '广州分公司', '0', '666', '1341620898007281665', '1341620898007281665', '2022-07-27 20:50:20', '2022-07-27 20:50:18', '0');
+INSERT INTO `boot_sys_dept` (`id`, `pid`, `name`, `status`, `sort`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`) VALUES ('1535881356595175426', '1535887940687765505', '长沙分公司', '0', '111', '1341620898007281665', '1341620898007281665', '2022-07-27 20:50:26', '2022-07-27 20:50:25', '0');
+INSERT INTO `boot_sys_dept` (`id`, `pid`, `name`, `status`, `sort`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`) VALUES ('1535887129341599746', '1535887940687765505', '深圳分公司', '0', '888', '1341620898007281665', '1341620898007281665', '2022-07-27 20:50:12', '2022-07-27 20:50:10', '0');
+INSERT INTO `boot_sys_dept` (`id`, `pid`, `name`, `status`, `sort`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`) VALUES ('1535887940687765505', '0', '老寇云集团', '0', '1000', '1341620898007281665', '1341620898007281665', '2022-07-27 20:48:56', '2022-07-27 20:48:55', '0');
+------------------------------------部门------------------------------------
+
+------------------------------------角色部门------------------------------------
+CREATE TABLE `boot_sys_role_dept` (
+  `role_id` bigint(20) NOT NULL COMMENT '角色id',
+  `dept_id` bigint(20) NOT NULL COMMENT '部门id',
+  KEY `role_id` (`role_id`) USING BTREE,
+  KEY `menu_id` (`dept_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色-部门';
+------------------------------------角色部门------------------------------------

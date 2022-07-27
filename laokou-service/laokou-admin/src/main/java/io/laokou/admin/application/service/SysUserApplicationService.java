@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
 import io.laokou.admin.interfaces.vo.OptionVO;
-import io.laokou.common.vo.SysUserVO;
+import io.laokou.admin.interfaces.vo.SysUserVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
