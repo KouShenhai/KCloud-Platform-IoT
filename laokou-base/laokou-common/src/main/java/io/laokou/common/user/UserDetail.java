@@ -20,6 +20,8 @@ public class UserDetail {
     private String mobile;
     private String password;
     private String zfbOpenid;
+    @JSONField(serializeUsing = ToStringSerializer.class)
+    private Long deptId;
     private List<String> permissionsList;
     private List<SysRoleVO> roles;
     private List<SysDeptVO> depts;

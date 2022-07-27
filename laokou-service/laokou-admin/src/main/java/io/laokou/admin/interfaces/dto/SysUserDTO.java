@@ -22,4 +22,6 @@ public class SysUserDTO {
 
     private Long editor;
 
+    private Long deptId;
+
 }

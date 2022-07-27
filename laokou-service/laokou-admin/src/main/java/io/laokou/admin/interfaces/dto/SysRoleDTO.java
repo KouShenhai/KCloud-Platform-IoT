@@ -12,4 +12,6 @@ public class SysRoleDTO {
 
     private List<Long> menuIds;
 
+    private List<Long> deptIds;
+
 }

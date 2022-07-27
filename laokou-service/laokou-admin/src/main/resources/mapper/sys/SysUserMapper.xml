@@ -11,6 +11,7 @@
     ,a.email as email
     ,a.mobile as mobile
     ,a.password as password
+    ,a.dept_id as deptId
     ,a.zfb_openid as zfbOpenid
     FROM `boot_sys_user` a
     where a.del_flag = '0'
@@ -71,7 +72,10 @@
                 mobile = #{dto.mobile},
             </if>
             <if test="dto.editor != null">
-                editor = #{dto.editor}
+                editor = #{dto.editor},
+            </if>
+            <if test="dto.deptId != null">
+                dept_id = #{dto.deptId}
             </if>
             where id = #{dto.id}
         </set>

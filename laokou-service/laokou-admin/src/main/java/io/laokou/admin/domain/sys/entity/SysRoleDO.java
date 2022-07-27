@@ -30,4 +30,11 @@ public class SysRoleDO extends BaseDO {
     @ApiModelProperty(value = "角色排序",name = "sort",required = true,example = "1")
     private Integer sort;
 
+    /**
+     * 部门id
+     */
+    @TableField("dept_id")
+    @ApiModelProperty(value = "部门id",name = "deptId",required = true,example = "0")
+    private Long deptId;
+
 }

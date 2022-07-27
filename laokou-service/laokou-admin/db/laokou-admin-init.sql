@@ -118,7 +118,7 @@ CREATE TABLE `boot_sys_dict` (
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `sort` int(11) DEFAULT '1' COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统字典';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='字典';
 
 CREATE TABLE `boot_zfb_user` (
   `id` bigint(20) NOT NULL COMMENT 'id',
@@ -189,6 +189,27 @@ CREATE TABLE `boot_sys_message_detail` (
   `read_flag` tinyint(1) DEFAULT '0' COMMENT '是否已读 0未读 1已读',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息详情';
+
+CREATE TABLE `boot_sys_dept` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `pid` bigint(20) NOT NULL COMMENT '父节点',
+  `name` varchar(100) DEFAULT NULL COMMENT '名称',
+  `status` tinyint(1) DEFAULT NULL COMMENT '0正常 1停用',
+  `sort` int(11) DEFAULT '1' COMMENT '排序',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) DEFAULT '0' COMMENT '1已删除 0未删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='部门';
+
+CREATE TABLE `boot_sys_role_dept` (
+  `role_id` bigint(20) NOT NULL COMMENT '角色id',
+  `dept_id` bigint(20) NOT NULL COMMENT '部门id',
+  KEY `role_id` (`role_id`) USING BTREE,
+  KEY `menu_id` (`dept_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色-部门';
 
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1535881096963563522', '1535878154046939137', 'sys:user:view', '0', '用户管理', '/sys/user/view', '0', 'GET', 'user', '1341620898007281665', '1341620898007281665', '2022-06-16 04:04:56', '2022-06-15 20:05:57', '0', '1000');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1391677542887788567', '1535878154046939137', 'sys:menu:view', '0', '菜单管理', '/sys/menu/view', '0', 'GET', 'treeTable', '1341620898007281665', '1341620898007281665', '2022-06-12 23:36:44', '2022-06-12 23:36:44', '0', '3000');
