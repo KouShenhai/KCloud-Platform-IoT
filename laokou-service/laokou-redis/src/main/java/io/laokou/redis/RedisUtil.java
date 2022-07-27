@@ -1,12 +1,11 @@
 package io.laokou.redis;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 /**
  * Redis工具类
@@ -110,13 +109,34 @@ public final class RedisUtil {
     }
 
     public final Long getKeysSize() {
-        final Object obj2 = redisTemplate.execute((RedisCallback) connection -> connection.dbSize());
-        return null == obj2 ? 0 : Long.valueOf(obj2.toString());
+        final Object obj = redisTemplate.execute((RedisCallback) connection -> connection.dbSize());
+        return obj == null ? 0 : Long.valueOf(obj.toString());
     }
 
-    public final Long getUsedMemory() {
-        final Object obj1 = redisTemplate.execute((RedisCallback) connection -> Optional.ofNullable(connection.info("memory")).orElseThrow(RuntimeException::new).get("used_memory"));
-        return null == obj1 ? 0 : Long.valueOf(obj1.toString());
+    public final List<Map<String, String>> getCommandStatus() {
+        final Properties commandStats = (Properties) redisTemplate.execute((RedisCallback<Object>) connection -> connection.info("commandstats"));
+        List<Map<String, String>> pieList = new ArrayList<>();
+        commandStats.stringPropertyNames().forEach(key -> {
+            Map<String, String> data = new HashMap<>(2);
+            String property = commandStats.getProperty(key);
+            data.put("label", StringUtils.removeStart(key, "cmdstat_"));
+            data.put("value", StringUtils.substringBetween(property, "calls=", ",usec"));
+            pieList.add(data);
+        });
+        return pieList;
+    }
+
+    public final Map<String, String> getInfo() {
+        final Properties properties = (Properties) redisTemplate.execute((RedisCallback) connection -> connection.info());
+        final Set<String> set = properties.stringPropertyNames();
+        final Iterator<String> iterator = set.iterator();
+        Map<String,String> dataMap = new HashMap<>(set.size());
+        while (iterator.hasNext()) {
+            final String key = iterator.next();
+            final String value = properties.getProperty(key);
+            dataMap.put(key, value);
+        }
+        return dataMap;
     }
 
 }

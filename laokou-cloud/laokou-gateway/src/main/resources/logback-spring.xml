@@ -8,7 +8,7 @@
     <springProfile name="dev,test">
         <logger name="org.springframework.web" level="INFO"/>
         <logger name="org.springboot.sample" level="INFO" />
-        <logger name="io.laokou.gateway" level="DEBUG" />
+        <logger name="io.laokou.gateway" level="INFO" />
     </springProfile>
 
     <!-- 生产环境 -->

@@ -34,7 +34,7 @@ spring:
 
 logging:
   file:
-    name: /opt/logs/${spring.application.name}/info.log
+    name: /opt/logs/${spring.application.name}/error.log
 
 app:
   id: gateway # 应用全局唯一的身份标识

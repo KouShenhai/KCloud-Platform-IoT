@@ -90,7 +90,7 @@ oauth:
 
 logging:
   file:
-    name: /opt/logs/${spring.application.name}/info.log
+    name: /opt/logs/${spring.application.name}/error.log
 
 dynamic:
   datasource:
