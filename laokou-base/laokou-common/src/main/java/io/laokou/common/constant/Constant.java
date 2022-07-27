@@ -55,7 +55,7 @@ public interface Constant {
     /**
      * yes
      */
-    Integer YES = 0;
+    Integer YES = 1;
     /**
      * 认证标识
      */

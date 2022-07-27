@@ -1,14 +1,14 @@
 package io.laokou.admin.interfaces.controller;
 import io.laokou.admin.application.service.SysDeptApplicationService;
+import io.laokou.admin.interfaces.dto.SysDeptDTO;
+import io.laokou.admin.interfaces.qo.SysDeptQO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.common.vo.SysDeptVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 /**
  * 系统部门
@@ -32,8 +32,20 @@ public class SysDeptApiController {
 
     @PostMapping("/query")
     @ApiOperation("系统部门>查询")
-    public HttpResultUtil<List<SysDeptVO>> query() {
-        return new HttpResultUtil<List<SysDeptVO>>().ok(sysDeptApplicationService.queryDeptList());
+    public HttpResultUtil<List<SysDeptVO>> query(@RequestBody SysDeptQO qo) {
+        return new HttpResultUtil<List<SysDeptVO>>().ok(sysDeptApplicationService.queryDeptList(qo));
+    }
+
+    @PostMapping("/insert")
+    @ApiOperation("系统部门>新增")
+    public HttpResultUtil<Boolean> insert(@RequestBody SysDeptDTO dto, HttpServletRequest request) {
+        return new HttpResultUtil<Boolean>().ok(sysDeptApplicationService.insertDept(dto,request));
+    }
+
+    @PutMapping("/update")
+    @ApiOperation("系统部门>修改")
+    public HttpResultUtil<Boolean> update(@RequestBody SysDeptDTO dto, HttpServletRequest request) {
+        return new HttpResultUtil<Boolean>().ok(sysDeptApplicationService.updateDept(dto,request));
     }
 
 }

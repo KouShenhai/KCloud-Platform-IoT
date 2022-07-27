@@ -2,8 +2,10 @@ package io.laokou.admin.domain.sys.repository.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import io.laokou.admin.domain.sys.entity.SysDeptDO;
+import io.laokou.admin.interfaces.qo.SysDeptQO;
 import io.laokou.common.vo.SysDeptVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import java.util.*;
 /**
@@ -15,6 +17,6 @@ import java.util.*;
 @Repository
 public interface SysDeptMapper extends BaseMapper<SysDeptDO> {
 
-    List<SysDeptVO> getDeptList();
+    List<SysDeptVO> getDeptList(@Param("qo") SysDeptQO qo);
 
 }

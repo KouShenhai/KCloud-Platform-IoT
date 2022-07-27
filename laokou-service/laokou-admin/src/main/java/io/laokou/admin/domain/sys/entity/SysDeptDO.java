@@ -36,6 +36,9 @@ public class SysDeptDO extends BaseDO {
     @ApiModelProperty(value = "部门名称",name = "name",required = true,example = "老寇云")
     private String name;
 
+    /**
+     * 排序
+     */
     @TableField("sort")
     @ApiModelProperty(value = "排序",name = "sort",example = "1")
     private Integer sort;

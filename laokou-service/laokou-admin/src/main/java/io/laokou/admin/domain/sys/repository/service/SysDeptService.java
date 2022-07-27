@@ -2,6 +2,7 @@ package io.laokou.admin.domain.sys.repository.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import io.laokou.admin.domain.sys.entity.SysDeptDO;
+import io.laokou.admin.interfaces.qo.SysDeptQO;
 import io.laokou.common.vo.SysDeptVO;
 
 import java.util.List;
@@ -13,6 +14,6 @@ import java.util.List;
  */
 public interface SysDeptService extends IService<SysDeptDO> {
 
-    List<SysDeptVO> getDeptList();
+    List<SysDeptVO> getDeptList(SysDeptQO qo);
 
 }

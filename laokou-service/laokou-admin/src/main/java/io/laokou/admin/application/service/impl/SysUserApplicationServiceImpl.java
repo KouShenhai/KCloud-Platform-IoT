@@ -1,6 +1,6 @@
 package io.laokou.admin.application.service.impl;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.SysUserApplicationService;
@@ -11,6 +11,7 @@ import io.laokou.admin.domain.sys.repository.service.SysUserRoleService;
 import io.laokou.admin.domain.sys.repository.service.SysUserService;
 import io.laokou.admin.infrastructure.common.password.PasswordUtil;
 import io.laokou.admin.interfaces.vo.OptionVO;
+import io.laokou.common.constant.Constant;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
@@ -57,7 +58,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (SuperAdminEnum.YES.ordinal() == userDetail.getSuperAdmin() && SuperAdminEnum.YES.ordinal() != userDetail2.getSuperAdmin()) {
             throw new CustomException("只有超级管理员才能修改");
         }
-        int count = sysUserService.count(new LambdaQueryWrapper<SysUserDO>().eq(SysUserDO::getUsername, dto.getUsername()).ne(SysUserDO::getId,id));
+        int count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername()).eq(SysUserDO::getDelFlag, Constant.NO).ne(SysUserDO::getId,id));
         if (count > 0) {
             throw new CustomException("账号已存在，请重新填写");
         }
@@ -65,7 +66,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         sysUserService.updateUser(dto);
         List<Long> roleIds = dto.getRoleIds();
         //删除中间表
-        sysUserRoleService.remove(new LambdaQueryWrapper<SysUserRoleDO>().eq(SysUserRoleDO::getUserId, dto.getId()));
+        sysUserRoleService.remove(Wrappers.lambdaQuery(SysUserRoleDO.class).eq(SysUserRoleDO::getUserId, dto.getId()));
         if (CollectionUtils.isNotEmpty(roleIds)) {
             saveOrUpdate(dto.getId(),roleIds);
         }
@@ -76,7 +77,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @DataSource("master")
     public Boolean insertUser(SysUserDTO dto, HttpServletRequest request) {
         SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
-        int count = sysUserService.count(new LambdaQueryWrapper<SysUserDO>().eq(SysUserDO::getUsername, sysUserDO.getUsername()));
+        int count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, sysUserDO.getUsername()).eq(SysUserDO::getDelFlag, Constant.NO));
         if (count > 0) {
             throw new CustomException("账号已存在，请重新填写");
         }
@@ -135,7 +136,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
                 sysUserRoleDO.setUserId(userId);
                 doList.add(sysUserRoleDO);
             }
-            sysUserRoleService.saveBatch(doList);
+            return sysUserRoleService.saveBatch(doList);
         }
         return false;
     }

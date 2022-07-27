@@ -1,6 +1,6 @@
 package io.laokou.admin.application.service.impl;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.SysRoleApplicationService;
@@ -8,6 +8,7 @@ import io.laokou.admin.domain.sys.entity.SysRoleDO;
 import io.laokou.admin.domain.sys.entity.SysRoleMenuDO;
 import io.laokou.admin.domain.sys.repository.service.SysRoleMenuService;
 import io.laokou.admin.domain.sys.repository.service.SysRoleService;
+import io.laokou.common.constant.Constant;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.SysRoleDTO;
 import io.laokou.admin.interfaces.qo.SysRoleQO;
@@ -57,9 +58,9 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     @DataSource("master")
     public Boolean insertRole(SysRoleDTO dto, HttpServletRequest request) {
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
-        int count = sysRoleService.count(new LambdaQueryWrapper<SysRoleDO>().eq(SysRoleDO::getName, roleDO.getName()));
+        int count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, roleDO.getName()).eq(SysRoleDO::getDelFlag, Constant.NO));
         if (count > 0) {
-            throw new CustomException("角色已存在，请重新输入");
+            throw new CustomException("角色已存在，请重新填写");
         }
         roleDO.setCreator(SecurityUser.getUserId(request));
         sysRoleService.save(roleDO);
@@ -88,16 +89,16 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     @DataSource("master")
     public Boolean updateRole(SysRoleDTO dto, HttpServletRequest request) {
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
-        int count = sysRoleService.count(new LambdaQueryWrapper<SysRoleDO>().eq(SysRoleDO::getName, roleDO.getName()).ne(SysRoleDO::getId,roleDO.getId()));
+        int count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, roleDO.getName()).eq(SysRoleDO::getDelFlag, Constant.NO).ne(SysRoleDO::getId,roleDO.getId()));
         if (count > 0) {
-            throw new CustomException("角色已存在，请重新输入");
+            throw new CustomException("角色已存在，请重新填写");
         }
         Long userId = SecurityUser.getUserId(request);
         roleDO.setEditor(userId);
         sysRoleService.updateById(roleDO);
         List<Long> menuIds = dto.getMenuIds();
         //删除中间表
-        sysRoleMenuService.remove(new LambdaQueryWrapper<SysRoleMenuDO>().eq(SysRoleMenuDO::getRoleId,dto.getId()));
+        sysRoleMenuService.remove(Wrappers.lambdaQuery(SysRoleMenuDO.class).eq(SysRoleMenuDO::getRoleId,dto.getId()));
         if (CollectionUtils.isNotEmpty(menuIds)) {
             saveOrUpdate(roleDO.getId(),dto.getMenuIds());
         }
