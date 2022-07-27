@@ -53,8 +53,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
             throw new CustomException("主键不存在");
         }
         Long userId = SecurityUser.getUserId(request);
-        UserDetail userDetail = sysUserService.getUserDetail(id, null);
-        UserDetail userDetail2 = sysUserService.getUserDetail(userId, null);
+        UserDetail userDetail = sysUserService.getUserDetail(id);
+        UserDetail userDetail2 = sysUserService.getUserDetail(userId);
         if (SuperAdminEnum.YES.ordinal() == userDetail.getSuperAdmin() && SuperAdminEnum.YES.ordinal() != userDetail2.getSuperAdmin()) {
             throw new CustomException("只有超级管理员才能修改");
         }
@@ -112,8 +112,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @DataSource("master")
     public Boolean deleteUser(Long id,HttpServletRequest request) {
         Long userId = SecurityUser.getUserId(request);
-        UserDetail userDetail = sysUserService.getUserDetail(id, null);
-        UserDetail userDetail2 = sysUserService.getUserDetail(userId, null);
+        UserDetail userDetail = sysUserService.getUserDetail(id);
+        UserDetail userDetail2 = sysUserService.getUserDetail(userId);
         if (SuperAdminEnum.YES.ordinal() == userDetail.getSuperAdmin() && SuperAdminEnum.YES.ordinal() != userDetail2.getSuperAdmin()) {
             throw new CustomException("只有超级管理员才能删除");
         }

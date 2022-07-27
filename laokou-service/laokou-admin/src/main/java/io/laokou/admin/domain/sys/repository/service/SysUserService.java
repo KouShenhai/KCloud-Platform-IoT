@@ -24,11 +24,10 @@ public interface SysUserService extends IService<SysUserDO> {
 
     /**
      * 获取用户信息
-     * @param id
-     * @param username
+     * @param userId
      * @return
      */
-    UserDetail getUserDetail(Long id,String username);
+    UserDetail getUserDetail(Long userId);
 
     /**
      * 根据openid获取username

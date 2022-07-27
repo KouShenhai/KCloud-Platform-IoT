@@ -34,7 +34,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     @DataSource("master")
     public SysMenuVO getMenuList(HttpServletRequest request) {
         Long userId = Long.valueOf(request.getHeader(Constant.USER_KEY_HEAD));
-        UserDetail userDetail = sysUserService.getUserDetail(userId,null);
+        UserDetail userDetail = sysUserService.getUserDetail(userId);
         List<SysMenuVO> menuList = sysMenuService.getMenuList(userDetail, true,0);
         return buildMenu(menuList);
     }

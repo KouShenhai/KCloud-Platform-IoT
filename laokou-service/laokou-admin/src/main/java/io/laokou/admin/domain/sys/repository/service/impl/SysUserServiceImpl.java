@@ -1,4 +1,5 @@
 package io.laokou.admin.domain.sys.repository.service.impl;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.infrastructure.common.password.PasswordUtil;
@@ -41,8 +42,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserDO> im
     }
 
     @Override
-    public UserDetail getUserDetail(Long id, String username) {
-        return this.baseMapper.getUserDetail(id, username);
+    public UserDetail getUserDetail(Long userId) {
+        //region Description
+        String userInfoKey = RedisKeyUtil.getUserInfoKey(userId);
+        String json = redisUtil.get(userInfoKey);
+        UserDetail userDetail;
+        if (org.apache.commons.lang3.StringUtils.isNotBlank(json)) {
+            userDetail = JSON.parseObject(json, UserDetail.class);
+        } else {
+            userDetail = this.baseMapper.getUserDetail(userId,null);
+        }
+        return userDetail;
+        //endregion
     }
 
     @Override
