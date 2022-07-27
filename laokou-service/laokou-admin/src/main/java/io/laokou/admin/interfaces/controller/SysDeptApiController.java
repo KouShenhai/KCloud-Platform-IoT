@@ -60,4 +60,10 @@ public class SysDeptApiController {
         return new HttpResultUtil<Boolean>().ok(sysDeptApplicationService.deleteDept(id));
     }
 
+    @GetMapping("/get")
+    @ApiOperation("系统部门>部门树ids")
+    public HttpResultUtil<List<Long>> get(@RequestParam(value = "roleId")Long roleId) {
+        return new HttpResultUtil<List<Long>>().ok(sysDeptApplicationService.getDeptIdsByRoleId(roleId));
+    }
+
 }

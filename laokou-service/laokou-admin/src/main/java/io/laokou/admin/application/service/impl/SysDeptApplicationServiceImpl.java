@@ -75,6 +75,11 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
         return sysDeptService.getDept(id);
     }
 
+    @Override
+    public List<Long> getDeptIdsByRoleId(Long roleId) {
+        return sysDeptService.getDeptIdsByRoleId(roleId);
+    }
+
     /**
      * 组装树部门
      * @param deptList

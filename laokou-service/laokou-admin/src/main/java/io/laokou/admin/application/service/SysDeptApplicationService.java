@@ -25,4 +25,5 @@ public interface SysDeptApplicationService {
 
     SysDeptVO getDept(Long id);
 
+    List<Long> getDeptIdsByRoleId(Long roleId);
 }

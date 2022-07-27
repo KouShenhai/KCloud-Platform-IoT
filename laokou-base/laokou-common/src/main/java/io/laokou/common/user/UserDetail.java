@@ -24,5 +24,8 @@ public class UserDetail {
     private Long deptId;
     private List<String> permissionsList;
     private List<SysRoleVO> roles;
+    /**
+     * 数据权限
+     */
     private List<SysDeptVO> depts;
 }

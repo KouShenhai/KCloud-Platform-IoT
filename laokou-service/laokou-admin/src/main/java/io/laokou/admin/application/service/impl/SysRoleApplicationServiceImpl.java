@@ -85,7 +85,6 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     }
 
     private Boolean saveOrUpdate(Long roleId,List<Long> menuIds,List<Long> deptIds) {
-        boolean flag = false;
         if (CollectionUtils.isNotEmpty(menuIds)) {
             List<SysRoleMenuDO> roleMenuList = Lists.newArrayList();
             for (Long menuId : menuIds) {
@@ -94,7 +93,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
                 roleMenuDO.setRoleId(roleId);
                 roleMenuList.add(roleMenuDO);
             }
-            flag = sysRoleMenuService.saveBatch(roleMenuList);
+            sysRoleMenuService.saveBatch(roleMenuList);
         }
         if (CollectionUtils.isNotEmpty(deptIds)) {
             List<SysRoleDeptDO> roleDeptList = Lists.newArrayList();
@@ -104,9 +103,9 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
                 roleDeptDO.setRoleId(roleId);
                 roleDeptList.add(roleDeptDO);
             }
-            flag = flag && sysRoleDeptService.saveBatch(roleDeptList);
+            sysRoleDeptService.saveBatch(roleDeptList);
         }
-        return flag;
+        return true;
     }
 
     @Override

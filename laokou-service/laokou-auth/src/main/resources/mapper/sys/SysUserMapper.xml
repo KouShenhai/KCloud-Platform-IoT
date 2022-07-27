@@ -10,6 +10,7 @@
     ,a.status as status
     ,a.email as email
     ,a.mobile as mobile
+    ,a.dept_id as deptId
     ,a.password as password
     ,a.zfb_openid as zfbOpenid
     FROM `boot_sys_user` a

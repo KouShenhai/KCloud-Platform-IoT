@@ -20,4 +20,5 @@ public interface SysDeptService extends IService<SysDeptDO> {
 
     SysDeptVO getDept(Long id);
 
+    List<Long> getDeptIdsByRoleId(Long roleId);
 }

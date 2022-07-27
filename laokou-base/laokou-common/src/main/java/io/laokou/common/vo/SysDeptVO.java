@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 public class SysDeptVO extends TreeUtil.TreeNo<SysDeptVO> {
 
-    private Integer status;
-
     private Integer sort;
 
 }

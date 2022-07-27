@@ -31,4 +31,10 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptDO> im
     public SysDeptVO getDept(Long id) {
         return this.baseMapper.getDept(id);
     }
+
+    @Override
+    public List<Long> getDeptIdsByRoleId(Long roleId) {
+        return this.baseMapper.getDeptIdsByRoleId(roleId);
+    }
+
 }

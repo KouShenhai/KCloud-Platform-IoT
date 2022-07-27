@@ -276,7 +276,6 @@ CREATE TABLE `boot_sys_dept` (
   `id` bigint(20) NOT NULL COMMENT 'id',
   `pid` bigint(20) NOT NULL COMMENT '父节点',
   `name` varchar(100) DEFAULT NULL COMMENT '名称',
-  `status` tinyint(1) DEFAULT NULL COMMENT '0正常 1停用',
   `sort` int(11) DEFAULT '1' COMMENT '排序',
   `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
   `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
@@ -285,10 +284,10 @@ CREATE TABLE `boot_sys_dept` (
   `del_flag` tinyint(1) DEFAULT '0' COMMENT '1已删除 0未删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='部门';
-INSERT INTO `boot_sys_dept` (`id`, `pid`, `name`, `status`, `sort`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`) VALUES ('1535858679453085698', '1535887940687765505', '广州分公司', '0', '666', '1341620898007281665', '1341620898007281665', '2022-07-27 20:50:20', '2022-07-27 20:50:18', '0');
-INSERT INTO `boot_sys_dept` (`id`, `pid`, `name`, `status`, `sort`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`) VALUES ('1535881356595175426', '1535887940687765505', '长沙分公司', '0', '111', '1341620898007281665', '1341620898007281665', '2022-07-27 20:50:26', '2022-07-27 20:50:25', '0');
-INSERT INTO `boot_sys_dept` (`id`, `pid`, `name`, `status`, `sort`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`) VALUES ('1535887129341599746', '1535887940687765505', '深圳分公司', '0', '888', '1341620898007281665', '1341620898007281665', '2022-07-27 20:50:12', '2022-07-27 20:50:10', '0');
-INSERT INTO `boot_sys_dept` (`id`, `pid`, `name`, `status`, `sort`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`) VALUES ('1535887940687765505', '0', '老寇云集团', '0', '1000', '1341620898007281665', '1341620898007281665', '2022-07-27 20:48:56', '2022-07-27 20:48:55', '0');
+INSERT INTO `boot_sys_dept` (`id`, `pid`, `name`, `sort`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`) VALUES ('1535858679453085698', '1535887940687765505', '广州分公司', '666', '1341620898007281665', '1341620898007281665', '2022-07-27 20:50:20', '2022-07-27 20:50:18', '0');
+INSERT INTO `boot_sys_dept` (`id`, `pid`, `name`, `sort`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`) VALUES ('1535881356595175426', '1535887940687765505', '长沙分公司', '111', '1341620898007281665', '1341620898007281665', '2022-07-27 20:50:26', '2022-07-27 20:50:25', '0');
+INSERT INTO `boot_sys_dept` (`id`, `pid`, `name`, `sort`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`) VALUES ('1535887129341599746', '1535887940687765505', '深圳分公司', '888', '1341620898007281665', '1341620898007281665', '2022-07-27 20:50:12', '2022-07-27 20:50:10', '0');
+INSERT INTO `boot_sys_dept` (`id`, `pid`, `name`, `sort`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`) VALUES ('1535887940687765505', '0', '老寇云集团', '1000', '1341620898007281665', '1341620898007281665', '2022-07-27 20:48:56', '2022-07-27 20:48:55', '0');
 ------------------------------------部门------------------------------------
 
 ------------------------------------角色部门------------------------------------

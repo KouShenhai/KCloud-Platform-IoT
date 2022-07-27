@@ -23,4 +23,6 @@ public interface SysDeptMapper extends BaseMapper<SysDeptDO> {
 
     SysDeptVO getDept(@Param("id") Long id);
 
+    List<Long> getDeptIdsByRoleId(@Param("roleId") Long roleId);
+
 }

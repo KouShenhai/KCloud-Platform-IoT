@@ -23,13 +23,6 @@ public class SysDeptDO extends BaseDO {
     private Long pid;
 
     /**
-     * 状态 0停用 1正常
-     */
-    @ApiModelProperty(value = "状态 0停用 1正常",name = "status",example = "1")
-    @TableField("status")
-    private Integer status;
-
-    /**
      * 部门名称
      */
     @TableField("name")
