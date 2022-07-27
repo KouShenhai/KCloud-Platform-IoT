@@ -1,4 +1,5 @@
 package io.laokou.gateway.exception;
+import com.alibaba.ttl.TransmittableThreadLocal;
 import feign.FeignException;
 import io.laokou.common.utils.HttpResultUtil;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
 	private List<HttpMessageReader<?>> messageReaders = Collections.emptyList();
 	private List<HttpMessageWriter<?>> messageWriters = Collections.emptyList();
 	private List<ViewResolver> viewResolvers = Collections.emptyList();
-	private static final ThreadLocal<HttpResultUtil<?>> threadLocal = new ThreadLocal<>();
+	private static final TransmittableThreadLocal<HttpResultUtil<?>> threadLocal = new TransmittableThreadLocal<>();
 
 	@Override
 	public Mono<Void> handle(ServerWebExchange exchange, Throwable e) {

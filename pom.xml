@@ -95,6 +95,8 @@
         <oracle.version>11.2.0.3</oracle.version>
         <!--freemarker模板引擎依赖-->
         <freemarker.version>2.3.31</freemarker.version>
+        <!--transmittable-thread-local版本-->
+        <transmittable-thread-local.version>2.12.1</transmittable-thread-local.version>
     </properties>
     <dependencyManagement>
         <dependencies>
