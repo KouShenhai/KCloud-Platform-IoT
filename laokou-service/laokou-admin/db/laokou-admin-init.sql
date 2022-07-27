@@ -122,9 +122,9 @@ CREATE TABLE `boot_sys_dict` (
 
 CREATE TABLE `boot_zfb_user` (
   `id` bigint(20) NOT NULL COMMENT 'id',
-  `creator` bigint(20) NOT NULL COMMENT '创建人',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
   `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `create_date` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
   `openid` varchar(32) NOT NULL COMMENT '支付宝用户唯一标识',

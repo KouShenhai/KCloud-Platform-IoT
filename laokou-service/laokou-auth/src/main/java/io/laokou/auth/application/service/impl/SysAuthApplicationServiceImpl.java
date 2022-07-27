@@ -27,7 +27,6 @@ import io.laokou.common.enums.ResultStatusEnum;
 import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.exception.ErrorCode;
-import io.laokou.common.user.SecurityUser;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.*;
 import io.laokou.datasource.annotation.DataSource;
@@ -371,7 +370,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                     entity.setProvince(province);
                     entity.setCity(city);
                     entity.setGender(gender);
-                    entity.setCreator(SecurityUser.getUserId(request));
                     zfbUserService.removeById(userId);
                     zfbUserService.save(entity);
                     sendRedirectLogin(sysUserService.getUsernameByOpenid(userId),response);
@@ -383,7 +381,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             if (StringUtils.isNotBlank(username)) {
                 final LoginVO loginInfo = getLoginInfo(username, null, false);
                 if (loginInfo != null) {
-                    params += "?" + Constant.ACCESS_TOKEN + "=" + loginInfo.getToken();
+                    params += "&" + Constant.ACCESS_TOKEN + "=" + loginInfo.getToken();
                 }
             }
             response.sendRedirect(REDIRECT_URL + params);
