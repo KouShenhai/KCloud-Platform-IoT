@@ -1,10 +1,12 @@
 package io.laokou.redis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 /**
  * Redis工具类
@@ -105,6 +107,16 @@ public final class RedisUtil {
 
     public final String rightPop(String key){
         return redisTemplate.opsForList().rightPop(key);
+    }
+
+    public final Long getKeysSize() {
+        final Object obj2 = redisTemplate.execute((RedisCallback) connection -> connection.dbSize());
+        return null == obj2 ? 0 : Long.valueOf(obj2.toString());
+    }
+
+    public final Long getUsedMemory() {
+        final Object obj1 = redisTemplate.execute((RedisCallback) connection -> Optional.ofNullable(connection.info("memory")).orElseThrow(RuntimeException::new).get("used_memory"));
+        return null == obj1 ? 0 : Long.valueOf(obj1.toString());
     }
 
 }
