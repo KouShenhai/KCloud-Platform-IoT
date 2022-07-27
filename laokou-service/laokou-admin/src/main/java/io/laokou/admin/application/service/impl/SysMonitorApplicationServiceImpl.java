@@ -1,12 +1,10 @@
 package io.laokou.admin.application.service.impl;
-
 import io.laokou.admin.application.service.SysMonitorApplicationService;
 import io.laokou.redis.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -21,8 +19,6 @@ public class SysMonitorApplicationServiceImpl implements SysMonitorApplicationSe
 
     @Override
     public void getRedisInfo() {
-        System.out.println(redisUtil.getCommandStatus());
-        System.out.println(redisUtil.getInfo());
-        System.out.println(redisUtil.getKeysSize());
+
     }
 }
