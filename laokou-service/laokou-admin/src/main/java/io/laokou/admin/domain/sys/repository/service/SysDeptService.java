@@ -16,4 +16,8 @@ public interface SysDeptService extends IService<SysDeptDO> {
 
     List<SysDeptVO> getDeptList(SysDeptQO qo);
 
+    void deleteDept(Long id);
+
+    SysDeptVO getDept(Long id);
+
 }

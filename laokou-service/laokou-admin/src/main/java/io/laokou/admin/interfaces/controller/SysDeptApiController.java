@@ -48,4 +48,16 @@ public class SysDeptApiController {
         return new HttpResultUtil<Boolean>().ok(sysDeptApplicationService.updateDept(dto,request));
     }
 
+    @GetMapping("/detail")
+    @ApiOperation("系统部门>详情")
+    public HttpResultUtil<SysDeptVO> detail(@RequestParam("id")Long id) {
+        return new HttpResultUtil<SysDeptVO>().ok(sysDeptApplicationService.getDept(id));
+    }
+
+    @DeleteMapping("/delete")
+    @ApiOperation("系统部门>删除")
+    public HttpResultUtil<Boolean> delete(@RequestParam("id")Long id) {
+        return new HttpResultUtil<Boolean>().ok(sysDeptApplicationService.deleteDept(id));
+    }
+
 }

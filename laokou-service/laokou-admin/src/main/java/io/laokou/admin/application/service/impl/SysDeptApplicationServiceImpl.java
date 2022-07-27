@@ -66,12 +66,13 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
 
     @Override
     public Boolean deleteDept(Long id) {
-        return null;
+        sysDeptService.deleteDept(id);
+        return true;
     }
 
     @Override
     public SysDeptVO getDept(Long id) {
-        return null;
+        return sysDeptService.getDept(id);
     }
 
     /**

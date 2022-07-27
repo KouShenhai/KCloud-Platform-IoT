@@ -21,4 +21,14 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptDO> im
     public List<SysDeptVO> getDeptList(SysDeptQO qo) {
         return this.baseMapper.getDeptList(qo);
     }
+
+    @Override
+    public void deleteDept(Long id) {
+        this.baseMapper.deleteDept(id);
+    }
+
+    @Override
+    public SysDeptVO getDept(Long id) {
+        return this.baseMapper.getDept(id);
+    }
 }

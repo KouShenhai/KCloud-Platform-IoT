@@ -19,4 +19,8 @@ public interface SysDeptMapper extends BaseMapper<SysDeptDO> {
 
     List<SysDeptVO> getDeptList(@Param("qo") SysDeptQO qo);
 
+    void deleteDept(@Param("id") Long id);
+
+    SysDeptVO getDept(@Param("id") Long id);
+
 }
