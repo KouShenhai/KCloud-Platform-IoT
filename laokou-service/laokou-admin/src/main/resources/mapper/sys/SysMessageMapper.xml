@@ -12,6 +12,9 @@
         <if test="qo.title != null and qo.title != ''">
             and title like concat('%',#{qo.title},'%')
         </if>
+        <if test="qo.sqlFilter != null and qo.sqlFilter != ''">
+            and ( ${qo.sqlFilter} )
+        </if>
          order by create_date desc
     </select>
 

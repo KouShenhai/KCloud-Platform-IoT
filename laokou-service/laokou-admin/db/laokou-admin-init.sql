@@ -158,6 +158,7 @@ CREATE TABLE `boot_sys_operate_log` (
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
   `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `dept_id` bigint(20) DEFAULT NULL COMMENT '部门id',
   PRIMARY KEY (`id`),
   KEY `idx_module` (`module`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='操作日志';
@@ -193,6 +194,7 @@ CREATE TABLE `boot_sys_dict` (
   `status` tinyint(1) DEFAULT NULL COMMENT '状态 0正常 1停用',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `sort` int(11) DEFAULT '1' COMMENT '排序',
+  `dept_id` bigint(20) DEFAULT NULL COMMENT '部门id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='字典';
 ------------------------------------字典------------------------------------
@@ -255,6 +257,7 @@ CREATE TABLE `boot_sys_message` (
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  `dept_id` bigint(20) DEFAULT NULL COMMENT '部门id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息';
 CREATE TABLE `boot_sys_message_detail` (

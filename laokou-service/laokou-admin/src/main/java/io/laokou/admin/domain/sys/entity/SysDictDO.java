@@ -35,4 +35,6 @@ public class SysDictDO extends BaseDO {
      */
     private Integer sort;
 
+    private Long deptId;
+
 }

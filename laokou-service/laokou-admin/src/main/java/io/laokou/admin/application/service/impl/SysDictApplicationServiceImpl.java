@@ -5,11 +5,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.laokou.admin.application.service.SysDictApplicationService;
 import io.laokou.admin.domain.sys.entity.SysDictDO;
 import io.laokou.admin.domain.sys.repository.service.SysDictService;
+import io.laokou.admin.domain.sys.repository.service.SysUserService;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.dto.SysDictDTO;
 import io.laokou.admin.interfaces.qo.SysDictQO;
 import io.laokou.admin.interfaces.vo.SysDictVO;
+import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.ConvertUtil;
+import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +28,12 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     @Autowired
     private SysDictService sysDictService;
 
+    @Autowired
+    private SysUserService sysUserService;
+
     @Override
     @DataSource("master")
+    @DataFilter(tableAlias = "boot_sys_dict")
     public IPage<SysDictVO> queryDictPage(SysDictQO qo) {
         IPage<SysDictVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysDictService.getDictList(page,qo);
@@ -43,6 +50,8 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     public Boolean insertDict(SysDictDTO dto, HttpServletRequest request) {
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
         dictDO.setCreator(SecurityUser.getUserId(request));
+        final UserDetail userDetail = sysUserService.getUserDetail(dictDO.getCreator());
+        dictDO.setDeptId(userDetail.getDeptId());
         return sysDictService.save(dictDO);
     }
 

@@ -11,7 +11,6 @@ import io.laokou.common.user.SecurityUser;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.TreeUtil;
 import io.laokou.common.vo.SysDeptVO;
-import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +41,6 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
 
     @Override
     @DataSource("master")
-    @DataFilter(tableAlias = "boot_sys_dept")
     public List<SysDeptVO> queryDeptList(SysDeptQO qo) {
         return sysDeptService.getDeptList(qo);
     }

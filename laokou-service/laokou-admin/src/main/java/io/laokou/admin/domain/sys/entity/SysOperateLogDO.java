@@ -68,4 +68,6 @@ public class SysOperateLogDO extends BaseDO {
      */
     private String methodName;
 
+    private Long deptId;
+
 }

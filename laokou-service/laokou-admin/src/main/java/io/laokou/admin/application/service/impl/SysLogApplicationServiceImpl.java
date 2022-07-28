@@ -6,13 +6,16 @@ import io.laokou.admin.domain.sys.entity.SysLoginLogDO;
 import io.laokou.admin.domain.sys.entity.SysOperateLogDO;
 import io.laokou.admin.domain.sys.repository.service.SysLoginLogService;
 import io.laokou.admin.domain.sys.repository.service.SysOperateLogService;
+import io.laokou.admin.domain.sys.repository.service.SysUserService;
 import io.laokou.admin.interfaces.qo.LoginLogQO;
 import io.laokou.admin.interfaces.qo.SysOperateLogQO;
 import io.laokou.admin.interfaces.vo.SysLoginLogVO;
 import io.laokou.admin.interfaces.vo.SysOperateLogVO;
 import io.laokou.common.dto.LoginLogDTO;
 import io.laokou.common.dto.OperateLogDTO;
+import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.ConvertUtil;
+import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,10 +31,15 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     @Autowired
     private SysLoginLogService sysLoginLogService;
 
+    @Autowired
+    private SysUserService sysUserService;
+
     @Override
     @DataSource("master")
     public Boolean insertOperateLog(OperateLogDTO dto) {
         SysOperateLogDO logDO = ConvertUtil.sourceToTarget(dto, SysOperateLogDO.class);
+        final UserDetail userDetail = sysUserService.getUserDetail(logDO.getCreator());
+        logDO.setDeptId(userDetail.getDeptId());
         return sysOperateLogService.save(logDO);
     }
 
@@ -44,6 +52,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
 
     @Override
     @DataSource("master")
+    @DataFilter(tableAlias = "boot_sys_operate_log")
     public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQO qo) {
         IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysOperateLogService.getOperateLogList(page,qo);

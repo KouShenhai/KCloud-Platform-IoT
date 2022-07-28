@@ -9,6 +9,7 @@ import io.laokou.admin.domain.sys.entity.SysMessageDO;
 import io.laokou.admin.domain.sys.entity.SysMessageDetailDO;
 import io.laokou.admin.domain.sys.repository.service.SysMessageDetailService;
 import io.laokou.admin.domain.sys.repository.service.SysMessageService;
+import io.laokou.admin.domain.sys.repository.service.SysUserService;
 import io.laokou.admin.infrastructure.component.event.SaveMessageEvent;
 import io.laokou.admin.infrastructure.component.pipeline.ProcessController;
 import io.laokou.admin.infrastructure.component.run.Task;
@@ -19,8 +20,11 @@ import io.laokou.admin.interfaces.vo.MessageDetailVO;
 import io.laokou.admin.interfaces.vo.MessageVO;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.user.SecurityUser;
+import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.SpringContextUtil;
+import io.laokou.datasource.annotation.DataFilter;
+import io.laokou.datasource.annotation.DataSource;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +61,9 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     private SysMessageService sysMessageService;
 
     @Autowired
+    private SysUserService sysUserService;
+
+    @Autowired
     private SysMessageDetailService sysMessageDetailService;
 
     @Override
@@ -86,10 +93,13 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
+    @DataSource("master")
     public Boolean insertMessage(MessageDTO dto) {
         SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
         messageDO.setCreateDate(new Date());
         messageDO.setCreator(dto.getUserId());
+        final UserDetail userDetail = sysUserService.getUserDetail(messageDO.getCreator());
+        messageDO.setDeptId(userDetail.getDeptId());
         sysMessageService.save(messageDO);
         Iterator<String> iterator = dto.getReceiver().iterator();
         List<SysMessageDetailDO> detailDOList = Lists.newArrayList();
@@ -109,23 +119,28 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
+    @DataSource("master")
+    @DataFilter(tableAlias = "boot_sys_message")
     public IPage<MessageVO> queryMessagePage(MessageQO qo) {
         IPage<MessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysMessageService.getMessageList(page,qo);
     }
 
     @Override
+    @DataSource("master")
     public MessageDetailVO getMessageByDetailId(Long id) {
         sysMessageService.readMessage(id);
         return sysMessageService.getMessageByDetailId(id);
     }
 
     @Override
+    @DataSource("master")
     public MessageDetailVO getMessageById(Long id) {
         return sysMessageService.getMessageById(id);
     }
 
     @Override
+    @DataSource("master")
     public IPage<MessageVO> getUnReadList(HttpServletRequest request, MessageQO qo) {
         IPage<MessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         final Long userId = SecurityUser.getUserId(request);
@@ -133,6 +148,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
+    @DataSource("master")
     public Integer unReadCount(HttpServletRequest request) {
         final Long userId = SecurityUser.getUserId(request);
         return sysMessageDetailService.count(Wrappers.lambdaQuery(SysMessageDetailDO.class).eq(SysMessageDetailDO::getUserId,userId)

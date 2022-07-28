@@ -49,7 +49,7 @@
                 and `status` = #{qo.status}
             </if>
             <if test="qo.sqlFilter != null and qo.sqlFilter != ''">
-                and ${qo.sqlFilter}
+                and ( ${qo.sqlFilter} )
             </if>
             order by create_date desc
     </select>
