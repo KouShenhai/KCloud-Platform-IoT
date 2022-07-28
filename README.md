@@ -31,7 +31,7 @@
 * 服务监控
 
 ### 系统架构
-![](http://assets.processon.com/chart_image/62e2406b1e0853070694817f.png)
+![](image/老寇云架构图.png)
 
 ### 技术体系
 
