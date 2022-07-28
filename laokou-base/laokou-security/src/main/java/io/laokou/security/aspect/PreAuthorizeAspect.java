@@ -44,7 +44,7 @@ public class PreAuthorizeAspect {
             return point.proceed();
         }
         if (checkPermission(userDetailUtil.getUserDetail(request),point)) {
-            point.proceed();
+            return point.proceed();
         }
         throw new CustomException(ErrorCode.FORBIDDEN);
     }

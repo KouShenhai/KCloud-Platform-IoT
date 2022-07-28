@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.laokou.auth.domain.sys.repository.mapper.SysDeptMapper">
+
+    <select id="getDeptList" resultType="io.laokou.common.vo.SysDeptVO">
+        select id,pid,`name`,sort from boot_sys_dept
+        where del_flag = '0'
+        order by sort desc
+    </select>
+
+    <select id="getDeptListByUserId" resultType="io.laokou.common.vo.SysDeptVO">
+   select distinct
+   boot_sys_dept.id
+   ,boot_sys_dept.pid
+   ,boot_sys_dept.`name`
+   ,boot_sys_dept.sort
+   from boot_sys_dept
+   ,boot_sys_role
+   ,boot_sys_role_dept
+   ,boot_sys_user
+   ,boot_sys_user_role
+   WHERE boot_sys_dept.id = boot_sys_role_dept.dept_id
+   AND boot_sys_role_dept.role_id = boot_sys_role.id
+    AND boot_sys_user.id = boot_sys_user_role.user_id
+    AND boot_sys_role.id = boot_sys_user_role.role_id
+    AND boot_sys_user.id = #{userId}
+   and boot_sys_dept.del_flag = '0'
+   order by boot_sys_dept.sort desc
+    </select>
+
+</mapper>

@@ -21,4 +21,9 @@ public @interface DataFilter {
      */
     String userId() default "creator";
 
+    /**
+     * 部门ID
+     */
+    String deptId() default "dept_id";
+
 }

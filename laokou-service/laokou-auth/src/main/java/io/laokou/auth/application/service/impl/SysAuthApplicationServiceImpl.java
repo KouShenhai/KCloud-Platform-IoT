@@ -8,10 +8,7 @@ import com.alipay.api.request.AlipayUserInfoShareRequest;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
 import io.laokou.auth.application.service.SysAuthApplicationService;
-import io.laokou.auth.domain.sys.repository.service.SysCaptchaService;
-import io.laokou.auth.domain.sys.repository.service.SysMenuService;
-import io.laokou.auth.domain.sys.repository.service.SysRoleService;
-import io.laokou.auth.domain.sys.repository.service.SysUserService;
+import io.laokou.auth.domain.sys.repository.service.*;
 import io.laokou.auth.domain.zfb.entity.ZfbUserDO;
 import io.laokou.auth.domain.zfb.repository.service.ZfbUserService;
 import io.laokou.auth.infrastructure.common.enums.AuthTypeEnum;
@@ -29,6 +26,7 @@ import io.laokou.common.exception.CustomException;
 import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.*;
+import io.laokou.common.vo.SysDeptVO;
 import io.laokou.datasource.annotation.DataSource;
 import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
@@ -79,6 +77,9 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     @Autowired
     private SysRoleService sysRoleService;
+
+    @Autowired
+    private SysDeptService sysDeptService;
 
     @Override
     @DataSource("master")
@@ -156,6 +157,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         List<String> permissionList = getPermissionList(userDetail);
         userDetail.setPermissionsList(permissionList);
         userDetail.setRoles(sysRoleService.getRoleListByUserId(userDetail.getId()));
+        userDetail.setDepts(getDeptList(userDetail));
         //用户信息
         String userInfoKey = RedisKeyUtil.getUserInfoKey(userId);
         redisUtil.delete(userInfoKey);
@@ -176,6 +178,16 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             return sysMenuService.getPermissionsListByUserId(userDetail.getId());
         }
         //endregion
+    }
+
+    private List<SysDeptVO> getDeptList(UserDetail userDetail) {
+        Integer superAdmin = userDetail.getSuperAdmin();
+        Long userId = userDetail.getId();
+        if (SuperAdminEnum.YES.ordinal() == superAdmin) {
+            return sysDeptService.getDeptList();
+        } else {
+            return sysDeptService.getDeptListByUserId(userId);
+        }
     }
 
     @Override
@@ -305,6 +317,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             }
             userDetail.setPermissionsList(getPermissionList(userDetail));
             userDetail.setRoles(sysRoleService.getRoleListByUserId(userId));
+            userDetail.setDepts(getDeptList(userDetail));
             redisUtil.set(userInfoKey, JSON.toJSONString(userDetail),RedisUtil.HOUR_ONE_EXPIRE);
         }
         return userDetail;

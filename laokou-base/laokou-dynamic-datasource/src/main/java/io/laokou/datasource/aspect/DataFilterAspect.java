@@ -5,6 +5,7 @@ import io.laokou.common.exception.CustomException;
 import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpContextUtil;
+import io.laokou.common.vo.SysRoleVO;
 import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.security.utils.UserDetailUtil;
 import org.apache.commons.collections.CollectionUtils;
@@ -65,11 +66,15 @@ public class DataFilterAspect {
         }
         StringBuilder sqlFilter = new StringBuilder();
         //用户列表
-//        List<Long> userIds = userDetail.getUsers().stream().map(item -> item.getId()).collect(Collectors.toList());
-//        if (CollectionUtils.isEmpty(userIds)) {
-//            throw new CustomException(ErrorCode.NOT_PERMISSIONS);
-//        }
-//        sqlFilter.append(" find_in_set(").append(tableAlias).append(dataFilter.userId()).append(",").append("'").append(StringUtils.join(userIds,",")).append("'").append(")");
+        List<Long> deptIds = userDetail.getDepts().stream().map(item -> item.getId()).collect(Collectors.toList());
+        List<SysRoleVO> roles = userDetail.getRoles();
+        if (CollectionUtils.isEmpty(roles)) {
+            throw new CustomException(ErrorCode.NOT_PERMISSIONS);
+        }
+        if (CollectionUtils.isEmpty(deptIds)) {
+            throw new CustomException(String.format("请联系管理配置[%s]的数据权限",StringUtils.join(roles.stream().map(item -> item.getName()).collect(Collectors.joining(",")),",")));
+        }
+        sqlFilter.append(" find_in_set(").append(tableAlias).append(dataFilter.deptId()).append(",").append("'").append(StringUtils.join(deptIds,",")).append("'").append(")");
         return sqlFilter.toString();
     }
 

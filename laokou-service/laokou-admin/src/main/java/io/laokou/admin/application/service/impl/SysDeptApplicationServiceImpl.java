@@ -11,6 +11,8 @@ import io.laokou.common.user.SecurityUser;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.TreeUtil;
 import io.laokou.common.vo.SysDeptVO;
+import io.laokou.datasource.annotation.DataFilter;
+import io.laokou.datasource.annotation.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -30,6 +32,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     private SysDeptService sysDeptService;
 
     @Override
+    @DataSource("master")
     public SysDeptVO getDeptList() {
         SysDeptQO qo = new SysDeptQO();
         qo.setStatus(Constant.NO);
@@ -38,11 +41,14 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     }
 
     @Override
+    @DataSource("master")
+    @DataFilter(tableAlias = "boot_sys_dept")
     public List<SysDeptVO> queryDeptList(SysDeptQO qo) {
         return sysDeptService.getDeptList(qo);
     }
 
     @Override
+    @DataSource("master")
     public Boolean insertDept(SysDeptDTO dto, HttpServletRequest request) {
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         int count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()).eq(SysDeptDO::getDelFlag, Constant.NO));
@@ -54,6 +60,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     }
 
     @Override
+    @DataSource("master")
     public Boolean updateDept(SysDeptDTO dto,HttpServletRequest request) {
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         int count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()).eq(SysDeptDO::getDelFlag, Constant.NO).ne(SysDeptDO::getId,dto.getId()));
@@ -65,17 +72,20 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     }
 
     @Override
+    @DataSource("master")
     public Boolean deleteDept(Long id) {
         sysDeptService.deleteDept(id);
         return true;
     }
 
     @Override
+    @DataSource("master")
     public SysDeptVO getDept(Long id) {
         return sysDeptService.getDept(id);
     }
 
     @Override
+    @DataSource("master")
     public List<Long> getDeptIdsByRoleId(Long roleId) {
         return sysDeptService.getDeptIdsByRoleId(roleId);
     }
