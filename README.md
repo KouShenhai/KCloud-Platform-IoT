@@ -30,6 +30,9 @@
 * 数据监控
 * 服务监控
 
+### 系统架构
+![](http://assets.processon.com/chart_image/62e2406b1e0853070694817f.png)
+
 ### 技术体系
 
 #### 四层架构
