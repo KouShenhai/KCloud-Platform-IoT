@@ -61,6 +61,7 @@
         └── laokou-common -- 公共组件
         └── laokou-dynamic-datasource 多数据源组件
         └── laokou-log -- 日志组件
+        └── laokou-security -- 认证组件
 ├── laokou-cloud
         └── laokou-gateway -- API网关
         └── laokou-monitor -- 服务监控
@@ -152,7 +153,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 ##### 配置文件
 ```xml
 <if test="qo.sqlFilter != null and qo.sqlFilter != ''">
-    and ${qo.sqlFilter}
+    and ( ${qo.sqlFilter} )
 </if>
 ```
 
