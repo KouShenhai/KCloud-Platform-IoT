@@ -11,7 +11,7 @@ import java.util.Map;
  * @date 2022/7/27 0027 下午 3:19
  */
 @Data
-public class RedisVO {
+public class CacheVO {
 
     private Long keysSize;
     private Map<String,String> info;

@@ -1,5 +1,6 @@
 package io.laokou.admin.application.service.impl;
 import io.laokou.admin.application.service.SysMonitorApplicationService;
+import io.laokou.admin.interfaces.vo.CacheVO;
 import io.laokou.redis.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,11 @@ public class SysMonitorApplicationServiceImpl implements SysMonitorApplicationSe
     private RedisUtil redisUtil;
 
     @Override
-    public void getRedisInfo() {
-
+    public CacheVO getCacheInfo() {
+        CacheVO vo = new CacheVO();
+        vo.setCommandStats(redisUtil.getCommandStatus());
+        vo.setInfo(redisUtil.getInfo());
+        vo.setKeysSize(redisUtil.getKeysSize());
+        return vo;
     }
 }

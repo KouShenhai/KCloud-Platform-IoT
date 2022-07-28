@@ -1,5 +1,6 @@
 package io.laokou.admin.application.service;
 
+import io.laokou.admin.interfaces.vo.CacheVO;
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -7,6 +8,6 @@ package io.laokou.admin.application.service;
  */
 public interface SysMonitorApplicationService {
 
-    void getRedisInfo();
+    CacheVO getCacheInfo();
 
 }
