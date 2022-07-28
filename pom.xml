@@ -97,6 +97,8 @@
         <freemarker.version>2.3.31</freemarker.version>
         <!--transmittable-thread-local版本-->
         <transmittable-thread-local.version>2.12.1</transmittable-thread-local.version>
+        <!--oshi版本-->
+        <oshi.version>5.8.0</oshi.version>
     </properties>
     <dependencyManagement>
         <dependencies>
