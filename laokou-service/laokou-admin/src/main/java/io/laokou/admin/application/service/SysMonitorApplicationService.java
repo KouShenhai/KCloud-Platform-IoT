@@ -1,6 +1,8 @@
 package io.laokou.admin.application.service;
 
 import io.laokou.admin.interfaces.vo.CacheVO;
+import io.laokou.admin.interfaces.vo.ServerVO;
+
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -9,5 +11,7 @@ import io.laokou.admin.interfaces.vo.CacheVO;
 public interface SysMonitorApplicationService {
 
     CacheVO getCacheInfo();
+
+    ServerVO getServerInfo() throws Exception;
 
 }
