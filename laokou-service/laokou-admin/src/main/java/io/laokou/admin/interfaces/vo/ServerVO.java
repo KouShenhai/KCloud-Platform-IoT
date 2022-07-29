@@ -1,11 +1,9 @@
 package io.laokou.admin.interfaces.vo;
-
-import java.net.UnknownHostException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Properties;
-
-import io.laokou.common.utils.IpUtil;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.net.NetUtil;
+import cn.hutool.core.util.NumberUtil;
+import lombok.Data;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.CentralProcessor.TickType;
@@ -15,94 +13,87 @@ import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
 import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
-
+import java.util.*;
+import java.io.Serializable;
+import java.lang.management.ManagementFactory;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.Properties;
 /**
- * 服务器相关信�?
- *
- * @author ruoyi
+ * 服务器相关信息
  */
-public class ServerVO
-{
+@Data
+public class ServerVO {
+
 
     private static final int OSHI_WAIT_SECOND = 1000;
 
     /**
      * CPU相关信息
      */
-    private CpuVO cpu = new CpuVO();
+    private Cpu cpu = new Cpu();
 
     /**
      * 內存相关信息
      */
-    private MemVO mem = new MemVO();
+    private Mem mem = new Mem();
 
     /**
      * JVM相关信息
      */
-    private JvmConfVO jvm = new JvmConfVO();
+    private Jvm jvm = new Jvm();
 
     /**
-     * 服务器相关信�?
+     * 服务器相关信息
      */
-    private SysVO sys = new SysVO();
+    private Sys sys = new Sys();
 
     /**
      * 磁盘相关信息
      */
-    private List<SysFileVO> sysFile = new LinkedList();
+    private List<SysFile> sysFiles = new LinkedList<>();
 
-    public CpuVO getCpu()
-    {
+    public Cpu getCpu() {
         return cpu;
     }
 
-    public void setCpu(CpuVO cpu)
-    {
+    public void setCpu(Cpu cpu) {
         this.cpu = cpu;
     }
 
-    public MemVO getMem()
-    {
+    public Mem getMem() {
         return mem;
     }
 
-    public void setMem(MemVO mem)
-    {
+    public void setMem(Mem mem) {
         this.mem = mem;
     }
 
-    public JvmConfVO getJvm()
-    {
+    public Jvm getJvm() {
         return jvm;
     }
 
-    public void setJvm(JvmConfVO jvmConf)
-    {
-        this.jvm = jvmConf;
+    public void setJvm(Jvm jvm) {
+        this.jvm = jvm;
     }
 
-    public SysVO getSysVO()
-    {
+    public Sys getSys() {
         return sys;
     }
 
-    public void setSysVO(SysVO sys)
-    {
+    public void setSys(Sys sys) {
         this.sys = sys;
     }
 
-    public List<SysFileVO> getSysFile()
-    {
-        return sysFile;
+    public List<SysFile> getSysFiles() {
+        return sysFiles;
     }
 
-    public void setSysFile(List<SysFileVO> sysFile)
-    {
-        this.sysFile = sysFile;
+    public void setSysFiles(List<SysFile> sysFiles) {
+        this.sysFiles = sysFiles;
     }
 
-    public void copyTo() throws Exception
-    {
+    public void copyTo() throws Exception {
         SystemInfo si = new SystemInfo();
         HardwareAbstractionLayer hal = si.getHardware();
 
@@ -120,8 +111,7 @@ public class ServerVO
     /**
      * 设置CPU信息
      */
-    private void setCpuInfo(CentralProcessor processor)
-    {
+    private void setCpuInfo(CentralProcessor processor) {
         // CPU信息
         long[] prevTicks = processor.getSystemCpuLoadTicks();
         Util.sleep(OSHI_WAIT_SECOND);
@@ -146,31 +136,28 @@ public class ServerVO
     /**
      * 设置内存信息
      */
-    private void setMemInfo(GlobalMemory memory)
-    {
+    private void setMemInfo(GlobalMemory memory) {
         mem.setTotal(memory.getTotal());
         mem.setUsed(memory.getTotal() - memory.getAvailable());
         mem.setFree(memory.getAvailable());
     }
 
     /**
-     * 设置服务器信�?
+     * 设置服务器信息
      */
-    private void setSysInfo()
-    {
+    private void setSysInfo() {
         Properties props = System.getProperties();
-        sys.setComputerName(IpUtil.getHostName());
-        sys.setComputerIp(IpUtil.getHostIp());
+        sys.setComputerName(NetUtil.getLocalhost().getHostName());
+        sys.setComputerIp(NetUtil.getLocalhost().getHostAddress());
         sys.setOsName(props.getProperty("os.name"));
         sys.setOsArch(props.getProperty("os.arch"));
         sys.setUserDir(props.getProperty("user.dir"));
     }
 
     /**
-     * 设置Java虚拟�?
+     * 设置Java虚拟机
      */
-    private void setJvmInfo() throws UnknownHostException
-    {
+    private void setJvmInfo() {
         Properties props = System.getProperties();
         jvm.setTotal(Runtime.getRuntime().totalMemory());
         jvm.setMax(Runtime.getRuntime().maxMemory());
@@ -182,24 +169,22 @@ public class ServerVO
     /**
      * 设置磁盘信息
      */
-    private void setSysFiles(OperatingSystem os)
-    {
+    private void setSysFiles(OperatingSystem os) {
         FileSystem fileSystem = os.getFileSystem();
-        OSFileStore[] fsArray = fileSystem.getFileStores();
-        for (OSFileStore fs : fsArray)
-        {
+        List<OSFileStore> fileStores = fileSystem.getFileStores();
+        for (OSFileStore fs : fileStores) {
             long free = fs.getUsableSpace();
             long total = fs.getTotalSpace();
             long used = total - free;
-            SysFileVO sysFileVO = new SysFileVO();
-            sysFileVO.setDirName(fs.getMount());
-            sysFileVO.setSysTypeName(fs.getType());
-            sysFileVO.setTypeName(fs.getName());
-            sysFileVO.setTotal(convertFileSize(total));
-            sysFileVO.setFree(convertFileSize(free));
-            sysFileVO.setUsed(convertFileSize(used));
-            sysFileVO.setUsage(ArithVO.mul(ArithVO.div(used, total, 4), 100));
-            sysFile.add(sysFileVO);
+            SysFile sysFile = new SysFile();
+            sysFile.setDirName(fs.getMount());
+            sysFile.setSysTypeName(fs.getType());
+            sysFile.setTypeName(fs.getName());
+            sysFile.setTotal(convertFileSize(total));
+            sysFile.setFree(convertFileSize(free));
+            sysFile.setUsed(convertFileSize(used));
+            sysFile.setUsage(NumberUtil.mul(NumberUtil.div(used, total, 4), 100));
+            sysFiles.add(sysFile);
         }
     }
 
@@ -207,30 +192,284 @@ public class ServerVO
      * 字节转换
      *
      * @param size 字节大小
-     * @return 转换后�??
+     * @return 转换后值
      */
-    public String convertFileSize(long size)
-    {
+    public String convertFileSize(long size) {
         long kb = 1024;
         long mb = kb * 1024;
         long gb = mb * 1024;
-        if (size >= gb)
-        {
+        if (size >= gb) {
             return String.format("%.1f GB", (float) size / gb);
-        }
-        else if (size >= mb)
-        {
+        } else if (size >= mb) {
             float f = (float) size / mb;
             return String.format(f > 100 ? "%.0f MB" : "%.1f MB", f);
-        }
-        else if (size >= kb)
-        {
+        } else if (size >= kb) {
             float f = (float) size / kb;
             return String.format(f > 100 ? "%.0f KB" : "%.1f KB", f);
-        }
-        else
-        {
+        } else {
             return String.format("%d B", size);
         }
     }
+
+}
+
+@Data
+class Jvm implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 当前JVM占用的内存总数(M)
+     */
+    private double total;
+
+    /**
+     * JVM最大可用内存总数(M)
+     */
+    private double max;
+
+    /**
+     * JVM空闲内存(M)
+     */
+    private double free;
+
+    /**
+     * JDK版本
+     */
+    private String version;
+
+    /**
+     * JDK路径
+     */
+    private String home;
+
+    public double getTotal() {
+        return NumberUtil.div(total, (1024 * 1024), 2);
+    }
+
+    public double getMax() {
+        return NumberUtil.div(max, (1024 * 1024), 2);
+    }
+
+    public double getFree() {
+        return NumberUtil.div(free, (1024 * 1024), 2);
+    }
+
+    public double getUsed() {
+        return NumberUtil.div(total - free, (1024 * 1024), 2);
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public String getHome() {
+        return home;
+    }
+
+    public double getUsage() {
+        return NumberUtil.mul(NumberUtil.div(total - free, total, 4), 100);
+    }
+    /**
+     * 获取JDK名称
+     */
+    public String getName() {
+        return ManagementFactory.getRuntimeMXBean().getVmName();
+    }
+
+    /**
+     * JDK启动时间
+     */
+    public String getStartTime() {
+        long time = ManagementFactory.getRuntimeMXBean().getStartTime();
+        Date date = new Date(time);
+        return DateUtil.formatDateTime(date);
+    }
+
+    /**
+     * JDK运行时间
+     */
+    public String getRunTime() {
+        long time = ManagementFactory.getRuntimeMXBean().getStartTime();
+        Date date = new Date(time);
+
+        //运行多少分钟
+        long runMS = DateUtil.between(date, new Date(), DateUnit.MS);
+
+        long nd = 1000 * 24 * 60 * 60;
+        long nh = 1000 * 60 * 60;
+        long nm = 1000 * 60;
+
+        long day = runMS / nd;
+        long hour = runMS % nd / nh;
+        long min = runMS % nd % nh / nm;
+        return day + "天" + hour + "小时" + min + "分钟";
+    }
+}
+
+
+@Data
+class Cpu implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 核心数
+     */
+    private int cpuNum;
+
+    /**
+     * CPU总的使用率
+     */
+    private double total;
+
+    /**
+     * CPU系统总数
+     */
+    private double sys;
+
+    /**
+     * CPU用户使用率
+     */
+    private double used;
+
+    /**
+     * CPU当前等待率
+     */
+    private double wait;
+
+    /**
+     * CPU当前空闲率
+     */
+    private double free;
+
+
+    public double getTotal() {
+        return NumberUtil.round(NumberUtil.mul(total, 100), 2).doubleValue();
+    }
+
+    public double getSys() {
+        return NumberUtil.round(NumberUtil.mul(sys / total, 100), 2).doubleValue();
+    }
+
+    public double getUsed() {
+        return NumberUtil.round(NumberUtil.mul(used / total, 100), 2).doubleValue();
+    }
+
+    public double getWait() {
+        return NumberUtil.round(NumberUtil.mul(wait / total, 100), 2).doubleValue();
+    }
+
+    public double getFree() {
+        return NumberUtil.round(NumberUtil.mul(free / total, 100), 2).doubleValue();
+    }
+}
+
+@Data
+class Mem implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 内存总量
+     */
+    private double total;
+
+    /**
+     * 已用内存
+     */
+    private double used;
+
+    /**
+     * 剩余内存
+     */
+    private double free;
+
+    public double getTotal() {
+        return NumberUtil.div(total, (1024 * 1024 * 1024), 2);
+    }
+
+    public double getUsed() {
+        return NumberUtil.div(used, (1024 * 1024 * 1024), 2);
+    }
+
+
+    public double getFree() {
+        return NumberUtil.div(free, (1024 * 1024 * 1024), 2);
+    }
+
+    public double getUsage() {
+        return NumberUtil.mul(NumberUtil.div(used, total, 4), 100);
+    }
+}
+
+@Data
+class Sys implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 服务器名称
+     */
+    private String computerName;
+
+    /**
+     * 服务器Ip
+     */
+    private String computerIp;
+
+    /**
+     * 项目路径
+     */
+    private String userDir;
+
+    /**
+     * 操作系统
+     */
+    private String osName;
+
+    /**
+     * 系统架构
+     */
+    private String osArch;
+}
+
+@Data
+class SysFile implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 盘符路径
+     */
+    private String dirName;
+
+    /**
+     * 盘符类型
+     */
+    private String sysTypeName;
+
+    /**
+     * 文件类型
+     */
+    private String typeName;
+
+    /**
+     * 总大小
+     */
+    private String total;
+
+    /**
+     * 剩余大小
+     */
+    private String free;
+
+    /**
+     * 已经使用量
+     */
+    private String used;
+
+    /**
+     * 资源的使用率
+     */
+    private double usage;
 }
