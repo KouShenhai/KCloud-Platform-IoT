@@ -2,6 +2,7 @@ package io.laokou.auth.application.service;
 
 import com.alipay.api.AlipayApiException;
 import io.laokou.auth.interfaces.dto.LoginDTO;
+import io.laokou.auth.interfaces.vo.BaseUserVO;
 import io.laokou.auth.interfaces.vo.LoginVO;
 import io.laokou.auth.interfaces.vo.UserInfoVO;
 import io.laokou.common.user.UserDetail;
@@ -52,6 +53,13 @@ public interface SysAuthApplicationService {
      * @return
      */
     UserInfoVO userInfo(Long userId);
+
+    /**
+     * 获取对外开放用户信息
+     * @param userId
+     * @return
+     */
+    BaseUserVO openUserInfo(Long userId);
 
     /**
      * 获取用户信息

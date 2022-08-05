@@ -3,6 +3,7 @@ import com.alipay.api.AlipayApiException;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.laokou.auth.application.service.SysAuthApplicationService;
 import io.laokou.auth.interfaces.dto.LoginDTO;
+import io.laokou.auth.interfaces.vo.BaseUserVO;
 import io.laokou.auth.interfaces.vo.LoginVO;
 import io.laokou.auth.interfaces.vo.UserInfoVO;
 import io.laokou.common.constant.Constant;
@@ -73,6 +74,12 @@ public class SysAuthApiController {
     @ApiOperation("系统认证>用户信息")
     public HttpResultUtil<UserInfoVO> userInfo(HttpServletRequest request) {
         return new HttpResultUtil<UserInfoVO>().ok(sysAuthApplicationService.userInfo(SecurityUser.getUserId(request)));
+    }
+
+    @GetMapping("/sys/auth/api/open/userInfo")
+    @ApiOperation("系统认证>对外开放用户信息")
+    public HttpResultUtil<BaseUserVO> openUserInfo(HttpServletRequest request) {
+        return new HttpResultUtil<BaseUserVO>().ok(sysAuthApplicationService.openUserInfo(SecurityUser.getUserId(request)));
     }
 
     public HttpResultUtil<UserDetail> fallback(String Authorization, String uri, String method) {

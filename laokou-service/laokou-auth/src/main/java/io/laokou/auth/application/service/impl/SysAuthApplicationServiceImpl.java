@@ -16,6 +16,7 @@ import io.laokou.auth.infrastructure.common.enums.UserStatusEnum;
 import io.laokou.auth.infrastructure.common.password.PasswordUtil;
 import io.laokou.auth.infrastructure.common.password.RsaCoder;
 import io.laokou.auth.interfaces.dto.LoginDTO;
+import io.laokou.auth.interfaces.vo.BaseUserVO;
 import io.laokou.auth.interfaces.vo.LoginVO;
 import io.laokou.auth.interfaces.vo.SysMenuVO;
 import io.laokou.auth.interfaces.vo.UserInfoVO;
@@ -277,6 +278,17 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                         .email(userDetail.getEmail())
                         .roles(userDetail.getRoles())
                         .permissionList(userDetail.getPermissionsList()).build();
+    }
+
+    @Override
+    @DataSource("master")
+    public BaseUserVO openUserInfo(Long userId) {
+        UserDetail userDetail = getUserDetail(userId);
+        return BaseUserVO.builder().imgUrl(userDetail.getImgUrl())
+                .username(userDetail.getUsername())
+                .userId(userDetail.getId())
+                .mobile(userDetail.getMobile())
+                .email(userDetail.getEmail()).build();
     }
 
     private SysMenuVO pathMatcher(String url, String method, List<SysMenuVO> resourceList) {
