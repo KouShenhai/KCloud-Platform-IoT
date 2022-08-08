@@ -188,9 +188,9 @@ public class SysUserApiController {
 
 ### 演示地址
 [http://175.178.69.253](http://175.178.69.253)
-* admin/admin123
-* test/test123
-* laok5/test123
+* admin/admin123（项目总结）
+* test/test123（项目经理）
+* laok5/test123（项目总工）
 
 ### 项目说明
 * 代码不可商用及二次开源，仅供学习使用，否则后果自负
