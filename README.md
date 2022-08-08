@@ -201,7 +201,7 @@ public class SysUserApiController {
 欢迎各路英雄好汉参与KCloud-Platform代码贡献，期待您的加入！Fork本仓库 新建Feat_xxx分支提交代码，新建Pull Request
 
 ### 加入仓库
-[https://gitee.com/laokou-yun?invite=af23e9108ac2450f324a37ebfde7364432d403c8ff96ab388e7cde0b62298f89d0f128ae41c0fbdba3913bda53efc7e3e6616f3d00909d16](https://gitee.com/laokou-yun?invite=af23e9108ac2450f324a37ebfde7364432d403c8ff96ab388e7cde0b62298f89d0f128ae41c0fbdba3913bda53efc7e3e6616f3d00909d16)
+[https://gitee.com/tttt_wmh_cn/KCloud-Platform/invite_link?invite=2e7ea5fb2430d51c84ba242d7b4f86f0844265149005366db7993663152babc5ff34e14fcb3734835f318cd36bbddc3a](https://gitee.com/tttt_wmh_cn/KCloud-Platform/invite_link?invite=2e7ea5fb2430d51c84ba242d7b4f86f0844265149005366db7993663152babc5ff34e14fcb3734835f318cd36bbddc3a)
 
 ### 开源协议
 KCloud-Platform 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html)
