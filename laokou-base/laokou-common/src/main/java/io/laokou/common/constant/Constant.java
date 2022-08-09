@@ -6,13 +6,6 @@ package io.laokou.common.constant;
  */
 public interface Constant {
 
-    String UTF8 = "UTF-8";
-
-    /**
-     * Bearer
-     */
-    String BEARER = "Bearer ";
-
     String ACCESS_TOKEN = "access_token";
 
     String PASSWORD_HEAD = "password";
@@ -28,10 +21,6 @@ public interface Constant {
      * Authorization header
      */
     String AUTHORIZATION_HEAD = "Authorization";
-    /**
-     * basic
-     */
-    String BASIC = "Basic ";
     /**
      * 成功
      */
