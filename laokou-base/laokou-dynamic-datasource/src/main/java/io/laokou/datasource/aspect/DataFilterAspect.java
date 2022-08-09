@@ -2,6 +2,7 @@ package io.laokou.datasource.aspect;
 import io.laokou.common.entity.BasePage;
 import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.common.exception.CustomException;
+import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpContextUtil;
 import io.laokou.datasource.annotation.DataFilter;
@@ -47,7 +48,7 @@ public class DataFilterAspect {
             }catch (Exception e){}
             return;
         }
-        throw new CustomException("服务正在维护，请联系管理员");
+        throw new CustomException(ErrorCode.SERVICE_MAINTENANCE);
     }
 
     /**

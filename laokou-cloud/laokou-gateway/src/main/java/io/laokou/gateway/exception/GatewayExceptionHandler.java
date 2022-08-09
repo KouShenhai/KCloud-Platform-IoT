@@ -1,6 +1,7 @@
 package io.laokou.gateway.exception;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import feign.FeignException;
+import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.utils.HttpResultUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,7 +46,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
 			result = parseFeignException(e);
 		} else if (e instanceof NotFoundException || e instanceof RuntimeException){
 			log.error("服务未启动或服务运行异常");
-			result = result.error("服务正在维护，请联系管理员");
+			result = result.error(ErrorCode.SERVICE_MAINTENANCE);
 		}
 		threadLocal.set(result);
 		ServerRequest serverRequest = ServerRequest.create(exchange, this.messageReaders);
