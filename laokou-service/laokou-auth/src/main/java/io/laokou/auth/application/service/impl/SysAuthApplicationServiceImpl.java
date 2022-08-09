@@ -114,7 +114,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                 username = RsaCoder.decryptByPrivateKey(username);
                 password = RsaCoder.decryptByPrivateKey(password);
             } catch (BadPaddingException e) {
-                PublishFactory.recordLogin("未知用户", ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
+                PublishFactory.recordLogin("系统正在维护，请联系管理员", ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
                 throw new CustomException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
             }
             log.info("解密后，用户名：{}", username);
