@@ -1,7 +1,7 @@
 package io.laokou.auth.interfaces.controller;
-import com.alipay.api.AlipayApiException;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.laokou.auth.application.service.SysAuthApplicationService;
+import io.laokou.auth.interfaces.dto.AuthDTO;
 import io.laokou.auth.interfaces.dto.LoginDTO;
 import io.laokou.auth.interfaces.vo.BaseUserVO;
 import io.laokou.auth.interfaces.vo.LoginVO;
@@ -46,9 +46,10 @@ public class SysAuthApiController {
 
     @GetMapping("/sys/auth/api/zfbLogin")
     @ApiOperation("系统认证>支付宝登录")
-    public void zfbLogin(HttpServletRequest request,HttpServletResponse response) throws IOException, AlipayApiException {
+    public void zfbLogin(HttpServletRequest request,HttpServletResponse response) throws Exception {
         sysAuthApplicationService.zfbLogin(request, response);
     }
+
 
     @GetMapping("/sys/auth/api/resource")
     @ApiOperation("系统认证>资源权限")
@@ -63,6 +64,8 @@ public class SysAuthApiController {
                                                 @RequestParam(Constant.METHOD)String method) {
         return new HttpResultUtil<UserDetail>().ok(sysAuthApplicationService.resource(Authorization, uri, method));
     }
+    public HttpResultUtil<UserDetail> fallback(String Authorization, String uri, String method) {return new HttpResultUtil<UserDetail>().error("服务已被降级熔断");}
+
 
     @GetMapping("/sys/auth/api/logout")
     @ApiOperation("系统认证>退出登录")
@@ -76,14 +79,16 @@ public class SysAuthApiController {
         return new HttpResultUtil<UserInfoVO>().ok(sysAuthApplicationService.userInfo(SecurityUser.getUserId(request)));
     }
 
+    @PostMapping("/sys/auth/api/open/login")
+    @ApiOperation("系统认证>对外开放登录")
+    public void openLogin(HttpServletResponse response, @RequestBody AuthDTO dto) {
+
+    }
+
     @GetMapping("/sys/auth/api/open/userInfo")
     @ApiOperation("系统认证>对外开放用户信息")
     public HttpResultUtil<BaseUserVO> openUserInfo(HttpServletRequest request) {
         return new HttpResultUtil<BaseUserVO>().ok(sysAuthApplicationService.openUserInfo(SecurityUser.getUserId(request)));
-    }
-
-    public HttpResultUtil<UserDetail> fallback(String Authorization, String uri, String method) {
-        return new HttpResultUtil<UserDetail>().error("服务已被降级熔断");
     }
 
 }

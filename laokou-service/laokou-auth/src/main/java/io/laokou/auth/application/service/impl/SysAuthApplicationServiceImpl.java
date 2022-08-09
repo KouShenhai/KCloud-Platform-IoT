@@ -1,6 +1,5 @@
 package io.laokou.auth.application.service.impl;
 import com.alibaba.fastjson.JSON;
-import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipaySystemOauthTokenRequest;
@@ -15,6 +14,7 @@ import io.laokou.auth.infrastructure.common.enums.AuthTypeEnum;
 import io.laokou.auth.infrastructure.common.enums.UserStatusEnum;
 import io.laokou.auth.infrastructure.common.password.PasswordUtil;
 import io.laokou.auth.infrastructure.common.password.RsaCoder;
+import io.laokou.auth.interfaces.dto.AuthDTO;
 import io.laokou.auth.interfaces.dto.LoginDTO;
 import io.laokou.auth.interfaces.vo.BaseUserVO;
 import io.laokou.auth.interfaces.vo.LoginVO;
@@ -92,29 +92,32 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         String username = loginDTO.getUsername();
         String password = loginDTO.getPassword();
         String captcha = loginDTO.getCaptcha();
-        log.info("解密前，用户名：{}", username);
-        log.info("解密前，密码：{}", password);
-        //SRA私钥解密
-        try {
-            username = RsaCoder.decryptByPrivateKey(username);
-            password = RsaCoder.decryptByPrivateKey(password);
-        } catch (BadPaddingException e) {
-            PublishFactory.recordLogin("未知用户", ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
-            throw new CustomException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
-        }
-        log.info("解密后，用户名：{}", username);
-        log.info("解密后，密码：{}", password);
         //验证码是否正确
         boolean validate = sysCaptchaService.validate(uuid, captcha);
         if (!validate) {
             PublishFactory.recordLogin(username, ResultStatusEnum.FAIL.ordinal(),MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR));
             throw new CustomException(ErrorCode.CAPTCHA_ERROR);
         }
-        return getLoginInfo(username,password,true);
+        String token = getToken(username, password, true);
+        return LoginVO.builder().token(token).build();
         //endregion
     }
 
-    private LoginVO getLoginInfo(String username,String password,boolean isUserPasswordFlag) throws IOException {
+    private String getToken(String username,String password,boolean isUserPasswordFlag) throws Exception {
+        if (isUserPasswordFlag) {
+            log.info("解密前，用户名：{}", username);
+            log.info("解密前，密码：{}", password);
+            //SRA私钥解密
+            try {
+                username = RsaCoder.decryptByPrivateKey(username);
+                password = RsaCoder.decryptByPrivateKey(password);
+            } catch (BadPaddingException e) {
+                PublishFactory.recordLogin("未知用户", ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
+                throw new CustomException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
+            }
+            log.info("解密后，用户名：{}", username);
+            log.info("解密后，密码：{}", password);
+        }
         //查询数据库
         UserDetail userDetail = getUserDetail(username);
         log.info("查询的数据：{}",userDetail);
@@ -141,8 +144,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         }
         PublishFactory.recordLogin(username, ResultStatusEnum.SUCCESS.ordinal(),"登录成功");
         //获取token
-        String token = getToken(userDetail,resourceList);
-        return LoginVO.builder().token(token).build();
+        return getToken(userDetail,resourceList);
     }
 
     private String getToken(UserDetail userDetail,List<SysMenuVO> resourceList) {
@@ -337,8 +339,18 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     }
 
     @Override
-    public void zfbLogin(HttpServletRequest request, HttpServletResponse response) throws AlipayApiException, IOException {
+    public void zfbLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
         zfbOauth.sendRedirectLogin(request,response);
+    }
+
+    @Override
+    public void openLogin(HttpServletResponse response, AuthDTO dto) throws Exception {
+        String redirectUrl = dto.getRedirectUrl();
+        String username = dto.getUsername();
+        String password = dto.getPassword();
+        String token = getToken(username,password,true);
+        String params = "&" + Constant.ACCESS_TOKEN + "=" + token;
+        response.sendRedirect(redirectUrl + params);
     }
 
     private UserDetail getUserDetail(String username) {
@@ -366,7 +378,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         @Value("${oauth.zfb.redirect_url}")
         private String REDIRECT_URL;
 
-        public void sendRedirectLogin(HttpServletRequest request,HttpServletResponse response) throws AlipayApiException, IOException {
+        public void sendRedirectLogin(HttpServletRequest request,HttpServletResponse response) throws Exception {
             final String authCode = request.getParameter("auth_code");
             log.info("appId:{}",APP_ID);
             log.info("authCode:{}",authCode);
@@ -397,19 +409,19 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                     entity.setGender(gender);
                     zfbUserService.removeById(userId);
                     zfbUserService.save(entity);
-                    sendRedirectLogin(sysUserService.getUsernameByOpenid(userId),response);
+                    sendRedirectIndex(sysUserService.getUsernameByOpenid(userId),response,REDIRECT_URL);
                 }
             }
         }
-        private void sendRedirectLogin(String username,HttpServletResponse response) throws IOException {
-            String params = "";
-            if (StringUtils.isNotBlank(username)) {
-                final LoginVO loginInfo = getLoginInfo(username, null, false);
-                if (loginInfo != null) {
-                    params += "&" + Constant.ACCESS_TOKEN + "=" + loginInfo.getToken();
-                }
+    }
+    private void sendRedirectIndex(String username,HttpServletResponse response,String redirectUrl) throws Exception {
+        String params = "";
+        if (StringUtils.isNotBlank(username)) {
+            final String token = getToken(username, null, false);
+            if (StringUtils.isNotBlank(token)) {
+                params += "&" + Constant.ACCESS_TOKEN + "=" + token;
             }
-            response.sendRedirect(REDIRECT_URL + params);
         }
+        response.sendRedirect(redirectUrl + params);
     }
 }
