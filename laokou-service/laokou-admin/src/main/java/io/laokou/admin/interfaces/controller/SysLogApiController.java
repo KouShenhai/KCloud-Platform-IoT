@@ -14,6 +14,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.text.ParseException;
+
 /**
  * 系统日志控制器
  * @author Kou Shenhai
@@ -25,6 +29,12 @@ public class SysLogApiController {
 
     @Autowired
     private SysLogApplicationService sysLogApplicationService;
+
+    @GetMapping("/test")
+    @ApiOperation("测试")
+    public void test() throws IOException, ParseException {
+        sysLogApplicationService.test();
+    }
 
     @PostMapping(value = "/operate/insert")
     @ApiOperation("系统日志>操作日志>新增")
