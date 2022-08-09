@@ -211,8 +211,7 @@ public class SysUserApiController {
 [https://gitee.com/tttt_wmh_cn/KCloud-Platform/invite_link?invite=2e7ea5fb2430d51c84ba242d7b4f86f0844265149005366db7993663152babc5ff34e14fcb3734835f318cd36bbddc3a](https://gitee.com/tttt_wmh_cn/KCloud-Platform/invite_link?invite=2e7ea5fb2430d51c84ba242d7b4f86f0844265149005366db7993663152babc5ff34e14fcb3734835f318cd36bbddc3a)
 
 ### 开源协议
-KCloud-Platform 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html)  
-务必保留作者、Copyright信息  
+KCloud-Platform 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
 ![](https://minio.pigx.vip/oss/1655474288.jpg)
 
 ### 致谢
