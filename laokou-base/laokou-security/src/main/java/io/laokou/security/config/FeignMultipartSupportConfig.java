@@ -20,7 +20,7 @@ public class FeignMultipartSupportConfig {
     public RequestInterceptor getRequestInterceptor() {
         return requestTemplate -> {
             HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-            requestTemplate.header(Constant.AUTHORIZATION_HEADER,request.getHeader(Constant.AUTHORIZATION_HEADER));
+            requestTemplate.header(Constant.AUTHORIZATION_HEAD,request.getHeader(Constant.AUTHORIZATION_HEAD));
         };
     }
 

@@ -14,7 +14,6 @@ import io.laokou.auth.infrastructure.common.enums.AuthTypeEnum;
 import io.laokou.auth.infrastructure.common.enums.UserStatusEnum;
 import io.laokou.auth.infrastructure.common.password.PasswordUtil;
 import io.laokou.auth.infrastructure.common.password.RsaCoder;
-import io.laokou.auth.interfaces.dto.AuthDTO;
 import io.laokou.auth.interfaces.dto.LoginDTO;
 import io.laokou.auth.interfaces.vo.BaseUserVO;
 import io.laokou.auth.interfaces.vo.LoginVO;
@@ -60,6 +59,8 @@ import java.util.Objects;
 public class SysAuthApplicationServiceImpl implements SysAuthApplicationService {
 
     private static AntPathMatcher antPathMatcher = new AntPathMatcher();
+
+    private static final String CALLBACK_LOGIN_URL = "/sys/login.html?redirect_url=%s&error_info=%s";
 
     @Autowired
     private SysMenuService sysMenuService;
@@ -168,7 +169,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         redisUtil.set(userInfoKey,JSON.toJSONString(userDetail),RedisUtil.HOUR_ONE_EXPIRE);
         redisUtil.set(userResourceKey, JSON.toJSONString(resourceList),RedisUtil.HOUR_ONE_EXPIRE);
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-        request.setAttribute(Constant.AUTHORIZATION_HEADER, token);
+        request.setAttribute(Constant.AUTHORIZATION_HEAD, token);
         return token;
         //endregion
     }
@@ -211,7 +212,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         redisUtil.delete(userResourceKey);
         redisUtil.delete(userInfoKey);
         //退出
-        request.removeAttribute(Constant.AUTHORIZATION_HEADER);
+        request.removeAttribute(Constant.AUTHORIZATION_HEAD);
         //endregion
     }
 
@@ -344,12 +345,18 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     }
 
     @Override
-    public void openLogin(HttpServletResponse response, AuthDTO dto) throws Exception {
-        String redirectUrl = dto.getRedirectUrl();
-        String username = dto.getUsername();
-        String password = dto.getPassword();
-        String token = getToken(username,password,true);
-        String params = "&" + Constant.ACCESS_TOKEN + "=" + token;
+    public void openLogin(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        final String username = request.getParameter(Constant.USERNAME_HEAD);
+        final String password = request.getParameter(Constant.PASSWORD_HEAD);
+        final String redirectUrl = request.getParameter(Constant.REDIRECT_URL_HEAD);
+        String token;
+        try {
+            token = getToken(username,password,true);
+        } catch (Exception e) {
+            response.sendRedirect(String.format(CALLBACK_LOGIN_URL,redirectUrl,e.getMessage()));
+            return;
+        }
+        String params = "?" + Constant.ACCESS_TOKEN + "=" + token;
         response.sendRedirect(redirectUrl + params);
     }
 
@@ -409,12 +416,12 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                     entity.setGender(gender);
                     zfbUserService.removeById(userId);
                     zfbUserService.save(entity);
-                    sendRedirectIndex(sysUserService.getUsernameByOpenid(userId),response,REDIRECT_URL);
+                    sendRedirectPage(sysUserService.getUsernameByOpenid(userId),response,REDIRECT_URL);
                 }
             }
         }
     }
-    private void sendRedirectIndex(String username,HttpServletResponse response,String redirectUrl) throws Exception {
+    private void sendRedirectPage(String username,HttpServletResponse response,String redirectUrl) throws Exception {
         String params = "";
         if (StringUtils.isNotBlank(username)) {
             final String token = getToken(username, null, false);

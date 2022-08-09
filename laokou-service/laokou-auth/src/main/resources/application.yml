@@ -22,6 +22,13 @@ spring:
   http:
     encoding:
       charset: UTF-8
+  thymeleaf:
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
+    suffix: .html
+    prefix: classpath:/templates/
   main:
     allow-bean-definition-overriding: true
   cloud:
@@ -120,3 +127,7 @@ auth:
       url: /sys/auth/api/zfbLogin
     - permission: anon
       url: /favicon.ico
+    - permission: anon
+      url: /sys/login.html
+    - permission: anon
+      url: /sys/auth/api/open/login

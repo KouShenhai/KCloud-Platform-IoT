@@ -35,10 +35,10 @@ public class UserDetailUtil {
      */
     private String getAuthorization(HttpServletRequest request){
         //从header中获取token
-        String Authorization = request.getHeader(Constant.AUTHORIZATION_HEADER);
+        String Authorization = request.getHeader(Constant.AUTHORIZATION_HEAD);
         //如果header中不存在Authorization，则从参数中获取Authorization
         if(StringUtils.isBlank(Authorization)){
-            Authorization = request.getParameter(Constant.AUTHORIZATION_HEADER);
+            Authorization = request.getParameter(Constant.AUTHORIZATION_HEAD);
         }
         return Authorization;
     }

@@ -98,10 +98,10 @@ public class Oauth2Filter extends AuthenticatingFilter {
      */
     private String getAuthorization(HttpServletRequest httpRequest){
         //从header中获取token
-        String Authorization = httpRequest.getHeader(Constant.AUTHORIZATION_HEADER);
+        String Authorization = httpRequest.getHeader(Constant.AUTHORIZATION_HEAD);
         //如果header中不存在Authorization，则从参数中获取Authorization
         if(StringUtils.isBlank(Authorization)){
-            Authorization = httpRequest.getParameter(Constant.AUTHORIZATION_HEADER);
+            Authorization = httpRequest.getParameter(Constant.AUTHORIZATION_HEAD);
         }
         return Authorization;
     }

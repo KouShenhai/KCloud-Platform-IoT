@@ -28,7 +28,7 @@ public interface AuthApiFeignClient {
     @GetMapping("/sys/auth/api/resource")
     HttpResultUtil<UserDetail> resource(
                              @RequestHeader(HttpHeaders.ACCEPT_LANGUAGE) String language,
-                             @RequestParam(Constant.AUTHORIZATION_HEADER) String Authorization,
+                             @RequestParam(Constant.AUTHORIZATION_HEAD) String Authorization,
                              @RequestParam(Constant.URI)String uri,
                              @RequestParam(Constant.METHOD)String method);
 }

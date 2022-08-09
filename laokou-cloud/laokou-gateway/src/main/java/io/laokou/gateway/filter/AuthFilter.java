@@ -63,9 +63,9 @@ public class AuthFilter implements GlobalFilter,Ordered {
             return chain.filter(exchange);
         }
         //获取用户token
-        String Authorization = request.getHeaders().getFirst(Constant.AUTHORIZATION_HEADER);
+        String Authorization = request.getHeaders().getFirst(Constant.AUTHORIZATION_HEAD);
         if (StringUtils.isBlank(Authorization)){
-            Authorization = request.getQueryParams().getFirst(Constant.AUTHORIZATION_HEADER);
+            Authorization = request.getQueryParams().getFirst(Constant.AUTHORIZATION_HEAD);
         }
         log.info("Authorization:{}",Authorization);
         //获取访问资源的权限

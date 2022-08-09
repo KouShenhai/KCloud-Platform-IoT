@@ -15,6 +15,10 @@ public interface Constant {
 
     String ACCESS_TOKEN = "access_token";
 
+    String PASSWORD_HEAD = "password";
+
+    String REDIRECT_URL_HEAD = "redirectUrl";
+
     String URI = "uri";
 
     String METHOD = "method";
@@ -23,7 +27,7 @@ public interface Constant {
     /**
      * Authorization header
      */
-    String AUTHORIZATION_HEADER = "Authorization";
+    String AUTHORIZATION_HEAD = "Authorization";
     /**
      * basic
      */

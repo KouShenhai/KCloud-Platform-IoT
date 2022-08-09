@@ -42,10 +42,10 @@ public class SecurityUser {
      */
     private static String getAuthorization(HttpServletRequest request){
         //从header中获取token
-        String Authorization = request.getHeader(Constant.AUTHORIZATION_HEADER);
+        String Authorization = request.getHeader(Constant.AUTHORIZATION_HEAD);
         //如果header中不存在Authorization，则从参数中获取Authorization
         if(org.apache.commons.lang3.StringUtils.isBlank(Authorization)){
-            Authorization = request.getParameter(Constant.AUTHORIZATION_HEADER);
+            Authorization = request.getParameter(Constant.AUTHORIZATION_HEAD);
         }
         return Authorization;
     }

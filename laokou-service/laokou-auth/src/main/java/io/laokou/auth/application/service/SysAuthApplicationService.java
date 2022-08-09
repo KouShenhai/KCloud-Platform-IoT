@@ -1,7 +1,6 @@
 package io.laokou.auth.application.service;
 
 import com.alipay.api.AlipayApiException;
-import io.laokou.auth.interfaces.dto.AuthDTO;
 import io.laokou.auth.interfaces.dto.LoginDTO;
 import io.laokou.auth.interfaces.vo.BaseUserVO;
 import io.laokou.auth.interfaces.vo.LoginVO;
@@ -78,5 +77,11 @@ public interface SysAuthApplicationService {
      */
     void zfbLogin(HttpServletRequest request,HttpServletResponse response) throws Exception;
 
-    void openLogin(HttpServletResponse response, AuthDTO dto) throws Exception;
+    /**
+     * 开放登录
+     * @param response
+     * @param request
+     * @throws Exception
+     */
+    void openLogin(HttpServletResponse response, HttpServletRequest request) throws Exception;
 }

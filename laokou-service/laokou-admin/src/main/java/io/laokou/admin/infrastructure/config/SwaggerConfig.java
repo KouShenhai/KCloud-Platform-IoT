@@ -29,7 +29,7 @@ public class SwaggerConfig {
     public Docket createRestApi() {
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = Lists.newArrayList();
-        tokenPar.name(Constant.AUTHORIZATION_HEADER).description(Constant.AUTHORIZATION_HEADER).modelRef(new ModelRef("string")).parameterType(Constant.HEADER).required(false).build();
+        tokenPar.name(Constant.AUTHORIZATION_HEAD).description(Constant.AUTHORIZATION_HEAD).modelRef(new ModelRef("string")).parameterType(Constant.HEADER).required(false).build();
         pars.add(tokenPar.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())

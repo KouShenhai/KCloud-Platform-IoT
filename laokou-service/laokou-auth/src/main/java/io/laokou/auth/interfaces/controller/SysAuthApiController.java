@@ -1,7 +1,6 @@
 package io.laokou.auth.interfaces.controller;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.laokou.auth.application.service.SysAuthApplicationService;
-import io.laokou.auth.interfaces.dto.AuthDTO;
 import io.laokou.auth.interfaces.dto.LoginDTO;
 import io.laokou.auth.interfaces.vo.BaseUserVO;
 import io.laokou.auth.interfaces.vo.LoginVO;
@@ -54,12 +53,12 @@ public class SysAuthApiController {
     @GetMapping("/sys/auth/api/resource")
     @ApiOperation("系统认证>资源权限")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = Constant.AUTHORIZATION_HEADER,value = "授权码",required = true,paramType = "query",dataType = "String"),
+            @ApiImplicitParam(name = Constant.AUTHORIZATION_HEAD,value = "授权码",required = true,paramType = "query",dataType = "String"),
             @ApiImplicitParam(name = Constant.URI,value = "请求路径",required = true,paramType = "query",dataType = "String"),
             @ApiImplicitParam(name = Constant.METHOD,value = "请求方法",required = true,paramType = "query",dataType = "String")
     })
     @HystrixCommand(fallbackMethod = "fallback",ignoreExceptions = {CustomException.class})
-    public HttpResultUtil<UserDetail>  resource(@RequestParam(Constant.AUTHORIZATION_HEADER) String Authorization,
+    public HttpResultUtil<UserDetail>  resource(@RequestParam(Constant.AUTHORIZATION_HEAD) String Authorization,
                                                 @RequestParam(Constant.URI)String uri,
                                                 @RequestParam(Constant.METHOD)String method) {
         return new HttpResultUtil<UserDetail>().ok(sysAuthApplicationService.resource(Authorization, uri, method));
@@ -81,8 +80,8 @@ public class SysAuthApiController {
 
     @PostMapping("/sys/auth/api/open/login")
     @ApiOperation("系统认证>对外开放登录")
-    public void openLogin(HttpServletResponse response, @RequestBody AuthDTO dto) {
-
+    public void openLogin(HttpServletResponse response, HttpServletRequest request) throws Exception {
+        sysAuthApplicationService.openLogin(response, request);
     }
 
     @GetMapping("/sys/auth/api/open/userInfo")
