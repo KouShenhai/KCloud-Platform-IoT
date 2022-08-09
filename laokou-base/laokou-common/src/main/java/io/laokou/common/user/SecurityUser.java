@@ -40,7 +40,7 @@ public class SecurityUser {
     /**
      * 获取请求的token
      */
-    private static String getAuthorization(HttpServletRequest request){
+    public static String getAuthorization(HttpServletRequest request){
         //从header中获取token
         String Authorization = request.getHeader(Constant.AUTHORIZATION_HEAD);
         //如果header中不存在Authorization，则从参数中获取Authorization

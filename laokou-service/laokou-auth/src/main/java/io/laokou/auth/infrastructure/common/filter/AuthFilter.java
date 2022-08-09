@@ -1,8 +1,8 @@
 package io.laokou.auth.infrastructure.common.filter;
 
 import com.google.gson.Gson;
-import io.laokou.common.constant.Constant;
 import io.laokou.common.exception.ErrorCode;
+import io.laokou.common.user.SecurityUser;
 import io.laokou.common.utils.HttpResultUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class AuthFilter extends AuthenticatingFilter {
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response){
         //获取请求token
-        String Authorization = getAuthorization((HttpServletRequest) request);
+        String Authorization = SecurityUser.getAuthorization((HttpServletRequest) request);
         if(StringUtils.isBlank(Authorization)){
             return null;
         }
@@ -50,7 +50,7 @@ public class AuthFilter extends AuthenticatingFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         //获取请求token，如果token为空，直接返回401
-        String Authorization = getAuthorization((HttpServletRequest) request);
+        String Authorization = SecurityUser.getAuthorization((HttpServletRequest) request);
         log.info("Authorization:{}",Authorization);
         if(StringUtils.isBlank(Authorization)){
             HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -91,19 +91,6 @@ public class AuthFilter extends AuthenticatingFilter {
             return false;
         }
         return super.preHandle(request, response);
-    }
-
-    /**
-     * 获取请求的token
-     */
-    private String getAuthorization(HttpServletRequest httpRequest){
-        //从header中获取token
-        String Authorization = httpRequest.getHeader(Constant.AUTHORIZATION_HEAD);
-        //如果header中不存在Authorization，则从参数中获取Authorization
-        if(StringUtils.isBlank(Authorization)){
-            Authorization = httpRequest.getParameter(Constant.AUTHORIZATION_HEAD);
-        }
-        return Authorization;
     }
 
 }

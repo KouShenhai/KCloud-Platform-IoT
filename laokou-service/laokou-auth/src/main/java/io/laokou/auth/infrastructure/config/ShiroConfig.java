@@ -1,6 +1,6 @@
 package io.laokou.auth.infrastructure.config;
-import io.laokou.auth.infrastructure.common.oauth2.Oauth2Filter;
-import io.laokou.auth.infrastructure.common.oauth2.Oauth2Realm;
+import io.laokou.auth.infrastructure.common.filter.AuthFilter;
+import io.laokou.auth.infrastructure.common.filter.AuthRealm;
 import io.laokou.auth.infrastructure.component.AuthHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -41,9 +41,9 @@ public class ShiroConfig {
     }
 
     @Bean("securityManager")
-    public SecurityManager securityManager(Oauth2Realm oauth2Realm, SessionManager sessionManager){
+    public SecurityManager securityManager(AuthRealm authRealm, SessionManager sessionManager){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(oauth2Realm);
+        securityManager.setRealm(authRealm);
         securityManager.setRememberMeManager(null);
         securityManager.setSessionManager(sessionManager);
         return securityManager;
@@ -55,7 +55,7 @@ public class ShiroConfig {
         shiroFilter.setSecurityManager(securityManager);
         //oauth过滤
         Map<String, Filter> filter = new HashMap<>();
-        filter.put("oauth2", new Oauth2Filter());
+        filter.put("oauth2", new AuthFilter());
         shiroFilter.setFilters(filter);
         Map<String, String> filterMap = new LinkedHashMap<>();
         List<Map<String, String>> auth = authHandler.getUris();
