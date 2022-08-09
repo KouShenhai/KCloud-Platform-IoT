@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 public class SecurityUser {
 
     public static Long getUserId(HttpServletRequest request) {
-        String userIdHeader = request.getHeader(Constant.USER_KEY_HEAD);
-        if (StringUtils.isBlank(userIdHeader)) {
+        String userId = request.getHeader(Constant.USER_KEY_HEAD);
+        if (StringUtils.isBlank(userId)) {
             String authHeader = getAuthorization(request);
             if (StringUtils.isBlank(authHeader)) {
                 throw new CustomException(ErrorCode.UNAUTHORIZED);
@@ -19,12 +19,12 @@ public class SecurityUser {
             }
             return TokenUtil.getUserId(authHeader);
         }
-        return Long.valueOf(userIdHeader);
+        return Long.valueOf(userId);
     }
 
     public static String getUsername(HttpServletRequest request) {
-        String userNameHeader = request.getHeader(Constant.USERNAME_HEAD);
-        if (StringUtils.isBlank(userNameHeader)) {
+        String username = request.getHeader(Constant.USERNAME_HEAD);
+        if (StringUtils.isBlank(username)) {
             String authHeader = getAuthorization(request);
             if (StringUtils.isBlank(authHeader)) {
                 throw new CustomException(ErrorCode.UNAUTHORIZED);
@@ -34,7 +34,7 @@ public class SecurityUser {
             }
             return TokenUtil.getUsername(authHeader);
         }
-        return userNameHeader;
+        return username;
     }
 
     /**
