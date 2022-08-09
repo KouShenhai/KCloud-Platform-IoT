@@ -8,9 +8,6 @@ import io.laokou.admin.interfaces.vo.SysOperateLogVO;
 import io.laokou.common.dto.LoginLogDTO;
 import io.laokou.common.dto.OperateLogDTO;
 
-import java.io.IOException;
-import java.text.ParseException;
-
 public interface SysLogApplicationService {
 
     Boolean insertOperateLog(OperateLogDTO dto);
@@ -20,6 +17,4 @@ public interface SysLogApplicationService {
     IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQO qo);
 
     IPage<SysLoginLogVO> queryLoginLogPage(LoginLogQO qo);
-
-    void test() throws IOException, ParseException;
 }
