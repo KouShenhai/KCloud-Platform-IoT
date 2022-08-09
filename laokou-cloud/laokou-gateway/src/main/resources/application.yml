@@ -89,3 +89,5 @@ gateway:
     - /webjars/**
     - /druid/**
     - /ws/**
+    - /sys/auth/api/open/login
+    - /sys/login.html
