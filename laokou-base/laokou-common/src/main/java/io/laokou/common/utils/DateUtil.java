@@ -173,7 +173,7 @@ public class DateUtil {
      */
     public static Date parse(String date,String pattern) {
         try {
-            return DateUtils.parseDateStrictly(date,pattern);
+            return DateUtils.parseDate(date,pattern);
         } catch (ParseException e) {
             e.printStackTrace();
         }

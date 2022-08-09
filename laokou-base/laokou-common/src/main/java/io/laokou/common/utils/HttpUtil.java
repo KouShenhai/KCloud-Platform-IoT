@@ -31,7 +31,7 @@ public class HttpUtil {
 
     private static Pattern linePattern = Pattern.compile("_(\\w)");
 
-    public static String doGet(String url, Map<String, String> params) throws IOException {
+    public static String doGet(String url, Map<String, String> params,Map<String, String> headers) throws IOException {
         //创建HttpClient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
         String resultString = "";
@@ -47,6 +47,11 @@ public class HttpUtil {
             URI uri = builder.build();
             //创建http GET请求
             HttpGet httpGet = new HttpGet(uri);
+            if (headers != null && headers.size() > 0) {
+                for (Map.Entry<String, String> e : headers.entrySet()) {
+                    httpGet.addHeader(e.getKey(), e.getValue());
+                }
+            }
             List<NameValuePair> paramList = new ArrayList<>();
             RequestBuilder requestBuilder = RequestBuilder.get().setUri(new URI(url));
             requestBuilder.setEntity(new UrlEncodedFormEntity(paramList, Consts.UTF_8));

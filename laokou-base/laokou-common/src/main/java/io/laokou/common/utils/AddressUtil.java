@@ -19,7 +19,7 @@ public class AddressUtil {
         Map<String,String> params = new HashMap<>(2);
         params.put("ip",ip);
         params.put("accessKey",ACCESS_KEY);
-        String ipJsonData = HttpUtil.transformerUnderHumpData(HttpUtil.doGet(IP_URI,params));
+        String ipJsonData = HttpUtil.transformerUnderHumpData(HttpUtil.doGet(IP_URI,params,new HashMap<>(0)));
         if (StringUtils.isNotBlank(ipJsonData)) {
             JSONObject jsonObject = JSONObject.parseObject(ipJsonData).getJSONObject("data");
             return jsonObject.getString("country") + " " + jsonObject.getString("city");
