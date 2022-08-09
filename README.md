@@ -193,7 +193,7 @@ public class SysUserApiController {
 * laok5/test123（项目总工）
 
 ### 对外开放
-/sys/login.html GET
+/sys/login.html?redirect_url=xxx GET
 对外开放登录页面
 
 /sys/auth/api/open/userInfo GET

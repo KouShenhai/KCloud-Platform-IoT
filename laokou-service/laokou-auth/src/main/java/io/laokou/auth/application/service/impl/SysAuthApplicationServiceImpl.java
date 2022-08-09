@@ -47,6 +47,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Objects;
 /**
@@ -349,11 +350,14 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         final String username = request.getParameter(Constant.USERNAME_HEAD);
         final String password = request.getParameter(Constant.PASSWORD_HEAD);
         final String redirectUrl = request.getParameter(Constant.REDIRECT_URL_HEAD);
-        String token;
+        String token = "";
         try {
             token = getToken(username,password,true);
+        } catch (CustomException e) {
+            response.sendRedirect(String.format(CALLBACK_LOGIN_URL, redirectUrl, URLEncoder.encode(e.getMsg(),"UTF-8")));
+            return;
         } catch (Exception e) {
-            response.sendRedirect(String.format(CALLBACK_LOGIN_URL,redirectUrl,e.getMessage()));
+            response.sendRedirect(String.format(CALLBACK_LOGIN_URL, redirectUrl, URLEncoder.encode("系统正在维护，请联系管理员","UTF-8") ));
             return;
         }
         String params = "?" + Constant.ACCESS_TOKEN + "=" + token;

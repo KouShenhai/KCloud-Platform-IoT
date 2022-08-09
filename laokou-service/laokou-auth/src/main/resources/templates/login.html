@@ -35,7 +35,7 @@
                 redirectUrl = queryData[1]
             }
             if (queryData[0] == "error_info") {
-                errorInfo = queryData[1]
+                errorInfo = decodeURIComponent(queryData[1])
             }
         }
     }
