@@ -26,7 +26,7 @@ public class SysDeptDO extends BaseDO {
      * 部门名称
      */
     @TableField("name")
-    @ApiModelProperty(value = "部门名称",name = "name",required = true,example = "老寇云")
+    @ApiModelProperty(value = "部门名称",name = "name",required = true,example = "老寇云集团")
     private String name;
 
     /**

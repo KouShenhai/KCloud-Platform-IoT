@@ -15,10 +15,10 @@ run() {
   sudo rm -rf *.jar
 
   echo 'copy file...'
-  sudo cp /var/lib/jenkins/workspace/laokou-yun/laokou-service/laokou-${admin}/target/${admin}.jar ${project_path}
-  sudo cp /var/lib/jenkins/workspace/laokou-yun/laokou-cloud/laokou-${gateway}/target/${gateway}.jar ${project_path}
-  sudo cp /var/lib/jenkins/workspace/laokou-yun/laokou-cloud/laokou-${register}/target/${register}.jar ${project_path}
-  sudo cp /var/lib/jenkins/workspace/laokou-yun/laokou-service/laokou-${auth}/target/${auth}.jar ${project_path}
+  sudo cp /var/lib/jenkins/workspace/kcloud-platform/laokou-service/laokou-${admin}/target/${admin}.jar ${project_path}
+  sudo cp /var/lib/jenkins/workspace/kcloud-platform/laokou-cloud/laokou-${gateway}/target/${gateway}.jar ${project_path}
+  sudo cp /var/lib/jenkins/workspace/kcloud-platform/laokou-cloud/laokou-${register}/target/${register}.jar ${project_path}
+  sudo cp /var/lib/jenkins/workspace/kcloud-platform/laokou-service/laokou-${auth}/target/${auth}.jar ${project_path}
 
   echo "run ${admin}..."
   sudo sh laokou-${admin}.sh
