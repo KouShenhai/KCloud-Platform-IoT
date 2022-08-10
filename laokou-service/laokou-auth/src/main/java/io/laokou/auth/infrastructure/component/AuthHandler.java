@@ -1,5 +1,4 @@
 package io.laokou.auth.infrastructure.component;
-
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 import lombok.Data;
@@ -9,8 +8,6 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
-
 /**
  * sso
  * @author Kou Shenhai
@@ -24,7 +21,7 @@ import java.util.Map;
 @Slf4j
 public class AuthHandler {
 
-    private List<Map<String,String>> uris;
+    private List<AuthProperties> uris;
 
     @Resource
     private org.springframework.cloud.context.scope.refresh.RefreshScope refreshScope;

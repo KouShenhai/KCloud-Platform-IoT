@@ -2,6 +2,7 @@ package io.laokou.auth.infrastructure.config;
 import io.laokou.auth.infrastructure.common.filter.AuthFilter;
 import io.laokou.auth.infrastructure.common.filter.AuthRealm;
 import io.laokou.auth.infrastructure.component.AuthHandler;
+import io.laokou.auth.infrastructure.component.AuthProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -58,12 +59,12 @@ public class ShiroConfig {
         filter.put("oauth2", new AuthFilter());
         shiroFilter.setFilters(filter);
         Map<String, String> filterMap = new LinkedHashMap<>();
-        List<Map<String, String>> auth = authHandler.getUris();
+        List<AuthProperties> auth = authHandler.getUris();
         log.info("map:{}",auth);
         if (!CollectionUtils.isEmpty(auth)) {
             auth.forEach(item -> {
-                String url = item.get("url");
-                String permission = item.get("permission");
+                String url = item.getUrl();
+                String permission = item.getPermission();
                 log.info("{} > {}",url,permission);
                 filterMap.put(url,permission);
             });
