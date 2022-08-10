@@ -4,7 +4,7 @@ security:
     type: authorization_code
     scopes: all
     secret: secret
-    redirect_uri: https://1.com/im/loading.html
+    redirect_uri: http://localhost:8080
 
 spring:
   datasource:
