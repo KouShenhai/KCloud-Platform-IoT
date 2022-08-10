@@ -303,3 +303,29 @@ CREATE TABLE `boot_sys_role_dept` (
   KEY `menu_id` (`dept_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色-部门';
 ------------------------------------角色部门------------------------------------
+
+------------------------------------角色部门------------------------------------
+CREATE TABLE `boot_sys_oauth_client_details` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `client_id` varchar(128) DEFAULT NULL COMMENT '客户端id',
+  `resource_ids` varchar(128) DEFAULT NULL COMMENT '资源ids',
+  `client_secret` varchar(128) DEFAULT NULL COMMENT '客户端密钥',
+  `scope` varchar(128) DEFAULT NULL COMMENT '授权范围',
+  `authorized_grant_types` varchar(128) DEFAULT NULL COMMENT '授权类型',
+  `web_server_redirect_uri` varchar(128) DEFAULT NULL COMMENT '回调地址',
+  `authorities` varchar(128) DEFAULT NULL COMMENT '权限标识',
+  `access_token_validity` int(11) DEFAULT NULL COMMENT '访问令牌有效期',
+  `refresh_token_validity` int(11) DEFAULT NULL COMMENT '刷新令牌有效期',
+  `additional_information` varchar(4096) DEFAULT NULL COMMENT '附加信息',
+  `autoapprove` varchar(128) DEFAULT NULL COMMENT '自动授权',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `del_flag` tinyint(1) DEFAULT '0' COMMENT '1已删除 0未删除'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='oauth客户端令牌';
+CREATE TABLE `oauth_code` (
+  `code` varchar(128) DEFAULT NULL,
+  `authentication` blob
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='oauth授权码';
+------------------------------------角色部门------------------------------------

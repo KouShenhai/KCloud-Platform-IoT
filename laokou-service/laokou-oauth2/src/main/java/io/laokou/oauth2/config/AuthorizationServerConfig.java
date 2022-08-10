@@ -1,6 +1,7 @@
 package io.laokou.oauth2.config;
+import io.laokou.oauth2.constant.OauthConstant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,7 +11,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
+import javax.sql.DataSource;
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -20,38 +25,29 @@ import org.springframework.security.oauth2.provider.error.WebResponseExceptionTr
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Value("${security.auth.client_id}")
-    private String CLIENT_ID;
-
-    @Value("${security.auth.scopes}")
-    private String SCOPES;
-
-    @Value("${security.auth.secret}")
-    private String SECRET;
-
-    @Value("${security.auth.type}")
-    private String TYPE;
-
-    @Value("${security.auth.redirect_uri}")
-    private String REDIRECT_URI;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private DataSource dataSource;
 
     @Autowired
     private WebResponseExceptionTranslator<OAuth2Exception> webResponseExceptionTranslator;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        //in-memory存储
-        clients.inMemory()
-                .withClient(CLIENT_ID)
-                //授权类型
-                .authorizedGrantTypes(TYPE)
-                .scopes(SCOPES)
-                .secret(SECRET)
-                .redirectUris(REDIRECT_URI)
-                .autoApprove(true);
+        JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
+        clientDetailsService.setSelectClientDetailsSql(OauthConstant.SELECT_STATEMENT);
+        clientDetailsService.setFindClientDetailsSql(OauthConstant.FIND_STATEMENT);
+        clients.withClientDetails(clientDetailsService);
+    }
+
+    /**
+     * 授权码管理
+     */
+    @Bean
+    public AuthorizationCodeServices jdbcAuthorizationCodeServices() {
+        return new JdbcAuthorizationCodeServices(dataSource);
     }
 
     @Override
@@ -62,6 +58,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         security.tokenKeyAccess("permitAll()");
         //认证后可访问/oauth/check_token
         security.checkTokenAccess("isAuthenticated()");
+        //加密
         security.passwordEncoder(passwordEncoder);
     }
 
@@ -70,5 +67,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //登录或者鉴权失败时的返回信息
         endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST, HttpMethod.DELETE);
         endpoints.exceptionTranslator(webResponseExceptionTranslator);
+        //授权码管理，授权码放在oauth_code表里面
+        endpoints.authorizationCodeServices(jdbcAuthorizationCodeServices());
     }
 }
