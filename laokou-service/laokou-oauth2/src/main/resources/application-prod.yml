@@ -9,10 +9,11 @@ security:
 spring:
   datasource:
     druid:
+      db-type: mysql
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.62.128:3306/kcloud?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
-      username: root
-      password: 123456
+      url: jdbc:mysql://124.222.196.51:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+      username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
+      password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=) # 密码：koushenhai123456
       initial-size: 10
       max-active: 100
       min-idle: 10
@@ -30,8 +31,8 @@ spring:
       stat-view-servlet:
         enabled: true
         url-pattern: /druid/*
-        login-username: root
-        login-password: koushenhai
+        login-username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
+        login-password: ENC(nj35dMcOWEmR5EASEZR3yfaT4IdT9TPm)
         allow:
       filter:
         stat:

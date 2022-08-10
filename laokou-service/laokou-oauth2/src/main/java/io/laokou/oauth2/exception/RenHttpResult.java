@@ -1,8 +1,6 @@
 package io.laokou.oauth2.exception;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -10,7 +8,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class HttpResult {
+public class RenHttpResult {
 
     private String code;
 

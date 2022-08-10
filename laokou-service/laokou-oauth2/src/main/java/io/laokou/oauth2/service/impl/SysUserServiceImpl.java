@@ -2,13 +2,11 @@ package io.laokou.oauth2.service.impl;
 import io.laokou.common.user.BaseUserVO;
 import io.laokou.common.user.UserDetail;
 import io.laokou.oauth2.mapper.SysUserMapper;
-import io.laokou.oauth2.service.SysMenuService;
 import io.laokou.oauth2.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 /**
  * @author Kou Shenhai
  */
@@ -19,9 +17,6 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
-
-    @Autowired
-    private SysMenuService sysMenuService;
 
     @Override
     public UserDetail getUserDetail(Long id, String username) {

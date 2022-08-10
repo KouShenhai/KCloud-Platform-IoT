@@ -3,6 +3,9 @@ package io.laokou.oauth2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author Kou Shenhai
+ */
 @SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.oauth2"})
 public class Oauth2Application {
 

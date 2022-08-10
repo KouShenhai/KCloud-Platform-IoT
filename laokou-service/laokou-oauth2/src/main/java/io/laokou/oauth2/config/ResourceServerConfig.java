@@ -1,10 +1,8 @@
 package io.laokou.oauth2.config;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-
 /**
  * 资源配置
  * @author Kou Shenhai
@@ -18,11 +16,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
      @Override
      public void configure(HttpSecurity http) throws Exception {
          http.requestMatchers()
-                 .antMatchers("/userInfo")
+                 .antMatchers("/oauth2/userInfo")
                  .and()
                  .authorizeRequests().antMatchers().authenticated()
                  .and()
-                 .authorizeRequests().antMatchers("/userInfo")
+                 .authorizeRequests().antMatchers("/oauth2/userInfo")
                  .access("#oauth2.hasScope('all')");
      }
 }

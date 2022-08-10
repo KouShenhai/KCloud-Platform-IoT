@@ -60,6 +60,6 @@ public class RenWebResponseExceptionTranslator implements WebResponseExceptionTr
         if (e instanceof ClientAuthenticationException) {
             return new ResponseEntity<>(e, headers, HttpStatus.valueOf(status));
         }
-        return new ResponseEntity(new HttpResult(e.getOAuth2ErrorCode(),e.getMessage()), headers, HttpStatus.OK);
+        return new ResponseEntity(new RenHttpResult(e.getOAuth2ErrorCode(),e.getMessage()), headers, HttpStatus.OK);
     }
 }
