@@ -42,21 +42,3 @@ mybatis-plus:
     call-setters-on-nulls: true
     jdbc-type-for-null: 'null'
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-security:
-  auth:
-    - clientId: _dev
-      type:
-      scopes: all
-      secret:
-      redirectUri: http://localhost:8080
-    - clientId: client_auth_test
-      type:
-      scopes: all
-      secret: secret
-      redirectUri: http://localhost:8080
-    - clientId: client_auth_prod
-      type: authorization_code
-      scopes: all
-      secret: secret
-      redirectUri: http://localhost:8080
