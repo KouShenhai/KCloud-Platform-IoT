@@ -4,11 +4,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 /**
- * @BelongsProject: kcloud
- * @BelongsPackage: io.laokou.common.utils
- * @Author: 86189
- * @CreateTime: 2020-06-02 17:24
- * @Description: 国际化
+ * @author 86189
  */
 public class MessageUtil {
     private static MessageSource messageSource;

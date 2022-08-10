@@ -4,7 +4,7 @@ import io.laokou.common.entity.BaseDO;
 import lombok.Data;
 /**
  * 字典管理
- * @author  Kou Shenhai
+ * @author Kou Shenhai
  */
 @Data
 @TableName("boot_sys_dict")

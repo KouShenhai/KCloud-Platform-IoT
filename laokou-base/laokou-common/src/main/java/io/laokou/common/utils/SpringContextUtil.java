@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 /**
  *  Spring Context 工具类
- * @author  Kou Shenhai
+ * @author Kou Shenhai
  */
 @Component
 public class SpringContextUtil implements ApplicationContextAware, DisposableBean {
