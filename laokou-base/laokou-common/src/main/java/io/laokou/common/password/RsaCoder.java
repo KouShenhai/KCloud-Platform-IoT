@@ -1,4 +1,4 @@
-package io.laokou.auth.infrastructure.common.password;
+package io.laokou.common.password;
 
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;

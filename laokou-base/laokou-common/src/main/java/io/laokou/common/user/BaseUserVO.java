@@ -1,4 +1,4 @@
-package io.laokou.auth.interfaces.vo;
+package io.laokou.common.user;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -2,7 +2,7 @@ package io.laokou.auth.interfaces.controller;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.laokou.auth.application.service.SysAuthApplicationService;
 import io.laokou.auth.interfaces.dto.LoginDTO;
-import io.laokou.auth.interfaces.vo.BaseUserVO;
+import io.laokou.common.user.BaseUserVO;
 import io.laokou.auth.interfaces.vo.LoginVO;
 import io.laokou.auth.interfaces.vo.UserInfoVO;
 import io.laokou.common.constant.Constant;

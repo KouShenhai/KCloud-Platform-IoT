@@ -78,6 +78,7 @@
 ├── laokou-service
         └── laokou-admin -- 后台管理模块
         └── laokou-auth -- 认证模块
+        └── laokou-oauth2 -- 认证模块
         └── laokou-generator -- 数据生成模块
         └── laokou-redis -- 缓存模块
 ~~~

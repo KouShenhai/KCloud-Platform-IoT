@@ -99,6 +99,8 @@
         <transmittable-thread-local.version>2.12.1</transmittable-thread-local.version>
         <!--oshi版本-->
         <oshi.version>5.8.0</oshi.version>
+        <!-- spring-security-oauth2版本 -->
+        <spring-security-oauth2.version>2.3.3.RELEASE</spring-security-oauth2.version>
     </properties>
     <dependencyManagement>
         <dependencies>

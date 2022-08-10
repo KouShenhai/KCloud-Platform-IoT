@@ -2,7 +2,7 @@ package io.laokou.auth.application.service;
 
 import com.alipay.api.AlipayApiException;
 import io.laokou.auth.interfaces.dto.LoginDTO;
-import io.laokou.auth.interfaces.vo.BaseUserVO;
+import io.laokou.common.user.BaseUserVO;
 import io.laokou.auth.interfaces.vo.LoginVO;
 import io.laokou.auth.interfaces.vo.UserInfoVO;
 import io.laokou.common.user.UserDetail;

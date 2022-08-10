@@ -1,4 +1,4 @@
-package io.laokou.auth.infrastructure.common.enums;
+package io.laokou.common.enums;
 /**
  * 用户状态
  * @author Kou Shenhai

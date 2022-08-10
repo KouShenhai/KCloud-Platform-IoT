@@ -18,5 +18,6 @@
         <module>laokou-redis</module>
         <module>laokou-auth</module>
         <module>laokou-generator</module>
+        <module>laokou-oauth2</module>
     </modules>
 </project>

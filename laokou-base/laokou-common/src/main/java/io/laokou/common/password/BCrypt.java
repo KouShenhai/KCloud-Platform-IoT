@@ -1,4 +1,4 @@
-package io.laokou.auth.infrastructure.common.password;
+package io.laokou.common.password;
 
 import io.laokou.common.exception.CustomException;
 
