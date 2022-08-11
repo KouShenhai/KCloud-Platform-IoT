@@ -324,6 +324,7 @@ CREATE TABLE `boot_sys_oauth_client_details` (
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `del_flag` tinyint(1) DEFAULT '0' COMMENT '1已删除 0未删除',
   `dept_id` bigint(20) DEFAULT NULL COMMENT '部门id',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='oauth客户端令牌';
 CREATE TABLE `oauth_code` (

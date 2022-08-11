@@ -6,4 +6,6 @@ public class SysDictQO extends BasePage {
 
     private String type;
 
+    private String dictLabel;
+
 }

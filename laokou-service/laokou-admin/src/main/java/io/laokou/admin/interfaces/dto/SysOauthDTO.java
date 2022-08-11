@@ -67,4 +67,6 @@ public class SysOauthDTO {
      */
     private String autoapprove;
 
+    private Integer sort;
+
 }

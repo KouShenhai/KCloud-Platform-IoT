@@ -11,6 +11,7 @@
     ,web_server_redirect_uri
     ,access_token_validity
     ,autoapprove
+    ,sort
     FROM boot_sys_oauth_client_details where del_flag = '0'
     <if test="qo.clientId != null and qo.clientId != ''">
         and client_id like concat('%',#{qo.clientId},'%')
@@ -18,7 +19,7 @@
     <if test="qo.clientSecret != null and qo.clientSecret != ''">
         and client_secret like concat('%',#{qo.clientSecret},'%')
     </if>
-    order by create_date desc
+    order by sort desc
     </select>
 
     <select id="getOauthById" resultType="io.laokou.admin.interfaces.vo.SysOauthVO">
@@ -31,6 +32,7 @@
     ,web_server_redirect_uri
     ,access_token_validity
     ,autoapprove
+    ,sort
     FROM boot_sys_oauth_client_details where id = #{id}
     </select>
 

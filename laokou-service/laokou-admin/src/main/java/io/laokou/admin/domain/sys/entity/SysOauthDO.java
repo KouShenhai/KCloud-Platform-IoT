@@ -69,4 +69,6 @@ public class SysOauthDO extends BaseDO {
     private String autoapprove;
 
     private Long deptId;
+
+    private Integer sort;
 }
