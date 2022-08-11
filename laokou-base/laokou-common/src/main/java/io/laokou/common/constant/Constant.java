@@ -53,4 +53,6 @@ public interface Constant {
      * 认证标识
      */
     String TICKET = "ticket";
+
+    String COMMA = ",";
 }

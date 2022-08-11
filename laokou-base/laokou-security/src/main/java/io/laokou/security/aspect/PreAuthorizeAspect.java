@@ -53,12 +53,14 @@ public class PreAuthorizeAspect {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = point.getTarget().getClass().getDeclaredMethod(signature.getName(), signature.getParameterTypes());
         final PreAuthorize preAuthorize = method.getAnnotation(PreAuthorize.class);
-        final String permission = preAuthorize.value();
+        final String[] permissionArray = preAuthorize.value().split(Constant.COMMA);
         final List<String> permissionsList = userDetail.getPermissionsList();
-        if (permissionsList.contains(permission)) {
-            return true;
+        for(String permission : permissionArray) {
+            if (!permissionsList.contains(permission)) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
 }

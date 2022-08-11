@@ -168,7 +168,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
 ### 服务认证
 ##### 代码引入
-说明：@PreAuthorize 根据请求头携带的ticket判断，ticket有值且等于ticket，则说明已经在网关认证过了直接跳过，否则需要认证
+说明：@PreAuthorize 根据请求头携带的ticket判断，ticket有值且等于ticket，则说明已经在网关认证过了直接跳过，否则需要认证（注意：多个权限标识请用逗号,隔开）
 ```java
 @RestController
 @AllArgsConstructor

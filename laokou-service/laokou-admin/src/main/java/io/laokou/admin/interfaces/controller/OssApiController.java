@@ -3,6 +3,7 @@ import io.laokou.admin.application.service.OssApplicationService;
 import io.laokou.admin.interfaces.vo.UploadVO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.HttpResultUtil;
+import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class OssApiController {
 
     @PostMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation("对象存储>上传")
+    @OperateLog(module = "对象存储",name = "文件上传")
     public HttpResultUtil<UploadVO> upload(@RequestPart("file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {
             throw new CustomException("上传的文件不能为空");

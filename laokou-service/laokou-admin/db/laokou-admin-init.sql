@@ -304,7 +304,7 @@ CREATE TABLE `boot_sys_role_dept` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='角色-部门';
 ------------------------------------角色部门------------------------------------
 
-------------------------------------角色部门------------------------------------
+------------------------------------认证------------------------------------
 CREATE TABLE `boot_sys_oauth_client_details` (
   `id` bigint(20) NOT NULL COMMENT 'id',
   `client_id` varchar(128) DEFAULT NULL COMMENT '客户端id',
@@ -322,10 +322,12 @@ CREATE TABLE `boot_sys_oauth_client_details` (
   `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) DEFAULT '0' COMMENT '1已删除 0未删除'
+  `del_flag` tinyint(1) DEFAULT '0' COMMENT '1已删除 0未删除',
+  `dept_id` bigint(20) DEFAULT NULL COMMENT '部门id',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='oauth客户端令牌';
 CREATE TABLE `oauth_code` (
   `code` varchar(128) DEFAULT NULL,
   `authentication` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='oauth授权码';
-------------------------------------角色部门------------------------------------
+------------------------------------认证------------------------------------
