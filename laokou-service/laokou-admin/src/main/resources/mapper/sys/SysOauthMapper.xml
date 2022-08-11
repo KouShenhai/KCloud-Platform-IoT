@@ -12,6 +12,10 @@
     ,access_token_validity
     ,autoapprove
     ,sort
+    ,resource_ids
+    ,authorities
+    ,refresh_token_validity
+    ,additional_information
     FROM boot_sys_oauth_client_details where del_flag = '0'
     <if test="qo.clientId != null and qo.clientId != ''">
         and client_id like concat('%',#{qo.clientId},'%')
@@ -33,6 +37,10 @@
     ,access_token_validity
     ,autoapprove
     ,sort
+    ,resource_ids
+    ,authorities
+    ,refresh_token_validity
+    ,additional_information
     FROM boot_sys_oauth_client_details where id = #{id}
     </select>
 
