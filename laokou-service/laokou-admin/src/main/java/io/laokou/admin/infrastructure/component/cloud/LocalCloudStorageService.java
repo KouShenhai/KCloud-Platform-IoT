@@ -1,11 +1,11 @@
 package io.laokou.admin.infrastructure.component.cloud;
-
 import cn.hutool.core.util.IdUtil;
 import io.laokou.admin.infrastructure.config.CloudStorageConfig;
 import io.laokou.common.utils.FileUtil;
 import io.laokou.common.utils.HashUtil;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-
 /**
  * OSS本地上传
  * @author : Kou Shenhai
@@ -20,11 +20,15 @@ public class LocalCloudStorageService extends AbstractCloudStorageService{
     }
 
     @Override
-    public String upload(InputStream inputStream,String fileName,Long fileSize) {
+    public String upload(InputStream inputStream,String fileName,Long fileSize) throws IOException {
        fileName = IdUtil.simpleUUID() + FileUtil.getFileSuffix(fileName);
        String directoryPath = SEPARATOR + cloudStorageConfig.getLocalPrefix() + SEPARATOR + NODES[HashUtil.getHash(fileName) % NODES.length];
        //上传文件
-       FileUtil.nioRandomFileChannelUpload(cloudStorageConfig.getLocalPath(),directoryPath,fileName,inputStream,fileSize,chunkSize);
+       if (inputStream instanceof ByteArrayInputStream) {
+           FileUtil.fileUpload(cloudStorageConfig.getLocalPath(), directoryPath, fileName, inputStream);
+       } else {
+           FileUtil.nioRandomFileChannelUpload(cloudStorageConfig.getLocalPath(), directoryPath, fileName, inputStream, fileSize, chunkSize);
+       }
        return cloudStorageConfig.getLocalDomain() + directoryPath + SEPARATOR + fileName ;
     }
 
