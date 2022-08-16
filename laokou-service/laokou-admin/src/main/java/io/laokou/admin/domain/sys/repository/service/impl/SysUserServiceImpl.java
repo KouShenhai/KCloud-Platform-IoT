@@ -43,7 +43,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserDO> im
         }
         this.baseMapper.updateUser(dto);
         //删除用户缓存数据
-        redisUtil.delete(RedisKeyUtil.getUserInfoKey(dto.getId()));
+        redissonClient.getKeys().delete(RedisKeyUtil.getUserInfoKey(dto.getId()));
     }
 
     @Override
