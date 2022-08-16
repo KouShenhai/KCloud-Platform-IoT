@@ -32,6 +32,8 @@ import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -50,6 +52,8 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
 /**
  * auth实现类
  * @author Kou Shenhai
@@ -83,6 +87,9 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     @Autowired
     private SysDeptService sysDeptService;
+
+    @Autowired
+    private RedissonClient redissonClient;
 
     @Override
     @DataSource("master")
@@ -157,18 +164,21 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         //登录成功 > 生成token
         String token = TokenUtil.getToken(TokenUtil.getClaims(userId,username));
         log.info("Token is：{}", token);
+        //用户信息
+        String userInfoKey = RedisKeyUtil.getUserInfoKey(userId);
         //资源列表放到redis中
         String userResourceKey = RedisKeyUtil.getUserResourceKey(userId);
+        //原子操作 -> 防止数据被修改，更新到redis的数据不是最新数据
+        final RBucket<String> userInfoBucket = redissonClient.getBucket(userInfoKey);
+        final RBucket<String> userResourceBucket = redissonClient.getBucket(userResourceKey);
         List<String> permissionList = getPermissionList(userDetail);
         userDetail.setPermissionsList(permissionList);
         userDetail.setRoles(sysRoleService.getRoleListByUserId(userDetail.getId()));
         userDetail.setDepts(getDeptList(userDetail));
-        //用户信息
-        String userInfoKey = RedisKeyUtil.getUserInfoKey(userId);
         redisUtil.delete(userInfoKey);
         redisUtil.delete(userResourceKey);
-        redisUtil.set(userInfoKey,JSON.toJSONString(userDetail),RedisUtil.HOUR_ONE_EXPIRE);
-        redisUtil.set(userResourceKey, JSON.toJSONString(resourceList),RedisUtil.HOUR_ONE_EXPIRE);
+        userInfoBucket.set(JSON.toJSONString(userDetail),RedisUtil.HOUR_ONE_EXPIRE, TimeUnit.SECONDS);
+        userResourceBucket.set(JSON.toJSONString(resourceList),RedisUtil.HOUR_ONE_EXPIRE,TimeUnit.SECONDS);
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         request.setAttribute(Constant.AUTHORIZATION_HEAD, token);
         return token;
