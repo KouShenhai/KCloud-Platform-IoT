@@ -1,5 +1,4 @@
 package io.laokou.auth.domain.sys.repository.service.impl;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.laokou.auth.domain.sys.repository.mapper.SysMenuMapper;
@@ -9,13 +8,13 @@ import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.RedisKeyUtil;
 import io.laokou.redis.RedisUtil;
-import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-
+import java.util.concurrent.TimeUnit;
 /**
  * @author Kou Shenhai
  */
@@ -25,6 +24,9 @@ public class SysMenuServiceImpl implements SysMenuService {
 
     @Autowired
     private RedisUtil redisUtil;
+
+    @Autowired
+    private RedissonClient redissonClient;
 
     @Autowired
     private SysMenuMapper sysMenuMapper;
@@ -57,13 +59,13 @@ public class SysMenuServiceImpl implements SysMenuService {
             return getMenuList(userDetail.getId(),userDetail.getSuperAdmin(),type);
         }
         String userResourceKey = RedisKeyUtil.getUserResourceKey(userDetail.getId());
-        String json = redisUtil.get(userResourceKey);
+        final RBucket<String> bucket = redissonClient.getBucket(userResourceKey);
         List<SysMenuVO> resourceList;
-        if (StringUtils.isNotBlank(json)) {
-            resourceList = JSONObject.parseArray(json, SysMenuVO.class);
+        if (redisUtil.hasKey(userResourceKey)) {
+            resourceList = JSONObject.parseArray(bucket.get(), SysMenuVO.class);
         } else {
             resourceList = getMenuList(userDetail.getId(),userDetail.getSuperAdmin(),type);
-            redisUtil.set(userResourceKey, JSON.toJSONString(resourceList),RedisUtil.HOUR_ONE_EXPIRE);
+            bucket.set(JSON.toJSONString(resourceList),RedisUtil.HOUR_ONE_EXPIRE, TimeUnit.SECONDS);
         }
         return resourceList;
         //endregion

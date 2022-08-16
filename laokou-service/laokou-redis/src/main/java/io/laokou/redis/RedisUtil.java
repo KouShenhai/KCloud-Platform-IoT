@@ -30,6 +30,10 @@ public final class RedisUtil {
         }
     }
 
+    public final boolean hasKey(String key) {
+        return redisTemplate.hasKey(key);
+    }
+
     public final void set(String key, String value){
         set(key, value, DEFAULT_EXPIRE);
     }

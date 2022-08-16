@@ -11,18 +11,23 @@ import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.RedisKeyUtil;
 import io.laokou.redis.RedisUtil;
-import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RBucket;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author Kou Shenhai
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> implements SysMenuService {
+
+    @Autowired
+    private RedissonClient redissonClient;
 
     @Autowired
     private RedisUtil redisUtil;
@@ -55,13 +60,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> im
             return getMenuList(userDetail.getId(),userDetail.getSuperAdmin(),type);
         }
         String userResourceKey = RedisKeyUtil.getUserResourceKey(userDetail.getId());
-        String json = redisUtil.get(userResourceKey);
+        final RBucket<String> bucket = redissonClient.getBucket(userResourceKey);
         List<SysMenuVO> resourceList;
-        if (StringUtils.isNotBlank(json)) {
-            resourceList = JSONObject.parseArray(json, SysMenuVO.class);
+        if (redisUtil.hasKey(userResourceKey)) {
+            resourceList = JSONObject.parseArray(bucket.get(), SysMenuVO.class);
         } else {
             resourceList = getMenuList(userDetail.getId(),userDetail.getSuperAdmin(),type);
-            redisUtil.set(userResourceKey, JSON.toJSONString(resourceList),RedisUtil.HOUR_ONE_EXPIRE);
+            bucket.set(JSON.toJSONString(resourceList),RedisUtil.HOUR_ONE_EXPIRE, TimeUnit.SECONDS);
         }
         return resourceList;
         //endregion

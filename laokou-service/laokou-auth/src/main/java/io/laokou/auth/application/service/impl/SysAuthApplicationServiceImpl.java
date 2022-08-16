@@ -53,7 +53,6 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
 /**
  * auth实现类
  * @author Kou Shenhai
@@ -74,9 +73,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     private SysUserService sysUserService;
 
     @Autowired
-    private RedisUtil redisUtil;
-
-    @Autowired
     private SysCaptchaService sysCaptchaService;
 
     @Autowired
@@ -90,6 +86,9 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     @Autowired
     private RedissonClient redissonClient;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     @DataSource("master")
@@ -175,8 +174,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         userDetail.setPermissionsList(permissionList);
         userDetail.setRoles(sysRoleService.getRoleListByUserId(userDetail.getId()));
         userDetail.setDepts(getDeptList(userDetail));
-        redisUtil.delete(userInfoKey);
-        redisUtil.delete(userResourceKey);
+        redissonClient.getKeys().delete(userInfoKey);
+        redissonClient.getKeys().delete(userResourceKey);
         userInfoBucket.set(JSON.toJSONString(userDetail),RedisUtil.HOUR_ONE_EXPIRE, TimeUnit.SECONDS);
         userResourceBucket.set(JSON.toJSONString(resourceList),RedisUtil.HOUR_ONE_EXPIRE,TimeUnit.SECONDS);
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
@@ -220,8 +219,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         //删除缓存
         String userResourceKey = RedisKeyUtil.getUserResourceKey(userId);
         String userInfoKey = RedisKeyUtil.getUserInfoKey(userId);
-        redisUtil.delete(userResourceKey);
-        redisUtil.delete(userInfoKey);
+        redissonClient.getKeys().delete(userResourceKey);
+        redissonClient.getKeys().delete(userInfoKey);
         //退出
         request.removeAttribute(Constant.AUTHORIZATION_HEAD);
         //endregion
@@ -332,10 +331,10 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     public UserDetail getUserDetail(Long userId) {
         //region Description
         String userInfoKey = RedisKeyUtil.getUserInfoKey(userId);
-        String json = redisUtil.get(userInfoKey);
+        final RBucket<String> bucket = redissonClient.getBucket(userInfoKey);
         UserDetail userDetail;
-        if (StringUtils.isNotBlank(json)) {
-            userDetail = JSON.parseObject(json, UserDetail.class);
+        if (redisUtil.hasKey(userInfoKey)) {
+            userDetail = JSON.parseObject(bucket.get(), UserDetail.class);
         } else {
             userDetail = sysUserService.getUserDetail(userId,null);
             if (Objects.isNull(userDetail)) {
@@ -344,7 +343,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             userDetail.setPermissionsList(getPermissionList(userDetail));
             userDetail.setRoles(sysRoleService.getRoleListByUserId(userId));
             userDetail.setDepts(getDeptList(userDetail));
-            redisUtil.set(userInfoKey, JSON.toJSONString(userDetail),RedisUtil.HOUR_ONE_EXPIRE);
+            bucket.set(JSON.toJSONString(userDetail),RedisUtil.HOUR_ONE_EXPIRE,TimeUnit.SECONDS);
         }
         return userDetail;
         //endregion
