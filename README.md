@@ -190,7 +190,7 @@ public class SysUserApiController {
 
 ### 演示地址
 [http://175.178.69.253](http://175.178.69.253)
-* admin/admin123（项目总结）
+* admin/admin123（项目总监）
 * test/test123（项目经理）
 * laok5/test123（项目总工）
 
