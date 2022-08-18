@@ -9,10 +9,16 @@ import io.laokou.admin.interfaces.vo.TaskVO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.datasource.annotation.DataSource;
 import org.apache.commons.lang3.StringUtils;
+import org.flowable.bpmn.model.BpmnModel;
+import org.flowable.bpmn.model.FlowElement;
+import org.flowable.bpmn.model.FlowNode;
+import org.flowable.bpmn.model.SequenceFlow;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.repository.ProcessDefinition;
+import org.flowable.engine.runtime.Execution;
+import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +50,15 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
             throw new CustomException("流程已被挂起，请先激活流程");
         }
         runtimeService.startProcessInstanceById(definitionId);
+        Task task = taskService.createTaskQuery().processDefinitionId(definitionId).list().get(0);
+        Execution execution = runtimeService.createExecutionQuery().executionId(task.getExecutionId()).singleResult();
+        String activityId = execution.getActivityId();
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinition.getId());
+        FlowNode flowNode = (FlowNode) bpmnModel.getFlowElement(activityId);
+        List<SequenceFlow> outFlows = flowNode.getOutgoingFlows();
+        for (SequenceFlow sequenceFlow : outFlows) {
+            FlowElement sourceFlowElement = sequenceFlow.getSourceFlowElement();
+        }
         return true;
     }
 
@@ -81,6 +96,14 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
             vo.setProcessName(processDefinition.getName());
             vo.setAssigneeName(username);
             vo.setCreateTime(task.getCreateTime());
+            Execution execution = runtimeService.createExecutionQuery().executionId(task.getExecutionId()).singleResult();
+            String activityId = execution.getActivityId();
+            BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinition.getId());
+            FlowNode flowNode = (FlowNode) bpmnModel.getFlowElement(activityId);
+            List<SequenceFlow> outFlows = flowNode.getOutgoingFlows();
+            for (SequenceFlow sequenceFlow : outFlows) {
+                FlowElement sourceFlowElement = sequenceFlow.getSourceFlowElement();
+            }
             voList.add(vo);
         }
         page.setRecords(voList);
