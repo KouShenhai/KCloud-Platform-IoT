@@ -44,12 +44,12 @@ SpringBoot
 SpringCloud Netflix  
 
 #### 技术栈
-shiro  
-mysql  
-redis  
-mybatis-plus  
-apollo  
-flowable  
+Shiro  
+Mysql  
+Redis  
+Mybatis-Plus  
+Apollo  
+Flowable  
 
 #### 一键部署
 docker-compose  
