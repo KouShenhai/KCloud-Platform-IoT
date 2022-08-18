@@ -1,9 +1,9 @@
 ### 项目备注
-* 项目：KCloud-Platform
-* 作者：老寇
-* 语言：Java
-* 职位：Java工程师
-* 时间：2020.06.08 ~ 至今
+项目：KCloud-Platform  
+作者：老寇  
+语言：Java
+职位：Java工程师  
+时间：2020.06.08 ~ 至今  
 
 ### 项目介绍
 老寇云平台是基于SpringCloud微服务开发、快速构建微服务项目的脚手架、支持Shell、Docker等多种部署方式，实现RBAC权限、其中包含系统管理、系统监控、工作流程等几大模块、坚持开源，永不闭源  
@@ -182,7 +182,7 @@ public class SysUserApiController {
 ```
 
 ### 演示地址
-[http://175.178.69.253](http://175.178.69.253)
+[http://175.178.69.253](http://175.178.69.253)  
 admin/admin123（项目总监）  
 test/test123（项目经理）  
 laok5/test123（项目总工）  
