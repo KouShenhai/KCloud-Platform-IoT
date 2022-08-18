@@ -48,8 +48,8 @@ shiro
 mysql  
 redis  
 mybatis-plus  
-apollo
-flowable
+apollo  
+flowable  
 
 #### 一键部署
 docker-compose  
