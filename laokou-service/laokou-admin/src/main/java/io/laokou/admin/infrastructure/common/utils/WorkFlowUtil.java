@@ -66,9 +66,9 @@ public class WorkFlowUtil {
      * @param sendChannel
      */
     @Async
-    public void sendAuditMsg(String assignee,Integer type,Integer sendChannel) {
-        String title = "";
-        String content = "";
+    public void sendAuditMsg(String assignee, Integer type, Integer sendChannel) {
+        String title = "资源审批提醒";
+        String content = String.format("编号为%s的资源需要您审批，请及时查看并处理","");
         Set set = Sets.newHashSet();
         set.add(assignee);
         MessageDTO dto = new MessageDTO();
@@ -76,6 +76,7 @@ public class WorkFlowUtil {
         dto.setTitle(title);
         dto.setSendChannel(sendChannel);
         dto.setReceiver(set);
+        dto.setType(type);
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         sysMessageApplicationService.sendMessage(dto,request);
     }

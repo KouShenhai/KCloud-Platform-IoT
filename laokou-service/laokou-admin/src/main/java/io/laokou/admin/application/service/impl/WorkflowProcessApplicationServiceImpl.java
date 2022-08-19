@@ -51,8 +51,8 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
         if (null != processDefinition && processDefinition.isSuspended()) {
             throw new CustomException("流程已被挂起，请先激活流程");
         }
-        final ProcessInstance processInstance = runtimeService.startProcessInstanceById(definitionId);
-        final Long auditUser = workFlowUtil.getAuditUser(definitionId, null, processInstance.getId());
+        final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionId);
+        final String auditUser = workFlowUtil.getAuditUser(definitionId, null, processInstance.getId());
         return true;
     }
 
