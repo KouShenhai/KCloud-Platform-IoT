@@ -3,21 +3,17 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.WorkflowProcessApplicationService;
+import io.laokou.admin.infrastructure.common.utils.WorkFlowUtil;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.qo.TaskQO;
 import io.laokou.admin.interfaces.vo.TaskVO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.datasource.annotation.DataSource;
 import org.apache.commons.lang3.StringUtils;
-import org.flowable.bpmn.model.BpmnModel;
-import org.flowable.bpmn.model.FlowElement;
-import org.flowable.bpmn.model.FlowNode;
-import org.flowable.bpmn.model.SequenceFlow;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.repository.ProcessDefinition;
-import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
@@ -27,6 +23,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+/**
+ * @author Kou Shenhai
+ */
 @Service
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApplicationService {
@@ -40,6 +39,9 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
     @Autowired
     private TaskService taskService;
 
+    @Autowired
+    private WorkFlowUtil workFlowUtil;
+
     @Override
     @DataSource("master")
     public Boolean startProcess(String definitionId) {
@@ -49,16 +51,8 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
         if (null != processDefinition && processDefinition.isSuspended()) {
             throw new CustomException("流程已被挂起，请先激活流程");
         }
-        runtimeService.startProcessInstanceById(definitionId);
-        Task task = taskService.createTaskQuery().processDefinitionId(definitionId).list().get(0);
-        Execution execution = runtimeService.createExecutionQuery().executionId(task.getExecutionId()).singleResult();
-        String activityId = execution.getActivityId();
-        BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinition.getId());
-        FlowNode flowNode = (FlowNode) bpmnModel.getFlowElement(activityId);
-        List<SequenceFlow> outFlows = flowNode.getOutgoingFlows();
-        for (SequenceFlow sequenceFlow : outFlows) {
-            FlowElement sourceFlowElement = sequenceFlow.getSourceFlowElement();
-        }
+        final ProcessInstance processInstance = runtimeService.startProcessInstanceById(definitionId);
+        final Long auditUser = workFlowUtil.getAuditUser(definitionId, null, processInstance.getId());
         return true;
     }
 
@@ -96,14 +90,6 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
             vo.setProcessName(processDefinition.getName());
             vo.setAssigneeName(username);
             vo.setCreateTime(task.getCreateTime());
-            Execution execution = runtimeService.createExecutionQuery().executionId(task.getExecutionId()).singleResult();
-            String activityId = execution.getActivityId();
-            BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinition.getId());
-            FlowNode flowNode = (FlowNode) bpmnModel.getFlowElement(activityId);
-            List<SequenceFlow> outFlows = flowNode.getOutgoingFlows();
-            for (SequenceFlow sequenceFlow : outFlows) {
-                FlowElement sourceFlowElement = sequenceFlow.getSourceFlowElement();
-            }
             voList.add(vo);
         }
         page.setRecords(voList);

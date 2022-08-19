@@ -1,11 +1,12 @@
 package io.laokou.admin.interfaces.dto;
 
 import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
-
+/**
+ * @author Kou Shenhai
+ */
 @Data
 public class MessageDTO {
 
@@ -26,4 +27,9 @@ public class MessageDTO {
     private String username;
 
     private Long userId;
+
+    /**
+     * 1通知 2提醒
+     */
+    private Integer type;
 }
