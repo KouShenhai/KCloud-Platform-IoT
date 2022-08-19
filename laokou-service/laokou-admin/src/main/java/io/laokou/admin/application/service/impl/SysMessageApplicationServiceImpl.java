@@ -36,7 +36,6 @@ import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
 @Service
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysMessageApplicationServiceImpl implements SysMessageApplicationService {

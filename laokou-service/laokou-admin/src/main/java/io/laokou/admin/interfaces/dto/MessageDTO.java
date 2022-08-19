@@ -29,7 +29,7 @@ public class MessageDTO {
     private Long userId;
 
     /**
-     * 1通知 2提醒
+     * 0通知 1提醒
      */
     private Integer type;
 }

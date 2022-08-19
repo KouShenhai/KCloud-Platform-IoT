@@ -265,6 +265,7 @@ CREATE TABLE `boot_sys_message` (
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
   `dept_id` bigint(20) DEFAULT NULL COMMENT '部门id',
+  `type` tinyint(2) DEFAULT '0' COMMENT '0通知 1提醒',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='消息';
 CREATE TABLE `boot_sys_message_detail` (

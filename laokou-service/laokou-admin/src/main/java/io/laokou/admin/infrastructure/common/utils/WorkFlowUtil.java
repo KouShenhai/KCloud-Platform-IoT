@@ -1,7 +1,10 @@
 package io.laokou.admin.infrastructure.common.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Sets;
 import io.laokou.admin.application.service.SysMessageApplicationService;
+import io.laokou.admin.interfaces.dto.MessageDTO;
+import io.laokou.common.utils.HttpContextUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.FlowElement;
@@ -13,8 +16,11 @@ import org.flowable.engine.TaskService;
 import org.flowable.engine.runtime.Execution;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -35,7 +41,7 @@ public class WorkFlowUtil {
     @Autowired
     private SysMessageApplicationService sysMessageApplicationService;
 
-    public Long getAuditUser(String definitionId,String executionId,String processInstanceId) {
+    public String getAuditUser(String definitionId,String executionId,String processInstanceId) {
         if (StringUtils.isBlank(executionId)) {
             final Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).active().singleResult();
             executionId = task.getExecutionId();
@@ -48,13 +54,30 @@ public class WorkFlowUtil {
         for (SequenceFlow sequenceFlow : outFlows) {
             FlowElement sourceFlowElement = sequenceFlow.getSourceFlowElement();
             final String json = JSON.toJSONString(sourceFlowElement);
-            return JSONObject.parseObject(json).getLong("assignee");
+            return JSONObject.parseObject(json).getString("assignee");
         }
         return null;
     }
 
-    public void sendAuditMsg(Long userId) {
-
+    /**
+     *
+     * @param assignee
+     * @param type
+     * @param sendChannel
+     */
+    @Async
+    public void sendAuditMsg(String assignee,Integer type,Integer sendChannel) {
+        String title = "";
+        String content = "";
+        Set set = Sets.newHashSet();
+        set.add(assignee);
+        MessageDTO dto = new MessageDTO();
+        dto.setContent(content);
+        dto.setTitle(title);
+        dto.setSendChannel(sendChannel);
+        dto.setReceiver(set);
+        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+        sysMessageApplicationService.sendMessage(dto,request);
     }
 
 }

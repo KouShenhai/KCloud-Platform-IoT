@@ -25,4 +25,6 @@ public class SysMessageDO extends BaseDO {
 
     private Long deptId;
 
+    private Integer type;
+
 }

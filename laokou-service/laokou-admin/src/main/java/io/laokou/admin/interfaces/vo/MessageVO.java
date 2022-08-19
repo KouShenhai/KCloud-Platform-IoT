@@ -20,4 +20,6 @@ public class MessageVO implements Serializable {
 
     private Date createDate;
 
+    private Integer type;
+
 }
