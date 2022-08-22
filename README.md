@@ -50,6 +50,7 @@ Redis
 Mybatis-Plus  
 Apollo  
 Flowable  
+ElasticSearch   
 
 #### 一键部署
 docker-compose  
