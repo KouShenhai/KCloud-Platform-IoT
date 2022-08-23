@@ -44,15 +44,16 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
 
     @Override
     @DataSource("master")
-    public Boolean startProcess(String definitionId) {
+    public Boolean startProcess(String processKey) {
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-                .processDefinitionId(definitionId)
+                .processDefinitionKey(processKey)
+                .latestVersion()
                 .singleResult();
         if (null != processDefinition && processDefinition.isSuspended()) {
             throw new CustomException("流程已被挂起，请先激活流程");
         }
-        final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionId);
-        final String auditUser = workFlowUtil.getAuditUser(definitionId, null, processInstance.getId());
+        final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processKey);
+        final String auditUser = workFlowUtil.getAuditUser(processDefinition.getId(), null, processInstance.getId());
         return true;
     }
 

@@ -3,7 +3,7 @@
 <mapper namespace="io.laokou.admin.domain.sys.repository.mapper.SysMessageMapper">
 
     <select id="getMessageList" resultType="io.laokou.admin.interfaces.vo.MessageVO">
-         select id,username,create_date,title,`type
+         select id,username,create_date,title,`type`
          from boot_sys_message
          where del_flag = '0'
          <if test="qo.username != null and qo.username != ''">

@@ -1,5 +1,6 @@
 package io.laokou.admin.interfaces.qo;
 
+import io.laokou.common.entity.BasePage;
 import lombok.Data;
 
 /**
@@ -8,8 +9,9 @@ import lombok.Data;
  * @date 2022/8/19 0019 下午 3:46
  */
 @Data
-public class SysResourceQO {
+public class SysResourceQO extends BasePage {
 
     private String title;
+    private String code;
 
 }

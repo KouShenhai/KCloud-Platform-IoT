@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface WorkflowProcessApplicationService {
 
-    Boolean startProcess(String definitionId);
+    Boolean startProcess(String processKey);
 
     IPage<TaskVO> queryTaskPage(TaskQO qo, HttpServletRequest request);
 

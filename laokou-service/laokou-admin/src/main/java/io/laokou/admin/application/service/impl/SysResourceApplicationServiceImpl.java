@@ -1,11 +1,16 @@
 package io.laokou.admin.application.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.laokou.admin.application.service.SysResourceApplicationService;
+import io.laokou.admin.domain.sys.entity.SysResourceDO;
+import io.laokou.admin.domain.sys.repository.service.SysResourceService;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.SysResourceVO;
-import io.laokou.datasource.annotation.DataFilter;
+import io.laokou.common.user.SecurityUser;
+import io.laokou.common.utils.ConvertUtil;
 import io.laokou.datasource.annotation.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,36 +24,44 @@ import javax.servlet.http.HttpServletRequest;
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
 
+    @Autowired
+    private SysResourceService sysResourceService;
+
     @Override
     @DataSource("master")
-    @DataFilter(tableAlias = "boot_sys_resource")
     public IPage<SysResourceVO> queryResourcePage(SysResourceQO qo) {
-
-        return null;
+        IPage<SysResourceVO> page = new Page(qo.getPageNum(),qo.getPageSize());
+        return sysResourceService.getResourceList(page,qo);
     }
 
     @Override
     @DataSource("master")
     public SysResourceVO getResourceById(Long id) {
-        return null;
+        return sysResourceService.getResourceById(id);
     }
 
     @Override
     @DataSource("master")
     public Boolean insertResource(SysResourceDTO dto, HttpServletRequest request) {
-        return null;
+        SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
+        sysResourceDO.setCreator(SecurityUser.getUserId(request));
+        sysResourceDO.setAuthor(SecurityUser.getUsername(request));
+        return sysResourceService.save(sysResourceDO);
     }
 
     @Override
     @DataSource("master")
     public Boolean updateResource(SysResourceDTO dto, HttpServletRequest request) {
-        return null;
+        SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
+        sysResourceDO.setEditor(SecurityUser.getUserId(request));
+        return sysResourceService.updateById(sysResourceDO);
     }
 
     @Override
     @DataSource("master")
     public Boolean deleteResource(Long id) {
-        return null;
+        sysResourceService.deleteResource(id);
+        return true;
     }
 
 }

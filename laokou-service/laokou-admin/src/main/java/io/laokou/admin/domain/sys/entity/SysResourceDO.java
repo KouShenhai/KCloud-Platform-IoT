@@ -21,10 +21,10 @@ public class SysResourceDO extends BaseDO {
     private String code;
     private String remark;
     private String tags;
-    private Long deptId;
     /**
      * 流程id
      */
     private String processInstanceId;
+    private String md5;
 
 }

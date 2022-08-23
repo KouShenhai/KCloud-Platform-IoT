@@ -23,8 +23,8 @@ public class WorkflowProcessApiController {
     @ApiOperation("流程处理>开始")
     @OperateLog(module = "流程处理",name = "流程发起")
     @PreAuthorize("workflow:process:start")
-    public HttpResultUtil<Boolean> start(@RequestParam("definitionId")String definitionId) {
-        return new HttpResultUtil<Boolean>().ok(workflowProcessApplicationService.startProcess(definitionId));
+    public HttpResultUtil<Boolean> start(@RequestParam("processKey")String processKey) {
+        return new HttpResultUtil<Boolean>().ok(workflowProcessApplicationService.startProcess(processKey));
     }
 
     @PostMapping("/query")
