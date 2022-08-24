@@ -13,10 +13,9 @@ spring:
     lazy-initialization: true
   servlet:
     multipart:
-      max-file-size: -1
       enabled: true
+      max-file-size: -1
       max-request-size: -1
-      file-size-threshold: -1
   cloud:
     inetutils:
       ignoredInterfaces:

@@ -49,4 +49,9 @@ public class TaskVO {
      */
     private String processName;
 
+    /**
+     * 实例名称
+     */
+    private String processInstanceName;
+
 }

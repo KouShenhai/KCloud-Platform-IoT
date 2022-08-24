@@ -15,4 +15,5 @@ public class SysResourceDTO {
     private String code;
     private String remark;
     private String tags;
+    private String md5;
 }

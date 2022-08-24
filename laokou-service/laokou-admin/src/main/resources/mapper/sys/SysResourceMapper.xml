@@ -6,7 +6,6 @@
         id,
         title,
         author,
-        case when `status` != 2 then '' else uri end uri,
         `status`,
         `code`,
         remark,
@@ -30,7 +29,8 @@
         `status`,
         `code`,
         remark,
-        tags
+        tags,
+        md5
         from boot_sys_resource
         where id = #{id}
     </select>

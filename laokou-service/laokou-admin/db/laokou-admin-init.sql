@@ -176,7 +176,7 @@ CREATE TABLE `boot_sys_login_log` (
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
   `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-  `login_name` varchar(20) DEFAULT NULL COMMENT '登录用户',
+  `login_name` varchar(200) DEFAULT NULL COMMENT '登录用户',
   `request_ip` varchar(50) DEFAULT NULL COMMENT 'IP地址',
   `request_address` varchar(200) DEFAULT NULL COMMENT '归属地',
   `browser` varchar(50) DEFAULT NULL COMMENT '浏览器',

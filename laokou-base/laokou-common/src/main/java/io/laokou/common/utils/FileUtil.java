@@ -38,14 +38,16 @@ public class FileUtil extends FileUtils {
         // 其中images,flashs,medias,files,对应文件夹名称,对应dirName
         // key文件夹名称
         // value该文件夹内可以上传文件的后缀名
-        extMap.put("images", "gif,GIF,jpg,JPG,jpeg,JPEG,png,PNG,bmp,BMP");
-        extMap.put("flashs", "swf,SWF,flv,FLV");
-        extMap.put("medias", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb,SWF,FLV,MP3,WAV,WMA,WMV,MID,AVI,MPG,ASF,RM,RMVB");
-        extMap.put("files", "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2,DOC,DOCX,XLS,XLSX,PPT,HTM,HTML,TXT,ZIP,RAR,GZ,BZ2");
-        extMap.put("sensitive", "txt,TXT");
-        extMap.put("pdf", "pdf");
+        extMap.put("image", ".gif,.GIF,.jpg,.JPG,.jpeg,.JPEG,.png,.PNG,.bmp,.BMP,.webp,.WEBP");
+        extMap.put("audio", ".flac,.FLAC,.cda,.wav,.mp3,.aif,.aiff,.mid,.wma,.ra,.vqf,.ape,.CDA,.WAV,.MP3,.AIF,.AIFF,.MID,.WMA,.RA,.VQF,.APE");
+        extMap.put("video", ".mp4,.MP4,.AVI,.mov,.rmvb,.rm,.FLV,.mp4,.3GP,.flv");
     }
 
+    public static Boolean checkFileExt(String code,String fileSuffix) {
+        String extValue = extMap.get(code);
+        List<String> extList = Arrays.asList(extValue.split(","));
+        return extList.contains(fileSuffix);
+    }
 
     /**
      * 获取文件后缀

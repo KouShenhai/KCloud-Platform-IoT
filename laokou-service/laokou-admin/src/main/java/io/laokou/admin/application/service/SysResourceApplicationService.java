@@ -4,7 +4,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.SysResourceVO;
+import io.laokou.admin.interfaces.vo.UploadVO;
+
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -22,4 +27,5 @@ public interface SysResourceApplicationService {
 
     Boolean deleteResource(Long id);
 
+    UploadVO uploadResource(String code,String fileName, InputStream inputStream,Long fileSize) throws Exception;
 }

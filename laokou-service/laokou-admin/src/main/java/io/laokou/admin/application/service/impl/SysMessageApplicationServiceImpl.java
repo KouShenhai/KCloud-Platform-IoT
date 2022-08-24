@@ -76,8 +76,10 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
     @Override
     public Boolean sendMessage(MessageDTO dto, HttpServletRequest request) {
-        dto.setUsername(SecurityUser.getUsername(request));
-        dto.setUserId(SecurityUser.getUserId(request));
+        String username = dto.getUsername();
+        Long userId = dto.getUserId();
+        dto.setUsername(null == username ? SecurityUser.getUsername(request) : username);
+        dto.setUserId(null == userId ? SecurityUser.getUserId(request) : userId);
         processController.process(dto);
         return true;
     }

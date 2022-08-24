@@ -1,14 +1,8 @@
 server:
-  compression:
-    # 开启压缩
-    enabled: true
-    # 配置支持压缩 MIME-TYPE
-    mime-types: text/html,text/xml,text/plain,application/xml,application/json,application/x-www-form-urlencoded
   address: 10.0.8.7
   port: 5555
   tomcat:
-    max-http-form-post-size: -1
-
+    connection-timeout: 18000000
 spring:
   redis:
     database: 0

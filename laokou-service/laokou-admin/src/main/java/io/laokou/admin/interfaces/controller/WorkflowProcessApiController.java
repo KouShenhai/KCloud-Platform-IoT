@@ -4,7 +4,6 @@ import io.laokou.admin.application.service.WorkflowProcessApplicationService;
 import io.laokou.admin.interfaces.qo.TaskQO;
 import io.laokou.admin.interfaces.vo.TaskVO;
 import io.laokou.common.utils.HttpResultUtil;
-import io.laokou.log.annotation.OperateLog;
 import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,14 +17,6 @@ public class WorkflowProcessApiController {
 
     @Autowired
     private WorkflowProcessApplicationService workflowProcessApplicationService;
-
-    @PostMapping("/start")
-    @ApiOperation("流程处理>开始")
-    @OperateLog(module = "流程处理",name = "流程发起")
-    @PreAuthorize("workflow:process:start")
-    public HttpResultUtil<Boolean> start(@RequestParam("processKey")String processKey) {
-        return new HttpResultUtil<Boolean>().ok(workflowProcessApplicationService.startProcess(processKey));
-    }
 
     @PostMapping("/query")
     @ApiOperation("流程处理>任务")

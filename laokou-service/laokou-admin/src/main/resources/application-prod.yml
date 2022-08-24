@@ -8,7 +8,7 @@ server:
     session:
       cookie:
         http-only: true
-    connection-timeout: 5000ms
+    connection-timeout: 18000000
 
 app:
   id: admin # 应用全局唯一的身份标识

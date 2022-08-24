@@ -24,7 +24,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 
     @Override
     public SysResourceVO getResourceById(Long id) {
-        return this.getResourceById(id);
+        return this.baseMapper.getResourceById(id);
     }
 
     @Override

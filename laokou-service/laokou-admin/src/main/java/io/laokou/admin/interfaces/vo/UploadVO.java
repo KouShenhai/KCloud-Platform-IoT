@@ -4,5 +4,6 @@ import lombok.Data;
 public class UploadVO {
 
     private String url;
+    private String md5;
 
 }

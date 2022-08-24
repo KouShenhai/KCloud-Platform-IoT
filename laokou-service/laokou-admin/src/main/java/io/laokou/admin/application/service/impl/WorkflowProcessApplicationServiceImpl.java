@@ -3,7 +3,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.WorkflowProcessApplicationService;
-import io.laokou.admin.infrastructure.common.utils.WorkFlowUtil;
+import io.laokou.admin.interfaces.vo.StartProcessVO;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.qo.TaskQO;
 import io.laokou.admin.interfaces.vo.TaskVO;
@@ -39,12 +39,10 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
     @Autowired
     private TaskService taskService;
 
-    @Autowired
-    private WorkFlowUtil workFlowUtil;
-
     @Override
     @DataSource("master")
-    public Boolean startProcess(String processKey) {
+    public StartProcessVO startProcess(String processKey,String instanceName) {
+        StartProcessVO vo = new StartProcessVO();
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
                 .processDefinitionKey(processKey)
                 .latestVersion()
@@ -53,8 +51,10 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
             throw new CustomException("流程已被挂起，请先激活流程");
         }
         final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processKey);
-        final String auditUser = workFlowUtil.getAuditUser(processDefinition.getId(), null, processInstance.getId());
-        return true;
+        runtimeService.setProcessInstanceName(processInstance.getId(),instanceName);
+        vo.setDefinitionId(processDefinition.getId());
+        vo.setInstanceId(processInstance.getId());
+        return vo;
     }
 
     @Override
@@ -83,7 +83,9 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
             vo.setTaskId(task.getId());
             vo.setTaskDefinitionKey(task.getTaskDefinitionKey());
             vo.setProcessInstanceId(task.getProcessInstanceId());
+            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
             ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                    .latestVersion()
                     .processDefinitionId(task.getProcessDefinitionId())
                     .singleResult();
             vo.setTaskName(task.getName());
@@ -91,6 +93,7 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
             vo.setProcessName(processDefinition.getName());
             vo.setAssigneeName(username);
             vo.setCreateTime(task.getCreateTime());
+            vo.setProcessInstanceName(processInstance.getName());
             voList.add(vo);
         }
         page.setRecords(voList);

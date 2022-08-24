@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Sets;
 import io.laokou.admin.application.service.SysMessageApplicationService;
 import io.laokou.admin.interfaces.dto.MessageDTO;
-import io.laokou.common.utils.HttpContextUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.FlowElement;
@@ -66,9 +65,9 @@ public class WorkFlowUtil {
      * @param sendChannel
      */
     @Async
-    public void sendAuditMsg(String assignee, Integer type, Integer sendChannel) {
+    public void sendAuditMsg(String assignee, Integer type, Integer sendChannel,Long id,String name,HttpServletRequest request) {
         String title = "资源审批提醒";
-        String content = String.format("编号为%s的资源需要您审批，请及时查看并处理","");
+        String content = String.format("编号为%s，名称为%s的资源需要审批，请及时查看并处理",id,name);
         Set set = Sets.newHashSet();
         set.add(assignee);
         MessageDTO dto = new MessageDTO();
@@ -77,7 +76,6 @@ public class WorkFlowUtil {
         dto.setSendChannel(sendChannel);
         dto.setReceiver(set);
         dto.setType(type);
-        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         sysMessageApplicationService.sendMessage(dto,request);
     }
 

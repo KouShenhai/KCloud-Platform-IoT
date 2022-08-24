@@ -8,7 +8,7 @@ server:
     session:
       cookie:
         http-only: true
-    connection-timeout: 5000ms
+    connection-timeout: -1
 
 app:
   id: auth # 应用全局唯一的身份标识
