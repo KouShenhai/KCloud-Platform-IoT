@@ -16,7 +16,8 @@
 日志管理  
 字典管理  
 消息管理  
-认证管理  
+认证管理 
+资源管理 
 流程定义  
 流程任务  
 接口文档  
@@ -184,9 +185,9 @@ public class SysUserApiController {
 
 ### 演示地址
 [http://175.178.69.253](http://175.178.69.253)  
-admin/admin123（项目总监）  
-test/test123（项目经理）  
-laok5/test123（项目总工）  
+admin/admin123
+test/test123
+laok5/test123
 
 ### 对外开放
 /sys/login.html?redirect_url=xxx GET  
