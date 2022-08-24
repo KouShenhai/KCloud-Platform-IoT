@@ -53,11 +53,4 @@ public class WorkflowTaskApiController {
         return new HttpResultUtil<Boolean>().ok(workflowTaskApplicationService.deleteTask(taskId));
     }
 
-    @GetMapping(value = "/diagram")
-    @ApiOperation(value = "流程任务>流程图")
-    @PreAuthorize("workflow:task:diagram")
-    public void diagram(@RequestParam("processInstanceId")String processInstanceId, HttpServletResponse response) throws IOException {
-        workflowTaskApplicationService.diagramProcess(processInstanceId, response);
-    }
-
 }

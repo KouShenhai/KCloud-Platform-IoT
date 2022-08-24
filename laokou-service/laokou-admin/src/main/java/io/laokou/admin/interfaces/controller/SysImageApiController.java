@@ -1,6 +1,7 @@
 package io.laokou.admin.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysResourceApplicationService;
+import io.laokou.admin.application.service.WorkflowTaskApplicationService;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.SysResourceVO;
@@ -15,8 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.InputStream;
-
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -29,6 +31,9 @@ public class SysImageApiController {
 
     @Autowired
     private SysResourceApplicationService sysResourceApplicationService;
+
+    @Autowired
+    private WorkflowTaskApplicationService workflowTaskApplicationService;
 
     @PostMapping("/upload")
     @ApiOperation("图片管理>上传")
@@ -48,7 +53,7 @@ public class SysImageApiController {
 
     @PostMapping("/query")
     @ApiOperation("图片管理>查询")
-    @PreAuthorize("sys:resource:audio:query")
+    @PreAuthorize("sys:resource:image:query")
     public HttpResultUtil<IPage<SysResourceVO>> query(@RequestBody SysResourceQO qo) {
         return new HttpResultUtil<IPage<SysResourceVO>>().ok(sysResourceApplicationService.queryResourcePage(qo));
     }
@@ -61,7 +66,7 @@ public class SysImageApiController {
 
     @PostMapping(value = "/insert")
     @ApiOperation("图片管理>新增")
-    @PreAuthorize("sys:resource:audio:insert")
+    @PreAuthorize("sys:resource:image:insert")
     @OperateLog(module = "图片管理",name = "图片新增")
     public HttpResultUtil<Boolean> insert(@RequestBody SysResourceDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysResourceApplicationService.insertResource(dto,request));
@@ -69,7 +74,7 @@ public class SysImageApiController {
 
     @PutMapping(value = "/update")
     @ApiOperation("图片管理>修改")
-    @PreAuthorize("sys:resource:audio:update")
+    @PreAuthorize("sys:resource:image:update")
     @OperateLog(module = "图片管理",name = "图片修改")
     public HttpResultUtil<Boolean> update(@RequestBody SysResourceDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(sysResourceApplicationService.updateResource(dto,request));
@@ -77,10 +82,17 @@ public class SysImageApiController {
 
     @DeleteMapping(value = "/delete")
     @ApiOperation("图片管理>删除")
-    @PreAuthorize("sys:resource:audio:delete")
+    @PreAuthorize("sys:resource:image:delete")
     @OperateLog(module = "图片管理",name = "图片删除")
     public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id) {
         return new HttpResultUtil<Boolean>().ok(sysResourceApplicationService.deleteResource(id));
+    }
+
+    @GetMapping(value = "/diagram")
+    @ApiOperation(value = "图片管理>流程图")
+    @PreAuthorize("sys:resource:image:diagram")
+    public void diagram(@RequestParam("processInstanceId")String processInstanceId, HttpServletResponse response) throws IOException {
+        workflowTaskApplicationService.diagramProcess(processInstanceId, response);
     }
 
 }

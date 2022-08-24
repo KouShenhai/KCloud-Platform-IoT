@@ -9,7 +9,8 @@
         `status`,
         `code`,
         remark,
-        tags
+        tags,
+        process_instance_id
         from boot_sys_resource
         where del_flag = '0'
         <if test="qo.title != null and qo.title != ''">
@@ -30,7 +31,8 @@
         `code`,
         remark,
         tags,
-        md5
+        md5,
+        process_instance_id
         from boot_sys_resource
         where id = #{id}
     </select>

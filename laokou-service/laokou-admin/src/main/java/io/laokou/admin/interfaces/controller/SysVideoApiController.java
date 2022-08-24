@@ -1,6 +1,7 @@
 package io.laokou.admin.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysResourceApplicationService;
+import io.laokou.admin.application.service.WorkflowTaskApplicationService;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.SysResourceVO;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.InputStream;
 /**
  * @author Kou Shenhai
@@ -28,6 +31,9 @@ public class SysVideoApiController {
 
     @Autowired
     private SysResourceApplicationService sysResourceApplicationService;
+
+    @Autowired
+    private WorkflowTaskApplicationService workflowTaskApplicationService;
 
     @PostMapping("/upload")
     @ApiOperation("视频管理>上传")
@@ -80,6 +86,13 @@ public class SysVideoApiController {
     @OperateLog(module = "视频管理",name = "视频删除")
     public HttpResultUtil<Boolean> delete(@RequestParam("id") Long id) {
         return new HttpResultUtil<Boolean>().ok(sysResourceApplicationService.deleteResource(id));
+    }
+
+    @GetMapping(value = "/diagram")
+    @ApiOperation(value = "视频管理>流程图")
+    @PreAuthorize("sys:resource:video:diagram")
+    public void diagram(@RequestParam("processInstanceId")String processInstanceId, HttpServletResponse response) throws IOException {
+        workflowTaskApplicationService.diagramProcess(processInstanceId, response);
     }
 
 }
