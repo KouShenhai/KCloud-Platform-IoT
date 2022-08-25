@@ -2,7 +2,6 @@ package io.laokou.admin.application.service.impl;
 import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
 import io.laokou.admin.infrastructure.common.enums.FlowCommentEnum;
-import io.laokou.admin.interfaces.vo.AuditProcessVO;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.infrastructure.config.CustomProcessDiagramGenerator;
 import io.laokou.admin.interfaces.dto.AuditDTO;
