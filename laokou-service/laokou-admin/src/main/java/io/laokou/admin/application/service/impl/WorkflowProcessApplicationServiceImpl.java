@@ -134,6 +134,7 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
             status = 1;
             workFlowUtil.sendAuditMsg(auditUser, MessageTypeEnum.REMIND.ordinal(), ChannelTypeEnum.PLATFORM.ordinal(),Long.valueOf(dto.getBusinessKey()),dto.getInstanceName(),request);
         } else {
+            //0拒绝 1同意
             if (0 == auditStatus) {
                 //审批拒绝
                 status = 2;
