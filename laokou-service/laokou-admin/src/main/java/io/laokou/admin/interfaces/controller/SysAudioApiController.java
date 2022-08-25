@@ -37,7 +37,7 @@ public class SysAudioApiController {
 
     @PostMapping("/upload")
     @ApiOperation("音频管理>上传")
-    @PreAuthorize("sys:resource:audio:update")
+    @PreAuthorize("sys:resource:audio:upload")
     public HttpResultUtil<UploadVO> upload(@RequestPart("file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {
             throw new CustomException("上传的文件不能为空");

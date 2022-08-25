@@ -37,7 +37,7 @@ public class SysVideoApiController {
 
     @PostMapping("/upload")
     @ApiOperation("视频管理>上传")
-    @PreAuthorize("sys:resource:video:update")
+    @PreAuthorize("sys:resource:video:upload")
     public HttpResultUtil<UploadVO> upload(@RequestPart("file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {
             throw new CustomException("上传的文件不能为空");
