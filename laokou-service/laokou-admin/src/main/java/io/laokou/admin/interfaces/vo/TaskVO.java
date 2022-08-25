@@ -54,4 +54,8 @@ public class TaskVO {
      */
     private String processInstanceName;
 
+    /**
+     * 业务主键
+     */
+    private String businessKey;
 }

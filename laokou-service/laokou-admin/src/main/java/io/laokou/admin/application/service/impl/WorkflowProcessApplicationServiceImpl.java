@@ -41,7 +41,7 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
 
     @Override
     @DataSource("master")
-    public StartProcessVO startProcess(String processKey,String instanceName) {
+    public StartProcessVO startProcess(String processKey,String businessKey,String instanceName) {
         StartProcessVO vo = new StartProcessVO();
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
                 .processDefinitionKey(processKey)
@@ -50,7 +50,7 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
         if (null != processDefinition && processDefinition.isSuspended()) {
             throw new CustomException("流程已被挂起，请先激活流程");
         }
-        final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processKey);
+        final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processKey,businessKey);
         runtimeService.setProcessInstanceName(processInstance.getId(),instanceName);
         vo.setDefinitionId(processDefinition.getId());
         vo.setInstanceId(processInstance.getId());
@@ -94,6 +94,7 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
             vo.setAssigneeName(username);
             vo.setCreateTime(task.getCreateTime());
             vo.setProcessInstanceName(processInstance.getName());
+            vo.setBusinessKey(processInstance.getBusinessKey());
             voList.add(vo);
         }
         page.setRecords(voList);

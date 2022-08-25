@@ -2,6 +2,7 @@ package io.laokou.admin.application.service.impl;
 import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
 import io.laokou.admin.infrastructure.common.enums.FlowCommentEnum;
+import io.laokou.admin.interfaces.vo.AuditProcessVO;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.infrastructure.config.CustomProcessDiagramGenerator;
 import io.laokou.admin.interfaces.dto.AuditDTO;
@@ -57,7 +58,8 @@ public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicati
 
     @Override
     @DataSource("master")
-    public Boolean auditTask(AuditDTO dto, HttpServletRequest request) {
+    public AuditProcessVO auditTask(AuditDTO dto, HttpServletRequest request) {
+        AuditProcessVO vo = new AuditProcessVO();
         Task task = taskService.createTaskQuery().taskId(dto.getTaskId()).singleResult();
         if (null == task) {
             throw new CustomException("任务不存在");
@@ -75,7 +77,12 @@ public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicati
                 taskService.complete(dto.getTaskId());
             }
         }
-        return true;
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
+        vo.setExecutionId(task.getExecutionId());
+        vo.setDefinitionId(task.getProcessDefinitionId());
+        vo.setBusinessKey(processInstance.getBusinessKey());
+        vo.setInstanceName(processInstance.getName());
+        return vo;
     }
 
     @Override

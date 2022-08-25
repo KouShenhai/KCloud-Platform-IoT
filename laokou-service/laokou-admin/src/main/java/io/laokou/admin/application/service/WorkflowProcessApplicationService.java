@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface WorkflowProcessApplicationService {
 
-    StartProcessVO startProcess(String processKey,String instanceName);
+    StartProcessVO startProcess(String processKey,String businessKey,String instanceName);
 
     IPage<TaskVO> queryTaskPage(TaskQO qo, HttpServletRequest request);
 
