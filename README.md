@@ -185,9 +185,9 @@ public class SysUserApiController {
 
 ### 演示地址
 [http://175.178.69.253](http://175.178.69.253)  
-admin/admin123
-test/test123
-laok5/test123
+admin/admin123  
+test/test123  
+laok5/test123  
 
 ### 对外开放
 /sys/login.html?redirect_url=xxx GET  
