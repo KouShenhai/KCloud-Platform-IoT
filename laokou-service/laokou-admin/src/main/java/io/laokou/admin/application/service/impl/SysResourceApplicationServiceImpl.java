@@ -122,9 +122,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     @Override
-    public Boolean syncAsyncBatchIndex(String code) {
-        //根据时间分区查询数据
-        //删除数据
+    public Boolean syncAsyncBatchResource(String code) {
         return null;
     }
+
 }
