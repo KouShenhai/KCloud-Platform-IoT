@@ -13,7 +13,7 @@ public class AuditProcessVO {
 
     private String businessKey;
 
-    private String executionId;
+    private String instanceId;
 
     private String instanceName;
 

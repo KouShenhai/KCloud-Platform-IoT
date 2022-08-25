@@ -24,6 +24,12 @@ public class AuditDTO {
      */
     private String instanceId;
 
+    private String businessKey;
+
+    private String instanceName;
+
+    private String definitionId;
+
     /**
      * 流程变量
      */

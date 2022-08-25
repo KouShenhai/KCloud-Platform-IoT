@@ -3,6 +3,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.WorkflowProcessApplicationService;
+import io.laokou.admin.application.service.WorkflowTaskApplicationService;
+import io.laokou.admin.domain.sys.entity.SysResourceDO;
+import io.laokou.admin.domain.sys.repository.service.SysResourceService;
+import io.laokou.admin.infrastructure.common.enums.ChannelTypeEnum;
+import io.laokou.admin.infrastructure.common.enums.MessageTypeEnum;
+import io.laokou.admin.infrastructure.common.utils.WorkFlowUtil;
+import io.laokou.admin.interfaces.dto.AuditDTO;
 import io.laokou.admin.interfaces.vo.StartProcessVO;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.admin.interfaces.qo.TaskQO;
@@ -23,6 +30,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 /**
  * @author Kou Shenhai
  */
@@ -39,9 +47,20 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
     @Autowired
     private TaskService taskService;
 
+    private static final String PROCESS_KEY = "Process_88888888";
+
+    @Autowired
+    private WorkflowTaskApplicationService workflowTaskApplicationService;
+
+    @Autowired
+    private WorkFlowUtil workFlowUtil;
+
+    @Autowired
+    private SysResourceService sysResourceService;
+
     @Override
     @DataSource("master")
-    public StartProcessVO startProcess(String processKey,String businessKey,String instanceName) {
+    public StartProcessVO startResourceProcess(String processKey,String businessKey,String instanceName) {
         StartProcessVO vo = new StartProcessVO();
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
                 .processDefinitionKey(processKey)
@@ -59,7 +78,7 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
 
     @Override
     @DataSource("master")
-    public IPage<TaskVO> queryTaskPage(TaskQO qo, HttpServletRequest request) {
+    public IPage<TaskVO> queryResourceTaskPage(TaskQO qo, HttpServletRequest request) {
         final Integer pageNum = qo.getPageNum();
         final Integer pageSize = qo.getPageSize();
         String processName = qo.getProcessName();
@@ -68,6 +87,7 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
         TaskQuery taskQuery = taskService.createTaskQuery()
                 .active()
                 .includeProcessVariables()
+                .processDefinitionKey(PROCESS_KEY)
                 .taskCandidateOrAssigned(userId.toString())
                 .orderByTaskCreateTime().desc();
         if (StringUtils.isNotBlank(processName)) {
@@ -99,6 +119,31 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
         }
         page.setRecords(voList);
         return page;
+    }
+
+    @Override
+    public Boolean auditResourceTask(AuditDTO dto, HttpServletRequest request) {
+        Map<String, Object> values = dto.getValues();
+        workflowTaskApplicationService.auditTask(dto, request);
+        String auditUser = workFlowUtil.getAuditUser(dto.getDefinitionId(), null, dto.getInstanceId());
+        Integer status;
+        Integer auditStatus = Integer.valueOf(values.get("auditStatus").toString());
+        SysResourceDO sysResourceDO = sysResourceService.getById(dto.getBusinessKey());
+        if (null != auditUser) {
+            //审批中
+            status = 1;
+            workFlowUtil.sendAuditMsg(auditUser, MessageTypeEnum.REMIND.ordinal(), ChannelTypeEnum.PLATFORM.ordinal(),Long.valueOf(dto.getBusinessKey()),dto.getInstanceName(),request);
+        } else {
+            if (0 == auditStatus) {
+                //审批拒绝
+                status = 2;
+            } else {
+                //审批通过
+                status = 3;
+            }
+        }
+        sysResourceDO.setStatus(status);
+        return sysResourceService.updateById(sysResourceDO);
     }
 
 }

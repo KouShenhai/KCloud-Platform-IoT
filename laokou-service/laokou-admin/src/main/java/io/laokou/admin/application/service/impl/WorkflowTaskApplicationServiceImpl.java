@@ -58,8 +58,7 @@ public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicati
 
     @Override
     @DataSource("master")
-    public AuditProcessVO auditTask(AuditDTO dto, HttpServletRequest request) {
-        AuditProcessVO vo = new AuditProcessVO();
+    public Boolean auditTask(AuditDTO dto, HttpServletRequest request) {
         Task task = taskService.createTaskQuery().taskId(dto.getTaskId()).singleResult();
         if (null == task) {
             throw new CustomException("任务不存在");
@@ -77,12 +76,7 @@ public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicati
                 taskService.complete(dto.getTaskId());
             }
         }
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-        vo.setExecutionId(task.getExecutionId());
-        vo.setDefinitionId(task.getProcessDefinitionId());
-        vo.setBusinessKey(processInstance.getBusinessKey());
-        vo.setInstanceName(processInstance.getName());
-        return vo;
+        return true;
     }
 
     @Override

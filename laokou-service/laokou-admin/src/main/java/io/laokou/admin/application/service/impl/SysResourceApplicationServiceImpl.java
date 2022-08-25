@@ -75,7 +75,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     private String startWork(Long id,String name,HttpServletRequest request) {
-        StartProcessVO startProcessVO = workflowProcessApplicationService.startProcess(PROCESS_KEY,id.toString(),name);
+        StartProcessVO startProcessVO = workflowProcessApplicationService.startResourceProcess(PROCESS_KEY,id.toString(),name);
         String definitionId = startProcessVO.getDefinitionId();
         String instanceId = startProcessVO.getInstanceId();
         String auditUser = workFlowUtil.getAuditUser(definitionId, null, instanceId);

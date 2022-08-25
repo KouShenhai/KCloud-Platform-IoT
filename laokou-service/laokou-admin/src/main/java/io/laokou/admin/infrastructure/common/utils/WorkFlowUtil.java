@@ -43,6 +43,9 @@ public class WorkFlowUtil {
     public String getAuditUser(String definitionId,String executionId,String processInstanceId) {
         if (StringUtils.isBlank(executionId)) {
             final Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).active().singleResult();
+            if (null == task) {
+                return null;
+            }
             executionId = task.getExecutionId();
         }
         Execution execution = runtimeService.createExecutionQuery().executionId(executionId).singleResult();
