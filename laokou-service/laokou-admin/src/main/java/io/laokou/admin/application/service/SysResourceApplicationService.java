@@ -7,7 +7,6 @@ import io.laokou.admin.interfaces.vo.SysResourceVO;
 import io.laokou.admin.interfaces.vo.UploadVO;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -28,4 +27,9 @@ public interface SysResourceApplicationService {
     Boolean deleteResource(Long id);
 
     UploadVO uploadResource(String code,String fileName, InputStream inputStream,Long fileSize) throws Exception;
+
+    Boolean syncAsyncBatchResource(String code);
+
+
+
 }
