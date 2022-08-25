@@ -37,7 +37,6 @@ public class SysImageApiController {
 
     @PostMapping("/upload")
     @ApiOperation("图片管理>上传")
-    @PreAuthorize("sys:resource:image:upload")
     public HttpResultUtil<UploadVO> upload(@RequestPart("file") MultipartFile file) throws Exception {
         if (file.isEmpty()) {
             throw new CustomException("上传的文件不能为空");
