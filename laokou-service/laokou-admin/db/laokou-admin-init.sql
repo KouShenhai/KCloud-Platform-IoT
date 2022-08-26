@@ -96,6 +96,9 @@ INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, 
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1562973502765723650', '1560530192751071234', 'sys:resource:video:update', '1', '视频修改', '/sys/resource/video/api/update', '0', 'PUT', 'edit', '1537114827246292994', NULL, '2022-08-26 09:21:36', '2022-08-26 09:21:36', '0', '10');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1562973726783500290', '1560530192751071234', 'sys:resource:video:delete', '1', '视频删除', '/sys/resource/video/api/delete', '0', 'DELETE', 'delete', '1537114827246292994', NULL, '2022-08-26 09:22:30', '2022-08-26 09:22:30', '0', '10');
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1562973963560349698', '1560530192751071234', 'sys:resource:video:diagram', '1', '视频流程图', '/sys/resource/video/api/diagram', '0', 'GET', 'gold', '1537114827246292994', NULL, '2022-08-26 09:23:26', '2022-08-26 09:23:26', '0', '10');
+INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1563103435471122433', '1560529603300364290', 'sys:resource:audio:auditLog', '1', '音频审批日志', '/sys/resource/audio/api/auditLog', '0', 'POST', 'book', '1341620898007281665', '1341620898007281665', '2022-08-26 18:00:40', '2022-08-26 18:00:41', '0', '10');
+INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1563104611147116545', '1560530192751071234', 'sys:resource:video:auditLog', '1', '视频审批日志', '/sys/resource/video/api/auditLog', '0', 'POST', 'book', '1341620898007281665', NULL, '2022-08-26 18:02:35', '2022-08-26 18:02:35', '0', '10');
+INSERT INTO `boot_sys_menu` (`id`, `pid`, `permissions`, `type`, `name`, `url`, `auth_level`, `method`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`) VALUES ('1563104888692600833', '1560530418819862529', 'sys:resource:image:auditLog', '1', '图片审批日志', '/sys/resource/image/api/auditLog', '0', 'POST', 'book', '1341620898007281665', NULL, '2022-08-26 18:03:41', '2022-08-26 18:03:41', '0', '10');
 ------------------------------------菜单------------------------------------
 
 ------------------------------------角色菜单------------------------------------
@@ -390,6 +393,20 @@ PARTITION BY RANGE ( UNIX_TIMESTAMP(`create_date`))
  PARTITION lk202210 VALUES LESS THAN (1664553600) ENGINE = InnoDB,
  PARTITION lk202211 VALUES LESS THAN (1667232000) ENGINE = InnoDB,
  PARTITION lk202212 VALUES LESS THAN (1669824000) ENGINE = InnoDB);
+ CREATE TABLE `boot_sys_resource_audit_log` (
+  `id` bigint(20) NOT NULL COMMENT 'id',
+  `resource_id` bigint(20) DEFAULT NULL COMMENT '资源id',
+  `audit_name` varchar(50) DEFAULT NULL COMMENT '审批人',
+  `audit_date` datetime DEFAULT NULL COMMENT '审批时间',
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
+  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+  `audit_status` tinyint(1) DEFAULT NULL COMMENT '0拒绝 1同意',
+  `comment` varchar(200) DEFAULT NULL COMMENT '审批意见',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='资源审批日志';
 INSERT INTO `boot_sys_resource` (`id`, `title`, `author`, `uri`, `status`, `code`, `create_date`, `update_date`, `remark`, `creator`, `editor`, `del_flag`, `tags`, `md5`, `process_instance_id`) VALUES ('1429355654328815617', '大籽 - 白月光与朱砂痣.mp3', 'admin', 'http://175.178.69.253:81/upload/node4/f906b6a282564c559632a1beeb449f5f.mp3', '3', 'audio', '2021-10-21 13:05:09', '2022-08-26 10:43:30', '《白月光与朱砂痣》是由大籽、嘿人李逵演唱的歌曲，收录于2021年1月1日发行的《白月光与朱砂痣》专辑。', '1341620898007281665', '1341620898007281665', '0', '大籽', 'b683aa12313835fb780d10866c00942b', '1296a870-24e4-11ed-b537-525400cf57fe');
 INSERT INTO `boot_sys_resource` (`id`, `title`, `author`, `uri`, `status`, `code`, `create_date`, `update_date`, `remark`, `creator`, `editor`, `del_flag`, `tags`, `md5`, `process_instance_id`) VALUES ('1429355954762616834', '王胜男_花粥 - 出山.mp3', 'admin', 'http://175.178.69.253:81/upload/node1/ebd577c32a8d448c8349af779d36110a.mp3', '3', 'audio', '2021-10-21 13:05:09', '2022-08-26 10:39:43', '《出山》是由花粥作词、作曲，王胜男和花粥演唱的歌曲，正式发行于2018年9月28日。背景伴奏原曲是Bachbeats创作的《Super Love》。', '1341620898007281665', '1341620898007281665', '0', '王胜男,花粥', 'e2ecdf590fd0fcb3dc18fddca2efa84f', 'a4d10ab8-24e4-11ed-b537-525400cf57fe');
 INSERT INTO `boot_sys_resource` (`id`, `title`, `author`, `uri`, `status`, `code`, `create_date`, `update_date`, `remark`, `creator`, `editor`, `del_flag`, `tags`, `md5`, `process_instance_id`) VALUES ('1429355987293638657', '艾辰 - 错位时空.mp3', 'admin', 'http://175.178.69.253:81/upload/node2/a673b6697e4142e5b24e5347b2b32fe8.mp3', '3', 'audio', '2021-10-21 13:05:09', '2022-08-26 10:39:50', '《错位时空》是周仁作词，张博文作曲，艾辰演唱的歌曲，由网易云音乐飓风工作室出品，于2021年1月1日发行。', '1341620898007281665', '1341620898007281665', '0', '艾辰', '7d7cdcbd02f9f3a260166b96bd2589a7', '8a148558-24e3-11ed-b537-525400cf57fe');
