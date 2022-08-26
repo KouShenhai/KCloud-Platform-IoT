@@ -35,6 +35,12 @@ public class SysAudioApiController {
     @Autowired
     private WorkflowTaskApplicationService workflowTaskApplicationService;
 
+    @GetMapping("/auditLog")
+    @ApiOperation("音频管理>审批日志")
+    public void auditLog() {
+        sysResourceApplicationService.get("d2483f7d-24c9-11ed-9e12-005056c00001");
+    }
+
     @PostMapping("/upload")
     @ApiOperation("音频管理>上传")
     public HttpResultUtil<UploadVO> upload(@RequestPart("file") MultipartFile file) throws Exception {

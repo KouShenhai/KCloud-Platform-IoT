@@ -1,5 +1,4 @@
 package io.laokou.admin.application.service.impl;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -22,6 +21,8 @@ import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.FileUtil;
 import io.laokou.datasource.annotation.DataSource;
 import lombok.extern.slf4j.Slf4j;
+import org.flowable.engine.HistoryService;
+import org.flowable.engine.history.HistoricActivityInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.stereotype.Service;
@@ -31,9 +32,6 @@ import org.springframework.util.DigestUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -57,6 +55,9 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
     @Autowired
     private AsyncTaskExecutor asyncTaskExecutor;
+
+    @Autowired
+    private HistoryService historyService;
 
     @Override
     @DataSource("master")
@@ -170,6 +171,15 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 //            afterSync();
 //        }
         return true;
+    }
+
+    @Override
+    public void get(String instanceId) {
+        List<HistoricActivityInstance> list = historyService.createHistoricActivityInstanceQuery().processInstanceId(instanceId).orderByHistoricActivityInstanceStartTime().desc().list();
+        for (HistoricActivityInstance HistoricActivityInstance : list) {
+
+        }
+        System.out.println(list.size());
     }
 
     private void beforeSync() {

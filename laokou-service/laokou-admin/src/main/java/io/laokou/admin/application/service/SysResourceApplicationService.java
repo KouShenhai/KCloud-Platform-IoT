@@ -30,6 +30,6 @@ public interface SysResourceApplicationService {
 
     Boolean syncAsyncBatchResource(String code);
 
-
+    void get(String instanceId);
 
 }
