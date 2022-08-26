@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import io.laokou.admin.application.service.WorkflowProcessApplicationService;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
+import io.laokou.admin.domain.sys.entity.SysResourceAuditLogDO;
 import io.laokou.admin.domain.sys.entity.SysResourceDO;
+import io.laokou.admin.domain.sys.repository.service.SysResourceAuditLogService;
 import io.laokou.admin.domain.sys.repository.service.SysResourceService;
 import io.laokou.admin.infrastructure.common.enums.ChannelTypeEnum;
 import io.laokou.admin.infrastructure.common.enums.MessageTypeEnum;
@@ -29,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 /**
@@ -57,6 +60,9 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
 
     @Autowired
     private SysResourceService sysResourceService;
+
+    @Autowired
+    private SysResourceAuditLogService sysResourceAuditLogService;
 
     @Override
     @DataSource("master")
@@ -144,7 +150,16 @@ public class WorkflowProcessApplicationServiceImpl implements WorkflowProcessApp
             }
         }
         sysResourceDO.setStatus(status);
-        return sysResourceService.updateById(sysResourceDO);
+        sysResourceService.updateById(sysResourceDO);
+        //插入审批日志
+        SysResourceAuditLogDO logDO = new SysResourceAuditLogDO();
+        logDO.setAuditDate(new Date());
+        logDO.setAuditName(SecurityUser.getUsername(request));
+        logDO.setCreator(SecurityUser.getUserId(request));
+        logDO.setComment(dto.getComment());
+        logDO.setResourceId(Long.valueOf(dto.getBusinessKey()));
+        logDO.setAuditStatus(auditStatus);
+        return sysResourceAuditLogService.save(logDO);
     }
 
 }

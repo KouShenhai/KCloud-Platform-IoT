@@ -6,13 +6,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.laokou.admin.application.service.SysResourceApplicationService;
 import io.laokou.admin.application.service.WorkflowProcessApplicationService;
 import io.laokou.admin.domain.sys.entity.SysResourceDO;
+import io.laokou.admin.domain.sys.repository.service.SysResourceAuditLogService;
 import io.laokou.admin.domain.sys.repository.service.SysResourceService;
 import io.laokou.admin.infrastructure.common.enums.ChannelTypeEnum;
 import io.laokou.admin.infrastructure.common.enums.MessageTypeEnum;
 import io.laokou.admin.infrastructure.common.utils.WorkFlowUtil;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
+import io.laokou.admin.interfaces.qo.SysResourceAuditLogQO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.StartProcessVO;
+import io.laokou.admin.interfaces.vo.SysResourceAuditLogVO;
 import io.laokou.admin.interfaces.vo.SysResourceVO;
 import io.laokou.admin.interfaces.vo.UploadVO;
 import io.laokou.common.exception.CustomException;
@@ -21,8 +24,6 @@ import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.FileUtil;
 import io.laokou.datasource.annotation.DataSource;
 import lombok.extern.slf4j.Slf4j;
-import org.flowable.engine.HistoryService;
-import org.flowable.engine.history.HistoricActivityInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.stereotype.Service;
@@ -57,7 +58,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     private AsyncTaskExecutor asyncTaskExecutor;
 
     @Autowired
-    private HistoryService historyService;
+    private SysResourceAuditLogService sysResourceAuditLogService;
 
     @Override
     @DataSource("master")
@@ -174,12 +175,9 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     @Override
-    public void get(String instanceId) {
-        List<HistoricActivityInstance> list = historyService.createHistoricActivityInstanceQuery().processInstanceId(instanceId).orderByHistoricActivityInstanceStartTime().desc().list();
-        for (HistoricActivityInstance HistoricActivityInstance : list) {
-
-        }
-        System.out.println(list.size());
+    public IPage<SysResourceAuditLogVO> queryAuditLogPage(SysResourceAuditLogQO qo) {
+        IPage<SysResourceAuditLogVO> page = new Page(qo.getPageNum(),qo.getPageSize());
+        return sysResourceAuditLogService.getAuditLogList(page,qo);
     }
 
     private void beforeSync() {

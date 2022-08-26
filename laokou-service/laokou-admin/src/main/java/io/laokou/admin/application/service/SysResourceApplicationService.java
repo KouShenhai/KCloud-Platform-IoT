@@ -1,14 +1,13 @@
 package io.laokou.admin.application.service;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
+import io.laokou.admin.interfaces.qo.SysResourceAuditLogQO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
+import io.laokou.admin.interfaces.vo.SysResourceAuditLogVO;
 import io.laokou.admin.interfaces.vo.SysResourceVO;
 import io.laokou.admin.interfaces.vo.UploadVO;
-
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
-
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -30,6 +29,6 @@ public interface SysResourceApplicationService {
 
     Boolean syncAsyncBatchResource(String code);
 
-    void get(String instanceId);
+    IPage<SysResourceAuditLogVO> queryAuditLogPage(SysResourceAuditLogQO qo);
 
 }

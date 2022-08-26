@@ -3,7 +3,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysResourceApplicationService;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
+import io.laokou.admin.interfaces.qo.SysResourceAuditLogQO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
+import io.laokou.admin.interfaces.vo.SysResourceAuditLogVO;
 import io.laokou.admin.interfaces.vo.SysResourceVO;
 import io.laokou.admin.interfaces.vo.UploadVO;
 import io.laokou.common.exception.CustomException;
@@ -92,6 +94,13 @@ public class SysVideoApiController {
     @PreAuthorize("sys:resource:video:diagram")
     public void diagram(@RequestParam("processInstanceId")String processInstanceId, HttpServletResponse response) throws IOException {
         workflowTaskApplicationService.diagramProcess(processInstanceId, response);
+    }
+
+    @PostMapping("/auditLog")
+    @ApiOperation("视频管理>审批日志")
+    @PreAuthorize("sys:resource:video:auditLog")
+    public HttpResultUtil<IPage<SysResourceAuditLogVO>> auditLog(@RequestBody SysResourceAuditLogQO qo) {
+        return new HttpResultUtil<IPage<SysResourceAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogPage(qo));
     }
 
 }

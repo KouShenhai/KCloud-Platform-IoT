@@ -3,7 +3,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysResourceApplicationService;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
+import io.laokou.admin.interfaces.qo.SysResourceAuditLogQO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
+import io.laokou.admin.interfaces.vo.SysResourceAuditLogVO;
 import io.laokou.admin.interfaces.vo.SysResourceVO;
 import io.laokou.admin.interfaces.vo.UploadVO;
 import io.laokou.common.exception.CustomException;
@@ -35,10 +37,11 @@ public class SysAudioApiController {
     @Autowired
     private WorkflowTaskApplicationService workflowTaskApplicationService;
 
-    @GetMapping("/auditLog")
+    @PostMapping("/auditLog")
     @ApiOperation("音频管理>审批日志")
-    public void auditLog() {
-        sysResourceApplicationService.get("d2483f7d-24c9-11ed-9e12-005056c00001");
+    @PreAuthorize("sys:resource:audio:auditLog")
+    public HttpResultUtil<IPage<SysResourceAuditLogVO>> auditLog(@RequestBody SysResourceAuditLogQO qo) {
+        return new HttpResultUtil<IPage<SysResourceAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogPage(qo));
     }
 
     @PostMapping("/upload")
