@@ -1,4 +1,5 @@
 package io.laokou.admin.application.service.impl;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -20,7 +21,9 @@ import io.laokou.common.user.SecurityUser;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.FileUtil;
 import io.laokou.datasource.annotation.DataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,12 +31,16 @@ import org.springframework.util.DigestUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
  * @author Kou Shenhai
  * @version 1.0
  * @date 2022/8/19 0019 下午 3:43
  */
 @Service
+@Slf4j
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
 
@@ -47,6 +54,9 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
     @Autowired
     private WorkFlowUtil workFlowUtil;
+
+    @Autowired
+    private AsyncTaskExecutor asyncTaskExecutor;
 
     @Override
     @DataSource("master")
@@ -123,7 +133,78 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
     @Override
     public Boolean syncAsyncBatchResource(String code) {
-        return null;
+        //总数
+//        final Integer messageTotal = syncDao.getMessageTotal();
+//        if (messageTotal > 0) {
+//            beforeSync();
+//            //创建索引 - 时间分区
+//            final String messageIndex = ElasticsearchFieldUtil.MESSAGE_INDEX;
+//            final List<String> messageDatePartitionList = syncDao.getMessageDatePartitionList();
+//            messageDatePartitionList.stream().forEach(ym -> {
+//                final CreateIndexModel model = new CreateIndexModel();
+//                final String indexName = messageIndex + ElasticsearchFieldUtil.INDEX_SUFFIX + ym;
+//                final String indexAlias = messageIndex;
+//                model.setIndexName(indexName);
+//                model.setIndexAlias(indexAlias);
+//                elasticsearchApiFeignClient.crateIndex(model);
+//            });
+//            //同步数据 - 异步
+//            final int chunkSize = ElasticsearchFieldUtil.chunkSize;
+//            int pageIndex = 0;
+//            while (pageIndex < messageTotal) {
+//                final List<MessageIndex> messageIndexList = syncDao.getMessageIndexList(chunkSize, pageIndex);
+//                final Map<String, List<MessageIndex>> messageDataMap = messageIndexList.stream().collect(Collectors.groupingBy(MessageIndex::getYm));
+//                final Iterator<Map.Entry<String, List<MessageIndex>>> iterator = messageDataMap.entrySet().iterator();
+//                while (iterator.hasNext()) {
+//                    final Map.Entry<String, List<MessageIndex>> entry = iterator.next();
+//                    final String ym = entry.getKey();
+//                    final List<MessageIndex> messageDataList = entry.getValue();
+//                    final String indexName = messageIndex + ElasticsearchFieldUtil.INDEX_SUFFIX + ym;
+//                    final String indexAlias = messageIndex;
+//                    final String jsonDataList = JSON.toJSONString(messageDataList);
+//                    final Integer type = SyncEnum.SYNC_ASYNC_BATCH.getValue();
+//                    asyncTaskExecutor.execute(() -> new SyncElasticsearchRun(indexName,indexAlias,jsonDataList,type).start());
+//                }
+//                pageIndex += chunkSize;
+//            }
+//            afterSync();
+//        }
+        return true;
     }
+
+    private void beforeSync() {
+        log.info("开始同步数据...");
+    }
+
+    private void afterSync() {
+        log.info("结束同步数据...");
+    }
+
+//    private class SyncElasticsearchRun extends Thread {
+//
+//        private String indexName;
+//        private String indexAlias;
+//        private String jsonDataList;
+//        private Integer type;
+//
+//        SyncElasticsearchRun(String indexName,String indexAlias,String jsonDataList,Integer type) {
+//            this.indexAlias = indexAlias;
+//            this.indexName = indexName;
+//            this.jsonDataList = jsonDataList;
+//            this.type = type;
+//        }
+//
+//        @Override
+//        public void run() {
+//            final ElasticsearchDTO elasticsearchDTO = new ElasticsearchDTO();
+//            final MqDTO mqDTO = new MqDTO();
+//            elasticsearchDTO.setIndexName(indexName);
+//            elasticsearchDTO.setData(jsonDataList);
+//            elasticsearchDTO.setType(type);
+//            elasticsearchDTO.setIndexAlias(indexAlias);
+//            mqDTO.setData(JSON.toJSONString(elasticsearchDTO));
+//            //同步数据
+//        }
+//    }
 
 }

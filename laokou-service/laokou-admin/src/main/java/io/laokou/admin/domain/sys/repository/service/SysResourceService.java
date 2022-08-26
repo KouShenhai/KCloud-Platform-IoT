@@ -17,4 +17,6 @@ public interface SysResourceService extends IService<SysResourceDO> {
     SysResourceVO getResourceById(Long id);
 
     void deleteResource(Long id);
+
+
 }
