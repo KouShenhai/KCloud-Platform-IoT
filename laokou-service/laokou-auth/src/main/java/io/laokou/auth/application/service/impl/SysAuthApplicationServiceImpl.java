@@ -31,6 +31,7 @@ import io.laokou.datasource.annotation.DataSource;
 import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
@@ -50,7 +51,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 /**
@@ -356,10 +359,19 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     @Override
     public void openLogin(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        String params = "";
+        String token;
         final String username = request.getParameter(Constant.USERNAME_HEAD);
         final String password = request.getParameter(Constant.PASSWORD_HEAD);
         final String redirectUrl = request.getParameter(Constant.REDIRECT_URL_HEAD);
-        String token = "";
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        if (MapUtils.isNotEmpty(parameterMap)) {
+            Iterator<Map.Entry<String, String[]>> iterator = parameterMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, String[]> entry = iterator.next();
+                params = "&" + entry.getKey() + "=" + entry.getValue()[0];
+            }
+        }
         try {
             token = getToken(username,password,true);
         } catch (CustomException e) {
@@ -369,7 +381,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             response.sendRedirect(String.format(CALLBACK_LOGIN_URL, redirectUrl, URLEncoder.encode(MessageUtil.getMessage(ErrorCode.SERVICE_MAINTENANCE),"UTF-8") ));
             return;
         }
-        String params = "?" + Constant.ACCESS_TOKEN + "=" + token;
+        params = "?" + Constant.ACCESS_TOKEN + "=" + token + params;
         response.sendRedirect(redirectUrl + params);
     }
 
