@@ -3,7 +3,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysResourceApplicationService;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
-import io.laokou.admin.interfaces.qo.SysResourceAuditLogQO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.SysResourceAuditLogVO;
 import io.laokou.admin.interfaces.vo.SysResourceVO;
@@ -21,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -37,11 +38,11 @@ public class SysAudioApiController {
     @Autowired
     private WorkflowTaskApplicationService workflowTaskApplicationService;
 
-    @PostMapping("/auditLog")
+    @GetMapping("/auditLog")
     @ApiOperation("音频管理>审批日志")
     @PreAuthorize("sys:resource:audio:auditLog")
-    public HttpResultUtil<IPage<SysResourceAuditLogVO>> auditLog(@RequestBody SysResourceAuditLogQO qo) {
-        return new HttpResultUtil<IPage<SysResourceAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogPage(qo));
+    public HttpResultUtil<List<SysResourceAuditLogVO>> auditLog(@RequestParam("resourceId") Long resourceId) {
+        return new HttpResultUtil<List<SysResourceAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogList(resourceId));
     }
 
     @PostMapping("/upload")
@@ -68,6 +69,7 @@ public class SysAudioApiController {
 
     @GetMapping(value = "/detail")
     @ApiOperation("音频管理>详情")
+    @PreAuthorize("sys:resource:audio:detail")
     public HttpResultUtil<SysResourceVO> detail(@RequestParam("id") Long id) {
         return new HttpResultUtil<SysResourceVO>().ok(sysResourceApplicationService.getResourceById(id));
     }

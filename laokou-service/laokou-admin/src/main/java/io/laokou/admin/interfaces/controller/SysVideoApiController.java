@@ -3,7 +3,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysResourceApplicationService;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
-import io.laokou.admin.interfaces.qo.SysResourceAuditLogQO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.SysResourceAuditLogVO;
 import io.laokou.admin.interfaces.vo.SysResourceVO;
@@ -21,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -61,6 +61,7 @@ public class SysVideoApiController {
 
     @GetMapping(value = "/detail")
     @ApiOperation("视频管理>详情")
+    @PreAuthorize("sys:resource:video:detail")
     public HttpResultUtil<SysResourceVO> detail(@RequestParam("id") Long id) {
         return new HttpResultUtil<SysResourceVO>().ok(sysResourceApplicationService.getResourceById(id));
     }
@@ -96,11 +97,11 @@ public class SysVideoApiController {
         workflowTaskApplicationService.diagramProcess(processInstanceId, response);
     }
 
-    @PostMapping("/auditLog")
+    @GetMapping("/auditLog")
     @ApiOperation("视频管理>审批日志")
     @PreAuthorize("sys:resource:video:auditLog")
-    public HttpResultUtil<IPage<SysResourceAuditLogVO>> auditLog(@RequestBody SysResourceAuditLogQO qo) {
-        return new HttpResultUtil<IPage<SysResourceAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogPage(qo));
+    public HttpResultUtil<List<SysResourceAuditLogVO>> auditLog(@RequestParam("resourceId") Long resourceId) {
+        return new HttpResultUtil<List<SysResourceAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogList(resourceId));
     }
 
 }

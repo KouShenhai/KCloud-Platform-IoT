@@ -4,8 +4,8 @@
     <select id="getAuditLogList" resultType="io.laokou.admin.interfaces.vo.SysResourceAuditLogVO">
         select id,resource_id,`comment`,audit_date,audit_name,audit_status from boot_sys_resource_audit_log
         where del_flag = '0'
-        <if test="qo.resourceId != null">
-            and resource_id = #{qo.resourceId}
+        <if test="resourceId != null">
+            and resource_id = #{resourceId}
         </if>
         order by audit_date desc
     </select>

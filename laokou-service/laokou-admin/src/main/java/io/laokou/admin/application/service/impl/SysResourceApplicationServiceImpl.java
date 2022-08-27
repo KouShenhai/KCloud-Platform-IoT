@@ -12,7 +12,6 @@ import io.laokou.admin.infrastructure.common.enums.ChannelTypeEnum;
 import io.laokou.admin.infrastructure.common.enums.MessageTypeEnum;
 import io.laokou.admin.infrastructure.common.utils.WorkFlowUtil;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
-import io.laokou.admin.interfaces.qo.SysResourceAuditLogQO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.StartProcessVO;
 import io.laokou.admin.interfaces.vo.SysResourceAuditLogVO;
@@ -175,9 +174,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     @Override
-    public IPage<SysResourceAuditLogVO> queryAuditLogPage(SysResourceAuditLogQO qo) {
-        IPage<SysResourceAuditLogVO> page = new Page(qo.getPageNum(),qo.getPageSize());
-        return sysResourceAuditLogService.getAuditLogList(page,qo);
+    public List<SysResourceAuditLogVO> queryAuditLogList(Long resourceId) {
+        return sysResourceAuditLogService.getAuditLogList(resourceId);
     }
 
     private void beforeSync() {
