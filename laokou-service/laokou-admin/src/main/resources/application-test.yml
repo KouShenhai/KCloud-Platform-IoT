@@ -93,3 +93,7 @@ dynamic:
       url: jdbc:mysql://192.168.62.128:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
       username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
       password: ENC(SX9kPzLDaZb9kGOl2QBziw==)
+
+service:
+  elasticsearch:
+    uri: 192.168.62.1:5556/elasticsearch

@@ -10,6 +10,7 @@ import io.laokou.admin.interfaces.vo.UploadVO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
+import io.laokou.redis.annotation.Lock4j;
 import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -43,6 +43,14 @@ public class SysAudioApiController {
     @PreAuthorize("sys:resource:audio:auditLog")
     public HttpResultUtil<List<SysResourceAuditLogVO>> auditLog(@RequestParam("resourceId") Long resourceId) {
         return new HttpResultUtil<List<SysResourceAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogList(resourceId));
+    }
+
+    @GetMapping("/sync")
+    @ApiOperation("音频管理>同步")
+    @PreAuthorize("sys:resource:audio:sync")
+    @Lock4j
+    public HttpResultUtil<Boolean> sync(@RequestParam("code") String code) {
+        return new HttpResultUtil<Boolean>().ok(sysResourceApplicationService.syncAsyncBatchResource(code));
     }
 
     @PostMapping("/upload")

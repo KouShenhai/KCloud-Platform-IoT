@@ -35,7 +35,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 @EnableEncryptableProperties
 @EnableHystrix
-@EnableFeignClients(basePackages = {"io.laokou.log","io.laokou.datasource","io.laokou.security"})
+@EnableFeignClients(basePackages = {"io.laokou.log","io.laokou.datasource","io.laokou.security","io.laokou.admin"})
 public class AdminApplication implements CommandLineRunner, WebServerFactoryCustomizer<WebServerFactory> {
 
 	public static void main(String[] args) {

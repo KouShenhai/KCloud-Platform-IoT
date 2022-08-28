@@ -1,4 +1,5 @@
 package io.laokou.admin.application.service.impl;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -10,6 +11,10 @@ import io.laokou.admin.domain.sys.repository.service.SysResourceAuditLogService;
 import io.laokou.admin.domain.sys.repository.service.SysResourceService;
 import io.laokou.admin.infrastructure.common.enums.ChannelTypeEnum;
 import io.laokou.admin.infrastructure.common.enums.MessageTypeEnum;
+import io.laokou.admin.infrastructure.common.feign.elasticsearch.ElasticsearchApiFeignClient;
+import io.laokou.admin.infrastructure.common.index.ResourceIndex;
+import io.laokou.admin.infrastructure.common.model.CreateIndexModel;
+import io.laokou.admin.infrastructure.common.model.ElasticsearchModel;
 import io.laokou.admin.infrastructure.common.utils.WorkFlowUtil;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
@@ -25,13 +30,17 @@ import io.laokou.datasource.annotation.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.AsyncTaskExecutor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -58,6 +67,9 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
     @Autowired
     private SysResourceAuditLogService sysResourceAuditLogService;
+
+    @Autowired
+    private ElasticsearchApiFeignClient elasticsearchApiFeignClient;
 
     @Override
     @DataSource("master")
@@ -135,41 +147,39 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @Override
     public Boolean syncAsyncBatchResource(String code) {
         //总数
-//        final Integer messageTotal = syncDao.getMessageTotal();
-//        if (messageTotal > 0) {
-//            beforeSync();
-//            //创建索引 - 时间分区
-//            final String messageIndex = ElasticsearchFieldUtil.MESSAGE_INDEX;
-//            final List<String> messageDatePartitionList = syncDao.getMessageDatePartitionList();
-//            messageDatePartitionList.stream().forEach(ym -> {
-//                final CreateIndexModel model = new CreateIndexModel();
-//                final String indexName = messageIndex + ElasticsearchFieldUtil.INDEX_SUFFIX + ym;
-//                final String indexAlias = messageIndex;
-//                model.setIndexName(indexName);
-//                model.setIndexAlias(indexAlias);
-//                elasticsearchApiFeignClient.crateIndex(model);
-//            });
-//            //同步数据 - 异步
-//            final int chunkSize = ElasticsearchFieldUtil.chunkSize;
-//            int pageIndex = 0;
-//            while (pageIndex < messageTotal) {
-//                final List<MessageIndex> messageIndexList = syncDao.getMessageIndexList(chunkSize, pageIndex);
-//                final Map<String, List<MessageIndex>> messageDataMap = messageIndexList.stream().collect(Collectors.groupingBy(MessageIndex::getYm));
-//                final Iterator<Map.Entry<String, List<MessageIndex>>> iterator = messageDataMap.entrySet().iterator();
-//                while (iterator.hasNext()) {
-//                    final Map.Entry<String, List<MessageIndex>> entry = iterator.next();
-//                    final String ym = entry.getKey();
-//                    final List<MessageIndex> messageDataList = entry.getValue();
-//                    final String indexName = messageIndex + ElasticsearchFieldUtil.INDEX_SUFFIX + ym;
-//                    final String indexAlias = messageIndex;
-//                    final String jsonDataList = JSON.toJSONString(messageDataList);
-//                    final Integer type = SyncEnum.SYNC_ASYNC_BATCH.getValue();
-//                    asyncTaskExecutor.execute(() -> new SyncElasticsearchRun(indexName,indexAlias,jsonDataList,type).start());
-//                }
-//                pageIndex += chunkSize;
-//            }
-//            afterSync();
-//        }
+        final Long resourceTotal = sysResourceService.getResourceTotal(code);
+        if (resourceTotal > 0) {
+            beforeSync();
+            //创建索引 - 时间分区
+            final String resourceIndex = "laokou_resource";
+            final List<String> resourceYMPartitionList = sysResourceService.getResourceYMPartitionList(code);
+            resourceYMPartitionList.stream().forEach(ym -> {
+                final CreateIndexModel model = new CreateIndexModel();
+                final String indexName = resourceIndex + "_" + ym;
+                final String indexAlias = resourceIndex;
+                model.setIndexName(indexName);
+                model.setIndexAlias(indexAlias);
+                elasticsearchApiFeignClient.create(model);
+            });
+            //同步数据 - 异步
+            final int chunkSize = 500;
+            int pageIndex = 0;
+            while (pageIndex < resourceTotal) {
+                final List<ResourceIndex> resourceIndexList = sysResourceService.getResourceIndexList(chunkSize, pageIndex,code);
+                final Map<String, List<ResourceIndex>> resourceDataMap = resourceIndexList.stream().collect(Collectors.groupingBy(ResourceIndex::getYm));
+                final Iterator<Map.Entry<String, List<ResourceIndex>>> iterator = resourceDataMap.entrySet().iterator();
+                while (iterator.hasNext()) {
+                    final Map.Entry<String, List<ResourceIndex>> entry = iterator.next();
+                    final String ym = entry.getKey();
+                    final List<ResourceIndex> resourceDataList = entry.getValue();
+                    final String indexName = resourceIndex + "_" + ym;
+                    final String jsonDataList = JSON.toJSONString(resourceDataList);
+                    asyncTaskExecutor.execute(new SyncElasticsearchRun(indexName,jsonDataList));
+                }
+                pageIndex += chunkSize;
+            }
+            afterSync();
+        }
         return true;
     }
 
@@ -186,31 +196,21 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         log.info("结束同步数据...");
     }
 
-//    private class SyncElasticsearchRun extends Thread {
-//
-//        private String indexName;
-//        private String indexAlias;
-//        private String jsonDataList;
-//        private Integer type;
-//
-//        SyncElasticsearchRun(String indexName,String indexAlias,String jsonDataList,Integer type) {
-//            this.indexAlias = indexAlias;
-//            this.indexName = indexName;
-//            this.jsonDataList = jsonDataList;
-//            this.type = type;
-//        }
-//
-//        @Override
-//        public void run() {
-//            final ElasticsearchDTO elasticsearchDTO = new ElasticsearchDTO();
-//            final MqDTO mqDTO = new MqDTO();
-//            elasticsearchDTO.setIndexName(indexName);
-//            elasticsearchDTO.setData(jsonDataList);
-//            elasticsearchDTO.setType(type);
-//            elasticsearchDTO.setIndexAlias(indexAlias);
-//            mqDTO.setData(JSON.toJSONString(elasticsearchDTO));
-//            //同步数据
-//        }
-//    }
+    private class SyncElasticsearchRun extends Thread {
+        private String indexName;
+        private String jsonDataList;
+        SyncElasticsearchRun(String indexName,String jsonDataList) {
+            this.indexName = indexName;
+            this.jsonDataList = jsonDataList;
+        }
+        @Override
+        public void run() {
+            final ElasticsearchModel model = new ElasticsearchModel();
+            model.setIndexName(indexName);
+            model.setData(jsonDataList);
+            //同步数据
+            elasticsearchApiFeignClient.syncAsyncBatch(model);
+        }
+    }
 
 }

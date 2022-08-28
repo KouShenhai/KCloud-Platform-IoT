@@ -37,6 +37,22 @@
         where id = #{id}
     </select>
 
+    <select id="getResourceIndexList" resultType="io.laokou.admin.infrastructure.common.index.ResourceIndex" flushCache="true">
+select id,title,`code`,`remark`,tags,DATE_FORMAT(create_date,'%Y%m') as ym from boot_sys_resource
+where del_flag = 0 and `status` = 3 and `code` = #{code}
+    </select>
+
+    <select id="getResourceTotal" resultType="java.lang.Long">
+select count(1) from boot_sys_resource
+where del_flag = 0 and `status` = 3 and `code` = #{code}
+    </select>
+
+    <select id="getResourceYMPartitionList" resultType="java.lang.String">
+select distinct DATE_FORMAT(create_date,'%Y%m') from boot_sys_resource
+where del_flag = 0 and `status` = 3 and `code` = #{code}
+    </select>
+
+
     <update id="deleteResource">
         update boot_sys_resource set del_flag = '1'
         where id = #{id}

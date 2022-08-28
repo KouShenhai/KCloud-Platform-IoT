@@ -7,5 +7,6 @@ public interface ServiceConstant {
 
     String LAOKOU_ADMIN = "laokou-admin";
     String LAOKOU_AUTH = "laokou-auth";
+    String LAOKOU_ELASTICSEARCH = "laokou-elasticsearch";
 
 }

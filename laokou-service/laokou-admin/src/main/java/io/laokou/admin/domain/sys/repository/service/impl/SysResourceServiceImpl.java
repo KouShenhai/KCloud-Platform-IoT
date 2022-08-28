@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.domain.sys.entity.SysResourceDO;
 import io.laokou.admin.domain.sys.repository.mapper.SysResourceMapper;
 import io.laokou.admin.domain.sys.repository.service.SysResourceService;
+import io.laokou.admin.infrastructure.common.index.ResourceIndex;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.SysResourceVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -30,5 +32,20 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
     @Override
     public void deleteResource(Long id) {
         this.baseMapper.deleteResource(id);
+    }
+
+    @Override
+    public Long getResourceTotal(String code) {
+        return this.baseMapper.getResourceTotal(code);
+    }
+
+    @Override
+    public List<String> getResourceYMPartitionList(String code) {
+        return this.baseMapper.getResourceYMPartitionList(code);
+    }
+
+    @Override
+    public List<ResourceIndex> getResourceIndexList(Integer pageSize, Integer pageIndex, String code) {
+        return this.baseMapper.getResourceIndexList(pageSize, pageIndex, code);
     }
 }
