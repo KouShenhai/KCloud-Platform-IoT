@@ -45,7 +45,7 @@ public class SysAudioApiController {
         return new HttpResultUtil<List<SysResourceAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogList(resourceId));
     }
 
-    @GetMapping("/sync")
+    @PostMapping("/sync")
     @ApiOperation("音频管理>同步")
     @PreAuthorize("sys:resource:audio:sync")
     @Lock4j
