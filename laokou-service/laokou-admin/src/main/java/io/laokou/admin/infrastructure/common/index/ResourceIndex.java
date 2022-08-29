@@ -15,7 +15,6 @@ public class ResourceIndex implements Serializable {
 
     private String remark;
 
-    private String tags;
-
     private String ym;
+
 }

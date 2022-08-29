@@ -96,4 +96,4 @@ dynamic:
 
 service:
   elasticsearch:
-    uri: 192.168.62.1:5556/elasticsearch
+    uri: 39.108.96.111:5556/elasticsearch
