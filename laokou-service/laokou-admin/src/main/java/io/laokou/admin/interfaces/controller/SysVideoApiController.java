@@ -2,8 +2,6 @@ package io.laokou.admin.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysResourceApplicationService;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
-import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchForm;
-import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchVO;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.SysResourceAuditLogVO;
@@ -60,13 +58,6 @@ public class SysVideoApiController {
     @PreAuthorize("sys:resource:video:query")
     public HttpResultUtil<IPage<SysResourceVO>> query(@RequestBody SysResourceQO qo) {
         return new HttpResultUtil<IPage<SysResourceVO>>().ok(sysResourceApplicationService.queryResourcePage(qo));
-    }
-
-    @PostMapping("/search")
-    @ApiOperation("视频管理>搜索")
-    @PreAuthorize("sys:resource:image:search")
-    public HttpResultUtil<SearchVO> search(@RequestBody SearchForm searchForm) {
-        return null;
     }
 
     @PostMapping("/sync")

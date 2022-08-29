@@ -2,8 +2,6 @@ package io.laokou.admin.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysResourceApplicationService;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
-import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchForm;
-import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchVO;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.SysResourceAuditLogVO;
@@ -62,13 +60,6 @@ public class SysImageApiController {
     @OperateLog(module = "图片管理",name = "图片同步")
     public HttpResultUtil<Boolean> sync(@RequestParam("code") String code) {
         return new HttpResultUtil<Boolean>().ok(sysResourceApplicationService.syncAsyncBatchResource(code));
-    }
-
-    @PostMapping("/search")
-    @ApiOperation("图片管理>搜索")
-    @PreAuthorize("sys:resource:image:search")
-    public HttpResultUtil<SearchVO> search(@RequestBody SearchForm searchForm) {
-        return null;
     }
 
     @PostMapping("/query")

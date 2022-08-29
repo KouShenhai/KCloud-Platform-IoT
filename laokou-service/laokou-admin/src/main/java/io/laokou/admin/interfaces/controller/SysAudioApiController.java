@@ -2,8 +2,6 @@ package io.laokou.admin.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysResourceApplicationService;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
-import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchForm;
-import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchVO;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.SysResourceAuditLogVO;
@@ -54,13 +52,6 @@ public class SysAudioApiController {
     @OperateLog(module = "音频管理",name = "音频同步")
     public HttpResultUtil<Boolean> sync(@RequestParam("code") String code) {
         return new HttpResultUtil<Boolean>().ok(sysResourceApplicationService.syncAsyncBatchResource(code));
-    }
-
-    @PostMapping("/search")
-    @ApiOperation("音频管理>搜索")
-    @PreAuthorize("sys:resource:audio:search")
-    public HttpResultUtil<SearchVO> search(@RequestBody SearchForm searchForm) {
-        return null;
     }
 
     @PostMapping("/upload")
