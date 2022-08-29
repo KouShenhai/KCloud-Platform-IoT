@@ -10,6 +10,7 @@ import io.laokou.admin.interfaces.vo.UploadVO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
+import io.laokou.redis.annotation.Lock4j;
 import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,6 +58,14 @@ public class SysVideoApiController {
     @PreAuthorize("sys:resource:video:query")
     public HttpResultUtil<IPage<SysResourceVO>> query(@RequestBody SysResourceQO qo) {
         return new HttpResultUtil<IPage<SysResourceVO>>().ok(sysResourceApplicationService.queryResourcePage(qo));
+    }
+
+    @PostMapping("/sync")
+    @ApiOperation("视频管理>同步")
+    @PreAuthorize("sys:resource:video:sync")
+    @Lock4j(key = "video_sync_lock")
+    public HttpResultUtil<Boolean> sync(@RequestParam("code") String code) {
+        return new HttpResultUtil<Boolean>().ok(sysResourceApplicationService.syncAsyncBatchResource(code));
     }
 
     @GetMapping(value = "/detail")

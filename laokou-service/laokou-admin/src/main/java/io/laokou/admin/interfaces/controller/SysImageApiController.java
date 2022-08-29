@@ -10,6 +10,7 @@ import io.laokou.admin.interfaces.vo.UploadVO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
+import io.laokou.redis.annotation.Lock4j;
 import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,6 +51,14 @@ public class SysImageApiController {
         //文件大小
         final Long fileSize = file.getSize();
         return new HttpResultUtil<UploadVO>().ok(sysResourceApplicationService.uploadResource("image",fileName,inputStream,fileSize));
+    }
+
+    @PostMapping("/sync")
+    @ApiOperation("图片管理>同步")
+    @PreAuthorize("sys:resource:image:sync")
+    @Lock4j(key = "image_sync_lock")
+    public HttpResultUtil<Boolean> sync(@RequestParam("code") String code) {
+        return new HttpResultUtil<Boolean>().ok(sysResourceApplicationService.syncAsyncBatchResource(code));
     }
 
     @PostMapping("/query")

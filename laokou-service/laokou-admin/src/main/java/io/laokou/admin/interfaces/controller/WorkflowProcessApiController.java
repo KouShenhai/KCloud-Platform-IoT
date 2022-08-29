@@ -32,7 +32,7 @@ public class WorkflowProcessApiController {
     @ApiOperation(value = "流程处理>资源审批")
     @OperateLog(module = "流程处理",name = "资源审批")
     @PreAuthorize("workflow:process:resource:audit")
-    @Lock4j
+    @Lock4j(key = "resource_audit_key")
     public HttpResultUtil<Boolean> auditResource(@RequestBody AuditDTO dto, HttpServletRequest request) {
         return new HttpResultUtil<Boolean>().ok(workflowProcessApplicationService.auditResourceTask(dto,request));
     }
