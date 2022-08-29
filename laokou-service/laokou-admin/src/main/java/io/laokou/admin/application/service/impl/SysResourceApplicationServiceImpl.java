@@ -29,7 +29,6 @@ import io.laokou.common.utils.FileUtil;
 import io.laokou.datasource.annotation.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,9 +59,6 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
     @Autowired
     private WorkFlowUtil workFlowUtil;
-
-    @Autowired
-    private AsyncTaskExecutor asyncTaskExecutor;
 
     @Autowired
     private SysResourceAuditLogService sysResourceAuditLogService;
@@ -173,7 +169,11 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                     final List<ResourceIndex> resourceDataList = entry.getValue();
                     final String indexName = resourceIndex + "_" + ym;
                     final String jsonDataList = JSON.toJSONString(resourceDataList);
-                    asyncTaskExecutor.execute(new SyncElasticsearchRun(indexName,jsonDataList));
+                    final ElasticsearchModel model = new ElasticsearchModel();
+                    model.setIndexName(indexName);
+                    model.setData(jsonDataList);
+                    //同步数据
+                    elasticsearchApiFeignClient.syncAsyncBatch(model);
                 }
                 pageIndex += chunkSize;
             }
@@ -193,23 +193,6 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
     private void afterSync() {
         log.info("结束同步数据...");
-    }
-
-    private class SyncElasticsearchRun extends Thread {
-        private String indexName;
-        private String jsonDataList;
-        SyncElasticsearchRun(String indexName,String jsonDataList) {
-            this.indexName = indexName;
-            this.jsonDataList = jsonDataList;
-        }
-        @Override
-        public void run() {
-            final ElasticsearchModel model = new ElasticsearchModel();
-            model.setIndexName(indexName);
-            model.setData(jsonDataList);
-            //同步数据
-            elasticsearchApiFeignClient.syncAsyncBatch(model);
-        }
     }
 
 }

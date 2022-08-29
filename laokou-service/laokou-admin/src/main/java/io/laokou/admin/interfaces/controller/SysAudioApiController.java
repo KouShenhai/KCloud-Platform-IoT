@@ -47,7 +47,7 @@ public class SysAudioApiController {
 
     @PostMapping("/sync")
     @ApiOperation("音频管理>同步")
-    @PreAuthorize("sys:resource:audio:sync")
+    //@PreAuthorize("sys:resource:audio:sync")
     @Lock4j
     public HttpResultUtil<Boolean> sync(@RequestParam("code") String code) {
         return new HttpResultUtil<Boolean>().ok(sysResourceApplicationService.syncAsyncBatchResource(code));
