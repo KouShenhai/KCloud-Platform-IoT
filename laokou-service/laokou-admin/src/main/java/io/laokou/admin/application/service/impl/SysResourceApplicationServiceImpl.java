@@ -146,12 +146,13 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (resourceTotal > 0) {
             beforeSync();
             //创建索引 - 时间分区
-            final String resourceIndex = "laokou_resource";
+            final String resourceIndex = "laokou_resource_" + code;
+            final String resourceIndexAlias = "laokou_resource";
             final List<String> resourceYMPartitionList = sysResourceService.getResourceYMPartitionList(code);
             resourceYMPartitionList.stream().forEach(ym -> {
                 final CreateIndexModel model = new CreateIndexModel();
                 final String indexName = resourceIndex + "_" + ym;
-                final String indexAlias = resourceIndex;
+                final String indexAlias = resourceIndexAlias;
                 model.setIndexName(indexName);
                 model.setIndexAlias(indexAlias);
                 elasticsearchApiFeignClient.create(model);
