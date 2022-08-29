@@ -3,7 +3,6 @@ package io.laokou.common.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -18,4 +17,5 @@ public class BasePage {
 
     @ApiModelProperty("数据过滤sql")
     private String sqlFilter;
+
 }

@@ -2,6 +2,8 @@ package io.laokou.admin.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysResourceApplicationService;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
+import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchForm;
+import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchVO;
 import io.laokou.admin.interfaces.dto.SysResourceDTO;
 import io.laokou.admin.interfaces.qo.SysResourceQO;
 import io.laokou.admin.interfaces.vo.SysResourceAuditLogVO;
@@ -60,10 +62,18 @@ public class SysVideoApiController {
         return new HttpResultUtil<IPage<SysResourceVO>>().ok(sysResourceApplicationService.queryResourcePage(qo));
     }
 
+    @PostMapping("/search")
+    @ApiOperation("视频管理>搜索")
+    @PreAuthorize("sys:resource:image:search")
+    public HttpResultUtil<SearchVO> search(@RequestBody SearchForm searchForm) {
+        return null;
+    }
+
     @PostMapping("/sync")
     @ApiOperation("视频管理>同步")
     @PreAuthorize("sys:resource:video:sync")
     @Lock4j(key = "video_sync_lock")
+    @OperateLog(module = "视频管理",name = "视频同步")
     public HttpResultUtil<Boolean> sync(@RequestParam("code") String code) {
         return new HttpResultUtil<Boolean>().ok(sysResourceApplicationService.syncAsyncBatchResource(code));
     }
