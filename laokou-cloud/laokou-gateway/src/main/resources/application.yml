@@ -79,6 +79,8 @@ gateway:
     - /sys/auth/api/captcha
     - /sys/auth/api/login
     - /sys/auth/api/zfbLogin
+    - /sys/auth/api/zfbBind
+    - /sys/auth/api/open/login
     - /actuator/**
     - /swagger/api-docs
     - /swagger-resources/**
