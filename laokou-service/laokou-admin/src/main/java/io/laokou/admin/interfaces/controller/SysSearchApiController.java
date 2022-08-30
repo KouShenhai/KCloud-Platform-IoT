@@ -5,6 +5,7 @@ import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchForm
 import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchVO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ public class SysSearchApiController {
     private SysSearchApplicationService sysSearchApplicationService;
 
     @PostMapping("/resource")
+    @ApiOperation("搜索管理>资源")
     public HttpResultUtil<SearchVO> searchResource(@RequestBody SearchForm form) {
         return new HttpResultUtil<SearchVO>().ok(sysSearchApplicationService.searchResource(form));
     }
