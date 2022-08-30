@@ -27,4 +27,10 @@ public class SysUserServiceImpl implements SysUserService {
         return sysUserMapper.getUsernameByOpenid(zfbOpenid);
     }
 
+    @Override
+    public void updateZfbOpenid(Long id, String zfbOpenid) {
+        sysUserMapper.updateZfbOpenid(id,zfbOpenid);
+    }
+
+
 }

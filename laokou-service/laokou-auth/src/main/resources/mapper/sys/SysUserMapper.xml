@@ -31,4 +31,8 @@
         </if>
     </select>
 
+    <update id="updateZfbOpenid">
+        update boot_sys_user set zfb_openid = #{zfbOpenid} where id = #{id}
+    </update>
+
 </mapper>

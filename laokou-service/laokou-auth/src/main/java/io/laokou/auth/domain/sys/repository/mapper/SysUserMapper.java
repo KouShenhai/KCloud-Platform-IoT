@@ -26,4 +26,6 @@ public interface SysUserMapper {
      */
     String getUsernameByOpenid(@Param("zfbOpenid")String zfbOpenid);
 
+    void updateZfbOpenid(@Param("id")Long id, @Param("zfbOpenid")String zfbOpenid);
+
 }

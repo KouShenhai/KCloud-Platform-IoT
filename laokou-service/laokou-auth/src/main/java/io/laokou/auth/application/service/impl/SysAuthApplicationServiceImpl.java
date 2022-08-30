@@ -24,6 +24,7 @@ import io.laokou.common.enums.ResultStatusEnum;
 import io.laokou.common.enums.SuperAdminEnum;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.exception.ErrorCode;
+import io.laokou.common.user.SecurityUser;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.*;
 import io.laokou.common.vo.SysDeptVO;
@@ -65,6 +66,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     private static AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     private static final String CALLBACK_LOGIN_URL = "/sys/login.html?redirect_url=%s&error_info=%s";
+
+    private static final String CALLBACK_FAIL_URL = "";
 
     @Autowired
     private SysMenuService sysMenuService;
@@ -352,6 +355,18 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     @Override
     public void zfbLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
         zfbOauth.sendRedirectLogin(request,response);
+    }
+
+    @Override
+    public void zfbBind(HttpServletRequest request, HttpServletResponse response) {
+        final Long userId = SecurityUser.getUserId(request);
+        final String zfbOpenid = request.getParameter("zfb_openid");
+        final UserDetail userDetail = sysUserService.getUserDetail(userId,null);
+        if (StringUtils.isBlank(userDetail.getZfbOpenid())) {
+            sysUserService.updateZfbOpenid(userId,zfbOpenid);
+        } else {
+
+        }
     }
 
     @Override

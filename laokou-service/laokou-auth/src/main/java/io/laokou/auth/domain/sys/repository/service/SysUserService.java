@@ -21,4 +21,5 @@ public interface SysUserService {
      */
     String getUsernameByOpenid(String zfbOpenid);
 
+    void updateZfbOpenid(Long id,String zfbOpenid);
 }

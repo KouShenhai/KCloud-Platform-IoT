@@ -46,7 +46,7 @@ public class SysAuthApiController {
     @GetMapping("/sys/auth/api/zfbBind")
     @ApiOperation("系统认证>支付宝绑定")
     public void zfbBind(HttpServletRequest request,HttpServletResponse response) throws Exception {
-        sysAuthApplicationService.zfbLogin(request, response);
+        sysAuthApplicationService.zfbBind(request, response);
     }
 
     @GetMapping("/sys/auth/api/zfbLogin")
