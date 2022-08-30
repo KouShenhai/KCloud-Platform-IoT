@@ -42,8 +42,7 @@ hystrix:
 
 feign:
   httpclient:
-    # 开启httpclient
-    enable: ture
+    enabled: true
   hystrix:
     enabled: true
   client:
