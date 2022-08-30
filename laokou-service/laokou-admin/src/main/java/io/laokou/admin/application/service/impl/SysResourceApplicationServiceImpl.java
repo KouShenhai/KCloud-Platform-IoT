@@ -173,6 +173,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                     final ElasticsearchModel model = new ElasticsearchModel();
                     model.setIndexName(indexName);
                     model.setData(jsonDataList);
+                    model.setIndexAlias(resourceIndexAlias);
                     //同步数据
                     elasticsearchApiFeignClient.syncAsyncBatch(model);
                 }
