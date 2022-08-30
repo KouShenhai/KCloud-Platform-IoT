@@ -1,8 +1,11 @@
 package io.laokou.admin.infrastructure.common.feign.elasticsearch;
 import io.laokou.admin.infrastructure.common.feign.elasticsearch.factory.ElasticsearchApiFeignClientFallbackFactory;
+import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchForm;
+import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchVO;
 import io.laokou.admin.infrastructure.common.model.CreateIndexModel;
 import io.laokou.admin.infrastructure.common.model.ElasticsearchModel;
 import io.laokou.common.constant.ServiceConstant;
+import io.laokou.common.utils.HttpResultUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -19,4 +22,6 @@ public interface ElasticsearchApiFeignClient {
     @PostMapping("/api/syncAsyncBatch")
     void syncAsyncBatch(@RequestBody final ElasticsearchModel model);
 
+    @PostMapping("/api/highlightSearch")
+    HttpResultUtil<SearchVO> highlightSearch(@RequestBody final SearchForm searchForm);
 }

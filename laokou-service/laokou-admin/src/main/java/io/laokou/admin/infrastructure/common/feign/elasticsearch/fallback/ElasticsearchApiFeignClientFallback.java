@@ -1,7 +1,10 @@
 package io.laokou.admin.infrastructure.common.feign.elasticsearch.fallback;
 import io.laokou.admin.infrastructure.common.feign.elasticsearch.ElasticsearchApiFeignClient;
+import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchForm;
+import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchVO;
 import io.laokou.admin.infrastructure.common.model.CreateIndexModel;
 import io.laokou.admin.infrastructure.common.model.ElasticsearchModel;
+import io.laokou.common.utils.HttpResultUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 /**
@@ -24,6 +27,12 @@ public class ElasticsearchApiFeignClientFallback implements ElasticsearchApiFeig
     @Override
     public void syncAsyncBatch(ElasticsearchModel model) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
+    }
+
+    @Override
+    public HttpResultUtil<SearchVO> highlightSearch(SearchForm searchForm) {
+        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
+        return new HttpResultUtil<SearchVO>().error("服务调用失败，请联系管理员");
     }
 
 }
