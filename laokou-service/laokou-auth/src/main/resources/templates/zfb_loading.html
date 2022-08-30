@@ -5,6 +5,30 @@
     <title>zfb_loading</title>
 </head>
 <body>
-
 </body>
+<script>
+    let accessToken = ""
+    let redirectUrl = ""
+    if (queryAttr.length > 0) {
+        queryAttr = queryAttr.substring(1)
+        let data = queryAttr.split("&")
+        for (let i = 0; i < data.length; i++) {
+            let queryData = data[i].split("=")
+            if (queryData[0] == "access_token") {
+                accessToken = queryData[1]
+            }
+            if (queryData[0] == "zfb_openid") {
+                localStorage.setItem("zfb_openid",queryData[1]);
+            }
+            if (queryData[0] == "redirect_url") {
+                redirectUrl = queryData[1]
+            }
+        }
+    }
+    if (accessToken != null) {
+        location.href = "/?"
+    } else {
+        location.href = redirectUrl
+    }
+</script>
 </html>

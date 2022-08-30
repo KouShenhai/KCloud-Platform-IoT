@@ -43,12 +43,17 @@ public class SysAuthApiController {
         return new HttpResultUtil<LoginVO>().ok(sysAuthApplicationService.login(loginDTO));
     }
 
+    @GetMapping("/sys/auth/api/zfbBind")
+    @ApiOperation("系统认证>支付宝绑定")
+    public void zfbBind(HttpServletRequest request,HttpServletResponse response) throws Exception {
+        sysAuthApplicationService.zfbLogin(request, response);
+    }
+
     @GetMapping("/sys/auth/api/zfbLogin")
     @ApiOperation("系统认证>支付宝登录")
     public void zfbLogin(HttpServletRequest request,HttpServletResponse response) throws Exception {
         sysAuthApplicationService.zfbLogin(request, response);
     }
-
 
     @GetMapping("/sys/auth/api/resource")
     @ApiOperation("系统认证>资源权限")
@@ -64,7 +69,6 @@ public class SysAuthApiController {
         return new HttpResultUtil<UserDetail>().ok(sysAuthApplicationService.resource(Authorization, uri, method));
     }
     public HttpResultUtil<UserDetail> fallback(String Authorization, String uri, String method) {return new HttpResultUtil<UserDetail>().error("服务已被降级熔断");}
-
 
     @GetMapping("/sys/auth/api/logout")
     @ApiOperation("系统认证>退出登录")

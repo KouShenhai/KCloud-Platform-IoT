@@ -223,6 +223,8 @@
                 <includes>
                     <include>application.yml</include>
                     <include>application-${profile.active}.yml</include>
+                    <include>application.properties</include>
+                    <include>application-${profile.active}.properties</include>
                 </includes>
             </resource>
         </resources>
