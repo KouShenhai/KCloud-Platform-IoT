@@ -13,5 +13,6 @@ public class SysResourceQO extends BasePage {
 
     private String title;
     private String code;
+    private Long id;
 
 }

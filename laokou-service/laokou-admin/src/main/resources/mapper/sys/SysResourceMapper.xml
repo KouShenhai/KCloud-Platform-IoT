@@ -19,6 +19,9 @@
         <if test="qo.code != null and qo.code != ''">
             and `code` = #{qo.code}
         </if>
+        <if test="qo.id != null">
+            and id = #{qo.id}
+        </if>
         order by create_date desc
     </select>
 
