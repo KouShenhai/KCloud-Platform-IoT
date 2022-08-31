@@ -96,4 +96,4 @@ dynamic:
 
 service:
   elasticsearch:
-    uri: localhost:9998
+    uri: 127.0.0.1:5556/elasticsearch
