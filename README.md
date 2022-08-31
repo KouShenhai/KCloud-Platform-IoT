@@ -55,9 +55,9 @@ ElasticSearch
 
 #### 服务监控
 Skywalking  
-Prometheus
-Grafana
-SpringBoot Admin
+Prometheus  
+Grafana  
+SpringBoot Admin  
 
 #### 一键部署
 docker-compose  
