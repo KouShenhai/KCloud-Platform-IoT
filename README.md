@@ -189,6 +189,14 @@ admin/admin123
 test/test123  
 laok5/test123  
 
+### 项目截图
+<table>
+    <tr>
+        <td><img src="https://gitee.com/tttt_wmh_cn/KCloud-Platform/raw/master/image/1.png"/></td>
+        <td><img src="https://gitee.com/tttt_wmh_cn/KCloud-Platform/raw/master/image/1.png"/></td>
+    </tr>
+</table>
+
 ### 对外开放
 /sys/login.html?redirect_url=xxx GET  
 对外开放登录页面
