@@ -77,7 +77,7 @@ public interface SysAuthApplicationService {
      */
     void zfbLogin(HttpServletRequest request,HttpServletResponse response) throws Exception;
 
-    void zfbBind(HttpServletRequest request,HttpServletResponse response);
+    void zfbBind(HttpServletRequest request,HttpServletResponse response) throws IOException;
 
     /**
      * 开放登录

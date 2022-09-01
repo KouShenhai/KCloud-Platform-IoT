@@ -5,27 +5,6 @@
     <title>zfb_bind_fail</title>
 </head>
 <body>
-<div id="info" style="color: red;display:none;font-size: 16px;">
-    <span id="errorInfo"></span>
-</div>
-<a href="/sys/zfb_loading.html?redirectUrl=">请重新绑定支付宝</a>
+<a href="http://175.178.69.253/oauth2/zfb/zfb_loading.html">账号已绑定，请重新绑定支付宝</a>
 </body>
-<script>
-    let errorInfo = ""
-    let accessToken = ""
-    let redirectUrl = ""
-    if (queryAttr.length > 0) {
-        queryAttr = queryAttr.substring(1)
-        let data = queryAttr.split("&")
-        for (let i = 0; i < data.length; i++) {
-            let queryData = data[i].split("=")
-            if (queryData[0] == "error_info") {
-                errorInfo = decodeURIComponent(queryData[1])
-            }
-        }
-    }
-    if (errorInfo != "") {
-        document.getElementById("errorInfo").innerText = errorInfo
-    }
-</script>
 </html>

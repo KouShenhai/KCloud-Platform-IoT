@@ -65,9 +65,11 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     private static AntPathMatcher antPathMatcher = new AntPathMatcher();
 
-    private static final String CALLBACK_LOGIN_URL = "/sys/login.html?redirect_url=%s&error_info=%s";
+    private static final String CALLBACK_LOGIN_URL = "http://175.178.69.253/oauth2/login.html?redirect_url=%s&error_info=%s";
 
-    private static final String CALLBACK_FAIL_URL = "";
+    private static final String CALLBACK_FAIL_URL = "http://175.178.69.253/oauth2/zfb/zfb_bind_fail.html";
+
+    private static final String INDEX_URL = "http://175.178.69.253/user/login?redirect=/index&access_token=%s";
 
     @Autowired
     private SysMenuService sysMenuService;
@@ -358,14 +360,16 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     }
 
     @Override
-    public void zfbBind(HttpServletRequest request, HttpServletResponse response) {
+    public void zfbBind(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String Authorization = SecurityUser.getAuthorization(request);
         final Long userId = SecurityUser.getUserId(request);
         final String zfbOpenid = request.getParameter("zfb_openid");
         final UserDetail userDetail = sysUserService.getUserDetail(userId,null);
         if (StringUtils.isBlank(userDetail.getZfbOpenid())) {
             sysUserService.updateZfbOpenid(userId,zfbOpenid);
+            response.sendRedirect(String.format(INDEX_URL,Authorization));
         } else {
-
+            response.sendRedirect(CALLBACK_FAIL_URL);
         }
     }
 
@@ -412,6 +416,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         private String ENCRYPT_TYPE;
         @Value("${oauth.zfb.redirect_url}")
         private String REDIRECT_URL;
+        @Value("${oauth.zfb.loading_url}")
+        private String LOADING_URL;
 
         public void sendRedirectLogin(HttpServletRequest request,HttpServletResponse response) throws Exception {
             final String authCode = request.getParameter("auth_code");
@@ -431,32 +437,35 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                 final AlipayUserInfoShareResponse userInfoResponse = alipayClient.execute(new AlipayUserInfoShareRequest(), accessToken);
                 log.info("userInfo:{}",JSON.toJSONString(userInfoResponse));
                 if (userInfoResponse.isSuccess()) {
-                    final String userId = userInfoResponse.getUserId();
+                    final String openid = userInfoResponse.getUserId();
                     final String city = userInfoResponse.getCity();
                     final String province = userInfoResponse.getProvince();
                     final String gender = userInfoResponse.getGender();
                     final String avatar = userInfoResponse.getAvatar();
                     ZfbUserDO entity = new ZfbUserDO();
-                    entity.setOpenid(userId);
+                    entity.setOpenid(openid);
                     entity.setAvatar(avatar);
                     entity.setProvince(province);
                     entity.setCity(city);
                     entity.setGender(gender);
-                    zfbUserService.removeById(userId);
+                    zfbUserService.removeById(openid);
                     zfbUserService.save(entity);
-                    sendRedirectPage(sysUserService.getUsernameByOpenid(userId),response,REDIRECT_URL);
+                    sendRedirectPage(openid,response,REDIRECT_URL,LOADING_URL);
                 }
             }
         }
-    }
-    private void sendRedirectPage(String username,HttpServletResponse response,String redirectUrl) throws Exception {
-        String params = "";
-        if (StringUtils.isNotBlank(username)) {
-            final String token = getToken(username, null, false);
-            if (StringUtils.isNotBlank(token)) {
-                params += "&" + Constant.ACCESS_TOKEN + "=" + token;
+        private void sendRedirectPage(String openid,HttpServletResponse response,String redirectUrl,String loadingUrl) throws Exception {
+            String username = sysUserService.getUsernameByOpenid(openid);
+            String params = "";
+            if (StringUtils.isNotBlank(username)) {
+                final String token = getToken(username, null, false);
+                if (StringUtils.isNotBlank(token)) {
+                    params += "&" + Constant.ACCESS_TOKEN + "=" + token;
+                }
+                response.sendRedirect(redirectUrl + params);
+            } else {
+                response.sendRedirect(String.format(loadingUrl,openid));
             }
         }
-        response.sendRedirect(redirectUrl + params);
     }
 }

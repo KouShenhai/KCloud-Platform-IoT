@@ -50,7 +50,7 @@
         let username = document.getElementById("username").value
         let password = document.getElementById("password").value
         let body = $(document.body), form = $("<form method='post'></form>"), input;
-        form.attr({"action":"/sys/auth/api/open/login"});
+        form.attr({"action":"http://192.168.62.1:5555/auth/sys/auth/api/open/login"});
         input = $("<input type='hidden'>")
         input.attr({"name":"username"})
         input.val(encrypt.encrypt(username))

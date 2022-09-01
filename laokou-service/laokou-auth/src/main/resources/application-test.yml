@@ -86,6 +86,7 @@ oauth:
     sign_type: json
     gateway_url: https://openapi.alipay.com/gateway.do
     redirect_url: http://192.168.62.1:8000/user/login?redirect=/index
+    loading_url: http://175.178.69.253/oauth2/zfb/zfb_loading.html?zfb_openid=%s
 
 logging:
   file:
