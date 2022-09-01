@@ -242,6 +242,10 @@ laok5/test123
         <td><img src="https://gitee.com/tttt_wmh_cn/KCloud-Platform/raw/master/image/21.png"/></td>
         <td><img src="https://gitee.com/tttt_wmh_cn/KCloud-Platform/raw/master/image/22.png"/></td>
     </tr>
+    <tr>
+        <td><img src="https://gitee.com/tttt_wmh_cn/KCloud-Platform/raw/master/image/23.png"/></td>
+        <td><img src="https://gitee.com/tttt_wmh_cn/KCloud-Platform/raw/master/image/24.png"/></td>
+    </tr>
 </table>
 
 ### 对外开放
