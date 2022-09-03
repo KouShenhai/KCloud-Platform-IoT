@@ -9,6 +9,7 @@ import io.laokou.common.utils.HttpResultUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 /**
  * @author Kou Shenhai
  */
@@ -23,5 +24,5 @@ public interface ElasticsearchApiFeignClient {
     void syncAsyncBatch(@RequestBody final ElasticsearchModel model);
 
     @PostMapping("/api/highlightSearch")
-    HttpResultUtil<SearchVO> highlightSearch(@RequestBody final SearchForm searchForm);
+    HttpResultUtil<SearchVO<Map<String,Object>>> highlightSearch(@RequestBody final SearchForm searchForm);
 }

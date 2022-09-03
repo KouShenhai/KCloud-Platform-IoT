@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Map;
 
 @Service
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
@@ -17,7 +18,7 @@ public class SysSearchApplicationServiceImpl implements SysSearchApplicationServ
     private ElasticsearchApiFeignClient elasticsearchApiFeignClient;
 
     @Override
-    public SearchVO searchResource(SearchForm form) {
+    public SearchVO<Map<String,Object>> searchResource(SearchForm form) {
         return elasticsearchApiFeignClient.highlightSearch(form).getData();
     }
 }

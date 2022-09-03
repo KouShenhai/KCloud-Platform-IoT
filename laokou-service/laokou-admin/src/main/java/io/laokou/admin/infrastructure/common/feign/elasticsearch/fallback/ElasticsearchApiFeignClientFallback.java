@@ -7,6 +7,7 @@ import io.laokou.admin.infrastructure.common.model.ElasticsearchModel;
 import io.laokou.common.utils.HttpResultUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import java.util.Map;
 /**
  * 服务降级
  * @author Kou Shenhai
@@ -30,9 +31,9 @@ public class ElasticsearchApiFeignClientFallback implements ElasticsearchApiFeig
     }
 
     @Override
-    public HttpResultUtil<SearchVO> highlightSearch(SearchForm searchForm) {
+    public HttpResultUtil<SearchVO<Map<String,Object>>> highlightSearch(SearchForm searchForm) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResultUtil<SearchVO>().error("服务调用失败，请联系管理员");
+        return new HttpResultUtil<SearchVO<Map<String,Object>>>().error("服务调用失败，请联系管理员");
     }
 
 }
