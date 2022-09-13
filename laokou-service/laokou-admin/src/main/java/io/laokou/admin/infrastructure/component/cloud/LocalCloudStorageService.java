@@ -22,7 +22,7 @@ public class LocalCloudStorageService extends AbstractCloudStorageService{
     @Override
     public String upload(InputStream inputStream,String fileName,Long fileSize) throws IOException {
        fileName = IdUtil.simpleUUID() + FileUtil.getFileSuffix(fileName);
-       String directoryPath = SEPARATOR + cloudStorageConfig.getLocalPrefix() + SEPARATOR + NODES[HashUtil.getHash(fileName) % NODES.length];
+       String directoryPath = SEPARATOR + cloudStorageConfig.getLocalPrefix() + SEPARATOR + NODES[HashUtil.getHash(fileName) & (NODES.length - 1)];
        //上传文件
        if (inputStream instanceof ByteArrayInputStream) {
            FileUtil.fileUpload(cloudStorageConfig.getLocalPath(), directoryPath, fileName, inputStream);
