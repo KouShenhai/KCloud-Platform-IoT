@@ -90,6 +90,27 @@ public class OperateLogAspect {
         dto.setMethodName(className + "." + methodName + "()");
         dto.setRequestMethod(request.getMethod());
         if (DataTypeEnum.TEXT.equals(operateLog.type())) {
+            /**
+             * public static void main(String[] args) throws JsonProcessingException {
+             *     Demo demo = new Demo("sojson",4,"https://www.sojson.com");
+             *     ObjectMapper mapper = new ObjectMapper();
+             *     //普通输出
+             *     System.out.println(mapper.writeValueAsString(demo));
+             *     //格式化/美化/优雅的输出
+             *     System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(demo));
+             * }
+             */
+            /**
+             * public static void main(String[] args) throws IOException {
+             *    //已知一个json 字符串
+             *     String json = "{\"name\":\"sojson\",\"age\":4,\"domain\":\"https://www.sojson.com\"}";
+             *     //求优雅输出
+             *     ObjectMapper mapper = new ObjectMapper();
+             *     Object obj = mapper.readValue(json, Object.class);
+             *     System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj));
+             * }
+             */
+            //https://blog.csdn.net/qq_21383435/article/details/115840815 优化输出
             dto.setRequestParams(JSON.toJSONString(params, true));
         }
         //发布事件
