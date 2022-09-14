@@ -20,6 +20,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,6 +62,9 @@ public class OperateLogAspect {
             return;
         }
         OperateLog operateLog = method.getAnnotation(OperateLog.class);
+        if (operateLog == null) {
+            operateLog = AnnotationUtils.findAnnotation(method,OperateLog.class);
+        }
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         String ip = IpUtil.getIpAddr(request);
         String className = joinPoint.getTarget().getClass().getName();

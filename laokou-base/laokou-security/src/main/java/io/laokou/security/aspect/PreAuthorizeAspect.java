@@ -13,6 +13,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -52,7 +53,10 @@ public class PreAuthorizeAspect {
     private boolean checkPermission(UserDetail userDetail,JoinPoint point) throws NoSuchMethodException {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = point.getTarget().getClass().getDeclaredMethod(signature.getName(), signature.getParameterTypes());
-        final PreAuthorize preAuthorize = method.getAnnotation(PreAuthorize.class);
+        PreAuthorize preAuthorize = method.getAnnotation(PreAuthorize.class);
+        if (preAuthorize == null) {
+            preAuthorize = AnnotationUtils.findAnnotation(method,PreAuthorize.class);
+        }
         final String[] permissionArray = preAuthorize.value().split(Constant.COMMA);
         final List<String> permissionsList = userDetail.getPermissionsList();
         for(String permission : permissionArray) {

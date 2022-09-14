@@ -9,6 +9,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
@@ -34,6 +35,9 @@ public class DataSourceAspect {
         Method method = signature.getMethod();
         DataSource targetDataSource = (DataSource)targetClass.getAnnotation(DataSource.class);
         DataSource methodDataSource = method.getAnnotation(DataSource.class);
+        if (methodDataSource == null) {
+            methodDataSource = AnnotationUtils.findAnnotation(method,DataSource.class);
+        }
         if(targetDataSource != null || methodDataSource != null){
             String value;
             if(methodDataSource != null) {

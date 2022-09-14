@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
@@ -37,6 +38,9 @@ public class LockAspect {
             return;
         }
         Lock4j lock4j = method.getAnnotation(Lock4j.class);
+        if (lock4j == null) {
+            lock4j = AnnotationUtils.findAnnotation(method,Lock4j.class);
+        }
         String key = lock4j.key();
         long expire = lock4j.expire();
         long timeout = lock4j.timeout();

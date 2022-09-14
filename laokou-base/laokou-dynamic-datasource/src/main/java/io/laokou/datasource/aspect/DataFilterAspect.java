@@ -15,6 +15,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -58,6 +59,9 @@ public class DataFilterAspect {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = point.getTarget().getClass().getDeclaredMethod(signature.getName(), signature.getParameterTypes());
         DataFilter dataFilter = method.getAnnotation(DataFilter.class);
+        if (dataFilter == null) {
+            dataFilter = AnnotationUtils.findAnnotation(method,DataFilter.class);
+        }
         //获取表的别名
         String tableAlias = dataFilter.tableAlias();
         if(StringUtils.isNotBlank(tableAlias)){
