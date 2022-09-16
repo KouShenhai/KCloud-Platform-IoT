@@ -105,6 +105,14 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         String username = loginDTO.getUsername();
         String password = loginDTO.getPassword();
         String captcha = loginDTO.getCaptcha();
+        //SRA私钥解密
+        try {
+            username = RsaCoder.decryptByPrivateKey(username);
+            password = RsaCoder.decryptByPrivateKey(password);
+        } catch (BadPaddingException e) {
+            PublishFactory.recordLogin(MessageUtil.getMessage(ErrorCode.SERVICE_MAINTENANCE), ResultStatusEnum.FAIL.ordinal(), "帐户或密码解密失败，请检查密钥");
+            throw new CustomException("帐户或密码解密失败，请检查密钥");
+        }
         //验证码是否正确
         boolean validate = sysCaptchaService.validate(uuid, captcha);
         if (!validate) {
@@ -120,14 +128,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         if (isUserPasswordFlag) {
             log.info("解密前，用户名：{}", username);
             log.info("解密前，密码：{}", password);
-            //SRA私钥解密
-            try {
-                username = RsaCoder.decryptByPrivateKey(username);
-                password = RsaCoder.decryptByPrivateKey(password);
-            } catch (BadPaddingException e) {
-                PublishFactory.recordLogin(MessageUtil.getMessage(ErrorCode.SERVICE_MAINTENANCE), ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
-                throw new CustomException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
-            }
             log.info("解密后，用户名：{}", username);
             log.info("解密后，密码：{}", password);
         }
