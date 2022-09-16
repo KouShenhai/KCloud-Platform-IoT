@@ -5,6 +5,12 @@
 职位：Java工程师  
 时间：2020.06.08 ~ 至今  
 
+### 项目集成
+[KCloud-Platform-Aliyun](https://gitee.com/tttt_wmh_cn/KCloud-Platform-Aliyun)  
+[KCloud-Platform-Kubernetes](https://gitee.com/tttt_wmh_cn/KCloud-Platform-Kubernetes)  
+[KCloud-Platform-Istio](https://gitee.com/tttt_wmh_cn/KCloud-Platform-Istio)  
+[KCloud-Platform-AWS-Lambda](https://gitee.com/tttt_wmh_cn/KCloud-Platform-AWS-Lambda) 
+
 ### 项目介绍
 老寇云平台是基于SpringCloud微服务开发、快速构建微服务项目的脚手架、支持Shell、Docker等多种部署方式，实现RBAC权限、其中包含系统管理、系统监控、工作流程、数据分析等几大模块、坚持开源，永不闭源  
 
