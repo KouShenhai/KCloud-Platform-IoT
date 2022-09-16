@@ -110,7 +110,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             username = RsaCoder.decryptByPrivateKey(username);
             password = RsaCoder.decryptByPrivateKey(password);
         } catch (BadPaddingException e) {
-            PublishFactory.recordLogin(MessageUtil.getMessage(ErrorCode.SERVICE_MAINTENANCE), ResultStatusEnum.FAIL.ordinal(), "帐户或密码解密失败，请检查密钥");
+            PublishFactory.recordLogin("unknown", ResultStatusEnum.FAIL.ordinal(), "帐户或密码解密失败，请检查密钥");
             throw new CustomException("帐户或密码解密失败，请检查密钥");
         }
         //验证码是否正确
