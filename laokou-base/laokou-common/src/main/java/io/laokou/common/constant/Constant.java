@@ -55,4 +55,6 @@ public interface Constant {
     String TICKET = "ticket";
 
     String COMMA = ",";
+
+    String UNKNOWN = "unknown";
 }

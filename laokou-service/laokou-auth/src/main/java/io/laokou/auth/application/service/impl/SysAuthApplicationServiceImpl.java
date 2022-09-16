@@ -110,9 +110,13 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             username = RsaCoder.decryptByPrivateKey(username);
             password = RsaCoder.decryptByPrivateKey(password);
         } catch (BadPaddingException e) {
-            PublishFactory.recordLogin("unknown", ResultStatusEnum.FAIL.ordinal(), "帐户或密码解密失败，请检查密钥");
-            throw new CustomException("帐户或密码解密失败，请检查密钥");
+            PublishFactory.recordLogin(Constant.UNKNOWN, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.DECRYPT_FAIL));
+            throw new CustomException(ErrorCode.DECRYPT_FAIL);
         }
+        log.info("解密前，用户名：{}", username);
+        log.info("解密前，密码：{}", password);
+        log.info("解密后，用户名：{}", username);
+        log.info("解密后，密码：{}", password);
         //验证码是否正确
         boolean validate = sysCaptchaService.validate(uuid, captcha);
         if (!validate) {
@@ -125,12 +129,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     }
 
     private String getToken(String username,String password,boolean isUserPasswordFlag) throws Exception {
-        if (isUserPasswordFlag) {
-            log.info("解密前，用户名：{}", username);
-            log.info("解密前，密码：{}", password);
-            log.info("解密后，用户名：{}", username);
-            log.info("解密后，密码：{}", password);
-        }
         //查询数据库
         UserDetail userDetail = getUserDetail(username);
         log.info("查询的数据：{}",userDetail);

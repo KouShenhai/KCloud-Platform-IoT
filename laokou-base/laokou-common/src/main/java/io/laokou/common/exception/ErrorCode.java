@@ -162,4 +162,5 @@ public interface ErrorCode {
     int BACK_PROCESS_HANDLEING_ERROR = 10047;
     int NOT_PERMISSIONS = 20001;
     int SERVICE_MAINTENANCE = 20002;
+    int DECRYPT_FAIL = 20003;
 }
