@@ -6,6 +6,7 @@ import com.alipay.api.request.AlipaySystemOauthTokenRequest;
 import com.alipay.api.request.AlipayUserInfoShareRequest;
 import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.laokou.auth.application.service.SysAuthApplicationService;
 import io.laokou.auth.domain.sys.repository.service.*;
 import io.laokou.auth.domain.zfb.entity.ZfbUserDO;
@@ -440,13 +441,13 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
                     final String province = userInfoResponse.getProvince();
                     final String gender = userInfoResponse.getGender();
                     final String avatar = userInfoResponse.getAvatar();
+                    zfbUserService.remove(Wrappers.lambdaQuery(ZfbUserDO.class).eq(ZfbUserDO::getOpenid,openid));
                     ZfbUserDO entity = new ZfbUserDO();
                     entity.setOpenid(openid);
                     entity.setAvatar(avatar);
                     entity.setProvince(province);
                     entity.setCity(city);
                     entity.setGender(gender);
-                    zfbUserService.removeById(openid);
                     zfbUserService.save(entity);
                     sendRedirectPage(openid,response,REDIRECT_URL,LOADING_URL);
                 }
