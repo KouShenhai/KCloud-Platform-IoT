@@ -254,13 +254,6 @@ laok5/test123
     </tr>
 </table>
 
-### 对外开放
-/sys/login.html?redirect_url=xxx GET  
-对外开放登录页面
-
-/sys/auth/api/open/userInfo GET  
-对外开放用户信息
-
 ### 项目说明
 代码不可商用及二次开源，仅供学习使用，否则后果自负  
 代码不可商用及二次开源，仅供学习使用，否则后果自负  
