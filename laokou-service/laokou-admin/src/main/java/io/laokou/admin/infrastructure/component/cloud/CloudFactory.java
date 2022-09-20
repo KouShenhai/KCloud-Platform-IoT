@@ -1,9 +1,9 @@
 package io.laokou.admin.infrastructure.component.cloud;
-import com.alibaba.fastjson.JSON;
 import io.laokou.admin.infrastructure.component.handler.impl.AdminHandler;
 import io.laokou.admin.infrastructure.config.CloudStorageConfig;
 import io.laokou.admin.infrastructure.common.enums.CloudTypeEnum;
 import io.laokou.common.exception.CustomException;
+import io.laokou.common.utils.JacksonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class CloudFactory {
        if (StringUtils.isBlank(oss)){
            throw new CustomException("请配置OSS");
        }
-       CloudStorageConfig config = JSON.parseObject(oss, CloudStorageConfig.class);
+       CloudStorageConfig config = JacksonUtil.toBean(oss, CloudStorageConfig.class);
        if (CloudTypeEnum.ALIYUN.ordinal() == config.getType()){
            return new AliyunCloudStorageService(config);
        }

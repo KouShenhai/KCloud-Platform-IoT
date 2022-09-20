@@ -1,5 +1,4 @@
 package io.laokou.auth.application.service.impl;
-import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipaySystemOauthTokenRequest;
@@ -32,6 +31,8 @@ import io.laokou.common.vo.SysDeptVO;
 import io.laokou.datasource.annotation.DataSource;
 import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
@@ -62,6 +63,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 @Slf4j
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+@AllArgsConstructor
+@NoArgsConstructor
 public class SysAuthApplicationServiceImpl implements SysAuthApplicationService {
 
     private static AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -74,25 +77,17 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     @Autowired
     private SysMenuService sysMenuService;
-
     @Autowired
     private SysUserService sysUserService;
-
     @Autowired
     private SysCaptchaService sysCaptchaService;
-
-    @Autowired
     private ZfbOauth zfbOauth;
-
     @Autowired
     private SysRoleService sysRoleService;
-
     @Autowired
     private SysDeptService sysDeptService;
-
     @Autowired
     private RedissonClient redissonClient;
-
     @Autowired
     private RedisUtil redisUtil;
 
@@ -172,16 +167,16 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         //资源列表放到redis中
         String userResourceKey = RedisKeyUtil.getUserResourceKey(userId);
         //原子操作 -> 防止数据被修改，更新到redis的数据不是最新数据
-        final RBucket<String> userInfoBucket = redissonClient.getBucket(userInfoKey);
-        final RBucket<String> userResourceBucket = redissonClient.getBucket(userResourceKey);
+        final RBucket<Object> userInfoBucket = redissonClient.getBucket(userInfoKey);
+        final RBucket<Object> userResourceBucket = redissonClient.getBucket(userResourceKey);
         List<String> permissionList = getPermissionList(userDetail);
         userDetail.setPermissionsList(permissionList);
         userDetail.setRoles(sysRoleService.getRoleListByUserId(userDetail.getId()));
         userDetail.setDepts(getDeptList(userDetail));
         redissonClient.getKeys().delete(userInfoKey);
         redissonClient.getKeys().delete(userResourceKey);
-        userInfoBucket.set(JSON.toJSONString(userDetail),RedisUtil.HOUR_ONE_EXPIRE, TimeUnit.SECONDS);
-        userResourceBucket.set(JSON.toJSONString(resourceList),RedisUtil.HOUR_ONE_EXPIRE,TimeUnit.SECONDS);
+        userInfoBucket.set(userDetail,RedisUtil.HOUR_ONE_EXPIRE, TimeUnit.SECONDS);
+        userResourceBucket.set(resourceList,RedisUtil.HOUR_ONE_EXPIRE,TimeUnit.SECONDS);
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         request.setAttribute(Constant.AUTHORIZATION_HEAD, token);
         return token;
@@ -335,10 +330,10 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     public UserDetail getUserDetail(Long userId) {
         //region Description
         String userInfoKey = RedisKeyUtil.getUserInfoKey(userId);
-        final RBucket<String> bucket = redissonClient.getBucket(userInfoKey);
+        final RBucket<Object> bucket = redissonClient.getBucket(userInfoKey);
         UserDetail userDetail;
         if (redisUtil.hasKey(userInfoKey)) {
-            userDetail = JSON.parseObject(bucket.get(), UserDetail.class);
+            userDetail = (UserDetail)bucket.get();
         } else {
             userDetail = sysUserService.getUserDetail(userId,null);
             if (Objects.isNull(userDetail)) {
@@ -347,7 +342,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             userDetail.setPermissionsList(getPermissionList(userDetail));
             userDetail.setRoles(sysRoleService.getRoleListByUserId(userId));
             userDetail.setDepts(getDeptList(userDetail));
-            bucket.set(JSON.toJSONString(userDetail),RedisUtil.HOUR_ONE_EXPIRE,TimeUnit.SECONDS);
+            bucket.set(userDetail,RedisUtil.HOUR_ONE_EXPIRE,TimeUnit.SECONDS);
         }
         return userDetail;
         //endregion
@@ -434,7 +429,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             if (StringUtils.isNotBlank(accessToken)) {
                 //根据accessToken获取用户信息
                 final AlipayUserInfoShareResponse userInfoResponse = alipayClient.execute(new AlipayUserInfoShareRequest(), accessToken);
-                log.info("userInfo:{}",JSON.toJSONString(userInfoResponse));
+                log.info("userInfo:{}",JacksonUtil.toJsonStr(userInfoResponse));
                 if (userInfoResponse.isSuccess()) {
                     final String openid = userInfoResponse.getUserId();
                     final String city = userInfoResponse.getCity();

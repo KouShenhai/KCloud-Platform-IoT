@@ -1,6 +1,4 @@
 package io.laokou.common.user;
-import com.alibaba.fastjson.annotation.JSONField;
-import com.alibaba.fastjson.serializer.ToStringSerializer;
 import io.laokou.common.vo.SysDeptVO;
 import io.laokou.common.vo.SysRoleVO;
 import lombok.Data;
@@ -10,7 +8,6 @@ import java.util.List;
  */
 @Data
 public class UserDetail {
-    @JSONField(serializeUsing = ToStringSerializer.class)
     private Long id;
     private String username;
     private String imgUrl;
@@ -20,7 +17,6 @@ public class UserDetail {
     private String mobile;
     private String password;
     private String zfbOpenid;
-    @JSONField(serializeUsing = ToStringSerializer.class)
     private Long deptId;
     private List<String> permissionsList;
     private List<SysRoleVO> roles;

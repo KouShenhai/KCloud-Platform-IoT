@@ -3,6 +3,9 @@ jasypt:
     password: koushenhai5201314wumeihua
 #spring
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   application:
     name: laokou-auth
   profiles:
@@ -19,11 +22,6 @@ spring:
       max-file-size: -1
       max-request-size: -1
       enabled: true
-  http:
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
   thymeleaf:
     encoding: UTF-8
     servlet:

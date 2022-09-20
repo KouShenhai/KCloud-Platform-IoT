@@ -1,6 +1,5 @@
 package io.laokou.admin.infrastructure.config;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import io.laokou.common.utils.JacksonUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -10,6 +9,7 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * @author  Kou Shenhai
@@ -72,9 +72,9 @@ public class WebSocketServer {
     public void onMessage(String message,Session session) throws IOException {
         log.info("收到来自：{}",this.userId,"的消息:{}",message);
         if(StringUtils.isNotBlank(message)) {
-            final JSONObject jsonData = JSON.parseObject(message);
+            Map<String, Object> map = JacksonUtil.toMap(message, String.class, Object.class);
             log.info("接到数据：{}",message);
-            final Long userId = jsonData.getLong("userId");
+            final Long userId = Long.valueOf(map.get("userId").toString());
             sendMessages(message,userId);
         }
     }

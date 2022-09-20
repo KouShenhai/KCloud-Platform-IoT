@@ -1,8 +1,8 @@
 package io.laokou.admin.infrastructure.config;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.laokou.common.utils.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
@@ -65,10 +65,10 @@ public class WebMvcConfig{
         mapper.setDateFormat(df.get());
         mapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         //Long类型转String类型
-        SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
-        simpleModule.addSerializer(Long.TYPE,ToStringSerializer.instance);
-        mapper.registerModule(simpleModule);
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        javaTimeModule.addSerializer(Long.class, ToStringSerializer.instance);
+        javaTimeModule.addSerializer(Long.TYPE,ToStringSerializer.instance);
+        mapper.registerModule(javaTimeModule);
         converter.setObjectMapper(mapper);
         return converter;
     }

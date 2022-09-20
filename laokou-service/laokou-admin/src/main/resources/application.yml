@@ -3,6 +3,9 @@ jasypt:
     password: koushenhai5201314wumeihua
 #spring
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   application:
     name: laokou-admin
   profiles:
@@ -19,9 +22,6 @@ spring:
       enabled: true
       max-file-size: -1
       max-request-size: -1
-  http:
-    encoding:
-      charset: UTF-8
   main:
     allow-bean-definition-overriding: true
   cloud:

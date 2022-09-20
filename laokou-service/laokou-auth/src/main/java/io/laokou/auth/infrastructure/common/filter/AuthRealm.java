@@ -1,9 +1,8 @@
 package io.laokou.auth.infrastructure.common.filter;
-
-import com.alibaba.fastjson.JSON;
 import io.laokou.auth.application.service.SysAuthApplicationService;
 import io.laokou.common.exception.ErrorCode;
 import io.laokou.common.user.UserDetail;
+import io.laokou.common.utils.JacksonUtil;
 import io.laokou.common.utils.MessageUtil;
 import io.laokou.common.utils.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +35,7 @@ public class AuthRealm extends AuthorizingRealm {
         UserDetail user = (UserDetail) principalCollection.getPrimaryPrincipal();
         //用户权限列表
         Set<String> permsSet = new HashSet<>(user.getPermissionsList());
-        log.info("获取权限标识:{}", JSON.toJSONString(permsSet));
+        log.info("获取权限标识:{}", JacksonUtil.toJsonStr(permsSet));
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(permsSet);
         return info;

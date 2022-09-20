@@ -1,5 +1,4 @@
 package io.laokou.admin.application.service.impl;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -26,6 +25,7 @@ import io.laokou.common.exception.CustomException;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.FileUtil;
+import io.laokou.common.utils.JacksonUtil;
 import io.laokou.datasource.annotation.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,7 +169,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                     final String ym = entry.getKey();
                     final List<ResourceIndex> resourceDataList = entry.getValue();
                     final String indexName = resourceIndex + "_" + ym;
-                    final String jsonDataList = JSON.toJSONString(resourceDataList);
+                    final String jsonDataList = JacksonUtil.toJsonStr(resourceDataList);
                     final ElasticsearchModel model = new ElasticsearchModel();
                     model.setIndexName(indexName);
                     model.setData(jsonDataList);

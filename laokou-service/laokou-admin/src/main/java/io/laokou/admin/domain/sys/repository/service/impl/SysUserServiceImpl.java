@@ -1,5 +1,4 @@
 package io.laokou.admin.domain.sys.repository.service.impl;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.infrastructure.common.password.PasswordUtil;
@@ -50,10 +49,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserDO> im
     public UserDetail getUserDetail(Long userId) {
         //region Description
         String userInfoKey = RedisKeyUtil.getUserInfoKey(userId);
-        final RBucket<String> bucket = redissonClient.getBucket(userInfoKey);
+        final RBucket<Object> bucket = redissonClient.getBucket(userInfoKey);
         UserDetail userDetail;
         if (redisUtil.hasKey(userInfoKey)) {
-            userDetail = JSON.parseObject(bucket.get(), UserDetail.class);
+            userDetail = (UserDetail) bucket.get();
         } else {
             userDetail = this.baseMapper.getUserDetail(userId,null);
         }

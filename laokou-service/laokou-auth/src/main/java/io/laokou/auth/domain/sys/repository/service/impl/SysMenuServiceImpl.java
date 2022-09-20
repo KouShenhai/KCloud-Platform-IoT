@@ -1,6 +1,4 @@
 package io.laokou.auth.domain.sys.repository.service.impl;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import io.laokou.auth.domain.sys.repository.mapper.SysMenuMapper;
 import io.laokou.auth.domain.sys.repository.service.SysMenuService;
 import io.laokou.auth.interfaces.vo.SysMenuVO;
@@ -59,13 +57,13 @@ public class SysMenuServiceImpl implements SysMenuService {
             return getMenuList(userDetail.getId(),userDetail.getSuperAdmin(),type);
         }
         String userResourceKey = RedisKeyUtil.getUserResourceKey(userDetail.getId());
-        final RBucket<String> bucket = redissonClient.getBucket(userResourceKey);
+        final RBucket<Object> bucket = redissonClient.getBucket(userResourceKey);
         List<SysMenuVO> resourceList;
         if (redisUtil.hasKey(userResourceKey)) {
-            resourceList = JSONObject.parseArray(bucket.get(), SysMenuVO.class);
+            resourceList = (List<SysMenuVO>) bucket.get();
         } else {
             resourceList = getMenuList(userDetail.getId(),userDetail.getSuperAdmin(),type);
-            bucket.set(JSON.toJSONString(resourceList),RedisUtil.HOUR_ONE_EXPIRE, TimeUnit.SECONDS);
+            bucket.set(resourceList,RedisUtil.HOUR_ONE_EXPIRE, TimeUnit.SECONDS);
         }
         return resourceList;
         //endregion

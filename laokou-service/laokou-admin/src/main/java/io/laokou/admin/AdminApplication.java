@@ -33,7 +33,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @Slf4j
 @EnableAsync
 @EnableEncryptableProperties
-@EnableHystrix
 @EnableFeignClients(basePackages = {"io.laokou.log","io.laokou.datasource","io.laokou.security","io.laokou.admin"})
 public class AdminApplication implements CommandLineRunner, WebServerFactoryCustomizer<WebServerFactory> {
 

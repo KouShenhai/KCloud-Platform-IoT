@@ -1,8 +1,8 @@
 package io.laokou.gateway.filter;
-import com.alibaba.fastjson.JSON;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpResultUtil;
+import io.laokou.common.utils.JacksonUtil;
 import io.laokou.gateway.feign.auth.AuthApiFeignClient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -100,8 +100,8 @@ public class AuthFilter implements GlobalFilter,Ordered {
     }
 
     private Mono<Void> response(ServerWebExchange exchange,Object data){
-        DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(JSON.toJSONString(data).getBytes(StandardCharsets.UTF_8));
-        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
+        DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(JacksonUtil.toJsonStr(data).getBytes(StandardCharsets.UTF_8));
+        exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
         exchange.getResponse().setStatusCode(HttpStatus.OK);
         return exchange.getResponse().writeWith(Flux.just(buffer));
     }

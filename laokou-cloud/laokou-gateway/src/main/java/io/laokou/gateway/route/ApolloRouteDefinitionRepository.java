@@ -1,10 +1,10 @@
 package io.laokou.gateway.route;
-import com.alibaba.fastjson.JSON;
 import com.ctrip.framework.apollo.Config;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfig;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 import com.google.common.collect.Lists;
+import io.laokou.common.utils.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
@@ -46,7 +46,7 @@ public class ApolloRouteDefinitionRepository implements RouteDefinitionRepositor
         if (StringUtils.isBlank(property)) {
             Flux.fromIterable(Lists.newArrayList());
         }
-        final List<RouteDefinition> routeDefinitions = JSON.parseArray(property, RouteDefinition.class);
+        final List<RouteDefinition> routeDefinitions = JacksonUtil.toList(property, RouteDefinition.class);
         return Flux.fromIterable(routeDefinitions);
     }
 

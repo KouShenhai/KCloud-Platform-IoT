@@ -1,9 +1,8 @@
 package io.laokou.admin.infrastructure.common.utils;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Sets;
 import io.laokou.admin.application.service.SysMessageApplicationService;
 import io.laokou.admin.interfaces.dto.MessageDTO;
+import io.laokou.common.utils.JacksonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.FlowElement;
@@ -55,8 +54,8 @@ public class WorkFlowUtil {
         List<SequenceFlow> outFlows = flowNode.getOutgoingFlows();
         for (SequenceFlow sequenceFlow : outFlows) {
             FlowElement sourceFlowElement = sequenceFlow.getSourceFlowElement();
-            final String json = JSON.toJSONString(sourceFlowElement);
-            return JSONObject.parseObject(json).getString("assignee");
+            final String json = JacksonUtil.toJsonStr(sourceFlowElement);
+            return JacksonUtil.toMap(json,String.class,Object.class).get("assignee").toString();
         }
         return null;
     }
