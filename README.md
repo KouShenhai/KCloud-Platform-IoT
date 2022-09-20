@@ -93,7 +93,7 @@ jenkins
 ~~~
 
 ### 项目配置
-安装jdk1.8、mysql5.7、redis、apollo  
+安装jdk1.8、mysql5.7、redis、apollo、ElasticSearch 7.6.2   
 创建数据库  
 开启apr模式  
 修改第三方相关配置  
