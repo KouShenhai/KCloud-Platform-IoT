@@ -1,3 +1,9 @@
+### 2022.09.20 更新日志
+###### 1.升级/替换依赖
+SpringBoot 2.2.5.RELEASE > SpringBoot 2.7.
+SpringCloud Hoxton.SR6 > SpringCloud 2021.0.4
+Netflix Hystrix > Resilience4j
+
 ### 2022.08.31 更新日志
 ###### 1.新增功能
 * 搜索管理
