@@ -202,6 +202,16 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <compilerArgument>-Xlint:-options,rawtypes,deprecation,unchecked</compilerArgument>
+                </configuration>
+            </plugin>
         </plugins>
         <!-- profile对资源的操作 -->
         <resources>
