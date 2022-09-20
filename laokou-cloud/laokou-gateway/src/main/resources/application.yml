@@ -55,12 +55,7 @@ resilience4j.circuitbreaker:
         - java.lang.Exception
       #不会被计为失败的异常集合，优先级高于recordExceptions。
       ignoreExceptions:
-        - java.lang.IllegalStateException
-  instances: #熔断器类型
-    aCustomizer: #使用默认配置
-      baseConfig: default
-    cacheCustomizer: #自定义配置
-      failureRateThreshold: 100
+        - io.laokou.common.exception.CustomException
 
 resilience4j.timelimiter:
   instances:

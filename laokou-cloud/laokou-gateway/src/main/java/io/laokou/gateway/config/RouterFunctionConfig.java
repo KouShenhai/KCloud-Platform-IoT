@@ -1,7 +1,6 @@
 package io.laokou.gateway.config;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
-import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 import io.laokou.gateway.component.Resilience4jFallbackHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
@@ -30,8 +29,6 @@ public class RouterFunctionConfig {
     @Bean
     public Customizer<Resilience4JCircuitBreakerFactory> defaultCustomizer() {
         return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
-                // 默认超时时间 10s
-                .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(10)).build())
                 // circuitBreaker 使用默认配置
                 .circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
                 .build());
