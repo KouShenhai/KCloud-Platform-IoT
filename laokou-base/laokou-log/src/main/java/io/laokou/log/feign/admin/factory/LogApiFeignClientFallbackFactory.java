@@ -1,6 +1,6 @@
 package io.laokou.log.feign.admin.factory;
-import feign.hystrix.FallbackFactory;
 import io.laokou.log.feign.admin.fallback.LogApiFeignClientFallback;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 /**
  * 回调工厂

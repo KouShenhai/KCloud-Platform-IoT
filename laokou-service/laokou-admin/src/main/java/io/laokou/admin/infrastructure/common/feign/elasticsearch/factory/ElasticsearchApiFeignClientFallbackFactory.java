@@ -1,6 +1,6 @@
 package io.laokou.admin.infrastructure.common.feign.elasticsearch.factory;
-import feign.hystrix.FallbackFactory;
 import io.laokou.admin.infrastructure.common.feign.elasticsearch.fallback.ElasticsearchApiFeignClientFallback;
+import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**
