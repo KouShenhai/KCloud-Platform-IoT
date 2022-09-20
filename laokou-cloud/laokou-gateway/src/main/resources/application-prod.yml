@@ -8,7 +8,7 @@ spring:
     database: 0
     host: 124.222.196.51
     port: 6379
-    password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=) # 密码：koushenhai123456
+    password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=)
     timeout: 6000ms #连接超时时长（毫秒）
     jedis:
       pool:

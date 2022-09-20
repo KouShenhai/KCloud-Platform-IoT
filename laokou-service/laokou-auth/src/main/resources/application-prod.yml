@@ -33,7 +33,7 @@ spring:
     database: 0
     host: 124.222.196.51
     port: 6379
-    password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=) # 密码：koushenhai123456
+    password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=)
     timeout: 6000ms #连接超时时长（毫秒）
     jedis:
       pool:
@@ -47,7 +47,7 @@ spring:
       driver-class-name: com.mysql.jdbc.Driver
       url: jdbc:mysql://124.222.196.51:3306/kcloud?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
       username: ENC(7j+MYBNM2fhq8WST3DE3WA==)
-      password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=) # 密码：koushenhai123456
+      password: ENC(AHdloD6Rp4bu9SYZJbO7bcwErNCQm43R1b4zh6x4B10=)
       initial-size: 10
       max-active: 100
       min-idle: 10
