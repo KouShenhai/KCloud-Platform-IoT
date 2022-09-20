@@ -62,7 +62,15 @@ resilience4j.circuitbreaker:
     cacheCustomizer: #自定义配置
       failureRateThreshold: 10
 
+resilience4j.timelimiter:
+  instances:
+    default:
+      timeoutDuration: 1s
+      cancelRunningFuture: true
+
 feign:
+  circuitbreaker:
+    enabled: true
   httpclient:
     enabled: true
   client:
