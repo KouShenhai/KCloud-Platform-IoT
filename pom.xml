@@ -20,13 +20,13 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <!--boot版本-->
-        <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
+        <spring-boot.version>2.7.3</spring-boot.version>
         <!--lombok版本-->
         <lombok.version>1.18.10</lombok.version>
         <!--mysql版本-->
         <mysql.version>5.1.46</mysql.version>
         <!--cloud版本-->
-        <spring-cloud.version>Hoxton.SR6</spring-cloud.version>
+        <spring-cloud.version>2021.0.4</spring-cloud.version>
         <!--admin版本-->
         <spring-boot-admin.version>2.2.2</spring-boot-admin.version>
         <!--flowable版本-->
