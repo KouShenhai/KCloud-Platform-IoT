@@ -2,12 +2,14 @@ package io.laokou.common.user;
 import io.laokou.common.vo.SysDeptVO;
 import io.laokou.common.vo.SysRoleVO;
 import lombok.Data;
+
+import java.io.Serializable;
 import java.util.List;
 /**
  * @author Kou Shenhai
  */
 @Data
-public class UserDetail {
+public class UserDetail implements Serializable {
     private Long id;
     private String username;
     private String imgUrl;

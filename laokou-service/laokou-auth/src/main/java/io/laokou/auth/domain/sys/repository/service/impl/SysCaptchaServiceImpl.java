@@ -6,6 +6,8 @@ import io.laokou.redis.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.awt.image.BufferedImage;
+import java.util.Optional;
+
 /**
  * 验证码实现类
  * @author Kou Shenhai
@@ -50,11 +52,11 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
 
     private String getCache(String uuid) {
         String key = RedisKeyUtil.getUserCaptchaKey(uuid);
-        String captcha = redisUtil.get(key);
+        Object captcha = redisUtil.get(key);
         if (captcha != null) {
             redisUtil.delete(key);
         }
-        return captcha;
+        return Optional.of(captcha).orElse("").toString();
     }
 
 }

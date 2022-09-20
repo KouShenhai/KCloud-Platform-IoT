@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public final class RedisUtil {
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
     /**  默认过期时长为24小时，单位：秒 */
     public final static long DEFAULT_EXPIRE = 60 * 60 * 24L;
     /**  过期时长为1小时，单位：秒 */
@@ -38,15 +38,15 @@ public final class RedisUtil {
         set(key, value, DEFAULT_EXPIRE);
     }
 
-    public final String get(String key, long expire) {
-        String value = redisTemplate.opsForValue().get(key);
+    public final Object get(String key, long expire) {
+        Object value = redisTemplate.opsForValue().get(key);
         if(expire != NOT_EXPIRE){
             expire(key, expire);
         }
         return value;
     }
 
-    public final String get(String key) {
+    public final Object get(String key) {
         return get(key, NOT_EXPIRE);
     }
 
@@ -108,7 +108,7 @@ public final class RedisUtil {
         }
     }
 
-    public final String rightPop(String key){
+    public final Object rightPop(String key){
         return redisTemplate.opsForList().rightPop(key);
     }
 

@@ -35,7 +35,7 @@ public class WebMvcConfig{
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         // 允许所有域名跨域
-        config.addAllowedOrigin(CorsConfiguration.ALL);
+        config.addAllowedOriginPattern(CorsConfiguration.ALL);
         // 允许证书
         config.setAllowCredentials(true);
         // 允许所有方法

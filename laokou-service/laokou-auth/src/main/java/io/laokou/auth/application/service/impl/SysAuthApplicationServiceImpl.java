@@ -31,14 +31,13 @@ import io.laokou.common.vo.SysDeptVO;
 import io.laokou.datasource.annotation.DataSource;
 import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -63,8 +62,6 @@ import java.util.concurrent.TimeUnit;
 @Service
 @Slf4j
 @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
-@AllArgsConstructor
-@NoArgsConstructor
 public class SysAuthApplicationServiceImpl implements SysAuthApplicationService {
 
     private static AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -81,6 +78,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     private SysUserService sysUserService;
     @Autowired
     private SysCaptchaService sysCaptchaService;
+    @Autowired
+    @Lazy
     private ZfbOauth zfbOauth;
     @Autowired
     private SysRoleService sysRoleService;

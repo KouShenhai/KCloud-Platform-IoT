@@ -30,8 +30,8 @@ public class RouterFunctionConfig {
     @Bean
     public Customizer<Resilience4JCircuitBreakerFactory> defaultCustomizer() {
         return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
-                // 默认超时时间 4s
-                .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(4)).build())
+                // 默认超时时间 10s
+                .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(10)).build())
                 // circuitBreaker 使用默认配置
                 .circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
                 .build());

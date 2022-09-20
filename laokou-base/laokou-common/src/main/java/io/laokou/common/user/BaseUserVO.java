@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author Kou Shenhai
  * @version 1.0
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "基础用户信息VO")
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseUserVO {
+public class BaseUserVO implements Serializable {
 
     @ApiModelProperty(name = "userId",value = "用户编号",required = true,example = "1341620898007281665")
     private Long userId;
