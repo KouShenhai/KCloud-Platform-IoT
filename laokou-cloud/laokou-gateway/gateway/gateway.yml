@@ -15,7 +15,7 @@ spring:
                 redis-rate-limiter.replenishRate: 1000
                 redis-rate-limiter.burstCapacity: 3000
             # 降级
-            - name: Hystrix
+            - name: CircuitBreaker
               args:
                 name: default
                 # 降级接口地址
@@ -33,7 +33,7 @@ spring:
                 redis-rate-limiter.replenishRate: 1000
                 redis-rate-limiter.burstCapacity: 3000
             # 降级
-            - name: Hystrix
+            - name: CircuitBreaker
               args:
                 name: default
                 # 降级接口地址

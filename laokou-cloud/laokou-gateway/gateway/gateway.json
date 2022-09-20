@@ -63,7 +63,7 @@
         }
       },
       {
-        "name": "Hystrix",
+        "name": "CircuitBreaker",
         "args": {
           "name": "default",
           "fallbackUri": "forward:/fallback"

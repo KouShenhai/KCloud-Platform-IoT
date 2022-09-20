@@ -1,5 +1,4 @@
 package io.laokou.auth.interfaces.controller;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.laokou.auth.application.service.SysAuthApplicationService;
 import io.laokou.auth.interfaces.dto.LoginDTO;
 import io.laokou.common.user.BaseUserVO;
@@ -62,7 +61,7 @@ public class SysAuthApiController {
             @ApiImplicitParam(name = Constant.URI,value = "请求路径",required = true,paramType = "query",dataType = "String"),
             @ApiImplicitParam(name = Constant.METHOD,value = "请求方法",required = true,paramType = "query",dataType = "String")
     })
-    @HystrixCommand(fallbackMethod = "fallback",ignoreExceptions = {CustomException.class})
+    //@HystrixCommand(fallbackMethod = "fallback",ignoreExceptions = {CustomException.class})
     public HttpResultUtil<UserDetail>  resource(@RequestParam(Constant.AUTHORIZATION_HEAD) String Authorization,
                                                 @RequestParam(Constant.URI)String uri,
                                                 @RequestParam(Constant.METHOD)String method) {

@@ -4,10 +4,11 @@ import io.laokou.common.constant.Constant;
 import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.gateway.feign.auth.AuthApiFeignClient;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -37,6 +38,8 @@ import java.util.List;
 @Slf4j
 @Data
 @ConfigurationProperties(prefix = "gateway")
+@AllArgsConstructor
+@NoArgsConstructor
 public class AuthFilter implements GlobalFilter,Ordered {
 
     private static final AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -46,7 +49,6 @@ public class AuthFilter implements GlobalFilter,Ordered {
      */
     private List<String> uris;
 
-    @Autowired
     private AuthApiFeignClient authApiFeignClient;
 
     @Override

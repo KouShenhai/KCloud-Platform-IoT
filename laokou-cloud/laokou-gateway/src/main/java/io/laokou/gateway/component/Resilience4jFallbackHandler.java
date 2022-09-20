@@ -17,7 +17,7 @@ public class Resilience4jFallbackHandler implements HandlerFunction<ServerRespon
     @Override
     public Mono<ServerResponse> handle(ServerRequest request) {
         Optional<Object> optionalUris = request.attribute(GATEWAY_ORIGINAL_REQUEST_URL_ATTR);
-        optionalUris.ifPresent((uri) -> log.error("网关执行请求：{}失败，hystrix服务降级处理",uri));
+        optionalUris.ifPresent((uri) -> log.error("网关执行请求：{}失败，resilience4j服务降级处理",uri));
         return ServerResponse.status(HttpStatus.HTTP_OK)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(new HttpResultUtil<Boolean>().error("服务已被降级熔断")));
