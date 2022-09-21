@@ -35,9 +35,9 @@ public class AddressUtil {
         params.put("accessKey",ACCESS_KEY);
         String ipJsonData = HttpUtil.transformerUnderHumpData(HttpUtil.doGet(IP_URI,params,new HashMap<>(0)));
         if (StringUtils.isNotBlank(ipJsonData)) {
-            Map<String,String> map = JacksonUtil.toMap(ipJsonData,String.class,String.class);
-            Map<String, String> dataMap = JacksonUtil.toMap(map.get("data"), String.class, String.class);
-            return dataMap.get("country") + " " + dataMap.get("city");
+            Map<String,Object> map = JacksonUtil.toMap(ipJsonData,String.class,Object.class);
+            Map<String, Object> dataMap = JacksonUtil.toMap(map.get("data").toString(), String.class, Object.class);
+            return dataMap.get("country").toString().concat(dataMap.get("city").toString());
         }
         return "XX XX";
     }
