@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package io.laokou.common.utils;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import java.io.IOException;
@@ -36,8 +38,8 @@ public class AddressUtil {
         String ipJsonData = HttpUtil.transformerUnderHumpData(HttpUtil.doGet(IP_URI,params,new HashMap<>(0)));
         if (StringUtils.isNotBlank(ipJsonData)) {
             Map<String,Object> map = JacksonUtil.toMap(ipJsonData,String.class,Object.class);
-            Map<String, Object> dataMap = JacksonUtil.toMap(map.get("data").toString(), String.class, Object.class);
-            return dataMap.get("country").toString().concat(dataMap.get("city").toString());
+            JSONObject jsonObject = JSONUtil.parseObj(map.get("data"));
+            return jsonObject.getStr("country") + " " + jsonObject.getStr("city");
         }
         return "XX XX";
     }
