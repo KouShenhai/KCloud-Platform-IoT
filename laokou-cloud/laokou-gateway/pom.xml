@@ -56,10 +56,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.github.resilience4j</groupId>
-            <artifactId>resilience4j-spring-boot2</artifactId>
-        </dependency>
         <!--resilience4j 配置文件支持，版本需要和Spring cloud中的匹配-->
         <dependency>
             <groupId>io.github.resilience4j</groupId>

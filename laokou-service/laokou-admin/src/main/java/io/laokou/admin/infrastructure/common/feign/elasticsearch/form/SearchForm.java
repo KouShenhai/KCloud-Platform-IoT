@@ -71,4 +71,9 @@ public class SearchForm implements Serializable {
      */
     private List<SearchDTO> orSearchList;
 
+    /**
+     * 聚合字段
+     */
+    private AggregationDTO aggregationKey;
+
 }
