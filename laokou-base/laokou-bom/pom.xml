@@ -89,6 +89,7 @@
         <spring-security-oauth2.version>2.3.3.RELEASE</spring-security-oauth2.version>
     </properties>
 
+    <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
             <!-- 定义 lombok 版本 -->
