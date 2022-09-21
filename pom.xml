@@ -28,7 +28,7 @@
         <!--cloud版本-->
         <spring-cloud.version>2021.0.4</spring-cloud.version>
         <!--admin版本-->
-        <spring-boot-admin.version>2.7.3</spring-boot-admin.version>
+        <spring-boot-admin.version>2.7.4</spring-boot-admin.version>
         <!--flowable版本-->
         <flowable.version>6.7.2</flowable.version>
         <!--mybatis-plus版本 -->
