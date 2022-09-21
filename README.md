@@ -38,50 +38,48 @@ KCloud-Platform（老寇云平台）是一款企业级微服务架构的云服�
 服务监控  
 主机监控  
 
-### 设计原则
-开闭原则  
-单一职责原则  
-
 ### 系统架构
 ![](image/老寇云平台架构图.png)
 
 ### 技术体系
 
 #### Spring全家桶及核心技术版本
-| 组件                          | 版本|
+| 组件                          | 版本       |
 | :--------------------------- | :----------|
 | Spring Boot                  | 2.7.3      |
 | Spring Cloud                 | 2021.0.4   |
+| Spring Cloud Alibaba         | 2021.0.4.0 |
 | Spring Boot Admin            | 2.7.4      |
 | Apollo                       | 1.4.0      |
+| Nacos                        | 2.1.1      |
+| Sentinel                     | 1.8.5      |
+| Seata                        | 1.5.2      |
 | Mysql                        | 5.7.9      |
 | Redis                        | 6.0.6      |
 | Elasticsearch                | 7.6.2      |
 
-#### 基础框架
-SpringBoot  
-SpringCloud Netflix  
+> Spring 全家桶版本对应关系，详见：[版本说明](https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
 
-#### 技术栈
-Shiro  
-Mysql  
-Redis  
-Mybatis-Plus  
-Apollo  
-Flowable  
-ElasticSearch  
-
-#### 服务监控
-Skywalking  
-Prometheus  
-Grafana  
-SpringBoot Admin  
-
-#### 一键部署
-docker-compose  
-
-#### 持续交付
-jenkins  
+#### 相关技术
+- API 网关：Spring Cloud Gateway
+- 服务注册&发现：Eureka、Nacos
+- 配置中心: Apollo、Nacos
+- 服务消费：Spring Cloud OpenFeign & RestTemplate & OkHttps
+- 负载均衡：Spring Cloud Loadbalancer
+- 服务熔断&降级&限流：Resilience4j、Sentinel
+- 服务监控：Spring Boot Admin、Prometheus
+- 消息队列：使用 Spring Cloud 消息总线 Spring Cloud Bus 默认 Kafka 适配 RabbitMQ
+- 链路跟踪：Skywalking
+- 分布式事务：Seata
+- 数据库：MySQL、Oracle 
+- 数据缓存：Redis
+- 工作流：Flowable
+- 日志中心：ELK
+- 持久层框架：Mybatis Plus
+- JSON 序列化：Jackson
+- 文件服务：Local/阿里云 OSS/Fastdfs
+- 服务部署：Shell、Docker
+- 持续交付：Jenkins
 
 #### 项目结构
 ~~~
@@ -103,15 +101,28 @@ jenkins
         └── laokou-redis -- 缓存模块
 ~~~
 
-### 项目配置
-安装jdk1.8、mysql5.7、redis、apollo、ElasticSearch 7.6.2   
-创建数据库  
-开启apr模式  
-修改第三方相关配置  
-修改中间件相关配置  
+### 环境配置
+#### 安装教程
+[centos7 安装jdk1.8](https://kcloud.blog.csdn.net/article/details/82184984)  
+[centos7 安装mysql5.7](https://kcloud.blog.csdn.net/article/details/123628721)  
+[centos7 安装maven](https://kcloud.blog.csdn.net/article/details/108459715)  
+[centos7 安装apollo](https://kcloud.blog.csdn.net/article/details/124957353)  
+[centos7 安装redis](https://kcloud.blog.csdn.net/article/details/82589349)  
+[centos7 安装fastdfs](https://kcloud.blog.csdn.net/article/details/116423931)  
+[centos7 安装中文字体](https://kcloud.blog.csdn.net/article/details/106575947)  
+[centos7 安装jenkins](https://kcloud.blog.csdn.net/article/details/112171878)  
+[centos7 安装apr](https://kcloud.blog.csdn.net/article/details/125473896)  
+[centos7 安装nacos](https://kcloud.blog.csdn.net/article/details/82589017)  
+[centos7 安装elasticsearch7.6.2](https://kcloud.blog.csdn.net/article/details/123123229)  
 
+#### 安装包
+[百度网盘](https://pan.baidu.com/s/1swrV9ffJnmz4S0mfkuBbIw) 提取码：1111
+
+### 项目配置
+#### 服务配置
 ```yaml
   # mysql
+spring:
   datasource:
     druid:
       # 连接地址
@@ -119,7 +130,7 @@ jenkins
       # 用户名
       username: root
       # 密码
-      password: XXXXXX
+      password: 123456
   # redis
   redis:
     #数据库索引
@@ -130,6 +141,29 @@ jenkins
     port: 6379
     #连接超时时长（毫秒）
     timeout: 6000ms 
+# elasticsearch
+elasticsearch:
+  #主机
+  host: 127.0.0.1:9200
+  #节点
+  cluster-name: elasticsearch-node
+```
+
+#### 开启APR模式
+##### 代码引入
+```java
+public class AuthApplication implements WebServerFactoryCustomizer<WebServerFactory> {
+    @Override
+    public void customize(WebServerFactory factory) {
+        TomcatServletWebServerFactory containerFactory = (TomcatServletWebServerFactory) factory;
+        containerFactory.setProtocol("org.apache.coyote.http11.Http11AprProtocol");
+    }
+}
+```
+
+##### VM options配置
+```shell script
+-Djava.library.path=./lib
 ```
 
 ### 多数据源配置
@@ -150,7 +184,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 }
 ```
-##### 配置文件
+##### YAML配置
 ```yaml
 dynamic:
   datasource:
@@ -179,7 +213,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 }
 ```
-##### 配置文件
+##### XML配置
 ```xml
 <if test="qo.sqlFilter != null and qo.sqlFilter != ''">
     and ( ${qo.sqlFilter} )
@@ -265,10 +299,10 @@ laok5/test123
     </tr>
 </table>
 
-### 项目说明
-代码不可商用及二次开源，仅供学习使用，否则后果自负  
-代码不可商用及二次开源，仅供学习使用，否则后果自负  
-代码不可商用及二次开源，仅供学习使用，否则后果自负  
+### 用户权益
+- 不可商用及二次开源，仅供学习、毕设，否则后果自负
+- 不可商用及二次开源，仅供学习、毕设，否则后果自负
+- 不可商用及二次开源，仅供学习、毕设，否则后果自负 
 
 ### 参与贡献
 欢迎各路英雄好汉参与KCloud-Platform代码贡献，期待您的加入！Fork本仓库 新建Feat_xxx分支提交代码，新建Pull Request
