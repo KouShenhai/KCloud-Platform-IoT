@@ -1,3 +1,18 @@
+/**
+ * Copyright 2020-2022 Kou Shenhai
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.laokou.common.exception;
 
 /**
@@ -143,24 +158,81 @@ public interface ErrorCode {
      * 短信配置错误
      */
     int SMS_CONFIG_ERROR = 10031;
-
+    /**
+     * 任务已被签收，操作失败
+     */
     int TASK_CLIME_FAIL = 10032;
+    /**
+     * 不存在的流程定义
+     */
     int NONE_EXIST_PROCESS = 10033;
+    /**
+     * 上级节点不存在
+     */
     int SUPERIOR_NOT_EXIST = 10034;
+    /**
+     * 驳回
+     */
     int REJECT_MESSAGE = 10035;
+    /**
+     * 回退
+     */
     int ROLLBACK_MESSAGE = 10036;
+    /**
+     * 任务没有分组，无法取消认领
+     */
     int UNCLAIM_ERROR_MESSAGE = 10037;
+    /**
+     * 上级区域选择错误
+     */
     int SUPERIOR_REGION_ERROR = 10038;
+    /**
+     * 请先删除下级区域
+     */
     int REGION_SUB_DELETE_ERROR = 10039;
+    /**
+     * 流程已挂起，不能启动实例
+     */
     int PROCESS_START_ERROR = 10040;
+    /**
+     * 多实例任务不能驳回
+     */
     int REJECT_PROCESS_PARALLEL_ERROR = 10041;
+    /**
+     * 存在多个处理中的任务，不能驳回
+     */
     int REJECT_PROCESS_HANDLEING_ERROR = 10042;
+    /**
+     * 多实例任务不能终止
+     */
     int END_PROCESS_PARALLEL_ERROR = 10043;
+    /**
+     * 存在多个处理中的任务，不能终止流程
+     */
     int END_PROCESS_HANDLEING_ERROR = 10044;
+    /**
+     * 终止
+     */
     int END_PROCESS_MESSAGE = 10045;
+    /**
+     * 多实例任务不能回退
+     */
     int BACK_PROCESS_PARALLEL_ERROR = 10046;
+    /**
+     * 存在多个并行执行的任务，不能回退
+     */
     int BACK_PROCESS_HANDLEING_ERROR = 10047;
+    /**
+     * 你没有权限访问，请联系管理员
+     */
     int NOT_PERMISSIONS = 20001;
+    /**
+     * 服务正在维护，请联系管理员
+     */
     int SERVICE_MAINTENANCE = 20002;
+    /**
+     * 帐户或密码解密失败，请检查密钥
+     */
     int DECRYPT_FAIL = 20003;
+
 }
