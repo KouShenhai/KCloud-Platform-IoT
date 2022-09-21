@@ -1,14 +1,25 @@
+/**
+ * Copyright 2020-2022 Kou Shenhai
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.laokou.log.aspect;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import io.laokou.common.dto.OperateLogDTO;
 import io.laokou.common.enums.DataTypeEnum;
 import io.laokou.common.enums.ResultStatusEnum;
 import io.laokou.common.user.SecurityUser;
-import io.laokou.common.utils.AddressUtil;
-import io.laokou.common.utils.HttpContextUtil;
-import io.laokou.common.utils.IpUtil;
-import io.laokou.common.utils.SpringContextUtil;
+import io.laokou.common.utils.*;
 import io.laokou.log.annotation.OperateLog;
 import io.laokou.log.event.OperateLogEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -90,8 +101,7 @@ public class OperateLogAspect {
         dto.setMethodName(className + "." + methodName + "()");
         dto.setRequestMethod(request.getMethod());
         if (DataTypeEnum.TEXT.equals(operateLog.type())) {
-            ObjectMapper mapper = new ObjectMapper();
-            dto.setRequestParams(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(params));
+            dto.setRequestParams(JacksonUtil.toJsonStr(params,true));
         }
         //发布事件
         SpringContextUtil.publishEvent(new OperateLogEvent(dto));
