@@ -1,10 +1,25 @@
+/**
+ * Copyright 2020-2022 Kou Shenhai
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.laokou.admin.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.application.service.SysMessageApplicationService;
 import io.laokou.admin.interfaces.dto.MessageDTO;
-import io.laokou.admin.interfaces.qo.MessageQO;
+import io.laokou.admin.interfaces.qo.SysMessageQO;
 import io.laokou.admin.interfaces.vo.MessageDetailVO;
-import io.laokou.admin.interfaces.vo.MessageVO;
+import io.laokou.admin.interfaces.vo.SysMessageVO;
 import io.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.laokou.security.annotation.PreAuthorize;
@@ -37,8 +52,8 @@ public class SysMessageApiController {
     @PostMapping("/query")
     @ApiOperation("系统消息>查询")
     @PreAuthorize("sys:message:query")
-    public HttpResultUtil<IPage<MessageVO>> query(@RequestBody MessageQO qo) {
-        return new HttpResultUtil<IPage<MessageVO>>().ok(sysMessageApplicationService.queryMessagePage(qo));
+    public HttpResultUtil<IPage<SysMessageVO>> query(@RequestBody SysMessageQO qo) {
+        return new HttpResultUtil<IPage<SysMessageVO>>().ok(sysMessageApplicationService.queryMessagePage(qo));
     }
 
     @GetMapping("/get")
@@ -57,8 +72,8 @@ public class SysMessageApiController {
 
     @PostMapping("/unread/list")
     @ApiOperation("系统消息>未读")
-    public HttpResultUtil<IPage<MessageVO>> unread(@RequestBody MessageQO qo,HttpServletRequest request) {
-        return new HttpResultUtil<IPage<MessageVO>>().ok(sysMessageApplicationService.getUnReadList(request,qo));
+    public HttpResultUtil<IPage<SysMessageVO>> unread(@RequestBody SysMessageQO qo, HttpServletRequest request) {
+        return new HttpResultUtil<IPage<SysMessageVO>>().ok(sysMessageApplicationService.getUnReadList(request,qo));
     }
 
     @GetMapping("/count")

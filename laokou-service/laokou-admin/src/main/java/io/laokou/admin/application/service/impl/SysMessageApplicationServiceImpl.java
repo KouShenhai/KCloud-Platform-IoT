@@ -1,3 +1,18 @@
+/**
+ * Copyright 2020-2022 Kou Shenhai
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.laokou.admin.application.service.impl;
 import cn.hutool.core.thread.ThreadUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -15,9 +30,9 @@ import io.laokou.admin.infrastructure.component.pipeline.ProcessController;
 import io.laokou.admin.infrastructure.component.run.Task;
 import io.laokou.admin.infrastructure.config.WebSocketServer;
 import io.laokou.admin.interfaces.dto.MessageDTO;
-import io.laokou.admin.interfaces.qo.MessageQO;
+import io.laokou.admin.interfaces.qo.SysMessageQO;
 import io.laokou.admin.interfaces.vo.MessageDetailVO;
-import io.laokou.admin.interfaces.vo.MessageVO;
+import io.laokou.admin.interfaces.vo.SysMessageVO;
 import io.laokou.common.constant.Constant;
 import io.laokou.common.user.SecurityUser;
 import io.laokou.common.user.UserDetail;
@@ -122,8 +137,8 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     @Override
     @DataSource("master")
     @DataFilter(tableAlias = "boot_sys_message")
-    public IPage<MessageVO> queryMessagePage(MessageQO qo) {
-        IPage<MessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+    public IPage<SysMessageVO> queryMessagePage(SysMessageQO qo) {
+        IPage<SysMessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysMessageService.getMessageList(page,qo);
     }
 
@@ -142,8 +157,8 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
     @Override
     @DataSource("master")
-    public IPage<MessageVO> getUnReadList(HttpServletRequest request, MessageQO qo) {
-        IPage<MessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+    public IPage<SysMessageVO> getUnReadList(HttpServletRequest request, SysMessageQO qo) {
+        IPage<SysMessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         final Long userId = SecurityUser.getUserId(request);
         return sysMessageService.getUnReadList(page,userId);
     }

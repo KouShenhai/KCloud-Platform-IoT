@@ -13,12 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.laokou.admin.interfaces.vo;
+package io.laokou.admin.interfaces.qo;
+
+import io.laokou.common.entity.BasePage;
 import lombok.Data;
+
+/**
+ * @author Kou Shenhai
+ * @version 1.0
+ * @date 2022/7/20 0020 下午 3:50
+ */
 @Data
-public class UploadVO {
+public class SysMessageQO extends BasePage {
 
-    private String url;
-    private String md5;
-
+    private String username;
+    private String title;
 }

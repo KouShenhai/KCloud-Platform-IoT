@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.laokou.admin.domain.sys.repository.mapper.SysMessageMapper">
 
-    <select id="getMessageList" resultType="io.laokou.admin.interfaces.vo.MessageVO">
+    <select id="getMessageList" resultType="io.laokou.admin.interfaces.vo.SysMessageVO">
          select id,username,create_date,title,`type`
          from boot_sys_message
          where del_flag = '0'
@@ -28,7 +28,7 @@ where b.id = #{id}
 SELECT a.title,a.content from boot_sys_message a where a.id = #{id}
     </select>
 
-    <select id="getUnReadList" resultType="io.laokou.admin.interfaces.vo.MessageVO">
+    <select id="getUnReadList" resultType="io.laokou.admin.interfaces.vo.SysMessageVO">
         SELECT b.id,a.title,a.create_date from boot_sys_message a
 join boot_sys_message_detail b on b.message_id = a.id
 where a.del_flag = '0' and b.read_flag = '0' and b.user_id = #{userId}

@@ -8,7 +8,7 @@ import java.util.Date;
  * @date 2022/7/20 0020 下午 3:52
  */
 @Data
-public class MessageVO implements Serializable {
+public class SysMessageVO implements Serializable {
 
     private Long id;
 

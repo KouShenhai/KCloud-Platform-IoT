@@ -1,3 +1,18 @@
+/**
+ * Copyright 2020-2022 Kou Shenhai
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.laokou.admin.domain.sys.repository.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -5,9 +20,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.laokou.admin.domain.sys.entity.SysMessageDO;
 import io.laokou.admin.domain.sys.repository.mapper.SysMessageMapper;
 import io.laokou.admin.domain.sys.repository.service.SysMessageService;
-import io.laokou.admin.interfaces.qo.MessageQO;
+import io.laokou.admin.interfaces.qo.SysMessageQO;
 import io.laokou.admin.interfaces.vo.MessageDetailVO;
-import io.laokou.admin.interfaces.vo.MessageVO;
+import io.laokou.admin.interfaces.vo.SysMessageVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMessageDO> implements SysMessageService {
     @Override
-    public IPage<MessageVO> getMessageList(IPage<MessageVO> page, MessageQO qo) {
+    public IPage<SysMessageVO> getMessageList(IPage<SysMessageVO> page, SysMessageQO qo) {
         return this.baseMapper.getMessageList(page,qo);
     }
 
@@ -25,7 +40,7 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
     }
 
     @Override
-    public IPage<MessageVO> getUnReadList(IPage<MessageVO> page, Long userId) {
+    public IPage<SysMessageVO> getUnReadList(IPage<SysMessageVO> page, Long userId) {
         return this.baseMapper.getUnReadList(page,userId);
     }
 
