@@ -15,7 +15,6 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -24,7 +23,6 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>${druid.version}</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -33,12 +31,10 @@
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc6</artifactId>
-            <version>${oracle.version}</version>
         </dependency>
         <dependency>
             <groupId>io.laokou</groupId>
             <artifactId>laokou-security</artifactId>
-            <version>${laokou.version}</version>
         </dependency>
     </dependencies>
 

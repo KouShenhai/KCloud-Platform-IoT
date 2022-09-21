@@ -20,12 +20,10 @@
         <dependency>
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
-            <version>${UserAgentUtils.version}</version>
         </dependency>
         <dependency>
             <groupId>io.laokou</groupId>
             <artifactId>laokou-common</artifactId>
-            <version>${laokou.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.baomidou</groupId>

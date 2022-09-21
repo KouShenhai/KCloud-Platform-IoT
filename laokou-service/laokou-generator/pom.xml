@@ -19,17 +19,14 @@
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>${freemarker.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>${jasypt.version}</version>
         </dependency>
         <dependency>
             <groupId>io.laokou</groupId>
             <artifactId>laokou-dynamic-datasource</artifactId>
-            <version>${laokou.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.cloud</groupId>
@@ -52,7 +49,7 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <compilerArgument>-Xlint:-options,rawtypes,deprecation,unchecked</compilerArgument>
+<!--                    <compilerArgument>-Xlint:-options,rawtypes,deprecation,unchecked</compilerArgument>-->
                 </configuration>
             </plugin>
             <plugin>

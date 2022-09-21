@@ -16,11 +16,11 @@
 package io.laokou.admin.domain.sys.repository.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.laokou.admin.infrastructure.common.password.PasswordUtil;
 import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
 import io.laokou.admin.interfaces.vo.OptionVO;
 import io.laokou.admin.interfaces.vo.SysUserVO;
+import io.laokou.common.password.PasswordUtil;
 import io.laokou.common.user.UserDetail;
 import io.laokou.admin.domain.sys.entity.SysUserDO;
 import io.laokou.admin.domain.sys.repository.mapper.SysUserMapper;

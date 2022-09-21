@@ -15,12 +15,10 @@
         <dependency>
             <groupId>io.laokou</groupId>
             <artifactId>laokou-redis</artifactId>
-            <version>${laokou.version}</version>
         </dependency>
         <dependency>
             <groupId>io.laokou</groupId>
             <artifactId>laokou-log</artifactId>
-            <version>${laokou.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>io.laokou</groupId>
@@ -35,7 +33,6 @@
         <dependency>
             <groupId>io.laokou</groupId>
             <artifactId>laokou-dynamic-datasource</artifactId>
-            <version>${laokou.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>io.laokou</groupId>
@@ -62,12 +59,10 @@
         <dependency>
             <groupId>com.ctrip.framework.apollo</groupId>
             <artifactId>apollo-client</artifactId>
-            <version>${apollo-client.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alipay.sdk</groupId>
             <artifactId>alipay-sdk-java</artifactId>
-            <version>${alipay-sdk-java.version}</version>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -77,22 +72,18 @@
         <dependency>
             <groupId>io.github.mweirauch</groupId>
             <artifactId>micrometer-jvm-extras</artifactId>
-            <version>${micrometer-jvm-extras.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.axet</groupId>
             <artifactId>kaptcha</artifactId>
-            <version>${kaptcha.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>${jasypt.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -101,12 +92,10 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
-            <version>${shiro.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
-            <version>${shiro.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -124,7 +113,7 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <compilerArgument>-Xlint:-options,rawtypes,deprecation,unchecked</compilerArgument>
+<!--                    <compilerArgument>-Xlint:-options,rawtypes,deprecation,unchecked</compilerArgument>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -135,6 +124,13 @@
                     <!-- main方法的地址 只需要修改这个地址-->
                     <mainClass>io.laokou.auth.AuthApplication</mainClass>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

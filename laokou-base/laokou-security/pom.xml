@@ -23,7 +23,6 @@
         <dependency>
             <groupId>io.laokou</groupId>
             <artifactId>laokou-common</artifactId>
-            <version>${laokou.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.baomidou</groupId>

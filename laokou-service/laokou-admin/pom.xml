@@ -19,12 +19,10 @@
 		<dependency>
 			<groupId>io.laokou</groupId>
 			<artifactId>laokou-redis</artifactId>
-			<version>${laokou.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.laokou</groupId>
 			<artifactId>laokou-log</artifactId>
-			<version>${laokou.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>io.laokou</groupId>
@@ -39,7 +37,6 @@
 		<dependency>
 			<groupId>io.laokou</groupId>
 			<artifactId>laokou-dynamic-datasource</artifactId>
-			<version>${laokou.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>io.laokou</groupId>
@@ -50,12 +47,10 @@
 		<dependency>
 			<groupId>com.github.tobato</groupId>
 			<artifactId>fastdfs-client</artifactId>
-			<version>${fastdfs-client.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.aliyun.oss</groupId>
 			<artifactId>aliyun-sdk-oss</artifactId>
-			<version>${aliyun-sdk-oss.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.micrometer</groupId>
@@ -65,7 +60,6 @@
 		<dependency>
 			<groupId>io.github.mweirauch</groupId>
 			<artifactId>micrometer-jvm-extras</artifactId>
-			<version>${micrometer-jvm-extras.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.codecentric</groupId>
@@ -86,12 +80,10 @@
 		<dependency>
 			<groupId>com.ctrip.framework.apollo</groupId>
 			<artifactId>apollo-client</artifactId>
-			<version>${apollo-client.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -100,7 +92,6 @@
 		<dependency>
 			<groupId>com.github.ulisesbocchio</groupId>
 			<artifactId>jasypt-spring-boot-starter</artifactId>
-			<version>${jasypt.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.flowable</groupId>
@@ -109,22 +100,18 @@
 		<dependency>
 			<groupId>com.github.binarywang</groupId>
 			<artifactId>weixin-java-mp</artifactId>
-			<version>${weixin-java-mp.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.oshi</groupId>
 			<artifactId>oshi-core</artifactId>
-			<version>${oshi.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna</artifactId>
-			<version>${oshi.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna-platform</artifactId>
-			<version>${oshi.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -137,7 +124,7 @@
 				<configuration>
 					<source>${maven.compiler.source}</source>
 					<target>${maven.compiler.target}</target>
-					<compilerArgument>-Xlint:-options,rawtypes,deprecation,unchecked</compilerArgument>
+<!--					<compilerArgument>-Xlint:-options,rawtypes,deprecation,unchecked</compilerArgument>-->
 				</configuration>
 			</plugin>
 			<plugin>

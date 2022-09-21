@@ -23,12 +23,10 @@
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
-            <version>${redisson.version}</version>
         </dependency>
         <dependency>
             <groupId>io.laokou</groupId>
             <artifactId>laokou-common</artifactId>
-            <version>${laokou.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.baomidou</groupId>

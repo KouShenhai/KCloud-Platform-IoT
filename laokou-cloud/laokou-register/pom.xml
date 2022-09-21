@@ -30,7 +30,7 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <compilerArgument>-Xlint:-options,rawtypes,deprecation,unchecked</compilerArgument>
+<!--                    <compilerArgument>-Xlint:-options,rawtypes,deprecation,unchecked</compilerArgument>-->
                 </configuration>
             </plugin>
             <plugin>
