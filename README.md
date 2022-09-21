@@ -79,6 +79,7 @@ KCloud-Platform（老寇云平台）是一款企业级微服务架构的云服�
 - 文件服务：Local/阿里云 OSS/Fastdfs
 - 服务部署：Shell、Docker
 - 持续交付：Jenkins
+- 服务发布：金丝雀发布
 
 #### 项目结构
 ~~~
@@ -238,6 +239,40 @@ public class SysUserApiController {
         return new HttpResultUtil<IPage<SysUserVO>>().ok(sysUserApplicationService.queryUserPage(qo));
     }
 }
+```
+### 金丝雀发布
+##### Apollo配置
+```yaml
+[{
+  {
+    "id": "laokou-admin",
+    "uri": "lb://laokou-admin",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "_genkey_0": "/admin/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "admin",
+          "_genkey_1": "50"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "_genkey_0": "1"
+        }
+      }
+    ],
+    "order": 0
+  }
+}]
 ```
 
 ### 演示地址
