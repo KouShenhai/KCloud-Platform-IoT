@@ -29,20 +29,20 @@ public class HttpResultUtil<T> {
      * 编码：0标识成功，其他值表示失败
      */
     @ApiModelProperty(value = "编码：0标识成功，其他值表示失败",example = "0")
-    public int code = 0;
+    private int code = 0;
 
     /**
      * 消息内容
      */
     @ApiModelProperty(value = "消息内容",example = "success")
-    public String msg = "success";
+    private String msg = "success";
 
 
     /**
      * 响应数据
      */
     @ApiModelProperty(value = "响应数据",example = "")
-    public T data;
+    private T data;
 
     public boolean success(){
         return code == 0 ? true : false;

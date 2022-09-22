@@ -15,10 +15,13 @@
  */
 package io.laokou.admin.application.service.impl;
 
+import feign.FeignException;
 import io.laokou.admin.application.service.SysSearchApplicationService;
 import io.laokou.admin.infrastructure.common.feign.elasticsearch.ElasticsearchApiFeignClient;
 import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchForm;
 import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchVO;
+import io.laokou.common.exception.CustomException;
+import io.laokou.common.utils.HttpResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -34,6 +37,12 @@ public class SysSearchApplicationServiceImpl implements SysSearchApplicationServ
 
     @Override
     public SearchVO<Map<String,Object>> searchResource(SearchForm form) {
-        return elasticsearchApiFeignClient.highlightSearch(form).getData();
+        HttpResultUtil<SearchVO<Map<String, Object>>> result;
+        try {
+             result = elasticsearchApiFeignClient.highlightSearch(form);
+        } catch (FeignException ex) {
+            throw new CustomException(429,"系统繁忙，请稍后再试");
+        }
+        return result.getData();
     }
 }
