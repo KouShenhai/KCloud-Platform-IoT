@@ -23,7 +23,7 @@ spring:
       max-file-size: -1
       max-request-size: -1
   main:
-    allow-bean-definition-overriding: true
+    allow-circular-references: true
   cloud:
     inetutils:
       ignoredInterfaces:
@@ -63,6 +63,21 @@ mybatis-plus:
     call-setters-on-nulls: true
     jdbc-type-for-null: 'null'
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+seata:
+  enabled: true
+  # 启用自动代理数据源
+  enable-auto-data-source-proxy: false
+  application-id: seata-client0 #seata客户端id
+  tx-service-group: default_tx_group #照搬即可
+  service:
+    vgroup-mapping:
+      default_tx_group: seata-server #照搬即可
+  registry:
+    type: eureka
+    eureka:
+      service-url: ${eureka.client.service-url.defaultZone}
+      weight: 1
 
 feign:
   httpclient:

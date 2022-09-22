@@ -18,17 +18,16 @@ import io.laokou.admin.application.service.SysMonitorApplicationService;
 import io.laokou.admin.interfaces.vo.CacheVO;
 import io.laokou.admin.interfaces.vo.ServerVO;
 import io.laokou.redis.RedisUtil;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 /**
  * @author Kou Shenhai
  * @version 1.0
  * @date 2022/7/27 0027 下午 3:18
  */
 @Service
-@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+@GlobalTransactional(rollbackFor = Exception.class)
 public class SysMonitorApplicationServiceImpl implements SysMonitorApplicationService {
 
     @Autowired

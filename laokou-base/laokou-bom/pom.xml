@@ -87,6 +87,14 @@
         <oshi.version>5.8.0</oshi.version>
         <!-- spring-security-oauth2版本 -->
         <spring-security-oauth2.version>2.3.3.RELEASE</spring-security-oauth2.version>
+        <!-- seata-spring-boot-starter -->
+        <seata-spring-boot-starter.version>1.5.2</seata-spring-boot-starter.version>
+        <!-- spring-cloud-starter-alibaba-seata -->
+        <spring-cloud-starter-alibaba-seata.version>2021.1</spring-cloud-starter-alibaba-seata.version>
+        <!-- ribbon -->
+        <ribbon.version>2.2.2</ribbon.version>
+        <!-- archaius-core -->
+        <archaius-core.version>0.7.4</archaius-core.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -373,6 +381,37 @@
                 <groupId>io.laokou</groupId>
                 <artifactId>laokou-redis</artifactId>
                 <version>${laokou.version}</version>
+            </dependency>
+            <!-- seata -->
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+                <version>${seata-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+                <version>${spring-cloud-starter-alibaba-seata.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.netflix.ribbon</groupId>
+                <artifactId>ribbon-loadbalancer</artifactId>
+                <version>${ribbon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.netflix.archaius</groupId>
+                <artifactId>archaius-core</artifactId>
+                <version>${archaius-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.netflix.ribbon</groupId>
+                <artifactId>ribbon-core</artifactId>
+                <version>${ribbon.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.netflix.ribbon</groupId>
+                <artifactId>ribbon-httpclient</artifactId>
+                <version>${ribbon.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

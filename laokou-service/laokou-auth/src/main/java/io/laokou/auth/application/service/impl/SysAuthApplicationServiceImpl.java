@@ -46,6 +46,7 @@ import io.laokou.common.vo.SysDeptVO;
 import io.laokou.datasource.annotation.DataSource;
 import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
@@ -55,8 +56,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
 import javax.crypto.BadPaddingException;
@@ -76,7 +75,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @Slf4j
-@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+@GlobalTransactional(rollbackFor = Exception.class)
 public class SysAuthApplicationServiceImpl implements SysAuthApplicationService {
 
     private static AntPathMatcher antPathMatcher = new AntPathMatcher();

@@ -170,7 +170,7 @@ public class AuthApplication implements WebServerFactoryCustomizer<WebServerFact
 ##### 代码引入
 ```java
 @Service
-@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+@GlobalTransactional(rollbackFor = Exception.class)
 public class SysUserApplicationServiceImpl implements SysUserApplicationService {
 
     @Autowired
@@ -199,7 +199,7 @@ dynamic:
 ##### 代码引入
 ```java
 @Service
-@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+@GlobalTransactional(rollbackFor = Exception.class)
 public class SysUserApplicationServiceImpl implements SysUserApplicationService {
 
     @Autowired

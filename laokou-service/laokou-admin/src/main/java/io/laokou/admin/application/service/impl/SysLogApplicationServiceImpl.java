@@ -32,13 +32,12 @@ import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+@GlobalTransactional(rollbackFor = Exception.class)
 public class SysLogApplicationServiceImpl implements SysLogApplicationService {
 
     @Autowired

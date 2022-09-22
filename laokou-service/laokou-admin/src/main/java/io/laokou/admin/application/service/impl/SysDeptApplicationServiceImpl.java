@@ -27,10 +27,9 @@ import io.laokou.common.utils.ConvertUtil;
 import io.laokou.common.utils.TreeUtil;
 import io.laokou.common.vo.SysDeptVO;
 import io.laokou.datasource.annotation.DataSource;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 /**
@@ -39,7 +38,7 @@ import java.util.List;
  * @date 2022/7/26 0026 下午 4:30
  */
 @Service
-@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+@GlobalTransactional(rollbackFor = Exception.class)
 public class SysDeptApplicationServiceImpl implements SysDeptApplicationService {
 
     @Autowired

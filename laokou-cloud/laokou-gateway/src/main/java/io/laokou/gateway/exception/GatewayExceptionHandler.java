@@ -72,7 +72,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
 	}
 
 	protected Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
-		return ServerResponse.status(threadLocal.get().code)
+		return ServerResponse.status(threadLocal.get().getCode())
 				.contentType(MediaType.APPLICATION_JSON_UTF8)
 				.body(BodyInserters.fromObject(threadLocal.get()));
 	}

@@ -22,14 +22,13 @@ import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchForm
 import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchVO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.HttpResultUtil;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+@GlobalTransactional(rollbackFor = Exception.class)
 public class SysSearchApplicationServiceImpl implements SysSearchApplicationService {
 
     @Autowired

@@ -25,6 +25,7 @@ import io.laokou.admin.interfaces.dto.UnClaimDTO;
 import io.laokou.common.exception.CustomException;
 import io.laokou.common.utils.FileUtil;
 import io.laokou.datasource.annotation.DataSource;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.collections.MapUtils;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.*;
@@ -37,8 +38,6 @@ import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +50,7 @@ import java.util.List;
  * @author Kou Shenhai
  */
 @Service
-@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+@GlobalTransactional(rollbackFor = Exception.class)
 public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicationService {
 
     @Autowired

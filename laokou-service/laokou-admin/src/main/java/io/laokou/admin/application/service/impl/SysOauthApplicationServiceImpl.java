@@ -31,10 +31,9 @@ import io.laokou.common.user.UserDetail;
 import io.laokou.common.utils.ConvertUtil;
 import io.laokou.datasource.annotation.DataFilter;
 import io.laokou.datasource.annotation.DataSource;
+import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 /**
  * @author Kou Shenhai
@@ -42,7 +41,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2022/8/11 0011 上午 9:47
  */
 @Service
-@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+@GlobalTransactional(rollbackFor = Exception.class)
 public class SysOauthApplicationServiceImpl implements SysOauthApplicationService {
 
     @Autowired
