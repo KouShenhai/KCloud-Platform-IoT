@@ -73,12 +73,5 @@ feign:
         connectTimeout: 10000
         readTimeout: 15000
 
-#ribbon的超时时间
-ribbon:
-  ReadTimeout: 30000
-  ConnectTimeout: 30000
-  eager-load:
-    enabled: true
-
 admin:
   oss: {"fastdfsDomain":"http://124.222.196.51","fastdfsGroup":"group1","localDomain":"http://175.178.69.253","localPath":"/opt/temp","localPrefix":"upload","type":0,"aliyunDomain":"https://koushenhai.oss-cn-shenzhen.aliyuncs.com","aliyunPrefix":"laokou","aliyunEndPoint":"https://oss-cn-shenzhen.aliyuncs.com","aliyunAccessKeyId":"LTAIPIOiuCK4ZK3o","aliyunAccessKeySecret":"dtYg8khtfEUM3FlV2FvVH6bHyezdqi","aliyunBucketName":"koushenhai"}

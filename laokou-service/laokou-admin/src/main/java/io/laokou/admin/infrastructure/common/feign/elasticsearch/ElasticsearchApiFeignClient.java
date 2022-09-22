@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * @author Kou Shenhai
  */
-@FeignClient(contextId = ServiceConstant.LAOKOU_ELASTICSEARCH,url = "${service.elasticsearch.uri}",name = ServiceConstant.LAOKOU_ELASTICSEARCH, fallbackFactory = ElasticsearchApiFeignClientFallbackFactory.class)
+@FeignClient(url = "${service.elasticsearch.uri}",name = "${service.elasticsearch.uri}", fallbackFactory = ElasticsearchApiFeignClientFallbackFactory.class)
 @Service
 public interface ElasticsearchApiFeignClient {
 

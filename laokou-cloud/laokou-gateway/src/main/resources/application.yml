@@ -74,13 +74,6 @@ feign:
         connectTimeout: 10000
         readTimeout: 15000
 
-#ribbon的超时时间
-ribbon:
-  ReadTimeout: 30000
-  ConnectTimeout: 30000
-  eager-load:
-    enabled: true
-
 # actuator相关配置
 management:
   endpoints:

@@ -71,7 +71,7 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
         if (captcha != null) {
             redisUtil.delete(key);
         }
-        return Optional.of(captcha).orElse("").toString();
+        return captcha != null ? captcha.toString() : "";
     }
 
 }

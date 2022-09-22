@@ -44,6 +44,7 @@ import io.laokou.common.utils.JacksonUtil;
 import io.laokou.datasource.annotation.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,6 +75,9 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
     @Autowired
     private WorkFlowUtil workFlowUtil;
+
+    @Autowired
+    private AsyncTaskExecutor asyncTaskExecutor;
 
     @Autowired
     private SysResourceAuditLogService sysResourceAuditLogService;
@@ -185,18 +189,33 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                     final List<ResourceIndex> resourceDataList = entry.getValue();
                     final String indexName = resourceIndex + "_" + ym;
                     final String jsonDataList = JacksonUtil.toJsonStr(resourceDataList);
-                    final ElasticsearchModel model = new ElasticsearchModel();
-                    model.setIndexName(indexName);
-                    model.setData(jsonDataList);
-                    model.setIndexAlias(resourceIndexAlias);
-                    //同步数据
-                    elasticsearchApiFeignClient.syncAsyncBatch(model);
+                    asyncTaskExecutor.execute(new SyncElasticsearchRun(indexName,jsonDataList,resourceIndexAlias));
                 }
                 pageIndex += chunkSize;
             }
             afterSync();
         }
         return true;
+    }
+
+    private class SyncElasticsearchRun extends Thread {
+        private String indexName;
+        private String resourceIndexAlias;
+        private String jsonDataList;
+        SyncElasticsearchRun(String indexName,String jsonDataList,String resourceIndexAlias) {
+            this.indexName = indexName;
+            this.jsonDataList = jsonDataList;
+            this.resourceIndexAlias = resourceIndexAlias;
+        }
+        @Override
+        public void run() {
+            final ElasticsearchModel model = new ElasticsearchModel();
+            model.setIndexName(indexName);
+            model.setData(jsonDataList);
+            model.setIndexAlias(resourceIndexAlias);
+            //同步数据
+            elasticsearchApiFeignClient.syncAsyncBatch(model);
+        }
     }
 
     @Override

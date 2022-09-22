@@ -75,7 +75,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+            <artifactId>spring-cloud-loadbalancer</artifactId>
         </dependency>
         <!-- 监控依赖 -->
         <dependency>
