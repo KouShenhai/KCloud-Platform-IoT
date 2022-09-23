@@ -13,33 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.infrastructure.config;
+package org.laokou.auth.infrastructure.config;
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.laokou.common.utils.DateUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.util.unit.DataSize;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import javax.servlet.MultipartConfigElement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
+
 /**
- * web mvc配置
+ * webflux配置
  * @author Kou Shenhai
  */
 @Configuration
 @Slf4j
-public class WebMvcConfig{
+public class WebFluxConfig {
 
     /**
      * SimpleDateFormat线程不安全
@@ -62,13 +61,6 @@ public class WebMvcConfig{
         UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
         configurationSource.registerCorsConfiguration("/**",config);
         return new CorsFilter(configurationSource);
-    }
-
-    @Bean
-    public MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxFileSize(DataSize.ofBytes(999 * 1024 * 1024 * 1024)); // 限制上传文件大小
-        return factory.createMultipartConfig();
     }
 
     @Bean

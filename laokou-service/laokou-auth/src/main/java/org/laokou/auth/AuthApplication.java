@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -49,7 +50,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class AuthApplication implements CommandLineRunner, WebServerFactoryCustomizer<WebServerFactory> {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthApplication.class, args);
+        SpringApplication app = new SpringApplication(AuthApplication.class);
+        app.setWebApplicationType(WebApplicationType.REACTIVE);
+        app.run(AuthApplication.class, args);
     }
 
     @Override
