@@ -1,3 +1,8 @@
+### 2022.09.23 更新日志
+###### 1.更新架构
+Spring Cloud Neflix > Spring Cloud Alibaba
+Shiro > Spring Security
+
 ### 2022.09.20 更新日志
 ###### 1.升级/替换依赖
 SpringBoot 2.2.5.RELEASE > SpringBoot 2.7.
