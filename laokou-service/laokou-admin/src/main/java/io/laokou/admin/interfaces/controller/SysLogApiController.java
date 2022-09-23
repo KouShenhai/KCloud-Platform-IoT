@@ -24,7 +24,7 @@ import io.laokou.admin.interfaces.vo.SysOperateLogVO;
 import org.laokou.common.dto.LoginLogDTO;
 import org.laokou.common.dto.OperateLogDTO;
 import org.laokou.common.utils.HttpResultUtil;
-import io.laokou.security.annotation.PreAuthorize;
+import org.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

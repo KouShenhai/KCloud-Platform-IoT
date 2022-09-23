@@ -39,7 +39,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <!-- main方法的地址 只需要修改这个地址-->
-                    <mainClass>io.laokou.register.RegisterApplication</mainClass>
+                    <mainClass>org.laokou.register.RegisterApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

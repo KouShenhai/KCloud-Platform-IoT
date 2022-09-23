@@ -21,7 +21,7 @@ import org.laokou.common.exception.ErrorCode;
 import org.laokou.common.user.UserDetail;
 import org.laokou.common.utils.HttpContextUtil;
 import org.laokou.datasource.annotation.DataFilter;
-import io.laokou.security.utils.UserDetailUtil;
+import org.laokou.security.utils.UserDetailUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;

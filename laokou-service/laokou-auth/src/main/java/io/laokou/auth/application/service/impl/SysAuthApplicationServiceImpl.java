@@ -44,7 +44,7 @@ import org.laokou.common.user.UserDetail;
 import org.laokou.common.utils.*;
 import org.laokou.common.vo.SysDeptVO;
 import org.laokou.datasource.annotation.DataSource;
-import io.laokou.log.publish.PublishFactory;
+import org.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;

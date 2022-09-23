@@ -18,7 +18,7 @@ import io.laokou.admin.application.service.SysMonitorApplicationService;
 import io.laokou.admin.interfaces.vo.CacheVO;
 import io.laokou.admin.interfaces.vo.ServerVO;
 import org.laokou.common.utils.HttpResultUtil;
-import io.laokou.security.annotation.PreAuthorize;
+import org.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
