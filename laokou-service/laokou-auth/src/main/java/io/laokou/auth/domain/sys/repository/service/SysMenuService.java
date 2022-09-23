@@ -16,7 +16,7 @@
 package io.laokou.auth.domain.sys.repository.service;
 
 import io.laokou.auth.interfaces.vo.SysMenuVO;
-import io.laokou.common.user.UserDetail;
+import org.laokou.common.user.UserDetail;
 
 import java.util.List;
 

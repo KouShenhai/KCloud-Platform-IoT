@@ -18,8 +18,8 @@ package io.laokou.admin.infrastructure.component.cloud;
 import cn.hutool.core.util.IdUtil;
 import com.aliyun.oss.OSSClient;
 import io.laokou.admin.infrastructure.config.CloudStorageConfig;
-import io.laokou.common.exception.CustomException;
-import io.laokou.common.utils.FileUtil;
+import org.laokou.common.exception.CustomException;
+import org.laokou.common.utils.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.InputStream;

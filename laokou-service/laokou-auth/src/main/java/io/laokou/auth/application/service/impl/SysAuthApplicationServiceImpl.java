@@ -26,24 +26,24 @@ import io.laokou.auth.domain.sys.repository.service.*;
 import io.laokou.auth.domain.zfb.entity.ZfbUserDO;
 import io.laokou.auth.domain.zfb.repository.service.ZfbUserService;
 import io.laokou.auth.infrastructure.common.enums.AuthTypeEnum;
-import io.laokou.common.enums.UserStatusEnum;
-import io.laokou.common.password.PasswordUtil;
-import io.laokou.common.password.RsaCoder;
+import org.laokou.common.enums.UserStatusEnum;
+import org.laokou.common.password.PasswordUtil;
+import org.laokou.common.password.RsaCoder;
 import io.laokou.auth.interfaces.dto.LoginDTO;
-import io.laokou.common.user.BaseUserVO;
+import org.laokou.common.user.BaseUserVO;
 import io.laokou.auth.interfaces.vo.LoginVO;
 import io.laokou.auth.interfaces.vo.SysMenuVO;
 import io.laokou.auth.interfaces.vo.UserInfoVO;
-import io.laokou.common.constant.Constant;
-import io.laokou.common.enums.ResultStatusEnum;
-import io.laokou.common.enums.SuperAdminEnum;
-import io.laokou.common.exception.CustomException;
-import io.laokou.common.exception.ErrorCode;
-import io.laokou.common.user.SecurityUser;
-import io.laokou.common.user.UserDetail;
-import io.laokou.common.utils.*;
-import io.laokou.common.vo.SysDeptVO;
-import io.laokou.datasource.annotation.DataSource;
+import org.laokou.common.constant.Constant;
+import org.laokou.common.enums.ResultStatusEnum;
+import org.laokou.common.enums.SuperAdminEnum;
+import org.laokou.common.exception.CustomException;
+import org.laokou.common.exception.ErrorCode;
+import org.laokou.common.user.SecurityUser;
+import org.laokou.common.user.UserDetail;
+import org.laokou.common.utils.*;
+import org.laokou.common.vo.SysDeptVO;
+import org.laokou.datasource.annotation.DataSource;
 import io.laokou.log.publish.PublishFactory;
 import io.laokou.redis.RedisUtil;
 import io.seata.spring.annotation.GlobalTransactional;
@@ -442,7 +442,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             if (StringUtils.isNotBlank(accessToken)) {
                 //根据accessToken获取用户信息
                 final AlipayUserInfoShareResponse userInfoResponse = alipayClient.execute(new AlipayUserInfoShareRequest(), accessToken);
-                log.info("userInfo:{}",JacksonUtil.toJsonStr(userInfoResponse));
+                log.info("userInfo:{}", JacksonUtil.toJsonStr(userInfoResponse));
                 if (userInfoResponse.isSuccess()) {
                     final String openid = userInfoResponse.getUserId();
                     final String city = userInfoResponse.getCity();

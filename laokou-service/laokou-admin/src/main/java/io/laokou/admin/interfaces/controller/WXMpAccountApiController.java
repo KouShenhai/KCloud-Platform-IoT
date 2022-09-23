@@ -16,7 +16,7 @@
 package io.laokou.admin.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.interfaces.dto.WXMpAccountDTO;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.utils.HttpResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;

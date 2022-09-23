@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 package io.laokou.security.utils;
-import io.laokou.common.exception.CustomException;
-import io.laokou.common.user.SecurityUser;
-import io.laokou.common.user.UserDetail;
-import io.laokou.common.utils.HttpContextUtil;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.exception.CustomException;
+import org.laokou.common.user.SecurityUser;
+import org.laokou.common.user.UserDetail;
+import org.laokou.common.utils.HttpContextUtil;
+import org.laokou.common.utils.HttpResultUtil;
 import io.laokou.security.feign.auth.AuthApiFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

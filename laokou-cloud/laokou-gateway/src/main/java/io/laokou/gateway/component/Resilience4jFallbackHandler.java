@@ -15,7 +15,7 @@
  */
 package io.laokou.gateway.component;
 import cn.hutool.http.HttpStatus;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.utils.HttpResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;

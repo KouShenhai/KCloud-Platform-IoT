@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package io.laokou.log.annotation;
-import io.laokou.common.enums.DataTypeEnum;
+import org.laokou.common.enums.DataTypeEnum;
 import java.lang.annotation.*;
 /**
  * 自定义操作日志注解

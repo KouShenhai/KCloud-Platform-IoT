@@ -17,7 +17,7 @@ package io.laokou.admin.application.service;
 
 import io.laokou.admin.interfaces.dto.SysDeptDTO;
 import io.laokou.admin.interfaces.qo.SysDeptQO;
-import io.laokou.common.vo.SysDeptVO;
+import org.laokou.common.vo.SysDeptVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;

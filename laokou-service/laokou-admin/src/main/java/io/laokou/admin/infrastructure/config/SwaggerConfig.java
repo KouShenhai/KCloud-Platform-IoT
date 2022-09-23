@@ -15,7 +15,7 @@
  */
 package io.laokou.admin.infrastructure.config;
 import com.google.common.collect.Lists;
-import io.laokou.common.constant.Constant;
+import org.laokou.common.constant.Constant;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;

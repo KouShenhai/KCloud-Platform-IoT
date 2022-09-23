@@ -15,8 +15,8 @@
  */
 package io.laokou.security.config;
 import feign.RequestInterceptor;
-import io.laokou.common.constant.Constant;
-import io.laokou.common.utils.HttpContextUtil;
+import org.laokou.common.constant.Constant;
+import org.laokou.common.utils.HttpContextUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import javax.servlet.http.HttpServletRequest;

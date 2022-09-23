@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 package io.laokou.oauth2.service.impl;
-import io.laokou.common.user.BaseUserVO;
-import io.laokou.common.user.UserDetail;
+import org.laokou.common.user.BaseUserVO;
+import org.laokou.common.user.UserDetail;
 import io.laokou.oauth2.mapper.SysUserMapper;
 import io.laokou.oauth2.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;

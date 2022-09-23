@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package io.laokou.auth.domain.sys.repository.service;
-import io.laokou.common.vo.SysRoleVO;
+import org.laokou.common.vo.SysRoleVO;
 
 import java.util.List;
 

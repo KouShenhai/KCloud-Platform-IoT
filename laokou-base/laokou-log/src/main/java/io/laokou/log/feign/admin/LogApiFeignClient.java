@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 package io.laokou.log.feign.admin;
-import io.laokou.common.constant.ServiceConstant;
-import io.laokou.common.dto.LoginLogDTO;
-import io.laokou.common.dto.OperateLogDTO;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.constant.ServiceConstant;
+import org.laokou.common.dto.LoginLogDTO;
+import org.laokou.common.dto.OperateLogDTO;
+import org.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.feign.admin.factory.LogApiFeignClientFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;

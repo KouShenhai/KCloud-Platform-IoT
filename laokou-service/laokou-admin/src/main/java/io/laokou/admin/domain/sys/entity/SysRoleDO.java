@@ -16,7 +16,7 @@
 package io.laokou.admin.domain.sys.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.laokou.common.entity.BaseDO;
+import org.laokou.common.entity.BaseDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

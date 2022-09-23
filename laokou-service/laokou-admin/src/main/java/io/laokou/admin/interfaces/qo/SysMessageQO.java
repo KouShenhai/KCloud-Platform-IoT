@@ -15,7 +15,7 @@
  */
 package io.laokou.admin.interfaces.qo;
 
-import io.laokou.common.entity.BasePage;
+import org.laokou.common.entity.BasePage;
 import lombok.Data;
 
 /**

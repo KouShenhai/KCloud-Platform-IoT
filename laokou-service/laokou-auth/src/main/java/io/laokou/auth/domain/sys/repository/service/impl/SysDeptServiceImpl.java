@@ -17,7 +17,7 @@ package io.laokou.auth.domain.sys.repository.service.impl;
 
 import io.laokou.auth.domain.sys.repository.mapper.SysDeptMapper;
 import io.laokou.auth.domain.sys.repository.service.SysDeptService;
-import io.laokou.common.vo.SysDeptVO;
+import org.laokou.common.vo.SysDeptVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

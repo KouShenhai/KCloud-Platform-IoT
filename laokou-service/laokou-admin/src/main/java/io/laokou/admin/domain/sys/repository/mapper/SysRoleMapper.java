@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.laokou.admin.domain.sys.entity.SysRoleDO;
 import io.laokou.admin.interfaces.qo.SysRoleQO;
-import io.laokou.common.vo.SysRoleVO;
+import org.laokou.common.vo.SysRoleVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

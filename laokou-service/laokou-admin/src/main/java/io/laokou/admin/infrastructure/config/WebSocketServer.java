@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package io.laokou.admin.infrastructure.config;
-import io.laokou.common.utils.JacksonUtil;
+import org.laokou.common.utils.JacksonUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;

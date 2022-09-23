@@ -19,7 +19,7 @@ import io.laokou.admin.application.service.SysOauthApplicationService;
 import io.laokou.admin.interfaces.dto.SysOauthDTO;
 import io.laokou.admin.interfaces.qo.SysOauthQO;
 import io.laokou.admin.interfaces.vo.SysOauthVO;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;

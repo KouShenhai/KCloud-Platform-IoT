@@ -17,7 +17,7 @@ package io.laokou.admin.interfaces.controller;
 import io.laokou.admin.application.service.SysMonitorApplicationService;
 import io.laokou.admin.interfaces.vo.CacheVO;
 import io.laokou.admin.interfaces.vo.ServerVO;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.utils.HttpResultUtil;
 import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

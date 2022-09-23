@@ -16,7 +16,7 @@
 package io.laokou.admin.interfaces.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.laokou.common.utils.DateUtil;
+import org.laokou.common.utils.DateUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

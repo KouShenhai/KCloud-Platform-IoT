@@ -16,8 +16,8 @@
 package io.laokou.admin.infrastructure.component.cloud;
 import cn.hutool.core.util.IdUtil;
 import io.laokou.admin.infrastructure.config.CloudStorageConfig;
-import io.laokou.common.utils.FileUtil;
-import io.laokou.common.utils.HashUtil;
+import org.laokou.common.utils.FileUtil;
+import org.laokou.common.utils.HashUtil;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;

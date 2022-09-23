@@ -17,7 +17,7 @@ package io.laokou.admin.interfaces.controller;
 import io.laokou.admin.application.service.WorkflowTaskApplicationService;
 import io.laokou.admin.interfaces.dto.ClaimDTO;
 import io.laokou.admin.interfaces.dto.UnClaimDTO;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

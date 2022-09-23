@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package io.laokou.auth.domain.sys.repository.mapper;
-import io.laokou.common.vo.SysRoleVO;
+import org.laokou.common.vo.SysRoleVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

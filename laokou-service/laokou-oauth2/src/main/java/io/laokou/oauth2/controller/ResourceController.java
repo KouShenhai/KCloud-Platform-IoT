@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 package io.laokou.oauth2.controller;
-import io.laokou.common.user.BaseUserVO;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.user.BaseUserVO;
+import org.laokou.common.utils.HttpResultUtil;
 import io.laokou.oauth2.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

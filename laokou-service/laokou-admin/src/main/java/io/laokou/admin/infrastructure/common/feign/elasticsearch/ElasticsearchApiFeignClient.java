@@ -19,8 +19,7 @@ import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchForm
 import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchVO;
 import io.laokou.admin.infrastructure.common.model.CreateIndexModel;
 import io.laokou.admin.infrastructure.common.model.ElasticsearchModel;
-import io.laokou.common.constant.ServiceConstant;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.utils.HttpResultUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;

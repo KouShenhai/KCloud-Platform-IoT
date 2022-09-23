@@ -15,7 +15,7 @@
  */
 package io.laokou.log.event;
 
-import io.laokou.common.dto.OperateLogDTO;
+import org.laokou.common.dto.OperateLogDTO;
 import org.springframework.context.ApplicationEvent;
 
 /**

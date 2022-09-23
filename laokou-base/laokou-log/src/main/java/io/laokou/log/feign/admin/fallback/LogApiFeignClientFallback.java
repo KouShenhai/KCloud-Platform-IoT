@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 package io.laokou.log.feign.admin.fallback;
-import io.laokou.common.dto.LoginLogDTO;
-import io.laokou.common.dto.OperateLogDTO;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.dto.LoginLogDTO;
+import org.laokou.common.dto.OperateLogDTO;
+import org.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.feign.admin.LogApiFeignClient;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

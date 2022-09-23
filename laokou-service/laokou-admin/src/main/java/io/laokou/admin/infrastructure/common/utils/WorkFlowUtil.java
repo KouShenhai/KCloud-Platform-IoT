@@ -17,7 +17,7 @@ package io.laokou.admin.infrastructure.common.utils;
 import com.google.common.collect.Sets;
 import io.laokou.admin.application.service.SysMessageApplicationService;
 import io.laokou.admin.interfaces.dto.MessageDTO;
-import io.laokou.common.utils.JacksonUtil;
+import org.laokou.common.utils.JacksonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.FlowElement;

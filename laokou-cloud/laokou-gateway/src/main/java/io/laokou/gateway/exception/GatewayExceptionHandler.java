@@ -16,7 +16,7 @@
 package io.laokou.gateway.exception;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import feign.FeignException;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.utils.HttpResultUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

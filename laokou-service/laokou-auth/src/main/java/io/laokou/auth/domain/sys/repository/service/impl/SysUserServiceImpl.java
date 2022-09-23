@@ -16,7 +16,7 @@
 package io.laokou.auth.domain.sys.repository.service.impl;
 import io.laokou.auth.domain.sys.repository.mapper.SysUserMapper;
 import io.laokou.auth.domain.sys.repository.service.SysUserService;
-import io.laokou.common.user.UserDetail;
+import org.laokou.common.user.UserDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

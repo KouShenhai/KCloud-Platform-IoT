@@ -15,11 +15,11 @@
  */
 package io.laokou.oauth2.provider;
 import com.google.common.collect.Lists;
-import io.laokou.common.enums.UserStatusEnum;
-import io.laokou.common.exception.ErrorCode;
-import io.laokou.common.password.PasswordUtil;
-import io.laokou.common.user.UserDetail;
-import io.laokou.common.utils.MessageUtil;
+import org.laokou.common.enums.UserStatusEnum;
+import org.laokou.common.exception.ErrorCode;
+import org.laokou.common.password.PasswordUtil;
+import org.laokou.common.user.UserDetail;
+import org.laokou.common.utils.MessageUtil;
 import io.laokou.oauth2.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

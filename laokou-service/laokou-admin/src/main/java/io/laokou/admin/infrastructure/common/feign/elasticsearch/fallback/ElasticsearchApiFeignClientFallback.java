@@ -19,7 +19,7 @@ import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchForm
 import io.laokou.admin.infrastructure.common.feign.elasticsearch.form.SearchVO;
 import io.laokou.admin.infrastructure.common.model.CreateIndexModel;
 import io.laokou.admin.infrastructure.common.model.ElasticsearchModel;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.utils.HttpResultUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import java.util.Map;

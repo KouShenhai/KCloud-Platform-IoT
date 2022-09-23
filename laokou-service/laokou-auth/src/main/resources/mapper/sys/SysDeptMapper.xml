@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.laokou.auth.domain.sys.repository.mapper.SysDeptMapper">
 
-    <select id="getDeptList" resultType="io.laokou.common.vo.SysDeptVO">
+    <select id="getDeptList" resultType="org.laokou.common.vo.SysDeptVO">
         select id,pid,`name`,sort from boot_sys_dept
         where del_flag = '0'
         order by sort desc
     </select>
 
-    <select id="getDeptListByUserId" resultType="io.laokou.common.vo.SysDeptVO">
+    <select id="getDeptListByUserId" resultType="org.laokou.common.vo.SysDeptVO">
    select distinct
    boot_sys_dept.id
    ,boot_sys_dept.pid

@@ -20,7 +20,7 @@ import io.laokou.admin.domain.sys.entity.SysRoleDO;
 import io.laokou.admin.domain.sys.repository.mapper.SysRoleMapper;
 import io.laokou.admin.domain.sys.repository.service.SysRoleService;
 import io.laokou.admin.interfaces.qo.SysRoleQO;
-import io.laokou.common.vo.SysRoleVO;
+import org.laokou.common.vo.SysRoleVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

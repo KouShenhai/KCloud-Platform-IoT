@@ -15,7 +15,7 @@
  */
 package io.laokou.admin.domain.wx.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.laokou.common.entity.BaseDO;
+import org.laokou.common.entity.BaseDO;
 import lombok.Data;
 /**
  * 公众号账号管理

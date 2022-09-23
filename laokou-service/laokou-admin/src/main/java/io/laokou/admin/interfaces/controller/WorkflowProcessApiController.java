@@ -19,7 +19,7 @@ import io.laokou.admin.application.service.WorkflowProcessApplicationService;
 import io.laokou.admin.interfaces.dto.AuditDTO;
 import io.laokou.admin.interfaces.qo.TaskQO;
 import io.laokou.admin.interfaces.vo.TaskVO;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.laokou.redis.annotation.Lock4j;
 import io.laokou.security.annotation.PreAuthorize;

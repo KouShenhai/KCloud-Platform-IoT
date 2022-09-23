@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 package io.laokou.log.listener;
-import io.laokou.common.dto.LoginLogDTO;
-import io.laokou.common.dto.OperateLogDTO;
+import org.laokou.common.dto.LoginLogDTO;
+import org.laokou.common.dto.OperateLogDTO;
 import io.laokou.log.event.LoginLogEvent;
 import io.laokou.log.event.OperateLogEvent;
 import io.laokou.log.feign.admin.LogApiFeignClient;

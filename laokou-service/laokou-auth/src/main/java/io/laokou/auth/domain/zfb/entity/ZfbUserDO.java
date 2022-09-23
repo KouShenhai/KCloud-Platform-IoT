@@ -15,7 +15,7 @@
  */
 package io.laokou.auth.domain.zfb.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.laokou.common.entity.BaseDO;
+import org.laokou.common.entity.BaseDO;
 import lombok.Data;
 
 @Data

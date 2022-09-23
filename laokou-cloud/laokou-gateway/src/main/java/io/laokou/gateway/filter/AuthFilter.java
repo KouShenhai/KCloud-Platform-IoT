@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 package io.laokou.gateway.filter;
-import io.laokou.common.constant.Constant;
-import io.laokou.common.user.UserDetail;
-import io.laokou.common.utils.HttpResultUtil;
-import io.laokou.common.utils.JacksonUtil;
+import org.laokou.common.constant.Constant;
+import org.laokou.common.user.UserDetail;
+import org.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.utils.JacksonUtil;
 import io.laokou.gateway.feign.auth.AuthApiFeignClient;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

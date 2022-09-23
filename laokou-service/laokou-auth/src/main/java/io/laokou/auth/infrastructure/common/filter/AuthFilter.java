@@ -16,9 +16,9 @@
 package io.laokou.auth.infrastructure.common.filter;
 
 import com.google.gson.Gson;
-import io.laokou.common.exception.ErrorCode;
-import io.laokou.common.user.SecurityUser;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.exception.ErrorCode;
+import org.laokou.common.user.SecurityUser;
+import org.laokou.common.utils.HttpResultUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

@@ -20,8 +20,8 @@ import io.laokou.admin.interfaces.qo.LoginLogQO;
 import io.laokou.admin.interfaces.qo.SysOperateLogQO;
 import io.laokou.admin.interfaces.vo.SysLoginLogVO;
 import io.laokou.admin.interfaces.vo.SysOperateLogVO;
-import io.laokou.common.dto.LoginLogDTO;
-import io.laokou.common.dto.OperateLogDTO;
+import org.laokou.common.dto.LoginLogDTO;
+import org.laokou.common.dto.OperateLogDTO;
 
 public interface SysLogApplicationService {
 

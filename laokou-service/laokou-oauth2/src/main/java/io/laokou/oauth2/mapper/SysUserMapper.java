@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package io.laokou.oauth2.mapper;
-import io.laokou.common.user.UserDetail;
+import org.laokou.common.user.UserDetail;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

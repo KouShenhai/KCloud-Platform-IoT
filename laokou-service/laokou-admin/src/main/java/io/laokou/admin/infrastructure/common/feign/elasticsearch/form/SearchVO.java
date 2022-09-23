@@ -15,7 +15,7 @@
  */
 package io.laokou.admin.infrastructure.common.feign.elasticsearch.form;
 
-import io.laokou.common.entity.BasePage;
+import org.laokou.common.entity.BasePage;
 import lombok.Data;
 
 import java.util.List;

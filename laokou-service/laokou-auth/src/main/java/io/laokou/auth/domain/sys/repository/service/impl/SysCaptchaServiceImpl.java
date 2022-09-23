@@ -16,12 +16,11 @@
 package io.laokou.auth.domain.sys.repository.service.impl;
 import com.google.code.kaptcha.Producer;
 import io.laokou.auth.domain.sys.repository.service.SysCaptchaService;
-import io.laokou.common.utils.RedisKeyUtil;
+import org.laokou.common.utils.RedisKeyUtil;
 import io.laokou.redis.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.awt.image.BufferedImage;
-import java.util.Optional;
 
 /**
  * 验证码实现类

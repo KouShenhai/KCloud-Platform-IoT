@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package io.laokou.admin.interfaces.vo;
-import io.laokou.common.utils.TreeUtil;
+import org.laokou.common.utils.TreeUtil;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 /**

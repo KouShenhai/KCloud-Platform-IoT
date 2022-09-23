@@ -16,8 +16,8 @@
 package io.laokou.admin.interfaces.controller;
 import io.laokou.admin.application.service.OssApplicationService;
 import io.laokou.admin.interfaces.vo.UploadVO;
-import io.laokou.common.exception.CustomException;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.exception.CustomException;
+import org.laokou.common.utils.HttpResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

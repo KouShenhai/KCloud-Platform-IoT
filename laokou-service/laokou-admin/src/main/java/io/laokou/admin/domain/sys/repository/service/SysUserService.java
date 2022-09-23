@@ -20,7 +20,7 @@ import io.laokou.admin.interfaces.dto.SysUserDTO;
 import io.laokou.admin.interfaces.qo.SysUserQO;
 import io.laokou.admin.interfaces.vo.OptionVO;
 import io.laokou.admin.interfaces.vo.SysUserVO;
-import io.laokou.common.user.UserDetail;
+import org.laokou.common.user.UserDetail;
 import io.laokou.admin.domain.sys.entity.SysUserDO;
 
 import java.util.List;

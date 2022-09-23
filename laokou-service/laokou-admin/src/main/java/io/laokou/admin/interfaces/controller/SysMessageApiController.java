@@ -20,7 +20,7 @@ import io.laokou.admin.interfaces.dto.MessageDTO;
 import io.laokou.admin.interfaces.qo.SysMessageQO;
 import io.laokou.admin.interfaces.vo.MessageDetailVO;
 import io.laokou.admin.interfaces.vo.SysMessageVO;
-import io.laokou.common.utils.HttpResultUtil;
+import org.laokou.common.utils.HttpResultUtil;
 import io.laokou.log.annotation.OperateLog;
 import io.laokou.security.annotation.PreAuthorize;
 import io.swagger.annotations.Api;

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 package io.laokou.security.aspect;
-import io.laokou.common.constant.Constant;
-import io.laokou.common.exception.CustomException;
-import io.laokou.common.exception.ErrorCode;
-import io.laokou.common.user.UserDetail;
-import io.laokou.common.utils.HttpContextUtil;
+import org.laokou.common.constant.Constant;
+import org.laokou.common.exception.CustomException;
+import org.laokou.common.exception.ErrorCode;
+import org.laokou.common.user.UserDetail;
+import org.laokou.common.utils.HttpContextUtil;
 import io.laokou.security.annotation.PreAuthorize;
 import io.laokou.security.utils.UserDetailUtil;
 import org.aspectj.lang.JoinPoint;

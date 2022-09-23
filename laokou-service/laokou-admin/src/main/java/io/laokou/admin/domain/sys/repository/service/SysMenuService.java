@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import io.laokou.admin.domain.sys.entity.SysMenuDO;
 import io.laokou.admin.interfaces.qo.SysMenuQO;
 import io.laokou.admin.interfaces.vo.SysMenuVO;
-import io.laokou.common.user.UserDetail;
+import org.laokou.common.user.UserDetail;
 import java.util.List;
 /**
  * 菜单类

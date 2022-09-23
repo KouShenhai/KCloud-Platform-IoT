@@ -15,11 +15,11 @@
  */
 package io.laokou.auth.infrastructure.common.filter;
 import io.laokou.auth.application.service.SysAuthApplicationService;
-import io.laokou.common.exception.ErrorCode;
-import io.laokou.common.user.UserDetail;
-import io.laokou.common.utils.JacksonUtil;
-import io.laokou.common.utils.MessageUtil;
-import io.laokou.common.utils.TokenUtil;
+import org.laokou.common.exception.ErrorCode;
+import org.laokou.common.user.UserDetail;
+import org.laokou.common.utils.JacksonUtil;
+import org.laokou.common.utils.MessageUtil;
+import org.laokou.common.utils.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

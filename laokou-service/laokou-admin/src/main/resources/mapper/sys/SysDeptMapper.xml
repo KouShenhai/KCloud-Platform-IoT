@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.laokou.admin.domain.sys.repository.mapper.SysDeptMapper">
-    <select id="getDeptList" resultType="io.laokou.common.vo.SysDeptVO">
+    <select id="getDeptList" resultType="org.laokou.common.vo.SysDeptVO">
    select id,pid,`name`,sort from boot_sys_dept
    where del_flag = '0'
    <if test="qo.name != null and qo.name != ''">
@@ -15,7 +15,7 @@
         where id = #{id}
     </delete>
 
-    <select id="getDept" resultType="io.laokou.common.vo.SysDeptVO">
+    <select id="getDept" resultType="org.laokou.common.vo.SysDeptVO">
         select id,pid,`name`,sort from boot_sys_dept
         where id = #{id}
     </select>
