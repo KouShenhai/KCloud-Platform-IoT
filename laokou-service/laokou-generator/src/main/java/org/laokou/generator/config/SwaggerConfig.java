@@ -76,7 +76,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("API文档")
                 .version("3.0.0")
-                .description("认证授权API")
+                .description("模板API")
                 //作者信息
                 .contact(new Contact("寇申海", "https://blog.csdn.net/qq_39893313", "2413176044@qq.com"))
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
