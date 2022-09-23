@@ -73,7 +73,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("API文档")
-                .version("2.0.0")
+                .version("3.0.0")
                 .description("后台管理API")
                 //作者信息
                 .contact(new Contact("寇申海", "https://blog.csdn.net/qq_39893313", "2413176044@qq.com"))

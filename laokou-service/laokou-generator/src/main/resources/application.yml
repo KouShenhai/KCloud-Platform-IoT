@@ -6,6 +6,9 @@ jasypt:
     password: koushenhai5201314wumeihua
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   application:
     name: laokou-generator
   profiles:
@@ -22,9 +25,6 @@ spring:
       max-file-size: -1
       max-request-size: -1
       enabled: true
-  http:
-    encoding:
-      charset: UTF-8
 
 #mybatis
 mybatis-plus:

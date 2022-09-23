@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.auth.infrastructure.config;
+package org.laokou.generator.config;
 
 import com.google.common.collect.Lists;
-import org.laokou.common.constant.Constant;
 import io.swagger.annotations.ApiOperation;
+import org.laokou.common.constant.Constant;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.web.server.ManagementPortType;

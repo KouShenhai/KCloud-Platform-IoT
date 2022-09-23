@@ -95,10 +95,10 @@ KCloud-Platform（老寇云平台）是一款企业级微服务架构的云服�
 ├── laokou-parent -- 版本依赖
 ├── laokou-service
         └── laokou-admin -- 后台管理模块
-        └── laokou-auth -- 认证模块
-        └── laokou-oauth2 -- 认证模块
+        └── laokou-auth -- 认证授权模块
+        └── laokou-oauth2 -- 认证授权模块
         └── laokou-generator -- 数据生成模块
-        └── laokou-redis -- 缓存模块
+        └── laokou-redis -- 数据缓存模块
 ~~~
 
 ### 环境配置
