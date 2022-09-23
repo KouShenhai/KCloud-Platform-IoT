@@ -164,7 +164,7 @@
 				<version>${spring-boot.version}</version>
 				<configuration>
 					<!-- main方法的地址 只需要修改这个地址-->
-					<mainClass>io.laokou.admin.AdminApplication</mainClass>
+					<mainClass>org.laokou.admin.AdminApplication</mainClass>
 				</configuration>
 				<executions>
 					<execution>

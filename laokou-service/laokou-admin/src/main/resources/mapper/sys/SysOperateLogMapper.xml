@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.laokou.admin.domain.sys.repository.mapper.SysOperateLogMapper">
-    <select id="getOperateLogList" resultType="io.laokou.admin.interfaces.vo.SysOperateLogVO">
+    <select id="getOperateLogList" resultType="org.laokou.admin.interfaces.vo.SysOperateLogVO">
 select
 `module`
 ,id

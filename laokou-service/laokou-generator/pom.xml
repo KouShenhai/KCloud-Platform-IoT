@@ -58,7 +58,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <!-- main方法的地址 只需要修改这个地址-->
-                    <mainClass>io.laokou.generator.GeneratorApplication</mainClass>
+                    <mainClass>org.laokou.generator.GeneratorApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

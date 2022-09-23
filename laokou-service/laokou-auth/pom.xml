@@ -153,7 +153,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <!-- main方法的地址 只需要修改这个地址-->
-                    <mainClass>io.laokou.auth.AuthApplication</mainClass>
+                    <mainClass>org.laokou.auth.AuthApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

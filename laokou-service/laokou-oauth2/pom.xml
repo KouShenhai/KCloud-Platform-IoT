@@ -67,7 +67,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <!-- main方法的地址 只需要修改这个地址-->
-                    <mainClass>io.laokou.oauth2.Oauth2Application</mainClass>
+                    <mainClass>org.laokou.oauth2.Oauth2Application</mainClass>
                 </configuration>
                 <executions>
                     <execution>

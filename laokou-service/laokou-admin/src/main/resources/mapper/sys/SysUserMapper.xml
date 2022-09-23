@@ -31,7 +31,7 @@
         </if>
     </select>
 
-    <select id="getUserPage" resultType="io.laokou.admin.interfaces.vo.SysUserVO">
+    <select id="getUserPage" resultType="org.laokou.admin.interfaces.vo.SysUserVO">
         select
             id
             ,username
@@ -87,7 +87,7 @@
         where id = #{id}
     </update>
 
-    <select id="getUserListByUserId" resultType="io.laokou.admin.interfaces.vo.SysUserVO" flushCache="true">
+    <select id="getUserListByUserId" resultType="org.laokou.admin.interfaces.vo.SysUserVO" flushCache="true">
         select
              distinct
              c.id
@@ -103,7 +103,7 @@
         and c.super_admin <![CDATA[ <> ]]> 1 and c.del_flag = '0' and c.`status` = 0
     </select>
 
-    <select id="getUserList" resultType="io.laokou.admin.interfaces.vo.SysUserVO" flushCache="true">
+    <select id="getUserList" resultType="org.laokou.admin.interfaces.vo.SysUserVO" flushCache="true">
         select
             id
             ,username
@@ -117,7 +117,7 @@
             order by create_date desc
     </select>
 
-    <select id="getOptionList" resultType="io.laokou.admin.interfaces.vo.OptionVO">
+    <select id="getOptionList" resultType="org.laokou.admin.interfaces.vo.OptionVO">
         select
             id as `value`
             ,username as label
