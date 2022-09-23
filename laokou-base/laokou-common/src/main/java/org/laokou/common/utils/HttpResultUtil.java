@@ -46,7 +46,7 @@ public class HttpResultUtil<T> {
     private T data;
 
     public boolean success(){
-        return code == 0 ? true : false;
+        return code == 0;
     }
 
     public HttpResultUtil<T> error(){

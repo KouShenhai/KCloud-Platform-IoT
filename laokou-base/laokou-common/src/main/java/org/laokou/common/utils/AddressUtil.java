@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2022 KCloud-Platform Authors. All Rights Reserved.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 package org.laokou.common.utils;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
+
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 @Slf4j
 public class AddressUtil {
 
@@ -32,14 +34,13 @@ public class AddressUtil {
         if (IpUtil.internalIp(ip)) {
             return "内网IP";
         }
-        Map<String,String> params = new HashMap<>(2);
-        params.put("ip",ip);
-        params.put("accessKey",ACCESS_KEY);
-        String ipJsonData = HttpUtil.transformerUnderHumpData(HttpUtil.doGet(IP_URI,params,new HashMap<>(0)));
+        Map<String, String> params = new HashMap<>(2);
+        params.put("ip", ip);
+        params.put("accessKey", ACCESS_KEY);
+        String ipJsonData = HttpUtil.transformerUnderHumpData(HttpUtil.doGet(IP_URI, params, new HashMap<>(0)));
         if (StringUtils.isNotBlank(ipJsonData)) {
-            Map<String,Object> map = JacksonUtil.toMap(ipJsonData,String.class,Object.class);
-            JSONObject jsonObject = JSONUtil.parseObj(map.get("data"));
-            return jsonObject.getStr("country") + " " + jsonObject.getStr("city");
+            JsonNode data = JacksonUtil.readTree(ipJsonData).get("data");
+            return data.get("country").toString() + " " + data.get("city").toString();
         }
         return "XX XX";
     }

@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2022 KCloud-Platform Authors. All Rights Reserved.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 package org.laokou.common.utils;
+
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ArrayUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.laokou.common.exception.CustomException;
 import org.laokou.common.exception.ErrorCode;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
+
 /**
  * 校验工具类
  *
@@ -37,7 +39,7 @@ public class AssertUtil {
     }
 
     public static void isBlank(String str, Integer code, String... params) {
-        if(code == null){
+        if (code == null) {
             throw new CustomException(ErrorCode.NOT_NULL, "code");
         }
         if (StringUtils.isBlank(str)) {
@@ -50,7 +52,7 @@ public class AssertUtil {
     }
 
     public static void isNull(Object object, Integer code, String... params) {
-        if(code == null){
+        if (code == null) {
             throw new CustomException(ErrorCode.NOT_NULL, "code");
         }
         if (object == null) {
@@ -63,10 +65,10 @@ public class AssertUtil {
     }
 
     public static void isArrayEmpty(Object[] array, Integer code, String... params) {
-        if(code == null){
+        if (code == null) {
             throw new CustomException(ErrorCode.NOT_NULL, "code");
         }
-        if(ArrayUtil.isEmpty(array)){
+        if (ArrayUtil.isEmpty(array)) {
             throw new CustomException(code, params);
         }
     }
@@ -76,23 +78,23 @@ public class AssertUtil {
     }
 
     public static void isListEmpty(List<?> list, Integer code, String... params) {
-        if(code == null){
+        if (code == null) {
             throw new CustomException(ErrorCode.NOT_NULL, "code");
         }
-        if(CollUtil.isEmpty(list)){
+        if (CollUtil.isEmpty(list)) {
             throw new CustomException(code, params);
         }
     }
 
-    public static void isMapEmpty(Map map, String... params) {
+    public static void isMapEmpty(Map<?, ?> map, String... params) {
         isMapEmpty(map, ErrorCode.NOT_NULL, params);
     }
 
-    public static void isMapEmpty(Map map, Integer code, String... params) {
-        if(code == null){
+    public static void isMapEmpty(Map<?, ?> map, Integer code, String... params) {
+        if (code == null) {
             throw new CustomException(ErrorCode.NOT_NULL, "code");
         }
-        if(MapUtil.isEmpty(map)){
+        if (MapUtil.isEmpty(map)) {
             throw new CustomException(code, params);
         }
     }

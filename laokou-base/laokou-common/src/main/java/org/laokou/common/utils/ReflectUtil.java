@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2022 KCloud-Platform Authors. All Rights Reserved.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * 反射相关工具类
- * @author  Kou Shenhai
+ * @author Kou Shenhai
  */
 public final class ReflectUtil {
 
@@ -34,16 +34,16 @@ public final class ReflectUtil {
      * @param containParent 是否包含父类
      * @return
      */
-    public static List<Field> getAllFields(Class clazz,boolean containParent){
+    public static List<Field> getAllFields(Class<?> clazz, boolean containParent) {
         List<Field> fields = new ArrayList<>();
-        if(null == clazz){
+        if (null == clazz) {
             return null;
         }
-        while(Object.class != clazz){
+        while (Object.class != clazz) {
             fields.addAll(new ArrayList<>(Arrays.asList(clazz.getDeclaredFields())));
-            if(containParent){
+            if (containParent) {
                 clazz = clazz.getSuperclass();
-            }else{
+            } else {
                 break;
             }
         }
@@ -58,12 +58,12 @@ public final class ReflectUtil {
      * @param containParent 是否包含父类
      * @return
      */
-    public static Field getFieldByName(String field,Class clazz,boolean containParent){
-        List<Field> fields = getAllFields(clazz,containParent);
+    public static Field getFieldByName(String field, Class<?> clazz, boolean containParent) {
+        List<Field> fields = getAllFields(clazz, containParent);
 
-        if(CollectionUtils.isNotEmpty(fields)){
-            for (Field field1: fields) {
-                if (field1.getName().equals(field)){
+        if (CollectionUtils.isNotEmpty(fields)) {
+            for (Field field1 : fields) {
+                if (field1.getName().equals(field)) {
                     return field1;
                 }
             }
@@ -78,15 +78,13 @@ public final class ReflectUtil {
      * @param prefix
      * @return
      */
-    public static String getMethod(Field field,String prefix){
+    public static String getMethod(Field field, String prefix) {
         String fieldName = field.getName();
-        StringBuffer sb = new StringBuffer(prefix);
-        return sb.append(fieldName.substring(0,1).toUpperCase()).append(fieldName.substring(1)).toString();
+        return prefix + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
     }
 
-    public static String getMethod(String fieldName,String prefix){
-        StringBuffer sb = new StringBuffer(prefix);
-        return sb.append(fieldName.substring(0,1).toUpperCase()).append(fieldName.substring(1)).toString();
+    public static String getMethod(String fieldName, String prefix) {
+        return prefix + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
     }
 
 }

@@ -56,7 +56,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
         return applicationContext.isSingleton(name);
     }
 
-    public static Class<? extends Object> getType(String name){
+    public static Class<?> getType(String name){
         return applicationContext.getType(name);
     }
 

@@ -17,6 +17,7 @@ package org.laokou.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
+import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -34,10 +35,7 @@ public class HttpContextUtil {
 
     public static HttpServletRequest getHttpServletRequest(){
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        if (requestAttributes == null){
-            return null;
-        }
-
+        Assert.notNull(requestAttributes,"requestAttributes not be null");
         return ((ServletRequestAttributes)requestAttributes).getRequest();
     }
 
