@@ -22,7 +22,6 @@ import com.alipay.api.response.AlipaySystemOauthTokenResponse;
 import com.alipay.api.response.AlipayUserInfoShareResponse;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.auth.application.service.SysAuthApplicationService;
-import io.laokou.auth.domain.sys.repository.service.*;
 import org.laokou.auth.domain.sys.repository.service.*;
 import org.laokou.auth.domain.zfb.entity.ZfbUserDO;
 import org.laokou.auth.domain.zfb.repository.service.ZfbUserService;

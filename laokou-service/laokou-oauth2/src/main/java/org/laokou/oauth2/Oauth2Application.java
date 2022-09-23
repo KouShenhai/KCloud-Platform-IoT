@@ -19,7 +19,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author Kou Shenhai
  */
-@SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.oauth2"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.common","org.laokou.oauth2"})
 public class Oauth2Application {
 
     public static void main(String[] args) {

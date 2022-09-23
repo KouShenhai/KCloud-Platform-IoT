@@ -38,14 +38,14 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
  * @author Kou Shenhai
  */
-@SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.auth","io.laokou.redis","io.laokou.log","io.laokou.security","io.laokou.datasource"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.common","org.laokou.auth","org.laokou.redis","org.laokou.log","org.laokou.security","org.laokou.datasource"})
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableApolloConfig
 @EnableAspectJAutoProxy
 @Slf4j
 @EnableEncryptableProperties
-@EnableFeignClients(basePackages = {"io.laokou.datasource","io.laokou.security","io.laokou.log"})
+@EnableFeignClients(basePackages = {"org.laokou.datasource","org.laokou.security","org.laokou.log"})
 public class AuthApplication implements CommandLineRunner, WebServerFactoryCustomizer<WebServerFactory> {
 
     public static void main(String[] args) {

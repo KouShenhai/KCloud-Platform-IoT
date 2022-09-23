@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.laokou.admin.domain.sys.repository.mapper.SysMenuMapper">
+<mapper namespace="org.laokou.admin.domain.sys.repository.mapper.SysMenuMapper">
     <select id="getPermissionsList" resultType="string" flushCache="true">
         SELECT DISTINCT substring_index(substring_index(permissions,',',help_topic_id + 1),',','-1') as permissions FROM boot_sys_menu
         left join mysql.help_topic on 1 = 1

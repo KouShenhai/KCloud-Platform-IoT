@@ -30,7 +30,7 @@ spring:
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   #实体类扫描，多个package用头号或分号分隔
-  type-aliases-package: io.laokou.generator.entity
+  type-aliases-package: org.laokou.generator.entity
   global-config:
     #数据库相关配置
     db-config:

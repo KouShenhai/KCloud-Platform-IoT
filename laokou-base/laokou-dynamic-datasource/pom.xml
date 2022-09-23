@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>laokou-base</artifactId>
-        <groupId>io.laokou</groupId>
+        <groupId>org.laokou</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.laokou</groupId>
+    <groupId>org.laokou</groupId>
     <artifactId>laokou-dynamic-datasource</artifactId>
 
     <dependencies>
@@ -33,7 +33,7 @@
             <artifactId>ojdbc6</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.laokou</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-security</artifactId>
         </dependency>
     </dependencies>

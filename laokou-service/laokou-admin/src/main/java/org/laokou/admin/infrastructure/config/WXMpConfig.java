@@ -16,14 +16,13 @@
 package org.laokou.admin.infrastructure.config;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.domain.wx.entity.WXMpAccountDO;
-import io.laokou.admin.infrastructure.component.handler.impl.*;
+import org.laokou.admin.infrastructure.component.handler.impl.*;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
-import org.laokou.admin.infrastructure.component.handler.impl.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import java.util.List;

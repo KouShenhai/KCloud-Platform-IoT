@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.laokou</groupId>
+    <groupId>org.laokou</groupId>
     <artifactId>laokou-bom</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -205,7 +205,7 @@
                 <version>${jjwt.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-common</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -220,12 +220,12 @@
                 <version>${oracle.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-security</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-dynamic-datasource</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -241,7 +241,7 @@
                 <version>${UserAgentUtils.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-log</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -268,17 +268,17 @@
                 <version>${transmittable-thread-local.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-gateway</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-monitor</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-register</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -293,7 +293,7 @@
                 <version>${aliyun-sdk-oss.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-admin</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -333,7 +333,7 @@
                 <version>${kaptcha.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-auth</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -358,12 +358,12 @@
                 <version>${freemarker.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-generator</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-oauth2</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -378,7 +378,7 @@
                 <version>${redisson.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-redis</artifactId>
                 <version>${laokou.version}</version>
             </dependency>

@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>io.laokou</groupId>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-cloud</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>io.laokou</groupId>
+    <groupId>org.laokou</groupId>
     <artifactId>laokou-gateway</artifactId>
     <description>API网关</description>
 
@@ -31,7 +31,7 @@
             <artifactId>apollo-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.laokou</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common</artifactId>
             <exclusions>
                 <exclusion>

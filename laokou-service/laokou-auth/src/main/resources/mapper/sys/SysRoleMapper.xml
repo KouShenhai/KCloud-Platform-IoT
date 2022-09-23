@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.laokou.auth.domain.sys.repository.mapper.SysRoleMapper">
+<mapper namespace="org.laokou.auth.domain.sys.repository.mapper.SysRoleMapper">
 
     <select id="getRoleListByUserId" resultType="org.laokou.common.vo.SysRoleVO" flushCache="true">
         SELECT

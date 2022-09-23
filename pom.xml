@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.laokou</groupId>
+    <groupId>org.laokou</groupId>
     <artifactId>laokou-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <description>parent配置</description>
@@ -29,7 +29,7 @@
         <dependencies>
             <!-- 定义公共版本-->
             <dependency>
-                <groupId>io.laokou</groupId>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-bom</artifactId>
                 <version>${laokou.version}</version>
                 <type>pom</type>

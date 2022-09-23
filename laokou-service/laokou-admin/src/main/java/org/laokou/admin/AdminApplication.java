@@ -40,7 +40,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
  * @author Kou Shenhai
  */
-@SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.admin","io.laokou.redis","io.laokou.log","io.laokou.security","io.laokou.datasource"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.common","org.laokou.admin","org.laokou.redis","org.laokou.log","org.laokou.security","org.laokou.datasource"})
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableApolloConfig
@@ -48,7 +48,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @Slf4j
 @EnableAsync
 @EnableEncryptableProperties
-@EnableFeignClients(basePackages = {"io.laokou.log","io.laokou.datasource","io.laokou.security","io.laokou.admin"})
+@EnableFeignClients(basePackages = {"org.laokou.log","org.laokou.datasource","org.laokou.security","org.laokou.admin"})
 public class AdminApplication implements CommandLineRunner, WebServerFactoryCustomizer<WebServerFactory> {
 
 	public static void main(String[] args) {

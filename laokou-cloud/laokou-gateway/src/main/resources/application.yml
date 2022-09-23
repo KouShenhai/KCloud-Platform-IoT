@@ -55,7 +55,7 @@ resilience4j.circuitbreaker:
         - java.lang.Exception
       #不会被计为失败的异常集合，优先级高于recordExceptions。
       ignoreExceptions:
-        - io.laokou.common.exception.CustomException
+        - org.laokou.common.exception.CustomException
 
 resilience4j.timelimiter:
   instances:

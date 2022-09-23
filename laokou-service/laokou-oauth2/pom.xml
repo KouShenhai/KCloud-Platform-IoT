@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>io.laokou</groupId>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-service</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>io.laokou</groupId>
+    <groupId>org.laokou</groupId>
     <artifactId>laokou-oauth2</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>laokou-oauth2</name>
@@ -33,7 +33,7 @@
             <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.laokou</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common</artifactId>
             <exclusions>
                 <exclusion>

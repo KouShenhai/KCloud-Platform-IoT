@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Bean;
 /**
  * @author kou shen hai
  */
-@SpringBootApplication(scanBasePackages = {"io.laokou.common","io.laokou.gateway"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.common","org.laokou.gateway"})
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableEncryptableProperties
