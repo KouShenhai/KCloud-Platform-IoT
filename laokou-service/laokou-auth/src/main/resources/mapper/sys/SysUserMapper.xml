@@ -12,7 +12,6 @@
     ,a.mobile as mobile
     ,a.dept_id as deptId
     ,a.password as password
-    ,a.zfb_openid as zfbOpenid
     FROM `boot_sys_user` a
     where a.del_flag = '0'
     <if test="userId != null">

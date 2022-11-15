@@ -85,14 +85,6 @@ public class SysUserDO extends BaseDO {
     private String mobile;
 
     /**
-     * 支付宝唯一用户标识
-     */
-    @ApiModelProperty(value = "支付宝唯一用户标识",name = "zfbOpenid",example = "2088722720196501")
-    @TableField("zfb_openid")
-    @JsonProperty("zfbOpenid")
-    private String zfbOpenid;
-
-    /**
      * 部门id
      */
     @ApiModelProperty(value = "部门id",name = "deptId",example = "0")
