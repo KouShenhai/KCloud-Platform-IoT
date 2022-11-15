@@ -42,7 +42,6 @@ import org.laokou.common.utils.ConvertUtil;
 import org.laokou.common.utils.FileUtil;
 import org.laokou.common.utils.JacksonUtil;
 import org.laokou.datasource.annotation.DataSource;
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.AsyncTaskExecutor;
@@ -61,7 +60,6 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-@GlobalTransactional(rollbackFor = Exception.class)
 public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
 
     @Autowired

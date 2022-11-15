@@ -18,7 +18,6 @@ import org.laokou.admin.application.service.SysMonitorApplicationService;
 import org.laokou.admin.interfaces.vo.CacheVO;
 import org.laokou.admin.interfaces.vo.ServerVO;
 import org.laokou.redis.RedisUtil;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 /**
@@ -27,7 +26,6 @@ import org.springframework.stereotype.Service;
  * @date 2022/7/27 0027 下午 3:18
  */
 @Service
-@GlobalTransactional(rollbackFor = Exception.class)
 public class SysMonitorApplicationServiceImpl implements SysMonitorApplicationService {
 
     @Autowired

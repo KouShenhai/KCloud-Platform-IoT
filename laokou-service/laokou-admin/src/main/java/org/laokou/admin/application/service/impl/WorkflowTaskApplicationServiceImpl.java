@@ -25,7 +25,6 @@ import org.laokou.admin.interfaces.dto.UnClaimDTO;
 import org.laokou.common.exception.CustomException;
 import org.laokou.common.utils.FileUtil;
 import org.laokou.datasource.annotation.DataSource;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.collections.MapUtils;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.*;
@@ -50,7 +49,6 @@ import java.util.List;
  * @author Kou Shenhai
  */
 @Service
-@GlobalTransactional(rollbackFor = Exception.class)
 public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicationService {
 
     @Autowired

@@ -22,7 +22,6 @@ import org.laokou.admin.interfaces.qo.DefinitionQO;
 import org.laokou.admin.interfaces.vo.DefinitionVO;
 import org.laokou.common.exception.CustomException;
 import org.laokou.datasource.annotation.DataSource;
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.BpmnModel;
@@ -47,7 +46,6 @@ import java.util.List;
  * @date 2022/7/6 0006 下午 6:11
  */
 @Service
-@GlobalTransactional(rollbackFor = Exception.class)
 @Slf4j
 public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinitionApplicationService {
 

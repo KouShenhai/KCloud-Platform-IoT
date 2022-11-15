@@ -46,7 +46,6 @@ import org.laokou.common.vo.SysDeptVO;
 import org.laokou.datasource.annotation.DataSource;
 import org.laokou.log.publish.PublishFactory;
 import org.laokou.redis.RedisUtil;
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBucket;
@@ -75,7 +74,6 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @Slf4j
-@GlobalTransactional(rollbackFor = Exception.class)
 public class SysAuthApplicationServiceImpl implements SysAuthApplicationService {
 
     private static AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -372,12 +370,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         final Long userId = SecurityUser.getUserId(request);
         final String zfbOpenid = request.getParameter("zfb_openid");
         final UserDetail userDetail = sysUserService.getUserDetail(userId,null);
-        if (StringUtils.isBlank(userDetail.getZfbOpenid())) {
-            sysUserService.updateZfbOpenid(userId,zfbOpenid);
-            response.sendRedirect(String.format(INDEX_URL,Authorization));
-        } else {
-            response.sendRedirect(CALLBACK_FAIL_URL);
-        }
     }
 
     @Override

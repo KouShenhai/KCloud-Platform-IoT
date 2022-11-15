@@ -15,7 +15,6 @@
  */
 package org.laokou.admin.application.service.impl;
 import org.laokou.admin.application.service.WXMpAccountApplicationService;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.stereotype.Service;
 /**
  * 公众号账号管理
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Service;
  *  * @create: 2022-07-12 18:03
  */
 @Service
-@GlobalTransactional(rollbackFor = Exception.class)
 public class WXMpAccountApplicationServiceImpl implements WXMpAccountApplicationService {
 
 }

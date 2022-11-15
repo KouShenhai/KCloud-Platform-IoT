@@ -40,7 +40,6 @@ import org.laokou.common.utils.ConvertUtil;
 import org.laokou.common.utils.SpringContextUtil;
 import org.laokou.datasource.annotation.DataFilter;
 import org.laokou.datasource.annotation.DataSource;
-import io.seata.spring.annotation.GlobalTransactional;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +50,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 @Service
-@GlobalTransactional(rollbackFor = Exception.class)
 public class SysMessageApplicationServiceImpl implements SysMessageApplicationService {
 
     public static final ThreadPoolExecutor executorService = new ThreadPoolExecutor(
