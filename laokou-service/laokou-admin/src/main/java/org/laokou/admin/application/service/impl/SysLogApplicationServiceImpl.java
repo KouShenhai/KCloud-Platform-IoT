@@ -48,7 +48,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     private SysUserService sysUserService;
 
     @Override
-    @DataSource("master")
+    @DataSource("slave")
     public Boolean insertOperateLog(OperateLogDTO dto) {
         SysOperateLogDO logDO = ConvertUtil.sourceToTarget(dto, SysOperateLogDO.class);
         final UserDetail userDetail = sysUserService.getUserDetail(logDO.getCreator());
@@ -57,14 +57,14 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     }
 
     @Override
-    @DataSource("master")
+    @DataSource("slave")
     public Boolean insertLoginLog(LoginLogDTO dto) {
         SysLoginLogDO logDO = ConvertUtil.sourceToTarget(dto, SysLoginLogDO.class);
         return sysLoginLogService.save(logDO);
     }
 
     @Override
-    @DataSource("master")
+    @DataSource("slave")
     @DataFilter(tableAlias = "boot_sys_operate_log")
     public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQO qo) {
         IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
@@ -72,7 +72,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     }
 
     @Override
-    @DataSource("master")
+    @DataSource("slave")
     public IPage<SysLoginLogVO> queryLoginLogPage(LoginLogQO qo) {
         IPage<SysLoginLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysLoginLogService.getLoginLogList(page,qo);

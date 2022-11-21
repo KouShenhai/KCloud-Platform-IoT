@@ -1,3 +1,6 @@
+# 本项目很久没更新啦，可以去看这个项目，这个项目花的时间长一点
+# KCloud-Platform-Netflix: https://gitee.com/laokouyun/KCloud-Platform-Official
+
 ### 项目备注
 项目：KCloud-Platform  
 作者：老寇  
