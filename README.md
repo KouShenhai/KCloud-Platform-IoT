@@ -58,23 +58,23 @@ KCloud-Platform（老寇云平台）是一款企业级微服务架构的云服�
 
 #### 相关技术
 - API 网关：Spring Cloud Gateway
-- 服务注册&发现：Eureka、Nacos
-- 配置中心: Apollo、Nacos
-- 服务消费：Spring Cloud OpenFeign & RestTemplate & OkHttps
+- 服务注册&发现：Nacos
+- 配置中心: Nacos
+- 服务消费：Spring Cloud OpenFeign & HttpClient
 - 负载均衡：Spring Cloud Loadbalancer
-- 服务熔断&降级&限流：Resilience4j、Sentinel
+- 服务熔断&降级&限流：Sentinel
 - 服务监控：Spring Boot Admin、Prometheus
-- 消息队列：使用 Spring Cloud 消息总线 Spring Cloud Bus 默认 Kafka 适配 RabbitMQ
+- 消息队列：RocketMQ
 - 链路跟踪：Skywalking
 - 分布式事务：Seata
-- 数据库：MySQL、Oracle 
+- 数据库：MySQL
 - 数据缓存：Redis
 - 工作流：Flowable
-- 日志中心：ELK
+- 日志中心：EFK
 - 持久层框架：Mybatis Plus
 - JSON 序列化：Jackson
-- 文件服务：Local/阿里云 OSS/Fastdfs
-- 服务部署：Shell、Docker
+- 文件服务：Local/Alibaba Cloud OSS/FastDFS/Minio
+- 服务部署：Docker-Compose
 - 持续交付：Jenkins
 - 服务发布：金丝雀发布
 
