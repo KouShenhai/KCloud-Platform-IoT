@@ -16,6 +16,5 @@
     <modules>
         <module>laokou-gateway</module>
         <module>laokou-monitor</module>
-        <module>laokou-register</module>
     </modules>
 </project>
