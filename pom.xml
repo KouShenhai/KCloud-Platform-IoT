@@ -21,9 +21,9 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven-compiler-plugin>2.0.2</maven-compiler-plugin>
         <!--boot版本-->
-        <spring-boot.version>2.7.3</spring-boot.version>
+        <spring-boot.version>2.7.5</spring-boot.version>
         <!--cloud版本-->
-        <spring-cloud.version>2021.0.4</spring-cloud.version>
+        <spring-cloud.version>2021.0.5</spring-cloud.version>
     </properties>
     <dependencyManagement>
         <dependencies>
