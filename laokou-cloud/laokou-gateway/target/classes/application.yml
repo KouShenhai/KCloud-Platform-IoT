@@ -1,0 +1,108 @@
+# tomcat
+server:
+  port: 5555
+  tomcat:
+    connection-timeout: 600000
+  compression:
+    enabled: true
+
+spring:
+  profiles:
+    active: test
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+  cloud:
+    inetutils:
+      ignoredInterfaces:
+        - docker0
+        - veth.*
+    # gateway
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: laokou-admin
+          uri: lb://laokou-admin
+          predicates:
+            - Path=/admin/**
+          filters:
+            - StripPrefix=1
+            - RewritePath=/admin/(?<path>.*), /$\{path}
+        - id: laokou-auth
+          uri: lb://laokou-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+            - RewritePath=/auth/(?<path>.*), /$\{path}
+        - id: laokou-elasticsearch
+          uri: lb://laokou-elasticsearch
+          predicates:
+            - Path=/elasticsearch/**
+          filters:
+            - StripPrefix=1
+            - RewritePath=/elasticsearch/(?<path>.*), /$\{path}
+        - id: laokou-rocketmq
+          uri: lb://laokou-rocketmq
+          predicates:
+            - Path=/rocketmq/**
+          filters:
+            - StripPrefix=1
+            - RewritePath=/rocketmq/(?<path>.*), /$\{path}
+        - id: laokou-oss
+          uri: lb://laokou-oss
+          predicates:
+            - Path=/oss/**
+          filters:
+            - StripPrefix=1
+            - RewritePath=/oss/(?<path>.*), /$\{path}
+        - id: laokou-im
+          uri: lb://laokou-im
+          predicates:
+            - Path=/im/**
+          filters:
+            - StripPrefix=1
+            - RewritePath=/im/(?<path>.*), /$\{path}
+        - id: open-api
+          uri: http://127.0.0.1:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+# springdoc
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: admin
+        url: /v3/api-docs/admin
+      - name: auth
+        url: /v3/api-docs/auth
+      - name: oss
+        url: /v3/api-docs/oss
+
+
+# actuator相关配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+# 忽略uris
+ignore:
+  uris:
+    - /oauth2/password/captcha
+    - /actuator/**
+    - /ws/**
+    - /favicon.ico
+    - /swagger-ui/**
+    - /swagger-ui.html
+    - /**/v3/api-docs/**

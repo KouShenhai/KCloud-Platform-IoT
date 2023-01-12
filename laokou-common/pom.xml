@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-parent</artifactId>
+        <version>3.0.2</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.laokou</groupId>
+    <artifactId>laokou-common</artifactId>
+    <version>3.0.2</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>laokou-common-core</module>
+        <module>laokou-common-mybatis-plus</module>
+        <module>laokou-common-bom</module>
+        <module>laokou-common-swagger</module>
+    </modules>
+
+</project>

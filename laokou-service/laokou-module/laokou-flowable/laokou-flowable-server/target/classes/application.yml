@@ -1,0 +1,16 @@
+
+#spring
+spring:
+  application:
+    name: laokou-flowable
+  profiles:
+    # 环境 dev|test|prod
+    active: test
+  messages:
+    encoding: UTF-8
+    basename: i18n/messages
+  cloud:
+    inetutils:
+      ignoredInterfaces:
+        - docker0
+        - veth.*

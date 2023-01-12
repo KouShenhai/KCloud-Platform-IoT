@@ -5,19 +5,21 @@
     <parent>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>3.0.2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-service</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>3.0.2</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-admin</module>
-        <module>laokou-redis</module>
-        <module>laokou-auth</module>
         <module>laokou-generator</module>
-        <module>laokou-oauth2</module>
+        <module>laokou-module</module>
+        <module>laokou-report</module>
+        <module>laokou-auth</module>
+        <module>laokou-log</module>
+        <module>laokou-api</module>
     </modules>
 </project>

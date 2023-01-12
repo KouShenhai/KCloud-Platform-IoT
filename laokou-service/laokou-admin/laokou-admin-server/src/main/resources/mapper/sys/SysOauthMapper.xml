@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.admin.server.domain.sys.repository.mapper.SysOauthMapper">
+    <select id="getOauthList" resultType="org.laokou.admin.client.vo.SysOauthVO">
+    select
+    id
+    ,client_id
+    ,client_secret
+    ,`scope`
+    ,authorized_grant_types
+    ,web_server_redirect_uri
+    ,access_token_validity
+    ,autoapprove
+    ,sort
+    ,resource_ids
+    ,authorities
+    ,refresh_token_validity
+    ,additional_information
+    FROM boot_sys_oauth_client_details where del_flag = '0'
+    <if test="qo.clientId != null and qo.clientId != ''">
+        and client_id like concat('%',#{qo.clientId},'%')
+    </if>
+    <if test="qo.clientSecret != null and qo.clientSecret != ''">
+        and client_secret like concat('%',#{qo.clientSecret},'%')
+    </if>
+    order by sort desc
+    </select>
+
+    <select id="getOauthById" resultType="org.laokou.admin.client.vo.SysOauthVO">
+    select
+    id
+    ,client_id
+    ,client_secret
+    ,`scope`
+    ,authorized_grant_types
+    ,web_server_redirect_uri
+    ,access_token_validity
+    ,autoapprove
+    ,sort
+    ,resource_ids
+    ,authorities
+    ,refresh_token_validity
+    ,additional_information
+    FROM boot_sys_oauth_client_details where id = #{id}
+    </select>
+
+    <update id="deleteOauth">
+        update boot_sys_oauth_client_details set del_flag = '1' where id = #{id}
+    </update>
+</mapper>

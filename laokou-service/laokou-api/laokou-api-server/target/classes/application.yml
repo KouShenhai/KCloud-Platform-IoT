@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: prod
+  main:
+    web-application-type: reactive

@@ -1,0 +1,3 @@
+keytool -genkeypair -alias auth -keyalg RSA -validity 365 -keystore D:/auth.jks
+
+keytool -exportcert -keystore  D:/auth.jks -file D:/auth.cer -alias auth

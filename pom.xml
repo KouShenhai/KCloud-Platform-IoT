@@ -5,32 +5,41 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>3.0.2</version>
     <description>parent配置</description>
     <packaging>pom</packaging>
     <modules>
-        <module>laokou-base</module>
+        <module>laokou-common</module>
         <module>laokou-cloud</module>
         <module>laokou-service</module>
     </modules>
     <properties>
-        <laokou.version>1.0-SNAPSHOT</laokou.version>
-        <java.version>1.8</java.version>
+        <laokou.version>3.0.2</laokou.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven-compiler-plugin>2.0.2</maven-compiler-plugin>
-        <!--boot版本-->
-        <spring-boot.version>2.7.5</spring-boot.version>
-        <!--cloud版本-->
-        <spring-cloud.version>2021.0.5</spring-cloud.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven-compiler-plugin.version>2.0.2</maven-compiler-plugin.version>
+        <!--spring-boot版本-->
+        <spring-boot.version>3.0.1</spring-boot.version>
+        <!--spring-cloud版本-->
+        <spring-cloud.version>2022.0.0</spring-cloud.version>
+        <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
+        <docker.registry.name>koushenhai</docker.registry.name>
+        <docker.version>1.2.2</docker.version>
+        <!--spring-security版本-->
+        <spring-security.version>6.0.1</spring-security.version>
+        <!--cloud-tencent版本-->
+        <spring-cloud-tencent.version>1.8.2-2022.0.0</spring-cloud-tencent.version>
+        <!--spring-doc版本-->
+        <spring-doc.version>2.0.2</spring-doc.version>
     </properties>
     <dependencyManagement>
         <dependencies>
-            <!-- 定义公共版本-->
+            <!-- 定义公共版本 -->
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-bom</artifactId>
+                <artifactId>laokou-common-bom</artifactId>
                 <version>${laokou.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -51,39 +60,124 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- 定义 spring cloud tencent 版本 -->
+            <dependency>
+                <groupId>com.tencent.cloud</groupId>
+                <artifactId>spring-cloud-tencent-dependencies</artifactId>
+                <version>${spring-cloud-tencent.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 定义spring security 版本 -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring-security.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 定义 spring doc 版本 -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi</artifactId>
+                <version>${spring-doc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-    <!--配置maven阿里云仓库开始,不用去改maven的setting -->
+
     <repositories>
         <repository>
-            <id>public</id>
-            <name>local private nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <id>snapshots-repo</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
             <releases>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
             </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-release</id>
+            <name>Spring release</name>
+            <url>https://repo.spring.io/release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-snapshot</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>ossrh</id>
+            <name>OSS Snapshot repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
-            <id>public</id>
-            <name>local private nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
+            <id>spring-release</id>
+            <name>Spring release</name>
+            <url>https://repo.spring.io/release</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestone</id>
+            <name>Spring milestone</name>
+            <url>https://repo.spring.io/milestone</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
+        <pluginRepository>
+            <id>snapshots-repo</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
     </pluginRepositories>
-    <!--配置maven阿里云结束 -->
+
     <profiles>
         <!--开发环境-->
         <profile>
             <id>dev</id>
             <properties>
+                <POLARIS_NAMESPACE>default</POLARIS_NAMESPACE>
+                <POLARIS_ADDRESS>grpc://127.0.0.1:8091</POLARIS_ADDRESS>
+                <CONFIG_ADDRESS>grpc://127.0.0.1:8093</CONFIG_ADDRESS>
                 <profile.active>dev</profile.active>
+                <mybatis-plus.log-impl>org.apache.ibatis.logging.stdout.StdOutImpl</mybatis-plus.log-impl>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -93,32 +187,58 @@
         <profile>
             <id>test</id>
             <properties>
+                <POLARIS_NAMESPACE>laokou</POLARIS_NAMESPACE>
+                <POLARIS_ADDRESS>grpc://192.168.62.144:8091</POLARIS_ADDRESS>
+                <CONFIG_ADDRESS>grpc://192.168.62.144:8093</CONFIG_ADDRESS>
                 <profile.active>test</profile.active>
+                <mybatis-plus.log-impl>org.apache.ibatis.logging.stdout.StdOutImpl</mybatis-plus.log-impl>
             </properties>
         </profile>
         <!--正式环境-->
         <profile>
             <id>prod</id>
             <properties>
+                <POLARIS_NAMESPACE>kcloud-platform</POLARIS_NAMESPACE>
+                <POLARIS_ADDRESS>grpc://192.168.62.137:8091</POLARIS_ADDRESS>
+                <CONFIG_ADDRESS>grpc://192.168.62.137:8093</CONFIG_ADDRESS>
                 <profile.active>prod</profile.active>
+                <mybatis-plus.log-impl>org.apache.ibatis.logging.nologging.NoLoggingImpl</mybatis-plus.log-impl>
             </properties>
         </profile>
     </profiles>
+
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin}</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-<!--                    <compilerArgument>-Xlint:-options,rawtypes,deprecation,unchecked</compilerArgument>-->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.version}</version>
+                <configuration>
+                    <!--        推送至阿里云Docker仓库            -->
+                    <serverId>docker-aliyun</serverId>
+                    <registryUrl>${docker.repostory}</registryUrl>
+                    <pushImage>true</pushImage>
+                    <!--指定生成的镜像名 推送阿里云镜像仓库用 -->
+                    <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
+                    <!-- 指定 Dockerfile 路径 , 根据实际情况改动! ${project.basedir}：项目根路径-->
+                    <dockerDirectory>${project.basedir}/docker</dockerDirectory>
+                    <dockerHost>http://192.168.62.137:2375</dockerHost>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.artifactId}.jar</include>
+                        </resource>
+                    </resources>
                 </configuration>
             </plugin>
         </plugins>
@@ -129,6 +249,8 @@
                 <directory>src/main/resources</directory>
                 <excludes>
                     <exclude>application*.yml</exclude>
+                    <exclude>application*.properties</exclude>
+                    <exclude>bootstrap.yml</exclude>
                 </excludes>
             </resource>
             <!--添加需要包含的文件-->
@@ -140,8 +262,8 @@
                 <includes>
                     <include>application.yml</include>
                     <include>application-${profile.active}.yml</include>
-                    <include>application.properties</include>
                     <include>application-${profile.active}.properties</include>
+                    <include>bootstrap.yml</include>
                 </includes>
             </resource>
         </resources>

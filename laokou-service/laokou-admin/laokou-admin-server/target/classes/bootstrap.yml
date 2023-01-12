@@ -1,0 +1,14 @@
+# spring
+spring:
+  application:
+    name: laokou-admin
+  cloud:
+    polaris:
+      address: grpc://192.168.62.144:8091
+      namespace: laokou
+    tencent:
+      metadata:
+        content:
+          version: 2.0.0
+    config:
+      address: grpc://192.168.62.144:8093

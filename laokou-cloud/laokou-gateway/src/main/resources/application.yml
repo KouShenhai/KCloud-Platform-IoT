@@ -1,19 +1,16 @@
-jasypt:
-  encryptor:
-    password: koushenhai5201314wumeihua
+# tomcat
+server:
+  port: 5555
+  tomcat:
+    connection-timeout: 600000
+  compression:
+    enabled: true
+
 spring:
-  application:
-    name: laokou-gateway
-  messages:
-    encoding: UTF-8
-    basename: i18n/messages
   profiles:
     active: @profile.active@
-  main:
-    lazy-initialization: true
   servlet:
     multipart:
-      enabled: true
       max-file-size: -1
       max-request-size: -1
   cloud:
@@ -21,58 +18,73 @@ spring:
       ignoredInterfaces:
         - docker0
         - veth.*
+    # gateway
     gateway:
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
+      routes:
+        - id: laokou-admin
+          uri: lb://laokou-admin
+          predicates:
+            - Path=/admin/**
+          filters:
+            - StripPrefix=1
+            - RewritePath=/admin/(?<path>.*), /$\{path}
+        - id: laokou-auth
+          uri: lb://laokou-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+            - RewritePath=/auth/(?<path>.*), /$\{path}
+        - id: laokou-elasticsearch
+          uri: lb://laokou-elasticsearch
+          predicates:
+            - Path=/elasticsearch/**
+          filters:
+            - StripPrefix=1
+            - RewritePath=/elasticsearch/(?<path>.*), /$\{path}
+        - id: laokou-rocketmq
+          uri: lb://laokou-rocketmq
+          predicates:
+            - Path=/rocketmq/**
+          filters:
+            - StripPrefix=1
+            - RewritePath=/rocketmq/(?<path>.*), /$\{path}
+        - id: laokou-oss
+          uri: lb://laokou-oss
+          predicates:
+            - Path=/oss/**
+          filters:
+            - StripPrefix=1
+            - RewritePath=/oss/(?<path>.*), /$\{path}
+        - id: laokou-im
+          uri: lb://laokou-im
+          predicates:
+            - Path=/im/**
+          filters:
+            - StripPrefix=1
+            - RewritePath=/im/(?<path>.*), /$\{path}
+        - id: open-api
+          uri: http://127.0.0.1:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+# springdoc
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: admin
+        url: /v3/api-docs/admin
+      - name: auth
+        url: /v3/api-docs/auth
+      - name: oss
+        url: /v3/api-docs/oss
 
-resilience4j.circuitbreaker:
-  configs: #通用配置
-    default: # 断路器系统默认配置
-      #失败率，错误率达到或高于该值则进入open状态
-      failureRateThreshold: 50
-      #慢调用阀值，请求执行的时间大于该值时会标记为慢调用
-      slowCallDurationThreshold: 60s
-      #慢调用熔断阀值，当慢调用率达到或高于该值时，进入open状态
-      slowCallRateThreshold: 100
-      #状态滚动收集器大小，close状态时收集多少请求状态，用于计算失败率。
-      slidingWindowSize: 100
-      #状态收集器类型
-      slidingWindowType: COUNT_BASED
-      #计算错误率的最小请求数，不足最小调用次数不会触发任何变化。
-      minimumNumberOfCalls: 100
-      #是否自动进入halfOpen状态，默认false-一定时间后进入halfopen，true-需要通过接口执行。
-      automaticTransitionFromOpenToHalfOpenEnabled: false
-      #进入halfOpen状态时，可以被调用次数，就算这些请求的失败率，低于设置的失败率变为close状态，否则变为open。
-      permittedNumberOfCallsInHalfOpenState: 100
-      #open状态变为half状态需要等待的时间，即熔断多久后开始尝试访问被熔断的服务。
-      waitDurationInOpenState: 60s
-      #事件缓冲区大小
-      eventConsumerBufferSize: 100
-      #被计为失败的异常集合，默认情况下所有异常都为失败。
-      recordExceptions:
-        - java.lang.Exception
-      #不会被计为失败的异常集合，优先级高于recordExceptions。
-      ignoreExceptions:
-        - org.laokou.common.exception.CustomException
-
-resilience4j.timelimiter:
-  instances:
-    default:
-      timeoutDuration: 60s
-      cancelRunningFuture: true
-
-feign:
-  circuitbreaker:
-    enabled: true
-  httpclient:
-    enabled: true
-  client:
-    config:
-      default:
-        connectTimeout: 10000
-        readTimeout: 15000
 
 # actuator相关配置
 management:
@@ -84,24 +96,13 @@ management:
     health:
       show-details: always
 
-gateway:
-  swagger:
-    routes:
-      - name: laokou-admin
-        location: /admin
-      - name: laokou-auth
-        location: /auth
+# 忽略uris
+ignore:
   uris:
-    - /sys/auth/api/captcha
-    - /sys/auth/api/login
-    - /sys/auth/api/zfbLogin
-    - /sys/auth/api/zfbBind
-    - /sys/auth/api/open/login
+    - /oauth2/password/captcha
     - /actuator/**
-    - /swagger/api-docs
-    - /swagger-resources/**
-    - /doc.html
-    - /v2/api-docs
-    - /webjars/**
-    - /druid/**
     - /ws/**
+    - /favicon.ico
+    - /swagger-ui/**
+    - /swagger-ui.html
+    - /**/v3/api-docs/**

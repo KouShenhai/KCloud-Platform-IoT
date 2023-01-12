@@ -1,0 +1,15 @@
+# spring
+spring:
+  application:
+    name: laokou-oss
+  cloud:
+    # polaris
+    polaris:
+      address: ${POLARIS_ADDRESS}
+      namespace: ${POLARIS_NAMESPACE}
+    tencent:
+      metadata:
+        content:
+          version: 2.0.0
+    config:
+      address: ${CONFIG_ADDRESS}

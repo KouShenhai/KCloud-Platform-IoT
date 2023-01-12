@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "ignore",
+      "type": "org.laokou.gateway.filter.AuthFilter",
+      "sourceType": "org.laokou.gateway.filter.AuthFilter"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ignore.uris",
+      "type": "java.util.List<java.lang.String>",
+      "description": "不拦截的urls",
+      "sourceType": "org.laokou.gateway.filter.AuthFilter"
+    }
+  ],
+  "hints": []
+}

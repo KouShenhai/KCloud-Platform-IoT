@@ -1,0 +1,6 @@
+
+spring:
+  application:
+    name: @pom.parent.artifactId@
+  profiles:
+    active: @profile.active@

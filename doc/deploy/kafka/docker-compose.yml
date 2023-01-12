@@ -1,0 +1,32 @@
+version: '3.2'
+services:
+  zookeeper:
+    tty: true
+    image: docker.io/wurstmeister/zookeeper:latest
+    container_name: zookeeper
+    environment:
+      - TZ="Asia/Shanghai"
+    restart: on-failure
+    ports:
+      - "2181:2181"
+    volumes:
+      - /etc/localtime:/etc/localtime
+  kafka:
+    tty: true
+    image: docker.io/wurstmeister/kafka:2.13-2.8.1
+    container_name: kafka
+    environment:
+      - TZ="Asia/Shanghai"
+      - KAFKA_BROKER_ID=0
+      - KAFKA_ZOOKEEPER_CONNECT=192.168.62.137:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.62.137:9092
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+    restart: on-failure
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    links:
+      - zookeeper
+    volumes:
+      - /etc/localtime:/etc/localtime

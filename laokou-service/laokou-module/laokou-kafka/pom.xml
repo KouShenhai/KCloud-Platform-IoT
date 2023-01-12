@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-module</artifactId>
+        <version>3.0.2</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.laokou</groupId>
+    <artifactId>laokou-kafka</artifactId>
+    <version>3.0.2</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>laokou-kafka-server</module>
+        <module>laokou-kafka-client</module>
+    </modules>
+
+</project>

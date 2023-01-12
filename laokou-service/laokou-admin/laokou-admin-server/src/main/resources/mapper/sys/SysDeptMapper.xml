@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.admin.server.domain.sys.repository.mapper.SysDeptMapper">
+    <select id="getDeptList" resultType="org.laokou.admin.client.vo.SysDeptVO">
+   select id,pid,`name`,sort from boot_sys_dept
+    where del_flag = '0'
+    <if test="qo.name != null and qo.name != ''">
+        and `name` like concat('%',#{qo.name},'%')
+    </if>
+   order by sort desc
+    </select>
+
+    <delete id="deleteDept">
+        update boot_sys_dept set del_flag = '1'
+        where id = #{id}
+    </delete>
+
+    <select id="getDept" resultType="org.laokou.admin.client.vo.SysDeptVO">
+        select id,pid,`name`,sort from boot_sys_dept
+        where id = #{id}
+    </select>
+
+    <select id="getDeptIdsByRoleId" resultType="long">
+        SELECT boot_sys_dept.id
+        FROM boot_sys_dept
+        ,boot_sys_role
+        ,boot_sys_role_dept
+        WHERE boot_sys_dept.id = boot_sys_role_dept.dept_id
+        AND boot_sys_role_dept.role_id = boot_sys_role.id
+        AND boot_sys_role.id = #{roleId}
+        and boot_sys_dept.del_flag = '0'
+        group by boot_sys_dept.id
+    </select>
+
+    <update id="updateDeptPath1ById" statementType="CALLABLE">
+        call updatePath1(#{id,mode=IN},#{pid,mode=IN});
+    </update>
+
+    <update id="updateDeptPath2ById" statementType="CALLABLE">
+        call updatePath2(#{id,mode=IN},#{pid,mode=IN});
+    </update>
+
+        </mapper>

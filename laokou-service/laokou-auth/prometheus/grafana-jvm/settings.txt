@@ -1,4 +1,0 @@
-Grafana：127.0.0.1:9091
-Prometheus：127.0.0.1:9090
-
-admin/koushenhai

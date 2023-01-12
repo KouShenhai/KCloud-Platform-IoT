@@ -1,0 +1,47 @@
+version: '3.2'
+services:
+  laokou-gateway-service:
+    tty: true
+    image: registry.cn-hangzhou.aliyuncs.com/koushenhai/laokou-gateway:3.0.1
+    container_name: laokou-gateway
+    environment:
+      - TZ="Asia/Shanghai"
+    restart: on-failure
+    ports:
+      - "5555:5555"
+  laokou-admin-service:
+    tty: true
+    image: registry.cn-hangzhou.aliyuncs.com/koushenhai/laokou-admin-server:3.0.1
+    container_name: laokou-admin
+    environment:
+      - TZ="Asia/Shanghai"
+    ports:
+      - "9999:9999"
+    restart: on-failure
+  laokou-auth-service:
+    tty: true
+    image: registry.cn-hangzhou.aliyuncs.com/koushenhai/laokou-auth-server:3.0.1
+    container_name: laokou-auth
+    environment:
+      - TZ="Asia/Shanghai"
+    ports:
+      - "1111:1111"
+    restart: on-failure
+  laokou-monitor-service:
+    tty: true
+    image: registry.cn-hangzhou.aliyuncs.com/koushenhai/laokou-monitor:3.0.1
+    container_name: laokou-monitor
+    environment:
+      - TZ="Asia/Shanghai"
+    ports:
+      - "5000:5000"
+    restart: on-failure
+  laokou-elasticsearch-service:
+    tty: true
+    image: registry.cn-hangzhou.aliyuncs.com/koushenhai/laokou-elasticsearch-server:3.0.1
+    container_name: laokou-elasticsearch
+    environment:
+      - TZ="Asia/Shanghai"
+    ports:
+      - "10003:10003"
+    restart: on-failure

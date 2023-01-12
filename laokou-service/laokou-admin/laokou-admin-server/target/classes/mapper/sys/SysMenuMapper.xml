@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.admin.server.domain.sys.repository.mapper.SysMenuMapper">
+
+    <select id="getMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
+        select id,pid,`name`,icon,url,`type`,permission from boot_sys_menu
+        where del_flag = '0'
+        <if test="type != null">
+            and `type` = #{type}
+        </if>
+        order by sort desc
+    </select>
+
+    <select id="queryMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
+        select id,pid,`name`,sort,`type`,icon,url,permission from boot_sys_menu
+        where del_flag = '0'
+        <if test="qo.name != null and qo.name != ''">
+            and `name` like concat('%',#{qo.name},'%')
+        </if>
+        order by sort desc
+    </select>
+
+    <select id="getMenuById" resultType="org.laokou.admin.client.vo.SysMenuVO">
+        select id,pid,`name`,sort,`type`,icon,url,permission from boot_sys_menu
+        where id = #{id}
+    </select>
+
+    <select id="getMenuListByUserId" resultType="org.laokou.admin.client.vo.SysMenuVO">
+        SELECT boot_sys_menu.url,
+        boot_sys_menu.type,
+        boot_sys_menu.sort,
+        boot_sys_menu.id,
+        boot_sys_menu.pid,
+        boot_sys_menu.name,
+        boot_sys_menu.icon,
+        boot_sys_menu.permission
+        FROM boot_sys_menu
+        ,boot_sys_role
+        ,boot_sys_role_menu
+        ,boot_sys_user
+        ,boot_sys_user_role
+        WHERE boot_sys_menu.id = boot_sys_role_menu.menu_id
+        AND boot_sys_role_menu.role_id = boot_sys_role.id
+        AND boot_sys_user.id = boot_sys_user_role.user_id
+        AND boot_sys_role.id = boot_sys_user_role.role_id
+        AND boot_sys_user.id = #{userId}
+        and boot_sys_menu.del_flag = '0'
+        <if test="type != null">
+            and boot_sys_menu.type = #{type}
+        </if>
+        group by boot_sys_menu.url,
+                boot_sys_menu.type,
+                boot_sys_menu.sort,
+                boot_sys_menu.id,
+                boot_sys_menu.pid,
+                boot_sys_menu.name,
+                boot_sys_menu.icon,
+                boot_sys_menu.permission
+        order by boot_sys_menu.sort desc
+    </select>
+
+    <update id="deleteMenu">
+        update boot_sys_menu set del_flag = '1'
+        where id = #{id}
+    </update>
+
+    <select id="getMenuListByRoleId" resultType="org.laokou.admin.client.vo.SysMenuVO">
+        SELECT boot_sys_menu.url,
+        boot_sys_menu.type,
+        boot_sys_menu.sort,
+        boot_sys_menu.id,
+        boot_sys_menu.pid,
+        boot_sys_menu.name,
+        boot_sys_menu.icon,
+        boot_sys_menu.permission
+        FROM boot_sys_menu
+        ,boot_sys_role
+        ,boot_sys_role_menu
+        WHERE boot_sys_menu.id = boot_sys_role_menu.menu_id
+        AND boot_sys_role_menu.role_id = boot_sys_role.id
+        AND boot_sys_role.id = #{roleId}
+        and boot_sys_menu.del_flag = '0'
+        group by boot_sys_menu.url,
+                boot_sys_menu.type,
+                boot_sys_menu.sort,
+                boot_sys_menu.id,
+                boot_sys_menu.pid,
+                boot_sys_menu.name,
+                boot_sys_menu.icon,
+                boot_sys_menu.permission
+        order by boot_sys_menu.sort desc
+    </select>
+
+    <select id="getMenuIdsByRoleId" resultType="long">
+        SELECT boot_sys_menu.id
+        FROM boot_sys_menu
+        ,boot_sys_role
+        ,boot_sys_role_menu
+        WHERE boot_sys_menu.id = boot_sys_role_menu.menu_id
+        AND boot_sys_role_menu.role_id = boot_sys_role.id
+        AND boot_sys_role.id = #{roleId}
+        and boot_sys_menu.del_flag = '0'
+        group by boot_sys_menu.id
+    </select>
+</mapper>

@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: laokou-api
+  cloud:
+    polaris:
+      address: ${POLARIS_ADDRESS}
+      namespace: ${POLARIS_NAMESPACE}
+    config:
+      address: ${CONFIG_ADDRESS}
