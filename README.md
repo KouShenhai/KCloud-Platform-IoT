@@ -35,7 +35,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 
 
 ### 系统架构
-![](doc/image/老寇云平台架构图-腾讯北极星.png)
+![](doc/image/老寇云平台架构图-阿里巴巴.png)
 
 ### 技术体系
 
