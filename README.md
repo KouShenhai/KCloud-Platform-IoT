@@ -132,7 +132,7 @@ spring:
   # mysql
   datasource:
     # 连接地址
-    url: jdbc:mysql://127.0.0.1:3306/kcloud_platform?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/kcloud_platform_alibaba?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     # 用户名
     username: root
     # 密码
