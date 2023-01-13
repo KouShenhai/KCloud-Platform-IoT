@@ -36,7 +36,6 @@ spring:
 # springdoc
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html
     urls:
       - name: admin
         url: /v3/api-docs/admin
@@ -44,16 +43,6 @@ springdoc:
         url: /v3/api-docs/auth
       - name: oss
         url: /v3/api-docs/oss
-
-# actuator相关配置
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
 
 # feign
 feign:

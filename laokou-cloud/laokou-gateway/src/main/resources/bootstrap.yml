@@ -11,3 +11,8 @@ spring:
         namespace: ${NACOS-NAMESPACE}
         group: LAOKOU_GROUP
         refresh-enabled: true
+        file-extension: yaml
+        extension-configs:
+          - data-id: application-common.yaml
+            group: LAOKOU_GROUP
+            refresh: true
