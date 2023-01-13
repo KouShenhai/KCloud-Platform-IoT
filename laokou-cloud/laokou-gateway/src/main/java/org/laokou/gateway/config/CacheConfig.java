@@ -21,9 +21,6 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author laokou
  */
@@ -34,7 +31,6 @@ public class CacheConfig {
     public Cache<String, RouteDefinition> caffeineCache() {
         return Caffeine.newBuilder().maximumSize(300)
                 .initialCapacity(30)
-                .expireAfterWrite(30, TimeUnit.MINUTES)
                 .build();
     }
 
