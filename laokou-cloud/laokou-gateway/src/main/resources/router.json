@@ -1,0 +1,60 @@
+[
+  {
+    "id": "laokou-auth",
+    "uri": "lb://laokou-auth",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/auth/**"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/auth/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {},
+    "order": 999
+  },
+  {
+    "id": "laokou-admin",
+    "uri": "lb://laokou-admin",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/admin/**"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/admin/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {},
+    "order": 999
+  }
+]
