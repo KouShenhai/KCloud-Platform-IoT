@@ -35,15 +35,3 @@ spring:
       ignoredInterfaces:
         - docker0
         - veth.*
-
-# feign
-feign:
-  httpclient:
-    enabled: true # 支持HttpClient的开关
-    max-connections: 200 # 最大连接数
-    max-connections-per-route: 50 # 单个路径的最大连接数
-  client:
-    config:
-      default:
-        connectTimeout: 120000
-        readTimeout: 120000

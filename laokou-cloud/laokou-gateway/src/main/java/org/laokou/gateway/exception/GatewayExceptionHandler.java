@@ -40,7 +40,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler, Ordere
 			result = ResponseUtil.error(GatewayException.SERVICE_MAINTENANCE);
 		} else {
 			log.error("未知错误");
-			result = ResponseUtil.error(GatewayException.UNAUTHORIZED);
+			result = ResponseUtil.error(GatewayException.UNKNOWN);
 		}
 		return ResponseUtil.response(exchange,result);
 	}

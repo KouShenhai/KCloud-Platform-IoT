@@ -18,7 +18,11 @@ public enum GatewayException {
     /**
      * 未知错误
      */
-    UNKNOWN_ERROR(505,"未知错误");
+    UNKNOWN(505,"未知错误"),
+    /**
+     * 操作太频繁，请稍后再试
+     */
+    BLOCK_REQUEST(429,"操作太频繁，请稍后再试");
 
     @Getter
     private final int code;

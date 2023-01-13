@@ -18,6 +18,17 @@ spring:
       max-file-size: -1
       max-request-size: -1
   cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        db1:
+          nacos:
+            server-addr: @NACOS-DISCOVERY-ADDRESS@
+            data-id: sentinel
+            rule-type: gw_flow # 网关规则
+            data-type: json
     # loadbalancer
     loadbalancer:
       nacos:
@@ -33,6 +44,7 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+
 # springdoc
 springdoc:
   swagger-ui:
@@ -43,18 +55,6 @@ springdoc:
         url: /v3/api-docs/auth
       - name: oss
         url: /v3/api-docs/oss
-
-# feign
-feign:
-  httpclient:
-    enabled: true # 支持HttpClient的开关
-    max-connections: 200 # 最大连接数
-    max-connections-per-route: 50 # 单个路径的最大连接数
-  client:
-    config:
-      default:
-        connectTimeout: 120000
-        readTimeout: 120000
 
 # 忽略uris
 ignore:
