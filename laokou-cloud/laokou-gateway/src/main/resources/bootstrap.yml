@@ -9,3 +9,5 @@ spring:
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
+        group: LAOKOU_GROUP
+        refresh-enabled: true
