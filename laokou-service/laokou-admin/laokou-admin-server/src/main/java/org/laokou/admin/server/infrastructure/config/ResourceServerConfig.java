@@ -61,8 +61,7 @@ public class ResourceServerConfig {
                 .and()
                 .oauth2ResourceServer(oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
                         .accessDeniedHandler(forbiddenExceptionHandler)
-                        .authenticationEntryPoint(invalidAuthenticationEntryPoint)
-                )
+                        .authenticationEntryPoint(invalidAuthenticationEntryPoint))
                 .build();
     }
 
