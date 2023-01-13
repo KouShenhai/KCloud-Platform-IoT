@@ -177,7 +177,6 @@
                 <NACOS-DISCOVERY-ADDRESS>http://127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>http://127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
                 <profile.active>dev</profile.active>
-                <mybatis-plus.log-impl>org.apache.ibatis.logging.stdout.StdOutImpl</mybatis-plus.log-impl>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -191,7 +190,6 @@
                 <NACOS-DISCOVERY-ADDRESS>http://192.168.62.144:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>http://192.168.62.144:8848</NACOS-CONFIG-ADDRESS>
                 <profile.active>test</profile.active>
-                <mybatis-plus.log-impl>org.apache.ibatis.logging.stdout.StdOutImpl</mybatis-plus.log-impl>
             </properties>
         </profile>
         <!--正式环境-->
@@ -202,7 +200,6 @@
                 <NACOS-DISCOVERY-ADDRESS>http://192.168.62.137:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>http://192.168.62.137:8848</NACOS-CONFIG-ADDRESS>
                 <profile.active>prod</profile.active>
-                <mybatis-plus.log-impl>org.apache.ibatis.logging.nologging.NoLoggingImpl</mybatis-plus.log-impl>
             </properties>
         </profile>
     </profiles>

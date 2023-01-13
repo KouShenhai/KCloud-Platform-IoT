@@ -18,6 +18,7 @@ spring:
       max-file-size: -1
       max-request-size: -1
   cloud:
+    # loadbalancer
     loadbalancer:
       nacos:
         enabled: true

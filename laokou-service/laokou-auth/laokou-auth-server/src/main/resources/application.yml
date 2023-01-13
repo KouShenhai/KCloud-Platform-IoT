@@ -17,6 +17,8 @@ server:
 
 # spring
 spring:
+  application:
+    name: @pom.parent.artifactId@
   profiles:
     # dev|test|prod
     active: @profile.active@
@@ -24,17 +26,15 @@ spring:
   messages:
     basename: i18n/messages
   cloud:
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
     # network
     inetutils:
       ignoredInterfaces:
         - docker0
         - veth.*
-
-# mybatis-plus
-mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*.xml
-  configuration:
-    log-impl: @mybatis-plus.log-impl@
 
 # feign
 feign:
@@ -47,18 +47,3 @@ feign:
       default:
         connectTimeout: 120000
         readTimeout: 120000
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-
-# springdoc
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
