@@ -13,12 +13,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -48,10 +48,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
@@ -59,39 +55,18 @@
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-core</artifactId>
         </dependency>
-        <!--Spring Cloud Tencent 依赖 开始 -->
-        <!--注册中心客户端-->
         <dependency>
-            <groupId>com.tencent.cloud</groupId>
-            <artifactId>spring-cloud-starter-tencent-polaris-discovery</artifactId>
-        </dependency>
-        <!--配置中心客户端-->
-        <dependency>
-            <groupId>com.tencent.cloud</groupId>
-            <artifactId>spring-cloud-starter-tencent-polaris-config</artifactId>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.tencent.cloud</groupId>
-            <artifactId>spring-cloud-starter-tencent-polaris-router</artifactId>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.tencent.cloud</groupId>
-            <artifactId>spring-cloud-tencent-polaris-loadbalancer</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.tencent.cloud</groupId>
-            <artifactId>spring-cloud-tencent-gateway-plugin</artifactId>
-        </dependency>
-        <!-- 需要全链路透传标签，需要引入 spring-cloud-starter-tencent-metadata-transfer 依赖 -->
-        <dependency>
-            <groupId>com.tencent.cloud</groupId>
-            <artifactId>spring-cloud-starter-tencent-metadata-transfer</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.tencent.cloud</groupId>
-            <artifactId>spring-cloud-starter-tencent-polaris-ratelimit</artifactId>
-        </dependency>
-        <!--Spring Cloud Tencent 依赖 结束 -->
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-kafka-client</artifactId>
