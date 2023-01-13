@@ -1,24 +1,11 @@
 # spring
 spring:
-  application:
-    name: laokou-gateway
   cloud:
-    polaris:
-      address: ${POLARIS_ADDRESS}
-      namespace: ${POLARIS_NAMESPACE}
+    # nacos
+    nacos:
+      discovery:
+        server-addr: ${NACOS-DISCOVERY-ADDRESS}
+        namespace: ${NACOS-NAMESPACE}
       config:
-        local-file-root-path: polaris
-    tencent:
-      plugin:
-        scg:
-          staining:
-            enabled: true
-            rule-staining:
-              enabled: true
-              namespace: ${POLARIS_NAMESPACE}
-              group: ${spring.application.name}
-              fileName: rule/staining.json
-    loadbalancer:
-      configurations: polaris
-    config:
-      address: ${CONFIG_ADDRESS}
+        server-addr: ${NACOS-CONFIG-ADDRESS}
+        namespace: ${NACOS-NAMESPACE}

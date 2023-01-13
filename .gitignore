@@ -9,7 +9,7 @@ doc/db/db_data
 *.iml
 # BlueJ files
 *.ctxt
-target
+/**/target
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
