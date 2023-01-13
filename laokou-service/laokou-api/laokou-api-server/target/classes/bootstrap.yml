@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: laokou-api
-  cloud:
-    polaris:
-      address: grpc://192.168.62.144:8091
-      namespace: laokou
-    config:
-      address: grpc://192.168.62.144:8093

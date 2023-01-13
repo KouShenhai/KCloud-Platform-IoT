@@ -1,1 +1,0 @@
-keytool -genkey -alias gateway -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore scg-keystore.p12  -validity 3650
