@@ -91,12 +91,6 @@
     ],
     "filters": [
       {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
         "name": "RewritePath",
         "args": {
           "_genkey_0": "/v3/api-docs/(?<path>.*)",
