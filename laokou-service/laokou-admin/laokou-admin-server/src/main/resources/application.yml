@@ -14,6 +14,8 @@ server:
 
 # spring
 spring:
+  application:
+    name: @pom.parent.artifactId@
   profiles:
     # 环境 dev|test|prod
     active: @profile.active@
@@ -26,16 +28,14 @@ spring:
       max-file-size: -1
       max-request-size: -1
   cloud:
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
     inetutils:
       ignoredInterfaces:
         - docker0
         - veth.*
-
-# mybatis-plus
-mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*.xml
-  configuration:
-    log-impl: @mybatis-plus.log-impl@
 
 # feign
 feign:
@@ -48,18 +48,3 @@ feign:
       default:
         connectTimeout: 120000
         readTimeout: 120000
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-
-# springdoc 3
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
