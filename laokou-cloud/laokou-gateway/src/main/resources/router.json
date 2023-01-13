@@ -32,7 +32,9 @@
         }
       }
     ],
-    "metadata": {},
+    "metadata": {
+      "version": "2.0"
+    },
     "order": 999
   },
   {
@@ -68,7 +70,9 @@
         }
       }
     ],
-    "metadata": {},
+    "metadata": {
+      "version": "2.0"
+    },
     "order": 999
   },
   {
