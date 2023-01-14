@@ -26,8 +26,9 @@ spring:
         db1:
           nacos:
             server-addr: @NACOS-DISCOVERY-ADDRESS@
-            data-id: sentinel
+            data-id: gateway-sentinel.json
             rule-type: gw_flow # 网关规则
+            group-id: LAOKOU_GROUP
             data-type: json
     # loadbalancer
     loadbalancer:

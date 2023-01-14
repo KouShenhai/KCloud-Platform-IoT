@@ -59,16 +59,17 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 #### 相关技术
 
 - API 网关：Spring Cloud Gateway
-- 服务注册&发现：Spring Cloud Alibaba Nacos
+- 配置中心：Nacos
+- 服务注册&发现：Nacos
 - 认证授权：Spring Security OAuth2 Authorization Server
 - 服务消费：Spring Cloud OpenFeign & HttpClient & WebClient
 - 负载均衡：Spring Cloud Loadbalancer
-- 服务熔断&降级&限流：Spring Cloud Alibaba Sentinel
+- 服务熔断&降级&限流：Sentinel
+- 分布式事务：Seata
 - 服务监控：Spring Boot Admin & Prometheus
-- 配置中心：Spring Cloud Alibaba Nacos
 - 消息队列：RocketMQ & Kafka
 - 日志分析：EFK
-- 数据缓存：Caffeine + Redis
+- 数据缓存：Caffeine & Redis
 - 统计报表：MongoDB
 - 对象存储：Amazon S3
 - 服务部署：Docker
