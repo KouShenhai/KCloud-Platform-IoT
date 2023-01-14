@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * @author laokou
  */
-@FeignClient(name = ServiceConstant.LAOKOU_ROCKETMQ,path = "/api", fallback = RocketmqApiFeignClientFallbackFactory.class)
+@FeignClient(name = ServiceConstant.LAOKOU_ROCKETMQ,path = "/api", fallbackFactory = RocketmqApiFeignClientFallbackFactory.class)
 @Service
 public interface RocketmqApiFeignClient {
 

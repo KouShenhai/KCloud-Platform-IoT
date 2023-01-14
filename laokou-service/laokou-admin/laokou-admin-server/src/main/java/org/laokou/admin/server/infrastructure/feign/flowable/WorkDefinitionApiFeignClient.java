@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * @author laokou
  */
-@FeignClient(contextId = "workDefinition",name = ServiceConstant.LAOKOU_FLOWABLE,path = "/work/definition/api", fallback = WorkTaskApiFeignClientFallbackFactory.class)
+@FeignClient(contextId = "workDefinition",name = ServiceConstant.LAOKOU_FLOWABLE,path = "/work/definition/api", fallbackFactory = WorkTaskApiFeignClientFallbackFactory.class)
 @Service
 public interface WorkDefinitionApiFeignClient {
 

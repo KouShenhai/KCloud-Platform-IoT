@@ -1,0 +1,10 @@
+[
+  {
+    "resource": "/sys/user/api/userInfo",
+    "limitApp": "default",
+    "count": 300,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]

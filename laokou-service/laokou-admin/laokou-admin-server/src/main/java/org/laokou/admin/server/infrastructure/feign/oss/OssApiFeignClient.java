@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * @author laokou
  */
-@FeignClient(name = ServiceConstant.LAOKOU_OSS,path = "/api", fallback = RocketmqApiFeignClientFallbackFactory.class)
+@FeignClient(name = ServiceConstant.LAOKOU_OSS,path = "/api", fallbackFactory = RocketmqApiFeignClientFallbackFactory.class)
 @Service
 public interface OssApiFeignClient {
 
