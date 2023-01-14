@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.gateway.exception;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
@@ -38,6 +39,9 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler, Ordere
 		if (e instanceof RuntimeException){
 			log.error("服务正在维护，请联系管理员");
 			result = ResponseUtil.error(GatewayException.SERVICE_MAINTENANCE);
+		} else if (BlockException.isBlockException(e)){
+			log.error("操作太频繁，请稍后再试");
+			result = ResponseUtil.error(GatewayException.BLOCK_REQUEST);
 		} else {
 			log.error("未知错误");
 			result = ResponseUtil.error(GatewayException.UNKNOWN);

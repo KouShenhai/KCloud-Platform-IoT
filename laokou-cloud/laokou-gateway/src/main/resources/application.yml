@@ -23,9 +23,11 @@ spring:
       filter:
         enabled: true
       datasource:
-        db1:
+        # key可以自定义
+        db0:
           nacos:
             server-addr: @NACOS-DISCOVERY-ADDRESS@
+            namespace: ${NACOS-NAMESPACE}
             data-id: gateway-sentinel.json
             rule-type: gw_flow # 网关规则
             group-id: LAOKOU_GROUP
