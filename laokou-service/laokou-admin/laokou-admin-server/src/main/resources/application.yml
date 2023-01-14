@@ -28,6 +28,17 @@ spring:
       max-file-size: -1
       max-request-size: -1
   cloud:
+    # sentinel
+    sentinel:
+      datasource:
+        db0:
+          nacos:
+            server-addr: @NACOS-CONFIG-ADDRESS@
+            namespace: @NACOS-NAMESPACE@
+            group-id: LAOKOU_GROUP
+            data-id: admin-sentinel.json
+            data-type: json
+            rule-type: flow
     # loadbalancer
     loadbalancer:
       nacos:

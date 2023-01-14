@@ -41,6 +41,7 @@ public class CustomAuthExceptionHandler {
         PrintWriter writer = response.getWriter();
         writer.write(JacksonUtil.toJsonStr(new HttpResult().error(code,message)));
         writer.flush();
+        writer.close();
     }
 
     public static void throwError(int errorCode,String description) {

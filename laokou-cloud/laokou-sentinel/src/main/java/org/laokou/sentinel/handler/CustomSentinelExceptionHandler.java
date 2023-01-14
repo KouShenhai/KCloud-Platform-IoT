@@ -44,5 +44,6 @@ public class CustomSentinelExceptionHandler implements BlockExceptionHandler {
         PrintWriter writer = response.getWriter();
         writer.write(JacksonUtil.toJsonStr(dataMap));
         writer.flush();
+        writer.close();
     }
 }
