@@ -80,6 +80,10 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-redis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-sentinel</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

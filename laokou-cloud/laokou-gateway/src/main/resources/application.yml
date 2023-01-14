@@ -27,7 +27,7 @@ spring:
         db0:
           nacos:
             server-addr: @NACOS-DISCOVERY-ADDRESS@
-            namespace: ${NACOS-NAMESPACE}
+            namespace: @NACOS-NAMESPACE@
             data-id: gateway-sentinel.json
             rule-type: gw_flow # 网关规则
             group-id: LAOKOU_GROUP

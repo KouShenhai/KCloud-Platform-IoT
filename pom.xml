@@ -12,6 +12,7 @@
         <module>laokou-common</module>
         <module>laokou-cloud</module>
         <module>laokou-service</module>
+        <module>laokou-cloud/laokou-sentinel</module>
     </modules>
     <properties>
         <laokou.version>3.0.2</laokou.version>

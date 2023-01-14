@@ -26,6 +26,23 @@ spring:
   messages:
     basename: i18n/messages
   cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: @NACOS-CONFIG-ADDRESS@
+            namespace: @NACOS-NAMESPACE@
+            data-id: auth-sentinel.json
+            data-type: json
+            group-id: LAOKOU_GROUP
+            rule-type: flow
     # loadbalancer
     loadbalancer:
       nacos:

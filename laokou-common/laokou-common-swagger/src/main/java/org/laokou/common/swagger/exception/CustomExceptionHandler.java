@@ -31,7 +31,7 @@ public class CustomExceptionHandler {
 	 * 处理自定义异常
 	 */
 	@ExceptionHandler({CustomException.class})
-	public HttpResult<Boolean> handleRenException(CustomException ex){
+	public HttpResult<Boolean> handleCustomException(CustomException ex){
 		return new HttpResult<Boolean>().error(ex.getCode(),ex.getMsg());
 	}
 

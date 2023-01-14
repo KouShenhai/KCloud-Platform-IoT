@@ -35,6 +35,11 @@ public class SysAuthApiController {
 
     private final SysAuthApplicationService sysAuthApplicationService;
 
+    /**
+     * 配置服务限流
+     * @param request
+     * @return
+     */
     @GetMapping("/password/captcha")
     @Operation(summary = "系统认证>账号密码登录>验证码",description = "系统认证>账号密码登录>验证码")
     @Parameter(name = AuthConstant.UUID,description = "唯一标识",example = "1111")

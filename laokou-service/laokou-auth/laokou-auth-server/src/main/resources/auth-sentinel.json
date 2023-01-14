@@ -1,0 +1,10 @@
+[
+  {
+    "resource": "/oauth2/password/captcha",
+    "limitApp": "default",
+    "count": 1,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
