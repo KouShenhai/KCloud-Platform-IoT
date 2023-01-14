@@ -40,6 +40,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler, Ordere
 			log.error("服务正在维护，请联系管理员");
 			result = ResponseUtil.error(GatewayException.SERVICE_MAINTENANCE);
 		} else if (BlockException.isBlockException(e)){
+			// 思路来源于SentinelGatewayBlockExceptionHandler
 			log.error("操作太频繁，请稍后再试");
 			result = ResponseUtil.error(GatewayException.BLOCK_REQUEST);
 		} else {
