@@ -52,6 +52,7 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .formLogin(Customizer.withDefaults())
                 .logout()
+                .invalidateHttpSession(true)
                 .and()
                 .build();
     }
