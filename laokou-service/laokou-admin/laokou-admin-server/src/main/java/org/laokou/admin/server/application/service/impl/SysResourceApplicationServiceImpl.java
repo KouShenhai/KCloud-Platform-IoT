@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -58,10 +57,7 @@ import org.laokou.rocketmq.client.constant.RocketmqConstant;
 import org.laokou.rocketmq.client.dto.SyncIndexDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 /**
@@ -134,16 +130,11 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (!FileUtil.checkFileExt(code,fileSuffix)) {
             throw new CustomException("格式不正确，请重新上传资源");
         }
-        try {
-            HttpResult<UploadVO> result = ossApiFeignClient.upload(file,md5);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(), result.getMsg());
-            }
-            return result.getData();
-        } catch (FeignException e) {
-            log.error("错误信息:{}",e.getMessage());
+        HttpResult<UploadVO> result = ossApiFeignClient.upload(file,md5);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(), result.getMsg());
         }
-        return UploadVO.builder().build();
+        return result.getData();
     }
 
     @Override
@@ -377,24 +368,19 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
      * @return
      */
     private String startTask(Long businessKey,String businessName) {
-        try {
-            ProcessDTO dto = new ProcessDTO();
-            dto.setBusinessKey(businessKey.toString());
-            dto.setBusinessName(businessName);
-            dto.setProcessKey(PROCESS_KEY);
-            HttpResult<AssigneeVO> result = workTaskApiFeignClient.start(dto);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(),result.getMsg());
-            }
-            AssigneeVO vo = result.getData();
-            String instanceId = vo.getInstanceId();
-            String assignee = vo.getAssignee();
-            insertMessage(assignee,MessageTypeEnum.REMIND.ordinal(),businessKey,businessName);
-            return instanceId;
-        } catch (FeignException e) {
-            log.error("报错信息：{}",e.getMessage());
-            throw new CustomException("未启动流程，请联系管理员");
+        ProcessDTO dto = new ProcessDTO();
+        dto.setBusinessKey(businessKey.toString());
+        dto.setBusinessName(businessName);
+        dto.setProcessKey(PROCESS_KEY);
+        HttpResult<AssigneeVO> result = workTaskApiFeignClient.start(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(),result.getMsg());
         }
+        AssigneeVO vo = result.getData();
+        String instanceId = vo.getInstanceId();
+        String assignee = vo.getAssignee();
+        insertMessage(assignee,MessageTypeEnum.REMIND.ordinal(),businessKey,businessName);
+        return instanceId;
     }
 
 }

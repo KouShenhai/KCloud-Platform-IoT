@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author laokou
  */
-@FeignClient(name = ServiceConstant.LAOKOU_KAFKA,path = "/api", fallbackFactory = KafkaApiFeignClientFallbackFactory.class)
+@FeignClient(value = ServiceConstant.LAOKOU_KAFKA,path = "/api", fallbackFactory = KafkaApiFeignClientFallbackFactory.class)
 @Service
 public interface KafkaApiFeignClient {
 

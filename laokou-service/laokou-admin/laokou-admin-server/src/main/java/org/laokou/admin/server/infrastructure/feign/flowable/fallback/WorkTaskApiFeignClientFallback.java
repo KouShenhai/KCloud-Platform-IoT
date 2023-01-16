@@ -53,7 +53,7 @@ public class WorkTaskApiFeignClientFallback implements WorkTaskApiFeignClient {
     @Override
     public HttpResult<AssigneeVO> start(ProcessDTO dto) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<AssigneeVO>().error("服务调用失败，请联系管理员");
+        return new HttpResult<AssigneeVO>().error("未启动流程，请联系管理员");
     }
 
     @Override

@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * @author laokou
  */
-@FeignClient(name = ServiceConstant.LAOKOU_LOG,path = "/sys/log/api", fallbackFactory = LogApiFeignClientFallbackFactory.class)
+@FeignClient(value = ServiceConstant.LAOKOU_LOG,path = "/sys/log/api", fallbackFactory = LogApiFeignClientFallbackFactory.class)
 @Service
 public interface LogApiFeignClient {
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.infrastructure.feign.oss;
-import org.laokou.admin.server.infrastructure.feign.rocketmq.factory.RocketmqApiFeignClientFallbackFactory;
+import org.laokou.admin.server.infrastructure.feign.oss.factory.OssApiFeignClientFallbackFactory;
 import org.laokou.common.core.constant.ServiceConstant;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.laokou.oss.client.vo.UploadVO;
@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * @author laokou
  */
-@FeignClient(name = ServiceConstant.LAOKOU_OSS,path = "/api", fallbackFactory = RocketmqApiFeignClientFallbackFactory.class)
+@FeignClient(value = ServiceConstant.LAOKOU_OSS,path = "/api", fallbackFactory = OssApiFeignClientFallbackFactory.class)
 @Service
 public interface OssApiFeignClient {
 

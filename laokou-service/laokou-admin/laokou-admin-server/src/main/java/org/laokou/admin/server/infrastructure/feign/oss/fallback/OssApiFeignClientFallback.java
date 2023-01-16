@@ -37,6 +37,6 @@ public class OssApiFeignClientFallback implements OssApiFeignClient {
     @Override
     public HttpResult<UploadVO> upload(MultipartFile file, String md5) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<UploadVO>().error("服务调用失败，请联系管理员");
+        return new HttpResult<UploadVO>().error("OSS服务未启动，请联系管理员");
     }
 }

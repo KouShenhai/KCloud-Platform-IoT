@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author laokou
  */
-@FeignClient(contextId = "workTask",name = ServiceConstant.LAOKOU_FLOWABLE,path = "/work/task/api", fallbackFactory = WorkTaskApiFeignClientFallbackFactory.class)
+@FeignClient(contextId = "workTask",value = ServiceConstant.LAOKOU_FLOWABLE,path = "/work/task/api", fallbackFactory = WorkTaskApiFeignClientFallbackFactory.class)
 @Service
 public interface WorkTaskApiFeignClient {
 

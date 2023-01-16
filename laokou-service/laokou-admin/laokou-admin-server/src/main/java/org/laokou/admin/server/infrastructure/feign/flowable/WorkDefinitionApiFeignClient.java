@@ -1,6 +1,6 @@
 package org.laokou.admin.server.infrastructure.feign.flowable;
 import feign.Response;
-import org.laokou.admin.server.infrastructure.feign.flowable.factory.WorkTaskApiFeignClientFallbackFactory;
+import org.laokou.admin.server.infrastructure.feign.flowable.factory.WorkDefinitionApiFeignClientFallbackFactory;
 import org.laokou.common.core.constant.ServiceConstant;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.laokou.flowable.client.dto.DefinitionDTO;
@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * @author laokou
  */
-@FeignClient(contextId = "workDefinition",name = ServiceConstant.LAOKOU_FLOWABLE,path = "/work/definition/api", fallbackFactory = WorkTaskApiFeignClientFallbackFactory.class)
+@FeignClient(contextId = "workDefinition",value = ServiceConstant.LAOKOU_FLOWABLE,path = "/work/definition/api", fallbackFactory = WorkDefinitionApiFeignClientFallbackFactory.class)
 @Service
 public interface WorkDefinitionApiFeignClient {
 
