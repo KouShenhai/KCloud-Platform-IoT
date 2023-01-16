@@ -53,7 +53,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 | Spring Boot                 | 3.0.1          |
 | Spring Cloud                | 2022.0.0       |
 | Spring Cloud Alibaba        | 2022.0.0.0-RC1 |
-| Spring Boot Admin           | 3.0.0-M8       |
+| Spring Boot Admin           | 3.0.0-M9       |
 | Spring Authorization Server | 1.0.0          |
 | Mybatis Plus                | 3.5.3.1        |
 | Nacos                       | 2.2.0          |
@@ -208,11 +208,11 @@ config set notify-keyspace-events KEA
 - [x] 严格遵循阿里规范，注重代码质量
 - [x] 使用集群，减少单点故障
 - [x] 限流
-- [ ] 超时和重试机制
+- [x] 超时和重试机制
 - [x] 熔断机制
 - [x] 异步调用
 - [x] 使用缓存
-- [ ] 其他（监控系统资源使用情况增加报警设置...）
+- [x] 其他（监控系统资源使用情况增加报警设置...）
 
 ### 演示地址
 [http://175.178.69.253](http://175.178.69.253)  

@@ -15,21 +15,11 @@ server:
     buffer-size: 1024
     # 分配堆外内存
     direct-buffers: true
+
+# spring
 spring:
-  profiles:
-    active: @profile.active@
   application:
     name: @artifactId@
-  security:
-    user:
-      name: root
-      password: koushenhai
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
+  # dev|test|prod
+  profiles:
+    active: @profile.active@
