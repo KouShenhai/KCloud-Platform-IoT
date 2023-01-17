@@ -272,70 +272,61 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
     @Override
     public Boolean auditResourceTask(AuditDTO dto) {
-        try {
-            HttpResult<AssigneeVO> result = workTaskApiFeignClient.audit(dto);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(),result.getMsg());
-            }
-            // 发送消息
-            AssigneeVO vo = result.getData();
-            String assignee = vo.getAssignee();
-            String instanceId = vo.getInstanceId();
-            Map<String, Object> values = dto.getValues();
-            String instanceName = dto.getInstanceName();
-            String businessKey = dto.getBusinessKey();
-            Long businessId = Long.valueOf(businessKey);
-            String comment = dto.getComment();
-            String username = UserUtil.getUsername();
-            Long userId = UserUtil.getUserId();
-            int auditStatus = Integer.parseInt(values.get("auditStatus").toString());
-            int status;
-            //1 审核中 2 审批拒绝 3审核通过
-            if (StringUtil.isNotEmpty(assignee)) {
-                //审批中
-                status = 1;
-                insertMessage(assignee, MessageTypeEnum.REMIND.ordinal(),businessId,instanceName);
-            } else {
-                //0拒绝 1同意
-                if (0 == auditStatus) {
-                    //审批拒绝
-                    status = 2;
-                } else {
-                    //审批通过
-                    status = 3;
-                }
-            }
-            // 修改状态
-            LambdaUpdateWrapper<SysResourceDO> updateWrapper = Wrappers.lambdaUpdate(SysResourceDO.class)
-                    .set(SysResourceDO::getStatus, status)
-                    .eq(SysResourceDO::getProcessInstanceId, instanceId)
-                    .eq(SysResourceDO::getDelFlag, Constant.NO);
-            sysResourceService.update(updateWrapper);
-            // 审核日志入队列
-           saveAuditLog(businessId,auditStatus,comment,username,userId);
-        } catch (FeignException e) {
-            log.error("错误信息：{}",e.getMessage());
-            throw new CustomException("未启动流程，请联系管理员");
+        HttpResult<AssigneeVO> result = workTaskApiFeignClient.audit(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(),result.getMsg());
         }
+        // 发送消息
+        AssigneeVO vo = result.getData();
+        String assignee = vo.getAssignee();
+        String instanceId = vo.getInstanceId();
+        Map<String, Object> values = dto.getValues();
+        String instanceName = dto.getInstanceName();
+        String businessKey = dto.getBusinessKey();
+        Long businessId = Long.valueOf(businessKey);
+        String comment = dto.getComment();
+        String username = UserUtil.getUsername();
+        Long userId = UserUtil.getUserId();
+        int auditStatus = Integer.parseInt(values.get("auditStatus").toString());
+        int status;
+        //1 审核中 2 审批拒绝 3审核通过
+        if (StringUtil.isNotEmpty(assignee)) {
+            //审批中
+            status = 1;
+            insertMessage(assignee, MessageTypeEnum.REMIND.ordinal(),businessId,instanceName);
+        } else {
+            //0拒绝 1同意
+            if (0 == auditStatus) {
+                //审批拒绝
+                status = 2;
+            } else {
+                //审批通过
+                status = 3;
+            }
+        }
+        // 修改状态
+        LambdaUpdateWrapper<SysResourceDO> updateWrapper = Wrappers.lambdaUpdate(SysResourceDO.class)
+                .set(SysResourceDO::getStatus, status)
+                .eq(SysResourceDO::getProcessInstanceId, instanceId)
+                .eq(SysResourceDO::getDelFlag, Constant.NO);
+        sysResourceService.update(updateWrapper);
+        // 审核日志入队列
+        saveAuditLog(businessId,auditStatus,comment,username,userId);
         return true;
     }
 
     private void saveAuditLog(Long businessId,int auditStatus,String comment,String username,Long userId) {
-        try {
-            AuditLogDTO auditLogDTO = new AuditLogDTO();
-            auditLogDTO.setBusinessId(businessId);
-            auditLogDTO.setAuditStatus(auditStatus);
-            auditLogDTO.setAuditDate(new Date());
-            auditLogDTO.setAuditName(username);
-            auditLogDTO.setCreator(userId);
-            auditLogDTO.setComment(comment);
-            auditLogDTO.setType(AuditTypeEnum.RESOURCE.ordinal());
-            RocketmqDTO rocketmqDTO = new RocketmqDTO();
-            rocketmqDTO.setData(JacksonUtil.toJsonStr(auditLogDTO));
-            rocketmqApiFeignClient.sendOneMessage(RocketmqConstant.LAOKOU_AUDIT_LOG_TOPIC, rocketmqDTO);
-        } catch (FeignException e) {
-            log.error("错误信息：{}",e.getMessage());
-        }
+        AuditLogDTO auditLogDTO = new AuditLogDTO();
+        auditLogDTO.setBusinessId(businessId);
+        auditLogDTO.setAuditStatus(auditStatus);
+        auditLogDTO.setAuditDate(new Date());
+        auditLogDTO.setAuditName(username);
+        auditLogDTO.setCreator(userId);
+        auditLogDTO.setComment(comment);
+        auditLogDTO.setType(AuditTypeEnum.RESOURCE.ordinal());
+        RocketmqDTO rocketmqDTO = new RocketmqDTO();
+        rocketmqDTO.setData(JacksonUtil.toJsonStr(auditLogDTO));
+        rocketmqApiFeignClient.sendOneMessage(RocketmqConstant.LAOKOU_AUDIT_LOG_TOPIC, rocketmqDTO);
     }
 
     @Override
