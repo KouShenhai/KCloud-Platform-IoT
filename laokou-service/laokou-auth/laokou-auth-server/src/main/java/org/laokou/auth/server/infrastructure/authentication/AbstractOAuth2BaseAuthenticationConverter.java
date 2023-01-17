@@ -32,7 +32,7 @@ import java.util.Map;
  * 密码模式
  * @author laokou
  */
-public abstract class OAuth2BaseAuthenticationConverter implements AuthenticationConverter {
+public abstract class AbstractOAuth2BaseAuthenticationConverter implements AuthenticationConverter {
 
     /**
      * 类型

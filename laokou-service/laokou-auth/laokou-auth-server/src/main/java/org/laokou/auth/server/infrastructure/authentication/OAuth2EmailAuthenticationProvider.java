@@ -39,7 +39,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
  * @author laokou
  */
 @Slf4j
-public class OAuth2EmailAuthenticationProvider extends OAuth2BaseAuthenticationProvider {
+public class OAuth2EmailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
     public static final String GRANT_TYPE = "email";
 

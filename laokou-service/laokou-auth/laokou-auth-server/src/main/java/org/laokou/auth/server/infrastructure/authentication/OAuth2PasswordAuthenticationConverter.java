@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * @author laokou
  */
-public class OAuth2PasswordAuthenticationConverter extends OAuth2BaseAuthenticationConverter{
+public class OAuth2PasswordAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {
     @Override
     String getGrantType() {
         return OAuth2PasswordAuthenticationProvider.GRANT_TYPE;

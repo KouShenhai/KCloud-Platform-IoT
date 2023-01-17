@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Import;
 @EnableConfigurationProperties
 @EnableEncryptableProperties
 @Import({CorsConfig.class})
-@SpringBootApplication(scanBasePackages = {"org.laokou.elasticsearch","org.laokou.common.core"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.common.swagger","org.laokou.elasticsearch","org.laokou.common.core"})
 public class ElasticsearchApplication {
     public static void main(String[] args) {
         SpringApplication.run(ElasticsearchApplication.class, args);

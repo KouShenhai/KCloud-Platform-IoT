@@ -25,7 +25,7 @@ import java.util.Map;
  * 密码模式
  * @author laokou
  */
-public class OAuth2BaseAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
+public abstract class AbstractOAuth2BaseAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
     /**
      * Sub-class constructor.
      *
@@ -33,7 +33,7 @@ public class OAuth2BaseAuthenticationToken extends OAuth2AuthorizationGrantAuthe
      * @param clientPrincipal        the authenticated client principal
      * @param additionalParameters   the additional parameters
      */
-    protected OAuth2BaseAuthenticationToken(
+    protected AbstractOAuth2BaseAuthenticationToken(
             AuthorizationGrantType authorizationGrantType
             , Authentication clientPrincipal
             , Map<String, Object> additionalParameters) {

@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * @author laokou
  */
-public class OAuth2PasswordAuthenticationToken extends OAuth2BaseAuthenticationToken {
+public class OAuth2PasswordAuthenticationToken extends AbstractOAuth2BaseAuthenticationToken {
     /**
      * Sub-class constructor.
      *

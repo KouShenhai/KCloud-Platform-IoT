@@ -12,17 +12,11 @@ server:
     direct-buffers: true
 
 spring:
+  application:
+    name: @pom.parent.artifactId@
+  # dev|test|prod
   profiles:
     active: @profile.active@
   messages:
     encoding: UTF-8
     basename: i18n/messages
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always

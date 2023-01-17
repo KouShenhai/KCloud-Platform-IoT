@@ -41,7 +41,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class OAuth2PasswordAuthenticationProvider extends OAuth2BaseAuthenticationProvider {
+public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
     public static final String GRANT_TYPE = "password";
 

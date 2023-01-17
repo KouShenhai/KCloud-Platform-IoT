@@ -28,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Objects;
@@ -44,10 +43,6 @@ public class ElasticsearchConfig {
 
     private static final String HTTP_SCHEME = "http";
 
-    /**
-     * 权限验证
-     */
-    final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
     /**
      * es主机
      */
@@ -68,6 +63,7 @@ public class ElasticsearchConfig {
                 .toArray(HttpHost[]::new);
         log.info("host:{}",Arrays.toString(hosts));
         //配置权限验证
+        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
         return RestClient.builder(hosts)
                 .setHttpClientConfigCallback(httpClientBuilder ->

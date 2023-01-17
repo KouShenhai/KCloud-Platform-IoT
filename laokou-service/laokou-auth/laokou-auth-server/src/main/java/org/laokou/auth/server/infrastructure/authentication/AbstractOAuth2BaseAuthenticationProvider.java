@@ -52,7 +52,7 @@ import java.util.Set;
  * 邮件/手机/密码
  * @author laokou
  */
-public abstract class OAuth2BaseAuthenticationProvider implements AuthenticationProvider {
+public abstract class AbstractOAuth2BaseAuthenticationProvider implements AuthenticationProvider {
 
     protected SysUserService sysUserService;
     protected SysMenuService sysMenuService;
@@ -63,7 +63,7 @@ public abstract class OAuth2BaseAuthenticationProvider implements Authentication
     protected OAuth2AuthorizationService authorizationService;
     protected OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
 
-    public OAuth2BaseAuthenticationProvider(
+    public AbstractOAuth2BaseAuthenticationProvider(
             SysUserService sysUserService
             , SysMenuService sysMenuService
             , SysDeptService sysDeptService
@@ -118,8 +118,8 @@ public abstract class OAuth2BaseAuthenticationProvider implements Authentication
      */
     protected Authentication getToken(Authentication authentication,Authentication principal,HttpServletRequest request) {
         // 生成token（access_token + refresh_token）
-        OAuth2BaseAuthenticationToken OAuth2BaseAuthenticationToken = (OAuth2BaseAuthenticationToken) authentication;
-        OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(OAuth2BaseAuthenticationToken);
+        AbstractOAuth2BaseAuthenticationToken abstractOAuth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;
+        OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(abstractOAuth2BaseAuthenticationToken);
         RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
         // 获取认证范围
         Set<String> scopes = registeredClient.getScopes();
