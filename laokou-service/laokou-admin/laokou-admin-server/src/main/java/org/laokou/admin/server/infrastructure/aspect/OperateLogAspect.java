@@ -32,7 +32,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.log.client.dto.OperateLogDTO;
-import org.laokou.rocketmq.client.constant.RocketmqConstant;
 import org.laokou.rocketmq.client.dto.RocketmqDTO;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
