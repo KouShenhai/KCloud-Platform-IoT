@@ -24,9 +24,7 @@ import org.laokou.flowable.client.dto.AuditDTO;
 import org.laokou.flowable.client.vo.TaskVO;
 import org.laokou.oss.client.vo.UploadVO;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 /**
  * @author laokou
@@ -41,6 +39,13 @@ public interface SysResourceApplicationService {
      * @return
      */
     IPage<SysResourceVO> queryResourcePage(SysResourceQo qo);
+
+    /**
+     * 全量同步数据
+     * @param code
+     * @return
+     */
+    Boolean completeSyncResource(String code);
 
     /**
      * 根据id查询资源
@@ -83,33 +88,11 @@ public interface SysResourceApplicationService {
     UploadVO uploadResource(String code, MultipartFile file,String md5) throws Exception;
 
     /**
-     * 同步资源到ES（批量异步同步）
-     * @param code
-     * @return
-     * @throws InterruptedException
-     */
-    Boolean syncResourceIndex(String code) throws InterruptedException;
-
-    /**
      * 查询资源审核日志列表
      * @param businessId
      * @return
      */
     List<SysAuditLogVO> queryAuditLogList(Long businessId);
-
-    /**
-     * 创建索引
-     * @param code
-     * @return
-     */
-    Boolean createResourceIndex(String code);
-
-    /**
-     * 删除索引
-     * @param code
-     * @return
-     */
-    Boolean deleteResourceIndex(String code);
 
     /**
      * 资源审批

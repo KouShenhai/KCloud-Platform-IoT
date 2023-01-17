@@ -26,13 +26,14 @@ import org.laokou.admin.server.application.service.SysResourceApplicationService
 import org.laokou.admin.server.domain.sys.entity.SysResourceDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysAuditLogService;
 import org.laokou.admin.server.domain.sys.repository.service.SysResourceService;
+import org.laokou.admin.server.infrastructure.feign.elasticsearch.ElasticsearchApiFeignClient;
 import org.laokou.admin.server.infrastructure.feign.flowable.WorkTaskApiFeignClient;
 import org.laokou.admin.server.infrastructure.feign.oss.OssApiFeignClient;
+import org.laokou.admin.server.infrastructure.feign.rocketmq.RocketmqApiFeignClient;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.*;
 import org.laokou.admin.client.enums.MessageTypeEnum;
-import org.laokou.admin.server.infrastructure.feign.rocketmq.RocketmqApiFeignClient;
 import org.laokou.admin.client.dto.SysResourceDTO;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysAuditLogVO;
@@ -75,6 +76,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     private static final Integer INIT_STATUS = 0;
     private final SysResourceService sysResourceService;
     private final SysAuditLogService sysAuditLogService;
+    private final ElasticsearchApiFeignClient elasticsearchApiFeignClient;
     private final RocketmqApiFeignClient rocketmqApiFeignClient;
     private final SysMessageApplicationService sysMessageApplicationService;
     private final WorkTaskApiFeignClient workTaskApiFeignClient;
@@ -84,6 +86,14 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     public IPage<SysResourceVO> queryResourcePage(SysResourceQo qo) {
         IPage<SysResourceVO> page = new Page(qo.getPageNum(),qo.getPageSize());
         return sysResourceService.getResourceList(page,qo);
+    }
+
+    @Override
+    public Boolean completeSyncResource(String code) {
+        // 删除索引
+        // 创建索引
+        // 同步索引
+        return true;
     }
 
     @Override
@@ -137,8 +147,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         return result.getData();
     }
 
-    @Override
-    public Boolean syncResourceIndex(String code) {
+    private Boolean syncResourceIndex(String code) {
         //总数
         final Long resourceTotal = sysResourceService.getResourceTotal(code);
         if (resourceTotal > 0) {
@@ -156,14 +165,11 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                     final List<ResourceIndex> resourceDataList = entry.getValue();
                     //同步数据
                     try {
-                        RocketmqDTO dto = new RocketmqDTO();
                         final String indexName = resourceIndex + "_" + ym;
                         final String jsonDataList = JacksonUtil.toJsonStr(resourceDataList);
                         final SyncIndexDTO syncIndexDTO = new SyncIndexDTO();
                         syncIndexDTO.setIndexName(indexName);
                         syncIndexDTO.setData(jsonDataList);
-                        dto.setData(JacksonUtil.toJsonStr(syncIndexDTO));
-                        rocketmqApiFeignClient.sendMessage(RocketmqConstant.LAOKOU_SYNC_INDEX_TOPIC,dto);
                     } catch (final FeignException e) {
                         log.error("错误信息：{}",e.getMessage());
                     }
@@ -188,8 +194,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         log.info("结束索引创建...");
     }
 
-    @Override
-    public Boolean createResourceIndex(String code) {
+    private Boolean createResourceIndex(String code) {
         // 总数
         final Long resourceTotal = sysResourceService.getResourceTotal(code);
         if (resourceTotal > 0) {
@@ -199,16 +204,13 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
             final String resourceIndexAlias = RESOURCE_KEY;
             final List<String> resourceYmPartitionList = sysResourceService.getResourceYmPartitionList(code);
             for (String ym : resourceYmPartitionList) {
-                try {
-                    RocketmqDTO rocketmqDTO = new RocketmqDTO();
-                    final CreateIndexDTO dto = new CreateIndexDTO();
-                    final String indexName = resourceIndex + "_" + ym;
-                    dto.setIndexName(indexName);
-                    dto.setIndexAlias(resourceIndexAlias);
-                    rocketmqDTO.setData(JacksonUtil.toJsonStr(dto));
-                    rocketmqApiFeignClient.sendMessage(RocketmqConstant.LAOKOU_CREATE_INDEX_TOPIC, rocketmqDTO);
-                } catch (final FeignException e) {
-                    log.error("错误信息：{}", e.getMessage());
+                final CreateIndexDTO dto = new CreateIndexDTO();
+                final String indexName = resourceIndex + "_" + ym;
+                dto.setIndexName(indexName);
+                dto.setIndexAlias(resourceIndexAlias);
+                HttpResult<Boolean> result = elasticsearchApiFeignClient.create(dto);
+                if (!result.success()) {
+                    throw new CustomException(result.getCode(),result.getMsg());
                 }
             }
             afterCreateIndex();
@@ -216,23 +218,16 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         return true;
     }
 
-    @Override
-    public Boolean deleteResourceIndex(String code) {
-        // 总数
-        final Long resourceTotal = sysResourceService.getResourceTotal(code);
+    private Boolean deleteResourceIndex(String code,long resourceTotal,List<String> resourceYmPartitionList) {
         if (resourceTotal > 0) {
             beforeDeleteIndex();
             //创建索引 - 时间分区
             final String resourceIndex = RESOURCE_KEY + "_" + code;
-            final List<String> resourceYmPartitionList = sysResourceService.getResourceYmPartitionList(code);
             for (String ym : resourceYmPartitionList) {
-                try {
-                    RocketmqDTO rocketmqDTO = new RocketmqDTO();
-                    final String indexName = resourceIndex + "_" + ym;
-                    rocketmqDTO.setData(indexName);
-                    rocketmqApiFeignClient.sendMessage(RocketmqConstant.LAOKOU_DELETE_INDEX_TOPIC, rocketmqDTO);
-                } catch (final FeignException e) {
-                    log.error("错误信息：{}", e.getMessage());
+                final String indexName = resourceIndex + "_" + ym;
+                HttpResult<Boolean> result = elasticsearchApiFeignClient.delete(indexName);
+                if (!result.success()) {
+                    throw new CustomException(result.getCode(),result.getMsg());
                 }
             }
             afterDeleteIndex();

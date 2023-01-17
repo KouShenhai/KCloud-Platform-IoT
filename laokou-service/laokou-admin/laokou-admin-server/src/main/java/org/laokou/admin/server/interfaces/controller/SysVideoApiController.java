@@ -68,32 +68,32 @@ public class SysVideoApiController {
         return new HttpResult<IPage<SysResourceVO>>().ok(sysResourceApplicationService.queryResourcePage(qo));
     }
 
-    @PostMapping("/syncIndex")
-    @Operation(summary = "视频管理>同步索引",description = "视频管理>同步索引")
-    @OperateLog(module = "视频管理",name = "索引同步")
-    @PreAuthorize("hasAuthority('sys:resource:video:syncIndex')")
-    @Lock4j(key = "video_sync_index_lock",scope = LockScope.DISTRIBUTED_LOCK)
-    public HttpResult<Boolean> sync(@RequestParam("code") String code) throws InterruptedException {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResourceIndex(code));
-    }
-
-    @PostMapping("/createIndex")
-    @Operation(summary = "视频管理>创建索引",description = "视频管理>创建索引")
-    @OperateLog(module = "视频管理",name = "创建索引")
-    @PreAuthorize("hasAuthority('sys:resource:video:createIndex')")
-    @Lock4j(key = "video_create_index_lock",scope = LockScope.DISTRIBUTED_LOCK)
-    public HttpResult<Boolean> createIndex(@RequestParam("code") String code) {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.createResourceIndex(code));
-    }
-
-    @DeleteMapping("/deleteIndex")
-    @Operation(summary = "视频管理>创建索引",description = "视频管理>创建索引")
-    @OperateLog(module = "视频管理",name = "删除索引")
-    @PreAuthorize("hasAuthority('sys:resource:video:deleteIndex')")
-    @Lock4j(key = "video_delete_index_lock",scope = LockScope.DISTRIBUTED_LOCK)
-    public HttpResult<Boolean> deleteIndex(@RequestParam("code") String code) {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.deleteResourceIndex(code));
-    }
+//    @PostMapping("/syncIndex")
+//    @Operation(summary = "视频管理>同步索引",description = "视频管理>同步索引")
+//    @OperateLog(module = "视频管理",name = "索引同步")
+//    @PreAuthorize("hasAuthority('sys:resource:video:syncIndex')")
+//    @Lock4j(key = "video_sync_index_lock",scope = LockScope.DISTRIBUTED_LOCK)
+//    public HttpResult<Boolean> sync(@RequestParam("code") String code) throws InterruptedException {
+//        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResourceIndex(code));
+//    }
+//
+//    @PostMapping("/createIndex")
+//    @Operation(summary = "视频管理>创建索引",description = "视频管理>创建索引")
+//    @OperateLog(module = "视频管理",name = "创建索引")
+//    @PreAuthorize("hasAuthority('sys:resource:video:createIndex')")
+//    @Lock4j(key = "video_create_index_lock",scope = LockScope.DISTRIBUTED_LOCK)
+//    public HttpResult<Boolean> createIndex(@RequestParam("code") String code) {
+//        return new HttpResult<Boolean>().ok(sysResourceApplicationService.createResourceIndex(code));
+//    }
+//
+//    @DeleteMapping("/deleteIndex")
+//    @Operation(summary = "视频管理>创建索引",description = "视频管理>创建索引")
+//    @OperateLog(module = "视频管理",name = "删除索引")
+//    @PreAuthorize("hasAuthority('sys:resource:video:deleteIndex')")
+//    @Lock4j(key = "video_delete_index_lock",scope = LockScope.DISTRIBUTED_LOCK)
+//    public HttpResult<Boolean> deleteIndex(@RequestParam("code") String code) {
+//        return new HttpResult<Boolean>().ok(sysResourceApplicationService.deleteResourceIndex(code));
+//    }
 
     @GetMapping(value = "/detail")
     @Operation(summary = "视频管理>详情",description = "视频管理>详情")

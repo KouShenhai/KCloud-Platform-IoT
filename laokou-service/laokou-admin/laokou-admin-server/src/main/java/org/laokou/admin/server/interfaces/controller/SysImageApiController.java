@@ -61,32 +61,32 @@ public class SysImageApiController {
         return new HttpResult<UploadVO>().ok(sysResourceApplicationService.uploadResource("image",file,md5));
     }
 
-    @PostMapping("/syncIndex")
-    @Operation(summary = "图片管理>同步索引",description = "图片管理>同步索引")
-    @OperateLog(module = "图片管理",name = "索引同步")
-    @PreAuthorize("hasAuthority('sys:resource:image:syncIndex')")
-    @Lock4j(key = "image_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-    public HttpResult<Boolean> sync(@RequestParam("code") String code) throws InterruptedException {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResourceIndex(code));
-    }
-
-    @PostMapping("/createIndex")
-    @Operation(summary = "图片管理>创建索引",description = "图片管理>创建索引")
-    @OperateLog(module = "图片管理",name = "创建索引")
-    @PreAuthorize("hasAuthority('sys:resource:image:createIndex')")
-    @Lock4j(key = "image_create_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-    public HttpResult<Boolean> create(@RequestParam("code") String code) {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.createResourceIndex(code));
-    }
-
-    @DeleteMapping("/deleteIndex")
-    @Operation(summary = "图片管理>创建索引",description = "图片管理>创建索引")
-    @OperateLog(module = "图片管理",name = "删除索引")
-    @PreAuthorize("hasAuthority('sys:resource:image:deleteIndex')")
-    @Lock4j(key = "image_delete_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-    public HttpResult<Boolean> deleteIndex(@RequestParam("code") String code) {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.deleteResourceIndex(code));
-    }
+//    @PostMapping("/syncIndex")
+//    @Operation(summary = "图片管理>同步索引",description = "图片管理>同步索引")
+//    @OperateLog(module = "图片管理",name = "索引同步")
+//    @PreAuthorize("hasAuthority('sys:resource:image:syncIndex')")
+//    @Lock4j(key = "image_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
+//    public HttpResult<Boolean> sync(@RequestParam("code") String code) throws InterruptedException {
+//        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResourceIndex(code));
+//    }
+//
+//    @PostMapping("/createIndex")
+//    @Operation(summary = "图片管理>创建索引",description = "图片管理>创建索引")
+//    @OperateLog(module = "图片管理",name = "创建索引")
+//    @PreAuthorize("hasAuthority('sys:resource:image:createIndex')")
+//    @Lock4j(key = "image_create_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
+//    public HttpResult<Boolean> create(@RequestParam("code") String code) {
+//        return new HttpResult<Boolean>().ok(sysResourceApplicationService.createResourceIndex(code));
+//    }
+//
+//    @DeleteMapping("/deleteIndex")
+//    @Operation(summary = "图片管理>创建索引",description = "图片管理>创建索引")
+//    @OperateLog(module = "图片管理",name = "删除索引")
+//    @PreAuthorize("hasAuthority('sys:resource:image:deleteIndex')")
+//    @Lock4j(key = "image_delete_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
+//    public HttpResult<Boolean> deleteIndex(@RequestParam("code") String code) {
+//        return new HttpResult<Boolean>().ok(sysResourceApplicationService.deleteResourceIndex(code));
+//    }
 
     @PostMapping("/query")
     @Operation(summary = "图片管理>查询",description = "图片管理>查询")

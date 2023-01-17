@@ -32,8 +32,6 @@ import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.laokou.admin.server.infrastructure.annotation.OperateLog;
 import org.laokou.oss.client.vo.UploadVO;
-import org.laokou.redis.annotation.Lock4j;
-import org.laokou.redis.enums.LockScope;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -64,35 +62,35 @@ public class SysAudioApiController {
         return new HttpResult<List<SysAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogList(businessId));
     }
 
-    @PostMapping("/syncIndex")
-    @Operation(summary = "音频管理>同步索引",description = "音频管理>同步索引")
-    @OperateLog(module = "音频管理",name = "同步索引")
-    @Lock4j(key = "audio_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-    @PreAuthorize("hasAuthority('sys:resource:audio:syncIndex')")
-    @Parameter(name = "code",description = "编码",example = "audio")
-    public HttpResult<Boolean> syncIndex(@RequestParam("code") String code) throws InterruptedException {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResourceIndex(code));
-    }
-
-    @PostMapping("/createIndex")
-    @Operation(summary = "音频管理>创建索引",description = "音频管理>创建索引")
-    @Parameter(name = "code",description = "编码",example = "audio")
-    @OperateLog(module = "音频管理",name = "创建索引")
-    @PreAuthorize("hasAuthority('sys:resource:audio:createIndex')")
-    @Lock4j(key = "audio_create_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-    public HttpResult<Boolean> createIndex(@RequestParam("code") String code) {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.createResourceIndex(code));
-    }
-
-    @DeleteMapping("/deleteIndex")
-    @Operation(summary = "音频管理>删除索引",description = "音频管理>删除索引")
-    @Parameter(name = "code",description = "编码",example = "audio")
-    @OperateLog(module = "音频管理",name = "删除索引")
-    @PreAuthorize("hasAuthority('sys:resource:audio:deleteIndex')")
-    @Lock4j(key = "audio_delete_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-    public HttpResult<Boolean> deleteIndex(@RequestParam("code") String code) {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.deleteResourceIndex(code));
-    }
+//    @PostMapping("/syncIndex")
+//    @Operation(summary = "音频管理>同步索引",description = "音频管理>同步索引")
+//    @OperateLog(module = "音频管理",name = "同步索引")
+//    @Lock4j(key = "audio_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
+//    @PreAuthorize("hasAuthority('sys:resource:audio:syncIndex')")
+//    @Parameter(name = "code",description = "编码",example = "audio")
+//    public HttpResult<Boolean> syncIndex(@RequestParam("code") String code) throws InterruptedException {
+//        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResourceIndex(code));
+//    }
+//
+//    @PostMapping("/createIndex")
+//    @Operation(summary = "音频管理>创建索引",description = "音频管理>创建索引")
+//    @Parameter(name = "code",description = "编码",example = "audio")
+//    @OperateLog(module = "音频管理",name = "创建索引")
+//    @PreAuthorize("hasAuthority('sys:resource:audio:createIndex')")
+//    @Lock4j(key = "audio_create_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
+//    public HttpResult<Boolean> createIndex(@RequestParam("code") String code) {
+//        return new HttpResult<Boolean>().ok(sysResourceApplicationService.createResourceIndex(code));
+//    }
+//
+//    @DeleteMapping("/deleteIndex")
+//    @Operation(summary = "音频管理>删除索引",description = "音频管理>删除索引")
+//    @Parameter(name = "code",description = "编码",example = "audio")
+//    @OperateLog(module = "音频管理",name = "删除索引")
+//    @PreAuthorize("hasAuthority('sys:resource:audio:deleteIndex')")
+//    @Lock4j(key = "audio_delete_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
+//    public HttpResult<Boolean> deleteIndex(@RequestParam("code") String code) {
+//        return new HttpResult<Boolean>().ok(sysResourceApplicationService.deleteResourceIndex(code));
+//    }
 
     @PostMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "音频管理>上传",description = "音频管理>上传")
