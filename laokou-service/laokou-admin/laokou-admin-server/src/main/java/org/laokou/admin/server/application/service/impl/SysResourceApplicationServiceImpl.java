@@ -59,7 +59,6 @@ import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.rocketmq.client.constant.RocketmqConstant;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -72,7 +71,6 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
     private static final String RESOURCE_KEY = "laokou_resource";
     private static final String PROCESS_KEY = "Process_88888888";
@@ -106,7 +104,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         }
         redisUtil.set(key,1,RedisUtil.HOUR_ONE_EXPIRE);
         List<String> resourceYmPartitionList;
-        if (StringUtil.isEmpty(ym)) {
+        if (StringUtil.isNotEmpty(ym)) {
             resourceYmPartitionList = new ArrayList<>();
             resourceYmPartitionList.add(ym);
         } else {

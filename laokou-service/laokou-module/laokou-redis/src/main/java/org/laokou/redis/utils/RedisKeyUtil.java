@@ -79,7 +79,7 @@ public final class RedisKeyUtil {
      * @return
      */
     public static String getSyncIndexCompleteKey(String code) {
-        return "sys:es:sync:" + code + ":complete";
+        return "sys:resource:sync:" + code + ":complete";
     }
 
     /**
@@ -87,7 +87,7 @@ public final class RedisKeyUtil {
      * @return
      */
     public static String getSyncIndexIncrementKey(String code) {
-        return "sys:es:sync:" + code + ":increment";
+        return "sys:resource:sync:" + code + ":increment";
     }
 
 }

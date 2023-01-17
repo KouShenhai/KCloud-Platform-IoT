@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.infrastructure.aspect;
-import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,6 @@ import org.laokou.common.core.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHeaders;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -76,49 +74,45 @@ public class OperateLogAspect {
     }
 
     protected void handleLog(final JoinPoint joinPoint,final Exception e) throws IOException {
-        try {
-            HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-            //获取注解
-            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-            Method method = methodSignature.getMethod();
-            OperateLog operateLog = method.getAnnotation(OperateLog.class);
-            if (operateLog == null) {
-                operateLog = AnnotationUtils.findAnnotation(method, OperateLog.class);
-            }
-            String ip = IpUtil.getIpAddr(request);
-            String className = joinPoint.getTarget().getClass().getName();
-            String methodName = joinPoint.getSignature().getName();
-            Object[] args = joinPoint.getArgs();
-            List<?> params = new ArrayList<>(Arrays.asList(args)).stream().filter(arg -> (!(arg instanceof HttpServletRequest)
-                    && !(arg instanceof HttpServletResponse))).collect(Collectors.toList());
-            OperateLogDTO dto = new OperateLogDTO();
-            assert operateLog != null;
-            dto.setModule(operateLog.module());
-            dto.setOperation(operateLog.name());
-            dto.setRequestUri(request.getRequestURI());
-            dto.setRequestIp(ip);
-            dto.setRequestAddress(AddressUtil.getRealAddress(ip));
-            dto.setOperator(UserUtil.getUsername());
-            dto.setCreator(UserUtil.getUserId());
-            dto.setDeptId(UserUtil.getDeptId());
-            if (null != e) {
-                dto.setRequestStatus(ResultStatusEnum.FAIL.ordinal());
-                dto.setErrorMsg(e.getMessage());
-            } else {
-                dto.setRequestStatus(ResultStatusEnum.SUCCESS.ordinal());
-            }
-            dto.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
-            dto.setMethodName(className + "." + methodName + "()");
-            dto.setRequestMethod(request.getMethod());
-            if (DataTypeEnum.TEXT.equals(operateLog.type())) {
-                dto.setRequestParams(JacksonUtil.toJsonStr(params, true));
-            }
-            RocketmqDTO rocketmqDTO = new RocketmqDTO();
-            rocketmqDTO.setData(JacksonUtil.toJsonStr(dto));
-            rocketmqApiFeignClient.sendOneMessage(RocketmqConstant.LAOKOU_OPERATE_LOG_TOPIC, rocketmqDTO);
-        } catch (FeignException ex) {
-            log.error("错误信息：{}", ex.getMessage());
+        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+        //获取注解
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        Method method = methodSignature.getMethod();
+        OperateLog operateLog = method.getAnnotation(OperateLog.class);
+        if (operateLog == null) {
+            operateLog = AnnotationUtils.findAnnotation(method, OperateLog.class);
         }
+        String ip = IpUtil.getIpAddr(request);
+        String className = joinPoint.getTarget().getClass().getName();
+        String methodName = joinPoint.getSignature().getName();
+        Object[] args = joinPoint.getArgs();
+        List<?> params = new ArrayList<>(Arrays.asList(args)).stream().filter(arg -> (!(arg instanceof HttpServletRequest)
+                && !(arg instanceof HttpServletResponse))).collect(Collectors.toList());
+        OperateLogDTO dto = new OperateLogDTO();
+        assert operateLog != null;
+        dto.setModule(operateLog.module());
+        dto.setOperation(operateLog.name());
+        dto.setRequestUri(request.getRequestURI());
+        dto.setRequestIp(ip);
+        dto.setRequestAddress(AddressUtil.getRealAddress(ip));
+        dto.setOperator(UserUtil.getUsername());
+        dto.setCreator(UserUtil.getUserId());
+        dto.setDeptId(UserUtil.getDeptId());
+        if (null != e) {
+            dto.setRequestStatus(ResultStatusEnum.FAIL.ordinal());
+            dto.setErrorMsg(e.getMessage());
+        } else {
+            dto.setRequestStatus(ResultStatusEnum.SUCCESS.ordinal());
+        }
+        dto.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
+        dto.setMethodName(className + "." + methodName + "()");
+        dto.setRequestMethod(request.getMethod());
+        if (DataTypeEnum.TEXT.equals(operateLog.type())) {
+            dto.setRequestParams(JacksonUtil.toJsonStr(params, true));
+        }
+        RocketmqDTO rocketmqDTO = new RocketmqDTO();
+        rocketmqDTO.setData(JacksonUtil.toJsonStr(dto));
+        rocketmqApiFeignClient.sendOneMessage(RocketmqConstant.LAOKOU_OPERATE_LOG_TOPIC, rocketmqDTO);
     }
 
 }

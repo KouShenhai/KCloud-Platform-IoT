@@ -18,6 +18,7 @@ package org.laokou.admin.server.infrastructure.feign.rocketmq.fallback;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.infrastructure.feign.rocketmq.RocketmqApiFeignClient;
+import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.rocketmq.client.dto.RocketmqDTO;
 
 /**
@@ -35,11 +36,13 @@ public class RocketmqApiFeignClientFallback implements RocketmqApiFeignClient {
     @Override
     public void sendMessage(String topic, RocketmqDTO dto) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
+        throw new CustomException("mq未启动，请联系管理员");
     }
 
     @Override
     public void sendOneMessage(String topic, RocketmqDTO dto) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
+        throw new CustomException("mq未启动，请联系管理员");
     }
 
 }
