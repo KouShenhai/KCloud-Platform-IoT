@@ -48,7 +48,7 @@ public class LockAspect {
     public void lockPointCut() {}
 
     @Around(value = "lockPointCut()")
-    public void around(ProceedingJoinPoint joinPoint) {
+    public void around(ProceedingJoinPoint joinPoint) throws Throwable {
         //获取注解
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
@@ -75,6 +75,7 @@ public class LockAspect {
             }
         } catch (Throwable throwable) {
             log.error("异常信息：{}",throwable.getMessage());
+            throw throwable;
         } finally {
             //释放锁
             locks.unlock(type,key);
