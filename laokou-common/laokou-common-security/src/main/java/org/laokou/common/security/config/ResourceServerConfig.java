@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.server.infrastructure.config;
+package org.laokou.common.security.config;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.exception.ForbiddenExceptionHandler;
 import org.laokou.auth.client.exception.InvalidAuthenticationEntryPoint;

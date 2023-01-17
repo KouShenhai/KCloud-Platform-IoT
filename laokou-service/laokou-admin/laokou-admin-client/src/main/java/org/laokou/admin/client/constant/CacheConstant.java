@@ -5,7 +5,6 @@ package org.laokou.admin.client.constant;
  */
 public interface CacheConstant {
 
-    String TOKEN = "token";
     String USER = "user";
     String AUDIO = "audio";
     String DEPT = "dept";

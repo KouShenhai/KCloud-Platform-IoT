@@ -86,6 +86,11 @@
         <dependencies>
             <dependency>
                 <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-security</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-sentinel</artifactId>
                 <version>${laokou.version}</version>
             </dependency>

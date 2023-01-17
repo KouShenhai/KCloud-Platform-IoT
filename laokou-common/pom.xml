@@ -18,6 +18,7 @@
         <module>laokou-common-mybatis-plus</module>
         <module>laokou-common-bom</module>
         <module>laokou-common-swagger</module>
+        <module>laokou-common-security</module>
     </modules>
 
 </project>

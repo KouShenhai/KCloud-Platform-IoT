@@ -14,39 +14,35 @@
  * limitations under the License.
  */
 
-package org.laokou.admin.server.infrastructure.config;
+package org.laokou.common.security.config;
 
-import org.laokou.admin.client.constant.CacheConstant;
+import com.github.benmanes.caffeine.cache.Cache;
+import lombok.RequiredArgsConstructor;
+import org.laokou.auth.client.user.UserDetail;
 import org.laokou.redis.config.AbstractRedisDeleteListener;
 import org.laokou.redis.utils.RedisKeyUtil;
-import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
 @Component
+@RequiredArgsConstructor
 public class RedisDeleteEventMessageListener extends AbstractRedisDeleteListener {
 
-    private CacheManager caffeineCacheManager;
-
-    public RedisDeleteEventMessageListener(CacheManager caffeineCacheManager) {
-        this.caffeineCacheManager = caffeineCacheManager;
-    }
+    private final Cache<String, UserDetail> userInfoCache;
 
     @Override
     protected void doHandle(String key) {
         String regex = ".*";
         if (key.matches(RedisKeyUtil.getUserInfoKey("") + regex)) {
-            caffeineCacheManager.getCache(CacheConstant.TOKEN).evict(key);
+            userInfoCache.invalidate(key);
         }
     }
 
     public static void main(String[] args) {
         boolean matches = "sys:user:info:11111".matches(RedisKeyUtil.getUserInfoKey("") + ".*");
         System.out.println(matches);
-        boolean matches2 = "sys:user:cache:11111".matches(RedisKeyUtil.getDoubleCacheKey(CacheConstant.USER,null)+ ".*");
-        System.out.println(matches2);
     }
 
 }

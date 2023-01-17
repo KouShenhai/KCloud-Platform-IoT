@@ -33,12 +33,7 @@ public class CacheConfig {
     @Bean(name = "caffeineCacheManager")
     public CacheManager caffeineCacheManager() {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
-        List<CaffeineCache> caffeineList = new ArrayList<>();
-        caffeineList.add(new CaffeineCache(CacheConstant.TOKEN, Caffeine.newBuilder()
-                .expireAfterWrite(1, TimeUnit.MINUTES)
-                .initialCapacity(100)
-                .maximumSize(1000)
-                .build()));
+        List<CaffeineCache> caffeineList = new ArrayList<>(9);
         caffeineList.add(new CaffeineCache(CacheConstant.USER, Caffeine.newBuilder()
                 .expireAfterWrite(5, TimeUnit.MINUTES)
                 .initialCapacity(10)

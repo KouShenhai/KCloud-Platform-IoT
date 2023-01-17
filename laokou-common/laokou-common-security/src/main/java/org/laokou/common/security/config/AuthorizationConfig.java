@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.laokou.admin.server.infrastructure.config;
-
+package org.laokou.common.security.config;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import org.laokou.auth.client.user.UserDetail;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,6 +26,7 @@ import org.springframework.security.oauth2.server.authorization.JdbcOAuth2Author
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
@@ -33,7 +35,7 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 public class AuthorizationConfig {
 
     @Bean
-    public OAuth2AuthorizationService auth2AuthorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
+    public OAuth2AuthorizationService oauth2AuthorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
         return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
     }
 
@@ -43,8 +45,17 @@ public class AuthorizationConfig {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public Cache<String, UserDetail> userInfoCache() {
+        return Caffeine.newBuilder()
+                .expireAfterWrite(1, TimeUnit.MINUTES)
+                .initialCapacity(100)
+                .maximumSize(1000)
+                .build();
     }
 
 }

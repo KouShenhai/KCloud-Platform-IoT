@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.server.infrastructure.config;
+package org.laokou.common.security.config;
+import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.constant.CacheConstant;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.swagger.exception.ErrorCode;
 import org.laokou.common.core.utils.MessageUtil;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
@@ -43,13 +41,12 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
     private final OAuth2AuthorizationService oAuth2AuthorizationService;
     private final RedisUtil redisUtil;
-    private final CacheManager caffeineCacheManager;
+    private final Cache<String, UserDetail> userInfoCache;
 
     @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
-        Cache userInfoCache = caffeineCacheManager.getCache(CacheConstant.TOKEN);
         String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-        UserDetail userDetail = userInfoCache.get(userInfoKey, UserDetail.class);
+        UserDetail userDetail = userInfoCache.getIfPresent(userInfoKey);
         if (userDetail != null) {
             return userDetail;
         }
