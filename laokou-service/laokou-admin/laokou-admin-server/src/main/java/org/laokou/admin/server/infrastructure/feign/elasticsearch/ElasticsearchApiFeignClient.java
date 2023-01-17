@@ -17,6 +17,8 @@ package org.laokou.admin.server.infrastructure.feign.elasticsearch;
 import org.laokou.admin.server.infrastructure.feign.elasticsearch.factory.ElasticsearchApiFeignClientFallbackFactory;
 import org.laokou.common.core.constant.ServiceConstant;
 import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
+import org.laokou.elasticsearch.client.dto.ElasticsearchDTO;
 import org.laokou.elasticsearch.client.form.SearchForm;
 import org.laokou.elasticsearch.client.vo.SearchVO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -37,4 +39,29 @@ public interface ElasticsearchApiFeignClient {
      */
     @PostMapping("/api/highlightSearch")
     HttpResult<SearchVO<Map<String,Object>>> highlightSearch(@RequestBody final SearchForm searchForm);
+
+    /**
+     * 异步批量同步索引
+     * @param model
+     * @return
+     */
+    @PostMapping("/api/syncBatch")
+    HttpResult<Boolean> syncBatch(@RequestBody final ElasticsearchDTO model);
+
+    /**
+     * 异步创建索引
+     * @param model
+     * @return
+     */
+    @PostMapping("/api/create")
+    HttpResult<Boolean> create(@RequestBody final CreateIndexDTO model);
+
+    /**
+     * 异步删除索引
+     * @param indexName
+     * @return
+     */
+    @DeleteMapping("/api/delete")
+    HttpResult<Boolean> delete(@RequestParam("indexName")final String indexName);
+
 }

@@ -59,6 +59,8 @@ public class ResourceServerConfig {
                 .anyRequest()
                 .authenticated()
                 .and()
+                // https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
+                // 大多数资源服务器支持都收集在 中。 但是，除非提供自定义的 OpaqueTokenIntrospector，否则资源服务器将回退到 NimbusOpaqueTokenIntrospector
                 .oauth2ResourceServer(oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
                         .accessDeniedHandler(forbiddenExceptionHandler)
                         .authenticationEntryPoint(invalidAuthenticationEntryPoint))

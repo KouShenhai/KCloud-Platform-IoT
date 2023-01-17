@@ -18,6 +18,8 @@ import org.laokou.admin.server.infrastructure.feign.elasticsearch.ElasticsearchA
 import org.laokou.common.swagger.utils.HttpResult;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
+import org.laokou.elasticsearch.client.dto.ElasticsearchDTO;
 import org.laokou.elasticsearch.client.form.SearchForm;
 import org.laokou.elasticsearch.client.vo.SearchVO;
 import java.util.Map;
@@ -36,7 +38,22 @@ public class ElasticsearchApiFeignClientFallback implements ElasticsearchApiFeig
     @Override
     public HttpResult<SearchVO<Map<String,Object>>> highlightSearch(SearchForm searchForm) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<SearchVO<Map<String,Object>>>().error("服务调用失败，请联系管理员");
+        return new HttpResult<SearchVO<Map<String,Object>>>().error("搜索服务未启动，请联系管理员");
+    }
+
+    @Override
+    public HttpResult<Boolean> syncBatch(ElasticsearchDTO model) {
+        return new HttpResult<Boolean>().error("同步索引失败，请联系管理员");
+    }
+
+    @Override
+    public HttpResult<Boolean> create(CreateIndexDTO model) {
+        return new HttpResult<Boolean>().error("索引创建失败，请联系管理员");
+    }
+
+    @Override
+    public HttpResult<Boolean> delete(String indexName) {
+        return new HttpResult<Boolean>().error("索引删除失败，请联系管理员");
     }
 
 }
