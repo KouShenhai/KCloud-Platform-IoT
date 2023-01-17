@@ -3,20 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
+        <artifactId>laokou-cloud</artifactId>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-parent</artifactId>
         <version>3.0.2</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-cloud</artifactId>
-    <version>3.0.2</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>laokou-gateway</module>
-        <module>laokou-monitor</module>
-        <module>laokou-sentinel</module>
-        <module>laokou-seata</module>
-    </modules>
+    <artifactId>laokou-seata</artifactId>
 </project>
