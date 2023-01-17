@@ -41,6 +41,7 @@ import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.elasticsearch.client.dto.ElasticsearchDTO;
 import org.laokou.elasticsearch.client.index.ResourceIndex;
 import org.laokou.flowable.client.dto.AuditDTO;
 import org.laokou.flowable.client.dto.ProcessDTO;
@@ -55,7 +56,6 @@ import org.laokou.oss.client.vo.UploadVO;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.rocketmq.client.constant.RocketmqConstant;
-import org.laokou.rocketmq.client.dto.SyncIndexDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -90,7 +90,15 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
     @Override
     public Boolean completeSyncResource(String code) {
+        long resourceTotal = sysResourceService.getResourceTotal(code);
+        if (resourceTotal == 0) {
+            throw new CustomException("数据为空，无法同步数据");
+        }
+
+        String resourceIndexAlias = RESOURCE_KEY;
+        String resourceIndex = RESOURCE_KEY + "_" + code;
         // 删除索引
+
         // 创建索引
         // 同步索引
         return true;
@@ -147,31 +155,27 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         return result.getData();
     }
 
-    private Boolean syncResourceIndex(String code) {
-        //总数
-        final Long resourceTotal = sysResourceService.getResourceTotal(code);
+    private Boolean syncResourceIndex(String code,long resourceTotal,final String resourceIndexAlias,final String resourceIndex) {
         if (resourceTotal > 0) {
             beforeSyncAsync();
-            //创建索引 - 时间分区
-            final String resourceIndex = RESOURCE_KEY + "_" + code;
-            //同步数据 - 异步
-            final int chunkSize = 500;
+            int chunkSize = 500;
             int pageIndex = 0;
             while (pageIndex < resourceTotal) {
-                final List<ResourceIndex> resourceIndexList = sysResourceService.getResourceIndexList(chunkSize, pageIndex,code);
-                final Map<String, List<ResourceIndex>> resourceDataMap = resourceIndexList.stream().collect(Collectors.groupingBy(ResourceIndex::getYm));
+                List<ResourceIndex> resourceIndexList = sysResourceService.getResourceIndexList(chunkSize, pageIndex,code);
+                Map<String, List<ResourceIndex>> resourceDataMap = resourceIndexList.stream().collect(Collectors.groupingBy(ResourceIndex::getYm));
                 for (Map.Entry<String, List<ResourceIndex>> entry : resourceDataMap.entrySet()) {
+                    ElasticsearchDTO dto = new ElasticsearchDTO();
                     final String ym = entry.getKey();
                     final List<ResourceIndex> resourceDataList = entry.getValue();
-                    //同步数据
-                    try {
-                        final String indexName = resourceIndex + "_" + ym;
-                        final String jsonDataList = JacksonUtil.toJsonStr(resourceDataList);
-                        final SyncIndexDTO syncIndexDTO = new SyncIndexDTO();
-                        syncIndexDTO.setIndexName(indexName);
-                        syncIndexDTO.setData(jsonDataList);
-                    } catch (final FeignException e) {
-                        log.error("错误信息：{}",e.getMessage());
+                    // 索引 + 时间分区
+                    final String indexName = resourceIndex + "_" + ym;
+                    final String jsonDataList = JacksonUtil.toJsonStr(resourceDataList);
+                    dto.setData(jsonDataList);
+                    dto.setIndexAlias(resourceIndexAlias);
+                    dto.setIndexName(indexName);
+                    HttpResult<Boolean> result = elasticsearchApiFeignClient.syncBatch(dto);
+                    if (!result.success()) {
+                        throw new CustomException(result.getCode(),result.getMsg());
                     }
                 }
                 pageIndex += chunkSize;
@@ -194,15 +198,10 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         log.info("结束索引创建...");
     }
 
-    private Boolean createResourceIndex(String code) {
-        // 总数
-        final Long resourceTotal = sysResourceService.getResourceTotal(code);
+    private Boolean createResourceIndex(String code,long resourceTotal,String resourceIndexAlias,String resourceIndex) {
         if (resourceTotal > 0) {
             beforeCreateIndex();
-            //创建索引 - 时间分区
-            final String resourceIndex = RESOURCE_KEY + "_" + code;
-            final String resourceIndexAlias = RESOURCE_KEY;
-            final List<String> resourceYmPartitionList = sysResourceService.getResourceYmPartitionList(code);
+            List<String> resourceYmPartitionList = sysResourceService.getResourceYmPartitionList(code);
             for (String ym : resourceYmPartitionList) {
                 final CreateIndexDTO dto = new CreateIndexDTO();
                 final String indexName = resourceIndex + "_" + ym;
@@ -218,11 +217,9 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         return true;
     }
 
-    private Boolean deleteResourceIndex(String code,long resourceTotal,List<String> resourceYmPartitionList) {
+    private Boolean deleteResourceIndex(String code,long resourceTotal,List<String> resourceYmPartitionList,String resourceIndex) {
         if (resourceTotal > 0) {
             beforeDeleteIndex();
-            //创建索引 - 时间分区
-            final String resourceIndex = RESOURCE_KEY + "_" + code;
             for (String ym : resourceYmPartitionList) {
                 final String indexName = resourceIndex + "_" + ym;
                 HttpResult<Boolean> result = elasticsearchApiFeignClient.delete(indexName);
