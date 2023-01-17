@@ -60,9 +60,10 @@ public interface SysResourceMapper extends BaseMapper<SysResourceDO> {
     /**
      * 根据编码查询资源总数
      * @param code
+     * @param ym
      * @return
      */
-    Long getResourceTotal(@Param("code")String code);
+    Long getResourceTotal(@Param("code")String code,@Param("ym")String ym);
 
     /**
      * 根据编码查询资源的年分区列表
@@ -76,8 +77,9 @@ public interface SysResourceMapper extends BaseMapper<SysResourceDO> {
      * @param pageSize
      * @param pageIndex
      * @param code
+     * @param ym
      * @return
      */
-    List<ResourceIndex> getResourceIndexList(@Param("pageSize")Integer pageSize, @Param("pageIndex")Integer pageIndex, @Param("code")String code);
+    List<ResourceIndex> getResourceIndexList(@Param("pageSize")Integer pageSize, @Param("pageIndex")Integer pageIndex, @Param("code")String code,@Param("ym")String ym);
 
 }

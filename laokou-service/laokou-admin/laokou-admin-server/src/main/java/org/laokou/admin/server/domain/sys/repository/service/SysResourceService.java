@@ -54,9 +54,10 @@ public interface SysResourceService extends IService<SysResourceDO> {
     /**
      * 根据编码获取资源总数
      * @param code
+     * @param ym
      * @return
      */
-    Long getResourceTotal(String code);
+    Long getResourceTotal(String code,String ym);
 
     /**
      * 根据编码查询资源的年分区列表
@@ -69,8 +70,9 @@ public interface SysResourceService extends IService<SysResourceDO> {
      * 根据偏移量查询资源列表
      * @param pageSize
      * @param pageIndex
+     * @param ym
      * @param code
      * @return
      */
-    List<ResourceIndex> getResourceIndexList(Integer pageSize, Integer pageIndex, String code);
+    List<ResourceIndex> getResourceIndexList(Integer pageSize,final Integer pageIndex, String code,String ym);
 }

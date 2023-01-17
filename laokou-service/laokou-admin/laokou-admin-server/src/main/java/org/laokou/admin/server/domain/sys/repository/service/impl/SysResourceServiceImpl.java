@@ -50,8 +50,8 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
     }
 
     @Override
-    public Long getResourceTotal(String code) {
-        return this.baseMapper.getResourceTotal(code);
+    public Long getResourceTotal(String code,String ym) {
+        return this.baseMapper.getResourceTotal(code,ym);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
     }
 
     @Override
-    public List<ResourceIndex> getResourceIndexList(Integer pageSize, Integer pageIndex, String code) {
-        return this.baseMapper.getResourceIndexList(pageSize, pageIndex, code);
+    public List<ResourceIndex> getResourceIndexList(Integer pageSize, Integer pageIndex, String code,String ym) {
+        return this.baseMapper.getResourceIndexList(pageSize, pageIndex, code,ym);
     }
 }

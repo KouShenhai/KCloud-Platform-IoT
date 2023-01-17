@@ -75,33 +75,19 @@ public final class RedisKeyUtil {
     }
 
     /**
-     * 创建索引Key
+     * 全量同步索引Key
      * @return
      */
-    public static String getCreateIndexKey() {
-        return "sys:es:create";
+    public static String getSyncIndexCompleteKey(String code) {
+        return "sys:es:sync:" + code + ":complete";
     }
 
     /**
-     * 删除索引Key
+     * 全量同步索引Key
      * @return
      */
-    public static String getDeleteIndexKey() {
-        return "sys:es:delete";
+    public static String getSyncIndexIncrementKey(String code) {
+        return "sys:es:sync:" + code + ":increment";
     }
 
-    /**
-     * 同步索引Key
-     * @return
-     */
-    public static String getSyncIndexKey() {
-        return "sys:es:sync";
-    }
-
-    /**
-     * 亚马逊S3Key
-     */
-    public static String getAmazonS3Key(Long id) {
-        return "sys:amazon:s3:" + id;
-    }
 }

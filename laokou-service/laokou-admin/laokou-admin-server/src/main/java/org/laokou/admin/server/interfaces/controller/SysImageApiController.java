@@ -28,11 +28,13 @@ import org.laokou.admin.server.infrastructure.annotation.DataCache;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysAuditLogVO;
 import org.laokou.admin.client.vo.SysResourceVO;
+import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.laokou.admin.server.infrastructure.annotation.OperateLog;
 import org.laokou.oss.client.vo.UploadVO;
 import org.laokou.redis.annotation.Lock4j;
 import org.laokou.redis.enums.LockScope;
+import org.laokou.redis.utils.RedisKeyUtil;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -61,32 +63,23 @@ public class SysImageApiController {
         return new HttpResult<UploadVO>().ok(sysResourceApplicationService.uploadResource("image",file,md5));
     }
 
-//    @PostMapping("/syncIndex")
-//    @Operation(summary = "图片管理>同步索引",description = "图片管理>同步索引")
-//    @OperateLog(module = "图片管理",name = "索引同步")
-//    @PreAuthorize("hasAuthority('sys:resource:image:syncIndex')")
-//    @Lock4j(key = "image_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-//    public HttpResult<Boolean> sync(@RequestParam("code") String code) throws InterruptedException {
-//        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResourceIndex(code));
-//    }
-//
-//    @PostMapping("/createIndex")
-//    @Operation(summary = "图片管理>创建索引",description = "图片管理>创建索引")
-//    @OperateLog(module = "图片管理",name = "创建索引")
-//    @PreAuthorize("hasAuthority('sys:resource:image:createIndex')")
-//    @Lock4j(key = "image_create_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-//    public HttpResult<Boolean> create(@RequestParam("code") String code) {
-//        return new HttpResult<Boolean>().ok(sysResourceApplicationService.createResourceIndex(code));
-//    }
-//
-//    @DeleteMapping("/deleteIndex")
-//    @Operation(summary = "图片管理>创建索引",description = "图片管理>创建索引")
-//    @OperateLog(module = "图片管理",name = "删除索引")
-//    @PreAuthorize("hasAuthority('sys:resource:image:deleteIndex')")
-//    @Lock4j(key = "image_delete_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-//    public HttpResult<Boolean> deleteIndex(@RequestParam("code") String code) {
-//        return new HttpResult<Boolean>().ok(sysResourceApplicationService.deleteResourceIndex(code));
-//    }
+    @PostMapping("/complete/syncIndex")
+    @Operation(summary = "图片管理>全量同步",description = "图片管理>全量同步")
+    @OperateLog(module = "图片管理",name = "全量同步")
+    @Lock4j(key = "complete_image_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
+    @PreAuthorize("hasAuthority('sys:resource:image:complete:syncIndex')")
+    public HttpResult<Boolean> complete() throws InterruptedException {
+        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResource("image","", RedisKeyUtil.getSyncIndexCompleteKey("image")));
+    }
+
+    @PostMapping("/increment/syncIndex")
+    @Operation(summary = "图片管理>增量同步",description = "图片管理>增量同步")
+    @OperateLog(module = "图片管理",name = "增量同步")
+    @Lock4j(key = "increment_image_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
+    @PreAuthorize("hasAuthority('sys:resource:image:increment:syncIndex')")
+    public HttpResult<Boolean> increment() throws InterruptedException {
+        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResource("image", DateUtil.format(new Date(),DateUtil.YM_DATE_TIME), RedisKeyUtil.getSyncIndexIncrementKey("image")));
+    }
 
     @PostMapping("/query")
     @Operation(summary = "图片管理>查询",description = "图片管理>查询")

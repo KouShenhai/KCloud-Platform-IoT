@@ -51,15 +51,18 @@ import org.laokou.flowable.client.vo.PageVO;
 import org.laokou.flowable.client.vo.TaskVO;
 import org.laokou.log.client.dto.AuditLogDTO;
 import org.laokou.log.client.dto.enums.AuditTypeEnum;
+import org.laokou.redis.utils.RedisUtil;
 import org.laokou.rocketmq.client.dto.RocketmqDTO;
 import org.laokou.oss.client.vo.UploadVO;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.rocketmq.client.constant.RocketmqConstant;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 /**
  * @author laokou
@@ -76,11 +79,13 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     private static final Integer INIT_STATUS = 0;
     private final SysResourceService sysResourceService;
     private final SysAuditLogService sysAuditLogService;
+    private final ThreadPoolTaskExecutor taskExecutor;
     private final ElasticsearchApiFeignClient elasticsearchApiFeignClient;
     private final RocketmqApiFeignClient rocketmqApiFeignClient;
     private final SysMessageApplicationService sysMessageApplicationService;
     private final WorkTaskApiFeignClient workTaskApiFeignClient;
     private final OssApiFeignClient ossApiFeignClient;
+    private final RedisUtil redisUtil;
 
     @Override
     public IPage<SysResourceVO> queryResourcePage(SysResourceQo qo) {
@@ -89,18 +94,38 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     @Override
-    public Boolean completeSyncResource(String code) {
-        long resourceTotal = sysResourceService.getResourceTotal(code);
+    public Boolean syncResource(String code,String ym,String key) throws InterruptedException {
+        long resourceTotal = sysResourceService.getResourceTotal(code,ym);
         if (resourceTotal == 0) {
             throw new CustomException("数据为空，无法同步数据");
         }
-
+        // 一个小时内不能重复同步数据
+        Object obj = redisUtil.get(key);
+        if (obj != null) {
+            throw new CustomException("数据已同步，请稍后再试");
+        }
+        redisUtil.set(key,1,RedisUtil.HOUR_ONE_EXPIRE);
+        List<String> resourceYmPartitionList;
+        if (StringUtil.isEmpty(ym)) {
+            resourceYmPartitionList = new ArrayList<>();
+            resourceYmPartitionList.add(ym);
+        } else {
+            resourceYmPartitionList = sysResourceService.getResourceYmPartitionList(code);
+        }
         String resourceIndexAlias = RESOURCE_KEY;
         String resourceIndex = RESOURCE_KEY + "_" + code;
-        // 删除索引
-
-        // 创建索引
-        // 同步索引
+        try {
+            // 删除索引
+            deleteResourceIndex(resourceYmPartitionList, resourceIndex);
+            // 创建索引
+            createResourceIndex(resourceYmPartitionList, resourceIndexAlias, resourceIndex);
+            // 同步索引
+            syncResourceIndex(code, resourceTotal, resourceIndexAlias, resourceIndex,ym);
+        } catch (CustomException e) {
+            // 删除redis
+            redisUtil.delete(key);
+            throw e;
+        }
         return true;
     }
 
@@ -155,20 +180,23 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         return result.getData();
     }
 
-    private Boolean syncResourceIndex(String code,long resourceTotal,final String resourceIndexAlias,final String resourceIndex) {
-        if (resourceTotal > 0) {
-            beforeSyncAsync();
-            int chunkSize = 500;
-            int pageIndex = 0;
-            while (pageIndex < resourceTotal) {
-                List<ResourceIndex> resourceIndexList = sysResourceService.getResourceIndexList(chunkSize, pageIndex,code);
+    private void syncResourceIndex(String code,long resourceTotal,final String resourceIndexAlias,final String resourceIndex,String ym) throws InterruptedException {
+        beforeSyncAsync();
+        int chunkSize = 500;
+        int pageIndex = 0;
+        int count = (int) (resourceTotal / chunkSize + (resourceTotal % chunkSize == 0 ? 0 : 1));
+        CountDownLatch latch = new CountDownLatch(count);
+        while (pageIndex < resourceTotal) {
+            int finalPageIndex = pageIndex;
+            taskExecutor.execute(() -> {
+                List<ResourceIndex> resourceIndexList = sysResourceService.getResourceIndexList(chunkSize, finalPageIndex,code,ym);
                 Map<String, List<ResourceIndex>> resourceDataMap = resourceIndexList.stream().collect(Collectors.groupingBy(ResourceIndex::getYm));
                 for (Map.Entry<String, List<ResourceIndex>> entry : resourceDataMap.entrySet()) {
                     ElasticsearchDTO dto = new ElasticsearchDTO();
-                    final String ym = entry.getKey();
+                    final String key = entry.getKey();
                     final List<ResourceIndex> resourceDataList = entry.getValue();
                     // 索引 + 时间分区
-                    final String indexName = resourceIndex + "_" + ym;
+                    final String indexName = resourceIndex + "_" + key;
                     final String jsonDataList = JacksonUtil.toJsonStr(resourceDataList);
                     dto.setData(jsonDataList);
                     dto.setIndexAlias(resourceIndexAlias);
@@ -178,15 +206,16 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                         throw new CustomException(result.getCode(),result.getMsg());
                     }
                 }
-                pageIndex += chunkSize;
-            }
-            afterSyncAsync();
+                latch.countDown();
+            });
+            pageIndex += chunkSize;
         }
-        return true;
+        latch.await();
+        afterSyncAsync();
     }
 
     @Override
-    public List<SysAuditLogVO> queryAuditLogList(Long businessId) {
+    public List<SysAuditLogVO>   queryAuditLogList(Long businessId) {
         return sysAuditLogService.getAuditLogList(businessId,AuditTypeEnum.RESOURCE.ordinal());
     }
 
@@ -198,11 +227,11 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         log.info("结束索引创建...");
     }
 
-    private Boolean createResourceIndex(String code,long resourceTotal,String resourceIndexAlias,String resourceIndex) {
-        if (resourceTotal > 0) {
-            beforeCreateIndex();
-            List<String> resourceYmPartitionList = sysResourceService.getResourceYmPartitionList(code);
-            for (String ym : resourceYmPartitionList) {
+    private void createResourceIndex(List<String> resourceYmPartitionList, String resourceIndexAlias, String resourceIndex) throws InterruptedException {
+        beforeCreateIndex();
+        CountDownLatch latch = new CountDownLatch(resourceYmPartitionList.size());
+        for (String ym : resourceYmPartitionList) {
+            taskExecutor.execute(() -> {
                 final CreateIndexDTO dto = new CreateIndexDTO();
                 final String indexName = resourceIndex + "_" + ym;
                 dto.setIndexName(indexName);
@@ -211,25 +240,28 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                 if (!result.success()) {
                     throw new CustomException(result.getCode(),result.getMsg());
                 }
-            }
-            afterCreateIndex();
+                latch.countDown();
+            });
         }
-        return true;
+        latch.await();
+        afterCreateIndex();
     }
 
-    private Boolean deleteResourceIndex(String code,long resourceTotal,List<String> resourceYmPartitionList,String resourceIndex) {
-        if (resourceTotal > 0) {
-            beforeDeleteIndex();
-            for (String ym : resourceYmPartitionList) {
+    private void deleteResourceIndex(List<String> resourceYmPartitionList, String resourceIndex) throws InterruptedException {
+        beforeDeleteIndex();
+        CountDownLatch latch = new CountDownLatch(resourceYmPartitionList.size());
+        for (String ym : resourceYmPartitionList) {
+            taskExecutor.execute(() -> {
                 final String indexName = resourceIndex + "_" + ym;
                 HttpResult<Boolean> result = elasticsearchApiFeignClient.delete(indexName);
                 if (!result.success()) {
                     throw new CustomException(result.getCode(),result.getMsg());
                 }
-            }
-            afterDeleteIndex();
+                latch.countDown();
+            });
         }
-        return true;
+        latch.await();
+        afterDeleteIndex();
     }
 
     private void beforeDeleteIndex() {
