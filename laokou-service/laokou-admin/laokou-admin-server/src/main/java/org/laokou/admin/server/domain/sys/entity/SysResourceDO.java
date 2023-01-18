@@ -36,22 +36,10 @@ public class SysResourceDO extends BaseDO {
     private String title;
 
     /**
-     * 作者
-     */
-    @Schema(name = "author",description = "作者")
-    private String author;
-
-    /**
      * 资源URL
      */
     @Schema(name = "url",description = "资源URL")
     private String url;
-
-    /**
-     * 资源状态 0 待审核 1 审核中 2 审批驳回 3 审批通过
-     */
-    @Schema(name = "status",description = "资源状态 0 待审核 1 审核中 2 审批驳回 3 审批通过")
-    private Integer status;
 
     /**
      * 资源编码
@@ -70,11 +58,5 @@ public class SysResourceDO extends BaseDO {
      */
     @Schema(name = "tags",description = "资源标签")
     private String tags;
-
-    /**
-     * 流程id
-     */
-    @Schema(name = "processInstanceId",description = "流程id")
-    private String processInstanceId;
 
 }
