@@ -23,14 +23,11 @@ import org.laokou.admin.server.domain.sys.repository.service.SysMenuService;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.core.enums.SuperAdminEnum;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-
 /**
  * @author laokou
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> implements SysMenuService {
 
     @Override

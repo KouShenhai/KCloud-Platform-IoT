@@ -39,7 +39,6 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 public class SysMenuApplicationServiceImpl implements SysMenuApplicationService {
 
     private final SysMenuService sysMenuService;
@@ -72,6 +71,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean updateMenu(SysMenuDTO dto) {
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
         long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, menuDO.getName()).eq(SysMenuDO::getDelFlag, Constant.NO).ne(SysMenuDO::getId,menuDO.getId()));
@@ -83,6 +83,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean insertMenu(SysMenuDTO dto) {
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
         long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, menuDO.getName()).eq(SysMenuDO::getDelFlag, Constant.NO));
@@ -94,6 +95,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean deleteMenu(Long id) {
         sysMenuService.deleteMenu(id);
         UserDetail userDetail = UserUtil.userDetail();

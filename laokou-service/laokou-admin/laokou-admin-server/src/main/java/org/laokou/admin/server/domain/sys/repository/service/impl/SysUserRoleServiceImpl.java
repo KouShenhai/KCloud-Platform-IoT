@@ -20,12 +20,10 @@ import org.laokou.admin.server.domain.sys.entity.SysUserRoleDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysUserRoleMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserRoleService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author laokou
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRoleDO> implements SysUserRoleService {
 }

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.service.impl;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysOperateLogMapper;
@@ -22,15 +21,11 @@ import org.laokou.admin.server.domain.sys.repository.service.SysOperateLogServic
 import org.laokou.admin.server.interfaces.qo.SysOperateLogQo;
 import org.laokou.admin.client.vo.SysOperateLogVO;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-
 /**
  * @author laokou
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
 public class SysOperateLogServiceImpl implements SysOperateLogService {
 

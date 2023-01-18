@@ -20,12 +20,9 @@ import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysMessageDetailMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysMessageDetailService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 /**
  * @author laokou
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysMessageDetailServiceImpl extends ServiceImpl<SysMessageDetailMapper, SysMessageDetailDO> implements SysMessageDetailService {
 }

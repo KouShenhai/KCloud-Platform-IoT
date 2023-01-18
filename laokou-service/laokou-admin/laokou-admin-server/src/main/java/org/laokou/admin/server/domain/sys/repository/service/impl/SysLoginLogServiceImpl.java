@@ -22,15 +22,12 @@ import org.laokou.admin.server.domain.sys.repository.service.SysLoginLogService;
 import org.laokou.admin.server.interfaces.qo.SysLoginLogQo;
 import org.laokou.admin.client.vo.SysLoginLogVO;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 /**
  * @author laokou
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
 public class SysLoginLogServiceImpl implements SysLoginLogService {
 

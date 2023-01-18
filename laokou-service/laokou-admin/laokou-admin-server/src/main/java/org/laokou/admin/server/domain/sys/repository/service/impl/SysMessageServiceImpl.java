@@ -24,13 +24,10 @@ import org.laokou.admin.server.interfaces.qo.SysMessageQo;
 import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 /**
  * @author laokou
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMessageDO> implements SysMessageService {
     @Override
     public IPage<SysMessageVO> getMessageList(IPage<SysMessageVO> page, SysMessageQo qo) {

@@ -23,8 +23,6 @@ import org.laokou.admin.server.domain.sys.repository.service.SysDictService;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 /**
@@ -33,7 +31,6 @@ import java.util.List;
  * @date 2022/6/23 0023 上午 11:03
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDictDO> implements SysDictService {
 
     @Override

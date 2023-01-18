@@ -16,7 +16,6 @@
 package org.laokou.admin.server.application.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import feign.FeignException;
 import feign.Response;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +29,10 @@ import org.laokou.flowable.client.dto.DefinitionDTO;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 /**
  * @author laokou
  * @version 1.0
@@ -44,20 +41,15 @@ import java.io.OutputStream;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinitionApplicationService {
 
     private final WorkDefinitionApiFeignClient workDefinitionApiFeignClient;
 
     @Override
     public Boolean insertDefinition(String name, MultipartFile file) {
-        try {
-            HttpResult<Boolean> result = workDefinitionApiFeignClient.insert(name,file);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(), result.getMsg());
-            }
-        } catch (FeignException e) {
-            log.error("错误信息:{}",e.getMessage());
+        HttpResult<Boolean> result = workDefinitionApiFeignClient.insert(name,file);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(), result.getMsg());
         }
         return true;
     }
@@ -67,21 +59,17 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
         Integer pageSize = qo.getPageSize();
         Integer pageNum = qo.getPageNum();
         IPage<DefinitionVO> page = new Page<>(pageNum,pageSize);
-        try {
-            String processName = qo.getProcessName();
-            DefinitionDTO dto = new DefinitionDTO();
-            dto.setPageNum(pageNum);
-            dto.setPageSize(pageSize);
-            dto.setProcessName(processName);
-            HttpResult<PageVO<DefinitionVO>> result = workDefinitionApiFeignClient.query(dto);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(), result.getMsg());
-            }
-            page.setRecords(result.getData().getRecords());
-            page.setTotal(result.getData().getTotal());
-        } catch (FeignException e) {
-            log.error("错误信息:{}",e.getMessage());
+        String processName = qo.getProcessName();
+        DefinitionDTO dto = new DefinitionDTO();
+        dto.setPageNum(pageNum);
+        dto.setPageSize(pageSize);
+        dto.setProcessName(processName);
+        HttpResult<PageVO<DefinitionVO>> result = workDefinitionApiFeignClient.query(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(), result.getMsg());
         }
+        page.setRecords(result.getData().getRecords());
+        page.setTotal(result.getData().getTotal());
         return page;
     }
 
@@ -104,39 +92,27 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
 
     @Override
     public Boolean deleteDefinition(String deploymentId) {
-        try {
-            HttpResult<Boolean> result = workDefinitionApiFeignClient.delete(deploymentId);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(), result.getMsg());
-            }
-        } catch (FeignException e) {
-            log.error("错误信息:{}",e.getMessage());
+        HttpResult<Boolean> result = workDefinitionApiFeignClient.delete(deploymentId);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(), result.getMsg());
         }
         return true;
     }
 
     @Override
     public Boolean suspendDefinition(String definitionId) {
-        try {
-            HttpResult<Boolean> result = workDefinitionApiFeignClient.suspend(definitionId);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(), result.getMsg());
-            }
-        } catch (FeignException e) {
-            log.error("错误信息:{}",e.getMessage());
+        HttpResult<Boolean> result = workDefinitionApiFeignClient.suspend(definitionId);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(), result.getMsg());
         }
         return true;
     }
 
     @Override
     public Boolean activateDefinition(String definitionId) {
-        try {
-            HttpResult<Boolean> result = workDefinitionApiFeignClient.activate(definitionId);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(), result.getMsg());
-            }
-        } catch (FeignException e) {
-            log.error("错误信息:{}",e.getMessage());
+        HttpResult<Boolean> result = workDefinitionApiFeignClient.activate(definitionId);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(), result.getMsg());
         }
         return true;
     }

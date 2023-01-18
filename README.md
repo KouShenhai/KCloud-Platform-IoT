@@ -58,6 +58,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 | Mybatis Plus                | 3.5.3.1        |
 | Nacos                       | 2.2.0          |
 | Sentinel                    | 1.8.6          |
+| Seata                       | 1.6.1          |
 | Mysql                       | 5.7.9          |
 | Redis                       | 6.0.6          |
 | Elasticsearch               | 7.6.2          |

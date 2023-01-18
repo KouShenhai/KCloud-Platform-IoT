@@ -41,6 +41,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -48,7 +49,6 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 public class SysUserApplicationServiceImpl implements SysUserApplicationService {
 
     private final SysUserService sysUserService;
@@ -60,6 +60,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean updateUser(SysUserDTO dto) {
         Long id = dto.getId();
         if (null == id) {
@@ -90,6 +91,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean insertUser(SysUserDTO dto) {
         SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
         long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, sysUserDO.getUsername()).eq(SysUserDO::getDelFlag, Constant.NO));
@@ -123,6 +125,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean deleteUser(Long id) {
         SysUserDO sysUser = sysUserService.getById(id);
         UserDetail userDetail = UserUtil.userDetail();

@@ -17,7 +17,6 @@ package org.laokou.admin.server.application.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.application.service.SysMessageApplicationService;
@@ -41,7 +40,9 @@ import org.laokou.rocketmq.client.constant.RocketmqConstant;
 import org.laokou.rocketmq.client.dto.MsgDTO;
 import org.laokou.rocketmq.client.enums.ChannelTypeEnum;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
 /**
  * @author laokou
@@ -49,7 +50,6 @@ import java.util.*;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 public class SysMessageApplicationServiceImpl implements SysMessageApplicationService {
 
     private final SysMessageService sysMessageService;
@@ -59,6 +59,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     private final RocketmqApiFeignClient rocketmqApiFeignClient;
 
     @Override
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     public Boolean insertMessage(MessageDTO dto) {
         SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
         messageDO.setCreateDate(new Date());
@@ -115,18 +116,14 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     private void pushMessage(String title,String content,Set<String> receiver,Integer sendChannel) {
-        try {
-            MsgDTO msgDTO = new MsgDTO();
-            msgDTO.setTitle(title);
-            msgDTO.setReceiver(receiver);
-            msgDTO.setContent(content);
-            msgDTO.setSendChannel(sendChannel);
-            RocketmqDTO dto = new RocketmqDTO();
-            dto.setData(JacksonUtil.toJsonStr(msgDTO));
-            rocketmqApiFeignClient.sendMessage(RocketmqConstant.LAOKOU_MESSAGE_NOTICE_TOPIC,dto);
-        } catch (FeignException e) {
-            log.error("错误消息：{}",e.getMessage());
-        }
+        MsgDTO msgDTO = new MsgDTO();
+        msgDTO.setTitle(title);
+        msgDTO.setReceiver(receiver);
+        msgDTO.setContent(content);
+        msgDTO.setSendChannel(sendChannel);
+        RocketmqDTO dto = new RocketmqDTO();
+        dto.setData(JacksonUtil.toJsonStr(msgDTO));
+        rocketmqApiFeignClient.sendMessage(RocketmqConstant.LAOKOU_MESSAGE_NOTICE_TOPIC,dto);
     }
 
     @Override
@@ -137,6 +134,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public MessageDetailVO getMessageByDetailId(Long id) {
         sysMessageService.readMessage(id);
         return sysMessageService.getMessageByDetailId(id);

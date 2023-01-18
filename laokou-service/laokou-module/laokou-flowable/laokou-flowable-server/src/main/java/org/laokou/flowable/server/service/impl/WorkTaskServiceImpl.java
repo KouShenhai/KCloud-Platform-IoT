@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.laokou.flowable.server.service.impl;
-
+import io.seata.core.context.RootContext;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -56,7 +55,6 @@ import java.util.Map;
  * @author laokou
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
 @Slf4j
 public class WorkTaskServiceImpl implements WorkTaskService {
@@ -74,7 +72,9 @@ public class WorkTaskServiceImpl implements WorkTaskService {
     private final ProcessEngine processEngine;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AssigneeVO auditTask(AuditDTO dto) {
+        log.info("分布式事务 XID:{}", RootContext.getXID());
         String taskId = dto.getTaskId();
         String instanceId = dto.getInstanceId();
         String type = FlowCommentEnum.NORMAL.getType();
@@ -97,7 +97,9 @@ public class WorkTaskServiceImpl implements WorkTaskService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public AssigneeVO startTask(ProcessDTO dto) {
+        log.info("分布式事务 XID:{}", RootContext.getXID());
         String processKey = dto.getProcessKey();
         String businessKey = dto.getBusinessKey();
         String businessName = dto.getBusinessName();

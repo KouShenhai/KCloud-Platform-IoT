@@ -22,13 +22,11 @@ import org.laokou.log.server.entity.SysLoginLogDO;
 import org.laokou.log.server.mapper.SysLoginLogMapper;
 import org.laokou.log.server.service.SysLoginLogService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author laokou
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLoginLogDO> implements SysLoginLogService {
 
     @Override

@@ -20,7 +20,6 @@ import org.laokou.admin.server.domain.sys.repository.mapper.SysAuditLogMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysAuditLogService;
 import org.laokou.admin.client.vo.SysAuditLogVO;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 /**
  * @author laokou
@@ -28,7 +27,6 @@ import java.util.*;
  * @date 2022/8/26 0026 下午 5:35
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
 public class SysAuditLogServiceImpl implements SysAuditLogService {
 

@@ -35,7 +35,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 public class SysDictApplicationServiceImpl implements SysDictApplicationService {
 
     private final SysDictService sysDictService;
@@ -53,6 +52,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean insertDict(SysDictDTO dto) {
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
         dictDO.setCreator(UserUtil.getUserId());
@@ -61,6 +61,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean updateDict(SysDictDTO dto) {
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
         dictDO.setEditor(UserUtil.getUserId());
@@ -68,6 +69,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean deleteDict(Long id) {
         sysDictService.deleteDict(id);
         return true;

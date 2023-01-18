@@ -44,7 +44,6 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 public class SysRoleApplicationServiceImpl implements SysRoleApplicationService {
 
     private final SysRoleService sysRoleService;
@@ -71,6 +70,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean insertRole(SysRoleDTO dto) {
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
         long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, roleDO.getName()).eq(SysRoleDO::getDelFlag, Constant.NO));
@@ -109,6 +109,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean updateRole(SysRoleDTO dto) {
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
         long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, roleDO.getName()).eq(SysRoleDO::getDelFlag, Constant.NO).ne(SysRoleDO::getId,roleDO.getId()));
@@ -126,6 +127,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean deleteRole(Long id) {
         sysRoleService.deleteRole(id);
         return true;

@@ -20,13 +20,11 @@ import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
 import org.laokou.auth.client.user.UserDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 /**
  * @author laokou
  */
 @Service
 @Slf4j
-@Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
 public class SysUserServiceImpl implements SysUserService {
 

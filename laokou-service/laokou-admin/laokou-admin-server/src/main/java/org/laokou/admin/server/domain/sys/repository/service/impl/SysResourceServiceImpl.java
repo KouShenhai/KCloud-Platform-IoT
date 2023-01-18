@@ -23,7 +23,6 @@ import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.elasticsearch.client.index.ResourceIndex;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 /**
  * @author laokou
@@ -31,7 +30,6 @@ import java.util.List;
  * @date 2022/8/19 0019 下午 4:12
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysResourceDO> implements SysResourceService {
 
     @Override

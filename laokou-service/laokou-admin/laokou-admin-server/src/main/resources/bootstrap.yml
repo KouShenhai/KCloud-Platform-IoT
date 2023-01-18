@@ -26,3 +26,6 @@ spring:
           - data-id: application-common.yaml
             group: LAOKOU_GROUP
             refresh: true
+          - data-id: application-common-seata.yaml
+            group: LAOKOU_GROUP
+            refresh: true

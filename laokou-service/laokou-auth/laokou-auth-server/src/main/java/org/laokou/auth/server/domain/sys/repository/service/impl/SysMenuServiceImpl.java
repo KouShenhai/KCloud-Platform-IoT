@@ -19,15 +19,12 @@ import org.laokou.auth.server.domain.sys.repository.mapper.SysMenuMapper;
 import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
 import org.laokou.common.core.enums.SuperAdminEnum;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 /**
  * @author laokou
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
 public class SysMenuServiceImpl implements SysMenuService {
     private final SysMenuMapper sysMenuMapper;

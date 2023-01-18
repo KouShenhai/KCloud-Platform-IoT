@@ -31,7 +31,6 @@ import org.laokou.admin.client.vo.SysOperateLogVO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.ExcelUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 
 /**
@@ -39,7 +38,6 @@ import java.io.IOException;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 public class SysLogApplicationServiceImpl implements SysLogApplicationService {
 
     private final SysOperateLogService sysOperateLogService;

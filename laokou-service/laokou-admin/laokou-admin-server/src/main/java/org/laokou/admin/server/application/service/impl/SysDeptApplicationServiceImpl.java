@@ -42,7 +42,6 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 public class SysDeptApplicationServiceImpl implements SysDeptApplicationService {
 
     private final SysDeptService sysDeptService;
@@ -72,6 +71,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean insertDept(SysDeptDTO dto) {
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()).eq(SysDeptDO::getDelFlag, Constant.NO));
@@ -86,6 +86,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean updateDept(SysDeptDTO dto) {
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()).eq(SysDeptDO::getDelFlag, Constant.NO).ne(SysDeptDO::getId,dto.getId()));
@@ -100,6 +101,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean deleteDept(Long id) {
         long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getDeptId, id).eq(SysUserDO::getDelFlag, Constant.NO));
         if (count > 0) {

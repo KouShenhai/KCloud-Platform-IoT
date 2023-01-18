@@ -22,14 +22,11 @@ import org.laokou.admin.server.domain.sys.repository.service.SysRoleService;
 import org.laokou.admin.server.interfaces.qo.SysRoleQo;
 import org.laokou.admin.client.vo.SysRoleVO;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 /**
  * @author laokou
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleDO> implements SysRoleService {
 
     @Override

@@ -18,7 +18,8 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import feign.FeignException;
+import io.seata.core.context.RootContext;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.MessageDTO;
 import org.laokou.admin.server.application.service.SysMessageApplicationService;
@@ -59,6 +60,7 @@ import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.rocketmq.client.constant.RocketmqConstant;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -133,7 +135,10 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional
     public Boolean insertResource(SysResourceDTO dto) {
+        log.info("分布式事务 XID:{}", RootContext.getXID());
         SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
         sysResourceDO.setCreator(UserUtil.getUserId());
         sysResourceDO.setAuthor(UserUtil.getUsername());
@@ -145,7 +150,10 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional
     public Boolean updateResource(SysResourceDTO dto) {
+        log.info("分布式事务 XID:{}", RootContext.getXID());
         SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
         sysResourceDO.setEditor(UserUtil.getUserId());
         sysResourceDO.setStatus(INIT_STATUS);
@@ -155,6 +163,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean deleteResource(Long id) {
         sysResourceService.deleteResource(id);
         return true;
@@ -271,7 +280,10 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional
     public Boolean auditResourceTask(AuditDTO dto) {
+        log.info("分布式事务 XID:{}", RootContext.getXID());
         HttpResult<AssigneeVO> result = workTaskApiFeignClient.audit(dto);
         if (!result.success()) {
             throw new CustomException(result.getCode(),result.getMsg());
@@ -332,24 +344,20 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @Override
     public IPage<TaskVO> queryResourceTask(TaskQo qo) {
         IPage<TaskVO> page = new Page<>();
-        try {
-            TaskDTO dto = new TaskDTO();
-            dto.setPageNum(qo.getPageNum());
-            dto.setPageSize(qo.getPageSize());
-            dto.setUsername(UserUtil.getUsername());
-            dto.setUserId(UserUtil.getUserId());
-            dto.setProcessName(qo.getProcessName());
-            HttpResult<PageVO<TaskVO>> result = workTaskApiFeignClient.query(dto);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(),result.getMsg());
-            }
-            page.setRecords(result.getData().getRecords());
-            page.setSize(dto.getPageSize());
-            page.setCurrent(dto.getPageNum());
-            page.setTotal(result.getData().getTotal());
-        } catch (FeignException e) {
-            log.error("报错信息：{}",e.getMessage());
+        TaskDTO dto = new TaskDTO();
+        dto.setPageNum(qo.getPageNum());
+        dto.setPageSize(qo.getPageSize());
+        dto.setUsername(UserUtil.getUsername());
+        dto.setUserId(UserUtil.getUserId());
+        dto.setProcessName(qo.getProcessName());
+        HttpResult<PageVO<TaskVO>> result = workTaskApiFeignClient.query(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(),result.getMsg());
         }
+        page.setRecords(result.getData().getRecords());
+        page.setSize(dto.getPageSize());
+        page.setCurrent(dto.getPageNum());
+        page.setTotal(result.getData().getTotal());
         return page;
     }
 

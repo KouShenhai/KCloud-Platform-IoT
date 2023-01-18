@@ -21,7 +21,6 @@ import org.laokou.admin.server.domain.sys.repository.service.SysDeptService;
 import org.laokou.admin.server.interfaces.qo.SysDeptQo;
 import org.laokou.admin.client.vo.SysDeptVO;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 /**
  * @author laokou
@@ -29,7 +28,6 @@ import java.util.List;
  * @date 2022/7/26 0026 下午 4:14
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptDO> implements SysDeptService {
 
     @Override

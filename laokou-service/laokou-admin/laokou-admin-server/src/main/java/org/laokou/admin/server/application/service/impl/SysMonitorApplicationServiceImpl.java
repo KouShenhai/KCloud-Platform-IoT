@@ -20,8 +20,6 @@ import org.laokou.admin.client.vo.CacheVO;
 import org.laokou.admin.server.infrastructure.server.Server;
 import org.laokou.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 /**
  * @author laokou
  * @version 1.0
@@ -29,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 public class SysMonitorApplicationServiceImpl implements SysMonitorApplicationService {
 
     private final RedisUtil redisUtil;
@@ -44,7 +41,7 @@ public class SysMonitorApplicationServiceImpl implements SysMonitorApplicationSe
     }
 
     @Override
-    public Server getServerInfo() throws Exception {
+    public Server getServerInfo() {
         Server server = new Server();
         server.copyTo();
         return server;

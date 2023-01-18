@@ -20,8 +20,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
 import org.laokou.admin.server.infrastructure.feign.flowable.WorkTaskApiFeignClient;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -31,7 +29,6 @@ import java.io.OutputStream;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicationService {
 
     private final WorkTaskApiFeignClient workTaskApiFeignClient;

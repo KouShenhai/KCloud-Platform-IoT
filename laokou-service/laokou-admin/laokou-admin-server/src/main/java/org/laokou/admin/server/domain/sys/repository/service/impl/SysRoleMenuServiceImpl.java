@@ -20,13 +20,10 @@ import org.laokou.admin.server.domain.sys.entity.SysRoleMenuDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysRoleMenuMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysRoleMenuService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 /**
  * @author laokou
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenuDO> implements SysRoleMenuService{
 
 

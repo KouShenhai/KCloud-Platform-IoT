@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.service.impl;
-
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.laokou.admin.server.domain.sys.entity.SysRoleDeptDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysRoleDeptMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysRoleDeptService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 /**
  * @author laokou
  * @version 1.0
  * @date 2022/7/27 0027 上午 9:22
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class SysRoleDeptServiceImpl extends ServiceImpl<SysRoleDeptMapper, SysRoleDeptDO> implements SysRoleDeptService {
 
 }

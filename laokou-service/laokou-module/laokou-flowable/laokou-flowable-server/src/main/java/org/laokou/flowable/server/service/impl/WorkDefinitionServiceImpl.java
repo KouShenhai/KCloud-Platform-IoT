@@ -48,7 +48,6 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 @Slf4j
 public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 
@@ -57,6 +56,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
     private static final String BPMN_FILE_SUFFIX = ".bpmn";
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean insertDefinition(String name, InputStream in) {
         String processName = name + BPMN_FILE_SUFFIX;
         DeploymentBuilder deploymentBuilder = repositoryService.createDeployment()
@@ -124,6 +124,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean deleteDefinition(String deploymentId) {
         // true允许级联删除 不设置会导致数据库关联异常
         repositoryService.deleteDeployment(deploymentId,true);
@@ -131,6 +132,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean suspendDefinition(String definitionId) {
         final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(definitionId).singleResult();
         if (processDefinition.isSuspended()) {
@@ -143,6 +145,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean activateDefinition(String definitionId) {
         final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(definitionId).singleResult();
         if (processDefinition.isSuspended()) {
