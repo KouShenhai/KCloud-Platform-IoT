@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.laokou.admin.server.interfaces.qo.SysLoginLogQo;
 import org.laokou.admin.client.vo.SysLoginLogVO;
