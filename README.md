@@ -206,6 +206,51 @@ public class SysUserApiController {
 ```shell
 config set notify-keyspace-events KEA
 ```
+
+### 分布式事务
+#### 服务配置
+```yaml
+# seata
+seata:
+  config:
+    type: nacos
+    nacos:
+      server-addr: 192.168.62.144:8848
+      namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+      group: SEATA_GROUP
+  registry:
+    type: nacos
+    nacos:
+      namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+      group: SEATA_GROUP
+      server-addr: 192.168.62.144:8848A
+  enabled: true
+  tx-service-group: default_tx_group
+  data-source-proxy-mode: AT
+```
+
+##### 代码引入
+```shell
+@Service
+@Slf4j
+@RequiredArgsConstructor
+public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
+    
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
+    @GlobalTransactional
+    public Boolean insertResource(SysResourceAuditDTO dto) {
+        log.info("分布式事务 XID:{}", RootContext.getXID());
+        SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
+        sysResourceDO.setEditor(UserUtil.getUserId());
+        sysResourceService.save(sysResourceDO);
+        Long id = sysResourceDO.getId();
+        String instanceId = startTask(id, sysResourceDO.getTitle());
+        dto.setResourceId(id);
+        return insertResourceAudit(dto,instanceId);
+    }
+    
+}
+```
     
 ### 高可用系统构建
 - [x] 严格遵循阿里规范，注重代码质量
