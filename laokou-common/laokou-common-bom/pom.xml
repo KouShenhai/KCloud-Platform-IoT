@@ -20,7 +20,7 @@
         <!--admin版本-->
         <spring-boot-admin.version>3.0.0-M9</spring-boot-admin.version>
         <!--flowable版本-->
-        <flowable.version>6.7.2</flowable.version>
+        <flowable.version>7.0.0.M1</flowable.version>
         <!--mybatis-plus版本 -->
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <!--commons-httpclient版本-->

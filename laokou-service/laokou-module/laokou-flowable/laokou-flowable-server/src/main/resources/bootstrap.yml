@@ -1,0 +1,28 @@
+# spring
+spring:
+  cloud:
+    # nacos
+    nacos:
+      discovery:
+        server-addr: ${NACOS-DISCOVERY-ADDRESS}
+        namespace: ${NACOS-NAMESPACE}
+      config:
+        server-addr: ${NACOS-CONFIG-ADDRESS}
+        namespace: ${NACOS-NAMESPACE}
+        # https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/spring-cloud-alibaba-docs/src/main/asciidoc-zh/nacos-config.adoc
+        # 指定读取的文件格式
+        file-extension: yaml
+        group: LAOKOU_GROUP
+        refresh-enabled: true
+        # 读取公共配置
+        # Data Id 在默认的组 DEFAULT_GROUP,不支持配置的动态刷新
+        extension-configs:
+          - data-id: application-common-datasource.yaml
+            group: LAOKOU_GROUP
+            refresh: true
+          - data-id: application-common.yaml
+            group: LAOKOU_GROUP
+            refresh: true
+          - data-id: application-common-seata.yaml
+            group: LAOKOU_GROUP
+            refresh: true

@@ -48,22 +48,23 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 ### 技术体系
 
 #### Spring全家桶及核心技术版本
-| 组件                          | 版本             |
-|:----------------------------|:---------------|
-| Spring Boot                 | 3.0.1          |
-| Spring Cloud                | 2022.0.0       |
-| Spring Cloud Alibaba        | 2022.0.0.0-RC1 |
-| Spring Boot Admin           | 3.0.0-M9       |
-| Spring Authorization Server | 1.0.0          |
-| Mybatis Plus                | 3.5.3.1        |
-| Nacos                       | 2.2.0          |
-| Sentinel                    | 1.8.6          |
-| Seata                       | 1.6.1          |
-| Mysql                       | 5.7.9          |
-| Redis                       | 6.0.6          |
-| Elasticsearch               | 7.6.2          |
-| RocketMQ                    | 5.0.0          |
-| Kafka                       | 2.8.1          |
+| 组件                          | 版本               |
+|:----------------------------|:-----------------|
+| Spring Boot                 | 3.0.1            |
+| Spring Cloud                | 2022.0.0         |
+| Spring Cloud Alibaba        | 2022.0.0.0-RC1   |
+| Spring Boot Admin           | 3.0.0-M9         |
+| Spring Authorization Server | 1.0.0            |
+| Mybatis Plus                | 3.5.3.1          |
+| Nacos                       | 2.2.0            |
+| Sentinel                    | 1.8.6            |
+| Seata                       | 1.6.1            |
+| Mysql                       | 5.7.9            |
+| Redis                       | 6.0.6            |
+| Elasticsearch               | 7.6.2            |
+| RocketMQ                    | 5.0.0            |
+| Kafka                       | 2.8.1            |
+| Flowable                    | 7.0.0.M1         |
 
 #### 相关技术
 
