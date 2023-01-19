@@ -38,21 +38,6 @@ public interface RocketmqConstant {
     String LAOKOU_AUDIT_LOG_TOPIC = "laokou-audit-log-topic";
 
     /**
-     * 同步索引
-     */
-    String LAOKOU_SYNC_INDEX_TOPIC = "laokou-sync-index-topic";
-
-    /**
-     * 创建索引
-     */
-    String LAOKOU_CREATE_INDEX_TOPIC = "laokou-create-index-topic";
-
-    /**
-     * 删除索引
-     */
-    String LAOKOU_DELETE_INDEX_TOPIC = "laokou-delete-index-topic";
-
-    /**
      * 消息通知
      */
     String LAOKOU_MESSAGE_NOTICE_TOPIC = "laokou-message-notice-topic";
