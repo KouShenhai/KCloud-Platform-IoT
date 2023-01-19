@@ -58,6 +58,13 @@ public interface SysResourceApplicationService {
     SysResourceVO getResourceById(Long id);
 
     /**
+     * 查询资源审批信息
+     * @param id
+     * @return
+     */
+    SysResourceVO getResourceAuditByResourceId(Long id);
+
+    /**
      * 新增资源
      * @param dto
      * @throws IOException

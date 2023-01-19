@@ -57,7 +57,7 @@ public class WorkflowTaskApiController {
     @Operation(summary = "流程任务>资源详情",description = "流程任务>资源详情")
     @PreAuthorize("hasAuthority('workflow:task:resource:detail')")
     public HttpResult<SysResourceVO> detailResource(@RequestParam("id") Long id) {
-        return new HttpResult<SysResourceVO>().ok(sysResourceApplicationService.getResourceById(id));
+        return new HttpResult<SysResourceVO>().ok(sysResourceApplicationService.getResourceAuditByResourceId(id));
     }
 
 }

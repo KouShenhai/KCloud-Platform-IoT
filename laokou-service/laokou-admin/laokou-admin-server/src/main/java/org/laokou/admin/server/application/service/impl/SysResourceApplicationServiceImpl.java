@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -79,7 +80,7 @@ import java.util.stream.Collectors;
 public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
     private static final String RESOURCE_KEY = "laokou_resource";
     private static final String PROCESS_KEY = "Process_88888888";
-    private static final Integer INIT_STATUS = 0;
+    private static final Integer START_AUDIT_STATUS = 1;
     private final SysResourceService sysResourceService;
     private final SysAuditLogService sysAuditLogService;
     private final ThreadPoolTaskExecutor taskExecutor;
@@ -139,6 +140,11 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     @Override
+    public SysResourceVO getResourceAuditByResourceId(Long id) {
+        return sysResourceService.getResourceAuditByResourceId(id);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @GlobalTransactional
     public Boolean insertResource(SysResourceAuditDTO dto) {
@@ -159,7 +165,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         log.info("分布式事务 XID:{}", RootContext.getXID());
         SysResourceAuditDO sysResourceAuditDO = ConvertUtil.sourceToTarget(dto, SysResourceAuditDO.class);
         sysResourceAuditDO.setEditor(UserUtil.getUserId());
-        sysResourceAuditDO.setStatus(INIT_STATUS);
+        sysResourceAuditDO.setStatus(START_AUDIT_STATUS);
         String instanceId = startTask(dto.getResourceId(), dto.getTitle());
         sysResourceAuditDO.setProcessInstanceId(instanceId);
         return insertResourceAudit(dto,instanceId);
@@ -168,7 +174,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     private Boolean insertResourceAudit(SysResourceAuditDTO dto,String instanceId) {
         SysResourceAuditDO sysResourceAuditDO = ConvertUtil.sourceToTarget(dto, SysResourceAuditDO.class);
         sysResourceAuditDO.setCreator(UserUtil.getUserId());
-        sysResourceAuditDO.setStatus(INIT_STATUS);
+        sysResourceAuditDO.setStatus(START_AUDIT_STATUS);
         sysResourceAuditDO.setProcessInstanceId(instanceId);
         return sysResourceAuditService.save(sysResourceAuditDO);
     }
@@ -323,8 +329,22 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                 //审批拒绝
                 status = 2;
             } else {
-                //审批通过
+                // 审批通过
                 status = 3;
+                // 将资源审批表的信息写入资源表
+                LambdaQueryWrapper<SysResourceAuditDO> queryWrapper = Wrappers.lambdaQuery(SysResourceAuditDO.class).eq(SysResourceAuditDO::getProcessInstanceId, instanceId)
+                        .eq(SysResourceAuditDO::getResourceId,businessId)
+                        .select(SysResourceAuditDO::getUrl
+                                , SysResourceAuditDO::getTitle
+                                , SysResourceAuditDO::getRemark
+                                , SysResourceAuditDO::getTags);
+                SysResourceAuditDO auditDO = sysResourceAuditService.getOne(queryWrapper);
+                LambdaUpdateWrapper<SysResourceDO> updateWrapper = Wrappers.lambdaUpdate(SysResourceDO.class).eq(SysResourceDO::getId, businessId)
+                        .set(SysResourceDO::getTags, auditDO.getTags())
+                        .set(SysResourceDO::getTitle, auditDO.getTitle())
+                        .set(SysResourceDO::getRemark, auditDO.getRemark())
+                        .set(SysResourceDO::getUrl, auditDO.getUrl());
+                sysResourceService.update(updateWrapper);
             }
         }
         // 修改状态
@@ -349,7 +369,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         auditLogDTO.setType(AuditTypeEnum.RESOURCE.ordinal());
         RocketmqDTO rocketmqDTO = new RocketmqDTO();
         rocketmqDTO.setData(JacksonUtil.toJsonStr(auditLogDTO));
-        rocketmqApiFeignClient.sendOneMessage(RocketmqConstant.LAOKOU_AUDIT_LOG_TOPIC, rocketmqDTO);
+        //rocketmqApiFeignClient.sendOneMessage(RocketmqConstant.LAOKOU_AUDIT_LOG_TOPIC, rocketmqDTO);
     }
 
     @Override

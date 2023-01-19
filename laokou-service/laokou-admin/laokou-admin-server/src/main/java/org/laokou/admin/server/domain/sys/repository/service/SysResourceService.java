@@ -75,4 +75,11 @@ public interface SysResourceService extends IService<SysResourceDO> {
      * @return
      */
     List<ResourceIndex> getResourceIndexList(Integer pageSize,final Integer pageIndex, String code,String ym);
+
+    /**
+     * 查询资源审批信息
+     * @param id
+     * @return
+     */
+    SysResourceVO getResourceAuditByResourceId(Long id);
 }

@@ -52,6 +52,13 @@ public interface SysResourceMapper extends BaseMapper<SysResourceDO> {
     SysResourceVO getResourceById(@Param("id") Long id);
 
     /**
+     * 查询审批的信息
+     * @param id
+     * @return
+     */
+    SysResourceVO getResourceAuditByResourceId(@Param("id") Long id);
+
+    /**
      * 根据id删除资源
      * @param id
      */

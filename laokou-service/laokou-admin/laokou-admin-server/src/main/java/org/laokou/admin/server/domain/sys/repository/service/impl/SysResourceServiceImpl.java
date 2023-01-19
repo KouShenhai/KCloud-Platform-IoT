@@ -61,4 +61,9 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
     public List<ResourceIndex> getResourceIndexList(Integer pageSize, Integer pageIndex, String code,String ym) {
         return this.baseMapper.getResourceIndexList(pageSize, pageIndex, code,ym);
     }
+
+    @Override
+    public SysResourceVO getResourceAuditByResourceId(Long id) {
+        return baseMapper.getResourceAuditByResourceId(id);
+    }
 }
