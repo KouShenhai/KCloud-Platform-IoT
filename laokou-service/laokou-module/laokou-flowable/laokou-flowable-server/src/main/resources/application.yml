@@ -23,6 +23,9 @@ spring:
     encoding: UTF-8
     basename: i18n/messages
   cloud:
+    loadbalancer:
+      nacos:
+        enabled: true
     inetutils:
       ignoredInterfaces:
         - docker0

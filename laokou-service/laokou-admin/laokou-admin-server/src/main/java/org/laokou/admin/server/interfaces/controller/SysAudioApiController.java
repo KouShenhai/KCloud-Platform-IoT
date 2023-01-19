@@ -110,7 +110,7 @@ public class SysAudioApiController {
     @Operation(summary = "音频管理>新增",description = "音频管理>新增")
     @OperateLog(module = "音频管理",name = "音频新增")
     @PreAuthorize("hasAuthority('sys:resource:audio:insert')")
-    @DataCache(name = CacheConstant.AUDIO,key = "#dto.id",type = CacheEnum.DEL)
+    @DataCache(name = CacheConstant.AUDIO,key = "#dto.resourceId",type = CacheEnum.DEL)
     public HttpResult<Boolean> insert(@RequestBody SysResourceAuditDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.insertResource(dto));
     }
@@ -119,7 +119,7 @@ public class SysAudioApiController {
     @Operation(summary = "音频管理>修改",description = "音频管理>修改")
     @OperateLog(module = "音频管理",name = "音频修改")
     @PreAuthorize("hasAuthority('sys:resource:audio:update')")
-    @DataCache(name = CacheConstant.AUDIO,key = "#dto.id",type = CacheEnum.DEL)
+    @DataCache(name = CacheConstant.AUDIO,key = "#dto.resourceId",type = CacheEnum.DEL)
     public HttpResult<Boolean> update(@RequestBody SysResourceAuditDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.updateResource(dto));
     }

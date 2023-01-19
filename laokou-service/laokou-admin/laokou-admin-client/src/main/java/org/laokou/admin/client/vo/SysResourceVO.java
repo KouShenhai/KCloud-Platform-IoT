@@ -27,7 +27,6 @@ public class SysResourceVO {
 
     private Long id;
     private String title;
-    private String author;
     private String url;
     private Integer status;
     private String code;

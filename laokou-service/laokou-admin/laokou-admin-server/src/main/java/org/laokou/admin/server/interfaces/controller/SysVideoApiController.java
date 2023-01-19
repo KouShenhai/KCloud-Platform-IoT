@@ -100,7 +100,7 @@ public class SysVideoApiController {
     @Operation(summary = "视频管理>新增",description = "视频管理>新增")
     @OperateLog(module = "视频管理",name = "视频新增")
     @PreAuthorize("hasAuthority('sys:resource:video:insert')")
-    @DataCache(name = CacheConstant.VIDEO,key = "#dto.id",type = CacheEnum.DEL)
+    @DataCache(name = CacheConstant.VIDEO,key = "#dto.resourceId",type = CacheEnum.DEL)
     public HttpResult<Boolean> insert(@RequestBody SysResourceAuditDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.insertResource(dto));
     }
@@ -109,7 +109,7 @@ public class SysVideoApiController {
     @Operation(summary = "视频管理>修改",description = "视频管理>修改")
     @OperateLog(module = "视频管理",name = "视频修改")
     @PreAuthorize("hasAuthority('sys:resource:video:update')")
-    @DataCache(name = CacheConstant.VIDEO,key = "#dto.id",type = CacheEnum.DEL)
+    @DataCache(name = CacheConstant.VIDEO,key = "#dto.resourceId",type = CacheEnum.DEL)
     public HttpResult<Boolean> update(@RequestBody SysResourceAuditDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.updateResource(dto));
     }

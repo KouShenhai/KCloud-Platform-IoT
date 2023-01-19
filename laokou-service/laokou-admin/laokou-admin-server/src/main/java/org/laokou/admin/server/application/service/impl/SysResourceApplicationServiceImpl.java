@@ -143,16 +143,13 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @GlobalTransactional
     public Boolean insertResource(SysResourceAuditDTO dto) {
         log.info("分布式事务 XID:{}", RootContext.getXID());
-        SysResourceAuditDO sysResourceAuditDO = ConvertUtil.sourceToTarget(dto, SysResourceAuditDO.class);
-        sysResourceAuditDO.setCreator(UserUtil.getUserId());
-        sysResourceAuditDO.setStatus(INIT_STATUS);
-        SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(sysResourceAuditDO, SysResourceDO.class);
+        SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
+        sysResourceDO.setEditor(UserUtil.getUserId());
         sysResourceService.save(sysResourceDO);
         Long id = sysResourceDO.getId();
-        sysResourceAuditDO.setResourceId(id);
         String instanceId = startTask(id, sysResourceDO.getTitle());
-        sysResourceAuditDO.setProcessInstanceId(instanceId);
-        return sysResourceAuditService.save(sysResourceAuditDO);
+        dto.setResourceId(id);
+        return insertResourceAudit(dto,instanceId);
     }
 
     @Override
@@ -165,7 +162,15 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         sysResourceAuditDO.setStatus(INIT_STATUS);
         String instanceId = startTask(dto.getResourceId(), dto.getTitle());
         sysResourceAuditDO.setProcessInstanceId(instanceId);
-        return sysResourceAuditService.updateById(sysResourceAuditDO);
+        return insertResourceAudit(dto,instanceId);
+    }
+
+    private Boolean insertResourceAudit(SysResourceAuditDTO dto,String instanceId) {
+        SysResourceAuditDO sysResourceAuditDO = ConvertUtil.sourceToTarget(dto, SysResourceAuditDO.class);
+        sysResourceAuditDO.setCreator(UserUtil.getUserId());
+        sysResourceAuditDO.setStatus(INIT_STATUS);
+        sysResourceAuditDO.setProcessInstanceId(instanceId);
+        return sysResourceAuditService.save(sysResourceAuditDO);
     }
 
     @Override
