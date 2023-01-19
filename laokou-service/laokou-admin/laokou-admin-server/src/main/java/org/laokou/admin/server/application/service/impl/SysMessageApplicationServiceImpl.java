@@ -141,6 +141,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Long unReadCount() {
         final Long userId = UserUtil.getUserId();
         return sysMessageDetailService.count(Wrappers.lambdaQuery(SysMessageDetailDO.class).eq(SysMessageDetailDO::getUserId,userId)
