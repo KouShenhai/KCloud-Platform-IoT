@@ -27,6 +27,7 @@ import org.laokou.admin.server.domain.sys.repository.service.SysMessageDetailSer
 import org.laokou.admin.server.domain.sys.repository.service.SysMessageService;
 import org.laokou.admin.server.infrastructure.annotation.DataFilter;
 import org.laokou.admin.client.dto.MessageDTO;
+import org.laokou.admin.server.infrastructure.feign.im.ImApiFeignClient;
 import org.laokou.admin.server.interfaces.qo.SysMessageQo;
 import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
@@ -34,6 +35,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.swagger.exception.CustomException;
+import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.im.client.PushMsgDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
@@ -48,6 +52,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     private final SysMessageService sysMessageService;
 
     private final SysMessageDetailService sysMessageDetailService;
+    private final ImApiFeignClient imApiFeignClient;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -74,14 +79,18 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         if (CollectionUtils.isNotEmpty(detailDOList)) {
             sysMessageDetailService.saveBatch(detailDOList);
         }
-        String content = dto.getContent();
-        String title = dto.getTitle();
         Set<String> emailReceiver = dto.getEmailReceiver();
         Set<String> platformReceiver = dto.getPlatformReceiver();
         // 平台-发送消息
         if (CollectionUtils.isNotEmpty(platformReceiver)) {
-            String newTitle = String.format("%s发来一条消息", UserUtil.getUsername());
-            //pushMessage(newTitle,"",platformReceiver,ChannelTypeEnum.PLATFORM.ordinal());
+            String msg = String.format("%s发来一条消息", UserUtil.getUsername());
+            PushMsgDTO pushMsgDTO = new PushMsgDTO();
+            pushMsgDTO.setMsg(msg);
+            pushMsgDTO.setReceiver(receiver);
+            HttpResult<Boolean> result = imApiFeignClient.push(pushMsgDTO);
+            if (!result.success()) {
+                throw new CustomException(result.getCode(),result.getMsg());
+            }
         }
         // 微信公众号-发送消息
         if (false) {
@@ -89,7 +98,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         }
         // 邮件-发送消息
         if (CollectionUtils.isNotEmpty(emailReceiver)) {
-            //pushMessage(title,content,emailReceiver, ChannelTypeEnum.EMAIL.ordinal());
+
         }
         return true;
     }
@@ -105,14 +114,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         String str = stringBuffer.toString();
         return str.isEmpty() ? "" : str.substring(0,str.length() - 1);
     }
-
-//    private void pushMessage(String title,String content,Set<String> receiver,Integer sendChannel) {
-//        MsgDTO msgDTO = new MsgDTO();
-//        msgDTO.setTitle(title);
-//        msgDTO.setReceiver(receiver);
-//        msgDTO.setContent(content);
-//        msgDTO.setSendChannel(sendChannel);
-//    }
 
     @Override
     @DataFilter(tableAlias = "boot_sys_message")

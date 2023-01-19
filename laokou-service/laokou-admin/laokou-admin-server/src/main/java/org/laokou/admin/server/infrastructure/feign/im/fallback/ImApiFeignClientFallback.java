@@ -34,7 +34,7 @@ public class ImApiFeignClientFallback implements ImApiFeignClient {
 
     @Override
     public HttpResult<Boolean> push(PushMsgDTO dto) {
-        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<Boolean>().error("服务调用失败，请联系管理员");
+        log.error("即时通讯服务未启动，报错原因：{}",throwable.getMessage());
+        return new HttpResult<Boolean>().error("即时通讯服务未启动，请联系管理员");
     }
 }

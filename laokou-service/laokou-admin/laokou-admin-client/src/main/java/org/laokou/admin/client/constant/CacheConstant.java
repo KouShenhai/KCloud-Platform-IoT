@@ -6,13 +6,10 @@ package org.laokou.admin.client.constant;
 public interface CacheConstant {
 
     String USER = "user";
-    String AUDIO = "audio";
     String DEPT = "dept";
     String DICT = "dict";
-    String IMAGE = "image";
     String MENU = "menu";
     String MESSAGE = "message";
     String ROLE = "role";
-    String VIDEO = "video";
 
 }

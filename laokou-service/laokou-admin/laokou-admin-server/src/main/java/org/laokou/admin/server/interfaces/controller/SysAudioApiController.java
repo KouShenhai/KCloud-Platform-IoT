@@ -20,12 +20,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.constant.CacheConstant;
-import org.laokou.admin.client.enums.CacheEnum;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
 import org.laokou.admin.client.dto.SysResourceAuditDTO;
-import org.laokou.admin.server.infrastructure.annotation.DataCache;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysAuditLogVO;
 import org.laokou.admin.client.vo.SysResourceVO;
@@ -101,7 +98,6 @@ public class SysAudioApiController {
     @GetMapping(value = "/detail")
     @Operation(summary = "音频管理>详情",description = "音频管理>详情")
     @PreAuthorize("hasAuthority('sys:resource:audio:detail')")
-    @DataCache(name = CacheConstant.AUDIO,key = "#id")
     public HttpResult<SysResourceVO> detail(@RequestParam("id") Long id) {
         return new HttpResult<SysResourceVO>().ok(sysResourceApplicationService.getResourceById(id));
     }
@@ -110,7 +106,6 @@ public class SysAudioApiController {
     @Operation(summary = "音频管理>新增",description = "音频管理>新增")
     @OperateLog(module = "音频管理",name = "音频新增")
     @PreAuthorize("hasAuthority('sys:resource:audio:insert')")
-    @DataCache(name = CacheConstant.AUDIO,key = "#dto.resourceId",type = CacheEnum.DEL)
     public HttpResult<Boolean> insert(@RequestBody SysResourceAuditDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.insertResource(dto));
     }
@@ -119,7 +114,6 @@ public class SysAudioApiController {
     @Operation(summary = "音频管理>修改",description = "音频管理>修改")
     @OperateLog(module = "音频管理",name = "音频修改")
     @PreAuthorize("hasAuthority('sys:resource:audio:update')")
-    @DataCache(name = CacheConstant.AUDIO,key = "#dto.resourceId",type = CacheEnum.DEL)
     public HttpResult<Boolean> update(@RequestBody SysResourceAuditDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.updateResource(dto));
     }
@@ -128,7 +122,6 @@ public class SysAudioApiController {
     @Operation(summary = "音频管理>删除",description = "音频管理>删除")
     @OperateLog(module = "音频管理",name = "音频删除")
     @PreAuthorize("hasAuthority('sys:resource:audio:delete')")
-    @DataCache(name = CacheConstant.AUDIO,key = "#id",type = CacheEnum.DEL)
     public HttpResult<Boolean> delete(@RequestParam("id") Long id) {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.deleteResource(id));
     }

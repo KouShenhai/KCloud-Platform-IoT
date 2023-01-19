@@ -19,12 +19,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.constant.CacheConstant;
-import org.laokou.admin.client.enums.CacheEnum;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
 import org.laokou.admin.client.dto.SysResourceAuditDTO;
-import org.laokou.admin.server.infrastructure.annotation.DataCache;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysAuditLogVO;
 import org.laokou.admin.client.vo.SysResourceVO;
@@ -91,7 +88,6 @@ public class SysVideoApiController {
     @GetMapping(value = "/detail")
     @Operation(summary = "视频管理>详情",description = "视频管理>详情")
     @PreAuthorize("hasAuthority('sys:resource:video:detail')")
-    @DataCache(name = CacheConstant.VIDEO,key = "#id")
     public HttpResult<SysResourceVO> detail(@RequestParam("id") Long id) {
         return new HttpResult<SysResourceVO>().ok(sysResourceApplicationService.getResourceById(id));
     }
@@ -100,7 +96,6 @@ public class SysVideoApiController {
     @Operation(summary = "视频管理>新增",description = "视频管理>新增")
     @OperateLog(module = "视频管理",name = "视频新增")
     @PreAuthorize("hasAuthority('sys:resource:video:insert')")
-    @DataCache(name = CacheConstant.VIDEO,key = "#dto.resourceId",type = CacheEnum.DEL)
     public HttpResult<Boolean> insert(@RequestBody SysResourceAuditDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.insertResource(dto));
     }
@@ -109,7 +104,6 @@ public class SysVideoApiController {
     @Operation(summary = "视频管理>修改",description = "视频管理>修改")
     @OperateLog(module = "视频管理",name = "视频修改")
     @PreAuthorize("hasAuthority('sys:resource:video:update')")
-    @DataCache(name = CacheConstant.VIDEO,key = "#dto.resourceId",type = CacheEnum.DEL)
     public HttpResult<Boolean> update(@RequestBody SysResourceAuditDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.updateResource(dto));
     }
@@ -118,7 +112,6 @@ public class SysVideoApiController {
     @Operation(summary = "视频管理>删除",description = "视频管理>删除")
     @OperateLog(module = "视频管理",name = "视频删除")
     @PreAuthorize("hasAuthority('sys:resource:video:delete')")
-    @DataCache(name = CacheConstant.VIDEO,key = "#id",type = CacheEnum.DEL)
     public HttpResult<Boolean> delete(@RequestParam("id") Long id) {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.deleteResource(id));
     }

@@ -17,6 +17,7 @@ package org.laokou.admin.server.infrastructure.aspect;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.server.domain.sys.repository.service.SysOperateLogService;
 import org.laokou.admin.server.infrastructure.annotation.OperateLog;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.admin.client.enums.DataTypeEnum;
@@ -48,7 +49,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OperateLogAspect {
 
-//    private final RocketmqApiFeignClient rocketmqApiFeignClient;
+    private final SysOperateLogService sysOperateLogService;
 
     /**
      * 配置切入点
@@ -107,9 +108,7 @@ public class OperateLogAspect {
         if (DataTypeEnum.TEXT.equals(operateLog.type())) {
             dto.setRequestParams(JacksonUtil.toJsonStr(params, true));
         }
-//        RocketmqDTO rocketmqDTO = new RocketmqDTO();
-//        rocketmqDTO.setData(JacksonUtil.toJsonStr(dto));
-        // rocketmqApiFeignClient.sendOneMessage(RocketmqConstant.LAOKOU_OPERATE_LOG_TOPIC, rocketmqDTO);
+        sysOperateLogService.insertOperateLog(dto);
     }
 
 }

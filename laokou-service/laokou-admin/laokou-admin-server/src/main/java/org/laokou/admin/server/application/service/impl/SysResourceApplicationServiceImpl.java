@@ -56,6 +56,7 @@ import org.laokou.redis.utils.RedisUtil;
 import org.laokou.oss.client.vo.UploadVO;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -360,7 +361,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         return true;
     }
 
-    private void saveAuditLog(Long businessId,int auditStatus,String comment,String username,Long userId) {
+    @Async
+    public void saveAuditLog(Long businessId,int auditStatus,String comment,String username,Long userId) {
         AuditLogDTO auditLogDTO = new AuditLogDTO();
         auditLogDTO.setBusinessId(businessId);
         auditLogDTO.setAuditStatus(auditStatus);

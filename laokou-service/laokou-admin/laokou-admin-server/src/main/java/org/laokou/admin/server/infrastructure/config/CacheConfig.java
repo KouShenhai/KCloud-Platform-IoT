@@ -33,13 +33,8 @@ public class CacheConfig {
     @Bean(name = "caffeineCacheManager")
     public CacheManager caffeineCacheManager() {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
-        List<CaffeineCache> caffeineList = new ArrayList<>(9);
+        List<CaffeineCache> caffeineList = new ArrayList<>(6);
         caffeineList.add(new CaffeineCache(CacheConstant.USER, Caffeine.newBuilder()
-                .expireAfterWrite(5, TimeUnit.MINUTES)
-                .initialCapacity(10)
-                .maximumSize(100)
-                .build()));
-        caffeineList.add(new CaffeineCache(CacheConstant.AUDIO, Caffeine.newBuilder()
                 .expireAfterWrite(5, TimeUnit.MINUTES)
                 .initialCapacity(10)
                 .maximumSize(100)
@@ -50,11 +45,6 @@ public class CacheConfig {
                 .maximumSize(100)
                 .build()));
         caffeineList.add(new CaffeineCache(CacheConstant.DICT, Caffeine.newBuilder()
-                .expireAfterWrite(5, TimeUnit.MINUTES)
-                .initialCapacity(10)
-                .maximumSize(100)
-                .build()));
-        caffeineList.add(new CaffeineCache(CacheConstant.IMAGE, Caffeine.newBuilder()
                 .expireAfterWrite(5, TimeUnit.MINUTES)
                 .initialCapacity(10)
                 .maximumSize(100)
@@ -70,11 +60,6 @@ public class CacheConfig {
                 .maximumSize(100)
                 .build()));
         caffeineList.add(new CaffeineCache(CacheConstant.ROLE, Caffeine.newBuilder()
-                .expireAfterWrite(5, TimeUnit.MINUTES)
-                .initialCapacity(10)
-                .maximumSize(100)
-                .build()));
-        caffeineList.add(new CaffeineCache(CacheConstant.VIDEO, Caffeine.newBuilder()
                 .expireAfterWrite(5, TimeUnit.MINUTES)
                 .initialCapacity(10)
                 .maximumSize(100)
