@@ -68,6 +68,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 /**
  * @author laokou
@@ -109,7 +110,6 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (obj != null) {
             throw new CustomException("数据已同步，请稍后再试");
         }
-        redisUtil.set(key,1,RedisUtil.HOUR_ONE_EXPIRE);
         List<String> resourceYmPartitionList;
         if (StringUtil.isNotEmpty(ym)) {
             resourceYmPartitionList = new ArrayList<>();
@@ -128,9 +128,9 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
             syncResourceIndex(code, resourceTotal, resourceIndexAlias, resourceIndex,ym);
         } catch (CustomException e) {
             // 删除redis
-            redisUtil.delete(key);
             throw e;
         }
+        redisUtil.set(key,1,RedisUtil.HOUR_ONE_EXPIRE);
         return true;
     }
 
@@ -204,37 +204,41 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         return result.getData();
     }
 
-    private void syncResourceIndex(String code,long resourceTotal,final String resourceIndexAlias,final String resourceIndex,String ym) throws InterruptedException {
+    private void syncResourceIndex(String code,long resourceTotal,final String resourceIndexAlias,final String resourceIndex,String ym) {
         beforeSyncAsync();
         int chunkSize = 500;
         int pageIndex = 0;
-        int count = (int) (resourceTotal / chunkSize + (resourceTotal % chunkSize == 0 ? 0 : 1));
-        CountDownLatch latch = new CountDownLatch(count);
         while (pageIndex < resourceTotal) {
             int finalPageIndex = pageIndex;
-            taskExecutor.execute(() -> {
-                List<ResourceIndex> resourceIndexList = sysResourceService.getResourceIndexList(chunkSize, finalPageIndex,code,ym);
-                Map<String, List<ResourceIndex>> resourceDataMap = resourceIndexList.stream().collect(Collectors.groupingBy(ResourceIndex::getYm));
-                for (Map.Entry<String, List<ResourceIndex>> entry : resourceDataMap.entrySet()) {
-                    ElasticsearchDTO dto = new ElasticsearchDTO();
-                    final String key = entry.getKey();
-                    final List<ResourceIndex> resourceDataList = entry.getValue();
-                    // 索引 + 时间分区
-                    final String indexName = resourceIndex + "_" + key;
-                    final String jsonDataList = JacksonUtil.toJsonStr(resourceDataList);
-                    dto.setData(jsonDataList);
-                    dto.setIndexAlias(resourceIndexAlias);
-                    dto.setIndexName(indexName);
-                    HttpResult<Boolean> result = elasticsearchApiFeignClient.syncBatch(dto);
-                    if (!result.success()) {
-                        throw new CustomException(result.getCode(),result.getMsg());
+            try {
+                taskExecutor.submit(() -> {
+                    List<ResourceIndex> resourceIndexList = sysResourceService.getResourceIndexList(chunkSize, finalPageIndex,code,ym);
+                    Map<String, List<ResourceIndex>> resourceDataMap = resourceIndexList.stream().collect(Collectors.groupingBy(ResourceIndex::getYm));
+                    for (Map.Entry<String, List<ResourceIndex>> entry : resourceDataMap.entrySet()) {
+                        ElasticsearchDTO dto = new ElasticsearchDTO();
+                        final String key = entry.getKey();
+                        final List<ResourceIndex> resourceDataList = entry.getValue();
+                        // 索引 + 时间分区
+                        final String indexName = resourceIndex + "_" + key;
+                        final String jsonDataList = JacksonUtil.toJsonStr(resourceDataList);
+                        dto.setData(jsonDataList);
+                        dto.setIndexAlias(resourceIndexAlias);
+                        dto.setIndexName(indexName);
+                        HttpResult<Boolean> result = elasticsearchApiFeignClient.syncBatch(dto);
+                        if (!result.success()) {
+                            throw new CustomException(result.getCode(),result.getMsg());
+                        }
                     }
-                }
-                latch.countDown();
-            });
+                }).get();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            } catch (CustomException e) {
+                throw e;
+            }
             pageIndex += chunkSize;
         }
-        latch.await();
         afterSyncAsync();
     }
 
@@ -253,38 +257,44 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
     private void createResourceIndex(List<String> resourceYmPartitionList, String resourceIndexAlias, String resourceIndex) throws InterruptedException {
         beforeCreateIndex();
-        CountDownLatch latch = new CountDownLatch(resourceYmPartitionList.size());
         for (String ym : resourceYmPartitionList) {
-            taskExecutor.execute(() -> {
-                final CreateIndexDTO dto = new CreateIndexDTO();
-                final String indexName = resourceIndex + "_" + ym;
-                dto.setIndexName(indexName);
-                dto.setIndexAlias(resourceIndexAlias);
-                HttpResult<Boolean> result = elasticsearchApiFeignClient.create(dto);
-                if (!result.success()) {
-                    throw new CustomException(result.getCode(),result.getMsg());
-                }
-                latch.countDown();
-            });
+            try {
+                taskExecutor.submit(() -> {
+                    final CreateIndexDTO dto = new CreateIndexDTO();
+                    final String indexName = resourceIndex + "_" + ym;
+                    dto.setIndexName(indexName);
+                    dto.setIndexAlias(resourceIndexAlias);
+                    HttpResult<Boolean> result = elasticsearchApiFeignClient.create(dto);
+                    if (!result.success()) {
+                        throw new CustomException(result.getCode(),result.getMsg());
+                    }
+                }).get();
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            }  catch (CustomException e) {
+                throw e;
+            }
         }
-        latch.await();
         afterCreateIndex();
     }
 
     private void deleteResourceIndex(List<String> resourceYmPartitionList, String resourceIndex) throws InterruptedException {
         beforeDeleteIndex();
-        CountDownLatch latch = new CountDownLatch(resourceYmPartitionList.size());
         for (String ym : resourceYmPartitionList) {
-            taskExecutor.execute(() -> {
-                final String indexName = resourceIndex + "_" + ym;
-                HttpResult<Boolean> result = elasticsearchApiFeignClient.delete(indexName);
-                if (!result.success()) {
-                    throw new CustomException(result.getCode(),result.getMsg());
-                }
-                latch.countDown();
-            });
+            try {
+                taskExecutor.submit(() -> {
+                    final String indexName = resourceIndex + "_" + ym;
+                    HttpResult<Boolean> result = elasticsearchApiFeignClient.delete(indexName);
+                    if (!result.success()) {
+                        throw new CustomException(result.getMsg());
+                    }
+                }).get();
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            }  catch (CustomException e) {
+                throw e;
+            }
         }
-        latch.await();
         afterDeleteIndex();
     }
 
