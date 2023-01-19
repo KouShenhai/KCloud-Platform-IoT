@@ -17,6 +17,5 @@
         <module>laokou-gateway</module>
         <module>laokou-monitor</module>
         <module>laokou-sentinel</module>
-        <module>laokou-seata</module>
     </modules>
 </project>

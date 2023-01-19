@@ -23,7 +23,7 @@ import org.laokou.admin.client.constant.CacheConstant;
 import org.laokou.admin.client.enums.CacheEnum;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
-import org.laokou.admin.client.dto.SysResourceDTO;
+import org.laokou.admin.client.dto.SysResourceAuditDTO;
 import org.laokou.admin.server.infrastructure.annotation.DataCache;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysAuditLogVO;
@@ -101,7 +101,7 @@ public class SysVideoApiController {
     @OperateLog(module = "视频管理",name = "视频新增")
     @PreAuthorize("hasAuthority('sys:resource:video:insert')")
     @DataCache(name = CacheConstant.VIDEO,key = "#dto.id",type = CacheEnum.DEL)
-    public HttpResult<Boolean> insert(@RequestBody SysResourceDTO dto) throws IOException {
+    public HttpResult<Boolean> insert(@RequestBody SysResourceAuditDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.insertResource(dto));
     }
 
@@ -110,7 +110,7 @@ public class SysVideoApiController {
     @OperateLog(module = "视频管理",name = "视频修改")
     @PreAuthorize("hasAuthority('sys:resource:video:update')")
     @DataCache(name = CacheConstant.VIDEO,key = "#dto.id",type = CacheEnum.DEL)
-    public HttpResult<Boolean> update(@RequestBody SysResourceDTO dto) throws IOException {
+    public HttpResult<Boolean> update(@RequestBody SysResourceAuditDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.updateResource(dto));
     }
 

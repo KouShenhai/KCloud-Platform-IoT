@@ -15,7 +15,7 @@
  */
 package org.laokou.admin.server.application.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.client.dto.SysResourceDTO;
+import org.laokou.admin.client.dto.SysResourceAuditDTO;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysAuditLogVO;
 import org.laokou.admin.client.vo.SysResourceVO;
@@ -63,7 +63,7 @@ public interface SysResourceApplicationService {
      * @throws IOException
      * @return
      */
-    Boolean insertResource(SysResourceDTO dto) throws IOException;
+    Boolean insertResource(SysResourceAuditDTO dto) throws IOException;
 
     /**
      * 修改资源
@@ -71,7 +71,7 @@ public interface SysResourceApplicationService {
      * @throws IOException
      * @return
      */
-    Boolean updateResource(SysResourceDTO dto) throws IOException;
+    Boolean updateResource(SysResourceAuditDTO dto) throws IOException;
 
     /**
      * 根据id删除资源

@@ -20,7 +20,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BaseDO;
-
 /**
  * @author laokou
  */
@@ -28,6 +27,42 @@ import org.laokou.common.mybatisplus.entity.BaseDO;
 @TableName("boot_sys_resource_audit")
 @Schema(name = "SysResourceAuditDO",description = "系统资源审批实体类")
 public class SysResourceAuditDO extends BaseDO {
+
+    /**
+     * 资源编号
+     */
+    @Schema(name = "resourceId",description = "1")
+    private Long resourceId;
+
+    /**
+     * 资源标题
+     */
+    @Schema(name = "title",description = "资源标题")
+    private String title;
+
+    /**
+     * 资源URL
+     */
+    @Schema(name = "url",description = "资源URL")
+    private String url;
+
+    /**
+     * 资源编码
+     */
+    @Schema(name = "code",description = "资源编码")
+    private String code;
+
+    /**
+     * 资源备注
+     */
+    @Schema(name = "remark",description = "资源备注")
+    private String remark;
+
+    /**
+     * 资源标签
+     */
+    @Schema(name = "tags",description = "资源标签")
+    private String tags;
 
     /**
      * 流程id
@@ -40,4 +75,5 @@ public class SysResourceAuditDO extends BaseDO {
      */
     @Schema(name = "status",description = "资源状态 0 待审核 1 审核中 2 审批驳回 3 审批通过")
     private Integer status;
+
 }

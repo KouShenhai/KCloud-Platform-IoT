@@ -24,7 +24,7 @@ import org.laokou.admin.client.constant.CacheConstant;
 import org.laokou.admin.client.enums.CacheEnum;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
-import org.laokou.admin.client.dto.SysResourceDTO;
+import org.laokou.admin.client.dto.SysResourceAuditDTO;
 import org.laokou.admin.server.infrastructure.annotation.DataCache;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysAuditLogVO;
@@ -111,7 +111,7 @@ public class SysAudioApiController {
     @OperateLog(module = "音频管理",name = "音频新增")
     @PreAuthorize("hasAuthority('sys:resource:audio:insert')")
     @DataCache(name = CacheConstant.AUDIO,key = "#dto.id",type = CacheEnum.DEL)
-    public HttpResult<Boolean> insert(@RequestBody SysResourceDTO dto) throws IOException {
+    public HttpResult<Boolean> insert(@RequestBody SysResourceAuditDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.insertResource(dto));
     }
 
@@ -120,7 +120,7 @@ public class SysAudioApiController {
     @OperateLog(module = "音频管理",name = "音频修改")
     @PreAuthorize("hasAuthority('sys:resource:audio:update')")
     @DataCache(name = CacheConstant.AUDIO,key = "#dto.id",type = CacheEnum.DEL)
-    public HttpResult<Boolean> update(@RequestBody SysResourceDTO dto) throws IOException {
+    public HttpResult<Boolean> update(@RequestBody SysResourceAuditDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.updateResource(dto));
     }
 
@@ -139,4 +139,5 @@ public class SysAudioApiController {
     public void diagram(@RequestParam("processInstanceId")String processInstanceId, HttpServletResponse response) throws IOException {
         workflowTaskApplicationService.diagramProcess(processInstanceId, response);
     }
+
 }

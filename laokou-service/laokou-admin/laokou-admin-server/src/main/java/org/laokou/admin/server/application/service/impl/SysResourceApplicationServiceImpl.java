@@ -24,8 +24,10 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.MessageDTO;
 import org.laokou.admin.server.application.service.SysMessageApplicationService;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
+import org.laokou.admin.server.domain.sys.entity.SysResourceAuditDO;
 import org.laokou.admin.server.domain.sys.entity.SysResourceDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysAuditLogService;
+import org.laokou.admin.server.domain.sys.repository.service.SysResourceAuditService;
 import org.laokou.admin.server.domain.sys.repository.service.SysResourceService;
 import org.laokou.admin.server.infrastructure.feign.elasticsearch.ElasticsearchApiFeignClient;
 import org.laokou.admin.server.infrastructure.feign.flowable.WorkTaskApiFeignClient;
@@ -35,7 +37,7 @@ import org.laokou.admin.server.interfaces.qo.TaskQo;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.*;
 import org.laokou.admin.client.enums.MessageTypeEnum;
-import org.laokou.admin.client.dto.SysResourceDTO;
+import org.laokou.admin.client.dto.SysResourceAuditDTO;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysAuditLogVO;
 import org.laokou.admin.client.vo.SysResourceVO;
@@ -60,6 +62,7 @@ import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.rocketmq.client.constant.RocketmqConstant;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
@@ -86,6 +89,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     private final WorkTaskApiFeignClient workTaskApiFeignClient;
     private final OssApiFeignClient ossApiFeignClient;
     private final RedisUtil redisUtil;
+    private final SysResourceAuditService sysResourceAuditService;
 
     @Override
     public IPage<SysResourceVO> queryResourcePage(SysResourceQo qo) {
@@ -135,31 +139,33 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @GlobalTransactional
-    public Boolean insertResource(SysResourceDTO dto) {
+    public Boolean insertResource(SysResourceAuditDTO dto) {
         log.info("分布式事务 XID:{}", RootContext.getXID());
-        SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
-        sysResourceDO.setCreator(UserUtil.getUserId());
-        sysResourceDO.setAuthor(UserUtil.getUsername());
-        sysResourceDO.setStatus(INIT_STATUS);
+        SysResourceAuditDO sysResourceAuditDO = ConvertUtil.sourceToTarget(dto, SysResourceAuditDO.class);
+        sysResourceAuditDO.setCreator(UserUtil.getUserId());
+        sysResourceAuditDO.setStatus(INIT_STATUS);
+        SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(sysResourceAuditDO, SysResourceDO.class);
         sysResourceService.save(sysResourceDO);
-        String instanceId = startTask(sysResourceDO.getId(), sysResourceDO.getTitle());
-        sysResourceDO.setProcessInstanceId(instanceId);
-        return sysResourceService.updateById(sysResourceDO);
+        Long id = sysResourceDO.getId();
+        sysResourceAuditDO.setResourceId(id);
+        String instanceId = startTask(id, sysResourceDO.getTitle());
+        sysResourceAuditDO.setProcessInstanceId(instanceId);
+        return sysResourceAuditService.save(sysResourceAuditDO);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @GlobalTransactional
-    public Boolean updateResource(SysResourceDTO dto) {
+    public Boolean updateResource(SysResourceAuditDTO dto) {
         log.info("分布式事务 XID:{}", RootContext.getXID());
-        SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
-        sysResourceDO.setEditor(UserUtil.getUserId());
-        sysResourceDO.setStatus(INIT_STATUS);
-        String instanceId = startTask(sysResourceDO.getId(), dto.getTitle());
-        sysResourceDO.setProcessInstanceId(instanceId);
-        return sysResourceService.updateById(sysResourceDO);
+        SysResourceAuditDO sysResourceAuditDO = ConvertUtil.sourceToTarget(dto, SysResourceAuditDO.class);
+        sysResourceAuditDO.setEditor(UserUtil.getUserId());
+        sysResourceAuditDO.setStatus(INIT_STATUS);
+        String instanceId = startTask(dto.getResourceId(), dto.getTitle());
+        sysResourceAuditDO.setProcessInstanceId(instanceId);
+        return sysResourceAuditService.updateById(sysResourceAuditDO);
     }
 
     @Override
@@ -317,11 +323,11 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
             }
         }
         // 修改状态
-        LambdaUpdateWrapper<SysResourceDO> updateWrapper = Wrappers.lambdaUpdate(SysResourceDO.class)
-                .set(SysResourceDO::getStatus, status)
-                .eq(SysResourceDO::getProcessInstanceId, instanceId)
-                .eq(SysResourceDO::getDelFlag, Constant.NO);
-        sysResourceService.update(updateWrapper);
+        LambdaUpdateWrapper<SysResourceAuditDO> updateWrapper = Wrappers.lambdaUpdate(SysResourceAuditDO.class)
+                .set(SysResourceAuditDO::getStatus, status)
+                .eq(SysResourceAuditDO::getProcessInstanceId, instanceId)
+                .eq(SysResourceAuditDO::getDelFlag, Constant.NO);
+        sysResourceAuditService.update(updateWrapper);
         // 审核日志入队列
         saveAuditLog(businessId,auditStatus,comment,username,userId);
         return true;
