@@ -26,8 +26,6 @@ import org.laokou.oss.client.vo.UploadVO;
 import org.laokou.oss.server.entity.SysOssLogDO;
 import org.laokou.oss.server.service.SysOssLogService;
 import org.laokou.oss.server.support.StorageFactory;
-import org.laokou.redis.utils.RedisKeyUtil;
-import org.laokou.redis.utils.RedisUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,7 +43,6 @@ public class OssApiController {
 
     private final StorageFactory storageFactory;
     private final SysOssLogService sysOssLogService;
-    private final RedisUtil redisUtil;
 
     @PostMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "对象存储>上传",description = "对象存储>上传")
@@ -77,11 +74,6 @@ public class OssApiController {
         // 写入文件记录表
         sysOssLogService.insertLog(url,md5,fileName,fileSize);
         return new HttpResult<UploadVO>().ok(UploadVO.builder().url(url).build());
-    }
-
-    @GetMapping("/test")
-    public void test() {
-        redisUtil.delete(RedisKeyUtil.getOssConfigKey());
     }
 
 }

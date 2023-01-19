@@ -35,6 +35,9 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+
 /**
  * 密码模式
  * @author laokou
@@ -62,7 +65,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
     }
 
     @Override
-    Authentication login(HttpServletRequest request) {
+    Authentication login(HttpServletRequest request) throws IOException {
         // 判断唯一标识是否为空
         String uuid = request.getParameter(AuthConstant.UUID);
         log.info("唯一标识：{}",uuid);

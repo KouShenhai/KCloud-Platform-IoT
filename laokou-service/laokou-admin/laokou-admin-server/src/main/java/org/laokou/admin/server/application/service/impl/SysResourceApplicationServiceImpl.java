@@ -27,13 +27,10 @@ import org.laokou.admin.server.application.service.SysMessageApplicationService;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysResourceAuditDO;
 import org.laokou.admin.server.domain.sys.entity.SysResourceDO;
-import org.laokou.admin.server.domain.sys.repository.service.SysAuditLogService;
-import org.laokou.admin.server.domain.sys.repository.service.SysResourceAuditService;
-import org.laokou.admin.server.domain.sys.repository.service.SysResourceService;
+import org.laokou.admin.server.domain.sys.repository.service.*;
 import org.laokou.admin.server.infrastructure.feign.elasticsearch.ElasticsearchApiFeignClient;
 import org.laokou.admin.server.infrastructure.feign.flowable.WorkTaskApiFeignClient;
 import org.laokou.admin.server.infrastructure.feign.oss.OssApiFeignClient;
-import org.laokou.admin.server.infrastructure.feign.rocketmq.RocketmqApiFeignClient;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.*;
@@ -53,21 +50,18 @@ import org.laokou.flowable.client.dto.TaskDTO;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.laokou.flowable.client.vo.TaskVO;
-import org.laokou.log.client.dto.AuditLogDTO;
-import org.laokou.log.client.dto.enums.AuditTypeEnum;
+import org.laokou.admin.client.dto.AuditLogDTO;
+import org.laokou.admin.client.enums.AuditTypeEnum;
 import org.laokou.redis.utils.RedisUtil;
-import org.laokou.rocketmq.client.dto.RocketmqDTO;
 import org.laokou.oss.client.vo.UploadVO;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
-import org.laokou.rocketmq.client.constant.RocketmqConstant;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 /**
@@ -86,13 +80,11 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     private final SysAuditLogService sysAuditLogService;
     private final ThreadPoolTaskExecutor taskExecutor;
     private final ElasticsearchApiFeignClient elasticsearchApiFeignClient;
-    private final RocketmqApiFeignClient rocketmqApiFeignClient;
     private final SysMessageApplicationService sysMessageApplicationService;
     private final WorkTaskApiFeignClient workTaskApiFeignClient;
     private final OssApiFeignClient ossApiFeignClient;
     private final RedisUtil redisUtil;
     private final SysResourceAuditService sysResourceAuditService;
-
     @Override
     public IPage<SysResourceVO> queryResourcePage(SysResourceQo qo) {
         IPage<SysResourceVO> page = new Page(qo.getPageNum(),qo.getPageSize());
@@ -377,9 +369,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         auditLogDTO.setCreator(userId);
         auditLogDTO.setComment(comment);
         auditLogDTO.setType(AuditTypeEnum.RESOURCE.ordinal());
-        RocketmqDTO rocketmqDTO = new RocketmqDTO();
-        rocketmqDTO.setData(JacksonUtil.toJsonStr(auditLogDTO));
-        //rocketmqApiFeignClient.sendOneMessage(RocketmqConstant.LAOKOU_AUDIT_LOG_TOPIC, rocketmqDTO);
+        sysAuditLogService.insertAuditLog(auditLogDTO);
     }
 
     @Override

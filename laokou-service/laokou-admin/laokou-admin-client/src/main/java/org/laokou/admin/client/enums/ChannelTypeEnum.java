@@ -13,30 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.server.domain.sys.repository.service;
-
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.server.interfaces.qo.SysLoginLogQo;
-import org.laokou.admin.client.vo.SysLoginLogVO;
-import java.util.List;
+package org.laokou.admin.client.enums;
 
 /**
  * @author laokou
  */
-public interface SysLoginLogService {
-    /**
-     * 分页查询登录日志
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, SysLoginLogQo qo);
+
+public enum ChannelTypeEnum {
 
     /**
-     * 查询登录日志
-     * @param qo
-     * @return
+     * 平台
      */
-    List<SysLoginLogVO> getLoginLogList(SysLoginLogQo qo);
-
+    PLATFORM,
+    /**
+     * 微信公众号
+     */
+    WX_MP,
+    /**
+     * 邮件
+     */
+    EMAIL
 }

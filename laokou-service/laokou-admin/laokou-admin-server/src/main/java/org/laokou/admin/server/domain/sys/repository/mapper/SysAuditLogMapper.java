@@ -17,9 +17,11 @@ package org.laokou.admin.server.domain.sys.repository.mapper;
 
 import java.util.*;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.laokou.admin.client.vo.SysAuditLogVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.admin.server.domain.sys.entity.SysAuditLogDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -29,7 +31,7 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface SysAuditLogMapper {
+public interface SysAuditLogMapper extends BaseMapper<SysAuditLogDO> {
 
     /**
      * 查询资源审核日志

@@ -23,6 +23,8 @@ import org.laokou.oss.server.mapper.SysOssLogMapper;
 import org.laokou.oss.server.service.SysOssLogService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
  * @author laokou
  */
@@ -31,6 +33,7 @@ public class SysOssLogServiceImpl extends ServiceImpl<SysOssLogMapper, SysOssLog
 
     @Override
     @Async
+    @Transactional(rollbackFor = Exception.class)
     public void insertLog(String url, String md5,String fileName,Long fileSize) {
         SysOssLogDO sysOssLogDO = new SysOssLogDO();
         sysOssLogDO.setUrl(url);

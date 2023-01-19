@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.service;
-
 import java.util.*;
+import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.client.vo.SysAuditLogVO;
+import org.laokou.admin.server.domain.sys.entity.SysAuditLogDO;
+import org.laokou.admin.client.dto.AuditLogDTO;
 
 /**
  * @author laokou
  * @version 1.0
  * @date 2022/8/26 0026 下午 5:35
  */
-public interface SysAuditLogService {
+public interface SysAuditLogService extends IService<SysAuditLogDO> {
     /**
      * 分页查询审核日志
      * @param businessId
@@ -31,4 +33,11 @@ public interface SysAuditLogService {
      * @return
      */
     List<SysAuditLogVO> getAuditLogList(Long businessId,Integer type);
+
+    /**
+     * 新增审批日志
+     * @param dto
+     * @return
+     */
+    Boolean insertAuditLog(AuditLogDTO dto);
 }

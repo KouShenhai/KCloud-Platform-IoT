@@ -15,10 +15,14 @@
  */
 package org.laokou.admin.server.domain.sys.repository.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.server.domain.sys.entity.SysAuditLogDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysAuditLogMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysAuditLogService;
 import org.laokou.admin.client.vo.SysAuditLogVO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.client.dto.AuditLogDTO;
 import org.springframework.stereotype.Service;
 import java.util.*;
 /**
@@ -28,13 +32,20 @@ import java.util.*;
  */
 @Service
 @RequiredArgsConstructor
-public class SysAuditLogServiceImpl implements SysAuditLogService {
+public class SysAuditLogServiceImpl extends ServiceImpl<SysAuditLogMapper, SysAuditLogDO> implements SysAuditLogService {
 
     private final SysAuditLogMapper sysAuditLogMapper;
 
     @Override
     public List<SysAuditLogVO> getAuditLogList(Long businessId,Integer type) {
         return this.sysAuditLogMapper.getAuditLogList(businessId,type);
+    }
+
+    @Override
+    public Boolean insertAuditLog(AuditLogDTO dto) {
+        SysAuditLogDO auditDO = ConvertUtil.sourceToTarget(dto, SysAuditLogDO.class);
+        baseMapper.insert(auditDO);
+        return true;
     }
 
 }

@@ -15,6 +15,7 @@
  */
 package org.laokou.auth.server.infrastructure.authentication;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.SneakyThrows;
 import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
@@ -43,6 +44,8 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
+
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
@@ -83,6 +86,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     }
 
 
+    @SneakyThrows
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         Authentication usernamePasswordToken = login(request);
@@ -101,7 +105,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
      * @param request
      * @return
      */
-    abstract Authentication login(HttpServletRequest request);
+    abstract Authentication login(HttpServletRequest request) throws IOException;
 
     /**
      * 认证类型
@@ -116,7 +120,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
      * @param principal
      * @return
      */
-    protected Authentication getToken(Authentication authentication,Authentication principal,HttpServletRequest request) {
+    protected Authentication getToken(Authentication authentication,Authentication principal,HttpServletRequest request) throws IOException {
         // 生成token（access_token + refresh_token）
         AbstractOAuth2BaseAuthenticationToken abstractOAuth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;
         OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(abstractOAuth2BaseAuthenticationToken);
@@ -177,7 +181,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         return new OAuth2AccessTokenAuthenticationToken(
                 registeredClient, clientPrincipal, oAuth2AccessToken, oAuth2RefreshToken, Collections.emptyMap());
     }
-    protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password, HttpServletRequest request) {
+    protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password, HttpServletRequest request) throws IOException {
         AuthorizationGrantType grantType = getGrantType();
         String loginType = grantType.getValue();
         // 验证用户

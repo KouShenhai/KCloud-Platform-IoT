@@ -16,15 +16,18 @@
 package org.laokou.admin.server.domain.sys.repository.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
+import org.laokou.admin.server.domain.sys.entity.SysOperateLogDO;
 import org.laokou.admin.server.interfaces.qo.SysOperateLogQo;
 import org.laokou.admin.client.vo.SysOperateLogVO;
+import org.laokou.admin.client.dto.OperateLogDTO;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface SysOperateLogService {
+public interface SysOperateLogService extends IService<SysOperateLogDO> {
 
     /**
      * 分页查询操作日志
@@ -40,5 +43,12 @@ public interface SysOperateLogService {
      * @return
      */
     List<SysOperateLogVO> getOperateLogList(SysOperateLogQo qo);
+
+    /**
+     * 新增登录日志
+     * @param dto
+     * @return
+     */
+    Boolean insertOperateLog(OperateLogDTO dto);
 
 }

@@ -18,6 +18,7 @@
  */
 package org.laokou.admin.server;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import org.laokou.common.mybatisplus.config.BaseDetaObjectHander;
 import org.laokou.common.security.config.AuthorizationConfig;
 import org.laokou.common.security.config.ResourceServerConfig;
 import org.laokou.common.swagger.config.CorsConfig;
@@ -31,6 +32,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableAsync;
+
 /**
  * 架构演变
  * 单机架构（两层架构）
@@ -44,8 +47,10 @@ import org.springframework.context.annotation.Import;
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties
 @EnableFeignClients
+@EnableAsync
 @Import({RedisSessionConfig.class
         , CorsConfig.class
+        , BaseDetaObjectHander.class
         , AuthorizationConfig.class
         , ResourceServerConfig.class
         , CustomExceptionHandler.class

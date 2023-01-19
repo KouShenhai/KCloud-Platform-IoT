@@ -13,20 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.laokou.auth.server.infrastructure.config;
 
-package org.laokou.oss.server.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
 import java.util.concurrent.ThreadPoolExecutor;
+
 /**
  * @author laokou
  */
 @Configuration
-public class AsyncTaskConfig {
+public class TaskExecutorConfig {
 
     @Bean
-    public ThreadPoolTaskExecutor taskExecutor() {
+    public ThreadPoolTaskExecutor taskExecutor () {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         // 核心线程数
         taskExecutor.setCorePoolSize(8);
@@ -39,7 +41,7 @@ public class AsyncTaskConfig {
         // 拒绝策略，默认ThreadPoolExecutor.AbortPolicy()
         taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         // 线程名称前缀
-        taskExecutor.setThreadNamePrefix("laokou-oss-service-");
+        taskExecutor.setThreadNamePrefix("laokou-auth-service-");
         return taskExecutor;
     }
 

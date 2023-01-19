@@ -26,6 +26,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * 架构演变
@@ -34,11 +35,12 @@ import org.springframework.context.annotation.Import;
  * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = {"org.laokou.sentinel","org.laokou.common.swagger","org.laokou.common.core","org.laokou.redis","org.laokou.auth"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.sentinel","org.laokou.common.swagger","org.laokou.common.mybatisplus","org.laokou.common.core","org.laokou.redis","org.laokou.auth"})
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties
 @EnableFeignClients
+@EnableAsync
 @Import({RedisSessionConfig.class
         , CorsConfig.class
         , CustomExceptionHandler.class

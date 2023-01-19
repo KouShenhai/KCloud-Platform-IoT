@@ -13,30 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.server.domain.sys.repository.service;
-
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.server.interfaces.qo.SysLoginLogQo;
-import org.laokou.admin.client.vo.SysLoginLogVO;
-import java.util.List;
-
+package org.laokou.auth.server.domain.sys.repository.service;
+import com.baomidou.mybatisplus.extension.service.IService;
+import org.laokou.auth.client.dto.LoginLogDTO;
+import org.laokou.auth.server.domain.sys.entity.SysLoginLogDO;
 /**
  * @author laokou
  */
-public interface SysLoginLogService {
+public interface SysLoginLogService extends IService<SysLoginLogDO> {
     /**
-     * 分页查询登录日志
-     * @param page
-     * @param qo
+     * 新增登录日志
+     * @param dto
      * @return
      */
-    IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, SysLoginLogQo qo);
-
-    /**
-     * 查询登录日志
-     * @param qo
-     * @return
-     */
-    List<SysLoginLogVO> getLoginLogList(SysLoginLogQo qo);
+    Boolean insertLoginLog(LoginLogDTO dto);
 
 }

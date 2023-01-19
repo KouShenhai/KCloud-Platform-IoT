@@ -13,30 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.server.domain.sys.repository.service;
+package org.laokou.admin.server.domain.sys.entity;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.server.interfaces.qo.SysLoginLogQo;
-import org.laokou.admin.client.vo.SysLoginLogVO;
-import java.util.List;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import org.laokou.common.mybatisplus.entity.BaseDO;
+
+import java.util.Date;
 
 /**
  * @author laokou
+ * @version 1.0
+ * @date 2022/8/26 0026 下午 5:31
  */
-public interface SysLoginLogService {
-    /**
-     * 分页查询登录日志
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, SysLoginLogQo qo);
+@Data
+@TableName("boot_sys_audit_log")
+public class SysAuditLogDO extends BaseDO {
 
-    /**
-     * 查询登录日志
-     * @param qo
-     * @return
-     */
-    List<SysLoginLogVO> getLoginLogList(SysLoginLogQo qo);
+    private Long businessId;
+
+    private String auditName;
+
+    private Date auditDate;
+
+    private Integer auditStatus;
+
+    private String comment;
 
 }

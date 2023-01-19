@@ -15,11 +15,15 @@
  */
 package org.laokou.admin.server.domain.sys.repository.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.server.domain.sys.entity.SysOperateLogDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysOperateLogMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysOperateLogService;
 import org.laokou.admin.server.interfaces.qo.SysOperateLogQo;
 import org.laokou.admin.client.vo.SysOperateLogVO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.client.dto.OperateLogDTO;
 import org.springframework.stereotype.Service;
 import java.util.List;
 /**
@@ -27,7 +31,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class SysOperateLogServiceImpl implements SysOperateLogService {
+public class SysOperateLogServiceImpl extends ServiceImpl<SysOperateLogMapper, SysOperateLogDO> implements SysOperateLogService {
 
     private final SysOperateLogMapper sysOperateLogMapper;
     @Override
@@ -38,5 +42,12 @@ public class SysOperateLogServiceImpl implements SysOperateLogService {
     @Override
     public List<SysOperateLogVO> getOperateLogList(SysOperateLogQo qo) {
         return sysOperateLogMapper.getOperateLogList(qo);
+    }
+
+    @Override
+    public Boolean insertOperateLog(OperateLogDTO dto) {
+        SysOperateLogDO logDO = ConvertUtil.sourceToTarget(dto, SysOperateLogDO.class);
+        baseMapper.insert(logDO);
+        return true;
     }
 }

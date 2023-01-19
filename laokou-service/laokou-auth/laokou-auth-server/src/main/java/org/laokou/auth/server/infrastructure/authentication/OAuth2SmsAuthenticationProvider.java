@@ -33,6 +33,9 @@ import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
+
+import java.io.IOException;
+
 /**
  * @author laokou
  */
@@ -58,7 +61,7 @@ public class OAuth2SmsAuthenticationProvider extends AbstractOAuth2BaseAuthentic
     }
 
     @Override
-    Authentication login(HttpServletRequest request) {
+    Authentication login(HttpServletRequest request) throws IOException {
         String code = request.getParameter(OAuth2ParameterNames.CODE);
         log.info("验证码：{}",code);
         if (StringUtil.isEmpty(code)) {

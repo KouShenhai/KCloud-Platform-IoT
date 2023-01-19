@@ -19,6 +19,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.client.enums.ChannelTypeEnum;
 import org.laokou.admin.server.application.service.SysMessageApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDO;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
@@ -26,7 +27,6 @@ import org.laokou.admin.server.domain.sys.repository.service.SysMessageDetailSer
 import org.laokou.admin.server.domain.sys.repository.service.SysMessageService;
 import org.laokou.admin.server.infrastructure.annotation.DataFilter;
 import org.laokou.admin.client.dto.MessageDTO;
-import org.laokou.admin.server.infrastructure.feign.rocketmq.RocketmqApiFeignClient;
 import org.laokou.admin.server.interfaces.qo.SysMessageQo;
 import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
@@ -34,14 +34,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.rocketmq.client.dto.RocketmqDTO;
-import org.laokou.rocketmq.client.constant.RocketmqConstant;
-import org.laokou.rocketmq.client.dto.MsgDTO;
-import org.laokou.rocketmq.client.enums.ChannelTypeEnum;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.*;
 /**
  * @author laokou
@@ -54,8 +48,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     private final SysMessageService sysMessageService;
 
     private final SysMessageDetailService sysMessageDetailService;
-
-    private final RocketmqApiFeignClient rocketmqApiFeignClient;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -89,7 +81,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         // 平台-发送消息
         if (CollectionUtils.isNotEmpty(platformReceiver)) {
             String newTitle = String.format("%s发来一条消息", UserUtil.getUsername());
-            pushMessage(newTitle,"",platformReceiver,ChannelTypeEnum.PLATFORM.ordinal());
+            //pushMessage(newTitle,"",platformReceiver,ChannelTypeEnum.PLATFORM.ordinal());
         }
         // 微信公众号-发送消息
         if (false) {
@@ -97,7 +89,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         }
         // 邮件-发送消息
         if (CollectionUtils.isNotEmpty(emailReceiver)) {
-            pushMessage(title,content,emailReceiver, ChannelTypeEnum.EMAIL.ordinal());
+            //pushMessage(title,content,emailReceiver, ChannelTypeEnum.EMAIL.ordinal());
         }
         return true;
     }
@@ -114,16 +106,13 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         return str.isEmpty() ? "" : str.substring(0,str.length() - 1);
     }
 
-    private void pushMessage(String title,String content,Set<String> receiver,Integer sendChannel) {
-        MsgDTO msgDTO = new MsgDTO();
-        msgDTO.setTitle(title);
-        msgDTO.setReceiver(receiver);
-        msgDTO.setContent(content);
-        msgDTO.setSendChannel(sendChannel);
-        RocketmqDTO dto = new RocketmqDTO();
-        dto.setData(JacksonUtil.toJsonStr(msgDTO));
-        // rocketmqApiFeignClient.sendMessage(RocketmqConstant.LAOKOU_MESSAGE_NOTICE_TOPIC,dto);
-    }
+//    private void pushMessage(String title,String content,Set<String> receiver,Integer sendChannel) {
+//        MsgDTO msgDTO = new MsgDTO();
+//        msgDTO.setTitle(title);
+//        msgDTO.setReceiver(receiver);
+//        msgDTO.setContent(content);
+//        msgDTO.setSendChannel(sendChannel);
+//    }
 
     @Override
     @DataFilter(tableAlias = "boot_sys_message")

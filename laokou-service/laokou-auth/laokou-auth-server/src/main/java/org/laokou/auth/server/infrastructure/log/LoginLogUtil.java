@@ -16,19 +16,18 @@
 package org.laokou.auth.server.infrastructure.log;
 
 import eu.bitwalker.useragentutils.UserAgent;
-import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHeaders;
-import org.laokou.auth.server.infrastructure.feign.rocketmq.RocketmqApiFeignClient;
+import org.laokou.auth.client.dto.LoginLogDTO;
+import org.laokou.auth.server.domain.sys.repository.service.SysLoginLogService;
 import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.core.utils.IpUtil;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.log.client.dto.LoginLogDTO;
-import org.laokou.rocketmq.client.dto.RocketmqDTO;
-import org.laokou.rocketmq.client.constant.RocketmqConstant;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.IOException;
 
 /**
@@ -39,31 +38,27 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class LoginLogUtil {
 
-    private final RocketmqApiFeignClient rocketmqApiFeignClient;
+    private final SysLoginLogService sysLoginLogService;
 
-    public void recordLogin(String username,String loginType, Integer status, String msg, HttpServletRequest request) {
-        try {
-            UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
-            String ip = IpUtil.getIpAddr(request);
-            //获取客户端操作系统
-            String os = userAgent.getOperatingSystem().getName();
-            //获取客户端浏览器
-            String browser = userAgent.getBrowser().getName();
-            LoginLogDTO dto = new LoginLogDTO();
-            dto.setLoginName(username);
-            dto.setRequestIp(ip);
-            dto.setRequestAddress(AddressUtil.getRealAddress(ip));
-            dto.setBrowser(browser);
-            dto.setOs(os);
-            dto.setMsg(msg);
-            dto.setLoginType(loginType);
-            dto.setRequestStatus(status);
-            RocketmqDTO rocketmqDTO = new RocketmqDTO();
-            rocketmqDTO.setData(JacksonUtil.toJsonStr(dto));
-            rocketmqApiFeignClient.sendOneMessage(RocketmqConstant.LAOKOU_LOGIN_LOG_TOPIC, rocketmqDTO);
-        } catch (FeignException | IOException e) {
-            log.error("异常信息：{}",e.getMessage());
-        }
+    @Async
+    @Transactional
+    public void recordLogin(String username,String loginType, Integer status, String msg, HttpServletRequest request) throws IOException {
+        UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
+        String ip = IpUtil.getIpAddr(request);
+        //获取客户端操作系统
+        String os = userAgent.getOperatingSystem().getName();
+        //获取客户端浏览器
+        String browser = userAgent.getBrowser().getName();
+        LoginLogDTO dto = new LoginLogDTO();
+        dto.setLoginName(username);
+        dto.setRequestIp(ip);
+        dto.setRequestAddress(AddressUtil.getRealAddress(ip));
+        dto.setBrowser(browser);
+        dto.setOs(os);
+        dto.setMsg(msg);
+        dto.setLoginType(loginType);
+        dto.setRequestStatus(status);
+        sysLoginLogService.insertLoginLog(dto);
     }
 
 }

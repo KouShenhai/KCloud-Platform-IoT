@@ -24,7 +24,6 @@ import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.rocketmq.client.constant.RocketmqConstant;
 import org.laokou.rocketmq.client.dto.MsgDTO;
-import org.laokou.rocketmq.client.enums.ChannelTypeEnum;
 import org.laokou.rocketmq.consumer.filter.MessageFilter;
 import org.springframework.stereotype.Component;
 /**
@@ -44,8 +43,8 @@ public class EmailNoticeConsumer implements RocketMQListener<MessageExt> {
             return;
         }
         final MsgDTO dto = JacksonUtil.toBean(messageBody, MsgDTO.class);
-        if (ChannelTypeEnum.EMAIL.ordinal() == dto.getSendChannel()) {
-            log.info("邮件");
-        }
+//        if (ChannelTypeEnum.EMAIL.ordinal() == dto.getSendChannel()) {
+//            log.info("邮件");
+//        }
     }
 }

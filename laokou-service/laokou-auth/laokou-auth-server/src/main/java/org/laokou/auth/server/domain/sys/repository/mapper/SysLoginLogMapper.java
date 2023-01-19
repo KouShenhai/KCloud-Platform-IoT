@@ -13,36 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.server.domain.sys.repository.mapper;
+package org.laokou.auth.server.domain.sys.repository.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.server.domain.sys.entity.SysOperateLogDO;
-import org.laokou.admin.server.interfaces.qo.SysOperateLogQo;
-import org.laokou.admin.client.vo.SysOperateLogVO;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.laokou.auth.server.domain.sys.entity.SysLoginLogDO;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 /**
  * @author laokou
  */
-@Mapper
 @Repository
-public interface SysOperateLogMapper extends BaseMapper<SysOperateLogDO> {
-
-    /**
-     * 分页查询操作日志
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysOperateLogVO> getOperateLogList(IPage<SysOperateLogVO> page, @Param("qo") SysOperateLogQo qo);
-
-    /**
-     * 查询操作日志
-     * @param qo
-     * @return
-     */
-    List<SysOperateLogVO> getOperateLogList(@Param("qo") SysOperateLogQo qo);
-
+@Mapper
+public interface SysLoginLogMapper extends BaseMapper<SysLoginLogDO> {
 }
