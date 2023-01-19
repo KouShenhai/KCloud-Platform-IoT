@@ -83,9 +83,8 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         Set<String> platformReceiver = dto.getPlatformReceiver();
         // 平台-发送消息
         if (CollectionUtils.isNotEmpty(platformReceiver)) {
-            String msg = String.format("%s发来一条消息", UserUtil.getUsername());
             PushMsgDTO pushMsgDTO = new PushMsgDTO();
-            pushMsgDTO.setMsg(msg);
+            pushMsgDTO.setMsg("您有一条未读消息，请注意查收");
             pushMsgDTO.setReceiver(receiver);
             HttpResult<Boolean> result = imApiFeignClient.push(pushMsgDTO);
             if (!result.success()) {

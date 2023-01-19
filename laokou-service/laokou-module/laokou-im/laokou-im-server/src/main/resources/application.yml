@@ -11,9 +11,10 @@ server:
     # 分配堆外内存
     direct-buffers: true
 
-
 #spring
 spring:
+  application:
+    name: @pom.parent.artifactId@
   profiles:
     # 环境 dev|test|prod
     active: @profile.active@

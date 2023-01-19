@@ -58,6 +58,8 @@ springdoc:
         url: /v3/api-docs/auth
       - name: oss
         url: /v3/api-docs/oss
+      - name: oss
+        url: /v3/api-docs/im
 
 # 忽略uris
 ignore:

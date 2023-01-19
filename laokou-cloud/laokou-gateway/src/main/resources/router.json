@@ -104,5 +104,43 @@
     ],
     "metadata": {},
     "order": 999
+  },
+  {
+    "id": "laokou-im",
+    "uri": "lb://laokou-im",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/im/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "im",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/im/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "2.0"
+    },
+    "order": 999
   }
 ]
