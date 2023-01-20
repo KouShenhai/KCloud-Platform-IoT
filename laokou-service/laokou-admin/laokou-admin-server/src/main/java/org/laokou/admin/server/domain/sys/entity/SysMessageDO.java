@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.entity;
-
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 import lombok.Data;
-
 /**
  * 系统消息
  * @author laokou
@@ -28,17 +26,6 @@ import lombok.Data;
 @TableName("boot_sys_message")
 @Schema(name = "SysMessageDO",description = "系统消息实体类")
 public class SysMessageDO extends BaseDO {
-
-    /**
-     * 用户id
-     */
-    // TODO 增加用户id
-
-    /**
-     * 用户名
-     */
-    @Schema(name = "username",description = "用户名")
-    private String username;
 
     /**
      * 消息标题
@@ -56,7 +43,7 @@ public class SysMessageDO extends BaseDO {
      * 发送渠道 0 平台 1 微信公众号 2 邮箱
      */
     @Schema(name = "sendChannel",description = "发送渠道 0 平台 1 微信公众号 2 邮箱")
-    private String sendChannel;
+    private Integer sendChannel;
 
     /**
      * 部门id

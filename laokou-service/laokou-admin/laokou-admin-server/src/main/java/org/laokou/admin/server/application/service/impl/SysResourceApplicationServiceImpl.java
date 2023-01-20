@@ -23,6 +23,7 @@ import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.MessageDTO;
+import org.laokou.admin.client.enums.ChannelTypeEnum;
 import org.laokou.admin.server.application.service.SysMessageApplicationService;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysResourceAuditDO;
@@ -325,7 +326,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (StringUtil.isNotEmpty(assignee)) {
             //审批中
             status = 1;
-            insertMessage(assignee, MessageTypeEnum.REMIND.ordinal(),businessId,instanceName);
+            insertMessage(assignee, MessageTypeEnum.REMIND.ordinal(),businessId,instanceName, ChannelTypeEnum.PLATFORM.ordinal());
         } else {
             //0拒绝 1同意
             if (0 == auditStatus) {
@@ -402,7 +403,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         log.info("结束异步同步数据...");
     }
 
-   private void insertMessage(String assignee, Integer type,Long id,String name) {
+   private void insertMessage(String assignee, Integer type,Long id,String name,Integer sendChannel) {
         String title = "资源审批提醒";
         String content = String.format("编号为%s，名称为%s的资源需要审批，请及时查看并处理",id,name);
         Set<String> set = new HashSet<>(1);
@@ -410,8 +411,9 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         MessageDTO dto = new MessageDTO();
         dto.setContent(content);
         dto.setTitle(title);
-        dto.setPlatformReceiver(set);
+        dto.setReceiver(set);
         dto.setType(type);
+        dto.setSendChannel(sendChannel);
         sysMessageApplicationService.insertMessage(dto);
    }
 
@@ -433,7 +435,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         AssigneeVO vo = result.getData();
         String instanceId = vo.getInstanceId();
         String assignee = vo.getAssignee();
-        insertMessage(assignee,MessageTypeEnum.REMIND.ordinal(),businessKey,businessName);
+        insertMessage(assignee,MessageTypeEnum.REMIND.ordinal(),businessKey,businessName, ChannelTypeEnum.PLATFORM.ordinal());
         return instanceId;
     }
 

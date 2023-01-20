@@ -31,8 +31,6 @@ public class SysMessageVO implements Serializable {
 
     private String content;
 
-    private String username;
-
     private Date createDate;
 
     private Integer type;

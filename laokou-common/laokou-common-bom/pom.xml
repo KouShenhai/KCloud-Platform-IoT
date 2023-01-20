@@ -12,7 +12,7 @@
     <properties>
         <laokou.version>3.0.2</laokou.version>
         <!--boot版本-->
-        <spring-boot.version>3.0.1</spring-boot.version>
+        <spring-boot.version>3.0.2</spring-boot.version>
         <!--lombok版本-->
         <lombok.version>1.18.20</lombok.version>
         <!--mysql版本-->
@@ -84,11 +84,6 @@
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-seata</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-security</artifactId>

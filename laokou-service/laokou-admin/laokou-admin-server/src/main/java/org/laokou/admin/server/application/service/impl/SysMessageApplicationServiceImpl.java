@@ -58,60 +58,40 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertMessage(MessageDTO dto) {
         SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
+        Integer sendChannel = dto.getSendChannel();
         messageDO.setCreateDate(new Date());
         messageDO.setCreator(UserUtil.getUserId());
-        messageDO.setUsername(UserUtil.getUsername());
         messageDO.setDeptId(UserUtil.getDeptId());
-        messageDO.setSendChannel(getSendChannel(dto));
+        messageDO.setSendChannel(sendChannel);
         sysMessageService.save(messageDO);
-        Set<String> receiver = dto.getPlatformReceiver();
-        Iterator<String> iterator = receiver.iterator();
-        List<SysMessageDetailDO> detailDOList = new ArrayList<>(receiver.size());
-        while (iterator.hasNext()) {
-            String next = iterator.next();
-            SysMessageDetailDO detailDO = new SysMessageDetailDO();
-            detailDO.setMessageId(messageDO.getId());
-            detailDO.setUserId(Long.valueOf(next));
-            detailDO.setCreateDate(new Date());
-            detailDO.setCreator(UserUtil.getUserId());
-            detailDOList.add(detailDO);
-        }
-        if (CollectionUtils.isNotEmpty(detailDOList)) {
-            sysMessageDetailService.saveBatch(detailDOList);
-        }
-        Set<String> emailReceiver = dto.getEmailReceiver();
-        Set<String> platformReceiver = dto.getPlatformReceiver();
-        // 平台-发送消息
-        if (CollectionUtils.isNotEmpty(platformReceiver)) {
-            PushMsgDTO pushMsgDTO = new PushMsgDTO();
-            pushMsgDTO.setMsg("您有一条未读消息，请注意查收");
-            pushMsgDTO.setReceiver(receiver);
-            HttpResult<Boolean> result = imApiFeignClient.push(pushMsgDTO);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(),result.getMsg());
+        if (ChannelTypeEnum.PLATFORM.ordinal() == sendChannel) {
+            Set<String> receiver = dto.getReceiver();
+            Iterator<String> iterator = receiver.iterator();
+            List<SysMessageDetailDO> detailDOList = new ArrayList<>(receiver.size());
+            while (iterator.hasNext()) {
+                String next = iterator.next();
+                SysMessageDetailDO detailDO = new SysMessageDetailDO();
+                detailDO.setMessageId(messageDO.getId());
+                detailDO.setUserId(Long.valueOf(next));
+                detailDO.setCreateDate(new Date());
+                detailDO.setCreator(UserUtil.getUserId());
+                detailDOList.add(detailDO);
+            }
+            if (CollectionUtils.isNotEmpty(detailDOList)) {
+                sysMessageDetailService.saveBatch(detailDOList);
+            }
+            // 平台-发送消息
+            if (CollectionUtils.isNotEmpty(receiver)) {
+                PushMsgDTO pushMsgDTO = new PushMsgDTO();
+                pushMsgDTO.setMsg("您有一条未读消息，请注意查收");
+                pushMsgDTO.setReceiver(receiver);
+                HttpResult<Boolean> result = imApiFeignClient.push(pushMsgDTO);
+                if (!result.success()) {
+                    throw new CustomException(result.getCode(), result.getMsg());
+                }
             }
         }
-        // 微信公众号-发送消息
-        if (false) {
-
-        }
-        // 邮件-发送消息
-        if (CollectionUtils.isNotEmpty(emailReceiver)) {
-
-        }
         return true;
-    }
-
-    private String getSendChannel(MessageDTO dto) {
-        StringBuffer stringBuffer = new StringBuffer();
-        if (CollectionUtils.isNotEmpty(dto.getPlatformReceiver())) {
-            stringBuffer.append(ChannelTypeEnum.PLATFORM.ordinal()).append(",");
-        }
-        if (CollectionUtils.isNotEmpty(dto.getEmailReceiver())) {
-            stringBuffer.append(ChannelTypeEnum.EMAIL.ordinal()).append(",");
-        }
-        String str = stringBuffer.toString();
-        return str.isEmpty() ? "" : str.substring(0,str.length() - 1);
     }
 
     @Override
