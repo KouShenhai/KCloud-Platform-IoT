@@ -218,15 +218,15 @@ seata:
   config:
     type: nacos
     nacos:
-      server-addr: 192.168.62.144:8848
-      namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+      server-addr: 127.0.0.1:8848
+      namespace: xxx-xxx-xxx-xx
       group: SEATA_GROUP
   registry:
     type: nacos
     nacos:
-      namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
+      namespace: xxx-xxx-xxx-xx
       group: SEATA_GROUP
-      server-addr: 192.168.62.144:8848A
+      server-addr: 127.0.0.1:8848A
   enabled: true
   tx-service-group: default_tx_group
   data-source-proxy-mode: AT
