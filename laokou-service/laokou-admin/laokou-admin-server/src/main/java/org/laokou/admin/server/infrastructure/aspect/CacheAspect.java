@@ -33,6 +33,7 @@ import java.lang.reflect.Method;
 /**
  * @author laokou
  */
+@SuppressWarnings("AlibabaSwitchStatement")
 @Component
 @Aspect
 @RequiredArgsConstructor
@@ -63,6 +64,7 @@ public class CacheAspect {
             }
             case PUT -> put(name,key,value,expire);
             case DEL -> del(name,key);
+            default -> {}
         }
         return value;
     }

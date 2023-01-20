@@ -29,7 +29,7 @@ import org.springframework.util.StringUtils;
 import java.util.HashMap;
 import java.util.Map;
 /**
- * 密码模式
+ * 邮件/手机/密码
  * @author laokou
  */
 public abstract class AbstractOAuth2BaseAuthenticationConverter implements AuthenticationConverter {

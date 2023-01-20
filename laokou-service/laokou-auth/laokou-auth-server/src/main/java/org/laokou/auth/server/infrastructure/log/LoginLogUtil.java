@@ -41,7 +41,7 @@ public class LoginLogUtil {
     private final SysLoginLogService sysLoginLogService;
 
     @Async
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void recordLogin(String username,String loginType, Integer status, String msg, HttpServletRequest request) throws IOException {
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
         String ip = IpUtil.getIpAddr(request);
