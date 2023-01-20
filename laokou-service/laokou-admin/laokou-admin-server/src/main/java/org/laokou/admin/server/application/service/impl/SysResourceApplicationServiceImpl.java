@@ -57,7 +57,6 @@ import org.laokou.redis.utils.RedisUtil;
 import org.laokou.oss.client.vo.UploadVO;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -199,7 +198,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     private void syncResourceIndex(String code,long resourceTotal,final String resourceIndexAlias,final String resourceIndex,String ym) {
-        beforeSyncAsync();
+        beforeSync();
         int chunkSize = 500;
         int pageIndex = 0;
         while (pageIndex < resourceTotal) {
@@ -233,7 +232,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
             }
             pageIndex += chunkSize;
         }
-        afterSyncAsync();
+        afterSync();
     }
 
     @Override
@@ -362,8 +361,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         return true;
     }
 
-    @Async
-    public void saveAuditLog(Long businessId,int auditStatus,String comment,String username,Long userId) {
+    private void saveAuditLog(Long businessId,int auditStatus,String comment,String username,Long userId) {
         AuditLogDTO auditLogDTO = new AuditLogDTO();
         auditLogDTO.setBusinessId(businessId);
         auditLogDTO.setAuditStatus(auditStatus);
@@ -395,12 +393,12 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         return page;
     }
 
-    private void beforeSyncAsync() {
-        log.info("开始异步同步数据...");
+    private void beforeSync() {
+        log.info("开始同步数据...");
     }
 
-    private void afterSyncAsync() {
-        log.info("结束异步同步数据...");
+    private void afterSync() {
+        log.info("结束同步数据...");
     }
 
    private void insertMessage(String assignee, Integer type,Long id,String name,Integer sendChannel) {
