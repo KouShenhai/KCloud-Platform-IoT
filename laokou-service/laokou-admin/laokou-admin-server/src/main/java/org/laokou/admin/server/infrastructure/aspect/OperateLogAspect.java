@@ -33,7 +33,10 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.admin.client.dto.OperateLogDTO;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -71,6 +74,8 @@ public class OperateLogAspect {
         handleLog(joinPoint,e);
     }
 
+    @Async
+    @Transactional(rollbackFor = Exception.class)
     protected void handleLog(final JoinPoint joinPoint,final Exception e) throws IOException {
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         //获取注解
