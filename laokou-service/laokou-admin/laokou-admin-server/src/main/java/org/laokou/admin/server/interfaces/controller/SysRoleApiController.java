@@ -66,7 +66,6 @@ public class SysRoleApiController {
     @Operation(summary = "系统角色>新增",description = "系统角色>新增")
     @OperateLog(module = "系统角色",name = "角色新增")
     @PreAuthorize("hasAuthority('sys:role:insert')")
-    @DataCache(name = CacheConstant.ROLE,key = "#dto.id",type = CacheEnum.DEL)
     public HttpResult<Boolean> insert(@RequestBody SysRoleDTO dto) {
         return new HttpResult<Boolean>().ok(sysRoleApplicationService.insertRole(dto));
     }

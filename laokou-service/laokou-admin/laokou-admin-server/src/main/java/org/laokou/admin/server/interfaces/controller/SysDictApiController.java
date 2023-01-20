@@ -59,7 +59,6 @@ public class SysDictApiController {
     @Operation(summary = "系统字典>新增",description = "系统字典>新增")
     @OperateLog(module = "系统字典",name = "字典新增")
     @PreAuthorize("hasAuthority('sys:dict:insert')")
-    @DataCache(name = CacheConstant.DICT,key = "#dto.id",type = CacheEnum.DEL)
     public HttpResult<Boolean> insert(@RequestBody SysDictDTO dto) {
         return new HttpResult<Boolean>().ok(sysDictApplicationService.insertDict(dto));
     }

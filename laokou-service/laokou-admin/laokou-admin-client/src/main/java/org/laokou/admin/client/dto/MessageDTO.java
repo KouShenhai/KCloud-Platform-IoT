@@ -24,7 +24,6 @@ import java.util.Set;
  */
 @Data
 public class MessageDTO {
-
     /**
      * 接收者
      */

@@ -74,7 +74,6 @@ public class SysMenuApiController {
     @Operation(summary = "系统菜单>新增",description = "系统菜单>新增")
     @OperateLog(module = "系统菜单",name = "菜单新增")
     @PreAuthorize("hasAuthority('sys:menu:insert')")
-    @DataCache(name = CacheConstant.MENU,key = "#dto.id",type = CacheEnum.DEL)
     public HttpResult<Boolean> insert(@RequestBody SysMenuDTO dto) {
         return new HttpResult<Boolean>().ok(sysMenuApplicationService.insertMenu(dto));
     }

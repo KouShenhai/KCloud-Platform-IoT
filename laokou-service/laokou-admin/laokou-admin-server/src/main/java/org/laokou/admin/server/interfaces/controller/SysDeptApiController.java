@@ -60,7 +60,6 @@ public class SysDeptApiController {
     @Operation(summary = "系统部门>新增",description = "系统部门>新增")
     @OperateLog(module = "系统部门",name = "部门新增")
     @PreAuthorize("hasAuthority('sys:dept:insert')")
-    @DataCache(name = CacheConstant.DEPT,key = "#dto.id",type = CacheEnum.DEL)
     public HttpResult<Boolean> insert(@RequestBody SysDeptDTO dto) {
         return new HttpResult<Boolean>().ok(sysDeptApplicationService.insertDept(dto));
     }

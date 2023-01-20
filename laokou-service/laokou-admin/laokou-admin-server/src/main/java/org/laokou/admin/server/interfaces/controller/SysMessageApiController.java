@@ -19,7 +19,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.constant.CacheConstant;
-import org.laokou.admin.client.enums.CacheEnum;
 import org.laokou.admin.server.application.service.SysMessageApplicationService;
 import org.laokou.admin.client.dto.MessageDTO;
 import org.laokou.admin.server.infrastructure.annotation.DataCache;
@@ -46,7 +45,6 @@ public class SysMessageApiController {
     @Operation(summary = "系统消息>新增",description = "系统消息>新增")
     @OperateLog(module = "系统消息",name = "消息新增")
     @PreAuthorize("hasAuthority('sys:message:insert')")
-    @DataCache(name = CacheConstant.MESSAGE,key = "#dto.id",type = CacheEnum.DEL)
     public HttpResult<Boolean> insert(@RequestBody MessageDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(sysMessageApplicationService.insertMessage(dto));
     }

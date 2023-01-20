@@ -83,7 +83,6 @@ public class SysUserApiController {
     @Operation(summary = "系统用户>新增",description = "系统用户>新增")
     @OperateLog(module = "系统用户",name = "用户新增")
     @PreAuthorize("hasAuthority('sys:user:insert')")
-    @DataCache(name = CacheConstant.USER,key = "#dto.id",type = CacheEnum.DEL)
     public HttpResult<Boolean> insert(@RequestBody SysUserDTO dto) {
         return new HttpResult<Boolean>().ok(sysUserApplicationService.insertUser(dto));
     }
