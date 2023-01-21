@@ -1,7 +1,5 @@
 # spring
 spring:
-  application:
-    name: laokou-rocketmq
   cloud:
     polaris:
       address: ${POLARIS_ADDRESS}
