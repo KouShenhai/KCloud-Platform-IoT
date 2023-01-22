@@ -47,27 +47,3 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-
-# springdoc
-springdoc:
-  swagger-ui:
-    urls:
-      - name: admin
-        url: /v3/api-docs/admin
-      - name: auth
-        url: /v3/api-docs/auth
-      - name: oss
-        url: /v3/api-docs/oss
-      - name: oss
-        url: /v3/api-docs/im
-
-# 忽略uris
-ignore:
-  uris:
-    - /oauth2/password/captcha
-    - /actuator/**
-    - /ws/**
-    - /favicon.ico
-    - /swagger-ui/**
-    - /swagger-ui.html
-    - /**/v3/api-docs/**
