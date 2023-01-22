@@ -16,3 +16,6 @@ spring:
           - data-id: application-common.yaml
             group: LAOKOU_GROUP
             refresh: true
+          - data-id: application-gateway.yaml
+            group: LAOKOU_GROUP
+            refresh: true
