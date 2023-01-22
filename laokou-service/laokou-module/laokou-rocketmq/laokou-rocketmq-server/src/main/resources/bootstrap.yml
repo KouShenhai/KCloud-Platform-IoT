@@ -1,12 +1,21 @@
 # spring
 spring:
   cloud:
-    polaris:
-      address: ${POLARIS_ADDRESS}
-      namespace: ${POLARIS_NAMESPACE}
-    tencent:
-      metadata:
-        content:
-          version: 2.0.0
-    config:
-      address: ${CONFIG_ADDRESS}
+    # nacos
+    nacos:
+      discovery:
+        server-addr: ${NACOS-DISCOVERY-ADDRESS}
+        namespace: ${NACOS-NAMESPACE}
+      config:
+        server-addr: ${NACOS-CONFIG-ADDRESS}
+        namespace: ${NACOS-NAMESPACE}
+        group: LAOKOU_GROUP
+        refresh-enabled: true
+        file-extension: yaml
+        extension-configs:
+          - data-id: application-common.yaml
+            group: LAOKOU_GROUP
+            refresh: true
+          - data-id: application-common-rocketmq.yaml
+            group: LAOKOU_GROUP
+            refresh: true

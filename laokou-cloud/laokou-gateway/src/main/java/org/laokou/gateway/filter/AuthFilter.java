@@ -16,8 +16,6 @@
 package org.laokou.gateway.filter;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.http.HttpUtil;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.gateway.exception.GatewayException;
@@ -25,7 +23,8 @@ import org.laokou.gateway.utils.PasswordUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.gateway.constant.GatewayConstant;
 import org.laokou.gateway.utils.ResponseUtil;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutputMessage;
@@ -61,14 +60,13 @@ import java.util.function.Function;
  */
 @Component
 @Slf4j
-@ConfigurationProperties(prefix = "ignore")
+@RefreshScope
 public class AuthFilter implements GlobalFilter,Ordered {
 
     /**
      * 不拦截的urls
      */
-    @Setter
-    @Getter
+    @Value("${ignore.uris}")
     private List<String> uris;
 
     @Override

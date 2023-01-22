@@ -21,27 +21,6 @@ package org.laokou.rocketmq.client.constant;
  * @date 2020/9/18 0018 上午 7:07
  */
 public interface RocketmqConstant {
-
-    /**
-     * 操作日志
-     */
-    String LAOKOU_OPERATE_LOG_TOPIC = "laokou-operate-log-topic";
-
-    /**
-     * 登录日志
-     */
-    String LAOKOU_LOGIN_LOG_TOPIC = "laokou-login-log-topic";
-
-    /**
-     * 审批日志
-     */
-    String LAOKOU_AUDIT_LOG_TOPIC = "laokou-audit-log-topic";
-
-    /**
-     * 消息通知
-     */
-    String LAOKOU_MESSAGE_NOTICE_TOPIC = "laokou-message-notice-topic";
-
     /**
      * 消息重试次数
      */
