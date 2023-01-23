@@ -10,5 +10,5 @@ ENTRYPOINT java -Xms512m -Xmx512m --add-opens \
                                 -Ddruid.filters=mergeStat -Ddruid.useGlobalDataSourceStat=true \
                                 -Djava.awt.headless=true \
                                 -Denv=DEV \
-                                -Dapollo.configService=http://124.222.196.51:8080 -jar \
+                                -jar \
                                 app.jar > app.log

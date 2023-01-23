@@ -9,4 +9,4 @@ EXPOSE 5555
 COPY laokou-gateway.jar app.jar
 RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 # 执行命令
-ENTRYPOINT java -Xms512m -Xmx512m --add-opens java.base/java.lang=ALL-UNNAMED -Denv=DEV -Dapollo.configService=http://124.222.196.51:8080 -jar app.jar > app.log
+ENTRYPOINT java -Xms512m -Xmx512m --add-opens java.base/java.lang=ALL-UNNAMED -Denv=DEV -jar app.jar > app.log
