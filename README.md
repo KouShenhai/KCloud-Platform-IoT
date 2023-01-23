@@ -204,12 +204,6 @@ public class SysUserApiController {
 }
 ```
 
-### Redis开启订阅
-##### 输入命令
-```shell
-config set notify-keyspace-events KEA
-```
-
 ### 分布式事务
 #### 服务配置
 ```yaml
