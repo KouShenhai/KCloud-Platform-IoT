@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,20 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.rocketmq.client.constant;
+
+package org.laokou.rocketmq.consumer.message;
+
+import org.laokou.rocketmq.client.constant.RocketmqConstant;
+import org.springframework.stereotype.Component;
+
 /**
- * 队列常量值
  * @author laokou
- * @version 1.0
- * @date 2020/9/18 0018 上午 7:07
  */
-public interface RocketmqConstant {
+@Component(RocketmqConstant.LAOKOU_EMAIL_TOPIC)
+public class EmailConsumerMessage implements ConsumerMessage {
 
-    String LAOKOU_EMAIL_TOPIC = "laokou-email-topic";
-
-    /**
-     * 消息重试次数
-     */
-    Integer RECONSUME_TIMES = 3;
+    @Override
+    public void receiveMessage(String data) {
+        System.out.println(data);
+    }
 
 }
