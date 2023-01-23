@@ -37,12 +37,12 @@ public class RocketmqSender {
 
     private final StreamBridge streamBridge;
 
-    @PostMapping("/send/{bridge}")
+    @PostMapping("/send/{topic}")
     @Operation(summary = "消息队列>同步发送",description = "消息队列>同步发送")
-    public void sendMessage(@PathVariable("bridge") String bridge, @RequestBody RocketmqDTO dto) {
+    public void sendMessage(@PathVariable("topic") String topic, @RequestBody RocketmqDTO dto) {
         Message<String> message = MessageBuilder.withPayload(dto.getData())
                 .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON).build();
-        streamBridge.send(bridge,message);
+        streamBridge.send(topic,message);
     }
 
 }
