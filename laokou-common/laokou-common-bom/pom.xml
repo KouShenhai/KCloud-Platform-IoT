@@ -51,8 +51,6 @@
         <joda-time.version>2.10</joda-time.version>
         <!--jasypt版本-->
         <jasypt.version>2.1.0</jasypt.version>
-        <!--druid版本-->
-        <druid.version>1.1.17</druid.version>
         <!--captcha版本-->
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <!--guava版本-->
@@ -197,11 +195,6 @@
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-core</artifactId>
                 <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
             </dependency>
             <!-- 解析客户端操作系统、浏览器等 -->
             <dependency>
