@@ -16,11 +16,8 @@
 
 package org.laokou.common.security.config;
 
-import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.client.user.UserDetail;
 import org.laokou.redis.config.AbstractRedisDeleteListener;
-import org.laokou.redis.utils.RedisKeyUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,19 +27,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RedisDeleteEventMessageListener extends AbstractRedisDeleteListener {
 
-    private final Cache<String, UserDetail> userInfoCache;
-
     @Override
-    protected void doHandle(String key) {
-        String regex = ".*";
-        if (key.matches(RedisKeyUtil.getUserInfoKey("") + regex)) {
-            userInfoCache.invalidate(key);
-        }
-    }
-
-    public static void main(String[] args) {
-        boolean matches = "sys:user:info:11111".matches(RedisKeyUtil.getUserInfoKey("") + ".*");
-        System.out.println(matches);
-    }
+    protected void doHandle(String key) {}
 
 }

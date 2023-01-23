@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.common.security.config;
-import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.swagger.exception.ErrorCode;
@@ -41,20 +40,13 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
     private final OAuth2AuthorizationService oAuth2AuthorizationService;
     private final RedisUtil redisUtil;
-    private final Cache<String, UserDetail> userInfoCache;
 
     @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
         String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-        UserDetail userDetail = userInfoCache.getIfPresent(userInfoKey);
-        if (userDetail != null) {
-            return userDetail;
-        }
         Object obj = redisUtil.get(userInfoKey);
         if (obj != null) {
-            userDetail = (UserDetail) obj;
-            userInfoCache.put(userInfoKey,userDetail);
-            return userDetail;
+            return (UserDetail) obj;
         }
         OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
         if (oAuth2Authorization == null) {
@@ -66,7 +58,7 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
         Instant expiresAt = oAuth2Authorization.getAccessToken().getToken().getExpiresAt();
         Instant nowAt = Instant.now();
         long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
-        userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) oAuth2Authorization.getAttribute(Principal.class.getName())).getPrincipal();
+        UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) oAuth2Authorization.getAttribute(Principal.class.getName())).getPrincipal();
         redisUtil.set(userInfoKey,userDetail,expireTime);
         return userDetail;
     }

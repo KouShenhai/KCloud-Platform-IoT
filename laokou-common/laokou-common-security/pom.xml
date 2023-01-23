@@ -17,10 +17,6 @@
             <artifactId>laokou-auth-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-redis</artifactId>
         </dependency>

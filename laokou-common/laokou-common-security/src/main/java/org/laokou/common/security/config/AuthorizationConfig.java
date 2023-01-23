@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.common.security.config;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
-import org.laokou.auth.client.user.UserDetail;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -26,8 +23,6 @@ import org.springframework.security.oauth2.server.authorization.JdbcOAuth2Author
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author laokou
  */
@@ -47,15 +42,6 @@ public class AuthorizationConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public Cache<String, UserDetail> userInfoCache() {
-        return Caffeine.newBuilder()
-                .expireAfterWrite(1, TimeUnit.MINUTES)
-                .initialCapacity(100)
-                .maximumSize(1000)
-                .build();
     }
 
 }
