@@ -20,7 +20,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 /**
@@ -53,16 +52,6 @@ public class RedisConfig {
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
-    }
-
-    @Bean
-    public RedisMessageListenerContainer redisMessageListenerContainer(AbstractRedisDeleteListener abstractRedisDeleteListener) {
-        RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
-        // 设置factory
-        redisMessageListenerContainer.setConnectionFactory(factory);
-        // 监听所有key的删除事件
-        redisMessageListenerContainer.addMessageListener(abstractRedisDeleteListener,AbstractRedisDeleteListener.TOPIC);
-        return redisMessageListenerContainer;
     }
 
     private Jackson2JsonRedisSerializer getJsonRedisSerializer() {

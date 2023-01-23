@@ -22,7 +22,6 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.github.benmanes.caffeine.cache.Cache;
 import org.laokou.oss.client.vo.SysOssVO;
 import java.io.InputStream;
 
@@ -32,8 +31,6 @@ import java.io.InputStream;
 public abstract class AbstractStorageService implements StorageService{
 
     protected SysOssVO vo;
-    protected Cache<String,Object> caffeineCache;
-
     public String upload(int limitRead, long size, String fileName, InputStream inputStream, String contentType) {
         // 获取AmazonS3
         AmazonS3 amazonS3 = getAmazonS3();
@@ -46,11 +43,6 @@ public abstract class AbstractStorageService implements StorageService{
     }
 
     private AmazonS3 getAmazonS3() {
-        String uuid = vo.getId().toString();
-        Object obj = caffeineCache.getIfPresent(uuid);
-        if (obj != null) {
-            return (AmazonS3) obj;
-        }
         String accessKey = vo.getAccessKey();
         String secretKey = vo.getSecretKey();
         String region = vo.getRegion();
@@ -66,7 +58,6 @@ public abstract class AbstractStorageService implements StorageService{
                 .withCredentials(awsCredentialsProvider)
                 .withPathStyleAccessEnabled(pathStyleAccessEnabled)
                 .build();
-        caffeineCache.put(uuid,amazonS3);
         return amazonS3;
     }
 

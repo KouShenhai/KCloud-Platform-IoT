@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.oss.server.support;
-import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.oss.client.vo.SysOssVO;
@@ -33,25 +32,20 @@ public class StorageFactory {
 
     private final RedisUtil redisUtil;
 
-    private final Cache<String,Object> caffeineCache;
-
    public StorageService build(){
        String ossConfigKey = RedisKeyUtil.getOssConfigKey();
-       Object vo = caffeineCache.getIfPresent(ossConfigKey);
-       if (vo == null) {
-           Object object = redisUtil.get(ossConfigKey);
-           if (object == null) {
-               vo = sysOssService.queryOssConfig();
-               if (null == vo) {
-                   throw new CustomException("请配置OSS");
-               }
-               redisUtil.set(ossConfigKey, vo, RedisUtil.HOUR_ONE_EXPIRE);
-           } else {
-               vo = object;
-               caffeineCache.put(ossConfigKey,vo);
+       Object object = redisUtil.get(ossConfigKey);
+       SysOssVO vo;
+       if (object == null) {
+           vo = sysOssService.queryOssConfig();
+           if (null == vo) {
+               throw new CustomException("请配置OSS");
            }
+           redisUtil.set(ossConfigKey, vo, RedisUtil.HOUR_ONE_EXPIRE);
+       } else {
+           vo = (SysOssVO) object;
        }
-       return new AmazonS3StorageService((SysOssVO) vo,caffeineCache);
+       return new AmazonS3StorageService(vo);
    }
 
 }

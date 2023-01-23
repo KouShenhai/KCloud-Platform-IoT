@@ -17,7 +17,6 @@ package org.laokou.oss.server.support;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.github.benmanes.caffeine.cache.Cache;
 import org.laokou.oss.client.vo.SysOssVO;
 import java.io.InputStream;
 import java.net.URL;
@@ -26,9 +25,8 @@ import java.net.URL;
  */
 public class AmazonS3StorageService extends AbstractStorageService{
 
-    public AmazonS3StorageService(SysOssVO vo, Cache<String,Object> caffeineCache) {
+    public AmazonS3StorageService(SysOssVO vo) {
         this.vo = vo;
-        this.caffeineCache = caffeineCache;
     }
 
     @Override
