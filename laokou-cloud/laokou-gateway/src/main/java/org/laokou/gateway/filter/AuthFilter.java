@@ -16,6 +16,7 @@
 package org.laokou.gateway.filter;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.http.HttpUtil;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.gateway.exception.GatewayException;
@@ -23,14 +24,12 @@ import org.laokou.gateway.utils.PasswordUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.gateway.constant.GatewayConstant;
 import org.laokou.gateway.utils.ResponseUtil;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutputMessage;
-import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.gateway.support.BodyInserterContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
@@ -49,9 +48,7 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
-
 /**
  * 认证Filter
  * @author laokou
@@ -61,12 +58,13 @@ import java.util.function.Function;
 @Component
 @Slf4j
 @RefreshScope
+@Data
+@ConfigurationProperties(prefix = "ignore")
 public class AuthFilter implements GlobalFilter,Ordered {
 
     /**
      * 不拦截的urls
      */
-    @Value("${ignore.uris}")
     private List<String> uris;
 
     @Override
@@ -93,14 +91,6 @@ public class AuthFilter implements GlobalFilter,Ordered {
         ServerHttpRequest build = exchange.getRequest().mutate()
                 .header(Constant.AUTHORIZATION_HEAD, token).build();
         return chain.filter(exchange.mutate().request(build).build());
-    }
-
-    @Bean(value = "ipKeyResolver")
-    public KeyResolver ipKeyResolver() {
-        return exchange -> {
-            String ip = Objects.requireNonNull(exchange.getRequest().getRemoteAddress()).getAddress().getHostAddress();
-            return Mono.just(ip);
-        };
     }
 
     @Override

@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 package org.laokou.common.core.constant;
-
 /**
  * @author laokou
  */
 public interface ServiceConstant {
 
-    String LAOKOU_AUTH = "laokou-auth";
     String LAOKOU_ELASTICSEARCH = "laokou-elasticsearch";
     String LAOKOU_ROCKETMQ = "laokou-rocketmq";
     String LAOKOU_IM = "laokou-im";
     String LAOKOU_KAFKA = "laokou-kafka";
     String LAOKOU_FLOWABLE = "laokou-flowable";
-    String LAOKOU_LOG = "laokou-log";
     String LAOKOU_OSS = "laokou-oss";
 
 }
