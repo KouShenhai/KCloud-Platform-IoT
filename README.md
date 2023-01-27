@@ -33,7 +33,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - [x] 字典管理：字典信息管理
 - [x] 消息管理：消息提醒和消息通知
 - [x] 搜索管理：通过关键字搜索并高亮显示
-- [x] 资源管理：视频、图片、音频管理，资源审批（分布式事务），审批日志
+- [x] 资源管理：视频、图片、音频管理，资源审批（分布式事务TCC模式），审批日志
 - [x] 流程定义：流程定义、挂起、激活、查看、删除
 - [x] 接口文档：Swagger2升级为Open Api Doc 3
 - [x] 服务监控：服务内存监控
@@ -204,7 +204,7 @@ public class SysUserApiController {
 }
 ```
 
-### 分布式事务
+### 分布式事务AT
 #### 服务配置
 ```yaml
 # seata
@@ -233,6 +233,9 @@ seata:
 @RequiredArgsConstructor
 public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
     
+    /**
+     * 使用openfeign调用时，每个被调用服务都需要加 @Transactional
+     */
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @GlobalTransactional
     public Boolean insertResource(SysResourceAuditDTO dto) {
@@ -248,6 +251,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     
 }
 ```
+
+
     
 ### 高可用系统构建
 - [x] 严格遵循阿里规范，注重代码质量
