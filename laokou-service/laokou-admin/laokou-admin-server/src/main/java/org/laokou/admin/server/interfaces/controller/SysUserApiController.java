@@ -28,7 +28,7 @@ import org.laokou.admin.client.vo.OptionVO;
 import org.laokou.admin.client.vo.SysUserVO;
 import org.laokou.admin.server.application.service.SysUserApplicationService;
 import org.laokou.common.swagger.utils.HttpResult;
-import org.laokou.admin.server.infrastructure.annotation.OperateLog;
+import org.laokou.common.log.annotation.OperateLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

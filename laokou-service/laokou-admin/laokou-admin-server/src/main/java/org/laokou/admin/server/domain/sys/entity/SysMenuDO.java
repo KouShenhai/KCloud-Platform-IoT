@@ -45,7 +45,7 @@ public class SysMenuDO extends BaseDO {
 	/**
 	 * 菜单URL
 	 */
-	@Schema(name = "url",description = "菜单URL",example = "/sys/user/api/login")
+	@Schema(name = "url",description = "菜单URL",example = "/mapper/sys/user/api/login")
 	private String url;
 
 	/**

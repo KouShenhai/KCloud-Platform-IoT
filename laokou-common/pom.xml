@@ -19,6 +19,7 @@
         <module>laokou-common-bom</module>
         <module>laokou-common-swagger</module>
         <module>laokou-common-security</module>
+        <module>laokou-common-log</module>
     </modules>
 
 </project>

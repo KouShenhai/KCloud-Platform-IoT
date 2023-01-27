@@ -26,8 +26,7 @@ import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
 import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserDetailServiceImpl;
 import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserServiceImpl;
 import org.laokou.auth.server.infrastructure.authentication.*;
-import org.laokou.auth.server.infrastructure.customizer.CustomTokenCustomizer;
-import org.laokou.auth.server.infrastructure.log.LoginLogUtil;
+import org.laokou.common.log.utils.LoginLogUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -179,7 +178,6 @@ public class AuthorizationServerConfig {
     @Bean
     OAuth2TokenGenerator<OAuth2Token> oAuth2TokenGenerator(JwtEncoder jwtEncoder) {
         JwtGenerator generator = new JwtGenerator(jwtEncoder);
-        generator.setJwtCustomizer(new CustomTokenCustomizer());
         return new DelegatingOAuth2TokenGenerator(generator, new OAuth2RefreshTokenGenerator());
     }
 

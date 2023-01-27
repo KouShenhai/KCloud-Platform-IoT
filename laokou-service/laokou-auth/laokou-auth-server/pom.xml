@@ -63,11 +63,6 @@
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
-        <!-- 解析客户端操作系统、浏览器等 -->
-        <dependency>
-            <groupId>eu.bitwalker</groupId>
-            <artifactId>UserAgentUtils</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-redis</artifactId>
@@ -79,6 +74,10 @@
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-mybatis-plus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-log</artifactId>
         </dependency>
     </dependencies>
 

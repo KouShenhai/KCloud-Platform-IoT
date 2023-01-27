@@ -17,10 +17,11 @@ package org.laokou.admin.server.application.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import jakarta.servlet.http.HttpServletResponse;
-import org.laokou.admin.server.interfaces.qo.SysLoginLogQo;
-import org.laokou.admin.server.interfaces.qo.SysOperateLogQo;
-import org.laokou.admin.client.vo.SysLoginLogVO;
-import org.laokou.admin.client.vo.SysOperateLogVO;
+import org.laokou.common.log.qo.SysLoginLogQo;
+import org.laokou.common.log.qo.SysOperateLogQo;
+import org.laokou.common.log.vo.SysLoginLogVO;
+import org.laokou.common.log.vo.SysOperateLogVO;
+
 import java.io.IOException;
 
 /**

@@ -25,7 +25,7 @@ import org.laokou.admin.client.dto.SysRoleDTO;
 import org.laokou.admin.server.infrastructure.annotation.DataCache;
 import org.laokou.admin.server.interfaces.qo.SysRoleQo;
 import org.laokou.admin.client.vo.SysRoleVO;
-import org.laokou.admin.server.infrastructure.annotation.OperateLog;
+import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

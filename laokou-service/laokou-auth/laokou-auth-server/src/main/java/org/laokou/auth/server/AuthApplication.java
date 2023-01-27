@@ -19,6 +19,7 @@ import org.laokou.common.swagger.config.CorsConfig;
 import org.laokou.common.swagger.config.OpenApiMvcConfig;
 import org.laokou.common.swagger.exception.CustomExceptionHandler;
 import org.laokou.redis.config.RedisSessionConfig;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -35,7 +36,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = {"org.laokou.sentinel","org.laokou.common.swagger","org.laokou.common.mybatisplus","org.laokou.common.core","org.laokou.redis","org.laokou.auth"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.common.log","org.laokou.sentinel","org.laokou.common.swagger","org.laokou.common.mybatisplus","org.laokou.common.core","org.laokou.redis","org.laokou.auth"})
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties
@@ -46,6 +47,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
         , CustomExceptionHandler.class
         , OpenApiMvcConfig.class})
 @EnableDiscoveryClient
+@MapperScan(value = {"org.laokou.auth.server.domain.sys.repository.mapper","org.laokou.common.log.mapper"})
 public class AuthApplication{
 
     public static void main(String[] args) {
