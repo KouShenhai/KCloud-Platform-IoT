@@ -18,7 +18,6 @@ package org.laokou.common.core.utils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-
 import java.util.Map;
 
 /**
@@ -26,16 +25,7 @@ import java.util.Map;
  * @version 1.0
  * @date 2021/7/11 0011 上午 10:03
  */
-public class HashUtil {
-
-    /**
-     * {@link java.util.HashMap#hash(Object)}
-     * 获取hash值
-     */
-    public static int getHash(String key) {
-        int h;
-        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
-    }
+public class MapUtil {
 
     public static MultiValueMap<String, String> getParameters(HttpServletRequest request) {
         Map<String, String[]> parameterMap = request.getParameterMap();

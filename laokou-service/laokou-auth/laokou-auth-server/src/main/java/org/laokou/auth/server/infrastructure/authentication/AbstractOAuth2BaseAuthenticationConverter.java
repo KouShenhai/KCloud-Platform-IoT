@@ -16,7 +16,7 @@
 package org.laokou.auth.server.infrastructure.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
-import org.laokou.common.core.utils.HashUtil;
+import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.MessageUtil;
 import org.laokou.common.swagger.exception.ErrorCode;
 import org.springframework.security.core.Authentication;
@@ -55,7 +55,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
             return null;
         }
         // 构建请求参数集合
-        MultiValueMap<String, String> parameters = HashUtil.getParameters(request);
+        MultiValueMap<String, String> parameters = MapUtil.getParameters(request);
         // 判断scope
         String scope = parameters.getFirst(OAuth2ParameterNames.SCOPE);
         if (StringUtils.hasText(scope) && parameters.get(OAuth2ParameterNames.SCOPE).size() != 1) {
