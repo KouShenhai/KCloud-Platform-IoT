@@ -95,36 +95,37 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 #### 项目结构
 ~~~
 ├── laokou-common  
-        └── laokou-common-log               --- 日志组件  
-        └── laokou-common-core              --- 核心组件  
-        └── laokou-common-swagger           --- 文档组件  
-        └── laokou-common-bom               --- 依赖版本库  
-        └── laokou-common-security          --- 认证授权组件  
-        └── laokou-common-data-cache        --- 数据缓存组件
-        └── laokou-common-data-filter       --- 数据过滤组件
-        └── laokou-common-mybatis-plus      --- 对象映射组件  
+        └── laokou-common-log                      --- 日志组件  
+        └── laokou-common-core                     --- 核心组件  
+        └── laokou-common-swagger                  --- 文档组件  
+        └── laokou-common-bom                      --- 依赖版本库  
+        └── laokou-common-security                 --- 认证授权组件  
+        └── laokou-common-data-cache               --- 数据缓存组件
+        └── laokou-common-data-filter              --- 数据过滤组件
+        └── laokou-common-mybatis-plus             --- 对象映射组件  
+        └── laokou-common-dynamic-datasource       --- 动态数据源组件  
 ├── laokou-cloud  
-        └── laokou-gateway                  --- API网关  
-        └── laokou-monitor                  --- 服务监控  
-        └── laokou-sntinel                  --- 服务限流 & 熔断降级  
-├── laokou-service  
-        └── laokou-api                      --- API模块  
-        └── laokou-generator                --- 模板模块  
-        └── laokou-auth                     --- 认证授权模块  
-        └── laokou-admin                    --- 后台管理模块  
-        └── laokou-report                   --- 数据分析模块  
-        └── laokou-modlule  
-                └── laokou-sms              --- 短信模块  
-                └── laokou-mail             --- 邮件模块  
-                └── laokou-redis            --- 缓存模块  
-                └── laokou-kafka            --- 消息模块  
-                └── laokou-xxl-job          --- 工作模块  
-                └── laokou-mongodb          --- 报表模块  
-                └── laokou-rocketmq         --- 消息模块  
-                └── laokou-elasticsearch    --- 搜索模块  
-                └── laokou-im               --- 即时通讯模块  
-                └── laokou-oss              --- 对象存储模块  
-                └── laokou-flowable         --- 工作流程模块  
+        └── laokou-gateway                         --- API网关  
+        └── laokou-monitor                         --- 服务监控  
+        └── laokou-sntinel                         --- 服务限流 & 熔断降级  
+├── laokou-service         
+        └── laokou-api                             --- API模块  
+        └── laokou-generator                       --- 模板模块  
+        └── laokou-auth                            --- 认证授权模块  
+        └── laokou-admin                           --- 后台管理模块  
+        └── laokou-report                          --- 数据分析模块  
+        └── laokou-modlule         
+                └── laokou-sms                     --- 短信模块  
+                └── laokou-mail                    --- 邮件模块  
+                └── laokou-redis                   --- 缓存模块  
+                └── laokou-kafka                   --- 消息模块  
+                └── laokou-xxl-job                 --- 工作模块  
+                └── laokou-mongodb                 --- 报表模块  
+                └── laokou-rocketmq                --- 消息模块  
+                └── laokou-elasticsearch           --- 搜索模块  
+                └── laokou-im                      --- 即时通讯模块  
+                └── laokou-oss                     --- 对象存储模块  
+                └── laokou-flowable                --- 工作流程模块  
 ~~~
 
 ### 环境配置
