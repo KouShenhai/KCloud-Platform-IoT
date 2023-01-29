@@ -21,12 +21,12 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysDictApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysDictDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysDictService;
-import org.laokou.admin.server.infrastructure.annotation.DataFilter;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
 import org.laokou.admin.client.dto.SysDictDTO;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.data.filter.annotation.DataFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

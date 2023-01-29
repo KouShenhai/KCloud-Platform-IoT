@@ -13,36 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.server.infrastructure.aspect;
+package org.laokou.common.data.cache.aspect;
+import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.admin.client.enums.CacheEnum;
-import org.laokou.admin.server.infrastructure.annotation.DataCache;
 import org.laokou.common.core.utils.SpringUtil;
-import org.laokou.common.swagger.exception.CustomException;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 /**
  * @author laokou
  */
-@SuppressWarnings("AlibabaSwitchStatement")
 @Component
 @Aspect
 @RequiredArgsConstructor
 public class CacheAspect {
-
-    private final CacheManager caffeineCacheManager;
     private final RedisUtil redisUtil;
+    private final Cache<String,Object> caffeineCache;
 
-    @Around("@annotation(org.laokou.admin.server.infrastructure.annotation.DataCache)")
+    @Around("@annotation(org.laokou.common.data.cache.annotation.DataCache)")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
@@ -53,37 +49,29 @@ public class CacheAspect {
         }
         long expire = dataCache.expire();
         CacheEnum type = dataCache.type();
-        String name = dataCache.name();
         String key = dataCache.key();
+        String name = dataCache.name();
         Object[] args = point.getArgs();
-        key = RedisKeyUtil.getDoubleCacheKey(name, SpringUtil.parse(key,parameterNames,args,Long.class));
+        key = RedisKeyUtil.getDataCacheKey(name,SpringUtil.parse(key,parameterNames,args,Long.class));
         Object value = point.proceed();
         switch (type) {
             case GET -> {
-                return get(name,key,value,expire);
+                return get(key,value,expire);
             }
-            case PUT -> put(name,key,value,expire);
-            case DEL -> del(name,key);
+            case PUT -> put(key,value,expire);
+            case DEL -> del(key);
             default -> {}
         }
         return value;
     }
 
-    private void put(String name,String key ,Object value,long expire) {
+    private void put(String key ,Object value,long expire) {
         redisUtil.set(key,value,expire);
-        Cache cache = caffeineCacheManager.getCache(name);
-        if (cache == null) {
-            throw new CustomException(String.format("请配置%s相关缓存",name));
-        }
-        cache.put(key,value);
+        caffeineCache.put(key,value);
     }
 
-    private Object get(String name,String key,Object value,long expire) {
-        Cache cache = caffeineCacheManager.getCache(name);
-        if (cache == null) {
-            throw new CustomException(String.format("请配置%s相关缓存",name));
-        }
-        Object obj = cache.get(key, () -> redisUtil.get(key));
+    private Object get(String key,Object value,long expire) {
+        Object obj = caffeineCache.get(key,t -> redisUtil.get(key));
         if (obj != null) {
             return obj;
         }
@@ -91,13 +79,9 @@ public class CacheAspect {
         return value;
     }
 
-    private void del(String name,String key) {
+    private void del(String key) {
         redisUtil.delete(key);
-        Cache cache = caffeineCacheManager.getCache(name);
-        if (cache == null) {
-            throw new CustomException(String.format("请配置%s相关缓存",name));
-        }
-        cache.evict(key);
+        caffeineCache.invalidate(key);
     }
 
 }

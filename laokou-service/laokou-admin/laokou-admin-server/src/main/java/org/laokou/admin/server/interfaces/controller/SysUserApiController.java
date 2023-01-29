@@ -18,15 +18,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.constant.CacheConstant;
 import org.laokou.admin.client.dto.SysUserDTO;
-import org.laokou.admin.client.enums.CacheEnum;
 import org.laokou.admin.client.vo.UserInfoVO;
-import org.laokou.admin.server.infrastructure.annotation.DataCache;
 import org.laokou.admin.server.interfaces.qo.SysUserQo;
 import org.laokou.admin.client.vo.OptionVO;
 import org.laokou.admin.client.vo.SysUserVO;
 import org.laokou.admin.server.application.service.SysUserApplicationService;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.laokou.common.log.annotation.OperateLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,7 +47,7 @@ public class SysUserApiController {
     @Operation(summary = "系统用户>修改",description = "系统用户>修改")
     @OperateLog(module = "系统用户",name = "用户修改")
     @PreAuthorize("hasAuthority('sys:user:update')")
-    @DataCache(name = CacheConstant.USER,key = "#dto.id",type = CacheEnum.DEL)
+    @DataCache(name = "user", key = "#dto.id", type = CacheEnum.DEL)
     public HttpResult<Boolean> update(@RequestBody SysUserDTO dto) {
         return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto));
     }
@@ -89,7 +88,7 @@ public class SysUserApiController {
 
     @GetMapping("/detail")
     @Operation(summary = "系统用户>详情",description = "系统用户>详情")
-    @DataCache(name = CacheConstant.USER,key = "#id")
+    @DataCache(name = "user", key = "#id")
     public HttpResult<SysUserVO> detail(@RequestParam("id") Long id) {
         return new HttpResult<SysUserVO>().ok(sysUserApplicationService.getUserById(id));
     }
@@ -98,7 +97,7 @@ public class SysUserApiController {
     @Operation(summary = "系统用户>删除",description = "系统用户>删除")
     @OperateLog(module = "系统用户",name = "用户删除")
     @PreAuthorize("hasAuthority('sys:user:delete')")
-    @DataCache(name = CacheConstant.USER,key = "#id",type = CacheEnum.DEL)
+    @DataCache(name = "user", key = "#id",type = CacheEnum.DEL)
     public HttpResult<Boolean> delete(@RequestParam("id") Long id) {
         return new HttpResult<Boolean>().ok(sysUserApplicationService.deleteUser(id));
     }

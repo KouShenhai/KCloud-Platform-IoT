@@ -1,6 +1,5 @@
-package org.laokou.admin.server.infrastructure.annotation;
-
-import org.laokou.admin.client.enums.CacheEnum;
+package org.laokou.common.data.cache.annotation;
+import org.laokou.common.data.cache.enums.CacheEnum;
 
 import java.lang.annotation.*;
 

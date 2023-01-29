@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.server.infrastructure.aspect;
+package org.laokou.common.data.filter.aspect;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.server.infrastructure.annotation.DataFilter;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.enums.SuperAdminEnum;
 import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.mybatisplus.entity.BasePage;
 import org.laokou.auth.client.user.UserDetail;
 import org.apache.commons.collections.CollectionUtils;
@@ -39,7 +39,7 @@ import java.util.List;
 @Slf4j
 public class DataFilterAspect {
 
-    @Pointcut("@annotation(org.laokou.admin.server.infrastructure.annotation.DataFilter)")
+    @Pointcut("@annotation(org.laokou.common.data.filter.annotation.DataFilter)")
     public void dataFilterPointCut() {}
 
     @Before("dataFilterPointCut()")

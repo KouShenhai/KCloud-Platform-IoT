@@ -18,13 +18,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.constant.CacheConstant;
-import org.laokou.admin.client.enums.CacheEnum;
 import org.laokou.admin.server.application.service.SysRoleApplicationService;
 import org.laokou.admin.client.dto.SysRoleDTO;
-import org.laokou.admin.server.infrastructure.annotation.DataCache;
 import org.laokou.admin.server.interfaces.qo.SysRoleQo;
 import org.laokou.admin.client.vo.SysRoleVO;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,7 +56,7 @@ public class SysRoleApiController {
 
     @GetMapping("/detail")
     @Operation(summary = "系统角色>详情",description = "系统角色>详情")
-    @DataCache(name = CacheConstant.ROLE,key = "#id")
+    @DataCache(name = "role", key = "#id")
     public HttpResult<SysRoleVO> detail(@RequestParam("id") Long id) {
         return new HttpResult<SysRoleVO>().ok(sysRoleApplicationService.getRoleById(id));
     }
@@ -74,7 +73,7 @@ public class SysRoleApiController {
     @Operation(summary = "系统角色>修改",description = "系统角色>修改")
     @OperateLog(module = "系统角色",name = "角色修改")
     @PreAuthorize("hasAuthority('sys:role:update')")
-    @DataCache(name = CacheConstant.ROLE,key = "#dto.id",type = CacheEnum.DEL)
+    @DataCache(name = "role", key = "#dto.id",type = CacheEnum.DEL)
     public HttpResult<Boolean> update(@RequestBody SysRoleDTO dto) {
         return new HttpResult<Boolean>().ok(sysRoleApplicationService.updateRole(dto));
     }
@@ -83,7 +82,7 @@ public class SysRoleApiController {
     @Operation(summary = "系统角色>删除",description = "系统角色>删除")
     @OperateLog(module = "系统角色",name = "角色删除")
     @PreAuthorize("hasAuthority('sys:role:delete')")
-    @DataCache(name = CacheConstant.ROLE,key = "#id",type = CacheEnum.DEL)
+    @DataCache(name = "role", key = "#id",type = CacheEnum.DEL)
     public HttpResult<Boolean> delete(@RequestParam("id") Long id) {
         return new HttpResult<Boolean>().ok(sysRoleApplicationService.deleteRole(id));
     }

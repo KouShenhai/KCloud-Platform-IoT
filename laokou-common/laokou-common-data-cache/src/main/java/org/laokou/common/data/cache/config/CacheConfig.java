@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,32 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.server.infrastructure.annotation;
-
-import java.lang.annotation.*;
-
+package org.laokou.common.data.cache.config;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import java.util.concurrent.TimeUnit;
 /**
- * 数据过滤
  * @author laokou
  */
-@Target({ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface DataFilter {
+@Configuration
+public class CacheConfig {
 
-    /**
-     * 表别名
-     */
-    String tableAlias();
-
-    /**
-     * 用户ID
-     */
-    String userId() default "creator";
-
-    /**
-     * 部门ID
-     */
-    String deptId() default "dept_id";
+    @Bean
+    public Cache<String, Object> caffeineCache() {
+        return Caffeine.newBuilder().maximumSize(4096)
+                .expireAfterWrite(10,TimeUnit.MINUTES)
+                .initialCapacity(400)
+                .build();
+    }
 
 }

@@ -1,0 +1,2 @@
+org.laokou.common.security.config.ResourceServerConfig
+org.laokou.common.security.config.AuthorizationConfig

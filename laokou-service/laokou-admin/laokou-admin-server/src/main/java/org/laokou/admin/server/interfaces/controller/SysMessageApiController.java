@@ -18,13 +18,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.constant.CacheConstant;
 import org.laokou.admin.server.application.service.SysMessageApplicationService;
 import org.laokou.admin.client.dto.MessageDTO;
-import org.laokou.admin.server.infrastructure.annotation.DataCache;
 import org.laokou.admin.server.interfaces.qo.SysMessageQo;
 import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
+import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.laokou.common.log.annotation.OperateLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -59,7 +58,7 @@ public class SysMessageApiController {
     @GetMapping("/get")
     @Operation(summary = "系统消息>查看",description = "系统消息>查看")
     @OperateLog(module = "系统消息",name = "消息查看")
-    @DataCache(name = CacheConstant.MESSAGE,key = "#id")
+    @DataCache(name = "message",key = "#id")
     public HttpResult<MessageDetailVO> get(@RequestParam("id")Long id) {
         return new HttpResult<MessageDetailVO>().ok(sysMessageApplicationService.getMessageByDetailId(id));
     }
@@ -67,7 +66,7 @@ public class SysMessageApiController {
     @GetMapping("/detail")
     @Operation(summary = "系统消息>详情",description = "系统消息>详情")
     @PreAuthorize("hasAuthority('sys:message:detail')")
-    @DataCache(name = CacheConstant.MESSAGE,key = "#id")
+    @DataCache(name = "message", key = "#id")
     public HttpResult<MessageDetailVO> detail(@RequestParam("id")Long id) {
         return new HttpResult<MessageDetailVO>().ok(sysMessageApplicationService.getMessageById(id));
     }

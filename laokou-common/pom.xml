@@ -20,6 +20,8 @@
         <module>laokou-common-swagger</module>
         <module>laokou-common-security</module>
         <module>laokou-common-log</module>
+        <module>laokou-common-data-cache</module>
+        <module>laokou-common-data-filter</module>
     </modules>
 
 </project>

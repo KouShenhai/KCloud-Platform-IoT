@@ -1,4 +1,4 @@
-package org.laokou.admin.client.enums;
+package org.laokou.common.data.cache.enums;
 
 /**
  * @author laokou
