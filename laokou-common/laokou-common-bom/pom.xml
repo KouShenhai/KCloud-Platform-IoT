@@ -89,6 +89,11 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-dynamic-datasource</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-data-filter</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
