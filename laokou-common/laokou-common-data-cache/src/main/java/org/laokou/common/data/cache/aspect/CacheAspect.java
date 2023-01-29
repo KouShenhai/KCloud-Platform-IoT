@@ -53,28 +53,29 @@ public class CacheAspect {
         String name = dataCache.name();
         Object[] args = point.getArgs();
         key = RedisKeyUtil.getDataCacheKey(name,SpringUtil.parse(key,parameterNames,args,Long.class));
-        Object value = point.proceed();
         switch (type) {
             case GET -> {
-                return get(key,value,expire);
+                return get(key,point,expire);
             }
-            case PUT -> put(key,value,expire);
+            case PUT -> put(key,point,expire);
             case DEL -> del(key);
             default -> {}
         }
-        return value;
+        return point.proceed();
     }
 
-    private void put(String key ,Object value,long expire) {
+    private void put(String key ,ProceedingJoinPoint point,long expire) throws Throwable {
+        Object value = point.proceed();
         redisUtil.set(key,value,expire);
         caffeineCache.put(key,value);
     }
 
-    private Object get(String key,Object value,long expire) {
+    private Object get(String key,ProceedingJoinPoint point,long expire) throws Throwable {
         Object obj = caffeineCache.get(key,t -> redisUtil.get(key));
         if (obj != null) {
             return obj;
         }
+        Object value = point.proceed();
         redisUtil.setIfExists(key,value,expire);
         return value;
     }
