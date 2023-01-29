@@ -236,7 +236,7 @@ seata:
     nacos:
       namespace: xxx-xxx-xxx-xx
       group: SEATA_GROUP
-      server-addr: 127.0.0.1:8848A
+      server-addr: 127.0.0.1:8848
   enabled: true
   tx-service-group: default_tx_group
   data-source-proxy-mode: AT
@@ -359,8 +359,8 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 
 ### 致谢
 [Spring官网](https://spring.io)  
-[人人社区](https://www.renren.io)  
-[若依社区](https://www.ruoyi.vip)  
+[人人社区](https://www.renren.io)   
+[若依社区](https://www.ruoyi.vip) 
 
 ### 联系
 博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)  
