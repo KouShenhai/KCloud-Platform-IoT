@@ -103,7 +103,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
         └── laokou-common-data-cache               --- 数据缓存组件
         └── laokou-common-data-filter              --- 数据过滤组件
         └── laokou-common-mybatis-plus             --- 对象映射组件  
-        └── laokou-common-dynamic-datasource       --- 动态数据源组件  
 ├── laokou-cloud  
         └── laokou-gateway                         --- API网关  
         └── laokou-monitor                         --- 服务监控  

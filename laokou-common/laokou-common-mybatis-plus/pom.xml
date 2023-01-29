@@ -29,5 +29,9 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-swagger</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>
