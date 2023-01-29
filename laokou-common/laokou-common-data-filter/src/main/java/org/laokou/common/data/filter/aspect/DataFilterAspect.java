@@ -25,7 +25,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
@@ -39,10 +38,7 @@ import java.util.List;
 @Slf4j
 public class DataFilterAspect {
 
-    @Pointcut("@annotation(org.laokou.common.data.filter.annotation.DataFilter)")
-    public void dataFilterPointCut() {}
-
-    @Before("dataFilterPointCut()")
+    @Before("@annotation(org.laokou.common.data.filter.annotation.DataFilter)")
     public void dataFilterPoint(JoinPoint point) {
         Object params = point.getArgs()[0];
         if (params instanceof BasePage basePage) {
