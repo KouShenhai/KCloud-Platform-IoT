@@ -147,14 +147,27 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 #### 服务配置
 ```yaml
 spring:
-  # mysql
+  # 多数据源
   datasource:
-    # 连接地址
-    url: jdbc:mysql://127.0.0.1:3306/kcloud_platform_alibaba?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    # 用户名
-    username: root
-    # 密码
-    password: 123456
+    dynamic:
+      primary: master
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/kcloud_platform_alibaba?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+          username: root
+          password: 123456
+          hikari:
+            max-lifetime: 120000
+        slave:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/kcloud_platform?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+          username: root
+          password: 123456
+          hikari:
+            max-lifetime: 120000
   # redis
   data:
     redis:
