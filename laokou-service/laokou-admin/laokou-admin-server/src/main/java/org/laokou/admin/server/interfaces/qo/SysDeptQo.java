@@ -25,6 +25,4 @@ public class SysDeptQo {
 
     private String name;
 
-    private Integer status;
-
 }

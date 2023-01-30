@@ -612,7 +612,7 @@ CREATE TABLE `oauth2_registered_client` (
                                             `client_name` varchar(200) NOT NULL,
                                             `client_authentication_methods` varchar(1000) NOT NULL,
                                             `authorization_grant_types` varchar(1000) NOT NULL,
-                                            `redirect_uris` varchar(1000) DEFAULT NULL,
+                                            `redirect_uris` text,
                                             `scopes` varchar(1000) NOT NULL,
                                             `client_settings` varchar(2000) NOT NULL,
                                             `token_settings` varchar(2000) NOT NULL,

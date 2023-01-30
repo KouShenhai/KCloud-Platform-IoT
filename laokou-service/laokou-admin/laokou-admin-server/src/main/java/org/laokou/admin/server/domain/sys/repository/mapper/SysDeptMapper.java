@@ -40,12 +40,6 @@ public interface SysDeptMapper extends BaseMapper<SysDeptDO> {
     List<SysDeptVO> getDeptList(@Param("qo") SysDeptQo qo);
 
     /**
-     * 根据id删除部门
-     * @param id
-     */
-    void deleteDept(@Param("id") Long id);
-
-    /**
      * 根据id获取部门
      * @param id
      * @return

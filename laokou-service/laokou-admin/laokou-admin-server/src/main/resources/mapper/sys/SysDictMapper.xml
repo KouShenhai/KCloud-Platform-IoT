@@ -36,9 +36,4 @@ from boot_sys_dict
 where del_flag = '0' and `status` = '0' and id = #{id}
     </select>
 
-    <update id="deleteDict">
-        update boot_sys_dict set del_flag = '1'
-        where id = #{id}
-    </update>
-
 </mapper>

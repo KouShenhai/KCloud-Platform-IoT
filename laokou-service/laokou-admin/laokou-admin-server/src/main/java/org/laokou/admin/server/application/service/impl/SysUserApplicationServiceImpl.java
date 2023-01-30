@@ -115,7 +115,6 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 
     @Override
-
     public SysUserVO getUserById(Long id) {
         SysUserDO sysUserDO = sysUserService.getById(id);
         SysUserVO sysUserVO = ConvertUtil.sourceToTarget(sysUserDO, SysUserVO.class);

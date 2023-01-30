@@ -44,7 +44,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserDO> im
 
     @Override
     public void deleteUser(Long id) {
-        this.baseMapper.deleteUser(id);
+        this.baseMapper.deleteById(id);
     }
 
     @Override

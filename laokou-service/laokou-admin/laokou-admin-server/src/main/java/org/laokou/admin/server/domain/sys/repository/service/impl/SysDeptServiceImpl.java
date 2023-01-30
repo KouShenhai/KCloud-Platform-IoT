@@ -37,7 +37,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptDO> im
 
     @Override
     public void deleteDept(Long id) {
-        this.baseMapper.deleteDept(id);
+        this.baseMapper.deleteById(id);
     }
 
     @Override

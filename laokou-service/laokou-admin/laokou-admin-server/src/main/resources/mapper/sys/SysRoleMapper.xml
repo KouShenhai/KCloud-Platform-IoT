@@ -7,7 +7,7 @@
         ,boot_sys_user
         ,boot_sys_user_role
         <where>
-            and boot_sys_user.id = boot_sys_user_role.user_id
+            boot_sys_user.id = boot_sys_user_role.user_id
             AND boot_sys_role.id = boot_sys_user_role.role_id
             <if test="userId != null">
                 AND boot_sys_user.id = #{userId}
@@ -30,10 +30,5 @@
         select id,`name`,sort from boot_sys_role
         where id = #{id}
     </select>
-
-    <update id="deleteRole">
-        update boot_sys_role set del_flag = '1'
-        where id = #{id}
-    </update>
 
 </mapper>

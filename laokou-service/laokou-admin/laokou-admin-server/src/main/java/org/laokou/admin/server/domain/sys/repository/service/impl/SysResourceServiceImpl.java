@@ -44,7 +44,7 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 
     @Override
     public void deleteResource(Long id) {
-        this.baseMapper.deleteResource(id);
+        this.baseMapper.deleteById(id);
     }
 
     @Override

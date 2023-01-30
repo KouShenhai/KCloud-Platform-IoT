@@ -70,7 +70,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> im
 
     @Override
     public void deleteMenu(Long id) {
-        this.baseMapper.deleteMenu(id);
+        this.baseMapper.deleteById(id);
     }
 
     @Override

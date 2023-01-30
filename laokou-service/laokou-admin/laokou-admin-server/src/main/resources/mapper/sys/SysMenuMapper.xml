@@ -59,11 +59,6 @@
         order by boot_sys_menu.sort desc
     </select>
 
-    <update id="deleteMenu">
-        update boot_sys_menu set del_flag = '1'
-        where id = #{id}
-    </update>
-
     <select id="getMenuListByRoleId" resultType="org.laokou.admin.client.vo.SysMenuVO">
         SELECT boot_sys_menu.url,
         boot_sys_menu.type,

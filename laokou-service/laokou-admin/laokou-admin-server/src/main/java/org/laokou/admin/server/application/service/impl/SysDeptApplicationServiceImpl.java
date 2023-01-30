@@ -53,7 +53,6 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     @Override
     public SysDeptVO getDeptList() {
         SysDeptQo qo = new SysDeptQo();
-        qo.setStatus(Constant.NO);
         String deptAllKey = RedisKeyUtil.getDeptAllKey();
         Object obj = redisUtil.get(deptAllKey);
         if (obj != null) {

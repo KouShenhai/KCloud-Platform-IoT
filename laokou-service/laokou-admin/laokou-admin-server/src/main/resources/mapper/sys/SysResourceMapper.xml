@@ -74,10 +74,4 @@ where del_flag = 0 and `code` = #{code}
 group by a
     </select>
 
-
-    <update id="deleteResource">
-        update boot_sys_resource set del_flag = '1'
-        where id = #{id}
-    </update>
-
 </mapper>

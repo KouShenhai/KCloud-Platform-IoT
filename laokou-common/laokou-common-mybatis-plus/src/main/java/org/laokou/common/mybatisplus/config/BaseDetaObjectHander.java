@@ -17,10 +17,10 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-import org.laokou.common.core.constant.Constant;
 import org.springframework.stereotype.Component;
 import java.util.Date;
-import java.util.Objects;
+import static org.laokou.common.core.constant.Constant.NO;
+
 /**
  * @author laokou
  */
@@ -34,23 +34,16 @@ public class BaseDetaObjectHander implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        log.info("come to insert fill .........");
-        if (Objects.isNull(getFieldValByName(CREATE_DATE,metaObject))) {
-            this.setFieldValByName(CREATE_DATE,new Date(),metaObject);
-        }
-        if (Objects.isNull(getFieldValByName(UPDATE_DATE,metaObject))) {
-            this.setFieldValByName(UPDATE_DATE,new Date(),metaObject);
-        }
-        if (Objects.isNull(getFieldValByName(DEL_FLAG,metaObject))) {
-            this.setFieldValByName(DEL_FLAG, Constant.NO, metaObject);
-        }
+        log.info("insert fill .........");
+        this.strictInsertFill(metaObject, CREATE_DATE, () -> new Date(), Date.class);
+        this.strictInsertFill(metaObject, UPDATE_DATE, () -> new Date(), Date.class);
+        this.strictInsertFill(metaObject, DEL_FLAG, () -> NO, Integer.class);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        log.info("come to update fill .......");
-        this.setFieldValByName(UPDATE_DATE,new Date(),metaObject);
-        this.setFieldValByName(DEL_FLAG, Constant.NO, metaObject);
+        log.info("update fill .......");
+        this.strictUpdateFill(metaObject, UPDATE_DATE, () -> new Date(), Date.class);
     }
 
 }

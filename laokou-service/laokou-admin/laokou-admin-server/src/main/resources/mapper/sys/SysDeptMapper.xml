@@ -10,11 +10,6 @@
    order by sort desc
     </select>
 
-    <delete id="deleteDept">
-        update boot_sys_dept set del_flag = '1'
-        where id = #{id}
-    </delete>
-
     <select id="getDept" resultType="org.laokou.admin.client.vo.SysDeptVO">
         select id,pid,`name`,sort from boot_sys_dept
         where id = #{id}

@@ -54,12 +54,6 @@ public interface SysRoleMapper extends BaseMapper<SysRoleDO> {
     SysRoleVO getRoleById(@Param("id") Long id);
 
     /**
-     * 根据id删除角色
-     * @param id
-     */
-    void deleteRole(@Param("id") Long id);
-
-    /**
      * 查询角色列表
      * @param qo
      * @return

@@ -57,10 +57,4 @@ public interface SysDictMapper extends BaseMapper<SysDictDO> {
      */
     SysDictVO getDictById(@Param("id") Long id);
 
-    /**
-     * 根据id删除字典
-     * @param id
-     */
-    void deleteDict(@Param("id") Long id);
-
 }

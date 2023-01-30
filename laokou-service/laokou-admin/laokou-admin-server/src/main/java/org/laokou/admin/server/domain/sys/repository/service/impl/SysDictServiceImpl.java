@@ -50,7 +50,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDictDO> im
 
     @Override
     public void deleteDict(Long id) {
-        this.baseMapper.deleteDict(id);
+        this.baseMapper.deleteById(id);
     }
 
 }

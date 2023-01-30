@@ -62,12 +62,6 @@ public interface SysMenuMapper extends BaseMapper<SysMenuDO> {
     SysMenuVO getMenuById(@Param("id") Long id);
 
     /**
-     * 逻辑删除
-     * @param id
-     */
-    void deleteMenu(@Param("id") Long id);
-
-    /**
      * 通过roleId获取菜单
      * @param roleId
      * @return

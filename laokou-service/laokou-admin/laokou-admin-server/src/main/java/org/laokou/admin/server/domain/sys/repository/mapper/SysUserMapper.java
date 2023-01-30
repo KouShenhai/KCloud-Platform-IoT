@@ -49,12 +49,6 @@ public interface SysUserMapper extends BaseMapper<SysUserDO> {
     void updateUser(@Param("dto") SysUserDTO dto);
 
     /**
-     * 根据id删除用户
-     * @param id
-     */
-    void deleteUser(@Param("id") Long id);
-
-    /**
      * 获取下拉用户选择列表
      * @return
      */

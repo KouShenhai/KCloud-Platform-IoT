@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.mybatisplus.entity;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import java.util.Date;
@@ -66,7 +63,8 @@ public abstract class BaseDO {
      * 删除标识 0 未删除 1已删除
      */
     @Schema(name = "delFlag",description = "删除标识 0 未删除 1已删除")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @TableField(fill = FieldFill.INSERT)
+    @TableLogic
     private Integer delFlag;
 
 }
