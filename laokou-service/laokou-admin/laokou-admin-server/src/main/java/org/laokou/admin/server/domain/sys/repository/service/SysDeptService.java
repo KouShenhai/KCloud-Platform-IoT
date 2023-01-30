@@ -69,4 +69,11 @@ public interface SysDeptService extends IService<SysDeptDO> {
      * @param pid
      */
     void updateDeptPath2ById(Long id,Long pid);
+
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(Long id);
 }

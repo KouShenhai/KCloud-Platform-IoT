@@ -82,4 +82,11 @@ public interface SysResourceService extends IService<SysResourceDO> {
      * @return
      */
     SysResourceVO getResourceAuditByResourceId(Long id);
+
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(Long id);
 }

@@ -54,4 +54,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleDO> im
         this.baseMapper.deleteById(id);
     }
 
+    @Override
+    public Integer getVersion(Long id) {
+        return baseMapper.getVersion(id);
+    }
+
 }

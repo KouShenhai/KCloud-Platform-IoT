@@ -60,4 +60,11 @@ public interface SysRoleMapper extends BaseMapper<SysRoleDO> {
      */
     List<SysRoleVO> getRoleList(@Param("qo") SysRoleQo qo);
 
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(@Param("id") Long id);
+
 }

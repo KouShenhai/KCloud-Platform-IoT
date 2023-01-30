@@ -75,4 +75,11 @@ public interface SysMenuMapper extends BaseMapper<SysMenuDO> {
      */
     List<Long> getMenuIdsByRoleId(@Param("roleId") Long roleId);
 
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(@Param("id") Long id);
+
 }

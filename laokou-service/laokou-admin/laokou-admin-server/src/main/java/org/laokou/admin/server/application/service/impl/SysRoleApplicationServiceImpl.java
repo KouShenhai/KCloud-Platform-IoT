@@ -30,7 +30,6 @@ import org.laokou.admin.client.dto.SysRoleDTO;
 import org.laokou.admin.client.vo.SysRoleVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.utils.UserUtil;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.core.utils.ConvertUtil;
@@ -72,7 +71,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertRole(SysRoleDTO dto) {
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
-        long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, roleDO.getName()).eq(SysRoleDO::getDelFlag, Constant.NO));
+        long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, roleDO.getName()));
         if (count > 0) {
             throw new CustomException("角色已存在，请重新填写");
         }
@@ -111,12 +110,14 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateRole(SysRoleDTO dto) {
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
-        long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, roleDO.getName()).eq(SysRoleDO::getDelFlag, Constant.NO).ne(SysRoleDO::getId,roleDO.getId()));
+        long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, roleDO.getName()).ne(SysRoleDO::getId,roleDO.getId()));
         if (count > 0) {
             throw new CustomException("角色已存在，请重新填写");
         }
         Long userId = UserUtil.getUserId();
+        Integer version = sysRoleService.getVersion(dto.getId());
         roleDO.setEditor(userId);
+        roleDO.setVersion(version);
         sysRoleService.updateById(roleDO);
         //删除中间表
         sysRoleMenuService.remove(Wrappers.lambdaQuery(SysRoleMenuDO.class).eq(SysRoleMenuDO::getRoleId,dto.getId()));

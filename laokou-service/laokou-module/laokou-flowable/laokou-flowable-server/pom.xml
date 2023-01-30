@@ -19,8 +19,8 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-mybatis-plus</artifactId>
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>

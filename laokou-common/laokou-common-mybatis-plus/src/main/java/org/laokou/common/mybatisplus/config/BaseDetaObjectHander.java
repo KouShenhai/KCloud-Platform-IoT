@@ -31,6 +31,7 @@ public class BaseDetaObjectHander implements MetaObjectHandler {
     private static final String CREATE_DATE = "createDate";
     private static final String UPDATE_DATE = "updateDate";
     private static final String DEL_FLAG = "delFlag";
+    private static final String VERSION = "version";
 
     @Override
     public void insertFill(MetaObject metaObject) {
@@ -38,6 +39,7 @@ public class BaseDetaObjectHander implements MetaObjectHandler {
         this.strictInsertFill(metaObject, CREATE_DATE, () -> new Date(), Date.class);
         this.strictInsertFill(metaObject, UPDATE_DATE, () -> new Date(), Date.class);
         this.strictInsertFill(metaObject, DEL_FLAG, () -> NO, Integer.class);
+        this.strictInsertFill(metaObject, VERSION, () -> NO, Integer.class);
     }
 
     @Override

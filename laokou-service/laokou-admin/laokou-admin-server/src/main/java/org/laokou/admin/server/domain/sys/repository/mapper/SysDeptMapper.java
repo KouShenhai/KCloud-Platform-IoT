@@ -67,4 +67,11 @@ public interface SysDeptMapper extends BaseMapper<SysDeptDO> {
      */
     void updateDeptPath2ById(@Param("id")Long id,@Param("pid")Long pid);
 
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(@Param("id") Long id);
+
 }

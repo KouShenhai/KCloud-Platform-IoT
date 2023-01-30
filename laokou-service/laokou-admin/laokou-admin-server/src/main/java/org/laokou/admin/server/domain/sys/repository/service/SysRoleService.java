@@ -62,4 +62,10 @@ public interface SysRoleService extends IService<SysRoleDO> {
      */
     void deleteRole(Long id);
 
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(Long id);
 }

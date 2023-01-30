@@ -35,4 +35,8 @@
         call updatePath2(#{id,mode=IN},#{pid,mode=IN});
     </update>
 
-        </mapper>
+    <select id="getVersion" resultType="integer">
+        select `version` from boot_sys_dept where id = #{id}
+    </select>
+
+</mapper>

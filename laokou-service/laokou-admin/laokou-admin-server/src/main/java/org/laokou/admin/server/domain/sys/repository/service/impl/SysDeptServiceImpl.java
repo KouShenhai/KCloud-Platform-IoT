@@ -60,4 +60,9 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptDO> im
         this.baseMapper.updateDeptPath2ById(id, pid);
     }
 
+    @Override
+    public Integer getVersion(Long id) {
+        return this.baseMapper.getVersion(id);
+    }
+
 }

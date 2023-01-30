@@ -59,8 +59,9 @@ public interface SysMessageMapper extends BaseMapper<SysMessageDO> {
     /**
      * 消息读取
      * @param id
+     * @param version
      */
-    void readMessage(Long id);
+    void readMessage(@Param("id") Long id,@Param("version") Integer version);
 
     /**
      * 根据id查询消息

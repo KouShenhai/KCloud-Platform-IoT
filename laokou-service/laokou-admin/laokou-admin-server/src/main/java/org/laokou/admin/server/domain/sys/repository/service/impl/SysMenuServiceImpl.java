@@ -83,4 +83,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> im
         return this.baseMapper.getMenuIdsByRoleId(roleId);
     }
 
+    @Override
+    public Integer getVersion(Long id) {
+        return this.baseMapper.getVersion(id);
+    }
+
 }

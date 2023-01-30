@@ -82,4 +82,10 @@ public interface SysResourceMapper extends BaseMapper<SysResourceDO> {
      */
     List<ResourceIndex> getResourceIndexList(@Param("pageSize")Integer pageSize, @Param("pageIndex")Integer pageIndex, @Param("code")String code,@Param("ym")String ym);
 
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(@Param("id")Long id);
 }

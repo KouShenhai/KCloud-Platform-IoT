@@ -30,7 +30,6 @@ import org.laokou.admin.server.interfaces.qo.SysUserQo;
 import org.laokou.admin.client.vo.SysUserVO;
 import org.laokou.admin.client.dto.SysUserDTO;
 import org.laokou.auth.client.utils.UserUtil;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.enums.SuperAdminEnum;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
@@ -70,7 +69,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (SuperAdminEnum.YES.ordinal() == sysUser.getSuperAdmin() && SuperAdminEnum.YES.ordinal() != userDetail.getSuperAdmin()) {
             throw new CustomException("只有超级管理员才能修改");
         }
-        long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername()).eq(SysUserDO::getDelFlag, Constant.NO).ne(SysUserDO::getId,id));
+        long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername()).ne(SysUserDO::getId,id));
         if (count > 0) {
             throw new CustomException("账号已存在，请重新填写");
         }
@@ -79,6 +78,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (StringUtil.isNotEmpty(password)) {
             dto.setPassword(passwordEncoder.encode(password));
         }
+        dto.setVersion(sysUser.getVersion());
         sysUserService.updateUser(dto);
         List<Long> roleIds = dto.getRoleIds();
         //删除中间表
@@ -93,7 +93,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertUser(SysUserDTO dto) {
         SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
-        long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, sysUserDO.getUsername()).eq(SysUserDO::getDelFlag, Constant.NO));
+        long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, sysUserDO.getUsername()));
         if (count > 0) {
             throw new CustomException("账号已存在，请重新填写");
         }

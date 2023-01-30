@@ -25,4 +25,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysMessageDetailServiceImpl extends ServiceImpl<SysMessageDetailMapper, SysMessageDetailDO> implements SysMessageDetailService {
+    @Override
+    public Integer getVersion(Long id) {
+        return this.baseMapper.getVersion(id);
+    }
 }

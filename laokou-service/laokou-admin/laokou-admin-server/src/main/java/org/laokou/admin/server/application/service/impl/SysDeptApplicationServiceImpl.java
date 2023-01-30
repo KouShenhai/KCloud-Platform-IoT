@@ -25,7 +25,6 @@ import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
 import org.laokou.admin.server.interfaces.qo.SysDeptQo;
 import org.laokou.admin.client.vo.SysDeptVO;
 import org.laokou.auth.client.utils.UserUtil;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.redis.utils.RedisKeyUtil;
@@ -73,7 +72,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertDept(SysDeptDTO dto) {
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
-        long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()).eq(SysDeptDO::getDelFlag, Constant.NO));
+        long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()));
         if (count > 0) {
             throw new CustomException("部门已存在，请重新填写");
         }
@@ -88,10 +87,12 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateDept(SysDeptDTO dto) {
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
-        long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()).eq(SysDeptDO::getDelFlag, Constant.NO).ne(SysDeptDO::getId,dto.getId()));
+        long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()).ne(SysDeptDO::getId,dto.getId()));
         if (count > 0) {
             throw new CustomException("部门已存在，请重新填写");
         }
+        Integer version = sysDeptService.getVersion(dto.getId());
+        sysDeptDO.setVersion(version);
         sysDeptDO.setEditor(UserUtil.getUserId());
         sysDeptService.updateById(sysDeptDO);
         // 修改当前节点及子节点path
@@ -102,7 +103,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteDept(Long id) {
-        long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getDeptId, id).eq(SysUserDO::getDelFlag, Constant.NO));
+        long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getDeptId, id));
         if (count > 0) {
             throw new CustomException("不可删除，该部门下存在用户");
         }

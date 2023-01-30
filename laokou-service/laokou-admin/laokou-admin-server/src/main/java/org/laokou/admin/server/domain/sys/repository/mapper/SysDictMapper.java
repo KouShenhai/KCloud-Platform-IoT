@@ -57,4 +57,11 @@ public interface SysDictMapper extends BaseMapper<SysDictDO> {
      */
     SysDictVO getDictById(@Param("id") Long id);
 
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(@Param("id")Long id);
+
 }

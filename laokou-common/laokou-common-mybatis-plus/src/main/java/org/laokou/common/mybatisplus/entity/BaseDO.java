@@ -67,4 +67,12 @@ public abstract class BaseDO {
     @TableLogic
     private Integer delFlag;
 
+    /**
+     * 版本号
+     */
+    @Version
+    @Schema(name = "version",description = "版本号")
+    @TableField(fill = FieldFill.INSERT)
+    private Integer version;
+
 }

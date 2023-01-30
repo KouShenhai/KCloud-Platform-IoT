@@ -33,7 +33,6 @@ import org.laokou.admin.server.infrastructure.feign.elasticsearch.ElasticsearchA
 import org.laokou.admin.server.infrastructure.feign.flowable.WorkTaskApiFeignClient;
 import org.laokou.admin.server.infrastructure.feign.oss.OssApiFeignClient;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.*;
 import org.laokou.admin.client.enums.MessageTypeEnum;
 import org.laokou.admin.client.dto.SysResourceAuditDTO;
@@ -343,7 +342,10 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                                 , SysResourceAuditDO::getRemark
                                 , SysResourceAuditDO::getTags);
                 SysResourceAuditDO auditDO = sysResourceAuditService.getOne(queryWrapper);
+                Integer version = sysResourceService.getVersion(businessId);
                 LambdaUpdateWrapper<SysResourceDO> updateWrapper = Wrappers.lambdaUpdate(SysResourceDO.class).eq(SysResourceDO::getId, businessId)
+                        .eq(SysResourceDO::getVersion,version)
+                        .set(SysResourceDO::getVersion, version + 1)
                         .set(SysResourceDO::getTags, auditDO.getTags())
                         .set(SysResourceDO::getTitle, auditDO.getTitle())
                         .set(SysResourceDO::getRemark, auditDO.getRemark())
@@ -352,10 +354,12 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
             }
         }
         // 修改状态
+        Integer version = sysResourceAuditService.getVersion(instanceId);
         LambdaUpdateWrapper<SysResourceAuditDO> updateWrapper = Wrappers.lambdaUpdate(SysResourceAuditDO.class)
                 .set(SysResourceAuditDO::getStatus, status)
-                .eq(SysResourceAuditDO::getProcessInstanceId, instanceId)
-                .eq(SysResourceAuditDO::getDelFlag, Constant.NO);
+                .set(SysResourceAuditDO::getVersion, version + 1)
+                .eq(SysResourceAuditDO::getVersion,version)
+                .eq(SysResourceAuditDO::getProcessInstanceId, instanceId);
         sysResourceAuditService.update(updateWrapper);
         // 审核日志入队列
         saveAuditLog(businessId,auditStatus,comment,username,userId);

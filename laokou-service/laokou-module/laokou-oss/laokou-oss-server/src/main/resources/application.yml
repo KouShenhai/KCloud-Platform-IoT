@@ -6,6 +6,8 @@ server:
 
 #spring
 spring:
+  application:
+    name: @pom.parent.artifactId@
   profiles:
     # dev|test|prod
     active: @profile.active@
@@ -24,19 +26,3 @@ spring:
       ignoredInterfaces:
         - docker0
         - veth.*
-
-# log
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-
-# mybatis-plus
-mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*.xml
-  configuration:
-    log-impl: @mybatis-plus.log-impl@

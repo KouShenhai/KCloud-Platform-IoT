@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Import;
 @SpringBootApplication(scanBasePackages = {"org.laokou.flowable","org.laokou.common.core","org.laokou.common.swagger"})
 @EnableDiscoveryClient
 @EnableEncryptableProperties
-@Import({CorsConfig.class, CustomExceptionHandler.class})
+@Import({CorsConfig.class})
 public class FlowableApplication {
 
     public static void main(String[] args) {

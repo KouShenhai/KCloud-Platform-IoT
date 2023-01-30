@@ -17,7 +17,6 @@ package org.laokou.oss.server.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.oss.server.entity.SysOssLogDO;
 import org.laokou.oss.server.mapper.SysOssLogMapper;
 import org.laokou.oss.server.service.SysOssLogService;
@@ -47,8 +46,7 @@ public class SysOssLogServiceImpl extends ServiceImpl<SysOssLogMapper, SysOssLog
     public SysOssLogDO getLogByMd5(String md5) {
         LambdaQueryWrapper<SysOssLogDO> queryWrapper = Wrappers.lambdaQuery(SysOssLogDO.class)
                 .select(SysOssLogDO::getUrl)
-                .eq(SysOssLogDO::getMd5, md5)
-                .eq(SysOssLogDO::getDelFlag, Constant.NO);
+                .eq(SysOssLogDO::getMd5, md5);
         return this.baseMapper.selectOne(queryWrapper);
     }
 

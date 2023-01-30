@@ -16,8 +16,6 @@
 package org.laokou.oss.server;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.laokou.common.swagger.config.CorsConfig;
-import org.laokou.common.swagger.config.OpenApiMvcConfig;
-import org.laokou.redis.config.RedisSessionConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -29,7 +27,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  */
 @SpringBootApplication(scanBasePackages = {"org.laokou.common.swagger","org.laokou.common.core","org.laokou.oss","org.laokou.redis","org.laokou.common.mybatisplus"})
 @EnableDiscoveryClient
-@Import({CorsConfig.class, RedisSessionConfig.class, OpenApiMvcConfig.class})
+@Import({CorsConfig.class})
 @EnableEncryptableProperties
 @EnableAsync
 public class OssApplication {

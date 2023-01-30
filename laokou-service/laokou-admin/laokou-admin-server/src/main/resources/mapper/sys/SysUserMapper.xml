@@ -43,10 +43,13 @@
                 editor = #{dto.editor},
             </if>
             <if test="dto.deptId != null">
-                dept_id = #{dto.deptId}
+                dept_id = #{dto.deptId},
             </if>
-            where id = #{dto.id}
+            <if test="dto.version != null">
+                version = version + 1
+            </if>
         </set>
+        where id = #{dto.id} and version = #{dto.version}
     </update>
 
     <select id="getOptionList" resultType="org.laokou.admin.client.vo.OptionVO">

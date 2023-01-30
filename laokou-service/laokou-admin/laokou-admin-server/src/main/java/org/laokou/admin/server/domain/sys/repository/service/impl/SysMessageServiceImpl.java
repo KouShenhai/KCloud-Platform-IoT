@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMessageDO> implements SysMessageService {
+
     @Override
     public IPage<SysMessageVO> getMessageList(IPage<SysMessageVO> page, SysMessageQo qo) {
         return this.baseMapper.getMessageList(page,qo);
@@ -45,12 +46,13 @@ public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMess
     }
 
     @Override
-    public void readMessage(Long id) {
-        this.baseMapper.readMessage(id);
+    public void readMessage(Long id,Integer version) {
+        this.baseMapper.readMessage(id,version);
     }
 
     @Override
     public MessageDetailVO getMessageById(Long id) {
         return this.baseMapper.getMessageById(id);
     }
+
 }

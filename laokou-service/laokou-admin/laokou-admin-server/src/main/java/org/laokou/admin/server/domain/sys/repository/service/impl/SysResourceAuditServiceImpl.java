@@ -27,4 +27,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysResourceAuditServiceImpl extends ServiceImpl<SysResourceAuditMapper, SysResourceAuditDO> implements SysResourceAuditService {
+    @Override
+    public Integer getVersion(String instanceId) {
+        return this.baseMapper.getVersion(instanceId);
+    }
 }

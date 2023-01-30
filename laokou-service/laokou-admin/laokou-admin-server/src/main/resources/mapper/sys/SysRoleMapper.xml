@@ -31,4 +31,8 @@
         where id = #{id}
     </select>
 
+    <select id="getVersion" resultType="integer">
+        select `version` from boot_sys_role where id = #{id}
+    </select>
+
 </mapper>

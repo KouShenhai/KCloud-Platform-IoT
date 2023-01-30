@@ -97,4 +97,8 @@
         and boot_sys_menu.del_flag = '0'
         group by boot_sys_menu.id
     </select>
+
+    <select id="getVersion" resultType="integer">
+        select `version` from boot_sys_menu where id = #{id}
+    </select>
 </mapper>

@@ -104,7 +104,8 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     @Override
     @Transactional(rollbackFor = Exception.class)
     public MessageDetailVO getMessageByDetailId(Long id) {
-        sysMessageService.readMessage(id);
+        Integer version = sysMessageDetailService.getVersion(id);
+        sysMessageService.readMessage(id,version);
         return sysMessageService.getMessageByDetailId(id);
     }
 
@@ -125,7 +126,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     public Long unReadCount() {
         final Long userId = UserUtil.getUserId();
         return sysMessageDetailService.count(Wrappers.lambdaQuery(SysMessageDetailDO.class).eq(SysMessageDetailDO::getUserId,userId)
-                .eq(SysMessageDetailDO::getDelFlag, Constant.NO)
                 .eq(SysMessageDetailDO::getReadFlag, Constant.NO));
     }
 

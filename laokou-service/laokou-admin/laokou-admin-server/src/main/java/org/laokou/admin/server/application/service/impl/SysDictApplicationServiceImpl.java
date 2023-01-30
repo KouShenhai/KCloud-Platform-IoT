@@ -64,7 +64,9 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateDict(SysDictDTO dto) {
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
+        Integer version = sysDictService.getVersion(dto.getId());
         dictDO.setEditor(UserUtil.getUserId());
+        dictDO.setVersion(version);
         return sysDictService.updateById(dictDO);
     }
 

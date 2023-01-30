@@ -66,4 +66,9 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
     public SysResourceVO getResourceAuditByResourceId(Long id) {
         return baseMapper.getResourceAuditByResourceId(id);
     }
+
+    @Override
+    public Integer getVersion(Long id) {
+        return this.baseMapper.getVersion(id);
+    }
 }

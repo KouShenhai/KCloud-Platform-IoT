@@ -33,6 +33,6 @@ order by a.create_date desc
     </select>
 
     <update id="readMessage">
-        update boot_sys_message_detail set read_flag = '1' where id = #{id}
+        update boot_sys_message_detail set read_flag = '1', `version` = `version` + 1 where id = #{id} and `version` = #{version}
     </update>
 </mapper>

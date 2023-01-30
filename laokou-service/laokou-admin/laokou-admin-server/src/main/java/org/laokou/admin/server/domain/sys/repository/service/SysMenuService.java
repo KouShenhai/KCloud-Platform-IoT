@@ -76,4 +76,11 @@ public interface SysMenuService extends IService<SysMenuDO> {
      */
     List<Long> getMenuIdsByRoleId(Long roleId);
 
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(Long id);
+
 }

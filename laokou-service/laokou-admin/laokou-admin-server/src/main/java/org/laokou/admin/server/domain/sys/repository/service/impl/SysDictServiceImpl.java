@@ -53,4 +53,9 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDictDO> im
         this.baseMapper.deleteById(id);
     }
 
+    @Override
+    public Integer getVersion(Long id) {
+        return this.baseMapper.getVersion(id);
+    }
+
 }

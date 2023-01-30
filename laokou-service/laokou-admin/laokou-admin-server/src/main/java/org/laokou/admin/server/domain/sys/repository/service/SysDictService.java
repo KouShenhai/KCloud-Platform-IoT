@@ -58,4 +58,10 @@ public interface SysDictService extends IService<SysDictDO> {
      */
     void deleteDict(Long id);
 
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(Long id);
 }
