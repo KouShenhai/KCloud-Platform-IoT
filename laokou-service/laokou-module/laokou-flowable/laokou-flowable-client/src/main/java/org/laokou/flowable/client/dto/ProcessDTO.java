@@ -16,6 +16,7 @@
 
 package org.laokou.flowable.client.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 /**
@@ -23,9 +24,11 @@ import lombok.Data;
  */
 @Data
 public class ProcessDTO {
-
+    @NotBlank(message = "流程编号不为空")
     private String processKey;
+    @NotBlank(message = "业务编号不为空")
     private String businessKey;
+    @NotBlank(message = "业务名称不为空")
     private String businessName;
 
 }

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.laokou.flowable.client.dto;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 /**
  * @author laokou
@@ -22,17 +24,17 @@ import lombok.Data;
  */
 @Data
 public class TaskDTO {
-
+    @NotNull(message = "显示页码不为空")
     private Integer pageNum;
-
+    @NotNull(message = "显示条数不为空")
     private Integer pageSize;
-
+    @NotBlank(message = "流程名称不为空")
     private String processName;
-
+    @NotNull(message = "用户编号不为空")
     private Long userId;
-
+    @NotBlank(message = "用户名不为空")
     private String username;
-
+    @NotBlank(message = "流程编号不为空")
     private String processKey;
 
 }

@@ -64,7 +64,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         ValidatorUtil.validateEntity(dto);
         Long id = dto.getId();
         if (null == id) {
-            throw new CustomException("主键不存在");
+            throw new CustomException("用户编号不为空");
         }
         SysUserDO sysUser = sysUserService.getById(id);
         UserDetail userDetail = UserUtil.userDetail();

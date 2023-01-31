@@ -28,6 +28,7 @@ import org.flowable.engine.repository.ProcessDefinitionQuery;
 import org.flowable.image.impl.DefaultProcessDiagramGenerator;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.laokou.flowable.client.dto.DefinitionDTO;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;
@@ -68,6 +69,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 
     @Override
     public PageVO<DefinitionVO> queryDefinitionPage(DefinitionDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         Integer pageNum = dto.getPageNum();
         Integer pageSize = dto.getPageSize();
         String processName = dto.getProcessName();

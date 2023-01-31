@@ -16,6 +16,7 @@
 
 package org.laokou.flowable.client.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -23,10 +24,10 @@ import lombok.Data;
  */
 @Data
 public class DefinitionDTO {
-
+    @NotNull(message = "显示页码不为空")
     private Integer pageNum;
-
+    @NotNull(message = "显示条数不为空")
     private Integer pageSize;
-
+    @NotNull(message = "显示条数不为空")
     private String processName;
 }

@@ -32,6 +32,7 @@ import org.flowable.task.api.TaskQuery;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.laokou.flowable.client.dto.AuditDTO;
 import org.laokou.flowable.client.dto.ProcessDTO;
 import org.laokou.flowable.client.dto.TaskDTO;
@@ -74,6 +75,7 @@ public class WorkTaskServiceImpl implements WorkTaskService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public AssigneeVO auditTask(AuditDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         log.info("分布式事务 XID:{}", RootContext.getXID());
         String taskId = dto.getTaskId();
         String instanceId = dto.getInstanceId();
@@ -99,6 +101,7 @@ public class WorkTaskServiceImpl implements WorkTaskService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public AssigneeVO startTask(ProcessDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         log.info("分布式事务 XID:{}", RootContext.getXID());
         String processKey = dto.getProcessKey();
         String businessKey = dto.getBusinessKey();
@@ -127,6 +130,7 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 
     @Override
     public PageVO<TaskVO> queryTaskPage(TaskDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         final Integer pageNum = dto.getPageNum();
         final Integer pageSize = dto.getPageSize();
         String processName = dto.getProcessName();

@@ -27,6 +27,7 @@ import org.laokou.admin.client.dto.SysDictDTO;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
+import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,8 +68,12 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateDict(SysDictDTO dto) {
         ValidatorUtil.validateEntity(dto);
+        Long id = dto.getId();
+        if (id == null) {
+            throw new CustomException("字典编号不为空");
+        }
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
-        Integer version = sysDictService.getVersion(dto.getId());
+        Integer version = sysDictService.getVersion(id);
         dictDO.setEditor(UserUtil.getUserId());
         dictDO.setVersion(version);
         return sysDictService.updateById(dictDO);

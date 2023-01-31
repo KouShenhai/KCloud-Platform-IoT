@@ -88,12 +88,16 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateDept(SysDeptDTO dto) {
         ValidatorUtil.validateEntity(dto);
+        Long id = dto.getId();
+        if (id == null) {
+            throw new CustomException("部门编号不为空");
+        }
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()).ne(SysDeptDO::getId,dto.getId()));
         if (count > 0) {
             throw new CustomException("部门已存在，请重新填写");
         }
-        Integer version = sysDeptService.getVersion(dto.getId());
+        Integer version = sysDeptService.getVersion(id);
         sysDeptDO.setVersion(version);
         sysDeptDO.setEditor(UserUtil.getUserId());
         sysDeptService.updateById(sysDeptDO);

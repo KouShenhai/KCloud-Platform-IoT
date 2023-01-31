@@ -65,6 +65,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
 
     @Override
     public IPage<SysLoginLogVO> queryLoginLogPage(SysLoginLogQo qo) {
+        ValidatorUtil.validateEntity(qo);
         IPage<SysLoginLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysLoginLogService.getLoginLogList(page,qo);
     }

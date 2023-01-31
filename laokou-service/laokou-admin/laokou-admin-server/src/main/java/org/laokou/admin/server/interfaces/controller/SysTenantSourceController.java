@@ -29,14 +29,14 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/sys/tenant/source/api")
-@Tag(name = "Sys Tenant Source Api",description = "系统租户数据源API")
+@Tag(name = "Sys Tenant Source Api",description = "系统多租户数据源API")
 @RequiredArgsConstructor
 public class SysTenantSourceController {
 
     private final SysTenantSourceApplicationService sysTenantSourceApplicationService;
 
     @PostMapping("/query")
-    @Operation(summary = "系统租户数据源>查询",description = "系统租户数据源>查询")
+    @Operation(summary = "系统多租户数据源>查询",description = "系统多租户数据源>查询")
     public HttpResult<IPage<SysTenantSourceVO>> query(@RequestBody SysTenantSourceQo qo) {
         return new HttpResult<IPage<SysTenantSourceVO>>().ok(sysTenantSourceApplicationService.queryTenantSourcePage(qo));
     }

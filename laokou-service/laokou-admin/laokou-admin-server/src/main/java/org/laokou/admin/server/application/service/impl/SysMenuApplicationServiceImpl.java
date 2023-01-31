@@ -74,12 +74,16 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateMenu(SysMenuDTO dto) {
         ValidatorUtil.validateEntity(dto);
+        Long id = dto.getId();
+        if (id == null) {
+            throw new CustomException("菜单编号不为空");
+        }
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
         long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, menuDO.getName()).ne(SysMenuDO::getId,menuDO.getId()));
         if (count > 0) {
             throw new CustomException("菜单已存在，请重新填写");
         }
-        Integer version = sysMenuService.getVersion(dto.getId());
+        Integer version = sysMenuService.getVersion(id);
         menuDO.setVersion(version);
         menuDO.setEditor(UserUtil.getUserId());
         return sysMenuService.updateById(menuDO);
