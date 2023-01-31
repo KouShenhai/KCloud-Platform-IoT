@@ -72,11 +72,11 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertDept(SysDeptDTO dto) {
         ValidatorUtil.validateEntity(dto);
-        SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()));
         if (count > 0) {
             throw new CustomException("部门已存在，请重新填写");
         }
+        SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         sysDeptDO.setCreator(UserUtil.getUserId());
         sysDeptService.save(sysDeptDO);
         // 修改当前节点path
@@ -92,12 +92,12 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
         if (id == null) {
             throw new CustomException("部门编号不为空");
         }
-        SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()).ne(SysDeptDO::getId,dto.getId()));
         if (count > 0) {
             throw new CustomException("部门已存在，请重新填写");
         }
         Integer version = sysDeptService.getVersion(id);
+        SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         sysDeptDO.setVersion(version);
         sysDeptDO.setEditor(UserUtil.getUserId());
         sysDeptService.updateById(sysDeptDO);

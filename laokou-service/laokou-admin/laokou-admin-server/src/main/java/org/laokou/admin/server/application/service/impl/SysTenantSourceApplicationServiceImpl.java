@@ -19,12 +19,18 @@ package org.laokou.admin.server.application.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.SysTenantSourceDTO;
 import org.laokou.admin.client.vo.SysTenantSourceVO;
 import org.laokou.admin.server.application.service.SysTenantSourceApplicationService;
+import org.laokou.admin.server.domain.sys.entity.SysTenantSourceDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysTenantSourceService;
 import org.laokou.admin.server.interfaces.qo.SysTenantSourceQo;
+import org.laokou.auth.client.utils.UserUtil;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author laokou
@@ -40,5 +46,24 @@ public class SysTenantSourceApplicationServiceImpl implements SysTenantSourceApp
         ValidatorUtil.validateEntity(qo);
         IPage<SysTenantSourceVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysTenantSourceService.queryTenantSourcePage(page,qo);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean insertTenantSource(SysTenantSourceDTO dto) {
+        ValidatorUtil.validateEntity(dto);
+        SysTenantSourceDO tenantSourceDO = ConvertUtil.sourceToTarget(dto, SysTenantSourceDO.class);
+        tenantSourceDO.setCreator(UserUtil.getUserId());
+        return sysTenantSourceService.save(tenantSourceDO);
+    }
+
+    @Override
+    public Boolean updateTenantSource(SysTenantSourceDTO dto) {
+        ValidatorUtil.validateEntity(dto);
+        Long id = dto.getId();
+        if (id == null) {
+            throw new CustomException("数据源编号不为空");
+        }
+        return null;
     }
 }

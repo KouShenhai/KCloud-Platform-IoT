@@ -78,12 +78,12 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
         if (id == null) {
             throw new CustomException("菜单编号不为空");
         }
-        SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
-        long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, menuDO.getName()).ne(SysMenuDO::getId,menuDO.getId()));
+        long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, dto.getName()).ne(SysMenuDO::getId,dto.getId()));
         if (count > 0) {
             throw new CustomException("菜单已存在，请重新填写");
         }
         Integer version = sysMenuService.getVersion(id);
+        SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
         menuDO.setVersion(version);
         menuDO.setEditor(UserUtil.getUserId());
         return sysMenuService.updateById(menuDO);
@@ -93,11 +93,11 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertMenu(SysMenuDTO dto) {
         ValidatorUtil.validateEntity(dto);
-        SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
-        long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, menuDO.getName()));
+        long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, dto.getName()));
         if (count > 0) {
             throw new CustomException("菜单已存在，请重新填写");
         }
+        SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
         menuDO.setCreator(UserUtil.getUserId());
         return sysMenuService.save(menuDO);
     }

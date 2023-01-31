@@ -117,14 +117,13 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
         if (id == null) {
             throw new CustomException("角色编号不为空");
         }
-        SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
-        long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, roleDO.getName()).ne(SysRoleDO::getId,roleDO.getId()));
+        long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, dto.getName()).ne(SysRoleDO::getId,dto.getId()));
         if (count > 0) {
             throw new CustomException("角色已存在，请重新填写");
         }
-        Long userId = UserUtil.getUserId();
         Integer version = sysRoleService.getVersion(id);
-        roleDO.setEditor(userId);
+        SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
+        roleDO.setEditor(UserUtil.getUserId());
         roleDO.setVersion(version);
         sysRoleService.updateById(roleDO);
         //删除中间表

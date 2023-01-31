@@ -18,9 +18,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.SysTenantSourceDTO;
 import org.laokou.admin.client.vo.SysTenantSourceVO;
 import org.laokou.admin.server.application.service.SysTenantSourceApplicationService;
 import org.laokou.admin.server.interfaces.qo.SysTenantSourceQo;
+import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +41,20 @@ public class SysTenantSourceController {
     @Operation(summary = "系统多租户数据源>查询",description = "系统多租户数据源>查询")
     public HttpResult<IPage<SysTenantSourceVO>> query(@RequestBody SysTenantSourceQo qo) {
         return new HttpResult<IPage<SysTenantSourceVO>>().ok(sysTenantSourceApplicationService.queryTenantSourcePage(qo));
+    }
+
+    @PostMapping("/insert")
+    @Operation(summary = "系统多租户数据源>新增",description = "系统多租户数据源>新增")
+    @OperateLog(module = "系统多租户数据源",name = "数据源新增")
+    public HttpResult<Boolean> insert(@RequestBody SysTenantSourceDTO dto) {
+        return new HttpResult<Boolean>().ok(sysTenantSourceApplicationService.insertTenantSource(dto));
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "系统多租户数据源>修改",description = "系统多租户数据源>修改")
+    @OperateLog(module = "系统多租户数据源",name = "数据源修改")
+    public HttpResult<Boolean> update(@RequestBody SysTenantSourceDTO dto) {
+        return new HttpResult<Boolean>().ok(sysTenantSourceApplicationService.insertTenantSource(dto));
     }
 
 }

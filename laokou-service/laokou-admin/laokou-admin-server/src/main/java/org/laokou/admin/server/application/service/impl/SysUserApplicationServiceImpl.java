@@ -95,11 +95,11 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertUser(SysUserDTO dto) {
         ValidatorUtil.validateEntity(dto);
-        SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
-        long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, sysUserDO.getUsername()));
+        long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername()));
         if (count > 0) {
             throw new CustomException("账号已存在，请重新填写");
         }
+        SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
         sysUserDO.setCreator(UserUtil.getUserId());
         sysUserDO.setPassword(passwordEncoder.encode(dto.getPassword()));
         sysUserService.save(sysUserDO);
