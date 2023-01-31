@@ -31,7 +31,7 @@ public class DBUtil {
 
     public void connect(String driverClassName,String url,String username,String password) {
         try {
-            Class<?> clazz = Class.forName(driverClassName);
+            Class.forName(driverClassName);
         } catch (Exception e) {
             log.error("数据源驱动加载失败，错误信息：{}",e.getMessage());
             throw new CustomException("数据源驱动加载失败，请检查相关配置");
