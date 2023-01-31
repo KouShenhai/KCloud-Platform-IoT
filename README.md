@@ -216,7 +216,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 ##### 代码引入
 ```java
 public class SysUserApiController {
-    @DataCache(key = "#id")
+    @DataCache(name = "user", key = "#id")
     public HttpResult<SysUserVO> detail(@RequestParam("id") Long id) {
         return new HttpResult<SysUserVO>().ok(sysUserApplicationService.getUserById(id));
     }
