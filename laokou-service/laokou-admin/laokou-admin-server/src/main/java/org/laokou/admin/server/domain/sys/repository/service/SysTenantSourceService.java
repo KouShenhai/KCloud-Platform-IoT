@@ -26,4 +26,10 @@ public interface SysTenantSourceService extends IService<SysTenantSourceDO> {
      */
     Integer getVersion(Long id);
 
+    /**
+     * 删除多租户数据源
+     * @param id
+     */
+    void deleteTenantSource(Long id);
+
 }

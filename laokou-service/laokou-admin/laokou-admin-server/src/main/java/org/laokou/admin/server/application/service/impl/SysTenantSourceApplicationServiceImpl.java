@@ -79,4 +79,10 @@ public class SysTenantSourceApplicationServiceImpl implements SysTenantSourceApp
         sourceDO.setEditor(UserUtil.getUserId());
         return sysTenantSourceService.updateById(sourceDO);
     }
+
+    @Override
+    public Boolean deleteTenantSource(Long id) {
+        sysTenantSourceService.deleteTenantSource(id);
+        return true;
+    }
 }

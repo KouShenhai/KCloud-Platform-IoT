@@ -57,4 +57,11 @@ public class SysTenantSourceController {
         return new HttpResult<Boolean>().ok(sysTenantSourceApplicationService.updateTenantSource(dto));
     }
 
+    @DeleteMapping("/delete")
+    @Operation(summary = "系统多租户数据源>删除",description = "系统多租户数据源>删除")
+    @OperateLog(module = "系统多租户数据源",name = "数据源删除")
+    public HttpResult<Boolean> delete(@RequestParam("id")Long id) {
+        return new HttpResult<Boolean>().ok(sysTenantSourceApplicationService.deleteTenantSource(id));
+    }
+
 }
