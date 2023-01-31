@@ -143,6 +143,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @GlobalTransactional
     public Boolean insertResource(SysResourceAuditDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         log.info("分布式事务 XID:{}", RootContext.getXID());
         SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
         sysResourceDO.setEditor(UserUtil.getUserId());
@@ -157,12 +158,13 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @GlobalTransactional
     public Boolean updateResource(SysResourceAuditDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         log.info("分布式事务 XID:{}", RootContext.getXID());
-        SysResourceAuditDO sysResourceAuditDO = ConvertUtil.sourceToTarget(dto, SysResourceAuditDO.class);
-        sysResourceAuditDO.setEditor(UserUtil.getUserId());
-        sysResourceAuditDO.setStatus(START_AUDIT_STATUS);
-        String instanceId = startTask(dto.getResourceId(), dto.getTitle());
-        sysResourceAuditDO.setProcessInstanceId(instanceId);
+        Long resourceId = dto.getResourceId();
+        if (resourceId == null) {
+            throw new CustomException("资源编号不为空");
+        }
+        String instanceId = startTask(resourceId, dto.getTitle());
         return insertResourceAudit(dto,instanceId);
     }
 
@@ -305,6 +307,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @Transactional(rollbackFor = Exception.class)
     @GlobalTransactional
     public Boolean auditResourceTask(AuditDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         log.info("分布式事务 XID:{}", RootContext.getXID());
         HttpResult<AssigneeVO> result = workTaskApiFeignClient.audit(dto);
         if (!result.success()) {

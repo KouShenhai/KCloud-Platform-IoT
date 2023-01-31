@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.laokou.admin.client.dto;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 /**
  * @author laokou
@@ -24,26 +26,33 @@ public class SysMenuDTO {
     /**
      * 类型   0：菜单   1：按钮
      */
+    @NotNull(message = "请选择菜单类型")
     private Integer type;
     /**
      * 排序
      */
+    @NotNull(message = "菜单排序不为空")
     private Integer sort;
     /**
-     * 资源URL
+     * 菜单路径
      */
+    @NotBlank(message = "菜单路径不为空")
     private String url;
     /**
      * 权限标识
      */
+    @NotBlank(message = "权限标识不为空")
     private String permission;
 
     private Long id;
 
+    @NotBlank(message = "菜单名称不为空")
     private String name;
 
+    @NotNull(message = "请选择上级菜单")
     private Long pid;
 
+    @NotBlank(message = "请选择菜单图标")
     private String icon;
 
 }

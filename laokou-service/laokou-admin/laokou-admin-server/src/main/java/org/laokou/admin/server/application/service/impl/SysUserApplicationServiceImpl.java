@@ -61,6 +61,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateUser(SysUserDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         Long id = dto.getId();
         if (null == id) {
             throw new CustomException("主键不存在");
@@ -93,6 +94,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertUser(SysUserDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
         long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, sysUserDO.getUsername()));
         if (count > 0) {

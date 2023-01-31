@@ -27,6 +27,7 @@ import org.laokou.admin.client.vo.SysDeptVO;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.redis.utils.RedisUtil;
@@ -70,6 +71,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertDept(SysDeptDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()));
         if (count > 0) {
@@ -85,6 +87,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateDept(SysDeptDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()).ne(SysDeptDO::getId,dto.getId()));
         if (count > 0) {

@@ -15,6 +15,8 @@
  */
 package org.laokou.admin.client.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -25,12 +27,13 @@ public class SysDeptDTO {
 
     private Long id;
 
+    @NotNull(message = "请选择上级部门")
     private Long pid;
 
+    @NotBlank(message = "部门名称不为空")
     private String name;
 
+    @NotNull(message = "部门排序不为空")
     private Integer sort;
-
-    private Integer status;
 
 }

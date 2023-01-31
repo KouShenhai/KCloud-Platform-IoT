@@ -72,6 +72,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertRole(SysRoleDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
         long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, roleDO.getName()));
         if (count > 0) {
@@ -111,6 +112,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateRole(SysRoleDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
         long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, roleDO.getName()).ne(SysRoleDO::getId,roleDO.getId()));
         if (count > 0) {

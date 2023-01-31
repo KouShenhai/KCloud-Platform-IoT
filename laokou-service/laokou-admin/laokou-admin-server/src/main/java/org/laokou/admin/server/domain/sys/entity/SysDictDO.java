@@ -28,12 +28,12 @@ import lombok.Data;
 public class SysDictDO extends BaseDO {
 
     /**
-     * 标签
+     * 字典名称
      */
-    @Schema(name = "dictLabel",description = "字典标签")
+    @Schema(name = "dictLabel",description = "字典名称")
     private String dictLabel;
     /**
-     * 类型
+     * 字典类型
      */
     @Schema(name = "type",description = "字典类型")
     private String type;

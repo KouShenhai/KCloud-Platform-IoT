@@ -20,7 +20,8 @@ import org.laokou.admin.server.application.service.SysSearchApplicationService;
 import org.laokou.admin.server.infrastructure.feign.elasticsearch.ElasticsearchApiFeignClient;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.HttpResult;
-import org.laokou.elasticsearch.client.form.SearchForm;
+import org.laokou.common.swagger.utils.ValidatorUtil;
+import org.laokou.elasticsearch.client.qo.SearchQo;
 import org.laokou.elasticsearch.client.vo.SearchVO;
 import org.springframework.stereotype.Service;
 import java.util.Map;
@@ -34,8 +35,9 @@ public class SysSearchApplicationServiceImpl implements SysSearchApplicationServ
     private final ElasticsearchApiFeignClient elasticsearchApiFeignClient;
 
     @Override
-    public SearchVO<Map<String,Object>> searchResource(SearchForm form) {
-        HttpResult<SearchVO<Map<String, Object>>> result = elasticsearchApiFeignClient.highlightSearch(form);
+    public SearchVO<Map<String,Object>> searchResource(SearchQo qo) {
+        ValidatorUtil.validateEntity(qo);
+        HttpResult<SearchVO<Map<String, Object>>> result = elasticsearchApiFeignClient.highlightSearch(qo);
         if (!result.success()) {
             throw new CustomException(result.getCode(),result.getMsg());
         }

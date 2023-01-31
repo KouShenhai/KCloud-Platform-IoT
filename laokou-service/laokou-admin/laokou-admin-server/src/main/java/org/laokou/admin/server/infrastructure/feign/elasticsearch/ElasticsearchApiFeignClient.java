@@ -19,7 +19,7 @@ import org.laokou.common.core.constant.ServiceConstant;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.elasticsearch.client.dto.ElasticsearchDTO;
-import org.laokou.elasticsearch.client.form.SearchForm;
+import org.laokou.elasticsearch.client.qo.SearchQo;
 import org.laokou.elasticsearch.client.vo.SearchVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
@@ -34,11 +34,11 @@ public interface ElasticsearchApiFeignClient {
 
     /**
      * 高亮搜索
-     * @param searchForm
+     * @param searchQo
      * @return
      */
     @PostMapping("/api/highlightSearch")
-    HttpResult<SearchVO<Map<String,Object>>> highlightSearch(@RequestBody final SearchForm searchForm);
+    HttpResult<SearchVO<Map<String,Object>>> highlightSearch(@RequestBody final SearchQo searchQo);
 
     /**
      * 异步批量同步索引

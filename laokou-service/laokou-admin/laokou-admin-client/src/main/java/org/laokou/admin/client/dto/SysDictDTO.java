@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.laokou.admin.client.dto;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 /**
  * @author laokou
@@ -23,27 +25,32 @@ public class SysDictDTO {
 
     private Long id;
     /**
-     * 标签
+     * 字典名称
      */
+    @NotBlank(message = "字典名称不为空")
     private String dictLabel;
     /**
-     * 类型
+     * 字典类型
      */
+    @NotBlank(message = "字典类型不为空")
     private String type;
     /**
-     * 值
+     * 字典值
      */
+    @NotBlank(message = "字典值不为空")
     private String dictValue;
     /**
      * 状态 0 正常 1 停用
      */
+    @NotNull(message = "请选择字典状态")
     private Integer status;
     /**
      * 备注
      */
     private String remark;
     /**
-     * 排序
+     * 字典排序
      */
+    @NotNull(message = "字典排序不为空")
     private Integer sort;
 }

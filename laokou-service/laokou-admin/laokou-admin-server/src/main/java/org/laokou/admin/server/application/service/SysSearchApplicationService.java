@@ -16,7 +16,7 @@
 package org.laokou.admin.server.application.service;
 
 
-import org.laokou.elasticsearch.client.form.SearchForm;
+import org.laokou.elasticsearch.client.qo.SearchQo;
 import org.laokou.elasticsearch.client.vo.SearchVO;
 
 /**
@@ -29,6 +29,6 @@ public interface SysSearchApplicationService {
      * @param form
      * @return
      */
-    SearchVO searchResource(SearchForm form);
+    SearchVO searchResource(SearchQo form);
 
 }

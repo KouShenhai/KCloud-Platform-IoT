@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.laokou.admin.client.dto;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.util.List;
 /**
@@ -23,13 +25,14 @@ import java.util.List;
 public class SysUserDTO {
 
     private Long id;
-
+    @NotBlank(message = "用户名不为空")
     private String username;
-
+    @NotNull(message = "请选择用户状态")
     private Integer status;
 
+    @NotNull(message = "请选择角色")
     private List<Long> roleIds;
-
+    @NotBlank(message = "密码不为空")
     private String password;
 
     private String imgUrl;
@@ -39,7 +42,7 @@ public class SysUserDTO {
     private String mobile;
 
     private Long editor;
-
+    @NotNull(message = "请选择部门")
     private Long deptId;
 
     private Integer version;

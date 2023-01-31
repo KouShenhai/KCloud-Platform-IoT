@@ -15,6 +15,7 @@
  */
 package org.laokou.admin.client.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 /**
@@ -25,9 +26,14 @@ import lombok.Data;
 @Data
 public class SysResourceAuditDTO {
     private Long resourceId;
+    @NotBlank(message = "标题不为空")
     private String title;
+    @NotBlank(message = "资源不为空")
     private String url;
+    @NotBlank(message = "类型不为空")
     private String code;
+    @NotBlank(message = "备注不为空")
     private String remark;
+    @NotBlank(message = "标签不为空")
     private String tags;
 }

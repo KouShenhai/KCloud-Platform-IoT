@@ -27,14 +27,14 @@ public abstract class BasePage {
     /**
      * 页码
      */
-    @NotNull(message = "请填写显示页码")
+    @NotNull(message = "显示页码不为空")
     @Schema(name = "pageNum",description = "页码")
     private Integer pageNum;
 
     /**
      *
      */
-    @NotNull(message = "请填写显示条数")
+    @NotNull(message = "显示条数不为空")
     @Schema(name = "pageSize",description = "条数")
     private Integer pageSize;
 

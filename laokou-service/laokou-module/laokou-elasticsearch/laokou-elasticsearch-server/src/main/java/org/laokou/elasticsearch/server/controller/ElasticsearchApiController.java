@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.swagger.utils.HttpResult;
-import org.laokou.elasticsearch.client.form.SearchForm;
+import org.laokou.elasticsearch.client.qo.SearchQo;
 import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.elasticsearch.client.dto.ElasticsearchDTO;
 import org.laokou.elasticsearch.client.vo.SearchVO;
@@ -140,14 +140,14 @@ public class ElasticsearchApiController {
 
     @PostMapping("/highlightSearch")
     @Operation(summary = "分布式搜索>高亮搜索",description = "分布式搜索>高亮搜索")
-    public HttpResult<SearchVO<Map<String,Object>>> highlightSearch(@RequestBody final SearchForm searchForm) throws IOException {
-        return new HttpResult<SearchVO<Map<String,Object>>>().ok(elasticsearchUtil.highlightSearchIndex(searchForm));
+    public HttpResult<SearchVO<Map<String,Object>>> highlightSearch(@RequestBody final SearchQo searchQo) throws IOException {
+        return new HttpResult<SearchVO<Map<String,Object>>>().ok(elasticsearchUtil.highlightSearchIndex(searchQo));
     }
 
     @PostMapping("/aggregationSearch")
     @Operation(summary = "分布式搜索>聚合查询",description = "分布式搜索>聚合查询")
-    public HttpResult<SearchVO<Map<String,Long>>> aggregationSearch(@RequestBody final SearchForm searchForm) throws IOException {
-        return new HttpResult<SearchVO<Map<String,Long>>>().ok(elasticsearchUtil.aggregationSearchIndex(searchForm));
+    public HttpResult<SearchVO<Map<String,Long>>> aggregationSearch(@RequestBody final SearchQo searchQo) throws IOException {
+        return new HttpResult<SearchVO<Map<String,Long>>>().ok(elasticsearchUtil.aggregationSearchIndex(searchQo));
     }
 
 }

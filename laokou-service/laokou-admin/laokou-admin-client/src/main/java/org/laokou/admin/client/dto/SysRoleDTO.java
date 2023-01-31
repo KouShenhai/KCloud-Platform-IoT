@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.laokou.admin.client.dto;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.util.List;
 /**
@@ -24,8 +26,9 @@ public class SysRoleDTO {
 
     private Long id;
 
+    @NotBlank(message = "角色名称不为空")
     private String name;
-
+    @NotNull(message = "角色排序不为空")
     private Integer sort;
 
     private List<Long> menuIds;

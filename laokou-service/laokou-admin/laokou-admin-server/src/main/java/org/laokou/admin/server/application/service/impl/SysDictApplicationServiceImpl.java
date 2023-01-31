@@ -56,6 +56,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertDict(SysDictDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
         dictDO.setCreator(UserUtil.getUserId());
         dictDO.setDeptId(UserUtil.getDeptId());
@@ -65,6 +66,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateDict(SysDictDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
         Integer version = sysDictService.getVersion(dto.getId());
         dictDO.setEditor(UserUtil.getUserId());

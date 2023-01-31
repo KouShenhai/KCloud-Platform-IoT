@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysSearchApplicationService;
 import org.laokou.common.swagger.utils.HttpResult;
-import org.laokou.elasticsearch.client.form.SearchForm;
+import org.laokou.elasticsearch.client.qo.SearchQo;
 import org.laokou.elasticsearch.client.vo.SearchVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,7 +42,7 @@ public class SysSearchApiController {
     @PostMapping("/resource")
     @Operation(summary = "系统搜索>资源",description = "系统搜索>资源")
     @PreAuthorize("hasAuthority('sys:search:resource:query')")
-    public HttpResult<SearchVO<Map<String,Object>>> searchResource(@RequestBody SearchForm form) {
+    public HttpResult<SearchVO<Map<String,Object>>> searchResource(@RequestBody SearchQo form) {
         return new HttpResult<SearchVO<Map<String,Object>>>().ok(sysSearchApplicationService.searchResource(form));
     }
 

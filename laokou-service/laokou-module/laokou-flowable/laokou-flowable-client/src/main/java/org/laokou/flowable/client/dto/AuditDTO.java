@@ -15,6 +15,8 @@
  */
 package org.laokou.flowable.client.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.Map;
@@ -28,41 +30,49 @@ public class AuditDTO {
     /**
      * 任务id
      */
+    @NotBlank(message = "任务编号不为空")
     private String taskId;
 
     /**
      * 任务名称
      */
+    @NotBlank(message = "任务名称不为空")
     private String taskName;
 
     /**
-     * 任务意见
+     * 审批意见
      */
+    @NotBlank(message = "审批意见不为空")
     private String comment;
 
     /**
      * 流程实例id
      */
+    @NotBlank(message = "流程实例编号不为空")
     private String instanceId;
 
     /**
      * 业务key
      */
+    @NotBlank(message = "业务编号不为空")
     private String businessKey;
 
     /**
-     * 实例名称
+     * 流程实例名称
      */
+    @NotBlank(message = "流程实例名称不为空")
     private String instanceName;
 
     /**
-     * 实例id
+     * 流程定义id
      */
+    @NotBlank(message = "任务定义编号不为空")
     private String definitionId;
 
     /**
      * 流程变量
      */
+    @NotNull(message = "流程变量不为空")
     private Map<String,Object> values;
 
 }

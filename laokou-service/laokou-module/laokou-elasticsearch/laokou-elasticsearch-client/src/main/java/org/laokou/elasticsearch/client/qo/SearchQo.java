@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.elasticsearch.client.form;
+package org.laokou.elasticsearch.client.qo;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.laokou.elasticsearch.client.dto.AggregationDTO;
 import org.laokou.elasticsearch.client.dto.SearchDTO;
@@ -27,26 +28,30 @@ import java.util.List;
  * @date 2020/8/9 0009 下午 5:16
  */
 @Data
-public class SearchForm implements Serializable {
+public class SearchQo implements Serializable {
 
     /**
      * 页码
      */
-    private Integer pageNum = 1;
+    @NotNull(message = "显示页码不为空")
+    private Integer pageNum;
 
     /**
      * 条数
      */
-    private Integer pageSize = 10000;
+    @NotNull(message = "显示条数不为空")
+    private Integer pageSize;
 
     /**
      * 是否分页
      */
-    private boolean needPage = true;
+    @NotNull(message = "分页标识不为空")
+    private boolean needPage;
 
     /**
      * 查询索引名称
      */
+    @NotNull(message = "索引名称不为空")
     private String[] indexNames;
 
     /**

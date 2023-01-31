@@ -26,6 +26,7 @@ import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.redis.utils.RedisUtil;
@@ -72,6 +73,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateMenu(SysMenuDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
         long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, menuDO.getName()).ne(SysMenuDO::getId,menuDO.getId()));
         if (count > 0) {
@@ -86,6 +88,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertMenu(SysMenuDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
         long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, menuDO.getName()));
         if (count > 0) {

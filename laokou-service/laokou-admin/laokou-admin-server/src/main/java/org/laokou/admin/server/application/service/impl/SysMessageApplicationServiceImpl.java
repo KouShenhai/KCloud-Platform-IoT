@@ -58,6 +58,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertMessage(MessageDTO dto) {
+        ValidatorUtil.validateEntity(dto);
         SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
         Integer sendChannel = dto.getSendChannel();
         messageDO.setCreateDate(new Date());

@@ -62,7 +62,7 @@ import org.laokou.common.core.utils.StringUtil;
 import org.laokou.elasticsearch.client.constant.EsConstant;
 import org.laokou.elasticsearch.client.dto.AggregationDTO;
 import org.laokou.elasticsearch.client.dto.SearchDTO;
-import org.laokou.elasticsearch.client.form.SearchForm;
+import org.laokou.elasticsearch.client.qo.SearchQo;
 import org.laokou.elasticsearch.client.vo.SearchVO;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -731,16 +731,16 @@ public class ElasticsearchUtil {
 
     /**
      * 关键字高亮显示
-     * @param searchForm 查询实体类
+     * @param searchQo 查询实体类
      * @return
      * @throws IOException
      */
-    public SearchVO<Map<String,Object>> highlightSearchIndex(SearchForm searchForm) throws IOException {
-        final String[] indexNames = searchForm.getIndexNames();
+    public SearchVO<Map<String,Object>> highlightSearchIndex(SearchQo searchQo) throws IOException {
+        final String[] indexNames = searchQo.getIndexNames();
         //用于搜索文档，聚合，定制查询有关操作
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.indices(indexNames);
-        searchRequest.source(buildSearchSource(searchForm,true,null));
+        searchRequest.source(buildSearchSource(searchQo,true,null));
         SearchHits hits = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT).getHits();
         List<Map<String,Object>> data = new ArrayList<>();
         for (SearchHit hit : hits){
@@ -755,22 +755,22 @@ public class ElasticsearchUtil {
         final long total = hits.getTotalHits().value;
         vo.setRecords(data);
         vo.setTotal(total);
-        vo.setPageNum(searchForm.getPageNum());
-        vo.setPageSize(searchForm.getPageSize());
+        vo.setPageNum(searchQo.getPageNum());
+        vo.setPageSize(searchQo.getPageSize());
         return vo;
     }
 
     /**
      * 构建query
-     * @param searchForm
+     * @param searchQo
      * @return
      */
-    private BoolQueryBuilder buildBoolQuery(SearchForm searchForm) {
+    private BoolQueryBuilder buildBoolQuery(SearchQo searchQo) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
         //分词查询
-        final List<SearchDTO> queryStringList = searchForm.getQueryStringList();
+        final List<SearchDTO> queryStringList = searchQo.getQueryStringList();
         //or查询
-        final List<SearchDTO> orSearchList = searchForm.getOrSearchList();
+        final List<SearchDTO> orSearchList = searchQo.getOrSearchList();
         if (CollectionUtil.isNotEmpty(orSearchList)) {
             //or查询
             BoolQueryBuilder orQuery = QueryBuilders.boolQuery();
@@ -795,18 +795,18 @@ public class ElasticsearchUtil {
 
     /**
      * 构建搜索
-     * @param searchForm
+     * @param searchQo
      * @param isHighlightSearchFlag
      * @param aggregationBuilder
      * @return
      */
-    private SearchSourceBuilder buildSearchSource(SearchForm searchForm, boolean isHighlightSearchFlag, TermsAggregationBuilder aggregationBuilder) {
+    private SearchSourceBuilder buildSearchSource(SearchQo searchQo, boolean isHighlightSearchFlag, TermsAggregationBuilder aggregationBuilder) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        final Integer pageNum = searchForm.getPageNum();
-        final Integer pageSize = searchForm.getPageSize();
-        final List<SearchDTO> sortFieldList = searchForm.getSortFieldList();
+        final Integer pageNum = searchQo.getPageNum();
+        final Integer pageSize = searchQo.getPageSize();
+        final List<SearchDTO> sortFieldList = searchQo.getSortFieldList();
         if (isHighlightSearchFlag) {
-            final List<String> highlightFieldList = searchForm.getHighlightFieldList();
+            final List<String> highlightFieldList = searchQo.getHighlightFieldList();
             //高亮显示数据
             HighlightBuilder highlightBuilder = new HighlightBuilder();
             //设置关键字显示颜色
@@ -822,7 +822,7 @@ public class ElasticsearchUtil {
             searchSourceBuilder.highlighter(highlightBuilder);
         }
         //分页
-        if (searchForm.isNeedPage()) {
+        if (searchQo.isNeedPage()) {
             final int pageIndex = (pageNum - 1) * pageSize;
             searchSourceBuilder.from(pageIndex);
             searchSourceBuilder.size(pageSize);
@@ -848,7 +848,7 @@ public class ElasticsearchUtil {
                 searchSourceBuilder.sort(field, sortOrder);
             }
         }
-        searchSourceBuilder.query(buildBoolQuery(searchForm));
+        searchSourceBuilder.query(buildBoolQuery(searchQo));
         //获取真实总数
         searchSourceBuilder.trackTotalHits(true);
         //聚合对象
@@ -862,11 +862,11 @@ public class ElasticsearchUtil {
      * 聚合查询
      * @return
      */
-    public SearchVO<Map<String,Long>> aggregationSearchIndex(SearchForm searchForm) throws IOException {
+    public SearchVO<Map<String,Long>> aggregationSearchIndex(SearchQo searchQo) throws IOException {
         SearchVO<Map<String,Long>> vo = new SearchVO();
         List<Map<String,Long>> list = new ArrayList<>(5);
-        String[] indexNames = searchForm.getIndexNames();
-        AggregationDTO aggregationKey = searchForm.getAggregationKey();
+        String[] indexNames = searchQo.getIndexNames();
+        AggregationDTO aggregationKey = searchQo.getAggregationKey();
         String field = aggregationKey.getField();
         String groupKey = aggregationKey.getGroupKey();
         String script = aggregationKey.getScript();
@@ -879,7 +879,7 @@ public class ElasticsearchUtil {
         //用于搜索文档，聚合，定制查询有关操作
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.indices(indexNames);
-        searchRequest.source(buildSearchSource(searchForm, false, aggregationBuilder));
+        searchRequest.source(buildSearchSource(searchQo, false, aggregationBuilder));
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
         Aggregations aggregations = searchResponse.getAggregations();
         Terms aggregation = aggregations.get(groupKey);
@@ -890,8 +890,8 @@ public class ElasticsearchUtil {
             list.add(dataMap);
         }
         vo.setRecords(list);
-        vo.setPageNum(searchForm.getPageNum());
-        vo.setPageSize(searchForm.getPageSize());
+        vo.setPageNum(searchQo.getPageNum());
+        vo.setPageSize(searchQo.getPageSize());
         vo.setTotal((long) list.size());
         return vo;
     }
