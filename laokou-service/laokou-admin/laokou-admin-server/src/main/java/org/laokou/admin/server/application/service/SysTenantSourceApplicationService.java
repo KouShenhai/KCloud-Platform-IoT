@@ -37,4 +37,11 @@ public interface SysTenantSourceApplicationService {
      * @return
      */
     Boolean deleteTenantSource(Long id);
+
+    /**
+     * 连接多租户数据源
+     * @param dto
+     * @return
+     */
+    Boolean connectTenantSource(SysTenantSourceDTO dto);
 }

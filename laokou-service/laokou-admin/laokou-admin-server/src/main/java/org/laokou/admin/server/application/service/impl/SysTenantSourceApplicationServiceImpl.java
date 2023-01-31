@@ -28,6 +28,7 @@ import org.laokou.admin.server.domain.sys.repository.service.SysTenantSourceServ
 import org.laokou.admin.server.interfaces.qo.SysTenantSourceQo;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.mybatisplus.utils.DBUtil;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
@@ -83,6 +84,17 @@ public class SysTenantSourceApplicationServiceImpl implements SysTenantSourceApp
     @Override
     public Boolean deleteTenantSource(Long id) {
         sysTenantSourceService.deleteTenantSource(id);
+        return true;
+    }
+
+    @Override
+    public Boolean connectTenantSource(SysTenantSourceDTO dto) {
+        ValidatorUtil.validateEntity(dto);
+        String url = dto.getUrl();
+        String driverClassName = dto.getDriverClassName();
+        String username = dto.getUsername();
+        String password = dto.getPassword();
+        DBUtil.connect(driverClassName,url,username,password);
         return true;
     }
 }

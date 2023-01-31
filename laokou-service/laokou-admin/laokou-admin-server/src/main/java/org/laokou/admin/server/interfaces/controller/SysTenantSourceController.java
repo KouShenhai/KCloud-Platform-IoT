@@ -64,4 +64,11 @@ public class SysTenantSourceController {
         return new HttpResult<Boolean>().ok(sysTenantSourceApplicationService.deleteTenantSource(id));
     }
 
+    @PostMapping("/connect")
+    @Operation(summary = "系统多租户数据源>连接",description = "系统多租户数据源>连接")
+    @OperateLog(module = "系统多租户数据源",name = "数据源连接")
+    public HttpResult<Boolean> connect(@RequestBody SysTenantSourceDTO dto) {
+        return new HttpResult<Boolean>().ok(sysTenantSourceApplicationService.connectTenantSource(dto));
+    }
+
 }
