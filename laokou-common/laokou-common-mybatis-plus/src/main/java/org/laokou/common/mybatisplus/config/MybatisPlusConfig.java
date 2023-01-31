@@ -15,7 +15,6 @@
  */
 package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -36,8 +35,6 @@ public class MybatisPlusConfig {
         mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
         // 乐观锁
         mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
-        // 防止全表更新与删除
-        mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         return mybatisPlusInterceptor;
     }
 }
