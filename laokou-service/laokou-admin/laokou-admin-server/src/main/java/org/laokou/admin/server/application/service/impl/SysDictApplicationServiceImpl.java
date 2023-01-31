@@ -27,6 +27,7 @@ import org.laokou.admin.client.dto.SysDictDTO;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
+import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +43,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     @Override
     @DataFilter(tableAlias = "boot_sys_dict")
     public IPage<SysDictVO> queryDictPage(SysDictQo qo) {
+        ValidatorUtil.validateEntity(qo);
         IPage<SysDictVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysDictService.getDictList(page,qo);
     }

@@ -25,6 +25,7 @@ import org.laokou.admin.server.infrastructure.feign.flowable.WorkDefinitionApiFe
 import org.laokou.admin.server.interfaces.qo.DefinitionQo;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.laokou.flowable.client.dto.DefinitionDTO;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;
@@ -56,6 +57,7 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
 
     @Override
     public IPage<DefinitionVO> queryDefinitionPage(DefinitionQo qo) {
+        ValidatorUtil.validateEntity(qo);
         Integer pageSize = qo.getPageSize();
         Integer pageNum = qo.getPageNum();
         IPage<DefinitionVO> page = new Page<>(pageNum,pageSize);

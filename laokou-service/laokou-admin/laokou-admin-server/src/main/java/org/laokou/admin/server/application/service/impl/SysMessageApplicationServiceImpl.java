@@ -37,6 +37,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.laokou.im.client.PushMsgDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,6 +98,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     @Override
     @DataFilter(tableAlias = "boot_sys_message")
     public IPage<SysMessageVO> queryMessagePage(SysMessageQo qo) {
+        ValidatorUtil.validateEntity(qo);
         IPage<SysMessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysMessageService.getMessageList(page,qo);
     }

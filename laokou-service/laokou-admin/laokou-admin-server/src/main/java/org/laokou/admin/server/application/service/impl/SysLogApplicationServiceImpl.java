@@ -30,6 +30,7 @@ import org.laokou.common.log.service.SysLoginLogService;
 import org.laokou.common.log.service.SysOperateLogService;
 import org.laokou.common.log.vo.SysLoginLogVO;
 import org.laokou.common.log.vo.SysOperateLogVO;
+import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 
@@ -47,6 +48,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     @Override
     @DataFilter(tableAlias = "boot_sys_operate_log")
     public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQo qo) {
+        ValidatorUtil.validateEntity(qo);
         IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysOperateLogService.getOperateLogList(page,qo);
     }

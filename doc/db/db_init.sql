@@ -712,6 +712,9 @@ WHERE
 GROUP BY
     id;
 
+# 提交事务
+COMMIT;
+
 END;
 
 # 调用
@@ -804,7 +807,8 @@ UPDATE boot_sys_dept
 SET path = concat(parpath, '/', xid)
 WHERE
         id = xid;
-
+# 提交事务
+COMMIT;
 
 END;
 
@@ -868,6 +872,8 @@ IF;
 # 关闭游标
 CLOSE consume;
 
+# 提交事务
+COMMIT;
 
 END;
 

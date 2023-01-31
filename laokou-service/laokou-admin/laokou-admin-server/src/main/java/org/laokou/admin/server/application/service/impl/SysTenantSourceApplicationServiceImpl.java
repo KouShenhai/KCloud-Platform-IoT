@@ -13,32 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.server.interfaces.controller;
+
+package org.laokou.admin.server.application.service.impl;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.vo.SysTenantSourceVO;
 import org.laokou.admin.server.application.service.SysTenantSourceApplicationService;
+import org.laokou.admin.server.domain.sys.repository.service.SysTenantSourceService;
 import org.laokou.admin.server.interfaces.qo.SysTenantSourceQo;
-import org.laokou.common.swagger.utils.HttpResult;
-import org.springframework.web.bind.annotation.*;
+import org.laokou.common.swagger.utils.ValidatorUtil;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-@RestController
-@RequestMapping("/sys/tenant/source/api")
-@Tag(name = "Sys Tenant Source Api",description = "系统租户数据源API")
+@Service
 @RequiredArgsConstructor
-public class SysTenantSourceController {
+public class SysTenantSourceApplicationServiceImpl implements SysTenantSourceApplicationService {
 
-    private final SysTenantSourceApplicationService sysTenantSourceApplicationService;
+    private final SysTenantSourceService sysTenantSourceService;
 
-    @PostMapping("/query")
-    @Operation(summary = "系统租户数据源>查询",description = "系统租户数据源>查询")
-    public HttpResult<IPage<SysTenantSourceVO>> query(@RequestBody SysTenantSourceQo qo) {
-        return new HttpResult<IPage<SysTenantSourceVO>>().ok(sysTenantSourceApplicationService.queryTenantSourcePage(qo));
+    @Override
+    public IPage<SysTenantSourceVO> queryTenantSourcePage(SysTenantSourceQo qo) {
+        ValidatorUtil.validateEntity(qo);
+        IPage<SysTenantSourceVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+        return sysTenantSourceService.queryTenantSourcePage(page,qo);
     }
-
 }

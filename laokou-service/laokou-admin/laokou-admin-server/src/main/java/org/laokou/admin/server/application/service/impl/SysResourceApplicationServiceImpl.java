@@ -44,6 +44,7 @@ import org.laokou.common.log.service.SysAuditLogService;
 import org.laokou.common.log.vo.SysAuditLogVO;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.laokou.elasticsearch.client.dto.ElasticsearchDTO;
 import org.laokou.elasticsearch.client.index.ResourceIndex;
 import org.laokou.flowable.client.dto.AuditDTO;
@@ -88,6 +89,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     private final SysResourceAuditService sysResourceAuditService;
     @Override
     public IPage<SysResourceVO> queryResourcePage(SysResourceQo qo) {
+        ValidatorUtil.validateEntity(qo);
         IPage<SysResourceVO> page = new Page(qo.getPageNum(),qo.getPageSize());
         return sysResourceService.getResourceList(page,qo);
     }
