@@ -16,10 +16,12 @@
 package org.laokou.admin.server.application.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysDictApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysDictDO;
+import org.laokou.admin.server.domain.sys.entity.SysUserDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysDictService;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
@@ -58,6 +60,10 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertDict(SysDictDTO dto) {
         ValidatorUtil.validateEntity(dto);
+        long count = sysDictService.count(Wrappers.lambdaQuery(SysDictDO.class).eq(SysDictDO::getDictLabel, dto.getDictLabel()).eq(SysDictDO::getType,dto.getType()));
+        if (count > 0) {
+            throw new CustomException("字典已存在，请重新填写");
+        }
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
         dictDO.setCreator(UserUtil.getUserId());
         dictDO.setDeptId(UserUtil.getDeptId());
@@ -71,6 +77,10 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
         Long id = dto.getId();
         if (id == null) {
             throw new CustomException("字典编号不为空");
+        }
+        long count = sysDictService.count(Wrappers.lambdaQuery(SysDictDO.class).eq(SysDictDO::getDictLabel, dto.getDictLabel()).eq(SysDictDO::getType,dto.getType()).ne(SysDictDO::getId,dto.getId()));
+        if (count > 0) {
+            throw new CustomException("字典已存在，请重新填写");
         }
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
         Integer version = sysDictService.getVersion(id);

@@ -73,7 +73,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         }
         long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername()).ne(SysUserDO::getId,id));
         if (count > 0) {
-            throw new CustomException("账号已存在，请重新填写");
+            throw new CustomException("用户名已存在，请重新填写");
         }
         dto.setEditor(userDetail.getUserId());
         String password = dto.getPassword();
@@ -97,7 +97,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         ValidatorUtil.validateEntity(dto);
         long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername()));
         if (count > 0) {
-            throw new CustomException("账号已存在，请重新填写");
+            throw new CustomException("用户名已存在，请重新填写");
         }
         SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
         sysUserDO.setCreator(UserUtil.getUserId());
