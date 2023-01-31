@@ -32,7 +32,7 @@ import java.util.Map;
  * @author laokou
  */
 @RestController
-@Tag(name = "Sys Search Api",description = "搜索管理API")
+@Tag(name = "Sys Search Api",description = "系统搜索API")
 @RequestMapping("/sys/search/api")
 @RequiredArgsConstructor
 public class SysSearchApiController {
@@ -40,7 +40,7 @@ public class SysSearchApiController {
     private final SysSearchApplicationService sysSearchApplicationService;
 
     @PostMapping("/resource")
-    @Operation(summary = "搜索管理>资源",description = "搜索管理>资源")
+    @Operation(summary = "系统搜索>资源",description = "系统搜索>资源")
     @PreAuthorize("hasAuthority('sys:search:resource:query')")
     public HttpResult<SearchVO<Map<String,Object>>> searchResource(@RequestBody SearchForm form) {
         return new HttpResult<SearchVO<Map<String,Object>>>().ok(sysSearchApplicationService.searchResource(form));

@@ -26,15 +26,9 @@ import java.util.List;
 @Data
 public class UserInfoVO {
     private Long userId;
-
     private String imgUrl;
-
     private String username;
-
     private String mobile;
-
     private String email;
-
     private List<String> permissionList;
-
 }

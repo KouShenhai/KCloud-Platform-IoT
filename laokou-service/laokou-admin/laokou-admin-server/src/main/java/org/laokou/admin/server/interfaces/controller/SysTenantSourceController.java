@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.interfaces.controller;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.laokou.common.swagger.utils.HttpResult;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,47 +25,13 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/sys/tenant/source/api")
-@Tag(name = "Sys Tenant Source Api",description = "系统租户数据源管理API")
+@Tag(name = "Sys Tenant Source Api",description = "系统租户数据源API")
 public class SysTenantSourceController {
 
 //    @PostMapping("/query")
-//    @Operation(summary = "系统角色>查询",description = "系统角色>查询")
-//    @PreAuthorize("hasAuthority('sys:role:query')")
-//    public HttpResult<IPage<SysRoleVO>> query(@RequestBody SysRoleQo qo) {
-//        return new HttpResult<IPage<SysRoleVO>>().ok(sysRoleApplicationService.queryRolePage(qo));
-//    }
-//
-//    @GetMapping("/detail")
-//    @Operation(summary = "系统角色>详情",description = "系统角色>详情")
-//    @DataCache(name = "role", key = "#id")
-//    public HttpResult<SysRoleVO> detail(@RequestParam("id") Long id) {
-//        return new HttpResult<SysRoleVO>().ok(sysRoleApplicationService.getRoleById(id));
-//    }
-//
-//    @PostMapping("/insert")
-//    @Operation(summary = "系统角色>新增",description = "系统角色>新增")
-//    @OperateLog(module = "系统角色",name = "角色新增")
-//    @PreAuthorize("hasAuthority('sys:role:insert')")
-//    public HttpResult<Boolean> insert(@RequestBody SysRoleDTO dto) {
-//        return new HttpResult<Boolean>().ok(sysRoleApplicationService.insertRole(dto));
-//    }
-//
-//    @PutMapping("/update")
-//    @Operation(summary = "系统角色>修改",description = "系统角色>修改")
-//    @OperateLog(module = "系统角色",name = "角色修改")
-//    @PreAuthorize("hasAuthority('sys:role:update')")
-//    @DataCache(name = "role", key = "#dto.id",type = CacheEnum.DEL)
-//    public HttpResult<Boolean> update(@RequestBody SysRoleDTO dto) {
-//        return new HttpResult<Boolean>().ok(sysRoleApplicationService.updateRole(dto));
-//    }
-//
-//    @DeleteMapping("/delete")
-//    @Operation(summary = "系统角色>删除",description = "系统角色>删除")
-//    @OperateLog(module = "系统角色",name = "角色删除")
-//    @PreAuthorize("hasAuthority('sys:role:delete')")
-//    @DataCache(name = "role", key = "#id",type = CacheEnum.DEL)
-//    public HttpResult<Boolean> delete(@RequestParam("id") Long id) {
-//        return new HttpResult<Boolean>().ok(sysRoleApplicationService.deleteRole(id));
+//    @Operation(summary = "系统租户数据源>查询",description = "系统租户数据源>查询")
+//    public HttpResult<IPage<>> query(@RequestBody  qo) {
+//        return new HttpResult<IPage<>>().ok(.queryRolePage(qo));
 //    }
 
 }

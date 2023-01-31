@@ -14,25 +14,21 @@
  * limitations under the License.
  */
 
-package org.laokou.admin.server.domain.sys.entity;
+package org.laokou.admin.client.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.mybatisplus.entity.BaseDO;
+
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
 @Data
-@TableName("boot_sys_tenant_source")
-@Schema(name = "SysTenantSourceDO",description = "系统多租户数据源实体类")
-public class SysTenantSourceDO extends BaseDO {
-
+public class SysTenantSourceVO implements Serializable {
+    private Long id;
+    private String name;
     private String driverClassName;
-    private String url;
     private String username;
     private String password;
-    private String name;
-
+    private String url;
 }

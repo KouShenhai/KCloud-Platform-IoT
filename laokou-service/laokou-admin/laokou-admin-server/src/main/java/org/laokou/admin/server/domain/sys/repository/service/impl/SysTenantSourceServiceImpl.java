@@ -14,25 +14,18 @@
  * limitations under the License.
  */
 
-package org.laokou.admin.server.domain.sys.entity;
+package org.laokou.admin.server.domain.sys.repository.service.impl;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import org.laokou.common.mybatisplus.entity.BaseDO;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.laokou.admin.server.domain.sys.entity.SysTenantSourceDO;
+import org.laokou.admin.server.domain.sys.repository.mapper.SysTenantSourceMapper;
+import org.laokou.admin.server.domain.sys.repository.service.SysTenantSourceService;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-@Data
-@TableName("boot_sys_tenant_source")
-@Schema(name = "SysTenantSourceDO",description = "系统多租户数据源实体类")
-public class SysTenantSourceDO extends BaseDO {
-
-    private String driverClassName;
-    private String url;
-    private String username;
-    private String password;
-    private String name;
+@Service
+public class SysTenantSourceServiceImpl extends ServiceImpl<SysTenantSourceMapper, SysTenantSourceDO> implements SysTenantSourceService {
 
 }
