@@ -54,7 +54,7 @@ public class SysTenantSourceController {
     @Operation(summary = "系统多租户数据源>修改",description = "系统多租户数据源>修改")
     @OperateLog(module = "系统多租户数据源",name = "数据源修改")
     public HttpResult<Boolean> update(@RequestBody SysTenantSourceDTO dto) {
-        return new HttpResult<Boolean>().ok(sysTenantSourceApplicationService.insertTenantSource(dto));
+        return new HttpResult<Boolean>().ok(sysTenantSourceApplicationService.updateTenantSource(dto));
     }
 
 }

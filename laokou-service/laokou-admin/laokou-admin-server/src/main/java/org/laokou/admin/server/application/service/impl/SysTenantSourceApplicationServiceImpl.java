@@ -17,6 +17,7 @@
 package org.laokou.admin.server.application.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.SysTenantSourceDTO;
@@ -52,6 +53,10 @@ public class SysTenantSourceApplicationServiceImpl implements SysTenantSourceApp
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertTenantSource(SysTenantSourceDTO dto) {
         ValidatorUtil.validateEntity(dto);
+        long count = sysTenantSourceService.count(Wrappers.lambdaQuery(SysTenantSourceDO.class).eq(SysTenantSourceDO::getName, dto.getName()));
+        if (count > 0) {
+            throw new CustomException("数据源名称已存在，请重新填写");
+        }
         SysTenantSourceDO tenantSourceDO = ConvertUtil.sourceToTarget(dto, SysTenantSourceDO.class);
         tenantSourceDO.setCreator(UserUtil.getUserId());
         return sysTenantSourceService.save(tenantSourceDO);
@@ -64,6 +69,14 @@ public class SysTenantSourceApplicationServiceImpl implements SysTenantSourceApp
         if (id == null) {
             throw new CustomException("数据源编号不为空");
         }
-        return null;
+        long count = sysTenantSourceService.count(Wrappers.lambdaQuery(SysTenantSourceDO.class).eq(SysTenantSourceDO::getName, dto.getName()).ne(SysTenantSourceDO::getId,dto.getId()));
+        if (count > 0) {
+            throw new CustomException("数据源名称已存在，请重新填写");
+        }
+        Integer version = sysTenantSourceService.getVersion(id);
+        SysTenantSourceDO sourceDO = ConvertUtil.sourceToTarget(dto, SysTenantSourceDO.class);
+        sourceDO.setVersion(version);
+        sourceDO.setEditor(UserUtil.getUserId());
+        return sysTenantSourceService.updateById(sourceDO);
     }
 }

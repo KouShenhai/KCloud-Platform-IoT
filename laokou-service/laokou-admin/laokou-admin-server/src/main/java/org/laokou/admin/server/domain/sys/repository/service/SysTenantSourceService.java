@@ -19,4 +19,11 @@ public interface SysTenantSourceService extends IService<SysTenantSourceDO> {
      */
     IPage<SysTenantSourceVO> queryTenantSourcePage(IPage<SysTenantSourceVO> page,SysTenantSourceQo qo);
 
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(Long id);
+
 }

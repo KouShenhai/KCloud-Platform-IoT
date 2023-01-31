@@ -35,4 +35,9 @@ public class SysTenantSourceServiceImpl extends ServiceImpl<SysTenantSourceMappe
     public IPage<SysTenantSourceVO> queryTenantSourcePage(IPage<SysTenantSourceVO> page,SysTenantSourceQo qo) {
         return this.baseMapper.queryTenantSourcePage(page,qo);
     }
+
+    @Override
+    public Integer getVersion(Long id) {
+        return this.baseMapper.getVersion(id);
+    }
 }
