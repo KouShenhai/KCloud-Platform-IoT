@@ -29,7 +29,7 @@ import java.sql.DriverManager;
 @Slf4j
 public class DBUtil {
 
-    public void connect(String driverClassName,String url,String username,String password) {
+    public void connectDB(String driverClassName,String url,String username,String password) {
         try {
             Class.forName(driverClassName);
         } catch (Exception e) {

@@ -94,7 +94,7 @@ public class SysTenantSourceApplicationServiceImpl implements SysTenantSourceApp
         String driverClassName = dto.getDriverClassName();
         String username = dto.getUsername();
         String password = dto.getPassword();
-        DBUtil.connect(driverClassName,url,username,password);
+        DBUtil.connectDB(driverClassName,url,username,password);
         return true;
     }
 }
