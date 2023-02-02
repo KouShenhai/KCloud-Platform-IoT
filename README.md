@@ -368,8 +368,12 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 [夸克官网](https://quarkus.io/)
 
 ### 鸣谢个人
-<a target="_blank" alt="2222" href="https://github.com/KouShenhai"><img alt="JDK" src="https://avatars.githubusercontent.com/u/48756217?s=40&v=4" width='20' height='20' /></a>
-
+<a href="https://github.com/KouShenhai" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/KouShenhai/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
+        <img src="https://avatars.githubusercontent.com/u/48756217?s=64&amp;v=4" alt="@KouShenhai" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
+</a>
+<a href="https://github.com/liang99" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/liang99/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
+        <img src="https://avatars.githubusercontent.com/u/26246537?s=64&amp;v=4" alt="@liang99" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
+</a>
 ### 联系
 博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)  
 邮箱：[2413176044@qq.com](https://mail.qq.com)  
