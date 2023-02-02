@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <maven-compiler-plugin.version>2.0.2</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.6.2</maven-compiler-plugin.version>
         <!--spring-boot版本-->
         <spring-boot.version>3.0.2</spring-boot.version>
         <!--spring-cloud版本-->
@@ -169,7 +169,7 @@
     </pluginRepositories>
 
     <profiles>
-        <!--开发环境-->
+        <!-- 开发环境 -->
         <profile>
             <id>dev</id>
             <properties>
@@ -182,7 +182,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
-        <!--测试环境-->
+        <!-- 测试环境 -->
         <profile>
             <id>test</id>
             <properties>
@@ -192,7 +192,7 @@
                 <profile.active>test</profile.active>
             </properties>
         </profile>
-        <!--正式环境-->
+        <!-- 正式环境 -->
         <profile>
             <id>prod</id>
             <properties>
@@ -220,11 +220,11 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>${docker.version}</version>
                 <configuration>
-                    <!--        推送至阿里云Docker仓库            -->
+                    <!-- 推送至阿里云Docker仓库 -->
                     <serverId>docker-aliyun</serverId>
                     <registryUrl>${docker.repostory}</registryUrl>
                     <pushImage>true</pushImage>
-                    <!--指定生成的镜像名 推送阿里云镜像仓库用 -->
+                    <!-- 指定生成的镜像名 推送阿里云镜像仓库用 -->
                     <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
                     <!-- 指定 Dockerfile 路径 , 根据实际情况改动! ${project.basedir}：项目根路径-->
                     <dockerDirectory>${project.basedir}/docker</dockerDirectory>
@@ -241,25 +241,25 @@
         </plugins>
         <!-- profile对资源的操作 -->
         <resources>
-            <!--打包的时候先去掉所有的配置文件-->
+            <!-- 打包的时候先去掉所有的配置文件 -->
             <resource>
                 <directory>src/main/resources</directory>
                 <excludes>
                     <exclude>application*.yml</exclude>
-                    <exclude>application*.properties</exclude>
+                    <exclude>bootstrap*.yml</exclude>
                 </excludes>
             </resource>
-            <!--添加需要包含的文件-->
+            <!-- 添加需要包含的文件 -->
             <resource>
                 <directory>src/main/resources</directory>
                 <!-- 是否替换yml或者properties里@xx@表示的maven properties属性值 -->
                 <filtering>true</filtering>
-                <!--在打包的时候，根据-P参数，加上需要的yml配置文件-->
+                <!-- 在打包的时候，根据-P参数，加上需要的yml配置文件 -->
                 <includes>
                     <include>application.yml</include>
                     <include>application-${profile.active}.yml</include>
-                    <include>application-${profile.active}.properties</include>
                     <include>bootstrap.yml</include>
+                    <include>bootstrap-${profile.active}.yml</include>
                 </includes>
             </resource>
         </resources>
