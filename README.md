@@ -163,14 +163,6 @@ spring:
           password: 123456
           hikari:
             max-lifetime: 120000
-        slave:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/kcloud_platform?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
-          username: root
-          password: 123456
-          hikari:
-            max-lifetime: 120000
   # redis
   data:
     redis:
@@ -253,7 +245,7 @@ seata:
 public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
     
     /**
-     * 使用openfeign调用时，每个被调用服务都需要加 @Transactional
+     * 使用openfeign调用时,每个被调用服务都需要加 @Transactional
      */
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @GlobalTransactional
