@@ -271,8 +271,13 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 }
 ```
 
+### 启动系统
+- 1.必须启动Mysql、Redis、Nacos、Seata
+- 2.可选启动Sentinel、RocketMQ、Kafka、ElasticSearch、MongoDB
+- 3.解压doc/config/dev配置文件，导入Nacos（注意：解压的文件有两个，都需要导入Nacos）
+- 4.运行doc/db/db_init.sql
+- 5.分别启动laokou-gateway、laokou-auth、laokou-admin
 
-    
 ### 高可用系统构建
 - [x] 严格遵循阿里规范，注重代码质量
 - [x] 集群部署，减少单点故障
@@ -365,7 +370,6 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 [人人社区](https://www.renren.io)   
 [若依社区](https://www.ruoyi.vip)  
 [苞米豆社区](https://baomidou.com/)  
-[夸克官网](https://quarkus.io/)  
 
 ### 鸣谢个人
 <a href="https://github.com/KouShenhai" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/KouShenhai/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
