@@ -18,6 +18,8 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import net.sf.jsqlparser.expression.LongValue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 /**
@@ -30,6 +32,10 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+        // 多租户
+        mybatisPlusInterceptor.addInnerInterceptor(new TenantLineInnerInterceptor(
+                () -> new LongValue(1)
+        ));
         // 数据权限
         mybatisPlusInterceptor.addInnerInterceptor(new DataFilterInterceptor());
         // 分页插件
