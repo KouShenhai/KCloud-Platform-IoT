@@ -360,13 +360,15 @@ Github 前端地址：[KCloud-Antdv-Alibaba](https://github.com/KouShenhai/KClou
 Gtiee 后端地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KCloud-Platform-Alibaba)  
 Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-Antdv-Alibaba)  
 
-### 致谢
+### 鸣谢组织
 [Spring官网](https://spring.io)  
 [人人社区](https://www.renren.io)   
 [若依社区](https://www.ruoyi.vip)
 [苞米豆社区](https://baomidou.com/)
 [夸克官网](https://quarkus.io/)
-<a href="https://github.com/KouShenhai/KCloud-Platform-Alibaba/graphs/contributors"><img src="https://opencollective.com/vuejs/contributors.svg?width=890" /></a>
+
+### 鸣谢个人
+<a target="_blank" alt="2222" href="https://github.com/KouShenhai"><img alt="JDK" src="https://avatars.githubusercontent.com/u/48756217?s=40&v=4" width='20' height='20' /></a>
 
 ### 联系
 博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)  
