@@ -46,12 +46,6 @@ public abstract class BaseDO {
     private Long editor;
 
     /**
-     * 租户id
-     */
-    @Schema(name = "tenantId",description = "租户id")
-    private Long tenantId;
-
-    /**
      * 创建时间
      */
     @Schema(name = "createDate",description = "创建时间")

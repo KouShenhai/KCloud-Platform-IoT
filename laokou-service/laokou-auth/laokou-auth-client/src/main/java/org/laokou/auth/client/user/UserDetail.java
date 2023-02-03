@@ -35,17 +35,20 @@ import java.util.stream.Collectors;
 @Setter
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal {
+
     private Long userId;
     private String username;
     private String imgUrl;
     private Integer superAdmin;
-    private transient Integer status;
+    private Integer status;
     private String email;
     private String mobile;
     private transient String password;
     private Long deptId;
     private List<Long> deptIds;
     private List<String> permissionList;
+    private Long tenantId;
+    private String sourceName;
 
     @Override
     public boolean equals(Object o) {
@@ -56,28 +59,61 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal {
             return false;
         }
         UserDetail that = (UserDetail) o;
-        return userId.equals(that.userId) && username.equals(that.username) && imgUrl.equals(that.imgUrl) && superAdmin.equals(that.superAdmin) && email.equals(that.email) && mobile.equals(that.mobile) && deptId.equals(that.deptId) && deptIds.equals(that.deptIds) && permissionList.equals(that.permissionList);
+
+        if (!Objects.equals(userId, that.userId)) {
+            return false;
+        }
+        if (!Objects.equals(username, that.username)) {
+            return false;
+        }
+        if (!Objects.equals(imgUrl, that.imgUrl)) {
+            return false;
+        }
+        if (!Objects.equals(superAdmin, that.superAdmin)) {
+            return false;
+        }
+        if (!Objects.equals(status, that.status)) {
+            return false;
+        }
+        if (!Objects.equals(email, that.email)) {
+            return false;
+        }
+        if (!Objects.equals(mobile, that.mobile)) {
+            return false;
+        }
+        if (!Objects.equals(deptId, that.deptId)) {
+            return false;
+        }
+        if (!Objects.equals(deptIds, that.deptIds)) {
+            return false;
+        }
+        if (!Objects.equals(permissionList, that.permissionList)) {
+            return false;
+        }
+        if (!Objects.equals(tenantId, that.tenantId)) {
+            return false;
+        }
+        return Objects.equals(sourceName, that.sourceName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, username, imgUrl, superAdmin, email, mobile, deptId, deptIds, permissionList);
+        int result = userId != null ? userId.hashCode() : 0;
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (imgUrl != null ? imgUrl.hashCode() : 0);
+        result = 31 * result + (superAdmin != null ? superAdmin.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
+        result = 31 * result + (deptId != null ? deptId.hashCode() : 0);
+        result = 31 * result + (deptIds != null ? deptIds.hashCode() : 0);
+        result = 31 * result + (permissionList != null ? permissionList.hashCode() : 0);
+        result = 31 * result + (tenantId != null ? tenantId.hashCode() : 0);
+        result = 31 * result + (sourceName != null ? sourceName.hashCode() : 0);
+        return result;
     }
 
-    @Override
-    public String toString() {
-        return "UserDetail{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", superAdmin=" + superAdmin +
-                ", email='" + email + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", deptId=" + deptId +
-                ", deptIds=" + deptIds +
-                ", permissionList=" + permissionList +
-                '}';
-    }
+
 
     @Override
     @JsonIgnore
@@ -124,6 +160,6 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal {
     @Override
     @JsonIgnore
     public String getName() {
-        return this.getUsername();
+        return this.username;
     }
 }

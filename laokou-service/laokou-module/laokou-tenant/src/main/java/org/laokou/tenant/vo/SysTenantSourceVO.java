@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.laokou.admin.client.vo;
+package org.laokou.tenant.vo;
 
 import lombok.Data;
 

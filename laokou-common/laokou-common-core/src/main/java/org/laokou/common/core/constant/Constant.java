@@ -37,4 +37,8 @@ public interface Constant {
     String COMMA = ",";
 
     String AND = "&";
+
+    Integer DEFAULT = 0;
+
+    String TENANT_ID = "tenantId";
 }

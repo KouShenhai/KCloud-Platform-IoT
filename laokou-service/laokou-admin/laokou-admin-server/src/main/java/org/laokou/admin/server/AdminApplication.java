@@ -35,7 +35,16 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = {"org.laokou.common.log","org.laokou.common.security","org.laokou.sentinel","org.laokou.common.swagger","org.laokou.common.core", "org.laokou.admin", "org.laokou.redis", "org.laokou.common.mybatisplus", "org.laokou.auth.client"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.tenant"
+        , "org.laokou.common.log"
+        , "org.laokou.common.security"
+        , "org.laokou.sentinel"
+        , "org.laokou.common.swagger"
+        , "org.laokou.common.core"
+        , "org.laokou.admin"
+        , "org.laokou.redis"
+        , "org.laokou.common.mybatisplus"
+        , "org.laokou.auth.client"})
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
@@ -43,7 +52,9 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableFeignClients
 @EnableAsync
 @Import(CorsConfig.class)
-@MapperScan(value = {"org.laokou.admin.server.domain.sys.repository.mapper","org.laokou.common.log.mapper"})
+@MapperScan(value = {"org.laokou.admin.server.domain.sys.repository.mapper"
+        , "org.laokou.tenant.mapper"
+        , "org.laokou.common.log.mapper"})
 public class AdminApplication {
 
     public static void main(String[] args) {

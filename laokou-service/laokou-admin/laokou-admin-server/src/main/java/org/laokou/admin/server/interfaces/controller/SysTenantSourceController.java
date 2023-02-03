@@ -19,11 +19,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.SysTenantSourceDTO;
-import org.laokou.admin.client.vo.SysTenantSourceVO;
 import org.laokou.admin.server.application.service.SysTenantSourceApplicationService;
-import org.laokou.admin.server.interfaces.qo.SysTenantSourceQo;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.tenant.qo.SysTenantSourceQo;
+import org.laokou.tenant.vo.SysTenantSourceVO;
 import org.springframework.web.bind.annotation.*;
 
 /**

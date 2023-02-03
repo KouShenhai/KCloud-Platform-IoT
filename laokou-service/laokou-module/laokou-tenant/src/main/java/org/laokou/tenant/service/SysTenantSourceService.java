@@ -1,10 +1,10 @@
-package org.laokou.admin.server.domain.sys.repository.service;
+package org.laokou.tenant.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.laokou.admin.client.vo.SysTenantSourceVO;
-import org.laokou.admin.server.domain.sys.entity.SysTenantSourceDO;
-import org.laokou.admin.server.interfaces.qo.SysTenantSourceQo;
+import org.laokou.tenant.entity.SysTenantSourceDO;
+import org.laokou.tenant.qo.SysTenantSourceQo;
+import org.laokou.tenant.vo.SysTenantSourceVO;
 
 /**
  * @author laokou
@@ -17,7 +17,7 @@ public interface SysTenantSourceService extends IService<SysTenantSourceDO> {
      * @param page
      * @return
      */
-    IPage<SysTenantSourceVO> queryTenantSourcePage(IPage<SysTenantSourceVO> page,SysTenantSourceQo qo);
+    IPage<SysTenantSourceVO> queryTenantSourcePage(IPage<SysTenantSourceVO> page, SysTenantSourceQo qo);
 
     /**
      * 获取版本号

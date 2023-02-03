@@ -23,5 +23,6 @@
         <module>laokou-flowable</module>
         <module>laokou-mongodb</module>
         <module>laokou-kafka</module>
+        <module>laokou-tenant</module>
     </modules>
 </project>

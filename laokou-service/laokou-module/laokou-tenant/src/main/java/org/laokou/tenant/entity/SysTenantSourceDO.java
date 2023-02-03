@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.laokou.admin.server.domain.sys.entity;
+package org.laokou.tenant.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;

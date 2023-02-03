@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package org.laokou.admin.server.domain.sys.repository.service.impl;
+package org.laokou.tenant.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.laokou.admin.client.vo.SysTenantSourceVO;
-import org.laokou.admin.server.domain.sys.entity.SysTenantSourceDO;
-import org.laokou.admin.server.domain.sys.repository.mapper.SysTenantSourceMapper;
-import org.laokou.admin.server.domain.sys.repository.service.SysTenantSourceService;
-import org.laokou.admin.server.interfaces.qo.SysTenantSourceQo;
+import org.laokou.tenant.entity.SysTenantSourceDO;
+import org.laokou.tenant.mapper.SysTenantSourceMapper;
+import org.laokou.tenant.qo.SysTenantSourceQo;
+import org.laokou.tenant.service.SysTenantSourceService;
+import org.laokou.tenant.vo.SysTenantSourceVO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 public class SysTenantSourceServiceImpl extends ServiceImpl<SysTenantSourceMapper, SysTenantSourceDO> implements SysTenantSourceService {
 
     @Override
-    public IPage<SysTenantSourceVO> queryTenantSourcePage(IPage<SysTenantSourceVO> page,SysTenantSourceQo qo) {
+    public IPage<SysTenantSourceVO> queryTenantSourcePage(IPage<SysTenantSourceVO> page, SysTenantSourceQo qo) {
         return this.baseMapper.queryTenantSourcePage(page,qo);
     }
 
