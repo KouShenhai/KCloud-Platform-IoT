@@ -18,13 +18,8 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
-import jakarta.servlet.http.HttpServletRequest;
-import net.sf.jsqlparser.expression.LongValue;
-import org.laokou.common.core.utils.HttpContextUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import static org.laokou.common.core.constant.Constant.TENANT_ID;
 /**
  * mybatis-plus的配置
  * @author laokou
@@ -35,15 +30,6 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
-        // 多租户
-        mybatisPlusInterceptor.addInnerInterceptor(new TenantLineInnerInterceptor(
-                () -> {
-                    // 从请求头获取tenantId
-                    HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-                    String tenantId = request.getHeader(TENANT_ID);
-                    return new LongValue(tenantId);
-                }
-        ));
         // 数据权限
         mybatisPlusInterceptor.addInnerInterceptor(new DataFilterInterceptor());
         // 分页插件

@@ -104,6 +104,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
      * 登录
      * @param request
      * @return
+     * @throws IOException
      */
     abstract Authentication login(HttpServletRequest request) throws IOException;
 

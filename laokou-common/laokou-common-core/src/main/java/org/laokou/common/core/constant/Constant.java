@@ -24,21 +24,18 @@ public interface Constant {
 
     String BACK_SLASH = "\\";
 
-    String BEARER = "Bearer ";
-
     String AUTHORIZATION_HEAD = "Authorization";
 
-    Integer NO = 0;
+    int NO = 0;
 
-    Integer SUCCESS = 200;
+    int SUCCESS = 200;
 
     String UNDERLINE = "_";
 
-    String COMMA = ",";
 
     String AND = "&";
 
-    Integer DEFAULT = 0;
+    long DEFAULT = 0L;
 
     String TENANT_ID = "tenantId";
 }

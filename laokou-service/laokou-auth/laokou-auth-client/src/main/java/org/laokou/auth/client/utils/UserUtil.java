@@ -42,8 +42,16 @@ public class UserUtil {
         return userDetail().getUsername();
     }
 
+    /**
+     * 部门id
+     * @return
+     */
     public static Long getDeptId() {
         return userDetail().getDeptId();
+    }
+
+    public static Long getTenantId() {
+        return userDetail().getTenantId();
     }
 
 }
