@@ -160,6 +160,8 @@ public class AuthorizationServerConfig {
                         , "https://gitee.com/laokouyun"
                         , "https://github.com/KouShenhai"
                         , "https://www.baidu.com"
+                        , "http://192.168.62.1:8000"
+                        , "http://192.168.62.1:8001"
                 )))
                 .clientName("认证")
                 // JWT配置

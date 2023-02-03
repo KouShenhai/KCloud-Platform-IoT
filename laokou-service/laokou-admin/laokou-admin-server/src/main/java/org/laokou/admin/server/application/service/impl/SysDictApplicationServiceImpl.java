@@ -21,14 +21,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysDictApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysDictDO;
-import org.laokou.admin.server.domain.sys.entity.SysUserDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysDictService;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
 import org.laokou.admin.client.dto.SysDictDTO;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
@@ -44,7 +42,6 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     private final SysDictService sysDictService;
 
     @Override
-    @DataFilter(tableAlias = "boot_sys_dict")
     public IPage<SysDictVO> queryDictPage(SysDictQo qo) {
         ValidatorUtil.validateEntity(qo);
         IPage<SysDictVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
@@ -66,7 +63,6 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
         }
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
         dictDO.setCreator(UserUtil.getUserId());
-        dictDO.setDeptId(UserUtil.getDeptId());
         return sysDictService.save(dictDO);
     }
 

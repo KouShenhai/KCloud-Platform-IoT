@@ -46,12 +46,6 @@ public class SysMessageDO extends BaseDO {
     private Integer sendChannel;
 
     /**
-     * 部门id
-     */
-    @Schema(name = "deptId",description = "部门id")
-    private Long deptId;
-
-    /**
      * 消息类型 0 通知 1 提醒
      */
     @Schema(name = "type",description = "消息类型 0 通知 1 提醒")

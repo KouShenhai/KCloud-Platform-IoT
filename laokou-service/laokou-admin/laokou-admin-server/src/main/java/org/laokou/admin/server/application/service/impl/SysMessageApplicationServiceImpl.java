@@ -34,7 +34,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.laokou.common.swagger.utils.ValidatorUtil;
@@ -63,7 +62,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         Integer sendChannel = dto.getSendChannel();
         messageDO.setCreateDate(new Date());
         messageDO.setCreator(UserUtil.getUserId());
-        messageDO.setDeptId(UserUtil.getDeptId());
         messageDO.setSendChannel(sendChannel);
         sysMessageService.save(messageDO);
         if (ChannelTypeEnum.PLATFORM.ordinal() == sendChannel) {
@@ -97,7 +95,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
-    @DataFilter(tableAlias = "boot_sys_message")
     public IPage<SysMessageVO> queryMessagePage(SysMessageQo qo) {
         ValidatorUtil.validateEntity(qo);
         IPage<SysMessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());

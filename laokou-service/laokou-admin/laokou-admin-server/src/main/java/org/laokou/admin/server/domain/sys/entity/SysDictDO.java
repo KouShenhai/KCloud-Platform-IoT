@@ -58,10 +58,4 @@ public class SysDictDO extends BaseDO {
     @Schema(name = "sort",description = "字典排序",example = "1")
     private Integer sort;
 
-    /**
-     * 部门id
-     */
-    @Schema(name = "deptId",description = "部门id",example = "123")
-    private Long deptId;
-
 }

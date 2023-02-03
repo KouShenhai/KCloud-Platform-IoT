@@ -13,47 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.laokou.tenant.entity;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BaseDO;
+
 /**
  * @author laokou
  */
 @Data
-@TableName("boot_sys_tenant_source")
-@Schema(name = "SysTenantSourceDO",description = "系统多租户数据源实体类")
-public class SysTenantSourceDO extends BaseDO {
+@TableName("boot_sys_tenant")
+@Schema(name = "SysTenantDO",description = "系统多租户实体类")
+public class SysTenantDO extends BaseDO {
 
     /**
-     * 数据源驱动
+     * 多租户名称
      */
-    @Schema(name = "driverClassName",description = "数据源驱动")
-    private String driverClassName;
-
-    /**
-     * 数据源连接
-     */
-    @Schema(name = "url",description = "数据源连接")
-    private String url;
-
-    /**
-     * 数据源用户名
-     */
-    @Schema(name = "username",description = "数据源用户名")
-    private String username;
-
-    /**
-     * 数据源密码
-     */
-    @Schema(name = "password",description = "数据源密码")
-    private String password;
-
-    /**
-     * 数据源名称
-     */
-    @Schema(name = "name",description = "数据源名称")
+    @Schema(name = "name",description = "多租户名称")
     private String name;
 
+    /**
+     * 数据源id
+     */
+    @Schema(name = "sourceId",description = "数据源id")
+    private Long sourceId;
+
+    /**
+     * 多租户状态 0未初始化 1已初始化
+     */
+    @Schema(name = "status",description = "多租户状态 0未初始化 1已初始化")
+    private Long status;
 }
