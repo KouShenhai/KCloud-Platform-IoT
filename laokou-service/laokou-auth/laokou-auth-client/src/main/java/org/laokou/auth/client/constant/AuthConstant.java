@@ -29,6 +29,8 @@ public interface AuthConstant {
     */
    String CAPTCHA = "captcha";
 
+   String TENANT_ID = "tenantId";
+
    /**
     * 登录成功
     */
@@ -43,4 +45,6 @@ public interface AuthConstant {
     * 手机
     */
    String MOBILE = "mobile";
+
+   String DEFAULT_SOURCE = "master";
 }

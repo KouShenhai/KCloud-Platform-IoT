@@ -44,13 +44,15 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
-
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import static org.laokou.auth.client.constant.AuthConstant.DEFAULT_SOURCE;
+
 /**
  * 邮件/手机/密码
  * @author laokou
@@ -185,8 +187,9 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password, HttpServletRequest request) throws IOException {
         AuthorizationGrantType grantType = getGrantType();
         String loginType = grantType.getValue();
+        String tenantId = request.getParameter(AuthConstant.TENANT_ID);
         // 验证用户
-        UserDetail userDetail = sysUserService.getUserDetail(loginName);
+        UserDetail userDetail = sysUserService.getUserDetail(loginName,tenantId);
         if (userDetail == null) {
             loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR),request);
             CustomAuthExceptionHandler.throwError(ErrorCode.ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
@@ -216,6 +219,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         List<Long> deptIds = sysDeptService.getDeptIds(superAdmin,userId);
         userDetail.setDeptIds(deptIds);
         userDetail.setPermissionList(permissionsList);
+        // 数据源
+        userDetail.setSourceName(DEFAULT_SOURCE);
         return new UsernamePasswordAuthenticationToken(userDetail,loginName,userDetail.getAuthorities());
     }
 

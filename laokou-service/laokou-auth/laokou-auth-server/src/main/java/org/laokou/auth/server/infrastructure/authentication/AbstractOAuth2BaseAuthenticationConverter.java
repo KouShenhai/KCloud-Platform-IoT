@@ -15,9 +15,12 @@
  */
 package org.laokou.auth.server.infrastructure.authentication;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.MessageUtil;
+import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.swagger.exception.ErrorCode;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +35,7 @@ import java.util.Map;
  * 邮件/手机/密码
  * @author laokou
  */
+@Slf4j
 public abstract class AbstractOAuth2BaseAuthenticationConverter implements AuthenticationConverter {
 
     /**
@@ -53,6 +57,12 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
         String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
         if (!getGrantType().equals(grantType)) {
             return null;
+        }
+        // 判断租户id是否为空
+        String tenantId = request.getParameter(AuthConstant.TENANT_ID);
+        log.info("租户编号：{}",tenantId);
+        if (StringUtil.isEmpty(tenantId)) {
+            CustomAuthExceptionHandler.throwError(20016, "租户编号不为空");
         }
         // 构建请求参数集合
         MultiValueMap<String, String> parameters = MapUtil.getParameters(request);

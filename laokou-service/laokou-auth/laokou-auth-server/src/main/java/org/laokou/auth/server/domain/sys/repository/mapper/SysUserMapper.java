@@ -29,9 +29,10 @@ public interface SysUserMapper {
     /**
      * 获取用户信息
      * @param loginName
+     * @param tenantId
      * @return
      */
-    UserDetail getUserDetail(@Param("loginName")String loginName);
+    UserDetail getUserDetail(@Param("loginName")String loginName,@Param("tenantId")String tenantId);
 
 
 }

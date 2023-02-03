@@ -36,7 +36,7 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
-        UserDetail userDetail = sysUserService.getUserDetail(loginName);
+        UserDetail userDetail = sysUserService.getUserDetail(loginName,"");
         if (userDetail == null) {
             throw new BadCredentialsException("The account number or password is incorrect");
         }

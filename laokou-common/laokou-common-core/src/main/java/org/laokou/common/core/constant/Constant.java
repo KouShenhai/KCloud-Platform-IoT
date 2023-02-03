@@ -35,7 +35,6 @@ public interface Constant {
 
     String AND = "&";
 
-    long DEFAULT = 0L;
+    int DEFAULT = 0;
 
-    String TENANT_ID = "tenantId";
 }

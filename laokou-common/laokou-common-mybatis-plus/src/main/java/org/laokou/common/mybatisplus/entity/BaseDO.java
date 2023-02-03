@@ -75,10 +75,4 @@ public abstract class BaseDO {
     @TableField(fill = FieldFill.INSERT)
     private Integer version;
 
-    /**
-     * 租户id
-     */
-    @Schema(name = "tenantId",description = "租户id")
-    private Long tenantId;
-
 }

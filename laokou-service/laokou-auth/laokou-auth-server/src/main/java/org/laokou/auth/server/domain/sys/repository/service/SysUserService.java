@@ -24,8 +24,9 @@ public interface SysUserService {
     /**
      * 获取用户信息
      * @param loginName
+     * @param tenantId
      * @return
      */
-    UserDetail getUserDetail(String loginName);
+    UserDetail getUserDetail(String loginName,String tenantId);
 
 }
