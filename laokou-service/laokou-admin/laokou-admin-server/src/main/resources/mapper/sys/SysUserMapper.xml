@@ -46,8 +46,11 @@
                 dept_id = #{dto.deptId},
             </if>
             <if test="dto.version != null">
-                version = version + 1
+                version = version + 1,
             </if>
+            <if test="dto.tenantId != null">
+                tenant_id = #{tenantId}
+        </if>
         </set>
         where id = #{dto.id} and version = #{dto.version}
     </update>
