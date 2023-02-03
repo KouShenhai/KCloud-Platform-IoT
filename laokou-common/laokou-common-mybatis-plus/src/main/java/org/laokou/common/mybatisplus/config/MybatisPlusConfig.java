@@ -26,7 +26,6 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.expression.BeanFactoryResolver;
-
 /**
  * mybatis-plus的配置
  * @author laokou

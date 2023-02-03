@@ -39,6 +39,7 @@ public class WebSecurityConfig {
         return http.authorizeHttpRequests().requestMatchers(
                  "/v3/api-docs/**"
                         , "/swagger-ui.html"
+                        , "/form/login"
                         , "/swagger-ui/**"
                         , "/oauth2/password/captcha"
                         , "/oauth2/logout"
@@ -50,7 +51,10 @@ public class WebSecurityConfig {
                 .authenticated()
                 .and()
                 .csrf().disable()
-                .formLogin(Customizer.withDefaults())
+                // 自定义登录页面
+                .formLogin(form -> form
+                        .loginProcessingUrl("/form/token")
+                        .loginPage("/form/login"))
                 .logout()
                 // 清除session
                 .invalidateHttpSession(true)

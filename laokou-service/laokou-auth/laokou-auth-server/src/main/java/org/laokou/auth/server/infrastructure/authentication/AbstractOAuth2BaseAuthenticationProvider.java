@@ -188,8 +188,9 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         AuthorizationGrantType grantType = getGrantType();
         String loginType = grantType.getValue();
         String tenantId = request.getParameter(AuthConstant.TENANT_ID);
-        // 验证用户
-        UserDetail userDetail = sysUserService.getUserDetail(loginName,tenantId);
+        Long id = Long.valueOf(tenantId);
+        // 多租户查询
+        UserDetail userDetail = sysUserService.getUserDetail(loginName,id);
         if (userDetail == null) {
             loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR),request);
             CustomAuthExceptionHandler.throwError(ErrorCode.ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));

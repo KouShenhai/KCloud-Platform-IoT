@@ -46,7 +46,7 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
         //获取验证码
         String captcha = getCache(uuid);
         if (StringUtil.isEmpty(captcha)) {
-            CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_ERROR, "验证码已过期，请重新获取");
+            CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_ERROR, "验证码已过期");
         }
         //效验成功
         return code.equalsIgnoreCase(captcha);

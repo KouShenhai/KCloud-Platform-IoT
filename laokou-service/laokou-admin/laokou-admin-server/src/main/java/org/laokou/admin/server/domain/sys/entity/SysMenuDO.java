@@ -72,4 +72,10 @@ public class SysMenuDO extends BaseDO {
 	@Schema(name = "type",description = "字典类型 0 菜单 1 按钮",example = "0")
 	private Integer type;
 
+	/**
+	 * 租户id
+	 */
+	@Schema(name = "tenantId",description = "租户id")
+	private Long tenantId;
+
 }

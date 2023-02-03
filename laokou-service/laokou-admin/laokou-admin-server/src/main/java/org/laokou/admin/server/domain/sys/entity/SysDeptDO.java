@@ -56,4 +56,10 @@ public class SysDeptDO extends BaseDO {
     @Schema(name = "path",description = "部门路径",example = "0")
     private String path;
 
+    /**
+     * 租户id
+     */
+    @Schema(name = "tenantId",description = "租户id")
+    private Long tenantId;
+
 }

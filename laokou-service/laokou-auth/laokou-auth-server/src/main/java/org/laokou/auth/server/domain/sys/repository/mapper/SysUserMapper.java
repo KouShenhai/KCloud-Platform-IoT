@@ -32,7 +32,7 @@ public interface SysUserMapper {
      * @param tenantId
      * @return
      */
-    UserDetail getUserDetail(@Param("loginName")String loginName,@Param("tenantId")String tenantId);
+    UserDetail getUserDetail(@Param("loginName")String loginName,@Param("tenantId")Long tenantId);
 
 
 }

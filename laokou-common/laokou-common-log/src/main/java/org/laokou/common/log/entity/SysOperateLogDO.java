@@ -16,6 +16,7 @@
 package org.laokou.common.log.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 
@@ -91,4 +92,9 @@ public class SysOperateLogDO extends BaseDO {
      */
     private Long deptId;
 
+    /**
+     * 租户id
+     */
+    @Schema(name = "tenantId",description = "租户id")
+    private Long tenantId;
 }
