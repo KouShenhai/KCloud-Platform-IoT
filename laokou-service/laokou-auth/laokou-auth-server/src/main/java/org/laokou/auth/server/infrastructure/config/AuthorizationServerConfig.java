@@ -202,9 +202,10 @@ public class AuthorizationServerConfig {
     UserDetailsService userDetailsService(
             SysUserServiceImpl sysUserService
             , SysMenuService sysMenuService
+            , PasswordEncoder passwordEncoder
             , SysDeptService sysDeptService) {
         return new SysUserDetailServiceImpl(sysUserService,sysMenuService
-                , sysDeptService);
+                , sysDeptService,passwordEncoder);
     }
 
     @Bean

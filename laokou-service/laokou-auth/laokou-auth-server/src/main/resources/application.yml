@@ -24,7 +24,7 @@ spring:
     servlet:
       content-type: text/html
     mode: HTML5
-    prefix: classpath:/templates
+    prefix: classpath:/templates/
   cloud:
     # sentinel
     sentinel:

@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PageController {
 
     @GetMapping("/form/login")
-    public String login() {
-        return "tenantLogin";
+    public String tenant() {
+        return "tenant";
     }
 
 }

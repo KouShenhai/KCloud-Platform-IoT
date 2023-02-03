@@ -51,10 +51,11 @@ public class WebSecurityConfig {
                 .authenticated()
                 .and()
                 .csrf().disable()
+                .formLogin(Customizer.withDefaults())
                 // 自定义登录页面
-                .formLogin(form -> form
-                        .loginProcessingUrl("/form/token")
-                        .loginPage("/form/login"))
+//                .formLogin(form -> form
+//                        .loginProcessingUrl("/form/token")
+//                        .loginPage("/form/login"))
                 .logout()
                 // 清除session
                 .invalidateHttpSession(true)
