@@ -77,10 +77,4 @@ public class SysUserDO extends BaseDO {
     @Schema(name = "deptId",description = "部门id",example = "0")
     private Long deptId;
 
-    /**
-     * 租户id
-     */
-    @Schema(name = "tenantId",description = "租户id")
-    private Long tenantId;
-
 }
