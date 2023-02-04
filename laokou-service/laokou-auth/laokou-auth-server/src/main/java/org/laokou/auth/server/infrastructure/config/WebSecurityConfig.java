@@ -17,7 +17,6 @@
 package org.laokou.auth.server.infrastructure.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 /**
@@ -39,7 +38,6 @@ public class WebSecurityConfig {
         return http.authorizeHttpRequests().requestMatchers(
                  "/v3/api-docs/**"
                         , "/swagger-ui.html"
-                        , "/form/login"
                         , "/swagger-ui/**"
                         , "/oauth2/password/captcha"
                         , "/oauth2/logout"
@@ -51,13 +49,15 @@ public class WebSecurityConfig {
                 .authenticated()
                 .and()
                 .csrf().disable()
-                .formLogin(Customizer.withDefaults())
                 // 自定义登录页面
-                .formLogin(form -> form
-                        .loginProcessingUrl("/form/token")
-                        .failureForwardUrl("/form/login")
-//                        .successForwardUrl()
-                        .loginPage("/form/login"))
+                // https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
+                // 登录页面 -> DefaultLoginPageGeneratingFilter
+                .formLogin()
+                .loginPage("/form/login")
+                .loginProcessingUrl("/form/token")
+                .failureForwardUrl("/form/login")
+                .permitAll()
+                .and()
                 .logout()
                 // 清除session
                 .invalidateHttpSession(true)

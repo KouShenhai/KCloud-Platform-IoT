@@ -1,5 +1,5 @@
 # 账号密码登录
-POST http://localhost:1111/oauth2/token
+POST http://127.0.0.1:1111/oauth2/token
 Authorization: Basic YXV0aC1jbGllbnQ6c2VjcmV0
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -23,6 +23,10 @@ Content-Disposition: form-data; name="uuid"
 Content-Disposition: form-data; name="captcha"
 
 bdbc
+--WebAppBoundary
+Content-Disposition: form-data; name="tenantId"
+
+0
 --WebAppBoundary
 
 #########
