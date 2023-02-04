@@ -15,6 +15,7 @@
  */
 
 package org.laokou.auth.server.infrastructure.config;
+import org.laokou.auth.server.infrastructure.handler.CustomSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -56,6 +57,7 @@ public class WebSecurityConfig {
                 .loginPage("/form/login")
                 .loginProcessingUrl("/form/token")
                 .failureForwardUrl("/form/login")
+                .successHandler(new CustomSuccessHandler())
                 .permitAll()
                 .and()
                 .logout()

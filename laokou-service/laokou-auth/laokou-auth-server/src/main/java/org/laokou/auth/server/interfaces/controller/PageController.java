@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.laokou.auth.server.interfaces.controller;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 /**
  * @author laokou
  */
@@ -28,6 +27,11 @@ public class PageController {
     @RequestMapping(value = "/form/login",method = {RequestMethod.GET,RequestMethod.POST})
     public String tenant() {
         return "tenant";
+    }
+
+    @GetMapping(value = "/form/success")
+    public String success() {
+        return "success";
     }
 
 }

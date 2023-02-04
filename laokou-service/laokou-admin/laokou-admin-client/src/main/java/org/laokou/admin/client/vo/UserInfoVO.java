@@ -31,6 +31,5 @@ public class UserInfoVO {
     private String mobile;
     private String email;
     private List<String> permissionList;
-    private String sourceName;
     private Long tenantId;
 }

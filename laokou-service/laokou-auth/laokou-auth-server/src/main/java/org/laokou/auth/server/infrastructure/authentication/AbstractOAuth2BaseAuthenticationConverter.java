@@ -54,6 +54,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 
     @Override
     public Authentication convert(HttpServletRequest request) {
+        // 请求链 FilterOrderRegistration
         String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
         if (!getGrantType().equals(grantType)) {
             return null;

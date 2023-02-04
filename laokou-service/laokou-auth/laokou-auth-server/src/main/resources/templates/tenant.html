@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container">
-  <form class="form-signin" method="post" action="/form/token">
+  <form class="form-signin" method="post" th:action="@{/form/token}">
     <h2 class="form-signin-heading">多租户统一认证平台</h2>
     <div class="alert alert-danger" role="alert" th:if="${errMsg != null}" th:text="${errMsg != null} ? ${errMsg}"/>
     <p>
