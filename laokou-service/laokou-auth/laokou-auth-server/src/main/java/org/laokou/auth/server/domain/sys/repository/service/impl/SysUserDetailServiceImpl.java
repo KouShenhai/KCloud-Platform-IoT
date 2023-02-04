@@ -44,7 +44,7 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
-        // 多租户查询
+        // 默认租户查询
         UserDetail userDetail = sysUserService.getUserDetail(loginName,0L);
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         String errMsg;

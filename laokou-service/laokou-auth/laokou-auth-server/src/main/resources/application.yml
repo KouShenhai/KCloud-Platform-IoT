@@ -15,16 +15,6 @@ spring:
   # i18n
   messages:
     basename: i18n/messages
-  # thymeleaf
-  thymeleaf:
-    suffix: .html
-    encoding: UTF-8
-    cache: false
-    enabled: true
-    servlet:
-      content-type: text/html
-    mode: HTML5
-    prefix: classpath:/templates/
   cloud:
     # sentinel
     sentinel:

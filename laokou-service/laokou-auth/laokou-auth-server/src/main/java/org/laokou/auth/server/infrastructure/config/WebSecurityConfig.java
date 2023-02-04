@@ -15,9 +15,9 @@
  */
 
 package org.laokou.auth.server.infrastructure.config;
-import org.laokou.auth.server.infrastructure.handler.CustomSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 /**
@@ -53,13 +53,7 @@ public class WebSecurityConfig {
                 // 自定义登录页面
                 // https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
                 // 登录页面 -> DefaultLoginPageGeneratingFilter
-                .formLogin()
-                .loginPage("/form/login")
-                .loginProcessingUrl("/form/token")
-                .failureForwardUrl("/form/login")
-                .successHandler(new CustomSuccessHandler())
-                .permitAll()
-                .and()
+                .formLogin(Customizer.withDefaults())
                 .logout()
                 // 清除session
                 .invalidateHttpSession(true)

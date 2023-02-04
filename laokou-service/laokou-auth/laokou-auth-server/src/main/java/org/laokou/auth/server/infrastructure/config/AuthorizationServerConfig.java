@@ -156,8 +156,10 @@ public class AuthorizationServerConfig {
                         , OidcScopes.EMAIL
                 )))
                 .redirectUris(redirectUris -> redirectUris.addAll(List.of(
-                          "http://127.0.0.1:8000/user/login"
-                        , "http://127.0.0.1:8001/user/login"
+                          "https://spring.io"
+                        , "https://gitee.com/laokouyun"
+                        , "https://github.com/KouShenhai"
+                        , "https://www.baidu.com"
                 )))
                 .clientName("认证")
                 // JWT配置
