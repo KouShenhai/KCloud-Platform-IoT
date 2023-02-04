@@ -40,29 +40,40 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
     private final SysDeptService sysDeptService;
     private final PasswordEncoder passwordEncoder;
 
+    private static final String ERR_MSG = "errMsg";
+
     @Override
     public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
         // 多租户查询
         UserDetail userDetail = sysUserService.getUserDetail(loginName,0L);
-        if (userDetail == null) {
-            throw new UsernameNotFoundException(MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
-        }
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+        String errMsg;
+        if (userDetail == null) {
+            errMsg = MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR);
+            request.setAttribute(ERR_MSG,errMsg);
+            throw new UsernameNotFoundException(errMsg);
+        }
         String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
         String clientPassword = userDetail.getPassword();
         if (!passwordEncoder.matches(password, clientPassword)) {
-            throw new UsernameNotFoundException(MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
+            errMsg = MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR);
+            request.setAttribute(ERR_MSG,errMsg);
+            throw new UsernameNotFoundException(errMsg);
         }
         // 是否锁定
         if (!userDetail.isEnabled()) {
-            throw new UsernameNotFoundException(MessageUtil.getMessage(ErrorCode.ACCOUNT_DISABLE));
+            errMsg = MessageUtil.getMessage(ErrorCode.ACCOUNT_DISABLE);
+            request.setAttribute(ERR_MSG,errMsg);
+            throw new UsernameNotFoundException(errMsg);
         }
         Long userId = userDetail.getUserId();
         Integer superAdmin = userDetail.getSuperAdmin();
         // 权限标识列表
         List<String> permissionsList = sysMenuService.getPermissionsList(superAdmin,userId);
         if (CollectionUtils.isEmpty(permissionsList)) {
-            throw new UsernameNotFoundException(MessageUtil.getMessage(ErrorCode.NOT_PERMISSIONS));
+            errMsg = MessageUtil.getMessage(ErrorCode.NOT_PERMISSIONS);
+            request.setAttribute(ERR_MSG,errMsg);
+            throw new UsernameNotFoundException(errMsg);
         }
         List<Long> deptIds = sysDeptService.getDeptIds(superAdmin, userId);
         userDetail.setDeptIds(deptIds);

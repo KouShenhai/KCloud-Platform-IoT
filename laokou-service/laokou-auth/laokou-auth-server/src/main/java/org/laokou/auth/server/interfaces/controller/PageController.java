@@ -15,16 +15,17 @@
  */
 
 package org.laokou.auth.server.interfaces.controller;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 /**
  * @author laokou
  */
 @Controller
 public class PageController {
 
-    @GetMapping("/form/login")
+    @RequestMapping(value = "/form/login",method = {RequestMethod.GET,RequestMethod.POST})
     public String tenant() {
         return "tenant";
     }

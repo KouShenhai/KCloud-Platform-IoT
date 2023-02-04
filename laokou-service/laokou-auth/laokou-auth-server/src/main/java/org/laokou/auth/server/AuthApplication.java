@@ -41,7 +41,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 @EnableDiscoveryClient
 @Import(CorsConfig.class)
-@MapperScan(value = {"org.laokou.auth.server.domain.sys.repository.mapper","org.laokou.common.log.mapper"})
+@MapperScan(value = {"org.laokou.auth.server.domain.sys.repository.mapper"
+        ,"org.laokou.common.log.mapper"})
 public class AuthApplication{
 
     public static void main(String[] args) {

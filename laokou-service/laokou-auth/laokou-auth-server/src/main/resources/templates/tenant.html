@@ -1,4 +1,5 @@
-<html lang="en"><head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -11,6 +12,7 @@
 <div class="container">
   <form class="form-signin" method="post" action="/form/token">
     <h2 class="form-signin-heading">多租户统一认证平台</h2>
+    <div class="alert alert-danger" role="alert" th:if="${errMsg != null}" th:text="${errMsg != null} ? ${errMsg}"/>
     <p>
       <label for="username" class="sr-only">用户名</label>
       <input type="text" id="username" name="username" class="form-control" placeholder="用户名" required="" autofocus="">
@@ -22,4 +24,5 @@
     <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
   </form>
 </div>
-</body></html>
+</body>
+</html>
