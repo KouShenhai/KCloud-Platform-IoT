@@ -48,8 +48,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserDO> im
     }
 
     @Override
-    public List<OptionVO> getOptionList() {
-        return this.baseMapper.getOptionList();
+    public List<OptionVO> getOptionList(Long tenantId) {
+        return this.baseMapper.getOptionList(tenantId);
     }
 
     @Override

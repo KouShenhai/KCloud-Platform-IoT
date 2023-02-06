@@ -24,5 +24,5 @@ import lombok.Data;
 public class SysDeptQo {
 
     private String name;
-
+    private Long tenantId;
 }

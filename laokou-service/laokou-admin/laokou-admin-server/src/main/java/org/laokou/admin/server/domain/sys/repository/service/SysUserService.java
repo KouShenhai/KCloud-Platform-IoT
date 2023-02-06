@@ -52,9 +52,10 @@ public interface SysUserService extends IService<SysUserDO> {
 
     /**
      * 获取用户列表下拉框
+     * @param tenantId
      * @return
      */
-    List<OptionVO> getOptionList();
+    List<OptionVO> getOptionList(Long tenantId);
 
     /**
      * 获取版本号

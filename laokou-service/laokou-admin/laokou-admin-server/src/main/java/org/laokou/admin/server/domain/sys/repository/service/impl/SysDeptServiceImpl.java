@@ -20,6 +20,7 @@ import org.laokou.admin.server.domain.sys.repository.mapper.SysDeptMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysDeptService;
 import org.laokou.admin.server.interfaces.qo.SysDeptQo;
 import org.laokou.admin.client.vo.SysDeptVO;
+import org.laokou.auth.client.utils.UserUtil;
 import org.springframework.stereotype.Service;
 import java.util.List;
 /**
@@ -32,6 +33,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptDO> im
 
     @Override
     public List<SysDeptVO> getDeptList(SysDeptQo qo) {
+        qo.setTenantId(UserUtil.getTenantId());
         return this.baseMapper.getDeptList(qo);
     }
 

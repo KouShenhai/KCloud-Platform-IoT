@@ -50,9 +50,10 @@ public interface SysUserMapper extends BaseMapper<SysUserDO> {
 
     /**
      * 获取下拉用户选择列表
+     * @param tenantId
      * @return
      */
-    List<OptionVO> getOptionList();
+    List<OptionVO> getOptionList(Long tenantId);
 
     /**
      * 获取版本号

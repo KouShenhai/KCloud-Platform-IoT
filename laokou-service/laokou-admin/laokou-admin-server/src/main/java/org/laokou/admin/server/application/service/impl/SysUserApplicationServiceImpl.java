@@ -140,7 +140,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
     @Override
     public List<OptionVO> getOptionList() {
-        return sysUserService.getOptionList();
+        Long tenantId = UserUtil.getTenantId();
+        return sysUserService.getOptionList(tenantId);
     }
 
     @Override
