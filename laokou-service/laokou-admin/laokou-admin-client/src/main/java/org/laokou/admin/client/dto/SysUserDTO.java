@@ -30,9 +30,7 @@ public class SysUserDTO {
     @NotNull(message = "请选择用户状态")
     private Integer status;
 
-    @NotNull(message = "请选择角色")
     private List<Long> roleIds;
-    @NotBlank(message = "密码不为空")
     private String password;
 
     private String imgUrl;
@@ -42,9 +40,9 @@ public class SysUserDTO {
     private String mobile;
 
     private Long editor;
-    @NotNull(message = "请选择部门")
     private Long deptId;
 
     private Integer version;
+    private Long tenantId;
 
 }

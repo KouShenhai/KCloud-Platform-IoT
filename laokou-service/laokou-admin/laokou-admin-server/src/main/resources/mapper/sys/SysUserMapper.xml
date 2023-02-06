@@ -52,7 +52,7 @@
                 version = version + 1,
             </if>
             <if test="dto.tenantId != null">
-                tenant_id = #{tenantId}
+                tenant_id = #{dto.tenantId}
         </if>
         </set>
         where id = #{dto.id} and version = #{dto.version}

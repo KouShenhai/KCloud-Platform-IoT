@@ -79,6 +79,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         }
         Integer version = sysRoleService.getVersion(id);
         dto.setVersion(version);
+        dto.setTenantId(UserUtil.getTenantId());
         sysUserService.updateUser(dto);
         List<Long> roleIds = dto.getRoleIds();
         //删除中间表
@@ -96,6 +97,15 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername()));
         if (count > 0) {
             throw new CustomException("用户名已存在，请重新填写");
+        }
+        if (CollectionUtils.isEmpty(dto.getRoleIds())) {
+            throw new CustomException("请选择角色");
+        }
+        if (dto.getDeptId() == null) {
+            throw new CustomException("请选择部门");
+        }
+        if (StringUtil.isEmpty(dto.getPassword())) {
+            throw new CustomException("请输入密码");
         }
         SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
         sysUserDO.setCreator(UserUtil.getUserId());
