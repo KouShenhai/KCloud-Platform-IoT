@@ -22,5 +22,6 @@ import lombok.Data;
 public class SysMenuQo {
 
     private String name;
+    private Long tenantId;
 
 }

@@ -23,6 +23,9 @@
          <if test="qo.name != '' and qo.name != null">
              and `name` like concat('%',#{qo.name},'%')
          </if>
+        <if test="qo.tenantId != null">
+            and tenant_id = #{qo.tenantId}
+        </if>
         order by sort desc
     </select>
 

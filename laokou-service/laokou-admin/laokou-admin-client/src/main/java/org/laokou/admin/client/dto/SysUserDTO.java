@@ -46,7 +46,5 @@ public class SysUserDTO {
     private Long deptId;
 
     private Integer version;
-    @NotNull(message = "请选择租户")
-    private Long tenantId;
 
 }

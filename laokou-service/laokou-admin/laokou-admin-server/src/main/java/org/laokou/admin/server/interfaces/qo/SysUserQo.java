@@ -26,4 +26,6 @@ public class SysUserQo extends BasePage {
 
     private Integer status;
 
+    private Long tenantId;
+
 }

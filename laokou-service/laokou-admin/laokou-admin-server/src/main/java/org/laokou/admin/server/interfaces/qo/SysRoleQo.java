@@ -23,4 +23,5 @@ import lombok.Data;
 public class SysRoleQo extends BasePage {
 
     private String name;
+    private Long tenantId;
 }

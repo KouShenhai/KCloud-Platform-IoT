@@ -66,23 +66,19 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (null == id) {
             throw new CustomException("用户编号不为空");
         }
-        SysUserDO sysUser = sysUserService.getById(id);
-        UserDetail userDetail = UserUtil.userDetail();
-        if (SuperAdminEnum.YES.ordinal() == sysUser.getSuperAdmin() && SuperAdminEnum.YES.ordinal() != userDetail.getSuperAdmin()) {
-            throw new CustomException("只有超级管理员才能修改");
-        }
         long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername())
-                        .eq(SysUserDO::getTenantId,userDetail.getTenantId())
+                        .eq(SysUserDO::getTenantId,UserUtil.getTenantId())
                 .ne(SysUserDO::getId,id));
         if (count > 0) {
             throw new CustomException("用户名已存在，请重新填写");
         }
-        dto.setEditor(userDetail.getUserId());
+        dto.setEditor(UserUtil.getUserId());
         String password = dto.getPassword();
         if (StringUtil.isNotEmpty(password)) {
             dto.setPassword(passwordEncoder.encode(password));
         }
-        dto.setVersion(sysUser.getVersion());
+        Integer version = sysRoleService.getVersion(id);
+        dto.setVersion(version);
         sysUserService.updateUser(dto);
         List<Long> roleIds = dto.getRoleIds();
         //删除中间表
@@ -103,6 +99,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         }
         SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
         sysUserDO.setCreator(UserUtil.getUserId());
+        sysUserDO.setTenantId(UserUtil.getTenantId());
         sysUserDO.setPassword(passwordEncoder.encode(dto.getPassword()));
         sysUserService.save(sysUserDO);
         List<Long> roleIds = dto.getRoleIds();
@@ -116,6 +113,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @DataFilter(tableAlias = "boot_sys_user")
     public IPage<SysUserVO> queryUserPage(SysUserQo qo) {
         ValidatorUtil.validateEntity(qo);
+        qo.setTenantId(UserUtil.getTenantId());
         IPage<SysUserVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysUserService.getUserPage(page,qo);
     }

@@ -55,6 +55,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     @DataFilter(tableAlias = "boot_sys_role")
     public IPage<SysRoleVO> queryRolePage(SysRoleQo qo) {
         ValidatorUtil.validateEntity(qo);
+        qo.setTenantId(UserUtil.getTenantId());
         IPage<SysRoleVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysRoleService.getRolePage(page,qo);
     }
@@ -74,7 +75,9 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     public Boolean insertRole(SysRoleDTO dto) {
         ValidatorUtil.validateEntity(dto);
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
-        long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, roleDO.getName()));
+        long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class)
+                        .eq(SysRoleDO::getTenantId,UserUtil.getTenantId())
+                .eq(SysRoleDO::getName, roleDO.getName()));
         if (count > 0) {
             throw new CustomException("角色已存在，请重新填写");
         }
@@ -117,7 +120,9 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
         if (id == null) {
             throw new CustomException("角色编号不为空");
         }
-        long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getName, dto.getName()).ne(SysRoleDO::getId,dto.getId()));
+        long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class)
+                .eq(SysRoleDO::getTenantId,UserUtil.getTenantId())
+                .eq(SysRoleDO::getName, dto.getName()).ne(SysRoleDO::getId,dto.getId()));
         if (count > 0) {
             throw new CustomException("角色已存在，请重新填写");
         }

@@ -55,4 +55,11 @@ public interface SysUserService extends IService<SysUserDO> {
      * @return
      */
     List<OptionVO> getOptionList();
+
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(Long id);
 }

@@ -4,7 +4,7 @@
 
     <select id="getMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
         select id,pid,`name`,icon,url,`type`,permission from boot_sys_menu
-        where del_flag = 0
+        where del_flag = 0 and tenant_id = #{tenantId}
         <if test="type != null">
             and `type` = #{type}
         </if>
@@ -16,6 +16,9 @@
         where del_flag = 0
         <if test="qo.name != null and qo.name != ''">
             and `name` like concat('%',#{qo.name},'%')
+        </if>
+        <if test="qo.tenantId != null">
+            and tenant_id = #{qo.tenantId}
         </if>
         order by sort desc
     </select>

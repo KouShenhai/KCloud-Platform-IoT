@@ -52,4 +52,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserDO> im
         return this.baseMapper.getOptionList();
     }
 
+    @Override
+    public Integer getVersion(Long id) {
+        return this.getVersion(id);
+    }
+
 }

@@ -62,6 +62,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
 
     @Override
     public List<SysMenuVO> queryMenuList(SysMenuQo qo) {
+        qo.setTenantId(UserUtil.getTenantId());
         return sysMenuService.queryMenuList(qo);
     }
 
@@ -78,7 +79,9 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
         if (id == null) {
             throw new CustomException("菜单编号不为空");
         }
-        long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, dto.getName()).ne(SysMenuDO::getId,dto.getId()));
+        long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class)
+                .eq(SysMenuDO::getTenantId,UserUtil.getTenantId())
+                .eq(SysMenuDO::getName, dto.getName()).ne(SysMenuDO::getId,dto.getId()));
         if (count > 0) {
             throw new CustomException("菜单已存在，请重新填写");
         }
@@ -93,7 +96,9 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertMenu(SysMenuDTO dto) {
         ValidatorUtil.validateEntity(dto);
-        long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, dto.getName()));
+        long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class)
+                .eq(SysMenuDO::getTenantId,UserUtil.getTenantId())
+                .eq(SysMenuDO::getName, dto.getName()));
         if (count > 0) {
             throw new CustomException("菜单已存在，请重新填写");
         }

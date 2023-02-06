@@ -53,4 +53,11 @@ public interface SysUserMapper extends BaseMapper<SysUserDO> {
      * @return
      */
     List<OptionVO> getOptionList();
+
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(@Param("id") Long id);
 }

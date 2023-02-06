@@ -72,7 +72,9 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertDept(SysDeptDTO dto) {
         ValidatorUtil.validateEntity(dto);
-        long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()));
+        long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class)
+                .eq(SysDeptDO::getTenantId,UserUtil.getTenantId())
+                .eq(SysDeptDO::getName, dto.getName()));
         if (count > 0) {
             throw new CustomException("部门已存在，请重新填写");
         }
@@ -92,7 +94,9 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
         if (id == null) {
             throw new CustomException("部门编号不为空");
         }
-        long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getName, dto.getName()).ne(SysDeptDO::getId,dto.getId()));
+        long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class)
+                .eq(SysDeptDO::getTenantId,UserUtil.getTenantId())
+                .eq(SysDeptDO::getName, dto.getName()).ne(SysDeptDO::getId,dto.getId()));
         if (count > 0) {
             throw new CustomException("部门已存在，请重新填写");
         }
