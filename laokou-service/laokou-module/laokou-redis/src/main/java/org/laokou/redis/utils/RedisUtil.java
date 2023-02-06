@@ -16,10 +16,7 @@
 package org.laokou.redis.utils;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.StringUtil;
-import org.redisson.api.RBloomFilter;
-import org.redisson.api.RLock;
-import org.redisson.api.RMap;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -117,12 +114,12 @@ public final class RedisUtil {
         redissonClient.getBucket(key).set(value,expire, TimeUnit.SECONDS);
     }
 
-    public void setIfExists(String key, Object value) {
-        setIfExists(key,value,DEFAULT_EXPIRE);
+    public void setIfAbsent(String key, Object value) {
+        setIfAbsent(key,value,DEFAULT_EXPIRE);
     }
 
-    public void setIfExists(String key, Object value, long expire) {
-        redissonClient.getBucket(key).setIfExists(value,expire, TimeUnit.SECONDS);
+    public void setIfAbsent(String key, Object value, long expire) {
+        redissonClient.getBucket(key).setIfAbsent(value,Duration.ofSeconds(expire));
     }
 
     public Object get(String key) {
@@ -131,6 +128,20 @@ public final class RedisUtil {
 
     public void delete(String key) {
         redissonClient.getKeys().delete(key);
+    }
+
+    public long incrementAndGet(String key) {
+        return redissonClient.getAtomicLong(key).incrementAndGet();
+    }
+
+    public long decrementAndGet(String key) {
+        return redissonClient.getAtomicLong(key).decrementAndGet();
+    }
+
+    public void setAtomicLong(String key,long value,long expire) {
+        RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
+        atomicLong.set(value);
+        atomicLong.expire(Duration.ofSeconds(expire));
     }
 
     public void hSet(String key,String field, Object value,long expire) {

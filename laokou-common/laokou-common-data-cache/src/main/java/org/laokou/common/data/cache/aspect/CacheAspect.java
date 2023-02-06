@@ -76,7 +76,7 @@ public class CacheAspect {
             return obj;
         }
         Object value = point.proceed();
-        redisUtil.setIfExists(key,value,expire);
+        redisUtil.setIfAbsent(key,value,expire);
         return value;
     }
 
