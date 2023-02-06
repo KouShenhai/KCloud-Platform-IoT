@@ -10,4 +10,9 @@
         select `name`,driver_class_name,url from boot_sys_tenant_source
     </select>
 
+    <select id="querySourceName" resultType="string">
+        select a.`name` from boot_sys_tenant_source a
+                                 JOIN boot_sys_tenant b on b.source_id = a.id
+        where a.del_flag = 0
+    </select>
 </mapper>

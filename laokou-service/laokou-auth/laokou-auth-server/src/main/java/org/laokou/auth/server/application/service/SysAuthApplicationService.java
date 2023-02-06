@@ -16,6 +16,10 @@
 package org.laokou.auth.server.application.service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.common.core.vo.OptionVO;
+
+import java.util.List;
+
 /**
  * auth服务
  * @author laokou
@@ -35,4 +39,9 @@ public interface SysAuthApplicationService {
      */
     Boolean logout(HttpServletRequest request);
 
+    /**
+     * 获取下拉选项
+     * @return
+     */
+    List<OptionVO> getOptionList();
 }

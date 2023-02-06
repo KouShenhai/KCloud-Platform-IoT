@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.SysUserDTO;
 import org.laokou.admin.client.vo.UserInfoVO;
 import org.laokou.admin.server.interfaces.qo.SysUserQo;
-import org.laokou.admin.client.vo.OptionVO;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.admin.client.vo.SysUserVO;
 import org.laokou.admin.server.application.service.SysUserApplicationService;
 import org.laokou.common.data.cache.annotation.DataCache;

@@ -18,8 +18,11 @@ package org.laokou.tenant.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.tenant.entity.SysTenantDO;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -28,16 +31,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysTenantMapper extends BaseMapper<SysTenantDO> {
     /**
-     * 根据租户id查询数据源
-     * @param tenantId
-     * @return
-     */
-    String querySourceName(Long tenantId);
-
-    /**
      * 查询版本号
      * @param id
      * @return
      */
     Integer getVersion(Long id);
+
+    /**
+     * 下拉选择框
+     * @return
+     */
+    List<OptionVO> getOptionList();
 }

@@ -32,4 +32,10 @@ public interface SysTenantSourceService extends IService<SysTenantSourceDO> {
      */
     void deleteTenantSource(Long id);
 
+    /**
+     * 查询数据源名称
+     * @param tenantId
+     * @return
+     */
+    String querySourceName(Long tenantId);
 }

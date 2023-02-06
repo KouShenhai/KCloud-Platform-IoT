@@ -21,8 +21,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.server.application.service.SysAuthApplicationService;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 /**
  * 系统认证控制器
  * @author laokou
@@ -51,6 +55,12 @@ public class SysAuthApiController {
     @Operation(summary = "系统认证>注销",description = "系统认证>注销")
     public HttpResult<Boolean> logout(HttpServletRequest request) {
         return new HttpResult<Boolean>().ok(sysAuthApplicationService.logout(request));
+    }
+
+    @GetMapping("/tenant")
+    @Operation(summary = "系统认证>租户",description = "系统认证>租户")
+    public HttpResult<List<OptionVO>> optionList() {
+        return new HttpResult<List<OptionVO>>().ok(sysAuthApplicationService.getOptionList());
     }
 
 }

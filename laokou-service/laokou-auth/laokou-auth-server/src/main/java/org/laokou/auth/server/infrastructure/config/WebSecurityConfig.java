@@ -42,6 +42,7 @@ public class WebSecurityConfig {
                         , "/swagger-ui/**"
                         , "/oauth2/password/captcha"
                         , "/oauth2/logout"
+                        , "/oauth2/tenant"
                         , "/actuator/**")
                 .permitAll()
                 .and()

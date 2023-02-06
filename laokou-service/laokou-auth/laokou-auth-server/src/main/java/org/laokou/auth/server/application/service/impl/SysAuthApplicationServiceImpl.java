@@ -22,6 +22,7 @@ import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.SysCaptchaService;
 import org.laokou.common.core.constant.Constant;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.exception.ErrorCode;
 import org.laokou.auth.server.application.service.SysAuthApplicationService;
@@ -29,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.*;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
+import org.laokou.tenant.service.SysTenantService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
@@ -37,6 +39,8 @@ import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.stereotype.Service;
 import java.awt.*;
 import java.security.Principal;
+import java.util.List;
+
 /**
  * SpringSecurity最新版本更新
  * @author laokou
@@ -49,6 +53,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     private final OAuth2AuthorizationService oAuth2AuthorizationService;
     private final RedisUtil redisUtil;
     private final SysCaptchaService sysCaptchaService;
+    private final SysTenantService sysTenantService;
 
     @Override
     public String captcha(HttpServletRequest request) {
@@ -89,6 +94,11 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
         redisUtil.delete(resourceTreeKey);
         return true;
+    }
+
+    @Override
+    public List<OptionVO> getOptionList() {
+        return sysTenantService.getOptionList();
     }
 
 }

@@ -17,18 +17,19 @@
 package org.laokou.tenant.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.tenant.entity.SysTenantDO;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
 public interface SysTenantService extends IService<SysTenantDO> {
     /**
-     * 查询数据源名称
-     * @param tenantId
+     * 下拉选择框
      * @return
      */
-    String querySourceName(Long tenantId);
-
+    List<OptionVO> getOptionList();
 
 }

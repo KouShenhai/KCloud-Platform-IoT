@@ -17,19 +17,21 @@
 package org.laokou.tenant.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.tenant.entity.SysTenantDO;
 import org.laokou.tenant.mapper.SysTenantMapper;
 import org.laokou.tenant.service.SysTenantService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
 @Service
 public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenantDO> implements SysTenantService {
-
     @Override
-    public String querySourceName(Long tenantId) {
-        return this.baseMapper.querySourceName(tenantId);
+    public List<OptionVO> getOptionList() {
+        return this.baseMapper.getOptionList();
     }
 }

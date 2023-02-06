@@ -19,7 +19,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.laokou.admin.client.dto.SysUserDTO;
 import org.laokou.admin.client.vo.UserInfoVO;
 import org.laokou.admin.server.interfaces.qo.SysUserQo;
-import org.laokou.admin.client.vo.OptionVO;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.admin.client.vo.SysUserVO;
 import java.util.List;
 

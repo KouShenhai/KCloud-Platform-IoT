@@ -27,10 +27,9 @@ import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.core.utils.MessageUtil;
-import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.swagger.exception.ErrorCode;
-import org.laokou.tenant.service.SysTenantService;
+import org.laokou.tenant.service.SysTenantSourceService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -70,7 +69,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     protected SysCaptchaService sysCaptchaService;
     protected OAuth2AuthorizationService authorizationService;
     protected OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
-    protected SysTenantService sysTenantService;
+    protected SysTenantSourceService sysTenantSourceService;
 
     public AbstractOAuth2BaseAuthenticationProvider(
             SysUserService sysUserService
@@ -81,7 +80,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             , SysCaptchaService sysCaptchaService
             , OAuth2AuthorizationService authorizationService
             , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
-            , SysTenantService sysTenantService) {
+            , SysTenantSourceService sysTenantSourceService) {
         this.sysDeptService = sysDeptService;
         this.sysMenuService = sysMenuService;
         this.loginLogUtil = loginLogUtil;
@@ -90,7 +89,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         this.sysCaptchaService = sysCaptchaService;
         this.tokenGenerator = tokenGenerator;
         this.authorizationService = authorizationService;
-        this.sysTenantService = sysTenantService;
+        this.sysTenantSourceService = sysTenantSourceService;
     }
 
 
@@ -230,10 +229,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             userDetail.setSourceName(DEFAULT_SOURCE);
         } else {
             // 租户数据源
-            String sourceName = sysTenantService.querySourceName(tenantId);
-            if (StringUtil.isEmpty(sourceName)) {
-                CustomAuthExceptionHandler.throwError(ErrorCode.TENANT_NOT_FOUND_SOURCE,MessageUtil.getMessage(ErrorCode.TENANT_NOT_FOUND_SOURCE));
-            }
+            String sourceName = sysTenantSourceService.querySourceName(tenantId);
             userDetail.setSourceName(sourceName);
         }
         return new UsernamePasswordAuthenticationToken(userDetail,loginName,userDetail.getAuthorities());

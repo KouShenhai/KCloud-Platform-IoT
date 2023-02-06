@@ -55,7 +55,7 @@
         where id = #{dto.id} and version = #{dto.version}
     </update>
 
-    <select id="getOptionList" resultType="org.laokou.admin.client.vo.OptionVO">
+    <select id="getOptionList" resultType="org.laokou.common.core.vo.OptionVO">
         select
             id as `value`
             ,username as label

@@ -45,4 +45,10 @@ public class SysTenantSourceServiceImpl extends ServiceImpl<SysTenantSourceMappe
     public void deleteTenantSource(Long id) {
         this.baseMapper.deleteById(id);
     }
+
+    @Override
+    public String querySourceName(Long tenantId) {
+        return this.baseMapper.querySourceName(tenantId);
+    }
+
 }
