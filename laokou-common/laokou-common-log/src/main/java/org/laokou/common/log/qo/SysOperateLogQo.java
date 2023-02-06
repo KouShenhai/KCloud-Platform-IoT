@@ -26,5 +26,6 @@ public class SysOperateLogQo extends BasePage {
     private String module;
 
     private Integer requestStatus;
+    private Long tenantId;
 
 }

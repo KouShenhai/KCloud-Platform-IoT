@@ -16,6 +16,7 @@
 package org.laokou.common.log.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.log.dto.OperateLogDTO;
 import org.laokou.common.log.entity.SysOperateLogDO;
@@ -33,11 +34,13 @@ public class SysOperateLogServiceImpl extends ServiceImpl<SysOperateLogMapper, S
 
     @Override
     public IPage<SysOperateLogVO> getOperateLogList(IPage<SysOperateLogVO> page, SysOperateLogQo qo) {
+        qo.setTenantId(UserUtil.getTenantId());
         return baseMapper.getOperateLogList(page,qo);
     }
 
     @Override
     public List<SysOperateLogVO> getOperateLogList(SysOperateLogQo qo) {
+        qo.setTenantId(UserUtil.getTenantId());
         return baseMapper.getOperateLogList(qo);
     }
 
