@@ -77,7 +77,7 @@ import java.util.stream.Collectors;
 public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
     private static final String RESOURCE_KEY = "laokou_resource";
     private static final String PROCESS_KEY = "Process_88888888";
-    private static final Integer START_AUDIT_STATUS = 1;
+    private static final Integer START_AUDIT_STATUS = 0;
     private final SysResourceService sysResourceService;
     private final SysAuditLogService sysAuditLogService;
     private final ThreadPoolTaskExecutor taskExecutor;

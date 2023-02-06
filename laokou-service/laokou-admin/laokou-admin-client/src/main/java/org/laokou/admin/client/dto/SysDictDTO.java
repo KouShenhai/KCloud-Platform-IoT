@@ -40,11 +40,6 @@ public class SysDictDTO {
     @NotBlank(message = "字典值不为空")
     private String dictValue;
     /**
-     * 状态 0 正常 1 停用
-     */
-    @NotNull(message = "请选择字典状态")
-    private Integer status;
-    /**
      * 备注
      */
     private String remark;

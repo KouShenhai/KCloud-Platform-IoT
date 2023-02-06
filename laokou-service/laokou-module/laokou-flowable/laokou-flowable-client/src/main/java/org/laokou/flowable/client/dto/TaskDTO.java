@@ -28,13 +28,11 @@ public class TaskDTO {
     private Integer pageNum;
     @NotNull(message = "显示条数不为空")
     private Integer pageSize;
-    @NotBlank(message = "流程名称不为空")
     private String processName;
     @NotNull(message = "用户编号不为空")
     private Long userId;
     @NotBlank(message = "用户名不为空")
     private String username;
-    @NotBlank(message = "流程编号不为空")
     private String processKey;
 
 }

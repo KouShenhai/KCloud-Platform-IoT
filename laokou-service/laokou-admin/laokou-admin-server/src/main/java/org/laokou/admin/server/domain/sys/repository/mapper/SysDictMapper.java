@@ -43,7 +43,12 @@ public interface SysDictMapper extends BaseMapper<SysDictDO> {
      */
     IPage<SysDictVO> getDictList(IPage<SysDictVO> page, @Param("qo") SysDictQo qo);
 
-//    List<OptionVO> optionList(String type);
+    /**
+     * 下拉框选项
+     * @param type
+     * @return
+     */
+    List<OptionVO> getOptionList(@Param("type") String type);
 
     /**
      * 根据id查询字典

@@ -203,7 +203,6 @@ CREATE TABLE `boot_sys_dict` (
                                  `dict_value` text COMMENT '值',
                                  `dict_label` varchar(100) DEFAULT NULL COMMENT '标签',
                                  `type` varchar(100) DEFAULT NULL COMMENT '类型',
-                                 `status` tinyint(1) DEFAULT NULL COMMENT '状态 0正常 1停用',
                                  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
                                  `sort` int(11) DEFAULT '1' COMMENT '排序',
                                  `dept_id` bigint(20) DEFAULT NULL COMMENT '部门id',
