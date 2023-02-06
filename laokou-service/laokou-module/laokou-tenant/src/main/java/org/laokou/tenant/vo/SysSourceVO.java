@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author laokou
  */
 @Data
-public class SysTenantSourceVO implements Serializable {
+public class SysSourceVO implements Serializable {
     private Long id;
     private String name;
     private String driverClassName;

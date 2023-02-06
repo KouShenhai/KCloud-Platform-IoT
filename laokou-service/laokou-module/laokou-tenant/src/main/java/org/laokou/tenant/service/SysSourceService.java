@@ -2,14 +2,14 @@ package org.laokou.tenant.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.laokou.tenant.entity.SysTenantSourceDO;
-import org.laokou.tenant.qo.SysTenantSourceQo;
-import org.laokou.tenant.vo.SysTenantSourceVO;
+import org.laokou.tenant.entity.SysSourceDO;
+import org.laokou.tenant.qo.SysSourceQo;
+import org.laokou.tenant.vo.SysSourceVO;
 
 /**
  * @author laokou
  */
-public interface SysTenantSourceService extends IService<SysTenantSourceDO> {
+public interface SysSourceService extends IService<SysSourceDO> {
 
     /**
      * 分页查询多租户数据源
@@ -17,7 +17,7 @@ public interface SysTenantSourceService extends IService<SysTenantSourceDO> {
      * @param page
      * @return
      */
-    IPage<SysTenantSourceVO> queryTenantSourcePage(IPage<SysTenantSourceVO> page, SysTenantSourceQo qo);
+    IPage<SysSourceVO> querySourcePage(IPage<SysSourceVO> page, SysSourceQo qo);
 
     /**
      * 获取版本号
@@ -30,19 +30,19 @@ public interface SysTenantSourceService extends IService<SysTenantSourceDO> {
      * 删除多租户数据源
      * @param id
      */
-    void deleteTenantSource(Long id);
+    void deleteSource(Long id);
 
     /**
      * 查询数据源名称
      * @param tenantId
      * @return
      */
-    String queryTenantSourceName(Long tenantId);
+    String querySourceName(Long tenantId);
 
     /**
      * 查询数据源信息
      * @param sourceName
      * @return
      */
-    SysTenantSourceVO queryTenantSource(String sourceName);
+    SysSourceVO querySource(String sourceName);
 }

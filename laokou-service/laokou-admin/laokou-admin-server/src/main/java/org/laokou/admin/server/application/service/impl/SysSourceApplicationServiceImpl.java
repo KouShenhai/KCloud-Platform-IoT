@@ -20,16 +20,16 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
-import org.laokou.tenant.dto.SysTenantSourceDTO;
-import org.laokou.admin.server.application.service.SysTenantSourceApplicationService;
+import org.laokou.tenant.dto.SysSourceDTO;
+import org.laokou.admin.server.application.service.SysSourceApplicationService;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.ValidatorUtil;
-import org.laokou.tenant.entity.SysTenantSourceDO;
-import org.laokou.tenant.qo.SysTenantSourceQo;
-import org.laokou.tenant.service.SysTenantSourceService;
-import org.laokou.tenant.vo.SysTenantSourceVO;
+import org.laokou.tenant.entity.SysSourceDO;
+import org.laokou.tenant.qo.SysSourceQo;
+import org.laokou.tenant.service.SysSourceService;
+import org.laokou.tenant.vo.SysSourceVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,50 +38,50 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-public class SysTenantSourceApplicationServiceImpl implements SysTenantSourceApplicationService {
+public class SysSourceApplicationServiceImpl implements SysSourceApplicationService {
 
-    private final SysTenantSourceService sysTenantSourceService;
+    private final SysSourceService sysSourceService;
     @Override
-    public IPage<SysTenantSourceVO> queryTenantSourcePage(SysTenantSourceQo qo) {
+    public IPage<SysSourceVO> querySourcePage(SysSourceQo qo) {
         ValidatorUtil.validateEntity(qo);
-        IPage<SysTenantSourceVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysTenantSourceService.queryTenantSourcePage(page,qo);
+        IPage<SysSourceVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+        return sysSourceService.querySourcePage(page,qo);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean insertTenantSource(SysTenantSourceDTO dto) {
+    public Boolean insertSource(SysSourceDTO dto) {
         ValidatorUtil.validateEntity(dto);
-        long count = sysTenantSourceService.count(Wrappers.lambdaQuery(SysTenantSourceDO.class).eq(SysTenantSourceDO::getName, dto.getName()));
+        long count = sysSourceService.count(Wrappers.lambdaQuery(SysSourceDO.class).eq(SysSourceDO::getName, dto.getName()));
         if (count > 0) {
             throw new CustomException("数据源名称已存在，请重新填写");
         }
-        SysTenantSourceDO tenantSourceDO = ConvertUtil.sourceToTarget(dto, SysTenantSourceDO.class);
+        SysSourceDO tenantSourceDO = ConvertUtil.sourceToTarget(dto, SysSourceDO.class);
         tenantSourceDO.setCreator(UserUtil.getUserId());
-        return sysTenantSourceService.save(tenantSourceDO);
+        return sysSourceService.save(tenantSourceDO);
     }
 
     @Override
-    public Boolean updateTenantSource(SysTenantSourceDTO dto) {
+    public Boolean updateSource(SysSourceDTO dto) {
         ValidatorUtil.validateEntity(dto);
         Long id = dto.getId();
         if (id == null) {
             throw new CustomException("数据源编号不为空");
         }
-        long count = sysTenantSourceService.count(Wrappers.lambdaQuery(SysTenantSourceDO.class).eq(SysTenantSourceDO::getName, dto.getName()).ne(SysTenantSourceDO::getId,dto.getId()));
+        long count = sysSourceService.count(Wrappers.lambdaQuery(SysSourceDO.class).eq(SysSourceDO::getName, dto.getName()).ne(SysSourceDO::getId,dto.getId()));
         if (count > 0) {
             throw new CustomException("数据源名称已存在，请重新填写");
         }
-        Integer version = sysTenantSourceService.getVersion(id);
-        SysTenantSourceDO sourceDO = ConvertUtil.sourceToTarget(dto, SysTenantSourceDO.class);
+        Integer version = sysSourceService.getVersion(id);
+        SysSourceDO sourceDO = ConvertUtil.sourceToTarget(dto, SysSourceDO.class);
         sourceDO.setVersion(version);
         sourceDO.setEditor(UserUtil.getUserId());
-        return sysTenantSourceService.updateById(sourceDO);
+        return sysSourceService.updateById(sourceDO);
     }
 
     @Override
-    public Boolean deleteTenantSource(Long id) {
-        sysTenantSourceService.deleteTenantSource(id);
+    public Boolean deleteSource(Long id) {
+        sysSourceService.deleteSource(id);
         return true;
     }
 

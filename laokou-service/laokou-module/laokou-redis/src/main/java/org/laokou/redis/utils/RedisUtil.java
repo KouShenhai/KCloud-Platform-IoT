@@ -122,7 +122,7 @@ public final class RedisUtil {
     }
 
     public void setIfExists(String key, Object value, long expire) {
-        redissonClient.getBucket(key).set(value,expire, TimeUnit.SECONDS);
+        redissonClient.getBucket(key).setIfExists(value,expire, TimeUnit.SECONDS);
     }
 
     public Object get(String key) {

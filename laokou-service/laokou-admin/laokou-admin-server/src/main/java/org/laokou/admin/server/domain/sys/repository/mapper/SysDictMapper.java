@@ -22,7 +22,11 @@ import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.common.core.vo.OptionVO;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
  * @author laokou
  * @version 1.0
@@ -38,6 +42,8 @@ public interface SysDictMapper extends BaseMapper<SysDictDO> {
      * @return
      */
     IPage<SysDictVO> getDictList(IPage<SysDictVO> page, @Param("qo") SysDictQo qo);
+
+//    List<OptionVO> optionList(String type);
 
     /**
      * 根据id查询字典

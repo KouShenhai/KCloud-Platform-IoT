@@ -22,9 +22,9 @@ import org.laokou.common.mybatisplus.entity.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("boot_sys_tenant_source")
-@Schema(name = "SysTenantSourceDO",description = "系统多租户数据源实体类")
-public class SysTenantSourceDO extends BaseDO {
+@TableName("boot_sys_source")
+@Schema(name = "SysSourceDO",description = "系统数据源实体类")
+public class SysSourceDO extends BaseDO {
 
     /**
      * 数据源驱动

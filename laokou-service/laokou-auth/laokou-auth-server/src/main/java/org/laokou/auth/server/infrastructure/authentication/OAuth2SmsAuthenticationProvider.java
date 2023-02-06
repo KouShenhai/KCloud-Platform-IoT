@@ -26,7 +26,7 @@ import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.exception.ErrorCode;
-import org.laokou.tenant.service.SysTenantSourceService;
+import org.laokou.tenant.service.SysSourceService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -53,8 +53,8 @@ public class OAuth2SmsAuthenticationProvider extends AbstractOAuth2BaseAuthentic
             , SysCaptchaService sysCaptchaService
             , OAuth2AuthorizationService oAuth2AuthorizationService
             , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
-            , SysTenantSourceService sysTenantSourceService) {
-        super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder,sysCaptchaService,oAuth2AuthorizationService,tokenGenerator,sysTenantSourceService);
+            , SysSourceService sysSourceService) {
+        super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder,sysCaptchaService,oAuth2AuthorizationService,tokenGenerator, sysSourceService);
     }
 
     @Override

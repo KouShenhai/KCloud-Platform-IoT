@@ -29,7 +29,7 @@ import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.core.utils.MessageUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.swagger.exception.ErrorCode;
-import org.laokou.tenant.service.SysTenantSourceService;
+import org.laokou.tenant.service.SysSourceService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -69,7 +69,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     protected SysCaptchaService sysCaptchaService;
     protected OAuth2AuthorizationService authorizationService;
     protected OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
-    protected SysTenantSourceService sysTenantSourceService;
+    protected SysSourceService sysSourceService;
 
     public AbstractOAuth2BaseAuthenticationProvider(
             SysUserService sysUserService
@@ -80,7 +80,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             , SysCaptchaService sysCaptchaService
             , OAuth2AuthorizationService authorizationService
             , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
-            , SysTenantSourceService sysTenantSourceService) {
+            , SysSourceService sysSourceService) {
         this.sysDeptService = sysDeptService;
         this.sysMenuService = sysMenuService;
         this.loginLogUtil = loginLogUtil;
@@ -89,7 +89,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         this.sysCaptchaService = sysCaptchaService;
         this.tokenGenerator = tokenGenerator;
         this.authorizationService = authorizationService;
-        this.sysTenantSourceService = sysTenantSourceService;
+        this.sysSourceService = sysSourceService;
     }
 
 
@@ -229,7 +229,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             userDetail.setSourceName(DEFAULT_SOURCE);
         } else {
             // 租户数据源
-            String sourceName = sysTenantSourceService.queryTenantSourceName(tenantId);
+            String sourceName = sysSourceService.querySourceName(tenantId);
             userDetail.setSourceName(sourceName);
         }
         return new UsernamePasswordAuthenticationToken(userDetail,loginName,userDetail.getAuthorities());

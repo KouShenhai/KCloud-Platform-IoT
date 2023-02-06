@@ -1,41 +1,41 @@
 package org.laokou.admin.server.application.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.tenant.dto.SysTenantSourceDTO;
-import org.laokou.tenant.qo.SysTenantSourceQo;
-import org.laokou.tenant.vo.SysTenantSourceVO;
+import org.laokou.tenant.dto.SysSourceDTO;
+import org.laokou.tenant.qo.SysSourceQo;
+import org.laokou.tenant.vo.SysSourceVO;
 
 /**
  * @author laokou
  */
-public interface SysTenantSourceApplicationService {
+public interface SysSourceApplicationService {
 
     /**
      * 查询多租户数据源分页
      * @param qo
      * @return
      */
-    IPage<SysTenantSourceVO> queryTenantSourcePage(SysTenantSourceQo qo);
+    IPage<SysSourceVO> querySourcePage(SysSourceQo qo);
 
     /**
      * 新增多租户数据源
      * @param dto
      * @return
      */
-    Boolean insertTenantSource(SysTenantSourceDTO dto);
+    Boolean insertSource(SysSourceDTO dto);
 
     /**
      * 修改多租户数据源
      * @param dto
      * @return
      */
-    Boolean updateTenantSource(SysTenantSourceDTO dto);
+    Boolean updateSource(SysSourceDTO dto);
 
     /**
      * 删除多租户数据源
      * @param id
      * @return
      */
-    Boolean deleteTenantSource(Long id);
+    Boolean deleteSource(Long id);
 
 }

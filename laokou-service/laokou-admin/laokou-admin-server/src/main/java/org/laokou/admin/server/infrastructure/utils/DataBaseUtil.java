@@ -24,8 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.swagger.exception.CustomException;
-import org.laokou.tenant.service.SysTenantSourceService;
-import org.laokou.tenant.vo.SysTenantSourceVO;
+import org.laokou.tenant.service.SysSourceService;
+import org.laokou.tenant.vo.SysSourceVO;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -40,7 +40,7 @@ import java.sql.DriverManager;
 @RequiredArgsConstructor
 public class DataBaseUtil {
 
-    private final SysTenantSourceService sysTenantSourceService;
+    private final SysSourceService sysSourceService;
 
     public void connectDataBase(String driverClassName,String url,String username,String password) {
         try {
@@ -69,7 +69,7 @@ public class DataBaseUtil {
     }
 
     private void dynamicAddDataBase(String sourceName) {
-        SysTenantSourceVO sourceVO = sysTenantSourceService.queryTenantSource(sourceName);
+        SysSourceVO sourceVO = sysSourceService.querySource(sourceName);
         DataSourceProperty properties = new DataSourceProperty ();
         properties.setUsername(sourceVO.getUsername());
         properties.setPassword(sourceVO.getPassword());

@@ -12,6 +12,7 @@
             <if test="userId != null">
                 AND boot_sys_user.id = #{userId}
             </if>
+            and boot_sys_role.del_flag = 0
         </where>
         group by boot_sys_role.id
         order by boot_sys_role.update_date desc

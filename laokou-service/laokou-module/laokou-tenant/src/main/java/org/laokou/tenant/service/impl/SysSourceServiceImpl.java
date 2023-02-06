@@ -18,22 +18,22 @@ package org.laokou.tenant.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.laokou.tenant.entity.SysTenantSourceDO;
-import org.laokou.tenant.mapper.SysTenantSourceMapper;
-import org.laokou.tenant.qo.SysTenantSourceQo;
-import org.laokou.tenant.service.SysTenantSourceService;
-import org.laokou.tenant.vo.SysTenantSourceVO;
+import org.laokou.tenant.entity.SysSourceDO;
+import org.laokou.tenant.mapper.SysSourceMapper;
+import org.laokou.tenant.qo.SysSourceQo;
+import org.laokou.tenant.service.SysSourceService;
+import org.laokou.tenant.vo.SysSourceVO;
 import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
 @Service
-public class SysTenantSourceServiceImpl extends ServiceImpl<SysTenantSourceMapper, SysTenantSourceDO> implements SysTenantSourceService {
+public class SysSourceServiceImpl extends ServiceImpl<SysSourceMapper, SysSourceDO> implements SysSourceService {
 
     @Override
-    public IPage<SysTenantSourceVO> queryTenantSourcePage(IPage<SysTenantSourceVO> page, SysTenantSourceQo qo) {
-        return this.baseMapper.queryTenantSourcePage(page,qo);
+    public IPage<SysSourceVO> querySourcePage(IPage<SysSourceVO> page, SysSourceQo qo) {
+        return this.baseMapper.querySourcePage(page,qo);
     }
 
     @Override
@@ -42,18 +42,18 @@ public class SysTenantSourceServiceImpl extends ServiceImpl<SysTenantSourceMappe
     }
 
     @Override
-    public void deleteTenantSource(Long id) {
+    public void deleteSource(Long id) {
         this.baseMapper.deleteById(id);
     }
 
     @Override
-    public String queryTenantSourceName(Long tenantId) {
-        return this.baseMapper.queryTenantSourceName(tenantId);
+    public String querySourceName(Long tenantId) {
+        return this.baseMapper.querySourceName(tenantId);
     }
 
     @Override
-    public SysTenantSourceVO queryTenantSource(String sourceName) {
-        return this.baseMapper.queryTenantSource(sourceName);
+    public SysSourceVO querySource(String sourceName) {
+        return this.baseMapper.querySource(sourceName);
     }
 
 }

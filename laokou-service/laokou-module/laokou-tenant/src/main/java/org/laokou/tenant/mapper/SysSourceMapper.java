@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.laokou.tenant.entity.SysTenantSourceDO;
-import org.laokou.tenant.qo.SysTenantSourceQo;
-import org.laokou.tenant.vo.SysTenantSourceVO;
+import org.laokou.tenant.entity.SysSourceDO;
+import org.laokou.tenant.qo.SysSourceQo;
+import org.laokou.tenant.vo.SysSourceVO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface SysTenantSourceMapper extends BaseMapper<SysTenantSourceDO> {
+public interface SysSourceMapper extends BaseMapper<SysSourceDO> {
 
     /**
      * 分页查询多租户数据源
@@ -22,7 +22,7 @@ public interface SysTenantSourceMapper extends BaseMapper<SysTenantSourceDO> {
      * @param page
      * @return
      */
-    IPage<SysTenantSourceVO> queryTenantSourcePage(IPage<SysTenantSourceVO> page, @Param("qo") SysTenantSourceQo qo);
+    IPage<SysSourceVO> querySourcePage(IPage<SysSourceVO> page, @Param("qo") SysSourceQo qo);
 
     /**
      * 查询版本号
@@ -36,7 +36,7 @@ public interface SysTenantSourceMapper extends BaseMapper<SysTenantSourceDO> {
      * @param tenantId
      * @return
      */
-    String queryTenantSourceName(@Param("tenantId") Long tenantId);
+    String querySourceName(@Param("tenantId") Long tenantId);
 
 
     /**
@@ -44,6 +44,6 @@ public interface SysTenantSourceMapper extends BaseMapper<SysTenantSourceDO> {
      * @param sourceName
      * @return
      */
-    SysTenantSourceVO queryTenantSource(@Param("sourceName") String sourceName);
+    SysSourceVO querySource(@Param("sourceName") String sourceName);
 
 }
