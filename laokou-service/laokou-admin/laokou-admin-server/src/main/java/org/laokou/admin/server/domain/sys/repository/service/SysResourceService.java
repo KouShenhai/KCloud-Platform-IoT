@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysResourceDO;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
-import org.laokou.common.mybatisplus.config.DsTenantProcessor;
+import org.laokou.admin.server.infrastructure.processor.DsTenantProcessor;
 import org.laokou.elasticsearch.client.index.ResourceIndex;
 import java.util.List;
 

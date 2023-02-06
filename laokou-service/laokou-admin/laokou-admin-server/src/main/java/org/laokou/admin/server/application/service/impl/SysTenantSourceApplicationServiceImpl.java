@@ -24,7 +24,6 @@ import org.laokou.tenant.dto.SysTenantSourceDTO;
 import org.laokou.admin.server.application.service.SysTenantSourceApplicationService;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.mybatisplus.utils.DataBaseUtil;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.laokou.tenant.entity.SysTenantSourceDO;

@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysDictDO;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
-import org.laokou.common.mybatisplus.config.DsTenantProcessor;
+import org.laokou.admin.server.infrastructure.processor.DsTenantProcessor;
 /**
  * @author laokou
  * @version 1.0

@@ -22,7 +22,7 @@ import org.laokou.admin.server.domain.sys.entity.SysMessageDO;
 import org.laokou.admin.server.interfaces.qo.SysMessageQo;
 import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
-import org.laokou.common.mybatisplus.config.DsTenantProcessor;
+import org.laokou.admin.server.infrastructure.processor.DsTenantProcessor;
 
 /**
  * @author laokou

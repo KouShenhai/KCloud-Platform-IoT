@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.laokou.common.mybatisplus.utils;
+package org.laokou.admin.server.infrastructure.utils;
 
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
@@ -24,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.swagger.exception.CustomException;
+import org.laokou.tenant.service.SysTenantSourceService;
+import org.laokou.tenant.vo.SysTenantSourceVO;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -38,6 +40,7 @@ import java.sql.DriverManager;
 @RequiredArgsConstructor
 public class DataBaseUtil {
 
+    private final SysTenantSourceService sysTenantSourceService;
 
     public void connectDataBase(String driverClassName,String url,String username,String password) {
         try {
@@ -59,19 +62,19 @@ public class DataBaseUtil {
         if (StringUtil.isEmpty(sourceName)) {
             throw new CustomException("数据源不存在");
         }
-//        if (!checkDataBase(sourceName)) {
-//            dynamicAddDataBase(sourceName);
-//        }
+        if (!checkDataBase(sourceName)) {
+            dynamicAddDataBase(sourceName);
+        }
         return sourceName;
     }
 
     private void dynamicAddDataBase(String sourceName) {
-//        SysTenantSourceVO sourceVO = sysTenantSourceService.queryTenantSource(sourceName);
+        SysTenantSourceVO sourceVO = sysTenantSourceService.queryTenantSource(sourceName);
         DataSourceProperty properties = new DataSourceProperty ();
-//        properties.setUsername(sourceVO.getUsername());
-//        properties.setPassword(sourceVO.getPassword());
-//        properties.setUrl(sourceVO.getUrl());
-//        properties.setDriverClassName(sourceVO.getDriverClassName());
+        properties.setUsername(sourceVO.getUsername());
+        properties.setPassword(sourceVO.getPassword());
+        properties.setUrl(sourceVO.getUrl());
+        properties.setDriverClassName(sourceVO.getDriverClassName());
         DynamicRoutingDataSource dynamicRoutingDataSource = SpringContextUtil.getBean(DynamicRoutingDataSource.class);
         DefaultDataSourceCreator dataSourceCreator = SpringContextUtil.getBean(DefaultDataSourceCreator.class);
         DataSource dataSource = dataSourceCreator.createDataSource(properties);
