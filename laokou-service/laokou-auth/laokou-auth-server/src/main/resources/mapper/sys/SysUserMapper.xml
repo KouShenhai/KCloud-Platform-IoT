@@ -14,7 +14,7 @@
     ,a.dept_id as deptId
     ,a.tenant_id as tenantId
     FROM `boot_sys_user` a
-    where a.del_flag = '0'
+    where a.del_flag = 0
           and a.tenant_id = #{tenantId}
           and (a.username = #{loginName}
                    or a.email = #{loginName}

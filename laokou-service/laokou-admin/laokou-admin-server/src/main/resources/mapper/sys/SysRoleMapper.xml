@@ -19,7 +19,7 @@
 
     <select id="getRoleList" resultType="org.laokou.admin.client.vo.SysRoleVO">
         select id,`name`,sort from boot_sys_role
-        where del_flag = '0'
+        where del_flag = 0
          <if test="qo.name != '' and qo.name != null">
              and `name` like concat('%',#{qo.name},'%')
          </if>

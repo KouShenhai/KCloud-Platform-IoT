@@ -3,7 +3,7 @@
 <mapper namespace="org.laokou.common.log.mapper.SysAuditLogMapper">
     <select id="getAuditLogList" resultType="org.laokou.common.log.vo.SysAuditLogVO">
         select id,`comment`,audit_date,audit_name,audit_status from boot_sys_audit_log
-        where del_flag = '0'
+        where del_flag = 0
         <if test="businessId != null">
             and business_id = #{businessId}
         </if>

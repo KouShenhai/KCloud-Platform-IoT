@@ -13,7 +13,7 @@
         ,request_status
         ,msg
         from boot_sys_login_log
-        where del_flag = '0'
+        where del_flag = 0
         <if test="qo.loginName != null and qo.loginName != ''">
             and login_name like concat('%',#{qo.loginName},'%')
         </if>

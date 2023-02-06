@@ -27,9 +27,9 @@ import java.sql.DriverManager;
  */
 @UtilityClass
 @Slf4j
-public class DBUtil {
+public class DataBaseUtil {
 
-    public void connectDB(String driverClassName,String url,String username,String password) {
+    public void connectDataBase(String driverClassName,String url,String username,String password) {
         try {
             Class.forName(driverClassName);
         } catch (Exception e) {

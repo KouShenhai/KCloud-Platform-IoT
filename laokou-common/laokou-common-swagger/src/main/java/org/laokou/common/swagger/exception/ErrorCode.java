@@ -282,4 +282,12 @@ public interface ErrorCode {
      * 访问被拒绝
      */
     int ACCESS_DENIED = 20015;
+    /**
+     * 租户未配置数据源
+     */
+    int TENANT_NOT_FOUND_SOURCE = 20016;
+    /**
+     * 租户编号不为空
+     */
+    int TENANT_ID_NOT_NULL = 20017;
 }

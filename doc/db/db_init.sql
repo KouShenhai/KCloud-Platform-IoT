@@ -653,7 +653,7 @@ DECLARE consume CURSOR FOR SELECT
                              AND boot_sys_user.id = boot_sys_user_role.user_id
                              AND boot_sys_role.id = boot_sys_user_role.role_id
                              AND boot_sys_user.id = userId
-                             AND boot_sys_dept.del_flag = '0'
+                             AND boot_sys_dept.del_flag = 0
                            GROUP BY
                                                      boot_sys_dept.id;
 
@@ -689,7 +689,7 @@ INSERT temp_boot_sys_dept SELECT
                           FROM
                                         boot_sys_dept
                           WHERE
-                                            del_flag = '0'
+                                            del_flag = 0
                             AND path LIKE concat('%', dept_id, '%');
 
 # 将consume赋值给dept_id
@@ -762,7 +762,7 @@ DECLARE con2 CURSOR FOR SELECT
                               boot_sys_dept
                         WHERE
                                   path LIKE concat('%', xid, '%')
-                          AND del_flag = '0'
+                          AND del_flag = 0
                           AND id <> xid;
 
 # 没有数据后返回,将s=1

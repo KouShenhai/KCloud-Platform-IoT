@@ -15,7 +15,7 @@
         FROM
             boot_sys_oss
         WHERE
-            del_flag = '0'
+            del_flag = 0
           AND `status` = 1
     </select>
 </mapper>

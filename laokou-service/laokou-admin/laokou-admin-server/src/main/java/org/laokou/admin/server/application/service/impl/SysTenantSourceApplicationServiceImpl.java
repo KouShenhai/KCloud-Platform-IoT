@@ -20,11 +20,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.SysTenantSourceDTO;
+import org.laokou.tenant.dto.SysTenantSourceDTO;
 import org.laokou.admin.server.application.service.SysTenantSourceApplicationService;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.mybatisplus.utils.DBUtil;
+import org.laokou.common.mybatisplus.utils.DataBaseUtil;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.laokou.tenant.entity.SysTenantSourceDO;
@@ -94,7 +94,7 @@ public class SysTenantSourceApplicationServiceImpl implements SysTenantSourceApp
         String driverClassName = dto.getDriverClassName();
         String username = dto.getUsername();
         String password = dto.getPassword();
-        DBUtil.connectDB(driverClassName,url,username,password);
+        DataBaseUtil.connectDataBase(driverClassName,url,username,password);
         return true;
     }
 }

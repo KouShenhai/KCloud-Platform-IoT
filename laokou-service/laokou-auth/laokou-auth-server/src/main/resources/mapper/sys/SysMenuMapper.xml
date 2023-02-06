@@ -3,7 +3,7 @@
 <mapper namespace="org.laokou.auth.server.domain.sys.repository.mapper.SysMenuMapper">
     <select id="getPermissionsList" resultType="string">
         SELECT permission FROM boot_sys_menu
-        where del_flag = '0'
+        where del_flag = 0
         GROUP BY permission
     </select>
 
@@ -18,7 +18,7 @@
         AND d.id = e.user_id
         AND b.id = e.role_id
         AND d.id = #{userId}
-        and a.del_flag = '0'
+        and a.del_flag = 0
         GROUP BY a.permission
     </select>
 

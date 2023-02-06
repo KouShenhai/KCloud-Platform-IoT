@@ -71,7 +71,9 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (SuperAdminEnum.YES.ordinal() == sysUser.getSuperAdmin() && SuperAdminEnum.YES.ordinal() != userDetail.getSuperAdmin()) {
             throw new CustomException("只有超级管理员才能修改");
         }
-        long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername()).ne(SysUserDO::getId,id));
+        long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername())
+                        .eq(SysUserDO::getTenantId,userDetail.getTenantId())
+                .ne(SysUserDO::getId,id));
         if (count > 0) {
             throw new CustomException("用户名已存在，请重新填写");
         }

@@ -83,6 +83,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - 分布式事务：Seata
 - 服务监控：Spring Boot Admin & Prometheus
 - 消息队列：RocketMQ & Kafka
+- 任务调度：Power Job
 - 日志分析：EFK
 - 数据缓存：Caffeine & Redis
 - 统计报表：MongoDB

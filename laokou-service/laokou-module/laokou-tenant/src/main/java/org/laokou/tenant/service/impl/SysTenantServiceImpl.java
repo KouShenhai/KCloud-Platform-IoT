@@ -13,25 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.auth.server.interfaces.controller;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+package org.laokou.tenant.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.laokou.tenant.entity.SysTenantDO;
+import org.laokou.tenant.mapper.SysTenantMapper;
+import org.laokou.tenant.service.SysTenantService;
+import org.springframework.stereotype.Service;
+
 /**
  * @author laokou
  */
-@Controller
-public class PageController {
+@Service
+public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenantDO> implements SysTenantService {
 
-    @RequestMapping(value = "/form/login",method = {RequestMethod.GET,RequestMethod.POST})
-    public String tenant() {
-        return "tenant";
+    @Override
+    public String querySourceName(Long tenantId) {
+        return this.baseMapper.querySourceName(tenantId);
     }
-
-    @GetMapping(value = "/form/success")
-    public String success() {
-        return "success";
-    }
-
 }

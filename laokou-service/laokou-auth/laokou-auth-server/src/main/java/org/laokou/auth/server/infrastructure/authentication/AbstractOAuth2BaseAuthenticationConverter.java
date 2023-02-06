@@ -63,7 +63,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
         String tenantId = request.getParameter(AuthConstant.TENANT_ID);
         log.info("租户编号：{}",tenantId);
         if (StringUtil.isEmpty(tenantId)) {
-            CustomAuthExceptionHandler.throwError(20016, "租户编号不为空");
+            CustomAuthExceptionHandler.throwError(ErrorCode.TENANT_ID_NOT_NULL, MessageUtil.getMessage(ErrorCode.TENANT_ID_NOT_NULL));
         }
         // 构建请求参数集合
         MultiValueMap<String, String> parameters = MapUtil.getParameters(request);

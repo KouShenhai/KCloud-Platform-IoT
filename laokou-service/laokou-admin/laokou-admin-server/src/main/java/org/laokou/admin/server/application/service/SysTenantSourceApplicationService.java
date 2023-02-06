@@ -1,7 +1,7 @@
 package org.laokou.admin.server.application.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.client.dto.SysTenantSourceDTO;
+import org.laokou.tenant.dto.SysTenantSourceDTO;
 import org.laokou.tenant.qo.SysTenantSourceQo;
 import org.laokou.tenant.vo.SysTenantSourceVO;
 

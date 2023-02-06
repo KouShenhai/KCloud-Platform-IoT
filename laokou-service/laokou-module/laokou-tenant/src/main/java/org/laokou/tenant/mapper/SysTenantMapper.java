@@ -14,27 +14,30 @@
  * limitations under the License.
  */
 
-package org.laokou.admin.client.dto;
+package org.laokou.tenant.mapper;
 
-import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.tenant.entity.SysTenantDO;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-@Data
-public class SysTenantSourceDTO {
+@Mapper
+@Repository
+public interface SysTenantMapper extends BaseMapper<SysTenantDO> {
+    /**
+     * 根据租户id查询数据源
+     * @param tenantId
+     * @return
+     */
+    String querySourceName(Long tenantId);
 
-    private Long id;
-    @NotBlank(message = "数据源名称不为空")
-    private String name;
-    @NotBlank(message = "数据源驱动不为空")
-    private String driverClassName;
-    @NotBlank(message = "数据源用户名不为空")
-    private String username;
-    @NotBlank(message = "数据源密码不为空")
-    private String password;
-    @NotBlank(message = "数据源连接不为空")
-    private String url;
-
+    /**
+     * 查询版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(Long id);
 }

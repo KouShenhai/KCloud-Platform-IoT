@@ -4,7 +4,7 @@
 
     <select id="getMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
         select id,pid,`name`,icon,url,`type`,permission from boot_sys_menu
-        where del_flag = '0'
+        where del_flag = 0
         <if test="type != null">
             and `type` = #{type}
         </if>
@@ -13,7 +13,7 @@
 
     <select id="queryMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
         select id,pid,`name`,sort,`type`,icon,url,permission from boot_sys_menu
-        where del_flag = '0'
+        where del_flag = 0
         <if test="qo.name != null and qo.name != ''">
             and `name` like concat('%',#{qo.name},'%')
         </if>
@@ -44,7 +44,7 @@
         AND boot_sys_user.id = boot_sys_user_role.user_id
         AND boot_sys_role.id = boot_sys_user_role.role_id
         AND boot_sys_user.id = #{userId}
-        and boot_sys_menu.del_flag = '0'
+        and boot_sys_menu.del_flag = 0
         <if test="type != null">
             and boot_sys_menu.type = #{type}
         </if>
@@ -74,7 +74,7 @@
         WHERE boot_sys_menu.id = boot_sys_role_menu.menu_id
         AND boot_sys_role_menu.role_id = boot_sys_role.id
         AND boot_sys_role.id = #{roleId}
-        and boot_sys_menu.del_flag = '0'
+        and boot_sys_menu.del_flag = 0
         group by boot_sys_menu.url,
                 boot_sys_menu.type,
                 boot_sys_menu.sort,
@@ -94,7 +94,7 @@
         WHERE boot_sys_menu.id = boot_sys_role_menu.menu_id
         AND boot_sys_role_menu.role_id = boot_sys_role.id
         AND boot_sys_role.id = #{roleId}
-        and boot_sys_menu.del_flag = '0'
+        and boot_sys_menu.del_flag = 0
         group by boot_sys_menu.id
     </select>
 

@@ -27,6 +27,7 @@ import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserDetailSe
 import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserServiceImpl;
 import org.laokou.auth.server.infrastructure.authentication.*;
 import org.laokou.common.log.utils.LoginLogUtil;
+import org.laokou.tenant.service.SysTenantService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -100,7 +101,8 @@ public class AuthorizationServerConfig {
     , LoginLogUtil loginLogUtil
     , PasswordEncoder passwordEncoder
     , SysCaptchaService sysCaptchaService
-    , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator) throws Exception {
+    , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
+    , SysTenantService sysTenantService) throws Exception {
         OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
         authorizationServerConfigurer.oidc(Customizer.withDefaults());
         http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
@@ -124,9 +126,9 @@ public class AuthorizationServerConfig {
                         .authorizationServerSettings(authorizationServerSettings))
                 .and()
                 .build();
-        http.authenticationProvider(new OAuth2PasswordAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator))
-                .authenticationProvider(new OAuth2SmsAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator))
-                .authenticationProvider(new OAuth2EmailAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator));
+        http.authenticationProvider(new OAuth2PasswordAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysTenantService))
+                .authenticationProvider(new OAuth2SmsAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysTenantService))
+                .authenticationProvider(new OAuth2EmailAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator,sysTenantService));
         return defaultSecurityFilterChain;
     }
 

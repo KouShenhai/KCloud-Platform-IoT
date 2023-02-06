@@ -27,8 +27,10 @@ import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.core.utils.MessageUtil;
+import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.swagger.exception.ErrorCode;
+import org.laokou.tenant.service.SysTenantService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -52,6 +54,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.laokou.auth.client.constant.AuthConstant.DEFAULT_SOURCE;
+import static org.laokou.common.core.constant.Constant.DEFAULT;
 
 /**
  * 邮件/手机/密码
@@ -67,6 +70,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     protected SysCaptchaService sysCaptchaService;
     protected OAuth2AuthorizationService authorizationService;
     protected OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
+    protected SysTenantService sysTenantService;
 
     public AbstractOAuth2BaseAuthenticationProvider(
             SysUserService sysUserService
@@ -76,7 +80,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             , PasswordEncoder passwordEncoder
             , SysCaptchaService sysCaptchaService
             , OAuth2AuthorizationService authorizationService
-            , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator) {
+            , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
+            , SysTenantService sysTenantService) {
         this.sysDeptService = sysDeptService;
         this.sysMenuService = sysMenuService;
         this.loginLogUtil = loginLogUtil;
@@ -85,6 +90,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         this.sysCaptchaService = sysCaptchaService;
         this.tokenGenerator = tokenGenerator;
         this.authorizationService = authorizationService;
+        this.sysTenantService = sysTenantService;
     }
 
 
@@ -187,10 +193,9 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password, HttpServletRequest request) throws IOException {
         AuthorizationGrantType grantType = getGrantType();
         String loginType = grantType.getValue();
-        String tenantId = request.getParameter(AuthConstant.TENANT_ID);
-        Long id = Long.valueOf(tenantId);
+        Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
         // 多租户查询
-        UserDetail userDetail = sysUserService.getUserDetail(loginName,id);
+        UserDetail userDetail = sysUserService.getUserDetail(loginName,tenantId);
         if (userDetail == null) {
             loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR),request);
             CustomAuthExceptionHandler.throwError(ErrorCode.ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
@@ -220,8 +225,17 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         List<Long> deptIds = sysDeptService.getDeptIds(superAdmin,userId);
         userDetail.setDeptIds(deptIds);
         userDetail.setPermissionList(permissionsList);
-        // 数据源
-        userDetail.setSourceName(DEFAULT_SOURCE);
+        if (tenantId == DEFAULT) {
+            // 默认数据源
+            userDetail.setSourceName(DEFAULT_SOURCE);
+        } else {
+            // 租户数据源
+            String sourceName = sysTenantService.querySourceName(tenantId);
+            if (StringUtil.isEmpty(sourceName)) {
+                CustomAuthExceptionHandler.throwError(ErrorCode.TENANT_NOT_FOUND_SOURCE,MessageUtil.getMessage(ErrorCode.TENANT_NOT_FOUND_SOURCE));
+            }
+            userDetail.setSourceName(sourceName);
+        }
         return new UsernamePasswordAuthenticationToken(userDetail,loginName,userDetail.getAuthorities());
     }
 

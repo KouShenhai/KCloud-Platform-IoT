@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.SysTenantSourceDTO;
+import org.laokou.tenant.dto.SysTenantSourceDTO;
 import org.laokou.admin.server.application.service.SysTenantSourceApplicationService;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.swagger.utils.HttpResult;
