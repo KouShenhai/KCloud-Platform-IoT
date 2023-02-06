@@ -47,8 +47,13 @@ public class SysTenantSourceServiceImpl extends ServiceImpl<SysTenantSourceMappe
     }
 
     @Override
-    public String querySourceName(Long tenantId) {
-        return this.baseMapper.querySourceName(tenantId);
+    public String queryTenantSourceName(Long tenantId) {
+        return this.baseMapper.queryTenantSourceName(tenantId);
+    }
+
+    @Override
+    public SysTenantSourceVO queryTenantSource(String sourceName) {
+        return this.baseMapper.queryTenantSource(sourceName);
     }
 
 }

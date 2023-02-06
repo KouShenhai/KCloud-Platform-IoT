@@ -10,9 +10,14 @@
         select `name`,driver_class_name,url from boot_sys_tenant_source
     </select>
 
-    <select id="querySourceName" resultType="string">
+    <select id="queryTenantSourceName" resultType="string">
         select a.`name` from boot_sys_tenant_source a
-                                 JOIN boot_sys_tenant b on b.source_id = a.id
-        where a.del_flag = 0
+        JOIN boot_sys_tenant b on b.source_id = a.id
+        where b.tenant_id = #{tenantId}
+    </select>
+
+    <select id="queryTenantSource" resultType="org.laokou.tenant.vo.SysTenantSourceVO">
+        select a.driver_class_name,a.url,a.username,a.password from boot_sys_tenant_source a
+        where a.del_flag = 0 and a.name = #{sourceName}
     </select>
 </mapper>

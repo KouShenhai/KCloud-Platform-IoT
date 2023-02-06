@@ -42,7 +42,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class SysTenantSourceApplicationServiceImpl implements SysTenantSourceApplicationService {
 
     private final SysTenantSourceService sysTenantSourceService;
-
     @Override
     public IPage<SysTenantSourceVO> queryTenantSourcePage(SysTenantSourceQo qo) {
         ValidatorUtil.validateEntity(qo);
@@ -87,14 +86,4 @@ public class SysTenantSourceApplicationServiceImpl implements SysTenantSourceApp
         return true;
     }
 
-    @Override
-    public Boolean connectTenantSource(SysTenantSourceDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        String url = dto.getUrl();
-        String driverClassName = dto.getDriverClassName();
-        String username = dto.getUsername();
-        String password = dto.getPassword();
-        DataBaseUtil.connectDataBase(driverClassName,url,username,password);
-        return true;
-    }
 }

@@ -23,9 +23,6 @@ import org.laokou.admin.client.vo.SysDictVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
 /**
  * @author laokou
  * @version 1.0
@@ -34,14 +31,6 @@ import java.util.List;
 @Repository
 @Mapper
 public interface SysDictMapper extends BaseMapper<SysDictDO> {
-
-    /**
-     * 获取字典列表
-     * @param qo
-     * @return
-     */
-    List<SysDictVO> getDictList(@Param("qo") SysDictQo qo);
-
     /**
      * 分页查询字典
      * @param page

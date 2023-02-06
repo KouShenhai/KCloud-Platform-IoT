@@ -54,4 +54,8 @@ public class UserUtil {
         return userDetail().getTenantId();
     }
 
+    public static String getSourceName() {
+        return userDetail().getSourceName();
+    }
+
 }

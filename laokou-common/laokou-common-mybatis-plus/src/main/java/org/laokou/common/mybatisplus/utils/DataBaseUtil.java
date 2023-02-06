@@ -16,18 +16,28 @@
 
 package org.laokou.common.mybatisplus.utils;
 
-import lombok.experimental.UtilityClass;
+import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
+import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
+import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.swagger.exception.CustomException;
+import org.springframework.stereotype.Component;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 /**
  * @author laokou
  */
-@UtilityClass
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class DataBaseUtil {
+
 
     public void connectDataBase(String driverClassName,String url,String username,String password) {
         try {
@@ -43,6 +53,34 @@ public class DataBaseUtil {
             log.error("数据源连接失败，错误信息：{}",e.getMessage());
             throw new CustomException("数据源连接失败，请检查相关配置");
         }
+    }
+
+    public String loadDataBase(String sourceName) {
+        if (StringUtil.isEmpty(sourceName)) {
+            throw new CustomException("数据源不存在");
+        }
+//        if (!checkDataBase(sourceName)) {
+//            dynamicAddDataBase(sourceName);
+//        }
+        return sourceName;
+    }
+
+    private void dynamicAddDataBase(String sourceName) {
+//        SysTenantSourceVO sourceVO = sysTenantSourceService.queryTenantSource(sourceName);
+        DataSourceProperty properties = new DataSourceProperty ();
+//        properties.setUsername(sourceVO.getUsername());
+//        properties.setPassword(sourceVO.getPassword());
+//        properties.setUrl(sourceVO.getUrl());
+//        properties.setDriverClassName(sourceVO.getDriverClassName());
+        DynamicRoutingDataSource dynamicRoutingDataSource = SpringContextUtil.getBean(DynamicRoutingDataSource.class);
+        DefaultDataSourceCreator dataSourceCreator = SpringContextUtil.getBean(DefaultDataSourceCreator.class);
+        DataSource dataSource = dataSourceCreator.createDataSource(properties);
+        dynamicRoutingDataSource.addDataSource(sourceName,dataSource);
+    }
+
+    private boolean checkDataBase(String sourceName) {
+        DynamicRoutingDataSource dynamicRoutingDataSource = SpringContextUtil.getBean(DynamicRoutingDataSource.class);
+        return dynamicRoutingDataSource.getDataSources().containsKey(sourceName);
     }
 
 }

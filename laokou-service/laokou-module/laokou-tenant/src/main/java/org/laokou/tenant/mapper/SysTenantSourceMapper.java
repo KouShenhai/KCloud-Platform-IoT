@@ -36,5 +36,14 @@ public interface SysTenantSourceMapper extends BaseMapper<SysTenantSourceDO> {
      * @param tenantId
      * @return
      */
-    String querySourceName(Long tenantId);
+    String queryTenantSourceName(@Param("tenantId") Long tenantId);
+
+
+    /**
+     * 查询数据库源信息
+     * @param sourceName
+     * @return
+     */
+    SysTenantSourceVO queryTenantSource(@Param("sourceName") String sourceName);
+
 }

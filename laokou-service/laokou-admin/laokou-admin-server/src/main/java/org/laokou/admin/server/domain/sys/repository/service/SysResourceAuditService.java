@@ -1,11 +1,14 @@
 package org.laokou.admin.server.domain.sys.repository.service;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysResourceAuditDO;
+import org.laokou.common.mybatisplus.config.DsTenantProcessor;
 
 /**
  * @author laokou
  */
+@DS(DsTenantProcessor.TENANT)
 public interface SysResourceAuditService extends IService<SysResourceAuditDO> {
     /**
      * 获取版本号

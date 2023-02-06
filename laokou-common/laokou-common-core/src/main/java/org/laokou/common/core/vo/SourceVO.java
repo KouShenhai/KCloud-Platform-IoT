@@ -14,24 +14,16 @@
  * limitations under the License.
  */
 
-package org.laokou.gateway.config;
+package org.laokou.common.core.vo;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
-import org.springframework.cloud.gateway.route.RouteDefinition;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import lombok.Data;
+
 /**
  * @author laokou
  */
-@Configuration
-public class CacheConfig {
+@Data
+public class SourceVO {
 
-    @Bean
-    public Cache<String, RouteDefinition> caffeineCache() {
-        return Caffeine.newBuilder()
-                .initialCapacity(10)
-                .build();
-    }
+
 
 }

@@ -311,7 +311,7 @@ CREATE TABLE `boot_sys_resource` (
                                      `code` varchar(10) NOT NULL COMMENT '类型 audio音频 video视频  image图片 text文本 other其他',
                                      `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                      `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-                                     `remark` text NOT NULL COMMENT '' 备注 '',
+                                     `remark` text NOT NULL COMMENT '备注',
                                      `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
                                      `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
                                      `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',

@@ -37,5 +37,12 @@ public interface SysTenantSourceService extends IService<SysTenantSourceDO> {
      * @param tenantId
      * @return
      */
-    String querySourceName(Long tenantId);
+    String queryTenantSourceName(Long tenantId);
+
+    /**
+     * 查询数据源信息
+     * @param sourceName
+     * @return
+     */
+    SysTenantSourceVO queryTenantSource(String sourceName);
 }

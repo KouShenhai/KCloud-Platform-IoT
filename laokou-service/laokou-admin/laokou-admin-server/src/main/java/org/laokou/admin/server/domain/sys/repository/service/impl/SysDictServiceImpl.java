@@ -23,8 +23,6 @@ import org.laokou.admin.server.domain.sys.repository.service.SysDictService;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
 import org.springframework.stereotype.Service;
-import java.util.List;
-
 /**
  * @author laokou
  * @version 1.0
@@ -32,11 +30,6 @@ import java.util.List;
  */
 @Service
 public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDictDO> implements SysDictService {
-
-    @Override
-    public List<SysDictVO> getDictList(SysDictQo qo) {
-        return this.baseMapper.getDictList(qo);
-    }
 
     @Override
     public IPage<SysDictVO> getDictList(IPage<SysDictVO> page, SysDictQo qo) {

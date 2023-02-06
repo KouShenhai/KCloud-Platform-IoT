@@ -15,27 +15,20 @@
  */
 package org.laokou.admin.server.domain.sys.repository.service;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysDictDO;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
-
-import java.util.List;
-
+import org.laokou.common.mybatisplus.config.DsTenantProcessor;
 /**
  * @author laokou
  * @version 1.0
  * @date 2022/6/23 0023 上午 11:04
  */
+@DS(DsTenantProcessor.TENANT)
 public interface SysDictService extends IService<SysDictDO> {
-
-    /**
-     * 查询字典列表
-     * @param qo
-     * @return
-     */
-    List<SysDictVO> getDictList(SysDictQo qo);
 
     /**
      * 分页查询字典

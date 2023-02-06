@@ -229,7 +229,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             userDetail.setSourceName(DEFAULT_SOURCE);
         } else {
             // 租户数据源
-            String sourceName = sysTenantSourceService.querySourceName(tenantId);
+            String sourceName = sysTenantSourceService.queryTenantSourceName(tenantId);
             userDetail.setSourceName(sourceName);
         }
         return new UsernamePasswordAuthenticationToken(userDetail,loginName,userDetail.getAuthorities());

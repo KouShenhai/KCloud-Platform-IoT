@@ -14,18 +14,12 @@
  * limitations under the License.
  */
 package org.laokou.common.mybatisplus.config;
-import com.baomidou.dynamic.datasource.processor.DsProcessor;
-import com.baomidou.dynamic.datasource.processor.DsSpelExpressionProcessor;
-import com.baomidou.dynamic.datasource.processor.jakarta.DsJakartaHeaderProcessor;
-import com.baomidou.dynamic.datasource.processor.jakarta.DsJakartaSessionProcessor;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.expression.BeanFactoryResolver;
 /**
  * mybatis-plus的配置
  * @author laokou
@@ -45,17 +39,6 @@ public class MybatisPlusConfig {
         // 防止全表更新与删除
         mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
         return mybatisPlusInterceptor;
-    }
-
-    @Bean
-    public DsProcessor customDsProcessor(BeanFactory beanFactory) {
-        DsProcessor headerProcessor = new DsJakartaHeaderProcessor();
-        DsProcessor sessionProcessor = new DsJakartaSessionProcessor();
-        DsSpelExpressionProcessor dsSpelExpressionProcessor = new DsSpelExpressionProcessor();
-        dsSpelExpressionProcessor.setBeanResolver(new BeanFactoryResolver(beanFactory));
-        headerProcessor.setNextProcessor(sessionProcessor);
-        sessionProcessor.setNextProcessor(dsSpelExpressionProcessor);
-        return headerProcessor;
     }
 
 }

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.laokou.admin.server.domain.sys.entity.SysResourceDO;
@@ -24,9 +23,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.elasticsearch.client.index.ResourceIndex;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
-
 /**
  * @author laokou
  * @version 1.0

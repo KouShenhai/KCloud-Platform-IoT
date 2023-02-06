@@ -15,16 +15,19 @@
  */
 package org.laokou.admin.server.domain.sys.repository.service;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDO;
 import org.laokou.admin.server.interfaces.qo.SysMessageQo;
 import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
+import org.laokou.common.mybatisplus.config.DsTenantProcessor;
 
 /**
  * @author laokou
  */
+@DS(DsTenantProcessor.TENANT)
 public interface SysMessageService extends IService<SysMessageDO> {
 
     /**
