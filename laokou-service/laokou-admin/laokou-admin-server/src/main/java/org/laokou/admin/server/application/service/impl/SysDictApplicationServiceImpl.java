@@ -27,10 +27,13 @@ import org.laokou.admin.client.vo.SysDictVO;
 import org.laokou.admin.client.dto.SysDictDTO;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -90,5 +93,10 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     public Boolean deleteDict(Long id) {
         sysDictService.deleteDict(id);
         return true;
+    }
+
+    @Override
+    public List<OptionVO> getOptionList(String type) {
+        return sysDictService.getOptionList(type);
     }
 }

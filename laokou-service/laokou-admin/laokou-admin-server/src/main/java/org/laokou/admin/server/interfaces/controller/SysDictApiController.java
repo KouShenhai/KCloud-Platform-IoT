@@ -22,12 +22,16 @@ import org.laokou.admin.server.application.service.SysDictApplicationService;
 import org.laokou.admin.client.dto.SysDictDTO;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.laokou.common.log.annotation.OperateLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 /**
  * 系统字典控制器
  * @author laokou
@@ -45,6 +49,12 @@ public class SysDictApiController {
     @PreAuthorize("hasAuthority('sys:dict:query')")
     public HttpResult<IPage<SysDictVO>> query(@RequestBody SysDictQo qo) {
         return new HttpResult<IPage<SysDictVO>>().ok(sysDictApplicationService.queryDictPage(qo));
+    }
+
+    @GetMapping("/option/list")
+    @Operation(summary = "系统字典>下拉框列表",description = "系统字典>下拉框列表")
+    public HttpResult<List<OptionVO>> optionList(@RequestParam("type")String type) {
+        return new HttpResult<List<OptionVO>>().ok(sysDictApplicationService.getOptionList(type));
     }
 
     @GetMapping(value = "/detail")

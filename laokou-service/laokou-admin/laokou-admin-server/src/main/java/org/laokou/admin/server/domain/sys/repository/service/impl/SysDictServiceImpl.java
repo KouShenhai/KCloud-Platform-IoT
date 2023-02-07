@@ -22,7 +22,11 @@ import org.laokou.admin.server.domain.sys.repository.mapper.SysDictMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysDictService;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
+import org.laokou.common.core.vo.OptionVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 /**
  * @author laokou
  * @version 1.0
@@ -49,6 +53,11 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDictDO> im
     @Override
     public Integer getVersion(Long id) {
         return this.baseMapper.getVersion(id);
+    }
+
+    @Override
+    public List<OptionVO> getOptionList(String type) {
+        return this.baseMapper.getOptionList(type);
     }
 
 }

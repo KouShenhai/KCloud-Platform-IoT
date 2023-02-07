@@ -22,6 +22,10 @@ import org.laokou.admin.server.domain.sys.entity.SysDictDO;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
 import org.laokou.admin.server.infrastructure.processor.DsTenantProcessor;
+import org.laokou.common.core.vo.OptionVO;
+
+import java.util.List;
+
 /**
  * @author laokou
  * @version 1.0
@@ -57,4 +61,11 @@ public interface SysDictService extends IService<SysDictDO> {
      * @return
      */
     Integer getVersion(Long id);
+
+    /**
+     * 下拉列表查询
+     * @param type
+     * @return
+     */
+    List<OptionVO> getOptionList(String type);
 }

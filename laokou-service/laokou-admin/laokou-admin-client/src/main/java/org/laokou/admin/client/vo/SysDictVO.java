@@ -36,10 +36,6 @@ public class SysDictVO {
      */
     private String dictValue;
     /**
-     * 状态 0 正常 1 停用
-     */
-    private Integer status;
-    /**
      * 备注
      */
     private String remark;
