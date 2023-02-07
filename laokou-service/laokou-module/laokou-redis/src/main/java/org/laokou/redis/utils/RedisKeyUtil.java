@@ -83,11 +83,19 @@ public final class RedisKeyUtil {
     }
 
     /**
-     * 全量同步索引Key
+     * 增量同步索引Key
      * @return
      */
     public static String getSyncIndexIncrementKey(String code) {
         return "sys:resource:sync:" + code + ":increment";
     }
 
+    /**
+     * 未读消息key
+     * @param userId
+     * @return
+     */
+    public static String getMessageUnReadKey(Long userId) {
+        return "sys:message:unread:" + userId;
+    }
 }

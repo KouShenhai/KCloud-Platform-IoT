@@ -66,11 +66,11 @@ public final class RedisUtil {
         return redissonClient.getReadWriteLock(key).writeLock();
     }
 
-    public Boolean tryLock(RLock lock, long expire, long timeout) throws InterruptedException {
+    public boolean tryLock(RLock lock, long expire, long timeout) throws InterruptedException {
         return lock.tryLock(timeout, expire, TimeUnit.MILLISECONDS);
     }
 
-    public Boolean tryLock(String key, long expire, long timeout) throws InterruptedException {
+    public boolean tryLock(String key, long expire, long timeout) throws InterruptedException {
         return tryLock(getLock(key),expire,timeout);
     }
 
@@ -90,19 +90,19 @@ public final class RedisUtil {
         lock.lock();
     }
 
-    public Boolean isLocked(String key) {
+    public boolean isLocked(String key) {
         return isLocked(getLock(key));
     }
 
-    public Boolean isLocked(RLock lock) {
+    public boolean isLocked(RLock lock) {
         return lock.isLocked();
     }
 
-    public Boolean isHeldByCurrentThread(String key) {
+    public boolean isHeldByCurrentThread(String key) {
         return isHeldByCurrentThread(getLock(key));
     }
 
-    public Boolean isHeldByCurrentThread(RLock lock) {
+    public boolean isHeldByCurrentThread(RLock lock) {
         return lock.isHeldByCurrentThread();
     }
 
@@ -138,10 +138,15 @@ public final class RedisUtil {
         return redissonClient.getAtomicLong(key).decrementAndGet();
     }
 
-    public void setAtomicLong(String key,long value,long expire) {
+    public long addAndGet(String key,long value,long expire) {
         RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
-        atomicLong.set(value);
         atomicLong.expire(Duration.ofSeconds(expire));
+        long newValue = atomicLong.addAndGet(value);
+        return newValue;
+    }
+
+    public long getAtomicValue(String key) {
+        return redissonClient.getAtomicLong(key).get();
     }
 
     public void hSet(String key,String field, Object value,long expire) {

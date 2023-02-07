@@ -35,13 +35,17 @@ public class RedisTest {
     @Test
     public void redisAtomicLongTest() {
         String key = "laokou";
-        redisUtil.setAtomicLong(key,10,100);
+        redisUtil.addAndGet(key,10,100);
         long l = redisUtil.incrementAndGet(key);
         long l1 = redisUtil.incrementAndGet(key);
         long l2 = redisUtil.decrementAndGet(key);
+        long l3 = redisUtil.getAtomicValue(key);
+        Object o = redisUtil.get(key);
         log.info("{}",l);
         log.info("{}",l1);
         log.info("{}",l2);
+        log.info("{}",l3);
+        log.info("{}",o);
     }
 
 }

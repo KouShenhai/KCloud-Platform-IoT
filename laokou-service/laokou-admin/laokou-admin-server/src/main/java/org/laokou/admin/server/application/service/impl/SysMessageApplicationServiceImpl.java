@@ -38,6 +38,8 @@ import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.laokou.im.client.PushMsgDTO;
+import org.laokou.redis.utils.RedisKeyUtil;
+import org.laokou.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
@@ -53,6 +55,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
     private final SysMessageDetailService sysMessageDetailService;
     private final ImApiFeignClient imApiFeignClient;
+    private final RedisUtil redisUtil;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -60,8 +63,9 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         ValidatorUtil.validateEntity(dto);
         SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
         Integer sendChannel = dto.getSendChannel();
+        Long userId = UserUtil.getUserId();
         messageDO.setCreateDate(new Date());
-        messageDO.setCreator(UserUtil.getUserId());
+        messageDO.setCreator(userId);
         messageDO.setSendChannel(sendChannel);
         sysMessageService.save(messageDO);
         if (ChannelTypeEnum.PLATFORM.ordinal() == sendChannel) {
@@ -79,6 +83,11 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             }
             if (CollectionUtils.isNotEmpty(detailDOList)) {
                 sysMessageDetailService.saveBatch(detailDOList);
+            }
+            String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
+            Object obj = redisUtil.get(messageUnReadKey);
+            if (obj != null) {
+                redisUtil.incrementAndGet(messageUnReadKey);
             }
             // 平台-发送消息
             if (CollectionUtils.isNotEmpty(receiver)) {
@@ -106,6 +115,12 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     public MessageDetailVO getMessageByDetailId(Long id) {
         Integer version = sysMessageDetailService.getVersion(id);
         sysMessageService.readMessage(id,version);
+        final Long userId = UserUtil.getUserId();
+        String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
+        Object obj = redisUtil.get(messageUnReadKey);
+        if (obj != null) {
+            redisUtil.decrementAndGet(messageUnReadKey);
+        }
         return sysMessageService.getMessageByDetailId(id);
     }
 
@@ -125,8 +140,15 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     @Transactional(readOnly = true)
     public Long unReadCount() {
         final Long userId = UserUtil.getUserId();
-        return sysMessageDetailService.count(Wrappers.lambdaQuery(SysMessageDetailDO.class).eq(SysMessageDetailDO::getUserId,userId)
+        String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
+        Object obj = redisUtil.get(messageUnReadKey);
+        if (obj != null) {
+            return (Long) obj;
+        }
+        long count = sysMessageDetailService.count(Wrappers.lambdaQuery(SysMessageDetailDO.class).eq(SysMessageDetailDO::getUserId, userId)
                 .eq(SysMessageDetailDO::getReadFlag, Constant.NO));
+        redisUtil.addAndGet(messageUnReadKey,count,RedisUtil.HOUR_ONE_EXPIRE);
+        return count;
     }
 
 }
