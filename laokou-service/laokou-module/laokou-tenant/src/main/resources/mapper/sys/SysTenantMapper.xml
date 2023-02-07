@@ -19,4 +19,8 @@
         select `name`,id,source_id,`status` from boot_sys_tenant where del_flag = 0
     </select>
 
+    <select id="getTenantById" resultType="org.laokou.tenant.vo.SysTenantVO">
+        select `name`,id,source_id,`status` from boot_sys_tenant where id = #{id}
+    </select>
+
 </mapper>

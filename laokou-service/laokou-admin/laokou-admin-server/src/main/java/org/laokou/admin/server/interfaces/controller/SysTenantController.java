@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.laokou.admin.server.interfaces.controller;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,9 +23,11 @@ import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.tenant.dto.SysTenantDTO;
+import org.laokou.tenant.qo.SysTenantQo;
+import org.laokou.tenant.vo.SysTenantVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 /**
  * @author laokou
  */
@@ -42,23 +42,23 @@ public class SysTenantController {
     @PostMapping("/query")
     @Operation(summary = "系统租户>查询",description = "系统租户>查询")
     @PreAuthorize("hasAuthority('sys:tenant:query')")
-    public HttpResult<IPage<>> query(@RequestBody  qo) {
-        return new HttpResult<IPage<>>().ok(.queryTenantPage(qo));
+    public HttpResult<IPage<SysTenantVO>> query(@RequestBody SysTenantQo qo) {
+        return new HttpResult<IPage<SysTenantVO>>().ok(sysTenantApplicationService.queryTenantPage(qo));
     }
 
     @PostMapping("/insert")
     @Operation(summary = "系统租户>新增",description = "系统租户>新增")
     @OperateLog(module = "系统租户",name = "租户新增")
     @PreAuthorize("hasAuthority('sys:tenant:insert')")
-    public HttpResult<Boolean> insert(@RequestBody  dto) {
-        return new HttpResult<Boolean>().ok(.insertTenant(dto));
+    public HttpResult<Boolean> insert(@RequestBody SysTenantDTO dto) {
+        return new HttpResult<Boolean>().ok(sysTenantApplicationService.insertTenant(dto));
     }
 
     @GetMapping("/detail")
     @Operation(summary = "系统租户>查看",description = "系统租户>查看")
     @DataCache(name = "tenant",key = "#id")
-    public HttpResult<> detail(@RequestParam("id")Long id) {
-        return new HttpResult<>().ok(.getTenantById(id));
+    public HttpResult<SysTenantVO> detail(@RequestParam("id")Long id) {
+        return new HttpResult<SysTenantVO>().ok(sysTenantApplicationService.getTenantById(id));
     }
 
     @PutMapping("/update")
@@ -66,8 +66,8 @@ public class SysTenantController {
     @OperateLog(module = "系统租户",name = "租户修改")
     @PreAuthorize("hasAuthority('sys:tenant:update')")
     @DataCache(name = "tenant",key = "#dto.id",type = CacheEnum.DEL)
-    public HttpResult<Boolean> update(@RequestBody  dto) {
-        return new HttpResult<Boolean>().ok(.updateTenant(dto));
+    public HttpResult<Boolean> update(@RequestBody SysTenantDTO dto) {
+        return new HttpResult<Boolean>().ok(sysTenantApplicationService.updateTenant(dto));
     }
 
     @DeleteMapping("/delete")
@@ -76,7 +76,7 @@ public class SysTenantController {
     @PreAuthorize("hasAuthority('sys:tenant:delete')")
     @DataCache(name = "tenant",key = "#id",type = CacheEnum.DEL)
     public HttpResult<Boolean> delete(@RequestParam("id")Long id) {
-        return new HttpResult<Boolean>().ok(.deleteTenant(id));
+        return new HttpResult<Boolean>().ok(sysTenantApplicationService.deleteTenant(id));
     }
 
 }

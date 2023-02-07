@@ -36,6 +36,13 @@ public interface SysTenantService extends IService<SysTenantDO> {
     List<OptionVO> getOptionList();
 
     /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(Long id);
+
+    /**
      * 分页查询
      * @param page
      * @param qo
@@ -43,4 +50,17 @@ public interface SysTenantService extends IService<SysTenantDO> {
      */
     IPage<SysTenantVO> queryTenantPage(IPage<SysTenantVO> page, SysTenantQo qo);
 
+
+    /**
+     * 查询租户
+     * @param id
+     * @return
+     */
+    SysTenantVO getTenantById(Long id);
+
+    /**
+     * 删除
+     * @param id
+     */
+    void deleteTenant(Long id);
 }

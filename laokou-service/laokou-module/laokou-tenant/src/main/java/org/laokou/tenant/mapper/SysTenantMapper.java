@@ -39,7 +39,7 @@ public interface SysTenantMapper extends BaseMapper<SysTenantDO> {
      * @param id
      * @return
      */
-    Integer getVersion(Long id);
+    Integer getVersion(@Param("id") Long id);
 
     /**
      * 下拉选择框
@@ -54,4 +54,11 @@ public interface SysTenantMapper extends BaseMapper<SysTenantDO> {
      * @return
      */
     IPage<SysTenantVO> queryTenantPage(IPage<SysTenantVO> page, @Param("qo") SysTenantQo qo);
+
+    /**
+     * 获取租户
+     * @param id
+     * @return
+     */
+    SysTenantVO getTenantById(@Param("id") Long id);
 }
