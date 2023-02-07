@@ -1,11 +1,11 @@
-### 项目备注
+### 🎉 项目备注
 项目：KCloud-Platform-Alibaba  
 作者：老寇  
 语言：Java  
 职位：Java工程师   
 时间：2020.06.08 ~ 至今  
 
-### 项目介绍
+### 📣 项目介绍
 <p align="center"><img src="doc/image/logo.png" width="100" height="110"></p>
 KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的云服务平台。基于Spring Boot 3.0.2、Spring Cloud 2022.0.1、Spring Cloud Alibaba 2022.0.0.0-RC1 最新版本开发的多租户SaaS系统。
 遵循SpringBoot编程思想，高度模块化和可配置化。具备服务注册&发现、配置中心、服务限流、熔断降级、监控报警、多数据源、工作流、高亮搜索、定时任务、分布式缓存、分布式事务、分布式存储等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，实现RBAC权限、其中包含系统管理、系统监控、工作流程、数据分析等几大模块。
@@ -25,7 +25,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
     <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=WFANTXDEjrDw6UxsrRFCv_rQsEu6LTxH&jump_from=webapi"><img src="https://img.shields.io/badge/Q群-218686225-blue.svg" alt="Java技术交流QQ群"></a>
 </p>
 
-### 功能介绍
+### 🔎 功能介绍
 - [x] 用户登录：账号密码（多租户）、手机号、邮件、授权码登录
 - [x] 用户管理：用户信息管理，可重置用户密码
 - [x] 角色管理：基于部门的数据权限、角色权限  
@@ -48,12 +48,12 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - [ ] 微信公众号管理：微信公众号一体化管理
 - [ ] 统计报表：用户画像
 
-### 系统架构
+### 💡 系统架构
 ![](doc/image/老寇云平台架构图-阿里巴巴.png)
 
-### 技术体系
+### ✂ 技术体系
 
-#### Spring全家桶及核心技术版本
+#### 🎯 Spring全家桶及核心技术版本
 | 组件                          | 版本             |
 |:----------------------------|:---------------|
 | Spring Boot                 | 3.0.2          |
@@ -72,7 +72,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 | Kafka                       | 2.8.1          |
 | Flowable                    | 7.0.0.M1       |
 
-#### 相关技术
+#### 🍺 相关技术
 
 - API 网关：Spring Cloud Gateway
 - 配置中心：Nacos
@@ -96,7 +96,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - 数据库：Mysql
 - 工作流：Flowable
 
-#### 项目结构
+#### 🌴 项目结构
 ~~~
 ├── laokou-common  
         └── laokou-common-log                      --- 日志组件  
@@ -131,8 +131,8 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
                 └── laokou-flowable                --- 工作流程模块  
 ~~~
 
-### 环境配置
-#### 安装教程
+### 🐧 环境配置
+#### 🌻 安装教程
 [centos7 安装jdk1.8](https://kcloud.blog.csdn.net/article/details/82184984)  
 [centos7 安装mysql5.7](https://kcloud.blog.csdn.net/article/details/123628721)  
 [centos7 安装maven](https://kcloud.blog.csdn.net/article/details/108459715)  
@@ -144,11 +144,11 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 [centos7 安装kafka](https://kcloud.blog.csdn.net/article/details/123771040)  
 [centos7 安装rocketmq](https://blog.csdn.net/qq_39893313/article/details/128223900)  
 
-#### 安装包
+#### 🌱 安装包
 [百度网盘](https://pan.baidu.com/s/1swrV9ffJnmz4S0mfkuBbIw) 提取码：1111
 
-### 环境配置
-#### 服务配置
+### ⚡ 环境配置
+#### 🐜 服务配置
 ```yaml
 spring:
   # https://www.kancloud.cn/tracy5546/dynamic-datasource/2264611
@@ -182,14 +182,14 @@ elasticsearch:
   cluster-name: elasticsearch-node
 ```
 
-### JDK版本兼容
-##### VM options配置
+### 🌵 JDK版本兼容
+##### 🌍 VM options配置
 ```shell script
 --add-opens=java.base/java.lang=ALL-UNNAMED
 ```
 
-### 数据权限
-##### 代码引入
+### 👻 数据权限
+##### ☁ 代码引入
 ```java
 @Service
 @RequiredArgsConstructor
@@ -206,8 +206,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 }
 ```
 
-### 二级缓存
-##### 代码引入
+### 🔆 二级缓存
+##### 🔧 代码引入
 ```java
 public class SysUserApiController {
     @DataCache(name = "user", key = "#id")
@@ -217,8 +217,8 @@ public class SysUserApiController {
 }
 ```
 
-### 分布式事务AT
-#### 服务配置
+### 📖 分布式事务AT
+#### 🍸 服务配置
 ```yaml
 # seata
 seata:
@@ -239,7 +239,7 @@ seata:
   data-source-proxy-mode: AT
 ```
 
-##### 代码引入
+##### ⚓ 代码引入
 ```shell
 @Service
 @Slf4j
@@ -265,14 +265,14 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 }
 ```
 
-### 启动系统
+### ✈ 启动系统
 - 1.必须启动Mysql、Redis、Nacos、Seata
 - 2.可选启动Sentinel、RocketMQ、Kafka、ElasticSearch、MongoDB
 - 3.解压doc/config/dev配置文件，导入Nacos（注意：解压的文件有两个，都需要导入Nacos）
 - 4.运行doc/db/db_init.sql
 - 5.分别启动laokou-gateway、laokou-auth、laokou-admin
 
-### 高可用系统构建
+### 😋 高可用系统构建
 - [x] 严格遵循阿里规范，注重代码质量
 - [x] 集群部署，减少单点故障
 - [x] 服务限流
@@ -282,13 +282,13 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 - [x] 多级缓存
 - [x] 服务监控报警
 
-### 演示地址
+### 💞 演示地址
 [http://175.178.69.253](http://175.178.69.253)  
 admin/admin123  
 test/test123  
 laok5/test123  
 
-### 项目截图
+### 🎵 项目截图
 <table>
     <tr>
         <td><img alt="暂无图片" src="doc/image/1.png"/></td>
@@ -340,32 +340,32 @@ laok5/test123
     </tr>
 </table>
 
-### 用户权益
+### 😛 用户权益
 - 采用Apache2.0开源协议，并且承诺永不参与商业用途，仅供大家无偿使用
 - 采用Apache2.0开源协议，并且承诺永不参与商业用途，仅供大家无偿使用
 - 采用Apache2.0开源协议，并且承诺永不参与商业用途，仅供大家无偿使用
 
-### 参与贡献
+### 😘 参与贡献
 欢迎各路英雄好汉参与KCloud-Platform-Alibaba代码贡献，期待您的加入！Fork本仓库 新建 feat_xxx_环境_时间（如 feat_laokou_dev_20230116） 分支提交代码，新建Pull Request
 
-### 开源协议
+### 😻 开源协议
 KCloud-Platform-Alibaba 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
 ![](doc/image/25.png)
 
-### 项目地址
+### 👀 项目地址
 Github 后端地址：[KCloud-Platform-Alibaba](https://github.com/KouShenhai/KCloud-Platform-Alibaba)  
 Github 前端地址：[KCloud-Antdv-Alibaba](https://github.com/KouShenhai/KCloud-Antdv-Alibaba)  
 
 Gtiee 后端地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KCloud-Platform-Alibaba)  
 Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-Antdv-Alibaba)  
 
-### 鸣谢组织
+### 🐭 鸣谢组织
 [Spring官网](https://spring.io)  
 [人人社区](https://www.renren.io)   
 [若依社区](https://www.ruoyi.vip)  
 [苞米豆社区](https://baomidou.com/)  
 
-### 鸣谢个人
+### 🐼 鸣谢个人
 <a href="https://github.com/KouShenhai" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/KouShenhai/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
         <img src="https://avatars.githubusercontent.com/u/48756217?s=64&amp;v=4" alt="@KouShenhai" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
 </a>
@@ -373,7 +373,7 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
         <img src="https://avatars.githubusercontent.com/u/26246537?s=64&amp;v=4" alt="@liang99" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
 </a>
 
-### 联系
+### 🐸 联系
 博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)    
 
 邮箱：[2413176044@qq.com](https://mail.qq.com)  
