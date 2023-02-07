@@ -73,17 +73,17 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             List<SysMessageDetailDO> detailDOList = new ArrayList<>(receiver.size());
             while (iterator.hasNext()) {
                 String next = iterator.next();
-                SysMessageDetailDO detailDO = new SysMessageDetailDO();
-                detailDO.setMessageId(messageDO.getId());
-                detailDO.setUserId(Long.valueOf(next));
-                detailDO.setCreateDate(new Date());
-                detailDO.setCreator(UserUtil.getUserId());
                 // 根据用户，分别将递增未读消息数
                 String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(Long.valueOf(next));
                 Object obj = redisUtil.get(messageUnReadKey);
                 if (obj != null) {
                     redisUtil.incrementAndGet(messageUnReadKey);
                 }
+                SysMessageDetailDO detailDO = new SysMessageDetailDO();
+                detailDO.setMessageId(messageDO.getId());
+                detailDO.setUserId(Long.valueOf(next));
+                detailDO.setCreateDate(new Date());
+                detailDO.setCreator(UserUtil.getUserId());
                 detailDOList.add(detailDO);
             }
             if (CollectionUtils.isNotEmpty(detailDOList)) {

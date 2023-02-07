@@ -131,16 +131,21 @@ public final class RedisUtil {
     }
 
     public long incrementAndGet(String key) {
-        return redissonClient.getAtomicLong(key).incrementAndGet();
+        RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
+        atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
+        return atomicLong.incrementAndGet();
     }
 
     public long decrementAndGet(String key) {
-        return redissonClient.getAtomicLong(key).decrementAndGet();
+        RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
+        atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
+        return atomicLong.decrementAndGet();
     }
 
     public long addAndGet(String key,long value) {
         RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
         long newValue = atomicLong.addAndGet(value);
+        atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
         return newValue;
     }
 
