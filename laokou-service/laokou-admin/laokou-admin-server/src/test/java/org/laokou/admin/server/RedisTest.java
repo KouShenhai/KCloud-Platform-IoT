@@ -35,7 +35,7 @@ public class RedisTest {
     @Test
     public void redisAtomicLongTest() {
         String key = "laokou";
-        redisUtil.addAndGet(key,10,100);
+        redisUtil.addAndGet(key,10);
         long l = redisUtil.incrementAndGet(key);
         long l1 = redisUtil.incrementAndGet(key);
         long l2 = redisUtil.decrementAndGet(key);

@@ -138,9 +138,8 @@ public final class RedisUtil {
         return redissonClient.getAtomicLong(key).decrementAndGet();
     }
 
-    public long addAndGet(String key,long value,long expire) {
+    public long addAndGet(String key,long value) {
         RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
-        atomicLong.expire(Duration.ofSeconds(expire));
         long newValue = atomicLong.addAndGet(value);
         return newValue;
     }

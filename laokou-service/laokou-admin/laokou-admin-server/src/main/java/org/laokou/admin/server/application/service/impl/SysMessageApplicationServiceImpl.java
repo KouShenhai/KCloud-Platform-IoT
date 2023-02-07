@@ -63,9 +63,8 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         ValidatorUtil.validateEntity(dto);
         SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
         Integer sendChannel = dto.getSendChannel();
-        Long userId = UserUtil.getUserId();
         messageDO.setCreateDate(new Date());
-        messageDO.setCreator(userId);
+        messageDO.setCreator(UserUtil.getUserId());
         messageDO.setSendChannel(sendChannel);
         sysMessageService.save(messageDO);
         if (ChannelTypeEnum.PLATFORM.ordinal() == sendChannel) {
@@ -79,15 +78,16 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
                 detailDO.setUserId(Long.valueOf(next));
                 detailDO.setCreateDate(new Date());
                 detailDO.setCreator(UserUtil.getUserId());
+                // 根据用户，分别将递增未读消息数
+                String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(Long.valueOf(next));
+                Object obj = redisUtil.get(messageUnReadKey);
+                if (obj != null) {
+                    redisUtil.incrementAndGet(messageUnReadKey);
+                }
                 detailDOList.add(detailDO);
             }
             if (CollectionUtils.isNotEmpty(detailDOList)) {
                 sysMessageDetailService.saveBatch(detailDOList);
-            }
-            String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
-            Object obj = redisUtil.get(messageUnReadKey);
-            if (obj != null) {
-                redisUtil.incrementAndGet(messageUnReadKey);
             }
             // 平台-发送消息
             if (CollectionUtils.isNotEmpty(receiver)) {
@@ -143,11 +143,11 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
         Object obj = redisUtil.get(messageUnReadKey);
         if (obj != null) {
-            return (Long) obj;
+            return Long.valueOf("" + obj);
         }
         long count = sysMessageDetailService.count(Wrappers.lambdaQuery(SysMessageDetailDO.class).eq(SysMessageDetailDO::getUserId, userId)
                 .eq(SysMessageDetailDO::getReadFlag, Constant.NO));
-        redisUtil.addAndGet(messageUnReadKey,count,RedisUtil.HOUR_ONE_EXPIRE);
+        redisUtil.addAndGet(messageUnReadKey,count);
         return count;
     }
 
