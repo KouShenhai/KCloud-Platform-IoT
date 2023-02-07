@@ -93,6 +93,8 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         Long userId = userDetail.getUserId();
         String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
         redisUtil.delete(resourceTreeKey);
+        String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
+        redisUtil.delete(messageUnReadKey);
         return true;
     }
 
