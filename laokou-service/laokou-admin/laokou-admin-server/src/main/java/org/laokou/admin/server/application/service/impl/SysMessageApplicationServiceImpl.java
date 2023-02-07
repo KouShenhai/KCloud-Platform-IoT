@@ -137,7 +137,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Long unReadCount() {
         final Long userId = UserUtil.getUserId();
         String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);

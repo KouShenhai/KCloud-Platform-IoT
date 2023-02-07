@@ -62,6 +62,7 @@ public class SysSourceApplicationServiceImpl implements SysSourceApplicationServ
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean updateSource(SysSourceDTO dto) {
         ValidatorUtil.validateEntity(dto);
         Long id = dto.getId();
@@ -80,6 +81,7 @@ public class SysSourceApplicationServiceImpl implements SysSourceApplicationServ
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean deleteSource(Long id) {
         sysSourceService.deleteSource(id);
         return true;

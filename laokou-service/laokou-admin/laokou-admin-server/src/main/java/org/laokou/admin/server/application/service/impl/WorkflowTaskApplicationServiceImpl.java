@@ -35,7 +35,8 @@ public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicati
 
     @Override
     public void diagramProcess(String processInstanceId, HttpServletResponse response) {
-        try (Response result = workTaskApiFeignClient.diagram(processInstanceId);
+        try (
+                Response result = workTaskApiFeignClient.diagram(processInstanceId);
                 InputStream inputStream = result.body().asInputStream();
                 OutputStream outputStream = response.getOutputStream()) {
             byte[] bytes = new byte[inputStream.available()];
