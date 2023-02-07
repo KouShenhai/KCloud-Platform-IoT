@@ -17,9 +17,13 @@
 package org.laokou.tenant.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.tenant.entity.SysTenantDO;
+import org.laokou.tenant.qo.SysTenantQo;
+import org.laokou.tenant.vo.SysTenantVO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -42,4 +46,12 @@ public interface SysTenantMapper extends BaseMapper<SysTenantDO> {
      * @return
      */
     List<OptionVO> getOptionList();
+
+    /**
+     * 分页查询
+     * @param page
+     * @param qo
+     * @return
+     */
+    IPage<SysTenantVO> queryTenantPage(IPage<SysTenantVO> page, @Param("qo") SysTenantQo qo);
 }

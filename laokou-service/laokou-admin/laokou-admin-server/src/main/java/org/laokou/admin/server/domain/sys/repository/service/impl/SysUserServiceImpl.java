@@ -54,7 +54,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserDO> im
 
     @Override
     public Integer getVersion(Long id) {
-        return this.getVersion(id);
+        return this.baseMapper.getVersion(id);
     }
 
 }

@@ -16,11 +16,14 @@
 
 package org.laokou.tenant.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.tenant.entity.SysTenantDO;
 import org.laokou.tenant.mapper.SysTenantMapper;
+import org.laokou.tenant.qo.SysTenantQo;
 import org.laokou.tenant.service.SysTenantService;
+import org.laokou.tenant.vo.SysTenantVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,5 +36,10 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     @Override
     public List<OptionVO> getOptionList() {
         return this.baseMapper.getOptionList();
+    }
+
+    @Override
+    public IPage<SysTenantVO> queryTenantPage(IPage<SysTenantVO> page, SysTenantQo qo) {
+        return this.baseMapper.queryTenantPage(page,qo);
     }
 }

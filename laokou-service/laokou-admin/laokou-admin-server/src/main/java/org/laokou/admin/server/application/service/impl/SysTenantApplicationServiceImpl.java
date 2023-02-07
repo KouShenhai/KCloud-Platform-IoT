@@ -16,12 +16,25 @@
 
 package org.laokou.admin.server.application.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysTenantApplicationService;
+import org.laokou.tenant.qo.SysTenantQo;
+import org.laokou.tenant.service.SysTenantService;
+import org.laokou.tenant.vo.SysTenantVO;
 import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
 @Service
+@RequiredArgsConstructor
 public class SysTenantApplicationServiceImpl implements SysTenantApplicationService {
+
+    private final SysTenantService sysTenantService;
+
+    @Override
+    public IPage<SysTenantVO> queryTenantPage(SysTenantQo qo) {
+        return null;
+    }
 }

@@ -14,33 +14,19 @@
  * limitations under the License.
  */
 
-package org.laokou.tenant.service;
+package org.laokou.tenant.dto;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
-import org.laokou.common.core.vo.OptionVO;
-import org.laokou.tenant.entity.SysTenantDO;
-import org.laokou.tenant.qo.SysTenantQo;
-import org.laokou.tenant.vo.SysTenantVO;
-
-import java.util.List;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-public interface SysTenantService extends IService<SysTenantDO> {
-    /**
-     * 下拉选择框
-     * @return
-     */
-    List<OptionVO> getOptionList();
+@Data
+public class SysTenantDTO {
 
-    /**
-     * 分页查询
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysTenantVO> queryTenantPage(IPage<SysTenantVO> page, SysTenantQo qo);
+    private String name;
+    private Long id;
+    private Long sourceId;
+    private Integer status;
 
 }

@@ -77,7 +77,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (StringUtil.isNotEmpty(password)) {
             dto.setPassword(passwordEncoder.encode(password));
         }
-        Integer version = sysRoleService.getVersion(id);
+        Integer version = sysUserService.getVersion(id);
         dto.setVersion(version);
         dto.setTenantId(UserUtil.getTenantId());
         sysUserService.updateUser(dto);
