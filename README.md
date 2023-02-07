@@ -1,3 +1,5 @@
+<p align="center"><img src="doc/image/logo.png" width="100" height="110"></p>
+
 ### 项目备注
 项目：KCloud-Platform-Alibaba  
 作者：老寇  
