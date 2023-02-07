@@ -85,4 +85,9 @@ public class SysSourceApplicationServiceImpl implements SysSourceApplicationServ
         return true;
     }
 
+    @Override
+    public SysSourceVO getSourceById(Long id) {
+        return sysSourceService.getSourceById(id);
+    }
+
 }

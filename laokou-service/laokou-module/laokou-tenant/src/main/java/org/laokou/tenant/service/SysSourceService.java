@@ -45,4 +45,11 @@ public interface SysSourceService extends IService<SysSourceDO> {
      * @return
      */
     SysSourceVO querySource(String sourceName);
+
+    /**
+     * 数据源详情
+     * @param id
+     * @return
+     */
+    SysSourceVO getSourceById(Long id);
 }

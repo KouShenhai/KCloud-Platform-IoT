@@ -38,4 +38,10 @@ public interface SysSourceApplicationService {
      */
     Boolean deleteSource(Long id);
 
+    /**
+     * 数据源详情
+     * @param id
+     * @return
+     */
+    SysSourceVO getSourceById(Long id);
 }

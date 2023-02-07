@@ -18,6 +18,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.tenant.dto.SysSourceDTO;
 import org.laokou.admin.server.application.service.SysSourceApplicationService;
 import org.laokou.common.log.annotation.OperateLog;
@@ -53,10 +55,18 @@ public class SysSourceController {
         return new HttpResult<Boolean>().ok(sysSourceApplicationService.insertSource(dto));
     }
 
+    @GetMapping("/detail")
+    @Operation(summary = "系统数据源>查看",description = "系统数据源>查看")
+    @DataCache(name = "source",key = "#id")
+    public HttpResult<SysSourceVO> detail(@RequestParam("id")Long id) {
+        return new HttpResult<SysSourceVO>().ok(sysSourceApplicationService.getSourceById(id));
+    }
+
     @PutMapping("/update")
     @Operation(summary = "系统数据源>修改",description = "系统数据源>修改")
     @OperateLog(module = "系统数据源",name = "数据源修改")
     @PreAuthorize("hasAuthority('sys:source:update')")
+    @DataCache(name = "source",key = "#dto.id",type = CacheEnum.DEL)
     public HttpResult<Boolean> update(@RequestBody SysSourceDTO dto) {
         return new HttpResult<Boolean>().ok(sysSourceApplicationService.updateSource(dto));
     }
@@ -65,6 +75,7 @@ public class SysSourceController {
     @Operation(summary = "系统数据源>删除",description = "系统数据源>删除")
     @OperateLog(module = "系统数据源",name = "数据源删除")
     @PreAuthorize("hasAuthority('sys:source:delete')")
+    @DataCache(name = "source",key = "#id",type = CacheEnum.DEL)
     public HttpResult<Boolean> delete(@RequestParam("id")Long id) {
         return new HttpResult<Boolean>().ok(sysSourceApplicationService.deleteSource(id));
     }

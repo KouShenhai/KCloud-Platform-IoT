@@ -46,4 +46,10 @@ public interface SysSourceMapper extends BaseMapper<SysSourceDO> {
      */
     SysSourceVO querySource(@Param("sourceName") String sourceName);
 
+    /**
+     * 数据源详情
+     * @param id
+     * @return
+     */
+    SysSourceVO getSourceById(@Param("id") Long id);
 }

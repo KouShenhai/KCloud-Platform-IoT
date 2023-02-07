@@ -56,4 +56,9 @@ public class SysSourceServiceImpl extends ServiceImpl<SysSourceMapper, SysSource
         return this.baseMapper.querySource(sourceName);
     }
 
+    @Override
+    public SysSourceVO getSourceById(Long id) {
+        return this.baseMapper.getSourceById(id);
+    }
+
 }
