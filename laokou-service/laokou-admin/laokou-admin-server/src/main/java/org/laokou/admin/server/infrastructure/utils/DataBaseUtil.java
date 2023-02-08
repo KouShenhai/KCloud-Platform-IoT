@@ -42,25 +42,9 @@ public class DataBaseUtil {
 
     private final SysSourceService sysSourceService;
 
-    public void connectDataBase(String driverClassName,String url,String username,String password) {
-        try {
-            Class.forName(driverClassName);
-        } catch (Exception e) {
-            log.error("数据源驱动加载失败，错误信息：{}",e.getMessage());
-            throw new CustomException("数据源驱动加载失败，请检查相关配置");
-        }
-        try {
-            Connection connection = DriverManager.getConnection(url, username, password);
-            connection.close();
-        } catch (Exception e) {
-            log.error("数据源连接失败，错误信息：{}",e.getMessage());
-            throw new CustomException("数据源连接失败，请检查相关配置");
-        }
-    }
-
     public String loadDataBase(String sourceName) {
         if (StringUtil.isEmpty(sourceName)) {
-            throw new CustomException("数据源不存在");
+            throw new CustomException("数据源名称不能为空");
         }
         if (!checkDataBase(sourceName)) {
             dynamicAddDataBase(sourceName);
@@ -75,6 +59,8 @@ public class DataBaseUtil {
         properties.setPassword(sourceVO.getPassword());
         properties.setUrl(sourceVO.getUrl());
         properties.setDriverClassName(sourceVO.getDriverClassName());
+        // 验证数据源
+        connectDataBase(properties);
         DynamicRoutingDataSource dynamicRoutingDataSource = SpringContextUtil.getBean(DynamicRoutingDataSource.class);
         DefaultDataSourceCreator dataSourceCreator = SpringContextUtil.getBean(DefaultDataSourceCreator.class);
         DataSource dataSource = dataSourceCreator.createDataSource(properties);
@@ -84,6 +70,22 @@ public class DataBaseUtil {
     private boolean checkDataBase(String sourceName) {
         DynamicRoutingDataSource dynamicRoutingDataSource = SpringContextUtil.getBean(DynamicRoutingDataSource.class);
         return dynamicRoutingDataSource.getDataSources().containsKey(sourceName);
+    }
+
+    private void connectDataBase(DataSourceProperty properties) {
+        try {
+            Class.forName(properties.getDriverClassName());
+        } catch (Exception e) {
+            log.error("数据源驱动加载失败，错误信息：{}",e.getMessage());
+            throw new CustomException("数据源驱动加载失败，请检查相关配置");
+        }
+        try {
+            Connection connection = DriverManager.getConnection(properties.getUrl(), properties.getUsername(), properties.getPassword());
+            connection.close();
+        } catch (Exception e) {
+            log.error("数据源连接失败，错误信息：{}",e.getMessage());
+            throw new CustomException("数据源连接失败，请检查相关配置");
+        }
     }
 
 }
