@@ -45,13 +45,18 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
     abstract String getGrantType();
 
     /**
-     * 转换
-     * @param clientPrincipal
-     * @param additionalParameters
+     * 子类实现转换
+     * @param clientPrincipal 认证参数
+     * @param additionalParameters 扩展参数
      * @return
      */
     abstract Authentication convert(Authentication clientPrincipal,Map<String, Object> additionalParameters);
 
+    /**
+     *
+     * @param request
+     * @return
+     */
     @Override
     public Authentication convert(HttpServletRequest request) {
         // 请求链 FilterOrderRegistration

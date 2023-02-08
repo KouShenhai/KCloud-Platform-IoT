@@ -32,32 +32,9 @@ import java.util.List;
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> implements SysMenuService {
 
     @Override
-    public List<SysMenuVO> getMenuList(Long userId, Integer type) {
-        List<SysMenuVO> menuList;
-        if (userId == null) {
-            Long tenantId = UserUtil.getTenantId();
-            menuList = this.baseMapper.getMenuList(type,tenantId);
-        } else {
-            menuList = this.baseMapper.getMenuListByUserId(userId,type);
-        }
-        return menuList;
-    }
-
-    @Override
     public List<SysMenuVO> getMenuList(UserDetail userDetail, Integer type) {
         //region Description
         return getMenuList(userDetail.getUserId(),userDetail.getSuperAdmin(),type);
-        //endregion
-    }
-
-    private List<SysMenuVO> getMenuList(Long userId, Integer superAdmin, Integer type) {
-        //region Description
-        if (SuperAdminEnum.YES.ordinal() == superAdmin) {
-            Long tenantId = UserUtil.getTenantId();
-            return this.baseMapper.getMenuList(type,tenantId);
-        } else {
-            return this.baseMapper.getMenuListByUserId(userId,type);
-        }
         //endregion
     }
 
@@ -77,11 +54,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> im
     }
 
     @Override
-    public List<SysMenuVO> getMenuListByRoleId(Long roleId) {
-        return this.baseMapper.getMenuListByRoleId(roleId);
-    }
-
-    @Override
     public List<Long> getMenuIdsByRoleId(Long roleId) {
         return this.baseMapper.getMenuIdsByRoleId(roleId);
     }
@@ -89,6 +61,17 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> im
     @Override
     public Integer getVersion(Long id) {
         return this.baseMapper.getVersion(id);
+    }
+
+    private List<SysMenuVO> getMenuList(Long userId, Integer superAdmin, Integer type) {
+        //region Description
+        if (SuperAdminEnum.YES.ordinal() == superAdmin) {
+            Long tenantId = UserUtil.getTenantId();
+            return this.baseMapper.getMenuList(type,tenantId);
+        } else {
+            return this.baseMapper.getMenuListByUserId(userId,type);
+        }
+        //endregion
     }
 
 }

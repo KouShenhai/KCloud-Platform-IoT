@@ -62,33 +62,6 @@
         order by boot_sys_menu.sort desc
     </select>
 
-    <select id="getMenuListByRoleId" resultType="org.laokou.admin.client.vo.SysMenuVO">
-        SELECT boot_sys_menu.url,
-        boot_sys_menu.type,
-        boot_sys_menu.sort,
-        boot_sys_menu.id,
-        boot_sys_menu.pid,
-        boot_sys_menu.name,
-        boot_sys_menu.icon,
-        boot_sys_menu.permission
-        FROM boot_sys_menu
-        ,boot_sys_role
-        ,boot_sys_role_menu
-        WHERE boot_sys_menu.id = boot_sys_role_menu.menu_id
-        AND boot_sys_role_menu.role_id = boot_sys_role.id
-        AND boot_sys_role.id = #{roleId}
-        and boot_sys_menu.del_flag = 0
-        group by boot_sys_menu.url,
-                boot_sys_menu.type,
-                boot_sys_menu.sort,
-                boot_sys_menu.id,
-                boot_sys_menu.pid,
-                boot_sys_menu.name,
-                boot_sys_menu.icon,
-                boot_sys_menu.permission
-        order by boot_sys_menu.sort desc
-    </select>
-
     <select id="getMenuIdsByRoleId" resultType="long">
         SELECT boot_sys_menu.id
         FROM boot_sys_menu

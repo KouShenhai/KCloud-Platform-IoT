@@ -27,14 +27,6 @@ import java.util.List;
 public interface SysMenuService extends IService<SysMenuDO> {
 
     /**
-     * 获取所有资源列表
-     * @param userId
-     * @param type
-     * @return
-     */
-    List<SysMenuVO> getMenuList(Long userId, Integer type);
-
-    /**
      * 获取菜单列表
      * @param userDetail
      * @param type
@@ -61,13 +53,6 @@ public interface SysMenuService extends IService<SysMenuDO> {
      * @param id
      */
     void deleteMenu(Long id);
-
-    /**
-     * 根据roleId获取菜单
-     * @param roleId
-     * @return
-     */
-    List<SysMenuVO> getMenuListByRoleId(Long roleId);
 
     /**
      * 根据角色id查询菜单ids

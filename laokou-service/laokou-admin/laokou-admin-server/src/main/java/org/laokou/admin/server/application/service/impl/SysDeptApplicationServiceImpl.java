@@ -50,7 +50,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     private final RedisUtil redisUtil;
 
     @Override
-    public SysDeptVO getDeptList() {
+    public SysDeptVO treeDept() {
         SysDeptQo qo = new SysDeptQo();
         String deptAllKey = RedisKeyUtil.getDeptAllKey();
         Object obj = redisUtil.get(deptAllKey);

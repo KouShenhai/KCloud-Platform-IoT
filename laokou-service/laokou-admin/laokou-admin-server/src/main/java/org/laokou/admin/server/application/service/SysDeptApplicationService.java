@@ -30,7 +30,7 @@ public interface SysDeptApplicationService {
      * 获取部门列表
      * @return
      */
-    SysDeptVO getDeptList();
+    SysDeptVO treeDept();
 
     /**
      * 查询部门列表

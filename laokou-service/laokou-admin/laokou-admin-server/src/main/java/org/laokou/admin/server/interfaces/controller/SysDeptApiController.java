@@ -42,10 +42,10 @@ public class SysDeptApiController {
 
     private final SysDeptApplicationService sysDeptApplicationService;
 
-    @Operation(summary = "系统部门>列表",description = "系统部门>列表")
-    @GetMapping("/list")
-    public HttpResult<SysDeptVO> list() {
-        return new HttpResult<SysDeptVO>().ok(sysDeptApplicationService.getDeptList());
+    @Operation(summary = "系统部门>树菜单",description = "系统部门>树菜单")
+    @GetMapping("/tree")
+    public HttpResult<SysDeptVO> tree() {
+        return new HttpResult<SysDeptVO>().ok(sysDeptApplicationService.treeDept());
     }
 
     @PostMapping("/query")

@@ -119,13 +119,8 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     }
 
     @Override
-    public SysMenuVO treeMenu(Long roleId) {
-        List<SysMenuVO> menuList;
-        if (null == roleId) {
-            menuList = queryMenuList(new SysMenuQo());
-        } else {
-            menuList = sysMenuService.getMenuListByRoleId(roleId);
-        }
+    public SysMenuVO treeMenu() {
+        List<SysMenuVO> menuList = queryMenuList(new SysMenuQo());
         return buildMenu(menuList);
     }
 

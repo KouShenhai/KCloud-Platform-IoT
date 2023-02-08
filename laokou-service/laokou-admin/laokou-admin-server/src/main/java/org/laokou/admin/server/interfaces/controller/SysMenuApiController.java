@@ -88,8 +88,8 @@ public class SysMenuApiController {
 
     @GetMapping("/tree")
     @Operation(summary = "系统菜单>树菜单",description = "系统菜单>树菜单")
-    public HttpResult<SysMenuVO> tree(@RequestParam(required = false,value = "roleId")Long roleId) {
-        return new HttpResult<SysMenuVO>().ok(sysMenuApplicationService.treeMenu(roleId));
+    public HttpResult<SysMenuVO> tree() {
+        return new HttpResult<SysMenuVO>().ok(sysMenuApplicationService.treeMenu());
     }
 
     @GetMapping("/get")

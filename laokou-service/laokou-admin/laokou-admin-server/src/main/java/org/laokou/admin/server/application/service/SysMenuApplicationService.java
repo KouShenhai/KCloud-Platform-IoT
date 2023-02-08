@@ -68,10 +68,9 @@ public interface SysMenuApplicationService {
 
     /**
      * 根据角色id构建菜单列表（树形）
-     * @param roleId
      * @return
      */
-    SysMenuVO treeMenu(Long roleId);
+    SysMenuVO treeMenu();
 
     /**
      * 根据角色id查询菜单ids
