@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package org.laokou.tenant.dto;
+package org.laokou.tenant.qo;
 
 import lombok.Data;
+import org.laokou.common.mybatisplus.entity.BasePage;
 
 /**
  * @author laokou
  */
 @Data
-public class SysTenantDTO {
+public class SysPackageQo extends BasePage {
 
     private String name;
-    private Long id;
-    private Long sourceId;
 
 }

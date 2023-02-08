@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package org.laokou.tenant.dto;
+package org.laokou.tenant.mapper;
 
-import lombok.Data;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.tenant.entity.SysPackageMenuDO;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-@Data
-public class SysTenantDTO {
+@Mapper
+@Repository
+public interface SysPackageMenuMapper extends BaseMapper<SysPackageMenuDO> {
 
-    private String name;
-    private Long id;
-    private Long sourceId;
+
 
 }

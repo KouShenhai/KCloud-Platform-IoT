@@ -41,9 +41,4 @@ public class SysTenantDO extends BaseDO {
     @Schema(name = "sourceId",description = "数据源id")
     private Long sourceId;
 
-    /**
-     * 多租户状态 0未初始化 1已初始化
-     */
-    @Schema(name = "status",description = "多租户状态 0未初始化 1已初始化")
-    private Long status;
 }

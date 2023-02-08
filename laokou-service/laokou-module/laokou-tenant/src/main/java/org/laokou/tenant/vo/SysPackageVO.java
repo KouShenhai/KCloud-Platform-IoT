@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package org.laokou.tenant.dto;
+package org.laokou.tenant.vo;
 
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
 @Data
-public class SysTenantDTO {
+public class SysPackageVO {
 
-    private String name;
     private Long id;
-    private Long sourceId;
+    private String name;
+    private List<Long> menuIds;
 
 }

@@ -14,18 +14,28 @@
  * limitations under the License.
  */
 
-package org.laokou.tenant.dto;
+package org.laokou.tenant.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
  * @author laokou
  */
 @Data
-public class SysTenantDTO {
-
-    private String name;
-    private Long id;
-    private Long sourceId;
+@TableName("boot_sys_package_menu")
+@Schema(name = "SysPackageMenuDO",description = "系统套餐菜单实体类")
+public class SysPackageMenuDO {
+    /**
+     * 套餐id
+     */
+    @Schema(name = "packageId",description = "套餐id")
+    private Long packageId;
+    /**
+     * 菜单id
+     */
+    @Schema(name = "menuId",description = "菜单id")
+    private Long menuId;
 
 }

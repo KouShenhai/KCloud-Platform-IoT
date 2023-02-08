@@ -11,16 +11,16 @@
             id as `value`
              ,`name` as label
         FROM boot_sys_tenant
-        where del_flag = 0 and `status` = 1
+        where del_flag = 0
         order by create_date desc
     </select>
 
     <select id="queryTenantPage" resultType="org.laokou.tenant.vo.SysTenantVO">
-        select `name`,id,source_id,`status` from boot_sys_tenant where del_flag = 0
+        select `name`,id,source_id from boot_sys_tenant where del_flag = 0
     </select>
 
     <select id="getTenantById" resultType="org.laokou.tenant.vo.SysTenantVO">
-        select `name`,id,source_id,`status` from boot_sys_tenant where id = #{id}
+        select `name`,id,source_id from boot_sys_tenant where id = #{id}
     </select>
 
 </mapper>

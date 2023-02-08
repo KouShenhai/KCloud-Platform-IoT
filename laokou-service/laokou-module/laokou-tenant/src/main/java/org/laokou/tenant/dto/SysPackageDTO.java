@@ -18,14 +18,16 @@ package org.laokou.tenant.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author laokou
  */
 @Data
-public class SysTenantDTO {
+public class SysPackageDTO {
 
-    private String name;
     private Long id;
-    private Long sourceId;
+    private String name;
+    private List<Long> menuIds;
 
 }

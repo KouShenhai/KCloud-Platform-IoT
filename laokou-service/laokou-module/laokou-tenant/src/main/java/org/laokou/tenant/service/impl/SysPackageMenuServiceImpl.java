@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package org.laokou.tenant.dto;
+package org.laokou.tenant.service.impl;
 
-import lombok.Data;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.laokou.tenant.entity.SysPackageMenuDO;
+import org.laokou.tenant.mapper.SysPackageMenuMapper;
+import org.laokou.tenant.service.SysPackageMenuService;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-@Data
-public class SysTenantDTO {
-
-    private String name;
-    private Long id;
-    private Long sourceId;
-
+@Service
+public class SysPackageMenuServiceImpl extends ServiceImpl<SysPackageMenuMapper, SysPackageMenuDO> implements SysPackageMenuService {
 }
