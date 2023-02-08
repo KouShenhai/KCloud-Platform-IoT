@@ -378,6 +378,9 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
         <img src="https://avatars.githubusercontent.com/u/26246537?s=64&amp;v=4" alt="@liang99" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
 </a>
 
+### 💰 赞助打赏
+<p align="left"><img src="doc/image/pay.jpg" width="500" height="500"></p>
+
 ### 🐸 联系
 博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)    
 
