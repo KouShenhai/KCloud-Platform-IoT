@@ -98,7 +98,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
                 roleMenuDO.setRoleId(roleId);
                 roleMenuList.add(roleMenuDO);
             }
-            sysRoleMenuService.saveBatch(roleMenuList);
+            sysRoleMenuService.saveBatch(roleMenuList,500);
         }
         if (CollectionUtils.isNotEmpty(deptIds)) {
             List<SysRoleDeptDO> roleDeptList = new ArrayList<>(deptIds.size());
@@ -108,7 +108,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
                 roleDeptDO.setRoleId(roleId);
                 roleDeptList.add(roleDeptDO);
             }
-            sysRoleDeptService.saveBatch(roleDeptList);
+            sysRoleDeptService.saveBatch(roleDeptList,500);
         }
     }
 

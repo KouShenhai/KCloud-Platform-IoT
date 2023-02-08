@@ -87,7 +87,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
                 detailDOList.add(detailDO);
             }
             if (CollectionUtils.isNotEmpty(detailDOList)) {
-                sysMessageDetailService.saveBatch(detailDOList);
+                sysMessageDetailService.saveBatch(detailDOList,500);
             }
             // 平台-发送消息
             if (CollectionUtils.isNotEmpty(receiver)) {
