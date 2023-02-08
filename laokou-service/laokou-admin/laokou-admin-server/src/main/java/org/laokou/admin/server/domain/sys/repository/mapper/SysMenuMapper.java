@@ -76,4 +76,11 @@ public interface SysMenuMapper extends BaseMapper<SysMenuDO> {
      */
     Integer getVersion(@Param("id") Long id);
 
+    /**
+     * 获取租户菜单
+     * @param tenantId
+     * @return
+     */
+    List<SysMenuVO> getTenantMenuList(@Param("tenantId") Long tenantId);
+
 }

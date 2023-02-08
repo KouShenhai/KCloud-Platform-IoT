@@ -68,4 +68,9 @@ public interface SysMenuService extends IService<SysMenuDO> {
      */
     Integer getVersion(Long id);
 
+    /**
+     * 获取租户菜单
+     * @return
+     */
+    List<SysMenuVO> getTenantMenuList();
 }

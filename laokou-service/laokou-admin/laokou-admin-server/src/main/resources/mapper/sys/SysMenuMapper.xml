@@ -77,4 +77,18 @@
     <select id="getVersion" resultType="integer">
         select `version` from boot_sys_menu where id = #{id}
     </select>
+
+    <select id="getTenantMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
+        select id,pid,`name` from boot_sys_menu
+        where del_flag = 0 and tenant_id = #{tenantId}
+          AND `name` NOT LIKE '菜单修改'
+          AND `name` NOT LIKE '菜单新增'
+          AND `name` NOT LIKE '菜单删除'
+          AND `name` not LIKE '租户%'
+          AND `name` not LIKE '套餐%'
+          AND `name` not LIKE '数据源%'
+          AND `name` not LIKE '%同步'
+        order by sort desc
+    </select>
+
 </mapper>

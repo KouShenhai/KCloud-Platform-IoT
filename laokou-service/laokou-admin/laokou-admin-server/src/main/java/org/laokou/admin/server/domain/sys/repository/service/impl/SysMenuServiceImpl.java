@@ -63,6 +63,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> im
         return this.baseMapper.getVersion(id);
     }
 
+    @Override
+    public List<SysMenuVO> getTenantMenuList() {
+        return this.baseMapper.getTenantMenuList(UserUtil.getTenantId());
+    }
+
     private List<SysMenuVO> getMenuList(Long userId, Integer superAdmin, Integer type) {
         //region Description
         if (SuperAdminEnum.YES.ordinal() == superAdmin) {
