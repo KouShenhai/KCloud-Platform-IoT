@@ -18,8 +18,6 @@ package org.laokou.tenant.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.laokou.common.swagger.utils.ValidatorUtil;
-import org.laokou.tenant.dto.SysPackageDTO;
 import org.laokou.tenant.entity.SysPackageDO;
 import org.laokou.tenant.mapper.SysPackageMapper;
 import org.laokou.tenant.qo.SysPackageQo;
@@ -33,32 +31,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysPackageServiceImpl extends ServiceImpl<SysPackageMapper, SysPackageDO> implements SysPackageService {
 
-
     @Override
-    public Boolean insertPackage(SysPackageDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        return null;
-    }
-
-    @Override
-    public Boolean updatePackage(SysPackageDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        return null;
+    public Integer getVersion(Long id) {
+        return this.baseMapper.getVersion(id);
     }
 
     @Override
     public Boolean deletePackage(Long id) {
-        return null;
+        this.baseMapper.deleteById(id);
+        return true;
     }
 
     @Override
-    public IPage<SysPackageVO> queryPackagePage(SysPackageQo qo) {
-        ValidatorUtil.validateEntity(qo);
-        return null;
+    public IPage<SysPackageVO> queryPackagePage(IPage<SysPackageVO> page,SysPackageQo qo) {
+        return this.baseMapper.queryPackagePage(page,qo);
     }
 
     @Override
     public SysPackageVO getPackageById(Long id) {
-        return null;
+        return this.baseMapper.getPackageById(id);
     }
 }

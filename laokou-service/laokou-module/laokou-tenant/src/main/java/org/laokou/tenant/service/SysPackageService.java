@@ -2,7 +2,6 @@ package org.laokou.tenant.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.laokou.tenant.dto.SysPackageDTO;
 import org.laokou.tenant.entity.SysPackageDO;
 import org.laokou.tenant.qo.SysPackageQo;
 import org.laokou.tenant.vo.SysPackageVO;
@@ -13,18 +12,11 @@ import org.laokou.tenant.vo.SysPackageVO;
 public interface SysPackageService extends IService<SysPackageDO> {
 
     /**
-     * 套餐插入
-     * @param dto
+     * 获取版本号
+     * @param id
      * @return
      */
-    Boolean insertPackage(SysPackageDTO dto);
-
-    /**
-     * 套餐修改
-     * @param dto
-     * @return
-     */
-    Boolean updatePackage(SysPackageDTO dto);
+    Integer getVersion(Long id);
 
     /**
      * 删除套餐
@@ -36,9 +28,10 @@ public interface SysPackageService extends IService<SysPackageDO> {
     /**
      * 查询套餐
      * @param qo
+     * @param page
      * @return
      */
-    IPage<SysPackageVO> queryPackagePage(SysPackageQo qo);
+    IPage<SysPackageVO> queryPackagePage(IPage<SysPackageVO> page,SysPackageQo qo);
 
     /**
      * 查询详情
