@@ -273,7 +273,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 ### ✈ 启动系统
 - 1.必须启动Mysql、Redis、Nacos、Seata
 - 2.可选启动Sentinel、RocketMQ、Kafka、ElasticSearch、MongoDB
-- 3.解压doc/config/dev配置文件，导入Nacos（注意：解压的文件有两个，都需要导入Nacos）
+- 3.解压doc/config/dev/dev.zip，导入Nacos（注意：解压的文件有两个，都需要导入Nacos）
 - 4.运行doc/db/db_init.sql
 - 5.分别启动laokou-gateway、laokou-auth、laokou-admin
 
