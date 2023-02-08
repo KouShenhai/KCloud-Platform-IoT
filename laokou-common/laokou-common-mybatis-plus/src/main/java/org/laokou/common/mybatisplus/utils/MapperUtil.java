@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.laokou.common.mybatisplus.mapper.BaseBatchDao;
+import org.laokou.common.mybatisplus.mapper.BaseBatchMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -34,12 +34,12 @@ public class MapperUtil<T> {
 
     private final SqlSessionFactory sqlSessionFactory;
 
-    public void insertBatch(List<T> dataList, int batchNum, BaseBatchDao<T> baseBatchDao){
+    public void insertBatch(List<T> dataList, int batchNum, BaseBatchMapper<T> baseBatchMapper){
         SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
         List<List<T>> partition = Lists.partition(dataList, batchNum);
         for(int i = 0; i < partition.size(); i++) {
             try {
-                baseBatchDao.insertBatch(partition.get(i));
+                baseBatchMapper.insertBatch(partition.get(i));
             } catch (Exception e) {
                 sqlSession.rollback();
                 log.error("错误信息：{}",e.getMessage());

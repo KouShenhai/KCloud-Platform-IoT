@@ -15,9 +15,9 @@
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.laokou.admin.server.domain.sys.entity.SysRoleDeptDO;
 import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.mapper.BaseBatchMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,5 +27,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface SysRoleDeptMapper extends BaseMapper<SysRoleDeptDO> {
+public interface SysRoleDeptMapper extends BaseBatchMapper<SysRoleDeptDO> {
 }

@@ -18,8 +18,17 @@ package org.laokou.admin.server.domain.sys.repository.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysRoleMenuDO;
 
+import java.util.List;
+
 /**
  * @author laokou
  */
 public interface SysRoleMenuService extends IService<SysRoleMenuDO> {
+
+    /**
+     * 批量新增
+     * @param list
+     */
+    void insertBatch(List<SysRoleMenuDO> list);
+
 }

@@ -15,9 +15,9 @@
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.laokou.admin.server.domain.sys.entity.SysRoleMenuDO;
 import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.mapper.BaseBatchMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -25,5 +25,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenuDO> {
+public interface SysRoleMenuMapper extends BaseBatchMapper<SysRoleMenuDO> {
 }

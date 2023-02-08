@@ -16,15 +16,26 @@
 package org.laokou.admin.server.domain.sys.repository.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.domain.sys.entity.SysRoleMenuDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysRoleMenuMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysRoleMenuService;
+import org.laokou.common.mybatisplus.utils.MapperUtil;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
 @Service
+@RequiredArgsConstructor
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenuDO> implements SysRoleMenuService{
 
+    private final MapperUtil<SysRoleMenuDO> mapperUtil;
 
+    @Override
+    public void insertBatch(List<SysRoleMenuDO> list) {
+        mapperUtil.insertBatch(list,500,this.baseMapper);
+    }
 }

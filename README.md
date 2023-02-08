@@ -170,6 +170,8 @@ spring:
           password: 123456
           hikari:
             max-lifetime: 120000
+            maximum-pool-size: 16
+            minimum-idle: 16
   # redis
   data:
     redis:
