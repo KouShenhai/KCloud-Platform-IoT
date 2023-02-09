@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysPackageApplicationService;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.log.annotation.OperateLog;
@@ -28,6 +29,9 @@ import org.laokou.tenant.qo.SysPackageQo;
 import org.laokou.tenant.vo.SysPackageVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
@@ -77,6 +81,12 @@ public class SysPackageController {
     @DataCache(name = "package",key = "#id",type = CacheEnum.DEL)
     public HttpResult<Boolean> delete(@RequestParam("id")Long id) {
         return new HttpResult<Boolean>().ok(sysPackageApplicationService.deletePackage(id));
+    }
+
+    @GetMapping("/option/list")
+    @Operation(summary = "系统套餐>下拉框列表",description = "系统套餐>下拉框列表")
+    public HttpResult<List<OptionVO>> optionList() {
+        return new HttpResult<List<OptionVO>>().ok(sysPackageApplicationService.getOptionList());
     }
 
 }

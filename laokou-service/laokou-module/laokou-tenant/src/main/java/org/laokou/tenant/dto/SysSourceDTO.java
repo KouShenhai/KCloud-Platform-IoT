@@ -17,7 +17,6 @@
 package org.laokou.tenant.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 /**
@@ -28,7 +27,6 @@ public class SysSourceDTO {
 
     private Long id;
     @NotBlank(message = "数据源名称不为空")
-    @Pattern(regexp = "[a-zA-Z0-9]",message = "数据源名称只能包含字母和数字")
     private String name;
     @NotBlank(message = "数据源驱动不为空")
     private String driverClassName;

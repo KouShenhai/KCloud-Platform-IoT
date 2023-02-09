@@ -18,12 +18,15 @@ package org.laokou.tenant.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.tenant.entity.SysPackageDO;
 import org.laokou.tenant.mapper.SysPackageMapper;
 import org.laokou.tenant.qo.SysPackageQo;
 import org.laokou.tenant.service.SysPackageService;
 import org.laokou.tenant.vo.SysPackageVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -50,5 +53,10 @@ public class SysPackageServiceImpl extends ServiceImpl<SysPackageMapper, SysPack
     @Override
     public SysPackageVO getPackageById(Long id) {
         return this.baseMapper.getPackageById(id);
+    }
+
+    @Override
+    public List<OptionVO> getOptionList() {
+        return this.baseMapper.getOptionList();
     }
 }

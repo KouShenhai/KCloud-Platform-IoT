@@ -98,4 +98,10 @@ public class SysMenuApiController {
         return new HttpResult<List<Long>>().ok(sysMenuApplicationService.getMenuIdsByRoleId(roleId));
     }
 
+    @GetMapping("/tenant")
+    @Operation(summary = "系统菜单>租户树菜单",description = "系统菜单>租户树菜单")
+    public HttpResult<SysMenuVO> treeTenant() {
+        return new HttpResult<SysMenuVO>().ok(sysMenuApplicationService.treeTenantMenu());
+    }
+
 }

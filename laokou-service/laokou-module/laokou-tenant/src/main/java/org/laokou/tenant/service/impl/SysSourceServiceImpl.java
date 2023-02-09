@@ -18,12 +18,15 @@ package org.laokou.tenant.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.tenant.entity.SysSourceDO;
 import org.laokou.tenant.mapper.SysSourceMapper;
 import org.laokou.tenant.qo.SysSourceQo;
 import org.laokou.tenant.service.SysSourceService;
 import org.laokou.tenant.vo.SysSourceVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -59,6 +62,11 @@ public class SysSourceServiceImpl extends ServiceImpl<SysSourceMapper, SysSource
     @Override
     public SysSourceVO getSourceById(Long id) {
         return this.baseMapper.getSourceById(id);
+    }
+
+    @Override
+    public List<OptionVO> getOptionList() {
+        return this.baseMapper.getOptionList();
     }
 
 }

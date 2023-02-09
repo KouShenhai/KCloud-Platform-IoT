@@ -130,6 +130,12 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
         return sysMenuService.getMenuIdsByRoleId(roleId);
     }
 
+    @Override
+    public SysMenuVO treeTenantMenu() {
+        List<SysMenuVO> tenantMenuList = sysMenuService.getTenantMenuList();
+        return buildMenu(tenantMenuList);
+    }
+
     /**
      * 组装树菜单
      * @param menuList

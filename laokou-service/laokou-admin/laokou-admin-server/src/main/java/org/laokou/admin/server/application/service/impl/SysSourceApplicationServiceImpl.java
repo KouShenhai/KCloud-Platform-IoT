@@ -20,6 +20,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.utils.RegexUtil;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.tenant.dto.SysSourceDTO;
 import org.laokou.admin.server.application.service.SysSourceApplicationService;
 import org.laokou.auth.client.utils.UserUtil;
@@ -32,6 +34,8 @@ import org.laokou.tenant.service.SysSourceService;
 import org.laokou.tenant.vo.SysSourceVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -56,6 +60,10 @@ public class SysSourceApplicationServiceImpl implements SysSourceApplicationServ
         if (count > 0) {
             throw new CustomException("数据源名称已存在，请重新填写");
         }
+        boolean sourceRegex = RegexUtil.sourceRegex(dto.getName());
+        if (!sourceRegex) {
+            throw new CustomException("数据源名称只能包含字母、数字和下划线，例如：tenant_000001");
+        }
         SysSourceDO tenantSourceDO = ConvertUtil.sourceToTarget(dto, SysSourceDO.class);
         tenantSourceDO.setCreator(UserUtil.getUserId());
         return sysSourceService.save(tenantSourceDO);
@@ -68,6 +76,10 @@ public class SysSourceApplicationServiceImpl implements SysSourceApplicationServ
         Long id = dto.getId();
         if (id == null) {
             throw new CustomException("数据源编号不为空");
+        }
+        boolean sourceRegex = RegexUtil.sourceRegex(dto.getName());
+        if (!sourceRegex) {
+            throw new CustomException("数据源名称只能包含字母、数字和下划线，例如：tenant_000001");
         }
         long count = sysSourceService.count(Wrappers.lambdaQuery(SysSourceDO.class).eq(SysSourceDO::getName, dto.getName()).ne(SysSourceDO::getId,dto.getId()));
         if (count > 0) {
@@ -90,6 +102,11 @@ public class SysSourceApplicationServiceImpl implements SysSourceApplicationServ
     @Override
     public SysSourceVO getSourceById(Long id) {
         return sysSourceService.getSourceById(id);
+    }
+
+    @Override
+    public List<OptionVO> getOptionList() {
+        return sysSourceService.getOptionList();
     }
 
 }

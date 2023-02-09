@@ -78,4 +78,11 @@ public interface SysMenuApplicationService {
      * @return
      */
     List<Long> getMenuIdsByRoleId(Long roleId);
+
+    /**
+     * 租户树菜单
+     * @return
+     */
+    SysMenuVO treeTenantMenu();
+
 }

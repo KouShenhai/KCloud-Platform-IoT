@@ -21,7 +21,7 @@
         <if test="qo.id != null">
             and a.id = #{qo.id}
         </if>
-        order by a.create_date desc
+        order by a.update_date desc
     </select>
 
     <select id="getResourceById" resultType="org.laokou.admin.client.vo.SysResourceVO">

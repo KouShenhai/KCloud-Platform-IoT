@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.tenant.entity.SysPackageDO;
 import org.laokou.tenant.qo.SysPackageQo;
 import org.laokou.tenant.vo.SysPackageVO;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -38,4 +41,9 @@ public interface SysPackageMapper extends BaseMapper<SysPackageDO> {
      */
     IPage<SysPackageVO> queryPackagePage(IPage<SysPackageVO> page,@Param("qo") SysPackageQo qo);
 
+    /**
+     * 获取下拉框
+     * @return
+     */
+    List<OptionVO> getOptionList();
 }

@@ -2,9 +2,12 @@ package org.laokou.tenant.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.tenant.entity.SysPackageDO;
 import org.laokou.tenant.qo.SysPackageQo;
 import org.laokou.tenant.vo.SysPackageVO;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -40,4 +43,9 @@ public interface SysPackageService extends IService<SysPackageDO> {
      */
     SysPackageVO getPackageById(Long id);
 
+    /**
+     * 获取下拉框
+     * @return
+     */
+    List<OptionVO> getOptionList();
 }

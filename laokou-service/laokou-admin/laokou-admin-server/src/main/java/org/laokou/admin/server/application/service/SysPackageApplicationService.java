@@ -1,9 +1,12 @@
 package org.laokou.admin.server.application.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.tenant.dto.SysPackageDTO;
 import org.laokou.tenant.qo.SysPackageQo;
 import org.laokou.tenant.vo.SysPackageVO;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -44,4 +47,10 @@ public interface SysPackageApplicationService {
      * @return
      */
     SysPackageVO getPackageById(Long id);
+
+    /**
+     * 下拉选择框
+     * @return
+     */
+    List<OptionVO> getOptionList();
 }

@@ -5,8 +5,10 @@
     <resultMap id="package" type="org.laokou.tenant.vo.SysPackageVO">
         <id column="id" property="id"/>
         <result property="name" column="name"/>
-        <collection property="menuIds" javaType="java.util.List">
-            <result column="menu_id"/>
+        <collection property="menuIds" ofType="java.lang.String">
+            <constructor>
+                <arg column="menuIds"/>
+            </constructor>
         </collection>
     </resultMap>
 
@@ -15,14 +17,27 @@
     </select>
 
     <select id="getPackageById" resultMap="package">
-        SELECT a.id,a.`name`,b.menu_id from boot_sys_package a
+        SELECT a.id,a.`name`,b.menu_id as menuIds from boot_sys_package a
         left JOIN boot_sys_package_menu b on b.package_id = a.id
         where del_flag = 0 and a.id = #{id}
     </select>
 
     <select id="queryPackagePage" resultMap="package">
-        SELECT a.id,a.`name` from boot_sys_package a
+        SELECT a.id,a.`name`, '' as menuIds from boot_sys_package a
         where a.del_flag = 0
+        <if test="qo.name != null and qo.name != ''">
+            and `name` = #{qo.name}
+        </if>
+        order by update_date desc
+    </select>
+
+    <select id="getOptionList" resultType="org.laokou.common.core.vo.OptionVO">
+        select
+            id as `value`
+             ,`name` as label
+        FROM boot_sys_package
+        where del_flag = 0
+        order by update_date desc
     </select>
 
 </mapper>

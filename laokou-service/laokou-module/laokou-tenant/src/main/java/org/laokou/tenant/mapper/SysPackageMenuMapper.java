@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.laokou.tenant.mapper;
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.mapper.BaseBatchMapper;
 import org.laokou.tenant.entity.SysPackageMenuDO;
 import org.springframework.stereotype.Repository;
-
 /**
  * @author laokou
  */
 @Mapper
 @Repository
-public interface SysPackageMenuMapper extends BaseMapper<SysPackageMenuDO> {
-
-
+public interface SysPackageMenuMapper extends BaseBatchMapper<SysPackageMenuDO> {
 
 }

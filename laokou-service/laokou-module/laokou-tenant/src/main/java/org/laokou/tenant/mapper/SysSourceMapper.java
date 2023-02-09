@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.common.core.vo.OptionVO;
 import org.laokou.tenant.entity.SysSourceDO;
 import org.laokou.tenant.qo.SysSourceQo;
 import org.laokou.tenant.vo.SysSourceVO;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -52,4 +55,10 @@ public interface SysSourceMapper extends BaseMapper<SysSourceDO> {
      * @return
      */
     SysSourceVO getSourceById(@Param("id") Long id);
+
+    /**
+     * 获取下拉框
+     * @return
+     */
+    List<OptionVO> getOptionList();
 }

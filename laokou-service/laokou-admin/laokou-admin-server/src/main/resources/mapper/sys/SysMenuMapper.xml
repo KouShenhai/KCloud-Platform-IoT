@@ -88,6 +88,7 @@
           AND `name` not LIKE '套餐%'
           AND `name` not LIKE '数据源%'
           AND `name` not LIKE '%同步'
+          AND `name` not like '%搜索%'
         order by sort desc
     </select>
 
