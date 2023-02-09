@@ -39,4 +39,11 @@ public interface SysMenuMapper {
      */
     List<String> getPermissionsListByUserId(@Param("userId") Long userId);
 
+    /**
+     * 获取租户权限标识
+     * @param tenantId
+     * @return
+     */
+    List<String> getTenantPermissionList(Long tenantId);
+
 }

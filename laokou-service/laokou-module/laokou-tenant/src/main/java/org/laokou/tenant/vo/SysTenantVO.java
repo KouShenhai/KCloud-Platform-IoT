@@ -27,5 +27,6 @@ public class SysTenantVO {
     private String name;
     private Long id;
     private Long sourceId;
+    private Long packageId;
 
 }

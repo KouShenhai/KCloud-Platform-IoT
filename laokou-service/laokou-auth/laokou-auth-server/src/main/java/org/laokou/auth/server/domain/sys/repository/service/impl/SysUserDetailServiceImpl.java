@@ -69,7 +69,7 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
         Long userId = userDetail.getUserId();
         Integer superAdmin = userDetail.getSuperAdmin();
         // 权限标识列表
-        List<String> permissionsList = sysMenuService.getPermissionsList(superAdmin,userId);
+        List<String> permissionsList = sysMenuService.getPermissionsList(0L,superAdmin,userId);
         if (CollectionUtils.isEmpty(permissionsList)) {
             errMsg = MessageUtil.getMessage(ErrorCode.NOT_PERMISSIONS);
             request.setAttribute(ERR_MSG,errMsg);

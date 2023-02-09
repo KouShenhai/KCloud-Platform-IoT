@@ -62,7 +62,6 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
 
     @Override
     public List<SysMenuVO> queryMenuList(SysMenuQo qo) {
-        qo.setTenantId(UserUtil.getTenantId());
         return sysMenuService.queryMenuList(qo);
     }
 

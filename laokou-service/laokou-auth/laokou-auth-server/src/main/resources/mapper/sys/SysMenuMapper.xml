@@ -22,4 +22,12 @@
         GROUP BY a.permission
     </select>
 
+    <select id="getTenantPermissionList" resultType="string">
+        SELECT a.permission FROM boot_sys_menu a
+        JOIN boot_sys_package_menu b on b.menu_id = a.id
+        JOIN boot_sys_tenant c on c.package_id = b.package_id
+        where a.del_flag = 0 and c.id = #{tenantId}
+        GROUP BY a.permission
+    </select>
+
 </mapper>

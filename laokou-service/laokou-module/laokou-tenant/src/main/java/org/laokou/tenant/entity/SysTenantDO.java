@@ -41,4 +41,10 @@ public class SysTenantDO extends BaseDO {
     @Schema(name = "sourceId",description = "数据源id")
     private Long sourceId;
 
+    /**
+     * 套餐id
+     */
+    @Schema(name = "packageId",description = "套餐id")
+    private Long packageId;
+
 }

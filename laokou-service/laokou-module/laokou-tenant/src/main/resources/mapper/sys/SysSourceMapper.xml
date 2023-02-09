@@ -18,7 +18,7 @@
     <select id="querySourceName" resultType="string">
         select a.`name` from boot_sys_source a
         JOIN boot_sys_tenant b on b.source_id = a.id
-        where b.tenant_id = #{tenantId}
+        where b.id = #{tenantId}
     </select>
 
     <select id="querySource" resultType="org.laokou.tenant.vo.SysSourceVO">
@@ -34,7 +34,7 @@
         select
             id as `value`
              ,`name` as label
-        FROM boot_sys_package
+        FROM boot_sys_source
         where del_flag = 0
         order by create_date desc
     </select>

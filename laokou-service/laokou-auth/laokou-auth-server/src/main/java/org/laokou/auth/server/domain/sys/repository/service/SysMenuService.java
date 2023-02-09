@@ -26,8 +26,9 @@ public interface SysMenuService {
      * 查询权限标识列表
      * @param superAdmin
      * @param userId
+     * @param tenantId
      * @return
      */
-    List<String> getPermissionsList(Integer superAdmin,Long userId);
+    List<String> getPermissionsList(Long tenantId,Integer superAdmin,Long userId);
 
 }

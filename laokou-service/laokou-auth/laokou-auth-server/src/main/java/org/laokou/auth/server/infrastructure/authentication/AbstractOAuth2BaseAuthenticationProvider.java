@@ -215,7 +215,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         Long userId = userDetail.getUserId();
         Integer superAdmin = userDetail.getSuperAdmin();
         // 权限标识列表
-        List<String> permissionsList = sysMenuService.getPermissionsList(superAdmin,userId);
+        List<String> permissionsList = sysMenuService.getPermissionsList(tenantId,superAdmin,userId);
         if (CollectionUtils.isEmpty(permissionsList)) {
             loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.NOT_PERMISSIONS),request);
             CustomAuthExceptionHandler.throwError(ErrorCode.NOT_PERMISSIONS, MessageUtil.getMessage(ErrorCode.NOT_PERMISSIONS));

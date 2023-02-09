@@ -27,5 +27,6 @@ public class SysTenantDTO {
     private String name;
     private Long id;
     private Long sourceId;
+    private Long packageId;
 
 }

@@ -11,14 +11,22 @@
         order by sort desc
     </select>
 
+    <select id="getTenantMenuListByTenantId" resultType="org.laokou.admin.client.vo.SysMenuVO">
+        select a.id,a.pid,a.`name`,a.icon,a.url,a.`type`,a.permission from boot_sys_menu a
+        join boot_sys_package_menu b on b.menu_id = a.id
+        join boot_sys_tenant c on c.package_id = b.package_id
+        where a.del_flag = 0 and c.id = #{tenantId}
+        <if test="type != null">
+            and a.`type` = #{type}
+        </if>
+        order by a.sort desc
+    </select>
+
     <select id="queryMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
         select id,pid,`name`,sort,`type`,icon,url,permission from boot_sys_menu
         where del_flag = 0
         <if test="qo.name != null and qo.name != ''">
             and `name` like concat('%',#{qo.name},'%')
-        </if>
-        <if test="qo.tenantId != null">
-            and tenant_id = #{qo.tenantId}
         </if>
         order by sort desc
     </select>

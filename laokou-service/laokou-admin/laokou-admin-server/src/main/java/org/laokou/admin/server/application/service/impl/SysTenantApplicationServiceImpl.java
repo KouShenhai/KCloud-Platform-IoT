@@ -21,7 +21,10 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysTenantApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysUserDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
+import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.utils.UserUtil;
+import org.laokou.common.core.constant.Constant;
+import org.laokou.common.core.enums.SuperAdminEnum;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.ValidatorUtil;
@@ -62,9 +65,8 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
         SysTenantDO sysTenantDO = ConvertUtil.sourceToTarget(dto, SysTenantDO.class);
         sysTenantDO.setCreator(UserUtil.getUserId());
         sysTenantService.save(sysTenantDO);
-        Long tenantId = UserUtil.getTenantId();
         // 初始化用户
-        initUser(tenantId);
+        initUser(sysTenantDO.getId());
         return true;
     }
 
@@ -89,8 +91,7 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
         SysTenantDO sysTenantDO = ConvertUtil.sourceToTarget(dto, SysTenantDO.class);
         sysTenantDO.setVersion(version);
         sysTenantDO.setEditor(UserUtil.getUserId());
-        sysTenantService.updateById(sysTenantDO);
-        return true;
+        return sysTenantService.updateById(sysTenantDO);
     }
 
     @Override
@@ -106,7 +107,10 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
         SysUserDO sysUserDO = new SysUserDO();
         sysUserDO.setTenantId(tenantId);
         sysUserDO.setUsername(tenantUsername);
+        sysUserDO.setCreator(UserUtil.getUserId());
+        sysUserDO.setSuperAdmin(SuperAdminEnum.YES.ordinal());
         sysUserDO.setPassword(passwordEncoder.encode(tenantPassword));
+        sysUserDO.setTenantId(tenantId);
         sysUserService.save(sysUserDO);
     }
 }
