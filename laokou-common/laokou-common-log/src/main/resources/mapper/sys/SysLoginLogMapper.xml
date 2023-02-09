@@ -20,6 +20,6 @@
         <if test="qo.requestStatus != null and qo.requestStatus != ''">
             and request_status = #{qo.requestStatus}
         </if>
-        order by update_date desc
+        order by create_date desc
     </select>
 </mapper>

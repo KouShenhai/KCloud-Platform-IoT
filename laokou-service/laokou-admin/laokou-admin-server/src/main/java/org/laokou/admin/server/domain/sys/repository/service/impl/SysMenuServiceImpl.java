@@ -21,7 +21,6 @@ import org.laokou.admin.server.interfaces.qo.SysMenuQo;
 import org.laokou.admin.client.vo.SysMenuVO;
 import org.laokou.admin.server.domain.sys.repository.service.SysMenuService;
 import org.laokou.auth.client.user.UserDetail;
-import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.enums.SuperAdminEnum;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -65,14 +64,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> im
 
     @Override
     public List<SysMenuVO> getTenantMenuList() {
-        return this.baseMapper.getTenantMenuList(UserUtil.getTenantId());
+        return this.baseMapper.getTenantMenuList();
     }
 
     private List<SysMenuVO> getMenuList(Long userId, Integer superAdmin, Integer type) {
         //region Description
         if (SuperAdminEnum.YES.ordinal() == superAdmin) {
-            Long tenantId = UserUtil.getTenantId();
-            return this.baseMapper.getMenuList(type,tenantId);
+            return this.baseMapper.getMenuList(type);
         } else {
             return this.baseMapper.getMenuListByUserId(userId,type);
         }

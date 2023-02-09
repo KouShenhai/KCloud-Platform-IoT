@@ -80,7 +80,6 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
             throw new CustomException("菜单编号不为空");
         }
         long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class)
-                .eq(SysMenuDO::getTenantId,UserUtil.getTenantId())
                 .eq(SysMenuDO::getName, dto.getName()).ne(SysMenuDO::getId,dto.getId()));
         if (count > 0) {
             throw new CustomException("菜单已存在，请重新填写");
@@ -97,7 +96,6 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     public Boolean insertMenu(SysMenuDTO dto) {
         ValidatorUtil.validateEntity(dto);
         long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class)
-                .eq(SysMenuDO::getTenantId,UserUtil.getTenantId())
                 .eq(SysMenuDO::getName, dto.getName()));
         if (count > 0) {
             throw new CustomException("菜单已存在，请重新填写");

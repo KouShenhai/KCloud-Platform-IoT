@@ -4,7 +4,7 @@
 
     <select id="getMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
         select id,pid,`name`,icon,url,`type`,permission from boot_sys_menu
-        where del_flag = 0 and tenant_id = #{tenantId}
+        where del_flag = 0
         <if test="type != null">
             and `type` = #{type}
         </if>
@@ -80,7 +80,7 @@
 
     <select id="getTenantMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
         select id,pid,`name` from boot_sys_menu
-        where del_flag = 0 and tenant_id = #{tenantId}
+        where del_flag = 0
           AND `name` NOT LIKE '菜单修改'
           AND `name` NOT LIKE '菜单新增'
           AND `name` NOT LIKE '菜单删除'

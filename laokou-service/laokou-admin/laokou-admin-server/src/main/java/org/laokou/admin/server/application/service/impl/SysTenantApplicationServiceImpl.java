@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.laokou.admin.server.application.service.impl;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysTenantApplicationService;
+import org.laokou.admin.server.domain.sys.entity.SysUserDO;
+import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.swagger.exception.CustomException;
@@ -30,9 +30,9 @@ import org.laokou.tenant.entity.SysTenantDO;
 import org.laokou.tenant.qo.SysTenantQo;
 import org.laokou.tenant.service.SysTenantService;
 import org.laokou.tenant.vo.SysTenantVO;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 /**
  * @author laokou
  */
@@ -41,6 +41,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class SysTenantApplicationServiceImpl implements SysTenantApplicationService {
 
     private final SysTenantService sysTenantService;
+    private final SysUserService sysUserService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public IPage<SysTenantVO> queryTenantPage(SysTenantQo qo) {
@@ -59,7 +61,11 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
         }
         SysTenantDO sysTenantDO = ConvertUtil.sourceToTarget(dto, SysTenantDO.class);
         sysTenantDO.setCreator(UserUtil.getUserId());
-        return sysTenantService.save(sysTenantDO);
+        sysTenantService.save(sysTenantDO);
+        Long tenantId = UserUtil.getTenantId();
+        // 初始化用户
+        initUser(tenantId);
+        return true;
     }
 
     @Override
@@ -83,7 +89,8 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
         SysTenantDO sysTenantDO = ConvertUtil.sourceToTarget(dto, SysTenantDO.class);
         sysTenantDO.setVersion(version);
         sysTenantDO.setEditor(UserUtil.getUserId());
-        return sysTenantService.updateById(sysTenantDO);
+        sysTenantService.updateById(sysTenantDO);
+        return true;
     }
 
     @Override
@@ -91,5 +98,15 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
     public Boolean deleteTenant(Long id) {
         sysTenantService.deleteTenant(id);
         return true;
+    }
+
+    private void initUser(Long tenantId) {
+        String tenantUsername = "tenant";
+        String tenantPassword = "tenant123";
+        SysUserDO sysUserDO = new SysUserDO();
+        sysUserDO.setTenantId(tenantId);
+        sysUserDO.setUsername(tenantUsername);
+        sysUserDO.setPassword(passwordEncoder.encode(tenantPassword));
+        sysUserService.save(sysUserDO);
     }
 }

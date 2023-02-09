@@ -12,7 +12,7 @@
         <if test="qo.title != null and qo.title != ''">
             and title like concat('%',#{qo.title},'%')
         </if>
-         order by update_date desc
+         order by create_date desc
     </select>
 
     <select id="getMessageByDetailId" resultType="org.laokou.admin.client.vo.MessageDetailVO">
