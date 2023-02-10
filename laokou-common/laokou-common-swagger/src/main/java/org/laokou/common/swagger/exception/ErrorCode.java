@@ -115,7 +115,7 @@ public interface ErrorCode {
      */
     int AUTHORIZATION_NOT_NULL = 10020;
     /**
-     * 授权无效
+     * token已过期，请重新登录
      */
     int AUTHORIZATION_INVALID = 10021;
     /**

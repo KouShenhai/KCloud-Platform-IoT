@@ -28,7 +28,9 @@ import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.exception.ErrorCode;
+import org.laokou.redis.utils.RedisUtil;
 import org.laokou.tenant.service.SysSourceService;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -55,8 +57,10 @@ public class OAuth2EmailAuthenticationProvider extends AbstractOAuth2BaseAuthent
             , SysCaptchaService sysCaptchaService
             , OAuth2AuthorizationService oAuth2AuthorizationService
             , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
-            , SysSourceService sysSourceService) {
-        super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder,sysCaptchaService,oAuth2AuthorizationService,tokenGenerator, sysSourceService);
+            , SysSourceService sysSourceService
+            , JdbcTemplate jdbcTemplate
+            , RedisUtil redisUtil) {
+        super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder,sysCaptchaService,oAuth2AuthorizationService,tokenGenerator, sysSourceService,jdbcTemplate,redisUtil);
     }
 
     @Override

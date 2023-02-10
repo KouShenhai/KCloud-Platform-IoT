@@ -27,9 +27,13 @@ import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.core.utils.MessageUtil;
+import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.swagger.exception.ErrorCode;
+import org.laokou.redis.utils.RedisKeyUtil;
+import org.laokou.redis.utils.RedisUtil;
 import org.laokou.tenant.service.SysSourceService;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -61,15 +65,22 @@ import static org.laokou.common.core.constant.Constant.DEFAULT;
  */
 public abstract class AbstractOAuth2BaseAuthenticationProvider implements AuthenticationProvider {
 
-    protected SysUserService sysUserService;
-    protected SysMenuService sysMenuService;
-    protected SysDeptService sysDeptService;
-    protected LoginLogUtil loginLogUtil;
-    protected PasswordEncoder passwordEncoder;
-    protected SysCaptchaService sysCaptchaService;
-    protected OAuth2AuthorizationService authorizationService;
-    protected OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
-    protected SysSourceService sysSourceService;
+    protected final SysUserService sysUserService;
+    protected final SysMenuService sysMenuService;
+    protected final SysDeptService sysDeptService;
+    protected final LoginLogUtil loginLogUtil;
+    protected final PasswordEncoder passwordEncoder;
+    protected final SysCaptchaService sysCaptchaService;
+    protected final OAuth2AuthorizationService authorizationService;
+    protected final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
+    protected final SysSourceService sysSourceService;
+    protected final JdbcTemplate jdbcTemplate;
+    protected final RedisUtil redisUtil;
+    private static final String QUERY_TOKEN_SQL = "SELECT CONVERT(access_token_value USING utf8) as access_token from oauth2_authorization " +
+            "WHERE access_token_value <> ? " +
+            "and NOW() > access_token_issued_at " +
+            "AND NOW() < access_token_expires_at " +
+            "and principal_name = ? order by access_token_issued_at desc limit 1";
 
     public AbstractOAuth2BaseAuthenticationProvider(
             SysUserService sysUserService
@@ -80,7 +91,9 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             , SysCaptchaService sysCaptchaService
             , OAuth2AuthorizationService authorizationService
             , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
-            , SysSourceService sysSourceService) {
+            , SysSourceService sysSourceService
+            , JdbcTemplate jdbcTemplate
+            , RedisUtil redisUtil) {
         this.sysDeptService = sysDeptService;
         this.sysMenuService = sysMenuService;
         this.loginLogUtil = loginLogUtil;
@@ -90,6 +103,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         this.tokenGenerator = tokenGenerator;
         this.authorizationService = authorizationService;
         this.sysSourceService = sysSourceService;
+        this.jdbcTemplate = jdbcTemplate;
+        this.redisUtil = redisUtil;
     }
 
 
@@ -186,9 +201,12 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         authorizationService.save(oAuth2Authorization);
         // 登录成功
         loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.SUCCESS.ordinal(), AuthConstant.LOGIN_SUCCESS_MSG,request);
+        // 账号是否已经登录并且未过期，是则强制踢出，反之不操作
+        accountKill(oAuth2AccessToken.getTokenValue(),loginName);
         return new OAuth2AccessTokenAuthenticationToken(
                 registeredClient, clientPrincipal, oAuth2AccessToken, oAuth2RefreshToken, Collections.emptyMap());
     }
+
     protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password, HttpServletRequest request) throws IOException {
         AuthorizationGrantType grantType = getGrantType();
         String loginType = grantType.getValue();
@@ -244,6 +262,19 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             return clientPrincipal;
         }
         throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_CLIENT);
+    }
+
+    /**
+     * 账号踢出
+     * @param accessToken
+     * @param loginName
+     */
+    private void accountKill(String accessToken,String loginName) {
+        String token = jdbcTemplate.queryForObject(QUERY_TOKEN_SQL, String.class, accessToken, loginName);
+        if (StringUtil.isNotEmpty(token)) {
+            String accountKillKey = RedisKeyUtil.getAccountKillKey(token);
+            redisUtil.set(accountKillKey,DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);
+        }
     }
 
 }

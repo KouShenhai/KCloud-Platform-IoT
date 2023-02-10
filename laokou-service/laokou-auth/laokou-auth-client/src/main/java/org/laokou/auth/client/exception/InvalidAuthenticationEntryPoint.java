@@ -17,9 +17,8 @@ package org.laokou.auth.client.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.MessageUtil;
-import org.laokou.common.swagger.exception.ErrorCode;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +26,7 @@ import java.io.IOException;
 
 /**
  * token失效，异常处理器
- * @author Mark sunlightcs@gmail.com
+ * @author laokou
  */
 @Slf4j
 @Component
@@ -35,7 +34,10 @@ public class InvalidAuthenticationEntryPoint implements AuthenticationEntryPoint
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-        log.error("错误信息：{}",authException.getMessage());
-        CustomAuthExceptionHandler.handleException(response, ErrorCode.AUTHORIZATION_INVALID, MessageUtil.getMessage(ErrorCode.AUTHORIZATION_INVALID));
+        OAuth2AuthenticationException oAuth2AuthenticationException = (OAuth2AuthenticationException) authException;
+        String message = oAuth2AuthenticationException.getError().getDescription();
+        String errorCode = oAuth2AuthenticationException.getError().getErrorCode();
+        log.error("错误信息：{}",message);
+        CustomAuthExceptionHandler.handleException(response, Integer.valueOf(errorCode), message);
     }
 }

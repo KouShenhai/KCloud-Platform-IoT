@@ -98,4 +98,12 @@ public final class RedisKeyUtil {
     public static String getMessageUnReadKey(Long userId) {
         return "sys:message:unread:" + userId;
     }
+
+    /**
+     * 账号踢出Key
+     */
+    public static String getAccountKillKey(String token) {
+        return "sys:account:kill:" + token;
+    }
+
 }

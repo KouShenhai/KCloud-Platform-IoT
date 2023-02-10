@@ -15,6 +15,7 @@
  */
 package org.laokou.common.security.config;
 import lombok.RequiredArgsConstructor;
+import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.swagger.exception.ErrorCode;
 import org.laokou.common.core.utils.MessageUtil;
@@ -25,7 +26,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
-import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.stereotype.Component;
 import java.security.Principal;
@@ -43,6 +43,13 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
     @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
+        // 账号是否被强制踢出
+        String accountKillKey = RedisKeyUtil.getAccountKillKey(token);
+        Object value = redisUtil.get(accountKillKey);
+        if (value != null) {
+            redisUtil.delete(accountKillKey);
+            CustomAuthExceptionHandler.throwError(401,"您的账号已在别处登录，请重新登录");
+        }
         String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
         Object obj = redisUtil.get(userInfoKey);
         if (obj != null) {
@@ -50,10 +57,10 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
         }
         OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
         if (oAuth2Authorization == null) {
-            throw new InvalidBearerTokenException(MessageUtil.getMessage(ErrorCode.UNAUTHORIZED));
+            CustomAuthExceptionHandler.throwError(ErrorCode.UNAUTHORIZED,MessageUtil.getMessage(ErrorCode.UNAUTHORIZED));
         }
         if (!oAuth2Authorization.getAccessToken().isActive()) {
-            throw new InvalidBearerTokenException(MessageUtil.getMessage(ErrorCode.AUTHORIZATION_INVALID));
+            CustomAuthExceptionHandler.throwError(ErrorCode.AUTHORIZATION_INVALID,MessageUtil.getMessage(ErrorCode.AUTHORIZATION_INVALID));
         }
         Instant expiresAt = oAuth2Authorization.getAccessToken().getToken().getExpiresAt();
         Instant nowAt = Instant.now();
