@@ -30,7 +30,7 @@ public class RegexUtil {
 
     private static final String GRADE_REGEX = "^[0-9]\\d*$";
 
-    private static final String SOURCE_REGEX = "^[a-zA-Z_]+([0-9]+)+$";
+    private static final String SOURCE_REGEX = "^[a-zA-Z]+_+([0-9]+)+$";
 
     /**
      * 邮箱验证
@@ -74,7 +74,8 @@ public class RegexUtil {
 
     public static void main(String[] args) {
         System.out.println(emailRegex("24131760@qq"));
-        sourceRegex("tenant-000001");
+        boolean sourceRegex = sourceRegex("tenant_000001");
+        System.out.println(sourceRegex);
     }
 
 }
