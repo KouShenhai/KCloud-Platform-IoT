@@ -842,7 +842,7 @@ DECLARE consume CURSOR FOR SELECT
                            FROM
                                                                boot_sys_dept
                            WHERE
-                                                                   pid = pid;
+                                                                   id = pid;
 
 # 打开游标
 OPEN consume;

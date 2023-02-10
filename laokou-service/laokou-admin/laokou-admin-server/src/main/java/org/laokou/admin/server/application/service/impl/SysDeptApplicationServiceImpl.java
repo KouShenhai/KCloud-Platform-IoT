@@ -100,6 +100,9 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
         if (count > 0) {
             throw new CustomException("部门已存在，请重新填写");
         }
+        if (dto.getPid().equals(dto.getId())) {
+            throw new CustomException("父节点不能为自身，请重新选择");
+        }
         Integer version = sysDeptService.getVersion(id);
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         sysDeptDO.setVersion(version);
