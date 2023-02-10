@@ -17,14 +17,14 @@ package org.laokou.common.core.utils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
-
 import java.util.regex.Pattern;
 
 /**
+ * http://www.xwood.net/_site_domain_/_root/5870/5874/t_c280386.html
  * XSS过滤工具
  * @author laokou
  */
-public class XssUtil extends Whitelist {
+public class XssUtil {
 
     private static final Pattern[] SCRIPT_PATTERNS = {
             Pattern.compile("<script(.*?)></script>",Pattern.CASE_INSENSITIVE),
@@ -42,7 +42,7 @@ public class XssUtil extends Whitelist {
      * XSS过滤
      */
     public static String filter(String html){
-        return Jsoup.clean(html, xssWhitelist());
+        return Jsoup.clean(html, Whitelist.relaxed());
     }
 
     public static String clean(String value) {
@@ -59,46 +59,6 @@ public class XssUtil extends Whitelist {
     public static void main(String[] args) {
         String cleanValue = XssUtil.clean("select & from sql <script>qqqqqq</script>");
         System.out.println(cleanValue);
-    }
-
-    /**
-     * XSS过滤白名单
-     */
-    private static Whitelist xssWhitelist(){
-        return new Whitelist()
-                //支持的标签
-                .addTags("a", "b", "blockquote", "br", "caption", "cite", "code", "col", "colgroup", "dd", "div", "dl",
-                        "dt", "em", "h1", "h2", "h3", "h4", "h5", "h6", "i", "img", "li", "ol", "p", "pre", "q", "small",
-                        "strike", "strong","sub", "sup", "table", "tbody", "td","tfoot", "th", "thead", "tr", "u","ul",
-                        "embed","object","param","span")
-                //支持的标签属性
-                .addAttributes("a", "href", "class", "style", "target", "rel", "nofollow")
-                .addAttributes("blockquote", "cite")
-                .addAttributes("code", "class", "style")
-                .addAttributes("col", "span", "width")
-                .addAttributes("colgroup", "span", "width")
-                .addAttributes("img", "align", "alt", "height", "src", "title", "width", "class", "style")
-                .addAttributes("ol", "start", "type")
-                .addAttributes("q", "cite")
-                .addAttributes("table", "summary", "width", "class", "style")
-                .addAttributes("tr", "abbr", "axis", "colspan", "rowspan", "width", "style")
-                .addAttributes("td", "abbr", "axis", "colspan", "rowspan", "width", "style")
-                .addAttributes("th", "abbr", "axis", "colspan", "rowspan", "scope","width", "style")
-                .addAttributes("ul", "type", "style")
-                .addAttributes("pre", "class", "style")
-                .addAttributes("div", "class", "id", "style")
-                .addAttributes("embed", "src", "wmode", "flashvars", "pluginspage", "allowFullScreen", "allowfullscreen",
-                        "quality", "width", "height", "align", "allowScriptAccess", "allowscriptaccess", "allownetworking", "type")
-                .addAttributes("object", "type", "id", "name", "data", "width", "height", "style", "classid", "codebase")
-                .addAttributes("param", "name", "value")
-                .addAttributes("span", "class", "style")
-                //标签属性对应的协议
-                .addProtocols("a", "href", "ftp", "http", "https", "mailto")
-                .addProtocols("img", "src", "http", "https")
-                .addProtocols("blockquote", "cite", "http", "https")
-                .addProtocols("cite", "cite", "http", "https")
-                .addProtocols("q", "cite", "http", "https")
-                .addProtocols("embed", "src", "http", "https");
     }
 
 }

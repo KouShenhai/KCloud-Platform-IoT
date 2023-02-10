@@ -25,6 +25,9 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
     <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=WFANTXDEjrDw6UxsrRFCv_rQsEu6LTxH&jump_from=webapi"><img src="https://img.shields.io/badge/Q群-218686225-blue.svg" alt="Java技术交流QQ群"></a>
 </p>
 
+### 版本号
+特此说明，与Spring Boot版本保持一致
+
 ### 🔎 功能介绍
 🚀 用户登录：账号密码（多租户）、手机号、邮件、授权码登录（同一个账号只能在一处登录，不然强制踢出）   
 🚀 用户管理：用户信息增删改查（字段共享）（可重置密码）   
