@@ -133,8 +133,8 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
                 └── laokou-kafka                   --- 消息模块  
                 └── laokou-mongodb                 --- 报表模块  
                 └── laokou-rocketmq                --- 消息模块  
-                └── laokou-elasticsearch           --- 搜索模块  
                 └── laokou-power-job               --- 工作模块  
+                └── laokou-elasticsearch           --- 搜索模块  
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-oss                     --- 对象存储模块  
                 └── laokou-flowable                --- 工作流程模块  
