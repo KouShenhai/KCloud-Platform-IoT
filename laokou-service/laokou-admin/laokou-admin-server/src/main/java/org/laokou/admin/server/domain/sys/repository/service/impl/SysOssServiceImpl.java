@@ -16,10 +16,13 @@
 
 package org.laokou.admin.server.domain.sys.repository.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.laokou.admin.server.domain.sys.entity.SysOssDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysOssMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysOssService;
+import org.laokou.admin.server.interfaces.qo.SysOssQo;
+import org.laokou.oss.client.vo.SysOssVO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -36,5 +39,15 @@ public class SysOssServiceImpl extends ServiceImpl<SysOssMapper, SysOssDO> imple
     @Override
     public Integer getVersion(Long id) {
         return this.baseMapper.getVersion(id);
+    }
+
+    @Override
+    public IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page, SysOssQo qo) {
+        return this.baseMapper.queryOssPage(page,qo);
+    }
+
+    @Override
+    public SysOssVO getOssById(Long id) {
+        return this.baseMapper.getOssById(id);
     }
 }

@@ -16,6 +16,7 @@
 package org.laokou.admin.server.application.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.SysOssDTO;
 import org.laokou.admin.server.application.service.SysOssApplicationService;
@@ -78,11 +79,13 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
     @Override
     public IPage<SysOssVO> queryOssPage(SysOssQo qo) {
-        return null;
+        ValidatorUtil.validateEntity(qo);
+        IPage<SysOssVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+        return sysOssService.queryOssPage(page,qo);
     }
 
     @Override
     public SysOssVO getOssById(Long id) {
-        return null;
+        return sysOssService.getOssById(id);
     }
 }
