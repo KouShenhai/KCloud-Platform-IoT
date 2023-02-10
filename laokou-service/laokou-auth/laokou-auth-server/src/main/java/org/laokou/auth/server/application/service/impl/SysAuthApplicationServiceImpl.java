@@ -80,6 +80,10 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             return true;
         }
         token = token.substring(7);
+        String accountKillKey = RedisKeyUtil.getAccountKillKey(token);
+        if (redisUtil.hasKey(accountKillKey)) {
+            redisUtil.delete(accountKillKey);
+        }
         OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
         if (oAuth2Authorization == null) {
             return true;

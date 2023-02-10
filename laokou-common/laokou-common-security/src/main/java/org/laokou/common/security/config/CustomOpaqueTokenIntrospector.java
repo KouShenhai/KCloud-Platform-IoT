@@ -47,7 +47,6 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
         String accountKillKey = RedisKeyUtil.getAccountKillKey(token);
         Object value = redisUtil.get(accountKillKey);
         if (value != null) {
-            redisUtil.delete(accountKillKey);
             CustomAuthExceptionHandler.throwError(401,"您的账号已在别处登录，请重新登录");
         }
         String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
