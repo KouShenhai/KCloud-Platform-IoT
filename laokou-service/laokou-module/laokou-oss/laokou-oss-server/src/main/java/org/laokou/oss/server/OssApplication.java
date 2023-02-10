@@ -16,6 +16,7 @@
 package org.laokou.oss.server;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.laokou.common.swagger.config.CorsConfig;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -25,11 +26,20 @@ import org.springframework.scheduling.annotation.EnableAsync;
 /**
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = {"org.laokou.common.swagger","org.laokou.common.core","org.laokou.oss","org.laokou.redis","org.laokou.common.mybatisplus"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.common.log"
+        , "org.laokou.auth.client"
+        , "org.laokou.common.security"
+        , "org.laokou.common.swagger"
+        , "org.laokou.common.core"
+        , "org.laokou.oss"
+        , "org.laokou.redis"
+        , "org.laokou.common.mybatisplus"})
 @EnableDiscoveryClient
-@Import({CorsConfig.class})
+@Import(CorsConfig.class)
 @EnableEncryptableProperties
 @EnableAsync
+@MapperScan(value = {"org.laokou.oss.server.mapper"
+        , "org.laokou.common.log.mapper"})
 public class OssApplication {
 
     public static void main(String[] args) {

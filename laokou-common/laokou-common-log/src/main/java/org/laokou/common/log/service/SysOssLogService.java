@@ -1,7 +1,7 @@
-package org.laokou.oss.server.service;
+package org.laokou.common.log.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.laokou.oss.server.entity.SysOssLogDO;
+import org.laokou.common.log.entity.SysOssLogDO;
 
 /**
  * @author laokou

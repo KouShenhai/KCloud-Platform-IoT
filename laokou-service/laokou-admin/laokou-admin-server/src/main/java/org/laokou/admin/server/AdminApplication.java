@@ -43,6 +43,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
         , "org.laokou.common.core"
         , "org.laokou.admin"
         , "org.laokou.redis"
+        , "org.laokou.openfeign"
         , "org.laokou.common.mybatisplus"
         , "org.laokou.auth.client"})
 @EnableDiscoveryClient

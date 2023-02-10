@@ -17,5 +17,6 @@
         <module>laokou-gateway</module>
         <module>laokou-monitor</module>
         <module>laokou-sentinel</module>
+        <module>laokou-openfeign</module>
     </modules>
 </project>
