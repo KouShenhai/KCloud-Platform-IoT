@@ -39,7 +39,7 @@ import java.util.List;
 @RequestMapping("/sys/package/api")
 @Tag(name = "Sys Package Api",description = "系统套餐API")
 @RequiredArgsConstructor
-public class SysPackageController {
+public class SysPackageApiController {
 
     private final SysPackageApplicationService sysPackageApplicationService;
 

@@ -47,7 +47,7 @@ public abstract class AbstractStorageService implements StorageService{
         String secretKey = vo.getSecretKey();
         String region = vo.getRegion();
         String endpoint = vo.getEndpoint();
-        Boolean pathStyleAccessEnabled = vo.getPathStyleAccessEnabled();
+        Boolean pathStyleAccessEnabled = vo.getPathStyleAccessEnabled() == 1 ? true : false;
         ClientConfiguration clientConfiguration = new ClientConfiguration();
         AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(endpoint, region);
         AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);

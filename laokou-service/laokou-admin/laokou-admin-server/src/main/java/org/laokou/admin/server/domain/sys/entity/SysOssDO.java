@@ -16,11 +16,65 @@
 
 package org.laokou.admin.server.domain.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.laokou.common.mybatisplus.entity.BaseDO;
 
 /**
  * @author laokou
  */
 @Data
-public class SysOssDO {
+@TableName("boot_sys_oss")
+@Schema(name = "SysOssDO",description = "系统存储实体类")
+public class SysOssDO extends BaseDO {
+
+    /**
+     * 名称
+     */
+    @Schema(name = "name",description = "名称")
+    private String name;
+
+    /**
+     * 终端地址
+     */
+    @Schema(name = "endpoint",description = "终端地址")
+    private String endpoint;
+
+    /**
+     * 区域
+     */
+    @Schema(name = "region",description = "区域")
+    private String region;
+
+    /**
+     * 访问密钥
+     */
+    @Schema(name = "accessKey",description = "访问密钥")
+    private String accessKey;
+
+    /**
+     * 用户密钥
+     */
+    @Schema(name = "secretKey",description = "用户密钥")
+    private String secretKey;
+
+    /**
+     * 桶名
+     */
+    @Schema(name = "bucketName",description = "桶名")
+    private String bucketName;
+
+    /**
+     * 路径样式访问 1启动 0不启用
+     */
+    @Schema(name = "pathStyleAccessEnabled",description = "路径样式访问 1启动 0不启用")
+    private Integer pathStyleAccessEnabled;
+
+    /**
+     * 状态 1已启用 0未启用
+     */
+    @Schema(name = "status",description = "状态 1启用 0未启用")
+    private Integer status;
+
 }

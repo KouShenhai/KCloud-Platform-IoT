@@ -31,7 +31,7 @@ public class SysResourceAuditDO extends BaseDO {
     /**
      * 资源编号
      */
-    @Schema(name = "resourceId",description = "1")
+    @Schema(name = "resourceId",description = "资源编号")
     private Long resourceId;
 
     /**

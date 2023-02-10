@@ -39,7 +39,7 @@ import java.util.List;
 @RequestMapping("/sys/source/api")
 @Tag(name = "Sys Source Api",description = "系统数据源API")
 @RequiredArgsConstructor
-public class SysSourceController {
+public class SysSourceApiController {
 
     private final SysSourceApplicationService sysSourceApplicationService;
 

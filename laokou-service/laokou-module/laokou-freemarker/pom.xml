@@ -11,4 +11,11 @@
     <groupId>org.laokou</groupId>
     <artifactId>laokou-freemarker</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-mybatis-plus</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/sys/tenant/api")
 @Tag(name = "Sys Tenant Api",description = "系统租户API")
 @RequiredArgsConstructor
-public class SysTenantController {
+public class SysTenantApiController {
 
     private final SysTenantApplicationService sysTenantApplicationService;
 
