@@ -20,10 +20,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
-import org.laokou.auth.server.domain.sys.repository.service.SysCaptchaService;
-import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
-import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
-import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
+import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.core.utils.MessageUtil;
@@ -33,7 +30,6 @@ import org.laokou.common.swagger.exception.ErrorCode;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
 import org.laokou.tenant.service.SysSourceService;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -74,14 +70,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     protected final OAuth2AuthorizationService authorizationService;
     protected final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
     protected final SysSourceService sysSourceService;
-    protected final JdbcTemplate jdbcTemplate;
     protected final RedisUtil redisUtil;
-    private static final String QUERY_TOKEN_SQL = "SELECT CONVERT(access_token_value USING utf8) as access_token from oauth2_authorization " +
-            "WHERE access_token_value <> ? " +
-            "and NOW() > access_token_issued_at " +
-            "AND NOW() < access_token_expires_at " +
-            "and principal_name = ? order by access_token_issued_at desc limit 1";
-
+    protected final SysAuthenticationService sysAuthenticationService;
     public AbstractOAuth2BaseAuthenticationProvider(
             SysUserService sysUserService
             , SysMenuService sysMenuService
@@ -92,7 +82,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             , OAuth2AuthorizationService authorizationService
             , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
             , SysSourceService sysSourceService
-            , JdbcTemplate jdbcTemplate
+            , SysAuthenticationService sysAuthenticationService
             , RedisUtil redisUtil) {
         this.sysDeptService = sysDeptService;
         this.sysMenuService = sysMenuService;
@@ -103,8 +93,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         this.tokenGenerator = tokenGenerator;
         this.authorizationService = authorizationService;
         this.sysSourceService = sysSourceService;
-        this.jdbcTemplate = jdbcTemplate;
         this.redisUtil = redisUtil;
+        this.sysAuthenticationService = sysAuthenticationService;
     }
 
 
@@ -270,7 +260,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
      * @param loginName
      */
     private void accountKill(String accessToken,String loginName) {
-        String token = jdbcTemplate.queryForObject(QUERY_TOKEN_SQL, String.class, accessToken, loginName);
+        String token = sysAuthenticationService.getAccessToken(loginName, accessToken);
         if (StringUtil.isNotEmpty(token)) {
             String accountKillKey = RedisKeyUtil.getAccountKillKey(token);
             redisUtil.set(accountKillKey,DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);

@@ -19,10 +19,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.laokou.auth.server.domain.sys.repository.service.SysCaptchaService;
-import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
-import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
-import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
+import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserDetailServiceImpl;
 import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserServiceImpl;
 import org.laokou.auth.server.infrastructure.authentication.*;
@@ -104,7 +101,7 @@ public class AuthorizationServerConfig {
     , SysCaptchaService sysCaptchaService
     , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
     , SysSourceService sysSourceService
-    , JdbcTemplate jdbcTemplate
+    , SysAuthenticationService sysAuthenticationService
     , RedisUtil redisUtil) throws Exception {
         OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
         authorizationServerConfigurer.oidc(Customizer.withDefaults());
@@ -129,9 +126,9 @@ public class AuthorizationServerConfig {
                         .authorizationServerSettings(authorizationServerSettings))
                 .and()
                 .build();
-        http.authenticationProvider(new OAuth2PasswordAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,jdbcTemplate,redisUtil))
-                .authenticationProvider(new OAuth2SmsAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,jdbcTemplate,redisUtil))
-                .authenticationProvider(new OAuth2EmailAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,jdbcTemplate,redisUtil));
+        http.authenticationProvider(new OAuth2PasswordAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil))
+                .authenticationProvider(new OAuth2SmsAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil))
+                .authenticationProvider(new OAuth2EmailAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil));
         return defaultSecurityFilterChain;
     }
 

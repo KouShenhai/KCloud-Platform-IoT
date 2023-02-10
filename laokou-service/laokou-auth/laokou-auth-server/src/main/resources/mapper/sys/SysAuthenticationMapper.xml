@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.auth.server.domain.sys.repository.mapper.SysAuthenticationMapper">
+
+    <select id="getAccessToken" resultType="string">
+        SELECT CONVERT(access_token_value USING utf8) as access_token from oauth2_authorization
+        WHERE access_token_value <![CDATA[ <> ]]> #{accessToken}
+        and NOW() > access_token_issued_at
+        AND NOW() <![CDATA[ < ]]> access_token_expires_at
+        and principal_name = #{loginName} order by access_token_issued_at desc limit 1
+    </select>
+
+</mapper>

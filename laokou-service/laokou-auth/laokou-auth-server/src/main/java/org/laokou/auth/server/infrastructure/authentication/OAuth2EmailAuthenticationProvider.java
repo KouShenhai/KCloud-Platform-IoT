@@ -18,10 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
-import org.laokou.auth.server.domain.sys.repository.service.SysCaptchaService;
-import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
-import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
-import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
+import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.common.core.utils.MessageUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.StringUtil;
@@ -30,7 +27,6 @@ import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.exception.ErrorCode;
 import org.laokou.redis.utils.RedisUtil;
 import org.laokou.tenant.service.SysSourceService;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -58,9 +54,9 @@ public class OAuth2EmailAuthenticationProvider extends AbstractOAuth2BaseAuthent
             , OAuth2AuthorizationService oAuth2AuthorizationService
             , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
             , SysSourceService sysSourceService
-            , JdbcTemplate jdbcTemplate
+            , SysAuthenticationService sysAuthenticationService
             , RedisUtil redisUtil) {
-        super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder,sysCaptchaService,oAuth2AuthorizationService,tokenGenerator, sysSourceService,jdbcTemplate,redisUtil);
+        super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder,sysCaptchaService,oAuth2AuthorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil);
     }
 
     @Override
