@@ -62,7 +62,7 @@ public class SysSourceApplicationServiceImpl implements SysSourceApplicationServ
         }
         boolean sourceRegex = RegexUtil.sourceRegex(dto.getName());
         if (!sourceRegex) {
-            throw new CustomException("数据源名称只能包含字母、下划线和数字，例如：tenant_000001");
+            throw new CustomException("数据源名称必须包含字母、下划线和数字，例如：tenant_000001");
         }
         SysSourceDO tenantSourceDO = ConvertUtil.sourceToTarget(dto, SysSourceDO.class);
         tenantSourceDO.setCreator(UserUtil.getUserId());
@@ -79,7 +79,7 @@ public class SysSourceApplicationServiceImpl implements SysSourceApplicationServ
         }
         boolean sourceRegex = RegexUtil.sourceRegex(dto.getName());
         if (!sourceRegex) {
-            throw new CustomException("数据源名称只能包含字母、下划线和数字，例如：tenant_000001");
+            throw new CustomException("数据源名称必须包含字母、下划线和数字，例如：tenant_000001");
         }
         long count = sysSourceService.count(Wrappers.lambdaQuery(SysSourceDO.class).eq(SysSourceDO::getName, dto.getName()).ne(SysSourceDO::getId,dto.getId()));
         if (count > 0) {
