@@ -22,8 +22,8 @@ import org.laokou.elasticsearch.client.qo.SearchQo;
 import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.elasticsearch.client.dto.ElasticsearchDTO;
 import org.laokou.elasticsearch.client.vo.SearchVO;
-import org.laokou.elasticsearch.server.utils.ElasticsearchFieldUtil;
-import org.laokou.elasticsearch.server.utils.ElasticsearchUtil;
+import org.laokou.elasticsearch.client.utils.ElasticsearchFieldUtil;
+import org.laokou.elasticsearch.server.component.ElasticsearchTemplate;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
@@ -36,7 +36,7 @@ import java.util.Map;
 @Tag(name = "Elasticsearch API",description = "分布式搜索API")
 @RequiredArgsConstructor
 public class ElasticsearchApiController {
-    private final ElasticsearchUtil elasticsearchUtil;
+    private final ElasticsearchTemplate elasticsearchTemplate;
 
     @PostMapping("/create")
     @Operation(summary = "分布式搜索>创建索引",description = "分布式搜索>创建索引")
@@ -44,7 +44,7 @@ public class ElasticsearchApiController {
         String indexName = model.getIndexName();
         String indexAlias = model.getIndexAlias();
         Class<?> clazz = ElasticsearchFieldUtil.getClazz(indexAlias);
-        return new HttpResult<Boolean>().ok(elasticsearchUtil.createIndex(indexName,indexAlias,clazz));
+        return new HttpResult<Boolean>().ok(elasticsearchTemplate.createIndex(indexName,indexAlias,clazz));
     }
 
     @PostMapping("/createAsync")
@@ -53,7 +53,7 @@ public class ElasticsearchApiController {
         String indexName = model.getIndexName();
         String indexAlias = model.getIndexAlias();
         Class<?> clazz = ElasticsearchFieldUtil.getClazz(indexAlias);
-        elasticsearchUtil.createAsyncIndex(indexName,indexAlias,clazz);
+        elasticsearchTemplate.createAsyncIndex(indexName,indexAlias,clazz);
     }
 
     @PostMapping("/sync")
@@ -64,7 +64,7 @@ public class ElasticsearchApiController {
         String indexAlias = model.getIndexAlias();
         String jsonData = model.getData();
         Class<?> clazz = ElasticsearchFieldUtil.getClazz(indexAlias);
-        return new HttpResult<Boolean>().ok(elasticsearchUtil.syncIndex(id,indexName,indexAlias,jsonData,clazz));
+        return new HttpResult<Boolean>().ok(elasticsearchTemplate.syncIndex(id,indexName,indexAlias,jsonData,clazz));
     }
 
     @PostMapping("/syncAsyncBatch")
@@ -72,7 +72,7 @@ public class ElasticsearchApiController {
     public void syncAsyncBatch(@RequestBody final ElasticsearchDTO model) {
         String indexName = model.getIndexName();
         String jsonDataList = model.getData();
-        elasticsearchUtil.syncAsyncBatchIndex(indexName,jsonDataList);
+        elasticsearchTemplate.syncAsyncBatchIndex(indexName,jsonDataList);
     }
 
     @PostMapping("/syncBatch")
@@ -80,13 +80,13 @@ public class ElasticsearchApiController {
     public HttpResult<Boolean> syncBatch(@RequestBody final ElasticsearchDTO model) throws IOException {
         String indexName = model.getIndexName();
         String jsonDataList = model.getData();
-        return new HttpResult<Boolean>().ok(elasticsearchUtil.syncBatchIndex(indexName,jsonDataList));
+        return new HttpResult<Boolean>().ok(elasticsearchTemplate.syncBatchIndex(indexName,jsonDataList));
     }
 
     @GetMapping("/detail")
     @Operation(summary = "分布式搜索>查看",description = "分布式搜索>查看")
     public HttpResult<String> detail(@RequestParam("indexName")final String indexName, @RequestParam("id")final String id) {
-        return new HttpResult<String>().ok(elasticsearchUtil.getIndexById(indexName,id));
+        return new HttpResult<String>().ok(elasticsearchTemplate.getIndexById(indexName,id));
     }
 
     @PutMapping("/updateBatch")
@@ -96,7 +96,7 @@ public class ElasticsearchApiController {
         String indexAlias = model.getIndexAlias();
         String jsonDataList = model.getData();
         Class<?> clazz = ElasticsearchFieldUtil.getClazz(indexAlias);
-        return new HttpResult<Boolean>().ok(elasticsearchUtil.updateBatchIndex(indexName,indexAlias,jsonDataList,clazz));
+        return new HttpResult<Boolean>().ok(elasticsearchTemplate.updateBatchIndex(indexName,indexAlias,jsonDataList,clazz));
     }
 
     @PutMapping("/update")
@@ -105,49 +105,49 @@ public class ElasticsearchApiController {
         String id = model.getId();
         String indexName = model.getIndexName();
         String paramJson = model.getData();
-        return new HttpResult<Boolean>().ok(elasticsearchUtil.updateIndex(indexName,id,paramJson));
+        return new HttpResult<Boolean>().ok(elasticsearchTemplate.updateIndex(indexName,id,paramJson));
     }
 
     @DeleteMapping("/deleteBatch")
     @Operation(summary = "分布式搜索>批量删除",description = "分布式搜索>批量删除")
     public HttpResult<Boolean> deleteBatch(@RequestParam("indexName")final String indexName, @RequestParam("ids")final List<String> ids) {
-        return new HttpResult<Boolean>().ok(elasticsearchUtil.deleteBatchIndex(indexName,ids));
+        return new HttpResult<Boolean>().ok(elasticsearchTemplate.deleteBatchIndex(indexName,ids));
     }
 
     @DeleteMapping("/deleteById")
     @Operation(summary = "分布式搜索>删除",description = "分布式搜索>删除")
     public HttpResult<Boolean> deleteById(@RequestParam("indexName")final String indexName, @RequestParam("id")final String id) {
-        return new HttpResult<Boolean>().ok(elasticsearchUtil.deleteById(indexName,id));
+        return new HttpResult<Boolean>().ok(elasticsearchTemplate.deleteById(indexName,id));
     }
 
     @DeleteMapping("/deleteAsync")
     @Operation(summary = "分布式搜索>异步删除",description = "分布式搜索>异步删除")
     public void deleteAsync(@RequestParam("indexName")final String indexName) {
-        elasticsearchUtil.deleteAsyncIndex(indexName);
+        elasticsearchTemplate.deleteAsyncIndex(indexName);
     }
 
     @DeleteMapping("/deleteAll")
     @Operation(summary = "分布式搜索>清空",description = "分布式搜索>清空")
     public HttpResult<Boolean> deleteAll(@RequestParam("indexName")final String indexName) {
-        return new HttpResult<Boolean>().ok(elasticsearchUtil.deleteAll(indexName));
+        return new HttpResult<Boolean>().ok(elasticsearchTemplate.deleteAll(indexName));
     }
 
     @DeleteMapping("/delete")
     @Operation(summary = "分布式搜索>删除索引",description = "分布式搜索>删除索引")
     public HttpResult<Boolean> delete(@RequestParam("indexName")final String indexName) throws IOException {
-        return new HttpResult<Boolean>().ok(elasticsearchUtil.deleteIndex(indexName));
+        return new HttpResult<Boolean>().ok(elasticsearchTemplate.deleteIndex(indexName));
     }
 
     @PostMapping("/highlightSearch")
     @Operation(summary = "分布式搜索>高亮搜索",description = "分布式搜索>高亮搜索")
     public HttpResult<SearchVO<Map<String,Object>>> highlightSearch(@RequestBody final SearchQo searchQo) throws IOException {
-        return new HttpResult<SearchVO<Map<String,Object>>>().ok(elasticsearchUtil.highlightSearchIndex(searchQo));
+        return new HttpResult<SearchVO<Map<String,Object>>>().ok(elasticsearchTemplate.highlightSearchIndex(searchQo));
     }
 
     @PostMapping("/aggregationSearch")
     @Operation(summary = "分布式搜索>聚合查询",description = "分布式搜索>聚合查询")
     public HttpResult<SearchVO<Map<String,Long>>> aggregationSearch(@RequestBody final SearchQo searchQo) throws IOException {
-        return new HttpResult<SearchVO<Map<String,Long>>>().ok(elasticsearchUtil.aggregationSearchIndex(searchQo));
+        return new HttpResult<SearchVO<Map<String,Long>>>().ok(elasticsearchTemplate.aggregationSearchIndex(searchQo));
     }
 
 }

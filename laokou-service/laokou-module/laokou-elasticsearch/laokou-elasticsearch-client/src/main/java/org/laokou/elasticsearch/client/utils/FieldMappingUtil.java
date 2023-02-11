@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.elasticsearch.server.utils;
+package org.laokou.elasticsearch.client.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.elasticsearch.client.annotation.ElasticsearchFieldInfo;
 

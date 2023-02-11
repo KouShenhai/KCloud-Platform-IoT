@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.elasticsearch.server.utils;
+package org.laokou.elasticsearch.server.component;
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,21 +63,21 @@ import org.laokou.elasticsearch.client.constant.EsConstant;
 import org.laokou.elasticsearch.client.dto.AggregationDTO;
 import org.laokou.elasticsearch.client.dto.SearchDTO;
 import org.laokou.elasticsearch.client.qo.SearchQo;
+import org.laokou.elasticsearch.client.utils.FieldMapping;
+import org.laokou.elasticsearch.client.utils.FieldMappingUtil;
 import org.laokou.elasticsearch.client.vo.SearchVO;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import java.io.IOException;
 import java.util.*;
 /**
- * Elasticsearch工具类
  * @author laokou
  * @version 1.0
- * @date 2021/1/24 0024 下午 5:42
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ElasticsearchUtil {
+public class ElasticsearchTemplate {
 
     private final RestHighLevelClient restHighLevelClient;
 

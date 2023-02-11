@@ -13,28 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.elasticsearch.server.utils;
-import org.laokou.elasticsearch.client.index.ResourceIndex;
-
-import java.util.HashMap;
-import java.util.Map;
+package org.laokou.elasticsearch.client.utils;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 /**
- * 索引管理
+ * 属性、类型、分词器
  * @author laokou
  * @version 1.0
- * @date 2021/10/31 0031 上午 10:11
+ * @date 2021/2/9 0009 上午 10:20
  */
-public class ElasticsearchFieldUtil {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class FieldMapping {
 
-    private static final String RESOURCE_INDEX = "laokou_resource";
+    private String field;
 
-    private static final Map<String,Class<?>> CLASS_MAP = new HashMap<>(16);
+    private String type;
 
-    static {
-        CLASS_MAP.put(RESOURCE_INDEX, ResourceIndex.class);
-    }
+    private Integer participle;
 
-    public static Class<?> getClazz(final String indexName) {
-        return CLASS_MAP.get(indexName);
-    }
 }

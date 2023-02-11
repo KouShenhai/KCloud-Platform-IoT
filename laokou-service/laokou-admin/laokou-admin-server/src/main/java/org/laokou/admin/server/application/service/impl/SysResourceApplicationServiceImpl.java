@@ -48,6 +48,7 @@ import org.laokou.common.swagger.utils.ValidatorUtil;
 import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.elasticsearch.client.dto.ElasticsearchDTO;
 import org.laokou.elasticsearch.client.index.ResourceIndex;
+import org.laokou.elasticsearch.client.utils.ElasticsearchFieldUtil;
 import org.laokou.flowable.client.dto.AuditDTO;
 import org.laokou.flowable.client.dto.ProcessDTO;
 import org.laokou.flowable.client.dto.TaskDTO;
@@ -76,7 +77,6 @@ import static org.laokou.common.core.constant.Constant.DEFAULT;
 @Slf4j
 @RequiredArgsConstructor
 public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
-    private static final String RESOURCE_KEY = "laokou_resource";
     private static final String PROCESS_KEY = "Process_88888888";
     private static final Integer START_AUDIT_STATUS = 0;
     private final SysResourceService sysResourceService;
@@ -105,8 +105,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (obj != null) {
             throw new CustomException("数据已同步，请稍后再试");
         }
-        String indexAlias = RESOURCE_KEY;
-        String indexName = RESOURCE_KEY + "_" + code;
+        String indexAlias = ElasticsearchFieldUtil.RESOURCE_INDEX;
+        String indexName = indexAlias + "_" + code;
         try {
             // 删除索引
             deleteResourceIndex(indexName);
