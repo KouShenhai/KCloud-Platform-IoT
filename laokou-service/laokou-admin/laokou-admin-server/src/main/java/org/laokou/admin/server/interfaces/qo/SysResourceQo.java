@@ -21,8 +21,6 @@ import org.laokou.common.mybatisplus.entity.BasePage;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/8/19 0019 下午 3:46
  */
 @Data
 @Schema(name = "SysResourceQo",description = "资源实体类")

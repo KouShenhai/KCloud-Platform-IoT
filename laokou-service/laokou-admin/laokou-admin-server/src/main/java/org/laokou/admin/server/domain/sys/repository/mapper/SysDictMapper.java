@@ -29,8 +29,6 @@ import java.util.List;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/6/23 0023 上午 10:22
  */
 @Repository
 @Mapper

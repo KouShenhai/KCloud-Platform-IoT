@@ -24,8 +24,6 @@ import java.util.List;
 /**
  * 搜索
  * @author laokou
- * @version 1.0
- * @date 2020/8/9 0009 下午 5:16
  */
 @Data
 public class SearchQo implements Serializable {

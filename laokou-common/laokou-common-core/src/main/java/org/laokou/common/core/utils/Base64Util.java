@@ -19,8 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 /**
  * @author laokou
- * @version 1.0
- * @date 2021/10/13 0013 下午 10:23
  */
 public class Base64Util {
 

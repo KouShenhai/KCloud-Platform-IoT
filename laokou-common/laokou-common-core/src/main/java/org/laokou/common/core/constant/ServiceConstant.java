@@ -20,7 +20,6 @@ package org.laokou.common.core.constant;
 public interface ServiceConstant {
 
     String LAOKOU_ELASTICSEARCH = "laokou-elasticsearch";
-    String LAOKOU_ROCKETMQ = "laokou-rocketmq";
     String LAOKOU_IM = "laokou-im";
     String LAOKOU_KAFKA = "laokou-kafka";
     String LAOKOU_FLOWABLE = "laokou-flowable";

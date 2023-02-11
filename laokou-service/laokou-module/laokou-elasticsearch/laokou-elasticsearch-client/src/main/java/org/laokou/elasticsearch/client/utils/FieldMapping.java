@@ -20,8 +20,6 @@ import lombok.NoArgsConstructor;
 /**
  * 属性、类型、分词器
  * @author laokou
- * @version 1.0
- * @date 2021/2/9 0009 上午 10:20
  */
 @Data
 @NoArgsConstructor

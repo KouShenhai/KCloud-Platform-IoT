@@ -25,8 +25,6 @@ import org.laokou.admin.server.infrastructure.processor.DsTenantProcessor;
 import org.laokou.elasticsearch.client.index.ResourceIndex;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/8/19 0019 下午 4:11
  */
 @DS(DsTenantProcessor.TENANT)
 public interface SysResourceService extends IService<SysResourceDO> {

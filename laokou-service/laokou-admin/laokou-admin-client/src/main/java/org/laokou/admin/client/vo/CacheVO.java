@@ -22,8 +22,6 @@ import java.util.Map;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/27 0027 下午 3:19
  */
 @Data
 public class CacheVO {

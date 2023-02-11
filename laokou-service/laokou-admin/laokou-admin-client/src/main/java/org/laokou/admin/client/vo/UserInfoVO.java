@@ -20,8 +20,6 @@ import java.util.List;
 /**
  * 用户信息VO
  * @author laokou
- * @version 1.0
- * @date 2021/5/14 0014 下午 8:02
  */
 @Data
 public class UserInfoVO {

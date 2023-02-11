@@ -21,8 +21,6 @@ import java.io.Serializable;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/3/4 0004 下午 6:44
  */
 @Data
 public class KafkaDTO implements Serializable {

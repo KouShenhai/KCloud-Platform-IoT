@@ -19,8 +19,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/7 0007 下午 5:40
  */
 @Data
 public class TaskDTO {

@@ -19,8 +19,6 @@ import java.io.Serializable;
 import java.util.Date;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/20 0020 下午 3:52
  */
 @Data
 public class SysMessageVO implements Serializable {

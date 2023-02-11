@@ -26,8 +26,6 @@ import org.laokou.elasticsearch.client.index.ResourceIndex;
 import org.springframework.stereotype.Service;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/8/19 0019 下午 4:12
  */
 @Service
 public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysResourceDO> implements SysResourceService {

@@ -20,8 +20,6 @@ import org.laokou.admin.server.infrastructure.server.Server;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/27 0027 下午 3:17
  */
 public interface SysMonitorApplicationService {
 

@@ -22,8 +22,6 @@ import org.laokou.common.log.vo.SysAuditLogVO;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/8/26 0026 下午 5:35
  */
 public interface SysAuditLogService extends IService<SysAuditLogDO> {
     /**

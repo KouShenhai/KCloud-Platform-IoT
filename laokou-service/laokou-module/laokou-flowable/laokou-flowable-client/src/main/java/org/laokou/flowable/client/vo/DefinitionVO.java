@@ -18,8 +18,6 @@ import lombok.Data;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/7 0007 上午 8:56
  */
 @Data
 public class DefinitionVO {

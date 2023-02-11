@@ -30,8 +30,6 @@ import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 /**
  * @author laokou
- * @version 1.0
- * @date 2020/9/4 0004 下午 8:01
  */
 @Configuration
 @Slf4j

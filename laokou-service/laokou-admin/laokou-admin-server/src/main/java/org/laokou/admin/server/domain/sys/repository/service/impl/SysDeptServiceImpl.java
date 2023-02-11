@@ -25,8 +25,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/26 0026 下午 4:14
  */
 @Service
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDeptDO> implements SysDeptService {

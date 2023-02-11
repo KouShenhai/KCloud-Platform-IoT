@@ -23,8 +23,6 @@ import org.laokou.common.log.vo.SysAuditLogVO;
 import org.springframework.stereotype.Repository;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/8/26 0026 下午 5:33
  */
 @Mapper
 @Repository

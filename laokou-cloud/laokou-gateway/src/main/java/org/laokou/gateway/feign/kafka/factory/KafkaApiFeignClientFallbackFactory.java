@@ -21,8 +21,6 @@ import org.springframework.stereotype.Component;
 /**
  * 回调工厂
  * @author laokou
- * @version 1.0
- * @date 2020/9/5 0005 上午 12:12
  */
 @Component
 public class KafkaApiFeignClientFallbackFactory implements FallbackFactory<KafkaApiFeignClientFallback> {

@@ -23,7 +23,7 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 /**
- *  Spring Context 工具类
+ * Spring Context 工具类
  * @author laokou
  */
 @Component

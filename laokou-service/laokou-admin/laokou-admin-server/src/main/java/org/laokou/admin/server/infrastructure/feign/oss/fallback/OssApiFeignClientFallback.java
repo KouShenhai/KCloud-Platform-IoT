@@ -25,8 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * 服务降级
  * @author laokou
- * @version 1.0
- * @date 2020/9/5 0005 上午 12:12
  */
 @Slf4j
 @AllArgsConstructor

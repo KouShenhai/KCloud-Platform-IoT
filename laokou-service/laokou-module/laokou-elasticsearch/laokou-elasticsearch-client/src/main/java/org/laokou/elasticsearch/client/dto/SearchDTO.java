@@ -20,8 +20,6 @@ import lombok.Data;
 /**
  * 搜索DTO
  * @author laokou
- * @version 1.0
- * @date 2022/3/15 0015 上午 9:45
  */
 @Data
 public class SearchDTO {

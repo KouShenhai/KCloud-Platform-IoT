@@ -23,8 +23,6 @@ import java.util.Date;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/8/26 0026 下午 5:31
  */
 @Data
 @TableName("boot_sys_audit_log")

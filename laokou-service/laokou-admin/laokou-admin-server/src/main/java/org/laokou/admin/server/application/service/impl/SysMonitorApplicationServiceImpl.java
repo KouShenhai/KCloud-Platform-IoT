@@ -22,8 +22,6 @@ import org.laokou.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/27 0027 下午 3:18
  */
 @Service
 @RequiredArgsConstructor

@@ -22,8 +22,6 @@ import java.util.Map;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2021/7/11 0011 上午 10:03
  */
 public class MapUtil {
 

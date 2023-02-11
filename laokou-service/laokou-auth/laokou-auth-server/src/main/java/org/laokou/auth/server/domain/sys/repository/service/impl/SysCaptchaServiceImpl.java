@@ -25,8 +25,6 @@ import org.springframework.stereotype.Service;
 /**
  * 验证码实现类
  * @author laokou
- * @version 1.0
- * @date 2020/12/19 0019 下午 7:23
  */
 @Service
 @RequiredArgsConstructor

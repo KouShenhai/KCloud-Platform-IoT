@@ -40,8 +40,6 @@ import java.util.regex.Pattern;
 /**
  * http工具类
  * @author laokou
- * @version 1.0
- * @date 2021/6/5 0005 下午 3:27
  */
 @Slf4j
 public class HttpUtil {

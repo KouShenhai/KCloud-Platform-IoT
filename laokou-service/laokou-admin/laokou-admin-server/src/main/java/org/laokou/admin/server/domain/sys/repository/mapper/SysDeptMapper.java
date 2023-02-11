@@ -25,8 +25,6 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/26 0026 下午 4:15
  */
 @Mapper
 @Repository

@@ -34,8 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/26 0026 下午 4:30
  */
 @Service
 @RequiredArgsConstructor

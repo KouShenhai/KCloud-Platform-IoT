@@ -34,8 +34,6 @@ import java.util.Objects;
 /**
  * es配置文件
  * @author laokou
- * @version 1.0
- * @date 2020/8/9 0009 下午 2:01
  */
 @Configuration
 @Slf4j

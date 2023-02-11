@@ -17,8 +17,6 @@ package org.laokou.rocketmq.client.constant;
 /**
  * 队列常量值
  * @author laokou
- * @version 1.0
- * @date 2020/9/18 0018 上午 7:07
  */
 public interface RocketmqConstant {
 

@@ -25,8 +25,6 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/8/26 0026 下午 5:35
  */
 @Service
 public class SysAuditLogServiceImpl extends ServiceImpl<SysAuditLogMapper, SysAuditLogDO> implements SysAuditLogService {

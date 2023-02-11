@@ -21,8 +21,6 @@ import org.laokou.flowable.client.vo.DefinitionVO;
 import org.springframework.web.multipart.MultipartFile;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/6 0006 下午 6:10
  */
 public interface WorkflowDefinitionApplicationService {
 

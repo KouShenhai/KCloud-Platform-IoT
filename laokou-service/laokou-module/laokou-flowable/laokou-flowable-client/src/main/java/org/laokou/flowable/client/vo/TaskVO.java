@@ -21,8 +21,6 @@ import java.util.Date;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/7 0007 下午 5:34
  */
 @Data
 public class TaskVO {

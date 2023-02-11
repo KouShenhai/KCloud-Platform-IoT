@@ -19,8 +19,6 @@ import org.laokou.common.mybatisplus.entity.BasePage;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/7 0007 下午 5:40
  */
 @Data
 public class TaskQo extends BasePage {

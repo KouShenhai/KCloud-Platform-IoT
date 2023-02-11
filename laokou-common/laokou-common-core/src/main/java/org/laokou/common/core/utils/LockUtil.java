@@ -22,8 +22,6 @@ import java.net.UnknownHostException;
 /**
  * 分布式锁工具类
  * @author laokou
- * @version 1.0
- * @date 2021/7/1 0001 上午 8:18
  */
 public class LockUtil {
 

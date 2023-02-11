@@ -16,8 +16,6 @@
 package org.laokou.auth.client.constant;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/8/10 0010 下午 4:28
  */
 public interface AuthConstant {
    /**

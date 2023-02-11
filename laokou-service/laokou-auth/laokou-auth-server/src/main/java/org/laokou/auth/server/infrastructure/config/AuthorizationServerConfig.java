@@ -74,11 +74,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.time.Duration;
 import java.util.List;
 /**
- * Spring Security配置
- * SpringSecurity最新版本更新
  * @author laokou
- * @version 1.0
- * @date 2021/5/28 0028 上午 10:33
  */
 @Configuration
 public class AuthorizationServerConfig {

@@ -31,8 +31,6 @@ import java.util.*;
 /**
  * 系统部门
  * @author laokou
- * @version 1.0
- * @date 2022/7/26 0026 下午 4:28
  */
 @RestController
 @Tag(name = "Sys Dept API",description = "系统部门API")

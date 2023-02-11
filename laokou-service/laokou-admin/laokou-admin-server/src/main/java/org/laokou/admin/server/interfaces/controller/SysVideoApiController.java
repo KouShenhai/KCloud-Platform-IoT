@@ -41,8 +41,6 @@ import java.util.Date;
 import java.util.List;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/8/19 0019 下午 3:56
  */
 @RestController
 @Tag(name = "Sys Resource Video API",description = "视频管理API")

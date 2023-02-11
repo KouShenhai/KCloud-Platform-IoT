@@ -26,8 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/27 0027 下午 3:13
  */
 @RestController
 @Tag(name = "Sys Monitor API",description = "系统监控API")

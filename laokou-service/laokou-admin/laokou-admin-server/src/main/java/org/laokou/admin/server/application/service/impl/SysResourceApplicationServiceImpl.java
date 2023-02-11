@@ -70,8 +70,6 @@ import static org.laokou.common.core.constant.Constant.DEFAULT;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/8/19 0019 下午 3:43
  */
 @Service
 @Slf4j

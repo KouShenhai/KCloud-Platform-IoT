@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 
 /**
  * 转换工具类
- *
  * @author laokou
  */
 public class ConvertUtil extends BeanUtils{

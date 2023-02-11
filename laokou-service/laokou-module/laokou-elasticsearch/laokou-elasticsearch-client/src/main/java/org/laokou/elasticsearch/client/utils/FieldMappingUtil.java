@@ -23,8 +23,6 @@ import java.util.List;
 /**
  * 每个属性对应的类型及分词器
  * @author laokou
- * @version 1.0
- * @date 2021/1/24 0024 下午 7:51
  */
 @Slf4j
 public class FieldMappingUtil {

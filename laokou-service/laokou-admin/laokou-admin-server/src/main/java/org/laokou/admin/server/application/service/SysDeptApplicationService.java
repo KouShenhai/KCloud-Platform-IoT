@@ -21,8 +21,6 @@ import org.laokou.admin.client.vo.SysDeptVO;
 import java.util.*;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/26 0026 下午 4:29
  */
 public interface SysDeptApplicationService {
 

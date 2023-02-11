@@ -41,8 +41,6 @@ import java.io.IOException;
 import java.util.*;
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/8/19 0019 下午 3:56
  */
 @RestController
 @Tag(name = "Sys Resource Image API",description = "图片管理API")

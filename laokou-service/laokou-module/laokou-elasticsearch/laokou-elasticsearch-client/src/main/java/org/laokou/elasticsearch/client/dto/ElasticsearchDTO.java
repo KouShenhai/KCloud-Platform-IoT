@@ -20,10 +20,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * Model
  * @author laokou
- * @version 1.0
- * @date 2021/11/1 0001 下午 12:45
  */
 @Data
 public class ElasticsearchDTO implements Serializable {

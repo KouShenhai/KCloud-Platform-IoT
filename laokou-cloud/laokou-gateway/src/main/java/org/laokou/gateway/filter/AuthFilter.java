@@ -52,8 +52,6 @@ import java.util.function.Function;
 /**
  * 认证Filter
  * @author laokou
- * @version 1.0
- * @date 2020/9/4 0004 下午 9:10
  */
 @Component
 @Slf4j

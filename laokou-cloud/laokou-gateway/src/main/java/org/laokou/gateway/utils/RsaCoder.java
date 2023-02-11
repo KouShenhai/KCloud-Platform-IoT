@@ -27,9 +27,6 @@ import java.util.Objects;
 @Slf4j
 public class RsaCoder {
 
-    public RsaCoder() {
-    }
-
     public static byte[] decryptBase64(String key) {
         return Base64.decodeBase64(key);
     }

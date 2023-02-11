@@ -18,8 +18,6 @@ import lombok.Data;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/20 0020 下午 3:38
  */
 @Data
 public class OptionVO {

@@ -22,8 +22,6 @@ import lombok.Data;
 /**
  * 系统角色部门
  * @author laokou
- * @version 1.0
- * @date 2022/7/27 0027 上午 9:20
  */
 @Data
 @TableName("boot_sys_role_dept")

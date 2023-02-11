@@ -20,8 +20,6 @@ import org.laokou.common.core.utils.TreeUtil;
 /**
  * 系统菜单VO
  * @author laokou
- * @version 1.0
- * @date 2021/1/16 0016 下午 9:08
  */
 @Data
 public class SysMenuVO extends TreeUtil.TreeNo<SysMenuVO> {

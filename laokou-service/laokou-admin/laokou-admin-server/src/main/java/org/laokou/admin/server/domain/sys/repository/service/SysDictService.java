@@ -28,8 +28,6 @@ import java.util.List;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/6/23 0023 上午 11:04
  */
 @DS(DsTenantProcessor.TENANT)
 public interface SysDictService extends IService<SysDictDO> {

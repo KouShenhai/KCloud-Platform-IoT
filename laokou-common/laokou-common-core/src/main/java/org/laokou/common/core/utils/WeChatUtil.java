@@ -20,7 +20,7 @@ import java.util.Arrays;
 /**
  * @author laokou
  */
-public class WxgzhUtil {
+public class WeChatUtil {
 
 	private static final  String TOKEN = "67c626f6978143efb6920bf054a6243a";
 	private static final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5',

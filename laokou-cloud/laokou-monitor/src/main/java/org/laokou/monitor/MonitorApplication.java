@@ -20,7 +20,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author laokou
- * SpringSecurity最新版本更新
  */
 @SpringBootApplication
 @EnableAdminServer

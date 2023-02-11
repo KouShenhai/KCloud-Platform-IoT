@@ -21,8 +21,6 @@ import lombok.Data;
 /**
  * 系统资源
  * @author laokou
- * @version 1.0
- * @date 2022/8/19 0019 下午 3:51
  */
 @Data
 @TableName("boot_sys_resource")

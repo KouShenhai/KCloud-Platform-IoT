@@ -21,8 +21,6 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author laokou
- * @version 1.0
- * @date 2022/7/7 0007 上午 9:55
  */
 @Configuration
 public class FlowableConfig implements EngineConfigurationConfigurer<SpringProcessEngineConfiguration> {
