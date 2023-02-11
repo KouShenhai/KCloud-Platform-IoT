@@ -16,6 +16,7 @@
 package org.laokou.admin.client.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.util.Set;
@@ -27,6 +28,7 @@ public class MessageDTO {
     /**
      * 接收者
      */
+    @NotEmpty(message = "所选接收人不少于一个，请重新选择")
     private Set<String> receiver;
 
     @NotBlank(message = "请输入标题")
