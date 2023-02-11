@@ -59,12 +59,6 @@ public class SysResourceAuditDO extends BaseDO {
     private String remark;
 
     /**
-     * 资源标签
-     */
-    @Schema(name = "tags",description = "资源标签")
-    private String tags;
-
-    /**
      * 流程id
      */
     @Schema(name = "processInstanceId",description = "流程id")

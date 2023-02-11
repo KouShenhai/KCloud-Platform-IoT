@@ -53,10 +53,4 @@ public class SysResourceDO extends BaseDO {
     @Schema(name = "remark",description = "资源备注")
     private String remark;
 
-    /**
-     * 资源标签
-     */
-    @Schema(name = "tags",description = "资源标签")
-    private String tags;
-
 }

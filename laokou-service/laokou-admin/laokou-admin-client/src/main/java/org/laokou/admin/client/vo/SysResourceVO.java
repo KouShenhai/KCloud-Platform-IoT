@@ -31,7 +31,6 @@ public class SysResourceVO {
     private Integer status;
     private String code;
     private String remark;
-    private String tags;
     private String processInstanceId;
 
 }

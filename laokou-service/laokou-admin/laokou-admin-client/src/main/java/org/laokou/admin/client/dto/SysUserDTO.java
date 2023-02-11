@@ -31,6 +31,7 @@ public class SysUserDTO {
     private Integer status;
 
     private List<Long> roleIds;
+
     private String password;
 
     private String imgUrl;
@@ -40,6 +41,7 @@ public class SysUserDTO {
     private String mobile;
 
     private Long editor;
+
     private Long deptId;
 
     private Integer version;

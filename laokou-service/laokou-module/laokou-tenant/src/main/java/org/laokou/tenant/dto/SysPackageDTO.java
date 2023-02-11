@@ -16,6 +16,8 @@
 
 package org.laokou.tenant.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 import java.util.List;
@@ -27,7 +29,9 @@ import java.util.List;
 public class SysPackageDTO {
 
     private Long id;
+    @NotBlank(message = "请输入套餐名称")
     private String name;
+    @NotEmpty(message = "所选菜单不少于一个，请重新选择")
     private List<Long> menuIds;
 
 }

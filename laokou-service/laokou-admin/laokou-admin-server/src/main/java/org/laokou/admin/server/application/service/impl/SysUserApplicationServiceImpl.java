@@ -60,7 +60,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean updateUser(SysUserDTO dto) {
+    public Boolean updateUser(SysUserDTO dto,boolean adminFlag) {
         ValidatorUtil.validateEntity(dto);
         Long id = dto.getId();
         if (null == id) {
@@ -71,6 +71,14 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
                 .ne(SysUserDO::getId,id));
         if (count > 0) {
             throw new CustomException("用户名已存在，请重新填写");
+        }
+        if (adminFlag) {
+            if (CollectionUtils.isEmpty(dto.getRoleIds())) {
+                throw new CustomException("所选角色不少于一个，请重新选择");
+            }
+            if (dto.getDeptId() == null) {
+                throw new CustomException("请选择部门");
+            }
         }
         dto.setEditor(UserUtil.getUserId());
         String password = dto.getPassword();
@@ -99,7 +107,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
             throw new CustomException("用户名已存在，请重新填写");
         }
         if (CollectionUtils.isEmpty(dto.getRoleIds())) {
-            throw new CustomException("请选择角色");
+            throw new CustomException("所选角色不少于一个，请重新选择");
         }
         if (dto.getDeptId() == null) {
             throw new CustomException("请选择部门");

@@ -15,6 +15,7 @@
  */
 package org.laokou.admin.client.dto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.util.List;
@@ -30,9 +31,9 @@ public class SysRoleDTO {
     private String name;
     @NotNull(message = "角色排序不为空")
     private Integer sort;
-
+    @NotEmpty(message = "所选菜单不少于一个，请重新选择")
     private List<Long> menuIds;
-
+    @NotEmpty(message = "所选部门不少于一个，请重新选择")
     private List<Long> deptIds;
 
 }

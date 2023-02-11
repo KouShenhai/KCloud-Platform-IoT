@@ -321,14 +321,12 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                         .eq(SysResourceAuditDO::getResourceId,businessId)
                         .select(SysResourceAuditDO::getUrl
                                 , SysResourceAuditDO::getTitle
-                                , SysResourceAuditDO::getRemark
-                                , SysResourceAuditDO::getTags);
+                                , SysResourceAuditDO::getRemark);
                 SysResourceAuditDO auditDO = sysResourceAuditService.getOne(queryWrapper);
                 Integer version = sysResourceService.getVersion(businessId);
                 LambdaUpdateWrapper<SysResourceDO> updateWrapper = Wrappers.lambdaUpdate(SysResourceDO.class).eq(SysResourceDO::getId, businessId)
                         .eq(SysResourceDO::getVersion,version)
                         .set(SysResourceDO::getVersion, version + 1)
-                        .set(SysResourceDO::getTags, auditDO.getTags())
                         .set(SysResourceDO::getTitle, auditDO.getTitle())
                         .set(SysResourceDO::getRemark, auditDO.getRemark())
                         .set(SysResourceDO::getUrl, auditDO.getUrl());

@@ -31,9 +31,10 @@ public interface SysUserApplicationService {
     /**
      * 修改用户
      * @param dto
+     * @param adminFlag
      * @return
      */
-    Boolean updateUser(SysUserDTO dto);
+    Boolean updateUser(SysUserDTO dto,boolean adminFlag);
 
     /**
      * 新增用户

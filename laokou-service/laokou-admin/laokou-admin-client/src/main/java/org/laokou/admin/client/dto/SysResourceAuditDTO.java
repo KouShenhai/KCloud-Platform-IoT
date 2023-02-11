@@ -26,14 +26,12 @@ import lombok.Data;
 @Data
 public class SysResourceAuditDTO {
     private Long resourceId;
-    @NotBlank(message = "标题不为空")
+    @NotBlank(message = "请输入标题")
     private String title;
-    @NotBlank(message = "资源不为空")
+    @NotBlank(message = "资源不存在，请重新上传")
     private String url;
-    @NotBlank(message = "类型不为空")
+    @NotBlank(message = "请输入类型")
     private String code;
-    @NotBlank(message = "备注不为空")
+    @NotBlank(message = "请输入备注")
     private String remark;
-    @NotBlank(message = "标签不为空")
-    private String tags;
 }

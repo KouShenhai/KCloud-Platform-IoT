@@ -49,7 +49,7 @@ public class SysUserApiController {
     @PreAuthorize("hasAuthority('sys:user:update')")
     @DataCache(name = "user", key = "#dto.id", type = CacheEnum.DEL)
     public HttpResult<Boolean> update(@RequestBody SysUserDTO dto) {
-        return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto));
+        return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto,true));
     }
 
     @GetMapping("/userInfo")
@@ -67,7 +67,7 @@ public class SysUserApiController {
     @PutMapping("/updateInfo")
     @Operation(summary = "系统用户>修改个人信息",description = "系统用户>修改个人信息")
     public HttpResult<Boolean> updateInfo(@RequestBody SysUserDTO dto) {
-        return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto));
+        return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto,false));
     }
 
     @PutMapping("/password")
@@ -75,7 +75,7 @@ public class SysUserApiController {
     @OperateLog(module = "系统用户",name = "重置密码")
     @PreAuthorize("hasAuthority('sys:user:password')")
     public HttpResult<Boolean> password(@RequestBody SysUserDTO dto) {
-        return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto));
+        return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto,false));
     }
 
     @PostMapping("/insert")

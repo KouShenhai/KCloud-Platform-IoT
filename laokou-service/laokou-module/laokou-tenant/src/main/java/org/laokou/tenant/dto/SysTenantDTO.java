@@ -16,6 +16,8 @@
 
 package org.laokou.tenant.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -24,9 +26,12 @@ import lombok.Data;
 @Data
 public class SysTenantDTO {
 
+    @NotBlank(message = "请输入租户名称")
     private String name;
     private Long id;
+    @NotNull(message = "请选择数据源")
     private Long sourceId;
+    @NotNull(message = "请选择套餐")
     private Long packageId;
 
 }
