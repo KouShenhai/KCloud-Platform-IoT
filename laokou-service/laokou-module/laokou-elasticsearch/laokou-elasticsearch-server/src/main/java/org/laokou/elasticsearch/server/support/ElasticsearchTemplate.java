@@ -72,7 +72,6 @@ import java.io.IOException;
 import java.util.*;
 /**
  * @author laokou
- * @version 1.0
  */
 @Slf4j
 @Component
@@ -680,7 +679,7 @@ public class ElasticsearchTemplate {
                         .field("type",dataType)
                         .field("eager_global_ordinals",true)
                         .field("boost",10)
-                        //fielddata=true 用来解决text字段不能进行聚合操作
+                        // fielddata=true 用来解决text字段不能进行聚合操作
                         .field("fielddata",true)
                         .field("analyzer","ik_pinyin")
                         .field("search_analyzer","ik_max_word")

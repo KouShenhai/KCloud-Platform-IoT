@@ -42,6 +42,8 @@ public class ResourceIndex implements Serializable {
     private String remark;
 
     @ElasticsearchFieldInfo
-    private String ym;
+    private String ymd;
+
+
 
 }
