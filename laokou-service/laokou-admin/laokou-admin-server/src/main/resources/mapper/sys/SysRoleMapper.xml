@@ -3,19 +3,19 @@
 <mapper namespace="org.laokou.admin.server.domain.sys.repository.mapper.SysRoleMapper">
 
     <select id="getRoleIdsByUserId" resultType="long">
-        SELECT boot_sys_role.id FROM boot_sys_role
-        ,boot_sys_user
-        ,boot_sys_user_role
+        SELECT a.id FROM boot_sys_role a
+        ,boot_sys_user b
+        ,boot_sys_user_role c
         <where>
-            boot_sys_user.id = boot_sys_user_role.user_id
-            AND boot_sys_role.id = boot_sys_user_role.role_id
+            b.id = c.user_id
+            AND a.id = c.role_id
             <if test="userId != null">
-                AND boot_sys_user.id = #{userId}
+                AND b.id = #{userId}
             </if>
-            and boot_sys_role.del_flag = 0
+            and a.del_flag = 0
         </where>
-        group by boot_sys_role.id
-        order by boot_sys_role.create_date desc
+        group by a.id
+        order by a.create_date desc
     </select>
 
     <select id="getRoleList" resultType="org.laokou.admin.client.vo.SysRoleVO">

@@ -55,4 +55,9 @@ public class SysMenuDTO {
     @NotBlank(message = "请选择菜单图标")
     private String icon;
 
+    /**
+     * 是否可见 0显示 1隐藏
+     */
+    @NotNull(message = "请选择是否可见")
+    private Integer visible;
 }

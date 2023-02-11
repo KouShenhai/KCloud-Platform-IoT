@@ -72,4 +72,9 @@ public class SysMenuDO extends BaseDO {
 	@Schema(name = "type",description = "字典类型 0 菜单 1 按钮",example = "0")
 	private Integer type;
 
+	/**
+	 * 是否可见  0显示 1隐藏
+	 */
+	@Schema(name = "visible",description = "是否可见  0显示 1隐藏",example = "0")
+	private Integer visible;
 }

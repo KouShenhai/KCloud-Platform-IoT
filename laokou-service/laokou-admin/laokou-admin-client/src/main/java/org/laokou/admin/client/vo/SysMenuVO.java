@@ -48,4 +48,8 @@ public class SysMenuVO extends TreeUtil.TreeNo<SysMenuVO> {
      */
     private String permission;
 
+    /**
+     * 是否可见 0显示 1隐藏
+     */
+    private Integer visible;
 }
