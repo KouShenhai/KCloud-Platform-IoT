@@ -23,7 +23,7 @@ import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.elasticsearch.client.dto.ElasticsearchDTO;
 import org.laokou.elasticsearch.client.vo.SearchVO;
 import org.laokou.elasticsearch.client.utils.ElasticsearchFieldUtil;
-import org.laokou.elasticsearch.server.component.ElasticsearchTemplate;
+import org.laokou.elasticsearch.server.support.ElasticsearchTemplate;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
