@@ -26,7 +26,7 @@
         SELECT a.id,a.`name`, '' as menuIds from boot_sys_package a
         where a.del_flag = 0
         <if test="qo.name != null and qo.name != ''">
-            and `name` = #{qo.name}
+            and `name` like concat('%',#{qo.name},'%')
         </if>
         order by create_date desc
     </select>

@@ -66,9 +66,9 @@ public class SysOssDO extends BaseDO {
     private String bucketName;
 
     /**
-     * 路径样式访问 1启动 0不启用
+     * 路径样式访问 1已开启 0未启用
      */
-    @Schema(name = "pathStyleAccessEnabled",description = "路径样式访问 1启动 0不启用")
+    @Schema(name = "pathStyleAccessEnabled",description = "路径样式访问 1已开启 0未启用")
     private Integer pathStyleAccessEnabled;
 
     /**
