@@ -60,13 +60,6 @@ public final class RedisKeyUtil {
     }
 
     /**
-     * 系统部门Key
-     */
-    public static String getDeptAllKey() {
-        return "sys:dept:all";
-    }
-
-    /**
      * 消息消费Key
      * @return
      */

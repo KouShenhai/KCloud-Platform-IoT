@@ -108,10 +108,6 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteMenu(Long id) {
         sysMenuService.deleteMenu(id);
-        UserDetail userDetail = UserUtil.userDetail();
-        Long userId = userDetail.getUserId();
-        String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
-        redisUtil.delete(resourceTreeKey);
         return true;
     }
 

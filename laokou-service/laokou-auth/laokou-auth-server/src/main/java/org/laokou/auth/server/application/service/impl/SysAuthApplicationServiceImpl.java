@@ -89,14 +89,16 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             return true;
         }
         UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) oAuth2Authorization.getAttribute(Principal.class.getName())).getPrincipal();
-        // 清空用户信息
+        // 清空token
         oAuth2AuthorizationService.remove(oAuth2Authorization);
-        // 清空用户key
+        // 用户key
         String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
         redisUtil.delete(userInfoKey);
         Long userId = userDetail.getUserId();
+        // 菜单key
         String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
         redisUtil.delete(resourceTreeKey);
+        // 消息key
         String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
         redisUtil.delete(messageUnReadKey);
         return true;

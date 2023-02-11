@@ -6,7 +6,7 @@
         select id,pid,`name`,icon,url,`type`,permission from boot_sys_menu
         where del_flag = 0
         <if test="type != null">
-            and `type` = #{type} and a.visible = 0
+            and `type` = #{type} and visible = 0
         </if>
         order by sort desc
     </select>
@@ -55,9 +55,9 @@
         AND d.id = e.user_id
         AND b.id = e.role_id
         AND d.id = #{userId}
-        and a.del_flag = 0 and a.visible = 0
+        and a.del_flag = 0
         <if test="type != null">
-            and a.type = #{type}
+            and a.type = #{type} and a.visible = 0
         </if>
         group by a.url,
                 a.type,

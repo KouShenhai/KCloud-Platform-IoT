@@ -56,8 +56,8 @@ public class SysMenuDTO {
     private String icon;
 
     /**
-     * 是否可见 0显示 1隐藏
+     * 状态 0显示 1隐藏
      */
-    @NotNull(message = "请选择是否可见")
+    @NotNull(message = "请选择状态")
     private Integer visible;
 }

@@ -73,8 +73,8 @@ public class SysMenuDO extends BaseDO {
 	private Integer type;
 
 	/**
-	 * 是否可见  0显示 1隐藏
+	 * 状态  0显示 1隐藏
 	 */
-	@Schema(name = "visible",description = "是否可见  0显示 1隐藏",example = "0")
+	@Schema(name = "visible",description = "状态  0显示 1隐藏",example = "0")
 	private Integer visible;
 }
