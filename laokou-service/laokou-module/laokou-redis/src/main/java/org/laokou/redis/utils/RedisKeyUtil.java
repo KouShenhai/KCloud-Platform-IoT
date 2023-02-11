@@ -16,7 +16,6 @@
 package org.laokou.redis.utils;
 /**
  * @author laokou
- * @since 1.0.0
  */
 public final class RedisKeyUtil {
 
