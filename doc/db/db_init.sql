@@ -316,22 +316,8 @@ CREATE TABLE `boot_sys_resource` (
                                      `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
                                      `tags` longtext COMMENT '标签',
                                      `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号',
-                                     PRIMARY KEY (`id`,`create_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='资源'
-PARTITION BY RANGE ( UNIX_TIMESTAMP(`create_date`))
-(PARTITION lk202110 VALUES LESS THAN (1633017600) ENGINE = InnoDB,
- PARTITION lk202111 VALUES LESS THAN (1635696000) ENGINE = InnoDB,
- PARTITION lk202112 VALUES LESS THAN (1638288000) ENGINE = InnoDB,
- PARTITION lk202203 VALUES LESS THAN (1646064000) ENGINE = InnoDB,
- PARTITION lk202204 VALUES LESS THAN (1648742400) ENGINE = InnoDB,
- PARTITION lk202205 VALUES LESS THAN (1651334400) ENGINE = InnoDB,
- PARTITION lk202206 VALUES LESS THAN (1654012800) ENGINE = InnoDB,
- PARTITION lk202207 VALUES LESS THAN (1656604800) ENGINE = InnoDB,
- PARTITION lk202208 VALUES LESS THAN (1659283200) ENGINE = InnoDB,
- PARTITION lk202209 VALUES LESS THAN (1661961600) ENGINE = InnoDB,
- PARTITION lk202210 VALUES LESS THAN (1664553600) ENGINE = InnoDB,
- PARTITION lk202211 VALUES LESS THAN (1667232000) ENGINE = InnoDB,
- PARTITION lk202212 VALUES LESS THAN (1669824000) ENGINE = InnoDB);
+                                     PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='资源';
 INSERT INTO `boot_sys_resource` (`id`, `title`, `url`, `code`, `create_date`, `update_date`, `remark`, `creator`, `editor`, `del_flag`, `tags`, `version`) VALUES ('1429355654328815617', '大籽 - 白月光与朱砂痣.mp3', 'http://175.178.69.253:81/upload/node4/f906b6a282564c559632a1beeb449f5f.mp3', 'audio', '2021-10-21 13:05:09', '2022-08-26 10:43:30', '《白月光与朱砂痣》是由大籽、嘿人李逵演唱的歌曲，收录于2021年1月1日发行的《白月光与朱砂痣》专辑。', '1341620898007281665', '1341620898007281665', '0', '大籽', '0');
 INSERT INTO `boot_sys_resource` (`id`, `title`, `url`, `code`, `create_date`, `update_date`, `remark`, `creator`, `editor`, `del_flag`, `tags`, `version`) VALUES ('1429355954762616834', '王胜男_花粥 - 出山.mp3', 'http://175.178.69.253:81/upload/node1/ebd577c32a8d448c8349af779d36110a.mp3', 'audio', '2021-10-21 13:05:09', '2022-08-26 10:39:43', '《出山》是由花粥作词、作曲，王胜男和花粥演唱的歌曲，正式发行于2018年9月28日。背景伴奏原曲是Bachbeats创作的《Super Love》。', '1341620898007281665', '1341620898007281665', '0', '王胜男,花粥', '0');
 INSERT INTO `boot_sys_resource` (`id`, `title`, `url`, `code`, `create_date`, `update_date`, `remark`, `creator`, `editor`, `del_flag`, `tags`, `version`) VALUES ('1429355987293638657', '艾辰 - 错位时空.mp3', 'http://175.178.69.253:81/upload/node2/a673b6697e4142e5b24e5347b2b32fe8.mp3', 'audio', '2021-10-21 13:05:09', '2022-08-26 10:39:50', '《错位时空》是周仁作词，张博文作曲，艾辰演唱的歌曲，由网易云音乐飓风工作室出品，于2021年1月1日发行。', '1341620898007281665', '1341620898007281665', '0', '艾辰', '0');

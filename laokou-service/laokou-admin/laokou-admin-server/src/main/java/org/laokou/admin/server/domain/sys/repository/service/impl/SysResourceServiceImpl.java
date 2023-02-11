@@ -16,6 +16,7 @@
 package org.laokou.admin.server.domain.sys.repository.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.ibatis.session.ResultHandler;
 import org.laokou.admin.server.domain.sys.entity.SysResourceDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysResourceMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysResourceService;
@@ -23,7 +24,6 @@ import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.elasticsearch.client.index.ResourceIndex;
 import org.springframework.stereotype.Service;
-import java.util.List;
 /**
  * @author laokou
  * @version 1.0
@@ -48,18 +48,13 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
     }
 
     @Override
-    public Long getResourceTotal(String code,String ym) {
-        return this.baseMapper.getResourceTotal(code,ym);
+    public Long getResourceTotal(String code) {
+        return this.baseMapper.getResourceTotal(code);
     }
 
     @Override
-    public List<String> getResourceYmPartitionList(String code) {
-        return this.baseMapper.getResourceYmPartitionList(code);
-    }
-
-    @Override
-    public List<ResourceIndex> getResourceIndexList(Integer pageSize, Integer pageIndex, String code,String ym) {
-        return this.baseMapper.getResourceIndexList(pageSize, pageIndex, code,ym);
+    public void handleResourceList(String code, ResultHandler<ResourceIndex> handler) {
+        this.baseMapper.handleResourceList(code,handler);
     }
 
     @Override

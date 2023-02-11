@@ -67,22 +67,13 @@ public class SysVideoApiController {
         return new HttpResult<IPage<SysResourceVO>>().ok(sysResourceApplicationService.queryResourcePage(qo));
     }
 
-    @PostMapping("/complete/syncIndex")
-    @Operation(summary = "视频管理>全量同步",description = "视频管理>全量同步")
-    @OperateLog(module = "视频管理",name = "全量同步")
-    @Lock4j(key = "complete_video_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-    @PreAuthorize("hasAuthority('sys:resource:video:complete:syncIndex')")
-    public HttpResult<Boolean> complete() throws InterruptedException {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResource("video","", RedisKeyUtil.getSyncIndexCompleteKey("video")));
-    }
-
-    @PostMapping("/increment/syncIndex")
-    @Operation(summary = "视频管理>增量同步",description = "视频管理>增量同步")
-    @OperateLog(module = "视频管理",name = "增量同步")
-    @Lock4j(key = "increment_video_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-    @PreAuthorize("hasAuthority('sys:resource:video:increment:syncIndex')")
-    public HttpResult<Boolean> increment() throws InterruptedException {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResource("video", DateUtil.format(new Date(),DateUtil.YM_DATE_TIME), RedisKeyUtil.getSyncIndexIncrementKey("video")));
+    @PostMapping("/syncIndex")
+    @Operation(summary = "视频管理>同步索引",description = "视频管理>同步索引")
+    @OperateLog(module = "视频管理",name = "同步索引")
+    @Lock4j(key = "video_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
+    @PreAuthorize("hasAuthority('sys:resource:video:syncIndex')")
+    public HttpResult<Boolean> syncIndex() throws InterruptedException {
+        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResource("video", RedisKeyUtil.getSyncIndexKey("video")));
     }
 
     @GetMapping(value = "/detail")

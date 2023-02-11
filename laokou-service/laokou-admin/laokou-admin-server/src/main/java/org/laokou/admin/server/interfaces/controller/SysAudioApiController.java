@@ -64,22 +64,13 @@ public class SysAudioApiController {
     }
 
 
-    @PostMapping("/complete/syncIndex")
-    @Operation(summary = "音频管理>全量同步",description = "音频管理>全量同步")
-    @OperateLog(module = "音频管理",name = "全量同步")
-    @Lock4j(key = "complete_audio_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-    @PreAuthorize("hasAuthority('sys:resource:audio:complete:syncIndex')")
-    public HttpResult<Boolean> complete() throws InterruptedException {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResource("audio","", RedisKeyUtil.getSyncIndexCompleteKey("audio")));
-    }
-
-    @PostMapping("/increment/syncIndex")
-    @Operation(summary = "音频管理>增量同步",description = "音频管理>增量同步")
-    @OperateLog(module = "音频管理",name = "增量同步")
-    @Lock4j(key = "increment_audio_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
-    @PreAuthorize("hasAuthority('sys:resource:audio:increment:syncIndex')")
-    public HttpResult<Boolean> increment() throws InterruptedException {
-        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResource("audio", DateUtil.format(new Date(),DateUtil.YM_DATE_TIME), RedisKeyUtil.getSyncIndexIncrementKey("audio")));
+    @PostMapping("/syncIndex")
+    @Operation(summary = "音频管理>同步索引",description = "音频管理>同步索引")
+    @OperateLog(module = "音频管理",name = "同步索引")
+    @Lock4j(key = "audio_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
+    @PreAuthorize("hasAuthority('sys:resource:audio:syncIndex')")
+    public HttpResult<Boolean> syncIndex() throws InterruptedException {
+        return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResource("audio", RedisKeyUtil.getSyncIndexKey("audio")));
     }
 
     @PostMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

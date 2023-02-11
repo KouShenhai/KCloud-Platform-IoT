@@ -71,8 +71,8 @@ public final class RedisKeyUtil {
      * 全量同步索引Key
      * @return
      */
-    public static String getSyncIndexCompleteKey(String code) {
-        return "sys:resource:sync:" + code + ":complete";
+    public static String getSyncIndexKey(String code) {
+        return "sys:resource:sync:" + code;
     }
 
     /**

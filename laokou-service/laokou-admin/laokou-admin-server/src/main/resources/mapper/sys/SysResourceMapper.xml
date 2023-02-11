@@ -52,26 +52,14 @@
             limit 1
     </select>
 
-    <select id="getResourceIndexList" resultType="org.laokou.elasticsearch.client.index.ResourceIndex">
-select id,title,`code`,`remark`,DATE_FORMAT(create_date,'%Y%m') as ym from boot_sys_resource
-where del_flag = 0 and `code` = #{code}
-        <if test="ym != null and ym != ''">
-            and DATE_FORMAT(create_date,'%Y%m') = #{ym}
-        </if>
+    <select id="handleResourceList" fetchSize="500" resultSetType="FORWARD_ONLY" resultType="org.laokou.elasticsearch.client.index.ResourceIndex">
+     select id,title,`code`,`remark`,DATE_FORMAT(create_date,'%Y%m') as ym from boot_sys_resource
+     where del_flag = 0 and `code` = #{code}
     </select>
 
     <select id="getResourceTotal" resultType="java.lang.Long">
-select count(1) from boot_sys_resource
-where del_flag = 0 and `code` = #{code}
-<if test="ym != null and ym != ''">
-    and DATE_FORMAT(create_date,'%Y%m') = #{ym}
-</if>
-    </select>
-
-    <select id="getResourceYmPartitionList" resultType="java.lang.String">
-select DATE_FORMAT(create_date,'%Y%m') a from boot_sys_resource
-where del_flag = 0 and `code` = #{code}
-group by a
+    select count(1) from boot_sys_resource
+    where del_flag = 0 and `code` = #{code}
     </select>
 
     <select id="getVersion" resultType="integer">

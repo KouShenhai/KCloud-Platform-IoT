@@ -43,12 +43,11 @@ public interface SysResourceApplicationService {
     /**
      * 全量同步数据
      * @param code
-     * @param ym
      * @param key
      * @return
      * @throws InterruptedException
      */
-    Boolean syncResource(String code,String ym,String key) throws InterruptedException;
+    Boolean syncResource(String code,String key) throws InterruptedException;
 
     /**
      * 根据id查询资源

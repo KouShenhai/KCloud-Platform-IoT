@@ -45,6 +45,7 @@ import org.laokou.common.log.vo.SysAuditLogVO;
 import org.laokou.common.swagger.exception.CustomException;
 import org.laokou.common.swagger.utils.HttpResult;
 import org.laokou.common.swagger.utils.ValidatorUtil;
+import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.elasticsearch.client.dto.ElasticsearchDTO;
 import org.laokou.elasticsearch.client.index.ResourceIndex;
 import org.laokou.flowable.client.dto.AuditDTO;
@@ -57,15 +58,15 @@ import org.laokou.admin.client.enums.AuditTypeEnum;
 import org.laokou.redis.utils.RedisUtil;
 import org.laokou.oss.client.vo.UploadVO;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.laokou.common.core.constant.Constant.DEFAULT;
+
 /**
  * @author laokou
  * @version 1.0
@@ -80,7 +81,6 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     private static final Integer START_AUDIT_STATUS = 0;
     private final SysResourceService sysResourceService;
     private final SysAuditLogService sysAuditLogService;
-    private final ThreadPoolTaskExecutor taskExecutor;
     private final ElasticsearchApiFeignClient elasticsearchApiFeignClient;
     private final SysMessageApplicationService sysMessageApplicationService;
     private final WorkTaskApiFeignClient workTaskApiFeignClient;
@@ -95,8 +95,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     }
 
     @Override
-    public Boolean syncResource(String code,String ym,String key) throws InterruptedException {
-        long resourceTotal = sysResourceService.getResourceTotal(code,ym);
+    public Boolean syncResource(String code,String key) {
+        long resourceTotal = sysResourceService.getResourceTotal(code);
         if (resourceTotal == 0) {
             throw new CustomException("数据为空，无法同步数据");
         }
@@ -105,27 +105,20 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (obj != null) {
             throw new CustomException("数据已同步，请稍后再试");
         }
-        List<String> resourceYmPartitionList;
-        if (StringUtil.isNotEmpty(ym)) {
-            resourceYmPartitionList = new ArrayList<>();
-            resourceYmPartitionList.add(ym);
-        } else {
-            resourceYmPartitionList = sysResourceService.getResourceYmPartitionList(code);
-        }
-        String resourceIndexAlias = RESOURCE_KEY;
-        String resourceIndex = RESOURCE_KEY + "_" + code;
+        String indexAlias = RESOURCE_KEY;
+        String indexName = RESOURCE_KEY + "_" + code;
         try {
             // 删除索引
-            deleteResourceIndex(resourceYmPartitionList, resourceIndex);
+            deleteResourceIndex(indexName);
             // 创建索引
-            createResourceIndex(resourceYmPartitionList, resourceIndexAlias, resourceIndex);
+            createResourceIndex(indexAlias, indexName);
             // 同步索引
-            syncResourceIndex(code, resourceTotal, resourceIndexAlias, resourceIndex,ym);
+            syncResourceIndex(code, indexAlias, indexName);
         } catch (CustomException e) {
-            // 删除redis
             throw e;
         }
-        redisUtil.set(key,1,RedisUtil.HOUR_ONE_EXPIRE);
+        // 删除redis
+        redisUtil.set(key, DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);
         return true;
     }
 
@@ -201,42 +194,48 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         return result.getData();
     }
 
-    private void syncResourceIndex(String code,long resourceTotal,final String resourceIndexAlias,final String resourceIndex,String ym) {
+    private void syncResourceIndex(String code, String indexAlias, String indexName) {
         beforeSync();
+        // https://mybatis.org/mybatis-3/zh/sqlmap-xml.html
+        // FORWARD_ONLY 浮标向下移动
+        // 流式查询
         int chunkSize = 500;
-        int pageIndex = 0;
-        while (pageIndex < resourceTotal) {
-            int finalPageIndex = pageIndex;
-            try {
-                taskExecutor.submit(() -> {
-                    List<ResourceIndex> resourceIndexList = sysResourceService.getResourceIndexList(chunkSize, finalPageIndex,code,ym);
-                    Map<String, List<ResourceIndex>> resourceDataMap = resourceIndexList.stream().collect(Collectors.groupingBy(ResourceIndex::getYm));
-                    for (Map.Entry<String, List<ResourceIndex>> entry : resourceDataMap.entrySet()) {
-                        ElasticsearchDTO dto = new ElasticsearchDTO();
-                        final String key = entry.getKey();
-                        final List<ResourceIndex> resourceDataList = entry.getValue();
-                        // 索引 + 时间分区
-                        final String indexName = resourceIndex + "_" + key;
-                        final String jsonDataList = JacksonUtil.toJsonStr(resourceDataList);
-                        dto.setData(jsonDataList);
-                        dto.setIndexAlias(resourceIndexAlias);
-                        dto.setIndexName(indexName);
-                        HttpResult<Boolean> result = elasticsearchApiFeignClient.syncBatch(dto);
-                        if (!result.success()) {
-                            throw new CustomException(result.getCode(),result.getMsg());
-                        }
-                    }
-                }).get();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            } catch (ExecutionException e) {
-                throw new RuntimeException(e);
-            } catch (CustomException e) {
-                throw e;
+        AtomicInteger fromIndex = new AtomicInteger(0);
+        AtomicInteger toIndex = new AtomicInteger(0);
+        List<ResourceIndex> list = new ArrayList<>();
+        sysResourceService.handleResourceList(code, resultContext -> {
+            ResourceIndex resultObject = resultContext.getResultObject();
+            list.add(resultObject);
+            int to = toIndex.incrementAndGet();
+            if (to % chunkSize == 0) {
+                int from = fromIndex.get();
+                syncIndex(list.subList(from,to),indexName,indexAlias);
+                fromIndex.addAndGet(chunkSize);
             }
-            pageIndex += chunkSize;
+        });
+        int to = toIndex.get();
+        if (to % chunkSize != 0) {
+            int from = fromIndex.get();
+            syncIndex(list.subList(from,to),indexName,indexAlias);
         }
         afterSync();
+    }
+
+    /**
+     * 同步索引
+     * @param list 数据集合
+     * @param indexName 索引名称
+     * @param indexAlias 索引别名
+     */
+    private void syncIndex(List<ResourceIndex> list,String indexName,String indexAlias) {
+        ElasticsearchDTO dto = new ElasticsearchDTO();
+        dto.setData(JacksonUtil.toJsonStr(list));
+        dto.setIndexAlias(indexAlias);
+        dto.setIndexName(indexName);
+        HttpResult<Boolean> result = elasticsearchApiFeignClient.syncBatch(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(),result.getMsg());
+        }
     }
 
     @Override
@@ -252,45 +251,23 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         log.info("结束索引创建...");
     }
 
-    private void createResourceIndex(List<String> resourceYmPartitionList, String resourceIndexAlias, String resourceIndex) throws InterruptedException {
+    private void createResourceIndex(String indexAlias, String indexName) {
         beforeCreateIndex();
-        for (String ym : resourceYmPartitionList) {
-            try {
-                taskExecutor.submit(() -> {
-                    final CreateIndexDTO dto = new CreateIndexDTO();
-                    final String indexName = resourceIndex + "_" + ym;
-                    dto.setIndexName(indexName);
-                    dto.setIndexAlias(resourceIndexAlias);
-                    HttpResult<Boolean> result = elasticsearchApiFeignClient.create(dto);
-                    if (!result.success()) {
-                        throw new CustomException(result.getCode(),result.getMsg());
-                    }
-                }).get();
-            } catch (ExecutionException e) {
-                throw new RuntimeException(e);
-            }  catch (CustomException e) {
-                throw e;
-            }
+        final CreateIndexDTO dto = new CreateIndexDTO();
+        dto.setIndexName(indexName);
+        dto.setIndexAlias(indexAlias);
+        HttpResult<Boolean> result = elasticsearchApiFeignClient.create(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(),result.getMsg());
         }
         afterCreateIndex();
     }
 
-    private void deleteResourceIndex(List<String> resourceYmPartitionList, String resourceIndex) throws InterruptedException {
+    private void deleteResourceIndex( String resourceIndex) {
         beforeDeleteIndex();
-        for (String ym : resourceYmPartitionList) {
-            try {
-                taskExecutor.submit(() -> {
-                    final String indexName = resourceIndex + "_" + ym;
-                    HttpResult<Boolean> result = elasticsearchApiFeignClient.delete(indexName);
-                    if (!result.success()) {
-                        throw new CustomException(result.getMsg());
-                    }
-                }).get();
-            } catch (ExecutionException e) {
-                throw new RuntimeException(e);
-            }  catch (CustomException e) {
-                throw e;
-            }
+        HttpResult<Boolean> result = elasticsearchApiFeignClient.delete(resourceIndex);
+        if (!result.success()) {
+            throw new CustomException(result.getMsg());
         }
         afterDeleteIndex();
     }
