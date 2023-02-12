@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.core.utils.StringUtil;
-import org.laokou.common.swagger.exception.CustomException;
+import org.laokou.common.core.exception.CustomException;
 import org.laokou.tenant.service.SysSourceService;
 import org.laokou.tenant.vo.SysSourceVO;
 import org.springframework.stereotype.Component;

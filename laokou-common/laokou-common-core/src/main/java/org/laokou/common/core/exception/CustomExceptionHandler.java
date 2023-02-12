@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.swagger.exception;
-import org.laokou.common.swagger.utils.HttpResult;
+package org.laokou.common.core.exception;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import java.util.HashMap;
+import java.util.Map;
 /**
  * @author laokou
  */
@@ -31,8 +32,11 @@ public class CustomExceptionHandler {
 	 * 处理自定义异常
 	 */
 	@ExceptionHandler({CustomException.class})
-	public HttpResult<Boolean> handleCustomException(CustomException ex){
-		return new HttpResult<Boolean>().error(ex.getCode(),ex.getMsg());
+	public Map<String,Object> handleCustomException(CustomException ex){
+		Map<String,Object> dataMap = new HashMap<>(2);
+		dataMap.put("code",ex.getCode());
+		dataMap.put("msg",ex.getMessage());
+		return dataMap;
 	}
 
 }

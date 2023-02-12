@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.swagger.exception;
+package org.laokou.common.core.exception;
 
 /**
  * 错误编码，由5位数字组成，前2位为模块编码，后3位为业务编码

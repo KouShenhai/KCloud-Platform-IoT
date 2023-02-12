@@ -26,7 +26,7 @@ import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.core.utils.MessageUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
-import org.laokou.common.swagger.exception.ErrorCode;
+import org.laokou.common.core.exception.ErrorCode;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
 import org.laokou.tenant.service.SysSourceService;

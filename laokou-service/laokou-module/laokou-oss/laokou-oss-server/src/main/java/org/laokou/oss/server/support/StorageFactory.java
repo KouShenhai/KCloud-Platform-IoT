@@ -15,7 +15,7 @@
  */
 package org.laokou.oss.server.support;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.swagger.exception.CustomException;
+import org.laokou.common.core.exception.CustomException;
 import org.laokou.oss.client.vo.SysOssVO;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.oss.server.service.SysOssService;

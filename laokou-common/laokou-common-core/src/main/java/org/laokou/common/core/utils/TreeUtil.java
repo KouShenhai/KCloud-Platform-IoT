@@ -16,6 +16,8 @@
 package org.laokou.common.core.utils;
 import lombok.Data;
 import org.apache.commons.collections.CollectionUtils;
+import org.laokou.common.core.exception.CustomException;
+
 import java.util.*;
 
 /**
@@ -31,7 +33,7 @@ public class TreeUtil {
     }
     public static <T extends TreeNo> T buildTreeNode(List<T> treeNodes,T rootNode) {
         if (null == rootNode) {
-            throw new RuntimeException("请构造根节点");
+            throw new CustomException("请构造根节点");
         }
         treeNodes.add(rootNode);
         //list转map

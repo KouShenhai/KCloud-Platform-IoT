@@ -17,7 +17,7 @@ package org.laokou.common.security.config;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
-import org.laokou.common.swagger.exception.ErrorCode;
+import org.laokou.common.core.exception.ErrorCode;
 import org.laokou.common.core.utils.MessageUtil;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;

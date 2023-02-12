@@ -23,9 +23,9 @@ import org.laokou.admin.server.application.service.WorkflowDefinitionApplication
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.infrastructure.feign.flowable.WorkDefinitionApiFeignClient;
 import org.laokou.admin.server.interfaces.qo.DefinitionQo;
-import org.laokou.common.swagger.exception.CustomException;
+import org.laokou.common.core.exception.CustomException;
 import org.laokou.common.swagger.utils.HttpResult;
-import org.laokou.common.swagger.utils.ValidatorUtil;
+import org.laokou.common.core.utils.ValidatorUtil;
 import org.laokou.flowable.client.dto.DefinitionDTO;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;

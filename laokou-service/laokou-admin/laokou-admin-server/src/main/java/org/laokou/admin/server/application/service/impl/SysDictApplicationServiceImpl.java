@@ -28,8 +28,8 @@ import org.laokou.admin.client.dto.SysDictDTO;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.vo.OptionVO;
-import org.laokou.common.swagger.exception.CustomException;
-import org.laokou.common.swagger.utils.ValidatorUtil;
+import org.laokou.common.core.exception.CustomException;
+import org.laokou.common.core.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -21,7 +21,7 @@ import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.MessageUtil;
 import org.laokou.common.core.utils.StringUtil;
-import org.laokou.common.swagger.exception.ErrorCode;
+import org.laokou.common.core.exception.ErrorCode;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;

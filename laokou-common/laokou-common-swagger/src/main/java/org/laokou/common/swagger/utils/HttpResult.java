@@ -16,7 +16,7 @@
 package org.laokou.common.swagger.utils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.swagger.exception.ErrorCode;
+import org.laokou.common.core.exception.ErrorCode;
 import org.laokou.common.core.utils.MessageUtil;
 /**
  * 统一返回结果实体类

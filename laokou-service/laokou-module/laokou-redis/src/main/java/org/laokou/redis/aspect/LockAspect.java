@@ -15,6 +15,7 @@
  */
 package org.laokou.redis.aspect;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.exception.CustomException;
 import org.laokou.redis.annotation.Lock4j;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -72,6 +73,8 @@ public class LockAspect {
         try {
             if (locks.tryLock(type,key,expire,timeout)) {
                 joinPoint.proceed();
+            } else {
+                throw new CustomException("前方拥堵请，稍后再试");
             }
         } catch (Throwable throwable) {
             log.error("异常信息：{}",throwable.getMessage());
