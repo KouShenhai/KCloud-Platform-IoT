@@ -21,6 +21,8 @@ import org.laokou.auth.server.domain.sys.repository.mapper.SysAuthenticationMapp
 import org.laokou.auth.server.domain.sys.repository.service.SysAuthenticationService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author laokou
  */
@@ -31,7 +33,7 @@ public class SysAuthenticationServiceImpl implements SysAuthenticationService {
     private final SysAuthenticationMapper sysAuthenticationMapper;
 
     @Override
-    public String getAccessToken(String loginName, String accessToken) {
-        return sysAuthenticationMapper.getAccessToken(loginName,accessToken);
+    public List<String> getAccessTokenList(String loginName, String accessToken) {
+        return sysAuthenticationMapper.getAccessTokenList(loginName,accessToken);
     }
 }

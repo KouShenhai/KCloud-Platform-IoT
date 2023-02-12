@@ -15,15 +15,17 @@
  */
 package org.laokou.auth.server.domain.sys.repository.service;
 
+import java.util.List;
+
 /**
  * @author laokou
  */
 public interface SysAuthenticationService {
     /**
-     * 获取token
+     * 获取token集合
      * @param loginName
      * @param accessToken
      * @return
      */
-    String getAccessToken(String loginName,String accessToken);
+    List<String> getAccessTokenList(String loginName, String accessToken);
 }

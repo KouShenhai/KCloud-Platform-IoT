@@ -20,6 +20,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author laokou
  */
@@ -28,11 +30,11 @@ import org.springframework.stereotype.Repository;
 public interface SysAuthenticationMapper {
 
     /**
-     * 获取token
+     * 获取token集合
      * @param loginName
      * @param accessToken
      * @return
      */
-    String getAccessToken(@Param("loginName")String loginName,@Param("accessToken")String accessToken);
+    List<String> getAccessTokenList(@Param("loginName")String loginName, @Param("accessToken")String accessToken);
 
 }

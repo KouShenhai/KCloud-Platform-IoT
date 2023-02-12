@@ -24,7 +24,6 @@ import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.core.utils.MessageUtil;
-import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.core.exception.ErrorCode;
 import org.laokou.redis.utils.RedisKeyUtil;
@@ -260,10 +259,12 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
      * @param loginName
      */
     private void accountKill(String accessToken,String loginName) {
-        String token = sysAuthenticationService.getAccessToken(loginName, accessToken);
-        if (StringUtil.isNotEmpty(token)) {
-            String accountKillKey = RedisKeyUtil.getAccountKillKey(token);
-            redisUtil.set(accountKillKey,DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);
+        List<String> accessTokenList = sysAuthenticationService.getAccessTokenList(loginName, accessToken);
+        if (CollectionUtils.isNotEmpty(accessTokenList)) {
+            accessTokenList.forEach(item -> {
+                String accountKillKey = RedisKeyUtil.getAccountKillKey(item);
+                redisUtil.set(accountKillKey,DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);
+            });
         }
     }
 
