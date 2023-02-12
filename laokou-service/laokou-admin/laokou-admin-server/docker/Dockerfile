@@ -20,7 +20,5 @@ COPY laokou-admin-server.jar app.jar
 RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 EXPOSE 9999
 ENTRYPOINT java -Xms512m -Xmx512m --add-opens=java.base/java.lang=ALL-UNNAMED \
- -Ddruid.filters=mergeStat \
- -Ddruid.useGlobalDataSourceStat=true \
   -Denv=DEV \
   -jar app.jar > app.log

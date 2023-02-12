@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <maven-compiler-plugin.version>3.6.2</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
         <!--spring-boot版本-->
         <spring-boot.version>3.0.2</spring-boot.version>
         <!--spring-cloud版本-->
@@ -33,9 +33,18 @@
         <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
         <!--spring-doc版本-->
         <spring-doc.version>2.0.2</spring-doc.version>
+        <!--shardingsphere版本-->
+        <shardingsphere.version>5.3.1</shardingsphere.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+<!--            <dependency>-->
+<!--                <groupId>org.apache.shardingsphere</groupId>-->
+<!--                <artifactId>shardingsphere</artifactId>-->
+<!--                <version>${shardingsphere.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
             <!-- 定义公共版本 -->
             <dependency>
                 <groupId>org.laokou</groupId>
