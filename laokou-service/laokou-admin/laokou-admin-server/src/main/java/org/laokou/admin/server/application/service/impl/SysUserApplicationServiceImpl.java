@@ -177,7 +177,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
                 sysUserRoleDO.setUserId(userId);
                 doList.add(sysUserRoleDO);
             }
-            sysUserRoleService.saveBatch(doList,500);
+            sysUserRoleService.insertBatch(doList);
         }
     }
 

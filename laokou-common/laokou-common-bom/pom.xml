@@ -68,7 +68,7 @@
         <!--jakarta.servlet-api版本-->
         <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
         <!--easyexcel版本-->
-        <easyexcel.version>3.1.2</easyexcel.version>
+        <easyexcel.version>3.2.1</easyexcel.version>
         <!--junit版本-->
         <junit.version>4.13.1</junit.version>
         <!--spring-security-oauth2-authorization-server版本-->

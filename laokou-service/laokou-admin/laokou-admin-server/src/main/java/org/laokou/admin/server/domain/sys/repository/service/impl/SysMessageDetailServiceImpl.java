@@ -16,17 +16,31 @@
 package org.laokou.admin.server.domain.sys.repository.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysMessageDetailMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysMessageDetailService;
+import org.laokou.common.mybatisplus.utils.MapperUtil;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
 @Service
+@RequiredArgsConstructor
 public class SysMessageDetailServiceImpl extends ServiceImpl<SysMessageDetailMapper, SysMessageDetailDO> implements SysMessageDetailService {
+
+    private final MapperUtil<SysMessageDetailDO> mapperUtil;
+
     @Override
     public Integer getVersion(Long id) {
         return this.baseMapper.getVersion(id);
+    }
+
+    @Override
+    public void insertBatch(List<SysMessageDetailDO> list) {
+        mapperUtil.insertBatch(list,500,this.baseMapper);
     }
 }

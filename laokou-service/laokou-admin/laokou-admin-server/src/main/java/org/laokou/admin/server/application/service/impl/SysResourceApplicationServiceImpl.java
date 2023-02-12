@@ -64,8 +64,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import static org.laokou.common.core.constant.Constant.DEFAULT;
 
 /**
@@ -88,7 +86,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @Override
     public IPage<SysResourceVO> queryResourcePage(SysResourceQo qo) {
         ValidatorUtil.validateEntity(qo);
-        IPage<SysResourceVO> page = new Page(qo.getPageNum(),qo.getPageSize());
+        IPage<SysResourceVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
         return sysResourceService.getResourceList(page,qo);
     }
 
@@ -179,7 +177,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (file.isEmpty()) {
             throw new CustomException("上传的文件不能为空");
         }
-        //判断类型
+        // 判断类型
         String fileName = file.getOriginalFilename();
         String fileSuffix = FileUtil.getFileSuffix(fileName);
         if (!FileUtil.checkFileExt(code,fileSuffix)) {
@@ -198,23 +196,18 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         // FORWARD_ONLY 浮标向下移动
         // 流式查询
         int chunkSize = 500;
-        AtomicInteger fromIndex = new AtomicInteger(0);
-        AtomicInteger toIndex = new AtomicInteger(0);
-        List<ResourceIndex> list = new ArrayList<>();
+        List<ResourceIndex> list = new ArrayList<>(chunkSize);
         sysResourceService.handleResourceList(code, resultContext -> {
             ResourceIndex resultObject = resultContext.getResultObject();
             list.add(resultObject);
-            int to = toIndex.incrementAndGet();
-            if (to % chunkSize == 0) {
-                int from = fromIndex.get();
-                syncIndex(list.subList(from,to),indexName,indexAlias);
-                fromIndex.addAndGet(chunkSize);
+            if (list.size() % chunkSize == 0) {
+                syncIndex(list,indexName,indexAlias);
+                list.clear();
             }
         });
-        int to = toIndex.get();
-        if (to % chunkSize != 0) {
-            int from = fromIndex.get();
-            syncIndex(list.subList(from,to),indexName,indexAlias);
+        if (list.size() % chunkSize != 0) {
+            syncIndex(list,indexName,indexAlias);
+            list.clear();
         }
         afterSync();
     }
@@ -402,7 +395,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
      * 开始任务
      * @param businessKey 业务主键
      * @param businessName 业务名称
-     * @return
+     * @return 返回实例编号
      */
     private String startTask(Long businessKey,String businessName) {
         ProcessDTO dto = new ProcessDTO();

@@ -20,6 +20,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
 import org.laokou.admin.server.infrastructure.processor.DsTenantProcessor;
 
+import java.util.List;
+
 /**
  * @author laokou
  */
@@ -28,9 +30,15 @@ public interface SysMessageDetailService extends IService<SysMessageDetailDO> {
 
     /**
      * 获取版本号
-     * @param id
-     * @return
+     * @param id 主键
+     * @return 返回版本号
      */
     Integer getVersion(Long id);
+
+    /**
+     * 批量新增
+     * @param list 消息详情集合
+     */
+    void insertBatch(List<SysMessageDetailDO> list);
 
 }
