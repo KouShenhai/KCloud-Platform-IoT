@@ -15,11 +15,10 @@
  */
 package org.laokou.common.log.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.log.dto.LoginLogDTO;
 import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.vo.SysLoginLogVO;
-
-import java.util.List;
 /**
  * @author laokou
  */
@@ -35,9 +34,10 @@ public interface SysLoginLogService {
     /**
      * 查询登录日志
      * @param qo
+     * @param handler
      * @return
      */
-    List<SysLoginLogVO> getLoginLogList(SysLoginLogQo qo);
+    void handleLoginLog(SysLoginLogQo qo, ResultHandler<SysLoginLogVO> handler);
 
     /**
      * 新增登录日志

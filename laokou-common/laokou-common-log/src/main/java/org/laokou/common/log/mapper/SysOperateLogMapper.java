@@ -18,11 +18,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.log.entity.SysOperateLogDO;
 import org.laokou.common.log.qo.SysOperateLogQo;
 import org.laokou.common.log.vo.SysOperateLogVO;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 /**
  * @author laokou
  */
@@ -41,8 +41,9 @@ public interface SysOperateLogMapper extends BaseMapper<SysOperateLogDO> {
     /**
      * 查询操作日志
      * @param qo
-     * @return
+     * @param handler
+     * @
      */
-    List<SysOperateLogVO> getOperateLogList(@Param("qo") SysOperateLogQo qo);
+    void handleLoginLog(@Param("qo") SysOperateLogQo qo, ResultHandler<SysOperateLogVO> handler);
 
 }

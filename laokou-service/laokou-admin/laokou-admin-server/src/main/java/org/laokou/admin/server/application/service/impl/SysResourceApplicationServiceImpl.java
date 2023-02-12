@@ -202,12 +202,10 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
             list.add(resultObject);
             if (list.size() % chunkSize == 0) {
                 syncIndex(list,indexName,indexAlias);
-                list.clear();
             }
         });
         if (list.size() % chunkSize != 0) {
             syncIndex(list,indexName,indexAlias);
-            list.clear();
         }
         afterSync();
     }
@@ -227,6 +225,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (!result.success()) {
             throw new CustomException(result.getCode(),result.getMsg());
         }
+        // 清除list
+        list.clear();
     }
 
     @Override

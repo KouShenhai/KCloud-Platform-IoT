@@ -17,13 +17,11 @@ package org.laokou.common.log.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.log.dto.OperateLogDTO;
 import org.laokou.common.log.entity.SysOperateLogDO;
 import org.laokou.common.log.qo.SysOperateLogQo;
 import org.laokou.common.log.vo.SysOperateLogVO;
-
-import java.util.List;
-
 /**
  * @author laokou
  */
@@ -40,9 +38,9 @@ public interface SysOperateLogService extends IService<SysOperateLogDO> {
     /**
      * 查询操作日志
      * @param qo
-     * @return
+     * @param handler
      */
-    List<SysOperateLogVO> getOperateLogList(SysOperateLogQo qo);
+    void handleLoginLog(SysOperateLogQo qo, ResultHandler<SysOperateLogVO> handler);
 
     /**
      * 新增登录日志

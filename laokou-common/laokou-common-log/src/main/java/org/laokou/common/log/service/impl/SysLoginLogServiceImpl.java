@@ -16,6 +16,7 @@
 package org.laokou.common.log.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.log.dto.LoginLogDTO;
 import org.laokou.common.log.entity.SysLoginLogDO;
@@ -24,8 +25,6 @@ import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.service.SysLoginLogService;
 import org.laokou.common.log.vo.SysLoginLogVO;
 import org.springframework.stereotype.Service;
-import java.util.List;
-
 /**
  * @author laokou
  */
@@ -34,12 +33,12 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper,SysLog
 
     @Override
     public IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, SysLoginLogQo qo) {
-        return baseMapper.getLoginLogList(page,qo);
+        return this.baseMapper.getLoginLogList(page,qo);
     }
 
     @Override
-    public List<SysLoginLogVO> getLoginLogList(SysLoginLogQo qo) {
-        return baseMapper.getLoginLogList(qo);
+    public void handleLoginLog(SysLoginLogQo qo, ResultHandler<SysLoginLogVO> handler) {
+        this.baseMapper.handleLoginLog(qo,handler);
     }
 
     @Override

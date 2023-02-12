@@ -74,7 +74,7 @@ public class LockAspect {
             if (locks.tryLock(type,key,expire,timeout)) {
                 joinPoint.proceed();
             } else {
-                throw new CustomException("前方拥堵请，稍后再试");
+                throw new CustomException("前方拥堵，请稍后再试");
             }
         } catch (Throwable throwable) {
             log.error("异常信息：{}",throwable.getMessage());

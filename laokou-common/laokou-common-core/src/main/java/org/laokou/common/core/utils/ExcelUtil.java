@@ -38,24 +38,17 @@ public class ExcelUtil {
     private static final String CHART_ENCODE = "UTF-8";
 
     /**
-     * 导出
+     * 导出请求头
      * @param response
-     * @param list
-     * @param clazz
-     * @param sheetName
      * @throws IOException
      */
-    public static void export(HttpServletResponse response, String sheetName, Collection<?> list, Class<?> clazz) throws IOException {
+    public static void exportHeader(HttpServletResponse response) throws IOException {
         String fileName = DateUtil.format(new Date(),DateUtil.DATE_TIME) + EXCEL_SUFFIX;
         response.setCharacterEncoding(CHART_ENCODE);
         response.setContentType(CONTENT_TYPE_VALUE);
         response.setHeader(CONTENT_DISPOSITION,
                 CONTENT_DISPOSITION_VALUE + URLEncoder.encode(fileName, CHART_ENCODE) + EXCEL_SUFFIX);
         response.addHeader("Access-Control-Expose-Headers", CONTENT_DISPOSITION);
-        ServletOutputStream out = response.getOutputStream();
-        EasyExcel.write(out,clazz).sheet(sheetName).doWrite(list);
-        out.flush();
-        out.close();
     }
 
 }
