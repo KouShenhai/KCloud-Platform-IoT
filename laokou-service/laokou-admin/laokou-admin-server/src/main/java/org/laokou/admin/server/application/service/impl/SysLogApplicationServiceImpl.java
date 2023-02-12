@@ -63,7 +63,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) throws IOException {
         // https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
         ExcelUtil.exportHeader(response);
-        int chunkSize = 1000;
+        int chunkSize = 500;
         List<SysOperateLogVO> list = new ArrayList<>(chunkSize);
         ServletOutputStream out = response.getOutputStream();
         ExcelWriter excelWriter = EasyExcel.write(out, SysOperateLogExcel.class).build();
@@ -86,7 +86,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) throws IOException {
         // https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
         ExcelUtil.exportHeader(response);
-        int chunkSize = 1000;
+        int chunkSize = 500;
         List<SysLoginLogVO> list = new ArrayList<>(chunkSize);
         ServletOutputStream out = response.getOutputStream();
         ExcelWriter excelWriter = EasyExcel.write(out, SysLoginLogExcel.class).build();
