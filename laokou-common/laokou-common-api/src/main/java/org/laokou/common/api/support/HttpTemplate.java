@@ -14,18 +14,23 @@
  * limitations under the License.
  */
 
-package org.laokou.sms.server.factory;
+package org.laokou.common.api.support;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author laokou
  */
-public interface SmsService {
+@Component
+@RequiredArgsConstructor
+public class HttpTemplate {
 
-    /**
-     * 发送短信
-     * @param mobile
-     * @return
-     */
-    Boolean sendSms(String mobile);
+    private final WebClient webClient;
+
+    public void doPost() {
+
+    }
 
 }

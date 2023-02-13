@@ -81,13 +81,14 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 
 #### 🍺 相关技术
 
-- API 网关：Spring Cloud Gateway
+- API网关：Spring Cloud Gateway
 - 配置中心：Nacos
 - 服务注册&发现：Nacos
 - 认证授权：Spring Security OAuth2 Authorization Server
 - 服务消费：Spring Cloud OpenFeign & HttpClient & WebClient
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Sentinel
+- 分库分表&读写分离：ShardingSphere
 - 分布式事务：Seata
 - 服务监控：Spring Boot Admin & Prometheus
 - 消息队列：RocketMQ & Kafka
@@ -95,7 +96,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - 日志分析：EFK
 - 数据缓存：Caffeine & Redis
 - 统计报表：MongoDB
-- 分库分表：ShardingSphere
 - 对象存储：Amazon S3
 - 服务部署：Docker
 - 持续交付：Jenkins
@@ -111,6 +111,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
         └── laokou-common-core                     --- 核心组件  
         └── laokou-common-swagger                  --- 文档组件  
         └── laokou-common-bom                      --- 依赖版本库  
+        └── laokou-common-api                      --- API调用组件  
         └── laokou-common-security                 --- 认证授权组件  
         └── laokou-common-data-cache               --- 数据缓存组件  
         └── laokou-common-data-filter              --- 数据过滤组件  
@@ -121,7 +122,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
         └── laokou-openfeign                       --- 远程调用  
         └── laokou-sntinel                         --- 服务限流 & 熔断降级  
 ├── laokou-service         
-        └── laokou-api                             --- API模块  
         └── laokou-generator                       --- 模板模块  
         └── laokou-auth                            --- 认证授权模块  
         └── laokou-admin                           --- 后台管理模块  

@@ -22,6 +22,7 @@
         <module>laokou-common-log</module>
         <module>laokou-common-data-cache</module>
         <module>laokou-common-data-filter</module>
+        <module>laokou-common-api</module>
     </modules>
 
 </project>

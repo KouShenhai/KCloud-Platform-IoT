@@ -16,16 +16,19 @@
 
 package org.laokou.sms.server.factory;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.stereotype.Service;
+
 /**
  * @author laokou
  */
-public interface SmsService {
+@Service
+@RefreshScope
+public class OtherSmsService implements SmsService{
 
-    /**
-     * 发送短信
-     * @param mobile
-     * @return
-     */
-    Boolean sendSms(String mobile);
-
+    @Override
+    public Boolean sendSms(String mobile) {
+        return null;
+    }
 }
