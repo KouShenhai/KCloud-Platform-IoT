@@ -41,7 +41,7 @@
             a.url,
             a.status,
             a.code,
-            a.remark
+            a.remark,
             a.process_instance_id
         from boot_sys_resource_audit a
         where a.resource_id = #{id}

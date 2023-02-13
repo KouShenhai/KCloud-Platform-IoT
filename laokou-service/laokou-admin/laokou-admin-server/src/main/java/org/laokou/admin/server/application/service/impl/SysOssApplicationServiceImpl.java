@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -98,7 +99,11 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean useOss(Long id) {
-        List<SysOssDO> list = sysOssService.list();
+        LambdaQueryWrapper<SysOssDO> wrapper = Wrappers.lambdaQuery(SysOssDO.class)
+                .and(t -> t.eq(SysOssDO::getStatus, Constant.YES)
+                        .or()
+                        .eq(SysOssDO::getId, id));
+        List<SysOssDO> list = sysOssService.list(wrapper);
         list.stream().forEach(item -> {
             if (id.equals(item.getId())) {
                 item.setStatus(Constant.YES);

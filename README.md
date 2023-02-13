@@ -79,7 +79,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 | RocketMQ                    | 5.0.0          |
 | Kafka                       | 2.8.1          |
 | Flowable                    | 7.0.0.M1       |
-| ShardingSphere              | 5.3.0          |
+| ShardingSphere              | 5.3.2          |
 
 #### 🍺 相关技术
 
