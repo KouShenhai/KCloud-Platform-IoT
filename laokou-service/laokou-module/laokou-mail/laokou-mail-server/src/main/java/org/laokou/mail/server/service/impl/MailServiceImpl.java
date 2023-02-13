@@ -28,8 +28,8 @@ import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -47,8 +47,10 @@ public class MailServiceImpl implements MailService {
 
     @Value("${spring.mail.username}")
     private String username;
-
-    private final MailSender mailSender;
+    @Value("${spring.mail.password}")
+    private String password;
+    @Value("${spring.mail.host}")
+    private String host;
     private static final String CAPTCHA_TEMPLATE = "验证码：${captcha}，${minute}分钟内有效，请勿泄漏于他人！";
     private final RedisUtil redisUtil;
     
@@ -76,12 +78,16 @@ public class MailServiceImpl implements MailService {
 
     private void sendMail(String subject,String content,String toMail) {
         try {
+            JavaMailSenderImpl sender = new JavaMailSenderImpl();
+            sender.setHost(host);
+            sender.setPassword(password);
+            sender.setUsername(username);
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(toMail);
             mailMessage.setSubject(subject);
             mailMessage.setFrom(username);
             mailMessage.setText(content);
-            mailSender.send(mailMessage);
+            sender.send(mailMessage);
         } catch (Exception e) {
             log.info("错误信息：{}",e.getMessage());
         }
