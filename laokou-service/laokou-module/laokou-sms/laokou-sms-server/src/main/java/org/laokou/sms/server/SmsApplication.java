@@ -15,13 +15,18 @@
  */
 package org.laokou.sms.server;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @author laokou
  */
-@SpringBootApplication
+
+@EnableEncryptableProperties
+@SpringBootApplication(scanBasePackages = {"org.laokou.sms.server","org.laokou.redis","org.laokou.common.core"})
+@EnableDiscoveryClient
 public class SmsApplication {
 
     public static void main(String[] args) {

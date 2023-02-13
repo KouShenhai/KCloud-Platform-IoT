@@ -1,1 +1,9 @@
+server:
+  port: 10011
 
+spring:
+  application:
+    name: @pom.parent.artifactId@
+  profiles:
+    # dev|test|prod
+    active: @profile.active@
