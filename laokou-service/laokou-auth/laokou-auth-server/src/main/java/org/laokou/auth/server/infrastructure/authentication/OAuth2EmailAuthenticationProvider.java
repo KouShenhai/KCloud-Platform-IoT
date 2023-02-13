@@ -77,7 +77,7 @@ public class OAuth2EmailAuthenticationProvider extends AbstractOAuth2BaseAuthent
         if (StringUtil.isEmpty(email)) {
             throw new CustomException("邮箱不为空");
         }
-        boolean isEmail = RegexUtil.emailRegex(email);
+        boolean isEmail = RegexUtil.mailRegex(email);
         if (!isEmail) {
             throw new CustomException("邮箱格式不对");
         }

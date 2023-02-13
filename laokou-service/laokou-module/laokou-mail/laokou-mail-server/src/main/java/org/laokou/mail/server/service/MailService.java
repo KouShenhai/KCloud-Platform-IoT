@@ -13,27 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.laokou.mail.server.service;
 
-package org.laokou.freemarker.utils;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author laokou
  */
-public class TemplateUtil extends FreeMarkerTemplateUtils {
+public interface MailService {
 
-    public static String getContent(String template, Map<String, Object> params) throws IOException, TemplateException {
-        Template temp = getTemplate(template);
-        return processTemplateIntoString(temp, params);
-    }
+    /**
+     * 发送邮件
+     * @param toMail
+     * @return
+     * @throws TemplateException
+     * @throws IOException
+     */
+    Boolean sendMail(String toMail) throws TemplateException, IOException;
 
-    private static Template getTemplate(String template) throws IOException {
-        Configuration configuration = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
-        return new Template("template",template,configuration);
-    }
 }

@@ -37,7 +37,7 @@ public class RegexUtil {
      * @param email
      * @return
      */
-    public static boolean emailRegex(String email) {
+    public static boolean mailRegex(String email) {
         return Pattern.matches(EMAIL_REGEX,email);
     }
 
@@ -73,7 +73,7 @@ public class RegexUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(emailRegex("24131760@qq"));
+        System.out.println(mailRegex("24131760@qq"));
         boolean sourceRegex = sourceRegex("tenant_000001");
         System.out.println(sourceRegex);
     }

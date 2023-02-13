@@ -39,6 +39,14 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-freemarker</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
