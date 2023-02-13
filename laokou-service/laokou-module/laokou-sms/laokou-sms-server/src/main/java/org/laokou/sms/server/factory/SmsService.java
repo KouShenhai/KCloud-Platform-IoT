@@ -16,6 +16,10 @@
 
 package org.laokou.sms.server.factory;
 
+import freemarker.template.TemplateException;
+
+import java.io.IOException;
+
 /**
  * @author laokou
  */
@@ -25,7 +29,9 @@ public interface SmsService {
      * 发送短信
      * @param mobile
      * @return
+     * @throws TemplateException
+     * @throws IOException
      */
-    Boolean sendSms(String mobile);
+    Boolean sendSms(String mobile) throws TemplateException, IOException;
 
 }

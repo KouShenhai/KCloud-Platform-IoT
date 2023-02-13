@@ -16,8 +16,31 @@
 
 package org.laokou.sms.server.factory;
 
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.exception.CustomException;
+import org.laokou.sms.client.enums.SmsTypeEnum;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.stereotype.Component;
+
 /**
  * @author laokou
  */
+@Component
+@RefreshScope
+@RequiredArgsConstructor
 public class SmsFactory {
+
+    @Value("${sms.type}")
+    private Integer type;
+
+    private final GuoYangYunSmsService smsService;
+
+    public SmsService build() {
+        if (SmsTypeEnum.GUO_YANG_YUN.ordinal() == type) {
+            return smsService;
+        }
+        throw new CustomException("请检查SMS配置");
+    }
+
 }

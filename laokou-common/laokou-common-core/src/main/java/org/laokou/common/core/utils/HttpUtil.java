@@ -28,8 +28,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.laokou.common.core.constant.Constant;
-
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -76,9 +74,7 @@ public class HttpUtil {
             //执行请求
             response = httpClient.execute(httpGet);
             //判断返回状态是否是200
-            if (response.getStatusLine().getStatusCode() == Constant.SUCCESS) {
-                resultString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-            }
+            resultString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
         } catch (Exception e) {
             log.error("调用失败，错误信息:{}",e);
         } finally {
@@ -117,10 +113,7 @@ public class HttpUtil {
                 httpPost.setHeader(new BasicHeader("Accept", "*/*;charset=utf-8"));
                 //执行http请求
                 response = httpClient.execute(httpPost);
-                //判断返回状态是否是200
-                if (response.getStatusLine().getStatusCode() == Constant.SUCCESS) {
-                    resultString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-                }
+                resultString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             }
         }catch (Exception e) {
             log.error("接口调用失败:{}",e);

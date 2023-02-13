@@ -14,21 +14,13 @@
  * limitations under the License.
  */
 
-package org.laokou.sms.server.factory;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.stereotype.Service;
+package org.laokou.sms.client.enums;
 
 /**
  * @author laokou
  */
-@Service
-@RefreshScope
-public class OtherSmsService implements SmsService{
+public enum SmsTypeEnum {
 
-    @Override
-    public Boolean sendSms(String mobile) {
-        return null;
-    }
+    GUO_YANG_YUN
+
 }
