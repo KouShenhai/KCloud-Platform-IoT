@@ -18,6 +18,7 @@ package org.laokou.mail.server.service.impl;
 
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.RandomStringUtils;
 import org.laokou.common.core.exception.CustomException;
 import org.laokou.common.core.utils.RegexUtil;
@@ -41,6 +42,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @RefreshScope
+@Slf4j
 public class MailServiceImpl implements MailService {
 
     @Value("${spring.mail.username}")
@@ -73,12 +75,16 @@ public class MailServiceImpl implements MailService {
     }
 
     private void sendMail(String subject,String content,String toMail) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(toMail);
-        mailMessage.setSubject(subject);
-        mailMessage.setFrom(username);
-        mailMessage.setText(content);
-        mailSender.send(mailMessage);
+        try {
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(toMail);
+            mailMessage.setSubject(subject);
+            mailMessage.setFrom(username);
+            mailMessage.setText(content);
+            mailSender.send(mailMessage);
+        } catch (Exception e) {
+            log.info("错误信息：{}",e.getMessage());
+        }
     }
 
 }

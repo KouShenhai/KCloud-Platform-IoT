@@ -24,7 +24,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author laokou
  */
 @EnableEncryptableProperties
-@SpringBootApplication(scanBasePackages = {"org.laokou.mail.server","org.laokou.redis"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.mail.server","org.laokou.redis","org.laokou.common.core"})
 @EnableDiscoveryClient
 public class MailApplication {
 
