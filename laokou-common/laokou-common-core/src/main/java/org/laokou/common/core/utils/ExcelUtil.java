@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Date;
 /**
@@ -35,8 +36,6 @@ public class ExcelUtil {
 
     private static final String CONTENT_DISPOSITION_VALUE = "attachment;filename=";
 
-    private static final String CHART_ENCODE = "UTF-8";
-
     /**
      * 导出请求头
      * @param response
@@ -44,10 +43,10 @@ public class ExcelUtil {
      */
     public static void exportHeader(HttpServletResponse response) throws IOException {
         String fileName = DateUtil.format(new Date(),DateUtil.DATE_TIME) + EXCEL_SUFFIX;
-        response.setCharacterEncoding(CHART_ENCODE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(CONTENT_TYPE_VALUE);
         response.setHeader(CONTENT_DISPOSITION,
-                CONTENT_DISPOSITION_VALUE + URLEncoder.encode(fileName, CHART_ENCODE) + EXCEL_SUFFIX);
+                CONTENT_DISPOSITION_VALUE + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + EXCEL_SUFFIX);
         response.addHeader("Access-Control-Expose-Headers", CONTENT_DISPOSITION);
     }
 

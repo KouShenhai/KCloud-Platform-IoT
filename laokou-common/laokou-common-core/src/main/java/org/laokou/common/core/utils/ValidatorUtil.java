@@ -23,6 +23,8 @@ import org.laokou.common.core.exception.CustomException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.MessageSourceResourceBundleLocator;
+
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Set;
 
@@ -33,7 +35,7 @@ import java.util.Set;
 public class ValidatorUtil {
     private static ResourceBundleMessageSource getMessageSource() {
         ResourceBundleMessageSource bundleMessageSource = new ResourceBundleMessageSource();
-        bundleMessageSource.setDefaultEncoding("UTF-8");
+        bundleMessageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
         bundleMessageSource.setBasenames("i18n/validation");
         return bundleMessageSource;
     }

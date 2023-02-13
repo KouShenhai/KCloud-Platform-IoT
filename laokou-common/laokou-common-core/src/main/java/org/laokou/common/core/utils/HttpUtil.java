@@ -32,6 +32,7 @@ import org.laokou.common.core.constant.Constant;
 
 import java.io.IOException;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,7 @@ public class HttpUtil {
             response = httpClient.execute(httpGet);
             //判断返回状态是否是200
             if (response.getStatusLine().getStatusCode() == Constant.SUCCESS) {
-                resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
+                resultString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             }
         } catch (Exception e) {
             log.error("调用失败，错误信息:{}",e);
@@ -110,7 +111,7 @@ public class HttpUtil {
                     paramList.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
                 }
                 //模拟表单
-                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(paramList, "UTF-8");
+                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(paramList, StandardCharsets.UTF_8);
                 httpPost.setEntity(entity);
                 httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded;application/json;charset=UTF-8");
                 httpPost.setHeader(new BasicHeader("Accept", "*/*;charset=utf-8"));
@@ -118,7 +119,7 @@ public class HttpUtil {
                 response = httpClient.execute(httpPost);
                 //判断返回状态是否是200
                 if (response.getStatusLine().getStatusCode() == Constant.SUCCESS) {
-                    resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
+                    resultString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
                 }
             }
         }catch (Exception e) {

@@ -1,6 +1,5 @@
 server:
   port: 10002
-  address: 127.0.0.1
 
 spring:
   kafka:

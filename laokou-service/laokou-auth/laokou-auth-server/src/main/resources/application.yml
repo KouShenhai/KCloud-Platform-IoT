@@ -16,9 +16,6 @@
 # server
 server:
   port: 1111
-  servlet:
-    encoding:
-      charset: UTF-8
 
 # spring
 spring:
