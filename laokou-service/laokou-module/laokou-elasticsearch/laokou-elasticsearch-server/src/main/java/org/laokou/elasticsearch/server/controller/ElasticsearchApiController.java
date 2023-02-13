@@ -17,7 +17,7 @@ package org.laokou.elasticsearch.server.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.common.core.utils.HttpResult;
 import org.laokou.elasticsearch.client.qo.SearchQo;
 import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.elasticsearch.client.dto.ElasticsearchDTO;

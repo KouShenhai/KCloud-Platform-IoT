@@ -22,7 +22,7 @@ import org.laokou.admin.server.application.service.SysTenantApplicationService;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.common.core.utils.HttpResult;
 import org.laokou.tenant.dto.SysTenantDTO;
 import org.laokou.tenant.qo.SysTenantQo;
 import org.laokou.tenant.vo.SysTenantVO;

@@ -26,7 +26,7 @@ import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.qo.SysOperateLogQo;
 import org.laokou.common.log.vo.SysLoginLogVO;
 import org.laokou.common.log.vo.SysOperateLogVO;
-import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.common.core.utils.HttpResult;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;

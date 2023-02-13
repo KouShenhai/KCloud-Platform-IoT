@@ -22,7 +22,7 @@ import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
-import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.common.core.utils.HttpResult;
 import org.laokou.flowable.client.dto.AuditDTO;
 import org.laokou.flowable.client.vo.TaskVO;
 import org.springframework.security.access.prepost.PreAuthorize;

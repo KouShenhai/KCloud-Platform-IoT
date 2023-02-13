@@ -24,7 +24,7 @@ import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.tenant.dto.SysSourceDTO;
 import org.laokou.admin.server.application.service.SysSourceApplicationService;
 import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.common.core.utils.HttpResult;
 import org.laokou.tenant.qo.SysSourceQo;
 import org.laokou.tenant.vo.SysSourceVO;
 import org.springframework.security.access.prepost.PreAuthorize;

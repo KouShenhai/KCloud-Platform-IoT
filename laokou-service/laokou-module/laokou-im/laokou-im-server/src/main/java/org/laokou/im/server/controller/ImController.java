@@ -18,7 +18,7 @@ package org.laokou.im.server.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.common.core.utils.HttpResult;
 import org.laokou.im.client.PushMsgDTO;
 import org.laokou.im.server.service.ImService;
 import org.springframework.web.bind.annotation.PostMapping;

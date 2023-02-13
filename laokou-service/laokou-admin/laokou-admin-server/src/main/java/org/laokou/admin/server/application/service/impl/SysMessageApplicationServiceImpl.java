@@ -35,7 +35,7 @@ import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.exception.CustomException;
-import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.common.core.utils.HttpResult;
 import org.laokou.common.core.utils.ValidatorUtil;
 import org.laokou.im.client.PushMsgDTO;
 import org.laokou.redis.utils.RedisKeyUtil;

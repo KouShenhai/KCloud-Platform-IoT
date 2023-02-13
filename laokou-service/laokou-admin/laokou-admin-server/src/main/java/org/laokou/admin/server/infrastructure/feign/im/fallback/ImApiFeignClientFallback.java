@@ -17,7 +17,7 @@ package org.laokou.admin.server.infrastructure.feign.im.fallback;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.swagger.utils.HttpResult;
+import org.laokou.common.core.utils.HttpResult;
 import org.laokou.admin.server.infrastructure.feign.im.ImApiFeignClient;
 import org.laokou.im.client.PushMsgDTO;
 /**

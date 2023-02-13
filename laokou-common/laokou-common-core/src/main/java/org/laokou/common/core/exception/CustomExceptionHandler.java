@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 package org.laokou.common.core.exception;
+import org.laokou.common.core.utils.HttpResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import java.util.HashMap;
-import java.util.Map;
 /**
  * @author laokou
  */
@@ -32,11 +31,8 @@ public class CustomExceptionHandler {
 	 * 处理自定义异常
 	 */
 	@ExceptionHandler({CustomException.class})
-	public Map<String,Object> handleCustomException(CustomException ex){
-		Map<String,Object> dataMap = new HashMap<>(2);
-		dataMap.put("code",ex.getCode());
-		dataMap.put("msg",ex.getMessage());
-		return dataMap;
+	public HttpResult<Boolean> handleRenException(CustomException ex){
+		return new HttpResult<Boolean>().error(ex.getCode(),ex.getMsg());
 	}
 
 }
