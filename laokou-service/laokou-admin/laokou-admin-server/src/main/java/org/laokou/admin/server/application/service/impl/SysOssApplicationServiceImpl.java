@@ -15,8 +15,6 @@
  */
 package org.laokou.admin.server.application.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -32,6 +30,8 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.exception.CustomException;
 import org.laokou.common.core.utils.ValidatorUtil;
 import org.laokou.oss.client.vo.SysOssVO;
+import org.laokou.redis.utils.RedisKeyUtil;
+import org.laokou.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +45,7 @@ import java.util.List;
 public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
     private final SysOssService sysOssService;
+    private final RedisUtil redisUtil;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -66,6 +67,10 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
         Long id = dto.getId();
         if (id == null) {
             throw new CustomException("存储编号不为空");
+        }
+        long useCount = sysOssService.count(Wrappers.lambdaQuery(SysOssDO.class).eq(SysOssDO::getStatus, Constant.YES));
+        if (useCount > 0) {
+            throw new CustomException("该配置正在使用，请修改其他配置");
         }
         long count = sysOssService.count(Wrappers.lambdaQuery(SysOssDO.class).eq(SysOssDO::getName, dto.getName()).ne(SysOssDO::getId,id));
         if (count > 0) {
@@ -111,6 +116,11 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
                 item.setStatus(Constant.NO);
             }
         });
-        return sysOssService.updateBatchById(list);
+        sysOssService.updateBatchById(list);
+        String ossConfigKey = RedisKeyUtil.getOssConfigKey();
+        if (redisUtil.hasKey(ossConfigKey)) {
+            redisUtil.delete(ossConfigKey);
+        }
+        return true;
     }
 }

@@ -93,14 +93,20 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         oAuth2AuthorizationService.remove(oAuth2Authorization);
         // 用户key
         String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-        redisUtil.delete(userInfoKey);
+        if (redisUtil.hasKey(userInfoKey)) {
+            redisUtil.delete(userInfoKey);
+        }
         Long userId = userDetail.getUserId();
         // 菜单key
         String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
-        redisUtil.delete(resourceTreeKey);
+        if (redisUtil.hasKey(resourceTreeKey)) {
+            redisUtil.delete(resourceTreeKey);
+        }
         // 消息key
         String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
-        redisUtil.delete(messageUnReadKey);
+        if (redisUtil.hasKey(messageUnReadKey)) {
+            redisUtil.delete(messageUnReadKey);
+        }
         return true;
     }
 
