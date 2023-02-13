@@ -43,30 +43,38 @@ public class SysOssApiController {
     private final SysOssApplicationService sysOssApplicationService;
 
     @PostMapping("/query")
-    @Operation(summary = "系统套餐>查询",description = "系统套餐>查询")
+    @Operation(summary = "系统存储>查询",description = "系统存储>查询")
     @PreAuthorize("hasAuthority('sys:oss:query')")
     public HttpResult<IPage<SysOssVO>> query(@RequestBody SysOssQo qo) {
         return new HttpResult<IPage<SysOssVO>>().ok(sysOssApplicationService.queryOssPage(qo));
     }
 
     @PostMapping("/insert")
-    @Operation(summary = "系统套餐>新增",description = "系统套餐>新增")
-    @OperateLog(module = "系统套餐",name = "套餐新增")
+    @Operation(summary = "系统存储>新增",description = "系统存储>新增")
+    @OperateLog(module = "系统存储",name = "存储新增")
     @PreAuthorize("hasAuthority('sys:oss:insert')")
     public HttpResult<Boolean> insert(@RequestBody SysOssDTO dto) {
         return new HttpResult<Boolean>().ok(sysOssApplicationService.insertOss(dto));
     }
 
+    @GetMapping("/use")
+    @Operation(summary = "系统存储>启用",description = "系统存储>启用")
+    @OperateLog(module = "系统存储",name = "存储启用")
+    @PreAuthorize("hasAuthority('sys:oss:use')")
+    public HttpResult<Boolean> use(@RequestParam("id") Long id) {
+        return new HttpResult<Boolean>().ok(sysOssApplicationService.useOss(id));
+    }
+
     @GetMapping("/detail")
-    @Operation(summary = "系统套餐>查看",description = "系统套餐>查看")
+    @Operation(summary = "系统存储>查看",description = "系统存储>查看")
     @DataCache(name = "oss",key = "#id")
     public HttpResult<SysOssVO> detail(@RequestParam("id")Long id) {
         return new HttpResult<SysOssVO>().ok(sysOssApplicationService.getOssById(id));
     }
 
     @PutMapping("/update")
-    @Operation(summary = "系统套餐>修改",description = "系统套餐>修改")
-    @OperateLog(module = "系统套餐",name = "套餐修改")
+    @Operation(summary = "系统存储>修改",description = "系统存储>修改")
+    @OperateLog(module = "系统存储",name = "存储修改")
     @PreAuthorize("hasAuthority('sys:oss:update')")
     @DataCache(name = "oss",key = "#dto.id",type = CacheEnum.DEL)
     public HttpResult<Boolean> update(@RequestBody SysOssDTO dto) {
@@ -74,8 +82,8 @@ public class SysOssApiController {
     }
 
     @DeleteMapping("/delete")
-    @Operation(summary = "系统套餐>删除",description = "系统套餐>删除")
-    @OperateLog(module = "系统套餐",name = "套餐删除")
+    @Operation(summary = "系统存储>删除",description = "系统存储>删除")
+    @OperateLog(module = "系统存储",name = "存储删除")
     @PreAuthorize("hasAuthority('sys:oss:delete')")
     @DataCache(name = "oss",key = "#id",type = CacheEnum.DEL)
     public HttpResult<Boolean> delete(@RequestParam("id")Long id) {

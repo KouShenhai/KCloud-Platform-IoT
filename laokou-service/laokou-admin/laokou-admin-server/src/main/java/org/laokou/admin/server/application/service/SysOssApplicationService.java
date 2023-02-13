@@ -61,4 +61,10 @@ public interface SysOssApplicationService {
      */
     SysOssVO getOssById(Long id);
 
+    /**
+     * 启用oss
+     * @param id
+     * @return
+     */
+    Boolean useOss(Long id);
 }

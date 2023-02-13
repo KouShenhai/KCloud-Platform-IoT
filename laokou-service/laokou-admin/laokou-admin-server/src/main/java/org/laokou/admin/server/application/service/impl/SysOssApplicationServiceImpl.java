@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -24,12 +26,16 @@ import org.laokou.admin.server.domain.sys.entity.SysOssDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysOssService;
 import org.laokou.admin.server.interfaces.qo.SysOssQo;
 import org.laokou.auth.client.utils.UserUtil;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.exception.CustomException;
 import org.laokou.common.core.utils.ValidatorUtil;
 import org.laokou.oss.client.vo.SysOssVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
@@ -87,5 +93,19 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
     @Override
     public SysOssVO getOssById(Long id) {
         return sysOssService.getOssById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean useOss(Long id) {
+        List<SysOssDO> list = sysOssService.list();
+        list.stream().forEach(item -> {
+            if (id.equals(item.getId())) {
+                item.setStatus(Constant.YES);
+            } else {
+                item.setStatus(Constant.NO);
+            }
+        });
+        return sysOssService.updateBatchById(list);
     }
 }

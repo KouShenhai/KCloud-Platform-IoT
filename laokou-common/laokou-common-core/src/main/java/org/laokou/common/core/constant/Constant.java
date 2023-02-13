@@ -30,6 +30,8 @@ public interface Constant {
 
     int SUCCESS = 200;
 
+    int YES = 1;
+
     String UNDERLINE = "_";
 
 
