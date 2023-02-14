@@ -15,7 +15,6 @@
  */
 package org.laokou.admin.server.application.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +31,6 @@ import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.utils.UserUtil;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.exception.CustomException;
 import org.laokou.common.core.utils.HttpResult;
@@ -73,12 +71,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             List<SysMessageDetailDO> detailDOList = new ArrayList<>(receiver.size());
             while (iterator.hasNext()) {
                 String next = iterator.next();
-                // 根据用户，分别将递增未读消息数
-                String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(Long.valueOf(next));
-                Object obj = redisUtil.get(messageUnReadKey);
-                if (obj != null) {
-                    redisUtil.incrementAndGet(messageUnReadKey);
-                }
                 SysMessageDetailDO detailDO = new SysMessageDetailDO();
                 detailDO.setMessageId(messageDO.getId());
                 detailDO.setUserId(Long.valueOf(next));
@@ -101,6 +93,15 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
                 HttpResult<Boolean> result = imApiFeignClient.push(pushMsgDTO);
                 if (!result.success()) {
                     throw new CustomException(result.getCode(), result.getMsg());
+                } else {
+                    receiver.forEach(item -> {
+                        // 根据用户，分别将递增未读消息数
+                        String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(Long.valueOf(item));
+                        Object obj = redisUtil.get(messageUnReadKey);
+                        if (obj != null) {
+                            redisUtil.incrementAndGet(messageUnReadKey);
+                        }
+                    });
                 }
             }
         }
@@ -148,8 +149,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         if (obj != null) {
             return Long.valueOf("" + obj);
         }
-        long count = sysMessageDetailService.count(Wrappers.lambdaQuery(SysMessageDetailDO.class).eq(SysMessageDetailDO::getUserId, userId)
-                .eq(SysMessageDetailDO::getReadFlag, Constant.NO));
+        long count = sysMessageDetailService.messageCount(userId);
         redisUtil.addAndGet(messageUnReadKey,count);
         return count;
     }

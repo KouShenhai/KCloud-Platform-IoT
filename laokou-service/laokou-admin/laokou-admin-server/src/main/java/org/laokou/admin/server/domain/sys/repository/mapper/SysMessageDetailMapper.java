@@ -34,4 +34,10 @@ public interface SysMessageDetailMapper extends BaseBatchMapper<SysMessageDetail
      */
     Integer getVersion(@Param("id")Long id);
 
+    /**
+     * 未读消息数
+     * @param userId
+     * @return
+     */
+    Integer messageCount(@Param("userId") Long userId);
 }

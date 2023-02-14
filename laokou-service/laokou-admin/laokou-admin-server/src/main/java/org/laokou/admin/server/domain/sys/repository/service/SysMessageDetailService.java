@@ -41,4 +41,10 @@ public interface SysMessageDetailService extends IService<SysMessageDetailDO> {
      */
     void insertBatch(List<SysMessageDetailDO> list);
 
+    /**
+     * 未读消息数
+     * @param userId
+     * @return
+     */
+    Integer messageCount(Long userId);
 }

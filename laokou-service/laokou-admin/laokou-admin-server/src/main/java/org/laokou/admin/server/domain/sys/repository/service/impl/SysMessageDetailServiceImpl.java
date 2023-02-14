@@ -43,4 +43,9 @@ public class SysMessageDetailServiceImpl extends ServiceImpl<SysMessageDetailMap
     public void insertBatch(List<SysMessageDetailDO> list) {
         mapperUtil.insertBatch(list,500,this.baseMapper);
     }
+
+    @Override
+    public Integer messageCount(Long userId) {
+        return this.baseMapper.messageCount(userId);
+    }
 }

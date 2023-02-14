@@ -34,7 +34,7 @@ public class TaskExecutorConfig {
         // 队列大小，默认LinkedBlockingQueue
         taskExecutor.setQueueCapacity(256);
         // 线程最大空闲时间
-        taskExecutor.setKeepAliveSeconds(300);
+        taskExecutor.setKeepAliveSeconds(60);
         // 拒绝策略，默认ThreadPoolExecutor.AbortPolicy()
         taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         // 线程名称前缀
