@@ -28,7 +28,7 @@
         <!--commons-configuration版本-->
         <commons-configuration.version>1.10</commons-configuration.version>
         <!--redisson版本-->
-        <redisson.version>3.18.1</redisson.version>
+        <redisson.version>3.19.3</redisson.version>
         <!--UserAgentUtils版本-->
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
         <!--jsoup版本-->
