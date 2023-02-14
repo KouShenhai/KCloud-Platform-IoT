@@ -38,13 +38,13 @@ public class WorkDefinitionApiFeignClientFallback implements WorkDefinitionApiFe
     @Override
     public HttpResult<Boolean> insert(String name, MultipartFile file) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<Boolean>().error("服务调用失败，请联系管理员");
+        return new HttpResult<Boolean>().error("流程新增失败，请联系管理员");
     }
 
     @Override
     public HttpResult<PageVO<DefinitionVO>> query(DefinitionDTO dto) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<PageVO<DefinitionVO>>().error("服务调用失败，请联系管理员");
+        return new HttpResult<PageVO<DefinitionVO>>().error("流程查询失败，请联系管理员");
     }
 
     @Override
@@ -56,18 +56,18 @@ public class WorkDefinitionApiFeignClientFallback implements WorkDefinitionApiFe
     @Override
     public HttpResult<Boolean> delete(String deploymentId) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<Boolean>().error("服务调用失败，请联系管理员");
+        return new HttpResult<Boolean>().error("流程删除失败，请联系管理员");
     }
 
     @Override
     public HttpResult<Boolean> suspend(String definitionId) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<Boolean>().error("服务调用失败，请联系管理员");
+        return new HttpResult<Boolean>().error("流程挂起失败，请联系管理员");
     }
 
     @Override
     public HttpResult<Boolean> activate(String definitionId) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<Boolean>().error("服务调用失败，请联系管理员");
+        return new HttpResult<Boolean>().error("流程激活失败，请联系管理员");
     }
 }
