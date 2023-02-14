@@ -25,8 +25,6 @@ import org.laokou.common.mybatisplus.mapper.BaseBatchMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +53,7 @@ public class MapperUtil<T> {
      * @param baseBatchMapper 基础mapper
      */
     @SneakyThrows
-    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
-    public void insertCurrentBatch(List<T> dataList, int batchNum, BaseBatchMapper<T> baseBatchMapper) {
+    public void insertConcurrentBatch(List<T> dataList, int batchNum, BaseBatchMapper<T> baseBatchMapper) {
         // 数据分组
         List<List<T>> partition = Lists.partition(dataList, batchNum);
         int size = partition.size();
