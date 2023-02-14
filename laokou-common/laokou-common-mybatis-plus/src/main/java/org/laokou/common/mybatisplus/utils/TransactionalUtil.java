@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 
 /**
  * @author laokou
@@ -35,12 +35,12 @@ public class TransactionalUtil {
      * 开启事务
      * @return
      */
-    public TransactionStatus begin(DefaultTransactionDefinition defaultTransactionDefinition) {
-        return dataSourceTransactionManager.getTransaction(defaultTransactionDefinition);
+    public TransactionStatus begin(DefaultTransactionAttribute defaultTransactionAttribute) {
+        return dataSourceTransactionManager.getTransaction(defaultTransactionAttribute);
     }
 
     public TransactionStatus begin() {
-        return dataSourceTransactionManager.getTransaction(new DefaultTransactionDefinition());
+        return dataSourceTransactionManager.getTransaction(new DefaultTransactionAttribute());
     }
 
     /**

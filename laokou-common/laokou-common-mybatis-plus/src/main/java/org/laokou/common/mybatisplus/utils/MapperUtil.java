@@ -25,7 +25,7 @@ import org.laokou.common.mybatisplus.mapper.BaseBatchMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -39,8 +39,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MapperUtil<T> {
 
     private final TransactionalUtil transactionalUtil;
-    private static final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4
-            , 8
+    private static final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(8
+            , 16
             , 60
             , TimeUnit.SECONDS
             , new LinkedBlockingQueue(256)
@@ -66,10 +66,10 @@ public class MapperUtil<T> {
             List<T> list = partition.get(i);
             threadPoolExecutor.execute(() -> {
                 try {
-                    DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
+                    DefaultTransactionAttribute defaultTransactionAttribute = new DefaultTransactionAttribute();
                     // 隔离级别设为，创建新事物
-                    defaultTransactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-                    TransactionStatus status = transactionalUtil.begin(defaultTransactionDefinition);
+                    defaultTransactionAttribute.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+                    TransactionStatus status = transactionalUtil.begin(defaultTransactionAttribute);
                     transactionStatus.add(status);
                     baseBatchMapper.insertBatch(list);
                 } catch (Exception e) {
