@@ -14,27 +14,16 @@
  * limitations under the License.
  */
 package org.laokou.rocketmq.consumer.message;
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.exception.CustomException;
-import org.laokou.common.core.utils.HttpResult;
 import org.laokou.rocketmq.client.constant.RocketmqConstant;
-import org.laokou.rocketmq.consumer.feign.oss.MailApiFeignClient;
 import org.springframework.stereotype.Component;
 /**
  * @author laokou
  */
 @Component(RocketmqConstant.MAIL_TAG)
-@RequiredArgsConstructor
-public class EmailConsumerMessage implements ConsumerMessage {
-
-    private final MailApiFeignClient mailApiFeignClient;
-
+public class MailConsumerMessage implements ConsumerMessage {
     @Override
     public void receiveMessage(String mail) {
-        HttpResult<Boolean> result = mailApiFeignClient.send(mail);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(),result.getMsg());
-        }
+
     }
 
 }

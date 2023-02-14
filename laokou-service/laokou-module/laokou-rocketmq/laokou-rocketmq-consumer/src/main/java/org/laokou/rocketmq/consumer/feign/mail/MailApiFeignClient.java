@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.rocketmq.consumer.feign.oss;
+package org.laokou.rocketmq.consumer.feign.mail;
 import org.laokou.common.core.constant.ServiceConstant;
 import org.laokou.common.core.utils.HttpResult;
+import org.laokou.rocketmq.consumer.feign.mail.fallback.MailApiFeignClientFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * @author laokou
  */
-@FeignClient(value = ServiceConstant.LAOKOU_MAIL,path = "/api", fallbackFactory = MailApiFeignClient.class)
+@FeignClient(value = ServiceConstant.LAOKOU_MAIL,path = "/api", fallbackFactory = MailApiFeignClientFallback.class)
 @Service
 public interface MailApiFeignClient {
 

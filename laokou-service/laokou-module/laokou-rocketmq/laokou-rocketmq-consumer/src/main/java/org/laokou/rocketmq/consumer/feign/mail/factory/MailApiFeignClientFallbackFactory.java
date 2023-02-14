@@ -13,25 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.rocketmq.consumer.feign.oss.fallback;
+package org.laokou.rocketmq.consumer.feign.mail.factory;
+import org.laokou.rocketmq.consumer.feign.mail.fallback.MailApiFeignClientFallback;
+import org.springframework.cloud.openfeign.FallbackFactory;
+import org.springframework.stereotype.Component;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.HttpResult;
-import org.laokou.rocketmq.consumer.feign.oss.MailApiFeignClient;
 /**
- * 服务降级
+ * 回调工厂
  * @author laokou
  */
-@Slf4j
-@AllArgsConstructor
-public class MailApiFeignClientFallback implements MailApiFeignClient {
-
-    private final Throwable throwable;
+@Component
+public class MailApiFeignClientFallbackFactory implements FallbackFactory<MailApiFeignClientFallback> {
 
     @Override
-    public HttpResult<Boolean> send(String mail) {
-        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<Boolean>().error("Mail服务未启动，请联系管理员");
+    public MailApiFeignClientFallback create(Throwable throwable) {
+        return new MailApiFeignClientFallback(throwable);
     }
 }
