@@ -13,23 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.rocketmq.client.constant;
+package org.laokou.rocketmq.consumer.feign.oss;
+import org.laokou.common.core.constant.ServiceConstant;
+import org.laokou.common.core.utils.HttpResult;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 /**
- * 队列常量值
  * @author laokou
  */
-public interface RocketmqConstant {
-
-    String LAOKOU_MAIL_TOPIC = "laokou-mail-topic";
-    String MAIL_TAG = "mail";
+@FeignClient(value = ServiceConstant.LAOKOU_MAIL,path = "/api", fallbackFactory = MailApiFeignClient.class)
+@Service
+public interface MailApiFeignClient {
 
     /**
-     * 消息重试次数
+     * 发送邮件
+     * @param mail
+     * @return
      */
-    Integer RECONSUME_TIMES = 3;
+    @GetMapping("/send")
+    HttpResult<Boolean> send(@RequestParam("mail")String mail);
 
-    String TAG = "tag";
-    String TOPIC = "topic";
-
-    String BINDER = "";
 }

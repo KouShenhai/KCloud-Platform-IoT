@@ -13,18 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.core.constant;
+package org.laokou.rocketmq.consumer.feign.oss.fallback;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.HttpResult;
+import org.laokou.rocketmq.consumer.feign.oss.MailApiFeignClient;
 /**
+ * 服务降级
  * @author laokou
  */
-public interface ServiceConstant {
+@Slf4j
+@AllArgsConstructor
+public class MailApiFeignClientFallback implements MailApiFeignClient {
 
-    String LAOKOU_ELASTICSEARCH = "laokou-elasticsearch";
-    String LAOKOU_IM = "laokou-im";
-    String LAOKOU_KAFKA = "laokou-kafka";
-    String LAOKOU_FLOWABLE = "laokou-flowable";
-    String LAOKOU_OSS = "laokou-oss";
-    String LAOKOU_MAIL = "laokou-mail";
-    String LAOKOU_SMS = "laokou-sms";
+    private final Throwable throwable;
 
+    @Override
+    public HttpResult<Boolean> send(String mail) {
+        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
+        return new HttpResult<Boolean>().error("Mail服务未启动，请联系管理员");
+    }
 }

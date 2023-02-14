@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 package org.laokou.rocketmq.server.controller;
+import com.alibaba.cloud.stream.binder.rocketmq.constant.RocketMQConst;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.rocketmq.client.constant.RocketmqConstant;
 import org.laokou.rocketmq.client.dto.RocketmqDTO;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.messaging.Message;
@@ -37,10 +39,21 @@ public class RocketmqSender {
 
     private final StreamBridge streamBridge;
 
-    @PostMapping("/send/{topic}")
-    @Operation(summary = "消息队列>同步发送",description = "消息队列>同步发送")
-    public void sendMessage(@PathVariable("topic") String topic, @RequestBody RocketmqDTO dto) {
+    @PostMapping("/send/{topic}/{tag}")
+    @Operation(summary = "消息队列>普通消息",description = "消息队列>普通消息")
+    public void sendMessage(@PathVariable(RocketmqConstant.TOPIC) String topic, @PathVariable(RocketmqConstant.TAG)String tag, @RequestBody RocketmqDTO dto) {
         Message<String> message = MessageBuilder.withPayload(dto.getData())
+                .setHeader(RocketmqConstant.TAG,tag)
+                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON).build();
+        streamBridge.send(topic,message);
+    }
+
+    @PostMapping("/sendTX/{topic}/{tag}")
+    @Operation(summary = "消息队列>事务消息",description = "消息队列>事务消息")
+    public void sendTXMessage(@PathVariable(RocketmqConstant.TOPIC) String topic, @PathVariable(RocketmqConstant.TAG)String tag, @RequestBody RocketmqDTO dto) {
+        Message<String> message = MessageBuilder.withPayload(dto.getData())
+                .setHeader(RocketMQConst.USER_TRANSACTIONAL_ARGS, RocketmqConstant.BINDER)
+                .setHeader(RocketmqConstant.TAG,tag)
                 .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON).build();
         streamBridge.send(topic,message);
     }

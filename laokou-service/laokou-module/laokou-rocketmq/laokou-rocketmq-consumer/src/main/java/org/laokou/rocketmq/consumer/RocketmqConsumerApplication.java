@@ -15,9 +15,9 @@
  */
 package org.laokou.rocketmq.consumer;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import org.laokou.common.core.exception.CustomException;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.swagger.config.CorsConfig;
-import org.laokou.redis.config.RedisSessionConfig;
 import org.laokou.rocketmq.client.constant.RocketmqConstant;
 import org.laokou.rocketmq.consumer.message.ConsumerMessage;
 import org.springframework.boot.SpringApplication;
@@ -31,10 +31,10 @@ import java.util.function.Consumer;
 /**
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = {"org.laokou.redis","org.laokou.common.core","org.laokou.rocketmq.consumer"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.openfeign","org.laokou.sentinel","org.laokou.common.core","org.laokou.rocketmq.consumer"})
 @EnableDiscoveryClient
 @EnableFeignClients
-@Import({RedisSessionConfig.class, CorsConfig.class})
+@Import({CorsConfig.class})
 @EnableEncryptableProperties
 public class RocketmqConsumerApplication {
 
@@ -45,7 +45,7 @@ public class RocketmqConsumerApplication {
     @Bean
     Consumer<Message<String>> consumer() {
         return msg -> {
-            ConsumerMessage message = SpringContextUtil.getBean(RocketmqConstant.LAOKOU_EMAIL_TOPIC, ConsumerMessage.class);
+            ConsumerMessage message = SpringContextUtil.getBean(msg.getHeaders().get(RocketmqConstant.TAG,String.class), ConsumerMessage.class);
             message.receiveMessage(msg.getPayload());
         };
     }

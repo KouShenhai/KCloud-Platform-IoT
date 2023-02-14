@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.rocketmq.consumer.message;
+package org.laokou.rocketmq.server.listener;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.exception.CustomException;
-import org.laokou.common.core.utils.HttpResult;
-import org.laokou.rocketmq.client.constant.RocketmqConstant;
-import org.laokou.rocketmq.consumer.feign.oss.MailApiFeignClient;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.LocalTransactionState;
+import org.apache.rocketmq.client.producer.TransactionListener;
+import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.stereotype.Component;
 /**
  * @author laokou
  */
-@Component(RocketmqConstant.MAIL_TAG)
 @RequiredArgsConstructor
-public class EmailConsumerMessage implements ConsumerMessage {
-
-    private final MailApiFeignClient mailApiFeignClient;
+@Slf4j
+@Component("customTransactionListener")
+public class CustomTransactionListener implements TransactionListener {
 
     @Override
-    public void receiveMessage(String mail) {
-        HttpResult<Boolean> result = mailApiFeignClient.send(mail);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(),result.getMsg());
-        }
+    public LocalTransactionState executeLocalTransaction(Message message, Object o) {
+        return LocalTransactionState.COMMIT_MESSAGE;
     }
 
+    @Override
+    public LocalTransactionState checkLocalTransaction(MessageExt messageExt) {
+        return LocalTransactionState.COMMIT_MESSAGE;
+    }
 }
