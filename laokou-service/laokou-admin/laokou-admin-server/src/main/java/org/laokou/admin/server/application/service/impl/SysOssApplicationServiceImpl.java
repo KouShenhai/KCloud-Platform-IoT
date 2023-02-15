@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -32,6 +33,7 @@ import org.laokou.common.core.utils.ValidatorUtil;
 import org.laokou.oss.client.vo.SysOssVO;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
+import org.laokou.tenant.processor.DsTenantProcessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +51,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @DS(DsTenantProcessor.TENANT)
     public Boolean insertOss(SysOssDTO dto) {
         ValidatorUtil.validateEntity(dto);
         long count = sysOssService.count(Wrappers.lambdaQuery(SysOssDO.class).eq(SysOssDO::getName, dto.getName()));
@@ -62,6 +65,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @DS(DsTenantProcessor.TENANT)
     public Boolean updateOss(SysOssDTO dto) {
         ValidatorUtil.validateEntity(dto);
         Long id = dto.getId();
@@ -85,11 +89,13 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @DS(DsTenantProcessor.TENANT)
     public Boolean deleteOss(Long id) {
         return sysOssService.deleteOss(id);
     }
 
     @Override
+    @DS(DsTenantProcessor.TENANT)
     public IPage<SysOssVO> queryOssPage(SysOssQo qo) {
         ValidatorUtil.validateEntity(qo);
         IPage<SysOssVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
@@ -97,12 +103,14 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
     }
 
     @Override
+    @DS(DsTenantProcessor.TENANT)
     public SysOssVO getOssById(Long id) {
         return sysOssService.getOssById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @DS(DsTenantProcessor.TENANT)
     public Boolean useOss(Long id) {
         LambdaQueryWrapper<SysOssDO> wrapper = Wrappers.lambdaQuery(SysOssDO.class)
                 .and(t -> t.eq(SysOssDO::getStatus, Constant.YES)

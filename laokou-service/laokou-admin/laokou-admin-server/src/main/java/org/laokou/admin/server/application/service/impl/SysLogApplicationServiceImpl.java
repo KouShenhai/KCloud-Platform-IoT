@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.excel.SysLoginLogExcel;
 import org.laokou.admin.client.excel.SysOperateLogExcel;
 import org.laokou.admin.server.application.service.SysLogApplicationService;
+import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.ExcelUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
@@ -55,6 +56,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     @DataFilter(tableAlias = "boot_sys_operate_log")
     public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQo qo) {
         ValidatorUtil.validateEntity(qo);
+        qo.setTenantId(UserUtil.getTenantId());
         IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysOperateLogService.getOperateLogList(page,qo);
     }
@@ -67,6 +69,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
         List<SysOperateLogVO> list = new ArrayList<>(chunkSize);
         ServletOutputStream out = response.getOutputStream();
         ExcelWriter excelWriter = EasyExcel.write(out, SysOperateLogExcel.class).build();
+        qo.setTenantId(UserUtil.getTenantId());
         sysOperateLogService.handleLoginLog(qo, resultContext -> {
             SysOperateLogVO resultObject = resultContext.getResultObject();
             list.add(resultObject);
@@ -90,6 +93,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
         List<SysLoginLogVO> list = new ArrayList<>(chunkSize);
         ServletOutputStream out = response.getOutputStream();
         ExcelWriter excelWriter = EasyExcel.write(out, SysLoginLogExcel.class).build();
+        qo.setTenantId(UserUtil.getTenantId());
         sysLoginLogService.handleLoginLog(qo, resultContext -> {
             SysLoginLogVO resultObject = resultContext.getResultObject();
             list.add(resultObject);
@@ -115,6 +119,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     @Override
     public IPage<SysLoginLogVO> queryLoginLogPage(SysLoginLogQo qo) {
         ValidatorUtil.validateEntity(qo);
+        qo.setTenantId(UserUtil.getTenantId());
         IPage<SysLoginLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         return sysLoginLogService.getLoginLogList(page,qo);
     }

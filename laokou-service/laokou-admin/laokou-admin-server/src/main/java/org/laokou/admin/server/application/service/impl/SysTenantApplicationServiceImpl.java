@@ -60,6 +60,11 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
         if (count > 0) {
             throw new CustomException("租户名称已存在，请重新填写");
         }
+        Long sourceId = dto.getSourceId();
+        long useSourceCount = sysTenantService.count(Wrappers.lambdaQuery(SysTenantDO.class).eq(SysTenantDO::getSourceId, sourceId));
+        if (useSourceCount > 0) {
+            throw new CustomException("该数据源已被使用，清重新选择");
+        }
         SysTenantDO sysTenantDO = ConvertUtil.sourceToTarget(dto, SysTenantDO.class);
         sysTenantDO.setCreator(UserUtil.getUserId());
         sysTenantService.save(sysTenantDO);
@@ -84,6 +89,11 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
         long count = sysTenantService.count(Wrappers.lambdaQuery(SysTenantDO.class).eq(SysTenantDO::getName, dto.getName()).ne(SysTenantDO::getId,id));
         if (count > 0) {
             throw new CustomException("租户名称已存在，请重新填写");
+        }
+        Long sourceId = dto.getSourceId();
+        long useSourceCount = sysTenantService.count(Wrappers.lambdaQuery(SysTenantDO.class).eq(SysTenantDO::getSourceId, sourceId).ne(SysTenantDO::getId, id));
+        if (useSourceCount > 0) {
+            throw new CustomException("该数据源已被使用，清重新选择");
         }
         Integer version = sysTenantService.getVersion(id);
         SysTenantDO sysTenantDO = ConvertUtil.sourceToTarget(dto, SysTenantDO.class);

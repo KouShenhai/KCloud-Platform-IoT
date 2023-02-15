@@ -15,6 +15,7 @@
  */
 package org.laokou.admin.server.application.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysDictApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysDictDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysDictService;
+import org.laokou.tenant.processor.DsTenantProcessor;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
 import org.laokou.admin.client.dto.SysDictDTO;
@@ -45,6 +47,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     private final SysDictService sysDictService;
 
     @Override
+    @DS(DsTenantProcessor.TENANT)
     public IPage<SysDictVO> queryDictPage(SysDictQo qo) {
         ValidatorUtil.validateEntity(qo);
         IPage<SysDictVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
@@ -52,11 +55,13 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     }
 
     @Override
+    @DS(DsTenantProcessor.TENANT)
     public SysDictVO getDictById(Long id) {
         return sysDictService.getDictById(id);
     }
 
     @Override
+    @DS(DsTenantProcessor.TENANT)
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertDict(SysDictDTO dto) {
         ValidatorUtil.validateEntity(dto);
@@ -71,6 +76,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @DS(DsTenantProcessor.TENANT)
     public Boolean updateDict(SysDictDTO dto) {
         ValidatorUtil.validateEntity(dto);
         Long id = dto.getId();
@@ -90,12 +96,14 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @DS(DsTenantProcessor.TENANT)
     public Boolean deleteDict(Long id) {
         sysDictService.deleteDict(id);
         return true;
     }
 
     @Override
+    @DS(DsTenantProcessor.TENANT)
     public List<OptionVO> getOptionList(String type) {
         return sysDictService.getOptionList(type);
     }

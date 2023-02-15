@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,7 @@ import org.laokou.common.core.utils.ValidatorUtil;
 import org.laokou.im.client.PushMsgDTO;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
+import org.laokou.tenant.processor.DsTenantProcessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
@@ -57,6 +59,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @DS(DsTenantProcessor.TENANT)
     public Boolean insertMessage(MessageDTO dto) {
         ValidatorUtil.validateEntity(dto);
         SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
@@ -109,6 +112,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
+    @DS(DsTenantProcessor.TENANT)
     public IPage<SysMessageVO> queryMessagePage(SysMessageQo qo) {
         ValidatorUtil.validateEntity(qo);
         IPage<SysMessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
@@ -117,6 +121,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @DS(DsTenantProcessor.TENANT)
     public MessageDetailVO getMessageByDetailId(Long id) {
         Integer version = sysMessageDetailService.getVersion(id);
         sysMessageService.readMessage(id,version);
@@ -130,11 +135,13 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
+    @DS(DsTenantProcessor.TENANT)
     public MessageDetailVO getMessageById(Long id) {
         return sysMessageService.getMessageById(id);
     }
 
     @Override
+    @DS(DsTenantProcessor.TENANT)
     public IPage<SysMessageVO> getUnReadList(SysMessageQo qo) {
         IPage<SysMessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         final Long userId = UserUtil.getUserId();
@@ -142,6 +149,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
+    @DS(DsTenantProcessor.TENANT)
     public Long unReadCount() {
         final Long userId = UserUtil.getUserId();
         String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);

@@ -189,7 +189,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         OAuth2Authorization oAuth2Authorization = authorizationBuilder.build();
         authorizationService.save(oAuth2Authorization);
         // 登录成功
-        loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.SUCCESS.ordinal(), AuthConstant.LOGIN_SUCCESS_MSG,request);
+        Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
+        loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.SUCCESS.ordinal(), AuthConstant.LOGIN_SUCCESS_MSG,request,tenantId);
         // 账号是否已经登录并且未过期，是则强制踢出，反之不操作
         accountKill(oAuth2AccessToken.getTokenValue(),loginName);
         return new OAuth2AccessTokenAuthenticationToken(
@@ -203,20 +204,20 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         // 多租户查询
         UserDetail userDetail = sysUserService.getUserDetail(loginName,tenantId);
         if (userDetail == null) {
-            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR),request);
+            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR),request,tenantId);
             CustomAuthExceptionHandler.throwError(ErrorCode.ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
         }
         if (OAuth2PasswordAuthenticationProvider.GRANT_TYPE.equals(loginType)) {
             // 验证密码
             String clientPassword = userDetail.getPassword();
             if (!passwordEncoder.matches(password, clientPassword)) {
-                loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR), request);
+                loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR), request,tenantId);
                 CustomAuthExceptionHandler.throwError(ErrorCode.ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
             }
         }
         // 是否锁定
         if (!userDetail.isEnabled()) {
-            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_DISABLE),request);
+            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_DISABLE),request,tenantId);
             CustomAuthExceptionHandler.throwError(ErrorCode.ACCOUNT_DISABLE, MessageUtil.getMessage(ErrorCode.ACCOUNT_DISABLE));
         }
         Long userId = userDetail.getUserId();
@@ -224,7 +225,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         // 权限标识列表
         List<String> permissionsList = sysMenuService.getPermissionsList(tenantId,superAdmin,userId);
         if (CollectionUtils.isEmpty(permissionsList)) {
-            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.NOT_PERMISSIONS),request);
+            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.NOT_PERMISSIONS),request,tenantId);
             CustomAuthExceptionHandler.throwError(ErrorCode.NOT_PERMISSIONS, MessageUtil.getMessage(ErrorCode.NOT_PERMISSIONS));
         }
         // 部门列表

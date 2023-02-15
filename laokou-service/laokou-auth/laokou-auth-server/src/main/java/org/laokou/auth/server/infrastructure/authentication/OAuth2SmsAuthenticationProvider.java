@@ -83,7 +83,8 @@ public class OAuth2SmsAuthenticationProvider extends AbstractOAuth2BaseAuthentic
         }
         Boolean validate = sysCaptchaService.validate(mobile, code);
         if (!validate) {
-            loginLogUtil.recordLogin(mobile,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR),request);
+            Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
+            loginLogUtil.recordLogin(mobile,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR),request,tenantId);
             CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_ERROR, MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR));
         }
         // 获取用户信息

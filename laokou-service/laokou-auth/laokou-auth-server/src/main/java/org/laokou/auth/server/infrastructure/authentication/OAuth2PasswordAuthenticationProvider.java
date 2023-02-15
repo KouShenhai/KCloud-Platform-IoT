@@ -95,7 +95,8 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
         // 验证验证码
         Boolean validate = sysCaptchaService.validate(uuid, captcha);
         if (!validate) {
-            loginLogUtil.recordLogin(username,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR),request);
+            Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
+            loginLogUtil.recordLogin(username,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR),request,tenantId);
             CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_ERROR, MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR));
         }
         // 获取用户信息,并认证信息

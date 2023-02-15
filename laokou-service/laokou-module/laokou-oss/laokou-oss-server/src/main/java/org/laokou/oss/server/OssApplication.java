@@ -21,8 +21,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Import;
-import org.springframework.scheduling.annotation.EnableAsync;
-
 /**
  * @author laokou
  */
@@ -31,14 +29,15 @@ import org.springframework.scheduling.annotation.EnableAsync;
         , "org.laokou.common.security"
         , "org.laokou.common.swagger"
         , "org.laokou.common.core"
+        , "org.laokou.tenant"
         , "org.laokou.oss"
         , "org.laokou.redis"
         , "org.laokou.common.mybatisplus"})
 @EnableDiscoveryClient
 @Import(CorsConfig.class)
 @EnableEncryptableProperties
-@EnableAsync
 @MapperScan(value = {"org.laokou.oss.server.mapper"
+        , "org.laokou.tenant.mapper"
         , "org.laokou.common.log.mapper"})
 public class OssApplication {
 

@@ -85,7 +85,8 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
         // 验证码
         Boolean validate = sysCaptchaService.validate(mail, code);
         if (!validate) {
-            loginLogUtil.recordLogin(mail,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR),request);
+            Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
+            loginLogUtil.recordLogin(mail,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR),request,tenantId);
             CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_ERROR, MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR));
         }
         // 获取用户信息

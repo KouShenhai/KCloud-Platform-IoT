@@ -65,5 +65,8 @@ public class SysLoginLogDO extends BaseDO {
      */
     private String loginType;
 
-
+    /**
+     * 租户id
+     */
+    private Long tenantId;
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.laokou.admin.server.infrastructure.utils;
+package org.laokou.tenant.utils;
 
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;

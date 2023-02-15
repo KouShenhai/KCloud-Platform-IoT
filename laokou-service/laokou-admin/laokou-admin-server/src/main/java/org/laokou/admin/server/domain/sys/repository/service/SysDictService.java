@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.service;
-
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysDictDO;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
-import org.laokou.admin.server.infrastructure.processor.DsTenantProcessor;
 import org.laokou.common.core.vo.OptionVO;
-
 import java.util.List;
 
 /**
  * @author laokou
  */
-@DS(DsTenantProcessor.TENANT)
 public interface SysDictService extends IService<SysDictDO> {
 
     /**

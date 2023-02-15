@@ -12,7 +12,7 @@
     </select>
 
     <select id="getTenantMenuListByTenantId" resultType="org.laokou.admin.client.vo.SysMenuVO">
-        select a.id,a.pid,a.`name`,a.icon,a.url,a.`type`,a.permission from boot_sys_menu a
+        select a.id,a.pid,a.`name`,a.icon,a.url,a.`type`,a.permission,a.visible,a.sort from boot_sys_menu a
         join boot_sys_package_menu b on b.menu_id = a.id
         join boot_sys_tenant c on c.package_id = b.package_id
         where a.del_flag = 0 and c.id = #{tenantId}
@@ -97,6 +97,13 @@
           AND `name` not LIKE '数据源%'
           AND `name` not LIKE '%同步'
           AND `name` not like '%搜索%'
+          AND `name` not like '%音频%'
+          AND `name` not like '%视频%'
+          AND `name` not like '%图片%'
+          AND `name` not like '%资源%'
+          AND `name` not like '%流程%'
+          AND `name` not like '%任务%'
+          AND `name` <![CDATA[ <> ]]> '接口文档'
         order by sort desc
     </select>
 

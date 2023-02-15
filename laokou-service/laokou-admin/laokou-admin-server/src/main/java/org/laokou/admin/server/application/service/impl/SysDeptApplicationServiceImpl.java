@@ -66,11 +66,19 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
         if (count > 0) {
             throw new CustomException("部门已存在，请重新填写");
         }
+        Long tenantId = UserUtil.getTenantId();
+        long userCount = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getTenantId,tenantId));
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         sysDeptDO.setCreator(UserUtil.getUserId());
+        sysDeptDO.setTenantId(tenantId);
         sysDeptService.save(sysDeptDO);
         // 修改当前节点path
-        sysDeptService.updateDeptPath1ById(sysDeptDO.getId(),sysDeptDO.getPid());
+        if (userCount > 0) {
+            sysDeptService.updateDeptPath1ById(sysDeptDO.getId(), sysDeptDO.getPid());
+        } else {
+            sysDeptDO.setPath("0/" + sysDeptDO.getId());
+            sysDeptService.updateById(sysDeptDO);
+        }
         return true;
     }
 

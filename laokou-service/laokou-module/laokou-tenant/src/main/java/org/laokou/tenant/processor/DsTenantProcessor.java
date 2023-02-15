@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package org.laokou.admin.server.infrastructure.processor;
+package org.laokou.tenant.processor;
 
 import com.baomidou.dynamic.datasource.processor.DsProcessor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.admin.server.infrastructure.utils.DataBaseUtil;
+import org.laokou.tenant.utils.DataBaseUtil;
 import org.springframework.stereotype.Component;
 
 /**

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.common.log.utils;
-
 import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,6 @@ import org.laokou.common.log.service.SysLoginLogService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.io.IOException;
 
 /**
@@ -42,7 +40,7 @@ public class LoginLogUtil {
 
     @Async
     @Transactional(rollbackFor = Exception.class)
-    public void recordLogin(String username,String loginType, Integer status, String msg, HttpServletRequest request) throws IOException {
+    public void recordLogin(String username,String loginType, Integer status, String msg, HttpServletRequest request,Long tenantId) throws IOException {
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
         String ip = IpUtil.getIpAddr(request);
         //获取客户端操作系统
@@ -58,6 +56,7 @@ public class LoginLogUtil {
         dto.setMsg(msg);
         dto.setLoginType(loginType);
         dto.setRequestStatus(status);
+        dto.setTenantId(tenantId);
         sysLoginLogService.insertLoginLog(dto);
     }
 

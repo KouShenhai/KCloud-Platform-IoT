@@ -112,6 +112,7 @@ public class OperateLogAspect {
         if (DataTypeEnum.TEXT.equals(operateLog.type())) {
             dto.setRequestParams(JacksonUtil.toJsonStr(params, true));
         }
+        dto.setTenantId(UserUtil.getTenantId());
         sysOperateLogService.insertOperateLog(dto);
     }
 

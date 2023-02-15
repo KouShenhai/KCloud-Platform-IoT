@@ -15,17 +15,13 @@
  */
 package org.laokou.admin.server.domain.sys.repository.service;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
-import org.laokou.admin.server.infrastructure.processor.DsTenantProcessor;
-
 import java.util.List;
 
 /**
  * @author laokou
  */
-@DS(DsTenantProcessor.TENANT)
 public interface SysMessageDetailService extends IService<SysMessageDetailDO> {
 
     /**

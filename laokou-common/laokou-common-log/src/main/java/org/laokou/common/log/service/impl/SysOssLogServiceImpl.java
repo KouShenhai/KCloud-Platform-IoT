@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 package org.laokou.common.log.service.impl;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.laokou.common.log.entity.SysOssLogDO;
 import org.laokou.common.log.mapper.SysOssLogMapper;
 import org.laokou.common.log.service.SysOssLogService;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class SysOssLogServiceImpl extends ServiceImpl<SysOssLogMapper, SysOssLogDO> implements SysOssLogService {
 
     @Override
-    @Async
     @Transactional(rollbackFor = Exception.class)
+    @DS("#tenant")
     public void insertLog(String url, String md5,String fileName,Long fileSize) {
         SysOssLogDO sysOssLogDO = new SysOssLogDO();
         sysOssLogDO.setUrl(url);
@@ -43,6 +43,7 @@ public class SysOssLogServiceImpl extends ServiceImpl<SysOssLogMapper, SysOssLog
     }
 
     @Override
+    @DS("#tenant")
     public SysOssLogDO getLogByMd5(String md5) {
         LambdaQueryWrapper<SysOssLogDO> queryWrapper = Wrappers.lambdaQuery(SysOssLogDO.class)
                 .select(SysOssLogDO::getUrl)

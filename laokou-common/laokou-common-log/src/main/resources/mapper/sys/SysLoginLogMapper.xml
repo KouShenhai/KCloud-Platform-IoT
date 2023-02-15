@@ -20,6 +20,9 @@
         <if test="qo.requestStatus != null and qo.requestStatus != ''">
             and request_status = #{qo.requestStatus}
         </if>
+        <if test="qo.tenantId != null">
+            and tenant_id = #{qo.tenantId}
+        </if>
         order by create_date desc
     </select>
 
@@ -41,6 +44,9 @@
         </if>
         <if test="qo.requestStatus != null and qo.requestStatus != ''">
             and request_status = #{qo.requestStatus}
+        </if>
+        <if test="qo.tenantId != null">
+            and tenant_id = #{qo.tenantId}
         </if>
         order by create_date desc
     </select>

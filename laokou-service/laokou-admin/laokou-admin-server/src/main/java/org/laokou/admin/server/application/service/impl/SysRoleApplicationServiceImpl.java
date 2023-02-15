@@ -62,6 +62,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 
     @Override
     public List<SysRoleVO> getRoleList(SysRoleQo qo) {
+        qo.setTenantId(UserUtil.getTenantId());
         return sysRoleService.getRoleList(qo);
     }
 
@@ -83,6 +84,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
         }
         roleDO.setCreator(UserUtil.getUserId());
         roleDO.setDeptId(UserUtil.getDeptId());
+        roleDO.setTenantId(UserUtil.getTenantId());
         sysRoleService.save(roleDO);
         List<Long> menuIds = dto.getMenuIds();
         saveOrUpdate(roleDO.getId(),menuIds,dto.getDeptIds());

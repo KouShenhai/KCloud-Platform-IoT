@@ -27,4 +27,6 @@ public class SysLoginLogQo extends BasePage {
 
     private Integer requestStatus;
 
+    private Long tenantId;
+
 }
