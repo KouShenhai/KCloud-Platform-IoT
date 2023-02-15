@@ -334,7 +334,7 @@ tenant/tenant123
     </tr>
     <tr>
         <td><img alt="暂无图片" src="doc/image/15.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/16.png"/></td>
+        <td><img alt="暂无图片" src="doc/image/20.png"/></td>
     </tr>
     <tr>
         <td><img alt="暂无图片" src="doc/image/17.png"/></td>
@@ -352,6 +352,14 @@ tenant/tenant123
         <td><img alt="暂无图片" src="doc/image/23.png"/></td>
         <td><img alt="暂无图片" src="doc/image/24.png"/></td>
     </tr>
+    <tr>
+        <td><img alt="暂无图片" src="doc/image/25.png"/></td>
+        <td><img alt="暂无图片" src="doc/image/26.png"/></td>
+    </tr>
+    <tr>
+        <td><img alt="暂无图片" src="doc/image/27.png"/></td>
+        <td><img alt="暂无图片" src="doc/image/28.png"/></td>
+    </tr>
 </table>
 
 ### 😛 用户权益
@@ -364,7 +372,7 @@ tenant/tenant123
 
 ### 😻 开源协议
 KCloud-Platform-Alibaba 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
-![](doc/image/25.png)
+![](doc/image/apache2.png)
 
 ### 👀 项目地址
 Github 后端地址：[KCloud-Platform-Alibaba](https://github.com/KouShenhai/KCloud-Platform-Alibaba)  
