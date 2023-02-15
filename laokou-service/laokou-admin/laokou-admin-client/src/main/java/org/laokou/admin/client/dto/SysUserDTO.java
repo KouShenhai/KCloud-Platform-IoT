@@ -36,7 +36,7 @@ public class SysUserDTO {
 
     private String imgUrl;
 
-    private String email;
+    private String mail;
 
     private String mobile;
 

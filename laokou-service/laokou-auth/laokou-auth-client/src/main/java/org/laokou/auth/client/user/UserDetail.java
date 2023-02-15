@@ -41,8 +41,8 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal {
     private String imgUrl;
     private Integer superAdmin;
     private Integer status;
-    private String email;
-    private String mobile;
+    private transient String mail;
+    private transient String mobile;
     private transient String password;
     private Long deptId;
     private List<Long> deptIds;
@@ -75,12 +75,6 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal {
         if (!Objects.equals(status, that.status)) {
             return false;
         }
-        if (!Objects.equals(email, that.email)) {
-            return false;
-        }
-        if (!Objects.equals(mobile, that.mobile)) {
-            return false;
-        }
         if (!Objects.equals(deptId, that.deptId)) {
             return false;
         }
@@ -103,8 +97,6 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal {
         result = 31 * result + (imgUrl != null ? imgUrl.hashCode() : 0);
         result = 31 * result + (superAdmin != null ? superAdmin.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
         result = 31 * result + (deptId != null ? deptId.hashCode() : 0);
         result = 31 * result + (deptIds != null ? deptIds.hashCode() : 0);
         result = 31 * result + (permissionList != null ? permissionList.hashCode() : 0);

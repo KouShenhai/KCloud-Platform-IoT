@@ -56,8 +56,8 @@ public class SysUserDO extends BaseDO {
     /**
      * 邮箱
      */
-    @Schema(name = "email",description = "邮箱",example = "2413176044@qq.com")
-    private String email;
+    @Schema(name = "mail",description = "邮箱",example = "2413176044@qq.com")
+    private String mail;
 
     /**
      * 用户状态 0 正常 1 停用

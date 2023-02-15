@@ -27,7 +27,7 @@ public class UserInfoVO {
     private String imgUrl;
     private String username;
     private String mobile;
-    private String email;
+    private String mail;
     private List<String> permissionList;
     private Long tenantId;
 }

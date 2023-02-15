@@ -47,7 +47,8 @@ Content-Disposition: form-data; name="tenantId"
 #########
 
 # 手机登录
-POST http://localhost:1111/oauth2/token
+# 手机号测试代码地址：https://github.com/KouShenhai/KCloud-Platform-Alibaba/blob/master/laokou-service/laokou-module/laokou-sms/laokou-sms-server/src/test/java/org/laokou/sms/server/SmsTest.java
+POST http://127.0.0.1:1111/oauth2/token
 Authorization: Basic YXV0aC1jbGllbnQ6c2VjcmV0
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
@@ -56,7 +57,29 @@ Content-Disposition: form-data; name="grant_type"
 
 sms
 --WebAppBoundary
-Content-Disposition: form-data; name="phone"
+Content-Disposition: form-data; name="mobile"
+
+13487567891
+--WebAppBoundary
+Content-Disposition: form-data; name="code"
+
+1234
+--WebAppBoundary
+
+#########
+
+# 邮箱登录
+# 邮箱测试代码地址：https://github.com/KouShenhai/KCloud-Platform-Alibaba/blob/master/laokou-service/laokou-module/laokou-mail/laokou-mail-server/src/test/java/org/laokou/mail/server/MailTest.java
+POST http://127.0.0.1:1111/oauth2/token
+Authorization: Basic YXV0aC1jbGllbnQ6c2VjcmV0
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+mail
+--WebAppBoundary
+Content-Disposition: form-data; name="mobile"
 
 13487567891
 --WebAppBoundary

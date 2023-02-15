@@ -47,6 +47,7 @@ public class MapperUtil<T> {
             , ThreadUtil.createThreadFactory("laokou-common-mybatis-plus-thread")
             , new ThreadPoolExecutor.CallerRunsPolicy());
     /**
+     * 多数据源出现了事务导致超时异常，等待高手解决
      * 多线程批量新增
      * @param dataList 集合
      * @param batchNum 每组多少条数据
@@ -67,7 +68,7 @@ public class MapperUtil<T> {
             threadPoolExecutor.execute(() -> {
                 try {
                     DefaultTransactionAttribute defaultTransactionAttribute = new DefaultTransactionAttribute();
-                    // 隔离级别设为，创建新事物
+                    // 隔离级别设为创建新事务
                     defaultTransactionAttribute.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
                     TransactionStatus status = transactionalUtil.begin(defaultTransactionAttribute);
                     transactionStatus.add(status);
@@ -116,4 +117,5 @@ public class MapperUtil<T> {
             }
         }
     }
+
 }

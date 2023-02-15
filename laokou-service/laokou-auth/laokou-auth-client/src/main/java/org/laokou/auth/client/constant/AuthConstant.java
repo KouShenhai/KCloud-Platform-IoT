@@ -37,7 +37,7 @@ public interface AuthConstant {
    /**
     * 邮箱
     */
-   String EMAIL = "email";
+   String MAIL = "mail";
 
    /**
     * 手机

@@ -57,8 +57,8 @@ public class MailServiceImpl implements MailService {
     @Override
     public Boolean sendMail(String toMail) throws TemplateException, IOException {
         // 验证邮箱
-        boolean emailRegex = RegexUtil.mailRegex(toMail);
-        if (!emailRegex) {
+        boolean mailRegex = RegexUtil.mailRegex(toMail);
+        if (!mailRegex) {
             throw new CustomException("邮箱格式不正确，请重新输入");
         }
         // 生成验证码

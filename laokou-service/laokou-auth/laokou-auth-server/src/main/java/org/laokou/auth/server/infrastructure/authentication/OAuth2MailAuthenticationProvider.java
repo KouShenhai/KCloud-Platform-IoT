@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.auth.server.domain.sys.repository.service.*;
+import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.MessageUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.StringUtil;
@@ -41,11 +42,11 @@ import java.io.IOException;
  * @author laokou
  */
 @Slf4j
-public class OAuth2EmailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
+public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-    public static final String GRANT_TYPE = "email";
+    public static final String GRANT_TYPE = "mail";
 
-    public OAuth2EmailAuthenticationProvider(SysUserService sysUserService
+    public OAuth2MailAuthenticationProvider(SysUserService sysUserService
             , SysMenuService sysMenuService
             , SysDeptService sysDeptService
             , LoginLogUtil loginLogUtil
@@ -61,7 +62,7 @@ public class OAuth2EmailAuthenticationProvider extends AbstractOAuth2BaseAuthent
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return OAuth2EmailAuthenticationToken.class.isAssignableFrom(authentication);
+        return OAuth2MailAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
     @Override
@@ -72,18 +73,23 @@ public class OAuth2EmailAuthenticationProvider extends AbstractOAuth2BaseAuthent
         if (StringUtil.isEmpty(code)) {
             CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_NOT_NULL, MessageUtil.getMessage(ErrorCode.CAPTCHA_NOT_NULL));
         }
-        String email = request.getParameter(AuthConstant.EMAIL);
-        log.info("邮箱：{}",email);
-        if (StringUtil.isEmpty(email)) {
+        String mail = request.getParameter(AuthConstant.MAIL);
+        log.info("邮箱：{}",mail);
+        if (StringUtil.isEmpty(mail)) {
             throw new CustomException("邮箱不为空");
         }
-        boolean isEmail = RegexUtil.mailRegex(email);
-        if (!isEmail) {
-            throw new CustomException("邮箱格式不对");
+        boolean isMail = RegexUtil.mailRegex(mail);
+        if (!isMail) {
+            throw new CustomException("邮箱不正确，请重新填写");
         }
-        // TODO 验证验证码
+        // 验证码
+        Boolean validate = sysCaptchaService.validate(mail, code);
+        if (!validate) {
+            loginLogUtil.recordLogin(mail,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR),request);
+            CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_ERROR, MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR));
+        }
         // 获取用户信息
-        return super.getUserInfo(email, "", request);
+        return super.getUserInfo(mail, "", request);
     }
 
     @Override

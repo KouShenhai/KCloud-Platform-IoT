@@ -105,7 +105,7 @@ public class AuthorizationServerConfig {
                 .apply(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(
                 List.of(new OAuth2PasswordAuthenticationConverter()
                         , new OAuth2SmsAuthenticationConverter()
-                        , new OAuth2EmailAuthenticationConverter()
+                        , new OAuth2MailAuthenticationConverter()
                         , new OAuth2AuthorizationCodeAuthenticationConverter()
                         , new OAuth2ClientCredentialsAuthenticationConverter()
                         , new OAuth2RefreshTokenAuthenticationConverter()
@@ -124,7 +124,7 @@ public class AuthorizationServerConfig {
                 .build();
         http.authenticationProvider(new OAuth2PasswordAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil))
                 .authenticationProvider(new OAuth2SmsAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil))
-                .authenticationProvider(new OAuth2EmailAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil));
+                .authenticationProvider(new OAuth2MailAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil));
         return defaultSecurityFilterChain;
     }
 
@@ -135,13 +135,13 @@ public class AuthorizationServerConfig {
                 .clientSecret(passwordEncoder.encode("secret"))
                 // ClientAuthenticationMethod.CLIENT_SECRET_BASIC => client_id:client_secret 进行Base64编码后的值
                 // Headers Authorization Basic YXV0aC1jbGllbnQ6c2VjcmV0
-                // http://localhost:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=auth email phone&redirect_uri=https://www.baidu.com
+                // http://localhost:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=auth mail phone&redirect_uri=https://www.baidu.com
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantTypes(authorizationGrantTypes -> authorizationGrantTypes.addAll(
                         List.of(AuthorizationGrantType.AUTHORIZATION_CODE
                                 , AuthorizationGrantType.REFRESH_TOKEN
                                 , new AuthorizationGrantType(OAuth2PasswordAuthenticationProvider.GRANT_TYPE)
-                                , new AuthorizationGrantType(OAuth2EmailAuthenticationProvider.GRANT_TYPE)
+                                , new AuthorizationGrantType(OAuth2MailAuthenticationProvider.GRANT_TYPE)
                                 , new AuthorizationGrantType(OAuth2SmsAuthenticationProvider.GRANT_TYPE)
                                 , AuthorizationGrantType.CLIENT_CREDENTIALS)))
                 // 支持OIDC

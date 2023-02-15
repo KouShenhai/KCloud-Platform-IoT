@@ -17,7 +17,10 @@ package org.laokou.auth.server.infrastructure.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.constant.AuthConstant;
+import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.auth.server.domain.sys.repository.service.*;
+import org.laokou.common.core.enums.ResultStatusEnum;
+import org.laokou.common.core.utils.MessageUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
@@ -76,9 +79,13 @@ public class OAuth2SmsAuthenticationProvider extends AbstractOAuth2BaseAuthentic
         }
         boolean isMobile = RegexUtil.mobileRegex(mobile);
         if (!isMobile) {
-            throw new CustomException("手机号格式不对");
+            throw new CustomException("手机号不正确，请重新填写");
         }
-        // TODO 验证验证码
+        Boolean validate = sysCaptchaService.validate(mobile, code);
+        if (!validate) {
+            loginLogUtil.recordLogin(mobile,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR),request);
+            CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_ERROR, MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR));
+        }
         // 获取用户信息
         return super.getUserInfo(mobile, "", request);
     }

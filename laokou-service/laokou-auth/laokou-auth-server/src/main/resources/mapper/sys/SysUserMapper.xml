@@ -9,7 +9,7 @@
     ,a.img_url as imgUrl
     ,a.super_admin as superAdmin
     ,a.status as status
-    ,a.email as email
+    ,a.mail as mail
     ,a.mobile as mobile
     ,a.dept_id as deptId
     ,a.tenant_id as tenantId
@@ -17,7 +17,7 @@
     where a.del_flag = 0
           and a.tenant_id = #{tenantId}
           and (a.username = #{loginName}
-                   or a.email = #{loginName}
+                   or a.mail = #{loginName}
                    or a.mobile = #{loginName})
     limit 1
     </select>

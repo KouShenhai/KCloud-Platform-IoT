@@ -32,5 +32,5 @@ public enum ChannelTypeEnum {
     /**
      * 邮件
      */
-    EMAIL
+    MAIL
 }
