@@ -28,7 +28,7 @@ import java.util.Map;
 @Slf4j
 public class AddressUtil {
 
-    private static final String IP_URI = "http://ip.taobao.com/outGetIpInfo";
+    private static final String IP_URI = "https://ip.taobao.com/outGetIpInfo";
 
     private static final String ACCESS_KEY = "alibaba-inc";
 
@@ -45,6 +45,13 @@ public class AddressUtil {
             return data.get("country").toString() + " " + data.get("city").toString();
         }
         return "XX XX";
+    }
+
+    public static void main(String[] args) throws IOException {
+        Map<String, String> params = new HashMap<>(2);
+        params.put("ip", "218.190.235.177");
+        params.put("accessKey", ACCESS_KEY);
+        HttpUtil.transformerUnderHumpData(HttpUtil.doGet(IP_URI, params, new HashMap<>(0)));
     }
 
 }

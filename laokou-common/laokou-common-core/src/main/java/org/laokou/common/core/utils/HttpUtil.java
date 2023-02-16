@@ -15,19 +15,18 @@
  */
 package org.laokou.common.core.utils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.Consts;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.message.BasicHeader;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
+import org.apache.hc.core5.net.URIBuilder;
+
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -66,15 +65,10 @@ public class HttpUtil {
                     httpGet.addHeader(e.getKey(), e.getValue());
                 }
             }
-            List<NameValuePair> paramList = new ArrayList<>();
-            RequestBuilder requestBuilder = RequestBuilder.get().setUri(new URI(url));
-            requestBuilder.setEntity(new UrlEncodedFormEntity(paramList, Consts.UTF_8));
             httpGet.setHeader(new BasicHeader("Content-Type", "application/json;charset=UTF-8"));
             httpGet.setHeader(new BasicHeader("Accept", "*/*;charset=utf-8"));
-            //执行请求
-            response = httpClient.execute(httpGet);
-            //判断返回状态是否是200
-            resultString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+            // 执行请求
+            resultString = httpClient.execute(httpGet, handler -> EntityUtils.toString(handler.getEntity(),StandardCharsets.UTF_8));
         } catch (Exception e) {
             log.error("调用失败，错误信息:{}",e);
         } finally {
@@ -112,8 +106,7 @@ public class HttpUtil {
                 httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded;application/json;charset=UTF-8");
                 httpPost.setHeader(new BasicHeader("Accept", "*/*;charset=utf-8"));
                 //执行http请求
-                response = httpClient.execute(httpPost);
-                resultString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+                resultString = httpClient.execute(httpPost, handler -> EntityUtils.toString(handler.getEntity(),StandardCharsets.UTF_8));
             }
         }catch (Exception e) {
             log.error("接口调用失败:{}",e);

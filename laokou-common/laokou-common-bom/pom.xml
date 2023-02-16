@@ -23,8 +23,6 @@
         <flowable.version>7.0.0.M1</flowable.version>
         <!--mybatis-plus版本 -->
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <!--commons-httpclient版本-->
-        <commons-httpclient.version>3.1</commons-httpclient.version>
         <!--commons-configuration版本-->
         <commons-configuration.version>1.10</commons-configuration.version>
         <!--redisson版本-->
@@ -81,11 +79,18 @@
         <dynamic-datasource.version>3.6.0</dynamic-datasource.version>
         <!--shardingsphere-jdbc-core版本-->
         <shardingsphere-jdbc-core.version>5.3.2</shardingsphere-jdbc-core.version>
+        <!--httpclient5版本-->
+        <httpclient5.version>5.2.1</httpclient5.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.httpcomponents.client5</groupId>
+                <artifactId>httpclient5</artifactId>
+                <version>${httpclient5.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-openfeign</artifactId>
@@ -219,11 +224,6 @@
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-httpclient</groupId>
-                <artifactId>commons-httpclient</artifactId>
-                <version>${commons-httpclient.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-configuration</groupId>
