@@ -38,6 +38,7 @@ import org.laokou.auth.client.user.UserDetail;
 import org.apache.commons.collections.CollectionUtils;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.ValidatorUtil;
+import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +58,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     private final SysUserRoleService sysUserRoleService;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final BatchUtil<SysUserRoleDO> batchUtil;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -177,7 +180,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
                 sysUserRoleDO.setUserId(userId);
                 doList.add(sysUserRoleDO);
             }
-            sysUserRoleService.insertBatch(doList);
+            batchUtil.insertBatch(doList,500,sysUserRoleService);
         }
     }
 

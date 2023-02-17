@@ -15,8 +15,6 @@
  */
 package org.laokou.tenant.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.mybatisplus.utils.MapperUtil;
 import org.laokou.tenant.entity.SysPackageMenuDO;
 import org.laokou.tenant.mapper.SysPackageMenuMapper;
 import org.laokou.tenant.service.SysPackageMenuService;
@@ -26,13 +24,10 @@ import java.util.List;
  * @author laokou
  */
 @Service
-@RequiredArgsConstructor
 public class SysPackageMenuServiceImpl extends ServiceImpl<SysPackageMenuMapper, SysPackageMenuDO> implements SysPackageMenuService {
-
-    private final MapperUtil<SysPackageMenuDO> mapperUtil;
 
     @Override
     public void insertBatch(List<SysPackageMenuDO> list) {
-        mapperUtil.insertBatch(list,500,this.baseMapper);
+        this.baseMapper.insertBatch(list);
     }
 }

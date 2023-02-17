@@ -13,23 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.mybatisplus.mapper;
+package org.laokou.common.mybatisplus.service;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface BaseBatchMapper<T> extends BaseMapper<T> {
+public interface BatchService<T> extends IService<T> {
 
     /**
-     * 批量插入
+     * 批量新增
      * @param list
-     * @throws Exception
      */
-    void insertBatch(@Param("list") List<T> list)throws Exception;
+    void insertBatch(List<T> list);
 
 }

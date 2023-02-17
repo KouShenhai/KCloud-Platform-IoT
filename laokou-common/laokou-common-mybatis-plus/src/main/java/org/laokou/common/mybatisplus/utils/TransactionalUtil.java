@@ -39,6 +39,10 @@ public class TransactionalUtil {
         return dataSourceTransactionManager.getTransaction(defaultTransactionAttribute);
     }
 
+    /**
+     * 开始事务
+     * @return
+     */
     public TransactionStatus begin() {
         return dataSourceTransactionManager.getTransaction(new DefaultTransactionAttribute());
     }

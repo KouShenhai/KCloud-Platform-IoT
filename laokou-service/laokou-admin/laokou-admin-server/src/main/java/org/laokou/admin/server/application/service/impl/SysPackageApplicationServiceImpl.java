@@ -25,6 +25,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.core.exception.CustomException;
 import org.laokou.common.core.utils.ValidatorUtil;
+import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.tenant.dto.SysPackageDTO;
 import org.laokou.tenant.entity.SysPackageDO;
 import org.laokou.tenant.entity.SysPackageMenuDO;
@@ -47,6 +48,7 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
 
     private final SysPackageService sysPackageService;
     private final SysPackageMenuService sysPackageMenuService;
+    private final BatchUtil<SysPackageMenuDO> batchUtil;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -115,7 +117,7 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
                 sysPackageMenuDO.setMenuId(menuId);
                 list.add(sysPackageMenuDO);
             }
-            sysPackageMenuService.insertBatch(list);
+            batchUtil.insertBatch(list,500,sysPackageMenuService);
         }
         return true;
     }

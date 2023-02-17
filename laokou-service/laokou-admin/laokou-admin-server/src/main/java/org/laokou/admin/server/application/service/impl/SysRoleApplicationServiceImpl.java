@@ -34,6 +34,7 @@ import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.core.exception.CustomException;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.ValidatorUtil;
+import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
@@ -50,6 +51,8 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     private final SysRoleMenuService sysRoleMenuService;
 
     private final SysRoleDeptService sysRoleDeptService;
+
+    private final BatchUtil batchUtil;
 
     @Override
     @DataFilter(tableAlias = "boot_sys_role")
@@ -100,7 +103,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
                 roleMenuDO.setRoleId(roleId);
                 roleMenuList.add(roleMenuDO);
             }
-            sysRoleMenuService.insertBatch(roleMenuList);
+            batchUtil.insertBatch(roleMenuList,500,sysRoleMenuService);
         }
         if (CollectionUtils.isNotEmpty(deptIds)) {
             List<SysRoleDeptDO> roleDeptList = new ArrayList<>(deptIds.size());
@@ -110,7 +113,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
                 roleDeptDO.setRoleId(roleId);
                 roleDeptList.add(roleDeptDO);
             }
-            sysRoleDeptService.insertBatch(roleDeptList);
+            batchUtil.insertBatch(roleDeptList,500,sysRoleDeptService);
         }
     }
 

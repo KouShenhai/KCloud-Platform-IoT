@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.service;
-
-import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
-import java.util.List;
-
+import org.laokou.common.mybatisplus.service.BatchService;
 /**
  * @author laokou
  */
-public interface SysMessageDetailService extends IService<SysMessageDetailDO> {
+public interface SysMessageDetailService extends BatchService<SysMessageDetailDO> {
 
     /**
      * 获取版本号
@@ -30,12 +27,6 @@ public interface SysMessageDetailService extends IService<SysMessageDetailDO> {
      * @return 返回版本号
      */
     Integer getVersion(Long id);
-
-    /**
-     * 批量新增
-     * @param list 消息详情集合
-     */
-    void insertBatch(List<SysMessageDetailDO> list);
 
     /**
      * 未读消息数

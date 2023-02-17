@@ -15,11 +15,9 @@
  */
 package org.laokou.admin.server.domain.sys.repository.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.domain.sys.entity.SysRoleDeptDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysRoleDeptMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysRoleDeptService;
-import org.laokou.common.mybatisplus.utils.MapperUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,13 +26,10 @@ import java.util.List;
  * @author laokou
  */
 @Service
-@RequiredArgsConstructor
 public class SysRoleDeptServiceImpl extends ServiceImpl<SysRoleDeptMapper, SysRoleDeptDO> implements SysRoleDeptService {
-
-    private final MapperUtil<SysRoleDeptDO> mapperUtil;
 
     @Override
     public void insertBatch(List<SysRoleDeptDO> list) {
-        mapperUtil.insertBatch(list,500,this.baseMapper);
+        this.baseMapper.insertBatch(list);
     }
 }

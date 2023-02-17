@@ -36,6 +36,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.exception.CustomException;
 import org.laokou.common.core.utils.HttpResult;
 import org.laokou.common.core.utils.ValidatorUtil;
+import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.im.client.PushMsgDTO;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
@@ -43,6 +44,7 @@ import org.laokou.tenant.processor.DsTenantProcessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
+
 /**
  * @author laokou
  */
@@ -56,6 +58,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     private final SysMessageDetailService sysMessageDetailService;
     private final ImApiFeignClient imApiFeignClient;
     private final RedisUtil redisUtil;
+    private final BatchUtil<SysMessageDetailDO> batchUtil;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -83,7 +86,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             }
             if (CollectionUtils.isNotEmpty(detailDOList)) {
                 if (detailDOList.size() != 1) {
-                    sysMessageDetailService.insertBatch(detailDOList);
+                    batchUtil.insertBatch(detailDOList,500,sysMessageDetailService);
                 } else {
                     sysMessageDetailService.save(detailDOList.stream().findFirst().get());
                 }
