@@ -46,6 +46,52 @@ public class BatchUtil<T> {
      * @param batchNum 每组多少条数据
      * @param service 基础service
      */
+//    @SneakyThrows
+//    public void insertConcurrentBatch(List<T> dataList, int batchNum, BatchService<T> service) {
+//        // 数据分组
+//        List<List<T>> partition = Lists.partition(dataList, batchNum);
+//        int size = partition.size();
+//        CountDownLatch latch = new CountDownLatch(size);
+//        // 标识事务状态
+//        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+//        // 存放事务状态
+//        List<TransactionStatus> transactionStatus = Collections.synchronizedList(new ArrayList<>(size));
+//        for(int i = 0; i < size; i++) {
+//            List<T> list = partition.get(i);
+//            threadPoolExecutor.execute(() -> {
+//                try {
+//                    TransactionStatus status = transactionalUtil.begin();
+//                    transactionStatus.add(status);
+//                    service.insertBatch(list);
+//                } catch (Exception e) {
+//                    // 标识为true，回滚事务
+//                    atomicBoolean.set(true);
+//                } finally {
+//                    latch.countDown();
+//                }
+//            });
+//        }
+//        boolean timeout = latch.await(30, TimeUnit.SECONDS);
+//        if (timeout) {
+//            atomicBoolean.set(true);
+//        }
+//        if (CollectionUtils.isNotEmpty(transactionStatus)) {
+//            if (atomicBoolean.get()) {
+//                // 回滚事务
+//                transactionStatus.forEach(status -> transactionalUtil.rollback(status));
+//                throw new RuntimeException("数据无法插入，请联系管理员");
+//            } else {
+//                transactionStatus.forEach(status -> transactionalUtil.commit(status));
+//            }
+//        }
+//    }
+
+    /**
+     * 多线程批量新增
+     * @param dataList 集合
+     * @param batchNum 每组多少条数据
+     * @param service 基础service
+     */
     @SneakyThrows
     public void insertConcurrentBatch(List<T> dataList, int batchNum, BatchService<T> service) {
         // 数据分组
@@ -54,19 +100,15 @@ public class BatchUtil<T> {
         for(int i = 0; i < size; i++) {
             List<T> list = partition.get(i);
             threadPoolExecutor.execute(() -> {
-                saveBatch(list, service);
+                TransactionStatus status = transactionalUtil.begin();
+                try {
+                    service.insertBatch(list);
+                    transactionalUtil.commit(status);
+                } catch (Exception e) {
+                    transactionalUtil.rollback(status);
+                    log.error("数据无法插入，请联系管理员");
+                }
             });
-        }
-    }
-
-    private void saveBatch(List<T> list, BatchService<T> service) {
-        TransactionStatus status = transactionalUtil.begin();
-        try {
-            service.insertBatch(list);
-            transactionalUtil.commit(status);
-        } catch (Exception e) {
-            transactionalUtil.rollback(status);
-            log.error("错误信息：批量插入数据异常，已执行回滚");
         }
     }
 
