@@ -48,7 +48,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
         , "org.laokou.auth.client"})
 @EnableDiscoveryClient
 @EnableConfigurationProperties
-@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy(exposeProxy = true)
 @EnableEncryptableProperties
 @EnableFeignClients
 @EnableAsync
