@@ -106,7 +106,7 @@ public class BatchUtil<T> {
                     transactionalUtil.commit(status);
                 } catch (Exception e) {
                     transactionalUtil.rollback(status);
-                    log.error("数据无法插入，请联系管理员");
+                    log.error("错误信息：批量插入数据异常，已执行回滚");
                 }
             });
         }
