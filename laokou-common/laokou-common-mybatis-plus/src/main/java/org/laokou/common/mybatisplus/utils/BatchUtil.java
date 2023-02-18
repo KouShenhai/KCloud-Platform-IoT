@@ -34,13 +34,17 @@ import java.util.concurrent.*;
 public class BatchUtil<T> {
 
     private final TransactionalUtil transactionalUtil;
-    private static final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(8
-            , 16
+
+    private static final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(9
+            , 9
             , 60
             , TimeUnit.SECONDS
-            , new LinkedBlockingQueue(256)
-            , ThreadUtil.createThreadFactory("laokou-common-mybatis-plus-thread")
-            , new ThreadPoolExecutor.CallerRunsPolicy());
+            , new LinkedBlockingQueue<>(256)
+            , ThreadUtil.createThreadFactory("laokou-common-mybatis-plus-thread-%d")
+            // 线程池拒绝策略不是AbortPolicy，阻塞队列满了新的任务会被抛弃而且不抛出异常，
+            // CountDownLatch永远不会等于0，countDownLatch.await()会一直阻塞
+            // AbortPolicy：直接抛出RejectedExecutionException异常阻止系统正常运行
+            , new ThreadPoolExecutor.AbortPolicy());
 
     /**
      * 多线程批量新增

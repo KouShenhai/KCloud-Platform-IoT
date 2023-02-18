@@ -36,9 +36,9 @@ public class TaskExecutorConfig {
         // 线程最大空闲时间
         taskExecutor.setKeepAliveSeconds(60);
         // 拒绝策略，默认ThreadPoolExecutor.AbortPolicy()
-        taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         // 线程名称前缀
-        taskExecutor.setThreadNamePrefix("laokou-log-service-");
+        taskExecutor.setThreadNamePrefix("laokou-common-log-thread-%d");
         return taskExecutor;
     }
 
