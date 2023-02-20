@@ -15,13 +15,18 @@
  */
 package org.laokou.admin.client.vo;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 /**
  * @author laokou
  */
 @Data
-public class SysUserVO {
+public class SysUserVO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -1038298439681609692L;
     private Long id;
     private Date createDate;
     private String username;

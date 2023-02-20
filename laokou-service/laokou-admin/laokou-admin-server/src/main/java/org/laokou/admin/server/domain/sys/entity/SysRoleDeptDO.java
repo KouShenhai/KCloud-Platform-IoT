@@ -19,6 +19,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * 系统角色部门
  * @author laokou
@@ -26,8 +29,10 @@ import lombok.Data;
 @Data
 @TableName("boot_sys_role_dept")
 @Schema(name = "SysRoleDeptDO",description = "系统角色部门实体类")
-public class SysRoleDeptDO {
+public class SysRoleDeptDO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 8958375447263625932L;
     /**
      * 角色id
      */

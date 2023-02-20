@@ -19,6 +19,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -28,6 +29,8 @@ import java.util.Date;
 @TableName("boot_sys_audit_log")
 public class SysAuditLogDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = 6137554824134778292L;
     private Long businessId;
 
     private String auditName;

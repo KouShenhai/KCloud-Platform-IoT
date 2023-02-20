@@ -19,6 +19,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 import lombok.Data;
+
+import java.io.Serial;
+
 /**
  * 系统部门
  * @author laokou
@@ -28,6 +31,8 @@ import lombok.Data;
 @Schema(name = "SysDeptDO",description = "系统部门实体类")
 public class SysDeptDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = 5119306834026407994L;
     /**
      * 父部门ID
      */

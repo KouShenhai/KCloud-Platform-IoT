@@ -18,6 +18,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BaseDO;
+
+import java.io.Serial;
+
 /**
  * @author laokou
  */
@@ -26,6 +29,8 @@ import org.laokou.common.mybatisplus.entity.BaseDO;
 @Schema(name = "SysSourceDO",description = "系统数据源实体类")
 public class SysSourceDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = 7616743906900137371L;
     /**
      * 数据源驱动
      */

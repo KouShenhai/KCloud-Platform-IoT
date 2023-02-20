@@ -19,12 +19,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Set;
 /**
  * @author laokou
  */
 @Data
-public class MessageDTO {
+public class MessageDTO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 7746946589804991815L;
     /**
      * 接收者
      */

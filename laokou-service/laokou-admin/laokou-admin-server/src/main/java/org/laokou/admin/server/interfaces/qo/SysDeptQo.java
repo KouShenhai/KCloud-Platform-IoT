@@ -17,12 +17,17 @@ package org.laokou.admin.server.interfaces.qo;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class SysDeptQo {
+public class SysDeptQo implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 789096430357175843L;
     private String name;
     private Long tenantId;
 }

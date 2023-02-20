@@ -17,6 +17,7 @@ package org.laokou.elasticsearch.client.dto;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -25,6 +26,8 @@ import java.io.Serializable;
 @Data
 public class CreateIndexDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -5412230383295542140L;
     private String indexName;
     private String indexAlias;
 

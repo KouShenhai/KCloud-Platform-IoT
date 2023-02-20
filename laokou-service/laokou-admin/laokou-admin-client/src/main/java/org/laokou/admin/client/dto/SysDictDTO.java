@@ -17,12 +17,18 @@ package org.laokou.admin.client.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class SysDictDTO {
+public class SysDictDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 9211125481081880084L;
     private Long id;
     /**
      * 字典名称

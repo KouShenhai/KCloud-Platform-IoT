@@ -17,12 +17,16 @@ package org.laokou.common.log.qo;
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BasePage;
 
+import java.io.Serial;
+
 /**
  * @author laokou
  */
 @Data
 public class SysLoginLogQo extends BasePage {
 
+    @Serial
+    private static final long serialVersionUID = -3186936106036144210L;
     private String loginName;
 
     private Integer requestStatus;

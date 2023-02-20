@@ -20,6 +20,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 
+import java.io.Serial;
+
 /**
  * @author laokou
  */
@@ -27,6 +29,8 @@ import org.laokou.common.mybatisplus.entity.BaseDO;
 @TableName("boot_sys_operate_log")
 public class SysOperateLogDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = 834248318156804579L;
     /**
      * 模块名称，如：系统菜单
      */

@@ -17,12 +17,15 @@ package org.laokou.mongodb.client.model;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 /**
  * @author laokou
  */
 @Data
 public class MongodbModel  implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1376139690867730270L;
     private String data;
     private String collectionName;
 }

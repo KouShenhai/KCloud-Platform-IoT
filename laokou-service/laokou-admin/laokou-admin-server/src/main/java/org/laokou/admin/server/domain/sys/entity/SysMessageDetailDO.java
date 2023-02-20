@@ -18,6 +18,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 import lombok.Data;
+
+import java.io.Serial;
+
 /**
  * 系统消息详情
  * @author laokou
@@ -27,6 +30,8 @@ import lombok.Data;
 @Schema(name = "SysMessageDetailDO",description = "系统消息详情实体类")
 public class SysMessageDetailDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = 7760123944108929889L;
     /**
      * 消息id
      */

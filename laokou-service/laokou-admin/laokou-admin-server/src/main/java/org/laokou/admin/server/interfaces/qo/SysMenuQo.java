@@ -15,12 +15,18 @@
  */
 package org.laokou.admin.server.interfaces.qo;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class SysMenuQo {
+public class SysMenuQo implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -3558796816963464826L;
     private String name;
     private Long tenantId;
 

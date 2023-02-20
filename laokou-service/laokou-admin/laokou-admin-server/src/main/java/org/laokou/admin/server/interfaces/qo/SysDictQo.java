@@ -16,12 +16,17 @@
 package org.laokou.admin.server.interfaces.qo;
 import org.laokou.common.mybatisplus.entity.BasePage;
 import lombok.Data;
+
+import java.io.Serial;
+
 /**
  * @author laokou
  */
 @Data
 public class SysDictQo extends BasePage {
 
+    @Serial
+    private static final long serialVersionUID = -3355100935500235845L;
     private String type;
 
     private String dictLabel;

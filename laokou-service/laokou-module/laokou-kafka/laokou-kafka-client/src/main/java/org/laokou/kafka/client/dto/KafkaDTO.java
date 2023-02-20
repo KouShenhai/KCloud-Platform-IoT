@@ -17,6 +17,7 @@ package org.laokou.kafka.client.dto;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -25,6 +26,8 @@ import java.io.Serializable;
 @Data
 public class KafkaDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 8891854156222145805L;
     private String data;
 
 }

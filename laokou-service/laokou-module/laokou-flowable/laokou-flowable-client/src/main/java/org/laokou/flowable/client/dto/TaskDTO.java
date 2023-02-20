@@ -17,11 +17,17 @@ package org.laokou.flowable.client.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class TaskDTO {
+public class TaskDTO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -3817507884449344739L;
     @NotNull(message = "显示页码不为空")
     private Integer pageNum;
     @NotNull(message = "显示条数不为空")

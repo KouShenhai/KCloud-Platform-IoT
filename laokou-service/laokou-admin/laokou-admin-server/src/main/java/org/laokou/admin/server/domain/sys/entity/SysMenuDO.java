@@ -19,6 +19,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 import lombok.Data;
+
+import java.io.Serial;
+
 /**
  * 系统菜单
  * @author laokou
@@ -28,6 +31,8 @@ import lombok.Data;
 @Schema(name = "SysMenuDO",description = "系统菜单实体类")
 public class SysMenuDO extends BaseDO {
 
+	@Serial
+	private static final long serialVersionUID = 6351930810565072011L;
 	/**
 	 * 父菜单ID，一级菜单为0
 	 */

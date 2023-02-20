@@ -20,6 +20,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BaseDO;
+
+import java.io.Serial;
+
 /**
  * @author laokou
  */
@@ -28,6 +31,8 @@ import org.laokou.common.mybatisplus.entity.BaseDO;
 @Schema(name = "SysResourceAuditDO",description = "系统资源审批实体类")
 public class SysResourceAuditDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = -2335690532963777527L;
     /**
      * 资源编号
      */

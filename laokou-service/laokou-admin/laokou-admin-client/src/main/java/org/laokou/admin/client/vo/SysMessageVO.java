@@ -15,6 +15,8 @@
  */
 package org.laokou.admin.client.vo;
 import lombok.Data;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 /**
@@ -23,6 +25,8 @@ import java.util.Date;
 @Data
 public class SysMessageVO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -8577186146037405223L;
     private Long id;
 
     private String title;

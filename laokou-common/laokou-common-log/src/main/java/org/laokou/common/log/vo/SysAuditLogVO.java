@@ -17,14 +17,18 @@ package org.laokou.common.log.vo;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author laokou
  */
 @Data
-public class SysAuditLogVO {
+public class SysAuditLogVO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -683682454620817254L;
     private Long id;
     private String auditName;
     private Date auditDate;

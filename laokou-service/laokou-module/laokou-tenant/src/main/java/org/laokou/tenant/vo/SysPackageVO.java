@@ -18,14 +18,18 @@ package org.laokou.tenant.vo;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author laokou
  */
 @Data
-public class SysPackageVO {
+public class SysPackageVO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 8402916009194734921L;
     private Long id;
     private String name;
     private List<Long> menuIds;

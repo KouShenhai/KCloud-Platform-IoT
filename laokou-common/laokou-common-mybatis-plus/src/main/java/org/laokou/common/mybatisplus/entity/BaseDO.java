@@ -17,6 +17,9 @@ package org.laokou.common.mybatisplus.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 /**
  * 基础实体类，所有实体都需要继承
@@ -24,8 +27,10 @@ import java.util.Date;
  */
 @Data
 @Schema(name = "BaseDO",description = "基础对象实体类")
-public abstract class BaseDO {
+public abstract class BaseDO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -5855413730985647400L;
     /**
      * id
      */

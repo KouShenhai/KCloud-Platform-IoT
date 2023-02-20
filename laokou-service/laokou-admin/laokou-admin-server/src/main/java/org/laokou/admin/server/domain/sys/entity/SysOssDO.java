@@ -21,6 +21,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 
+import java.io.Serial;
+
 /**
  * @author laokou
  */
@@ -29,6 +31,8 @@ import org.laokou.common.mybatisplus.entity.BaseDO;
 @Schema(name = "SysOssDO",description = "系统存储实体类")
 public class SysOssDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = 7064643286240062439L;
     /**
      * 名称
      */

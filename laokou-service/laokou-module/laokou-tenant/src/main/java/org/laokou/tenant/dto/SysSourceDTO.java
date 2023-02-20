@@ -19,12 +19,17 @@ package org.laokou.tenant.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class SysSourceDTO {
+public class SysSourceDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -2121545002296157366L;
     private Long id;
     @NotBlank(message = "数据源名称不为空")
     private String name;

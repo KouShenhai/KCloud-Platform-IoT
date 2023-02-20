@@ -19,14 +19,18 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * @author laokou
  */
 @Data
-public class AuditDTO {
+public class AuditDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -945627686622034109L;
     /**
      * 任务id
      */

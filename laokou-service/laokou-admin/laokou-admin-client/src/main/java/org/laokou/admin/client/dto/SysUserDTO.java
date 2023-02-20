@@ -17,13 +17,18 @@ package org.laokou.admin.client.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 /**
  * @author laokou
  */
 @Data
-public class SysUserDTO {
+public class SysUserDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 2478790090537077784L;
     private Long id;
     @NotBlank(message = "用户名不为空")
     private String username;

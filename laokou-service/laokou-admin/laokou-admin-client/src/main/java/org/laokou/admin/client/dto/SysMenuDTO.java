@@ -17,12 +17,18 @@ package org.laokou.admin.client.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class SysMenuDTO {
+public class SysMenuDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 3007786510929305220L;
     /**
      * 类型   0：菜单   1：按钮
      */

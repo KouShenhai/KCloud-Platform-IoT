@@ -18,11 +18,16 @@ package org.laokou.admin.client.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class SysResourceAuditDTO {
+public class SysResourceAuditDTO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 944715502102587415L;
     private Long resourceId;
     @NotBlank(message = "请输入标题")
     private String title;

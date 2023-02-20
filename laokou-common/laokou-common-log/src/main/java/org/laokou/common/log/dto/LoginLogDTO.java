@@ -16,12 +16,17 @@
 package org.laokou.common.log.dto;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class LoginLogDTO {
+public class LoginLogDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -325094951800650353L;
     /**
      * 登录用户
      */

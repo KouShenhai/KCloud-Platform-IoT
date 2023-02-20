@@ -20,14 +20,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AssigneeVO {
+public class AssigneeVO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -2567274615004770287L;
     private String assignee;
     private String instanceId;
 
