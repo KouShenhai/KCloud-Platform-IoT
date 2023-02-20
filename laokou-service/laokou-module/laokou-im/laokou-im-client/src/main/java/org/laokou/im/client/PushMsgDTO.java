@@ -18,14 +18,18 @@ package org.laokou.im.client;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
  * @author laokou
  */
 @Data
-public class PushMsgDTO {
+public class PushMsgDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -4930262464816447000L;
     /**
      * 接收者
      */

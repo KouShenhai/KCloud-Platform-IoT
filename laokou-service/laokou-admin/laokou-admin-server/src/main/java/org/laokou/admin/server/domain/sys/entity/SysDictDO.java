@@ -18,6 +18,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 import lombok.Data;
+
+import java.io.Serial;
+
 /**
  * 系统字典
  * @author laokou
@@ -27,6 +30,8 @@ import lombok.Data;
 @Schema(name = "SysDictDO",description = "系统字典实体类")
 public class SysDictDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = 956432385619473630L;
     /**
      * 字典名称
      */

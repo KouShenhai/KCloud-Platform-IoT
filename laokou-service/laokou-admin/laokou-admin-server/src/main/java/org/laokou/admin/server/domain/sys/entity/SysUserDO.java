@@ -20,6 +20,9 @@ import jakarta.validation.constraints.NotBlank;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+
+import java.io.Serial;
+
 /**
  * 系统用户
  * @author laokou
@@ -29,6 +32,8 @@ import org.hibernate.validator.constraints.Length;
 @Schema(name = "SysUserDO",description = "系统用户实体类")
 public class SysUserDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = 1181289215379287683L;
     @NotBlank(message = "{sys.user.password.require}")
     @Schema(name = "password",description = "密码",example = "123456")
     @Length(min = 6, max = 18, message = "密码长度必须在 {min} - {max} 之间")

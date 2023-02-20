@@ -18,13 +18,18 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 /**
  * @author laokou
  */
 @Data
-public class SysRoleDTO {
+public class SysRoleDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -310458579347980263L;
     private Long id;
 
     @NotBlank(message = "角色名称不为空")

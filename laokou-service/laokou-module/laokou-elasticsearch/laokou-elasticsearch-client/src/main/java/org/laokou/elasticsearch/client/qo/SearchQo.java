@@ -19,6 +19,7 @@ import lombok.Data;
 import org.laokou.elasticsearch.client.dto.AggregationDTO;
 import org.laokou.elasticsearch.client.dto.SearchDTO;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 /**
@@ -28,6 +29,8 @@ import java.util.List;
 @Data
 public class SearchQo implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 8362710467533113506L;
     /**
      * 页码
      */

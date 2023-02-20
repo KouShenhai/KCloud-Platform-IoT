@@ -15,6 +15,8 @@
  */
 package org.laokou.common.log.dto;
 import lombok.Data;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,6 +25,8 @@ import java.util.Date;
  */
 @Data
 public class AuditLogDTO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1532877866226749304L;
     private Long businessId;
 
     private String auditName;

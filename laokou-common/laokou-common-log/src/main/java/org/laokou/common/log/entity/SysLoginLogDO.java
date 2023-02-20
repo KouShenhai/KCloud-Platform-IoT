@@ -19,6 +19,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 
+import java.io.Serial;
+
 /**
  * @author laokou
  */
@@ -26,6 +28,8 @@ import org.laokou.common.mybatisplus.entity.BaseDO;
 @TableName("boot_sys_login_log")
 public class SysLoginLogDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = 4289483981365827983L;
     /**
      * 登录用户
      */

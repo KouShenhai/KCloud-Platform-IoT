@@ -17,13 +17,19 @@ package org.laokou.common.mybatisplus.entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
 @Schema(name = "BasePage",description = "基础分页实体类")
-public abstract class BasePage {
+public abstract class BasePage implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 6412915892334241813L;
     /**
      * 页码
      */

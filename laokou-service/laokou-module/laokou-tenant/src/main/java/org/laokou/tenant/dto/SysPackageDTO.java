@@ -20,14 +20,18 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author laokou
  */
 @Data
-public class SysPackageDTO {
+public class SysPackageDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 9203124235085714232L;
     private Long id;
     @NotBlank(message = "请输入套餐名称")
     private String name;

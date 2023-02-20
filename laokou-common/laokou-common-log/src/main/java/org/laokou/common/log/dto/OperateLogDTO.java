@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -26,6 +27,8 @@ import java.io.Serializable;
 @Data
 public class OperateLogDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -6523521638764501311L;
     /**
      * 模块名称，如：系统菜单
      */

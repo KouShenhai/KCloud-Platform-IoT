@@ -19,6 +19,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 import lombok.Data;
+
+import java.io.Serial;
+
 /**
  * 系统角色
  * @author laokou
@@ -28,6 +31,8 @@ import lombok.Data;
 @Schema(name = "SysRoleDO",description = "系统角色实体类")
 public class SysRoleDO extends BaseDO {
 
+    @Serial
+    private static final long serialVersionUID = 6034156236048273668L;
     /**
      * 角色名称
      */

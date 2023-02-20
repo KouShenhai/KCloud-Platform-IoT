@@ -196,7 +196,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         // FORWARD_ONLY 浮标向下移动
         // 流式查询
         int chunkSize = 500;
-        List<ResourceIndex> list = new ArrayList<>(chunkSize);
+        List<ResourceIndex> list = Collections.synchronizedList(new ArrayList<>(chunkSize));
         sysResourceService.handleResourceList(code, resultContext -> {
             ResourceIndex resultObject = resultContext.getResultObject();
             list.add(resultObject);

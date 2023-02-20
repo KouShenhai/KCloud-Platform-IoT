@@ -21,14 +21,18 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author laokou
  */
 @Data
-public class SysOperateLogExcel {
+public class SysOperateLogExcel implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -7345114440915452670L;
     /**
      * 模块名称，如：系统菜单
      */

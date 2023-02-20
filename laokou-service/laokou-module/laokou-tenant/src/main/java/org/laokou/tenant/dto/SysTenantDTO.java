@@ -20,12 +20,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class SysTenantDTO {
+public class SysTenantDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -3978973545182419917L;
     @NotBlank(message = "请输入租户名称")
     private String name;
     private Long id;

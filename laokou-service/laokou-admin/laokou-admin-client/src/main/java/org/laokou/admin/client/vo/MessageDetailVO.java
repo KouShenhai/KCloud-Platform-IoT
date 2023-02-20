@@ -17,12 +17,17 @@ package org.laokou.admin.client.vo;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class MessageDetailVO {
+public class MessageDetailVO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -2804860432974152927L;
     private String title;
 
     private String content;

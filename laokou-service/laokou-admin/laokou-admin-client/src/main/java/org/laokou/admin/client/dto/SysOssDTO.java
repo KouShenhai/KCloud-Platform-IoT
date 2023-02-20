@@ -20,12 +20,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class SysOssDTO {
+public class SysOssDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 2765572823094626152L;
     private Long id;
     @NotBlank(message = "请输入名称")
     private String name;

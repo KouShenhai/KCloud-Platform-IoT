@@ -17,6 +17,7 @@ package org.laokou.mongodb.client.vo;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,6 +27,8 @@ import java.util.List;
 @Data
 public class SearchVO<T> implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -1053263147714785496L;
     private List<T> records;
 
     /**

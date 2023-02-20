@@ -16,12 +16,17 @@
 package org.laokou.common.core.vo;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class OptionVO {
+public class OptionVO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -4146348495335527374L;
     private String label;
     private String value;
 

@@ -19,12 +19,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class SysDeptDTO {
+public class SysDeptDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -4984183236399313199L;
     private Long id;
 
     @NotNull(message = "请选择上级部门")

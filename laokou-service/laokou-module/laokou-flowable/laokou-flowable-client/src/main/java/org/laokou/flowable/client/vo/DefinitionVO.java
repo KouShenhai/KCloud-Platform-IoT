@@ -16,12 +16,17 @@
 package org.laokou.flowable.client.vo;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class DefinitionVO {
+public class DefinitionVO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -2308324118562026040L;
     /**
      * 流程定义id
      */

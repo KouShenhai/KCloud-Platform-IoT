@@ -15,13 +15,18 @@
  */
 package org.laokou.common.log.vo;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 /**
  * @author laokou
  */
 @Data
-public class SysLoginLogVO {
+public class SysLoginLogVO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 4351525994459806638L;
     private Long id;
     /**
      * 登录用户

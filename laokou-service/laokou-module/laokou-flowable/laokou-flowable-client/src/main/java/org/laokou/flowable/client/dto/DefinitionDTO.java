@@ -19,11 +19,16 @@ package org.laokou.flowable.client.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class DefinitionDTO {
+public class DefinitionDTO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -818653141079850719L;
     @NotNull(message = "显示页码不为空")
     private Integer pageNum;
     @NotNull(message = "显示条数不为空")

@@ -15,6 +15,9 @@
  */
 package org.laokou.admin.client.vo;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -22,7 +25,9 @@ import java.util.List;
  * @author laokou
  */
 @Data
-public class UserInfoVO {
+public class UserInfoVO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 5297753219988591611L;
     private Long userId;
     private String imgUrl;
     private String username;

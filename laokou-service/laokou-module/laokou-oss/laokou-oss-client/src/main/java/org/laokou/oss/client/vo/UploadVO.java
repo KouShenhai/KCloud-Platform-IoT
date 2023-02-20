@@ -19,6 +19,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
@@ -26,8 +29,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UploadVO {
+public class UploadVO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -8398370701382335473L;
     private String url;
 
 }

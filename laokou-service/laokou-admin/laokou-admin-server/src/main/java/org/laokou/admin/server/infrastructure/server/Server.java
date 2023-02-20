@@ -41,9 +41,10 @@ import java.util.Properties;
  * @author laokou
  */
 @Data
-public class Server {
+public class Server implements Serializable{
 
-
+    @Serial
+    private static final long serialVersionUID = 886551822597986662L;
     private static final int OSHI_WAIT_SECOND = 1000;
 
     /**
@@ -235,8 +236,7 @@ public class Server {
 class Jvm implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 6661783699792848234L;
     /**
      * 当前JVM占用的内存总数(M)
      */
@@ -329,9 +329,10 @@ class Jvm implements Serializable {
 
 @Data
 class Cpu implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
 
+
+    @Serial
+    private static final long serialVersionUID = 8621293532430186793L;
     /**
      * 核心数
      */
@@ -387,9 +388,9 @@ class Cpu implements Serializable {
 @Data
 class Mem implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
 
+    @Serial
+    private static final long serialVersionUID = 4618498208469144168L;
     /**
      * 内存总量
      */
@@ -426,9 +427,9 @@ class Mem implements Serializable {
 @Data
 class Sys implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
 
+    @Serial
+    private static final long serialVersionUID = -2249049152299436233L;
     /**
      * 服务器名称
      */
@@ -459,8 +460,7 @@ class Sys implements Serializable {
 class SysFile implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 2307419364818519046L;
     /**
      * 盘符路径
      */

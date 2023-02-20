@@ -20,6 +20,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -28,8 +30,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageVO<T> {
+public class PageVO<T> implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 483921799089968341L;
     private List<T> records;
     private Long total;
 }

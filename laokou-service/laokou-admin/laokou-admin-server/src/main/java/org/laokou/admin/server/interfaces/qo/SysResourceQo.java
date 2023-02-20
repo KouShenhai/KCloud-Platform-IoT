@@ -19,12 +19,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BasePage;
 
+import java.io.Serial;
+
 /**
  * @author laokou
  */
 @Data
 @Schema(name = "SysResourceQo",description = "资源实体类")
 public class SysResourceQo extends BasePage {
+    @Serial
+    private static final long serialVersionUID = -4054765772439493563L;
     @Schema(name = "title",description = "标题")
     private String title;
     @Schema(name = "code",description = "编码")

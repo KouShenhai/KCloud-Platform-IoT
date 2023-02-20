@@ -17,6 +17,8 @@ package org.laokou.admin.client.vo;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +26,10 @@ import java.util.Map;
  * @author laokou
  */
 @Data
-public class CacheVO {
+public class CacheVO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 9153324620769020304L;
     private Long keysSize;
     private Map<String,String> info;
     private List<Map<String,String>> commandStats;

@@ -16,12 +16,17 @@
 package org.laokou.admin.server.interfaces.qo;
 import org.laokou.common.mybatisplus.entity.BasePage;
 import lombok.Data;
+
+import java.io.Serial;
+
 /**
  * @author laokou
  */
 @Data
 public class SysRoleQo extends BasePage {
 
+    @Serial
+    private static final long serialVersionUID = -8041350010255534707L;
     private String name;
     private Long tenantId;
 }

@@ -17,13 +17,18 @@ package org.laokou.elasticsearch.client.dto;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * 搜索DTO
  * @author laokou
  */
 @Data
-public class SearchDTO {
+public class SearchDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 3570397340773143088L;
     private String field;
 
     private String value;

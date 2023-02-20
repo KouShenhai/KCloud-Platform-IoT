@@ -39,6 +39,7 @@ import org.laokou.common.core.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -66,7 +67,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
         // https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
         ExcelUtil.exportHeader(response);
         int chunkSize = 500;
-        List<SysOperateLogVO> list = new ArrayList<>(chunkSize);
+        List<SysOperateLogVO> list = Collections.synchronizedList(new ArrayList<>(chunkSize));
         ServletOutputStream out = response.getOutputStream();
         ExcelWriter excelWriter = EasyExcel.write(out, SysOperateLogExcel.class).build();
         qo.setTenantId(UserUtil.getTenantId());
@@ -90,7 +91,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
         // https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
         ExcelUtil.exportHeader(response);
         int chunkSize = 500;
-        List<SysLoginLogVO> list = new ArrayList<>(chunkSize);
+        List<SysLoginLogVO> list = Collections.synchronizedList(new ArrayList<>(chunkSize));
         ServletOutputStream out = response.getOutputStream();
         ExcelWriter excelWriter = EasyExcel.write(out, SysLoginLogExcel.class).build();
         qo.setTenantId(UserUtil.getTenantId());

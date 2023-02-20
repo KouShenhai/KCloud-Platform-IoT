@@ -15,13 +15,19 @@
  */
 package org.laokou.oss.client.vo;
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * oss
  * @author laokou
  */
 @Data
-public class SysOssVO {
+public class SysOssVO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 863106401406515312L;
     private Long id;
     private String name;
     private String endpoint;

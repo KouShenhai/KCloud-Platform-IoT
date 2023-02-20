@@ -20,13 +20,18 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
 @TableName("boot_sys_package_menu")
 @Schema(name = "SysPackageMenuDO",description = "系统套餐菜单实体类")
-public class SysPackageMenuDO {
+public class SysPackageMenuDO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 683935513335526615L;
     /**
      * 套餐id
      */

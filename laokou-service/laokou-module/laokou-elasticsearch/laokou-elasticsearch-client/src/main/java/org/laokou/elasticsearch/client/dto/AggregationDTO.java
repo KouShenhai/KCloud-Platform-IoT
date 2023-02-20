@@ -17,6 +17,7 @@ package org.laokou.elasticsearch.client.dto;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -25,6 +26,8 @@ import java.io.Serializable;
 @Data
 public class AggregationDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -1778556690148647870L;
     private String groupKey;
     private String field;
     private String script;

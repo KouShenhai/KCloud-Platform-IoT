@@ -18,6 +18,7 @@ package org.laokou.admin.client.vo;
 import lombok.Data;
 import org.laokou.common.core.utils.TreeUtil;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -26,6 +27,8 @@ import java.io.Serializable;
 @Data
 public class SysDeptVO extends TreeUtil.TreeNo<SysDeptVO> implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 4116703987840123059L;
     private Integer sort;
 
 }

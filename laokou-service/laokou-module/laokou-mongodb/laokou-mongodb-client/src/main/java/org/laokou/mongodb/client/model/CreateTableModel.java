@@ -17,6 +17,7 @@ package org.laokou.mongodb.client.model;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 /**
@@ -25,6 +26,8 @@ import java.util.List;
 @Data
 public class CreateTableModel implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 3613769580037039693L;
     private String tableName;
 
     private List<String> familyList;

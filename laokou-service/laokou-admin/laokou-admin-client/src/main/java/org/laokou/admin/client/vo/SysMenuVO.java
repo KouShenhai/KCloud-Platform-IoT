@@ -17,13 +17,18 @@ package org.laokou.admin.client.vo;
 import lombok.Data;
 import org.laokou.common.core.utils.TreeUtil;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * 系统菜单VO
  * @author laokou
  */
 @Data
-public class SysMenuVO extends TreeUtil.TreeNo<SysMenuVO> {
+public class SysMenuVO extends TreeUtil.TreeNo<SysMenuVO> implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 9057183259302756376L;
     /**
      * 图标
      */

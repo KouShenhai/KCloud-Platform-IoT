@@ -16,14 +16,19 @@
 package org.laokou.elasticsearch.client.vo;
 
 import lombok.Data;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author laokou
  */
 @Data
-public class SearchVO<T> {
+public class SearchVO<T> implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -8960349384828203957L;
     private Integer pageNum;
 
     private Integer pageSize;
