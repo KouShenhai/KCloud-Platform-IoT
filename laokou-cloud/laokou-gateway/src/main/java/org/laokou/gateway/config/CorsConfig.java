@@ -29,6 +29,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 /**
+ * 跨域配置
  * @author laokou
  */
 @Configuration
@@ -38,18 +39,18 @@ public class CorsConfig{
     @Bean
     public WebFilter corsFilter() {
         return (ServerWebExchange serverWebExchange, WebFilterChain webFilterChain) -> {
-            //获取request对象
+            // 获取request对象
             ServerHttpRequest request = serverWebExchange.getRequest();
             if (!CorsUtils.isCorsRequest(request)) {
                 return webFilterChain.filter(serverWebExchange);
             }
-            //获取请求头
+            // 获取请求头
             HttpHeaders requestHeaders = request.getHeaders();
-            //获取response对象
+            // 获取response对象
             ServerHttpResponse response = serverWebExchange.getResponse();
-            //获取请求头的请求方法
+            // 获取请求头的请求方法
             HttpMethod requestMethod = requestHeaders.getAccessControlRequestMethod();
-            //获取响应头
+            // 获取响应头
             HttpHeaders responseHeaders = response.getHeaders();
             // 允许跨域
             responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, requestHeaders.getOrigin());
@@ -65,7 +66,7 @@ public class CorsConfig{
             responseHeaders.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, CorsConfiguration.ALL);
             // 每1个小时发送一次预请求
             responseHeaders.add(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "3600");
-            //获取方法
+            // 获取方法
             HttpMethod method = request.getMethod();
             if (method == HttpMethod.OPTIONS) {
                 response.setStatusCode(HttpStatus.OK);

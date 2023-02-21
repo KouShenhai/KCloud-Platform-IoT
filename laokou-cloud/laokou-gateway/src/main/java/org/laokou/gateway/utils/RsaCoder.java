@@ -27,10 +27,22 @@ import java.util.Objects;
 @Slf4j
 public class RsaCoder {
 
+    /**
+     * base64解密
+     * @param key 私钥
+     * @return
+     */
     public static byte[] decryptBase64(String key) {
         return Base64.decodeBase64(key);
     }
 
+    /**
+     * 通过私钥解密
+     * @param data 加密字符串
+     * @param key 私钥
+     * @return
+     * @throws Exception
+     */
     public static byte[] decryptByPrivateKey(byte[] data, String key) throws Exception {
         byte[] keyBytes = decryptBase64(key);
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
@@ -58,7 +70,7 @@ public class RsaCoder {
             return r;
         } catch (Exception var2) {
             log.error("context", var2);
-            return null;
+            return new byte[0];
         }
     }
 }

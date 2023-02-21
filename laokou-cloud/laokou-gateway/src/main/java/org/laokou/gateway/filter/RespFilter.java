@@ -17,6 +17,8 @@ package org.laokou.gateway.filter;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.gateway.constant.GatewayConstant;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.reactivestreams.Publisher;
@@ -38,7 +40,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 /**
  * @author laokou
  */
@@ -64,7 +65,7 @@ public class RespFilter implements GlobalFilter, Ordered {
                 public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
                     String contentType = getDelegate().getHeaders().getFirst(HttpHeaders.CONTENT_TYPE);
                     if (contentType.contains(MediaType.APPLICATION_JSON_VALUE)
-                     && response.getStatusCode().value() != GatewayConstant.SUCCESS
+                     && response.getStatusCode().value() != StatusCode.OK
                      && body instanceof Flux) {
                         Flux<? extends DataBuffer> fluxBody = (Flux<? extends DataBuffer>) body;
                         return super.writeWith(fluxBody.map(dataBuffer -> {
@@ -77,8 +78,8 @@ public class RespFilter implements GlobalFilter, Ordered {
                             JsonNode node = JacksonUtil.readTree(str);
                             String msg = node.get(GatewayConstant.ERROR_DESCRIPTION).asText();
                             int code = node.get(GatewayConstant.ERROR).asInt();
-                            Map<String, Object> dataMap = ResponseUtil.response(code, msg);
-                            byte[] uppedContent = JacksonUtil.toJsonStr(dataMap).getBytes();
+                            HttpResult result = ResponseUtil.response(code, msg);
+                            byte[] uppedContent = JacksonUtil.toJsonStr(result).getBytes();
                             // 修改状态码
                             response.setStatusCode(HttpStatus.OK);
                             return dataBufferFactory.wrap(uppedContent);

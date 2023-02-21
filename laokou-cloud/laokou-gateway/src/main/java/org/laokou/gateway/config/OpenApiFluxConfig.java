@@ -23,13 +23,14 @@ import org.springframework.context.annotation.Lazy;
 import java.util.ArrayList;
 import java.util.List;
 /**
+ * 网关swagger 3配置
  * @author laokou
  */
 @Configuration
 public class OpenApiFluxConfig {
 
     @Bean
-    @Lazy(false)
+    @Lazy(value = false)
     public List<GroupedOpenApi> openApis(RouteDefinitionLocator locator) {
         List<GroupedOpenApi> groups = new ArrayList<>();
         List<RouteDefinition> definitions = locator.getRouteDefinitions().collectList().block();

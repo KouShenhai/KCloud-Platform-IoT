@@ -19,6 +19,7 @@ package org.laokou.gateway.constant;
  * @author laokou
  */
 public interface GatewayConstant {
+
     /**
      * 请求链-用户id
      */
@@ -55,5 +56,4 @@ public interface GatewayConstant {
      */
     String XSS_TICKET_VALUE = "xss-white";
 
-    int SUCCESS = 200;
 }

@@ -17,8 +17,8 @@ package org.laokou.gateway.utils;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.gateway.constant.GatewayConstant;
-import org.laokou.gateway.exception.GatewayException;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,18 +28,22 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 /**
+ * 响应工具
  * @author laokou
  */
 public class ResponseUtil {
+
+    /**
+     * 拥有uri匹配
+     */
     public static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
     /**
      * 前端响应
-     * @param exchange
-     * @param data
+     * @param exchange exchange对象
+     * @param data 数据
      * @return
      */
     public static Mono<Void> response(ServerWebExchange exchange, Object data){
@@ -49,23 +53,28 @@ public class ResponseUtil {
         return exchange.getResponse().writeWith(Flux.just(buffer));
     }
 
-    public static Map<String,Object> response(int code,String msg) {
-       Map<String,Object> dataMap = new HashMap<>(2);
-       dataMap.put("code",code);
-       dataMap.put("msg",msg);
-       return dataMap;
+    /**
+     * map响应体
+     * @param code 响应编码
+     * @param msg 响应信息
+     * @return
+     */
+    public static HttpResult response(int code,String msg) {
+       return new HttpResult().error(code,msg);
     }
 
-    public static Map<String,Object> error(GatewayException gatewayException) {
-        Map<String,Object> errorMap = new HashMap<>(2);
-        errorMap.put("code",gatewayException.getCode());
-        errorMap.put("msg",gatewayException.getMsg());
-        return errorMap;
+    /**
+     * 获取错误map集合
+     * @param code 错误码
+     * @return
+     */
+    public static HttpResult error(int code) {
+        return new HttpResult().error(code);
     }
 
     /**
      * 获取token
-     * @param request
+     * @param request 请求对象
      */
     public static String getToken(ServerHttpRequest request){
         //从header中获取token
@@ -79,7 +88,7 @@ public class ResponseUtil {
 
     /**
      * 获取userId
-     * @param request
+     * @param request 请求对象
      */
     public static String getUserId(ServerHttpRequest request){
         //从header中获取userId
@@ -94,7 +103,7 @@ public class ResponseUtil {
 
     /**
      * 获取username
-     * @param request
+     * @param request 请求对象
      */
     public static String getUsername(ServerHttpRequest request){
         //从header中获取username
@@ -104,6 +113,21 @@ public class ResponseUtil {
             username = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USERNAME);
         }
         return username == null ? "" : username.trim();
+    }
+
+    /**
+     * uri匹配
+     * @param requestUri 请求uri
+     * @param uris 忽略uris
+     * @return
+     */
+    public static boolean pathMatcher(String requestUri, List<String> uris) {
+        for (String url : uris) {
+            if (ANT_PATH_MATCHER.match(url, requestUri)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

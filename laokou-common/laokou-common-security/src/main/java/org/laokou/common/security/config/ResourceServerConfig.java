@@ -45,8 +45,9 @@ public class ResourceServerConfig {
     SecurityFilterChain resourceFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
+                .cors().disable()
                 .sessionManagement()
-                // 基于token.关闭session
+                // 基于token，关闭session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests().requestMatchers(

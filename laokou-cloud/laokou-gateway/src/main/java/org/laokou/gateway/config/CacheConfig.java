@@ -22,6 +22,7 @@ import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 /**
+ * 缓存Caffeine配置
  * @author laokou
  */
 @Configuration
@@ -30,6 +31,7 @@ public class CacheConfig {
     @Bean
     public Cache<String, RouteDefinition> caffeineCache() {
         return Caffeine.newBuilder()
+                // 初始化10个容量
                 .initialCapacity(10)
                 .build();
     }
