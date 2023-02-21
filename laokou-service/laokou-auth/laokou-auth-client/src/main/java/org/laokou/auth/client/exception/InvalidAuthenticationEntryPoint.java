@@ -37,14 +37,13 @@ public class InvalidAuthenticationEntryPoint implements AuthenticationEntryPoint
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-        if (authException instanceof OAuth2AuthenticationException oAuth2AuthenticationException) {
-            String message = oAuth2AuthenticationException.getError().getDescription();
-            String errorCode = oAuth2AuthenticationException.getError().getErrorCode();
-            log.error("错误信息：{}", message);
-            CustomAuthExceptionHandler.handleException(response, Integer.valueOf(errorCode), message);
-        }
         if (authException instanceof InsufficientAuthenticationException) {
             CustomAuthExceptionHandler.handleException(response, StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
+        }
+        if (authException instanceof OAuth2AuthenticationException oAuth2AuthenticationException) {
+            String message = oAuth2AuthenticationException.getError().getDescription();
+            Integer errorCode = Integer.valueOf(oAuth2AuthenticationException.getError().getErrorCode());
+            CustomAuthExceptionHandler.handleException(response, errorCode, message);
         }
     }
 }
