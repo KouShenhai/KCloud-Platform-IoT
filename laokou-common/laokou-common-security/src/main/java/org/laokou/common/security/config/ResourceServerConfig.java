@@ -41,11 +41,12 @@ public class ResourceServerConfig {
     private final CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector;
 
     @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
+    @Order(Ordered.HIGHEST_PRECEDENCE + 1000)
     SecurityFilterChain resourceFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
-                .cors().disable()
+                .cors()
+                .and()
                 .sessionManagement()
                 // 基于token，关闭session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
