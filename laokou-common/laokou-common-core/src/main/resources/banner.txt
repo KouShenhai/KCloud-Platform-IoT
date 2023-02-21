@@ -24,9 +24,9 @@ ${AnsiColor.BRIGHT_RED}
 ▒▒▒▒▒   ▒▒▒▒   ▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒▒▒    ▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒▒▒            ▒▒▒▒▒        ▒▒▒▒▒  ▒▒▒▒▒▒▒▒    ▒▒▒▒▒   ▒▒▒▒▒      ▒▒▒▒▒▒  ▒▒▒▒▒     ▒▒▒▒▒ ▒▒▒ ▒▒▒▒▒            ▒▒▒▒▒   ▒▒▒▒▒ ▒▒▒▒▒ ▒▒▒▒▒ ▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒▒▒
 ${AnsiColor.DEFAULT}
 作者：老寇
-csdn：https://kcloud.blog.csdn.net
-gitee：https://gitee.com/laokouyun
-github：https://github.com/KouShenhai
+GitHub：https://github.com/KouShenhai
+Gitee：https://gitee.com/laokouyun
+CSDN：https://kcloud.blog.csdn.net
 
 操作系统：${os.name}
 JDK版本：${java.version}
