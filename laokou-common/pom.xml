@@ -23,6 +23,7 @@
         <module>laokou-common-data-cache</module>
         <module>laokou-common-data-filter</module>
         <module>laokou-common-api</module>
+        <module>laokou-common-i18n</module>
     </modules>
 
 </project>

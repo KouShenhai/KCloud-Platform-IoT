@@ -16,13 +16,14 @@
 package org.laokou.gateway.exception;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import java.util.Map;
 /**
  * 异常处理器
  * @author laokou
@@ -34,17 +35,17 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler, Ordere
 	@Override
 	public Mono<Void> handle(ServerWebExchange exchange, Throwable e) {
 		log.error("网关全局处理异常，异常信息:{}",e.getMessage());
-		Map<String,Object> result;
+		HttpResult result;
 		if (e instanceof RuntimeException){
 			log.error("服务正在维护，请联系管理员");
-			result = ResponseUtil.error(GatewayException.SERVICE_MAINTENANCE);
+			result = ResponseUtil.error(StatusCode.SERVICE_UNAVAILABLE);
 		} else if (BlockException.isBlockException(e)){
 			// 思路来源于SentinelGatewayBlockExceptionHandler
-			log.error("操作太频繁，请稍后再试");
-			result = ResponseUtil.error(GatewayException.BLOCK_REQUEST);
+			log.error("请求过于频繁，请稍后再试");
+			result = ResponseUtil.error(StatusCode.SERVICE_BLOCK_REQUEST);
 		} else {
-			log.error("未知错误");
-			result = ResponseUtil.error(GatewayException.UNKNOWN);
+			log.error("服务未知错误");
+			result = ResponseUtil.error(StatusCode.SERVICE_UNKNOWN_ERROR);
 		}
 		return ResponseUtil.response(exchange,result);
 	}

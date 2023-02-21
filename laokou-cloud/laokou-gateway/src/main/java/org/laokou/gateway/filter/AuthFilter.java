@@ -19,7 +19,7 @@ import cn.hutool.http.HttpUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
-import org.laokou.gateway.exception.GatewayException;
+import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.gateway.utils.PasswordUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.gateway.constant.GatewayConstant;
@@ -73,7 +73,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
         String requestUri = request.getPath().pathWithinApplication().value();
         log.info("uri：{}", requestUri);
         // 请求放行，无需验证权限
-        if (pathMatcher(requestUri)){
+        if (ResponseUtil.pathMatcher(requestUri,uris)){
             return chain.filter(exchange);
         }
         // 表单提交
@@ -84,7 +84,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
         // 获取token
         String token = ResponseUtil.getToken(request);
         if (StringUtil.isEmpty(token)) {
-            return ResponseUtil.response(exchange, ResponseUtil.error(GatewayException.UNAUTHORIZED));
+            return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.UNAUTHORIZED));
         }
         ServerHttpRequest build = exchange.getRequest().mutate()
                 .header(Constant.AUTHORIZATION_HEAD, token).build();
@@ -157,20 +157,6 @@ public class AuthFilter implements GlobalFilter,Ordered {
                 return outputMessage.getBody();
             }
         };
-    }
-
-    /**
-     * uri匹配
-     * @param requestUri
-     * @return
-     */
-    private boolean pathMatcher(String requestUri) {
-        for (String url : uris) {
-            if (ResponseUtil.ANT_PATH_MATCHER.match(url, requestUri)) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }

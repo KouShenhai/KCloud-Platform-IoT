@@ -19,6 +19,13 @@ package org.laokou.gateway.utils;
  * @author laokou
  */
 public class PasswordUtil {
+
+    /**
+     * 密码解密
+     * @param str 加密字符串
+     * @return
+     * @throws Exception
+     */
     public static String decode(String str) throws Exception {
         return RsaCoder.decryptByPrivateKey(str);
     }
