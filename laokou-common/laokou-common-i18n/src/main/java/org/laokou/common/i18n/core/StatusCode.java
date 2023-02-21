@@ -128,5 +128,4 @@ public interface StatusCode {
      * 密码不能为空
      */
     int PASSWORD_NOT_NULL = 2009;
-
 }
