@@ -75,4 +75,57 @@ public interface StatusCode {
      */
     int SERVICE_UNKNOWN_ERROR = 1002;
 
+    /**
+     * auth => 2
+     * 唯一标识不能为空
+     */
+    int IDENTIFIER_NOT_NULL = 2001;
+
+    /**
+     * auth => 2
+     * 验证码不能为空
+     */
+    int CAPTCHA_NOT_NULL = 2002;
+
+    /**
+     * auth => 2
+     * 验证码不正确，请重新输入
+     */
+    int CAPTCHA_ERROR = 2003;
+
+    /**
+     * auth => 2
+     * 验证码已过期
+     */
+    int CAPTCHA_EXPIRED = 2004;
+
+    /**
+     * auth => 2
+     * 账号不能为空
+     */
+    int USERNAME_NOT_NULL = 2005;
+
+    /**
+     * auth => 2
+     * 账号已被停用
+     */
+    int USERNAME_DISABLE = 2006;
+
+    /**
+     * auth => 2
+     * 帐户或密码错误，请重新输入
+     */
+    int USERNAME_PASSWORD_ERROR = 2007;
+
+    /**
+     * auth => 2
+     * 用户没有权限访问，请联系管理员
+     */
+    int USERNAME_NOT_PERMISSION = 2008;
+
+    /**
+     * auth => 2
+     * 密码不能为空
+     */
+    int PASSWORD_NOT_NULL = 2009;
 }

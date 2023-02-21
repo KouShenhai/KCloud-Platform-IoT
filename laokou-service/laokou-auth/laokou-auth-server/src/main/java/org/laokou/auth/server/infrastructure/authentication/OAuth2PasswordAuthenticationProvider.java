@@ -20,10 +20,10 @@ import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.common.core.enums.ResultStatusEnum;
-import org.laokou.common.core.utils.MessageUtil;
 import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
-import org.laokou.common.core.exception.ErrorCode;
 import org.laokou.redis.utils.RedisUtil;
 import org.laokou.tenant.service.SysSourceService;
 import org.springframework.security.core.Authentication;
@@ -72,32 +72,32 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
         String uuid = request.getParameter(AuthConstant.UUID);
         log.info("唯一标识：{}",uuid);
         if (StringUtil.isEmpty(uuid)) {
-            CustomAuthExceptionHandler.throwError(ErrorCode.IDENTIFIER_NOT_NULL, MessageUtil.getMessage(ErrorCode.IDENTIFIER_NOT_NULL));
+            CustomAuthExceptionHandler.throwError(StatusCode.IDENTIFIER_NOT_NULL, MessageUtil.getMessage(StatusCode.IDENTIFIER_NOT_NULL));
         }
         // 判断验证码是否为空
         String captcha = request.getParameter(AuthConstant.CAPTCHA);
         log.info("验证码：{}",captcha);
         if (StringUtil.isEmpty(captcha)) {
-            CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_NOT_NULL, MessageUtil.getMessage(ErrorCode.CAPTCHA_NOT_NULL));
+            CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_NOT_NULL, MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
         }
         // 验证账号是否为空
         String username = request.getParameter(OAuth2ParameterNames.USERNAME);
         log.info("账号：{}",username);
         if (StringUtil.isEmpty(username)) {
-            CustomAuthExceptionHandler.throwError(ErrorCode.USERNAME_NOT_NULL, MessageUtil.getMessage(ErrorCode.USERNAME_NOT_NULL));
+            CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_NOT_NULL, MessageUtil.getMessage(StatusCode.USERNAME_NOT_NULL));
         }
         // 验证密码是否为空
         String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
         log.info("密码：{}",password);
         if (StringUtil.isEmpty(password)) {
-            CustomAuthExceptionHandler.throwError(ErrorCode.PASSWORD_NOT_NULL, MessageUtil.getMessage(ErrorCode.PASSWORD_NOT_NULL));
+            CustomAuthExceptionHandler.throwError(StatusCode.PASSWORD_NOT_NULL, MessageUtil.getMessage(StatusCode.PASSWORD_NOT_NULL));
         }
         // 验证验证码
         Boolean validate = sysCaptchaService.validate(uuid, captcha);
         if (!validate) {
             Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
-            loginLogUtil.recordLogin(username,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR),request,tenantId);
-            CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_ERROR, MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR));
+            loginLogUtil.recordLogin(username,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR),request,tenantId);
+            CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_ERROR, MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR));
         }
         // 获取用户信息,并认证信息
         return super.getUserInfo(username, password, request);
