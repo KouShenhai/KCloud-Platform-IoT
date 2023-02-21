@@ -17,8 +17,8 @@ package org.laokou.common.security.config;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
-import org.laokou.common.core.exception.ErrorCode;
-import org.laokou.common.core.utils.MessageUtil;
+import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -56,10 +56,10 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
         }
         OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
         if (oAuth2Authorization == null) {
-            CustomAuthExceptionHandler.throwError(ErrorCode.UNAUTHORIZED,MessageUtil.getMessage(ErrorCode.UNAUTHORIZED));
+            CustomAuthExceptionHandler.throwError(StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
         }
         if (!oAuth2Authorization.getAccessToken().isActive()) {
-            CustomAuthExceptionHandler.throwError(ErrorCode.AUTHORIZATION_INVALID,MessageUtil.getMessage(ErrorCode.AUTHORIZATION_INVALID));
+            CustomAuthExceptionHandler.throwError(StatusCode.UNAUTHORIZED,MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
         }
         Instant expiresAt = oAuth2Authorization.getAccessToken().getToken().getExpiresAt();
         Instant nowAt = Instant.now();

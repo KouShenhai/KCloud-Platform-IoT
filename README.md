@@ -152,6 +152,11 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 #### 🌱 安装包
 [百度网盘](https://pan.baidu.com/s/1swrV9ffJnmz4S0mfkuBbIw) 提取码：1111
 
+### 👍 Maven打包
+```bash
+mvn install -Dmaven.test.skip=true
+```
+
 ### ⚡ 环境配置
 #### 🐜 服务配置
 ```yaml
