@@ -22,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.DateUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -39,6 +41,7 @@ import java.util.TimeZone;
 public class CorsConfig {
 
     @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         // 允许所有域名跨域
