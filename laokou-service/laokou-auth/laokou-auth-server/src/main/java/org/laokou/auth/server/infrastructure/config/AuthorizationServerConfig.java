@@ -157,7 +157,6 @@ public class AuthorizationServerConfig {
                 )))
                 .redirectUris(redirectUris -> redirectUris.addAll(List.of(
                           "https://spring.io"
-                        , "https://gitee.com/laokouyun"
                         , "https://github.com/KouShenhai"
                         , "https://www.baidu.com"
                 )))
