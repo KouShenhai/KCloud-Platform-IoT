@@ -23,9 +23,9 @@ import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.HttpContextUtil;
-import org.laokou.common.core.utils.MessageUtil;
+import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
-import org.laokou.common.core.exception.ErrorCode;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
 import org.laokou.tenant.service.SysSourceService;
@@ -204,29 +204,29 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         // 多租户查询
         UserDetail userDetail = sysUserService.getUserDetail(loginName,tenantId);
         if (userDetail == null) {
-            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR),request,tenantId);
-            CustomAuthExceptionHandler.throwError(ErrorCode.ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
+            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR),request,tenantId);
+            CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_PASSWORD_ERROR, MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR));
         }
         if (OAuth2PasswordAuthenticationProvider.GRANT_TYPE.equals(loginType)) {
             // 验证密码
             String clientPassword = userDetail.getPassword();
             if (!passwordEncoder.matches(password, clientPassword)) {
-                loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR), request,tenantId);
-                CustomAuthExceptionHandler.throwError(ErrorCode.ACCOUNT_PASSWORD_ERROR, MessageUtil.getMessage(ErrorCode.ACCOUNT_PASSWORD_ERROR));
+                loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR), request,tenantId);
+                CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_PASSWORD_ERROR, MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR));
             }
         }
         // 是否锁定
         if (!userDetail.isEnabled()) {
-            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.ACCOUNT_DISABLE),request,tenantId);
-            CustomAuthExceptionHandler.throwError(ErrorCode.ACCOUNT_DISABLE, MessageUtil.getMessage(ErrorCode.ACCOUNT_DISABLE));
+            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.USERNAME_DISABLE),request,tenantId);
+            CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_DISABLE, MessageUtil.getMessage(StatusCode.USERNAME_DISABLE));
         }
         Long userId = userDetail.getUserId();
         Integer superAdmin = userDetail.getSuperAdmin();
         // 权限标识列表
         List<String> permissionsList = sysMenuService.getPermissionsList(tenantId,superAdmin,userId);
         if (CollectionUtils.isEmpty(permissionsList)) {
-            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.NOT_PERMISSIONS),request,tenantId);
-            CustomAuthExceptionHandler.throwError(ErrorCode.NOT_PERMISSIONS, MessageUtil.getMessage(ErrorCode.NOT_PERMISSIONS));
+            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.USERNAME_NOT_PERMISSION),request,tenantId);
+            CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_NOT_PERMISSION, MessageUtil.getMessage(StatusCode.USERNAME_NOT_PERMISSION));
         }
         // 部门列表
         List<Long> deptIds = sysDeptService.getDeptIds(superAdmin,userId);
