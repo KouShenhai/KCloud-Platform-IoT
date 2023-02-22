@@ -24,16 +24,15 @@ public interface Constant {
 
     String BACK_SLASH = "\\";
 
+    String COMMA = ",";
+
     String AUTHORIZATION_HEAD = "Authorization";
 
     int NO = 0;
 
-    int SUCCESS = 200;
-
     int YES = 1;
 
     String UNDERLINE = "_";
-
 
     String AND = "&";
 

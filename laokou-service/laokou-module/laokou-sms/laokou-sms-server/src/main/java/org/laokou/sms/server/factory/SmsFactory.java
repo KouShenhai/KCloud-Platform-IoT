@@ -34,11 +34,11 @@ public class SmsFactory {
     @Value("${sms.type}")
     private Integer type;
 
-    private final GuoYangYunSmsService smsService;
+    private final GuoYangYunSmsServiceImpl guoYangYunServiceImpl;
 
     public SmsService build() {
         if (SmsTypeEnum.GUO_YANG_YUN.ordinal() == type) {
-            return smsService;
+            return guoYangYunServiceImpl;
         }
         throw new CustomException("请检查SMS配置");
     }
