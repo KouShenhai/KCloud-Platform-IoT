@@ -40,7 +40,7 @@ spring:
           nacos:
             server-addr: @NACOS-CONFIG-ADDRESS@
             namespace: @NACOS-NAMESPACE@
-            group-id: ${NACOS-GROUP}
+            group-id: @NACOS-GROUP@
             data-id: admin-sentinel.json
             data-type: json
             rule-type: flow
