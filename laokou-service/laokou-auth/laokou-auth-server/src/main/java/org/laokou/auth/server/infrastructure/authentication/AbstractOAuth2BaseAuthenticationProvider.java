@@ -197,10 +197,16 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
                 registeredClient, clientPrincipal, oAuth2AccessToken, oAuth2RefreshToken, Collections.emptyMap());
     }
 
-    protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password, HttpServletRequest request) throws IOException {
+    protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password, HttpServletRequest request,String captcha,String uuid) throws IOException {
         AuthorizationGrantType grantType = getGrantType();
         String loginType = grantType.getValue();
         Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
+        // 验证验证码
+        Boolean validate = sysCaptchaService.validate(uuid, captcha);
+        if (!validate) {
+            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR),request,tenantId);
+            CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_ERROR, MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR));
+        }
         // 多租户查询
         UserDetail userDetail = sysUserService.getUserDetail(loginName,tenantId);
         if (userDetail == null) {

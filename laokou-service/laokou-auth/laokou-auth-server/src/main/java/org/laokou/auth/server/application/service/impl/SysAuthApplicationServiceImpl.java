@@ -24,10 +24,10 @@ import org.laokou.auth.server.domain.sys.repository.service.SysCaptchaService;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.core.exception.CustomException;
-import org.laokou.common.core.exception.ErrorCode;
 import org.laokou.auth.server.application.service.SysAuthApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.*;
+import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
 import org.laokou.tenant.service.SysTenantService;
@@ -61,7 +61,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         String uuid = request.getParameter(AuthConstant.UUID);
         log.info("唯一标识：{}",uuid);
         if (StringUtil.isEmpty(uuid)) {
-            throw new CustomException(ErrorCode.IDENTIFIER_NOT_NULL);
+            throw new CustomException(StatusCode.IDENTIFIER_NOT_NULL);
         }
         // 三个参数分别为宽、高、位数
         Captcha captcha = new GifCaptcha(130, 48, 4);

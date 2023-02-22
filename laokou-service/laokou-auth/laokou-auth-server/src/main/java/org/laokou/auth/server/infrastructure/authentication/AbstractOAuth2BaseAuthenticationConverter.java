@@ -19,9 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.core.utils.MessageUtil;
+import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.core.utils.StringUtil;
-import org.laokou.common.core.exception.ErrorCode;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
@@ -64,18 +64,18 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
         if (!getGrantType().equals(grantType)) {
             return null;
         }
-        // 判断租户id是否为空
+        // 判断租户编号是否为空
         String tenantId = request.getParameter(AuthConstant.TENANT_ID);
         log.info("租户编号：{}",tenantId);
         if (StringUtil.isEmpty(tenantId)) {
-            CustomAuthExceptionHandler.throwError(ErrorCode.TENANT_ID_NOT_NULL, MessageUtil.getMessage(ErrorCode.TENANT_ID_NOT_NULL));
+            CustomAuthExceptionHandler.throwError(StatusCode.TENANT_NOT_NULL, MessageUtil.getMessage(StatusCode.TENANT_NOT_NULL));
         }
         // 构建请求参数集合
         MultiValueMap<String, String> parameters = MapUtil.getParameters(request);
         // 判断scope
         String scope = parameters.getFirst(OAuth2ParameterNames.SCOPE);
         if (StringUtils.hasText(scope) && parameters.get(OAuth2ParameterNames.SCOPE).size() != 1) {
-            CustomAuthExceptionHandler.throwError(ErrorCode.INVALID_SCOPE, MessageUtil.getMessage(ErrorCode.INVALID_SCOPE));
+            CustomAuthExceptionHandler.throwError(StatusCode.INVALID_SCOPE, MessageUtil.getMessage(StatusCode.INVALID_SCOPE));
         }
         // 获取上下文认证信息
         Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();

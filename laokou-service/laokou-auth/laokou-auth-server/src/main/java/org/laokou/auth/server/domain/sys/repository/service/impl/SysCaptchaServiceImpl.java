@@ -18,7 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.auth.server.domain.sys.repository.service.SysCaptchaService;
 import org.laokou.common.core.utils.StringUtil;
-import org.laokou.common.core.exception.ErrorCode;
+import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
         //获取验证码
         String captcha = getCache(uuid);
         if (StringUtil.isEmpty(captcha)) {
-            CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_ERROR, "验证码已过期");
+            CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_EXPIRED, MessageUtil.getMessage(StatusCode.CAPTCHA_EXPIRED));
         }
         //效验成功
         return code.equalsIgnoreCase(captcha);
