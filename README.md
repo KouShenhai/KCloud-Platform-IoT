@@ -74,6 +74,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 | Kafka                       | 2.8.1          |
 | Flowable                    | 7.0.0.M1       |
 | ShardingSphere              | 5.3.2          |
+| OpenResty                   | 1.21.4.1       |
 
 #### 🍺 相关技术
 
@@ -81,7 +82,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - 配置中心：Nacos
 - 服务注册&发现：Nacos
 - 认证授权：Spring Security OAuth2 Authorization Server
-- 服务消费：Spring Cloud OpenFeign & HttpClient & WebClient
+- 服务消费：Spring Cloud OpenFeign & WebClient
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Sentinel
 - 分库分表&读写分离：ShardingSphere
@@ -90,7 +91,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - 消息队列：RocketMQ & Kafka
 - 任务调度：Power Job
 - 日志分析：EFK
-- 数据缓存：Caffeine & Redis
+- 多级缓存：OpenResty & Redis & Caffeine
 - 统计报表：MongoDB
 - 对象存储：Amazon S3
 - 服务部署：Docker
