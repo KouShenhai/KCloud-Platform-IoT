@@ -35,7 +35,7 @@ public class BatchUtil<T> {
 
     private final TransactionalUtil transactionalUtil;
 
-    private static final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(9
+    private static final ThreadPoolExecutor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(9
             , 9
             , 60
             , TimeUnit.SECONDS
@@ -59,7 +59,7 @@ public class BatchUtil<T> {
         int size = partition.size();
         for(int i = 0; i < size; i++) {
             List<T> list = partition.get(i);
-            threadPoolExecutor.execute(() -> {
+            THREAD_POOL_EXECUTOR.execute(() -> {
                 TransactionStatus status = transactionalUtil.begin();
                 try {
                     service.insertBatch(list);

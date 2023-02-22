@@ -30,6 +30,12 @@
           "_genkey_0": "/auth/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
+      },
+      {
+        "name": "IpBlack",
+        "args": {
+          "sources": "192.168.62.100"
+        }
       }
     ],
     "metadata": {
@@ -67,6 +73,12 @@
         "args": {
           "_genkey_0": "/admin/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
+        }
+      },
+      {
+        "name": "IpBlack",
+        "args": {
+          "sources": "192.168.62.100"
         }
       }
     ],
@@ -136,6 +148,12 @@
           "_genkey_0": "/im/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
+      },
+      {
+        "name": "IpBlack",
+        "args": {
+          "sources": "192.168.62.100"
+        }
       }
     ],
     "metadata": {
@@ -173,6 +191,12 @@
         "args": {
           "_genkey_0": "/oss/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
+        }
+      },
+      {
+        "name": "IpBlack",
+        "args": {
+          "sources": "192.168.62.100"
         }
       }
     ],

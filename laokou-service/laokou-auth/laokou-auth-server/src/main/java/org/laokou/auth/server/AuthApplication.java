@@ -32,7 +32,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = {"org.laokou.tenant","org.laokou.common.log","org.laokou.sentinel","org.laokou.common.swagger","org.laokou.common.mybatisplus","org.laokou.common.core","org.laokou.redis","org.laokou.auth"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.common.i18n","org.laokou.tenant","org.laokou.common.log","org.laokou.sentinel","org.laokou.common.swagger","org.laokou.common.mybatisplus","org.laokou.common.core","org.laokou.redis","org.laokou.auth"})
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties

@@ -42,7 +42,7 @@ import java.util.Map;
 @RefreshScope
 @RequiredArgsConstructor
 @Slf4j
-public class GuoYangYunSmsService implements SmsService{
+public class GuoYangYunSmsServiceImpl implements SmsService{
 
     @Value("${sms.guoYangYun.templateId}")
     private String templateId;

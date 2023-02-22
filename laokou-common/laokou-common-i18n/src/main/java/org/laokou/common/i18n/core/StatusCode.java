@@ -76,6 +76,12 @@ public interface StatusCode {
     int SERVICE_UNKNOWN_ERROR = 1002;
 
     /**
+     * gateway => 1
+     * IP被列入黑名单，请联系管理员
+     */
+    int IP_BLACK = 1003;
+
+    /**
      * auth => 2
      * 唯一标识不能为空
      */
