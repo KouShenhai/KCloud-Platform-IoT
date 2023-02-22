@@ -24,13 +24,13 @@ spring:
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
-        group: LAOKOU_GROUP
+        group: ${NACOS-GROUP}
         refresh-enabled: true
         file-extension: yaml
         extension-configs:
           - data-id: application-common.yaml
-            group: LAOKOU_GROUP
+            group: ${NACOS-GROUP}
             refresh: true
           - data-id: application-common-rocketmq.yaml
-            group: LAOKOU_GROUP
+            group: ${NACOS-GROUP}
             refresh: true

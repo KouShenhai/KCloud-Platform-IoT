@@ -24,9 +24,9 @@ spring:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
         file-extension: yaml
-        group: LAOKOU_GROUP
+        group: ${NACOS-GROUP}
         refresh-enabled: true
         extension-configs:
           - data-id: application-monitor.yaml
-            group: LAOKOU_GROUP
+            group: ${NACOS-GROUP}
             refresh: true
