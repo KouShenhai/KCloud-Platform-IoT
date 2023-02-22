@@ -40,7 +40,7 @@ spring:
             namespace: @NACOS-NAMESPACE@
             data-id: auth-sentinel.json
             data-type: json
-            group-id: LAOKOU_GROUP
+            group-id: ${NACOS-GROUP}
             rule-type: flow
     # loadbalancer
     loadbalancer:

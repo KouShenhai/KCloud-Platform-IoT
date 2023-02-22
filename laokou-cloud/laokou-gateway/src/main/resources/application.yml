@@ -45,7 +45,7 @@ spring:
             namespace: @NACOS-NAMESPACE@
             data-id: gateway-sentinel.json
             rule-type: gw_flow # 网关规则
-            group-id: LAOKOU_GROUP
+            group-id: ${NACOS-GROUP}
             data-type: json
     # loadbalancer
     loadbalancer:

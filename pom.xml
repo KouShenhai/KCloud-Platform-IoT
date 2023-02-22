@@ -186,6 +186,7 @@
                 <NACOS-NAMESPACE>public</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
+                <NACOS-GROUP>DEFAULT_GROUP</NACOS-GROUP>
                 <profile.active>dev</profile.active>
             </properties>
             <activation>
@@ -199,6 +200,7 @@
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>192.168.62.144:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>192.168.62.144:8848</NACOS-CONFIG-ADDRESS>
+                <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
                 <profile.active>test</profile.active>
             </properties>
         </profile>
@@ -209,6 +211,7 @@
                 <NACOS-NAMESPACE>xxxxxxxxxxxxxxxxxxxxxxxxxxx</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>192.168.62.137:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>192.168.62.137:8848</NACOS-CONFIG-ADDRESS>
+                <NACOS-GROUP>xxx</NACOS-GROUP>
                 <profile.active>prod</profile.active>
             </properties>
         </profile>
