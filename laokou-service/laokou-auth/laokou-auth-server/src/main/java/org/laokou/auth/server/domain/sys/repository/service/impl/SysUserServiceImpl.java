@@ -31,8 +31,8 @@ public class SysUserServiceImpl implements SysUserService {
     private final SysUserMapper sysUserMapper;
 
     @Override
-    public UserDetail getUserDetail(String loginName,Long tenantId) {
-        return sysUserMapper.getUserDetail(loginName,tenantId);
+    public UserDetail getUserDetail(String loginName,Long tenantId,String loginType) {
+        return sysUserMapper.getUserDetail(loginName,tenantId,loginType);
     }
 
 }

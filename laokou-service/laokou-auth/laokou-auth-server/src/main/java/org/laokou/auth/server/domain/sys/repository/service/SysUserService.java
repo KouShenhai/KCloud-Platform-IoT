@@ -23,10 +23,11 @@ public interface SysUserService {
 
     /**
      * 获取用户信息
-     * @param loginName
-     * @param tenantId
+     * @param loginName 登录名
+     * @param tenantId 租户id
+     * @param loginType 登录类型
      * @return
      */
-    UserDetail getUserDetail(String loginName,Long tenantId);
+    UserDetail getUserDetail(String loginName,Long tenantId,String loginType);
 
 }

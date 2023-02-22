@@ -82,6 +82,23 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
             if (dto.getDeptId() == null) {
                 throw new CustomException("请选择部门");
             }
+        } else {
+            // 验证邮箱唯一
+            String mail = dto.getMail();
+            if (StringUtil.isNotEmpty(mail)) {
+                long mailCount = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getTenantId,UserUtil.getTenantId()).eq(SysUserDO::getMail, mail).ne(SysUserDO::getId, id));
+                if (mailCount > 0) {
+                    throw new CustomException("邮箱已被注册，请重新填写");
+                }
+            }
+            // 验证手机号唯一
+            String mobile = dto.getMobile();
+            if (StringUtil.isNotEmpty(mobile)) {
+                long mobileCount = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getTenantId,UserUtil.getTenantId()).eq(SysUserDO::getMobile, mobile).ne(SysUserDO::getId, id));
+                if (mobileCount > 0) {
+                    throw new CustomException("手机号已被注册，请重新填写");
+                }
+            }
         }
         dto.setEditor(UserUtil.getUserId());
         String password = dto.getPassword();

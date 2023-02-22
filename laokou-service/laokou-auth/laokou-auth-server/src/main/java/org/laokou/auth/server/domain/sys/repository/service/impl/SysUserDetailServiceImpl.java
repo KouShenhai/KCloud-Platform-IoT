@@ -20,9 +20,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
 import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
+import org.laokou.auth.server.infrastructure.authentication.OAuth2PasswordAuthenticationProvider;
 import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -43,7 +45,7 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
         // 默认租户查询
-        UserDetail userDetail = sysUserService.getUserDetail(loginName,0L);
+        UserDetail userDetail = sysUserService.getUserDetail(loginName,0L, OAuth2PasswordAuthenticationProvider.GRANT_TYPE);
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         String errMsg;
         if (userDetail == null) {
