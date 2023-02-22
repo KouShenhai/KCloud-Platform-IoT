@@ -93,7 +93,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
             CustomAuthExceptionHandler.throwError(StatusCode.PASSWORD_NOT_NULL, MessageUtil.getMessage(StatusCode.PASSWORD_NOT_NULL));
         }
         // 获取用户信息,并认证信息
-        return super.getUserInfo(username, password, request,captcha);
+        return super.getUserInfo(username, password, request,captcha,uuid);
     }
 
     @Override

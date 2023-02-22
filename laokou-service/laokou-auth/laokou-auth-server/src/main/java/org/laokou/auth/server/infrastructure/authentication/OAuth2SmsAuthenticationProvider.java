@@ -82,7 +82,7 @@ public class OAuth2SmsAuthenticationProvider extends AbstractOAuth2BaseAuthentic
             CustomAuthExceptionHandler.throwError(StatusCode.MOBILE_ERROR, MessageUtil.getMessage(StatusCode.MOBILE_ERROR));
         }
         // 获取用户信息,并认证信息
-        return super.getUserInfo(mobile, "", request,code);
+        return super.getUserInfo(mobile, "", request,code,mobile);
     }
 
     @Override

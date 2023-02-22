@@ -81,7 +81,7 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
             CustomAuthExceptionHandler.throwError(StatusCode.MAIL_ERROR, MessageUtil.getMessage(StatusCode.MAIL_ERROR));
         }
         // 获取用户信息,并认证信息
-        return super.getUserInfo(mail, "", request,code);
+        return super.getUserInfo(mail, "", request,code,mail);
     }
 
     @Override
