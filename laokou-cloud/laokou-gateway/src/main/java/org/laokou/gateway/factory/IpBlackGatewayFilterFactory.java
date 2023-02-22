@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 /**
+ * RemoteAddrRoutePredicateFactory
  * IP黑名单
  * @author laokou
  */
