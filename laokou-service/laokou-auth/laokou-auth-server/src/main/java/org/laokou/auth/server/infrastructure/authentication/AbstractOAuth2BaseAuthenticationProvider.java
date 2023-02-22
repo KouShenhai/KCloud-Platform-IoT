@@ -208,7 +208,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_ERROR, MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR));
         }
         // 多租户查询
-        UserDetail userDetail = sysUserService.getUserDetail(loginName,tenantId);
+        UserDetail userDetail = sysUserService.getUserDetail(loginName,tenantId,loginType);
         if (userDetail == null) {
             loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR),request,tenantId);
             CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_PASSWORD_ERROR, MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR));
