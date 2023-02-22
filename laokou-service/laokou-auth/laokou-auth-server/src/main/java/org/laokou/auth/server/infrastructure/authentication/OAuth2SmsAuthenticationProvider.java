@@ -20,12 +20,12 @@ import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.common.core.enums.ResultStatusEnum;
-import org.laokou.common.core.utils.MessageUtil;
+import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.core.exception.CustomException;
-import org.laokou.common.core.exception.ErrorCode;
 import org.laokou.redis.utils.RedisUtil;
 import org.laokou.tenant.service.SysSourceService;
 import org.springframework.security.core.Authentication;
@@ -70,25 +70,19 @@ public class OAuth2SmsAuthenticationProvider extends AbstractOAuth2BaseAuthentic
         String code = request.getParameter(OAuth2ParameterNames.CODE);
         log.info("验证码：{}",code);
         if (StringUtil.isEmpty(code)) {
-            throw new CustomException(ErrorCode.CAPTCHA_NOT_NULL);
+            CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_NOT_NULL, MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
         }
         String mobile = request.getParameter(AuthConstant.MOBILE);
         log.info("手机：{}",mobile);
         if (StringUtil.isEmpty(mobile)) {
-            throw new CustomException("手机号不为空");
+            CustomAuthExceptionHandler.throwError(StatusCode.MOBILE_NOT_NULL, MessageUtil.getMessage(StatusCode.MOBILE_NOT_NULL));
         }
         boolean isMobile = RegexUtil.mobileRegex(mobile);
         if (!isMobile) {
-            throw new CustomException("手机号不正确，请重新填写");
+            CustomAuthExceptionHandler.throwError(StatusCode.MOBILE_ERROR, MessageUtil.getMessage(StatusCode.MOBILE_ERROR));
         }
-        Boolean validate = sysCaptchaService.validate(mobile, code);
-        if (!validate) {
-            Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
-            loginLogUtil.recordLogin(mobile,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR),request,tenantId);
-            CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_ERROR, MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR));
-        }
-        // 获取用户信息
-        return super.getUserInfo(mobile, "", request);
+        // 获取用户信息,并认证信息
+        return super.getUserInfo(mobile, "", request,code);
     }
 
     @Override

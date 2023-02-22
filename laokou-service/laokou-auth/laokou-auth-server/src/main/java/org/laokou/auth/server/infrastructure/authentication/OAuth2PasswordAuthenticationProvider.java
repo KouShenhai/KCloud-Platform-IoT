@@ -92,15 +92,8 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
         if (StringUtil.isEmpty(password)) {
             CustomAuthExceptionHandler.throwError(StatusCode.PASSWORD_NOT_NULL, MessageUtil.getMessage(StatusCode.PASSWORD_NOT_NULL));
         }
-        // 验证验证码
-        Boolean validate = sysCaptchaService.validate(uuid, captcha);
-        if (!validate) {
-            Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
-            loginLogUtil.recordLogin(username,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR),request,tenantId);
-            CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_ERROR, MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR));
-        }
         // 获取用户信息,并认证信息
-        return super.getUserInfo(username, password, request);
+        return super.getUserInfo(username, password, request,captcha);
     }
 
     @Override

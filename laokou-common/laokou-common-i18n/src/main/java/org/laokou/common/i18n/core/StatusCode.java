@@ -24,6 +24,7 @@ package org.laokou.common.i18n.core;
  * gateway => 1
  * auth    => 2
  * admin   => 3
+ * tenant  => 4
  * @author laokou
  */
 public interface StatusCode {
@@ -134,4 +135,41 @@ public interface StatusCode {
      * 密码不能为空
      */
     int PASSWORD_NOT_NULL = 2009;
+
+    /**
+     * auth => 2
+     * 手机号不能为空
+     */
+    int MOBILE_NOT_NULL = 2010;
+
+    /**
+     * auth => 2
+     * 手机号错误，请重新输入
+     */
+    int MOBILE_ERROR = 2011;
+
+    /**
+     * auth => 2
+     * 邮箱不能为空
+     */
+    int MAIL_NOT_NULL = 2012;
+
+    /**
+     * auth => 2
+     * 邮箱错误，请重新输入
+     */
+    int MAIL_ERROR = 2013;
+
+    /**
+     * auth => 2
+     * 租户不能为空，请选择租户
+     */
+    int TENANT_NOT_NULL = 2014;
+
+    /**
+     * auth => 2
+     * 无效作用域
+     */
+    int INVALID_SCOPE = 2015;
+
 }

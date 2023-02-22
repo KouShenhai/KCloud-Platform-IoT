@@ -19,13 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
 import org.laokou.auth.server.domain.sys.repository.service.*;
-import org.laokou.common.core.enums.ResultStatusEnum;
-import org.laokou.common.core.utils.MessageUtil;
+import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
-import org.laokou.common.core.exception.CustomException;
-import org.laokou.common.core.exception.ErrorCode;
 import org.laokou.redis.utils.RedisUtil;
 import org.laokou.tenant.service.SysSourceService;
 import org.springframework.security.core.Authentication;
@@ -71,26 +69,19 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
         String code = request.getParameter(OAuth2ParameterNames.CODE);
         log.info("验证码：{}",code);
         if (StringUtil.isEmpty(code)) {
-            CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_NOT_NULL, MessageUtil.getMessage(ErrorCode.CAPTCHA_NOT_NULL));
+            CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_NOT_NULL, MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
         }
         String mail = request.getParameter(AuthConstant.MAIL);
         log.info("邮箱：{}",mail);
         if (StringUtil.isEmpty(mail)) {
-            throw new CustomException("邮箱不为空");
+            CustomAuthExceptionHandler.throwError(StatusCode.MAIL_NOT_NULL, MessageUtil.getMessage(StatusCode.MAIL_NOT_NULL));
         }
         boolean isMail = RegexUtil.mailRegex(mail);
         if (!isMail) {
-            throw new CustomException("邮箱不正确，请重新填写");
+            CustomAuthExceptionHandler.throwError(StatusCode.MAIL_ERROR, MessageUtil.getMessage(StatusCode.MAIL_ERROR));
         }
-        // 验证码
-        Boolean validate = sysCaptchaService.validate(mail, code);
-        if (!validate) {
-            Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
-            loginLogUtil.recordLogin(mail,GRANT_TYPE, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR),request,tenantId);
-            CustomAuthExceptionHandler.throwError(ErrorCode.CAPTCHA_ERROR, MessageUtil.getMessage(ErrorCode.CAPTCHA_ERROR));
-        }
-        // 获取用户信息
-        return super.getUserInfo(mail, "", request);
+        // 获取用户信息,并认证信息
+        return super.getUserInfo(mail, "", request,code);
     }
 
     @Override
