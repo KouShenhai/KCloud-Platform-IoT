@@ -5,8 +5,8 @@
     <select id="getAccessTokenList" resultType="string">
         SELECT CONVERT(access_token_value USING utf8) as access_token from oauth2_authorization
         WHERE access_token_value <![CDATA[ <> ]]> #{accessToken}
-        and NOW() > access_token_issued_at
-        AND NOW() <![CDATA[ < ]]> access_token_expires_at
+        and NOW() <![CDATA[ < ]]> access_token_expires_at
+        AND NOW() > access_token_issued_at
         and principal_name = #{loginName}
     </select>
 
