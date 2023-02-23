@@ -388,6 +388,7 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 
 ### 🐭 鸣谢组织
 [Spring官网](https://spring.io)  
+[阿里巴巴社区](https://github.com/alibaba/spring-cloud-alibaba)  
 [人人社区](https://www.renren.io)   
 [若依社区](https://www.ruoyi.vip)  
 [苞米豆社区](https://baomidou.com/)  
