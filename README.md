@@ -16,7 +16,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
     <a target="_blank" href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/static/v1?label=Spring Boot&message=3.0.2&color=green" alt="SpringBoot"></a>
     <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2022.0.1&color=green"></a>
     <a target="_blank" href="https://github.com/alibaba/spring-cloud-alibaba"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud Alibaba&message=2022.0.0.0-RC1&color=orange"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.0.0&color=blue"></a>
+    <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.0.1&color=blue"></a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/JDK-17.0.4.1-blue.svg"/></a>
     <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=WFANTXDEjrDw6UxsrRFCv_rQsEu6LTxH&jump_from=webapi"><img src="https://img.shields.io/badge/Q群-218686225-blue.svg" alt="Java技术交流QQ群"></a>
 </p>
@@ -62,7 +62,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 | Spring Cloud                | 2022.0.1       |
 | Spring Cloud Alibaba        | 2022.0.0.0-RC1 |
 | Spring Boot Admin           | 3.0.0          |
-| Spring Authorization Server | 1.0.0          |
+| Spring Authorization Server | 1.0.1          |
 | Mybatis Plus                | 3.5.3.1        |
 | Nacos                       | 2.2.0          |
 | Sentinel                    | 1.8.6          |
