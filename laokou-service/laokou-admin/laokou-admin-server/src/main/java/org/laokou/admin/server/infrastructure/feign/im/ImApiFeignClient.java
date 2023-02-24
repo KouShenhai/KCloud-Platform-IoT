@@ -15,7 +15,7 @@
  */
 package org.laokou.admin.server.infrastructure.feign.im;
 import org.laokou.admin.server.infrastructure.feign.im.factory.ImApiFeignClientFallbackFactory;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.core.constant.ServiceConstant;
 import org.laokou.im.client.PushMsgDTO;
 import org.springframework.cloud.openfeign.FeignClient;

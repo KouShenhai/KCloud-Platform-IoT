@@ -18,7 +18,7 @@ package org.laokou.mail.server.controller;
 
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.mail.server.service.MailService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

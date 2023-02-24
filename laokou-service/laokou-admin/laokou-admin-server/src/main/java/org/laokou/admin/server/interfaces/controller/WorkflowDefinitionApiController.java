@@ -24,7 +24,7 @@ import org.laokou.admin.server.application.service.WorkflowDefinitionApplication
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.admin.server.interfaces.qo.DefinitionQo;
 import org.laokou.common.log.enums.DataTypeEnum;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

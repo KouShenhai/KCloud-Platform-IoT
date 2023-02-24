@@ -26,7 +26,7 @@ import org.laokou.admin.client.dto.SysResourceAuditDTO;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.common.log.vo.SysAuditLogVO;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.oss.client.vo.UploadVO;
 import org.laokou.redis.annotation.Lock4j;

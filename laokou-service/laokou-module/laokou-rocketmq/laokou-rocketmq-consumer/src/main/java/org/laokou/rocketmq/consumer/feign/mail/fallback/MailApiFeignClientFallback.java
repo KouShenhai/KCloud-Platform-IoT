@@ -17,7 +17,7 @@ package org.laokou.rocketmq.consumer.feign.mail.fallback;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.rocketmq.consumer.feign.mail.MailApiFeignClient;
 /**
  * 服务降级

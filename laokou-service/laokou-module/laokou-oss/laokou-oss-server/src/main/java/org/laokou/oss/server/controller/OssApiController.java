@@ -23,7 +23,7 @@ import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.log.entity.SysOssLogDO;
 import org.laokou.common.log.service.SysOssLogService;
 import org.laokou.common.core.exception.CustomException;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.oss.client.vo.UploadVO;
 import org.laokou.oss.server.support.StorageFactory;
 import org.springframework.http.MediaType;

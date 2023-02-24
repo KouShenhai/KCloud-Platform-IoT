@@ -22,7 +22,7 @@ import org.laokou.admin.client.dto.SysDeptDTO;
 import org.laokou.admin.server.interfaces.qo.SysDeptQo;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.admin.client.vo.SysDeptVO;
 import org.laokou.common.log.annotation.OperateLog;
 import org.springframework.security.access.prepost.PreAuthorize;
