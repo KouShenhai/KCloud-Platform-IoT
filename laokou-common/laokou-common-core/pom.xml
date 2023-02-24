@@ -10,10 +10,6 @@
   <artifactId>laokou-common-core</artifactId>
   <dependencies>
     <dependency>
-      <groupId>org.mapstruct</groupId>
-      <artifactId>mapstruct</artifactId>
-    </dependency>
-    <dependency>
       <groupId>cn.hutool</groupId>
       <artifactId>hutool-all</artifactId>
     </dependency>
