@@ -40,7 +40,7 @@ public class WebSecurityConfig {
                  "/v3/api-docs/**"
                         , "/swagger-ui.html"
                         , "/swagger-ui/**"
-                        , "/oauth2/password/captcha"
+                        , "/oauth2/captcha"
                         , "/oauth2/logout"
                         , "/oauth2/tenant"
                         , "/actuator/**")

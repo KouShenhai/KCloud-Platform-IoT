@@ -57,6 +57,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortOrder;
+import org.laokou.common.core.exception.CustomException;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.elasticsearch.client.constant.EsConstant;
@@ -732,31 +733,34 @@ public class ElasticsearchTemplate {
      * 关键字高亮显示
      * @param searchQo 查询实体类
      * @return
-     * @throws IOException
      */
-    public SearchVO<Map<String,Object>> highlightSearchIndex(SearchQo searchQo) throws IOException {
-        final String[] indexNames = searchQo.getIndexNames();
-        //用于搜索文档，聚合，定制查询有关操作
-        SearchRequest searchRequest = new SearchRequest();
-        searchRequest.indices(indexNames);
-        searchRequest.source(buildSearchSource(searchQo,true,null));
-        SearchHits hits = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT).getHits();
-        List<Map<String,Object>> data = new ArrayList<>();
-        for (SearchHit hit : hits){
-            Map<String,Object> sourceData = hit.getSourceAsMap();
-            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-            for (String key : highlightFields.keySet()){
-                sourceData.put(key,highlightFields.get(key).getFragments()[0].string());
+    public SearchVO<Map<String,Object>> highlightSearchIndex(SearchQo searchQo) {
+        try {
+            final String[] indexNames = searchQo.getIndexNames();
+            //用于搜索文档，聚合，定制查询有关操作
+            SearchRequest searchRequest = new SearchRequest();
+            searchRequest.indices(indexNames);
+            searchRequest.source(buildSearchSource(searchQo,true,null));
+            SearchHits hits = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT).getHits();
+            List<Map<String,Object>> data = new ArrayList<>();
+            for (SearchHit hit : hits){
+                Map<String,Object> sourceData = hit.getSourceAsMap();
+                Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+                for (String key : highlightFields.keySet()){
+                    sourceData.put(key,highlightFields.get(key).getFragments()[0].string());
+                }
+                data.add(sourceData);
             }
-            data.add(sourceData);
+            SearchVO<Map<String,Object>> vo = new SearchVO();
+            final long total = hits.getTotalHits().value;
+            vo.setRecords(data);
+            vo.setTotal(total);
+            vo.setPageNum(searchQo.getPageNum());
+            vo.setPageSize(searchQo.getPageSize());
+            return vo;
+        } catch (Exception e) {
+            throw new CustomException("搜索失败");
         }
-        SearchVO<Map<String,Object>> vo = new SearchVO();
-        final long total = hits.getTotalHits().value;
-        vo.setRecords(data);
-        vo.setTotal(total);
-        vo.setPageNum(searchQo.getPageNum());
-        vo.setPageSize(searchQo.getPageSize());
-        return vo;
     }
 
     /**

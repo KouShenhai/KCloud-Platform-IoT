@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-parent</artifactId>
-    <version>3.0.2</version>
+    <version>3.0.3</version>
     <description>parent配置</description>
     <packaging>pom</packaging>
     <modules>
@@ -14,21 +14,21 @@
         <module>laokou-service</module>
     </modules>
     <properties>
-        <laokou.version>3.0.2</laokou.version>
+        <laokou.version>3.0.3</laokou.version>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.0.2</spring-boot.version>
+        <spring-boot.version>3.0.3</spring-boot.version>
         <!--spring-cloud版本-->
         <spring-cloud.version>2022.0.1</spring-cloud.version>
         <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
         <docker.registry.name>koushenhai</docker.registry.name>
         <docker.version>1.2.2</docker.version>
-        <!--spring-security版本-->
-        <spring-security.version>6.0.1</spring-security.version>
+        <!--spring-framework版本-->
+        <spring-framework.version>6.0.5</spring-framework.version>
         <!--cloud-alibaba版本-->
         <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
         <!--spring-doc版本-->
@@ -78,11 +78,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- 定义spring security 版本 -->
+            <!-- 定义spring framework 版本 -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-framework-bom</artifactId>
-                <version>${spring-security.version}</version>
+                <version>${spring-framework.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

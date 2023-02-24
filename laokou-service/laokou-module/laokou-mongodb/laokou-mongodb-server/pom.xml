@@ -5,7 +5,7 @@
     <parent>
         <artifactId>laokou-mongodb</artifactId>
         <groupId>org.laokou</groupId>
-        <version>3.0.2</version>
+        <version>3.0.3</version>
     </parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-mongodb-server</artifactId>

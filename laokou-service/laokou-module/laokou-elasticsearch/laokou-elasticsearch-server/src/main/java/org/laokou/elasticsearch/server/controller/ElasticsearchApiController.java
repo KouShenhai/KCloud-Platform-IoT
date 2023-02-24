@@ -140,7 +140,7 @@ public class ElasticsearchApiController {
 
     @PostMapping("/highlightSearch")
     @Operation(summary = "分布式搜索>高亮搜索",description = "分布式搜索>高亮搜索")
-    public HttpResult<SearchVO<Map<String,Object>>> highlightSearch(@RequestBody final SearchQo searchQo) throws IOException {
+    public HttpResult<SearchVO<Map<String,Object>>> highlightSearch(@RequestBody final SearchQo searchQo) {
         return new HttpResult<SearchVO<Map<String,Object>>>().ok(elasticsearchTemplate.highlightSearchIndex(searchQo));
     }
 

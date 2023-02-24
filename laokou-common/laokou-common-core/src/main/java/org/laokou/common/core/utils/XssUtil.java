@@ -16,7 +16,8 @@
 package org.laokou.common.core.utils;
 
 import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
+
 import java.util.regex.Pattern;
 
 /**
@@ -42,7 +43,7 @@ public class XssUtil {
      * XSS过滤
      */
     public static String filter(String html){
-        return Jsoup.clean(html, Whitelist.relaxed());
+        return Jsoup.clean(html, Safelist.relaxed());
     }
 
     public static String clean(String value) {

@@ -1,6 +1,6 @@
 [
   {
-    "resource": "/oauth2/password/captcha",
+    "resource": "/oauth2/captcha",
     "limitApp": "default",
     "count": 300,
     "grade": 1,
