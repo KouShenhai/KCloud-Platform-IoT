@@ -14,7 +14,14 @@
  * limitations under the License.
  */
 package org.laokou.oss.server.support;
+import com.amazonaws.ClientConfiguration;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.laokou.oss.client.vo.SysOssVO;
@@ -23,7 +30,7 @@ import java.net.URL;
 /**
  * @author laokou
  */
-public class AmazonS3StorageService extends AbstractStorageService{
+public class AmazonS3StorageService extends AbstractStorageService {
 
     public AmazonS3StorageService(SysOssVO vo) {
         this.vo = vo;
@@ -55,5 +62,25 @@ public class AmazonS3StorageService extends AbstractStorageService{
         String bucketName = vo.getBucketName();
         URL url = amazonS3.getUrl(bucketName, fileName);
         return url.toString();
+    }
+
+    @Override
+    protected AmazonS3 getAmazonS3() {
+        String accessKey = vo.getAccessKey();
+        String secretKey = vo.getSecretKey();
+        String region = vo.getRegion();
+        String endpoint = vo.getEndpoint();
+        Boolean pathStyleAccessEnabled = vo.getPathStyleAccessEnabled() == 1 ? true : false;
+        ClientConfiguration clientConfiguration = new ClientConfiguration();
+        AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(endpoint, region);
+        AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
+        AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(awsCredentials);
+        AmazonS3 amazonS3 = AmazonS3Client.builder()
+                .withEndpointConfiguration(endpointConfiguration)
+                .withClientConfiguration(clientConfiguration)
+                .withCredentials(awsCredentialsProvider)
+                .withPathStyleAccessEnabled(pathStyleAccessEnabled)
+                .build();
+        return amazonS3;
     }
 }
