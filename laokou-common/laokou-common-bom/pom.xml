@@ -83,11 +83,18 @@
         <httpclient5.version>5.2.1</httpclient5.version>
         <!--jna版本-->
         <jna.version>5.13.0</jna.version>
+        <!--hibernate-validator版本-->
+        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents.client5</groupId>
                 <artifactId>httpclient5</artifactId>

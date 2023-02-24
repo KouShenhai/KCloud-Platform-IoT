@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.core.utils;
-import cn.hutool.core.codec.Base64Encoder;
-import java.io.IOException;
-import java.io.InputStream;
+
+package org.laokou.common.i18n.utils;
+
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+
 /**
+ * https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-validating-bean-constraints
  * @author laokou
  */
-public class Base64Util {
+public class ValidatorUtil {
 
-    public static String convertBase64(InputStream in) {
-        try {
-            byte[] buf = new byte[in.available()];
-            in.read(buf);
-            return Base64Encoder.encode(buf);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static void main(String[] args) {
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
     }
 
 }
