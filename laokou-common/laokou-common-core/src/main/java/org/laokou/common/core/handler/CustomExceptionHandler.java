@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.core.exception;
+package org.laokou.common.core.handler;
+import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.core.HttpResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;

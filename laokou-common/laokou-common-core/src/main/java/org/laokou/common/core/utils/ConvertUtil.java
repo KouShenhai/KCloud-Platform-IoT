@@ -19,14 +19,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 转换工具类
  * @author laokou
  */
 public class ConvertUtil extends BeanUtils{
@@ -38,12 +36,11 @@ public class ConvertUtil extends BeanUtils{
         }
         T targetObject = null;
         try {
-            targetObject = BeanUtils.instantiateClass(target);
-            BeanUtils.copyProperties(source, targetObject);
+            targetObject = instantiateClass(target);
+            copyProperties(source, targetObject);
         } catch (Exception e) {
             logger.error("convert error ", e);
         }
-
         return targetObject;
     }
 

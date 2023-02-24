@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 package org.laokou.sentinel.handler;
-import cn.hutool.http.HttpStatus;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
 import java.io.PrintWriter;
@@ -38,7 +38,7 @@ public class CustomSentinelExceptionHandler implements BlockExceptionHandler {
         Map<String,Object> dataMap = new HashMap<>(2);
         dataMap.put("code",429);
         dataMap.put("msg","服务已被限流，请稍后再试");
-        response.setStatus(HttpStatus.HTTP_OK);
+        response.setStatus(HttpStatus.OK.value());
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
         PrintWriter writer = response.getWriter();

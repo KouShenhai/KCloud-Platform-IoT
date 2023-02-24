@@ -13,24 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.core.utils;
-import cn.hutool.core.codec.Base64Encoder;
-import java.io.IOException;
-import java.io.InputStream;
+package org.laokou.common.i18n.core;
+
+import lombok.Data;
+import org.laokou.common.i18n.utils.MessageUtil;
+
 /**
  * @author laokou
  */
-public class Base64Util {
+@Data
+public class CustomException extends RuntimeException{
 
-    public static String convertBase64(InputStream in) {
-        try {
-            byte[] buf = new byte[in.available()];
-            in.read(buf);
-            return Base64Encoder.encode(buf);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+    private int code;
+    private String msg;
+
+    public CustomException(int code) {
+        this.code = code;
+        this.msg = MessageUtil.getMessage(code);
+    }
+
+    public CustomException(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public CustomException(String msg) {
+        super(msg);
+        this.code = StatusCode.INTERNAL_SERVER_ERROR;
+        this.msg = msg;
     }
 
 }

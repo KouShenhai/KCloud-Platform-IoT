@@ -35,6 +35,8 @@
         <spring-doc.version>2.0.2</spring-doc.version>
         <!--shardingsphere版本-->
         <shardingsphere.version>5.3.2</shardingsphere.version>
+        <!--mapstruct版本-->
+        <mapstruct.version>1.5.3.Final</mapstruct.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -226,6 +228,13 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+<!--                    <annotationProcessorPaths>-->
+<!--                        <path>-->
+<!--                            <groupId>org.mapstruct</groupId>-->
+<!--                            <artifactId>mapstruct-processor</artifactId>-->
+<!--                            <version>${mapstruct.version}</version>-->
+<!--                        </path>-->
+<!--                    </annotationProcessorPaths>-->
                 </configuration>
             </plugin>
             <plugin>

@@ -15,7 +15,7 @@
  */
 package org.laokou.oss.server.support;
 import com.amazonaws.services.s3.AmazonS3;
-import org.laokou.common.core.exception.CustomException;
+import org.laokou.common.i18n.core.CustomException;
 import org.laokou.oss.client.OssTypeEnum;
 import org.laokou.oss.client.vo.SysOssVO;
 import java.io.InputStream;

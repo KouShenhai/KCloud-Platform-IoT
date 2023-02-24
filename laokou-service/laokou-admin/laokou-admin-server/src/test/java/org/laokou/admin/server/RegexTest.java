@@ -18,7 +18,7 @@ package org.laokou.admin.server;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.utils.ValidatorUtil;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.tenant.dto.SysSourceDTO;
 import org.springframework.boot.test.context.SpringBootTest;
 

@@ -23,7 +23,7 @@ import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.SysCaptchaService;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.vo.OptionVO;
-import org.laokou.common.core.exception.CustomException;
+import org.laokou.common.i18n.core.CustomException;
 import org.laokou.auth.server.application.service.SysAuthApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.*;
