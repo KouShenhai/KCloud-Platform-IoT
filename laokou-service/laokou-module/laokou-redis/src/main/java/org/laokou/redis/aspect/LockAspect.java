@@ -15,7 +15,7 @@
  */
 package org.laokou.redis.aspect;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.exception.CustomException;
+import org.laokou.common.i18n.core.CustomException;
 import org.laokou.redis.annotation.Lock4j;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

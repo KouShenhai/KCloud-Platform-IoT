@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 package org.laokou.elasticsearch.server.support;
-import cn.hutool.core.collection.CollectionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.DocWriteResponse;
@@ -57,7 +57,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortOrder;
-import org.laokou.common.core.exception.CustomException;
+import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.elasticsearch.client.constant.EsConstant;
@@ -68,7 +68,6 @@ import org.laokou.elasticsearch.client.utils.FieldMapping;
 import org.laokou.elasticsearch.client.utils.FieldMappingUtil;
 import org.laokou.elasticsearch.client.vo.SearchVO;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import java.io.IOException;
 import java.util.*;
 /**
@@ -774,7 +773,7 @@ public class ElasticsearchTemplate {
         final List<SearchDTO> queryStringList = searchQo.getQueryStringList();
         //or查询
         final List<SearchDTO> orSearchList = searchQo.getOrSearchList();
-        if (CollectionUtil.isNotEmpty(orSearchList)) {
+        if (CollectionUtils.isNotEmpty(orSearchList)) {
             //or查询
             BoolQueryBuilder orQuery = QueryBuilders.boolQuery();
             for (SearchDTO dto : orSearchList) {
@@ -782,7 +781,7 @@ public class ElasticsearchTemplate {
             }
             boolQueryBuilder.must(orQuery);
         }
-        if (CollectionUtil.isNotEmpty(queryStringList)) {
+        if (CollectionUtils.isNotEmpty(queryStringList)) {
             //分词查询
             BoolQueryBuilder analysisQuery = QueryBuilders.boolQuery();
             for (SearchDTO dto : queryStringList) {
@@ -837,7 +836,7 @@ public class ElasticsearchTemplate {
         //匹配度倒排，数值越大匹配度越高
         searchSourceBuilder.sort("_score",SortOrder.DESC);
         //排序
-        if (CollectionUtil.isNotEmpty(sortFieldList)) {
+        if (CollectionUtils.isNotEmpty(sortFieldList)) {
             for (SearchDTO dto : sortFieldList) {
                 SortOrder sortOrder;
                 final String desc = "desc";

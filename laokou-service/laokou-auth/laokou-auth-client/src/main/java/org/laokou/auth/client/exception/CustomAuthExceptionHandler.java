@@ -16,10 +16,10 @@
 
 package org.laokou.auth.client.exception;
 
-import cn.hutool.http.HttpStatus;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.core.HttpResult;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.util.MimeTypeUtils;
@@ -35,7 +35,7 @@ public class CustomAuthExceptionHandler {
     public static final String ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
     public static void handleException(HttpServletResponse response, int code, String message) throws IOException {
-        response.setStatus(HttpStatus.HTTP_OK);
+        response.setStatus(HttpStatus.OK.value());
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
         PrintWriter writer = response.getWriter();

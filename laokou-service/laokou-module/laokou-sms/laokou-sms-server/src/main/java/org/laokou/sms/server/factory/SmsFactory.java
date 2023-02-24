@@ -17,7 +17,7 @@
 package org.laokou.sms.server.factory;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.exception.CustomException;
+import org.laokou.common.i18n.core.CustomException;
 import org.laokou.sms.client.enums.SmsTypeEnum;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;

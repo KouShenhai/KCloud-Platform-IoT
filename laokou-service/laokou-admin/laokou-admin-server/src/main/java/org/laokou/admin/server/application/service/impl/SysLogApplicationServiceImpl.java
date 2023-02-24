@@ -35,7 +35,7 @@ import org.laokou.common.log.service.SysLoginLogService;
 import org.laokou.common.log.service.SysOperateLogService;
 import org.laokou.common.log.vo.SysLoginLogVO;
 import org.laokou.common.log.vo.SysOperateLogVO;
-import org.laokou.common.core.utils.ValidatorUtil;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;

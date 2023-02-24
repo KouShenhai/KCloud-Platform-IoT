@@ -13,27 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.core.exception;
-import org.laokou.common.i18n.core.HttpResult;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+package org.laokou.common.i18n.core;
+
+import lombok.Data;
+import org.laokou.common.i18n.utils.MessageUtil;
 
 /**
  * @author laokou
  */
-@RestControllerAdvice
-@ResponseBody
-@Component
-public class CustomExceptionHandler {
-	/**
-	 *
-	 * 处理自定义异常
-	 */
-	@ExceptionHandler({CustomException.class})
-	public HttpResult handleRenException(CustomException ex){
-		return new HttpResult().error(ex.getCode(),ex.getMsg());
-	}
+@Data
+public class CustomException extends RuntimeException{
+
+    private int code;
+    private String msg;
+
+    public CustomException(int code) {
+        this.code = code;
+        this.msg = MessageUtil.getMessage(code);
+    }
+
+    public CustomException(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public CustomException(String msg) {
+        super(msg);
+        this.code = StatusCode.INTERNAL_SERVER_ERROR;
+        this.msg = msg;
+    }
 
 }
