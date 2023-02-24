@@ -178,71 +178,71 @@ public class FileUtil extends FileUtils {
         return conn.getInputStream();
     }
 
-    /**
-     * 删除文件，不管路径是文件还是文件夹，都删掉。<br>
-     * 删除文件夹时会自动删除子文件夹。
-     */
-    public static boolean delete(String path) {
-        path = normalizePath(path);
-        File file = new File(path);
-        return delete(file);
-    }
+//    /**
+//     * 删除文件，不管路径是文件还是文件夹，都删掉。<br>
+//     * 删除文件夹时会自动删除子文件夹。
+//     */
+//    public static boolean delete(String path) {
+//        path = normalizePath(path);
+//        File file = new File(path);
+//        return delete(file);
+//    }
+//
+//    /**
+//     * 删除文件，不管路径是文件还是文件夹，都删掉。<br>
+//     * 删除文件夹时会自动删除子文件夹。
+//     */
+//    public static File delete(File f) {
+//        f = normalizeFile(f);
+//        if (!f.exists()) {
+//            log.info("文件或文件夹不存在：" + f);
+//            return false;
+//        }
+//        if (f.isFile()) {
+//            return f.delete();
+//        } else {
+//            return FileUtil.deleteDir(f);
+//        }
+//    }
 
-    /**
-     * 删除文件，不管路径是文件还是文件夹，都删掉。<br>
-     * 删除文件夹时会自动删除子文件夹。
-     */
-    public static boolean delete(File f) {
-        f = normalizeFile(f);
-        if (!f.exists()) {
-            log.info("文件或文件夹不存在：" + f);
-            return false;
-        }
-        if (f.isFile()) {
-            return f.delete();
-        } else {
-            return FileUtil.deleteDir(f);
-        }
-    }
+//    /**
+//     * 删除文件夹及其子文件夹
+//     */
+//    private static boolean deleteDir(File dir) {
+//        dir = normalizeFile(dir);
+//        try {
+//            // 先删除完里面所有内容再删除空文件夹
+//            return deleteFromDir(dir) && dir.delete();
+//        } catch (Exception e) {
+//            return false;
+//        }
+//    }
 
-    /**
-     * 删除文件夹及其子文件夹
-     */
-    private static boolean deleteDir(File dir) {
-        dir = normalizeFile(dir);
-        try {
-            // 先删除完里面所有内容再删除空文件夹
-            return deleteFromDir(dir) && dir.delete();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    /**
-     * 删除文件夹里面的所有文件和子文件夹,但不删除自己本身
-     *
-     * @return
-     */
-    public static boolean deleteFromDir(File dir) {
-        dir = normalizeFile(dir);
-        if (!dir.exists()) {
-            log.info("文件夹不存在：" + dir);
-            return false;
-        }
-        if (!dir.isDirectory()) {
-            log.info(dir + "不是文件夹");
-            return false;
-        }
-        File[] tempList = dir.listFiles();
-        assert tempList != null;
-        for (File file : tempList) {
-            log.info("删除：" + dir);
-            if (!delete(file)) {
-                return false;
-            }
-        }
-        return true;
-    }
+//    /**
+//     * 删除文件夹里面的所有文件和子文件夹,但不删除自己本身
+//     *
+//     * @return
+//     */
+//    public static boolean deleteFromDir(File dir) {
+//        dir = normalizeFile(dir);
+//        if (!dir.exists()) {
+//            log.info("文件夹不存在：" + dir);
+//            return false;
+//        }
+//        if (!dir.isDirectory()) {
+//            log.info(dir + "不是文件夹");
+//            return false;
+//        }
+//        File[] tempList = dir.listFiles();
+//        assert tempList != null;
+//        for (File file : tempList) {
+//            log.info("删除：" + dir);
+//            if (!delete(file)) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
     /**
      * 从指定位置复制文件到另一个文件夹

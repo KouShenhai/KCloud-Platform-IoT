@@ -44,7 +44,7 @@ public class SysAuthApiController {
      * @param request
      * @return
      */
-    @GetMapping("/password/captcha")
+    @GetMapping("/captcha")
     @Operation(summary = "系统认证>账号密码登录>验证码",description = "系统认证>账号密码登录>验证码")
     @Parameter(name = AuthConstant.UUID,description = "唯一标识",example = "1111")
     public HttpResult<String> captcha(HttpServletRequest request) {

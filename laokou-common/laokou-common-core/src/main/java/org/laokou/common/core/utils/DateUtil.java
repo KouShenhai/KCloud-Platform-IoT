@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.core.utils;
-import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
