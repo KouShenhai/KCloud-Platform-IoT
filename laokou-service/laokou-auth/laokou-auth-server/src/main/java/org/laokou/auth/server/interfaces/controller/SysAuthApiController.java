@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.server.application.service.SysAuthApplicationService;
 import org.laokou.common.core.vo.OptionVO;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

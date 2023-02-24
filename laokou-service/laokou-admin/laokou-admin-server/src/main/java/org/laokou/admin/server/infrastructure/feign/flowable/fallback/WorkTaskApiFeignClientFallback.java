@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.infrastructure.feign.flowable.WorkTaskApiFeignClient;
 import org.laokou.common.core.exception.CustomException;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.dto.AuditDTO;
 import org.laokou.flowable.client.dto.ProcessDTO;
 import org.laokou.flowable.client.dto.TaskDTO;

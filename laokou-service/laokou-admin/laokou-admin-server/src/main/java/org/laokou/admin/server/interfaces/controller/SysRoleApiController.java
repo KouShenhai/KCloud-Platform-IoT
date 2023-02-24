@@ -25,7 +25,7 @@ import org.laokou.admin.client.vo.SysRoleVO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

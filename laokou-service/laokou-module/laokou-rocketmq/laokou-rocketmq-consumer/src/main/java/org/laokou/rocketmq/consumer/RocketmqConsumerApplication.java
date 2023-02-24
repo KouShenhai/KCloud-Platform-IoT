@@ -15,7 +15,6 @@
  */
 package org.laokou.rocketmq.consumer;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.laokou.common.core.exception.CustomException;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.swagger.config.CorsConfig;
 import org.laokou.rocketmq.client.constant.RocketmqConstant;

@@ -15,6 +15,8 @@
  */
 package org.laokou.oss.server.support;
 import com.amazonaws.services.s3.AmazonS3;
+import org.laokou.common.core.exception.CustomException;
+import org.laokou.oss.client.OssTypeEnum;
 import org.laokou.oss.client.vo.SysOssVO;
 import java.io.InputStream;
 
@@ -22,10 +24,15 @@ import java.io.InputStream;
  * @author laokou
  */
 public abstract class AbstractStorageService implements StorageService{
-
     protected SysOssVO vo;
     public String upload(int limitRead, long size, String fileName, InputStream inputStream, String contentType) {
-        return uploadS3(limitRead,size,fileName,inputStream,contentType);
+        OssTypeEnum type = OssTypeEnum.S3;
+        switch (type) {
+            case S3 -> {
+                return uploadS3(limitRead,size,fileName,inputStream,contentType);
+            }
+            default -> throw new CustomException("不支持该协议");
+        }
     }
 
     public String uploadS3(int limitRead, long size, String fileName, InputStream inputStream, String contentType) {

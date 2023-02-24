@@ -13,26 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.core.utils;
-
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
+package org.laokou.oss.client;
 
 /**
- * @author 86189
+ * @author laokou
  */
-public class MessageUtil {
-    private static final MessageSource MESSAGE_SOURCE;
-    static {
-        MESSAGE_SOURCE = SpringContextUtil.getBean(MessageSource.class);
-    }
 
-    public static String getMessage(int code){
-        return getMessage(code, new String[0]);
-    }
+public enum OssTypeEnum {
 
-    public static String getMessage(int code, String... params){
-        return MESSAGE_SOURCE.getMessage(code + "", params, LocaleContextHolder.getLocale());
-    }
+    /**
+     * s3协议
+     */
+    S3
 
 }

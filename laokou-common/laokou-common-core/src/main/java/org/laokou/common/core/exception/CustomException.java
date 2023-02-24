@@ -16,7 +16,8 @@
 package org.laokou.common.core.exception;
 
 import lombok.Data;
-import org.laokou.common.core.utils.MessageUtil;
+import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.utils.MessageUtil;
 
 /**
  * @author laokou
@@ -32,37 +33,14 @@ public class CustomException extends RuntimeException{
         this.msg = MessageUtil.getMessage(code);
     }
 
-    public CustomException(int code, String... params) {
-        this.code = code;
-        this.msg = MessageUtil.getMessage(code, params);
-    }
-
     public CustomException(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public CustomException(int code, Throwable e) {
-        super(e);
-        this.code = code;
-        this.msg = MessageUtil.getMessage(code);
-    }
-
-    public CustomException(int code, Throwable e, String... params) {
-        super(e);
-        this.code = code;
-        this.msg = MessageUtil.getMessage(code, params);
-    }
-
     public CustomException(String msg) {
         super(msg);
-        this.code = ErrorCode.INTERNAL_SERVER_ERROR;
-        this.msg = msg;
-    }
-
-    public CustomException(String msg, Throwable e) {
-        super(msg, e);
-        this.code = ErrorCode.INTERNAL_SERVER_ERROR;
+        this.code = StatusCode.INTERNAL_SERVER_ERROR;
         this.msg = msg;
     }
 

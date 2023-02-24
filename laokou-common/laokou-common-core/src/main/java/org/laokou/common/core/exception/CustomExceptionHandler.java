@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 package org.laokou.common.core.exception;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 /**
  * @author laokou
  */
@@ -31,8 +32,8 @@ public class CustomExceptionHandler {
 	 * 处理自定义异常
 	 */
 	@ExceptionHandler({CustomException.class})
-	public HttpResult<Boolean> handleRenException(CustomException ex){
-		return new HttpResult<Boolean>().error(ex.getCode(),ex.getMsg());
+	public HttpResult handleRenException(CustomException ex){
+		return new HttpResult().error(ex.getCode(),ex.getMsg());
 	}
 
 }

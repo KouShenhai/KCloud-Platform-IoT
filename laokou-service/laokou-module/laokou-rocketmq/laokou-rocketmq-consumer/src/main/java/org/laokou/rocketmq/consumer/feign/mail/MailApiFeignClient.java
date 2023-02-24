@@ -15,7 +15,7 @@
  */
 package org.laokou.rocketmq.consumer.feign.mail;
 import org.laokou.common.core.constant.ServiceConstant;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.rocketmq.consumer.feign.mail.fallback.MailApiFeignClientFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;

@@ -36,6 +36,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @author laokou
  */
 @SpringBootApplication(scanBasePackages = {"org.laokou.tenant"
+        , "org.laokou.common.i18n"
         , "org.laokou.common.log"
         , "org.laokou.common.security"
         , "org.laokou.sentinel"

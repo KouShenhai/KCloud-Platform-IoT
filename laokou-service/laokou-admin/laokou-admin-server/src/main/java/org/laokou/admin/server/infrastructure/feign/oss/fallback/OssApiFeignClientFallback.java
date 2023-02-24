@@ -18,7 +18,7 @@ package org.laokou.admin.server.infrastructure.feign.oss.fallback;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.infrastructure.feign.oss.OssApiFeignClient;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.oss.client.vo.UploadVO;
 import org.springframework.web.multipart.MultipartFile;
 

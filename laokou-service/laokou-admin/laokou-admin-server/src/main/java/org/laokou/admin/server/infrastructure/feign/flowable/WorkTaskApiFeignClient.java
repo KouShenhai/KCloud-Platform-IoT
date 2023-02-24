@@ -17,7 +17,7 @@ package org.laokou.admin.server.infrastructure.feign.flowable;
 import feign.Response;
 import org.laokou.admin.server.infrastructure.feign.flowable.factory.WorkTaskApiFeignClientFallbackFactory;
 import org.laokou.common.core.constant.ServiceConstant;
-import org.laokou.common.core.utils.HttpResult;
+import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.dto.AuditDTO;
 import org.laokou.flowable.client.dto.ProcessDTO;
 import org.laokou.flowable.client.dto.TaskDTO;
