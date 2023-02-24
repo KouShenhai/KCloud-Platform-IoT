@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 转换工具类
  * @author laokou
  */
 public class ConvertUtil extends BeanUtils{
@@ -43,7 +42,6 @@ public class ConvertUtil extends BeanUtils{
         } catch (Exception e) {
             logger.error("convert error ", e);
         }
-
         return targetObject;
     }
 
