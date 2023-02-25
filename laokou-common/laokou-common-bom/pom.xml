@@ -87,6 +87,8 @@
         <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
         <!--mapstruct版本-->
         <mapstruct.version>1.5.3.Final</mapstruct.version>
+        <!--hbase版本-->
+        <hbase.version>2.5.3</hbase.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -98,8 +100,23 @@
 <!--                <version>${mapstruct.version}</version>-->
 <!--            </dependency>-->
             <dependency>
+                <groupId>org.apache.hbase</groupId>
+                <artifactId>hbase-shaded-client</artifactId>
+                <version>${hbase.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-dynamic-router</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-hbase-client</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-hbase-server</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

@@ -48,18 +48,14 @@ public class MongodbApiController {
     @PostMapping("/query")
     @Operation(summary = "统计报表>查询",description = "统计报表>查询")
     public HttpResult<SearchVO> query(@RequestBody final QueryForm queryForm) {
-        HttpResult<SearchVO> result = new HttpResult<>();
-        result.setData(mongodbTemplate.query(queryForm));
-        return result;
+        return new HttpResult<SearchVO>().ok(mongodbTemplate.query(queryForm));
     }
 
     @PostMapping("/get")
     @Operation(summary = "统计报表>详情",description = "统计报表>详情")
     public HttpResult<Object> get(@RequestParam("collectionName")final String collectionName, @RequestParam("id")final String id) {
-        HttpResult<Object> result = new HttpResult<>();
         final Class<?> clazz = MongodbFieldUtil.getClazz(collectionName);
-        result.setData(mongodbTemplate.get(clazz,id));
-        return result;
+        return new HttpResult<>().ok(mongodbTemplate.get(clazz,id));
     }
 
     @PostMapping("/insertBatch")
