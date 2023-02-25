@@ -16,8 +16,11 @@
 package org.laokou.sentinel.handler;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.alibaba.csp.sentinel.slots.block.degrade.DegradeException;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.i18n.core.StatusCode;
@@ -30,16 +33,22 @@ import java.nio.charset.StandardCharsets;
  * @author laokou
  */
 @Component
+@Slf4j
 public class CustomSentinelExceptionHandler implements BlockExceptionHandler {
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, BlockException e) throws Exception {
-        response.setStatus(HttpStatus.OK.value());
-        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
-        PrintWriter writer = response.getWriter();
-        writer.write(JacksonUtil.toJsonStr(new HttpResult().error(StatusCode.API_BLOCK_REQUEST)));
-        writer.flush();
-        writer.close();
+        if (e instanceof FlowException) {
+            log.info("接口被限流");
+            response.setStatus(HttpStatus.OK.value());
+            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+            response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
+            PrintWriter writer = response.getWriter();
+            writer.write(JacksonUtil.toJsonStr(new HttpResult().error(StatusCode.API_BLOCK_REQUEST)));
+            writer.flush();
+            writer.close();
+        } else if (e instanceof DegradeException) {
+            log.info("接口被降级");
+        }
     }
 }
