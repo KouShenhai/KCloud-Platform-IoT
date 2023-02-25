@@ -35,7 +35,10 @@ spring:
   cloud:
     # sentinel
     sentinel:
+      filter:
+        enabled: true
       datasource:
+        # 自定义名称
         db0:
           nacos:
             server-addr: @NACOS-CONFIG-ADDRESS@
