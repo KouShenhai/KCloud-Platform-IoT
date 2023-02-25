@@ -49,7 +49,7 @@ public class RouterUtil {
        String template = new String(bytes, StandardCharsets.UTF_8);
        String content = TemplateUtil.getContent(template, dataMap);
        RouteDefinition routeDefinition = JacksonUtil.toBean(content, RouteDefinition.class);
-       log.info("获取的路由信息：{}",JacksonUtil.toJsonStr(routeDefinition,true));
+       log.info("获取路由信息：{}",JacksonUtil.toJsonStr(routeDefinition,true));
    }
 
 }
