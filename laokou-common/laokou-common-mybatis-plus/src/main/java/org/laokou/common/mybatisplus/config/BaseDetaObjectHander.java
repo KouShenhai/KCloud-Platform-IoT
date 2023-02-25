@@ -36,8 +36,8 @@ public class BaseDetaObjectHander implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("insert fill .........");
-        this.strictInsertFill(metaObject, CREATE_DATE, () -> new Date(), Date.class);
-        this.strictInsertFill(metaObject, UPDATE_DATE, () -> new Date(), Date.class);
+        this.strictInsertFill(metaObject, CREATE_DATE, Date::new, Date.class);
+        this.strictInsertFill(metaObject, UPDATE_DATE, Date::new, Date.class);
         this.strictInsertFill(metaObject, DEL_FLAG, () -> NO, Integer.class);
         this.strictInsertFill(metaObject, VERSION, () -> NO, Integer.class);
     }
@@ -45,7 +45,7 @@ public class BaseDetaObjectHander implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         log.info("update fill .......");
-        this.strictUpdateFill(metaObject, UPDATE_DATE, () -> new Date(), Date.class);
+        this.strictUpdateFill(metaObject, UPDATE_DATE, Date::new, Date.class);
     }
 
 }

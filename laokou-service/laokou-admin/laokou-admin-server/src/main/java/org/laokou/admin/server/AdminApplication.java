@@ -18,8 +18,12 @@
  */
 package org.laokou.admin.server;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import freemarker.template.TemplateException;
+import lombok.RequiredArgsConstructor;
 import org.laokou.common.swagger.config.CorsConfig;
+import org.laokou.dynamic.router.utils.RouterUtil;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -28,6 +32,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableAsync;
+
+import java.io.IOException;
+
 /**
  * 架构演变
  * 单机架构（两层架构）
@@ -42,6 +49,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
         , "org.laokou.sentinel"
         , "org.laokou.common.swagger"
         , "org.laokou.common.core"
+        , "org.laokou.dynamic.router"
         , "org.laokou.admin"
         , "org.laokou.redis"
         , "org.laokou.openfeign"
@@ -57,10 +65,17 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @MapperScan(value = {"org.laokou.admin.server.domain.sys.repository.mapper"
         , "org.laokou.tenant.mapper"
         , "org.laokou.common.log.mapper"})
-public class AdminApplication {
+@RequiredArgsConstructor
+public class AdminApplication implements CommandLineRunner {
+
+    private final RouterUtil routerUtil;
 
     public static void main(String[] args) {
         SpringApplication.run(AdminApplication.class, args);
     }
 
+    @Override
+    public void run(String... args) throws TemplateException, IOException {
+        routerUtil.initRouter();
+    }
 }

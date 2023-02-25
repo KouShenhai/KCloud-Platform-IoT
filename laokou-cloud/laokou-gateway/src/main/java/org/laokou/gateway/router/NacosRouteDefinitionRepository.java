@@ -45,6 +45,7 @@ import java.util.concurrent.Executors;
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository, ApplicationEventPublisherAware {
 
     private static final String DATA_ID = "router.json";
+
     private final NacosConfigManager nacosConfigManager;
 
     private final NacosConfigProperties nacosConfigProperties;

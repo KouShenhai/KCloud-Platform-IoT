@@ -182,7 +182,8 @@ public class WorkTaskServiceImpl implements WorkTaskService {
             ImageIO.write(image,"png",outputStream);
         }
         outputStream.flush();
-        FileUtil.closeStream(inputStream,outputStream);
+        inputStream.close();
+        outputStream.close();
     }
 
     private InputStream getInputStream(String processInstanceId) {
