@@ -1,0 +1,9 @@
+server:
+  port: 9016
+  servlet:
+    context-path: /laokou-service
+spring:
+  profiles:
+    active: test
+  application:
+    name: laokou-hbase

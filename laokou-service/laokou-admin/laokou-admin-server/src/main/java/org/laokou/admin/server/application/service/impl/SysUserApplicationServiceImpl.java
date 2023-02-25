@@ -63,51 +63,21 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean updateUser(SysUserDTO dto,boolean adminFlag) {
+    public Boolean updateUser(SysUserDTO dto) {
         ValidatorUtil.validateEntity(dto);
         Long id = dto.getId();
         if (null == id) {
             throw new CustomException("用户编号不为空");
         }
-        long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername())
-                        .eq(SysUserDO::getTenantId,UserUtil.getTenantId())
-                .ne(SysUserDO::getId,id));
-        if (count > 0) {
-            throw new CustomException("用户名已存在，请重新填写");
+        if (CollectionUtils.isEmpty(dto.getRoleIds())) {
+            throw new CustomException("所选角色不少于一个，请重新选择");
         }
-        if (adminFlag) {
-            if (CollectionUtils.isEmpty(dto.getRoleIds())) {
-                throw new CustomException("所选角色不少于一个，请重新选择");
-            }
-            if (dto.getDeptId() == null) {
-                throw new CustomException("请选择部门");
-            }
-        } else {
-            // 验证邮箱唯一
-            String mail = dto.getMail();
-            if (StringUtil.isNotEmpty(mail)) {
-                long mailCount = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getTenantId,UserUtil.getTenantId()).eq(SysUserDO::getMail, mail).ne(SysUserDO::getId, id));
-                if (mailCount > 0) {
-                    throw new CustomException("邮箱已被注册，请重新填写");
-                }
-            }
-            // 验证手机号唯一
-            String mobile = dto.getMobile();
-            if (StringUtil.isNotEmpty(mobile)) {
-                long mobileCount = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getTenantId,UserUtil.getTenantId()).eq(SysUserDO::getMobile, mobile).ne(SysUserDO::getId, id));
-                if (mobileCount > 0) {
-                    throw new CustomException("手机号已被注册，请重新填写");
-                }
-            }
+        if (dto.getDeptId() == null) {
+            throw new CustomException("请选择部门");
         }
         dto.setEditor(UserUtil.getUserId());
-        String password = dto.getPassword();
-        if (StringUtil.isNotEmpty(password)) {
-            dto.setPassword(passwordEncoder.encode(password));
-        }
         Integer version = sysUserService.getVersion(id);
         dto.setVersion(version);
-        dto.setTenantId(UserUtil.getTenantId());
         sysUserService.updateUser(dto);
         List<Long> roleIds = dto.getRoleIds();
         //删除中间表
@@ -115,6 +85,59 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (CollectionUtils.isNotEmpty(roleIds)) {
             saveOrUpdate(dto.getId(),roleIds);
         }
+        return true;
+    }
+
+    @Override
+    public Boolean updatePassword(Long id, String newPassword) {
+        Integer version = sysUserService.getVersion(id);
+        SysUserDTO dto = new SysUserDTO();
+        dto.setEditor(UserUtil.getUserId());
+        dto.setId(id);
+        dto.setPassword(passwordEncoder.encode(newPassword));
+        dto.setVersion(version);
+        sysUserService.updateUser(dto);
+        return true;
+    }
+
+    @Override
+    public Boolean updateStatus(Long id, Integer status) {
+        Integer version = sysUserService.getVersion(id);
+        SysUserDTO dto = new SysUserDTO();
+        dto.setEditor(UserUtil.getUserId());
+        dto.setId(id);
+        dto.setStatus(status);
+        dto.setVersion(version);
+        sysUserService.updateUser(dto);
+        return true;
+    }
+
+    @Override
+    public Boolean updateInfo(SysUserDTO dto) {
+        Long id = dto.getId();
+        if (null == id) {
+            throw new CustomException("用户编号不为空");
+        }
+        // 验证邮箱唯一
+        String mail = dto.getMail();
+        if (StringUtil.isNotEmpty(mail)) {
+            long mailCount = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getTenantId,UserUtil.getTenantId()).eq(SysUserDO::getMail, mail).ne(SysUserDO::getId, id));
+            if (mailCount > 0) {
+                throw new CustomException("邮箱已被注册，请重新填写");
+            }
+        }
+        // 验证手机号唯一
+        String mobile = dto.getMobile();
+        if (StringUtil.isNotEmpty(mobile)) {
+            long mobileCount = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getTenantId,UserUtil.getTenantId()).eq(SysUserDO::getMobile, mobile).ne(SysUserDO::getId, id));
+            if (mobileCount > 0) {
+                throw new CustomException("手机号已被注册，请重新填写");
+            }
+        }
+        dto.setEditor(UserUtil.getUserId());
+        Integer version = sysUserService.getVersion(id);
+        dto.setVersion(version);
+        sysUserService.updateUser(dto);
         return true;
     }
 

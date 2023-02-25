@@ -31,10 +31,32 @@ public interface SysUserApplicationService {
     /**
      * 修改用户
      * @param dto
-     * @param adminFlag
      * @return
      */
-    Boolean updateUser(SysUserDTO dto,boolean adminFlag);
+    Boolean updateUser(SysUserDTO dto);
+
+    /**
+     * 修改密码
+     * @param id
+     * @param newPassword
+     * @return
+     */
+    Boolean updatePassword(Long id,String newPassword);
+
+    /**
+     * 修改状态
+     * @param id
+     * @param status
+     * @return
+     */
+    Boolean updateStatus(Long id,Integer status);
+
+    /**
+     * 修改个人信息
+     * @param dto
+     * @return
+     */
+    Boolean updateInfo(SysUserDTO dto);
 
     /**
      * 新增用户

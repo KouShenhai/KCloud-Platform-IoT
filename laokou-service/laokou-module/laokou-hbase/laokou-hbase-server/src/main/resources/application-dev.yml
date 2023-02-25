@@ -1,0 +1,3 @@
+hbase:
+  zookeeper:
+    quorum: laokou:2181

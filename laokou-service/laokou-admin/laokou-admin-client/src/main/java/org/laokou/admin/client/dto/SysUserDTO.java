@@ -50,6 +50,5 @@ public class SysUserDTO implements Serializable {
     private Long deptId;
 
     private Integer version;
-    private Long tenantId;
 
 }

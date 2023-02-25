@@ -75,7 +75,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 | Flowable                    | 7.0.0.M1       |
 | ShardingSphere              | 5.3.2          |
 | OpenResty                   | 1.21.4.1       |
-
+| HBase                       | 2.5.3          |
 #### 🍺 相关技术
 
 - API网关：Spring Cloud Gateway
@@ -87,6 +87,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - 服务熔断&降级&限流：Sentinel
 - 分库分表&读写分离：ShardingSphere
 - 分布式事务：Seata
+- 分布式数据库：HBase
 - 服务监控：Spring Boot Admin & Prometheus
 - 消息队列：RocketMQ & Kafka
 - 任务调度：Power Job
@@ -135,6 +136,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
                 └── laokou-elasticsearch           --- 搜索模块  
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-oss                     --- 对象存储模块  
+                └── laokou-hbase                   --- 海量存储模块  
                 └── laokou-flowable                --- 工作流程模块  
                 └── laokou-dynamic-router          --- 动态路由模块  
 ~~~
