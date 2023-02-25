@@ -72,7 +72,7 @@ public interface StatusCode {
 
     /**
      * gateway => 1
-     * 服务未知错误
+     * 未知错误
      */
     int SERVICE_UNKNOWN_ERROR = 1002;
 
