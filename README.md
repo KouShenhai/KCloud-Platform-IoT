@@ -136,6 +136,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-oss                     --- 对象存储模块  
                 └── laokou-flowable                --- 工作流程模块  
+                └── laokou-dynamic-router          --- 动态路由模块  
 ~~~
 
 ### 🐧 环境配置

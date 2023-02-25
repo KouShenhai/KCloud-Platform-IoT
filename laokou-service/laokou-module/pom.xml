@@ -25,5 +25,6 @@
         <module>laokou-tenant</module>
         <module>laokou-freemarker</module>
         <module>laokou-power-job</module>
+        <module>laokou-dynamic-router</module>
     </modules>
 </project>

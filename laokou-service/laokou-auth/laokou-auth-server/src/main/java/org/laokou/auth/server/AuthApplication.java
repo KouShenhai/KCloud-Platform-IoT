@@ -15,8 +15,11 @@
  */
 package org.laokou.auth.server;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import lombok.RequiredArgsConstructor;
 import org.laokou.common.swagger.config.CorsConfig;
+import org.laokou.dynamic.router.utils.RouterUtil;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -32,7 +35,17 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = {"org.laokou.common.i18n","org.laokou.tenant","org.laokou.common.log","org.laokou.sentinel","org.laokou.common.swagger","org.laokou.common.mybatisplus","org.laokou.common.core","org.laokou.redis","org.laokou.auth"})
+@SpringBootApplication(scanBasePackages = {
+         "org.laokou.common.i18n"
+        ,"org.laokou.tenant"
+        ,"org.laokou.common.log"
+        ,"org.laokou.sentinel"
+        ,"org.laokou.dynamic.router"
+        ,"org.laokou.common.swagger"
+        ,"org.laokou.common.mybatisplus"
+        ,"org.laokou.common.core"
+        ,"org.laokou.redis"
+        ,"org.laokou.auth"})
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties
@@ -42,10 +55,17 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @MapperScan(value = {"org.laokou.auth.server.domain.sys.repository.mapper"
         , "org.laokou.tenant.mapper"
         ,"org.laokou.common.log.mapper"})
-public class AuthApplication{
+@RequiredArgsConstructor
+public class AuthApplication implements CommandLineRunner {
+
+    private final RouterUtil routerUtil;
 
     public static void main(String[] args) {
         SpringApplication.run(AuthApplication.class, args);
     }
 
+    @Override
+    public void run(String... args) throws Exception {
+        routerUtil.initRouter();
+    }
 }

@@ -115,6 +115,10 @@
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-openfeign</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.laokou</groupId>
+			<artifactId>laokou-dynamic-router</artifactId>
+		</dependency>
     </dependencies>
 	<build>
 		<plugins>
