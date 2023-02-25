@@ -86,6 +86,12 @@ public class SysUserApiController {
         return new HttpResult<Boolean>().ok(sysUserApplicationService.updatePassword(id,newPassword));
     }
 
+    @PutMapping("/pwd")
+    @Operation(summary = "系统用户>重置密码",description = "系统用户>重置密码")
+    public HttpResult<Boolean> pwd(@RequestParam("id")Long id,@RequestParam("newPassword")String newPassword) {
+        return new HttpResult<Boolean>().ok(sysUserApplicationService.updatePassword(id,newPassword));
+    }
+
     @PostMapping("/insert")
     @Operation(summary = "系统用户>新增",description = "系统用户>新增")
     @OperateLog(module = "系统用户",name = "用户新增")
