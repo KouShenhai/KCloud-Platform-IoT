@@ -52,7 +52,7 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler, Ordere
 
 	@Override
 	public int getOrder() {
-		return Ordered.HIGHEST_PRECEDENCE + 3000;
+		return Ordered.HIGHEST_PRECEDENCE;
 	}
 
 }
