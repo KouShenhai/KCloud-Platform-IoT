@@ -49,7 +49,7 @@ public class SysUserApiController {
     @PreAuthorize("hasAuthority('sys:user:update')")
     @DataCache(name = "user", key = "#dto.id", type = CacheEnum.DEL)
     public HttpResult<Boolean> update(@RequestBody SysUserDTO dto) {
-        return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto,true));
+        return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto));
     }
 
     @GetMapping("/userInfo")
@@ -64,18 +64,26 @@ public class SysUserApiController {
         return new HttpResult<List<OptionVO>>().ok(sysUserApplicationService.getOptionList());
     }
 
-    @PutMapping("/updateInfo")
+    @PutMapping("/info")
     @Operation(summary = "系统用户>修改个人信息",description = "系统用户>修改个人信息")
-    public HttpResult<Boolean> updateInfo(@RequestBody SysUserDTO dto) {
-        return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto,false));
+    public HttpResult<Boolean> info(@RequestBody SysUserDTO dto) {
+        return new HttpResult<Boolean>().ok(sysUserApplicationService.updateInfo(dto));
+    }
+
+    @PutMapping("/status")
+    @Operation(summary = "系统用户>修改用户状态",description = "系统用户>修改用户状态")
+    @OperateLog(module = "系统用户",name = "用户状态")
+    @PreAuthorize("hasAuthority('sys:user:status')")
+    public HttpResult<Boolean> status(@RequestParam("id")Long id,@RequestParam("status")Integer status) {
+        return new HttpResult<Boolean>().ok(sysUserApplicationService.updateStatus(id,status));
     }
 
     @PutMapping("/password")
     @Operation(summary = "系统用户>重置密码",description = "系统用户>重置密码")
     @OperateLog(module = "系统用户",name = "重置密码")
     @PreAuthorize("hasAuthority('sys:user:password')")
-    public HttpResult<Boolean> password(@RequestBody SysUserDTO dto) {
-        return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto,false));
+    public HttpResult<Boolean> password(@RequestParam("id")Long id,@RequestParam("newPassword")String newPassword) {
+        return new HttpResult<Boolean>().ok(sysUserApplicationService.updatePassword(id,newPassword));
     }
 
     @PostMapping("/insert")
