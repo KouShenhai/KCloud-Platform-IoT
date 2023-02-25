@@ -19,14 +19,13 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.core.StatusCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author laokou
  */
@@ -35,14 +34,11 @@ public class CustomSentinelExceptionHandler implements BlockExceptionHandler {
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, BlockException e) throws Exception {
-        Map<String,Object> dataMap = new HashMap<>(2);
-        dataMap.put("code",429);
-        dataMap.put("msg","服务已被限流，请稍后再试");
         response.setStatus(HttpStatus.OK.value());
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
         PrintWriter writer = response.getWriter();
-        writer.write(JacksonUtil.toJsonStr(dataMap));
+        writer.write(JacksonUtil.toJsonStr(new HttpResult().error(StatusCode.API_BLOCK_REQUEST)));
         writer.flush();
         writer.close();
     }

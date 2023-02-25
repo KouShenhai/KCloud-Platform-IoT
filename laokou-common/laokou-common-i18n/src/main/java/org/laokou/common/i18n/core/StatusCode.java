@@ -21,10 +21,11 @@ package org.laokou.common.i18n.core;
  * 编码由5位数字构成
  * 前2位为应用编号
  * 后3位为业务编号
- * gateway => 1
- * auth    => 2
- * admin   => 3
- * tenant  => 4
+ * gateway  => 1
+ * auth     => 2
+ * admin    => 3
+ * tenant   => 4
+ * sentinel => 5
  * @author laokou
  */
 public interface StatusCode {
@@ -171,5 +172,11 @@ public interface StatusCode {
      * 无效作用域
      */
     int INVALID_SCOPE = 2015;
+
+    /**
+     * sentinel => 5
+     * 接口已被限流，请稍后再试
+     */
+    int API_BLOCK_REQUEST = 5001;
 
 }
