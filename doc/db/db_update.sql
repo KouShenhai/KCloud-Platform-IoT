@@ -30,3 +30,7 @@ ALTER table boot_sys_resource ADD INDEX idx_code(`code`) comment '编码_索引'
 
 -- 2023/2/24 增加boot_sys_resource_audit索引 老寇
 ALTER table boot_sys_resource_audit add index idx_resource_id(`resource_id`) comment '资源编号_索引';
+
+-- 2023/2/26 增加boot_sys_menu数据 老寇
+INSERT INTO `boot_sys_menu` (`id`, `pid`, `permission`, `type`, `name`, `url`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `version`, `visible`) VALUES ('1564996817056710700', '1537444981390794754', 'monitor:flow:view', '0', '流量监控', 'http://127.0.0.1:8081', 'dashboard', '1341620898007281665', NULL, '2023-02-26 21:05:30', '2023-02-26 21:05:30', '0', '4000', '0', '0');
+INSERT INTO `boot_sys_menu` (`id`, `pid`, `permission`, `type`, `name`, `url`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `version`, `visible`) VALUES ('1564996817056710701', '1535878154046939137', 'dynamic:router:view', '0', '动态路由', 'http://192.168.1.1:8848/nacos', 'fork', '1341620898007281665', NULL, '2023-02-26 21:09:04', '2023-02-26 21:09:04', '0', '404', '0', '0');
