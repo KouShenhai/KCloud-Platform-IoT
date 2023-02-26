@@ -135,6 +135,7 @@ public class ElasticsearchApiController {
     @DeleteMapping("/delete")
     @Operation(summary = "分布式搜索>删除索引",description = "分布式搜索>删除索引")
     public HttpResult<Boolean> delete(@RequestParam("indexName")final String indexName) throws IOException {
+        System.out.println(1/0);
         return new HttpResult<Boolean>().ok(elasticsearchTemplate.deleteIndex(indexName));
     }
 

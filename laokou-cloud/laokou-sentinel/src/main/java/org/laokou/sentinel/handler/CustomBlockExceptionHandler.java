@@ -32,7 +32,7 @@ import java.nio.charset.StandardCharsets;
  */
 @Component
 @Slf4j
-public class CustomFlowExceptionHandler implements BlockExceptionHandler {
+public class CustomBlockExceptionHandler implements BlockExceptionHandler {
 
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, BlockException e) throws Exception {
