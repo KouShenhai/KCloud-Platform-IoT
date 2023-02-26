@@ -38,7 +38,7 @@ spring:
           nacos:
             server-addr: @NACOS-CONFIG-ADDRESS@
             namespace: @NACOS-NAMESPACE@
-            data-id: auth-sentinel.json
+            data-id: auth-flow.json
             data-type: json
             group-id: @NACOS-GROUP@
             rule-type: flow

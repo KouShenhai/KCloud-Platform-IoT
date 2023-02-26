@@ -43,7 +43,7 @@ spring:
           nacos:
             server-addr: @NACOS-DISCOVERY-ADDRESS@
             namespace: @NACOS-NAMESPACE@
-            data-id: gateway-sentinel.json
+            data-id: gateway-flow.json
             rule-type: gw_flow # 网关规则
             group-id: @NACOS-GROUP@
             data-type: json
