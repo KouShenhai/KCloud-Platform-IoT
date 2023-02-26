@@ -6,12 +6,5 @@
     "slowRatioThreshold": 0.1,
     "minRequestAmount": 1,
     "timeWindow": 30
-  },
-  {
-    "resource": "DELETE:http://laokou-elasticsearch/api/delete",
-    "count": 1,
-    "grade": 2,
-    "minRequestAmount": 1,
-    "timeWindow": 30
   }
 ]
