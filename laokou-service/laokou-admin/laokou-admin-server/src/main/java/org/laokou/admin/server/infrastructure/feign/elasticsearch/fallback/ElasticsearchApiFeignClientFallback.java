@@ -36,22 +36,25 @@ public class ElasticsearchApiFeignClientFallback implements ElasticsearchApiFeig
     @Override
     public HttpResult<SearchVO<Map<String,Object>>> highlightSearch(SearchQo searchQo) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<SearchVO<Map<String,Object>>>().error("搜索服务未启动，请联系管理员");
+        return new HttpResult<>();
     }
 
     @Override
     public HttpResult<Boolean> syncBatch(ElasticsearchDTO model) {
-        return new HttpResult<Boolean>().error("同步索引失败，请联系管理员");
+        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
+        return new HttpResult<Boolean>().error("批量同步索引失败，请联系管理员");
     }
 
     @Override
     public HttpResult<Boolean> create(CreateIndexDTO model) {
-        return new HttpResult<Boolean>().error("索引创建失败，请联系管理员");
+        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
+        return new HttpResult<Boolean>().error("创建索引失败，请联系管理员");
     }
 
     @Override
     public HttpResult<Boolean> delete(String indexName) {
-        return new HttpResult<Boolean>().error("索引删除失败，请联系管理员");
+        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
+        return new HttpResult<Boolean>().error("删除索引失败，请联系管理员");
     }
 
 }

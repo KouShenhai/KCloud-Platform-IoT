@@ -1,0 +1,26 @@
+[
+  {
+    "resource": "/oauth2/captcha",
+    "limitApp": "default",
+    "count": 300,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/oauth2/logout",
+    "limitApp": "default",
+    "count": 300,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/oauth2/tenant",
+    "limitApp": "default",
+    "count": 300,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
