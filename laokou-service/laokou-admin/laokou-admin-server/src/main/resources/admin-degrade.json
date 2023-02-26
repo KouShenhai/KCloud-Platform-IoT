@@ -2,8 +2,9 @@
   {
     "resource": "GET:http://laokou-elasticsearch/api/highlightSearch",
     "count": 1,
-    "grade": 2,
+    "grade": 0,
+    "slowRatioThreshold": 0.1,
     "minRequestAmount": 1,
-    "timeWindow": 10
+    "timeWindow": 30
   }
 ]
