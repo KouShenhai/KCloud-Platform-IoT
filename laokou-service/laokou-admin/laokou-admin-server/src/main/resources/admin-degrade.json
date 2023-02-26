@@ -3,8 +3,8 @@
     "resource": "POST:http://laokou-elasticsearch/api/highlightSearch",
     "count": 200,
     "grade": 0,
-    "slowRatioThreshold": 0.8,
-    "minRequestAmount": 300,
+    "slowRatioThreshold": 0.1,
+    "minRequestAmount": 5,
     "timeWindow": 30
   }
 ]
