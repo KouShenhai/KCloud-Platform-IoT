@@ -1,0 +1,9 @@
+[
+  {
+    "resource": "GET:http://laokou-elasticsearch/api/highlightSearch",
+    "count": 1,
+    "grade": 2,
+    "minRequestAmount": 1,
+    "timeWindow": 10
+  }
+]

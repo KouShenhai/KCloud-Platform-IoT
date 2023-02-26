@@ -47,6 +47,14 @@ spring:
             data-id: admin-flow.json
             data-type: json
             rule-type: flow
+        db1:
+          nacos:
+            server-addr: @NACOS-CONFIG-ADDRESS@
+            namespace: @NACOS-NAMESPACE@
+            group-id: @NACOS-GROUP@
+            data-id: admin-degrade.json
+            data-type: json
+            rule-type: degrade
     # loadbalancer
     loadbalancer:
       nacos:
