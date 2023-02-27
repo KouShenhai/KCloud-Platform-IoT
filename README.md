@@ -92,7 +92,8 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - 消息队列：RocketMQ & Kafka
 - 任务调度：Power Job
 - 日志分析：EFK
-- 多级缓存：OpenResty & Redis & Caffeine
+- 负载均衡：OpenResty
+- 多级缓存：Caffeine & Redis
 - 统计报表：MongoDB
 - 对象存储：Amazon S3
 - 服务部署：Docker
