@@ -30,7 +30,7 @@ import java.net.URL;
 /**
  * @author laokou
  */
-public class AmazonS3StorageService extends AbstractStorageService {
+public class AmazonS3StorageService extends AbstractStorageService<AmazonS3> {
 
     public AmazonS3StorageService(SysOssVO vo) {
         this.vo = vo;
@@ -65,7 +65,7 @@ public class AmazonS3StorageService extends AbstractStorageService {
     }
 
     @Override
-    protected AmazonS3 getAmazonS3() {
+    protected AmazonS3 getObj() {
         String accessKey = vo.getAccessKey();
         String secretKey = vo.getSecretKey();
         String region = vo.getRegion();
