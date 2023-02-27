@@ -14,42 +14,30 @@
  * limitations under the License.
  */
 package org.laokou.oss.server.support;
-import com.amazonaws.services.s3.AmazonS3;
-import org.laokou.common.i18n.core.CustomException;
-import org.laokou.oss.client.OssTypeEnum;
 import org.laokou.oss.client.vo.SysOssVO;
 import java.io.InputStream;
 
 /**
  * @author laokou
  */
-public abstract class AbstractStorageService implements StorageService{
+public abstract class AbstractStorageService<O> implements StorageService<O>{
     protected SysOssVO vo;
-    public String upload(int limitRead, long size, String fileName, InputStream inputStream, String contentType) {
-        OssTypeEnum type = OssTypeEnum.S3;
-        switch (type) {
-            case S3 -> {
-                return uploadS3(limitRead,size,fileName,inputStream,contentType);
-            }
-            default -> throw new CustomException("不支持该协议");
-        }
-    }
 
-    public String uploadS3(int limitRead, long size, String fileName, InputStream inputStream, String contentType) {
-        // 获取AmazonS3
-        AmazonS3 amazonS3 = getAmazonS3();
+    public String upload(int limitRead, long size, String fileName, InputStream inputStream, String contentType) {
+        // 获取连接对象
+        O obj = getObj();
         // 创建bucket
-        createBucket(amazonS3);
+        createBucket(obj);
         // 上传文件
-        putObject(amazonS3,limitRead,size,fileName,inputStream,contentType);
+        putObject(obj,limitRead,size,fileName,inputStream,contentType);
         // 获取地址
-        return getUrl(amazonS3, fileName);
+        return getUrl(obj, fileName);
     }
 
     /**
-     * 获取s3连接
+     * 获取连接对象
      * @return
      */
-    protected abstract AmazonS3 getAmazonS3();
+    protected abstract O getObj();
 
 }
