@@ -16,8 +16,6 @@
 package org.laokou.admin.server.application.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import feign.Response;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.WorkflowDefinitionApplicationService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,9 +29,8 @@ import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.Optional;
+
 /**
  * @author laokou
  */
@@ -68,8 +65,9 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
         if (!result.success()) {
             throw new CustomException(result.getCode(), result.getMsg());
         }
-        page.setRecords(result.getData().getRecords());
-        page.setTotal(result.getData().getTotal());
+        PageVO<DefinitionVO> definitionVOPageVO = Optional.ofNullable(result.getData()).orElseGet(PageVO::new);
+        page.setRecords(definitionVOPageVO.getRecords());
+        page.setTotal(Optional.ofNullable(definitionVOPageVO.getTotal()).orElse(0L));
         return page;
     }
 
