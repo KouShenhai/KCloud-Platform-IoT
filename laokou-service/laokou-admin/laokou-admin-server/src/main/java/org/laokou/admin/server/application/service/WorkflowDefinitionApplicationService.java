@@ -42,9 +42,9 @@ public interface WorkflowDefinitionApplicationService {
     /**
      * 查看流程图
      * @param definitionId
-     * @param response
+     * @return
      */
-    void diagramDefinition(String definitionId, HttpServletResponse response);
+    String diagramDefinition(String definitionId);
 
     /**
      * 删除流程

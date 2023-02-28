@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
-import feign.Response;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
 import org.laokou.admin.server.infrastructure.feign.flowable.WorkTaskApiFeignClient;
+import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.core.HttpResult;
 import org.springframework.stereotype.Service;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 /**
  * @author laokou
  */
@@ -34,19 +30,12 @@ public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicati
     private final WorkTaskApiFeignClient workTaskApiFeignClient;
 
     @Override
-    public void diagramProcess(String processInstanceId, HttpServletResponse response) {
-        try (
-                Response result = workTaskApiFeignClient.diagram(processInstanceId);
-                InputStream inputStream = result.body().asInputStream();
-                OutputStream outputStream = response.getOutputStream()) {
-            byte[] bytes = new byte[inputStream.available()];
-            int len;
-            while ((len = inputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, len);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public String diagramProcess(String processInstanceId) {
+        HttpResult<String> result = workTaskApiFeignClient.diagram(processInstanceId);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(),result.getMsg());
         }
+        return result.getData();
     }
 
 }

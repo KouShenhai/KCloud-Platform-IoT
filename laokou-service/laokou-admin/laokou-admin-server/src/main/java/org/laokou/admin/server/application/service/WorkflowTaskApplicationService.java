@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service;
-import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 /**
  * @author laokou
@@ -25,8 +23,8 @@ public interface WorkflowTaskApplicationService {
     /**
      * 任务流程图
      * @param processInstanceId
-     * @param response
+     * @return
      * @throws IOException
      */
-    void diagramProcess(String processInstanceId, HttpServletResponse response) throws IOException;
+    String diagramProcess(String processInstanceId) throws IOException;
 }

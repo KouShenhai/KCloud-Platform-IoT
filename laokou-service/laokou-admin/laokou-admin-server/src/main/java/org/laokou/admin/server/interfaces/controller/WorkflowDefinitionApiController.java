@@ -18,7 +18,6 @@ package org.laokou.admin.server.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.WorkflowDefinitionApplicationService;
 import org.laokou.common.log.annotation.OperateLog;
@@ -60,8 +59,8 @@ public class WorkflowDefinitionApiController {
     @GetMapping("/image")
     @Operation(summary = "流程定义>图片",description = "流程定义>图片")
     @PreAuthorize("hasAuthority('workflow:definition:diagram')")
-    public void image(@RequestParam("definitionId")String definitionId, HttpServletResponse response) {
-        workflowDefinitionApplicationService.diagramDefinition(definitionId,response);
+    public HttpResult<String> image(@RequestParam("definitionId")String definitionId) {
+        return new HttpResult<String>().ok(workflowDefinitionApplicationService.diagramDefinition(definitionId));
     }
 
     @DeleteMapping("/delete")

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.flowable.server.service;
-import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.flowable.client.dto.DefinitionDTO;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;
@@ -42,9 +41,9 @@ public interface WorkDefinitionService {
     /**
      * 查看流程图
      * @param definitionId
-     * @param response
+     * @return
      */
-    void diagramDefinition(String definitionId, HttpServletResponse response);
+    String diagramDefinition(String definitionId);
 
     /**
      * 删除流程

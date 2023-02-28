@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.infrastructure.feign.flowable;
-import feign.Response;
 import org.laokou.admin.server.infrastructure.feign.flowable.factory.WorkDefinitionApiFeignClientFallbackFactory;
 import org.laokou.common.core.constant.ServiceConstant;
 import org.laokou.common.i18n.core.HttpResult;
@@ -58,9 +57,10 @@ public interface WorkDefinitionApiFeignClient {
      * 流程图
      * @param definitionId
      * @return
+     * @return
      */
     @GetMapping(value = "/diagram")
-    Response diagram(@RequestParam("definitionId")String definitionId);
+    HttpResult<String> diagram(@RequestParam("definitionId")String definitionId);
 
     /**
      * 删除流程

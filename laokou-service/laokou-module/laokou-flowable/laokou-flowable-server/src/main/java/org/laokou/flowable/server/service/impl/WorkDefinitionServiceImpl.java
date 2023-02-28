@@ -15,11 +15,9 @@
  */
 
 package org.laokou.flowable.server.service.impl;
-
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.client5.http.utils.Base64;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.DeploymentBuilder;
@@ -37,6 +35,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -96,7 +95,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
     }
 
     @Override
-    public void diagramDefinition(String definitionId, HttpServletResponse response) {
+    public String diagramDefinition(String definitionId) {
         //获取图片流
         DefaultProcessDiagramGenerator diagramGenerator = new DefaultProcessDiagramGenerator();
         BpmnModel bpmnModel = repositoryService.getBpmnModel(definitionId);
@@ -112,15 +111,15 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
                 null,
                 1.0,
                 false);
-        try(ServletOutputStream os = response.getOutputStream()) {
+        try(ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             BufferedImage image = ImageIO.read(inputStream);
             if (null != image) {
-                response.setHeader("Cache-Control", "no-store, no-cache");
-                response.setContentType("image/png");
-                ImageIO.write(image,"png",os);
+                ImageIO.write(image,"png",outputStream);
             }
+            return Base64.encodeBase64String(outputStream.toByteArray());
         } catch (IOException e) {
             log.error("错误信息：{}",e.getMessage());
+            return "";
         }
     }
 

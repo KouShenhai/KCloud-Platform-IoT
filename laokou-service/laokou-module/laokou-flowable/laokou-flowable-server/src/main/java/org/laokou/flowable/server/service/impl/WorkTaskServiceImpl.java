@@ -15,11 +15,10 @@
  */
 package org.laokou.flowable.server.service.impl;
 import io.seata.core.context.RootContext;
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
+import org.apache.hc.client5.http.utils.Base64;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.*;
 import org.flowable.engine.history.HistoricActivityInstance;
@@ -30,7 +29,6 @@ import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
 import org.laokou.common.i18n.core.CustomException;
-import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.flowable.client.dto.AuditDTO;
@@ -40,13 +38,13 @@ import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.laokou.flowable.client.vo.TaskVO;
 import org.laokou.flowable.server.config.CustomProcessDiagramGenerator;
-import org.laokou.flowable.server.enums.FlowCommentEnum;
 import org.laokou.flowable.server.service.WorkTaskService;
 import org.laokou.flowable.server.utils.TaskUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -59,7 +57,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 public class WorkTaskServiceImpl implements WorkTaskService {
-
+    private static final String PNG = "png";
     private final TaskService taskService;
 
     private final TaskUtil taskUtil;
@@ -79,15 +77,12 @@ public class WorkTaskServiceImpl implements WorkTaskService {
         log.info("分布式事务 XID:{}", RootContext.getXID());
         String taskId = dto.getTaskId();
         String instanceId = dto.getInstanceId();
-        String type = FlowCommentEnum.NORMAL.getType();
-        String comment = dto.getComment();
         Map<String, Object> values = dto.getValues();
         String definitionId = dto.getDefinitionId();
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         if (null == task) {
             throw new CustomException("任务不存在");
         }
-        taskService.addComment(taskId,instanceId,type,comment);
         if (MapUtils.isNotEmpty(values)) {
             taskService.complete(taskId,values);
         } else {
@@ -173,17 +168,15 @@ public class WorkTaskServiceImpl implements WorkTaskService {
     }
 
     @Override
-    public void diagramTask(String processInstanceId, HttpServletResponse response) throws IOException {
+    public String diagramTask(String processInstanceId) throws IOException {
         final InputStream inputStream = getInputStream(processInstanceId);
         final BufferedImage image = ImageIO.read(inputStream);
-        response.setContentType("image/png");
-        final ServletOutputStream outputStream = response.getOutputStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         if (null != image) {
-            ImageIO.write(image,"png",outputStream);
+            ImageIO.write(image,PNG,outputStream);
         }
-        outputStream.flush();
-        inputStream.close();
-        outputStream.close();
+        String base64String = Base64.encodeBase64String(outputStream.toByteArray());
+        return base64String;
     }
 
     private InputStream getInputStream(String processInstanceId) {
