@@ -21,6 +21,19 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
     <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=WFANTXDEjrDw6UxsrRFCv_rQsEu6LTxH&jump_from=webapi"><img src="https://img.shields.io/badge/Q群-218686225-blue.svg" alt="Java技术交流QQ群"></a>
 </p>
 
+### 💞 演示地址
+[http://175.178.69.253](http://175.178.69.253)  
+系统账号   
+admin/admin123  
+test/test123  
+laok5/test123
+
+系统租户   
+tenant/tenant123
+
+### 🔖 在线文档
+[https://koushenhai.github.io](https://koushenhai.github.io)
+
 ### 💪 版本号
 特此说明，与Spring Boot版本保持一致
 
@@ -301,16 +314,6 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 - [x] 异步调用
 - [x] 多级缓存
 - [x] 服务监控报警
-
-### 💞 演示地址
-[http://175.178.69.253](http://175.178.69.253)  
-系统账号   
-admin/admin123  
-test/test123  
-laok5/test123  
-
-系统租户   
-tenant/tenant123   
 
 ### 🎵 项目截图
 <table>
