@@ -74,20 +74,12 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
     }
 
     @Override
-    public void diagramDefinition(String definitionId, HttpServletResponse response) {
-        try (
-                Response result = workDefinitionApiFeignClient.diagram(definitionId);
-                InputStream inputStream = result.body().asInputStream();
-                OutputStream outputStream = response.getOutputStream();
-        ) {
-            byte[] bytes = new byte[inputStream.available()];
-            int len;
-            while ((len = inputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, len);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public String diagramDefinition(String definitionId) {
+        HttpResult<String> result = workDefinitionApiFeignClient.diagram(definitionId);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(),result.getMsg());
         }
+        return result.getData();
     }
 
     @Override

@@ -15,11 +15,9 @@
  */
 package org.laokou.admin.server.infrastructure.feign.flowable.fallback;
 
-import feign.Response;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.infrastructure.feign.flowable.WorkTaskApiFeignClient;
-import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.dto.AuditDTO;
 import org.laokou.flowable.client.dto.ProcessDTO;
@@ -40,7 +38,7 @@ public class WorkTaskApiFeignClientFallback implements WorkTaskApiFeignClient {
     @Override
     public HttpResult<PageVO<TaskVO>> query(TaskDTO dto) {
         log.error("流程查询失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<PageVO<TaskVO>>().error("流程查询失败，请联系管理员");
+        return new HttpResult<>();
     }
 
     @Override
@@ -56,9 +54,9 @@ public class WorkTaskApiFeignClientFallback implements WorkTaskApiFeignClient {
     }
 
     @Override
-    public Response diagram(String processInstanceId) {
+    public HttpResult<String> diagram(String processInstanceId) {
         log.error("流程图查看失败，报错原因：{}",throwable.getMessage());
-        throw new CustomException("流程图查看失败，请联系管理员");
+        return new HttpResult<String>().error("流程图查看失败，请联系管理员");
     }
 
 }

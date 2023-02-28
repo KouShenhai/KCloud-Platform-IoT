@@ -35,3 +35,16 @@ spring:
       ignoredInterfaces:
         - docker0
         - veth.*
+
+flowable:
+  # 只保存审批记录
+  history-level: audit
+  # 开启异步作业执行程序激活
+  async-history-executor-activate: true
+  # 关闭idm
+  idm:
+    enabled: false
+  # 开启历史记录清除
+  enable-history-cleaning: true
+  # 一周后清理历史记录
+  history-cleaning-after: 7

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.infrastructure.feign.flowable;
-import feign.Response;
 import org.laokou.admin.server.infrastructure.feign.flowable.factory.WorkTaskApiFeignClientFallbackFactory;
 import org.laokou.common.core.constant.ServiceConstant;
 import org.laokou.common.i18n.core.HttpResult;
@@ -64,5 +63,5 @@ public interface WorkTaskApiFeignClient {
      * @return
      */
     @GetMapping(value = "/diagram")
-    Response diagram(@RequestParam("processInstanceId")String processInstanceId);
+    HttpResult<String> diagram(@RequestParam("processInstanceId")String processInstanceId);
 }

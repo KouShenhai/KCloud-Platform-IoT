@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.flowable.server.service;
-import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.flowable.client.dto.AuditDTO;
 import org.laokou.flowable.client.dto.ProcessDTO;
 import org.laokou.flowable.client.dto.TaskDTO;
@@ -52,9 +51,9 @@ public interface WorkTaskService {
     /**
      * 任务流程图
      * @param processInstanceId
-     * @param response
+     * @return
      * @throws IOException
      */
-    void diagramTask(String processInstanceId, HttpServletResponse response) throws IOException;
+    String diagramTask(String processInstanceId) throws IOException;
 
 }

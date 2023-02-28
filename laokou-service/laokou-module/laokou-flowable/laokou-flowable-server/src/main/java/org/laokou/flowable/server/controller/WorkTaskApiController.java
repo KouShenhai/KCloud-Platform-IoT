@@ -17,7 +17,6 @@
 package org.laokou.flowable.server.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.dto.AuditDTO;
@@ -61,8 +60,8 @@ public class WorkTaskApiController {
 
     @GetMapping(value = "/diagram")
     @Operation(summary = "流程任务>任务流程",description = "流程任务>任务流程")
-    public void diagram(@RequestParam("processInstanceId")String processInstanceId, HttpServletResponse response) throws IOException {
-        workTaskService.diagramTask(processInstanceId, response);
+    public HttpResult<String> diagram(@RequestParam("processInstanceId")String processInstanceId) throws IOException {
+        return new HttpResult<String>().ok(workTaskService.diagramTask(processInstanceId));
     }
 
 }

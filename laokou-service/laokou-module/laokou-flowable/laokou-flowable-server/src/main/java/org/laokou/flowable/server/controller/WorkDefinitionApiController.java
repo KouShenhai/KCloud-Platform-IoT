@@ -17,7 +17,6 @@
 package org.laokou.flowable.server.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.dto.DefinitionDTO;
@@ -53,8 +52,8 @@ public class WorkDefinitionApiController {
 
     @GetMapping(value = "/diagram")
     @Operation(summary = "流程定义>流程图",description = "流程定义>流程图")
-    public void diagram(@RequestParam("definitionId")String definitionId, HttpServletResponse response) {
-        workDefinitionService.diagramDefinition(definitionId,response);
+    public HttpResult<String> diagram(@RequestParam("definitionId")String definitionId) {
+        return new HttpResult<String>().ok(workDefinitionService.diagramDefinition(definitionId));
     }
 
     @DeleteMapping(value = "/delete")

@@ -17,7 +17,6 @@ package org.laokou.admin.server.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
@@ -106,8 +105,8 @@ public class SysImageApiController {
     @GetMapping(value = "/diagram")
     @Operation(summary = "图片管理>流程图",description = "图片管理>流程图")
     @PreAuthorize("hasAuthority('sys:resource:image:diagram')")
-    public void diagram(@RequestParam("processInstanceId")String processInstanceId, HttpServletResponse response) throws IOException {
-        workflowTaskApplicationService.diagramProcess(processInstanceId, response);
+    public HttpResult<String> diagram(@RequestParam("processInstanceId")String processInstanceId) throws IOException {
+        return new HttpResult<String>().ok(workflowTaskApplicationService.diagramProcess(processInstanceId));
     }
 
     @GetMapping("/auditLog")

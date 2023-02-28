@@ -18,7 +18,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
@@ -116,8 +115,8 @@ public class SysAudioApiController {
     @GetMapping(value = "/diagram")
     @Operation(summary = "音频管理>流程图",description = "音频管理>流程图")
     @PreAuthorize("hasAuthority('sys:resource:audio:diagram')")
-    public void diagram(@RequestParam("processInstanceId")String processInstanceId, HttpServletResponse response) throws IOException {
-        workflowTaskApplicationService.diagramProcess(processInstanceId, response);
+    public HttpResult<String> diagram(@RequestParam("processInstanceId")String processInstanceId) throws IOException {
+        return new HttpResult<String>().ok(workflowTaskApplicationService.diagramProcess(processInstanceId));
     }
 
 }
