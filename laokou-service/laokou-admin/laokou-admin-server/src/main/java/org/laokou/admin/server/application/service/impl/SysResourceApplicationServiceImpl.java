@@ -362,10 +362,11 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (!result.success()) {
             throw new CustomException(result.getCode(),result.getMsg());
         }
-        page.setRecords(result.getData().getRecords());
+        PageVO<TaskVO> taskVOPageVO = Optional.ofNullable(result.getData()).orElseGet(PageVO::new);
+        page.setRecords(taskVOPageVO.getRecords());
         page.setSize(dto.getPageSize());
         page.setCurrent(dto.getPageNum());
-        page.setTotal(result.getData().getTotal());
+        page.setTotal(Optional.ofNullable(taskVOPageVO.getTotal()).orElse(0L));
         return page;
     }
 

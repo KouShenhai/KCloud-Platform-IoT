@@ -38,7 +38,7 @@ public class WorkTaskApiFeignClientFallback implements WorkTaskApiFeignClient {
     @Override
     public HttpResult<PageVO<TaskVO>> query(TaskDTO dto) {
         log.error("流程查询失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<>();
+        return new HttpResult<>().ok();
     }
 
     @Override
