@@ -406,31 +406,6 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
         <img src="https://avatars.githubusercontent.com/u/26246537?s=64&amp;v=4" alt="@liang99" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
 </a>
 
-### 💰 赞助打赏
-<p align="left"><img src="doc/image/pay.jpg" width="500" height="500"></p>
-
-### 💖 赞助名单
-<table>
-    <tr>
-        <th>时间</th>
-        <th>网名</th>
-        <th>金额</th>
-        <th>备注</th>
-    </tr>
-        <tr>
-        <td>2023/2/16</td>
-        <td>不愿透露姓名的网友</td>
-        <td>￥10</td>
-        <td>加油</td>
-    </tr>
-    <tr>
-        <td>2023/2/15</td>
-        <td>某不知名网友</td>
-        <td>￥50</td>
-        <td>老寇加油，看好你哦</td>
-    </tr>
-</table>
-
 ### 🐸 联系
 博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)    
 
