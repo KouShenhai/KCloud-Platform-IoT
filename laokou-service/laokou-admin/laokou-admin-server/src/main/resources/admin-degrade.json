@@ -6,5 +6,13 @@
     "slowRatioThreshold": 0.1,
     "minRequestAmount": 5,
     "timeWindow": 30
+  },
+  {
+    "resource": "POST:http://laokou-flowable/work/task/api/query",
+    "count": 200,
+    "grade": 0,
+    "slowRatioThreshold": 0.1,
+    "minRequestAmount": 5,
+    "timeWindow": 30
   }
 ]
