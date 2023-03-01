@@ -37,7 +37,7 @@ import java.io.OutputStream;
 public class CustomJsonJacksonCodec extends BaseCodec {
     public static final CustomJsonJacksonCodec INSTANCE = new CustomJsonJacksonCodec();
 
-    private ObjectMapper mapObjectMapper;
+    private volatile ObjectMapper mapObjectMapper;
     
     public CustomJsonJacksonCodec(){
         this.mapObjectMapper = CustomJsonJacksonCodec.getObjectMapper();
