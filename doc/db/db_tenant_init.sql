@@ -33,7 +33,7 @@ CREATE TABLE `boot_sys_message` (
                                     `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
                                     `title` varchar(400) DEFAULT NULL COMMENT '标题',
                                     `content` longtext COMMENT '内容',
-                                    `send_channel` tinyint(10) DEFAULT NULL COMMENT '发送渠道：0平台 1微信公众号 2邮箱',
+邮箱',
                                     `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
                                     `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
                                     `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

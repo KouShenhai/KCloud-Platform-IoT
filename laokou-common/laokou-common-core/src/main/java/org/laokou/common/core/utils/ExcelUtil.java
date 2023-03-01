@@ -39,9 +39,8 @@ public class ExcelUtil {
     /**
      * 导出请求头
      * @param response
-     * @throws IOException
      */
-    public static void exportHeader(HttpServletResponse response) throws IOException {
+    public static void exportHeader(HttpServletResponse response) {
         String fileName = DateUtil.format(new Date(),DateUtil.DATE_TIME) + EXCEL_SUFFIX;
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(CONTENT_TYPE_VALUE);

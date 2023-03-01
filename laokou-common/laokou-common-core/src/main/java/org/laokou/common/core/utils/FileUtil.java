@@ -17,6 +17,10 @@ package org.laokou.common.core.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 /**
  * @author laokou
@@ -51,6 +55,22 @@ public class FileUtil {
      */
     public static String getFileSuffix(String fileName) {
         return fileName.substring(fileName.lastIndexOf(Constant.DOT));
+    }
+
+    /**
+     * 获取流
+     * @param uri
+     * @return
+     */
+    public static InputStream getInputStream(String uri) throws IOException {
+        URL url = new URL(uri);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        conn.connect();
+        conn.disconnect();
+        return conn.getInputStream();
     }
 
 }

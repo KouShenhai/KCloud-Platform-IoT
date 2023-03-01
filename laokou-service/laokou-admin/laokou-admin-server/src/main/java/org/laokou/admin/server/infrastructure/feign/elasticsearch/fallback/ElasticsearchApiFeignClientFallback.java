@@ -36,7 +36,7 @@ public class ElasticsearchApiFeignClientFallback implements ElasticsearchApiFeig
     @Override
     public HttpResult<SearchVO<Map<String,Object>>> highlightSearch(SearchQo searchQo) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<>().ok();
+        return new HttpResult<SearchVO<Map<String,Object>>>().ok(new SearchVO<>());
     }
 
     @Override
