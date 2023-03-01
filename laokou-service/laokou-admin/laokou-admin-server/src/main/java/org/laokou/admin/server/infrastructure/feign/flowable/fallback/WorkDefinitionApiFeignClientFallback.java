@@ -43,7 +43,7 @@ public class WorkDefinitionApiFeignClientFallback implements WorkDefinitionApiFe
     @Override
     public HttpResult<PageVO<DefinitionVO>> query(DefinitionDTO dto) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<>().ok();
+        return new HttpResult<PageVO<DefinitionVO>>().ok(new PageVO<>());
     }
 
     @Override

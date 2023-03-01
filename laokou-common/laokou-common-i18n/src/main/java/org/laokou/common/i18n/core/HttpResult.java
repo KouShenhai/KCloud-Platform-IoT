@@ -48,13 +48,6 @@ public class HttpResult<T> {
         return this;
     }
 
-    public HttpResult ok() {
-        this.code = StatusCode.OK;
-        this.msg = MessageUtil.getMessage(StatusCode.OK);
-        this.data = data;
-        return this;
-    }
-
     public HttpResult<T> ok(T data){
         this.code = StatusCode.OK;
         this.msg = MessageUtil.getMessage(StatusCode.OK);

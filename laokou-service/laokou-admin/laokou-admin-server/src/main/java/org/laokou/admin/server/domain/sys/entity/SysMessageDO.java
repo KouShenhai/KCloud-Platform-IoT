@@ -45,12 +45,6 @@ public class SysMessageDO extends BaseDO {
     private String content;
 
     /**
-     * 发送渠道 0 平台 1 微信公众号 2 邮箱
-     */
-    @Schema(name = "sendChannel",description = "发送渠道 0 平台 1 微信公众号 2 邮箱")
-    private Integer sendChannel;
-
-    /**
      * 消息类型 0 通知 1 提醒
      */
     @Schema(name = "type",description = "消息类型 0 通知 1 提醒")

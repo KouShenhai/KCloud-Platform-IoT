@@ -17,6 +17,7 @@ package org.laokou.admin.server.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
@@ -76,6 +77,13 @@ public class SysImageApiController {
     @PreAuthorize("hasAuthority('sys:resource:image:detail')")
     public HttpResult<SysResourceVO> detail(@RequestParam("id") Long id) {
         return new HttpResult<SysResourceVO>().ok(sysResourceApplicationService.getResourceById(id));
+    }
+
+    @GetMapping(value = "/download")
+    @Operation(summary = "图片管理>下载",description = "图片管理>下载")
+    @PreAuthorize("hasAuthority('sys:resource:image:download')")
+    public void download(@RequestParam("id") Long id, HttpServletResponse response) throws IOException {
+        sysResourceApplicationService.downLoadResource(id,response);
     }
 
     @PostMapping(value = "/insert")

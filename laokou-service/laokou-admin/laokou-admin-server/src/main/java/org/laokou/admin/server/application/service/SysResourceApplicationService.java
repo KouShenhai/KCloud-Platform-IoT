@@ -15,6 +15,7 @@
  */
 package org.laokou.admin.server.application.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.admin.client.dto.SysResourceAuditDTO;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
@@ -53,6 +54,14 @@ public interface SysResourceApplicationService {
      * @return
      */
     SysResourceVO getResourceById(Long id);
+
+    /**
+     * 下载资源
+     * @param id
+     * @param response
+     * @throws IOException
+     */
+    void downLoadResource(Long id, HttpServletResponse response) throws IOException;
 
     /**
      * 查询资源审批信息

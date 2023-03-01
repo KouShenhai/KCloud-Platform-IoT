@@ -42,9 +42,6 @@ public class MessageDTO implements Serializable {
     @NotBlank(message = "请输入内容")
     private String content;
 
-    @NotNull(message = "请选择发送渠道")
-    private Integer sendChannel;
-
     /**
      * 0通知 1提醒
      */

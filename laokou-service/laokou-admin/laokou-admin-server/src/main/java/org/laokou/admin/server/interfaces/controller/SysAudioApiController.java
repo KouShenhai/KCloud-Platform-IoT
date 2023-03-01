@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
@@ -58,7 +59,6 @@ public class SysAudioApiController {
         return new HttpResult<List<SysAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogList(businessId));
     }
 
-
     @PostMapping("/syncIndex")
     @Operation(summary = "音频管理>同步索引",description = "音频管理>同步索引")
     @OperateLog(module = "音频管理",name = "同步索引")
@@ -86,6 +86,13 @@ public class SysAudioApiController {
     @PreAuthorize("hasAuthority('sys:resource:audio:detail')")
     public HttpResult<SysResourceVO> detail(@RequestParam("id") Long id) {
         return new HttpResult<SysResourceVO>().ok(sysResourceApplicationService.getResourceById(id));
+    }
+
+    @GetMapping(value = "/download")
+    @Operation(summary = "音频管理>下载",description = "音频管理>下载")
+    @PreAuthorize("hasAuthority('sys:resource:audio:download')")
+    public void download(@RequestParam("id") Long id, HttpServletResponse response) throws IOException {
+        sysResourceApplicationService.downLoadResource(id,response);
     }
 
     @PostMapping(value = "/insert")
