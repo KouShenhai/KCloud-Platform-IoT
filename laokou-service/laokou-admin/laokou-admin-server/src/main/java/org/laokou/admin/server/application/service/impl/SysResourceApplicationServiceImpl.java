@@ -352,11 +352,11 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                 .eq(SysResourceAuditDO::getProcessInstanceId, instanceId);
         sysResourceAuditService.update(updateWrapper);
         // 审核日志入队列
-        saveAuditLog(businessId,auditStatus,comment,username,userId);
+        insertAuditLog(businessId,auditStatus,comment,username,userId);
         return true;
     }
 
-    private void saveAuditLog(Long businessId,int auditStatus,String comment,String username,Long userId) {
+    private void insertAuditLog(Long businessId,int auditStatus,String comment,String username,Long userId) {
         AuditLogDTO auditLogDTO = new AuditLogDTO();
         auditLogDTO.setBusinessId(businessId);
         auditLogDTO.setAuditStatus(auditStatus);

@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 package org.laokou.common.mybatisplus.utils;
-import cn.hutool.core.thread.ThreadUtil;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.mybatisplus.service.BatchService;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionStatus;
-
 import java.util.List;
-import java.util.concurrent.*;
 /**
  * @author laokou
  */
@@ -35,16 +33,7 @@ public class BatchUtil<T> {
 
     private final TransactionalUtil transactionalUtil;
 
-    private static final ThreadPoolExecutor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(9
-            , 9
-            , 60
-            , TimeUnit.SECONDS
-            , new LinkedBlockingQueue<>(256)
-            , ThreadUtil.createThreadFactory("laokou-common-mybatis-plus-thread-%d")
-            // 线程池拒绝策略不是AbortPolicy，阻塞队列满了新的任务会被抛弃而且不抛出异常，
-            // CountDownLatch永远不会等于0，countDownLatch.await()会一直阻塞
-            // AbortPolicy：直接抛出RejectedExecutionException异常阻止系统正常运行
-            , new ThreadPoolExecutor.AbortPolicy());
+    private final ThreadPoolTaskExecutor taskExecutor;
 
     /**
      * 多线程批量新增
@@ -59,7 +48,7 @@ public class BatchUtil<T> {
         int size = partition.size();
         for(int i = 0; i < size; i++) {
             List<T> list = partition.get(i);
-            THREAD_POOL_EXECUTOR.execute(() -> {
+            taskExecutor.execute(() -> {
                 TransactionStatus status = transactionalUtil.begin();
                 try {
                     service.insertBatch(list);

@@ -16,11 +16,15 @@
 package org.laokou.admin.server.application.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.laokou.admin.server.application.service.WorkflowDefinitionApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.infrastructure.feign.flowable.WorkDefinitionApiFeignClient;
 import org.laokou.admin.server.interfaces.qo.DefinitionQo;
+import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -29,6 +33,9 @@ import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Optional;
 
 /**
@@ -105,6 +112,19 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
             throw new CustomException(result.getCode(), result.getMsg());
         }
         return true;
+    }
+
+    @Override
+    public void downloadTemplate(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=audit.bpmn20.xml");
+        InputStream inputStream = this.getClass().getResourceAsStream("/process/template/audit.bpmn20.xml");
+        ServletOutputStream outputStream = response.getOutputStream();
+        IOUtils.write(inputStream.readAllBytes(),outputStream);
+        outputStream.flush();
+        outputStream.close();
+        inputStream.close();
     }
 
 }
