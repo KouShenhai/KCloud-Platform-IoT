@@ -18,6 +18,7 @@ package org.laokou.admin.server.interfaces.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.WorkflowDefinitionApplicationService;
 import org.laokou.common.log.annotation.OperateLog;
@@ -85,6 +86,13 @@ public class WorkflowDefinitionApiController {
     @PreAuthorize("hasAuthority('workflow:definition:activate')")
     public HttpResult<Boolean> activate(@RequestParam("definitionId")String definitionId) {
         return new HttpResult<Boolean>().ok(workflowDefinitionApplicationService.activateDefinition(definitionId));
+    }
+
+    @GetMapping("/template")
+    @Operation(summary = "流程定义>模板",description = "流程定义>模板")
+    @PreAuthorize("hasAuthority('workflow:definition:template')")
+    public void template(HttpServletResponse response) throws IOException {
+        workflowDefinitionApplicationService.downloadTemplate(response);
     }
 
 }

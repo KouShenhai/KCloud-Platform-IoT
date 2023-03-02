@@ -19,6 +19,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.admin.server.interfaces.qo.DefinitionQo;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
 /**
  * @author laokou
  */
@@ -66,4 +69,10 @@ public interface WorkflowDefinitionApplicationService {
      * @return
      */
     Boolean activateDefinition(String definitionId);
+
+    /**
+     * 下载模板
+     * @param response
+     */
+    void downloadTemplate(HttpServletResponse response) throws IOException;
 }
