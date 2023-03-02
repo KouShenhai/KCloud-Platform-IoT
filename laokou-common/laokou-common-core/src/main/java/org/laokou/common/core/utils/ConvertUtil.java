@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.core.utils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 import java.util.Collection;
@@ -27,8 +25,8 @@ import java.util.stream.Collectors;
 /**
  * @author laokou
  */
+@Slf4j
 public class ConvertUtil extends BeanUtils{
-    private static final Logger logger = LoggerFactory.getLogger(ConvertUtil.class);
 
     public static <T> T sourceToTarget(Object source, Class<T> target) {
         if (source == null) {
@@ -39,7 +37,7 @@ public class ConvertUtil extends BeanUtils{
             targetObject = instantiateClass(target);
             copyProperties(source, targetObject);
         } catch (Exception e) {
-            logger.error("convert error ", e);
+            log.error("convert error :{}", e.getMessage());
         }
         return targetObject;
     }
