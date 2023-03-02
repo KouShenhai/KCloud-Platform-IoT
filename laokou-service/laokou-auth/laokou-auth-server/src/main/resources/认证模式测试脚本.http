@@ -14,8 +14,8 @@
 # * limitations under the License.
 # */
 # 账号密码登录
-POST http://127.0.0.1:1111/oauth2/token
-Authorization: Basic YXV0aC1jbGllbnQ6c2VjcmV0
+POST http://{{host}}/oauth2/token
+Authorization: {{Authorization}}
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -25,19 +25,19 @@ password
 --WebAppBoundary
 Content-Disposition: form-data; name="username"
 
-admin
+{{username}}
 --WebAppBoundary
 Content-Disposition: form-data; name="password"
 
-admin123
+{{password}}
 --WebAppBoundary
 Content-Disposition: form-data; name="uuid"
 
-1111
+{{uuid}}
 --WebAppBoundary
 Content-Disposition: form-data; name="captcha"
 
-bdbc
+{{captcha}}
 --WebAppBoundary
 Content-Disposition: form-data; name="tenantId"
 
@@ -48,8 +48,8 @@ Content-Disposition: form-data; name="tenantId"
 
 # 手机登录
 # 手机号测试代码地址：https://github.com/KouShenhai/KCloud-Platform-Alibaba/blob/master/laokou-service/laokou-module/laokou-sms/laokou-sms-server/src/test/java/org/laokou/sms/server/SmsTest.java
-POST http://127.0.0.1:1111/oauth2/token
-Authorization: Basic YXV0aC1jbGllbnQ6c2VjcmV0
+POST http://{{host}}/oauth2/token
+Authorization: {{Authorization}}
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -59,11 +59,11 @@ sms
 --WebAppBoundary
 Content-Disposition: form-data; name="mobile"
 
-你的手机号
+{{mobile}}
 --WebAppBoundary
 Content-Disposition: form-data; name="code"
 
-手机号验证码
+{{mobile_code}}
 --WebAppBoundary
 Content-Disposition: form-data; name="tenantId"
 
@@ -75,8 +75,8 @@ Content-Disposition: form-data; name="tenantId"
 
 # 邮箱登录
 # 邮箱测试代码地址：https://github.com/KouShenhai/KCloud-Platform-Alibaba/blob/master/laokou-service/laokou-module/laokou-mail/laokou-mail-server/src/test/java/org/laokou/mail/server/MailTest.java
-POST http://127.0.0.1:1111/oauth2/token
-Authorization: Basic YXV0aC1jbGllbnQ6c2VjcmV0
+POST http://{{host}}/oauth2/token
+Authorization: {{Authorization}}
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -86,11 +86,11 @@ mail
 --WebAppBoundary
 Content-Disposition: form-data; name="mail"
 
-你的邮箱
+{{mail}}
 --WebAppBoundary
 Content-Disposition: form-data; name="code"
 
-邮箱验证码
+{{mail_code}}
 --WebAppBoundary
 Content-Disposition: form-data; name="tenantId"
 
@@ -102,8 +102,8 @@ Content-Disposition: form-data; name="tenantId"
 # 授权码登录(默认数据库)
 # 账号/密码：admin/admin123
 # 获取code地址：http://127.0.0.1:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=password&redirect_uri=https://www.baidu.com
-POST http://127.0.0.1:1111/oauth2/token
-Authorization: Basic YXV0aC1jbGllbnQ6c2VjcmV0
+POST http://{{host}}/oauth2/token
+Authorization: {{Authorization}}
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -113,9 +113,9 @@ authorization_code
 --WebAppBoundary
 Content-Disposition: form-data; name="code"
 
-K7gA8Wm6CKKZPBf-Xhhl-nM5PS_3vi8htN7DEeZrTnqTHCx0LH7Yx3hHVLBh5x0MkyxVpDGsGabb9OOM6V1-PfI4V6BOlu9q59IK8Bmmvap8Fbgw7rvLCsJoCurG1rz_
+{{code}}
 --WebAppBoundary
 Content-Disposition: form-data; name="redirect_uri"
 
-https://www.baidu.com
+{{redirect_uri}}
 --WebAppBoundary
