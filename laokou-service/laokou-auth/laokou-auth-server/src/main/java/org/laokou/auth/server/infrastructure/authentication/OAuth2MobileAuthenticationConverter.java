@@ -17,21 +17,20 @@
 package org.laokou.auth.server.infrastructure.authentication;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Map;
 
 /**
  * @author laokou
  */
-public class OAuth2SmsAuthenticationToken extends AbstractOAuth2BaseAuthenticationToken {
-    /**
-     * Sub-class constructor.
-     *
-     * @param clientPrincipal      the authenticated client principal
-     * @param additionalParameters the additional parameters
-     */
-    protected OAuth2SmsAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-        super(new AuthorizationGrantType(OAuth2SmsAuthenticationProvider.GRANT_TYPE),clientPrincipal, additionalParameters);
+public class OAuth2MobileAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {
+    @Override
+    String getGrantType() {
+        return OAuth2MobileAuthenticationProvider.GRANT_TYPE;
+    }
+
+    @Override
+    Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
+        return new OAuth2MobileAuthenticationToken(clientPrincipal,additionalParameters);
     }
 }

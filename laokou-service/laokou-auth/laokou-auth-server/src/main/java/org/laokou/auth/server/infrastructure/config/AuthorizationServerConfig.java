@@ -80,7 +80,20 @@ import java.util.List;
 public class AuthorizationServerConfig {
 
     /**
+     *
      * @param http
+     * @param authorizationServerSettings
+     * @param authorizationService
+     * @param sysUserService
+     * @param sysMenuService
+     * @param sysDeptService
+     * @param loginLogUtil
+     * @param passwordEncoder
+     * @param sysCaptchaService
+     * @param tokenGenerator
+     * @param sysSourceService
+     * @param sysAuthenticationService
+     * @param redisUtil
      * @return
      * @throws Exception
      */
@@ -104,7 +117,7 @@ public class AuthorizationServerConfig {
         http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
                 .apply(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(
                 List.of(new OAuth2PasswordAuthenticationConverter()
-                        , new OAuth2SmsAuthenticationConverter()
+                        , new OAuth2MobileAuthenticationConverter()
                         , new OAuth2MailAuthenticationConverter()
                         , new OAuth2AuthorizationCodeAuthenticationConverter()
                         , new OAuth2ClientCredentialsAuthenticationConverter()
@@ -123,32 +136,36 @@ public class AuthorizationServerConfig {
                 .and()
                 .build();
         http.authenticationProvider(new OAuth2PasswordAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil))
-                .authenticationProvider(new OAuth2SmsAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil))
+                .authenticationProvider(new OAuth2MobileAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil))
                 .authenticationProvider(new OAuth2MailAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil));
         return defaultSecurityFilterChain;
     }
 
+    /**
+     *
+     * @param jdbcTemplate
+     * @return
+     */
     @Bean
-    RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder,JdbcTemplate jdbcTemplate) {
-        RegisteredClient registeredClient = RegisteredClient.withId("auth-client")
-                .clientId("auth-client")
-                .clientSecret(passwordEncoder.encode("secret"))
-                // ClientAuthenticationMethod.CLIENT_SECRET_BASIC => client_id:client_secret 进行Base64编码后的值
-                // Headers Authorization Basic YXV0aC1jbGllbnQ6c2VjcmV0
-                // http://localhost:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=auth mail phone&redirect_uri=https://www.baidu.com
+    RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
+        RegisteredClient registeredClient = RegisteredClient.withId("95TxSsTPFA3tF12TBSMmUVK0da")
+                .clientId("95TxSsTPFA3tF12TBSMmUVK0da")
+                .clientSecret("$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO")
+                // ClientAuthenticationMethod.CLIENT_SECRET_BASIC => client_id:client_secret => 95TxSsTPFA3tF12TBSMmUVK0da:secret 进行Base64编码后的值
+                // Headers Authorization Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6c2VjcmV0
+                // http://localhost:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=password mail mobile&redirect_uri=https://www.baidu.com
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantTypes(authorizationGrantTypes -> authorizationGrantTypes.addAll(
                         List.of(AuthorizationGrantType.AUTHORIZATION_CODE
                                 , AuthorizationGrantType.REFRESH_TOKEN
                                 , new AuthorizationGrantType(OAuth2PasswordAuthenticationProvider.GRANT_TYPE)
                                 , new AuthorizationGrantType(OAuth2MailAuthenticationProvider.GRANT_TYPE)
-                                , new AuthorizationGrantType(OAuth2SmsAuthenticationProvider.GRANT_TYPE)
+                                , new AuthorizationGrantType(OAuth2MobileAuthenticationProvider.GRANT_TYPE)
                                 , AuthorizationGrantType.CLIENT_CREDENTIALS)))
-                // 支持OIDC
                 .scopes(scopes -> scopes.addAll(List.of(
-                          "password"
-                        , "mail"
-                        , "mobile"
+                          OAuth2PasswordAuthenticationProvider.GRANT_TYPE
+                        , OAuth2MailAuthenticationProvider.GRANT_TYPE
+                        , OAuth2MobileAuthenticationProvider.GRANT_TYPE
                         , OidcScopes.OPENID
                         , OidcScopes.PROFILE
                         , OidcScopes.PHONE
@@ -174,27 +191,54 @@ public class AuthorizationServerConfig {
         return registeredClientRepository;
     }
 
+    /**
+     *
+     * @param jwtEncoder
+     * @return
+     */
     @Bean
     OAuth2TokenGenerator<OAuth2Token> oAuth2TokenGenerator(JwtEncoder jwtEncoder) {
         JwtGenerator generator = new JwtGenerator(jwtEncoder);
         return new DelegatingOAuth2TokenGenerator(generator, new OAuth2RefreshTokenGenerator());
     }
 
+    /**
+     *
+     * @return
+     */
     @Bean
     AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder().build();
     }
 
+    /**
+     *
+     * @return
+     */
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     *
+     * @param jdbcTemplate
+     * @param registeredClientRepository
+     * @return
+     */
     @Bean
     OAuth2AuthorizationService auth2AuthorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
         return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
     }
 
+    /**
+     *
+     * @param sysUserService
+     * @param sysMenuService
+     * @param passwordEncoder
+     * @param sysDeptService
+     * @return
+     */
     @Bean
     UserDetailsService userDetailsService(
             SysUserServiceImpl sysUserService
@@ -205,6 +249,12 @@ public class AuthorizationServerConfig {
                 , sysDeptService,passwordEncoder);
     }
 
+    /**
+     *
+     * @param passwordEncoder
+     * @param userDetailsService
+     * @return
+     */
     @Bean
     AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder
             , UserDetailsService userDetailsService) {
@@ -217,7 +267,8 @@ public class AuthorizationServerConfig {
     /**
      * 加载jwk资源
      * 生成令牌
-     * @return     */
+     * @return
+     */
     @Bean
     JWKSource<SecurityContext> jwkSource() throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException, JOSEException {
         String alias = "auth";
@@ -248,11 +299,22 @@ public class AuthorizationServerConfig {
         return NimbusJwtDecoder.withPublicKey(publicKey).build();
     }
 
+    /**
+     *
+     * @param jwkSource
+     * @return
+     */
     @Bean
     JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
         return new NimbusJwtEncoder(jwkSource);
     }
 
+    /**
+     *
+     * @param jdbcTemplate
+     * @param registeredClientRepository
+     * @return
+     */
     @Bean
     OAuth2AuthorizationConsentService authorizationConsentService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
         return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);

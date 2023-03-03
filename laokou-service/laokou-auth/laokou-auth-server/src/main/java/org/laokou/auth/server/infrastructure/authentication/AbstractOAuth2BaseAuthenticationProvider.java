@@ -100,8 +100,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     @SneakyThrows
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-        Authentication usernamePasswordToken = login(request);
-        return getToken(authentication,usernamePasswordToken,request);
+        Authentication principal = login(request);
+        return getToken(authentication,principal,request);
     }
 
     /**

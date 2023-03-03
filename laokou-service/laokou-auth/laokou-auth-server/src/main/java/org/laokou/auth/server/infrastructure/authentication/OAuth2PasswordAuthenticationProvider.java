@@ -38,7 +38,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * 密码模式
  * @author laokou
  */
 @Component
