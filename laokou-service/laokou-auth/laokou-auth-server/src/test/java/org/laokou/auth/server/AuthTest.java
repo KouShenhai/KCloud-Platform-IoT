@@ -34,7 +34,7 @@ public class AuthTest {
 
     @Test
     public void test() {
-        String encode = passwordEncoder.encode("auth-client");
+        String encode = passwordEncoder.encode("FpHwIfw4wY92dO");
         log.info("{}",encode);
     }
 
