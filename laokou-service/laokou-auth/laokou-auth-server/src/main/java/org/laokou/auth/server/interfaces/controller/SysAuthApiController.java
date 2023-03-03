@@ -25,6 +25,7 @@ import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.i18n.core.HttpResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -45,22 +46,41 @@ public class SysAuthApiController {
      * @return
      */
     @GetMapping("/captcha")
-    @Operation(summary = "系统认证>账号密码登录>验证码",description = "系统认证>账号密码登录>验证码")
+    @Operation(summary = "系统认证>验证码",description = "系统认证>验证码")
     @Parameter(name = AuthConstant.UUID,description = "唯一标识",example = "1111")
     public HttpResult<String> captcha(HttpServletRequest request) {
         return new HttpResult<String>().ok(sysAuthApplicationService.captcha(request));
     }
 
+    /**
+     * 配置服务限流
+     * @param request
+     * @return
+     */
     @GetMapping("/logout")
     @Operation(summary = "系统认证>注销",description = "系统认证>注销")
     public HttpResult<Boolean> logout(HttpServletRequest request) {
         return new HttpResult<Boolean>().ok(sysAuthApplicationService.logout(request));
     }
 
+    /**
+     * 配置服务限流
+     * @return
+     */
     @GetMapping("/tenant")
     @Operation(summary = "系统认证>租户",description = "系统认证>租户")
     public HttpResult<List<OptionVO>> optionList() {
         return new HttpResult<List<OptionVO>>().ok(sysAuthApplicationService.getOptionList());
+    }
+
+    /**
+     * 配置服务限流
+     * @return
+     */
+    @GetMapping("/public_key")
+    @Operation(summary = "系统认证>公钥",description = "系统认证>公钥")
+    public HttpResult<String> publicKey() throws IOException {
+        return new HttpResult<String>().ok(sysAuthApplicationService.getPublicKey());
     }
 
 }

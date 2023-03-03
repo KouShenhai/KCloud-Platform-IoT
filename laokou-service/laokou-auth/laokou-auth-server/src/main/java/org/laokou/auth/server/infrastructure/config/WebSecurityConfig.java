@@ -43,6 +43,7 @@ public class WebSecurityConfig {
                         , "/oauth2/captcha"
                         , "/oauth2/logout"
                         , "/oauth2/tenant"
+                        , "/oauth2/public_key"
                         , "/actuator/**")
                 .permitAll()
                 .and()

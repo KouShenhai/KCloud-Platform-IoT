@@ -38,6 +38,8 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.stereotype.Service;
 import java.awt.*;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.List;
 
@@ -113,6 +115,12 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     @Override
     public List<OptionVO> getOptionList() {
         return sysTenantService.getOptionList();
+    }
+
+    @Override
+    public String getPublicKey() throws IOException {
+        byte[] bytes = this.getClass().getResourceAsStream("/conf/publicKey.scr").readAllBytes();
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 
 }
