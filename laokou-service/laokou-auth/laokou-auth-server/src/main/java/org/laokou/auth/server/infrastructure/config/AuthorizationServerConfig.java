@@ -80,7 +80,20 @@ import java.util.List;
 public class AuthorizationServerConfig {
 
     /**
+     *
      * @param http
+     * @param authorizationServerSettings
+     * @param authorizationService
+     * @param sysUserService
+     * @param sysMenuService
+     * @param sysDeptService
+     * @param loginLogUtil
+     * @param passwordEncoder
+     * @param sysCaptchaService
+     * @param tokenGenerator
+     * @param sysSourceService
+     * @param sysAuthenticationService
+     * @param redisUtil
      * @return
      * @throws Exception
      */
@@ -128,6 +141,12 @@ public class AuthorizationServerConfig {
         return defaultSecurityFilterChain;
     }
 
+    /**
+     *
+     * @param passwordEncoder
+     * @param jdbcTemplate
+     * @return
+     */
     @Bean
     RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder,JdbcTemplate jdbcTemplate) {
         RegisteredClient registeredClient = RegisteredClient.withId("auth-client")
@@ -135,7 +154,7 @@ public class AuthorizationServerConfig {
                 .clientSecret(passwordEncoder.encode("secret"))
                 // ClientAuthenticationMethod.CLIENT_SECRET_BASIC => client_id:client_secret 进行Base64编码后的值
                 // Headers Authorization Basic YXV0aC1jbGllbnQ6c2VjcmV0
-                // http://localhost:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=auth mail phone&redirect_uri=https://www.baidu.com
+                // http://localhost:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=password mail mobile&redirect_uri=https://www.baidu.com
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantTypes(authorizationGrantTypes -> authorizationGrantTypes.addAll(
                         List.of(AuthorizationGrantType.AUTHORIZATION_CODE
@@ -144,7 +163,6 @@ public class AuthorizationServerConfig {
                                 , new AuthorizationGrantType(OAuth2MailAuthenticationProvider.GRANT_TYPE)
                                 , new AuthorizationGrantType(OAuth2MobileAuthenticationProvider.GRANT_TYPE)
                                 , AuthorizationGrantType.CLIENT_CREDENTIALS)))
-                // 支持OIDC
                 .scopes(scopes -> scopes.addAll(List.of(
                           OAuth2PasswordAuthenticationProvider.GRANT_TYPE
                         , OAuth2MailAuthenticationProvider.GRANT_TYPE
@@ -174,27 +192,54 @@ public class AuthorizationServerConfig {
         return registeredClientRepository;
     }
 
+    /**
+     *
+     * @param jwtEncoder
+     * @return
+     */
     @Bean
     OAuth2TokenGenerator<OAuth2Token> oAuth2TokenGenerator(JwtEncoder jwtEncoder) {
         JwtGenerator generator = new JwtGenerator(jwtEncoder);
         return new DelegatingOAuth2TokenGenerator(generator, new OAuth2RefreshTokenGenerator());
     }
 
+    /**
+     *
+     * @return
+     */
     @Bean
     AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder().build();
     }
 
+    /**
+     *
+     * @return
+     */
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     *
+     * @param jdbcTemplate
+     * @param registeredClientRepository
+     * @return
+     */
     @Bean
     OAuth2AuthorizationService auth2AuthorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
         return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
     }
 
+    /**
+     *
+     * @param sysUserService
+     * @param sysMenuService
+     * @param passwordEncoder
+     * @param sysDeptService
+     * @return
+     */
     @Bean
     UserDetailsService userDetailsService(
             SysUserServiceImpl sysUserService
@@ -205,6 +250,12 @@ public class AuthorizationServerConfig {
                 , sysDeptService,passwordEncoder);
     }
 
+    /**
+     *
+     * @param passwordEncoder
+     * @param userDetailsService
+     * @return
+     */
     @Bean
     AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder
             , UserDetailsService userDetailsService) {
@@ -217,7 +268,8 @@ public class AuthorizationServerConfig {
     /**
      * 加载jwk资源
      * 生成令牌
-     * @return     */
+     * @return
+     */
     @Bean
     JWKSource<SecurityContext> jwkSource() throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException, JOSEException {
         String alias = "auth";
@@ -248,11 +300,22 @@ public class AuthorizationServerConfig {
         return NimbusJwtDecoder.withPublicKey(publicKey).build();
     }
 
+    /**
+     *
+     * @param jwkSource
+     * @return
+     */
     @Bean
     JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
         return new NimbusJwtEncoder(jwkSource);
     }
 
+    /**
+     *
+     * @param jdbcTemplate
+     * @param registeredClientRepository
+     * @return
+     */
     @Bean
     OAuth2AuthorizationConsentService authorizationConsentService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
         return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
