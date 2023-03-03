@@ -104,7 +104,7 @@ public class AuthorizationServerConfig {
         http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
                 .apply(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(
                 List.of(new OAuth2PasswordAuthenticationConverter()
-                        , new OAuth2SmsAuthenticationConverter()
+                        , new OAuth2MobileAuthenticationConverter()
                         , new OAuth2MailAuthenticationConverter()
                         , new OAuth2AuthorizationCodeAuthenticationConverter()
                         , new OAuth2ClientCredentialsAuthenticationConverter()
@@ -123,7 +123,7 @@ public class AuthorizationServerConfig {
                 .and()
                 .build();
         http.authenticationProvider(new OAuth2PasswordAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil))
-                .authenticationProvider(new OAuth2SmsAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil))
+                .authenticationProvider(new OAuth2MobileAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil))
                 .authenticationProvider(new OAuth2MailAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil));
         return defaultSecurityFilterChain;
     }
@@ -142,13 +142,13 @@ public class AuthorizationServerConfig {
                                 , AuthorizationGrantType.REFRESH_TOKEN
                                 , new AuthorizationGrantType(OAuth2PasswordAuthenticationProvider.GRANT_TYPE)
                                 , new AuthorizationGrantType(OAuth2MailAuthenticationProvider.GRANT_TYPE)
-                                , new AuthorizationGrantType(OAuth2SmsAuthenticationProvider.GRANT_TYPE)
+                                , new AuthorizationGrantType(OAuth2MobileAuthenticationProvider.GRANT_TYPE)
                                 , AuthorizationGrantType.CLIENT_CREDENTIALS)))
                 // 支持OIDC
                 .scopes(scopes -> scopes.addAll(List.of(
-                          "password"
-                        , "mail"
-                        , "mobile"
+                          OAuth2PasswordAuthenticationProvider.GRANT_TYPE
+                        , OAuth2MailAuthenticationProvider.GRANT_TYPE
+                        , OAuth2MobileAuthenticationProvider.GRANT_TYPE
                         , OidcScopes.OPENID
                         , OidcScopes.PROFILE
                         , OidcScopes.PHONE

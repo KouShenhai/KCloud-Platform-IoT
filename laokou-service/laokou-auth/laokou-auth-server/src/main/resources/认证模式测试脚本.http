@@ -55,7 +55,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="grant_type"
 
-sms
+mobile
 --WebAppBoundary
 Content-Disposition: form-data; name="mobile"
 

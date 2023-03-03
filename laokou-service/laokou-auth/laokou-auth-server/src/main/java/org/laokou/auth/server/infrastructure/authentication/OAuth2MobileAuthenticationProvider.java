@@ -40,11 +40,11 @@ import java.io.IOException;
  * @author laokou
  */
 @Slf4j
-public class OAuth2SmsAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
+public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-    public static final String GRANT_TYPE = "sms";
+    public static final String GRANT_TYPE = "mobile";
 
-    public OAuth2SmsAuthenticationProvider(SysUserService sysUserService
+    public OAuth2MobileAuthenticationProvider(SysUserService sysUserService
             , SysMenuService sysMenuService
             , SysDeptService sysDeptService
             , LoginLogUtil loginLogUtil
@@ -60,7 +60,7 @@ public class OAuth2SmsAuthenticationProvider extends AbstractOAuth2BaseAuthentic
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return OAuth2SmsAuthenticationToken.class.isAssignableFrom(authentication);
+        return OAuth2MobileAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
     @Override

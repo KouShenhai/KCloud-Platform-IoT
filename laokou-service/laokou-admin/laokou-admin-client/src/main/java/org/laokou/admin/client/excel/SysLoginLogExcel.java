@@ -91,8 +91,7 @@ public class SysLoginLogExcel implements Serializable {
     private Integer requestStatus;
 
     public void setRequestStatusMsg(Integer requestStatus) {
-        requestStatusMsg = requestStatus == 0 ? "成功" : "失败";
-        this.requestStatusMsg = requestStatusMsg;
+        this.requestStatusMsg = requestStatus == 0 ? "成功" : "失败";
     }
 
     public String getRequestStatusMsg() {
