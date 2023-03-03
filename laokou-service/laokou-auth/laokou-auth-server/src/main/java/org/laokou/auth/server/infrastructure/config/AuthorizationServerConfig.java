@@ -149,11 +149,11 @@ public class AuthorizationServerConfig {
      */
     @Bean
     RegisteredClientRepository registeredClientRepository(PasswordEncoder passwordEncoder,JdbcTemplate jdbcTemplate) {
-        RegisteredClient registeredClient = RegisteredClient.withId("auth-client")
-                .clientId("auth-client")
+        RegisteredClient registeredClient = RegisteredClient.withId("95TxSsTPFA3tF12TBSMmUVK0da")
+                .clientId("95TxSsTPFA3tF12TBSMmUVK0da")
                 .clientSecret(passwordEncoder.encode("secret"))
-                // ClientAuthenticationMethod.CLIENT_SECRET_BASIC => client_id:client_secret 进行Base64编码后的值
-                // Headers Authorization Basic YXV0aC1jbGllbnQ6c2VjcmV0
+                // ClientAuthenticationMethod.CLIENT_SECRET_BASIC => client_id:client_secret => 95TxSsTPFA3tF12TBSMmUVK0da:secret 进行Base64编码后的值
+                // Headers Authorization Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6c2VjcmV0
                 // http://localhost:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=password mail mobile&redirect_uri=https://www.baidu.com
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantTypes(authorizationGrantTypes -> authorizationGrantTypes.addAll(
