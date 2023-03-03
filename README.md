@@ -409,6 +409,9 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 <a href="https://github.com/liang99" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/liang99/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
         <img src="https://avatars.githubusercontent.com/u/26246537?s=64&amp;v=4" alt="@liang99" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
 </a>
+<a href="https://github.com/@livk-cloud" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/@livk-cloud/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
+        <img src="https://avatars.githubusercontent.com/u/50291874?s=64&amp;v=4" alt="@livk-cloud" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
+</a>
 
 ### 🐸 联系
 博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)    
