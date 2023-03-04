@@ -22,5 +22,13 @@
     "grade": 1,
     "strategy": 0,
     "controlBehavior": 0
+  },
+  {
+    "resource": "/oauth2/public_key",
+    "limitApp": "default",
+    "count": 300,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
   }
 ]
