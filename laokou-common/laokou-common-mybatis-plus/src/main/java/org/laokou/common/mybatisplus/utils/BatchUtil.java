@@ -16,7 +16,6 @@
 package org.laokou.common.mybatisplus.utils;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.mybatisplus.service.BatchService;
@@ -39,7 +38,6 @@ public class BatchUtil<T> {
      * @param batchNum 每组多少条数据
      * @param service 基础service
      */
-    @SneakyThrows
     public void insertBatch(List<T> dataList, int batchNum, BatchService<T> service) {
         // 数据分组
         List<List<T>> partition = Lists.partition(dataList, batchNum);
