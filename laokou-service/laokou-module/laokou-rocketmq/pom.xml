@@ -5,12 +5,12 @@
     <parent>
         <artifactId>laokou-module</artifactId>
         <groupId>org.laokou</groupId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-rocketmq</artifactId>
-    <version>3.0.3</version>
+    <version>3.0.4</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-rocketmq-client</module>
