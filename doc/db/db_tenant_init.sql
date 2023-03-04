@@ -33,7 +33,6 @@ CREATE TABLE `boot_sys_message` (
                                     `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
                                     `title` varchar(400) DEFAULT NULL COMMENT '标题',
                                     `content` longtext COMMENT '内容',
-邮箱',
                                     `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
                                     `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
                                     `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -95,3 +94,6 @@ CREATE TABLE `boot_sys_oss` (
                                 `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号',
                                 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='对象存储';
+
+-- 2023/2/24 增加boot_sys_message_detail索引 老寇
+ALTER table boot_sys_message_detail add INDEX idx_read_flag_user_id(read_flag,user_id) COMMENT '已读_用户编号_索引';
