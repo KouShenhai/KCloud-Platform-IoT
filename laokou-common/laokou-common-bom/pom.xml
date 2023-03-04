@@ -16,7 +16,7 @@
         <!--lombok版本-->
         <lombok.version>1.18.26</lombok.version>
         <!--mysql版本-->
-        <mysql.version>5.1.46</mysql.version>
+        <mysql.version>8.0.31</mysql.version>
         <!--admin版本-->
         <spring-boot-admin.version>3.0.0</spring-boot-admin.version>
         <!--flowable版本-->

@@ -6,7 +6,7 @@
         select `version` from boot_sys_message_detail where id = #{id}
     </select>
 
-    <insert id="insertBatch">
+    <insert id="insertBatch" useGeneratedKeys="false">
         insert into boot_sys_message_detail(message_id,user_id,creator)
         values
             <foreach collection="list" item="item" separator=",">

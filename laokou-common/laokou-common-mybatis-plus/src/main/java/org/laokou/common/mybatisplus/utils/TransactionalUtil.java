@@ -34,7 +34,7 @@ public class TransactionalUtil {
      * @return
      */
     public TransactionStatus begin() {
-        DefaultTransactionAttribute defaultTransactionAttribute = new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        DefaultTransactionAttribute defaultTransactionAttribute = new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRED);
         return dataSourceTransactionManager.getTransaction(defaultTransactionAttribute);
     }
 

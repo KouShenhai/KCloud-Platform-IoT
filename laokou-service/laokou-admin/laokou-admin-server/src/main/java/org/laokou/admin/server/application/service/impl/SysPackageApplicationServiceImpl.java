@@ -117,7 +117,7 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
                 sysPackageMenuDO.setMenuId(menuId);
                 list.add(sysPackageMenuDO);
             }
-            batchUtil.insertConcurrentBatch(list,500,sysPackageMenuService);
+            batchUtil.insertBatch(list,500,sysPackageMenuService);
         }
         return true;
     }
