@@ -38,11 +38,12 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class RouterUtil {
     private final Environment env;
+    private static final String APPLICATION_PREFIX = "laokou-";
 
    public void initRouter() throws IOException, TemplateException {
        String appId = env.getProperty("spring.application.name");
        Map<String,Object> dataMap = new HashMap<>(2);
-       String name = appId.replace("laokou-","");
+       String name = appId.replace(APPLICATION_PREFIX,"");
        dataMap.put("appId",appId);
        dataMap.put("name",name);
        byte[] bytes = new ClassPathResource("init_router.json").getInputStream().readAllBytes();

@@ -24,6 +24,7 @@
         <module>laokou-common-data-filter</module>
         <module>laokou-common-api</module>
         <module>laokou-common-i18n</module>
+        <module>laokou-common-banner</module>
     </modules>
 
 </project>

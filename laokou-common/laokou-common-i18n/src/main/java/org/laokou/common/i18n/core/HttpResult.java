@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.i18n.core;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.utils.MessageUtil;
 /**
@@ -21,21 +22,25 @@ import org.laokou.common.i18n.utils.MessageUtil;
  * @author laokou
  */
 @Data
+@Schema(name = "HttpResult",description = "统一返回结果实体类")
 public class HttpResult<T> {
 
     /**
      * 状态编码
      */
+    @Schema(name = "code",description = "状态编码",example = "200")
     private int code;
 
     /**
      * 响应描述
      */
+    @Schema(name = "msg",description = "响应描述",example = "请求成功")
     private String msg;
 
     /**
      * 响应结果
      */
+    @Schema(name = "data",description = "响应结果")
     private T data;
 
     public boolean success(){
@@ -65,11 +70,6 @@ public class HttpResult<T> {
         this.code = StatusCode.INTERNAL_SERVER_ERROR;
         this.msg = msg;
         return this;
-    }
-
-    public static void main(String[] args) {
-        HttpResult result = new HttpResult().ok(1);
-        System.out.println(result.success());
     }
 
 }
