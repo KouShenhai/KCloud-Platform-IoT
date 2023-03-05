@@ -49,6 +49,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import static org.laokou.gateway.constant.GatewayConstant.OAUTH2_AUTH_URI;
 /**
  * 认证Filter
  * @author laokou
@@ -78,8 +79,8 @@ public class AuthFilter implements GlobalFilter,Ordered {
         }
         // 表单提交
         MediaType mediaType = request.getHeaders().getContentType();
-        if (ResponseUtil.ANT_PATH_MATCHER.match(GatewayConstant.OAUTH2_AUTH_URI,requestUri) && MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
-            return authDecode(exchange,chain);
+        if (OAUTH2_AUTH_URI.contains(requestUri) && MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
+            return oauth2Decode(exchange,chain);
         }
         // 获取token
         String token = ResponseUtil.getToken(request);
@@ -96,7 +97,13 @@ public class AuthFilter implements GlobalFilter,Ordered {
         return Ordered.LOWEST_PRECEDENCE;
     }
 
-    private Mono<Void> authDecode(ServerWebExchange exchange, GatewayFilterChain chain) {
+    /**
+     * OAuth2转换
+     * @param exchange
+     * @param chain
+     * @return
+     */
+    private Mono<Void> oauth2Decode(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());
         Mono modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt());
         BodyInserter<Mono, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody, String.class);
@@ -106,7 +113,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
         CachedBodyOutputMessage outputMessage = new CachedBodyOutputMessage(exchange, headers);
         return bodyInserter.insert(outputMessage, new BodyInserterContext()).then(Mono.defer(() -> {
-            ServerHttpRequest decorator = decorate(exchange, headers, outputMessage);
+            ServerHttpRequest decorator = requestDecorator(exchange, headers, outputMessage);
             return chain.filter(exchange.mutate().request(decorator).build());
         }));
     }
@@ -137,7 +144,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
         };
     }
 
-    private ServerHttpRequestDecorator decorate(ServerWebExchange exchange, HttpHeaders headers, CachedBodyOutputMessage outputMessage) {
+    private ServerHttpRequestDecorator requestDecorator(ServerWebExchange exchange, HttpHeaders headers, CachedBodyOutputMessage outputMessage) {
         return new ServerHttpRequestDecorator(exchange.getRequest()) {
             @Override
             public HttpHeaders getHeaders() {
@@ -158,5 +165,4 @@ public class AuthFilter implements GlobalFilter,Ordered {
             }
         };
     }
-
 }

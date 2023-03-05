@@ -31,7 +31,7 @@ public interface GatewayConstant {
     /**
      * 密码模式-请求地址
      */
-    String OAUTH2_AUTH_URI = "/**/oauth2/token";
+    String OAUTH2_AUTH_URI = "/auth/oauth2/token";
 
     /**
      * 密码模式-用户名

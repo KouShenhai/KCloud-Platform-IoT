@@ -40,6 +40,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
+import static org.laokou.gateway.constant.GatewayConstant.OAUTH2_AUTH_URI;
 /**
  * @author laokou
  */
@@ -56,8 +57,7 @@ public class RespFilter implements GlobalFilter, Ordered {
         String requestUri = request.getPath().pathWithinApplication().value();
         // 表单提交
         MediaType mediaType = request.getHeaders().getContentType();
-        if (ResponseUtil.ANT_PATH_MATCHER.match(GatewayConstant.OAUTH2_AUTH_URI,requestUri)
-                && MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
+        if (OAUTH2_AUTH_URI.contains(requestUri) && MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
             ServerHttpResponse response = exchange.getResponse();
             DataBufferFactory dataBufferFactory = response.bufferFactory();
             ServerHttpResponseDecorator serverHttpResponseDecorator = new ServerHttpResponseDecorator(response) {

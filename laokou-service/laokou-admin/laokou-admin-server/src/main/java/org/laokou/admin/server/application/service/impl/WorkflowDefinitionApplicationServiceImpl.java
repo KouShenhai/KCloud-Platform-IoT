@@ -49,8 +49,8 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
     private final WorkDefinitionApiFeignClient workDefinitionApiFeignClient;
 
     @Override
-    public Boolean insertDefinition(String name, MultipartFile file) {
-        HttpResult<Boolean> result = workDefinitionApiFeignClient.insert(name,file);
+    public Boolean insertDefinition(MultipartFile file) {
+        HttpResult<Boolean> result = workDefinitionApiFeignClient.insert(file);
         if (!result.success()) {
             throw new CustomException(result.getCode(), result.getMsg());
         }

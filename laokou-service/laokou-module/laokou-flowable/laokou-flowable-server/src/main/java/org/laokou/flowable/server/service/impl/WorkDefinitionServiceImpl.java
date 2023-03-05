@@ -18,9 +18,11 @@ package org.laokou.flowable.server.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.utils.Base64;
+import org.flowable.bpmn.converter.BpmnXMLConverter;
 import org.flowable.bpmn.model.BpmnModel;
+import org.flowable.bpmn.model.Process;
+import org.flowable.common.engine.impl.util.io.InputStreamSource;
 import org.flowable.engine.RepositoryService;
-import org.flowable.engine.repository.DeploymentBuilder;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.repository.ProcessDefinitionQuery;
 import org.flowable.image.impl.DefaultProcessDiagramGenerator;
@@ -56,13 +58,22 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean insertDefinition(String name, InputStream in) {
-        String processName = name + BPMN_FILE_SUFFIX;
-        DeploymentBuilder deploymentBuilder = repositoryService.createDeployment()
+    public Boolean insertDefinition(InputStream in) {
+        BpmnXMLConverter bpmnXMLConverter = new BpmnXMLConverter();
+        InputStreamSource inputStreamSource = new InputStreamSource(in);
+        BpmnModel bpmnModel = bpmnXMLConverter.convertToBpmnModel(inputStreamSource, true, true);
+        Process process = bpmnModel.getProcesses().stream().findFirst().get();
+        String processId = process.getId();
+        String processName = process.getName() + BPMN_FILE_SUFFIX;
+        long count = repositoryService.createDeploymentQuery().deploymentKey(processId).count();
+        if (count > 0) {
+            throw new CustomException("流程已存在，请重新上传");
+        }
+        repositoryService.createDeployment()
                 .name(processName)
-                .key(name)
-                .addInputStream(processName, in);
-        deploymentBuilder.deploy();
+                .key(processId)
+                .addBpmnModel(processName, bpmnModel)
+                .deploy();
         return true;
     }
 
