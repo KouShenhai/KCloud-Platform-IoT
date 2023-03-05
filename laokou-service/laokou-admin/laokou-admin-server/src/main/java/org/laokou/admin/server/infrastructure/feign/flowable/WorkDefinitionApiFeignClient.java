@@ -37,13 +37,12 @@ public interface WorkDefinitionApiFeignClient {
 
     /**
      * 新增流程
-     * @param name
      * @param file
      * @return
      * @throws IOException
      */
     @PostMapping(value = "/insert",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    HttpResult<Boolean> insert(@RequestParam("name")String name, @RequestPart("file") MultipartFile file);
+    HttpResult<Boolean> insert(@RequestPart("file") MultipartFile file);
 
     /**
      * 查询流程

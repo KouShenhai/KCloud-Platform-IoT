@@ -17,6 +17,8 @@
 package org.laokou.flowable.server.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.dto.DefinitionDTO;
@@ -40,8 +42,8 @@ public class WorkDefinitionApiController {
 
     @PostMapping(value = "/insert")
     @Operation(summary = "流程定义>新增流程",description = "流程定义>新增流程")
-    public HttpResult<Boolean> insert(@RequestParam("name")String name, @RequestPart("file") MultipartFile file) throws IOException {
-        return new HttpResult<Boolean>().ok(workDefinitionService.insertDefinition(name,file.getInputStream()));
+    public HttpResult<Boolean> insert(@Valid @NotNull(message = "请上传相关流程图") @RequestPart("file") MultipartFile file) throws IOException {
+        return new HttpResult<Boolean>().ok(workDefinitionService.insertDefinition(file.getInputStream()));
     }
 
     @PostMapping(value = "/query")

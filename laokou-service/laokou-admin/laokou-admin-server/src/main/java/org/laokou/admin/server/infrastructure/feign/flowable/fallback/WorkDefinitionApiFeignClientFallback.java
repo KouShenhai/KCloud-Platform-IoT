@@ -35,7 +35,7 @@ public class WorkDefinitionApiFeignClientFallback implements WorkDefinitionApiFe
     private final Throwable throwable;
 
     @Override
-    public HttpResult<Boolean> insert(String name, MultipartFile file) {
+    public HttpResult<Boolean> insert(MultipartFile file) {
         log.error("服务调用失败，报错原因：{}",throwable.getMessage());
         return new HttpResult<Boolean>().error("流程新增失败，请联系管理员");
     }

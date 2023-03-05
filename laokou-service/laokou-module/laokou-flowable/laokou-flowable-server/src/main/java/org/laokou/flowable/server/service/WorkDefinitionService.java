@@ -17,6 +17,8 @@ package org.laokou.flowable.server.service;
 import org.laokou.flowable.client.dto.DefinitionDTO;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;
+
+import java.io.IOException;
 import java.io.InputStream;
 /**
  * @author laokou
@@ -25,11 +27,10 @@ public interface WorkDefinitionService {
 
     /**
      * 新增流程文件
-     * @param name
      * @param in
      * @return
      */
-    Boolean insertDefinition(String name, InputStream in);
+    Boolean insertDefinition(InputStream in);
 
     /**
      * 分页查询流程

@@ -16,10 +16,9 @@
 package org.laokou.common.mybatisplus.utils;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.mybatisplus.service.BatchService;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionStatus;
 import java.util.List;
@@ -33,31 +32,27 @@ public class BatchUtil<T> {
 
     private final TransactionalUtil transactionalUtil;
 
-    private final ThreadPoolTaskExecutor taskExecutor;
-
     /**
-     * 多线程批量新增
+     * 批量新增
      * @param dataList 集合
      * @param batchNum 每组多少条数据
      * @param service 基础service
      */
-    @SneakyThrows
-    public void insertConcurrentBatch(List<T> dataList, int batchNum, BatchService<T> service) {
+    public void insertBatch(List<T> dataList, int batchNum, BatchService<T> service) {
         // 数据分组
         List<List<T>> partition = Lists.partition(dataList, batchNum);
         int size = partition.size();
         for(int i = 0; i < size; i++) {
             List<T> list = partition.get(i);
-            taskExecutor.execute(() -> {
-                TransactionStatus status = transactionalUtil.begin();
-                try {
-                    service.insertBatch(list);
-                    transactionalUtil.commit(status);
-                } catch (Exception e) {
-                    transactionalUtil.rollback(status);
-                    log.error("错误信息：批量插入数据异常，已执行回滚");
-                }
-            });
+            TransactionStatus status = transactionalUtil.begin();
+            try {
+                service.insertBatch(list);
+                transactionalUtil.commit(status);
+            } catch (Exception e) {
+                transactionalUtil.rollback(status);
+                log.error("错误信息：批量插入数据异常，已执行回滚");
+                throw new CustomException("批量插入数据异常，数据已回滚");
+            }
         }
     }
 

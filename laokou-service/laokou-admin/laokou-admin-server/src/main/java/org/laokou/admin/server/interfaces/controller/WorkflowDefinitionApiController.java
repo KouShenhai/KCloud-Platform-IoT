@@ -46,8 +46,8 @@ public class WorkflowDefinitionApiController {
     @Operation(summary = "流程定义>新增",description = "流程定义>新增")
     @OperateLog(module = "流程定义",name = "流程新增",type = DataTypeEnum.FILE)
     @PreAuthorize("hasAuthority('workflow:definition:insert')")
-    public HttpResult<Boolean> insert(@RequestParam("name")String name, @RequestPart("file") MultipartFile file) throws IOException {
-        return new HttpResult<Boolean>().ok(workflowDefinitionApplicationService.insertDefinition(name, file));
+    public HttpResult<Boolean> insert(@RequestPart("file") MultipartFile file) throws IOException {
+        return new HttpResult<Boolean>().ok(workflowDefinitionApplicationService.insertDefinition(file));
     }
 
     @PostMapping("/query")
