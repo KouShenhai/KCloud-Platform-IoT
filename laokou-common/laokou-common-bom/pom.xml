@@ -100,6 +100,16 @@
 <!--                <version>${mapstruct.version}</version>-->
 <!--            </dependency>-->
             <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-banner</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-wechat-mp</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.hbase</groupId>
                 <artifactId>hbase-shaded-client</artifactId>
                 <version>${hbase.version}</version>

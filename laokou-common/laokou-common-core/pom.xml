@@ -8,6 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
   <artifactId>laokou-common-core</artifactId>
+
   <dependencies>
     <dependency>
       <groupId>cn.hutool</groupId>
@@ -102,6 +103,16 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springdoc</groupId>
+          <artifactId>springdoc-openapi-starter-common</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-banner</artifactId>
     </dependency>
   </dependencies>
 </project>

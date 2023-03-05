@@ -27,5 +27,6 @@
         <module>laokou-power-job</module>
         <module>laokou-dynamic-router</module>
         <module>laokou-hbase</module>
+        <module>laokou-wechat</module>
     </modules>
 </project>

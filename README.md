@@ -126,6 +126,7 @@ tenant/tenant123
         └── laokou-common-bom                      --- 依赖版本库  
         └── laokou-common-i18n                     --- 国际化组件  
         └── laokou-common-api                      --- API调用组件  
+        └── laokou-common-banner                   --- Banner组件  
         └── laokou-common-security                 --- 认证授权组件  
         └── laokou-common-data-cache               --- 数据缓存组件  
         └── laokou-common-data-filter              --- 数据过滤组件  
@@ -145,6 +146,7 @@ tenant/tenant123
                 └── laokou-mail                    --- 邮件模块  
                 └── laokou-redis                   --- 缓存模块  
                 └── laokou-kafka                   --- 消息模块  
+                └── laokou-wechat                  --- 微信模块  
                 └── laokou-mongodb                 --- 报表模块  
                 └── laokou-rocketmq                --- 消息模块  
                 └── laokou-power-job               --- 工作模块  
@@ -280,7 +282,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     
     /**
      * 使用openfeign调用时,每个被调用服务都需要加 @Transactional
-     */
+     */ 
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @GlobalTransactional
     public Boolean insertResource(SysResourceAuditDTO dto) {

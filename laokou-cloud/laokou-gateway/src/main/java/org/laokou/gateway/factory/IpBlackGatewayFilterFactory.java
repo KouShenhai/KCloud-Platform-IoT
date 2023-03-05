@@ -19,14 +19,15 @@ package org.laokou.gateway.factory;
 import io.netty.handler.ipfilter.IpFilterRuleType;
 import io.netty.handler.ipfilter.IpSubnetFilterRule;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import org.laokou.common.core.constant.Constant;
+import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
 import org.springframework.stereotype.Component;
-
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +43,9 @@ public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<Ip
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
+            if (StringUtil.isEmpty(config.sources)) {
+                return chain.filter(exchange);
+            }
             List<IpSubnetFilterRule> sources = convert(Arrays.asList(config.sources.split(Constant.COMMA)));
             InetSocketAddress remoteAddress = config.remoteAddressResolver.resolve(exchange);
             for (IpSubnetFilterRule source : sources) {
@@ -57,24 +61,17 @@ public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<Ip
         super(Config.class);
     }
 
+    @Data
     static class Config {
 
         private String sources;
 
-        private RemoteAddressResolver remoteAddressResolver = new RemoteAddressResolver() {};
+        private volatile RemoteAddressResolver remoteAddressResolver;
 
-        public IpBlackGatewayFilterFactory.Config setRemoteAddressResolver(RemoteAddressResolver remoteAddressResolver) {
-            this.remoteAddressResolver = remoteAddressResolver;
-            return this;
+        public Config() {
+            remoteAddressResolver = new RemoteAddressResolver() {};
         }
 
-        public String getSources() {
-            return sources;
-        }
-
-        public void setSources(String sources) {
-            this.sources = sources;
-        }
     }
 
     private void addSource(List<IpSubnetFilterRule> sources, String source) {

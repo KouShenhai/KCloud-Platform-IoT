@@ -54,10 +54,6 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-sentinel</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-i18n</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
