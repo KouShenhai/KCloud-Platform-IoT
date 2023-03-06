@@ -33,6 +33,7 @@ import org.springframework.cloud.gateway.support.BodyInserterContext;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ReactiveHttpOutputMessage;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -79,7 +80,9 @@ public class AuthFilter implements GlobalFilter,Ordered {
         }
         // 表单提交
         MediaType mediaType = request.getHeaders().getContentType();
-        if (OAUTH2_AUTH_URI.contains(requestUri) && MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
+        if (OAUTH2_AUTH_URI.contains(requestUri)
+                && HttpMethod.POST.matches(request.getMethod().name())
+                && MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
             return oauth2Decode(exchange,chain);
         }
         // 获取token
@@ -98,7 +101,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
     }
 
     /**
-     * OAuth2转换
+     * OAuth2解密
      * @param exchange
      * @param chain
      * @return
