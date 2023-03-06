@@ -29,14 +29,17 @@ public class XssUtil {
 
     private static final Pattern[] SCRIPT_PATTERNS = {
             Pattern.compile("<script(.*?)></script>",Pattern.CASE_INSENSITIVE),
-            Pattern.compile("src[\r\n]*=[\r\n]*\\'(.*?)\\'",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+            Pattern.compile("src[\r\n]*=[\r\n]*\'(.*?)\'",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
             Pattern.compile("</script>",Pattern.CASE_INSENSITIVE),
             Pattern.compile("<script(.*?)>",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
             Pattern.compile("eval\\((.*?)\\)",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
             Pattern.compile("expression\\((.*?)\\)",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
             Pattern.compile("javascript:",Pattern.CASE_INSENSITIVE),
             Pattern.compile("vbscript:",Pattern.CASE_INSENSITIVE),
-            Pattern.compile("onload(.*?)=",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL)
+            Pattern.compile("onload(.*?)=",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+            Pattern.compile("alert(.*?)", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+            Pattern.compile("<", Pattern.MULTILINE | Pattern.DOTALL),
+            Pattern.compile(">", Pattern.MULTILINE | Pattern.DOTALL)
     };
 
     /**
@@ -58,7 +61,7 @@ public class XssUtil {
     }
 
     public static void main(String[] args) {
-        String cleanValue = XssUtil.clean("select & from sql <script>qqqqqq</script>");
+        String cleanValue = XssUtil.clean("<a>2222222</a>");
         System.out.println(cleanValue);
     }
 

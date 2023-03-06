@@ -20,7 +20,9 @@ import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.i18n.core.CustomException;
@@ -29,8 +31,10 @@ import org.laokou.tenant.vo.SysSourceVO;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author laokou
@@ -41,6 +45,17 @@ import java.sql.DriverManager;
 public class DataBaseUtil {
 
     private final SysSourceService sysSourceService;
+
+    private static final List<String> TABLES;
+
+    static {
+        TABLES = new ArrayList<>(5);
+        TABLES.add("boot_sys_dict");
+        TABLES.add("boot_sys_message");
+        TABLES.add("boot_sys_message_detail");
+        TABLES.add("boot_sys_oss");
+        TABLES.add("boot_sys_oss_log");
+    }
 
     public String loadDataBase(String sourceName) {
         if (StringUtil.isEmpty(sourceName)) {
@@ -72,7 +87,9 @@ public class DataBaseUtil {
         return dynamicRoutingDataSource.getDataSources().containsKey(sourceName);
     }
 
+    @SneakyThrows
     private void connectDataBase(DataSourceProperty properties) {
+        Connection connection = null;
         try {
             Class.forName(properties.getDriverClassName());
         } catch (Exception e) {
@@ -80,11 +97,29 @@ public class DataBaseUtil {
             throw new CustomException("数据源驱动加载失败，请检查相关配置");
         }
         try {
-            Connection connection = DriverManager.getConnection(properties.getUrl(), properties.getUsername(), properties.getPassword());
-            connection.close();
+            connection = DriverManager.getConnection(properties.getUrl(), properties.getUsername(), properties.getPassword());
         } catch (Exception e) {
             log.error("数据源连接失败，错误信息：{}",e.getMessage());
             throw new CustomException("数据源连接失败，请检查相关配置");
+        }
+        try {
+            String sql = "select table_name from information_schema.tables where table_schema = (select database())";
+            ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
+            List<String> tables = new ArrayList<>(TABLES.size());
+            while (resultSet.next()) {
+                String tableName = resultSet.getString("table_name");
+                tables.add(tableName);
+            }
+            List<String> list = TABLES.stream().filter(item -> !tables.contains(item)).collect(Collectors.toList());
+            if (CollectionUtils.isNotEmpty(list)) {
+                throw new CustomException(String.format("%s不存在，请检查数据库表",list.stream().collect(Collectors.joining("、"))));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
     }
 

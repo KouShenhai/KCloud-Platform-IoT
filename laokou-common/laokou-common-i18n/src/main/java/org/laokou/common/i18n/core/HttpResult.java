@@ -17,14 +17,20 @@ package org.laokou.common.i18n.core;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.utils.MessageUtil;
+
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * 统一返回结果实体类
  * @author laokou
  */
 @Data
 @Schema(name = "HttpResult",description = "统一返回结果实体类")
-public class HttpResult<T> {
+public class HttpResult<T> implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -1286769110881865369L;
     /**
      * 状态编码
      */
