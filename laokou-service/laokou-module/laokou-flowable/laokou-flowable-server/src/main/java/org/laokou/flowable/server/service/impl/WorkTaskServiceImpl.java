@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.apache.hc.client5.http.utils.Base64;
 import org.flowable.bpmn.model.BpmnModel;
-import org.flowable.common.engine.api.FlowableException;
 import org.flowable.engine.*;
 import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.history.HistoricProcessInstance;
@@ -83,19 +82,18 @@ public class WorkTaskServiceImpl implements WorkTaskService {
         if (null == task) {
             throw new CustomException("任务不存在");
         }
-        try {
-            // 审批处理
-            if (MapUtils.isNotEmpty(values)) {
-                taskService.complete(taskId, values);
-            } else {
-                taskService.complete(taskId);
-            }
-            String assignee = taskUtil.getAssignee(instanceId);
-            log.info("当前审核人：{}", assignee == null ? "无" : assignee);
-            return new AssigneeVO(assignee, instanceId);
-        } catch (FlowableException exception) {
+        if (DelegationState.PENDING.equals(task.getDelegationState())) {
             throw new CustomException("非审批任务，请处理任务");
         }
+        // 审批处理
+        if (MapUtils.isNotEmpty(values)) {
+            taskService.complete(taskId, values);
+        } else {
+            taskService.complete(taskId);
+        }
+        String assignee = taskUtil.getAssignee(instanceId);
+        log.info("当前审核人：{}", assignee == null ? "无" : assignee);
+        return new AssigneeVO(assignee, instanceId);
     }
 
     @Override
