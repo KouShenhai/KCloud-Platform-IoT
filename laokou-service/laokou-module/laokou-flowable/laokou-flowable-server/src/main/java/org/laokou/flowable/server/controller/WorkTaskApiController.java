@@ -19,9 +19,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.core.HttpResult;
-import org.laokou.flowable.client.dto.AuditDTO;
-import org.laokou.flowable.client.dto.ProcessDTO;
-import org.laokou.flowable.client.dto.TaskDTO;
+import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.laokou.flowable.client.vo.TaskVO;
@@ -52,6 +50,12 @@ public class WorkTaskApiController {
         return new HttpResult<AssigneeVO>().ok(workTaskService.auditTask(dto));
     }
 
+    @PostMapping(value = "/resolve")
+    @Operation(summary = "流程任务>任务处理",description = "流程任务>任务处理")
+    public HttpResult<AssigneeVO> resolve(@RequestBody ResolveDTO dto) {
+        return new HttpResult<AssigneeVO>().ok(workTaskService.resolveTask(dto));
+    }
+
     @PostMapping(value = "/start")
     @Operation(summary = "流程任务>任务开始",description = "流程任务>任务开始")
     public HttpResult<AssigneeVO> start(@RequestBody ProcessDTO dto) {
@@ -63,5 +67,19 @@ public class WorkTaskApiController {
     public HttpResult<String> diagram(@RequestParam("processInstanceId")String processInstanceId) throws IOException {
         return new HttpResult<String>().ok(workTaskService.diagramTask(processInstanceId));
     }
+
+    @PostMapping("/transfer")
+    @Operation(summary = "流程任务>任务转办",description = "流程任务>任务转办")
+    public HttpResult<AssigneeVO> transfer(@RequestBody TransferDTO dto) {
+        return new HttpResult<AssigneeVO>().ok(workTaskService.transferTask(dto));
+    }
+
+    @PostMapping("/delegate")
+    @Operation(summary = "流程任务>任务委派",description = "流程任务>任务委派")
+    public HttpResult<AssigneeVO> delegate(@RequestBody DelegateDTO dto) {
+        return new HttpResult<AssigneeVO>().ok(workTaskService.delegateTask(dto));
+    }
+
+
 
 }

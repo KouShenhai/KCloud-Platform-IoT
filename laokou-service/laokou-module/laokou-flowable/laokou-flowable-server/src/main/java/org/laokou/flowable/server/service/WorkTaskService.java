@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.flowable.server.service;
-import org.laokou.flowable.client.dto.AuditDTO;
-import org.laokou.flowable.client.dto.ProcessDTO;
-import org.laokou.flowable.client.dto.TaskDTO;
+import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.laokou.flowable.client.vo.TaskVO;
@@ -33,6 +31,13 @@ public interface WorkTaskService {
      * @return
      */
     AssigneeVO auditTask(AuditDTO dto);
+
+    /**
+     * 处理任务
+     * @param dto
+     * @return
+     */
+    AssigneeVO resolveTask(ResolveDTO dto);
 
     /**
      * 开始任务
@@ -55,5 +60,19 @@ public interface WorkTaskService {
      * @throws IOException
      */
     String diagramTask(String processInstanceId) throws IOException;
+
+    /**
+     * 转办任务
+     * @param dto
+     * @return
+     */
+    AssigneeVO transferTask(TransferDTO dto);
+
+    /**
+     * 委派任务
+     * @param dto
+     * @return
+     */
+    AssigneeVO delegateTask(DelegateDTO dto);
 
 }
