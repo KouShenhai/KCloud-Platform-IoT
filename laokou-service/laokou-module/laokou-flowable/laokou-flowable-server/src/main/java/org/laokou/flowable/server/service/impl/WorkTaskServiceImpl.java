@@ -14,26 +14,27 @@
  * limitations under the License.
  */
 package org.laokou.flowable.server.service.impl;
+import io.seata.common.util.StringUtils;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.apache.hc.client5.http.utils.Base64;
 import org.flowable.bpmn.model.BpmnModel;
+import org.flowable.common.engine.api.FlowableException;
 import org.flowable.engine.*;
 import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.image.ProcessDiagramGenerator;
+import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
-import org.laokou.flowable.client.dto.AuditDTO;
-import org.laokou.flowable.client.dto.ProcessDTO;
-import org.laokou.flowable.client.dto.TaskDTO;
+import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.laokou.flowable.client.vo.TaskVO;
@@ -78,18 +79,41 @@ public class WorkTaskServiceImpl implements WorkTaskService {
         String taskId = dto.getTaskId();
         String instanceId = dto.getInstanceId();
         Map<String, Object> values = dto.getValues();
-        String definitionId = dto.getDefinitionId();
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         if (null == task) {
             throw new CustomException("任务不存在");
         }
-        if (MapUtils.isNotEmpty(values)) {
-            taskService.complete(taskId,values);
-        } else {
-            taskService.complete(taskId);
+        try {
+            // 审批处理
+            if (MapUtils.isNotEmpty(values)) {
+                taskService.complete(taskId, values);
+            } else {
+                taskService.complete(taskId);
+            }
+            String assignee = taskUtil.getAssignee(instanceId);
+            log.info("当前审核人：{}", assignee == null ? "无" : assignee);
+            return new AssigneeVO(assignee, instanceId);
+        } catch (FlowableException exception) {
+            throw new CustomException("非审批任务，请处理任务");
         }
-        String assignee = taskUtil.getAssignee(definitionId, instanceId);
-        log.info("当前审核人：{}",assignee.isEmpty() ? "无" : assignee);
+    }
+
+    @Override
+    public AssigneeVO resolveTask(ResolveDTO dto) {
+        ValidatorUtil.validateEntity(dto);
+        String taskId = dto.getTaskId();
+        String instanceId = dto.getInstanceId();
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        if (null == task) {
+            throw new CustomException("任务不存在");
+        }
+        if (DelegationState.PENDING.equals(task.getDelegationState())) {
+            taskService.resolveTask(taskId);
+        } else {
+            throw new CustomException("非处理任务，请审批任务");
+        }
+        String assignee = taskUtil.getAssignee(instanceId);
+        log.info("当前审核人：{}",assignee == null ? "无" : assignee);
         return new AssigneeVO(assignee,instanceId);
     }
 
@@ -115,11 +139,10 @@ public class WorkTaskServiceImpl implements WorkTaskService {
         if (processInstance == null) {
             throw new CustomException("流程不存在");
         }
-        String definitionId = processDefinition.getId();
         String instanceId = processInstance.getId();
         runtimeService.setProcessInstanceName(instanceId,businessName);
-        String assignee = taskUtil.getAssignee(definitionId, instanceId);
-        log.info("当前审核人：{}",assignee.isEmpty() ? "无" : assignee);
+        String assignee = taskUtil.getAssignee(instanceId);
+        log.info("当前审核人：{}",assignee == null ? "无" : assignee);
         return new AssigneeVO(assignee,instanceId);
     }
 
@@ -177,6 +200,44 @@ public class WorkTaskServiceImpl implements WorkTaskService {
         }
         String base64String = Base64.encodeBase64String(outputStream.toByteArray());
         return base64String;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public AssigneeVO transferTask(TransferDTO dto) {
+        ValidatorUtil.validateEntity(dto);
+        String owner = dto.getUserId().toString();
+        String assignee = dto.getAssignee().toString();
+        String instanceId = dto.getInstanceId();
+        String taskId = dto.getTaskId();
+        checkTask(taskId,owner);
+        taskService.setOwner(taskId,owner);
+        taskService.setAssignee(taskId,assignee);
+        return new AssigneeVO(assignee,instanceId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public AssigneeVO delegateTask(DelegateDTO dto) {
+        ValidatorUtil.validateEntity(dto);
+        String owner = dto.getUserId().toString();
+        String assignee = dto.getAssignee().toString();
+        String instanceId = dto.getInstanceId();
+        String taskId = dto.getTaskId();
+        checkTask(taskId,owner);
+        taskService.setOwner(taskId,owner);
+        taskService.delegateTask(taskId,assignee);
+        return new AssigneeVO(assignee,instanceId);
+    }
+
+    private void checkTask(String taskId,String owner) {
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        if (task == null) {
+            throw new CustomException("任务不存在");
+        }
+        if (!StringUtils.equals(owner,task.getAssignee())) {
+            throw new CustomException("该用户无法操作任务");
+        }
     }
 
     private InputStream getInputStream(String processInstanceId) {

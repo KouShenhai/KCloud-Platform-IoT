@@ -68,12 +68,6 @@ public class AuditDTO implements Serializable {
     private String instanceName;
 
     /**
-     * 流程定义id
-     */
-    @NotBlank(message = "任务定义编号不为空")
-    private String definitionId;
-
-    /**
      * 流程变量
      */
     @NotNull(message = "流程变量不为空")

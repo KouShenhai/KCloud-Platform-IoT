@@ -50,11 +50,15 @@ public class XssFilter implements GlobalFilter, Ordered {
                 return xssGet(request,exchange,chain);
             }
             case "POST" -> {
-                return xssPost(request,exchange,chain);
+                return xssPostOrPut(request,exchange,chain);
             }
-            default -> {}
+            case "PUT" -> {
+                return xssPostOrPut(request,exchange,chain);
+            }
+            default -> {
+                return chain.filter(exchange);
+            }
         }
-        return chain.filter(exchange);
     }
 
     /**
@@ -85,10 +89,9 @@ public class XssFilter implements GlobalFilter, Ordered {
         return chain.filter(exchange.mutate().request(request.mutate().uri(newUri).build()).build());
     }
 
-    private Mono<Void> xssPost(ServerHttpRequest request,ServerWebExchange exchange, GatewayFilterChain chain) {
+    private Mono<Void> xssPostOrPut(ServerHttpRequest request,ServerWebExchange exchange, GatewayFilterChain chain) {
         MediaType mediaType = request.getHeaders().getContentType();
-        if (MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)
-                || MediaType.APPLICATION_JSON.isCompatibleWith(mediaType)) {
+        if (MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType) || MediaType.APPLICATION_JSON.isCompatibleWith(mediaType)) {
             return chain.filter(exchange);
         } else {
             return chain.filter(exchange);

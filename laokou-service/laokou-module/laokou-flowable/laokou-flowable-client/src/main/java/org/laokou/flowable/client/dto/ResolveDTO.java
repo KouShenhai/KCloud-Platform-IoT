@@ -13,20 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.flowable.server.utils;
-import lombok.RequiredArgsConstructor;
-import org.laokou.flowable.server.mapper.TaskMapper;
-import org.springframework.stereotype.Component;
+
+package org.laokou.flowable.client.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class TaskUtil {
-
-    private final TaskMapper taskMapper;
-
-    public String getAssignee (String processInstanceId) {
-        return taskMapper.getAssignee(processInstanceId);
-    }
+@Data
+public class ResolveDTO implements Serializable {
+    @NotBlank(message = "任务编号不为空")
+    private String taskId;
+    @NotBlank(message = "流程实例编号不为空")
+    private String instanceId;
 }

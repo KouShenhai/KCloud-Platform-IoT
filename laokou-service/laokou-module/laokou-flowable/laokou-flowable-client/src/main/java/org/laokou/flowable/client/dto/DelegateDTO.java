@@ -13,20 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.flowable.server.utils;
-import lombok.RequiredArgsConstructor;
-import org.laokou.flowable.server.mapper.TaskMapper;
-import org.springframework.stereotype.Component;
+
+package org.laokou.flowable.client.dto;
+
+import lombok.Data;
+
+import java.io.Serial;
+
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class TaskUtil {
-
-    private final TaskMapper taskMapper;
-
-    public String getAssignee (String processInstanceId) {
-        return taskMapper.getAssignee(processInstanceId);
-    }
+@Data
+public class DelegateDTO extends TransferDTO{
+    @Serial
+    private static final long serialVersionUID = -4922465039180029063L;
 }
