@@ -78,7 +78,6 @@ public class WorkTaskServiceImpl implements WorkTaskService {
         String taskId = dto.getTaskId();
         String instanceId = dto.getInstanceId();
         Map<String, Object> values = dto.getValues();
-        String definitionId = dto.getDefinitionId();
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         if (null == task) {
             throw new CustomException("任务不存在");
@@ -88,8 +87,8 @@ public class WorkTaskServiceImpl implements WorkTaskService {
         } else {
             taskService.complete(taskId);
         }
-        String assignee = taskUtil.getAssignee(definitionId, instanceId);
-        log.info("当前审核人：{}",assignee.isEmpty() ? "无" : assignee);
+        String assignee = taskUtil.getAssignee(instanceId);
+        log.info("当前审核人：{}",assignee == null ? "无" : assignee);
         return new AssigneeVO(assignee,instanceId);
     }
 
@@ -115,11 +114,10 @@ public class WorkTaskServiceImpl implements WorkTaskService {
         if (processInstance == null) {
             throw new CustomException("流程不存在");
         }
-        String definitionId = processDefinition.getId();
         String instanceId = processInstance.getId();
         runtimeService.setProcessInstanceName(instanceId,businessName);
-        String assignee = taskUtil.getAssignee(definitionId, instanceId);
-        log.info("当前审核人：{}",assignee.isEmpty() ? "无" : assignee);
+        String assignee = taskUtil.getAssignee(instanceId);
+        log.info("当前审核人：{}",assignee == null ? "无" : assignee);
         return new AssigneeVO(assignee,instanceId);
     }
 

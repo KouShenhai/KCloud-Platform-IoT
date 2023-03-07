@@ -13,24 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.laokou.flowable.server.utils;
-
 import lombok.RequiredArgsConstructor;
-import org.flowable.bpmn.model.BpmnModel;
-import org.flowable.bpmn.model.FlowElement;
-import org.flowable.bpmn.model.FlowNode;
-import org.flowable.bpmn.model.SequenceFlow;
-import org.flowable.engine.RepositoryService;
-import org.flowable.engine.RuntimeService;
-import org.flowable.engine.TaskService;
-import org.flowable.engine.runtime.Execution;
-import org.flowable.task.api.Task;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.flowable.server.mapper.TaskMapper;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-
 /**
  * @author laokou
  */
@@ -38,30 +24,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskUtil {
 
-    private final TaskService taskService;
+    private final TaskMapper taskMapper;
 
-    private final RuntimeService runtimeService;
-
-    private final RepositoryService repositoryService;
-
-    private static final String ASSIGNEE = "assignee";
-
-    public String getAssignee (String definitionId,String processInstanceId) {
-        final Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).active().singleResult();
-        if (null == task) {
-            return "";
-        }
-        String executionId = task.getExecutionId();
-        Execution execution = runtimeService.createExecutionQuery().executionId(executionId).singleResult();
-        String activityId = execution.getActivityId();
-        BpmnModel bpmnModel = repositoryService.getBpmnModel(definitionId);
-        FlowNode flowNode = (FlowNode) bpmnModel.getFlowElement(activityId);
-        List<SequenceFlow> outFlows = flowNode.getOutgoingFlows();
-        for (SequenceFlow sequenceFlow : outFlows) {
-            FlowElement sourceFlowElement = sequenceFlow.getSourceFlowElement();
-            final String json = JacksonUtil.toJsonStr(sourceFlowElement);
-            return JacksonUtil.readTree(json).get(ASSIGNEE).asText();
-        }
-        return "";
+    public String getAssignee (String processInstanceId) {
+        return taskMapper.getAssignee(processInstanceId);
     }
 }

@@ -59,7 +59,9 @@ public class CacheAspect {
             }
             case PUT -> put(key,point,expire);
             case DEL -> del(key);
-            default -> {}
+            default -> {
+                return point.proceed();
+            }
         }
         return point.proceed();
     }
