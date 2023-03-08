@@ -42,6 +42,7 @@
         <module>laokou-common-api</module>
         <module>laokou-common-i18n</module>
         <module>laokou-common-banner</module>
+        <module>laokou-common-jasypt</module>
     </modules>
 
 </project>
