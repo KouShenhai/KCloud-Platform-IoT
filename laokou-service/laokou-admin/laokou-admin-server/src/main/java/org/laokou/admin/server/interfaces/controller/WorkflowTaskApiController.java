@@ -24,6 +24,9 @@ import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.dto.AuditDTO;
+import org.laokou.flowable.client.dto.DelegateDTO;
+import org.laokou.flowable.client.dto.ResolveDTO;
+import org.laokou.flowable.client.dto.TransferDTO;
 import org.laokou.flowable.client.vo.TaskVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -39,24 +42,48 @@ public class WorkflowTaskApiController {
     private final SysResourceApplicationService sysResourceApplicationService;
 
     @PostMapping(value = "/resource/query")
-    @Operation(summary = "流程任务>资源查询",description = "流程任务>资源查询")
+    @Operation(summary = "流程任务>资源>查询任务",description = "流程任务>资源>查询任务")
     @PreAuthorize("hasAuthority('workflow:task:resource:query')")
     public HttpResult<IPage<TaskVO>> queryResource(@RequestBody TaskQo qo) {
         return new HttpResult<IPage<TaskVO>>().ok(sysResourceApplicationService.queryResourceTask(qo));
     }
 
     @PostMapping(value = "/resource/audit")
-    @Operation(summary = "流程任务>资源审批",description = "流程任务>资源审批")
-    @OperateLog(module = "流程任务",name = "资源审批")
+    @Operation(summary = "流程任务>资源>审批任务",description = "流程任务>资源>审批任务")
+    @OperateLog(module = "流程任务",name = "审批任务")
     @PreAuthorize("hasAuthority('workflow:task:resource:audit')")
     public HttpResult<Boolean> auditResource(@RequestBody AuditDTO dto) {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.auditResourceTask(dto));
     }
 
     @GetMapping(value = "/resource/detail")
-    @Operation(summary = "流程任务>资源详情",description = "流程任务>资源详情")
+    @Operation(summary = "流程任务>资源>任务详情",description = "流程任务>资源>任务详情")
     public HttpResult<SysResourceVO> detailResource(@RequestParam("id") Long id) {
         return new HttpResult<SysResourceVO>().ok(sysResourceApplicationService.getResourceAuditByResourceId(id));
+    }
+
+    @PostMapping(value = "/resource/resolve")
+    @Operation(summary = "流程任务>资源>处理任务",description = "流程任务>资源>处理任务")
+    @OperateLog(module = "流程任务",name = "处理任务")
+    @PreAuthorize("hasAuthority('workflow:task:resource:resolve')")
+    public HttpResult<Boolean> resolveResource(@RequestBody ResolveDTO dto) {
+        return new HttpResult<Boolean>().ok(sysResourceApplicationService.resolveResourceTask(dto));
+    }
+
+    @PostMapping(value = "/resource/transfer")
+    @Operation(summary = "流程任务>资源>转办任务",description = "流程任务>资源>转办任务")
+    @OperateLog(module = "流程任务",name = "转办任务")
+    @PreAuthorize("hasAuthority('workflow:task:resource:transfer')")
+    public HttpResult<Boolean> transferResource(@RequestBody TransferDTO dto) {
+        return new HttpResult<Boolean>().ok(sysResourceApplicationService.transferResourceTask(dto));
+    }
+
+    @PostMapping(value = "/resource/delegate")
+    @Operation(summary = "流程任务>资源>委派任务",description = "流程任务>资源>委派任务")
+    @OperateLog(module = "流程任务",name = "委派任务")
+    @PreAuthorize("hasAuthority('workflow:task:resource:delegate')")
+    public HttpResult<Boolean> delegateResource(@RequestBody DelegateDTO dto) {
+        return new HttpResult<Boolean>().ok(sysResourceApplicationService.delegateResourceTask(dto));
     }
 
 }

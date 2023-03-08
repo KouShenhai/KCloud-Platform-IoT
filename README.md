@@ -18,7 +18,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
     <a target="_blank" href="https://github.com/alibaba/spring-cloud-alibaba"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud Alibaba&message=2022.0.0.0-RC1&color=orange"></a>
     <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.0.1&color=blue"></a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/JDK-17.0.4.1-blue.svg"/></a>
-    <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=WFANTXDEjrDw6UxsrRFCv_rQsEu6LTxH&jump_from=webapi"><img src="https://img.shields.io/badge/Q群-218686225-blue.svg" alt="Java技术交流QQ群"></a>
+    <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流"></a>
 </p>
 
 ### 💞 演示地址
@@ -26,7 +26,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 系统账号   
 admin/admin123  
 test/test123  
-laok5/test123
+laok5/test123  
 
 系统租户   
 tenant/tenant123
@@ -55,7 +55,7 @@ tenant/tenant123
 🚀 租户管理：租户信息增删改查增删改查（默认数据库）       
 🚀 套餐管理：自定义租户菜单增删改查（默认数据库）    
 🚀 数据源管理：数据源信息增删改查（默认数据库）         
-🚀 资源管理：视频、图片、音频信息增删改查，资源审批（分布式事务AT模式）、处理、转办、委派，审批日志，数据同步（批量同步到ES）（默认数据库）          
+🚀 资源管理：视频、图片、音频信息增删改查，资源审批、处理、转办、委派（分布式事务AT模式），审批日志，数据同步（批量同步到ES）（默认数据库）          
 🚀 用户登录：账号密码（多租户）、手机号、邮件、授权码登录（请运行认证模式测试脚本.http）（同一个账号只能在一处登录，不然强制踢出）    
 
 ### 🚩 下个版本

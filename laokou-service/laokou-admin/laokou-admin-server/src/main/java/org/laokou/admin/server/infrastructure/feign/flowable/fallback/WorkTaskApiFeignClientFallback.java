@@ -19,9 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.infrastructure.feign.flowable.WorkTaskApiFeignClient;
 import org.laokou.common.i18n.core.HttpResult;
-import org.laokou.flowable.client.dto.AuditDTO;
-import org.laokou.flowable.client.dto.ProcessDTO;
-import org.laokou.flowable.client.dto.TaskDTO;
+import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.laokou.flowable.client.vo.TaskVO;
@@ -49,14 +47,32 @@ public class WorkTaskApiFeignClientFallback implements WorkTaskApiFeignClient {
 
     @Override
     public HttpResult<AssigneeVO> start(ProcessDTO dto) {
-        log.error("未启动流程，报错原因：{}",throwable.getMessage());
-        return new HttpResult<AssigneeVO>().error("未启动流程，请联系管理员");
+        log.error("流程启动失败，报错原因：{}",throwable.getMessage());
+        return new HttpResult<AssigneeVO>().error("流程启动失败，请联系管理员");
     }
 
     @Override
     public HttpResult<String> diagram(String processInstanceId) {
         log.error("流程图查看失败，报错原因：{}",throwable.getMessage());
         return new HttpResult<String>().error("流程图查看失败，请联系管理员");
+    }
+
+    @Override
+    public HttpResult<AssigneeVO> delegate(DelegateDTO dto) {
+        log.error("流程委派失败，报错原因：{}",throwable.getMessage());
+        return new HttpResult<AssigneeVO>().error("流程委派失败，请联系管理员");
+    }
+
+    @Override
+    public HttpResult<AssigneeVO> transfer(TransferDTO dto) {
+        log.error("流程转办失败，报错原因：{}",throwable.getMessage());
+        return new HttpResult<AssigneeVO>().error("流程转办失败，请联系管理员");
+    }
+
+    @Override
+    public HttpResult<AssigneeVO> resolve(ResolveDTO dto) {
+        log.error("流程处理失败，报错原因：{}",throwable.getMessage());
+        return new HttpResult<AssigneeVO>().error("流程处理失败，请联系管理员");
     }
 
 }

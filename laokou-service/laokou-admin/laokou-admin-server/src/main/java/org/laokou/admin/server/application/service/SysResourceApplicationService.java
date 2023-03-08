@@ -22,6 +22,9 @@ import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
 import org.laokou.common.log.vo.SysAuditLogVO;
 import org.laokou.flowable.client.dto.AuditDTO;
+import org.laokou.flowable.client.dto.DelegateDTO;
+import org.laokou.flowable.client.dto.ResolveDTO;
+import org.laokou.flowable.client.dto.TransferDTO;
 import org.laokou.flowable.client.vo.TaskVO;
 import org.laokou.oss.client.vo.UploadVO;
 import org.springframework.web.multipart.MultipartFile;
@@ -111,17 +114,38 @@ public interface SysResourceApplicationService {
     List<SysAuditLogVO> queryAuditLogList(Long businessId);
 
     /**
-     * 资源审批
+     * 审批任务
      * @param dto
      * @return
      */
     Boolean auditResourceTask(AuditDTO dto);
 
     /**
-     * 任务列表
+     * 查询任务
      * @param qo
      * @return
      */
     IPage<TaskVO> queryResourceTask(TaskQo qo);
+
+    /**
+     * 处理任务
+     * @param dto
+     * @return
+     */
+    Boolean resolveResourceTask(ResolveDTO dto);
+
+    /**
+     * 转办任务
+     * @param dto
+     * @return
+     */
+    Boolean transferResourceTask(TransferDTO dto);
+
+    /**
+     * 委派任务
+     * @param dto
+     * @return
+     */
+    Boolean delegateResourceTask(DelegateDTO dto);
 
 }

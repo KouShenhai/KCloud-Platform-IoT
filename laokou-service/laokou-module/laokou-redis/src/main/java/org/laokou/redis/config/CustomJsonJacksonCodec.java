@@ -59,8 +59,6 @@ public class CustomJsonJacksonCodec extends BaseCodec {
     };
 
     private final Decoder<Object> DECODER = (buf, state) -> mapObjectMapper.readValue((InputStream) new ByteBufInputStream(buf), Object.class);
-
-
     @Override
     public Decoder<Object> getValueDecoder() {
         return DECODER;

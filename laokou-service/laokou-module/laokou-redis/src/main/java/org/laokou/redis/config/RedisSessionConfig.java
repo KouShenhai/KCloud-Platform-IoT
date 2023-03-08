@@ -32,12 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @EnableConfigurationProperties -> ConfigurationProperties的类进行一次注入
- * AutoConfiguration -> 给插件使用
- * Configuration -> 直接使用
- * @ConditionalOnBean -> spring容器中存在指定的class实例对象，对应的配置才生效
- * @ConditionalOnMissingBean -> ConditionalOnMissingBean 保证只有一个bean被注入
- * 某个class位于类路径上，才会实例化一个bean
+ * @author livk
  * @author laokou
  */
 @ConditionalOnClass(Redisson.class)
@@ -49,8 +44,17 @@ public class RedisSessionConfig {
 
     private static final String REDISS_PROTOCOL_PREFIX = "rediss://";
 
+    @Bean
+    public RBloomFilter<String> bloomFilter(RedissonClient redisson) {
+        RBloomFilter<String> bloomFilter = redisson.getBloomFilter(RedisKeyUtil.getBloomFilterKey());
+        bloomFilter.tryInit(10000,0.01);
+        return bloomFilter;
+    }
+
     /**
-     * ConditionalOnMissingBean -> 相同类型的bean被注入，保证bean只有一个
+     * redisson配置
+     * @param properties redis配置文件
+     * @return
      */
     @Bean(destroyMethod = "shutdown")
     @ConditionalOnMissingBean(RedissonClient.class)
@@ -84,13 +88,6 @@ public class RedisSessionConfig {
         Codec codec = CustomJsonJacksonCodec.INSTANCE;
         config.setCodec(codec);
         return Redisson.create(config);
-    }
-
-    @Bean
-    public RBloomFilter<String> bloomFilter(RedissonClient redisson) {
-        RBloomFilter<String> bloomFilter = redisson.getBloomFilter(RedisKeyUtil.getBloomFilterKey());
-        bloomFilter.tryInit(10000,0.01);
-        return bloomFilter;
     }
 
     private String getProtocolPrefix(boolean isSsl) {
