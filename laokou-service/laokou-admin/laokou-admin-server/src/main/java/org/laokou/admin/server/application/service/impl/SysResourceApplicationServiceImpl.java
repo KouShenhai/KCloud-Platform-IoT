@@ -51,9 +51,7 @@ import org.laokou.elasticsearch.client.dto.CreateIndexDTO;
 import org.laokou.elasticsearch.client.dto.ElasticsearchDTO;
 import org.laokou.elasticsearch.client.index.ResourceIndex;
 import org.laokou.elasticsearch.client.utils.ElasticsearchFieldUtil;
-import org.laokou.flowable.client.dto.AuditDTO;
-import org.laokou.flowable.client.dto.ProcessDTO;
-import org.laokou.flowable.client.dto.TaskDTO;
+import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.laokou.flowable.client.vo.TaskVO;
@@ -317,7 +315,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (StringUtil.isNotEmpty(assignee)) {
             //审批中
             status = 1;
-            insertMessage(assignee, MessageTypeEnum.REMIND.ordinal(),businessId,instanceName);
+            insertAuditMessage(assignee,businessId,instanceName);
         } else {
             //0拒绝 1同意
             if (0 == auditStatus) {
@@ -351,7 +349,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                 .eq(SysResourceAuditDO::getVersion,version)
                 .eq(SysResourceAuditDO::getProcessInstanceId, instanceId);
         sysResourceAuditService.update(updateWrapper);
-        // 审核日志入队列
+        // 审核日志
         insertAuditLog(businessId,auditStatus,comment,username,userId);
         return true;
     }
@@ -389,6 +387,57 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         return page;
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional
+    public Boolean resolveResourceTask(ResolveDTO dto) {
+        HttpResult<AssigneeVO> result = workTaskApiFeignClient.resolve(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(),result.getMsg());
+        }
+        // 发送通知
+        AssigneeVO vo = result.getData();
+        String assignee = vo.getAssignee();
+        Long businessId = Long.valueOf(dto.getBusinessKey());
+        String instanceName = dto.getInstanceName();
+        insertAuditMessage(assignee,businessId,instanceName);
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional
+    public Boolean transferResourceTask(TransferDTO dto) {
+        HttpResult<AssigneeVO> result = workTaskApiFeignClient.transfer(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(),result.getMsg());
+        }
+        // 发送通知
+        AssigneeVO vo = result.getData();
+        String assignee = vo.getAssignee();
+        Long businessId = Long.valueOf(dto.getBusinessKey());
+        String instanceName = dto.getInstanceName();
+        insertAuditMessage(assignee,businessId,instanceName);
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional
+    public Boolean delegateResourceTask(DelegateDTO dto) {
+        HttpResult<AssigneeVO> result = workTaskApiFeignClient.delegate(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(),result.getMsg());
+        }
+        // 发送通知
+        AssigneeVO vo = result.getData();
+        String assignee = vo.getAssignee();
+        Long businessId = Long.valueOf(dto.getBusinessKey());
+        String instanceName = dto.getInstanceName();
+        insertResolveMessage(assignee,businessId,instanceName);
+        return true;
+    }
+
     private void beforeSync() {
         log.info("开始同步数据...");
     }
@@ -397,17 +446,27 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         log.info("结束同步数据...");
     }
 
-   private void insertMessage(String assignee, Integer type,Long id,String name) {
-        String title = "资源审批提醒";
-        String content = String.format("编号为%s，名称为%s的资源需要审批，请及时查看并处理",id,name);
+    private void insertMessage(String assignee,String title,String content) {
         Set<String> set = new HashSet<>(1);
         set.add(assignee);
         MessageDTO dto = new MessageDTO();
         dto.setContent(content);
         dto.setTitle(title);
         dto.setReceiver(set);
-        dto.setType(type);
+        dto.setType(MessageTypeEnum.REMIND.ordinal());
         sysMessageApplicationService.insertMessage(dto);
+    }
+
+   private void insertAuditMessage(String assignee,Long id,String name) {
+        String title = "资源审批任务提醒";
+        String content = String.format("编号为%s，名称为%s的资源需要审批，请及时查看并审批",id,name);
+        insertMessage(assignee,title,content);
+   }
+
+   private void insertResolveMessage(String assignee,Long id,String name) {
+        String title = "资源处理任务提醒";
+        String content = String.format("编号为%s，名称为%s的资源需要处理，请及时查看并处理",id,name);
+        insertMessage(assignee,title,content);
    }
 
     /**
@@ -428,7 +487,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         AssigneeVO vo = result.getData();
         String instanceId = vo.getInstanceId();
         String assignee = vo.getAssignee();
-        insertMessage(assignee,MessageTypeEnum.REMIND.ordinal(),businessKey,businessName);
+        insertAuditMessage(assignee,businessKey,businessName);
         return instanceId;
     }
 

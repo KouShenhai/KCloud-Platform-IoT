@@ -17,9 +17,7 @@ package org.laokou.admin.server.infrastructure.feign.flowable;
 import org.laokou.admin.server.infrastructure.feign.flowable.factory.WorkTaskApiFeignClientFallbackFactory;
 import org.laokou.common.core.constant.ServiceConstant;
 import org.laokou.common.i18n.core.HttpResult;
-import org.laokou.flowable.client.dto.AuditDTO;
-import org.laokou.flowable.client.dto.ProcessDTO;
-import org.laokou.flowable.client.dto.TaskDTO;
+import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.laokou.flowable.client.vo.TaskVO;
@@ -64,4 +62,29 @@ public interface WorkTaskApiFeignClient {
      */
     @GetMapping(value = "/diagram")
     HttpResult<String> diagram(@RequestParam("processInstanceId")String processInstanceId);
+
+    /**
+     * 任务委派
+     * @param dto
+     * @return
+     */
+    @PostMapping("/delegate")
+    HttpResult<AssigneeVO> delegate(@RequestBody DelegateDTO dto);
+
+    /**
+     * 任务转办
+     * @param dto
+     * @return
+     */
+    @PostMapping("/transfer")
+    HttpResult<AssigneeVO> transfer(@RequestBody TransferDTO dto);
+
+    /**
+     * 任务处理
+     * @param dto
+     * @return
+     */
+    @PostMapping(value = "/resolve")
+    HttpResult<AssigneeVO> resolve(@RequestBody ResolveDTO dto);
+
 }

@@ -37,3 +37,4 @@ INSERT INTO `boot_sys_menu` (`id`, `pid`, `permission`, `type`, `name`, `url`, `
 
 -- 2023/3/2 增加boot_sys_menu数据 老寇
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permission`, `type`, `name`, `url`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `version`, `visible`) VALUES ('1564996817056710705', '1545036486288732162', 'workflow:definition:template', '1', '流程模板', '/workflow/definition/api/template', 'documentation', '1341620898007281665', '1341620898007281665', '2023-03-02 07:52:36', '2023-03-02 07:53:10', '0', '10', '2', '0');
+
