@@ -17,6 +17,7 @@ package org.laokou.admin.client.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.laokou.common.jasypt.annotation.JasyptField;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -41,8 +42,10 @@ public class SysUserDTO implements Serializable {
 
     private String imgUrl;
 
+    @JasyptField
     private String mail;
 
+    @JasyptField
     private String mobile;
 
     private Long editor;

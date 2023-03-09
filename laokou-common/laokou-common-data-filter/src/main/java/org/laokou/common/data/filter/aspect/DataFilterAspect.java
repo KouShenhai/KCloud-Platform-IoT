@@ -39,7 +39,7 @@ import java.util.List;
 public class DataFilterAspect {
 
     @Before("@annotation(org.laokou.common.data.filter.annotation.DataFilter)")
-    public void dataFilterPoint(JoinPoint point) {
+    public void before(JoinPoint point) {
         Object params = point.getArgs()[0];
         if (params instanceof BasePage basePage) {
             UserDetail userDetail = UserUtil.userDetail();

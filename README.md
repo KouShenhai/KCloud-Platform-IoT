@@ -127,6 +127,7 @@ tenant/tenant123
         └── laokou-common-i18n                     --- 国际化组件  
         └── laokou-common-api                      --- API调用组件  
         └── laokou-common-banner                   --- Banner组件  
+        └── laokou-common-jasypt                   --- 加密解密组件  
         └── laokou-common-security                 --- 认证授权组件  
         └── laokou-common-data-cache               --- 数据缓存组件  
         └── laokou-common-data-filter              --- 数据过滤组件  

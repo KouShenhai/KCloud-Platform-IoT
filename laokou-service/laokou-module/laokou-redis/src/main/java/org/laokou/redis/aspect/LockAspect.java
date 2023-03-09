@@ -22,7 +22,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.redis.enums.LockScope;
 import org.laokou.redis.enums.LockType;
@@ -42,13 +41,7 @@ public class LockAspect {
 
     private final LockFactory factory;
 
-    /**
-     * 配置切入点
-     */
-    @Pointcut("@annotation(org.laokou.redis.annotation.Lock4j)")
-    public void lockPointCut() {}
-
-    @Around(value = "lockPointCut()")
+    @Around(value = "@annotation(org.laokou.redis.annotation.Lock4j)")
     public void around(ProceedingJoinPoint joinPoint) throws Throwable {
         //获取注解
         Signature signature = joinPoint.getSignature();
