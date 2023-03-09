@@ -1,8 +1,10 @@
 package org.laokou.flowable.server.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.laokou.flowable.client.dto.TaskDTO;
+import org.laokou.flowable.client.vo.TaskVO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,12 +15,18 @@ import org.springframework.stereotype.Repository;
 public interface TaskMapper {
 
     /**
-     * 获取审批人
+     * 获取审批人或处理人
      * @param instanceId
      * @return
      */
-    @Select("SELECT a.assignee_ FROM act_hi_actinst a JOIN act_ru_task b ON b.id_ = a.task_id_\n" +
-            "WHERE act_type_ = 'userTask' AND b.proc_inst_id_ = #{instanceId}")
     String getAssignee(@Param("instanceId")String instanceId);
+
+    /**
+     * 分页查询任务
+     * @param page
+     * @param dto
+     * @return
+     */
+    IPage<TaskVO> getTakePage(IPage<TaskVO> page,@Param("dto")TaskDTO dto);
 
 }

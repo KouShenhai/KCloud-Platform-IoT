@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.laokou.flowable.server.service.impl;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.seata.common.util.StringUtils;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
@@ -29,15 +31,14 @@ import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
-import org.flowable.task.api.TaskQuery;
 import org.laokou.common.i18n.core.CustomException;
-import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.laokou.flowable.client.vo.TaskVO;
 import org.laokou.flowable.server.config.CustomProcessDiagramGenerator;
+import org.laokou.flowable.server.mapper.TaskMapper;
 import org.laokou.flowable.server.service.WorkTaskService;
 import org.laokou.flowable.server.utils.TaskUtil;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,8 @@ public class WorkTaskServiceImpl implements WorkTaskService {
     private final RepositoryService repositoryService;
 
     private final ProcessEngine processEngine;
+
+    private final TaskMapper taskMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -147,45 +150,9 @@ public class WorkTaskServiceImpl implements WorkTaskService {
     @Override
     public PageVO<TaskVO> queryTaskPage(TaskDTO dto) {
         ValidatorUtil.validateEntity(dto);
-        final Integer pageNum = dto.getPageNum();
-        final Integer pageSize = dto.getPageSize();
-        String processName = dto.getProcessName();
-        String processKey = dto.getProcessKey();
-        String username = dto.getUsername();
-        Long userId = dto.getUserId();
-        TaskQuery taskQuery = taskService.createTaskQuery()
-                .active()
-                .includeProcessVariables()
-                .processDefinitionKey(processKey)
-                .taskCandidateOrAssigned(userId.toString())
-                .orderByTaskCreateTime().desc();
-        if (StringUtil.isNotEmpty(processName)) {
-            taskQuery = taskQuery.processDefinitionNameLike("%" + processName + "%");
-        }
-        final long total = taskQuery.count();
-        int  pageIndex = pageSize * (pageNum - 1);
-        final List<Task> taskList = taskQuery.listPage(pageIndex, pageSize);
-        List<TaskVO> voList = new ArrayList<>(taskList.size());
-        for (Task task : taskList) {
-            TaskVO vo = new TaskVO();
-            vo.setTaskId(task.getId());
-            vo.setTaskDefinitionKey(task.getTaskDefinitionKey());
-            vo.setProcessInstanceId(task.getProcessInstanceId());
-            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-            ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-                    .latestVersion()
-                    .processDefinitionId(task.getProcessDefinitionId())
-                    .singleResult();
-            vo.setTaskName(task.getName());
-            vo.setDefinitionId(processDefinition.getId());
-            vo.setProcessName(processDefinition.getName());
-            vo.setAssigneeName(username);
-            vo.setCreateTime(task.getCreateTime());
-            vo.setProcessInstanceName(processInstance.getName());
-            vo.setBusinessKey(processInstance.getBusinessKey());
-            voList.add(vo);
-        }
-        return new PageVO<>(voList,total);
+        IPage<TaskVO> page = new Page<>(dto.getPageNum(),dto.getPageSize());
+        IPage<TaskVO> takePage = taskMapper.getTakePage(page, dto);
+        return new PageVO<>(takePage.getRecords(),takePage.getTotal());
     }
 
     @Override
