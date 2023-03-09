@@ -211,7 +211,11 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @Override
     public List<OptionVO> getOptionList() {
         Long tenantId = UserUtil.getTenantId();
-        return sysUserService.getOptionList(tenantId);
+        List<OptionVO> optionList = sysUserService.getOptionList(tenantId);
+        if (CollectionUtils.isNotEmpty(optionList)) {
+            optionList.forEach(item -> item.setLabel(AESUtil.decrypt(item.getLabel())));
+        }
+        return optionList;
     }
 
     @Override

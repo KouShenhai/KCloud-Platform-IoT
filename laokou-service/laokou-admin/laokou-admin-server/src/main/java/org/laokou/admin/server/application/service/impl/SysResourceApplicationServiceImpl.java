@@ -41,6 +41,7 @@ import org.laokou.admin.client.dto.SysResourceAuditDTO;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.auth.client.utils.UserUtil;
+import org.laokou.common.jasypt.utils.AESUtil;
 import org.laokou.common.log.dto.AuditLogDTO;
 import org.laokou.common.log.service.SysAuditLogService;
 import org.laokou.common.log.vo.SysAuditLogVO;
@@ -372,9 +373,10 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         TaskDTO dto = new TaskDTO();
         dto.setPageNum(qo.getPageNum());
         dto.setPageSize(qo.getPageSize());
-        dto.setUsername(UserUtil.getUsername());
+        dto.setUsername(AESUtil.decrypt(UserUtil.getUsername()));
         dto.setUserId(UserUtil.getUserId());
         dto.setProcessName(qo.getProcessName());
+        dto.setProcessKey(PROCESS_KEY);
         HttpResult<PageVO<TaskVO>> result = workTaskApiFeignClient.query(dto);
         if (!result.success()) {
             throw new CustomException(result.getCode(),result.getMsg());
