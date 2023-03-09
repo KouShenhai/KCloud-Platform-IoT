@@ -20,17 +20,6 @@ spring:
   profiles:
     # 环境 dev|test|prod
     active: @profile.active@
-  messages:
-    encoding: UTF-8
-    basename: i18n/messages
-  servlet:
-    multipart:
-      max-file-size: -1
-      max-request-size: -1
-      enabled: true
-
-#mybatis
-mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*.xml
-  configuration:
-    log-impl: @mybatis-plus.log-impl@
+  web:
+    resources:
+      static-locations: /**

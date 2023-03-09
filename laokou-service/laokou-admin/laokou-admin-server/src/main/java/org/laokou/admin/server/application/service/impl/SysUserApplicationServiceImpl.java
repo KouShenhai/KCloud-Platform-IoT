@@ -38,6 +38,8 @@ import org.laokou.auth.client.user.UserDetail;
 import org.apache.commons.collections.CollectionUtils;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.laokou.common.jasypt.utils.AESUtil;
+import org.laokou.common.jasypt.utils.JasyptUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -118,20 +120,22 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (null == id) {
             throw new CustomException("用户编号不为空");
         }
-        // 验证邮箱唯一
-        String mail = dto.getMail();
-        if (StringUtil.isNotEmpty(mail)) {
-            long mailCount = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getTenantId,UserUtil.getTenantId()).eq(SysUserDO::getMail, mail).ne(SysUserDO::getId, id));
-            if (mailCount > 0) {
-                throw new CustomException("邮箱已被注册，请重新填写");
-            }
-        }
+        // 加密
+        JasyptUtil.setFieldValue(dto);
         // 验证手机号唯一
         String mobile = dto.getMobile();
         if (StringUtil.isNotEmpty(mobile)) {
             long mobileCount = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getTenantId,UserUtil.getTenantId()).eq(SysUserDO::getMobile, mobile).ne(SysUserDO::getId, id));
             if (mobileCount > 0) {
                 throw new CustomException("手机号已被注册，请重新填写");
+            }
+        }
+        // 验证邮箱唯一
+        String mail = dto.getMail();
+        if (StringUtil.isNotEmpty(mail)) {
+            long mailCount = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getTenantId,UserUtil.getTenantId()).eq(SysUserDO::getMail, mail).ne(SysUserDO::getId, id));
+            if (mailCount > 0) {
+                throw new CustomException("邮箱已被注册，请重新填写");
             }
         }
         dto.setEditor(UserUtil.getUserId());
@@ -176,7 +180,12 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         ValidatorUtil.validateEntity(qo);
         qo.setTenantId(UserUtil.getTenantId());
         IPage<SysUserVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysUserService.getUserPage(page,qo);
+        IPage<SysUserVO> userPage = sysUserService.getUserPage(page, qo);
+        List<SysUserVO> records = userPage.getRecords();
+        if (CollectionUtils.isNotEmpty(records)) {
+            records.forEach(item -> item.setUsername(AESUtil.decrypt(item.getUsername())));
+        }
+        return userPage;
     }
 
     @Override
@@ -208,7 +217,10 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @Override
     public UserInfoVO getUserInfo() {
         UserDetail userDetail = UserUtil.userDetail();
-        return ConvertUtil.sourceToTarget(userDetail, UserInfoVO.class);
+        UserInfoVO userInfoVO = ConvertUtil.sourceToTarget(userDetail, UserInfoVO.class);
+        // 解密
+        JasyptUtil.setFieldValue(userInfoVO);
+        return userInfoVO;
     }
 
     private void saveOrUpdate(Long userId, List<Long> roleIds) {

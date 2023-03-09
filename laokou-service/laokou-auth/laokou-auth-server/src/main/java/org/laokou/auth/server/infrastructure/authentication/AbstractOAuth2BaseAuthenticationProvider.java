@@ -25,6 +25,7 @@ import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.jasypt.utils.AESUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
@@ -207,8 +208,10 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR),request,tenantId);
             CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_ERROR, MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR));
         }
+        // 对称性AES加密
+        String encrypt = AESUtil.encrypt(loginName);
         // 多租户查询
-        UserDetail userDetail = sysUserService.getUserDetail(loginName,tenantId,loginType);
+        UserDetail userDetail = sysUserService.getUserDetail(encrypt,tenantId,loginType);
         if (userDetail == null) {
             loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR),request,tenantId);
             CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_PASSWORD_ERROR, MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR));

@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.entity;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.laokou.common.mybatisplus.handler.JasyptTypeHandler;
 
 import java.io.Serial;
 
@@ -28,7 +30,7 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-@TableName("boot_sys_user")
+@TableName(value = "boot_sys_user",autoResultMap = true)
 @Schema(name = "SysUserDO",description = "系统用户实体类")
 public class SysUserDO extends BaseDO {
 
@@ -44,6 +46,7 @@ public class SysUserDO extends BaseDO {
      */
     @NotBlank(message = "{sys.user.username.require}")
     @Schema(name = "username",description = "用户名",example = "admin")
+    @TableField(value = "username",typeHandler = JasyptTypeHandler.class)
     private String username;
 
     /**
@@ -62,6 +65,7 @@ public class SysUserDO extends BaseDO {
      * 邮箱
      */
     @Schema(name = "mail",description = "邮箱",example = "2413176044@qq.com")
+    @TableField(value = "mail",typeHandler = JasyptTypeHandler.class)
     private String mail;
 
     /**
@@ -73,7 +77,8 @@ public class SysUserDO extends BaseDO {
     /**
      * 手机号
      */
-    @Schema(name = "mobile",description = "手机号",example = "18974432578")
+    @Schema(name = "mobile",description = "手机号",example = "18974432577")
+    @TableField(value = "mobile",typeHandler = JasyptTypeHandler.class)
     private String mobile;
 
     /**

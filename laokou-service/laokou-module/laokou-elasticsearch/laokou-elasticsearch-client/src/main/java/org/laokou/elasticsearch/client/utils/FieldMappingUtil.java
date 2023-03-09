@@ -28,12 +28,12 @@ import java.util.List;
 public class FieldMappingUtil {
 
     public static List<FieldMapping> getFieldInfo(Class clazz) {
-        //返回class中的所有字段（包括私有字段）
+        // 返回class中的所有字段（包括私有字段）
         Field[] fields = clazz.getDeclaredFields();
-        //创建FieldMapping集合
+        // 创建FieldMapping集合
         List<FieldMapping> fieldMappingList = new ArrayList<>();
         for (Field field : fields) {
-            //获取字段上的FieldInfo对象
+            // 获取字段上的FieldInfo对象
             boolean annotationPresent = field.isAnnotationPresent(ElasticsearchFieldInfo.class);
             if (annotationPresent) {
                 ElasticsearchFieldInfo elasticsearchFieldInfo = field.getAnnotation(ElasticsearchFieldInfo.class);

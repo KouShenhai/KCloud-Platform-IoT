@@ -26,7 +26,6 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.dto.OperateLogDTO;
@@ -54,21 +53,15 @@ public class OperateLogAspect {
     private final SysOperateLogService sysOperateLogService;
 
     /**
-     * 配置切入点
-     */
-    @Pointcut("@annotation(org.laokou.common.log.annotation.OperateLog)")
-    public void logPointCut() {}
-
-    /**
      * 处理完请求后执行
      */
-    @AfterReturning(pointcut = "logPointCut()")
+    @AfterReturning(value = "@annotation(org.laokou.common.log.annotation.OperateLog)")
     public void doAfterReturning(JoinPoint joinPoint) throws IOException {
         handleLog(joinPoint,null);
 
     }
 
-    @AfterThrowing(pointcut = "logPointCut()",throwing = "e")
+    @AfterThrowing(pointcut = "@annotation(org.laokou.common.log.annotation.OperateLog)",throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint,Exception e) throws IOException {
         handleLog(joinPoint,e);
     }

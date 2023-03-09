@@ -33,7 +33,7 @@ import java.util.List;
 @Slf4j
 public final class FieldUtil extends ReflectUtil {
 
-    public static  <T> String getFieldName(FieldFunction<T> function) {
+    public static <T> String getFieldName(FieldFunction<T> function) {
         try {
             String get = "get", is = "is";
             final Method method = function.getClass().getDeclaredMethod("writeReplace");
