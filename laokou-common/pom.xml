@@ -43,6 +43,7 @@
         <module>laokou-common-i18n</module>
         <module>laokou-common-banner</module>
         <module>laokou-common-jasypt</module>
+        <module>laokou-common-ip-region</module>
     </modules>
 
 </project>

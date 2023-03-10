@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 package org.laokou.gateway.utils;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
+import org.laokou.common.core.utils.ResourceUtil;
+
 import javax.crypto.Cipher;
 import java.io.InputStream;
 import java.security.*;
@@ -58,8 +61,9 @@ public class RsaCoder {
         return new String(bytes);
     }
 
+    @SneakyThrows
     public static String getPrivateKey() {
-        InputStream in = RsaCoder.class.getResourceAsStream("/conf/privateKey.scr");
+        InputStream in = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream();
         return new String(Objects.requireNonNull(readByte(in)));
     }
 

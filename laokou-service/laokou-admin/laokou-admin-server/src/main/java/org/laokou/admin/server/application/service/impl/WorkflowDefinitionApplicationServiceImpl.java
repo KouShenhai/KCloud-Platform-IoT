@@ -24,7 +24,7 @@ import org.laokou.admin.server.application.service.WorkflowDefinitionApplication
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.infrastructure.feign.flowable.WorkDefinitionApiFeignClient;
 import org.laokou.admin.server.interfaces.qo.DefinitionQo;
-import org.laokou.common.core.utils.FileUtil;
+import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -119,7 +119,7 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
         response.setHeader("Content-disposition", "attachment;filename=audit.bpmn20.xml");
-        InputStream inputStream = this.getClass().getResourceAsStream("/process/template/audit.bpmn20.xml");
+        InputStream inputStream = ResourceUtil.getResource("/process/template/audit.bpmn20.xml").getInputStream();
         ServletOutputStream outputStream = response.getOutputStream();
         IOUtils.write(inputStream.readAllBytes(),outputStream);
         outputStream.flush();

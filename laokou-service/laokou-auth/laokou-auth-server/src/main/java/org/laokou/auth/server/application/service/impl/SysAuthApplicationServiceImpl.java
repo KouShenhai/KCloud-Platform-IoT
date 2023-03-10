@@ -119,7 +119,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     @Override
     public String getPublicKey() throws IOException {
-        byte[] bytes = this.getClass().getResourceAsStream("/conf/publicKey.scr").readAllBytes();
+        byte[] bytes = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream().readAllBytes();
         return new String(bytes, StandardCharsets.UTF_8);
     }
 

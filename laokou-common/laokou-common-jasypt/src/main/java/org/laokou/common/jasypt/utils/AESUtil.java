@@ -17,11 +17,13 @@ package org.laokou.common.jasypt.utils;
 
 import lombok.SneakyThrows;
 import org.apache.commons.codec.binary.Base64;
+import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.springframework.util.Assert;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
@@ -29,7 +31,16 @@ import java.nio.charset.StandardCharsets;
 public class AESUtil {
 
 
-    private static final ThreadLocal<String> SECRET_KEY_LOCAL = ThreadLocal.withInitial(() -> "U75WqcG7E9I1OabD");
+    private static final ThreadLocal<String> SECRET_KEY_LOCAL;
+
+    static {
+        try {
+            byte[] bytes = ResourceUtil.getResource("secret_key.b64").getInputStream().readAllBytes();
+            SECRET_KEY_LOCAL = ThreadLocal.withInitial(() -> new String(bytes,StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private static byte[] getSecretKey() {
         String secretKey = getKey();

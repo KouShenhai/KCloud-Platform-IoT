@@ -37,7 +37,7 @@ public class AESTest {
     }
 
     public static void main(String[] args) {
-        String str = "18974432577";
+        String str = "1897443257";
         String encrypt = AESUtil.encrypt(str);
         String decrypt = AESUtil.decrypt(encrypt);
         System.out.println(encrypt);
