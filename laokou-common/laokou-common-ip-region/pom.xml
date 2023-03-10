@@ -11,4 +11,14 @@
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common-ip-region</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-core</artifactId>
+        </dependency>
+    </dependencies>
 </project>
