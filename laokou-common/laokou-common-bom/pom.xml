@@ -106,6 +106,8 @@
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <!--hbase版本-->
         <hbase.version>2.5.3</hbase.version>
+        <!--ip2region版本-->
+        <ip2region.version>2.7.0</ip2region.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -116,6 +118,16 @@
 <!--                <artifactId>mapstruct</artifactId>-->
 <!--                <version>${mapstruct.version}</version>-->
 <!--            </dependency>-->
+            <dependency>
+                <groupId>org.lionsoul</groupId>
+                <artifactId>ip2region</artifactId>
+                <version>${ip2region.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-ip-region</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-banner</artifactId>

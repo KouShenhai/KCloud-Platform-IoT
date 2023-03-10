@@ -170,23 +170,4 @@ public class IpUtil {
         return bytes;
     }
 
-    public static String getHostIp() {
-        try {
-            return InetAddress.getLocalHost().getHostAddress();
-        }
-        catch (UnknownHostException e) {
-            log.error("获取ip失败，错误信息：{}",e.getMessage());
-        }
-        return "127.0.0.1";
-    }
-
-    public static String getHostName() {
-        try {
-            return InetAddress.getLocalHost().getHostName();
-        }
-        catch (UnknownHostException e) {
-            log.error("获取主机名称失败，错误信息：{}",e.getMessage());
-        }
-        return "未知";
-    }
 }

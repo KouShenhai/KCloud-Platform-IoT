@@ -23,6 +23,7 @@ import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserDetailServiceImpl;
 import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserServiceImpl;
 import org.laokou.auth.server.infrastructure.authentication.*;
+import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.redis.utils.RedisUtil;
 import org.laokou.tenant.service.SysSourceService;
@@ -30,7 +31,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -64,6 +64,7 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -274,10 +275,10 @@ public class AuthorizationServerConfig {
         String alias = "auth";
         String password = "koushenhai";
         String path = "auth.jks";
-        ClassPathResource resource = new ClassPathResource(path);
+        InputStream inputStream = ResourceUtil.getResource(path).getInputStream();
         KeyStore jks = KeyStore.getInstance("jks");
         char[] pwd = password.toCharArray();
-        jks.load(resource.getInputStream(),pwd);
+        jks.load(inputStream,pwd);
         RSAKey rsaKey = RSAKey.load(jks, alias, pwd);
         JWKSet jwkSet = new JWKSet(rsaKey);
         return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
@@ -293,8 +294,8 @@ public class AuthorizationServerConfig {
     JwtDecoder jwtDecoder() throws CertificateException, IOException {
         CertificateFactory certificateFactory = CertificateFactory.getInstance("x.509");
         // 读取cer公钥证书来配置解码器
-        ClassPathResource resource = new ClassPathResource("auth.cer");
-        Certificate certificate = certificateFactory.generateCertificate(resource.getInputStream());
+        InputStream inputStream = ResourceUtil.getResource("auth.cer").getInputStream();
+        Certificate certificate = certificateFactory.generateCertificate(inputStream);
         RSAPublicKey publicKey = (RSAPublicKey) certificate.getPublicKey();
         return NimbusJwtDecoder.withPublicKey(publicKey).build();
     }

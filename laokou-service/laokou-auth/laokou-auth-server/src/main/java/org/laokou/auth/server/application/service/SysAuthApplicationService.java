@@ -48,6 +48,7 @@ public interface SysAuthApplicationService {
 
     /**
      * 获取公钥
+     * @throws IOException
      * @return
      */
     String getPublicKey() throws IOException;

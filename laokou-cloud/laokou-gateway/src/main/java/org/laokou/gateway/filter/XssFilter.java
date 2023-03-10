@@ -49,10 +49,7 @@ public class XssFilter implements GlobalFilter, Ordered {
             case "GET" -> {
                 return xssGet(request,exchange,chain);
             }
-            case "POST" -> {
-                return xssPostOrPut(request,exchange,chain);
-            }
-            case "PUT" -> {
+            case "POST", "PUT" -> {
                 return xssPostOrPut(request,exchange,chain);
             }
             default -> {

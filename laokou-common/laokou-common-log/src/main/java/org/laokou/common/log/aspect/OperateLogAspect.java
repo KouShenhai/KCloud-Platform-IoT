@@ -27,6 +27,8 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.laokou.common.ip.region.utils.AddressUtil;
+import org.laokou.common.jasypt.utils.AESUtil;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.dto.OperateLogDTO;
 import org.laokou.common.log.enums.DataTypeEnum;
@@ -90,7 +92,7 @@ public class OperateLogAspect {
         dto.setRequestUri(request.getRequestURI());
         dto.setRequestIp(ip);
         dto.setRequestAddress(AddressUtil.getRealAddress(ip));
-        dto.setOperator(UserUtil.getUsername());
+        dto.setOperator(AESUtil.decrypt(UserUtil.getUsername()));
         dto.setCreator(UserUtil.getUserId());
         dto.setDeptId(UserUtil.getDeptId());
         if (null != e) {
