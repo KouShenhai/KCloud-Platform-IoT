@@ -22,8 +22,6 @@ public interface Constant {
 
     String FORWARD_SLASH = "/";
 
-    String BACK_SLASH = "\\";
-
     String DOT = ".";
 
     String COMMA = ",";

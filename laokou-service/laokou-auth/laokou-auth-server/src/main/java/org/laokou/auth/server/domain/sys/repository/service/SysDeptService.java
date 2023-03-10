@@ -25,8 +25,9 @@ public interface SysDeptService {
      * 查询deptIds
      * @param superAdmin
      * @param userId
+     * @param tenantId
      * @return
      */
-    List<Long> getDeptIds(Integer superAdmin,Long userId);
+    List<Long> getDeptIds(Integer superAdmin,Long userId,Long tenantId);
 
 }

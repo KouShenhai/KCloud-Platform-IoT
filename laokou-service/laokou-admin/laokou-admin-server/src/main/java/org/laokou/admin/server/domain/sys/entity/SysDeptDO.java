@@ -55,13 +55,6 @@ public class SysDeptDO extends BaseDO {
     private Integer sort;
 
     /**
-     * 路径
-     */
-    @TableField("path")
-    @Schema(name = "path",description = "部门路径",example = "0")
-    private String path;
-
-    /**
      * 租户id
      */
     @Schema(name = "tenantId",description = "租户id")

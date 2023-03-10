@@ -238,7 +238,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_NOT_PERMISSION, MessageUtil.getMessage(StatusCode.USERNAME_NOT_PERMISSION));
         }
         // 部门列表
-        List<Long> deptIds = sysDeptService.getDeptIds(superAdmin,userId);
+        List<Long> deptIds = sysDeptService.getDeptIds(superAdmin,userId,tenantId);
         userDetail.setDeptIds(deptIds);
         userDetail.setPermissionList(permissionsList);
         if (tenantId == DEFAULT) {

@@ -55,20 +55,6 @@ public interface SysDeptService extends IService<SysDeptDO> {
     List<Long> getDeptIdsByRoleId(Long roleId);
 
     /**
-     * 根据id修改部门路径
-     * @param id
-     * @param pid
-     */
-    void updateDeptPath1ById(Long id,Long pid);
-
-    /**
-     * 根据id修改部门路径
-     * @param id
-     * @param pid
-     */
-    void updateDeptPath2ById(Long id,Long pid);
-
-    /**
      * 获取版本号
      * @param id
      * @return

@@ -32,10 +32,10 @@ public class SysDeptServiceImpl implements SysDeptService {
     private final SysDeptMapper sysDeptMapper;
 
     @Override
-    public List<Long> getDeptIds(Integer superAdmin,Long userId) {
+    public List<Long> getDeptIds(Integer superAdmin,Long userId,Long tenantId) {
         if (SuperAdminEnum.YES.ordinal() == superAdmin) {
-            return sysDeptMapper.getDeptIds();
+            return sysDeptMapper.getDeptIds(tenantId);
         }
-        return sysDeptMapper.getDeptIdsByUserId(userId);
+        return sysDeptMapper.getDeptIdsByUserId(userId,tenantId);
     }
 }

@@ -25,7 +25,6 @@ import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
 import org.laokou.admin.server.interfaces.qo.SysDeptQo;
 import org.laokou.admin.client.vo.SysDeptVO;
 import org.laokou.auth.client.utils.UserUtil;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -68,23 +67,10 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
             throw new CustomException("部门已存在，请重新填写");
         }
         Long tenantId = UserUtil.getTenantId();
-        Long pid = dto.getPid();
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         sysDeptDO.setCreator(UserUtil.getUserId());
         sysDeptDO.setTenantId(tenantId);
-        // 修改顶级节path
-        boolean updateParentPathFlag = false;
-        if (pid == Constant.DEFAULT) {
-            updateParentPathFlag = true;
-        }
         sysDeptService.save(sysDeptDO);
-        // 修改顶级节点path
-        if (updateParentPathFlag) {
-            sysDeptDO.setPath("0/" + sysDeptDO.getId());
-            sysDeptService.updateById(sysDeptDO);
-        } else {
-            sysDeptService.updateDeptPath1ById(sysDeptDO.getId(), sysDeptDO.getPid());
-        }
         return true;
     }
 
@@ -110,8 +96,6 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
         sysDeptDO.setVersion(version);
         sysDeptDO.setEditor(UserUtil.getUserId());
         sysDeptService.updateById(sysDeptDO);
-        // 修改当前节点及子节点path
-        sysDeptService.updateDeptPath2ById(dto.getId(),dto.getPid());
         return true;
     }
 

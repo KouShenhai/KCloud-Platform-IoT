@@ -29,14 +29,16 @@ public interface SysDeptMapper {
     /**
      * 根据userId查询deptIds
      * @param userId
+     * @param tenantId
      * @return
      */
-    List<Long> getDeptIdsByUserId(@Param("userId")Long userId);
+    List<Long> getDeptIdsByUserId(@Param("userId")Long userId,@Param("tenantId")Long tenantId);
 
     /**
      * 查询deptIds
+     * @param tenantId
      * @return
      */
-    List<Long> getDeptIds();
+    List<Long> getDeptIds(@Param("tenantId")Long tenantId);
 
 }

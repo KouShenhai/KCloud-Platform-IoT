@@ -52,20 +52,6 @@ public interface SysDeptMapper extends BaseMapper<SysDeptDO> {
     List<Long> getDeptIdsByRoleId(@Param("roleId") Long roleId);
 
     /**
-     * 根据id修改部门路径
-     * @param id
-     * @param pid
-     */
-    void updateDeptPath1ById(@Param("id")Long id,@Param("pid")Long pid);
-
-    /**
-     * 根据id修改部门路径
-     * @param id
-     * @param pid
-     */
-    void updateDeptPath2ById(@Param("id")Long id,@Param("pid")Long pid);
-
-    /**
      * 获取版本号
      * @param id
      * @return
