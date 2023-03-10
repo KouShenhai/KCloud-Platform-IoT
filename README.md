@@ -384,7 +384,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 - 采用Apache2.0开源协议，并且承诺永不参与商业用途，仅供大家无偿使用（点个star，拜托啦~🙏）
 
 ### 😘 参与贡献
-欢迎各路英雄好汉参与KCloud-Platform-Alibaba代码贡献，期待您的加入！Fork本仓库 新建 feat_xxx_环境_时间（如 feat_laokou_dev_20230116） 分支提交代码，新建Pull Request。
+欢迎各路英雄好汉参与KCloud-Platform-Alibaba代码贡献，期待您的加入！
+Fork本仓库 新建 feat_xxx_环境_时间（如 feat_laokou_dev_20230116） 分支提交代码，新建Pull Request。
 我觉得没问题就会合并到主干分支，你也就成为正式贡献者啦！
 
 ### 😻 开源协议
