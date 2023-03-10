@@ -57,3 +57,11 @@ alter table boot_sys_dept drop path;
 
 -- 2023/3/10 增加boot_sys_dept索引 老寇
 ALTER table boot_sys_dept ADD INDEX idx_tenant_id(`tenant_id`) comment '租户编号_索引';
+
+-- 2023/3/11 为oauth2_authorization增加事件 老寇
+-- 每天零点清理过期token
+drop event if exists delete_oauth2_authorization_expire_token_every_day;
+create event delete_oauth2_authorization_expire_token_every_day
+on schedule every 1 day starts '2023-03-11 00:00:00'
+on completion preserve
+do delete from oauth2_authorization where access_token_expires_at <= now();
