@@ -24,7 +24,6 @@ import org.laokou.auth.server.infrastructure.authentication.OAuth2PasswordAuthen
 import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -71,7 +70,7 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
             errMsg = MessageUtil.getMessage(StatusCode.USERNAME_NOT_PERMISSION);
             throw new UsernameNotFoundException(errMsg);
         }
-        List<Long> deptIds = sysDeptService.getDeptIds(superAdmin, userId);
+        List<Long> deptIds = sysDeptService.getDeptIds(superAdmin, userId,0L);
         userDetail.setDeptIds(deptIds);
         userDetail.setPermissionList(permissionsList);
         return userDetail;

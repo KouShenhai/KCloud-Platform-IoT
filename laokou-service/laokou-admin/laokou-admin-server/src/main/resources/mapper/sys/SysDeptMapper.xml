@@ -47,14 +47,6 @@
         group by a.id
     </select>
 
-    <update id="updateDeptPath1ById" statementType="CALLABLE">
-        call updatePath1(#{id,mode=IN},#{pid,mode=IN});
-    </update>
-
-    <update id="updateDeptPath2ById" statementType="CALLABLE">
-        call updatePath2(#{id,mode=IN},#{pid,mode=IN});
-    </update>
-
     <select id="getVersion" resultType="integer">
         select `version` from boot_sys_dept where id = #{id}
     </select>

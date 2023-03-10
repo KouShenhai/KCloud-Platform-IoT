@@ -21,11 +21,24 @@
 
     <select id="getDeptIds" resultType="long">
         select id from boot_sys_dept
-        where del_flag = 0
+        where del_flag = 0 and tenant_id = #{tenantId}
     </select>
 
-    <select id="getDeptIdsByUserId" resultType="long" statementType="CALLABLE">
-        call deptIds(#{userId,mode=IN});
+    <select id="getDeptIdsByUserId" resultType="long">
+        WITH RECURSIVE td AS (
+                    select a.id,a.pid from boot_sys_dept a, boot_sys_role b, boot_sys_role_dept c, boot_sys_user d, boot_sys_user_role e
+                    where a.id = c.dept_id
+                        and c.role_id = b.id
+                        and d.id = e.user_id
+                        and b.id = e.role_id
+                        and d.id = #{userId}
+                        and a.del_flag = 0 and a.tenant_id = #{tenantId}
+                    GROUP BY a.id,a.pid
+                UNION
+                    SELECT c.id,c.pid FROM boot_sys_dept c, td WHERE c.pid = td.id
+        )
+        SELECT id FROM td
+        GROUP BY id
     </select>
 
 </mapper>
