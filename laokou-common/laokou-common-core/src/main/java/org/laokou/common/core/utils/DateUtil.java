@@ -55,8 +55,15 @@ public class DateUtil {
         return localDateTime.format(dateTimeFormatter);
     }
 
+    public static LocalDateTime parse(String format,int index) {
+        String timePattern = getTimePattern(index);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern);
+        return LocalDateTime.parse(format,dateTimeFormatter);
+    }
+
     public static void main(String[] args) {
         System.out.println(format(LocalDateTime.now(), YYYYMMDDHHMMSS));
+        System.out.println(parse("20230311001155",YYYYMMDDHHMMSS));
     }
 
 }
