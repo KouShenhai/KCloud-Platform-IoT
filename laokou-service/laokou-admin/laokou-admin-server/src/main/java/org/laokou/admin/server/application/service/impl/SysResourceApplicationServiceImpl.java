@@ -26,6 +26,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.laokou.admin.client.dto.MessageDTO;
+import org.laokou.admin.client.enums.AuditEnum;
+import org.laokou.admin.client.enums.AuditStatusEnum;
 import org.laokou.admin.server.application.service.SysMessageApplicationService;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysResourceAuditDO;
@@ -78,7 +80,6 @@ import static org.laokou.common.core.constant.Constant.DEFAULT;
 @RequiredArgsConstructor
 public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
     private static final String PROCESS_KEY = "Process_88888888";
-    private static final Integer START_AUDIT_STATUS = 0;
     private final SysResourceService sysResourceService;
     private final SysAuditLogService sysAuditLogService;
     private final ElasticsearchApiFeignClient elasticsearchApiFeignClient;
@@ -156,6 +157,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         sysResourceDO.setEditor(UserUtil.getUserId());
         sysResourceService.save(sysResourceDO);
         Long id = sysResourceDO.getId();
+        // 开启任务
         String instanceId = startTask(id, sysResourceDO.getTitle());
         dto.setResourceId(id);
         return insertResourceAudit(dto,instanceId);
@@ -171,14 +173,21 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (resourceId == null) {
             throw new CustomException("资源编号不为空");
         }
+        // 开启任务
         String instanceId = startTask(resourceId, dto.getTitle());
         return insertResourceAudit(dto,instanceId);
     }
 
+    /**
+     * 插入资源审批表
+     * @param dto
+     * @param instanceId
+     * @return
+     */
     private Boolean insertResourceAudit(SysResourceAuditDTO dto,String instanceId) {
         SysResourceAuditDO sysResourceAuditDO = ConvertUtil.sourceToTarget(dto, SysResourceAuditDO.class);
         sysResourceAuditDO.setCreator(UserUtil.getUserId());
-        sysResourceAuditDO.setStatus(START_AUDIT_STATUS);
+        sysResourceAuditDO.setStatus(AuditStatusEnum.INIT.ordinal());
         sysResourceAuditDO.setProcessInstanceId(instanceId);
         return sysResourceAuditService.save(sysResourceAuditDO);
     }
@@ -310,38 +319,67 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         String comment = dto.getComment();
         String username = UserUtil.getUsername();
         Long userId = UserUtil.getUserId();
-        int auditStatus = Integer.parseInt(values.get("auditStatus").toString());
+        int auditStatus = (int) values.get("auditStatus");
         int status;
         //1 审核中 2 审批拒绝 3审核通过
         if (StringUtil.isNotEmpty(assignee)) {
-            //审批中
-            status = 1;
-            insertAuditMessage(assignee,businessId,instanceName);
+            // 审批中
+            status = AuditStatusEnum.AUDIT.ordinal();
         } else {
-            //0拒绝 1同意
-            if (0 == auditStatus) {
+            // auditStatus => 0拒绝 1同意
+            if (AuditEnum.NO.ordinal() == auditStatus) {
                 //审批拒绝
-                status = 2;
+                status = AuditStatusEnum.REJECT.ordinal();
             } else {
                 // 审批通过
-                status = 3;
-                // 将资源审批表的信息写入资源表
-                LambdaQueryWrapper<SysResourceAuditDO> queryWrapper = Wrappers.lambdaQuery(SysResourceAuditDO.class).eq(SysResourceAuditDO::getProcessInstanceId, instanceId)
-                        .eq(SysResourceAuditDO::getResourceId,businessId)
-                        .select(SysResourceAuditDO::getUrl
-                                , SysResourceAuditDO::getTitle
-                                , SysResourceAuditDO::getRemark);
-                SysResourceAuditDO auditDO = sysResourceAuditService.getOne(queryWrapper);
-                Integer version = sysResourceService.getVersion(businessId);
-                LambdaUpdateWrapper<SysResourceDO> updateWrapper = Wrappers.lambdaUpdate(SysResourceDO.class).eq(SysResourceDO::getId, businessId)
-                        .eq(SysResourceDO::getVersion,version)
-                        .set(SysResourceDO::getVersion, version + 1)
-                        .set(SysResourceDO::getTitle, auditDO.getTitle())
-                        .set(SysResourceDO::getRemark, auditDO.getRemark())
-                        .set(SysResourceDO::getUrl, auditDO.getUrl());
-                sysResourceService.update(updateWrapper);
+                status = AuditStatusEnum.AGREE.ordinal();
             }
         }
+        switch (AuditStatusEnum.getStatus(status)) {
+            case AUDIT -> // 审批中,发送审批消息通知
+                    insertAuditMessage(assignee,businessId,instanceName);
+            case AGREE -> // 审批通过
+                    auditAgree(businessId,instanceId);
+            case REJECT -> {
+                // 审批拒绝
+            }
+            default -> {}
+        }
+        // 修改审批状态
+        updateAuditStatus(status,instanceId);
+        // 审核日志
+        insertAuditLog(businessId,auditStatus,comment,username,userId);
+        return true;
+    }
+
+    /**
+     * 审批通过
+     * @param businessId
+     */
+    private void auditAgree(Long businessId,String instanceId) {
+        // 将资源审批表的信息写入资源表
+        LambdaQueryWrapper<SysResourceAuditDO> queryWrapper = Wrappers.lambdaQuery(SysResourceAuditDO.class).eq(SysResourceAuditDO::getProcessInstanceId, instanceId)
+                .eq(SysResourceAuditDO::getResourceId,businessId)
+                .select(SysResourceAuditDO::getUrl
+                        , SysResourceAuditDO::getTitle
+                        , SysResourceAuditDO::getRemark);
+        SysResourceAuditDO auditDO = sysResourceAuditService.getOne(queryWrapper);
+        Integer version = sysResourceService.getVersion(businessId);
+        LambdaUpdateWrapper<SysResourceDO> updateWrapper = Wrappers.lambdaUpdate(SysResourceDO.class).eq(SysResourceDO::getId, businessId)
+                .eq(SysResourceDO::getVersion,version)
+                .set(SysResourceDO::getVersion, version + 1)
+                .set(SysResourceDO::getTitle, auditDO.getTitle())
+                .set(SysResourceDO::getRemark, auditDO.getRemark())
+                .set(SysResourceDO::getUrl, auditDO.getUrl());
+        sysResourceService.update(updateWrapper);
+    }
+
+    /**
+     * 修改审批状态
+     * @param status
+     * @param instanceId
+     */
+    private void updateAuditStatus(int status,String instanceId) {
         // 修改状态
         Integer version = sysResourceAuditService.getVersion(instanceId);
         LambdaUpdateWrapper<SysResourceAuditDO> updateWrapper = Wrappers.lambdaUpdate(SysResourceAuditDO.class)
@@ -350,9 +388,6 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
                 .eq(SysResourceAuditDO::getVersion,version)
                 .eq(SysResourceAuditDO::getProcessInstanceId, instanceId);
         sysResourceAuditService.update(updateWrapper);
-        // 审核日志
-        insertAuditLog(businessId,auditStatus,comment,username,userId);
-        return true;
     }
 
     private void insertAuditLog(Long businessId,int auditStatus,String comment,String username,Long userId) {

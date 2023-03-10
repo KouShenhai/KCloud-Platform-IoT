@@ -70,7 +70,7 @@ public class OperateLogAspect {
 
     @Async
     @Transactional(rollbackFor = Exception.class)
-    protected void handleLog(final JoinPoint joinPoint,final Exception e) throws IOException {
+    protected void handleLog(final JoinPoint joinPoint,final Exception e) {
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         //获取注解
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
