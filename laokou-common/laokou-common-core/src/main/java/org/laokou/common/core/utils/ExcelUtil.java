@@ -14,15 +14,10 @@
  * limitations under the License.
  */
 package org.laokou.common.core.utils;
-import com.alibaba.excel.EasyExcel;
-import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.Date;
+import java.time.LocalDateTime;
 /**
  * @author laokou
  */
@@ -36,17 +31,19 @@ public class ExcelUtil {
 
     private static final String CONTENT_DISPOSITION_VALUE = "attachment;filename=";
 
+    private static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
+
     /**
      * 导出请求头
      * @param response
      */
     public static void exportHeader(HttpServletResponse response) {
-        String fileName = DateUtil.format(new Date(),DateUtil.DATE_TIME) + EXCEL_SUFFIX;
+        String fileName = DateUtil.format(LocalDateTime.now(),DateUtil.YYYYMMDDHHMMSS) + EXCEL_SUFFIX;
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(CONTENT_TYPE_VALUE);
         response.setHeader(CONTENT_DISPOSITION,
                 CONTENT_DISPOSITION_VALUE + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + EXCEL_SUFFIX);
-        response.addHeader("Access-Control-Expose-Headers", CONTENT_DISPOSITION);
+        response.addHeader(ACCESS_CONTROL_EXPOSE_HEADERS, CONTENT_DISPOSITION);
     }
 
 }
