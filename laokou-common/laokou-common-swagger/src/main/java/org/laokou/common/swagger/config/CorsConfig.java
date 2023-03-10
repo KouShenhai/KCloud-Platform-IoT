@@ -67,7 +67,9 @@ public class CorsConfig {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
         // 时区
         TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
-        mapper.setDateFormat(new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_MM_DD_HH_MM_SS)));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_MM_DD_HH_MM_SS));
+        simpleDateFormat.setTimeZone(timeZone);
+        mapper.setDateFormat(simpleDateFormat);
         mapper.setTimeZone(timeZone);
         // Long类型转String类型
         JavaTimeModule javaTimeModule = new JavaTimeModule();

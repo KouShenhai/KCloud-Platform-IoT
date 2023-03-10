@@ -80,6 +80,7 @@ import static org.laokou.common.core.constant.Constant.DEFAULT;
 @RequiredArgsConstructor
 public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
     private static final String PROCESS_KEY = "Process_88888888";
+    private static final String AUDIT_STATUS = "auditStatus";
     private final SysResourceService sysResourceService;
     private final SysAuditLogService sysAuditLogService;
     private final ElasticsearchApiFeignClient elasticsearchApiFeignClient;
@@ -317,9 +318,9 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         String businessKey = dto.getBusinessKey();
         Long businessId = Long.valueOf(businessKey);
         String comment = dto.getComment();
-        String username = UserUtil.getUsername();
+        String username = AESUtil.decrypt(UserUtil.getUsername());
         Long userId = UserUtil.getUserId();
-        int auditStatus = (int) values.get("auditStatus");
+        int auditStatus = Integer.valueOf(values.get(AUDIT_STATUS).toString());
         int status;
         //1 审核中 2 审批拒绝 3审核通过
         if (StringUtil.isNotEmpty(assignee)) {
