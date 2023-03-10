@@ -48,10 +48,11 @@
         and c.business_key_ <![CDATA[ <> ]]> ''
         and c.name_ <![CDATA[ <> ]]> ''
         and d.key_ = #{dto.processKey}
+        <if test="dto.processName != null and dto.processName != ''">
         and d.name_ like concat('%',#{dto.processName},'%')
+        </if>
         ORDER BY
         a.start_time_ DESC
-
     </select>
 
 </mapper>

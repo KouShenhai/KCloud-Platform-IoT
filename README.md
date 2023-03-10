@@ -132,6 +132,7 @@ tenant/tenant123
         └── laokou-common-data-cache               --- 数据缓存组件  
         └── laokou-common-data-filter              --- 数据过滤组件  
         └── laokou-common-mybatis-plus             --- 对象映射组件  
+        └── laokou-common-ip-region                --- IP归属地组件  
 ├── laokou-cloud  
         └── laokou-gateway                         --- API网关  
         └── laokou-monitor                         --- 服务监控  

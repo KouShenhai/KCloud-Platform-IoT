@@ -17,6 +17,7 @@ package org.laokou.common.swagger.config;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.DateUtil;
@@ -30,9 +31,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
+
 /**
  * @author laokou
  */
@@ -64,22 +64,35 @@ public class CorsConfig {
     public MappingJackson2HttpMessageConverter jackson2HttpMessageConverter(){
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         ObjectMapper mapper = new ObjectMapper();
-        //日期格式转换
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
-        mapper.setDateFormat(new SimpleDateFormat(DateUtil.DATE_TIME_PATTERN));
-        mapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-        //Long类型转String类型
+        // 时区
+        TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_MM_DD_HH_MM_SS));
+        simpleDateFormat.setTimeZone(timeZone);
+        mapper.setDateFormat(simpleDateFormat);
+        mapper.setTimeZone(timeZone);
+        // Long类型转String类型
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(Long.class, ToStringSerializer.instance);
         javaTimeModule.addSerializer(Long.TYPE,ToStringSerializer.instance);
         // 中文转换
-        List<MediaType> list = new ArrayList<>();
+        List<MediaType> list = new ArrayList<>(1);
         list.add(MediaType.APPLICATION_JSON);
         converter.setSupportedMediaTypes(list);
         mapper.registerModule(javaTimeModule);
         converter.setObjectMapper(mapper);
         log.info("jackson配置加载完毕");
         return converter;
+    }
+
+    public static void main(String[] args) {
+        StdDateFormat stdDateFormat = new StdDateFormat();
+        TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+        stdDateFormat.setTimeZone(timeZone);
+        stdDateFormat.withLocale(Locale.SIMPLIFIED_CHINESE);
+        String format = stdDateFormat.format(new Date());
+        System.out.println(format);
+        System.out.println(new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_MM_DD_HH_MM_SS)).format(new Date()));
     }
 
 }
