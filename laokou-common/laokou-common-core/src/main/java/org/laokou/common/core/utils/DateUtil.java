@@ -37,16 +37,16 @@ public class DateUtil {
     /**
      * 时间格式
      */
-    private static final String[] PARSE_PATTERNS = {
+    private static final String[] TIME_PATTERNS = {
             "yyyy-MM-dd HH:mm:ss"
           , "yyyyMMddHHmmss"
     };
 
     public static String getTimePattern(int index) {
-        if (index >= PARSE_PATTERNS.length || index < 0) {
+        if (index >= TIME_PATTERNS.length || index < 0) {
             throw new CustomException("时间格式不存在，请重新输入");
         }
-        return PARSE_PATTERNS[index];
+        return TIME_PATTERNS[index];
     }
 
     public static String format(LocalDateTime localDateTime,int index) {

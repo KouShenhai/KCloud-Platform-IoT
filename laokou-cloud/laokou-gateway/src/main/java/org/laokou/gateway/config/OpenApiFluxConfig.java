@@ -15,7 +15,6 @@
  */
 package org.laokou.gateway.config;
 import org.springdoc.core.models.GroupedOpenApi;
-import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,8 +32,7 @@ public class OpenApiFluxConfig {
     @Lazy(value = false)
     public List<GroupedOpenApi> openApis(RouteDefinitionLocator locator) {
         List<GroupedOpenApi> groups = new ArrayList<>();
-        List<RouteDefinition> definitions = locator.getRouteDefinitions().collectList().block();
-        definitions.stream().filter(routeDefinition -> routeDefinition.getId().matches("laokou-.*")).forEach(routeDefinition -> {
+        locator.getRouteDefinitions().filter(routeDefinition -> routeDefinition.getId().matches("laokou-.*")).doOnNext(routeDefinition -> {
             String name = routeDefinition.getId().replaceAll("laokou-", "");
             GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").group(name).build();
         });
