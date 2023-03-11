@@ -50,8 +50,7 @@ public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
 
                     //服务未知异常
                     case "UNKNOWN" -> log.error("服务未知异常");
-                    default -> {
-                    }
+                    default -> {}
                 }
             }
         });

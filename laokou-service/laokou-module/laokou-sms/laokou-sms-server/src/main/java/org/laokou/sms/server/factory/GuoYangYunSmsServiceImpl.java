@@ -102,19 +102,12 @@ public class GuoYangYunSmsServiceImpl implements SmsService{
         }
         int minute = 5;
         String captcha = RandomStringUtils.randomNumeric(6);
-        Map<String,Object> param = new HashMap<>(2);
-        param.put("captcha",captcha);
-        param.put("minute",minute);
+        Map<String,Object> param = Map.of("captcha",captcha,"minute",minute);
         String paramValue = TemplateUtil.getContent(PARAMS_TEMPLATE, param);
-        Map<String, String> headers = new HashMap<>(1);
         //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
-        headers.put("Authorization", "APPCODE " + appcode);
-        Map<String, String> params = new HashMap<>(4);
-        params.put("mobile", mobile);
-        params.put("param", paramValue);
+        Map<String, String> headers = Map.of("Authorization", "APPCODE " + appcode);
         //smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
-        params.put("smsSignId", signId);
-        params.put("templateId", templateId);
+        Map<String, String> params = Map.of("mobile", mobile,"param", paramValue,"smsSignId", signId,"templateId", templateId);
         try {
             /**
              * 重要提示如下:

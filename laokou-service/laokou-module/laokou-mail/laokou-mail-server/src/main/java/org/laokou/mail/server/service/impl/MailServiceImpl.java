@@ -33,7 +33,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -65,9 +64,7 @@ public class MailServiceImpl implements MailService {
         String subject = "验证码";
         int minute = 5;
         String captcha = RandomStringUtils.randomNumeric(6);
-        Map<String,Object> params = new HashMap<>(2);
-        params.put("captcha",captcha);
-        params.put("minute",minute);
+        Map<String, Object> params = Map.of("captcha", captcha, "minute", minute);
         String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, params);
         // 发送邮件
         sendMail(subject,content,toMail);

@@ -346,7 +346,7 @@ CREATE TABLE `boot_sys_resource` (
                                      `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
                                      `title` varchar(200) NOT NULL COMMENT '名称',
                                      `url` varchar(500) NOT NULL COMMENT '地址',
-                                     `code` varchar(10) NOT NULL COMMENT '类型 audio音频 video视频  image图片 text文本 other其他',
+                                     `code` varchar(10) NOT NULL COMMENT '类型 audio音频 video视频  image图片',
                                      `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                      `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
                                      `remark` text NOT NULL COMMENT '备注',
@@ -416,7 +416,7 @@ CREATE TABLE `boot_sys_resource_audit` (
                                            `title` varchar(200) NOT NULL COMMENT '名称',
                                            `url` varchar(500) NOT NULL COMMENT '地址',
                                            `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '审核状态(0待审核 1审核中 2审批驳回 3审批通过 )',
-                                           `code` varchar(10) NOT NULL COMMENT '类型 audio音频 video视频  image图片 text文本 other其他',
+                                           `code` varchar(10) NOT NULL COMMENT '类型 audio音频 video视频  image图片',
                                            `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                            `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
                                            `remark` longtext COMMENT '备注',
@@ -542,7 +542,7 @@ CREATE TABLE `boot_sys_user` (
                                  `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
                                  `mail` varchar(50) DEFAULT NULL COMMENT '邮箱',
                                  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态 0正常 1停用',
-                                 `img_url` varchar(400) NOT NULL DEFAULT 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400' COMMENT '头像url',
+                                 `img_url` varchar(400) NOT NULL DEFAULT 'https://www.gravatar.com/avatar' COMMENT '头像url',
                                  `mobile` varchar(11) DEFAULT NULL COMMENT '手机号',
                                  `dept_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '部门id',
                                  `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号',
@@ -695,7 +695,7 @@ INSERT INTO `boot_sys_package` (`id`, `name`, `creator`, `editor`, `create_date`
 CREATE TABLE `boot_sys_package_menu` (
                                          `package_id` bigint(20) NOT NULL COMMENT '套餐id',
                                          `menu_id` bigint(20) NOT NULL COMMENT '菜单id'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment='套餐-菜单';
 INSERT INTO `boot_sys_package_menu` (`package_id`, `menu_id`) VALUES ('2', '1391677542887788567');
 INSERT INTO `boot_sys_package_menu` (`package_id`, `menu_id`) VALUES ('2', '1535858679453085698');
 INSERT INTO `boot_sys_package_menu` (`package_id`, `menu_id`) VALUES ('2', '1535878154046939137');
@@ -798,10 +798,10 @@ INSERT INTO `boot_sys_package_menu` (`package_id`, `menu_id`) VALUES ('3', '1552
 CREATE TABLE `boot_sys_source` (
                                    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
                                    `name` varchar(50) NOT NULL COMMENT '名称',
-                                   `driver_class_name` varchar(100) NOT NULL,
-                                   `url` varchar(500) DEFAULT NULL,
-                                   `username` varchar(100) DEFAULT NULL,
-                                   `password` varchar(200) DEFAULT NULL,
+                                   `driver_class_name` varchar(100) NOT NULL comment '驱动',
+                                   `url` varchar(500) DEFAULT NULL comment '连接信息',
+                                   `username` varchar(100) DEFAULT NULL comment '用户名',
+                                   `password` varchar(200) DEFAULT NULL comment '密码',
                                    `creator` bigint(20) DEFAULT NULL COMMENT '创建人',
                                    `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
                                    `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -822,7 +822,7 @@ CREATE TABLE `boot_sys_tenant` (
                                    `source_id` bigint(20) DEFAULT NULL COMMENT '数据源id',
                                    `package_id` bigint(20) DEFAULT NULL COMMENT '套餐id',
                                    PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment='租户';
 INSERT INTO `boot_sys_tenant` (`id`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `version`, `name`, `source_id`, `package_id`) VALUES ('1', '1341620898007281665', '1537114827246292994', '2023-02-06 12:32:05', '2023-02-15 15:45:06', '0', '6', '阿里巴巴集团', '1', '2');
 -- ------------------------------------租户------------------------------------
 

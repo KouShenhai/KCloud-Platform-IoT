@@ -104,7 +104,7 @@ public class IpUtil {
             int i;
             switch (elements.length)
             {
-                case 1:
+                case 1 -> {
                     long max = 4294967295L;
                     l = Long.parseLong(elements[0]);
                     if ((l < 0L) || (l > max)) {
@@ -114,8 +114,8 @@ public class IpUtil {
                     bytes[1] = (byte) (int) ((l & 0xFFFFFF) >> 16 & 0xFF);
                     bytes[2] = (byte) (int) ((l & 0xFFFF) >> 8 & 0xFF);
                     bytes[3] = (byte) (int) (l & 0xFF);
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     long len3 = 255L;
                     l = Integer.parseInt(elements[0]);
                     if ((l < 0L) || (l > len3)) {
@@ -130,11 +130,10 @@ public class IpUtil {
                     bytes[1] = (byte) (int) (l >> 16 & 0xFF);
                     bytes[2] = (byte) (int) ((l & 0xFFFF) >> 8 & 0xFF);
                     bytes[3] = (byte) (int) (l & 0xFF);
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     int len1 = 2;
-                    for (i = 0; i < len1; ++i)
-                    {
+                    for (i = 0; i < len1; ++i) {
                         l = Integer.parseInt(elements[i]);
                         if ((l < 0L) || (l > 255L)) {
                             return null;
@@ -148,20 +147,20 @@ public class IpUtil {
                     }
                     bytes[2] = (byte) (int) (l >> 8 & 0xFF);
                     bytes[3] = (byte) (int) (l & 0xFF);
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     int len2 = 4;
-                    for (i = 0; i < len2; ++i)
-                    {
+                    for (i = 0; i < len2; ++i) {
                         l = Integer.parseInt(elements[i]);
                         if ((l < 0L) || (l > 255L)) {
                             return null;
                         }
                         bytes[i] = (byte) (int) (l & 0xFF);
                     }
-                    break;
-                default:
+                }
+                default -> {
                     return null;
+                }
             }
         }
         catch (NumberFormatException e) {

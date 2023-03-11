@@ -46,16 +46,11 @@ public class DataBaseUtil {
 
     private final SysSourceService sysSourceService;
 
-    private static final List<String> TABLES;
-
-    static {
-        TABLES = new ArrayList<>(5);
-        TABLES.add("boot_sys_dict");
-        TABLES.add("boot_sys_message");
-        TABLES.add("boot_sys_message_detail");
-        TABLES.add("boot_sys_oss");
-        TABLES.add("boot_sys_oss_log");
-    }
+    private static final List<String> TABLES = List.of("boot_sys_dict"
+                , "boot_sys_message"
+                , "boot_sys_message_detail"
+                , "boot_sys_oss"
+                , "boot_sys_oss_log");
 
     public String loadDataBase(String sourceName) {
         if (StringUtil.isEmpty(sourceName)) {
