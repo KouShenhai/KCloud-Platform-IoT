@@ -33,7 +33,7 @@ public class WeChatUtil {
      */
 	public static boolean checkSignature(String signature, String timestamp, String nonce) {
 		String[] strings = new String[]{TOKEN ,timestamp ,nonce};
-		Arrays.sort(strings);
+		Arrays.parallelSort(strings);
 		String str = strings[0] + strings[1] + strings[2];
 		String sigNature = sha1(str);
 		return sigNature.equals(signature);
