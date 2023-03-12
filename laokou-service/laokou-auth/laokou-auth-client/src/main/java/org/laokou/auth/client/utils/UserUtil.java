@@ -16,6 +16,7 @@
 package org.laokou.auth.client.utils;
 
 import org.laokou.auth.client.user.UserDetail;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -24,7 +25,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class UserUtil {
 
     public static UserDetail userDetail() {
-        return (UserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return (UserDetail) getAuthentication().getPrincipal();
+    }
+
+    public static Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
     /**

@@ -23,6 +23,7 @@ public interface Constant {
     String FORWARD_SLASH = "/";
 
     String DOT = ".";
+    String RISK = ":";
 
     String COMMA = ",";
 

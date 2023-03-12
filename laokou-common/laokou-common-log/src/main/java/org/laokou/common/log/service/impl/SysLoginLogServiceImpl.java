@@ -18,13 +18,15 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.log.dto.LoginLogDTO;
+import org.laokou.common.log.event.LoginLogEvent;
 import org.laokou.common.log.entity.SysLoginLogDO;
 import org.laokou.common.log.mapper.SysLoginLogMapper;
 import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.service.SysLoginLogService;
 import org.laokou.common.log.vo.SysLoginLogVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
  * @author laokou
  */
@@ -42,10 +44,10 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper,SysLog
     }
 
     @Override
-    public Boolean insertLoginLog(LoginLogDTO dto) {
-        SysLoginLogDO logDO = ConvertUtil.sourceToTarget(dto, SysLoginLogDO.class);
-        baseMapper.insert(logDO);
-        return true;
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean insertLoginLog(LoginLogEvent event) {
+        SysLoginLogDO logDO = ConvertUtil.sourceToTarget(event, SysLoginLogDO.class);
+        return baseMapper.insert(logDO) > 0 ? true : false;
     }
 
 }

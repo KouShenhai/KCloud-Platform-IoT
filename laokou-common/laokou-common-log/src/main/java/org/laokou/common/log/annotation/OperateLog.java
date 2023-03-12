@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.common.log.annotation;
-import org.laokou.common.log.enums.DataTypeEnum;
 import java.lang.annotation.*;
 /**
  * 自定义操作日志注解
@@ -28,12 +27,5 @@ public @interface OperateLog {
     String module();
 
     String name();
-
-    /**
-     * TEXT文本
-     * FILE文件
-     * @return
-     */
-    DataTypeEnum type() default DataTypeEnum.TEXT;
 
 }

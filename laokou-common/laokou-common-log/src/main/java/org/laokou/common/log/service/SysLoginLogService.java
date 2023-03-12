@@ -16,7 +16,7 @@
 package org.laokou.common.log.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.session.ResultHandler;
-import org.laokou.common.log.dto.LoginLogDTO;
+import org.laokou.common.log.event.LoginLogEvent;
 import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.vo.SysLoginLogVO;
 /**
@@ -41,9 +41,9 @@ public interface SysLoginLogService {
 
     /**
      * 新增登录日志
-     * @param dto
+     * @param event
      * @return
      */
-    Boolean insertLoginLog(LoginLogDTO dto);
+    Boolean insertLoginLog(LoginLogEvent event);
 
 }

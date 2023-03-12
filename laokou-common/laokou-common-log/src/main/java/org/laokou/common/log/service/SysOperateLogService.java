@@ -18,7 +18,7 @@ package org.laokou.common.log.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.session.ResultHandler;
-import org.laokou.common.log.dto.OperateLogDTO;
+import org.laokou.common.log.event.OperateLogEvent;
 import org.laokou.common.log.entity.SysOperateLogDO;
 import org.laokou.common.log.qo.SysOperateLogQo;
 import org.laokou.common.log.vo.SysOperateLogVO;
@@ -44,9 +44,9 @@ public interface SysOperateLogService extends IService<SysOperateLogDO> {
 
     /**
      * 新增登录日志
-     * @param dto
+     * @param event
      * @return
      */
-    Boolean insertOperateLog(OperateLogDTO dto);
+    Boolean insertOperateLog(OperateLogEvent event);
 
 }

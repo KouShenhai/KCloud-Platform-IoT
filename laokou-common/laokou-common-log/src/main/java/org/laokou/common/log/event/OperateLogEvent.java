@@ -13,19 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.log.dto;
+package org.laokou.common.log.event;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.context.ApplicationEvent;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Clock;
 
 /**
  * @author laokou
  */
-@Data
-public class OperateLogDTO implements Serializable {
+@Getter
+@Setter
+public class OperateLogEvent extends ApplicationEvent implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -6523521638764501311L;
@@ -105,4 +109,11 @@ public class OperateLogDTO implements Serializable {
      */
     private Long tenantId;
 
+    public OperateLogEvent(Object source) {
+        super(source);
+    }
+
+    public OperateLogEvent(Object source, Clock clock) {
+        super(source, clock);
+    }
 }

@@ -16,9 +16,10 @@
 package org.laokou.common.log.aspect;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.hc.core5.http.HttpHeaders;
 import org.laokou.auth.client.utils.UserUtil;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.*;
 import lombok.extern.slf4j.Slf4j;
@@ -30,17 +31,14 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.ip.region.utils.AddressUtil;
 import org.laokou.common.jasypt.utils.AESUtil;
 import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.log.dto.OperateLogDTO;
-import org.laokou.common.log.enums.DataTypeEnum;
-import org.laokou.common.log.service.SysOperateLogService;
+import org.laokou.common.log.event.OperateLogEvent;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 /**
  * @author laokou
@@ -48,10 +46,9 @@ import java.util.stream.Collectors;
 @Component
 @Aspect
 @Slf4j
-@RequiredArgsConstructor
 public class OperateLogAspect {
 
-    private final SysOperateLogService sysOperateLogService;
+    private static final String[] REMOVE_PARAMS = {"username","password","mobile","mail"};
 
     /**
      * 处理完请求后执行
@@ -68,46 +65,80 @@ public class OperateLogAspect {
     }
 
     @Async
-    @Transactional(rollbackFor = Exception.class)
     protected void handleLog(final JoinPoint joinPoint,final Exception e) {
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-        //获取注解
+        // 获取注解
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
         OperateLog operateLog = method.getAnnotation(OperateLog.class);
         if (operateLog == null) {
             operateLog = AnnotationUtils.findAnnotation(method, OperateLog.class);
         }
+        // 构建事件对象
+        OperateLogEvent event = buildEvent(operateLog,request,joinPoint,e);
+        SpringContextUtil.publishEvent(event);
+    }
+
+    private OperateLogEvent buildEvent(OperateLog operateLog
+            , HttpServletRequest request
+            , JoinPoint joinPoint
+            , Exception e) {
         String ip = IpUtil.getIpAddr(request);
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
-        List<?> params = new ArrayList<>(Arrays.asList(args)).stream().filter(arg -> (!(arg instanceof HttpServletRequest)
-                && !(arg instanceof HttpServletResponse))).collect(Collectors.toList());
-        OperateLogDTO dto = new OperateLogDTO();
+        List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).collect(Collectors.toList());
+        OperateLogEvent event = new OperateLogEvent(this);
         assert operateLog != null;
-        dto.setModule(operateLog.module());
-        dto.setOperation(operateLog.name());
-        dto.setRequestUri(request.getRequestURI());
-        dto.setRequestIp(ip);
-        dto.setRequestAddress(AddressUtil.getRealAddress(ip));
-        dto.setOperator(AESUtil.decrypt(UserUtil.getUsername()));
-        dto.setCreator(UserUtil.getUserId());
-        dto.setDeptId(UserUtil.getDeptId());
+        event.setModule(operateLog.module());
+        event.setOperation(operateLog.name());
+        event.setRequestUri(request.getRequestURI());
+        event.setRequestIp(ip);
+        event.setRequestAddress(AddressUtil.getRealAddress(ip));
+        event.setOperator(AESUtil.decrypt(UserUtil.getUsername()));
+        event.setCreator(UserUtil.getUserId());
+        event.setDeptId(UserUtil.getDeptId());
         if (null != e) {
-            dto.setRequestStatus(ResultStatusEnum.FAIL.ordinal());
-            dto.setErrorMsg(e.getMessage());
+            event.setRequestStatus(ResultStatusEnum.FAIL.ordinal());
+            event.setErrorMsg(e.getMessage());
         } else {
-            dto.setRequestStatus(ResultStatusEnum.SUCCESS.ordinal());
+            event.setRequestStatus(ResultStatusEnum.SUCCESS.ordinal());
         }
-        dto.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
-        dto.setMethodName(className + "." + methodName + "()");
-        dto.setRequestMethod(request.getMethod());
-        if (DataTypeEnum.TEXT.equals(operateLog.type())) {
-            dto.setRequestParams(JacksonUtil.toJsonStr(params, true));
+        event.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
+        event.setMethodName(className + "." + methodName + "()");
+        event.setRequestMethod(request.getMethod());
+        Object obj;
+        if (CollectionUtils.isEmpty(params)) {
+            obj = null;
+        } else {
+            obj =  params.get(0);
         }
-        dto.setTenantId(UserUtil.getTenantId());
-        sysOperateLogService.insertOperateLog(dto);
+        if (obj == null) {
+            event.setRequestParams(JacksonUtil.EMPTY_JSON);
+        } else {
+            String str = JacksonUtil.toJsonStr(obj);
+            if (Constant.RISK.contains(str)) {
+                Map map = removeAny(JacksonUtil.toBean(str, Map.class), REMOVE_PARAMS);
+                event.setRequestParams(JacksonUtil.toJsonStr(map,true));
+            } else {
+                event.setRequestParams(str);
+            }
+        }
+        event.setTenantId(UserUtil.getTenantId());
+        return event;
+    }
+
+    private boolean filterArgs(Object arg) {
+        return !(arg instanceof HttpServletRequest)
+               && !(arg instanceof MultipartFile)
+               && !(arg instanceof HttpServletResponse);
+    }
+
+    public static Map removeAny(Map map, String... keys) {
+        for(int var5 = 0; var5 < keys.length; ++var5) {
+            map.remove(keys[var5]);
+        }
+        return map;
     }
 
 }
