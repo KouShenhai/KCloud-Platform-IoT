@@ -26,6 +26,7 @@ package org.laokou.common.i18n.core;
  * admin    => 3
  * tenant   => 4
  * sentinel => 5
+ * sms      => 6
  * @author laokou
  */
 public interface StatusCode {
@@ -163,9 +164,9 @@ public interface StatusCode {
 
     /**
      * auth => 2
-     * 租户不能为空，请选择租户
+     * 租户编号不能为空，请选择租户
      */
-    int TENANT_NOT_NULL = 2014;
+    int TENANT_ID_NOT_NULL = 2014;
 
     /**
      * auth => 2
@@ -178,5 +179,41 @@ public interface StatusCode {
      * 接口已被限流，请稍后再试
      */
     int API_BLOCK_REQUEST = 5001;
+
+    /**
+     * sms => 6
+     * 签名未报备，请检查签名
+     */
+    int SMS_SIGNATURE_NOT_REPORTED = 6001;
+
+    /**
+     * sms => 6
+     * 签名不可用，请检查签名
+     */
+    int SMS_SIGNATURE_NOT_AVAILABLE = 6002;
+
+    /**
+     * sms => 6
+     * 短信内容包含敏感词，请重新输入
+     */
+    int SMS_CONTENT_CONTAINS_SENSITIVE = 6003;
+
+    /**
+     * sms => 6
+     * 短信内容过长，请重新输入
+     */
+    int SMS_CONTENT_TOO_LONG = 6004;
+
+    /**
+     * sms => 6
+     * 模板编号不存在，请重新选择模板
+     */
+    int SMS_TEMPLATE_ID_NOT_EXIST = 6005;
+
+    /**
+     * sms => 6
+     * 验证未通过，请核对相关信息
+     */
+    int SMS_VERIFICATION_FAILED = 6006;
 
 }

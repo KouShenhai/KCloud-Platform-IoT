@@ -20,14 +20,16 @@ import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RegexUtil;
+import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.freemarker.utils.TemplateUtil;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
@@ -44,18 +46,18 @@ import java.util.Map;
 @Slf4j
 public class GuoYangYunSmsServiceImpl implements SmsService{
 
-    @Value("${sms.guoYangYun.templateId}")
-    private String templateId;
-
-    @Value("${sms.guoYangYun.signId}")
-    private String signId;
-
-    @Value("${sms.guoYangYun.appcode}")
-    private String appcode;
-
+    private final GuoYangYunProperties guoYangYunProperties;
     private static final Map<String,String> TEMPLATE_MAP = new HashMap<>(15);
     private static final Map<String,String> ERROR_MAP = new HashMap<>(7);
-
+    private static final Map<String,Integer> SMS_STATUS_CODE_MAP = Map.of(
+             "1204", StatusCode.SMS_SIGNATURE_NOT_REPORTED
+            ,"1205", StatusCode.SMS_SIGNATURE_NOT_AVAILABLE
+            ,"1302", StatusCode.SMS_CONTENT_CONTAINS_SENSITIVE
+            ,"1304", StatusCode.SMS_CONTENT_TOO_LONG
+            ,"1320", StatusCode.SMS_TEMPLATE_ID_NOT_EXIST
+            ,"1403", StatusCode.MOBILE_ERROR
+            ,"1905", StatusCode.SMS_VERIFICATION_FAILED
+    );
     private final RedisUtil redisUtil;
 
     private static final String PARAMS_TEMPLATE = "**code**:${captcha},**minute**:${minute}";
@@ -93,39 +95,49 @@ public class GuoYangYunSmsServiceImpl implements SmsService{
     public Boolean sendSms(String mobile) throws TemplateException, IOException {
         boolean mobileRegex = RegexUtil.mobileRegex(mobile);
         if (!mobileRegex) {
-            throw new CustomException("手机号码不正确，请重新输入");
+            throw new CustomException(StatusCode.MOBILE_ERROR,MessageUtil.getMessage(StatusCode.MOBILE_ERROR));
         }
+        String templateId = guoYangYunProperties.getTemplateId();
+        String appcode = guoYangYunProperties.getAppcode();
+        String signId = guoYangYunProperties.getSignId();
         // 验证模块id
         boolean exist = TEMPLATE_MAP.keySet().contains(templateId);
         if (!exist) {
-            throw new CustomException("模板id不存在，请检查配置");
+            throw new CustomException(StatusCode.SMS_TEMPLATE_ID_NOT_EXIST,MessageUtil.getMessage(StatusCode.SMS_TEMPLATE_ID_NOT_EXIST));
         }
         int minute = 5;
         String captcha = RandomStringUtils.randomNumeric(6);
         Map<String,Object> param = Map.of("captcha",captcha,"minute",minute);
         String paramValue = TemplateUtil.getContent(PARAMS_TEMPLATE, param);
-        //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
-        Map<String, String> headers = Map.of("Authorization", "APPCODE " + appcode);
-        //smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
+        // 最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
+        Map<String, String> headers = Map.of(Constant.AUTHORIZATION_HEAD, "APPCODE " + appcode);
+        // smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
         Map<String, String> params = Map.of("mobile", mobile,"param", paramValue,"smsSignId", signId,"templateId", templateId);
         try {
             /**
              * 重要提示如下:
-             * HttpUtils请从\r\n\t    \t* https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/src/main/java/com/aliyun/api/gateway/demo/util/HttpUtils.java\r\n\t    \t* 下载
-             *
+             * HttpUtils请从 https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/src/main/java/com/aliyun/api/gateway/demo/util/HttpUtils.java 下载
+             * <p>
              * 相应的依赖请参照
              * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml
              */
             String json = HttpUtil.doPost(URL, params, headers);
             JsonNode node = JacksonUtil.readTree(json);
-            int code = node.get("code").asInt();
-            if (SUCCESS_CODE == code) {
+            node = node.get("code");
+            String code = node.textValue();
+            int statusCode = node.asInt();
+            if (SUCCESS_CODE == statusCode) {
                 String userCaptchaKey = RedisKeyUtil.getUserCaptchaKey(mobile);
                 redisUtil.set(userCaptchaKey,captcha,minute * 60);
             } else {
-                throw new CustomException(ERROR_MAP.get("" + code));
+                log.error("错误信息：{}", ERROR_MAP.get(code));
+                statusCode = SMS_STATUS_CODE_MAP.get(code);
+                throw new CustomException(statusCode, MessageUtil.getMessage(statusCode));
             }
-        } catch (Exception e) {
+        } catch (CustomException ex) {
+            throw ex;
+        }
+        catch (Exception e) {
             log.error("错误信息：{}",e.getMessage());
             throw e;
         }
