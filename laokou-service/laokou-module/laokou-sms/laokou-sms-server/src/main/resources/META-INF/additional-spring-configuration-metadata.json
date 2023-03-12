@@ -1,0 +1,32 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "sms.type",
+      "type": "java.lang.Integer",
+      "description": "0:国阳云.",
+      "defaultValue": 0
+    },
+    {
+      "name": "sms.gyy.templateId",
+      "type": "java.lang.String",
+      "description": "模板编号.",
+      "sourceType": "org.laokou.sms.server.factory.GuoYangYunProperties",
+      "sourceMethod": "getTemplateId()"
+    },
+    {
+      "name": "sms.gyy.signId",
+      "type": "java.lang.String",
+      "description": "签名编号.",
+      "sourceType": "org.laokou.sms.server.factory.GuoYangYunProperties",
+      "sourceMethod": "getSignId()"
+    },
+    {
+      "name": "sms.gyy.appcode",
+      "type": "java.lang.String",
+      "description": "令牌.",
+      "sourceType": "org.laokou.sms.server.factory.GuoYangYunProperties",
+      "sourceMethod": "getAppcode()"
+    }
+  ]
+}
