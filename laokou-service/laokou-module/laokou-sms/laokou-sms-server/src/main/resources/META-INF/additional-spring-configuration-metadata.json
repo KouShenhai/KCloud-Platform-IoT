@@ -4,7 +4,7 @@
     {
       "name": "sms.type",
       "type": "java.lang.Integer",
-      "description": "type 0国阳云.",
+      "description": "0:国阳云.",
       "defaultValue": 0
     },
     {
