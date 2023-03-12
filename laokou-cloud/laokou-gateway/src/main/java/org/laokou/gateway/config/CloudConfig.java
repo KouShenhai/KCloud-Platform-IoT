@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Configuration
 public class CloudConfig {
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(HttpMessageConverters.class)
     public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
         return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
     }

@@ -15,7 +15,7 @@
  */
 package org.laokou.auth.server.domain.sys.repository.service.impl;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
+import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.server.domain.sys.repository.service.SysCaptchaService;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.i18n.core.StatusCode;

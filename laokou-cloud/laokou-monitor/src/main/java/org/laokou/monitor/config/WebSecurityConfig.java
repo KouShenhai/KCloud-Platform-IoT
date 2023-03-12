@@ -19,6 +19,7 @@ package org.laokou.monitor.config;
 import de.codecentric.boot.admin.server.config.AdminServerProperties;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -35,6 +36,7 @@ public class WebSecurityConfig {
     private final AdminServerProperties adminServerProperties;
 
     @Bean
+    @ConditionalOnMissingBean(SecurityFilterChain.class)
     SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
         SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
         successHandler.setTargetUrlParameter("redirectTo");

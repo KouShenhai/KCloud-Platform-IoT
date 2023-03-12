@@ -15,12 +15,10 @@
  */
 package org.laokou.oss.server;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.laokou.common.swagger.config.CorsConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
@@ -36,7 +34,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
         , "org.laokou.redis"
         , "org.laokou.common.mybatisplus"})
 @EnableDiscoveryClient
-@Import(CorsConfig.class)
 @EnableAsync
 @EnableEncryptableProperties
 @MapperScan(value = {"org.laokou.oss.server.mapper"

@@ -27,6 +27,7 @@ import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.redis.utils.RedisUtil;
 import org.laokou.tenant.service.SysSourceService;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -148,6 +149,7 @@ public class AuthorizationServerConfig {
      * @return
      */
     @Bean
+    @ConditionalOnMissingBean(RegisteredClientRepository.class)
     RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
         RegisteredClient registeredClient = RegisteredClient.withId("95TxSsTPFA3tF12TBSMmUVK0da")
                 .clientId("95TxSsTPFA3tF12TBSMmUVK0da")
@@ -208,6 +210,7 @@ public class AuthorizationServerConfig {
      * @return
      */
     @Bean
+    @ConditionalOnMissingBean(AuthorizationServerSettings.class)
     AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder().build();
     }
@@ -217,6 +220,7 @@ public class AuthorizationServerConfig {
      * @return
      */
     @Bean
+    @ConditionalOnMissingBean(PasswordEncoder.class)
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -228,6 +232,7 @@ public class AuthorizationServerConfig {
      * @return
      */
     @Bean
+    @ConditionalOnMissingBean(OAuth2AuthorizationService.class)
     OAuth2AuthorizationService auth2AuthorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
         return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
     }
@@ -317,6 +322,7 @@ public class AuthorizationServerConfig {
      * @return
      */
     @Bean
+    @ConditionalOnMissingBean(OAuth2AuthorizationConsentService.class)
     OAuth2AuthorizationConsentService authorizationConsentService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
         return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
     }

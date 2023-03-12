@@ -70,9 +70,9 @@ public class CustomJsonJacksonCodec extends BaseCodec {
     }
 
     public static ObjectMapper getObjectMapper() {
-        //解决查询缓存转换异常的问题
+        // 解决查询缓存转换异常的问题
         ObjectMapper objectMapper = new ObjectMapper();
-        //Long类型转String类型
+        // Long类型转String类型
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         javaTimeModule.addSerializer(Long.class, ToStringSerializer.instance);
         javaTimeModule.addSerializer(Long.TYPE,ToStringSerializer.instance);

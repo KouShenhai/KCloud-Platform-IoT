@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.redis.config;
+package org.laokou.redis.config.auto;
+import org.laokou.redis.config.CustomJsonJacksonCodec;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RBloomFilter;
@@ -38,7 +39,7 @@ import java.util.List;
 @ConditionalOnClass(Redisson.class)
 @AutoConfiguration(before = RedisAutoConfiguration.class)
 @EnableConfigurationProperties(RedisProperties.class)
-public class RedisSessionConfig {
+public class RedisSessionAutoConfig {
 
     private static final String REDIS_PROTOCOL_PREFIX = "redis://";
 
@@ -84,7 +85,7 @@ public class RedisSessionConfig {
                     .setPassword(properties.getPassword())
                     .setTimeout(timeout);
         }
-        //使用json序列化方式
+        // 使用json序列化方式
         Codec codec = CustomJsonJacksonCodec.INSTANCE;
         config.setCodec(codec);
         return Redisson.create(config);

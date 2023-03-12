@@ -18,6 +18,7 @@ package org.laokou.gateway.config;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,7 @@ import org.springframework.context.annotation.Configuration;
 public class CacheConfig {
 
     @Bean
+    @ConditionalOnMissingBean(Cache.class)
     public Cache<String, RouteDefinition> caffeineCache() {
         return Caffeine.newBuilder()
                 // 初始化10个容量

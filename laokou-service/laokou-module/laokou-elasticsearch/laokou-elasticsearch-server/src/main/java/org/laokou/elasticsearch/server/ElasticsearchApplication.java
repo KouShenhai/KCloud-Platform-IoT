@@ -15,19 +15,16 @@
  */
 package org.laokou.elasticsearch.server;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.laokou.common.swagger.config.CorsConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.Import;
 /**
  * @author laokou
  */
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableEncryptableProperties
-@Import({CorsConfig.class})
 @SpringBootApplication(scanBasePackages = {"org.laokou.common.swagger","org.laokou.elasticsearch","org.laokou.common.core"})
 public class ElasticsearchApplication {
     public static void main(String[] args) {

@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 package org.laokou.im.server;
-
-import org.laokou.common.swagger.config.CorsConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.Import;
-
 /**
  * @author laokou
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@Import(CorsConfig.class)
 public class ImApplication {
 
     public static void main(String[] args) {

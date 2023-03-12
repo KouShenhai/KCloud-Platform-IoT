@@ -28,14 +28,15 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
+
 import java.lang.reflect.Method;
 import java.util.List;
 /**
  * @author laokou
  */
-@Component
 @Aspect
 @Slf4j
+@Component
 public class DataFilterAspect {
 
     @Before("@annotation(org.laokou.common.data.filter.annotation.DataFilter)")

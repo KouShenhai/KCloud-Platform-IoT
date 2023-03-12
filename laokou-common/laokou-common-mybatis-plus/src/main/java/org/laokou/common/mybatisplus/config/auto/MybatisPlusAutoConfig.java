@@ -13,27 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.mybatisplus.config;
+package org.laokou.common.mybatisplus.config.auto;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import org.laokou.common.mybatisplus.config.BaseDetaObjectHander;
+import org.laokou.common.mybatisplus.config.DataFilterInterceptor;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.sql.DataSource;
+
 /**
  * mybatis-plus的配置
  * @author laokou
  */
-@Configuration
-public class MybatisPlusConfig {
+@AutoConfiguration
+@ConditionalOnClass({DataSource.class})
+@Import(BaseDetaObjectHander.class)
+public class MybatisPlusAutoConfig {
 
     @Bean
+    @ConditionalOnMissingBean(MybatisPlusInterceptor.class)
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
         // 数据权限

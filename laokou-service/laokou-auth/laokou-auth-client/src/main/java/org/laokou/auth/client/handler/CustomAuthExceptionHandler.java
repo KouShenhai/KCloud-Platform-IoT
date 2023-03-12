@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.laokou.auth.client.exception;
+package org.laokou.auth.client.handler;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.utils.JacksonUtil;

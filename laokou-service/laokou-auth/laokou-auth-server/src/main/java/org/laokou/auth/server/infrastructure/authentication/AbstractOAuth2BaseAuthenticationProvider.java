@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.constant.AuthConstant;
-import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
+import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.common.core.enums.ResultStatusEnum;

@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.DateUtil;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -41,6 +42,7 @@ import java.util.*;
 public class CorsConfig {
 
     @Bean
+    @ConditionalOnMissingBean(CorsFilter.class)
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
@@ -61,6 +63,7 @@ public class CorsConfig {
     }
 
     @Bean
+    @ConditionalOnMissingBean(MappingJackson2HttpMessageConverter.class)
     public MappingJackson2HttpMessageConverter jackson2HttpMessageConverter(){
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         ObjectMapper mapper = new ObjectMapper();

@@ -13,12 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.security.config;
-import lombok.RequiredArgsConstructor;
-import org.laokou.auth.client.exception.ForbiddenExceptionHandler;
-import org.laokou.auth.client.exception.InvalidAuthenticationEntryPoint;
+package org.laokou.common.security.config.auto;
+import org.laokou.auth.client.handler.ForbiddenExceptionHandler;
+import org.laokou.auth.client.handler.InvalidAuthenticationEntryPoint;
+import org.laokou.common.security.config.CustomOpaqueTokenIntrospector;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -26,23 +29,26 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-
 /**
  * @author laokou
  */
 @EnableWebSecurity
-@RequiredArgsConstructor
 @Configuration
 @EnableMethodSecurity
-public class ResourceServerConfig {
-
-    private final ForbiddenExceptionHandler forbiddenExceptionHandler;
-    private final InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint;
-    private final CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector;
+@AutoConfiguration(before = {AutoConfiguration.class})
+@Import(value = {CustomOpaqueTokenIntrospector.class
+        , ForbiddenExceptionHandler.class
+        , InvalidAuthenticationEntryPoint.class})
+public class ResourceServerAutoConfig {
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE + 1000)
-    SecurityFilterChain resourceFilterChain(HttpSecurity http) throws Exception {
+    @ConditionalOnMissingBean(SecurityFilterChain.class)
+    SecurityFilterChain resourceFilterChain(
+            CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector
+            , InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint
+            , ForbiddenExceptionHandler forbiddenExceptionHandler
+            , HttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
                 .cors()

@@ -16,7 +16,6 @@
 package org.laokou.auth.server;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.swagger.config.CorsConfig;
 import org.laokou.dynamic.router.utils.RouterUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
@@ -25,7 +24,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
@@ -51,7 +49,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableEncryptableProperties
 @EnableAsync
 @EnableDiscoveryClient
-@Import(CorsConfig.class)
 @MapperScan(value = {"org.laokou.auth.server.domain.sys.repository.mapper"
         , "org.laokou.tenant.mapper"
         ,"org.laokou.common.log.mapper"})

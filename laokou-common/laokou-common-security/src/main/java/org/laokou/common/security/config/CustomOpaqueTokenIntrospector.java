@@ -15,7 +15,7 @@
  */
 package org.laokou.common.security.config;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.client.exception.CustomAuthExceptionHandler;
+import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
