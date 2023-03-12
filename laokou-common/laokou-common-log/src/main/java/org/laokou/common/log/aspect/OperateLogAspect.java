@@ -58,13 +58,13 @@ public class OperateLogAspect {
      * 处理完请求后执行
      */
     @AfterReturning(value = "@annotation(org.laokou.common.log.annotation.OperateLog)")
-    public void doAfterReturning(JoinPoint joinPoint) throws IOException {
+    public void doAfterReturning(JoinPoint joinPoint) {
         handleLog(joinPoint,null);
 
     }
 
     @AfterThrowing(pointcut = "@annotation(org.laokou.common.log.annotation.OperateLog)",throwing = "e")
-    public void doAfterThrowing(JoinPoint joinPoint,Exception e) throws IOException {
+    public void doAfterThrowing(JoinPoint joinPoint,Exception e) {
         handleLog(joinPoint,e);
     }
 
