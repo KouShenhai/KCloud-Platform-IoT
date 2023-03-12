@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 package org.laokou.oss.server.controller;
-import cn.hutool.core.util.IdUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.FileUtil;
-import org.laokou.common.log.entity.SysOssLogDO;
-import org.laokou.common.log.service.SysOssLogService;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.oss.client.vo.UploadVO;
-import org.laokou.oss.server.support.StorageFactory;
+import org.laokou.oss.server.support.OssTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.InputStream;
 /**
  * 对象存储控制器
  * @author laokou
@@ -41,8 +36,7 @@ import java.io.InputStream;
 @RequiredArgsConstructor
 public class OssApiController {
 
-    private final StorageFactory storageFactory;
-    private final SysOssLogService sysOssLogService;
+    private final OssTemplate ossTemplate;
 
     @PostMapping(value = "/upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "对象存储>上传",description = "对象存储>上传")
@@ -50,30 +44,7 @@ public class OssApiController {
         if (file.isEmpty()) {
             throw new CustomException("上传的文件不能为空");
         }
-        // 是否上传
-        SysOssLogDO logDO = sysOssLogService.getLogByMd5(md5);
-        if (null != logDO) {
-            return new HttpResult<UploadVO>().ok(UploadVO.builder().url(logDO.getUrl()).build());
-        }
-        // 文件大小
-        long fileSize = file.getSize();
-        long file100M = 100 * 1024 * 1024;
-        if (fileSize > file100M) {
-            throw new CustomException("单个文件上传不能超过100M，请重新选择文件并上传");
-        }
-        // 文件名
-        String fileName = file.getOriginalFilename();
-        String newFileName = IdUtil.simpleUUID() + FileUtil.getFileSuffix(fileName);
-        // 文件流
-        InputStream inputStream = file.getInputStream();
-        // 文件类型
-        String contentType = file.getContentType();
-        int limitRead = (int) (fileSize + 1);
-        // 上传文件
-        String url = storageFactory.build().upload(limitRead, fileSize, newFileName, inputStream, contentType);
-        // 写入文件记录表
-        sysOssLogService.insertLog(url,md5,fileName,fileSize);
-        return new HttpResult<UploadVO>().ok(UploadVO.builder().url(url).build());
+        return new HttpResult<UploadVO>().ok(ossTemplate.upload(file.getSize(),md5,file.getOriginalFilename(),file.getContentType(),file.getInputStream()));
     }
 
 }

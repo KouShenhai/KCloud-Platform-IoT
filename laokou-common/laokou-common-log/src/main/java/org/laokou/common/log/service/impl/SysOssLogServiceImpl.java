@@ -18,7 +18,9 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.log.entity.SysOssLogDO;
+import org.laokou.common.log.event.OssLogEvent;
 import org.laokou.common.log.mapper.SysOssLogMapper;
 import org.laokou.common.log.service.SysOssLogService;
 import org.springframework.stereotype.Service;
@@ -33,13 +35,9 @@ public class SysOssLogServiceImpl extends ServiceImpl<SysOssLogMapper, SysOssLog
     @Override
     @Transactional(rollbackFor = Exception.class)
     @DS("#tenant")
-    public void insertLog(String url, String md5,String fileName,Long fileSize) {
-        SysOssLogDO sysOssLogDO = new SysOssLogDO();
-        sysOssLogDO.setUrl(url);
-        sysOssLogDO.setMd5(md5);
-        sysOssLogDO.setFileName(fileName);
-        sysOssLogDO.setFileSize(fileSize);
-        this.baseMapper.insert(sysOssLogDO);
+    public Boolean insertLog(OssLogEvent event) {
+        SysOssLogDO sysOssLogDO = ConvertUtil.sourceToTarget(event, SysOssLogDO.class);
+        return this.baseMapper.insert(sysOssLogDO) > 0 ? true : false;
     }
 
     @Override

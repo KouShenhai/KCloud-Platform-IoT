@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,21 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.log.enums;
+
+package org.laokou.common.log.listener;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.log.event.OssLogEvent;
+import org.laokou.common.log.service.SysOssLogService;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
+@Component
+@RequiredArgsConstructor
+public class OssLogListener implements ApplicationListener<OssLogEvent> {
 
-public enum DataTypeEnum {
+    private final SysOssLogService sysOssLogService;
 
-    /**
-     * 文本
-     */
-    TEXT,
-    /**
-     * 文件
-     */
-    FILE
-
+    @Override
+    public void onApplicationEvent(OssLogEvent event) {
+        sysOssLogService.insertLog(event);
+    }
 }

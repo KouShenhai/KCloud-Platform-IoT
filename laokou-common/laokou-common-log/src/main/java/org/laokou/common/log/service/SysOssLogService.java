@@ -17,6 +17,7 @@ package org.laokou.common.log.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.common.log.entity.SysOssLogDO;
+import org.laokou.common.log.event.OssLogEvent;
 
 /**
  * @author laokou
@@ -25,12 +26,10 @@ public interface SysOssLogService extends IService<SysOssLogDO> {
 
     /**
      * 新增日志
-     * @param url
-     * @param md5
-     * @param fileName
-     * @param fileSize
+     * @param event
+     * @return
      */
-    void insertLog(String url,String md5,String fileName,Long fileSize);
+    Boolean insertLog(OssLogEvent event);
 
     /**
      * 获取文件日志

@@ -16,48 +16,41 @@
 package org.laokou.common.log.utils;
 import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IpUtil;
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.ip.region.utils.AddressUtil;
-import org.laokou.common.log.dto.LoginLogDTO;
-import org.laokou.common.log.service.SysLoginLogService;
+import org.laokou.common.log.event.LoginLogEvent;
 import org.springframework.http.HttpHeaders;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-import java.io.IOException;
 
 /**
  * @author laokou
  */
 @Component
 @Slf4j
-@RequiredArgsConstructor
 public class LoginLogUtil {
 
-    private final SysLoginLogService sysLoginLogService;
-
     @Async
-    @Transactional(rollbackFor = Exception.class)
-    public void recordLogin(String username,String loginType, Integer status, String msg, HttpServletRequest request,Long tenantId) throws IOException {
+    public void recordLogin(String username,String loginType, Integer status, String msg, HttpServletRequest request,Long tenantId) {
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
         String ip = IpUtil.getIpAddr(request);
         //获取客户端操作系统
         String os = userAgent.getOperatingSystem().getName();
         //获取客户端浏览器
         String browser = userAgent.getBrowser().getName();
-        LoginLogDTO dto = new LoginLogDTO();
-        dto.setLoginName(username);
-        dto.setRequestIp(ip);
-        dto.setRequestAddress(AddressUtil.getRealAddress(ip));
-        dto.setBrowser(browser);
-        dto.setOs(os);
-        dto.setMsg(msg);
-        dto.setLoginType(loginType);
-        dto.setRequestStatus(status);
-        dto.setTenantId(tenantId);
-        sysLoginLogService.insertLoginLog(dto);
+        LoginLogEvent event = new LoginLogEvent(this);
+        event.setLoginName(username);
+        event.setRequestIp(ip);
+        event.setRequestAddress(AddressUtil.getRealAddress(ip));
+        event.setBrowser(browser);
+        event.setOs(os);
+        event.setMsg(msg);
+        event.setLoginType(loginType);
+        event.setRequestStatus(status);
+        event.setTenantId(tenantId);
+        SpringContextUtil.publishEvent(event);
     }
 
 }

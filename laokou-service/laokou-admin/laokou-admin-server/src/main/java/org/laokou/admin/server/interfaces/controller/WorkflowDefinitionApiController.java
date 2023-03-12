@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.WorkflowDefinitionApplicationService;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.admin.server.interfaces.qo.DefinitionQo;
-import org.laokou.common.log.enums.DataTypeEnum;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,7 +43,7 @@ public class WorkflowDefinitionApiController {
 
     @PostMapping("/insert")
     @Operation(summary = "流程定义>新增",description = "流程定义>新增")
-    @OperateLog(module = "流程定义",name = "流程新增",type = DataTypeEnum.FILE)
+    @OperateLog(module = "流程定义",name = "流程新增")
     @PreAuthorize("hasAuthority('workflow:definition:insert')")
     public HttpResult<Boolean> insert(@RequestPart("file") MultipartFile file) throws IOException {
         return new HttpResult<Boolean>().ok(workflowDefinitionApplicationService.insertDefinition(file));
