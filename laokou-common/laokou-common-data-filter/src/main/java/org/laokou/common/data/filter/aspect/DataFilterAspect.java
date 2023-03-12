@@ -33,9 +33,9 @@ import java.util.List;
 /**
  * @author laokou
  */
-@Component
 @Aspect
 @Slf4j
+@Component
 public class DataFilterAspect {
 
     @Before("@annotation(org.laokou.common.data.filter.annotation.DataFilter)")

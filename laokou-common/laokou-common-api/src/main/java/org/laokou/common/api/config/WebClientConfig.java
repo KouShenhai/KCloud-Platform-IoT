@@ -16,9 +16,9 @@
 
 package org.laokou.common.api.config;
 import io.netty.channel.ChannelOption;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
@@ -26,7 +26,7 @@ import reactor.netty.http.client.HttpClient;
 /**
  * @author laokou
  */
-@Configuration
+@AutoConfiguration
 public class WebClientConfig {
 
     /**
@@ -34,7 +34,7 @@ public class WebClientConfig {
      * @return
      */
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(WebClient.class)
     public WebClient webClient() {
         // 超时配置
         HttpClient httpClient = HttpClient.create()

@@ -15,6 +15,7 @@
  */
 package org.laokou.gateway.config;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -37,6 +38,7 @@ import reactor.core.publisher.Mono;
 public class CorsConfig{
 
     @Bean
+    @ConditionalOnMissingBean(WebFilter.class)
     public WebFilter corsFilter() {
         return (ServerWebExchange serverWebExchange, WebFilterChain webFilterChain) -> {
             // 获取request对象

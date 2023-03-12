@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.laokou.common.swagger.config;
+package org.laokou.common.swagger.config.auto;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -24,13 +24,19 @@ import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.laokou.common.core.constant.Constant;
+import org.laokou.common.swagger.config.CorsConfig;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
 /**
  * @author laokou
  */
-@Configuration
-public class OpenApiMvcConfig {
+@AutoConfiguration
+@ConditionalOnProperty(prefix = "openapi.doc",name = "enable",matchIfMissing = true,havingValue = "true")
+@Import(CorsConfig.class)
+public class OpenApiMvcAutoConfig {
 
     @Bean
     OpenAPI openApi() {
