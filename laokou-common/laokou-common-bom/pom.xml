@@ -77,7 +77,7 @@
         <!--oshi版本-->
         <oshi.version>6.4.0</oshi.version>
         <!-- elasticsearch版本-->
-        <elasticsearch.version>7.6.2</elasticsearch.version>
+        <elasticsearch.version>7.14.0</elasticsearch.version>
         <!--rocketmq版本-->
         <rocketmq.version>2.2.3</rocketmq.version>
         <!--jakarta.servlet-api版本-->
