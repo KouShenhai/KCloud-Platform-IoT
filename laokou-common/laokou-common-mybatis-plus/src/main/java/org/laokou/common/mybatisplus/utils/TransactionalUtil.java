@@ -15,11 +15,10 @@
  */
 package org.laokou.common.mybatisplus.utils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
+
 /**
  * @author laokou
  */
@@ -27,30 +26,10 @@ import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 @RequiredArgsConstructor
 public class TransactionalUtil {
 
-    private final DataSourceTransactionManager dataSourceTransactionManager;
+    private final TransactionTemplate transactionTemplate;
 
-    /**
-     * 开启事务
-     * @return
-     */
-    public TransactionStatus begin() {
-        DefaultTransactionAttribute defaultTransactionAttribute = new DefaultTransactionAttribute(TransactionDefinition.PROPAGATION_REQUIRED);
-        return dataSourceTransactionManager.getTransaction(defaultTransactionAttribute);
-    }
-
-    /**
-     * 提交事务
-     * @param transactionStatus
-     */
-    public void commit(TransactionStatus transactionStatus) {
-        dataSourceTransactionManager.commit(transactionStatus);
-    }
-
-    /**
-     * 回滚事务
-     */
-    public void rollback(TransactionStatus transactionStatus) {
-        dataSourceTransactionManager.rollback(transactionStatus);
+    public <T> T execute(TransactionCallback<T> action) {
+        return transactionTemplate.execute(action);
     }
 
 }

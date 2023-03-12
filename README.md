@@ -374,6 +374,14 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         <td><img alt="暂无图片" src="doc/image/26.png"/></td>
     </tr>
     <tr>
+        <td><img alt="暂无图片" src="doc/image/29.png"/></td>
+        <td><img alt="暂无图片" src="doc/image/30.png"/></td>
+    </tr>
+    <tr>
+        <td><img alt="暂无图片" src="doc/image/31.png"/></td>
+        <td><img alt="暂无图片" src="doc/image/32.png"/></td>
+    </tr>
+    <tr>
         <td><img alt="暂无图片" src="doc/image/27.png"/></td>
         <td><img alt="暂无图片" src="doc/image/28.png"/></td>
     </tr>

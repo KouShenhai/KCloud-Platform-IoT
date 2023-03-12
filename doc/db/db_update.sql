@@ -65,3 +65,6 @@ create event delete_oauth2_authorization_expire_token_every_day
 on schedule every 1 day starts '2023-03-11 00:00:00'
 on completion preserve
 do delete from oauth2_authorization where access_token_expires_at <= now();
+
+-- 2023/3/12 增加boot_sys_menu数据 老寇
+INSERT INTO `boot_sys_menu` (`id`, `pid`, `permission`, `type`, `name`, `url`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `version`, `visible`) VALUES ('1564996817056710709', '1535878154046939137', 'sys:db:view', '0', '数据库文档', '/sys/db/view', 'book', '1341620898007281665', '1341620898007281665', '2023-03-12 13:05:20', '2023-03-12 13:06:54', '0', '401', '2', '0');
