@@ -43,6 +43,8 @@ import java.io.IOException;
 @SpringBootApplication(scanBasePackages = {"org.laokou.tenant"
         , "org.laokou.common.i18n"
         , "org.laokou.common.log"
+        , "org.laokou.common.data.cache"
+        , "org.laokou.common.data.filter"
         , "org.laokou.common.security"
         , "org.laokou.sentinel"
         , "org.laokou.common.swagger"

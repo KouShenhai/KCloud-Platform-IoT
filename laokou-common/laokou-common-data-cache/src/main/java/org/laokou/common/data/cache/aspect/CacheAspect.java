@@ -22,11 +22,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.config.CacheConfig;
 import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.redis.utils.RedisKeyUtil;
 import org.laokou.redis.utils.RedisUtil;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +35,6 @@ import java.lang.reflect.Method;
 @Component
 @Aspect
 @RequiredArgsConstructor
-@Import(CacheConfig.class)
 public class CacheAspect {
     private final RedisUtil redisUtil;
     private final Cache<String,Object> caffeineCache;
