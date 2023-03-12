@@ -26,6 +26,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.swagger.config.CorsConfig;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -34,11 +35,12 @@ import org.springframework.context.annotation.Import;
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnProperty(prefix = "openapi.doc",name = "enable",matchIfMissing = true,havingValue = "true")
 @Import(CorsConfig.class)
 public class OpenApiMvcAutoConfig {
 
     @Bean
+    @ConditionalOnMissingBean(OpenAPI.class)
+    @ConditionalOnProperty(prefix = "openapi",name = "enabled",havingValue = "true")
     OpenAPI openApi() {
         return new OpenAPI()
                 .info(new Info().title("API文档").description("API文档").version("3.0.4")
