@@ -20,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.mybatisplus.service.BatchService;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.TransactionStatus;
 import java.util.List;
 /**
  * @author laokou
@@ -44,15 +43,17 @@ public class BatchUtil<T> {
         int size = partition.size();
         for(int i = 0; i < size; i++) {
             List<T> list = partition.get(i);
-            TransactionStatus status = transactionalUtil.begin();
-            try {
-                service.insertBatch(list);
-                transactionalUtil.commit(status);
-            } catch (Exception e) {
-                transactionalUtil.rollback(status);
-                log.error("错误信息：批量插入数据异常，已执行回滚");
-                throw new CustomException("批量插入数据异常，数据已回滚");
-            }
+            transactionalUtil.execute(callback -> {
+                try{
+                    service.insertBatch(list);
+                    return true;
+                } catch (Exception e) {
+                    // 回滚标志
+                    callback.setRollbackOnly();
+                    log.error("错误信息：批量插入数据异常，已执行回滚");
+                    throw new CustomException("批量插入数据异常，数据已回滚");
+                }
+            });
         }
     }
 
