@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.laokou.common.api.config;
+package org.laokou.common.api.config.auto;
 import io.netty.channel.ChannelOption;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -27,7 +27,7 @@ import reactor.netty.http.client.HttpClient;
  * @author laokou
  */
 @AutoConfiguration
-public class WebClientConfig {
+public class WebClientAutoConfig {
 
     /**
      * 只允许注入一次
