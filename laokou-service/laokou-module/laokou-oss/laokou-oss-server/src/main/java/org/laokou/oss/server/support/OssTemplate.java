@@ -17,8 +17,6 @@
 package org.laokou.oss.server.support;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.utils.DateUtil;
-import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.log.entity.SysOssLogDO;
@@ -28,8 +26,6 @@ import org.laokou.oss.client.vo.UploadVO;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
-import java.time.LocalDateTime;
-
 /**
  * @author laokou
  */
@@ -51,11 +47,10 @@ public class OssTemplate {
         if (fileSize > file100M) {
             throw new CustomException("单个文件上传不能超过100M，请重新选择文件并上传");
         }
-        // 文件名
-        String newFileName = DateUtil.format(LocalDateTime.now(),DateUtil.YYYYMMDDHHMMSS) + FileUtil.getFileSuffix(fileName);
+        // 一次读取字节数
         int limitRead = (int) (fileSize + 1);
         // 上传文件
-        String url = storageFactory.build().upload(limitRead, fileSize, newFileName, inputStream, contentType);
+        String url = storageFactory.build().upload(limitRead, fileSize, fileName, inputStream, contentType);
         // 构建事件对象
         OssLogEvent event = buildEvent(url, md5, fileName, fileSize);
         SpringContextUtil.publishEvent(event);
