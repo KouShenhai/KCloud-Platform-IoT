@@ -16,24 +16,15 @@
 package org.laokou.admin.server.domain.sys.repository.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.server.domain.sys.entity.SysRoleMenuDO;
 import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.mapper.BatchMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
 /**
  * @author laokou
  */
 @Repository
 @Mapper
-public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenuDO> {
-
-    /**
-     * 批量插入
-     * @param list
-     */
-    void insertBatch(@Param("list") List<SysRoleMenuDO> list);
+public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenuDO>, BatchMapper<SysRoleMenuDO> {
 
 }

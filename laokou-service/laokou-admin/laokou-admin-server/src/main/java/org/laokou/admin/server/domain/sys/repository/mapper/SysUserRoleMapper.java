@@ -15,24 +15,16 @@
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.server.domain.sys.entity.SysUserRoleDO;
 import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.mapper.BatchMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
 /**
  * @author laokou
  */
 @Repository
 @Mapper
-public interface SysUserRoleMapper extends BaseMapper<SysUserRoleDO> {
+public interface SysUserRoleMapper extends BaseMapper<SysUserRoleDO>, BatchMapper<SysUserRoleDO> {
 
-    /**
-     * 批量插入
-     * @param list
-     */
-    void insertBatch(@Param("list") List<SysUserRoleDO> list);
 
 }

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,32 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.server.domain.sys.repository.mapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
+
+package org.laokou.common.mybatisplus.mapper;
+
 import org.apache.ibatis.annotations.Mapper;
-import org.laokou.common.mybatisplus.mapper.BatchMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
 @Repository
 @Mapper
-public interface SysMessageDetailMapper extends BaseMapper<SysMessageDetailDO>, BatchMapper<SysMessageDetailDO> {
+public interface BatchMapper<T> {
 
     /**
-     * 获取版本号
-     * @param id 主键
-     * @return 返回版本号
+     * 批量插入
+     * @param list
      */
-    Integer getVersion(@Param("id")Long id);
-
-    /**
-     * 未读消息数
-     * @param userId
-     * @return
-     */
-    Integer messageCount(@Param("userId") Long userId);
+    void insertBatch(@Param("list") List<T> list);
 
 }

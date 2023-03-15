@@ -16,21 +16,14 @@
 package org.laokou.tenant.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.laokou.common.mybatisplus.mapper.BatchMapper;
 import org.laokou.tenant.entity.SysPackageMenuDO;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
 /**
  * @author laokou
  */
 @Mapper
 @Repository
-public interface SysPackageMenuMapper extends BaseMapper<SysPackageMenuDO> {
-    /**
-     * 批量插入
-     * @param list
-     */
-    void insertBatch(@Param("list") List<SysPackageMenuDO> list);
+public interface SysPackageMenuMapper extends BaseMapper<SysPackageMenuDO>, BatchMapper<SysPackageMenuDO> {
+
 }
