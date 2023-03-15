@@ -16,11 +16,17 @@
 package org.laokou.common.mybatisplus.utils;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.mybatisplus.service.BatchService;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * @author laokou
  */
@@ -30,6 +36,7 @@ import java.util.List;
 public class BatchUtil<T> {
 
     private final TransactionalUtil transactionalUtil;
+    private final ThreadPoolTaskExecutor taskExecutor;
 
     /**
      * 批量新增
@@ -37,23 +44,36 @@ public class BatchUtil<T> {
      * @param batchNum 每组多少条数据
      * @param service 基础service
      */
+    @SneakyThrows
     public void insertBatch(List<T> dataList, int batchNum, BatchService<T> service) {
         // 数据分组
         List<List<T>> partition = Lists.partition(dataList, batchNum);
         int size = partition.size();
+        AtomicBoolean rollback = new AtomicBoolean(false);
+        CountDownLatch countDownLatch = new CountDownLatch(size);
         for(int i = 0; i < size; i++) {
             List<T> list = partition.get(i);
-            transactionalUtil.execute(callback -> {
+            taskExecutor.execute(() -> transactionalUtil.execute(callback -> {
                 try{
                     service.insertBatch(list);
                     return true;
                 } catch (Exception e) {
-                    // 回滚标志
-                    callback.setRollbackOnly();
-                    log.error("错误信息：批量插入数据异常，已执行回滚");
-                    throw new CustomException("批量插入数据异常，数据已回滚");
+                    // 回滚标识
+                    rollback.set(true);
+                    log.error("错误信息：批量插入数据异常，设置回滚标识");
+                    return false;
+                } finally {
+                    if (rollback.get()) {
+                        callback.setRollbackOnly();
+                    }
+                    countDownLatch.countDown();
                 }
-            });
+            }));
+        }
+        // 阻塞线程
+        countDownLatch.await(30, TimeUnit.SECONDS);
+        if (rollback.get()) {
+            throw new CustomException("批量插入数据异常，数据已回滚");
         }
     }
 
