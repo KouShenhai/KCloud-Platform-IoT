@@ -271,8 +271,7 @@ public class AuthorizationServerConfig {
     }
 
     /**
-     * 加载jwk资源
-     * 生成令牌
+     * JWK资源
      * @return
      */
     @Bean
