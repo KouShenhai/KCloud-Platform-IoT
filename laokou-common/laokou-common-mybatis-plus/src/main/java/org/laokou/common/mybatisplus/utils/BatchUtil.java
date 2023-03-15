@@ -71,7 +71,10 @@ public class BatchUtil<T> {
             }));
         }
         // 阻塞线程
-        countDownLatch.await(30, TimeUnit.SECONDS);
+        boolean await = countDownLatch.await(30L, TimeUnit.SECONDS);
+        if (!await) {
+            throw new CustomException("事务超时，数据已回滚");
+        }
         if (rollback.get()) {
             throw new CustomException("批量插入数据异常，数据已回滚");
         }
