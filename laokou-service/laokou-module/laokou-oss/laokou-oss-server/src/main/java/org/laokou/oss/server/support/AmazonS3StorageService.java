@@ -24,9 +24,12 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.laokou.common.core.utils.DateUtil;
 import org.laokou.oss.client.vo.SysOssVO;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.LocalDateTime;
+
 /**
  * @author laokou
  */
@@ -62,6 +65,11 @@ public class AmazonS3StorageService extends AbstractStorageService<AmazonS3> {
         String bucketName = vo.getBucketName();
         URL url = amazonS3.getUrl(bucketName, fileName);
         return url.toString();
+    }
+
+    @Override
+    public String getFileName(String fileName) {
+        return DateUtil.format(LocalDateTime.now(),DateUtil.YYYYMMDDHHMMSS) + getFileSuffix(fileName);
     }
 
     @Override

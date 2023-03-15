@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.service;
+import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
 import org.laokou.common.mybatisplus.service.BatchService;
 /**
  * @author laokou
  */
-public interface SysMessageDetailService extends BatchService<SysMessageDetailDO> {
+public interface SysMessageDetailService extends BatchService<SysMessageDetailDO>, IService<SysMessageDetailDO> {
 
     /**
      * 获取版本号

@@ -56,4 +56,18 @@ public interface StorageService<O> {
      * @return
      */
     String upload(int readLimit, long size, String fileName, InputStream inputStream,String contentType);
+
+    /**
+     * 获取文件名称
+     * @param fileName
+     * @return
+     */
+    String getFileName(String fileName);
+
+    /**
+     * 获取文件后缀
+     * @param fileName
+     * @return
+     */
+    String getFileSuffix(String fileName);
 }

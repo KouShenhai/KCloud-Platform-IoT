@@ -84,7 +84,7 @@ public class DataBaseUtil {
 
     @SneakyThrows
     private void connectDataBase(DataSourceProperty properties) {
-        Connection connection = null;
+        Connection connection;
         try {
             Class.forName(properties.getDriverClassName());
         } catch (Exception e) {
@@ -116,6 +116,13 @@ public class DataBaseUtil {
                 connection.close();
             }
         }
+    }
+
+    public static void main(String[] args) {
+        List<Integer> int1 = List.of(1, 2);
+        ArrayList<Integer> int2 = new ArrayList<>();
+        List<Integer> collect = int1.stream().filter(i -> !int2.contains(i)).collect(Collectors.toList());
+        System.out.println(collect);
     }
 
 }

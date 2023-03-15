@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 package org.laokou.common.mybatisplus.service;
-
-import com.baomidou.mybatisplus.extension.service.IService;
-
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface BatchService<T> extends IService<T> {
+public interface BatchService<T> {
 
     /**
      * 批量新增

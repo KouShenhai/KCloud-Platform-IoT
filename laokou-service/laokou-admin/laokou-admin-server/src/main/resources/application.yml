@@ -24,9 +24,6 @@ spring:
   profiles:
     # 环境 dev|test|prod
     active: @profile.active@
-  messages:
-    encoding: UTF-8
-    basename: i18n/messages
   servlet:
     multipart:
       enabled: true

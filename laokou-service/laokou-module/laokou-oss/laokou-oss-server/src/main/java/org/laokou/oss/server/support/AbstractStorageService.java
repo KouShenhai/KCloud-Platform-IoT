@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.oss.server.support;
+import org.laokou.common.core.utils.FileUtil;
 import org.laokou.oss.client.vo.SysOssVO;
 import java.io.InputStream;
 
@@ -24,14 +25,16 @@ public abstract class AbstractStorageService<O> implements StorageService<O>{
     protected SysOssVO vo;
 
     public String upload(int limitRead, long size, String fileName, InputStream inputStream, String contentType) {
+        // 修改文件名
+        String newFileName = getFileName(fileName);
         // 获取连接对象
         O obj = getObj();
         // 创建bucket
         createBucket(obj);
         // 上传文件
-        putObject(obj,limitRead,size,fileName,inputStream,contentType);
+        putObject(obj,limitRead,size,newFileName,inputStream,contentType);
         // 获取地址
-        return getUrl(obj, fileName);
+        return getUrl(obj, newFileName);
     }
 
     /**
@@ -39,5 +42,14 @@ public abstract class AbstractStorageService<O> implements StorageService<O>{
      * @return
      */
     protected abstract O getObj();
+
+    /**
+     * 文件后缀
+     * @param fileName
+     * @return
+     */
+    public String getFileSuffix(String fileName) {
+        return FileUtil.getFileSuffix(fileName);
+    }
 
 }

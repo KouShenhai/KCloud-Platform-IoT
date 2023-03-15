@@ -15,11 +15,12 @@
  */
 package org.laokou.admin.server.domain.sys.repository.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysRoleMenuDO;
 import org.laokou.common.mybatisplus.service.BatchService;
 /**
  * @author laokou
  */
-public interface SysRoleMenuService extends BatchService<SysRoleMenuDO> {
+public interface SysRoleMenuService extends BatchService<SysRoleMenuDO>, IService<SysRoleMenuDO> {
 
 }
