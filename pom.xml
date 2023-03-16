@@ -54,6 +54,8 @@
         <shardingsphere.version>5.3.2</shardingsphere.version>
         <!--mapstruct版本-->
         <mapstruct.version>1.5.3.Final</mapstruct.version>
+        <!--guava版本-->
+        <guava.version>31.1-JRE</guava.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -70,6 +72,14 @@
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-bom</artifactId>
                 <version>${laokou.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 定义 guava 版本 -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
