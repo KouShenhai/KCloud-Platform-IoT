@@ -53,6 +53,7 @@ public class RedisAutoConfig {
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
         // hash-value
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
+        // 初始化
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
