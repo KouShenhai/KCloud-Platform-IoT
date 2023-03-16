@@ -35,18 +35,16 @@
         b.task_def_key_ AS taskDefinitionKey,
         d.name_ AS processName,
         c.name_ AS processInstanceName,
-        c.BUSINESS_KEY_ as businessKey
+        c.business_key_ as businessKey
         FROM
         act_hi_actinst a
         join act_ru_task b on a.task_id_ = b.id_
-        join act_ru_execution c on a.proc_inst_id_ = c.proc_inst_id_
+        join (select name_,business_key_,proc_inst_id_ from act_ru_execution where business_key_ <![CDATA[ <> ]]> '') c on a.proc_inst_id_ = c.proc_inst_id_
         join act_re_procdef d on d.id_ = a.proc_def_id_
         where
         a.assignee_ = #{dto.userId}
         and b.suspension_state_ = 1
         and a.act_type_ = 'userTask'
-        and c.business_key_ <![CDATA[ <> ]]> ''
-        and c.name_ <![CDATA[ <> ]]> ''
         and d.key_ = #{dto.processKey}
         <if test="dto.processName != null and dto.processName != ''">
         and d.name_ like concat('%',#{dto.processName},'%')
