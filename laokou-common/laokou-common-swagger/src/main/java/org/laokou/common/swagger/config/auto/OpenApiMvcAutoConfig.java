@@ -36,11 +36,14 @@ import org.springframework.context.annotation.Import;
  */
 @AutoConfiguration
 @Import(CorsConfig.class)
+@ConditionalOnProperty(prefix = "openapi"
+        ,name = "enabled"
+        ,havingValue = "true"
+        ,matchIfMissing = true)
 public class OpenApiMvcAutoConfig {
 
     @Bean
     @ConditionalOnMissingBean(OpenAPI.class)
-    @ConditionalOnProperty(prefix = "openapi",name = "enabled",havingValue = "true")
     OpenAPI openApi() {
         return new OpenAPI()
                 .info(new Info().title("API文档").description("API文档").version("3.0.4")
