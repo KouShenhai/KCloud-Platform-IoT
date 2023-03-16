@@ -69,7 +69,7 @@
         <!--captcha版本-->
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <!--guava版本-->
-        <guava.version>31.1-JRE</guava.version>
+        <guava.version>31.0-jre</guava.version>
         <!--commons-codec版本-->
         <commons-codec.version>1.15</commons-codec.version>
         <!--freemarker模板引擎依赖-->

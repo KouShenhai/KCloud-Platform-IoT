@@ -55,7 +55,7 @@
         <!--mapstruct版本-->
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <!--guava版本-->
-        <guava.version>31.1-JRE</guava.version>
+        <guava.version>31.0-jre</guava.version>
     </properties>
     <dependencyManagement>
         <dependencies>
