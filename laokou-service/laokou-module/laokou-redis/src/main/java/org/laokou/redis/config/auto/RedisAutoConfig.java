@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.redis.config;
+package org.laokou.redis.config.auto;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
+import org.laokou.redis.config.CustomJsonJacksonCodec;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,10 +30,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author laokou
  */
 @Configuration
-@RequiredArgsConstructor
-public class RedisConfig {
-
-    private final LettuceConnectionFactory factory;
+@AutoConfigureAfter({RedisSessionAutoConfig.class})
+public class RedisAutoConfig {
 
     /**
      * 自定义RedisTemplate
@@ -39,9 +39,9 @@ public class RedisConfig {
      */
     @Bean("redisTemplate")
     @ConditionalOnMissingBean(RedisTemplate.class)
-    public RedisTemplate<String, Object> redisTemplate() {
+    public RedisTemplate<String, Object> redisTemplate(@Autowired(required = false) LettuceConnectionFactory lettuceConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(factory);
+        redisTemplate.setConnectionFactory(lettuceConnectionFactory);
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = getJsonRedisSerializer();
         // string序列化
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
@@ -60,8 +60,7 @@ public class RedisConfig {
     private Jackson2JsonRedisSerializer getJsonRedisSerializer() {
         // Json序列化配置
         ObjectMapper objectMapper = CustomJsonJacksonCodec.getObjectMapper();
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(objectMapper,Object.class);
-        return jackson2JsonRedisSerializer;
+        return new Jackson2JsonRedisSerializer(objectMapper,Object.class);
     }
 
 }

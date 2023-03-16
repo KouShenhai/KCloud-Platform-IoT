@@ -16,12 +16,13 @@
 package org.laokou.gateway.exception;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
+import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 /**
@@ -35,19 +36,29 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler, Ordere
 	@Override
 	public Mono<Void> handle(ServerWebExchange exchange, Throwable e) {
 		log.error("网关全局处理异常，异常信息:{}",e.getMessage());
-		HttpResult result;
-		if (e instanceof RuntimeException){
+		if (e instanceof NotFoundException) {
 			log.error("服务正在维护，请联系管理员");
-			result = ResponseUtil.error(StatusCode.SERVICE_UNAVAILABLE);
-		} else if (BlockException.isBlockException(e)){
+			return ResponseUtil.response(exchange,ResponseUtil.error(StatusCode.SERVICE_UNAVAILABLE));
+		}
+		if (e instanceof ResponseStatusException) {
+			int statusCode = ((ResponseStatusException) e).getStatusCode().value();
+			log.info("状态码：{}",statusCode);
+			if (statusCode == StatusCode.NOT_FOUND) {
+				log.error("无法找到请求的资源");
+				return ResponseUtil.response(exchange,ResponseUtil.error(StatusCode.NOT_FOUND));
+			} else {
+				log.error("服务器内部错误，无法完成请求");
+				return ResponseUtil.response(exchange,ResponseUtil.error(StatusCode.INTERNAL_SERVER_ERROR));
+			}
+		}
+		if (BlockException.isBlockException(e)){
 			// 思路来源于SentinelGatewayBlockExceptionHandler
 			log.error("请求过于频繁，请稍后再试");
-			result = ResponseUtil.error(StatusCode.SERVICE_BLOCK_REQUEST);
+			return ResponseUtil.response(exchange,ResponseUtil.error(StatusCode.SERVICE_BLOCK_REQUEST));
 		} else {
 			log.error("服务未知错误");
-			result = ResponseUtil.error(StatusCode.SERVICE_UNKNOWN_ERROR);
+			return ResponseUtil.response(exchange,ResponseUtil.error(StatusCode.SERVICE_UNKNOWN_ERROR));
 		}
-		return ResponseUtil.response(exchange,result);
 	}
 
 	@Override

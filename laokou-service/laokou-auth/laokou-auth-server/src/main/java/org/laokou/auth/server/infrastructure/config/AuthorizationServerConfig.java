@@ -19,6 +19,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import lombok.SneakyThrows;
 import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserDetailServiceImpl;
 import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserServiceImpl;
@@ -276,14 +277,7 @@ public class AuthorizationServerConfig {
      */
     @Bean
     JWKSource<SecurityContext> jwkSource() throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException, JOSEException {
-        String alias = "auth";
-        String password = "koushenhai";
-        String path = "auth.jks";
-        InputStream inputStream = ResourceUtil.getResource(path).getInputStream();
-        KeyStore jks = KeyStore.getInstance("jks");
-        char[] pwd = password.toCharArray();
-        jks.load(inputStream,pwd);
-        RSAKey rsaKey = RSAKey.load(jks, alias, pwd);
+        RSAKey rsaKey = getRSAKey();
         JWKSet jwkSet = new JWKSet(rsaKey);
         return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
     }
@@ -324,6 +318,22 @@ public class AuthorizationServerConfig {
     @ConditionalOnMissingBean(OAuth2AuthorizationConsentService.class)
     OAuth2AuthorizationConsentService authorizationConsentService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
         return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
+    }
+
+    /**
+     * 获取RSA密钥
+     * @return
+     */
+    @SneakyThrows
+    private RSAKey getRSAKey() {
+        String alias = "auth";
+        String password = "koushenhai";
+        String path = "auth.jks";
+        InputStream inputStream = ResourceUtil.getResource(path).getInputStream();
+        KeyStore jks = KeyStore.getInstance("jks");
+        char[] pwd = password.toCharArray();
+        jks.load(inputStream,pwd);
+        return RSAKey.load(jks, alias, pwd);
     }
 
 }

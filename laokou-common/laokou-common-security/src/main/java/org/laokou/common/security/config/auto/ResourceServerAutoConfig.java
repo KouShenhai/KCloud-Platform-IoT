@@ -17,7 +17,7 @@ package org.laokou.common.security.config.auto;
 import org.laokou.auth.client.handler.ForbiddenExceptionHandler;
 import org.laokou.auth.client.handler.InvalidAuthenticationEntryPoint;
 import org.laokou.common.security.config.CustomOpaqueTokenIntrospector;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +35,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @Configuration
 @EnableMethodSecurity
-@AutoConfiguration(before = {AutoConfiguration.class})
+@AutoConfigureAfter({AuthorizationAutoConfig.class})
 @Import(value = {CustomOpaqueTokenIntrospector.class
         , ForbiddenExceptionHandler.class
         , InvalidAuthenticationEntryPoint.class})
