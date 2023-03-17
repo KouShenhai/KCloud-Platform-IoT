@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 package org.laokou.oss.server.service.impl;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.oss.client.vo.SysOssVO;
 import org.laokou.oss.server.mapper.SysOssMapper;
 import org.laokou.oss.server.service.SysOssService;
+import org.laokou.tenant.processor.DsTenantProcessor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,6 +32,7 @@ public class SysOssServiceImpl implements SysOssService {
     private final SysOssMapper sysOssMapper;
 
     @Override
+    @DS(DsTenantProcessor.TENANT)
     public SysOssVO queryOssConfig() {
         return sysOssMapper.queryOssConfig();
     }

@@ -15,6 +15,7 @@
  */
 package org.laokou.oss.server.support;
 import lombok.RequiredArgsConstructor;
+import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.oss.client.vo.SysOssVO;
 import org.laokou.redis.utils.RedisKeyUtil;
@@ -33,7 +34,7 @@ public class StorageFactory {
     private final RedisUtil redisUtil;
 
    public StorageService build(){
-       String ossConfigKey = RedisKeyUtil.getOssConfigKey();
+       String ossConfigKey = RedisKeyUtil.getOssConfigKey(UserUtil.getTenantId());
        Object object = redisUtil.get(ossConfigKey);
        SysOssVO vo;
        if (object == null) {
