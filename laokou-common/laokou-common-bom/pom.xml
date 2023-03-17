@@ -35,7 +35,7 @@
         <!--mysql版本-->
         <mysql.version>8.0.31</mysql.version>
         <!--admin版本-->
-        <spring-boot-admin.version>3.0.0</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.1</spring-boot-admin.version>
         <!--flowable版本-->
         <flowable.version>7.0.0.M1</flowable.version>
         <!--mybatis-plus版本 -->
