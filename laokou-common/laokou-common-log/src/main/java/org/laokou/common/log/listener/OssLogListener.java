@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.log.event.OssLogEvent;
 import org.laokou.common.log.service.SysOssLogService;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,6 +33,7 @@ public class OssLogListener implements ApplicationListener<OssLogEvent> {
     private final SysOssLogService sysOssLogService;
 
     @Override
+    @Async
     public void onApplicationEvent(OssLogEvent event) {
         sysOssLogService.insertLog(event);
     }

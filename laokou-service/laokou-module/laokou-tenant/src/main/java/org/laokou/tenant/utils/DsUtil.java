@@ -23,9 +23,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.tenant.service.SysSourceService;
 import org.laokou.tenant.vo.SysSourceVO;
 import org.springframework.stereotype.Component;
@@ -34,6 +34,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -42,9 +43,10 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DataBaseUtil {
+public class DsUtil {
 
     private final SysSourceService sysSourceService;
+    private final DynamicUtil dynamicUtil;
 
     private static final List<String> TABLES = List.of("boot_sys_dict"
                 , "boot_sys_message"
@@ -52,17 +54,17 @@ public class DataBaseUtil {
                 , "boot_sys_oss"
                 , "boot_sys_oss_log");
 
-    public String loadDataBase(String sourceName) {
+    public String loadDs(String sourceName) {
         if (StringUtil.isEmpty(sourceName)) {
             throw new CustomException("数据源名称不能为空");
         }
-        if (!checkDataBase(sourceName)) {
-            dynamicAddDataBase(sourceName);
+        if (!checkDs(sourceName)) {
+            addDs(sourceName);
         }
         return sourceName;
     }
 
-    private void dynamicAddDataBase(String sourceName) {
+    private void addDs(String sourceName) {
         SysSourceVO sourceVO = sysSourceService.querySource(sourceName);
         DataSourceProperty properties = new DataSourceProperty ();
         properties.setUsername(sourceVO.getUsername());
@@ -70,20 +72,25 @@ public class DataBaseUtil {
         properties.setUrl(sourceVO.getUrl());
         properties.setDriverClassName(sourceVO.getDriverClassName());
         // 验证数据源
-        connectDataBase(properties);
-        DynamicRoutingDataSource dynamicRoutingDataSource = SpringContextUtil.getBean(DynamicRoutingDataSource.class);
-        DefaultDataSourceCreator dataSourceCreator = SpringContextUtil.getBean(DefaultDataSourceCreator.class);
+        connDs(properties);
+        DynamicRoutingDataSource dynamicRoutingDataSource = dynamicUtil.getDynamicDataSource();
+        DefaultDataSourceCreator dataSourceCreator = dynamicUtil.getDefaultDataSourceCreator();
         DataSource dataSource = dataSourceCreator.createDataSource(properties);
         dynamicRoutingDataSource.addDataSource(sourceName,dataSource);
     }
 
-    private boolean checkDataBase(String sourceName) {
-        DynamicRoutingDataSource dynamicRoutingDataSource = SpringContextUtil.getBean(DynamicRoutingDataSource.class);
-        return dynamicRoutingDataSource.getDataSources().containsKey(sourceName);
+    private boolean checkDs(String sourceName) {
+        Map<String, DataSource> dataSources = dynamicUtil.getDataSources();
+        return dataSources.containsKey(sourceName);
     }
 
+
+    /**
+     * 连接数据库
+     * @param properties
+     */
     @SneakyThrows
-    private void connectDataBase(DataSourceProperty properties) {
+    private void connDs(DataSourceProperty properties) {
         Connection connection;
         try {
             Class.forName(properties.getDriverClassName());

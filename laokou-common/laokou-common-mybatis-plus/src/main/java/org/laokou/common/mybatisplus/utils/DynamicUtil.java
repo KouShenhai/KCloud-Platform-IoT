@@ -14,31 +14,36 @@
  * limitations under the License.
  */
 
-package org.laokou.tenant.processor;
+package org.laokou.common.mybatisplus.utils;
 
-import com.baomidou.dynamic.datasource.processor.DsProcessor;
-import org.aopalliance.intercept.MethodInvocation;
-import org.laokou.auth.client.utils.UserUtil;
+import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
+import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
 import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.tenant.utils.DsUtil;
 import org.springframework.stereotype.Component;
+
+import javax.sql.DataSource;
+import java.util.Map;
 
 /**
  * @author laokou
  */
 @Component
-public class DsTenantProcessor extends DsProcessor {
+public class DynamicUtil {
 
-    public static final String TENANT = "#tenant";
-
-    @Override
-    public boolean matches(String key) {
-        return key.startsWith(TENANT);
+    public DynamicRoutingDataSource getDynamicDataSource() {
+        return SpringContextUtil.getBean(DynamicRoutingDataSource.class);
     }
 
-    @Override
-    public String doDetermineDatasource(MethodInvocation invocation, String key) {
-        DsUtil dsUtil = SpringContextUtil.getBean(DsUtil.class);
-        return dsUtil.loadDs(UserUtil.getSourceName());
+    public DataSource getDataSource(String sourceName) {
+        return getDynamicDataSource().getDataSource(sourceName);
     }
+
+    public Map<String, DataSource> getDataSources() {
+        return getDynamicDataSource().getDataSources();
+    }
+
+    public DefaultDataSourceCreator getDefaultDataSourceCreator() {
+        return SpringContextUtil.getBean(DefaultDataSourceCreator.class);
+    }
+
 }

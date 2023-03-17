@@ -37,6 +37,7 @@ public class OssLogEvent extends ApplicationEvent implements Serializable {
     private String url;
     private String fileName;
     private Long fileSize;
+    private String sourceName;
 
     public OssLogEvent(Object source) {
         super(source);
