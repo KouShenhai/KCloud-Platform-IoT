@@ -92,17 +92,16 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             PushMsgDTO pushMsgDTO = new PushMsgDTO();
             pushMsgDTO.setMsg("您有一条未读消息，请注意查收");
             pushMsgDTO.setReceiver(receiver);
-            HttpResult<Boolean> result = imApiFeignClient.push(pushMsgDTO);
-            if (result.success()) {
-                receiver.forEach(item -> {
-                    // 根据用户，分别将递增未读消息数
-                    String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(Long.valueOf(item));
-                    Object obj = redisUtil.get(messageUnReadKey);
-                    if (obj != null) {
-                        redisUtil.incrementAndGet(messageUnReadKey);
-                    }
-                });
-            }
+            // 推送消息
+            imApiFeignClient.push(pushMsgDTO);
+            receiver.forEach(item -> {
+                // 根据用户，分别将递增未读消息数
+                String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(Long.valueOf(item));
+                Object obj = redisUtil.get(messageUnReadKey);
+                if (obj != null) {
+                    redisUtil.incrementAndGet(messageUnReadKey);
+                }
+            });
         }
     }
 
