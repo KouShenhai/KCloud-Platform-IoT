@@ -54,8 +54,8 @@ public final class RedisKeyUtil {
     /**
      * OSS配置Key
      */
-    public static String getOssConfigKey() {
-        return "sys:oss:config";
+    public static String getOssConfigKey(Long tenantId) {
+        return "sys:oss:config:" + tenantId;
     }
 
     /**

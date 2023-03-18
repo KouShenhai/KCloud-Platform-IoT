@@ -62,6 +62,7 @@ import org.laokou.admin.client.enums.AuditTypeEnum;
 import org.laokou.redis.utils.RedisUtil;
 import org.laokou.oss.client.vo.UploadVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -391,7 +392,9 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         sysResourceAuditService.update(updateWrapper);
     }
 
-    private void insertAuditLog(Long businessId,int auditStatus,String comment,String username,Long userId) {
+
+    @Async
+    public void insertAuditLog(Long businessId,int auditStatus,String comment,String username,Long userId) {
         AuditLogDTO auditLogDTO = new AuditLogDTO();
         auditLogDTO.setBusinessId(businessId);
         auditLogDTO.setAuditStatus(auditStatus);
@@ -495,13 +498,15 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         sysMessageApplicationService.insertMessage(dto);
     }
 
-   private void insertAuditMessage(String assignee,Long id,String name) {
+    @Async
+   public void insertAuditMessage(String assignee,Long id,String name) {
         String title = "资源审批任务提醒";
         String content = String.format("编号为%s，名称为%s的资源需要审批，请及时查看并审批",id,name);
         insertMessage(assignee,title,content);
    }
 
-   private void insertResolveMessage(String assignee,Long id,String name) {
+   @Async
+   public void insertResolveMessage(String assignee,Long id,String name) {
         String title = "资源处理任务提醒";
         String content = String.format("编号为%s，名称为%s的资源需要处理，请及时查看并处理",id,name);
         insertMessage(assignee,title,content);

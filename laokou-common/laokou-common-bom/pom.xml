@@ -35,7 +35,7 @@
         <!--mysql版本-->
         <mysql.version>8.0.31</mysql.version>
         <!--admin版本-->
-        <spring-boot-admin.version>3.0.0</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.1</spring-boot-admin.version>
         <!--flowable版本-->
         <flowable.version>7.0.0.M1</flowable.version>
         <!--mybatis-plus版本 -->
@@ -51,7 +51,7 @@
         <!--commons-collections4版本-->
         <commons-collections4.version>4.4</commons-collections4.version>
         <!--hutool-all版本-->
-        <hutool-all.version>5.8.12</hutool-all.version>
+        <hutool-all.version>5.8.15</hutool-all.version>
         <!--commons-lang3版本-->
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <!--commons-beanutils版本-->
@@ -102,22 +102,22 @@
         <jna.version>5.13.0</jna.version>
         <!--hibernate-validator版本-->
         <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
-        <!--mapstruct版本-->
-        <mapstruct.version>1.5.3.Final</mapstruct.version>
         <!--hbase版本-->
         <hbase.version>2.5.3</hbase.version>
         <!--ip2region版本-->
         <ip2region.version>2.7.0</ip2region.version>
+        <!--jackson-module-kotlin版本-->
+        <jackson-module-kotlin.version>2.14.2</jackson-module-kotlin.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
-<!--            <dependency>-->
-<!--                <groupId>org.mapstruct</groupId>-->
-<!--                <artifactId>mapstruct</artifactId>-->
-<!--                <version>${mapstruct.version}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-kotlin</artifactId>
+                <version>${jackson-module-kotlin.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.lionsoul</groupId>
                 <artifactId>ip2region</artifactId>
@@ -251,8 +251,8 @@
             </dependency>
             <!-- 定义 mysql 版本 -->
             <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
             <!-- 定义 flowable 版本 -->
@@ -600,5 +600,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 </project>
