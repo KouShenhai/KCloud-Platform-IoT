@@ -32,7 +32,6 @@ import org.laokou.admin.client.vo.SysMessageVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.im.client.PushMsgDTO;
