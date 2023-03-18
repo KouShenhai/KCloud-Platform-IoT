@@ -41,45 +41,27 @@
         <spring-boot.version>3.0.4</spring-boot.version>
         <!--spring-cloud版本-->
         <spring-cloud.version>2022.0.1</spring-cloud.version>
-        <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
-        <docker.registry.name>koushenhai</docker.registry.name>
-        <docker.version>1.2.2</docker.version>
         <!--spring-framework版本-->
         <spring-framework.version>6.0.6</spring-framework.version>
         <!--cloud-alibaba版本-->
         <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
         <!--spring-doc版本-->
         <spring-doc.version>2.0.3</spring-doc.version>
-        <!--shardingsphere版本-->
-        <shardingsphere.version>5.3.2</shardingsphere.version>
-        <!--mapstruct版本-->
-        <mapstruct.version>1.5.3.Final</mapstruct.version>
         <!--guava版本-->
         <guava.version>31.0-jre</guava.version>
+        <!--jackson-module-kotlin版本-->
+        <jackson-module-kotlin.version>2.14.2</jackson-module-kotlin.version>
+        <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
+        <docker.registry.name>koushenhai</docker.registry.name>
+        <docker.version>1.2.2</docker.version>
     </properties>
     <dependencyManagement>
         <dependencies>
-            <!-- 定义 shardingsphere 版本 -->
-<!--            <dependency>-->
-<!--                <groupId>org.apache.shardingsphere</groupId>-->
-<!--                <artifactId>shardingsphere-jdbc-core</artifactId>-->
-<!--                <version>${shardingsphere.version}</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
             <!-- 定义公共版本 -->
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-bom</artifactId>
                 <version>${laokou.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- 定义 guava 版本 -->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -120,6 +102,21 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi</artifactId>
                 <version>${spring-doc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 定义 guava 版本 -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-kotlin</artifactId>
+                <version>${jackson-module-kotlin.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

@@ -18,8 +18,10 @@ package org.laokou.tenant.processor;
 
 import com.baomidou.dynamic.datasource.processor.DsProcessor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.core.utils.StringUtil;
 import org.laokou.tenant.utils.DsUtil;
 import org.springframework.stereotype.Component;
 
@@ -39,6 +41,6 @@ public class DsTenantProcessor extends DsProcessor {
     @Override
     public String doDetermineDatasource(MethodInvocation invocation, String key) {
         DsUtil dsUtil = SpringContextUtil.getBean(DsUtil.class);
-        return dsUtil.loadDs(UserUtil.getSourceName());
+        return dsUtil.loadDs(StringUtil.isNotEmpty(UserUtil.getSourceName()) ? UserUtil.getSourceName() : AuthConstant.DEFAULT_SOURCE);
     }
 }

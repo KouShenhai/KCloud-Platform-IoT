@@ -32,7 +32,6 @@ import org.laokou.admin.client.vo.SysMessageVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
@@ -84,14 +83,17 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             batchUtil.insertBatch(detailDOList,500,sysMessageDetailService);
         }
         // 平台-发送消息
+        pushMsg(receiver);
+        return true;
+    }
+
+    private void pushMsg(Set<String> receiver) {
         if (CollectionUtils.isNotEmpty(receiver)) {
             PushMsgDTO pushMsgDTO = new PushMsgDTO();
             pushMsgDTO.setMsg("您有一条未读消息，请注意查收");
             pushMsgDTO.setReceiver(receiver);
             HttpResult<Boolean> result = imApiFeignClient.push(pushMsgDTO);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(), result.getMsg());
-            } else {
+            if (result.success()) {
                 receiver.forEach(item -> {
                     // 根据用户，分别将递增未读消息数
                     String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(Long.valueOf(item));
@@ -102,7 +104,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
                 });
             }
         }
-        return true;
     }
 
     @Override
