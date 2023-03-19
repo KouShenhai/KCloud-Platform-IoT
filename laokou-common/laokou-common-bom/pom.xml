@@ -470,11 +470,6 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-rocketmq-consumer</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-swagger</artifactId>
                 <version>${laokou.version}</version>
             </dependency>

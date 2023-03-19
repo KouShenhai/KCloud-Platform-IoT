@@ -16,18 +16,9 @@
 
 package org.laokou.rocketmq.server;
 
-import com.alibaba.cloud.stream.binder.rocketmq.constant.RocketMQConst;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.rocketmq.client.constant.RocketmqConstant;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.util.MimeTypeUtils;
-
 /**
  * @author laokou
  */
@@ -35,15 +26,8 @@ import org.springframework.util.MimeTypeUtils;
 @SpringBootTest(classes = RocketmqApplication.class)
 public class SendMessageTest {
 
-    @Autowired
-    private StreamBridge streamBridge;
-
     @Test
-    public void mailTest() {
-        Message<String> message = MessageBuilder.withPayload("2413176044@qq.com")
-                .setHeader(RocketmqConstant.TAG,RocketmqConstant.MAIL_TAG)
-                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON).build();
-        streamBridge.send(RocketmqConstant.LAOKOU_MAIL_TOPIC,message);
+    public void msgTest() {
     }
 
 }

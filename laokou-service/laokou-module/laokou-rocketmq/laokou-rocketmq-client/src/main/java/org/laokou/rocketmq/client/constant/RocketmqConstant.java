@@ -21,15 +21,5 @@ package org.laokou.rocketmq.client.constant;
 public interface RocketmqConstant {
 
     String LAOKOU_MAIL_TOPIC = "laokou-mail-topic";
-    String MAIL_TAG = "mail";
 
-    /**
-     * 消息重试次数
-     */
-    Integer RECONSUME_TIMES = 3;
-
-    String TAG = "tag";
-    String TOPIC = "topic";
-
-    String BINDER = "";
 }

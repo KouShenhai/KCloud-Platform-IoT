@@ -23,7 +23,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = {"org.laokou.rocketmq.server","org.laokou.common.swagger", "org.laokou.common.core"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.rocketmq.server","org.laokou.rocketmq.client","org.laokou.common.swagger", "org.laokou.common.core"})
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 public class RocketmqApplication {
