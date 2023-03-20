@@ -98,4 +98,22 @@ public final class RedisKeyUtil {
         return "sys:account:kill:" + token;
     }
 
+    /**
+     * 手机验证码Key
+     * @param mobile
+     * @return
+     */
+    public static String getMobileCodeKey(String mobile) {
+        return getUserCaptchaKey(mobile);
+    }
+
+    /**
+     * 邮箱验证码Key
+     * @param mail
+     * @return
+     */
+    public static String getMailCodeKey(String mail) {
+        return getUserCaptchaKey(mail);
+    }
+
 }
