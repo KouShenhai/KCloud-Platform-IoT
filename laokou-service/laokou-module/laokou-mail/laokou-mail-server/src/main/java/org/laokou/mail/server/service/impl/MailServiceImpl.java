@@ -68,8 +68,8 @@ public class MailServiceImpl implements MailService {
         String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, params);
         // 发送邮件
         sendMail(subject,content,toMail);
-        String userCaptchaKey = RedisKeyUtil.getUserCaptchaKey(toMail);
-        redisUtil.set(userCaptchaKey,captcha,minute * 60);
+        String mailCodeKey = RedisKeyUtil.getMailCodeKey(toMail);
+        redisUtil.set(mailCodeKey,captcha,minute * 60);
         return true;
     }
 

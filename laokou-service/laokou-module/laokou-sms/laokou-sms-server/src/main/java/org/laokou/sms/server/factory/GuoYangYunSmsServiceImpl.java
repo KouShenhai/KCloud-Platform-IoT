@@ -127,8 +127,8 @@ public class GuoYangYunSmsServiceImpl implements SmsService{
             String code = node.textValue();
             int statusCode = node.asInt();
             if (SUCCESS_CODE == statusCode) {
-                String userCaptchaKey = RedisKeyUtil.getUserCaptchaKey(mobile);
-                redisUtil.set(userCaptchaKey,captcha,minute * 60);
+                String mobileCodeKey = RedisKeyUtil.getMobileCodeKey(mobile);
+                redisUtil.set(mobileCodeKey,captcha,minute * 60);
             } else {
                 log.error("错误信息：{}", ERROR_MAP.get(code));
                 statusCode = SMS_STATUS_CODE_MAP.get(code);

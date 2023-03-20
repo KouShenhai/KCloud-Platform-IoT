@@ -22,11 +22,15 @@ public interface AuthConstant {
     * 唯一标识
     */
    String UUID = "uuid";
+
    /**
     * 验证码
     */
    String CAPTCHA = "captcha";
 
+   /**
+    * 租户id
+    */
    String TENANT_ID = "tenantId";
 
    /**
@@ -44,6 +48,9 @@ public interface AuthConstant {
     */
    String MOBILE = "mobile";
 
+   /**
+    * 默认数据库
+    */
    String DEFAULT_SOURCE = "master";
 
 }
