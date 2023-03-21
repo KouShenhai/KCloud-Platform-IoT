@@ -115,7 +115,7 @@ tenant/tenant123
 - 统计报表：MongoDB
 - 对象存储：Amazon S3
 - 服务部署：Docker
-- 持续交付：Jenkins
+- 持续集成&交付：Jenkins
 - 持久层框架：Mybatis Plus
 - JSON 序列化：Jackson
 - 数据库：Mysql
