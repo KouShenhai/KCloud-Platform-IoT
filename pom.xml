@@ -46,7 +46,7 @@
         <!--cloud-alibaba版本-->
         <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
         <!--spring-doc版本-->
-        <spring-doc.version>2.0.3</spring-doc.version>
+        <spring-doc.version>2.0.4</spring-doc.version>
         <!--guava版本-->
         <guava.version>31.0-jre</guava.version>
         <!--jackson-module-kotlin版本-->
