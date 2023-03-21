@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.auth.server.infrastructure.config;
-import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -68,8 +67,6 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -276,7 +273,7 @@ public class AuthorizationServerConfig {
      * @return
      */
     @Bean
-    JWKSource<SecurityContext> jwkSource() throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException, JOSEException {
+    JWKSource<SecurityContext> jwkSource() {
         RSAKey rsaKey = getRSAKey();
         JWKSet jwkSet = new JWKSet(rsaKey);
         return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
