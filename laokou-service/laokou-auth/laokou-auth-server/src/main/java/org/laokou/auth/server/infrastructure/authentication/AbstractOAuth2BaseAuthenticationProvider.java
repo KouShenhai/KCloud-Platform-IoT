@@ -34,6 +34,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.*;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
@@ -194,6 +195,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.SUCCESS.ordinal(), AuthConstant.LOGIN_SUCCESS_MSG,request,tenantId);
         // 账号是否已经登录并且未过期，是则强制踢出，反之不操作
         accountKill(oAuth2AccessToken.getTokenValue(),loginName);
+        // 清空上下文
+        SecurityContextHolder.clearContext();
         return new OAuth2AccessTokenAuthenticationToken(
                 registeredClient, clientPrincipal, oAuth2AccessToken, oAuth2RefreshToken, Collections.emptyMap());
     }
@@ -271,11 +274,13 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     private void accountKill(String accessToken,String loginName) {
         List<String> accessTokenList = sysAuthenticationService.getAccessTokenList(loginName, accessToken);
         if (CollectionUtils.isNotEmpty(accessTokenList)) {
-            accessTokenList.forEach(item -> {
-                String accountKillKey = RedisKeyUtil.getAccountKillKey(item);
-                redisUtil.set(accountKillKey,DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);
-            });
+            accessTokenList.forEach(this::kill);
         }
+    }
+
+    private void kill(String token) {
+        String accountKillKey = RedisKeyUtil.getAccountKillKey(token);
+        redisUtil.set(accountKillKey,DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);
     }
 
 }
