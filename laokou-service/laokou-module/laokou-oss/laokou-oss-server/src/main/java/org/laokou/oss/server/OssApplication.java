@@ -20,6 +20,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * @author laokou
@@ -42,6 +43,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class OssApplication {
 
     public static void main(String[] args) {
+        // SpringSecurity 子线程读取父线程的上下文
+        System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
         SpringApplication.run(OssApplication.class, args);
     }
 
