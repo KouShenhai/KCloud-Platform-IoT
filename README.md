@@ -88,7 +88,6 @@ tenant/tenant123
 | Redis                       | 7.0.8          |
 | Elasticsearch               | 7.6.2          |
 | RocketMQ                    | 5.0.0          |
-| Kafka                       | 2.8.1          |
 | Flowable                    | 7.0.0.M1       |
 | ShardingSphere              | 5.3.2          |
 | OpenResty                   | 1.21.4.1       |
@@ -106,7 +105,7 @@ tenant/tenant123
 - 分布式事务：Spring Cloud Alibaba Seata
 - 分布式数据库：HBase
 - 服务监控：Spring Boot Admin & Prometheus
-- 消息队列：RocketMQ & Kafka
+- 消息队列：RocketMQ
 - 链路跟踪：SkyWalking
 - 任务调度：Power Job
 - 日志分析：EFK
@@ -151,7 +150,6 @@ tenant/tenant123
                 └── laokou-sms                     --- 短信模块  
                 └── laokou-mail                    --- 邮件模块  
                 └── laokou-redis                   --- 缓存模块  
-                └── laokou-kafka                   --- 消息模块  
                 └── laokou-wechat                  --- 微信模块  
                 └── laokou-mongodb                 --- 报表模块  
                 └── laokou-rocketmq                --- 消息模块  
@@ -174,7 +172,6 @@ tenant/tenant123
 [centos7 安装jenkins](https://kcloud.blog.csdn.net/article/details/112171878)  
 [centos7 安装nacos](https://kcloud.blog.csdn.net/article/details/82589017)  
 [centos7 安装elasticsearch7.6.2](https://kcloud.blog.csdn.net/article/details/123123229)  
-[centos7 安装kafka](https://kcloud.blog.csdn.net/article/details/123771040)  
 [centos7 安装rocketmq](https://blog.csdn.net/qq_39893313/article/details/128223900)  
 
 #### 🌱 安装包
@@ -307,7 +304,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
 ### ✈ 启动系统
 - 1.必须启动Mysql、Redis、Nacos、Seata
-- 2.可选启动Sentinel、RocketMQ、Kafka、ElasticSearch、MongoDB
+- 2.可选启动Sentinel、RocketMQ、ElasticSearch、MongoDB
 - 3.将doc/config/dev目录下的zip压缩文件都导入Nacos
 - 4.运行doc/db/db_init.sql（如果使用租户，需要运行doc/db/db_tenant_init.sql）
 - 5.分别启动laokou-gateway、laokou-auth、laokou-admin（其他的服务根据实际情况启动）
