@@ -17,7 +17,6 @@
 package org.laokou.oss.server.support;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.log.entity.SysOssLogDO;
@@ -62,7 +61,6 @@ public class OssTemplate {
         OssLogEvent ossLogEvent = new OssLogEvent(this);
         ossLogEvent.setUrl(url);
         ossLogEvent.setMd5(md5);
-        ossLogEvent.setSourceName(UserUtil.getSourceName());
         ossLogEvent.setFileName(fileName);
         ossLogEvent.setFileSize(fileSize);
         return ossLogEvent;

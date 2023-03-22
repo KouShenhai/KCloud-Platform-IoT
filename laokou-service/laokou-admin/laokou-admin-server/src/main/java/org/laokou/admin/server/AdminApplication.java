@@ -30,6 +30,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.IOException;
 
@@ -70,6 +71,8 @@ public class AdminApplication implements CommandLineRunner {
     private final RouterUtil routerUtil;
 
     public static void main(String[] args) {
+        // SpringSecurity 子线程读取父线程的上下文
+        System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
         SpringApplication.run(AdminApplication.class, args);
     }
 
