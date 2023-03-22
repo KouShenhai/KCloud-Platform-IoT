@@ -129,12 +129,13 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     abstract AuthorizationGrantType getGrantType();
 
     /**
-     * 仿照授权码模式
+     * 获取token
      * @param authentication
      * @param principal
      * @return
      */
     protected Authentication getToken(Authentication authentication,Authentication principal,HttpServletRequest request) throws IOException {
+        // 仿照授权码模式
         // 生成token（access_token + refresh_token）
         AbstractOAuth2BaseAuthenticationToken abstractOAuth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;
         OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(abstractOAuth2BaseAuthenticationToken);
@@ -201,6 +202,16 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
                 registeredClient, clientPrincipal, oAuth2AccessToken, oAuth2RefreshToken, Collections.emptyMap());
     }
 
+    /**
+     * 获取用户信息
+     * @param loginName
+     * @param password
+     * @param request
+     * @param captcha
+     * @param uuid
+     * @return
+     * @throws IOException
+     */
     protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password, HttpServletRequest request,String captcha,String uuid) throws IOException {
         AuthorizationGrantType grantType = getGrantType();
         String loginType = grantType.getValue();
@@ -278,6 +289,10 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         }
     }
 
+    /**
+     * 踢出
+     * @param token
+     */
     private void kill(String token) {
         String accountKillKey = RedisKeyUtil.getAccountKillKey(token);
         redisUtil.set(accountKillKey,DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);
