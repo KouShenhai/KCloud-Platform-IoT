@@ -59,7 +59,7 @@ tenant/tenant123
 🚀 租户管理：租户信息增删改查增删改查（默认数据库）       
 🚀 套餐管理：自定义租户菜单增删改查（默认数据库）    
 🚀 数据源管理：数据源信息增删改查（默认数据库）         
-🚀 资源管理：视频、图片、音频信息增删改查，资源审批、处理、转办、委派（分布式事务AT模式），审批日志，数据同步（批量同步到ES）（默认数据库）          
+🚀 资源管理：视频、图片、音频信息增删改查，资源审批（RocketMQ分布式事务）、处理、转办、委派，审批日志，数据同步（批量同步到ES）（默认数据库）          
 🚀 用户登录：账号密码（多租户）、手机号、邮件、授权码登录（请运行认证模式测试脚本.http）（同一个账号只能在一处登录，不然强制踢出）    
 
 ### 🚩 下个版本
@@ -83,7 +83,6 @@ tenant/tenant123
 | Mybatis Plus                | 3.5.3.1        |
 | Nacos                       | 2.2.0          |
 | Sentinel                    | 1.8.6          |
-| Seata                       | 1.6.1          |
 | Mysql                       | 8.0.31         |
 | Redis                       | 7.0.8          |
 | Elasticsearch               | 7.6.2          |
@@ -94,18 +93,16 @@ tenant/tenant123
 | HBase                       | 2.5.3          |
 #### 🍺 相关技术
 
+- 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
-- 配置中心：Spring Cloud Alibaba Nacos
-- 服务注册&发现：Spring Cloud Alibaba Nacos
 - 认证授权：Spring Security OAuth2 Authorization Server
 - 服务消费：Spring Cloud OpenFeign & OkHttp & HttpClient & WebClient
 - 负载均衡：Spring Cloud Loadbalancer
-- 服务熔断&降级&限流：Spring Cloud Alibaba Sentinel
+- 服务熔断&降级&限流：Sentinel
 - 分库分表&读写分离：ShardingSphere
-- 分布式事务：Spring Cloud Alibaba Seata
+- 消息队列&分布式事务：RocketMQ
 - 分布式数据库：HBase
 - 服务监控：Spring Boot Admin & Prometheus
-- 消息队列：RocketMQ
 - 链路跟踪：SkyWalking
 - 任务调度：Power Job
 - 日志分析：EFK
@@ -252,28 +249,6 @@ public class SysUserApiController {
         return new HttpResult<SysUserVO>().ok(sysUserApplicationService.getUserById(id));
     }
 }
-```
-
-### 📖 分布式事务AT
-#### 🍸 服务配置
-```yaml
-# seata
-seata:
-  config:
-    type: nacos
-    nacos:
-      server-addr: 127.0.0.1:8848
-      namespace: xxx-xxx-xxx-xx
-      group: SEATA_GROUP
-  registry:
-    type: nacos
-    nacos:
-      namespace: xxx-xxx-xxx-xx
-      group: SEATA_GROUP
-      server-addr: 127.0.0.1:8848
-  enabled: true
-  tx-service-group: default_tx_group
-  data-source-proxy-mode: AT
 ```
 
 ##### ⚓ 代码引入
