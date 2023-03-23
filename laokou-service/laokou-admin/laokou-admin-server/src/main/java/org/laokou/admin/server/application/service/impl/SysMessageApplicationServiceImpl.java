@@ -148,7 +148,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
         Object obj = redisUtil.get(messageUnReadKey);
         if (obj != null) {
-            return Long.valueOf("" + obj);
+            return Long.valueOf(obj.toString());
         }
         long count = sysMessageDetailService.messageCount(userId);
         redisUtil.addAndGet(messageUnReadKey,count);
