@@ -24,7 +24,3 @@ spring:
   profiles:
     # dev|test|prod
     active: @profile.active@
-rocketmq:
-  producer:
-    group: laokou-producer-group
-  name-server: 192.168.62.144:9876

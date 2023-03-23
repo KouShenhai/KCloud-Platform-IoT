@@ -22,9 +22,10 @@ import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.mybatisplus.service.BatchService;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -48,33 +49,30 @@ public class BatchUtil<T> {
     public void insertBatch(List<T> dataList, int batchNum, BatchService<T> service) {
         // 数据分组
         List<List<T>> partition = Lists.partition(dataList, batchNum);
-        int size = partition.size();
         AtomicBoolean rollback = new AtomicBoolean(false);
-        CountDownLatch countDownLatch = new CountDownLatch(size);
-        for(int i = 0; i < size; i++) {
-            List<T> list = partition.get(i);
-            taskExecutor.execute(() -> transactionalUtil.execute(callback -> {
-                try{
-                    service.insertBatch(list);
-                    return true;
-                } catch (Exception e) {
-                    // 回滚标识
-                    rollback.set(true);
-                    log.error("错误信息：批量插入数据异常，设置回滚标识");
-                    return false;
-                } finally {
-                    if (rollback.get()) {
-                        callback.setRollbackOnly();
+        List<Object> synchronizedList = Collections.synchronizedList(new ArrayList<>(partition.size()));
+        partition.forEach(item -> {
+            CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
+                transactionalUtil.execute(callback -> {
+                    try {
+                        service.insertBatch(item);
+                        return true;
+                    } catch (Exception e) {
+                        // 回滚标识
+                        rollback.set(true);
+                        log.error("错误信息：批量插入数据异常，设置回滚标识");
+                        return false;
+                    } finally {
+                        if (rollback.get()) {
+                            callback.setRollbackOnly();
+                        }
                     }
-                    countDownLatch.countDown();
-                }
-            }));
-        }
-        // 阻塞线程
-        boolean await = countDownLatch.await(30L, TimeUnit.SECONDS);
-        if (!await) {
-            throw new CustomException("事务超时，数据已回滚");
-        }
+                });
+            }, taskExecutor);
+            synchronizedList.add(completableFuture);
+        });
+        // 阻塞主线程
+        CompletableFuture.allOf(synchronizedList.toArray(CompletableFuture[]::new)).join();
         if (rollback.get()) {
             throw new CustomException("批量插入数据异常，数据已回滚");
         }

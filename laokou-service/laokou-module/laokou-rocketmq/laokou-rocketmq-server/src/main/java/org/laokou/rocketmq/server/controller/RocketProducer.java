@@ -42,7 +42,7 @@ public class RocketProducer {
      */
     @PostMapping("/send/{topic}")
     public void sendMessage(@PathVariable("topic") String topic, @RequestBody RocketmqDTO dto) {
-        rocketMQTemplate.syncSend(topic, dto.getData(), 3000);
+        rocketMQTemplate.syncSend(topic, dto);
     }
 
     /**
@@ -53,7 +53,7 @@ public class RocketProducer {
      */
     @PostMapping("/sendAsync/{topic}")
     public void sendAsyncMessage(@PathVariable("topic") String topic, @RequestBody RocketmqDTO dto) {
-        rocketMQTemplate.asyncSend(topic, dto.getData(), new SendCallback() {
+        rocketMQTemplate.asyncSend(topic, dto, new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {
                 log.info("发送成功");
@@ -76,7 +76,18 @@ public class RocketProducer {
     public void sendOneMessage(@PathVariable("topic") String topic, @RequestBody RocketmqDTO dto) {
         //单向发送，只负责发送消息，不会触发回调函数，即发送消息请求不等待
         //适用于耗时短，但对可靠性不高的场景，如日志收集
-        rocketMQTemplate.sendOneWay(topic, dto.getData());
+        rocketMQTemplate.sendOneWay(topic, dto);
+    }
+
+    /**
+     * rocketmq消息>延迟
+     * @param topic
+     * @param delay
+     * @param dto
+     */
+    @PostMapping("/sendDelay/{topic}/{delay}")
+    public void sendDelay(@PathVariable("topic") String topic,@PathVariable("delay")long delay, @RequestBody RocketmqDTO dto) {
+        rocketMQTemplate.syncSendDelayTimeSeconds(topic,dto,delay);
     }
 
 }

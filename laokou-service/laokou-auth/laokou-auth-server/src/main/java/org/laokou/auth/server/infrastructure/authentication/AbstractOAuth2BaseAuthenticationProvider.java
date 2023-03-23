@@ -34,6 +34,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.*;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
@@ -128,12 +129,13 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     abstract AuthorizationGrantType getGrantType();
 
     /**
-     * 仿照授权码模式
+     * 获取token
      * @param authentication
      * @param principal
      * @return
      */
     protected Authentication getToken(Authentication authentication,Authentication principal,HttpServletRequest request) throws IOException {
+        // 仿照授权码模式
         // 生成token（access_token + refresh_token）
         AbstractOAuth2BaseAuthenticationToken abstractOAuth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;
         OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(abstractOAuth2BaseAuthenticationToken);
@@ -194,10 +196,22 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.SUCCESS.ordinal(), AuthConstant.LOGIN_SUCCESS_MSG,request,tenantId);
         // 账号是否已经登录并且未过期，是则强制踢出，反之不操作
         accountKill(oAuth2AccessToken.getTokenValue(),loginName);
+        // 清空上下文
+        SecurityContextHolder.clearContext();
         return new OAuth2AccessTokenAuthenticationToken(
                 registeredClient, clientPrincipal, oAuth2AccessToken, oAuth2RefreshToken, Collections.emptyMap());
     }
 
+    /**
+     * 获取用户信息
+     * @param loginName
+     * @param password
+     * @param request
+     * @param captcha
+     * @param uuid
+     * @return
+     * @throws IOException
+     */
     protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password, HttpServletRequest request,String captcha,String uuid) throws IOException {
         AuthorizationGrantType grantType = getGrantType();
         String loginType = grantType.getValue();
@@ -271,11 +285,17 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     private void accountKill(String accessToken,String loginName) {
         List<String> accessTokenList = sysAuthenticationService.getAccessTokenList(loginName, accessToken);
         if (CollectionUtils.isNotEmpty(accessTokenList)) {
-            accessTokenList.forEach(item -> {
-                String accountKillKey = RedisKeyUtil.getAccountKillKey(item);
-                redisUtil.set(accountKillKey,DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);
-            });
+            accessTokenList.forEach(this::kill);
         }
+    }
+
+    /**
+     * 踢出
+     * @param token
+     */
+    private void kill(String token) {
+        String accountKillKey = RedisKeyUtil.getAccountKillKey(token);
+        redisUtil.set(accountKillKey,DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);
     }
 
 }
