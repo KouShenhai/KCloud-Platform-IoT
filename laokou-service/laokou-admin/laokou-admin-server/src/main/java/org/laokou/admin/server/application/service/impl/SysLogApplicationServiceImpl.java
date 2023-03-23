@@ -14,20 +14,12 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.write.metadata.WriteSheet;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.excel.SysLoginLogExcel;
-import org.laokou.admin.client.excel.SysOperateLogExcel;
 import org.laokou.admin.server.application.service.SysLogApplicationService;
 import org.laokou.auth.client.utils.UserUtil;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.ExcelUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.qo.SysOperateLogQo;
@@ -37,11 +29,6 @@ import org.laokou.common.log.vo.SysLoginLogVO;
 import org.laokou.common.log.vo.SysOperateLogVO;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * @author laokou
  */
@@ -63,58 +50,13 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     }
 
     @Override
-    public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) throws IOException {
-        // https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
-        ExcelUtil.exportHeader(response);
-        int chunkSize = 500;
-        List<SysOperateLogVO> list = Collections.synchronizedList(new ArrayList<>(chunkSize));
-        ServletOutputStream out = response.getOutputStream();
-        ExcelWriter excelWriter = EasyExcel.write(out, SysOperateLogExcel.class).build();
-        qo.setTenantId(UserUtil.getTenantId());
-        sysOperateLogService.handleLoginLog(qo, resultContext -> {
-            SysOperateLogVO resultObject = resultContext.getResultObject();
-            list.add(resultObject);
-            if (list.size() % chunkSize == 0) {
-                writeSheet(list,SysOperateLogExcel.class,excelWriter);
-            }
-        });
-        if (list.size() % chunkSize != 0) {
-            writeSheet(list,SysOperateLogExcel.class,excelWriter);
-        }
-        excelWriter.finish();
-        out.flush();
-        out.close();
+    public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) {
+        sysOperateLogService.exportOperateLog(qo,response);
     }
 
     @Override
-    public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) throws IOException {
-        // https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
-        ExcelUtil.exportHeader(response);
-        int chunkSize = 500;
-        List<SysLoginLogVO> list = Collections.synchronizedList(new ArrayList<>(chunkSize));
-        ServletOutputStream out = response.getOutputStream();
-        ExcelWriter excelWriter = EasyExcel.write(out, SysLoginLogExcel.class).build();
-        qo.setTenantId(UserUtil.getTenantId());
-        sysLoginLogService.handleLoginLog(qo, resultContext -> {
-            SysLoginLogVO resultObject = resultContext.getResultObject();
-            list.add(resultObject);
-            if (list.size() % chunkSize == 0) {
-                writeSheet(list,SysLoginLogExcel.class,excelWriter);
-            }
-        });
-        if (list.size() % chunkSize != 0) {
-            writeSheet(list,SysLoginLogExcel.class,excelWriter);
-        }
-        excelWriter.finish();
-        out.flush();
-        out.close();
-    }
-
-    private void writeSheet(List list,Class clazz,ExcelWriter excelWriter) {
-        WriteSheet writeSheet = EasyExcel.writerSheet().head(clazz).build();
-        // 写数据
-        excelWriter.write(ConvertUtil.sourceToTarget(list,clazz),writeSheet);
-        list.clear();
+    public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {
+        sysLoginLogService.exportLoginLog(qo,response);
     }
 
     @Override

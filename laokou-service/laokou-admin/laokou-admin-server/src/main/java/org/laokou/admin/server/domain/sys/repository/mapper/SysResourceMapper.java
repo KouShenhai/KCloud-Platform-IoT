@@ -64,7 +64,7 @@ public interface SysResourceMapper extends BaseMapper<SysResourceDO> {
      * @param code
      * @param handler
      */
-    void handleResourceList(@Param("code")String code,ResultHandler<ResourceIndex> handler);
+    void resultList(@Param("code")String code,ResultHandler<ResourceIndex> handler);
 
     /**
      * 获取版本号

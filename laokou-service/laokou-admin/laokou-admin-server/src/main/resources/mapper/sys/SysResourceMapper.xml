@@ -66,7 +66,7 @@
             limit 1
     </select>
 
-    <select id="handleResourceList" fetchSize="1000" resultSetType="FORWARD_ONLY" resultType="org.laokou.elasticsearch.client.index.ResourceIndex">
+    <select id="resultList" fetchSize="1000" resultSetType="FORWARD_ONLY" resultType="org.laokou.elasticsearch.client.index.ResourceIndex">
      select id,title,`code`,`remark`,DATE_FORMAT(create_date,'%Y%m%d') as ymd from boot_sys_resource
      where del_flag = 0 and `code` = #{code}
     </select>
