@@ -43,7 +43,7 @@
         order by create_date desc
     </select>
 
-    <select id="handleLoginLog" fetchSize="1000" resultSetType="FORWARD_ONLY" resultType="org.laokou.common.log.vo.SysLoginLogVO">
+    <select id="resultList" fetchSize="1000" resultSetType="FORWARD_ONLY" resultType="org.laokou.common.log.vo.SysLoginLogVO">
         select
         id
         ,create_date

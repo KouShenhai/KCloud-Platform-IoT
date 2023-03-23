@@ -16,14 +16,18 @@
 package org.laokou.common.log.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.log.event.LoginLogEvent;
 import org.laokou.common.log.entity.SysLoginLogDO;
+import org.laokou.common.log.excel.SysLoginLogExcel;
 import org.laokou.common.log.mapper.SysLoginLogMapper;
 import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.service.SysLoginLogService;
 import org.laokou.common.log.vo.SysLoginLogVO;
+import org.laokou.common.mybatisplus.utils.ExcelUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,16 +35,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @author laokou
  */
 @Service
+@RequiredArgsConstructor
 public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper,SysLoginLogDO> implements SysLoginLogService {
+
+    private final ExcelUtil<SysLoginLogQo,SysLoginLogVO> excelUtil;
 
     @Override
     public IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, SysLoginLogQo qo) {
         return this.baseMapper.getLoginLogList(page,qo);
-    }
-
-    @Override
-    public void handleLoginLog(SysLoginLogQo qo, ResultHandler<SysLoginLogVO> handler) {
-        this.baseMapper.handleLoginLog(qo,handler);
     }
 
     @Override
@@ -50,4 +52,13 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper,SysLog
         return baseMapper.insert(logDO) > 0 ? true : false;
     }
 
+    @Override
+    public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {
+        excelUtil.export(500,response,qo,this, SysLoginLogExcel.class);
+    }
+
+    @Override
+    public void resultList(SysLoginLogQo qo, ResultHandler<SysLoginLogVO> resultHandler) {
+        this.baseMapper.resultList(qo,resultHandler);
+    }
 }

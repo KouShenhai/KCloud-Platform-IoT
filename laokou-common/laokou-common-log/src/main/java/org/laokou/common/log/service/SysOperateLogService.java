@@ -16,16 +16,16 @@
 package org.laokou.common.log.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.session.ResultHandler;
+import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.log.event.OperateLogEvent;
-import org.laokou.common.log.entity.SysOperateLogDO;
 import org.laokou.common.log.qo.SysOperateLogQo;
 import org.laokou.common.log.vo.SysOperateLogVO;
+import org.laokou.common.mybatisplus.service.ResultService;
+
 /**
  * @author laokou
  */
-public interface SysOperateLogService extends IService<SysOperateLogDO> {
+public interface SysOperateLogService extends ResultService<SysOperateLogQo,SysOperateLogVO> {
 
     /**
      * 分页查询操作日志
@@ -36,17 +36,17 @@ public interface SysOperateLogService extends IService<SysOperateLogDO> {
     IPage<SysOperateLogVO> getOperateLogList(IPage<SysOperateLogVO> page, SysOperateLogQo qo);
 
     /**
-     * 查询操作日志
-     * @param qo
-     * @param handler
-     */
-    void handleLoginLog(SysOperateLogQo qo, ResultHandler<SysOperateLogVO> handler);
-
-    /**
      * 新增登录日志
      * @param event
      * @return
      */
     Boolean insertOperateLog(OperateLogEvent event);
+
+    /**
+     * 导出操作日志
+     * @param qo
+     * @param response
+     */
+    void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response);
 
 }

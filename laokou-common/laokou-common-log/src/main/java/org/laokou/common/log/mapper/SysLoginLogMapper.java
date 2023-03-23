@@ -43,5 +43,5 @@ public interface SysLoginLogMapper extends BaseMapper<SysLoginLogDO> {
      * @param qo
      * @param handler
      */
-    void handleLoginLog(@Param("qo") SysLoginLogQo qo, ResultHandler<SysLoginLogVO> handler);
+    void resultList(@Param("qo") SysLoginLogQo qo, ResultHandler<SysLoginLogVO> handler);
 }

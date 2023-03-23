@@ -226,7 +226,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         // 流式查询
         int chunkSize = 500;
         List<ResourceIndex> list = Collections.synchronizedList(new ArrayList<>(chunkSize));
-        sysResourceService.handleResourceList(code, resultContext -> {
+        sysResourceService.resultList(code, resultContext -> {
             ResourceIndex resultObject = resultContext.getResultObject();
             list.add(resultObject);
             if (list.size() % chunkSize == 0) {
@@ -310,7 +310,6 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (!result.success()) {
             throw new CustomException(result.getCode(),result.getMsg());
         }
-        // 发送消息
         AssigneeVO vo = result.getData();
         String assignee = vo.getAssignee();
         String instanceId = vo.getInstanceId();
@@ -338,13 +337,11 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
             }
         }
         switch (AuditStatusEnum.getStatus(status)) {
-            case AUDIT -> // 审批中,发送审批消息通知
-                    insertAuditMessage(assignee,businessId,instanceName);
-            case AGREE -> // 审批通过
-                    auditAgree(businessId,instanceId);
-            case REJECT -> {
-                // 审批拒绝
-            }
+            // 审批中,发送审批消息通知
+            case AUDIT -> insertAuditMessage(assignee,businessId,instanceName);
+            // 审批通过
+            case AGREE -> auditAgree(businessId,instanceId);
+            // 审批拒绝
             default -> {}
         }
         // 修改审批状态

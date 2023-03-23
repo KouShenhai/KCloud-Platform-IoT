@@ -44,6 +44,6 @@ public interface SysOperateLogMapper extends BaseMapper<SysOperateLogDO> {
      * @param handler
      * @
      */
-    void handleLoginLog(@Param("qo") SysOperateLogQo qo, ResultHandler<SysOperateLogVO> handler);
+    void resultList(@Param("qo") SysOperateLogQo qo, ResultHandler<SysOperateLogVO> handler);
 
 }

@@ -51,11 +51,6 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
     }
 
     @Override
-    public void handleResourceList(String code, ResultHandler<ResourceIndex> handler) {
-        this.baseMapper.handleResourceList(code,handler);
-    }
-
-    @Override
     public SysResourceVO getResourceAuditByResourceId(Long id) {
         return baseMapper.getResourceAuditByResourceId(id);
     }
@@ -63,5 +58,10 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
     @Override
     public Integer getVersion(Long id) {
         return this.baseMapper.getVersion(id);
+    }
+
+    @Override
+    public void resultList(String code, ResultHandler<ResourceIndex> resultHandler) {
+        this.baseMapper.resultList(code,resultHandler);
     }
 }
