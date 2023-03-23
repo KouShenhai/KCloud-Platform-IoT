@@ -20,6 +20,6 @@ package org.laokou.rocketmq.client.constant;
  */
 public interface RocketmqConstant {
 
-    String LAOKOU_MAIL_TOPIC = "laokou-mail-topic";
+    String LAOKOU_MESSAGE_QUEUE_SELECTOR_KEY = "laokou_message_queue_selector_key";
 
 }
