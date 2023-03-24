@@ -15,7 +15,12 @@
  */
 package org.laokou.elasticsearch.server.support;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch.indices.PutMappingRequest;
+import co.elastic.clients.elasticsearch._types.Time;
+import co.elastic.clients.elasticsearch._types.mapping.Property;
+import co.elastic.clients.elasticsearch._types.mapping.SourceField;
+import co.elastic.clients.elasticsearch._types.mapping.TypeMapping;
+import co.elastic.clients.elasticsearch.core.CreateRequest;
+import co.elastic.clients.elasticsearch.indices.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -835,9 +840,47 @@ public class ElasticsearchTemplate {
 //    }
 
     public void test() {
-        PutMappingRequest.Builder putMappingBuilder = new PutMappingRequest.Builder();
-//        putMappingBuilder.properties("laokou",)
-//        elasticsearchClient.indices().putMapping();
+        //https://discuss.elastic.co/t/elasticsearch-v8-java-api-client-adding-index-settings/310888/5
+        //XContentBuilder setting = XContentFactory.jsonBuilder().startObject()
+        ////                .startObject("index")
+        ////                .field("refresh_interval","30s")
+        ////                .startObject("analysis");
+        ////        //ik分词拼音
+        ////        setting.startObject("analyzer")
+        ////                .startObject("ik_pinyin")
+        ////                .field("tokenizer","ik_max_word")
+        ////                .field("filter", "laokou_pinyin")
+        ////                .endObject();
+        ////        setting.endObject();
+        ////        //设置拼音分词器分词
+
+//        CreateIndexRequest.Builder createBuilder = new CreateIndexRequest.Builder();
+//        TypeMapping.Builder mappingBuilder = new TypeMapping.Builder();
+//        IndexSettings.Builder settingBuilder = new IndexSettings.Builder();
+//        settingBuilder.analysis();
+//        // 一个分片
+//        settingBuilder.numberOfShards("1");
+//        // 不需要副本
+//        settingBuilder.numberOfReplicas("0");
+//        settingBuilder.refreshInterval(Time.of(time -> time.time("30s")));
+//        mappingBuilder.properties();
+//        createBuilder.mappings();
+//        createBuilder.settings()
+        ////        setting.startObject("filter")
+        ////                .startObject("laokou_pinyin")
+        ////                .field("type", "pinyin")
+        ////                // 不会这样划分：刘德华 > [liu,de,hua]
+        ////                .field("keep_full_pinyin", false)
+        ////                // 这样划分：刘德华 > [liudehua]
+        ////                .field("keep_joined_full_pinyin",true)
+        ////                //保留原始中文
+        ////                .field("keep_original", true)
+        ////                .field("limit_first_letter_length", 16)
+        ////                .field("remove_duplicated_term", true)
+        ////                .field("none_chinese_pinyin_tokenize", false)
+        ////                .endObject()
+        ////                .endObject();
+        ////        setting.endObject().endObject().endObject();
     }
 
 }

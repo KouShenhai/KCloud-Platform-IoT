@@ -22,7 +22,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * @author laokou
  */
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableEncryptableProperties
 @SpringBootApplication(scanBasePackages = {"org.laokou.common.swagger","org.laokou.elasticsearch","org.laokou.common.core"})
