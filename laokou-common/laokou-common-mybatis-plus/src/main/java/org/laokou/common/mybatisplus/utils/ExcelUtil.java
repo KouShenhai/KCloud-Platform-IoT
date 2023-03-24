@@ -23,6 +23,7 @@ import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.mybatisplus.service.ResultService;
+import org.springframework.stereotype.Component;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -34,6 +35,7 @@ import java.util.List;
 /**
  * @author laokou
  */
+@Component
 public class ExcelUtil<Q,T> {
 
     private static final String EXCEL_SUFFIX = ".xlsx";
