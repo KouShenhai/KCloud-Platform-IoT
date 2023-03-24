@@ -76,8 +76,8 @@
         <freemarker.version>2.3.32</freemarker.version>
         <!--oshi版本-->
         <oshi.version>6.4.0</oshi.version>
-        <!-- elasticsearch版本-->
-        <elasticsearch.version>7.6.2</elasticsearch.version>
+        <!--elasticsearch版本-->
+        <elasticsearch.version>8.6.2</elasticsearch.version>
         <!--rocketmq版本-->
         <rocketmq.version>2.2.3</rocketmq.version>
         <!--jakarta.servlet-api版本-->
@@ -429,28 +429,8 @@
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.elasticsearch.client</groupId>
-                <artifactId>elasticsearch-rest-high-level-client</artifactId>
-                <version>${elasticsearch.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.elasticsearch</groupId>
-                        <artifactId>elasticsearch</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.elasticsearch.client</groupId>
-                        <artifactId>elasticsearch-rest-client</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.elasticsearch.client</groupId>
-                <artifactId>elasticsearch-rest-client</artifactId>
-                <version>${elasticsearch.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.elasticsearch</groupId>
-                <artifactId>elasticsearch</artifactId>
+                <groupId>co.elastic.clients</groupId>
+                <artifactId>elasticsearch-java</artifactId>
                 <version>${elasticsearch.version}</version>
             </dependency>
             <dependency>

@@ -23,5 +23,4 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConfigurationProperties(prefix = "spring.elasticsearch")
-public class CustomElasticsearchProperties extends ElasticsearchProperties {
-}
+public class CustomElasticsearchProperties extends ElasticsearchProperties {}
