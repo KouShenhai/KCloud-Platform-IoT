@@ -22,7 +22,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-parent</artifactId>
-    <version>3.0.4</version>
+    <version>3.0.5</version>
     <description>parent配置</description>
     <packaging>pom</packaging>
     <modules>
@@ -31,14 +31,14 @@
         <module>laokou-service</module>
     </modules>
     <properties>
-        <laokou.version>3.0.4</laokou.version>
+        <laokou.version>3.0.5</laokou.version>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.0.4</spring-boot.version>
+        <spring-boot.version>3.0.5</spring-boot.version>
         <!--spring-cloud版本-->
         <spring-cloud.version>2022.0.1</spring-cloud.version>
         <!--spring-framework版本-->
