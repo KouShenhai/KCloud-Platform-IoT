@@ -17,7 +17,7 @@ package org.laokou.admin.server.infrastructure.feign.oss;
 import org.laokou.admin.server.infrastructure.feign.oss.factory.OssApiFeignClientFallbackFactory;
 import org.laokou.common.core.constant.ServiceConstant;
 import org.laokou.common.i18n.core.HttpResult;
-import org.laokou.oss.client.vo.UploadVO;
+import org.laokou.common.oss.vo.UploadVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;

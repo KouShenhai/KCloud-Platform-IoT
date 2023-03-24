@@ -25,8 +25,8 @@ import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserServiceI
 import org.laokou.auth.server.infrastructure.authentication.*;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
-import org.laokou.redis.utils.RedisUtil;
-import org.laokou.tenant.service.SysSourceService;
+import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.tenant.service.SysSourceService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

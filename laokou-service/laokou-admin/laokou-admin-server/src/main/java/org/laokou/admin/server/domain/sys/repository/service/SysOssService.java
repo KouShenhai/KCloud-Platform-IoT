@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysOssDO;
 import org.laokou.admin.server.interfaces.qo.SysOssQo;
-import org.laokou.oss.client.vo.SysOssVO;
+import org.laokou.common.oss.vo.SysOssVO;
 /**
  * @author laokou
  */
@@ -44,7 +44,7 @@ public interface SysOssService extends IService<SysOssDO> {
      * @param qo
      * @return
      */
-    IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page,SysOssQo qo);
+    IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page, SysOssQo qo);
 
     /**
      * 查看详情

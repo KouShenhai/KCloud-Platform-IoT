@@ -20,8 +20,8 @@ import org.laokou.auth.server.domain.sys.repository.service.SysCaptchaService;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.redis.utils.RedisKeyUtil;
-import org.laokou.redis.utils.RedisUtil;
+import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
 /**
  * 验证码实现类

@@ -150,17 +150,12 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-dynamic-router</artifactId>
+                <artifactId>laokou-common-dynamic-router</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-hbase-client</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-hbase-server</artifactId>
+                <artifactId>laokou-common-hbase</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -190,7 +185,7 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-power-job</artifactId>
+                <artifactId>laokou-common-power-job</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -205,7 +200,7 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-tenant</artifactId>
+                <artifactId>laokou-common-tenant</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -318,6 +313,11 @@
                 <version>${joda-time.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-easy-captcha</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>${commons-collections4.version}</version>
@@ -415,17 +415,12 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-redis</artifactId>
+                <artifactId>laokou-common-redis</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-elasticsearch-server</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-elasticsearch-client</artifactId>
+                <artifactId>laokou-common-elasticsearch</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -440,12 +435,7 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-rocketmq-server</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-rocketmq-client</artifactId>
+                <artifactId>laokou-common-rocketmq</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -465,22 +455,12 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-oss-client</artifactId>
+                <artifactId>laokou-common-oss</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-oss-server</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-sms-client</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-sms-server</artifactId>
+                <artifactId>laokou-common-sms</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -520,7 +500,7 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-mongodb-client</artifactId>
+                <artifactId>laokou-common-mongodb</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -557,11 +537,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
                 <version>${spring-boot-starter-oauth2-resource-server.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-mongodb-server</artifactId>
-                <version>${laokou.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

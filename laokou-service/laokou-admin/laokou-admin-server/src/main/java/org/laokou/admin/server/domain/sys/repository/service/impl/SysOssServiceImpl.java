@@ -22,7 +22,7 @@ import org.laokou.admin.server.domain.sys.entity.SysOssDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysOssMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysOssService;
 import org.laokou.admin.server.interfaces.qo.SysOssQo;
-import org.laokou.oss.client.vo.SysOssVO;
+import org.laokou.common.oss.vo.SysOssVO;
 import org.springframework.stereotype.Service;
 
 /**

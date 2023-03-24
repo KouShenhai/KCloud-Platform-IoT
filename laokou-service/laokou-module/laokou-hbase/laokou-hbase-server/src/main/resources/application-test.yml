@@ -1,3 +1,0 @@
-hbase:
-  zookeeper:
-    quorum: x.x.x.x:2181

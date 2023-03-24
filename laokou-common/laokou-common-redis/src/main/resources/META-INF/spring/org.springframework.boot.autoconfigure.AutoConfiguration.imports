@@ -1,0 +1,2 @@
+org.laokou.common.redis.config.auto.RedisSessionAutoConfig
+org.laokou.common.redis.config.auto.RedisAutoConfig

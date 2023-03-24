@@ -22,7 +22,7 @@
     <select id="getVersion" resultType="integer">
         select version from boot_sys_oss where id = #{id}
     </select>
-    <select id="queryOssPage" resultType="org.laokou.oss.client.vo.SysOssVO">
+    <select id="queryOssPage" resultType="org.laokou.common.oss.vo.SysOssVO">
         SELECT
             id,
             `name`,
@@ -43,7 +43,7 @@
         order by create_date desc
     </select>
 
-    <select id="getOssById" resultType="org.laokou.oss.client.vo.SysOssVO">
+    <select id="getOssById" resultType="org.laokou.common.oss.vo.SysOssVO">
         SELECT
             id,
             `name`,

@@ -21,7 +21,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.server.domain.sys.entity.SysOssDO;
 import org.laokou.admin.server.interfaces.qo.SysOssQo;
-import org.laokou.oss.client.vo.SysOssVO;
+import org.laokou.common.oss.vo.SysOssVO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -44,7 +44,7 @@ public interface SysOssMapper extends BaseMapper<SysOssDO> {
      * @param qo
      * @return
      */
-    IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page,@Param("qo") SysOssQo qo);
+    IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page, @Param("qo") SysOssQo qo);
 
     /**
      * 查询详情

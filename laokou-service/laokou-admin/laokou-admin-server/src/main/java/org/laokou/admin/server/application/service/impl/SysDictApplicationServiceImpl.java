@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysDictApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysDictDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysDictService;
-import org.laokou.tenant.processor.DsTenantProcessor;
+import org.laokou.common.tenant.processor.DsTenantProcessor;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
 import org.laokou.admin.client.dto.SysDictDTO;

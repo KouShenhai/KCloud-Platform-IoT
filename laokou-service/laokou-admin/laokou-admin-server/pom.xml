@@ -34,7 +34,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
-			<artifactId>laokou-oss-client</artifactId>
+			<artifactId>laokou-common-oss</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -42,7 +42,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
-			<artifactId>laokou-tenant</artifactId>
+			<artifactId>laokou-common-tenant</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -82,7 +82,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
-			<artifactId>laokou-elasticsearch-client</artifactId>
+			<artifactId>laokou-common-elasticsearch</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -130,7 +130,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
-			<artifactId>laokou-dynamic-router</artifactId>
+			<artifactId>laokou-common-dynamic-router</artifactId>
 		</dependency>
     </dependencies>
 	<build>

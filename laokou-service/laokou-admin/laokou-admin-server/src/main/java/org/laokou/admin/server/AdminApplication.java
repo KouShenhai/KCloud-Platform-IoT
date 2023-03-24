@@ -20,7 +20,7 @@ package org.laokou.admin.server;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
-import org.laokou.dynamic.router.utils.RouterUtil;
+import org.laokou.common.dynamic.router.utils.RouterUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -41,7 +41,7 @@ import java.io.IOException;
  * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = {"org.laokou.tenant"
+@SpringBootApplication(scanBasePackages = {"org.laokou.common.tenant"
         , "org.laokou.common.i18n"
         , "org.laokou.common.log"
         , "org.laokou.common.data.cache"
@@ -50,9 +50,9 @@ import java.io.IOException;
         , "org.laokou.sentinel"
         , "org.laokou.common.swagger"
         , "org.laokou.common.core"
-        , "org.laokou.dynamic.router"
+        , "org.laokou.common.dynamic.router"
         , "org.laokou.admin"
-        , "org.laokou.redis"
+        , "org.laokou.common.redis"
         , "org.laokou.openfeign"
         , "org.laokou.common.mybatisplus"
         , "org.laokou.auth.client"})

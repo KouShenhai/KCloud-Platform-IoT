@@ -44,6 +44,20 @@
         <module>laokou-common-banner</module>
         <module>laokou-common-jasypt</module>
         <module>laokou-common-ip-region</module>
+        <module>laokou-common-tenant</module>
+        <module>laokou-common-sms</module>
+        <module>laokou-common-dynamic-router</module>
+        <module>laokou-common-elasticsearch</module>
+        <module>laokou-common-mail</module>
+        <module>laokou-common-redis</module>
+        <module>laokou-common-wechat</module>
+        <module>laokou-common-oss</module>
+        <module>laokou-common-power-job</module>
+        <module>laokou-common-rocketmq</module>
+        <module>laokou-common-freemarker</module>
+        <module>laokou-common-hbase</module>
+        <module>laokou-common-mongodb</module>
+        <module>laokou-common-easy-captcha</module>
     </modules>
 
 </project>

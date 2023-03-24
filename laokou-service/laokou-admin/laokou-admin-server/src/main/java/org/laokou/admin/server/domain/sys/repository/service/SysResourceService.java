@@ -16,16 +16,15 @@
 package org.laokou.admin.server.domain.sys.repository.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.session.ResultHandler;
 import org.laokou.admin.server.domain.sys.entity.SysResourceDO;
+import org.laokou.admin.server.infrastructure.index.ResourceIndex;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.common.mybatisplus.service.ResultService;
-import org.laokou.elasticsearch.client.index.ResourceIndex;
 /**
  * @author laokou
  */
-public interface SysResourceService extends IService<SysResourceDO>, ResultService<String,ResourceIndex> {
+public interface SysResourceService extends IService<SysResourceDO>, ResultService<String, ResourceIndex> {
     /**
      * 分页查询资源
      * @param page

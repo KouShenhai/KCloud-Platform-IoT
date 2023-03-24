@@ -30,20 +30,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>laokou-oss</module>
-        <module>laokou-sms</module>
-        <module>laokou-mail</module>
         <module>laokou-im</module>
-        <module>laokou-elasticsearch</module>
-        <module>laokou-redis</module>
-        <module>laokou-rocketmq</module>
         <module>laokou-flowable</module>
-        <module>laokou-mongodb</module>
-        <module>laokou-tenant</module>
-        <module>laokou-freemarker</module>
-        <module>laokou-power-job</module>
-        <module>laokou-dynamic-router</module>
-        <module>laokou-hbase</module>
-        <module>laokou-wechat</module>
     </modules>
 </project>
