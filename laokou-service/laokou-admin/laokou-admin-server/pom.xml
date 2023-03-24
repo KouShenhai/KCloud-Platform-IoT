@@ -114,7 +114,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
-			<artifactId>laokou-sentinel</artifactId>
+			<artifactId>laokou-common-sentinel</artifactId>
 		</dependency>
         <dependency>
             <groupId>org.laokou</groupId>
@@ -126,7 +126,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
-			<artifactId>laokou-openfeign</artifactId>
+			<artifactId>laokou-common-openfeign</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>

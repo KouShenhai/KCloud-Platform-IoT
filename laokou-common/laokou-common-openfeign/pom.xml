@@ -26,7 +26,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-openfeign</artifactId>
+    <artifactId>laokou-common-openfeign</artifactId>
 
     <dependencies>
         <dependency>

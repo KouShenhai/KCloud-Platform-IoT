@@ -58,6 +58,8 @@
         <module>laokou-common-hbase</module>
         <module>laokou-common-mongodb</module>
         <module>laokou-common-easy-captcha</module>
+        <module>laokou-common-sentinel</module>
+        <module>laokou-common-openfeign</module>
     </modules>
 
 </project>
