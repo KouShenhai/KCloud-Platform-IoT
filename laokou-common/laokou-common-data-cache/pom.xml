@@ -39,7 +39,7 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-redis</artifactId>
+            <artifactId>laokou-common-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>

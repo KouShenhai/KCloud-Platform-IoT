@@ -1,3 +1,0 @@
-hbase:
-  zookeeper:
-    quorum: 192.168.62.137:2181

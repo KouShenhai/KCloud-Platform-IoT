@@ -22,7 +22,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = {"org.laokou.flowable","org.laokou.common.core","org.laokou.common.swagger"})
+@SpringBootApplication(scanBasePackages = {"org.laokou.**"})
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 public class FlowableApplication {

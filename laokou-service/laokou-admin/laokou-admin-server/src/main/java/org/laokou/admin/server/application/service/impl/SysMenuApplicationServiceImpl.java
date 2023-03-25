@@ -27,9 +27,9 @@ import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
-import org.laokou.redis.utils.RedisKeyUtil;
+import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.core.utils.TreeUtil;
-import org.laokou.redis.utils.RedisUtil;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

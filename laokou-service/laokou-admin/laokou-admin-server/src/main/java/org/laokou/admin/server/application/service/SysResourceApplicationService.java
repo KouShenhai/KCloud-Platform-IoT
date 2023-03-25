@@ -21,12 +21,12 @@ import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
 import org.laokou.common.log.vo.SysAuditLogVO;
+import org.laokou.common.oss.vo.UploadVO;
 import org.laokou.flowable.client.dto.AuditDTO;
 import org.laokou.flowable.client.dto.DelegateDTO;
 import org.laokou.flowable.client.dto.ResolveDTO;
 import org.laokou.flowable.client.dto.TransferDTO;
 import org.laokou.flowable.client.vo.TaskVO;
-import org.laokou.oss.client.vo.UploadVO;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.*;
@@ -104,7 +104,7 @@ public interface SysResourceApplicationService {
      * @return
      * @throws Exception
      */
-    UploadVO uploadResource(String code, MultipartFile file,String md5) throws Exception;
+    UploadVO uploadResource(String code, MultipartFile file, String md5) throws Exception;
 
     /**
      * 查询资源审核日志列表

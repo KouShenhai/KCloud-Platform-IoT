@@ -17,9 +17,9 @@ package org.laokou.admin.server.application.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.laokou.common.core.vo.OptionVO;
-import org.laokou.tenant.dto.SysPackageDTO;
-import org.laokou.tenant.qo.SysPackageQo;
-import org.laokou.tenant.vo.SysPackageVO;
+import org.laokou.common.tenant.dto.SysPackageDTO;
+import org.laokou.common.tenant.qo.SysPackageQo;
+import org.laokou.common.tenant.vo.SysPackageVO;
 
 import java.util.List;
 

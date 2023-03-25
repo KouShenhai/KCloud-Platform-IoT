@@ -16,8 +16,8 @@
 package org.laokou.admin.server.application.service;
 
 
-import org.laokou.elasticsearch.client.qo.SearchQo;
-import org.laokou.elasticsearch.client.vo.SearchVO;
+import org.laokou.common.elasticsearch.qo.SearchQo;
+import org.laokou.common.elasticsearch.vo.SearchVO;
 
 /**
  * @author laokou

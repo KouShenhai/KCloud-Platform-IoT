@@ -16,6 +16,7 @@
 package org.laokou.common.log.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.laokou.common.easy.excel.suppert.ExcelTemplate;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.ResultHandler;
@@ -27,7 +28,7 @@ import org.laokou.common.log.mapper.SysOperateLogMapper;
 import org.laokou.common.log.qo.SysOperateLogQo;
 import org.laokou.common.log.service.SysOperateLogService;
 import org.laokou.common.log.vo.SysOperateLogVO;
-import org.laokou.common.mybatisplus.utils.ExcelUtil;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,9 +37,10 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
+@ImportAutoConfiguration
 public class SysOperateLogServiceImpl extends ServiceImpl<SysOperateLogMapper, SysOperateLogDO> implements SysOperateLogService {
 
-    private final ExcelUtil<SysOperateLogQo,SysOperateLogVO> excelUtil;
+    private final ExcelTemplate<SysOperateLogQo,SysOperateLogVO> excelTemplate;
 
     @Override
     public IPage<SysOperateLogVO> getOperateLogList(IPage<SysOperateLogVO> page, SysOperateLogQo qo) {
@@ -55,7 +57,7 @@ public class SysOperateLogServiceImpl extends ServiceImpl<SysOperateLogMapper, S
 
     @Override
     public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) {
-        excelUtil.export(500,response,qo,this, SysOperateLogExcel.class);
+        excelTemplate.export(500,response,qo,this, SysOperateLogExcel.class);
     }
 
 

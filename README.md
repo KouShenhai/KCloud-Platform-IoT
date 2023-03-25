@@ -85,7 +85,7 @@ tenant/tenant123
 | Sentinel                    | 1.8.6          |
 | Mysql                       | 8.0.31         |
 | Redis                       | 7.0.8          |
-| Elasticsearch               | 7.6.2          |
+| Elasticsearch               | 8.6.2          |
 | RocketMQ                    | 5.0.0          |
 | Flowable                    | 7.0.0.M1       |
 | ShardingSphere              | 5.3.2          |
@@ -158,21 +158,6 @@ tenant/tenant123
                 └── laokou-flowable                --- 工作流程模块  
                 └── laokou-dynamic-router          --- 动态路由模块  
 ~~~
-
-### 🐧 环境配置
-#### 🌻 安装教程
-[centos7 安装jdk1.8](https://kcloud.blog.csdn.net/article/details/82184984)  
-[centos7 安装mysql5.7](https://kcloud.blog.csdn.net/article/details/123628721)  
-[centos7 安装maven](https://kcloud.blog.csdn.net/article/details/108459715)  
-[centos7 安装redis](https://kcloud.blog.csdn.net/article/details/82589349)  
-[centos7 安装中文字体](https://kcloud.blog.csdn.net/article/details/106575947)  
-[centos7 安装jenkins](https://kcloud.blog.csdn.net/article/details/112171878)  
-[centos7 安装nacos](https://kcloud.blog.csdn.net/article/details/82589017)  
-[centos7 安装elasticsearch7.6.2](https://kcloud.blog.csdn.net/article/details/123123229)  
-[centos7 安装rocketmq](https://blog.csdn.net/qq_39893313/article/details/128223900)  
-
-#### 🌱 安装包
-[百度网盘](https://pan.baidu.com/s/1swrV9ffJnmz4S0mfkuBbIw) 提取码：1111
 
 ### 👍 Maven打包
 ```bash

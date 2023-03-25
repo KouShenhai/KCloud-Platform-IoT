@@ -34,7 +34,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
-			<artifactId>laokou-oss-client</artifactId>
+			<artifactId>laokou-common-easy-excel</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.laokou</groupId>
+			<artifactId>laokou-common-oss</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -42,7 +46,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
-			<artifactId>laokou-tenant</artifactId>
+			<artifactId>laokou-common-tenant</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -51,6 +55,12 @@
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>com.alibaba</groupId>
+					<artifactId>druid</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
@@ -82,7 +92,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
-			<artifactId>laokou-elasticsearch-client</artifactId>
+			<artifactId>laokou-common-elasticsearch</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -114,7 +124,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
-			<artifactId>laokou-sentinel</artifactId>
+			<artifactId>laokou-common-sentinel</artifactId>
 		</dependency>
         <dependency>
             <groupId>org.laokou</groupId>
@@ -126,11 +136,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
-			<artifactId>laokou-openfeign</artifactId>
+			<artifactId>laokou-common-openfeign</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
-			<artifactId>laokou-dynamic-router</artifactId>
+			<artifactId>laokou-common-dynamic-router</artifactId>
 		</dependency>
     </dependencies>
 	<build>

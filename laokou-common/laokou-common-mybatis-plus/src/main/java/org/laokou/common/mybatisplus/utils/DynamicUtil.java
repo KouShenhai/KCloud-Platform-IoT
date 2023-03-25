@@ -34,10 +34,6 @@ public class DynamicUtil {
         return SpringContextUtil.getBean(DynamicRoutingDataSource.class);
     }
 
-    public DataSource getDataSource(String sourceName) {
-        return getDynamicDataSource().getDataSource(sourceName);
-    }
-
     public Map<String, DataSource> getDataSources() {
         return getDynamicDataSource().getDataSources();
     }

@@ -17,8 +17,8 @@ package org.laokou.admin.server.application.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.laokou.admin.client.dto.SysOssDTO;
-import org.laokou.admin.server.interfaces.qo.SysOssQo;
-import org.laokou.oss.client.vo.SysOssVO;
+import org.laokou.common.oss.qo.SysOssQo;
+import org.laokou.common.oss.vo.SysOssVO;
 
 /**
  * @author laokou

@@ -16,7 +16,7 @@
 package org.laokou.auth.server;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
-import org.laokou.dynamic.router.utils.RouterUtil;
+import org.laokou.common.dynamic.router.utils.RouterUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -36,14 +36,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 @SpringBootApplication(scanBasePackages = {
          "org.laokou.common.i18n"
-        ,"org.laokou.tenant"
+        ,"org.laokou.common.tenant"
         ,"org.laokou.common.log"
-        ,"org.laokou.sentinel"
-        ,"org.laokou.dynamic.router"
+        ,"org.laokou.common.sentinel"
+        ,"org.laokou.common.dynamic.router"
+        ,"org.laokou.common.easy.captcha"
         ,"org.laokou.common.swagger"
         ,"org.laokou.common.mybatisplus"
         ,"org.laokou.common.core"
-        ,"org.laokou.redis"
+        ,"org.laokou.common.redis"
         ,"org.laokou.auth"})
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
@@ -51,7 +52,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @EnableAsync
 @EnableDiscoveryClient
 @MapperScan(value = {"org.laokou.auth.server.domain.sys.repository.mapper"
-        , "org.laokou.tenant.mapper"
+        , "org.laokou.common.tenant.mapper"
         ,"org.laokou.common.log.mapper"})
 @RequiredArgsConstructor
 public class AuthApplication implements CommandLineRunner {

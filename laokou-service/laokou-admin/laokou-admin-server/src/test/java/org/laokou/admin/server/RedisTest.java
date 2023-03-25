@@ -18,7 +18,7 @@ package org.laokou.admin.server;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.redis.utils.RedisUtil;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

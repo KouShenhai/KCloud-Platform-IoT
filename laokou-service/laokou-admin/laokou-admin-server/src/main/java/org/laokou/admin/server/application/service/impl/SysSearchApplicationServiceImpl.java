@@ -17,12 +17,10 @@ package org.laokou.admin.server.application.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.application.service.SysSearchApplicationService;
-import org.laokou.admin.server.infrastructure.feign.elasticsearch.ElasticsearchApiFeignClient;
-import org.laokou.common.i18n.core.CustomException;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.elasticsearch.qo.SearchQo;
+import org.laokou.common.elasticsearch.support.ElasticsearchTemplate;
+import org.laokou.common.elasticsearch.vo.SearchVO;
 import org.laokou.common.i18n.utils.ValidatorUtil;
-import org.laokou.elasticsearch.client.qo.SearchQo;
-import org.laokou.elasticsearch.client.vo.SearchVO;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 /**
@@ -32,15 +30,11 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class SysSearchApplicationServiceImpl implements SysSearchApplicationService {
-    private final ElasticsearchApiFeignClient elasticsearchApiFeignClient;
+    private final ElasticsearchTemplate elasticsearchTemplate;
 
     @Override
     public SearchVO<Map<String,Object>> searchResource(SearchQo qo) {
         ValidatorUtil.validateEntity(qo);
-        HttpResult<SearchVO<Map<String, Object>>> result = elasticsearchApiFeignClient.highlightSearch(qo);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(),result.getMsg());
-        }
-        return result.getData();
+        return elasticsearchTemplate.highlightSearchIndex(qo);
     }
 }
