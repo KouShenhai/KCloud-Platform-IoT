@@ -66,6 +66,11 @@
         <module>laokou-common-reptile</module>
         <module>laokou-common-pulsar</module>
         <module>laokou-common-graphql</module>
+        <module>laokou-common-r2dbc</module>
+        <module>laokou-common-neo4j</module>
+        <module>laokou-common-redis-search</module>
+        <module>laokou-common-tenant</module>
+        <module>laokou-common-dubbo</module>
     </modules>
 
 </project>
