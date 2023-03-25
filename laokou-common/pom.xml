@@ -60,6 +60,12 @@
         <module>laokou-common-easy-captcha</module>
         <module>laokou-common-sentinel</module>
         <module>laokou-common-openfeign</module>
+        <module>laokou-common-prometheus</module>
+        <module>laokou-common-kafka</module>
+        <module>laokou-common-easy-excel</module>
+        <module>laokou-common-reptile</module>
+        <module>laokou-common-pulsar</module>
+        <module>laokou-common-graphql</module>
     </modules>
 
 </project>

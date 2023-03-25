@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.mybatisplus.service;
+package com.laokou.common.excel.service;
 
 import org.apache.ibatis.session.ResultHandler;
 

@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.mybatisplus.utils;
+package com.laokou.common.excel.utils;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
+import com.laokou.common.excel.service.ResultService;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
-import org.laokou.common.mybatisplus.service.ResultService;
 import org.springframework.stereotype.Component;
 
 import java.net.URLEncoder;
@@ -70,7 +70,7 @@ public class ExcelUtil<Q,T> {
      * @param clazz
      */
     @SneakyThrows
-    public void export(int chunkSize, HttpServletResponse response,Q qo,ResultService<Q,T> resultService,Class<?> clazz) {
+    public void export(int chunkSize, HttpServletResponse response, Q qo, ResultService<Q,T> resultService, Class<?> clazz) {
         // https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
         // 设置请求头
         header(response);

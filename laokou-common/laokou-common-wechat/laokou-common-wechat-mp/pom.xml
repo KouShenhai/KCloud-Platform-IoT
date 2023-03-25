@@ -26,6 +26,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-wechat-mp</artifactId>
+    <artifactId>laokou-common-wechat-mp</artifactId>
 
 </project>
