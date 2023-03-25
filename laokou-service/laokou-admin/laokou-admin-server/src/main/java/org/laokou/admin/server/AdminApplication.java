@@ -47,13 +47,16 @@ import java.io.IOException;
         , "org.laokou.common.data.cache"
         , "org.laokou.common.data.filter"
         , "org.laokou.common.security"
-        , "org.laokou.sentinel"
+        , "org.laokou.common.sentinel"
+        , "org.laokou.common.elasticsearch"
         , "org.laokou.common.swagger"
         , "org.laokou.common.core"
         , "org.laokou.common.dynamic.router"
         , "org.laokou.admin"
         , "org.laokou.common.redis"
-        , "org.laokou.openfeign"
+        , "org.laokou.common.oss"
+        , "org.laokou.flowable.client"
+        , "org.laokou.common.openfeign"
         , "org.laokou.common.mybatisplus"
         , "org.laokou.auth.client"})
 @EnableDiscoveryClient
@@ -63,7 +66,8 @@ import java.io.IOException;
 @EnableFeignClients
 @EnableAsync
 @MapperScan(value = {"org.laokou.admin.server.domain.sys.repository.mapper"
-        , "org.laokou.tenant.mapper"
+        , "org.laokou.common.tenant.mapper"
+        , "org.laokou.common.oss.mapper"
         , "org.laokou.common.log.mapper"})
 @RequiredArgsConstructor
 public class AdminApplication implements CommandLineRunner {

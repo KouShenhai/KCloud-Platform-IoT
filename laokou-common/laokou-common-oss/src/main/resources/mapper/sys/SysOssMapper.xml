@@ -17,9 +17,9 @@
  */
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.org.laokou.common.oss.SysOssMapper">
+<mapper namespace="org.laokou.common.oss.mapper.SysOssMapper">
 
-    <select id="queryOssConfig" resultType="org.laokou.oss.client.vo.SysOssVO">
+    <select id="queryOssConfig" resultType="org.laokou.common.oss.vo.SysOssVO">
         SELECT
             id,
             `name`,
@@ -35,4 +35,45 @@
             del_flag = 0
           AND `status` = 1
     </select>
+
+    <select id="getVersion" resultType="integer">
+        select version from boot_sys_oss where id = #{id}
+    </select>
+    <select id="queryOssPage" resultType="org.laokou.common.oss.vo.SysOssVO">
+        SELECT
+        id,
+        `name`,
+        endpoint,
+        region,
+        access_key,
+        secret_key,
+        bucket_name,
+        `status`,
+        path_style_access_enabled
+        FROM
+        boot_sys_oss
+        WHERE
+        del_flag = 0
+        <if test="qo.name != null and qo.name != ''">
+            and `name` like concat('%',#{qo.name},'%')
+        </if>
+        order by create_date desc
+    </select>
+
+    <select id="getOssById" resultType="org.laokou.common.oss.vo.SysOssVO">
+        SELECT
+            id,
+            `name`,
+            endpoint,
+            region,
+            access_key,
+            secret_key,
+            bucket_name,
+            `status`,
+            path_style_access_enabled
+        FROM
+            boot_sys_oss
+        WHERE id = #{id}
+    </select>
+
 </mapper>

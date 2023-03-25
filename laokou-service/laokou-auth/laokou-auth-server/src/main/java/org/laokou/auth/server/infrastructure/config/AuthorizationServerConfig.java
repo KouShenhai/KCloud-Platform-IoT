@@ -24,6 +24,7 @@ import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserDetailSe
 import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserServiceImpl;
 import org.laokou.auth.server.infrastructure.authentication.*;
 import org.laokou.common.core.utils.ResourceUtil;
+import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.tenant.service.SysSourceService;

@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.SysOssDTO;
 import org.laokou.admin.server.application.service.SysOssApplicationService;
-import org.laokou.admin.server.interfaces.qo.SysOssQo;
+import org.laokou.common.oss.qo.SysOssQo;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.log.annotation.OperateLog;

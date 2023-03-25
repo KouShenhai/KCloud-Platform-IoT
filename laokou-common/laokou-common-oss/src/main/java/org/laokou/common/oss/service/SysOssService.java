@@ -15,17 +15,50 @@
  */
 package org.laokou.common.oss.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
+import org.laokou.common.oss.entity.SysOssDO;
+import org.laokou.common.oss.qo.SysOssQo;
 import org.laokou.common.oss.vo.SysOssVO;
 
 /**
  * @author laokou
  */
-public interface SysOssService {
+public interface SysOssService extends IService<SysOssDO> {
 
     /**
      * 查询OSS配置
      * @return
      */
     SysOssVO queryOssConfig();
+
+    /**
+     * 删除oss
+     * @param id
+     * @return
+     */
+    Boolean deleteOss(Long id);
+
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(Long id);
+
+    /**
+     * 分页查询
+     * @param page
+     * @param qo
+     * @return
+     */
+    IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page, SysOssQo qo);
+
+    /**
+     * 查看详情
+     * @param id
+     * @return
+     */
+    SysOssVO getOssById(Long id);
 
 }

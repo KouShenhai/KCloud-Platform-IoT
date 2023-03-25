@@ -15,7 +15,12 @@
  */
 package org.laokou.common.oss.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.common.oss.entity.SysOssDO;
+import org.laokou.common.oss.qo.SysOssQo;
 import org.laokou.common.oss.vo.SysOssVO;
 import org.springframework.stereotype.Repository;
 
@@ -24,12 +29,34 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface SysOssMapper {
+public interface SysOssMapper  extends BaseMapper<SysOssDO> {
 
     /**
      * 查询OSS配置
      * @return
      */
     SysOssVO queryOssConfig();
+
+    /**
+     * 获取版本号
+     * @param id
+     * @return
+     */
+    Integer getVersion(@Param("id") Long id);
+
+    /**
+     * 分页查询
+     * @param page
+     * @param qo
+     * @return
+     */
+    IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page, @Param("qo") SysOssQo qo);
+
+    /**
+     * 查询详情
+     * @param id
+     * @return
+     */
+    SysOssVO getOssById(@Param("id")Long id);
 
 }

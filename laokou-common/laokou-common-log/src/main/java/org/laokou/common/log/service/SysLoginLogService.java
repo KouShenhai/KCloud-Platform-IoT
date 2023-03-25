@@ -15,7 +15,7 @@
  */
 package org.laokou.common.log.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.laokou.common.excel.service.ResultService;
+import com.laokou.common.easy.excel.service.ResultService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.log.event.LoginLogEvent;
 import org.laokou.common.log.qo.SysLoginLogQo;

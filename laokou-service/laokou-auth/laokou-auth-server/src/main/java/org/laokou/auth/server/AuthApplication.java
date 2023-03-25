@@ -38,8 +38,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
          "org.laokou.common.i18n"
         ,"org.laokou.common.tenant"
         ,"org.laokou.common.log"
-        ,"org.laokou.sentinel"
+        ,"org.laokou.common.sentinel"
         ,"org.laokou.common.dynamic.router"
+        ,"org.laokou.common.easy.captcha"
         ,"org.laokou.common.swagger"
         ,"org.laokou.common.mybatisplus"
         ,"org.laokou.common.core"
@@ -51,7 +52,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @EnableAsync
 @EnableDiscoveryClient
 @MapperScan(value = {"org.laokou.auth.server.domain.sys.repository.mapper"
-        , "org.laokou.tenant.mapper"
+        , "org.laokou.common.tenant.mapper"
         ,"org.laokou.common.log.mapper"})
 @RequiredArgsConstructor
 public class AuthApplication implements CommandLineRunner {

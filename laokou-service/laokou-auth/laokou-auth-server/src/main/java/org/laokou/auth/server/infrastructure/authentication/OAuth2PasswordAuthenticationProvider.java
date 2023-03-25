@@ -20,6 +20,7 @@ import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.log.utils.LoginLogUtil;

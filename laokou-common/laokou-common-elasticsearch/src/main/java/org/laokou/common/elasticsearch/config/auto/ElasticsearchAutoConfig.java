@@ -18,6 +18,7 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -29,16 +30,18 @@ import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.apache.http.impl.nio.reactor.IOReactorConfig;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
-import org.laokou.common.elasticsearch.config.CustomElasticsearchProperties;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.RestHighLevelClientBuilder;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchProperties;
 import org.springframework.boot.autoconfigure.elasticsearch.RestClientBuilderCustomizer;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.StringUtils;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
@@ -48,17 +51,19 @@ import java.time.Duration;
  */
 @AutoConfiguration
 @Slf4j
+@RequiredArgsConstructor
+@EnableConfigurationProperties(ElasticsearchProperties.class)
 public class ElasticsearchAutoConfig {
 
     @Bean("defaultRestClientBuilderCustomizer")
     @ConditionalOnMissingBean(RestClientBuilderCustomizer.class)
-    RestClientBuilderCustomizer defaultRestClientBuilderCustomizer(CustomElasticsearchProperties properties) {
+    RestClientBuilderCustomizer defaultRestClientBuilderCustomizer(ElasticsearchProperties properties) {
         return new DefaultRestClientBuilderCustomizer(properties);
     }
 
     @Bean("elasticsearchRestClientBuilder")
     @ConditionalOnMissingBean(RestClientBuilder.class)
-    RestClientBuilder elasticsearchRestClientBuilder(CustomElasticsearchProperties properties,ObjectProvider<RestClientBuilderCustomizer> builderCustomizers) {
+    RestClientBuilder elasticsearchRestClientBuilder(ElasticsearchProperties properties,ObjectProvider<RestClientBuilderCustomizer> builderCustomizers) {
         HttpHost[] hosts = properties.getUris().stream().map(this::createHttpHost).toArray(HttpHost[]::new);
         RestClientBuilder builder = RestClient.builder(hosts);
         builder.setHttpClientConfigCallback((httpClientBuilder) -> {
@@ -103,9 +108,9 @@ public class ElasticsearchAutoConfig {
 
         private static final PropertyMapper map = PropertyMapper.get();
 
-        private final CustomElasticsearchProperties properties;
+        private final ElasticsearchProperties properties;
 
-        DefaultRestClientBuilderCustomizer(CustomElasticsearchProperties properties) {
+        DefaultRestClientBuilderCustomizer(ElasticsearchProperties properties) {
             this.properties = properties;
         }
 
@@ -137,7 +142,7 @@ public class ElasticsearchAutoConfig {
 
     private static class PropertiesCredentialsProvider extends BasicCredentialsProvider {
 
-        PropertiesCredentialsProvider(CustomElasticsearchProperties properties) {
+        PropertiesCredentialsProvider(ElasticsearchProperties properties) {
             if (StringUtils.hasText(properties.getUsername())) {
                 Credentials credentials = new UsernamePasswordCredentials(properties.getUsername(),
                         properties.getPassword());
@@ -188,6 +193,15 @@ public class ElasticsearchAutoConfig {
         ElasticsearchTransport transport = new RestClientTransport(
                 elasticsearchRestClientBuilder.build(), new JacksonJsonpMapper());
         return new ElasticsearchClient(transport);
+    }
+
+    @Bean(name = "restHighLevelClient")
+    @ConditionalOnMissingBean(RestHighLevelClient.class)
+    @ConditionalOnClass(RestClientBuilder.class)
+    public RestHighLevelClient restHighLevelClient(RestClientBuilder elasticsearchRestClientBuilder) {
+        return new RestHighLevelClientBuilder(elasticsearchRestClientBuilder.build())
+                .setApiCompatibilityMode(true)
+                .build();
     }
 
 }

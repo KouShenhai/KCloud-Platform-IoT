@@ -15,8 +15,12 @@
  */
 package org.laokou.common.oss.service.impl;
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.oss.entity.SysOssDO;
 import org.laokou.common.oss.mapper.SysOssMapper;
+import org.laokou.common.oss.qo.SysOssQo;
 import org.laokou.common.oss.service.SysOssService;
 import org.laokou.common.oss.vo.SysOssVO;
 import org.laokou.common.tenant.processor.DsTenantProcessor;
@@ -27,7 +31,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class SysOssServiceImpl implements SysOssService {
+public class SysOssServiceImpl extends ServiceImpl<SysOssMapper, SysOssDO> implements SysOssService {
 
     private final SysOssMapper sysOssMapper;
 
@@ -36,5 +40,24 @@ public class SysOssServiceImpl implements SysOssService {
     public SysOssVO queryOssConfig() {
         return sysOssMapper.queryOssConfig();
     }
+    @Override
+    public Boolean deleteOss(Long id) {
+        this.baseMapper.deleteById(id);
+        return true;
+    }
 
+    @Override
+    public Integer getVersion(Long id) {
+        return this.baseMapper.getVersion(id);
+    }
+
+    @Override
+    public IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page, SysOssQo qo) {
+        return this.baseMapper.queryOssPage(page,qo);
+    }
+
+    @Override
+    public SysOssVO getOssById(Long id) {
+        return this.baseMapper.getOssById(id);
+    }
 }
