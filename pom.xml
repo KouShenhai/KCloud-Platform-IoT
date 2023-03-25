@@ -29,9 +29,6 @@
         <module>laokou-common</module>
         <module>laokou-cloud</module>
         <module>laokou-service</module>
-        <module>laokou-common/laokou-common-clickhouse</module>
-        <module>laokou-common/laokou-common-redis-search</module>
-        <module>laokou-common/laokou-common-neo4j</module>
     </modules>
     <properties>
         <laokou.version>3.0.5</laokou.version>

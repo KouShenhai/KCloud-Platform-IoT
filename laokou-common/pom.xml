@@ -69,7 +69,6 @@
         <module>laokou-common-r2dbc</module>
         <module>laokou-common-neo4j</module>
         <module>laokou-common-redis-search</module>
-        <module>laokou-common-tenant</module>
         <module>laokou-common-dubbo</module>
     </modules>
 
