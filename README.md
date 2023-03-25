@@ -121,42 +121,56 @@ tenant/tenant123
 ~~~
 ├── laokou-common  
         └── laokou-common-log                      --- 日志组件  
+        └── laokou-common-sms                      --- 短信组件  
+        └── laokou-common-mail                     --- 邮箱组件  
         └── laokou-common-core                     --- 核心组件  
+        └── laokou-common-redis                    --- 缓存组件  
+        └── laokou-common-kafka                    --- 消息组件  
+        └── laokou-common-wechat                   --- 微信组件  
+        └── laokou-common-pulsar                   --- 消息组件  
         └── laokou-common-swagger                  --- 文档组件  
+        └── laokou-common-reptile                  --- 爬虫组件  
+        └── laokou-common-mongodb                  --- 报表组件  
+        └── laokou-common-graphql                  --- 查询组件  
+        └── laokou-common-rocketmq                 --- 消息组件  
+        └── laokou-common-power-job                --- 工作组件  
+        └── laokou-common-freemarker               --- 模板组件  
+        └── laokou-common-prometheus               --- 监控组件  
+        └── laokou-common-elasticsearch            --- 搜索组件  
         └── laokou-common-bom                      --- 依赖版本库  
         └── laokou-common-i18n                     --- 国际化组件  
+        └── laokou-common-tenant                   --- 多租户组件  
+        └── laokou-common-easy-captcha             --- 验证码组件  
+        └── laokou-common-oss                      --- 对象存储组件  
         └── laokou-common-api                      --- API调用组件  
+        └── laokou-common-hbase                    --- 海量存储组件  
         └── laokou-common-banner                   --- Banner组件  
+        └── laokou-common-dubbo                    --- 远程调用组件  
         └── laokou-common-jasypt                   --- 加密解密组件  
         └── laokou-common-security                 --- 认证授权组件  
+        └── laokou-common-openfeign                --- 远程调用组件   
+        └── laokou-common-easy-excel               --- 导入导出组件   
+        └── laokou-common-clickhouse               --- 列式存储组件  
         └── laokou-common-data-cache               --- 数据缓存组件  
         └── laokou-common-data-filter              --- 数据过滤组件  
+        └── laokou-common-redis-search             --- 高效搜索组件  
         └── laokou-common-mybatis-plus             --- 对象映射组件  
+        └── laokou-common-dynamic-router           --- 动态路由组件  
         └── laokou-common-ip-region                --- IP归属地组件  
+        └── laokou-common-neo4j                    --- 图形数据库组件  
+        └── laokou-common-r2dbc                    --- 响应式数据库组件  
+        └── laokou-common-sentinel                 --- 服务限流&熔断降级组件  
 ├── laokou-cloud  
         └── laokou-gateway                         --- API网关  
         └── laokou-monitor                         --- 服务监控  
-        └── laokou-openfeign                       --- 远程调用  
-        └── laokou-sntinel                         --- 服务限流&熔断降级  
 ├── laokou-service         
         └── laokou-generator                       --- 模板模块  
         └── laokou-auth                            --- 认证授权模块  
         └── laokou-admin                           --- 后台管理模块  
         └── laokou-report                          --- 数据分析模块  
         └── laokou-modlule         
-                └── laokou-sms                     --- 短信模块  
-                └── laokou-mail                    --- 邮件模块  
-                └── laokou-redis                   --- 缓存模块  
-                └── laokou-wechat                  --- 微信模块  
-                └── laokou-mongodb                 --- 报表模块  
-                └── laokou-rocketmq                --- 消息模块  
-                └── laokou-power-job               --- 工作模块  
-                └── laokou-elasticsearch           --- 搜索模块  
                 └── laokou-im                      --- 即时通讯模块  
-                └── laokou-oss                     --- 对象存储模块  
-                └── laokou-hbase                   --- 海量存储模块  
                 └── laokou-flowable                --- 工作流程模块  
-                └── laokou-dynamic-router          --- 动态路由模块  
 ~~~
 
 ### 👍 Maven打包

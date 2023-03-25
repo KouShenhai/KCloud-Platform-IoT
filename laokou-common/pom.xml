@@ -70,6 +70,7 @@
         <module>laokou-common-neo4j</module>
         <module>laokou-common-redis-search</module>
         <module>laokou-common-dubbo</module>
+        <module>laokou-common-clickhouse</module>
     </modules>
 
 </project>
