@@ -16,7 +16,7 @@
 package org.laokou.common.log.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.log.dto.AuditLogDTO;
+import org.laokou.common.log.event.AuditLogEvent;
 import org.laokou.common.log.entity.SysAuditLogDO;
 import org.laokou.common.log.mapper.SysAuditLogMapper;
 import org.laokou.common.log.service.SysAuditLogService;
@@ -35,7 +35,7 @@ public class SysAuditLogServiceImpl extends ServiceImpl<SysAuditLogMapper, SysAu
     }
 
     @Override
-    public Boolean insertAuditLog(AuditLogDTO dto) {
+    public Boolean insertAuditLog(AuditLogEvent dto) {
         SysAuditLogDO auditDO = ConvertUtil.sourceToTarget(dto, SysAuditLogDO.class);
         baseMapper.insert(auditDO);
         return true;
