@@ -35,6 +35,7 @@ public abstract class AbstractTxListener implements RocketMQLocalTransactionList
     public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object args) {
         String transactionId = message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID).toString();
         Object payload = message.getPayload();
+        log.info("执行本地事务");
         try {
             executeLocalTransaction(payload,transactionId);
             log.info("事务提交");
