@@ -14,12 +14,17 @@
  * limitations under the License.
  */
 package org.laokou.common.rocketmq.support;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
+import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.laokou.common.rocketmq.constant.RocketmqConstant;
 import org.laokou.common.rocketmq.dto.RocketmqDTO;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,14 +32,18 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class CustomRocketMQTemplate {
+@RequiredArgsConstructor
+public class RocketTemplate {
+
+    private final RocketMQTemplate rocketMQTemplate;
+
     /**
      * 同步发送消息
      * @param topic topic
      * @param dto   dto
      */
-    public void sendMessage(RocketMQTemplate rocketMQTemplate, String topic, RocketmqDTO dto) {
-        rocketMQTemplate.syncSend(topic, dto);
+    public boolean sendSyncMessage(String topic, RocketmqDTO dto) {
+        return rocketMQTemplate.syncSend(topic, dto).getSendStatus().equals(SendStatus.SEND_OK);
     }
 
     /**
@@ -42,7 +51,7 @@ public class CustomRocketMQTemplate {
      * @param topic topic
      * @param dto   dto
      */
-    public void sendAsyncMessage(RocketMQTemplate rocketMQTemplate, String topic,  RocketmqDTO dto) {
+    public void sendAsyncMessage(String topic,  RocketmqDTO dto) {
         rocketMQTemplate.asyncSend(topic, dto, new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {
@@ -61,7 +70,7 @@ public class CustomRocketMQTemplate {
      * @param topic topic
      * @param dto   dto
      */
-    public void sendOneMessage(RocketMQTemplate rocketMQTemplate, String topic, RocketmqDTO dto) {
+    public void sendOneWayMessage( String topic, RocketmqDTO dto) {
         //单向发送，只负责发送消息，不会触发回调函数，即发送消息请求不等待
         //适用于耗时短，但对可靠性不高的场景，如日志收集
         rocketMQTemplate.sendOneWay(topic, dto);
@@ -73,8 +82,8 @@ public class CustomRocketMQTemplate {
      * @param delay
      * @param dto
      */
-    public void sendDelay(RocketMQTemplate rocketMQTemplate, String topic,long delay, RocketmqDTO dto) {
-        rocketMQTemplate.syncSendDelayTimeSeconds(topic,dto,delay);
+    public boolean sendDelayMessage( String topic,long delay, RocketmqDTO dto) {
+        return rocketMQTemplate.syncSendDelayTimeSeconds(topic,dto,delay).getSendStatus().equals(SendStatus.SEND_OK);
     }
 
     /**
@@ -82,8 +91,8 @@ public class CustomRocketMQTemplate {
      * @param topic topic
      * @param dto   dto
      */
-    public void sendMessageOrderly(RocketMQTemplate rocketMQTemplate, String topic, RocketmqDTO dto) {
-        rocketMQTemplate.syncSendOrderly(topic, dto,RocketmqConstant.LAOKOU_MESSAGE_QUEUE_SELECTOR_KEY);
+    public boolean sendSyncOrderlyMessage( String topic, RocketmqDTO dto) {
+        return rocketMQTemplate.syncSendOrderly(topic, dto,RocketmqConstant.LAOKOU_MESSAGE_QUEUE_SELECTOR_KEY).getSendStatus().equals(SendStatus.SEND_OK);
     }
 
     /**
@@ -91,7 +100,7 @@ public class CustomRocketMQTemplate {
      * @param topic topic
      * @param dto   dto
      */
-    public void sendAsyncMessageOrderly(RocketMQTemplate rocketMQTemplate, String topic, RocketmqDTO dto) {
+    public void sendAsyncOrderlyMessage(String topic, RocketmqDTO dto) {
         rocketMQTemplate.asyncSendOrderly(topic, dto, RocketmqConstant.LAOKOU_MESSAGE_QUEUE_SELECTOR_KEY, new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {
@@ -110,9 +119,22 @@ public class CustomRocketMQTemplate {
      * @param topic topic
      * @param dto   dto
      */
-    public void sendOneMessageOrderly(RocketMQTemplate rocketMQTemplate, String topic, RocketmqDTO dto) {
+    public void sendOneWayOrderlyMessage(String topic, RocketmqDTO dto) {
         //单向发送，只负责发送消息，不会触发回调函数，即发送消息请求不等待
         //适用于耗时短，但对可靠性不高的场景，如日志收集
         rocketMQTemplate.sendOneWayOrderly(topic, dto, RocketmqConstant.LAOKOU_MESSAGE_QUEUE_SELECTOR_KEY);
     }
+
+    /**
+     * 事务消息
+     * @param topic
+     * @param dto
+     * @param transactionId
+     * @return
+     */
+    public boolean sendTransactionMessage(String topic,RocketmqDTO dto,String transactionId) {
+        Message<RocketmqDTO> message = MessageBuilder.withPayload(dto).setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId).build();
+        return rocketMQTemplate.sendMessageInTransaction(topic,message,null).getSendStatus().equals(SendStatus.SEND_OK);
+    }
+
 }
