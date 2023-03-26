@@ -217,6 +217,29 @@ elasticsearch:
   cluster-name: elasticsearch-node
 ```
 
+### 📖 分布式事务AT
+#### 🍸 服务配置
+```yaml
+# seata
+seata:
+  config:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      namespace: xxx-xxx-xxx-xx
+      group: SEATA_GROUP
+  registry:
+    type: nacos
+    nacos:
+      namespace: xxx-xxx-xxx-xx
+      group: SEATA_GROUP
+      server-addr: 127.0.0.1:8848
+  enabled: true
+  tx-service-group: default_tx_group
+  data-source-proxy-mode: AT
+```
+
+
 ### 🌵 JDK版本兼容
 ##### 🌍 VM options配置
 ```shell script
