@@ -13,18 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.log.dto;
-import lombok.Data;
+package org.laokou.common.log.event;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.context.ApplicationEvent;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Clock;
 import java.util.Date;
 
 /**
  * @author laokou
  */
-@Data
-public class AuditLogDTO implements Serializable {
+@Setter
+@Getter
+public class AuditLogEvent extends ApplicationEvent implements Serializable {
     @Serial
     private static final long serialVersionUID = 1532877866226749304L;
     private Long businessId;
@@ -41,4 +45,11 @@ public class AuditLogDTO implements Serializable {
 
     private Integer type;
 
+    public AuditLogEvent(Object source) {
+        super(source);
+    }
+
+    public AuditLogEvent(Object source, Clock clock) {
+        super(source, clock);
+    }
 }

@@ -46,7 +46,7 @@ import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.jasypt.utils.AESUtil;
-import org.laokou.common.log.dto.AuditLogDTO;
+import org.laokou.common.log.event.AuditLogEvent;
 import org.laokou.common.log.service.SysAuditLogService;
 import org.laokou.common.log.vo.SysAuditLogVO;
 import org.laokou.common.i18n.core.CustomException;
@@ -363,18 +363,16 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         sysResourceAuditService.update(updateWrapper);
     }
 
-
-    @Async
-    public void insertAuditLog(Long businessId,int auditStatus,String comment,String username,Long userId) {
-        AuditLogDTO auditLogDTO = new AuditLogDTO();
-        auditLogDTO.setBusinessId(businessId);
-        auditLogDTO.setAuditStatus(auditStatus);
-        auditLogDTO.setAuditDate(new Date());
-        auditLogDTO.setAuditName(username);
-        auditLogDTO.setCreator(userId);
-        auditLogDTO.setComment(comment);
-        auditLogDTO.setType(AuditTypeEnum.RESOURCE.ordinal());
-        sysAuditLogService.insertAuditLog(auditLogDTO);
+    private void insertAuditLog(Long businessId,int auditStatus,String comment,String username,Long userId) {
+        AuditLogEvent auditLogEvent = new AuditLogEvent(this);
+        auditLogEvent.setBusinessId(businessId);
+        auditLogEvent.setAuditStatus(auditStatus);
+        auditLogEvent.setAuditDate(new Date());
+        auditLogEvent.setAuditName(username);
+        auditLogEvent.setCreator(userId);
+        auditLogEvent.setComment(comment);
+        auditLogEvent.setType(AuditTypeEnum.RESOURCE.ordinal());
+        SpringContextUtil.publishEvent(auditLogEvent);
     }
 
     @Override
