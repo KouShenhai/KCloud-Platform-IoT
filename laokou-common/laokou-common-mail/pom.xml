@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-freemarker</artifactId>
+            <artifactId>laokou-common-freemarker</artifactId>
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
