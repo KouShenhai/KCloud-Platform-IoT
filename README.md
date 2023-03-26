@@ -82,6 +82,7 @@ tenant/tenant123
 | Spring Authorization Server | 1.0.1          |
 | Mybatis Plus                | 3.5.3.1        |
 | Nacos                       | 2.2.0          |
+| Seata                       | 1.6.1          |
 | Sentinel                    | 1.8.6          |
 | Mysql                       | 8.0.31         |
 | Redis                       | 7.0.8          |
@@ -100,7 +101,8 @@ tenant/tenant123
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Sentinel
 - 分库分表&读写分离：ShardingSphere
-- 消息队列&分布式事务：RocketMQ
+- 分布式事务：Seata
+- 消息队列：RocketMQ
 - 分布式数据库：HBase
 - 服务监控：Spring Boot Admin & Prometheus
 - 链路跟踪：SkyWalking
