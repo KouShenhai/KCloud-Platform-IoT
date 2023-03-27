@@ -15,7 +15,7 @@
 # */
 # server
 server:
-  port: 10005
+  port: 10000
 
 #spring
 spring:

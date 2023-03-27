@@ -16,19 +16,14 @@
 
 package org.laokou.common.rocketmq.listener;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.springframework.messaging.Message;
-import org.springframework.stereotype.Component;
-
 /**
  * @author laokou
  */
 @Slf4j
-@Component
-@RocketMQTransactionListener
 public abstract class AbstractTxListener implements RocketMQLocalTransactionListener {
 
     @Override
@@ -65,13 +60,13 @@ public abstract class AbstractTxListener implements RocketMQLocalTransactionList
      * @param obj
      * @return
      */
-    abstract void executeLocalTransaction(Object obj,String transactionId);
+    protected abstract void executeLocalTransaction(Object obj, String transactionId);
 
     /**
      * 本地事务检查
      * @param transactionId
      * @return
      */
-    abstract boolean checkLocalTransaction(String transactionId);
+    protected abstract boolean checkLocalTransaction(String transactionId);
 
 }
