@@ -23,8 +23,10 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.laokou.common.rocketmq.constant.RocketmqConstant;
 import org.laokou.common.rocketmq.dto.RocketmqDTO;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,9 +35,33 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class RocketTemplate {
+public class RocketTemplate implements InitializingBean {
 
     private final RocketMQTemplate rocketMQTemplate;
+    private final ThreadPoolTaskExecutor taskExecutor;
+
+    /**
+     * 同步发送
+     * @param topic
+     * @param dto
+     * @param timeout
+     * @return
+     */
+    public boolean sendSyncMessage(String topic, RocketmqDTO dto,long timeout) {
+        return rocketMQTemplate.syncSend(topic, dto,timeout).getSendStatus().equals(SendStatus.SEND_OK);
+    }
+
+    /**
+     * 同步发送
+     * @param topic
+     * @param dto
+     * @param timeout
+     * @return
+     */
+    public boolean sendSyncMessage(String topic, RocketmqDTO dto,long timeout,int delayLevel) {
+        Message<RocketmqDTO> payload = MessageBuilder.withPayload(dto).build();
+        return rocketMQTemplate.syncSend(topic, payload,timeout,delayLevel).getSendStatus().equals(SendStatus.SEND_OK);
+    }
 
     /**
      * 同步发送消息
@@ -63,6 +89,25 @@ public class RocketTemplate {
                 log.error("报错信息：{}", throwable.getMessage());
             }
         });
+    }
+
+    /**
+     * 异步发送消息
+     * @param topic topic
+     * @param dto   dto
+     */
+    public void sendAsyncMessage(String topic,  RocketmqDTO dto,long timeout) {
+        rocketMQTemplate.asyncSend(topic, dto, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("发送成功");
+            }
+
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("报错信息：{}", throwable.getMessage());
+            }
+        },timeout);
     }
 
     /**
@@ -153,4 +198,8 @@ public class RocketTemplate {
         return rocketMQTemplate.sendAndReceive(topic,dto,RocketmqDTO.class);
     }
 
+    @Override
+    public void afterPropertiesSet() {
+        rocketMQTemplate.setAsyncSenderExecutor(taskExecutor.getThreadPoolExecutor());
+    }
 }

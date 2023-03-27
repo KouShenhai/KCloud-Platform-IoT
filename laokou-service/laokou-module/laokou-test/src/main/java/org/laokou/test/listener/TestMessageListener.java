@@ -17,21 +17,25 @@
 package org.laokou.test.listener;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.rocketmq.dto.RocketmqDTO;
 import org.springframework.stereotype.Component;
+
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author laokou
  */
 @Slf4j
 @Component
 @RocketMQMessageListener(consumerGroup = "laokou-consumer-group", topic = "laokou-test")
-public class TestMessageListener implements RocketMQListener<RocketmqDTO> {
+public class TestMessageListener implements RocketMQListener<MessageExt> {
 
     @Override
-    public void onMessage(RocketmqDTO dto) {
-        log.info("receive message：{}", JacksonUtil.toJsonStr(dto));
+    public void onMessage(MessageExt messageExt) {
+        log.info("queue:{},receive message：{},offset:{}",messageExt.getQueueId(), JacksonUtil.toJsonStr(new String(messageExt.getBody(), StandardCharsets.UTF_8)),messageExt.getQueueOffset());
     }
+
 }
