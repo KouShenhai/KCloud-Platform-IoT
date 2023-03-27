@@ -28,7 +28,6 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
-
 /**
  * @author laokou
  */
@@ -115,7 +114,7 @@ public class RocketTemplate implements InitializingBean {
      * @param topic topic
      * @param dto   dto
      */
-    public void sendOneWayMessage( String topic, RocketmqDTO dto) {
+    public void sendOneWayMessage(String topic, RocketmqDTO dto) {
         //单向发送，只负责发送消息，不会触发回调函数，即发送消息请求不等待
         //适用于耗时短，但对可靠性不高的场景，如日志收集
         rocketMQTemplate.sendOneWay(topic, dto);
@@ -127,7 +126,7 @@ public class RocketTemplate implements InitializingBean {
      * @param delay
      * @param dto
      */
-    public boolean sendDelayMessage( String topic,long delay, RocketmqDTO dto) {
+    public boolean sendDelayMessage(String topic,long delay, RocketmqDTO dto) {
         return rocketMQTemplate.syncSendDelayTimeSeconds(topic,dto,delay).getSendStatus().equals(SendStatus.SEND_OK);
     }
 
@@ -136,7 +135,7 @@ public class RocketTemplate implements InitializingBean {
      * @param topic topic
      * @param dto   dto
      */
-    public boolean sendSyncOrderlyMessage( String topic, RocketmqDTO dto) {
+    public boolean sendSyncOrderlyMessage(String topic, RocketmqDTO dto) {
         return rocketMQTemplate.syncSendOrderly(topic, dto,RocketmqConstant.LAOKOU_MESSAGE_QUEUE_SELECTOR_KEY).getSendStatus().equals(SendStatus.SEND_OK);
     }
 
@@ -195,7 +194,7 @@ public class RocketTemplate implements InitializingBean {
      * 发送并接收
      */
     public Object sendAndReceiveMessage(String topic,RocketmqDTO dto,Class<?> clazz) {
-        return rocketMQTemplate.sendAndReceive(topic,dto,RocketmqDTO.class);
+        return rocketMQTemplate.sendAndReceive(topic,dto,clazz);
     }
 
     @Override
