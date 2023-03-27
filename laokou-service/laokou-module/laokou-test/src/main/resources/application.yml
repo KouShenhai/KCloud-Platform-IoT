@@ -5,5 +5,3 @@ rocketmq:
   producer:
     group: laokou-producer-group
   name-server: laokou.org:9876
-  consumer:
-    group: laokou-consumer-group
