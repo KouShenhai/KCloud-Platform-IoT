@@ -22,15 +22,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.i18n.core.StatusCode;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
  */
-@Component
+@AutoConfiguration
 @Slf4j
 public class CustomBlockExceptionHandler implements BlockExceptionHandler {
 

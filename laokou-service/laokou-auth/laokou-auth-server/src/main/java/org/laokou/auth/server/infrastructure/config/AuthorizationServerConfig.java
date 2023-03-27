@@ -20,8 +20,6 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.SneakyThrows;
 import org.laokou.auth.server.domain.sys.repository.service.*;
-import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserDetailServiceImpl;
-import org.laokou.auth.server.domain.sys.repository.service.impl.SysUserServiceImpl;
 import org.laokou.auth.server.infrastructure.authentication.*;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
@@ -143,7 +141,7 @@ public class AuthorizationServerConfig {
     }
 
     /**
-     * TODO ConfigurationSettingNames配置文件
+     * ConfigurationSettingNames配置OAuth2
      * @param jdbcTemplate
      * @return
      */
@@ -234,24 +232,6 @@ public class AuthorizationServerConfig {
     @ConditionalOnMissingBean(OAuth2AuthorizationService.class)
     OAuth2AuthorizationService auth2AuthorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
         return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
-    }
-
-    /**
-     *
-     * @param sysUserService
-     * @param sysMenuService
-     * @param passwordEncoder
-     * @param sysDeptService
-     * @return
-     */
-    @Bean
-    UserDetailsService userDetailsService(
-            SysUserServiceImpl sysUserService
-            , SysMenuService sysMenuService
-            , PasswordEncoder passwordEncoder
-            , SysDeptService sysDeptService) {
-        return new SysUserDetailServiceImpl(sysUserService,sysMenuService
-                , sysDeptService,passwordEncoder);
     }
 
     /**

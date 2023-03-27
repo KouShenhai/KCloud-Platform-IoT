@@ -21,7 +21,6 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
-import org.laokou.common.rocketmq.constant.RocketmqConstant;
 import org.laokou.common.rocketmq.dto.RocketmqDTO;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.messaging.Message;
@@ -135,8 +134,8 @@ public class RocketTemplate implements InitializingBean {
      * @param topic topic
      * @param dto   dto
      */
-    public boolean sendSyncOrderlyMessage(String topic, RocketmqDTO dto) {
-        return rocketMQTemplate.syncSendOrderly(topic, dto,RocketmqConstant.LAOKOU_MESSAGE_QUEUE_SELECTOR_KEY).getSendStatus().equals(SendStatus.SEND_OK);
+    public boolean sendSyncOrderlyMessage(String topic, RocketmqDTO dto,String id) {
+        return rocketMQTemplate.syncSendOrderly(topic, dto,id).getSendStatus().equals(SendStatus.SEND_OK);
     }
 
     /**
@@ -144,8 +143,8 @@ public class RocketTemplate implements InitializingBean {
      * @param topic topic
      * @param dto   dto
      */
-    public void sendAsyncOrderlyMessage(String topic, RocketmqDTO dto) {
-        rocketMQTemplate.asyncSendOrderly(topic, dto, RocketmqConstant.LAOKOU_MESSAGE_QUEUE_SELECTOR_KEY, new SendCallback() {
+    public void sendAsyncOrderlyMessage(String topic, RocketmqDTO dto,String id) {
+        rocketMQTemplate.asyncSendOrderly(topic, dto, id, new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {
                 log.info("发送成功");
@@ -163,10 +162,10 @@ public class RocketTemplate implements InitializingBean {
      * @param topic topic
      * @param dto   dto
      */
-    public void sendOneWayOrderlyMessage(String topic, RocketmqDTO dto) {
+    public void sendOneWayOrderlyMessage(String topic, RocketmqDTO dto,String id) {
         //单向发送，只负责发送消息，不会触发回调函数，即发送消息请求不等待
         //适用于耗时短，但对可靠性不高的场景，如日志收集
-        rocketMQTemplate.sendOneWayOrderly(topic, dto, RocketmqConstant.LAOKOU_MESSAGE_QUEUE_SELECTOR_KEY);
+        rocketMQTemplate.sendOneWayOrderly(topic, dto, id);
     }
 
     /**
