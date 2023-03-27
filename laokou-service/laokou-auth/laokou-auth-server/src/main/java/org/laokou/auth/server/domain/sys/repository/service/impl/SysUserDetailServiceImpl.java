@@ -21,6 +21,7 @@ import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
 import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
 import org.laokou.auth.server.infrastructure.authentication.OAuth2PasswordAuthenticationProvider;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -29,10 +30,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 /**
  * @author laokou
  */
+@Service
 @RequiredArgsConstructor
 public class SysUserDetailServiceImpl implements UserDetailsService {
 
