@@ -143,7 +143,7 @@ public class AuthorizationServerConfig {
     }
 
     /**
-     *
+     * TODO ConfigurationSettingNames配置文件
      * @param jdbcTemplate
      * @return
      */
