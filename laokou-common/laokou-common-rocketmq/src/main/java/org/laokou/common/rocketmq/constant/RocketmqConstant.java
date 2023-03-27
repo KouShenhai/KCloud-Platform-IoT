@@ -20,6 +20,4 @@ package org.laokou.common.rocketmq.constant;
  */
 public interface RocketmqConstant {
 
-    String LAOKOU_MESSAGE_QUEUE_SELECTOR_KEY = "laokou_message_queue_selector_key";
-
 }
