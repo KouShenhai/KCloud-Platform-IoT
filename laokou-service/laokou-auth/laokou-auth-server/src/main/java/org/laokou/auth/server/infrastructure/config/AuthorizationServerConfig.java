@@ -141,6 +141,7 @@ public class AuthorizationServerConfig {
     }
 
     /**
+     * ConfigurationSettingNames配置OAuth2
      * @param jdbcTemplate
      * @return
      */
