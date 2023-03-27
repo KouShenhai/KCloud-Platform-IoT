@@ -137,4 +137,20 @@ public class RocketTemplate {
         return rocketMQTemplate.sendMessageInTransaction(topic,message,null).getSendStatus().equals(SendStatus.SEND_OK);
     }
 
+    /**
+     * 转换并发送
+     * @param topic
+     * @param dto
+     */
+    public void convertAndSendMessage(String topic,RocketmqDTO dto) {
+        rocketMQTemplate.convertAndSend(topic,dto);
+    }
+
+    /**
+     * 发送并接收
+     */
+    public Object sendAndReceiveMessage(String topic,RocketmqDTO dto,Class<?> clazz) {
+        return rocketMQTemplate.sendAndReceive(topic,dto,RocketmqDTO.class);
+    }
+
 }

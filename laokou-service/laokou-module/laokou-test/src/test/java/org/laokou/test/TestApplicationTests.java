@@ -15,8 +15,10 @@ class TestApplicationTests {
 
     @Test
     void contextLoads() {
-        rocketTemplate.sendAsyncMessage("test",new RocketmqDTO());
-        rocketTemplate.sendTransactionMessage("test",new RocketmqDTO(),String.valueOf(IdGenerator.defaultSnowflakeId()));
+        rocketTemplate.convertAndSendMessage("laokou-test",new RocketmqDTO());
+        rocketTemplate.sendSyncMessage("laokou-test-2",new RocketmqDTO());
+        rocketTemplate.sendAndReceiveMessage("laokou-test-2",new RocketmqDTO(),RocketmqDTO.class);
+        rocketTemplate.sendTransactionMessage("laokou-test",new RocketmqDTO(),String.valueOf(IdGenerator.defaultSnowflakeId()));
     }
 
 }
