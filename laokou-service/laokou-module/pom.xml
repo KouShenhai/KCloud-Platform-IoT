@@ -32,5 +32,6 @@
     <modules>
         <module>laokou-im</module>
         <module>laokou-flowable</module>
+        <module>laokou-test</module>
     </modules>
 </project>
