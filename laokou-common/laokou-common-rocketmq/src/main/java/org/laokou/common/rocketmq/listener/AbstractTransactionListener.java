@@ -24,7 +24,7 @@ import org.springframework.messaging.Message;
  * @author laokou
  */
 @Slf4j
-public abstract class AbstractTxListener implements RocketMQLocalTransactionListener {
+public abstract class AbstractTransactionListener implements RocketMQLocalTransactionListener {
 
     @Override
     public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object args) {

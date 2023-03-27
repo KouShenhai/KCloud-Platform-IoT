@@ -17,7 +17,7 @@
 package org.laokou.test.listener;
 
 import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
-import org.laokou.common.rocketmq.listener.AbstractTxListener;
+import org.laokou.common.rocketmq.listener.AbstractTransactionListener;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RocketMQTransactionListener
-public class DefaultTxListener extends AbstractTxListener {
+public class DefaultTransactionListener extends AbstractTransactionListener {
     @Override
     protected void executeLocalTransaction(Object obj, String transactionId) {
 
