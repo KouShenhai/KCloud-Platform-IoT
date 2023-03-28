@@ -160,49 +160,5 @@
       "version": "2.0"
     },
     "order": 999
-  },
-  {
-    "id": "laokou-oss",
-    "uri": "lb://laokou-oss",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/oss/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "oss",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/oss/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      },
-      {
-        "name": "IpBlack",
-        "args": {
-          "sources": "192.168.62.100"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "2.0"
-    },
-    "order": 999
   }
 ]
