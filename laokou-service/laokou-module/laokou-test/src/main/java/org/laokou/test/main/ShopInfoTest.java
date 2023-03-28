@@ -45,7 +45,7 @@ public class ShopInfoTest {
         String accessToken = getAccessToken(appKey,appSecret,clientId);
         // 2.获取商品信息
         // 名牌名称，模糊查询
-        String brandName = "KAO";
+        String brandName = "";
         // 页码
         int page = 1;
         // 页数
