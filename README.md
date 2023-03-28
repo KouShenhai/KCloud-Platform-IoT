@@ -171,6 +171,7 @@ tenant/tenant123
         └── laokou-admin                           --- 后台管理模块  
         └── laokou-report                          --- 数据分析模块  
         └── laokou-modlule         
+                └── laokou-test                    --- 测试模块  
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-flowable                --- 工作流程模块  
 ~~~
