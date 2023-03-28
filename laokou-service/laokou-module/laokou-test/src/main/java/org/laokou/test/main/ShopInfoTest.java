@@ -36,11 +36,11 @@ public class ShopInfoTest {
     public static void main(String[] args) {
         // 1.获取token
         // 应用私钥
-        String appKey = "K2022101215115922";
+        String appKey = "";
         // 应用密钥
-        String appSecret = "test1234567890";
+        String appSecret = "";
         // 客户端编号
-        String clientId = "1580093880840245249";
+        String clientId = "";
         // 获取accessToken
         String accessToken = getAccessToken(appKey,appSecret,clientId);
         // 2.获取商品信息
