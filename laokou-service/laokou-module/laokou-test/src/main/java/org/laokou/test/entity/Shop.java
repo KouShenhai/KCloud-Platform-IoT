@@ -14,25 +14,19 @@
  * limitations under the License.
  */
 
-package org.laokou.test.listener;
+package org.laokou.test.entity;
 
-import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
-import org.laokou.common.rocketmq.listener.AbstractTransactionListener;
-import org.springframework.stereotype.Component;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-@Component
-//@RocketMQTransactionListener
-public class DefaultTransactionListener extends AbstractTransactionListener {
-    @Override
-    protected void executeLocalTransaction(Object obj, String transactionId) {
+@Data
+//@TableName("shop")
+public class Shop {
 
-    }
+    private Long id;
+    private String name;
+    private String imgUri;
 
-    @Override
-    protected boolean checkLocalTransaction(String transactionId) {
-        return true;
-    }
 }

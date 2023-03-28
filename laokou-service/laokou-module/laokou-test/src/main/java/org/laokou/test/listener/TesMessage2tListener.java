@@ -26,8 +26,8 @@ import org.springframework.stereotype.Component;
  * @author laokou
  */
 @Slf4j
-@Component
-@RocketMQMessageListener(consumerGroup = "laokou-consumer-group-2", topic = "laokou-test-2")
+//@Component
+//@RocketMQMessageListener(consumerGroup = "laokou-consumer-group-2", topic = "laokou-test-2")
 public class TesMessage2tListener implements RocketMQReplyListener<RocketmqDTO,RocketmqDTO> {
     @Override
     public RocketmqDTO onMessage(RocketmqDTO dto) {

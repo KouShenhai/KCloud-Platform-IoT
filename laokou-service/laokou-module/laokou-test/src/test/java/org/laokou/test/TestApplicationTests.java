@@ -13,8 +13,8 @@ import java.util.List;
 @SpringBootTest(classes = TestApplication.class)
 class TestApplicationTests {
 
-    @Autowired
-    private RocketTemplate rocketTemplate;
+//    @Autowired
+//    private RocketTemplate rocketTemplate;
 
     @Test
     void contextLoads() {
@@ -29,10 +29,10 @@ class TestApplicationTests {
         rocketmqDTO.setBody("333");
         RocketmqDTO rocketmqDTO1 = new RocketmqDTO();
         rocketmqDTO1.setBody("31111");
-        rocketTemplate.sendAsyncMessage("laokou-test",rocketmqDTO1);
-        rocketTemplate.sendAsyncMessage("laokou-test",rocketmqDTO1);
-        rocketTemplate.sendAsyncMessage("laokou-test",rocketmqDTO1);
-        rocketTemplate.sendSyncMessage("laokou-test",rocketmqDTO);
+//        rocketTemplate.sendAsyncMessage("laokou-test",rocketmqDTO1);
+//        rocketTemplate.sendAsyncMessage("laokou-test",rocketmqDTO1);
+//        rocketTemplate.sendAsyncMessage("laokou-test",rocketmqDTO1);
+//        rocketTemplate.sendSyncMessage("laokou-test",rocketmqDTO);
         //rocketTemplate.convertAndSendMessage("laokou-test",rocketmqDTO);
         //rocketTemplate.sendSyncMessage("laokou-test-2",new RocketmqDTO());
         //rocketTemplate.sendAndReceiveMessage("laokou-test-2",new RocketmqDTO(),RocketmqDTO.class);
