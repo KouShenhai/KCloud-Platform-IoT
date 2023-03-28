@@ -14,13 +14,5 @@
     "intervalSec": 1,
     "burst": 1000,
     "controlBehavior": 0
-  },
-  {
-    "resource": "laokou-oss",
-    "grade": 1,
-    "count": 300,
-    "intervalSec": 1,
-    "burst": 1000,
-    "controlBehavior": 0
   }
 ]
