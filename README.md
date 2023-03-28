@@ -78,7 +78,7 @@ tenant/tenant123
 | Spring Boot                 | 3.0.5          |
 | Spring Cloud                | 2022.0.1       |
 | Spring Cloud Alibaba        | 2022.0.0.0-RC1 |
-| Spring Boot Admin           | 3.0.1          |
+| Spring Boot Admin           | 3.0.2          |
 | Spring Authorization Server | 1.0.1          |
 | Mybatis Plus                | 3.5.3.1        |
 | Nacos                       | 2.2.0          |
