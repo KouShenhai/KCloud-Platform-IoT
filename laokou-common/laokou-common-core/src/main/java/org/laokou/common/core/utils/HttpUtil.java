@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 package org.laokou.common.core.utils;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.message.BasicHeader;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.apache.hc.core5.net.URIBuilder;
@@ -44,6 +48,7 @@ public class HttpUtil {
 
     private static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 
+    @SneakyThrows
     public static String doGet(String url, Map<String, String> params,Map<String, String> headers) throws IOException {
         //创建HttpClient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -81,6 +86,7 @@ public class HttpUtil {
         return resultString;
     }
 
+    @SneakyThrows
     public static String doPost(String url,Map<String, String> params,Map<String,String> headers) throws IOException {
         //创建HttpClient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -118,6 +124,35 @@ public class HttpUtil {
         }
         log.info("打印：{}",resultString);
         return resultString;
+    }
+
+    @SneakyThrows
+    public static String doJsonPost(String url, Object param,Map<String,String> headers) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        RequestConfig requestConfig = RequestConfig.custom().build();
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
+        headers.forEach((k,v) -> httpPost.setHeader(k,v));
+        httpPost.setConfig(requestConfig);
+        String parameter = JacksonUtil.toJsonStr(param);
+        StringEntity se = null;
+        try {
+            se = new StringEntity(parameter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        httpPost.setEntity(se);
+
+        CloseableHttpResponse response;
+        String result = null;
+        try {
+            response = httpClient.execute(httpPost);
+            HttpEntity httpEntity = response.getEntity();
+            result = EntityUtils.toString(httpEntity, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**

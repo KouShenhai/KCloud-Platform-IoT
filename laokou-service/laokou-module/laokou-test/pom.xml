@@ -26,6 +26,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-core</artifactId>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.laokou</groupId>-->
+<!--            <artifactId>laokou-common-mybatis-plus</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>

@@ -29,8 +29,8 @@ import java.nio.charset.StandardCharsets;
  * @author laokou
  */
 @Slf4j
-@Component
-@RocketMQMessageListener(consumerGroup = "laokou-consumer-group", topic = "laokou-test")
+//@Component
+//@RocketMQMessageListener(consumerGroup = "laokou-consumer-group", topic = "laokou-test")
 public class TestMessageListener implements RocketMQListener<MessageExt> {
 
     @Override
