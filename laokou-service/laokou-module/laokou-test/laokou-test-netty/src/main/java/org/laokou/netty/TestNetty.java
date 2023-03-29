@@ -41,22 +41,7 @@ public class TestNetty {
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel channel) {
-                    channel.pipeline().addLast(new ChannelHandler() {
-                        @Override
-                        public void handlerAdded(ChannelHandlerContext channelHandlerContext) throws Exception {
-
-                        }
-
-                        @Override
-                        public void handlerRemoved(ChannelHandlerContext channelHandlerContext) throws Exception {
-
-                        }
-
-                        @Override
-                        public void exceptionCaught(ChannelHandlerContext channelHandlerContext, Throwable throwable) throws Exception {
-
-                        }
-                    });
+                    channel.pipeline().addLast(new ChannelInboundHandlerAdapter());
                 }
             });
             // 绑定端口，开始提供服务
