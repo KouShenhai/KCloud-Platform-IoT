@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.test.mapper.DeviceMapper">
+
+    <select id="getDeviceIdsByTenantId" resultType="string">
+        select dev_id from dw_iot_device
+        where dev_id <![CDATA[ <> ]]> '' and dev_online_status = 1 and tenant_id = #{tenantId}
+        GROUP BY dev_id
+    </select>
+
+    <select id="getAdDataReport" resultType="org.laokou.test.entity.AdReportPO">
+        <foreach collection="list" separator=" union " item="item">
+            select dev_id,ad_id,max(rt_ad) as maxRT,min(rt_ad) as minRT from ${item}
+            where FIND_IN_SET(ad_id,'0,1,2,3,4,5,6') and date_format(ad_time,'%Y-%m-%d') = #{dateTime}
+            GROUP BY dev_id,ad_id
+        </foreach>
+    </select>
+
+    <select id="getDecideExportRateList" resultType="org.laokou.test.entity.DecideExportRate">
+        <foreach collection="list" separator=" union " item="item">
+            SELECT
+                a.ad_id,
+                a.hours,
+                100 * ( a.maxRT - a.minRT )/ a.maxRT AS rate
+                FROM
+                ( SELECT
+                date_format( ad_time, '%H' ) AS hours,
+                ad_id,
+                dev_id,
+                max( rt_ad ) AS maxRT,
+                min( rt_ad ) AS minRT
+                FROM
+                     ${item}
+                WHERE
+                date_format( ad_time, '%Y-%m-%d' ) = #{dateTime}
+                GROUP BY
+                hours,
+                ad_id,
+                dev_id) AS a
+        </foreach>
+    </select>
+
+</mapper>

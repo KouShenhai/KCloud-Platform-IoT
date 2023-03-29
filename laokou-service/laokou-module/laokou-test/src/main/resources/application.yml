@@ -6,6 +6,11 @@ rocketmq:
     group: laokou-producer-group
   name-server: laokou.org:9876
 
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: assign_id
+
 spring:
   datasource:
     dynamic:
@@ -16,4 +21,4 @@ spring:
           driver-class-name: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://192.168.62.144:3306/test?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
           username: root
-          password: koushenhai123456
+          password:
