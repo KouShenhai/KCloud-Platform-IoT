@@ -21,7 +21,6 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.dynamic.router.utils.RouterUtil;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -41,34 +40,13 @@ import java.io.IOException;
  * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = {"org.laokou.common.tenant"
-        , "org.laokou.common.i18n"
-        , "org.laokou.common.log"
-        , "org.laokou.common.data.cache"
-        , "org.laokou.common.data.filter"
-        , "org.laokou.common.security"
-        , "org.laokou.common.sentinel"
-        , "org.laokou.common.elasticsearch"
-        , "org.laokou.common.swagger"
-        , "org.laokou.common.core"
-        , "org.laokou.common.dynamic.router"
-        , "org.laokou.admin"
-        , "org.laokou.common.redis"
-        , "org.laokou.common.oss"
-        , "org.laokou.flowable.client"
-        , "org.laokou.common.openfeign"
-        , "org.laokou.common.mybatisplus"
-        , "org.laokou.auth.client"})
+@SpringBootApplication
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
 @EnableEncryptableProperties
 @EnableFeignClients
 @EnableAsync
-@MapperScan(value = {"org.laokou.admin.server.domain.sys.repository.mapper"
-        , "org.laokou.common.tenant.mapper"
-        , "org.laokou.common.oss.mapper"
-        , "org.laokou.common.log.mapper"})
 @RequiredArgsConstructor
 public class AdminApplication implements CommandLineRunner {
 

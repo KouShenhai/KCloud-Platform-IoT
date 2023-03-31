@@ -13,5 +13,7 @@
     <version>3.0.5</version>
     <modules>
         <module>laokou-test-netty</module>
+        <module>laokou-test-rocketmq</module>
+        <module>laokou-test-juc</module>
     </modules>
 </project>

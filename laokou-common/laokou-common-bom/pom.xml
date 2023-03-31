@@ -124,6 +124,16 @@
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-test-juc</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-test-rocketmq</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.lionsoul</groupId>
                 <artifactId>ip2region</artifactId>
                 <version>${ip2region.version}</version>
