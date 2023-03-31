@@ -119,6 +119,11 @@
                 <version>${jackson-module-kotlin.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-test-netty</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.lionsoul</groupId>
                 <artifactId>ip2region</artifactId>
                 <version>${ip2region.version}</version>
