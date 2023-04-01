@@ -28,7 +28,7 @@ import java.util.Objects;
  * @author laokou
  */
 @Slf4j
-public class RsaCoder {
+public class RsaUtil {
 
     /**
      * base64解密
