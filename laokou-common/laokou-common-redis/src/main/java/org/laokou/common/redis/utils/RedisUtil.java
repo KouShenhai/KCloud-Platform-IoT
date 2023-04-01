@@ -30,13 +30,11 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @RequiredArgsConstructor
-public final class RedisUtil {
+public class RedisUtil {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final RedissonClient redissonClient;
-
-    private final RBloomFilter<String> bloomFilter;
 
     /**  默认过期时长为24小时，单位：秒 */
     public final static long DEFAULT_EXPIRE = 60 * 60 * 24;

@@ -1,1 +1,2 @@
 org.apache.rocketmq.spring.autoconfigure.RocketMQAutoConfiguration
+org.laokou.common.rocketmq.config.auto.RocketmqAutoConfig

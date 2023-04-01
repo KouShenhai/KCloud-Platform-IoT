@@ -16,7 +16,7 @@
 package org.laokou.admin.server.domain.sys.repository.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.laokou.common.easy.excel.service.ResultService;
+import org.laokou.common.easy.excel.service.ResultService;
 import org.laokou.admin.server.domain.sys.entity.SysResourceDO;
 import org.laokou.admin.server.infrastructure.index.ResourceIndex;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;

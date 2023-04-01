@@ -1,2 +1,1 @@
-org.laokou.common.security.config.auto.ResourceServerAutoConfig
-org.laokou.common.security.config.auto.AuthorizationAutoConfig
+org.laokou.common.security.config.auto.SecurityAutoConfig
