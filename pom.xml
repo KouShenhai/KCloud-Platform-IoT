@@ -193,12 +193,18 @@
                 <MYSQL-USERNAME>root</MYSQL-USERNAME>
                 <MYSQL-PASSWORD>123456</MYSQL-PASSWORD>
                 <MYSQL-HOST>127.0.0.1</MYSQL-HOST>
-                <MYSQL-DB>nacos-config</MYSQL-DB>
+                <MYSQL-DB-NACOS>nacos-config</MYSQL-DB-NACOS>
+                <MYSQL-DB-SEATA>seata-config</MYSQL-DB-SEATA>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>public</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
                 <NACOS-GROUP>DEFAULT_GROUP</NACOS-GROUP>
+                <NACOS-USERNAME>nacos</NACOS-USERNAME>
+                <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
+                <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
+                <SEATA-USERNAME>seata</SEATA-USERNAME>
+                <SEATA-PASSWORD>seata</SEATA-PASSWORD>
                 <profile.active>dev</profile.active>
             </properties>
             <activation>
@@ -212,12 +218,18 @@
                 <MYSQL-USERNAME>ENC(DuWAWIwLQL7R8lDfksUa3w==)</MYSQL-USERNAME>
                 <MYSQL-PASSWORD>ENC(d8GwIeLi+yrnFnaZFqs7s5hGuoSpupWofYMTOKhnSBA=)</MYSQL-PASSWORD>
                 <MYSQL-HOST>laokou.org</MYSQL-HOST>
-                <MYSQL-DB>kcloud_platform_nacos</MYSQL-DB>
+                <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
+                <MYSQL-DB-SEATA>seata-config</MYSQL-DB-SEATA>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
                 <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
+                <NACOS-USERNAME>nacos</NACOS-USERNAME>
+                <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
+                <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
+                <SEATA-USERNAME>seata</SEATA-USERNAME>
+                <SEATA-PASSWORD>seata</SEATA-PASSWORD>
                 <profile.active>test</profile.active>
             </properties>
         </profile>
@@ -228,12 +240,18 @@
                 <MYSQL-USERNAME>xxx</MYSQL-USERNAME>
                 <MYSQL-PASSWORD>xxx</MYSQL-PASSWORD>
                 <MYSQL-HOST>xxx</MYSQL-HOST>
-                <MYSQL-DB>xxx</MYSQL-DB>
+                <MYSQL-DB-NACOS>xxx</MYSQL-DB-NACOS>
+                <MYSQL-DB-SEATA>xxx</MYSQL-DB-SEATA>
                 <MYSQL-PORT>xxx</MYSQL-PORT>
                 <NACOS-NAMESPACE>xxx111222333444555666777888999</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>192.168.62.137:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>192.168.62.137:8848</NACOS-CONFIG-ADDRESS>
                 <NACOS-GROUP>xxx</NACOS-GROUP>
+                <NACOS-USERNAME>xxx</NACOS-USERNAME>
+                <NACOS-PASSWORD>xxx</NACOS-PASSWORD>
+                <SEATA-GROUP>xxx</SEATA-GROUP>
+                <SEATA-USERNAME>xxx</SEATA-USERNAME>
+                <SEATA-PASSWORD>xxx</SEATA-PASSWORD>
                 <profile.active>prod</profile.active>
             </properties>
         </profile>
