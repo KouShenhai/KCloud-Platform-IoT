@@ -71,6 +71,7 @@
         <module>laokou-common-redis-search</module>
         <module>laokou-common-dubbo</module>
         <module>laokou-common-clickhouse</module>
+        <module>laokou-common-cors</module>
     </modules>
 
 </project>

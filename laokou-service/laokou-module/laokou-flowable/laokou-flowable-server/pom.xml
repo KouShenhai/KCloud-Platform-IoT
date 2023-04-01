@@ -28,6 +28,10 @@
     <artifactId>laokou-flowable-server</artifactId>
     <dependencies>
         <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-cors</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
         </dependency>
@@ -84,6 +88,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

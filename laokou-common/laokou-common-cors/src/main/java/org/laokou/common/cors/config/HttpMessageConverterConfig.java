@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.swagger.config;
+
+package org.laokou.common.cors.config;
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -21,16 +23,13 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.DateUtil;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -39,31 +38,10 @@ import java.util.*;
  */
 @Configuration
 @Slf4j
-public class CorsConfig {
+public class HttpMessageConverterConfig {
 
-    @Bean
-    @ConditionalOnMissingBean(CorsFilter.class)
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
-        // 允许所有域名跨域
-        config.addAllowedOriginPattern(CorsConfiguration.ALL);
-        // 允许证书
-        config.setAllowCredentials(true);
-        // 允许所有方法
-        config.addAllowedMethod(CorsConfiguration.ALL);
-        // 允许任何头
-        config.addAllowedHeader(CorsConfiguration.ALL);
-        // 每一个小时，异步请求都发起预检请求 => 发送两次请求 第一次OPTION 第二次GET/POT/PUT/DELETE
-        config.setMaxAge(3600L);
-        UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
-        configurationSource.registerCorsConfiguration("/**",config);
-        log.info("cors加载完毕");
-        return new CorsFilter(configurationSource);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(MappingJackson2HttpMessageConverter.class)
+    @Bean("jackson2HttpMessageConverter")
+    @Order(Ordered.LOWEST_PRECEDENCE - 10000)
     public MappingJackson2HttpMessageConverter jackson2HttpMessageConverter(){
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         ObjectMapper mapper = new ObjectMapper();

@@ -14,6 +14,11 @@
 server:
   port: 7091
 
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
 spring:
   application:
     name: @pom.artifactId@

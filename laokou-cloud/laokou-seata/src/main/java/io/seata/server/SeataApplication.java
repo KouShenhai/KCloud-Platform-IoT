@@ -17,6 +17,7 @@ package io.seata.server;
 
 import java.io.IOException;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -24,6 +25,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author spilledyear@outlook.com
  */
 @SpringBootApplication(scanBasePackages = {"io.seata"})
+@EnableEncryptableProperties
 public class SeataApplication {
     public static void main(String[] args) throws IOException {
         // run the spring-boot application
