@@ -47,10 +47,6 @@
         <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
         <!--spring-doc版本-->
         <spring-doc.version>2.0.4</spring-doc.version>
-        <!--guava版本-->
-        <guava.version>31.0-jre</guava.version>
-        <!--jackson-module-kotlin版本-->
-        <jackson-module-kotlin.version>2.14.2</jackson-module-kotlin.version>
         <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
         <docker.registry.name>koushenhai</docker.registry.name>
         <docker.version>1.2.2</docker.version>
@@ -102,21 +98,6 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi</artifactId>
                 <version>${spring-doc.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- 定义 guava 版本 -->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-kotlin</artifactId>
-                <version>${jackson-module-kotlin.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -209,6 +190,11 @@
         <profile>
             <id>dev</id>
             <properties>
+                <MYSQL-USERNAME>root</MYSQL-USERNAME>
+                <MYSQL-PASSWORD>123456</MYSQL-PASSWORD>
+                <MYSQL-HOST>127.0.0.1</MYSQL-HOST>
+                <MYSQL-DB>nacos-config</MYSQL-DB>
+                <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>public</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
@@ -223,9 +209,14 @@
         <profile>
             <id>test</id>
             <properties>
+                <MYSQL-USERNAME>ENC(DuWAWIwLQL7R8lDfksUa3w==)</MYSQL-USERNAME>
+                <MYSQL-PASSWORD>ENC(d8GwIeLi+yrnFnaZFqs7s5hGuoSpupWofYMTOKhnSBA=)</MYSQL-PASSWORD>
+                <MYSQL-HOST>laokou.org</MYSQL-HOST>
+                <MYSQL-DB>kcloud_platform_nacos</MYSQL-DB>
+                <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
-                <NACOS-DISCOVERY-ADDRESS>192.168.62.144:8848</NACOS-DISCOVERY-ADDRESS>
-                <NACOS-CONFIG-ADDRESS>192.168.62.144:8848</NACOS-CONFIG-ADDRESS>
+                <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
+                <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
                 <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
                 <profile.active>test</profile.active>
             </properties>
@@ -234,7 +225,12 @@
         <profile>
             <id>prod</id>
             <properties>
-                <NACOS-NAMESPACE>xxxxxxxxxxxxxxxxxxxxxxxxxxx</NACOS-NAMESPACE>
+                <MYSQL-USERNAME>xxx</MYSQL-USERNAME>
+                <MYSQL-PASSWORD>xxx</MYSQL-PASSWORD>
+                <MYSQL-HOST>xxx</MYSQL-HOST>
+                <MYSQL-DB>xxx</MYSQL-DB>
+                <MYSQL-PORT>xxx</MYSQL-PORT>
+                <NACOS-NAMESPACE>xxx111222333444555666777888999</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>192.168.62.137:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>192.168.62.137:8848</NACOS-CONFIG-ADDRESS>
                 <NACOS-GROUP>xxx</NACOS-GROUP>

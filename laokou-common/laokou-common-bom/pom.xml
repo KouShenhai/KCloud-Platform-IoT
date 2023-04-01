@@ -108,6 +108,8 @@
         <ip2region.version>2.7.0</ip2region.version>
         <!--jackson-module-kotlin版本-->
         <jackson-module-kotlin.version>2.14.2</jackson-module-kotlin.version>
+        <!--nacos版本-->
+        <nacos.version>2.2.0.1</nacos.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -117,10 +119,16 @@
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-kotlin</artifactId>
                 <version>${jackson-module-kotlin.version}</version>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-test-netty</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-register</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -401,6 +409,7 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -516,16 +525,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-swagger</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-mail-client</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-mail-server</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

@@ -19,7 +19,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = {"org.laokou.generator.server","org.laokou.common.jasypt"})
+@SpringBootApplication
 public class GeneratorApplication {
     public static void main(String[] args) {
         SpringApplication.run(GeneratorApplication.class, args);

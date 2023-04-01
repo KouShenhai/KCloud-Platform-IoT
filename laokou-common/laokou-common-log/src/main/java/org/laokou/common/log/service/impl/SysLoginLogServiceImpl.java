@@ -16,7 +16,7 @@
 package org.laokou.common.log.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.laokou.common.easy.excel.suppert.ExcelTemplate;
+import org.laokou.common.easy.excel.suppert.ExcelTemplate;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.ResultHandler;
@@ -28,7 +28,6 @@ import org.laokou.common.log.mapper.SysLoginLogMapper;
 import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.service.SysLoginLogService;
 import org.laokou.common.log.vo.SysLoginLogVO;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +36,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-@ImportAutoConfiguration
 public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper,SysLoginLogDO> implements SysLoginLogService {
 
     private final ExcelTemplate<SysLoginLogQo,SysLoginLogVO> excelTemplate;
