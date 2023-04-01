@@ -21,7 +21,7 @@ jasypt:
 db:
   num: 1
   url:
-    '0': jdbc:mysql://@MYSQL-HOST@:@MYSQL-PORT@/@MYSQL-DB@?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+    '0': jdbc:mysql://@MYSQL-HOST@:@MYSQL-PORT@/@MYSQL-DB-NACOS@?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
   user: @MYSQL-USERNAME@
   password: @MYSQL-PASSWORD@
 management:
@@ -76,8 +76,12 @@ server:
       enabled: true
       max-days: 30
       pattern: '%h %l %u %t "%r" %s %b %D %{User-Agent}i %{Request-Source}i'
-    basedir: logs
+    basedir: logs/nacos
 spring:
+  application:
+    name: @pom.artifactId@
+  profiles:
+    active: @profile.active@
   sql:
     init:
       platform: mysql

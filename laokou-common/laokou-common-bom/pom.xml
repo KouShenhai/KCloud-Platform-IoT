@@ -409,6 +409,11 @@
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-cors</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>${commons-collections4.version}</version>
@@ -532,6 +537,11 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-swagger</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-seata</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

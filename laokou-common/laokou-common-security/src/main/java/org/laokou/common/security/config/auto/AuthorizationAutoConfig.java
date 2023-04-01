@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.security.config;
+package org.laokou.common.security.config.auto;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -26,7 +26,6 @@ import org.springframework.security.oauth2.server.authorization.JdbcOAuth2Author
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
-
 import javax.sql.DataSource;
 
 /**
@@ -34,7 +33,7 @@ import javax.sql.DataSource;
  */
 @AutoConfiguration(before = {JdbcTemplateAutoConfiguration.class})
 @ConditionalOnClass({DataSource.class})
-public class AuthorizationConfig {
+public class AuthorizationAutoConfig {
 
     @Bean
     @ConditionalOnMissingBean(OAuth2AuthorizationService.class)

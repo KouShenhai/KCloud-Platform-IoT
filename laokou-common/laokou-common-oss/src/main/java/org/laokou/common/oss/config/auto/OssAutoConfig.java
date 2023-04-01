@@ -16,6 +16,7 @@
 
 package org.laokou.common.oss.config.auto;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -24,5 +25,6 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @AutoConfiguration
 @ComponentScan("org.laokou.common.oss")
+@MapperScan("org.laokou.common.oss.mapper")
 public class OssAutoConfig {
 }
