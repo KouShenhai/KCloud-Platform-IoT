@@ -32,6 +32,9 @@ spring:
       ignoredInterfaces:
         - docker0
         - veth.*
+  datasource:
+    dynamic:
+      primary: flowable
 
 flowable:
   # 只保存审批记录
