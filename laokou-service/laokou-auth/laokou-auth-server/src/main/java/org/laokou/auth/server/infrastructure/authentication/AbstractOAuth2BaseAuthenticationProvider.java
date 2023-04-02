@@ -22,6 +22,7 @@ import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.common.core.enums.ResultStatusEnum;
+import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
@@ -103,7 +104,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
         Authentication principal = login(request);
-        return getToken(authentication,principal,request);
+        return getToken(authentication,principal);
     }
 
     /**
@@ -135,7 +136,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    protected Authentication getToken(Authentication authentication,Authentication principal,HttpServletRequest request) throws IOException {
+    protected Authentication getToken(Authentication authentication,Authentication principal) throws IOException {
         // 仿照授权码模式
         // 生成token（access_token + refresh_token）
         AbstractOAuth2BaseAuthenticationToken abstractOAuth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;
@@ -146,7 +147,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         String loginName = principal.getCredentials().toString();
         // 认证类型
         AuthorizationGrantType grantType = getGrantType();
-        String loginType = grantType.getValue();
         // 获取上下文
         DefaultOAuth2TokenContext.Builder builder = DefaultOAuth2TokenContext.builder()
                 .registeredClient(registeredClient)
@@ -172,9 +172,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         // jwt
         if (generatedOauth2AccessToken instanceof ClaimAccessor) {
             authorizationBuilder
-                    .token(oAuth2AccessToken,
-                            meta -> meta.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME
-                                    ,((ClaimAccessor)generatedOauth2AccessToken).getClaims()))
+                    .token(oAuth2AccessToken, meta -> meta.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME,((ClaimAccessor)generatedOauth2AccessToken).getClaims()))
                     .authorizedScopes(scopes)
                     // admin后台管理需要token，解析token获取用户信息，因此将用户信息存在数据库，下次直接查询数据库就可以获取用户信息
                     .attribute(Principal.class.getName(), principal);
@@ -192,9 +190,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         authorizationBuilder.refreshToken(oAuth2RefreshToken);
         OAuth2Authorization oAuth2Authorization = authorizationBuilder.build();
         authorizationService.save(oAuth2Authorization);
-        // 登录成功
-        Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
-        loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.SUCCESS.ordinal(), AuthConstant.LOGIN_SUCCESS_MSG,request,tenantId);
         // 清空上下文
         SecurityContextHolder.clearContext();
         return new OAuth2AccessTokenAuthenticationToken(
@@ -263,7 +258,11 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             userDetail.setSourceName(sourceName);
         }
         // 登录IP
-        userDetail.setIp(IpUtil.getIpAddr(request));
+        userDetail.setLoginIp(IpUtil.getIpAddr(request));
+        // 登录时间
+        userDetail.setLoginDate(DateUtil.now());
+        // 登录成功
+        loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.SUCCESS.ordinal(), AuthConstant.LOGIN_SUCCESS_MSG,request,tenantId);
         return new UsernamePasswordAuthenticationToken(userDetail,loginName,userDetail.getAuthorities());
     }
 

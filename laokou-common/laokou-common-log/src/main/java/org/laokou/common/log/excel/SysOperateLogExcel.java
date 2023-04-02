@@ -123,9 +123,16 @@ public class SysOperateLogExcel implements Serializable {
     /**
      * 操作时间
      */
-    @ExcelProperty(index = 12,value = "操作世间")
+    @ExcelProperty(index = 12,value = "操作时间")
     @ColumnWidth(value = 20)
     private Date createDate;
+
+    /**
+     * 耗时（毫秒）
+     */
+    @ExcelProperty(index = 13,value = "耗时（毫秒）")
+    @ColumnWidth(value = 20)
+    private Long takeTime;
 
     public void setRequestStatusMsg(Integer requestStatus) {
         requestStatusMsg = requestStatus == 0 ? "成功" : "失败";

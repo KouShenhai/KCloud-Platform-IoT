@@ -95,4 +95,9 @@ public class SysOperateLogVO implements Serializable {
      */
     private Date createDate;
 
+    /**
+     * 耗时（毫秒）
+     */
+    private Long takeTime;
+
 }
