@@ -82,10 +82,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             return true;
         }
         token = token.substring(7);
-        String accountKillKey = RedisKeyUtil.getAccountKillKey(token);
-        if (redisUtil.hasKey(accountKillKey)) {
-            redisUtil.delete(accountKillKey);
-        }
         OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
         if (oAuth2Authorization == null) {
             return true;
@@ -95,20 +91,14 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         oAuth2AuthorizationService.remove(oAuth2Authorization);
         // 用户key
         String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-        if (redisUtil.hasKey(userInfoKey)) {
-            redisUtil.delete(userInfoKey);
-        }
-        Long userId = userDetail.getUserId();
+        redisUtil.delete(userInfoKey);
+        Long userId = userDetail.getId();
         // 菜单key
         String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
-        if (redisUtil.hasKey(resourceTreeKey)) {
-            redisUtil.delete(resourceTreeKey);
-        }
+        redisUtil.delete(resourceTreeKey);
         // 消息key
         String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
-        if (redisUtil.hasKey(messageUnReadKey)) {
-            redisUtil.delete(messageUnReadKey);
-        }
+        redisUtil.delete(messageUnReadKey);
         return true;
     }
 

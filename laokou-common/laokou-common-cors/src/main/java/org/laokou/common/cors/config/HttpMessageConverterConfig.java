@@ -71,9 +71,9 @@ public class HttpMessageConverterConfig {
         TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
         stdDateFormat.setTimeZone(timeZone);
         stdDateFormat.withLocale(Locale.SIMPLIFIED_CHINESE);
-        String format = stdDateFormat.format(new Date());
+        String format = stdDateFormat.format(DateUtil.now());
         System.out.println(format);
-        System.out.println(new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_MM_DD_HH_MM_SS)).format(new Date()));
+        System.out.println(new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_MM_DD_HH_MM_SS)).format(DateUtil.now()));
     }
 
 }

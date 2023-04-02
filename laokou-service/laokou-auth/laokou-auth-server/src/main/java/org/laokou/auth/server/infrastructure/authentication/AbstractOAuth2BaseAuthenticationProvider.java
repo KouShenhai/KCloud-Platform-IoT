@@ -28,7 +28,6 @@ import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AESUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.tenant.service.SysSourceService;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -47,6 +46,8 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
@@ -73,7 +74,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     protected final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
     protected final SysSourceService sysSourceService;
     protected final RedisUtil redisUtil;
-    protected final SysAuthenticationService sysAuthenticationService;
     public AbstractOAuth2BaseAuthenticationProvider(
             SysUserService sysUserService
             , SysMenuService sysMenuService
@@ -84,7 +84,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             , OAuth2AuthorizationService authorizationService
             , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
             , SysSourceService sysSourceService
-            , SysAuthenticationService sysAuthenticationService
             , RedisUtil redisUtil) {
         this.sysDeptService = sysDeptService;
         this.sysMenuService = sysMenuService;
@@ -96,7 +95,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         this.authorizationService = authorizationService;
         this.sysSourceService = sysSourceService;
         this.redisUtil = redisUtil;
-        this.sysAuthenticationService = sysAuthenticationService;
     }
 
 
@@ -135,6 +133,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
      * @param principal
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     protected Authentication getToken(Authentication authentication,Authentication principal,HttpServletRequest request) throws IOException {
         // 仿照授权码模式
         // 生成token（access_token + refresh_token）
@@ -195,8 +194,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         // 登录成功
         Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
         loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.SUCCESS.ordinal(), AuthConstant.LOGIN_SUCCESS_MSG,request,tenantId);
-        // 账号是否已经登录并且未过期，是则强制踢出，反之不操作
-        accountKill(oAuth2AccessToken.getTokenValue(),loginName);
         // 清空上下文
         SecurityContextHolder.clearContext();
         return new OAuth2AccessTokenAuthenticationToken(
@@ -244,7 +241,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.USERNAME_DISABLE),request,tenantId);
             CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_DISABLE, MessageUtil.getMessage(StatusCode.USERNAME_DISABLE));
         }
-        Long userId = userDetail.getUserId();
+        Long userId = userDetail.getId();
         Integer superAdmin = userDetail.getSuperAdmin();
         // 权限标识列表
         List<String> permissionsList = sysMenuService.getPermissionsList(tenantId,superAdmin,userId);
@@ -276,27 +273,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             return clientPrincipal;
         }
         throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_CLIENT);
-    }
-
-    /**
-     * 账号踢出
-     * @param accessToken
-     * @param loginName
-     */
-    private void accountKill(String accessToken,String loginName) {
-        List<String> accessTokenList = sysAuthenticationService.getAccessTokenList(loginName, accessToken);
-        if (CollectionUtils.isNotEmpty(accessTokenList)) {
-            accessTokenList.forEach(this::kill);
-        }
-    }
-
-    /**
-     * 踢出
-     * @param token
-     */
-    private void kill(String token) {
-        String accountKillKey = RedisKeyUtil.getAccountKillKey(token);
-        redisUtil.set(accountKillKey,DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);
     }
 
 }

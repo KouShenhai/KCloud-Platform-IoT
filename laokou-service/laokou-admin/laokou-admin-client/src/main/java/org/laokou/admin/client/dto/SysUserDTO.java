@@ -40,7 +40,7 @@ public class SysUserDTO implements Serializable {
 
     private String password;
 
-    private String imgUrl;
+    private String avatar;
 
     @JasyptField
     private String mail;

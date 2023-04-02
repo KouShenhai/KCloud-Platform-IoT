@@ -110,7 +110,6 @@ public class OAuth2AuthorizationServerConfig {
     , SysCaptchaService sysCaptchaService
     , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
     , SysSourceService sysSourceService
-    , SysAuthenticationService sysAuthenticationService
     , RedisUtil redisUtil) throws Exception {
         OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
         authorizationServerConfigurer.oidc(Customizer.withDefaults());
@@ -135,9 +134,9 @@ public class OAuth2AuthorizationServerConfig {
                         .authorizationServerSettings(authorizationServerSettings))
                 .and()
                 .build();
-        http.authenticationProvider(new OAuth2PasswordAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil))
-                .authenticationProvider(new OAuth2MobileAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil))
-                .authenticationProvider(new OAuth2MailAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil));
+        http.authenticationProvider(new OAuth2PasswordAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,redisUtil))
+                .authenticationProvider(new OAuth2MobileAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,redisUtil))
+                .authenticationProvider(new OAuth2MailAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,redisUtil));
         return defaultSecurityFilterChain;
     }
 

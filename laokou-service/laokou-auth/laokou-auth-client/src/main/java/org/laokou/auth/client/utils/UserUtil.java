@@ -36,14 +36,14 @@ public class UserUtil {
      * 获取用户id
      */
     public static Long getUserId() {
-        return userDetail().getUserId();
+        return userDetail().getId();
     }
 
     /**
      * 获取用户名
      * @return
      */
-    public static String getUsername() {
+    public static String getUserName() {
         return userDetail().getUsername();
     }
 

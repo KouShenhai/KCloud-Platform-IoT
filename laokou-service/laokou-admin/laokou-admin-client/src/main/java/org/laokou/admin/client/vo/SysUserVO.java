@@ -30,7 +30,7 @@ public class SysUserVO implements Serializable {
     private Long id;
     private Date createDate;
     private String username;
-    private String imgUrl;
+    private String avatar;
     private Long deptId;
     private Integer superAdmin;
     private Integer status;

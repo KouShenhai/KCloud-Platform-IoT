@@ -308,7 +308,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
             String businessKey = dto.getBusinessKey();
             Long businessId = Long.valueOf(businessKey);
             String comment = dto.getComment();
-            String username = AESUtil.decrypt(UserUtil.getUsername());
+            String username = AESUtil.decrypt(UserUtil.getUserName());
             Long userId = UserUtil.getUserId();
             int auditStatus = Integer.valueOf(values.get(AUDIT_STATUS).toString());
             int status;
@@ -392,7 +392,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         AuditLogEvent auditLogEvent = new AuditLogEvent(this);
         auditLogEvent.setBusinessId(businessId);
         auditLogEvent.setAuditStatus(auditStatus);
-        auditLogEvent.setAuditDate(new Date());
+        auditLogEvent.setAuditDate(DateUtil.now());
         auditLogEvent.setAuditName(username);
         auditLogEvent.setCreator(userId);
         auditLogEvent.setComment(comment);
@@ -406,7 +406,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         TaskDTO dto = new TaskDTO();
         dto.setPageNum(qo.getPageNum());
         dto.setPageSize(qo.getPageSize());
-        dto.setUsername(AESUtil.decrypt(UserUtil.getUsername()));
+        dto.setUsername(AESUtil.decrypt(UserUtil.getUserName()));
         dto.setUserId(UserUtil.getUserId());
         dto.setProcessName(qo.getProcessName());
         dto.setProcessKey(PROCESS_KEY);

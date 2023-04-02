@@ -109,10 +109,10 @@ public class ResponseUtil {
      */
     public static String getUsername(ServerHttpRequest request){
         //从header中获取username
-        String username = request.getHeaders().getFirst(GatewayConstant.REQUEST_USERNAME);
+        String username = request.getHeaders().getFirst(GatewayConstant.REQUEST_USER_NAME);
         //如果header中不存在username，则从参数中获取username
         if(StringUtil.isEmpty(username)){
-            username = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USERNAME);
+            username = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USER_NAME);
         }
         return username == null ? "" : username.trim();
     }

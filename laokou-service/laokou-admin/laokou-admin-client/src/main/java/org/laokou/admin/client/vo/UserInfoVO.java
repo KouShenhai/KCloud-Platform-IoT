@@ -30,8 +30,8 @@ import java.util.List;
 public class UserInfoVO implements Serializable {
     @Serial
     private static final long serialVersionUID = 5297753219988591611L;
-    private Long userId;
-    private String imgUrl;
+    private Long id;
+    private String avatar;
     @JasyptField(type = TypeEnum.DECRYPT)
     private String username;
     @JasyptField(type = TypeEnum.DECRYPT)

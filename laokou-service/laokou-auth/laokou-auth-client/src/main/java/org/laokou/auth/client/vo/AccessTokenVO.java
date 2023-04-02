@@ -14,27 +14,17 @@
  * limitations under the License.
  */
 
-package org.laokou.auth.server.domain.sys.repository.mapper;
+package org.laokou.auth.client.vo;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-@Repository
-@Mapper
-public interface SysAuthenticationMapper {
+@Data
+public class AccessTokenVO {
 
-    /**
-     * 获取token集合
-     * @param loginName
-     * @param accessToken
-     * @return
-     */
-    List<String> getAccessTokenList(@Param("loginName")String loginName, @Param("accessToken")String accessToken);
+    private String accessToken;
+    private Integer expire;
 
 }

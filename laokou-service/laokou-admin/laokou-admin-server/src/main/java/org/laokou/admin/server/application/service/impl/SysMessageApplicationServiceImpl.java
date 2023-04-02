@@ -32,6 +32,7 @@ import org.laokou.admin.client.vo.SysMessageVO;
 import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.im.client.PushMsgDTO;
@@ -60,7 +61,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     public Boolean insertMessage(MessageDTO dto) {
         ValidatorUtil.validateEntity(dto);
         SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
-        messageDO.setCreateDate(new Date());
+        messageDO.setCreateDate(DateUtil.now());
         messageDO.setCreator(UserUtil.getUserId());
         sysMessageService.save(messageDO);
         Set<String> receiver = dto.getReceiver();
@@ -71,7 +72,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             SysMessageDetailDO detailDO = new SysMessageDetailDO();
             detailDO.setMessageId(messageDO.getId());
             detailDO.setUserId(Long.valueOf(next));
-            detailDO.setCreateDate(new Date());
+            detailDO.setCreateDate(DateUtil.now());
             detailDO.setCreator(UserUtil.getUserId());
             detailDOList.add(detailDO);
         }

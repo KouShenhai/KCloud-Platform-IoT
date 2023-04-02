@@ -17,6 +17,10 @@
 server:
   port: 1111
 
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 # spring
 spring:
   application:

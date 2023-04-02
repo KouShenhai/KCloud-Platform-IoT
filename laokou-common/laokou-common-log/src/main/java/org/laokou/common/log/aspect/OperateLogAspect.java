@@ -95,7 +95,7 @@ public class OperateLogAspect {
         event.setRequestUri(request.getRequestURI());
         event.setRequestIp(ip);
         event.setRequestAddress(AddressUtil.getRealAddress(ip));
-        event.setOperator(AESUtil.decrypt(UserUtil.getUsername()));
+        event.setOperator(AESUtil.decrypt(UserUtil.getUserName()));
         event.setCreator(UserUtil.getUserId());
         event.setDeptId(UserUtil.getDeptId());
         if (null != e) {

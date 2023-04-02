@@ -40,9 +40,9 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 
     @Serial
     private static final long serialVersionUID = 3319752558160144611L;
-    private Long userId;
+    private Long id;
     private String username;
-    private String imgUrl;
+    private String avatar;
     private Integer superAdmin;
     private Integer status;
     private transient String mail;
@@ -64,13 +64,13 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
         }
         UserDetail that = (UserDetail) o;
 
-        if (!Objects.equals(userId, that.userId)) {
+        if (!Objects.equals(id, that.id)) {
             return false;
         }
         if (!Objects.equals(username, that.username)) {
             return false;
         }
-        if (!Objects.equals(imgUrl, that.imgUrl)) {
+        if (!Objects.equals(avatar, that.avatar)) {
             return false;
         }
         if (!Objects.equals(superAdmin, that.superAdmin)) {
@@ -96,9 +96,9 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 
     @Override
     public int hashCode() {
-        int result = userId != null ? userId.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (imgUrl != null ? imgUrl.hashCode() : 0);
+        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
         result = 31 * result + (superAdmin != null ? superAdmin.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (deptId != null ? deptId.hashCode() : 0);
