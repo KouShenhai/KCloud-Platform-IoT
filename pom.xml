@@ -205,6 +205,8 @@
                 <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
                 <SEATA-USERNAME>seata</SEATA-USERNAME>
                 <SEATA-PASSWORD>seata</SEATA-PASSWORD>
+                <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
+                <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <profile.active>dev</profile.active>
             </properties>
             <activation>
@@ -230,6 +232,8 @@
                 <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
                 <SEATA-USERNAME>seata</SEATA-USERNAME>
                 <SEATA-PASSWORD>seata</SEATA-PASSWORD>
+                <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
+                <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <profile.active>test</profile.active>
             </properties>
         </profile>
@@ -252,6 +256,8 @@
                 <SEATA-GROUP>xxx</SEATA-GROUP>
                 <SEATA-USERNAME>xxx</SEATA-USERNAME>
                 <SEATA-PASSWORD>xxx</SEATA-PASSWORD>
+                <SENTINEL-USERNAME>xxx</SENTINEL-USERNAME>
+                <SENTINEL-PASSWORD>xxx</SENTINEL-PASSWORD>
                 <profile.active>prod</profile.active>
             </properties>
         </profile>
