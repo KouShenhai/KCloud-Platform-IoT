@@ -134,7 +134,7 @@ public class OperateLogAspect {
                && !(arg instanceof HttpServletResponse);
     }
 
-    public static Map removeAny(Map map, String... keys) {
+    private Map removeAny(Map map, String... keys) {
         for(int var5 = 0; var5 < keys.length; ++var5) {
             map.remove(keys[var5]);
         }
