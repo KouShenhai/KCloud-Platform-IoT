@@ -53,6 +53,7 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
     private List<String> permissionList;
     private Long tenantId;
     private String sourceName;
+    private String ip;
 
     @Override
     public boolean equals(Object o) {
@@ -63,53 +64,54 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
             return false;
         }
         UserDetail that = (UserDetail) o;
-
-        if (!Objects.equals(id, that.id)) {
+        if (!id.equals(that.id)) {
             return false;
         }
-        if (!Objects.equals(username, that.username)) {
+        if (!username.equals(that.username)) {
             return false;
         }
-        if (!Objects.equals(avatar, that.avatar)) {
+        if (!avatar.equals(that.avatar)) {
             return false;
         }
-        if (!Objects.equals(superAdmin, that.superAdmin)) {
+        if (!superAdmin.equals(that.superAdmin)) {
             return false;
         }
-        if (!Objects.equals(status, that.status)) {
+        if (!status.equals(that.status)) {
             return false;
         }
-        if (!Objects.equals(deptId, that.deptId)) {
+        if (!deptId.equals(that.deptId)) {
             return false;
         }
-        if (!Objects.equals(deptIds, that.deptIds)) {
+        if (!deptIds.equals(that.deptIds)) {
             return false;
         }
-        if (!Objects.equals(permissionList, that.permissionList)) {
+        if (!permissionList.equals(that.permissionList)) {
             return false;
         }
-        if (!Objects.equals(tenantId, that.tenantId)) {
+        if (!tenantId.equals(that.tenantId)) {
             return false;
         }
-        return Objects.equals(sourceName, that.sourceName);
+        if (!sourceName.equals(that.sourceName)) {
+            return false;
+        }
+        return ip.equals(that.ip);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
-        result = 31 * result + (superAdmin != null ? superAdmin.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (deptId != null ? deptId.hashCode() : 0);
-        result = 31 * result + (deptIds != null ? deptIds.hashCode() : 0);
-        result = 31 * result + (permissionList != null ? permissionList.hashCode() : 0);
-        result = 31 * result + (tenantId != null ? tenantId.hashCode() : 0);
-        result = 31 * result + (sourceName != null ? sourceName.hashCode() : 0);
+        int result = id.hashCode();
+        result = 31 * result + username.hashCode();
+        result = 31 * result + avatar.hashCode();
+        result = 31 * result + superAdmin.hashCode();
+        result = 31 * result + status.hashCode();
+        result = 31 * result + deptId.hashCode();
+        result = 31 * result + deptIds.hashCode();
+        result = 31 * result + permissionList.hashCode();
+        result = 31 * result + tenantId.hashCode();
+        result = 31 * result + sourceName.hashCode();
+        result = 31 * result + ip.hashCode();
         return result;
     }
-
-
 
     @Override
     @JsonIgnore
