@@ -51,3 +51,35 @@ spring:
       ignoredInterfaces:
         - docker0
         - veth.*
+  # OAuth2
+  security:
+    oauth2:
+      authorization-server:
+        enabled: true
+        token:
+          accessTokenTimeToLive: 1h
+          refreshTokenTimeToLive: 6h
+        client:
+          requireAuthorizationConsent: true
+        registration:
+          id: 95TxSsTPFA3tF12TBSMmUVK0da
+          clientId: 95TxSsTPFA3tF12TBSMmUVK0da
+          clientName: OAuth2认证
+          clientSecret: $2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO
+          clientAuthenticationMethods:
+            - client_secret_basic
+          authorizationGrantTypes:
+            - password
+            - mail
+            - mobile
+            - client_credentials
+            - refresh_token
+            - authorization_code
+          scopes:
+            - password
+            - mail
+            - mobile
+            - openid
+          redirectUris:
+            - http://127.0.0.1:8000
+            - http://127.0.0.1:8001

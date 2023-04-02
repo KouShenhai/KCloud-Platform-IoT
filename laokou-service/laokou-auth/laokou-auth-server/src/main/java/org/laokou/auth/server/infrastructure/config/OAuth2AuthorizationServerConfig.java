@@ -27,6 +27,8 @@ import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.tenant.service.SysSourceService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -42,7 +44,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.OAuth2Token;
-import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
@@ -70,13 +71,13 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.interfaces.RSAPublicKey;
-import java.time.Duration;
 import java.util.List;
 /**
  * @author laokou
  */
 @Configuration
-public class AuthorizationServerConfig {
+@ConditionalOnProperty(havingValue = "true",matchIfMissing = true,prefix = OAuth2AuthorizationServerProperties.PREFIX,name = "enabled")
+public class OAuth2AuthorizationServerConfig {
 
     /**
      *
@@ -141,53 +142,49 @@ public class AuthorizationServerConfig {
     }
 
     /**
-     * TODO ConfigurationSettingNames配置OAuth2
      * @param jdbcTemplate
      * @return
      */
     @Bean
     @ConditionalOnMissingBean(RegisteredClientRepository.class)
-    RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
-        RegisteredClient registeredClient = RegisteredClient.withId("95TxSsTPFA3tF12TBSMmUVK0da")
-                .clientId("95TxSsTPFA3tF12TBSMmUVK0da")
-                .clientSecret("$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO")
-                // ClientAuthenticationMethod.CLIENT_SECRET_BASIC => client_id:client_secret => 95TxSsTPFA3tF12TBSMmUVK0da:FpHwIfw4wY92dO 进行Base64编码后的值
-                // Headers Authorization Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=
-                // http://localhost:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=password mail mobile&redirect_uri=https://www.baidu.com
-                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                .authorizationGrantTypes(authorizationGrantTypes -> authorizationGrantTypes.addAll(
-                        List.of(AuthorizationGrantType.AUTHORIZATION_CODE
-                                , AuthorizationGrantType.REFRESH_TOKEN
-                                , new AuthorizationGrantType(OAuth2PasswordAuthenticationProvider.GRANT_TYPE)
-                                , new AuthorizationGrantType(OAuth2MailAuthenticationProvider.GRANT_TYPE)
-                                , new AuthorizationGrantType(OAuth2MobileAuthenticationProvider.GRANT_TYPE)
-                                , AuthorizationGrantType.CLIENT_CREDENTIALS)))
-                .scopes(scopes -> scopes.addAll(List.of(
-                          OAuth2PasswordAuthenticationProvider.GRANT_TYPE
-                        , OAuth2MailAuthenticationProvider.GRANT_TYPE
-                        , OAuth2MobileAuthenticationProvider.GRANT_TYPE
-                        , OidcScopes.OPENID
-                        , OidcScopes.PROFILE
-                        , OidcScopes.PHONE
-                        , OidcScopes.ADDRESS
-                        , OidcScopes.EMAIL
-                )))
-                .redirectUris(redirectUris -> redirectUris.addAll(List.of(
-                          "https://spring.io"
-                        , "https://github.com/KouShenhai"
-                        , "https://www.baidu.com"
-                )))
-                .clientName("认证")
-                // JWT配置
-                .tokenSettings(TokenSettings.builder()
-                        .accessTokenTimeToLive(Duration.ofHours(1))
-                        .refreshTokenTimeToLive(Duration.ofHours(6))
-                        .build())
-                // 客户端配置，包括验证密钥或需要授权页面
-                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
-                .build();
+    RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate,OAuth2AuthorizationServerProperties properties) {
+        OAuth2AuthorizationServerProperties.Client client = properties.getClient();
+        OAuth2AuthorizationServerProperties.Token token = properties.getToken();
+        OAuth2AuthorizationServerProperties.Registration registration = properties.getRegistration();
+        RegisteredClient.Builder registrationBuilder = RegisteredClient.withId(registration.getId());
+        TokenSettings.Builder tokenBuilder = TokenSettings.builder();
+        ClientSettings.Builder clientBuilder = ClientSettings.builder();
+        PropertyMapper map = PropertyMapper.get();
+        // 令牌 => JWT配置
+        map.from(token::getAccessTokenTimeToLive).to(tokenBuilder::accessTokenTimeToLive);
+        map.from(token::getRefreshTokenTimeToLive).to(tokenBuilder::refreshTokenTimeToLive);
+        // 客户端配置，包括验证密钥或需要授权页面
+        map.from(client::isRequireAuthorizationConsent).to(clientBuilder::requireAuthorizationConsent);
+        // 注册
+        // ClientAuthenticationMethod.CLIENT_SECRET_BASIC => client_id:client_secret => 95TxSsTPFA3tF12TBSMmUVK0da:FpHwIfw4wY92dO 进行Base64编码后的值
+        // Headers Authorization Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=
+        // http://localhost:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=password mail mobile&redirect_uri=http://127.0.0.1:8000
+        map.from(registration::getClientId).to(registrationBuilder::clientId);
+        map.from(registration::getClientName).to(registrationBuilder::clientName);
+        map.from(registration::getClientSecret).to(registrationBuilder::clientSecret);
+        registration.getClientAuthenticationMethods().forEach(clientAuthenticationMethod -> map.from(clientAuthenticationMethod)
+                .whenNonNull()
+                .as(ClientAuthenticationMethod::new)
+                .to(registrationBuilder::clientAuthenticationMethod));
+        registration.getAuthorizationGrantTypes().forEach(authorizationGrantType -> map.from(authorizationGrantType)
+                .whenNonNull()
+                .as(AuthorizationGrantType::new)
+                .to(registrationBuilder::authorizationGrantType));
+        registration.getScopes().forEach(scope -> map.from(scope)
+                .whenNonNull()
+                .to(registrationBuilder::scope));
+        registration.getRedirectUris().forEach(redirectUri -> map.from(redirectUri)
+                .whenNonNull()
+                .to(registrationBuilder::redirectUri));
+        registrationBuilder.tokenSettings(tokenBuilder.build());
+        registrationBuilder.clientSettings(clientBuilder.build());
         JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
-        registeredClientRepository.save(registeredClient);
+        registeredClientRepository.save(registrationBuilder.build());
         return registeredClientRepository;
     }
 

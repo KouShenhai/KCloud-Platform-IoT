@@ -24,7 +24,7 @@ import org.springframework.security.web.SecurityFilterChain;
  * @author laokou
  */
 @Configuration
-public class WebSecurityConfig {
+public class OAuth2ResourceServerConfig {
 
     /**
      * 不拦截拦截静态资源
