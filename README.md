@@ -168,6 +168,7 @@ tenant/tenant123
         └── laokou-gateway                         --- API网关  
         └── laokou-monitor                         --- 服务监控  
         └── laokou-register                        --- 服务治理  
+        └── laokou-sentinel                        --- 流量治理  
         └── laokou-seata                           --- 分布式事务  
 ├── laokou-service         
         └── laokou-generator                       --- 模板模块  
