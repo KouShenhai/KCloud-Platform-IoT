@@ -76,7 +76,7 @@ server:
       enabled: true
       max-days: 30
       pattern: '%h %l %u %t "%r" %s %b %D %{User-Agent}i %{Request-Source}i'
-    basedir: logs/nacos
+    basedir: logs
 spring:
   application:
     name: @pom.artifactId@

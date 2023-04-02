@@ -35,8 +35,6 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.im.client.PushMsgDTO;
-import org.laokou.common.redis.utils.RedisKeyUtil;
-import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.tenant.processor.DsTenantProcessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,7 +52,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
     private final SysMessageDetailService sysMessageDetailService;
     private final ImApiFeignClient imApiFeignClient;
-    private final RedisUtil redisUtil;
     private final BatchUtil<SysMessageDetailDO> batchUtil;
 
     @Override
@@ -93,14 +90,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             pushMsgDTO.setReceiver(receiver);
             // 推送消息
             imApiFeignClient.push(pushMsgDTO);
-            receiver.forEach(item -> {
-                // 根据用户，分别将递增未读消息数
-                String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(Long.valueOf(item));
-                Object obj = redisUtil.get(messageUnReadKey);
-                if (obj != null) {
-                    redisUtil.incrementAndGet(messageUnReadKey);
-                }
-            });
         }
     }
 
@@ -118,12 +107,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     public MessageDetailVO getMessageByDetailId(Long id) {
         Integer version = sysMessageDetailService.getVersion(id);
         sysMessageService.readMessage(id,version);
-        final Long userId = UserUtil.getUserId();
-        String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
-        Object obj = redisUtil.get(messageUnReadKey);
-        if (obj != null) {
-            redisUtil.decrementAndGet(messageUnReadKey);
-        }
         return sysMessageService.getMessageByDetailId(id);
     }
 
@@ -145,13 +128,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     @DS(DsTenantProcessor.TENANT)
     public Long unReadCount() {
         final Long userId = UserUtil.getUserId();
-        String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
-        Object obj = redisUtil.get(messageUnReadKey);
-        if (obj != null) {
-            return Long.valueOf(obj.toString());
-        }
         long count = sysMessageDetailService.messageCount(userId);
-        redisUtil.addAndGet(messageUnReadKey,count);
         return count;
     }
 

@@ -27,6 +27,6 @@ public class PasswordUtil {
      * @throws Exception
      */
     public static String decode(String str) throws Exception {
-        return RsaCoder.decryptByPrivateKey(str);
+        return RsaUtil.decryptByPrivateKey(str);
     }
 }
