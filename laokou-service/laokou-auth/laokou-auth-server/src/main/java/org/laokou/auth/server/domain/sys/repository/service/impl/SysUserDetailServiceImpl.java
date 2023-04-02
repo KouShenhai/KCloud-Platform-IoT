@@ -21,8 +21,8 @@ import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
 import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
 import org.laokou.auth.server.infrastructure.authentication.OAuth2PasswordAuthenticationProvider;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.HttpContextUtil;
+import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -77,6 +77,8 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
         List<Long> deptIds = sysDeptService.getDeptIds(superAdmin, userId,0L);
         userDetail.setDeptIds(deptIds);
         userDetail.setPermissionList(permissionsList);
+        // 登录IP
+        userDetail.setIp(IpUtil.getIpAddr(request));
         return userDetail;
     }
 }

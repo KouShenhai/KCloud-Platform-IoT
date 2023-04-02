@@ -23,6 +23,7 @@ import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.HttpContextUtil;
+import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -261,6 +262,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             String sourceName = sysSourceService.querySourceName(tenantId);
             userDetail.setSourceName(sourceName);
         }
+        // 登录IP
+        userDetail.setIp(IpUtil.getIpAddr(request));
         return new UsernamePasswordAuthenticationToken(userDetail,loginName,userDetail.getAuthorities());
     }
 
