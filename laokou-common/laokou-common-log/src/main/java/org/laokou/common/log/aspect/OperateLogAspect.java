@@ -52,13 +52,13 @@ public class OperateLogAspect {
 
     private static final String[] REMOVE_PARAMS = {"username","password","mobile","mail"};
 
-    private static final ThreadLocal<StopWatch> COS_TIME_LOCAL = new NamedThreadLocal<>("消耗时间");
+    private static final ThreadLocal<StopWatch> TASK_TIME_LOCAL = new NamedThreadLocal<>("耗时");
 
     @Before(value = "@annotation(org.laokou.common.log.annotation.OperateLog)")
     public void doBefore() {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        COS_TIME_LOCAL.set(stopWatch);
+        TASK_TIME_LOCAL.set(stopWatch);
     }
 
     /**
@@ -137,14 +137,14 @@ public class OperateLogAspect {
                 }
             }
             event.setTenantId(UserUtil.getTenantId());
-            StopWatch stopWatch = COS_TIME_LOCAL.get();
+            StopWatch stopWatch = TASK_TIME_LOCAL.get();
             stopWatch.stop();
-            event.setCosTime(stopWatch.getTotalTimeMillis());
+            event.setTakeTime(stopWatch.getTotalTimeMillis());
             return event;
         } catch (Exception ex) {
             throw ex;
         } finally {
-            COS_TIME_LOCAL.remove();
+            TASK_TIME_LOCAL.remove();
         }
     }
 

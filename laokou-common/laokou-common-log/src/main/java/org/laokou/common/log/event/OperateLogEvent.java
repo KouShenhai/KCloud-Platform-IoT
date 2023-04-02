@@ -110,9 +110,9 @@ public class OperateLogEvent extends ApplicationEvent implements Serializable {
     private Long tenantId;
 
     /**
-     * 耗时
+     * 耗时（毫秒）
      */
-    private Long cosTime;
+    private Long takeTime;
 
     public OperateLogEvent(Object source) {
         super(source);

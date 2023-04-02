@@ -53,7 +53,8 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
     private List<String> permissionList;
     private Long tenantId;
     private String sourceName;
-    private String ip;
+    private String loginIp;
+    private Date loginDate;
 
     @Override
     public boolean equals(Object o) {
@@ -94,7 +95,10 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
         if (!sourceName.equals(that.sourceName)) {
             return false;
         }
-        return ip.equals(that.ip);
+        if (!loginIp.equals(that.loginIp)) {
+            return false;
+        }
+        return loginDate.equals(that.loginDate);
     }
 
     @Override
@@ -109,7 +113,8 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
         result = 31 * result + permissionList.hashCode();
         result = 31 * result + tenantId.hashCode();
         result = 31 * result + sourceName.hashCode();
-        result = 31 * result + ip.hashCode();
+        result = 31 * result + loginIp.hashCode();
+        result = 31 * result + loginDate.hashCode();
         return result;
     }
 

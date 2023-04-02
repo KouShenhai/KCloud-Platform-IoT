@@ -101,4 +101,9 @@ public class SysOperateLogDO extends BaseDO {
      */
     @Schema(name = "tenantId",description = "租户id")
     private Long tenantId;
+
+    /**
+     * 耗时（毫秒）
+     */
+    private Long takeTime;
 }
