@@ -153,7 +153,7 @@ public class JacksonUtil {
     public static void main(String[] args) {
         String json = "{\"name\":\"Jack\",\"age\":18}";
         System.out.println(toBean(json, String.class));
-        System.out.println(toJsonStr(new Date()));
+        System.out.println(toJsonStr(DateUtil.now()));
     }
 
 }

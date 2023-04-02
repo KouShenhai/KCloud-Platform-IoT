@@ -392,7 +392,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         AuditLogEvent auditLogEvent = new AuditLogEvent(this);
         auditLogEvent.setBusinessId(businessId);
         auditLogEvent.setAuditStatus(auditStatus);
-        auditLogEvent.setAuditDate(new Date());
+        auditLogEvent.setAuditDate(DateUtil.now());
         auditLogEvent.setAuditName(username);
         auditLogEvent.setCreator(userId);
         auditLogEvent.setComment(comment);

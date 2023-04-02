@@ -18,6 +18,7 @@ import org.laokou.common.i18n.core.CustomException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * 日期处理
@@ -59,6 +60,10 @@ public class DateUtil {
         String timePattern = getTimePattern(index);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern);
         return LocalDateTime.parse(format,dateTimeFormatter);
+    }
+
+    public static Date now() {
+        return new Date();
     }
 
     public static void main(String[] args) {
