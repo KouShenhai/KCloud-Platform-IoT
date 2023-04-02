@@ -102,7 +102,7 @@ Content-Disposition: form-data; name="tenantId"
 
 # 授权码模式(默认数据库)
 # 账号/密码：admin/admin123
-# 获取code地址：http://localhost:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=password mail mobile&redirect_uri=https://www.baidu.com
+# 获取code地址：http://localhost:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=password mail mobile&redirect_uri=http://127.0.0.1:8000
 POST http://{{host}}/oauth2/token
 Authorization: {{Authorization}}
 Content-Type: multipart/form-data; boundary=WebAppBoundary

@@ -312,7 +312,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 - 2.可选启动Sentinel、RocketMQ、ElasticSearch、MongoDB
 - 3.将doc/config/dev目录下的zip压缩文件都导入Nacos
 - 4.运行doc/db/db_init.sql（如果使用租户，需要运行doc/db/db_tenant_init.sql）
-- 5.按顺序启动laokou-register(第一个启动)、laokou-seata、laokou-gateway、laokou-auth、laokou-admin（其他的服务根据实际情况启动）
+- 5.按顺序启动laokou-register、laokou-seata、laokou-gateway、laokou-auth、laokou-admin、laokou-flowable、laokou-im（其他的服务根据实际情况启动）
 - 6.使用flowable审批，第一次启动，需要在流程定义上传流程图（下载模板，然后上传即可）
 
 ### 😋 高可用系统构建
