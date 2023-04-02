@@ -136,11 +136,6 @@ public class SysOperateLogExcel implements Serializable {
 
     public void setRequestStatusMsg(Integer requestStatus) {
         requestStatusMsg = requestStatus == 0 ? "成功" : "失败";
-        this.requestStatusMsg = requestStatusMsg;
-    }
-
-    public String getRequestStatusMsg() {
-        return requestStatusMsg;
     }
 
     public void setRequestStatus(Integer requestStatus) {
