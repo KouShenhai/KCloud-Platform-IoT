@@ -66,7 +66,7 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
             errMsg = MessageUtil.getMessage(StatusCode.USERNAME_DISABLE);
             throw new UsernameNotFoundException(errMsg);
         }
-        Long userId = userDetail.getUserId();
+        Long userId = userDetail.getId();
         Integer superAdmin = userDetail.getSuperAdmin();
         // 权限标识列表
         List<String> permissionsList = sysMenuService.getPermissionsList(0L,superAdmin,userId);

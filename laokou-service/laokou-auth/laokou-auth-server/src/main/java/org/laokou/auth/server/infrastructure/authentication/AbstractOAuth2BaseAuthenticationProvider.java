@@ -241,7 +241,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.USERNAME_DISABLE),request,tenantId);
             CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_DISABLE, MessageUtil.getMessage(StatusCode.USERNAME_DISABLE));
         }
-        Long userId = userDetail.getUserId();
+        Long userId = userDetail.getId();
         Integer superAdmin = userDetail.getSuperAdmin();
         // 权限标识列表
         List<String> permissionsList = sysMenuService.getPermissionsList(tenantId,superAdmin,userId);

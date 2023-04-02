@@ -81,7 +81,7 @@ public class DataFilterAspect {
         if (CollectionUtils.isNotEmpty(deptIds)) {
             sqlFilter.append("find_in_set(").append(tableAlias).append(dataFilter.deptId()).append(" , ").append("\"").append(StringUtil.join(deptIds,",")).append("\"").append(") or ");
         }
-        sqlFilter.append(tableAlias).append(dataFilter.userId()).append(" = ").append(userDetail.getUserId());
+        sqlFilter.append(tableAlias).append(dataFilter.userId()).append(" = ").append(userDetail.getId());
         sqlFilter.append(")");
         return sqlFilter.toString();
     }

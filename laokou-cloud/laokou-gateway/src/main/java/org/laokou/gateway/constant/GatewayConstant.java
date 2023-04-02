@@ -23,11 +23,11 @@ public interface GatewayConstant {
     /**
      * 请求链-用户id
      */
-    String REQUEST_USER_ID = "userId";
+    String REQUEST_USER_ID = "User-Id";
     /**
      * 请求链-用户名
      */
-    String REQUEST_USERNAME = "username";
+    String REQUEST_USER_NAME = "User-Name";
     /**
      * 密码模式-请求地址
      */

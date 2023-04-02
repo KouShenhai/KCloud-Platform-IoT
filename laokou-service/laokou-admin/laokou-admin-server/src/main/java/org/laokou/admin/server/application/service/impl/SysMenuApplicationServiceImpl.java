@@ -48,7 +48,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
     @Override
     public SysMenuVO getMenuList() {
         UserDetail userDetail = UserUtil.userDetail();
-        Long userId = userDetail.getUserId();
+        Long userId = userDetail.getId();
         String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
         Object obj = redisUtil.get(resourceTreeKey);
         if (obj != null) {

@@ -92,7 +92,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         // 用户key
         String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
         redisUtil.delete(userInfoKey);
-        Long userId = userDetail.getUserId();
+        Long userId = userDetail.getId();
         // 菜单key
         String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
         redisUtil.delete(resourceTreeKey);
