@@ -126,9 +126,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
         });
         sysOssService.updateBatchById(list);
         String ossConfigKey = RedisKeyUtil.getOssConfigKey(UserUtil.getTenantId());
-        if (redisUtil.hasKey(ossConfigKey)) {
-            redisUtil.delete(ossConfigKey);
-        }
+        redisUtil.delete(ossConfigKey);
         return true;
     }
 }

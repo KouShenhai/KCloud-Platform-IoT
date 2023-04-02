@@ -92,13 +92,6 @@ public final class RedisKeyUtil {
     }
 
     /**
-     * 账号踢出Key
-     */
-    public static String getAccountKillKey(String token) {
-        return "sys:account:kill:" + token;
-    }
-
-    /**
      * 手机验证码Key
      * @param mobile
      * @return

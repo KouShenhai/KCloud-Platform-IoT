@@ -54,9 +54,8 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
             , OAuth2AuthorizationService oAuth2AuthorizationService
             , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
             , SysSourceService sysSourceService
-            , SysAuthenticationService sysAuthenticationService
             , RedisUtil redisUtil) {
-        super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder,sysCaptchaService,oAuth2AuthorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil);
+        super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder,sysCaptchaService,oAuth2AuthorizationService,tokenGenerator, sysSourceService,redisUtil);
     }
 
     @Override
