@@ -72,6 +72,7 @@
         <module>laokou-common-dubbo</module>
         <module>laokou-common-clickhouse</module>
         <module>laokou-common-cors</module>
+        <module>laokou-common-seata</module>
     </modules>
 
 </project>

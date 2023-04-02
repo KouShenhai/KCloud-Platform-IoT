@@ -161,6 +161,7 @@ tenant/tenant123
         └── laokou-common-dynamic-router           --- 动态路由组件  
         └── laokou-common-ip-region                --- IP归属地组件  
         └── laokou-common-neo4j                    --- 图形数据库组件  
+        └── laokou-common-seata                    --- 分布式事务组件  
         └── laokou-common-r2dbc                    --- 响应式数据库组件  
         └── laokou-common-sentinel                 --- 服务限流&熔断降级组件  
 ├── laokou-cloud  

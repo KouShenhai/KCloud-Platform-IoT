@@ -140,31 +140,36 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @GlobalTransactional
     public Boolean insertResource(SysResourceAuditDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        log.info("分布式事务 XID:{}", RootContext.getXID());
-        SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
-        sysResourceDO.setEditor(UserUtil.getUserId());
-        sysResourceService.save(sysResourceDO);
-        Long id = sysResourceDO.getId();
-        // 开启任务
-        String instanceId = startTask(id, sysResourceDO.getTitle());
-        dto.setResourceId(id);
-        return insertResourceAudit(dto,instanceId);
+        try {
+            ValidatorUtil.validateEntity(dto);
+            log.info("分布式事务 XID:{}", RootContext.getXID());
+            SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
+            sysResourceDO.setEditor(UserUtil.getUserId());
+            sysResourceService.save(sysResourceDO);
+            Long id = sysResourceDO.getId();
+            // 开启任务
+            return insertAuditMessage(startTask(id, dto.getTitle()), dto);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @GlobalTransactional
     public Boolean updateResource(SysResourceAuditDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        log.info("分布式事务 XID:{}", RootContext.getXID());
-        Long resourceId = dto.getResourceId();
-        if (resourceId == null) {
-            throw new CustomException("资源编号不为空");
+        try {
+            ValidatorUtil.validateEntity(dto);
+            log.info("分布式事务 XID:{}", RootContext.getXID());
+            Long resourceId = dto.getResourceId();
+            if (resourceId == null) {
+                throw new CustomException("资源编号不为空");
+            }
+            // 开启任务
+            return insertAuditMessage(startTask(resourceId, dto.getTitle()), dto);
+        } catch (Exception e) {
+            throw e;
         }
-        // 开启任务
-        String instanceId = startTask(resourceId, dto.getTitle());
-        return insertResourceAudit(dto,instanceId);
     }
 
     /**
@@ -227,6 +232,16 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         afterSync();
     }
 
+    private Boolean insertAuditMessage(AssigneeVO vo,SysResourceAuditDTO dto) {
+        String instanceId = vo.getInstanceId();
+        String assignee = vo.getAssignee();
+        Long resourceId = dto.getResourceId();
+        String title = dto.getTitle();
+        insertResourceAudit(dto,instanceId);
+        insertAuditMessage(assignee,resourceId,title);
+        return true;
+    }
+
     /**
      * 同步索引
      * @param list 数据集合
@@ -278,51 +293,61 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @Transactional(rollbackFor = Exception.class)
     @GlobalTransactional
     public Boolean auditResourceTask(AuditDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        log.info("分布式事务 XID:{}", RootContext.getXID());
-        HttpResult<AssigneeVO> result = workTaskApiFeignClient.audit(dto);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(),result.getMsg());
-        }
-        AssigneeVO vo = result.getData();
-        String assignee = vo.getAssignee();
-        String instanceId = vo.getInstanceId();
-        Map<String, Object> values = dto.getValues();
-        String instanceName = dto.getInstanceName();
-        String businessKey = dto.getBusinessKey();
-        Long businessId = Long.valueOf(businessKey);
-        String comment = dto.getComment();
-        String username = AESUtil.decrypt(UserUtil.getUsername());
-        Long userId = UserUtil.getUserId();
-        int auditStatus = Integer.valueOf(values.get(AUDIT_STATUS).toString());
-        int status;
-        //1 审核中 2 审批拒绝 3审核通过
-        if (StringUtil.isNotEmpty(assignee)) {
-            // 审批中
-            status = AuditStatusEnum.AUDIT.ordinal();
-        } else {
-            // auditStatus => 0拒绝 1同意
-            if (AuditEnum.NO.ordinal() == auditStatus) {
-                //审批拒绝
-                status = AuditStatusEnum.REJECT.ordinal();
-            } else {
-                // 审批通过
-                status = AuditStatusEnum.AGREE.ordinal();
+        try {
+            ValidatorUtil.validateEntity(dto);
+            log.info("分布式事务 XID:{}", RootContext.getXID());
+            HttpResult<AssigneeVO> result = workTaskApiFeignClient.audit(dto);
+            if (!result.success()) {
+                throw new CustomException(result.getCode(), result.getMsg());
             }
+            AssigneeVO vo = result.getData();
+            String assignee = vo.getAssignee();
+            String instanceId = vo.getInstanceId();
+            Map<String, Object> values = dto.getValues();
+            String instanceName = dto.getInstanceName();
+            String businessKey = dto.getBusinessKey();
+            Long businessId = Long.valueOf(businessKey);
+            String comment = dto.getComment();
+            String username = AESUtil.decrypt(UserUtil.getUsername());
+            Long userId = UserUtil.getUserId();
+            int auditStatus = Integer.valueOf(values.get(AUDIT_STATUS).toString());
+            int status;
+            boolean isAudit = false;
+            //1 审核中 2 审批拒绝 3审核通过
+            if (StringUtil.isNotEmpty(assignee)) {
+                // 审批中
+                status = AuditStatusEnum.AUDIT.ordinal();
+            } else {
+                // auditStatus => 0拒绝 1同意
+                if (AuditEnum.NO.ordinal() == auditStatus) {
+                    //审批拒绝
+                    status = AuditStatusEnum.REJECT.ordinal();
+                } else {
+                    // 审批通过
+                    status = AuditStatusEnum.AGREE.ordinal();
+                }
+            }
+            switch (AuditStatusEnum.getStatus(status)) {
+                // 审批中,发送审批消息通知
+                case AUDIT -> isAudit = true;
+                // 审批通过
+                case AGREE -> auditAgree(businessId, instanceId);
+                // 审批拒绝
+                default -> {
+                }
+            }
+            // 修改审批状态
+            updateAuditStatus(status, instanceId);
+            // 审核日志
+            insertAuditLog(businessId, auditStatus, comment, username, userId);
+            // 审批消息
+            if (isAudit) {
+                insertAuditMessage(assignee, businessId, instanceName);
+            }
+            return true;
+        } catch (Exception e) {
+            throw e;
         }
-        switch (AuditStatusEnum.getStatus(status)) {
-            // 审批中,发送审批消息通知
-            case AUDIT -> insertAuditMessage(assignee,businessId,instanceName);
-            // 审批通过
-            case AGREE -> auditAgree(businessId,instanceId);
-            // 审批拒绝
-            default -> {}
-        }
-        // 修改审批状态
-        updateAuditStatus(status,instanceId);
-        // 审核日志
-        insertAuditLog(businessId,auditStatus,comment,username,userId);
-        return true;
     }
 
     /**
@@ -401,51 +426,63 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @Transactional(rollbackFor = Exception.class)
     @GlobalTransactional
     public Boolean resolveResourceTask(ResolveDTO dto) {
-        HttpResult<AssigneeVO> result = workTaskApiFeignClient.resolve(dto);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(),result.getMsg());
+        try {
+            HttpResult<AssigneeVO> result = workTaskApiFeignClient.resolve(dto);
+            if (!result.success()) {
+                throw new CustomException(result.getCode(), result.getMsg());
+            }
+            // 发送通知
+            AssigneeVO vo = result.getData();
+            String assignee = vo.getAssignee();
+            Long businessId = Long.valueOf(dto.getBusinessKey());
+            String instanceName = dto.getInstanceName();
+            insertAuditMessage(assignee, businessId, instanceName);
+            return true;
+        } catch (Exception e) {
+            throw e;
         }
-        // 发送通知
-        AssigneeVO vo = result.getData();
-        String assignee = vo.getAssignee();
-        Long businessId = Long.valueOf(dto.getBusinessKey());
-        String instanceName = dto.getInstanceName();
-        insertAuditMessage(assignee,businessId,instanceName);
-        return true;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     @GlobalTransactional
     public Boolean transferResourceTask(TransferDTO dto) {
-        HttpResult<AssigneeVO> result = workTaskApiFeignClient.transfer(dto);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(),result.getMsg());
+        try {
+            HttpResult<AssigneeVO> result = workTaskApiFeignClient.transfer(dto);
+            if (!result.success()) {
+                throw new CustomException(result.getCode(), result.getMsg());
+            }
+            // 发送通知
+            AssigneeVO vo = result.getData();
+            String assignee = vo.getAssignee();
+            Long businessId = Long.valueOf(dto.getBusinessKey());
+            String instanceName = dto.getInstanceName();
+            insertAuditMessage(assignee, businessId, instanceName);
+            return true;
+        } catch (Exception e) {
+            throw e;
         }
-        // 发送通知
-        AssigneeVO vo = result.getData();
-        String assignee = vo.getAssignee();
-        Long businessId = Long.valueOf(dto.getBusinessKey());
-        String instanceName = dto.getInstanceName();
-        insertAuditMessage(assignee,businessId,instanceName);
-        return true;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     @GlobalTransactional
     public Boolean delegateResourceTask(DelegateDTO dto) {
-        HttpResult<AssigneeVO> result = workTaskApiFeignClient.delegate(dto);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(),result.getMsg());
+        try {
+            HttpResult<AssigneeVO> result = workTaskApiFeignClient.delegate(dto);
+            if (!result.success()) {
+                throw new CustomException(result.getCode(), result.getMsg());
+            }
+            // 发送通知
+            AssigneeVO vo = result.getData();
+            String assignee = vo.getAssignee();
+            Long businessId = Long.valueOf(dto.getBusinessKey());
+            String instanceName = dto.getInstanceName();
+            insertResolveMessage(assignee, businessId, instanceName);
+            return true;
+        } catch (Exception e) {
+            throw e;
         }
-        // 发送通知
-        AssigneeVO vo = result.getData();
-        String assignee = vo.getAssignee();
-        Long businessId = Long.valueOf(dto.getBusinessKey());
-        String instanceName = dto.getInstanceName();
-        insertResolveMessage(assignee,businessId,instanceName);
-        return true;
     }
 
     private void beforeSync() {
@@ -487,7 +524,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
      * @param businessName 业务名称
      * @return 返回实例编号
      */
-    private String startTask(Long businessKey,String businessName) {
+    private AssigneeVO startTask(Long businessKey,String businessName) {
         ProcessDTO dto = new ProcessDTO();
         dto.setBusinessKey(businessKey.toString());
         dto.setBusinessName(businessName);
@@ -496,11 +533,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (!result.success()) {
             throw new CustomException(result.getCode(),result.getMsg());
         }
-        AssigneeVO vo = result.getData();
-        String instanceId = vo.getInstanceId();
-        String assignee = vo.getAssignee();
-        insertAuditMessage(assignee,businessKey,businessName);
-        return instanceId;
+        return result.getData();
     }
 
 }

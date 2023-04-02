@@ -53,22 +53,16 @@
 			<artifactId>spring-boot-starter-undertow</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>com.alibaba</groupId>
-					<artifactId>druid</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-cors</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-mybatis-plus</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.laokou</groupId>
+			<artifactId>laokou-common-seata</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
