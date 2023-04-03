@@ -195,6 +195,7 @@
                 <MYSQL-HOST>127.0.0.1</MYSQL-HOST>
                 <MYSQL-DB-NACOS>nacos-config</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>seata-config</MYSQL-DB-SEATA>
+                <MYSQL-DB-XXL-JOB>xxl-job-config</MYSQL-DB-XXL-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>public</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
@@ -208,6 +209,8 @@
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <profile.active>dev</profile.active>
+                <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
+                <MAIL-FROM>xxx</MAIL-FROM>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -222,6 +225,7 @@
                 <MYSQL-HOST>laokou.org</MYSQL-HOST>
                 <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>kcloud_platform_seata</MYSQL-DB-SEATA>
+                <MYSQL-DB-XXL-JOB>kcloud_platform_xxl_job</MYSQL-DB-XXL-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>1.com:8848</NACOS-DISCOVERY-ADDRESS>
@@ -235,6 +239,8 @@
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <profile.active>test</profile.active>
+                <MAIL-PASSWORD>ENC(/GuIBb+rM1VYKHnngv5WZD9S7JHZ+6FpZvtoSTNsKPM=)</MAIL-PASSWORD>
+                <MAIL-FROM>2413176044@qq.com</MAIL-FROM>
             </properties>
         </profile>
         <!-- 正式环境 -->
@@ -246,6 +252,7 @@
                 <MYSQL-HOST>xxx</MYSQL-HOST>
                 <MYSQL-DB-NACOS>xxx</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>xxx</MYSQL-DB-SEATA>
+                <MYSQL-DB-XXL-JOB>xxx</MYSQL-DB-XXL-JOB>
                 <MYSQL-PORT>xxx</MYSQL-PORT>
                 <NACOS-NAMESPACE>xxx111222333444555666777888999</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>xxx</NACOS-DISCOVERY-ADDRESS>
@@ -258,7 +265,10 @@
                 <SEATA-PASSWORD>xxx</SEATA-PASSWORD>
                 <SENTINEL-USERNAME>xxx</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>xxx</SENTINEL-PASSWORD>
+                <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
                 <profile.active>prod</profile.active>
+                <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
+                <MAIL-FROM>xxx</MAIL-FROM>
             </properties>
         </profile>
     </profiles>
