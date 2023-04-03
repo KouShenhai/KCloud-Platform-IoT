@@ -20,13 +20,12 @@ import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.Codec;
 import org.redisson.config.Config;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ import java.util.List;
  * @author laokou
  */
 @ConditionalOnClass(Redisson.class)
-@AutoConfigureBefore({RedisAutoConfiguration.class})
+@Configuration
 @EnableConfigurationProperties(RedisProperties.class)
 public class RedisSessionConfig {
 
