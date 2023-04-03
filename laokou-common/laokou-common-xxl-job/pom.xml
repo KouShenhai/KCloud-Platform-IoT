@@ -10,6 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-common-xxl-job</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-cors</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
