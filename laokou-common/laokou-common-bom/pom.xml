@@ -108,6 +108,8 @@
         <ip2region.version>2.7.0</ip2region.version>
         <!--jackson-module-kotlin版本-->
         <jackson-module-kotlin.version>2.14.2</jackson-module-kotlin.version>
+        <!--xxl-job版本-->
+        <xxl-job.version>2.4.0</xxl-job.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -118,6 +120,11 @@
                 <artifactId>jackson-module-kotlin</artifactId>
                 <version>${jackson-module-kotlin.version}</version>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>

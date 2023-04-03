@@ -73,6 +73,7 @@
         <module>laokou-common-clickhouse</module>
         <module>laokou-common-cors</module>
         <module>laokou-common-seata</module>
+        <module>laokou-common-xxl-job</module>
     </modules>
 
 </project>
