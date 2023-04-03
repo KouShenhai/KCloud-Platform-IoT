@@ -210,7 +210,7 @@
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <profile.active>dev</profile.active>
                 <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
-                <MAIL-FROM>xxx</MAIL-FROM>
+                <MAIL-USERNAME>xxx</MAIL-USERNAME>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -240,7 +240,7 @@
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <profile.active>test</profile.active>
                 <MAIL-PASSWORD>ENC(/GuIBb+rM1VYKHnngv5WZD9S7JHZ+6FpZvtoSTNsKPM=)</MAIL-PASSWORD>
-                <MAIL-FROM>2413176044@qq.com</MAIL-FROM>
+                <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
             </properties>
         </profile>
         <!-- 正式环境 -->
@@ -268,7 +268,7 @@
                 <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
                 <profile.active>prod</profile.active>
                 <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
-                <MAIL-FROM>xxx</MAIL-FROM>
+                <MAIL-USERNAME>xxx</MAIL-USERNAME>
             </properties>
         </profile>
     </profiles>

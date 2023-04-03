@@ -43,7 +43,7 @@ spring:
     suffix: .ftl
     templateLoaderPath: classpath:/templates/
   mail:
-    from: @MAIL-FROM@
+    from: @MAIL-USERNAME@
     host: smtp.qq.com
     password: @MAIL-PASSWORD@
     port: 25
@@ -56,7 +56,7 @@ spring:
           starttls:
             enable: true
             required: true
-    username: xxx@qq.com
+    username: @MAIL-USERNAME@
   mvc:
     servlet:
       load-on-startup: 0
