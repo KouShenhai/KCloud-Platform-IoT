@@ -1,5 +1,5 @@
 #
-# XXL-JOB v2.4.1-SNAPSHOT
+# XXL-JOB v2.4.0
 # Copyright (c) 2015-present, xuxueli.
 CREATE TABLE `xxl_job_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
