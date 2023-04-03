@@ -1,0 +1,76 @@
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+management:
+  health:
+    mail:
+      enabled: false
+  server:
+    base-path: /actuator
+mybatis:
+  mapper-locations: classpath:/mybatis-mapper/*Mapper.xml
+server:
+  port: 8082
+  servlet:
+    context-path: /xxl-job-admin
+spring:
+  application:
+    name: @pom.artifactId@
+  profiles:
+    active: @profile.active@
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: @MYSQL-USERNAME@
+    password: @MYSQL-PASSWORD@
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://@MYSQL-HOST@:@MYSQL-PORT@/@MYSQL-DB-XXL-JOB@?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    hikari:
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 10000
+      idle-timeout: 30000
+      max-lifetime: 900000
+      maximum-pool-size: 30
+      minimum-idle: 10
+      pool-name: HikariCP
+      validation-timeout: 1000
+  freemarker:
+    charset: UTF-8
+    request-context-attribute: request
+    settings:
+      number_format: 0.##########
+    suffix: .ftl
+    templateLoaderPath: classpath:/templates/
+  mail:
+    from: @MAIL-FROM@
+    host: smtp.qq.com
+    password: @MAIL-PASSWORD@
+    port: 25
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+          starttls:
+            enable: true
+            required: true
+    username: xxx@qq.com
+  mvc:
+    servlet:
+      load-on-startup: 0
+    static-path-pattern: /static/**
+  web:
+    resources:
+      static-locations: classpath:/static/
+xxl:
+  job:
+    accessToken: default_token
+    i18n: zh_CN
+    logretentiondays: 30
+    triggerpool:
+      fast:
+        max: 200
+      slow:
+        max: 100

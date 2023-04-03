@@ -52,6 +52,16 @@ public class SysUserApiController {
         return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto));
     }
 
+    @PostMapping("/online/query")
+    public void test() {
+
+    }
+
+    @PostMapping("/online/kill")
+    public void kill() {
+
+    }
+
     @GetMapping("/userInfo")
     @Operation(summary = "系统用户>用户信息",description = "系统用户>用户信息")
     public HttpResult<UserInfoVO> userInfo() {
