@@ -128,6 +128,11 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-xxl-job</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-test-netty</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
