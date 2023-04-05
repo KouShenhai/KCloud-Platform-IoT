@@ -92,7 +92,6 @@ public class OAuth2AuthorizationServerConfig {
      * @param sysCaptchaService
      * @param tokenGenerator
      * @param sysSourceService
-     * @param sysAuthenticationService
      * @param redisUtil
      * @return
      * @throws Exception
@@ -162,7 +161,7 @@ public class OAuth2AuthorizationServerConfig {
         // 注册
         // ClientAuthenticationMethod.CLIENT_SECRET_BASIC => client_id:client_secret => 95TxSsTPFA3tF12TBSMmUVK0da:FpHwIfw4wY92dO 进行Base64编码后的值
         // Headers Authorization Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=
-        // http://localhost:1111/oauth2/authorize?client_id=auth-client&client_secret=secret&response_type=code&scope=password mail mobile&redirect_uri=http://127.0.0.1:8000
+        // http://localhost:1111/oauth2/authorize?client_id=95TxSsTPFA3tF12TBSMmUVK0da&client_secret=FpHwIfw4wY92dO&response_type=code&scope=password mail mobile&redirect_uri=http://127.0.0.1:8000
         map.from(registration::getClientId).to(registrationBuilder::clientId);
         map.from(registration::getClientName).to(registrationBuilder::clientName);
         map.from(registration::getClientSecret).to(registrationBuilder::clientSecret);

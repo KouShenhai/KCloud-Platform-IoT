@@ -274,7 +274,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         if (clientPrincipal != null && clientPrincipal.isAuthenticated()) {
             return clientPrincipal;
         }
-        throw new OAuth2AuthenticationException(OAuth2ErrorCodes.INVALID_CLIENT);
+        throw CustomAuthExceptionHandler.getError(StatusCode.INVALID_CLIENT, MessageUtil.getMessage(StatusCode.INVALID_CLIENT));
     }
 
 }
