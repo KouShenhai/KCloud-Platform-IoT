@@ -16,10 +16,12 @@
 package org.laokou.common.mybatisplus.config.auto;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.laokou.common.mybatisplus.config.BaseDetaObjectHander;
 import org.laokou.common.mybatisplus.config.DataFilterInterceptor;
+import org.laokou.common.mybatisplus.config.DynamicTableNameHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -55,6 +57,10 @@ public class MybatisPlusAutoConfig {
         mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         // 防止全表更新与删除
         mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+        // 动态表名
+        DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
+        dynamicTableNameInnerInterceptor.setTableNameHandler(new DynamicTableNameHandler());
+        mybatisPlusInterceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
         return mybatisPlusInterceptor;
     }
 

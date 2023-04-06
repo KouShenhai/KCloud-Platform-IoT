@@ -17,10 +17,6 @@
 server:
   port: 1111
 
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
 # spring
 spring:
   application:
@@ -28,9 +24,12 @@ spring:
   profiles:
     # dev|test|prod
     active: @profile.active@
-  # i18n
-  messages:
-    basename: i18n/messages
+  datasource:
+    dynamic:
+      datasource:
+        shardingSphere:
+          url: jdbc:shardingsphere:classpath:shardingsphere.yaml
+          driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
   cloud:
     # sentinel
     sentinel:

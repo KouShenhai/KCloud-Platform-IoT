@@ -175,6 +175,12 @@ public interface StatusCode {
     int INVALID_SCOPE = 2015;
 
     /**
+     * auth => 2
+     * 无效客户端
+     */
+    int INVALID_CLIENT = 2016;
+
+    /**
      * sentinel => 5
      * 接口已被限流，请稍后再试
      */

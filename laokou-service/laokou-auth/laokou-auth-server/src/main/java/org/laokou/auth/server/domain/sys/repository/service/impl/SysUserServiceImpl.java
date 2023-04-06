@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 package org.laokou.auth.server.domain.sys.repository.service.impl;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.server.domain.sys.repository.mapper.SysUserMapper;
 import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
 import org.laokou.auth.client.user.UserDetail;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.constant.Constant;
 import org.springframework.stereotype.Service;
 /**
  * @author laokou
@@ -31,6 +33,7 @@ public class SysUserServiceImpl implements SysUserService {
     private final SysUserMapper sysUserMapper;
 
     @Override
+    @DS(Constant.SHARDING_SPHERE)
     public UserDetail getUserDetail(String loginName,Long tenantId,String loginType) {
         return sysUserMapper.getUserDetail(loginName,tenantId,loginType);
     }

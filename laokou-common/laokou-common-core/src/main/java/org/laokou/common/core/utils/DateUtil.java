@@ -36,11 +36,17 @@ public class DateUtil {
     public static final int YYYYMMDDHHMMSS = 1;
 
     /**
+     * yyyyMM
+     */
+    public static final int YYYYMM = 2;
+
+    /**
      * 时间格式
      */
     private static final String[] TIME_PATTERNS = {
-            "yyyy-MM-dd HH:mm:ss"
-          , "yyyyMMddHHmmss"
+              "yyyy-MM-dd HH:mm:ss"
+            , "yyyyMMddHHmmss"
+            , "yyyyMM"
     };
 
     public static String getTimePattern(int index) {

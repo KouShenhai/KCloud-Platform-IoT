@@ -94,8 +94,6 @@
         <aws-java-sdk-s3.version>1.12.267</aws-java-sdk-s3.version>
         <!--dynamic-datasource版本-->
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
-        <!--shardingsphere-jdbc-core版本-->
-        <shardingsphere-jdbc-core.version>5.3.1</shardingsphere-jdbc-core.version>
         <!--httpclient5版本-->
         <httpclient5.version>5.2.1</httpclient5.version>
         <!--jna版本-->
@@ -110,6 +108,8 @@
         <jackson-module-kotlin.version>2.14.2</jackson-module-kotlin.version>
         <!--xxl-job版本-->
         <xxl-job.version>2.4.0</xxl-job.version>
+        <!--shardingsphere版本-->
+        <shardingsphere.version>5.3.2</shardingsphere.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -125,6 +125,11 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-xxl-job</artifactId>
+                <version>${laokou.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
@@ -279,11 +284,16 @@
             <dependency>
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>shardingsphere-jdbc-core</artifactId>
-                <version>${shardingsphere-jdbc-core.version}</version>
+                <version>${shardingsphere.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-power-job</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-shardingsphere</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

@@ -24,6 +24,12 @@ spring:
   profiles:
     # 环境 dev|test|prod
     active: @profile.active@
+  datasource:
+    dynamic:
+      datasource:
+        shardingSphere:
+          url: jdbc:shardingsphere:classpath:shardingsphere.yaml
+          driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
   servlet:
     multipart:
       enabled: true

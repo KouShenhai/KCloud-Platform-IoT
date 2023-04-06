@@ -160,6 +160,7 @@ tenant/tenant123
         └── laokou-common-redis-search             --- 高效搜索组件  
         └── laokou-common-mybatis-plus             --- 对象映射组件  
         └── laokou-common-dynamic-router           --- 动态路由组件  
+        └── laokou-common-shardingsphere           --- 分库分表组件  
         └── laokou-common-ip-region                --- IP归属地组件  
         └── laokou-common-neo4j                    --- 图形数据库组件  
         └── laokou-common-seata                    --- 分布式事务组件  
@@ -168,9 +169,9 @@ tenant/tenant123
 ├── laokou-cloud  
         └── laokou-gateway                         --- API网关  
         └── laokou-monitor                         --- 服务监控  
+        └── laokou-xxl-job                         --- 任务调度  
         └── laokou-register                        --- 服务治理  
         └── laokou-sentinel                        --- 流量治理  
-        └── laokou-xxl-job                         --- 任务调度  
         └── laokou-seata                           --- 分布式事务  
 ├── laokou-service         
         └── laokou-generator                       --- 模板模块  

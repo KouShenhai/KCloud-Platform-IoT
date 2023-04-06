@@ -53,7 +53,7 @@ UPDATE `boot_sys_user` SET `username` = '5/Pqo/yVzE72YyPDE5RKAw==', `password` =
 UPDATE `boot_sys_user` SET `username` = 'cmV6CFYc1NUWgni0E8xpdg==', `password` = '$2a$10$nbLXUQeCfuiw.7wZwuOT.e0r1mr.ZQcLIlFbil28PCrPBNAnPLRT.', `super_admin` = 0, `creator` = 1537114827246292998, `editor` = NULL, `create_date` = '2023-02-15 13:18:39', `update_date` = '2023-02-15 13:18:39', `del_flag` = 0, `mail` = NULL, `status` = 0, `avatar` = 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', `mobile` = NULL, `dept_id` = 1584488411756171278, `version` = 0, `tenant_id` = 1 WHERE `id` = 1537114827246293001;
 
 -- 2023/3/10 移除boot_sys_dept字段 老寇
-alter table boot_sys_dept drop path;
+alter table boot_sys_dept drop `path`;
 
 -- 2023/3/10 增加boot_sys_dept索引 老寇
 ALTER table boot_sys_dept ADD INDEX idx_tenant_id(`tenant_id`) comment '租户编号_索引';

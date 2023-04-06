@@ -28,6 +28,12 @@ public interface GatewayConstant {
      * 请求链-用户名
      */
     String REQUEST_USER_NAME = "User-Name";
+
+    /**
+     * 请求链-租户id
+     */
+    String REQUEST_TENANT_ID = "Tenant-Id";
+
     /**
      * 密码模式-请求地址
      */
