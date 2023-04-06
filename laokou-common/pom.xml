@@ -74,6 +74,7 @@
         <module>laokou-common-cors</module>
         <module>laokou-common-seata</module>
         <module>laokou-common-xxl-job</module>
+        <module>laokou-common-shardingsphere</module>
     </modules>
 
 </project>

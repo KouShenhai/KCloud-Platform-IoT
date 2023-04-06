@@ -48,9 +48,4 @@ public interface AuthConstant {
     */
    String MOBILE = "mobile";
 
-   /**
-    * 默认数据库
-    */
-   String DEFAULT_SOURCE = "master";
-
 }

@@ -160,6 +160,7 @@ tenant/tenant123
         └── laokou-common-redis-search             --- 高效搜索组件  
         └── laokou-common-mybatis-plus             --- 对象映射组件  
         └── laokou-common-dynamic-router           --- 动态路由组件  
+        └── laokou-common-shardingsphere           --- 分库分表组件  
         └── laokou-common-ip-region                --- IP归属地组件  
         └── laokou-common-neo4j                    --- 图形数据库组件  
         └── laokou-common-seata                    --- 分布式事务组件  

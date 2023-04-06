@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -25,6 +28,7 @@ import org.laokou.admin.server.domain.sys.entity.SysUserRoleDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysRoleService;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserRoleService;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.admin.server.interfaces.qo.SysUserQo;
 import org.laokou.admin.client.vo.SysUserVO;
@@ -46,6 +50,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
+
 /**
  * @author laokou
  */
@@ -64,7 +71,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     private final BatchUtil<SysUserRoleDO> batchUtil;
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @DSTransactional
+    @DS(Constant.SHARDING_SPHERE)
     public Boolean updateUser(SysUserDTO dto) {
         ValidatorUtil.validateEntity(dto);
         Long id = dto.getId();
@@ -82,15 +90,19 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         dto.setVersion(version);
         sysUserService.updateUser(dto);
         List<Long> roleIds = dto.getRoleIds();
+        DynamicDataSourceContextHolder.push(DEFAULT_SOURCE);
         //删除中间表
         sysUserRoleService.remove(Wrappers.lambdaQuery(SysUserRoleDO.class).eq(SysUserRoleDO::getUserId, dto.getId()));
         if (CollectionUtils.isNotEmpty(roleIds)) {
             saveOrUpdate(dto.getId(),roleIds);
         }
+        DynamicDataSourceContextHolder.clear();
         return true;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    @DS(Constant.SHARDING_SPHERE)
     public Boolean updatePassword(Long id, String newPassword) {
         Integer version = sysUserService.getVersion(id);
         SysUserDTO dto = new SysUserDTO();
@@ -103,6 +115,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    @DS(Constant.SHARDING_SPHERE)
     public Boolean updateStatus(Long id, Integer status) {
         Integer version = sysUserService.getVersion(id);
         SysUserDTO dto = new SysUserDTO();
@@ -115,6 +129,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    @DS(Constant.SHARDING_SPHERE)
     public Boolean updateInfo(SysUserDTO dto) {
         Long id = dto.getId();
         if (null == id) {
@@ -146,7 +162,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @DSTransactional
+    @DS(Constant.SHARDING_SPHERE)
     public Boolean insertUser(SysUserDTO dto) {
         ValidatorUtil.validateEntity(dto);
         long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername()));
@@ -176,6 +193,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
     @Override
     @DataFilter(tableAlias = "boot_sys_user")
+    @DS(Constant.SHARDING_SPHERE)
     public IPage<SysUserVO> queryUserPage(SysUserQo qo) {
         ValidatorUtil.validateEntity(qo);
         qo.setTenantId(UserUtil.getTenantId());
@@ -189,15 +207,19 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 
     @Override
+    @DS(Constant.SHARDING_SPHERE)
     public SysUserVO getUserById(Long id) {
         SysUserDO sysUserDO = sysUserService.getById(id);
         SysUserVO sysUserVO = ConvertUtil.sourceToTarget(sysUserDO, SysUserVO.class);
+        DynamicDataSourceContextHolder.push(DEFAULT_SOURCE);
         sysUserVO.setRoleIds(sysRoleService.getRoleIdsByUserId(sysUserVO.getId()));
+        DynamicDataSourceContextHolder.clear();
         return sysUserVO;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @DS(Constant.SHARDING_SPHERE)
     public Boolean deleteUser(Long id) {
         SysUserDO sysUser = sysUserService.getById(id);
         UserDetail userDetail = UserUtil.userDetail();
@@ -209,6 +231,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     }
 
     @Override
+    @DS(Constant.SHARDING_SPHERE)
     public List<OptionVO> getOptionList() {
         Long tenantId = UserUtil.getTenantId();
         List<OptionVO> optionList = sysUserService.getOptionList(tenantId);

@@ -56,9 +56,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import static org.laokou.auth.client.constant.AuthConstant.DEFAULT_SOURCE;
 import static org.laokou.common.core.constant.Constant.DEFAULT;
+import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
 
 /**
  * 邮件/手机/密码

@@ -18,6 +18,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.log.entity.SysOssLogDO;
 import org.laokou.common.log.event.OssLogEvent;
@@ -32,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SysOssLogServiceImpl extends ServiceImpl<SysOssLogMapper, SysOssLogDO> implements SysOssLogService {
 
     @Override
-    @DS("#tenant")
+    @DS(Constant.TENANT)
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertLog(OssLogEvent event) {
         SysOssLogDO sysOssLogDO = ConvertUtil.sourceToTarget(event, SysOssLogDO.class);
@@ -40,7 +41,7 @@ public class SysOssLogServiceImpl extends ServiceImpl<SysOssLogMapper, SysOssLog
     }
 
     @Override
-    @DS("#tenant")
+    @DS(Constant.TENANT)
     public SysOssLogDO getLogByMd5(String md5) {
         LambdaQueryWrapper<SysOssLogDO> queryWrapper = Wrappers.lambdaQuery(SysOssLogDO.class)
                 .select(SysOssLogDO::getUrl)

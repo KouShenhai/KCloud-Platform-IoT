@@ -21,13 +21,10 @@
 
     <select id="getRoleIdsByUserId" resultType="long">
         SELECT a.id FROM boot_sys_role a
-        ,boot_sys_user b
         ,boot_sys_user_role c
-        <where>
-            b.id = c.user_id
-            AND a.id = c.role_id
+        <where> a.id = c.role_id
             <if test="userId != null">
-                AND b.id = #{userId}
+                AND c.user_id = #{userId}
             </if>
             and a.del_flag = 0
         </where>

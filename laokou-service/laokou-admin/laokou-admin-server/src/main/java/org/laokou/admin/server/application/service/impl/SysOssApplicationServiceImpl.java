@@ -33,7 +33,6 @@ import org.laokou.common.oss.service.SysOssService;
 import org.laokou.common.oss.vo.SysOssVO;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.tenant.processor.DsTenantProcessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +50,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public Boolean insertOss(SysOssDTO dto) {
         ValidatorUtil.validateEntity(dto);
         long count = sysOssService.count(Wrappers.lambdaQuery(SysOssDO.class).eq(SysOssDO::getName, dto.getName()));
@@ -65,7 +64,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public Boolean updateOss(SysOssDTO dto) {
         ValidatorUtil.validateEntity(dto);
         Long id = dto.getId();
@@ -89,13 +88,13 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public Boolean deleteOss(Long id) {
         return sysOssService.deleteOss(id);
     }
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public IPage<SysOssVO> queryOssPage(SysOssQo qo) {
         ValidatorUtil.validateEntity(qo);
         IPage<SysOssVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
@@ -103,14 +102,14 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
     }
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public SysOssVO getOssById(Long id) {
         return sysOssService.getOssById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public Boolean useOss(Long id) {
         LambdaQueryWrapper<SysOssDO> wrapper = Wrappers.lambdaQuery(SysOssDO.class)
                 .and(t -> t.eq(SysOssDO::getStatus, Constant.YES)

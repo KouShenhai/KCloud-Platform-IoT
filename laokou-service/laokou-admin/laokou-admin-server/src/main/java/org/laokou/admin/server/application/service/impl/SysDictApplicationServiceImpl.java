@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysDictApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysDictDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysDictService;
-import org.laokou.common.tenant.processor.DsTenantProcessor;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
 import org.laokou.admin.client.dto.SysDictDTO;
@@ -47,7 +47,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     private final SysDictService sysDictService;
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public IPage<SysDictVO> queryDictPage(SysDictQo qo) {
         ValidatorUtil.validateEntity(qo);
         IPage<SysDictVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
@@ -55,13 +55,13 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
     }
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public SysDictVO getDictById(Long id) {
         return sysDictService.getDictById(id);
     }
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     @Transactional(rollbackFor = Exception.class)
     public Boolean insertDict(SysDictDTO dto) {
         ValidatorUtil.validateEntity(dto);
@@ -76,7 +76,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public Boolean updateDict(SysDictDTO dto) {
         ValidatorUtil.validateEntity(dto);
         Long id = dto.getId();
@@ -96,14 +96,14 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public Boolean deleteDict(Long id) {
         sysDictService.deleteDict(id);
         return true;
     }
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public List<OptionVO> getOptionList(String type) {
         return sysDictService.getOptionList(type);
     }
