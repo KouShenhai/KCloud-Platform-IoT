@@ -75,6 +75,7 @@
         <module>laokou-common-seata</module>
         <module>laokou-common-xxl-job</module>
         <module>laokou-common-shardingsphere</module>
+        <module>laokou-common-p6spy</module>
     </modules>
 
 </project>

@@ -128,6 +128,7 @@ tenant/tenant123
         └── laokou-common-core                     --- 核心组件  
         └── laokou-common-cors                     --- 跨域组件  
         └── laokou-common-redis                    --- 缓存组件  
+        └── laokou-common-p6spy                    --- 日志组件  
         └── laokou-common-kafka                    --- 消息组件  
         └── laokou-common-wechat                   --- 微信组件  
         └── laokou-common-pulsar                   --- 消息组件  

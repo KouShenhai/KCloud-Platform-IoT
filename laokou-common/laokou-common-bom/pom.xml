@@ -110,11 +110,18 @@
         <xxl-job.version>2.4.0</xxl-job.version>
         <!--shardingsphere版本-->
         <shardingsphere.version>5.3.2</shardingsphere.version>
+        <!--p6spy版本-->
+        <p6spy.version>3.9.1</p6spy.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>${p6spy.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-kotlin</artifactId>
@@ -174,6 +181,11 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-pulsar</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-p6spy</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
