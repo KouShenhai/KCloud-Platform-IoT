@@ -33,15 +33,18 @@ rules:
         type: INLINE
         props:
           algorithm-expression: boot_sys_user_$->{id % 2}
-          allow-range-query-with-inline-sharding: false
+          # 开启全表扫描的范围查询
+          allow-range-query-with-inline-sharding: true
       laokou-database-inline:
         type: INLINE
         props:
           algorithm-expression: ds$->{tenant_id % 2}
-          allow-range-query-with-inline-sharding: false
+          # 开启全表扫描的范围查询
+          allow-range-query-with-inline-sharding: true
     keyGenerators:
       laokou-snowflake:
         type: SNOWFLAKE
         props:
           max-vibration-offset: 1
+          # 允许回拨的时间间隔
           max-tolerate-time-difference-milliseconds: 10
