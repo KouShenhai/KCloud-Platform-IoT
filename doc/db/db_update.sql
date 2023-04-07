@@ -13,9 +13,6 @@ alter table oauth2_authorization add index idx_token_expires_issued_principal_na
 -- 2023/2/24 增加boot_sys_audit_log索引 老寇
 alter table boot_sys_audit_log add index idx_business_id_type(business_id,`type`) comment '业务编号_索引';
 
--- 2023/2/24 增加boot_sys_login_log索引 老寇
-alter table boot_sys_login_log add index idx_tenant_id_request_status(tenant_id,request_status) comment '租户编号_请求状态_索引';
-
 -- 2023/2/24 增加boot_sys_menu索引 老寇
 ALTER TABLE boot_sys_menu ADD index idx_type_visible(`type`,`visible`) COMMENT '类型_可见_索引';
 

@@ -51,3 +51,47 @@ INSERT INTO `kcloud_platform_alibaba_user_0`.`boot_sys_user_1` (`id`, `username`
 INSERT INTO `kcloud_platform_alibaba_user_1`.`boot_sys_user_0` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `mail`, `status`, `avatar`, `mobile`, `dept_id`, `version`, `tenant_id`) VALUES ('1537114827246292998', '5/Pqo/yVzE72YyPDE5RKAw==', '$2a$10$ToBq5JB191IUkAfnqfeV5OFLOFDvhr9wWaRm1LhTn5sbL8uyJ0Gre', '1', '1341620898007281665', '1341620898007281665', '2023-02-09 22:59:04', '2023-02-09 22:59:04', '0', NULL, '0', 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', NULL, '0', '0', '1');
 INSERT INTO `kcloud_platform_alibaba_user_1`.`boot_sys_user_1` (`id`, `username`, `password`, `super_admin`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `mail`, `status`, `avatar`, `mobile`, `dept_id`, `version`, `tenant_id`) VALUES ('1537114827246293001', 'cmV6CFYc1NUWgni0E8xpdg==', '$2a$10$nbLXUQeCfuiw.7wZwuOT.e0r1mr.ZQcLIlFbil28PCrPBNAnPLRT.', '0', '1537114827246292998', NULL, '2023-02-15 13:18:39', '2023-02-15 13:18:39', '0', NULL, '0', 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', NULL, '1584488411756171278', '0', '1');
 -- ------------------------------------用户------------------------------------
+
+-- ------------------------------------日志------------------------------------
+CREATE TABLE `boot_sys_login_log_0` (
+                                        `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+                                        `creator` bigint DEFAULT NULL COMMENT '创建者',
+                                        `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                        `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+                                        `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+                                        `editor` bigint DEFAULT NULL COMMENT '编辑人',
+                                        `login_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '登录用户',
+                                        `request_ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'IP地址',
+                                        `request_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '归属地',
+                                        `browser` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '浏览器版本',
+                                        `os` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '操作系统',
+                                        `request_status` tinyint unsigned NOT NULL COMMENT '状态  0：成功   1：失败',
+                                        `msg` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '提示信息',
+                                        `login_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '登录类型',
+                                        `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
+                                        `tenant_id` bigint NOT NULL DEFAULT '0' COMMENT '租户id',
+                                        PRIMARY KEY (`id`),
+                                        KEY `idx_tenant_id_request_status` (`tenant_id`,`request_status`) USING BTREE COMMENT '租户编号_请求状态_索引'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='登录日志';
+
+CREATE TABLE `boot_sys_login_log_1` (
+                                        `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+                                        `creator` bigint DEFAULT NULL COMMENT '创建者',
+                                        `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                        `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+                                        `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+                                        `editor` bigint DEFAULT NULL COMMENT '编辑人',
+                                        `login_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '登录用户',
+                                        `request_ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'IP地址',
+                                        `request_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '归属地',
+                                        `browser` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '浏览器版本',
+                                        `os` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '操作系统',
+                                        `request_status` tinyint unsigned NOT NULL COMMENT '状态  0：成功   1：失败',
+                                        `msg` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '提示信息',
+                                        `login_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '登录类型',
+                                        `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
+                                        `tenant_id` bigint NOT NULL DEFAULT '0' COMMENT '租户id',
+                                        PRIMARY KEY (`id`),
+                                        KEY `idx_tenant_id_request_status` (`tenant_id`,`request_status`) USING BTREE COMMENT '租户编号_请求状态_索引'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='登录日志';
+-- ------------------------------------日志------------------------------------

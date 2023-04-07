@@ -12,20 +12,15 @@ dataSources:
     username: root
     password: koushenhai123456
 
-
 rules:
   - !SHARDING
     tables:
-      boot_sys_user:
-        actualDataNodes: master.boot_sys_user_$->{0..1}
+      boot_sys_login_log:
+        actualDataNodes: master.boot_sys_login_log_$->{0..1}
         tableStrategy:
           standard:
             shardingColumn: id
             shardingAlgorithmName: laokou-table-inline
-        databaseStrategy:
-          standard:
-            shardingColumn: tenant_id
-            shardingAlgorithmName: laokou-database-inline
         keyGenerateStrategy:
           column: id
           keyGeneratorName: laokou-snowflake
@@ -33,7 +28,7 @@ rules:
       laokou-table-inline:
         type: INLINE
         props:
-          algorithm-expression: boot_sys_user_$->{id % 5}
+          algorithm-expression: boot_sys_login_log_$->{id % 2}
           # 开启全表扫描的范围查询
           allow-range-query-with-inline-sharding: true
     keyGenerators:
@@ -47,10 +42,9 @@ rules:
     dataSources:
       laokou-readwrite-data-sources:
         staticStrategy:
-          writeDataSourceName: ds0
+          writeDataSourceName: master
           readDataSourceNames:
-            - ds0
-            - ds1
+            - slave
         loadBalancerName: laokou-load-balance-algorithm
     loadBalancers:
       laokou-load-balance-algorithm:

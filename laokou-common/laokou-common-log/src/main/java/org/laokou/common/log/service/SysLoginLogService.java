@@ -15,8 +15,10 @@
  */
 package org.laokou.common.log.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.common.easy.excel.service.ResultService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.laokou.common.log.entity.SysLoginLogDO;
 import org.laokou.common.log.event.LoginLogEvent;
 import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.vo.SysLoginLogVO;
@@ -24,7 +26,7 @@ import org.laokou.common.log.vo.SysLoginLogVO;
 /**
  * @author laokou
  */
-public interface SysLoginLogService extends ResultService<SysLoginLogQo,SysLoginLogVO> {
+public interface SysLoginLogService extends IService<SysLoginLogDO>,ResultService<SysLoginLogQo,SysLoginLogVO> {
     /**
      * 分页查询登录日志
      * @param page

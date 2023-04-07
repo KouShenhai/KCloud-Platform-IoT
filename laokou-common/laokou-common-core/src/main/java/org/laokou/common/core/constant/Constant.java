@@ -43,6 +43,8 @@ public interface Constant {
 
     String SHARDING_SPHERE = "shardingSphere";
 
+    String SHARDING_SPHERE_READWRITE = "shardingSphereReadWrite";
+
     String TENANT = "#tenant";
 
     /**
