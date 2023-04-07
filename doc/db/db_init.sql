@@ -192,25 +192,6 @@ CREATE TABLE `boot_sys_oss_log` (
                                     `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号',
                                     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='存储日志';
-CREATE TABLE `boot_sys_login_log` (
-                                      `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-                                      `creator` bigint(20) DEFAULT NULL COMMENT '创建者',
-                                      `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                                      `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-                                      `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
-                                      `editor` bigint(20) DEFAULT NULL COMMENT '编辑人',
-                                      `login_name` varchar(200) DEFAULT NULL COMMENT '登录用户',
-                                      `request_ip` varchar(50) DEFAULT NULL COMMENT 'IP地址',
-                                      `request_address` varchar(200) DEFAULT NULL COMMENT '归属地',
-                                      `browser` varchar(50) DEFAULT NULL COMMENT '浏览器版本',
-                                      `os` varchar(50) DEFAULT NULL COMMENT '操作系统',
-                                      `request_status` tinyint(1) unsigned NOT NULL COMMENT '状态  0：成功   1：失败',
-                                      `msg` varchar(500) DEFAULT NULL COMMENT '提示信息',
-                                      `login_type` varchar(50) DEFAULT NULL COMMENT '登录类型',
-                                      `version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号',
-                                      `tenant_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '租户id',
-                                      PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='登录日志';
 CREATE TABLE `boot_sys_operate_log` (
                                         `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
                                         `module` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '模块名称，如：系统菜单',

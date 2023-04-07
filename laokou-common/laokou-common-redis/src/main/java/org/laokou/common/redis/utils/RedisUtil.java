@@ -47,7 +47,6 @@ public class RedisUtil {
 
     /**  不设置过期时长 */
     public final static long NOT_EXPIRE = -1L;
-
     public RLock getLock(String key) {
         return redissonClient.getLock(key);
     }
@@ -112,6 +111,10 @@ public class RedisUtil {
         redissonClient.getBucket(key).set(value,expire, TimeUnit.SECONDS);
     }
 
+    public long getExpire(String key) {
+        return redissonClient.getBucket(key).getExpireTime();
+    }
+
     public void setIfAbsent(String key, Object value) {
         setIfAbsent(key,value,DEFAULT_EXPIRE);
     }
@@ -169,7 +172,7 @@ public class RedisUtil {
         return redissonClient.getMap(key).get(field);
     }
 
-    public Long getKeysSize() {
+    public long getKeysSize() {
         final Object obj = redisTemplate.execute((RedisCallback) RedisServerCommands::dbSize);
         return obj == null ? 0 : Long.parseLong(obj.toString());
     }

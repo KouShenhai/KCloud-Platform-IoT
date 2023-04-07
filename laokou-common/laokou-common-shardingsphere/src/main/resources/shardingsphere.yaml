@@ -48,15 +48,3 @@ rules:
           max-vibration-offset: 1
           # 允许回拨的时间间隔
           max-tolerate-time-difference-milliseconds: 10
-  - !READWRITE_SPLITTING
-    dataSources:
-      laokou-readwrite-data-sources:
-        staticStrategy:
-          writeDataSourceName: ds0
-          readDataSourceNames:
-            - ds0
-            - ds1
-        loadBalancerName: laokou-load-balance-algorithm
-    loadBalancers:
-      laokou-load-balance-algorithm:
-        type: ROUND_ROBIN
