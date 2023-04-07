@@ -102,7 +102,7 @@ tenant/tenant123
 - 服务熔断&降级&限流：Sentinel
 - 分库分表&读写分离：ShardingSphere
 - 分布式事务：Seata
-- 消息队列：RocketMQ
+- 消息队列：RocketMQ & Kafka
 - 分布式数据库：HBase
 - 服务监控：Spring Boot Admin & Prometheus
 - 链路跟踪：SkyWalking

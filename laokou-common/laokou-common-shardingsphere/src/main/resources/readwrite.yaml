@@ -1,22 +1,23 @@
 dataSources:
-  ds0:
+  master:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://laokou.org:3306/kcloud_platform_alibaba_user_0?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+    jdbcUrl: jdbc:mysql://laokou.org:3306/kcloud_platform_alibaba?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: koushenhai123456
-  ds1:
+  slave:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://laokou.org:3306/kcloud_platform_alibaba_user_1?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+    jdbcUrl: jdbc:mysql://laokou.org:3306/kcloud_platform_alibaba?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: koushenhai123456
+
 
 rules:
   - !SHARDING
     tables:
       boot_sys_user:
-        actualDataNodes: ds$->{0..1}.boot_sys_user_$->{0..1}
+        actualDataNodes: master.boot_sys_user_$->{0..1}
         tableStrategy:
           standard:
             shardingColumn: id
@@ -32,13 +33,7 @@ rules:
       laokou-table-inline:
         type: INLINE
         props:
-          algorithm-expression: boot_sys_user_$->{id % 2}
-          # 开启全表扫描的范围查询
-          allow-range-query-with-inline-sharding: true
-      laokou-database-inline:
-        type: INLINE
-        props:
-          algorithm-expression: ds$->{tenant_id % 2}
+          algorithm-expression: boot_sys_user_$->{id % 5}
           # 开启全表扫描的范围查询
           allow-range-query-with-inline-sharding: true
     keyGenerators:
@@ -48,3 +43,15 @@ rules:
           max-vibration-offset: 1
           # 允许回拨的时间间隔
           max-tolerate-time-difference-milliseconds: 10
+  - !READWRITE_SPLITTING
+    dataSources:
+      laokou-readwrite-data-sources:
+        staticStrategy:
+          writeDataSourceName: ds0
+          readDataSourceNames:
+            - ds0
+            - ds1
+        loadBalancerName: laokou-load-balance-algorithm
+    loadBalancers:
+      laokou-load-balance-algorithm:
+        type: ROUND_ROBIN
