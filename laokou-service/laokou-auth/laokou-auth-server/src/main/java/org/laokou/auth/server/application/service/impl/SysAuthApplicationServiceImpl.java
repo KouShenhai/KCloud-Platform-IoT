@@ -44,7 +44,6 @@ import java.security.Principal;
 import java.util.List;
 
 /**
- * SpringSecurity最新版本更新
  * @author laokou
  */
 @Service
@@ -77,29 +76,29 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     @Override
     public Boolean logout(HttpServletRequest request) {
-        String token = request.getHeader(Constant.AUTHORIZATION_HEAD);
-        if (StringUtil.isEmpty(token)) {
+        try {
+            String token = getToken(request);
+            OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+            if (oAuth2Authorization == null) {
+                return true;
+            }
+            UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) oAuth2Authorization.getAttribute(Principal.class.getName())).getPrincipal();
+            // 清空token
+            oAuth2AuthorizationService.remove(oAuth2Authorization);
+            // 用户key
+            String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
+            redisUtil.delete(userInfoKey);
+            Long userId = userDetail.getId();
+            // 菜单key
+            String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
+            redisUtil.delete(resourceTreeKey);
+            // 消息key
+            String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
+            redisUtil.delete(messageUnReadKey);
             return true;
+        } catch (Exception e) {
+            return false;
         }
-        token = token.substring(7);
-        OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
-        if (oAuth2Authorization == null) {
-            return true;
-        }
-        UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) oAuth2Authorization.getAttribute(Principal.class.getName())).getPrincipal();
-        // 清空token
-        oAuth2AuthorizationService.remove(oAuth2Authorization);
-        // 用户key
-        String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-        redisUtil.delete(userInfoKey);
-        Long userId = userDetail.getId();
-        // 菜单key
-        String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
-        redisUtil.delete(resourceTreeKey);
-        // 消息key
-        String messageUnReadKey = RedisKeyUtil.getMessageUnReadKey(userId);
-        redisUtil.delete(messageUnReadKey);
-        return true;
     }
 
     @Override
@@ -111,6 +110,21 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     public String getPublicKey() throws IOException {
         byte[] bytes = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream().readAllBytes();
         return new String(bytes, StandardCharsets.UTF_8);
+    }
+
+    @Override
+    public Long getExpire(HttpServletRequest request) {
+        String token = getToken(request);
+        String tokenExpireKey = RedisKeyUtil.getTokenExpireKey(token);
+        return redisUtil.getExpire(tokenExpireKey);
+    }
+
+    private String getToken(HttpServletRequest request) {
+        String token = request.getHeader(Constant.AUTHORIZATION_HEAD);
+        if (StringUtil.isEmpty(token)) {
+            throw new CustomException("令牌不存在");
+        }
+        return token.substring(7);
     }
 
 }
