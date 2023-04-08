@@ -22,4 +22,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 @Slf4j
 @SpringBootTest(classes = AdminApplication.class)
 public class LoginLogShardingTest {
+
 }
