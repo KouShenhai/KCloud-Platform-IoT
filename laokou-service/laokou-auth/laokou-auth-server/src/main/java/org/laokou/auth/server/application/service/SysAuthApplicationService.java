@@ -52,4 +52,11 @@ public interface SysAuthApplicationService {
      * @return
      */
     String getPublicKey() throws IOException;
+
+    /**
+     * 令牌过期
+     * @param request
+     * @return
+     */
+    Long getExpire(HttpServletRequest request);
 }
