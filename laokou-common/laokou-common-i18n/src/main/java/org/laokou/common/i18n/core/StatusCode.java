@@ -116,7 +116,7 @@ public interface StatusCode {
 
     /**
      * auth => 2
-     * 账号已被停用
+     * 账号已被锁定，请联系管理员
      */
     int USERNAME_DISABLE = 2006;
 
@@ -179,6 +179,18 @@ public interface StatusCode {
      * 无效客户端
      */
     int INVALID_CLIENT = 2016;
+
+    /**
+     * auth => 2
+     * 已被强制踢出，请重新登录
+     */
+    int FORCE_KILL = 2017;
+
+    /**
+     * auth => 2
+     * 系统繁忙，请刷新页面
+     */
+    int REFRESH_PAGE = 2018;
 
     /**
      * sentinel => 5

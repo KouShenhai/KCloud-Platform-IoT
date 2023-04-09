@@ -93,11 +93,12 @@ public final class RedisKeyUtil {
     }
 
     /**
-     * 令牌过期Key
+     * 用户踢出Key
+     * @param token
      * @return
      */
-    public static String getTokenExpireKey(String token) {
-        return "sys:token:expire:" + token;
+    public static String getUserKillKey(String token) {
+        return "sys:user:kill:" + token;
     }
 
 }

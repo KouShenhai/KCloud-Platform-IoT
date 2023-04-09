@@ -42,6 +42,7 @@ tenant/tenant123
 特此说明，与Spring Boot版本保持一致
 
 ### 🔎 功能介绍
+🚀 在线用户：强制踢出在线用户
 🚀 用户管理：用户信息增删改查（字段隔离&分库分表）（可重置密码）   
 🚀 角色管理：角色信息增删改查，基于部门的数据权限、角色权限（字段隔离）     
 🚀 菜单管理：菜单信息增删改查（字段隔离）（自定义菜单图标）   
@@ -386,6 +387,10 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     <tr>
         <td><img alt="暂无图片" src="doc/image/29.png"/></td>
         <td><img alt="暂无图片" src="doc/image/30.png"/></td>
+    </tr>
+    <tr>
+        <td><img alt="暂无图片" src="doc/image/33.png"/></td>
+        <td><img alt="暂无图片" src="doc/image/34.png"/></td>
     </tr>
     <tr>
         <td><img alt="暂无图片" src="doc/image/31.png"/></td>

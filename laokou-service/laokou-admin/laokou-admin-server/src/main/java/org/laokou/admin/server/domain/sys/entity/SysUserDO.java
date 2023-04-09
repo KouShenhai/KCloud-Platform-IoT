@@ -69,9 +69,9 @@ public class SysUserDO extends BaseDO {
     private String mail;
 
     /**
-     * 用户状态 0 正常 1 停用
+     * 用户状态 0 正常 1 锁定
      */
-    @Schema(name = "status",description = "用户状态 0 正常 1 停用",example = "0")
+    @Schema(name = "status",description = "用户状态 0 正常 1 锁定",example = "0")
     private Integer status;
 
     /**

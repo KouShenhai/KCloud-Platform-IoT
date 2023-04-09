@@ -43,8 +43,13 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
     @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
+        String userKillKey = RedisKeyUtil.getUserKillKey(token);
+        Object obj = redisUtil.get(userKillKey);
+        if (obj != null) {
+            CustomAuthExceptionHandler.throwError(StatusCode.FORCE_KILL, MessageUtil.getMessage(StatusCode.FORCE_KILL));
+        }
         String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-        Object obj = redisUtil.get(userInfoKey);
+        obj = redisUtil.get(userInfoKey);
         if (obj != null) {
             return (UserDetail) obj;
         }
