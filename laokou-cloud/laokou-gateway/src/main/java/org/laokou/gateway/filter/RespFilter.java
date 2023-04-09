@@ -90,17 +90,9 @@ public class RespFilter implements GlobalFilter, Ordered {
                         DataBufferUtils.release(dataBuffer);
                         String str = new String(content, StandardCharsets.UTF_8);
                         // str就是response的值
-                        String msg;
                         JsonNode node = JacksonUtil.readTree(str);
-                        JsonNode jsonNode1 = node.get(GatewayConstant.ERROR);
-                        int code = jsonNode1.asInt();
-                        JsonNode jsonNode2 = node.get(GatewayConstant.ERROR_DESCRIPTION);
-                        if (jsonNode2 != null) {
-                            msg = jsonNode2.asText();
-                        } else {
-                            msg = jsonNode1.asText();
-                            code = 500;
-                        }
+                        String msg = node.get(GatewayConstant.ERROR_DESCRIPTION).asText();
+                        int code = node.get(GatewayConstant.ERROR).asInt();
                         HttpResult result = ResponseUtil.response(code, msg);
                         byte[] uppedContent = JacksonUtil.toJsonStr(result).getBytes();
                         // 修改状态码
