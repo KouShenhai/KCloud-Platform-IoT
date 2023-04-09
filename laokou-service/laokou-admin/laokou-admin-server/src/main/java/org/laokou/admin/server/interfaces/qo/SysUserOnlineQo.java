@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.server;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.test.context.SpringBootTest;
+
+package org.laokou.admin.server.interfaces.qo;
+
+import lombok.Data;
+import org.laokou.common.mybatisplus.entity.BasePage;
+
 /**
  * @author laokou
  */
-@Slf4j
-@SpringBootTest(classes = AdminApplication.class)
-public class LoginLogShardingTest {
-
+@Data
+public class SysUserOnlineQo extends BasePage {
+    private String username;
 }

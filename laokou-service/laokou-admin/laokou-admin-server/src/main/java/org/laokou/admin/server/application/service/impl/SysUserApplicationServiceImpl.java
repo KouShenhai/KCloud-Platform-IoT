@@ -21,6 +21,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.vo.SysUserOnlineVO;
 import org.laokou.admin.client.vo.UserInfoVO;
 import org.laokou.admin.server.application.service.SysUserApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysUserDO;
@@ -28,6 +29,7 @@ import org.laokou.admin.server.domain.sys.entity.SysUserRoleDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysRoleService;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserRoleService;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
+import org.laokou.admin.server.interfaces.qo.SysUserOnlineQo;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.admin.server.interfaces.qo.SysUserQo;
@@ -45,12 +47,16 @@ import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.jasypt.utils.AESUtil;
 import org.laokou.common.jasypt.utils.JasyptUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
+import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import static org.laokou.common.core.constant.Constant.DEFAULT;
 import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
 
 /**
@@ -69,6 +75,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     private final PasswordEncoder passwordEncoder;
 
     private final BatchUtil<SysUserRoleDO> batchUtil;
+    private final RedisUtil redisUtil;
 
     @Override
     @DSTransactional
@@ -248,6 +255,50 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         // 解密
         JasyptUtil.setFieldValue(userInfoVO);
         return userInfoVO;
+    }
+
+    @Override
+    public IPage<SysUserOnlineVO> onlineQueryPage(SysUserOnlineQo qo) {
+        String userInfoKey = RedisKeyUtil.getUserInfoKey("*");
+        Set<String> keys = redisUtil.keys(userInfoKey);
+        List<SysUserOnlineVO> list = new ArrayList<>(keys.size());
+        String keyword = qo.getUsername();
+        Integer pageNum = qo.getPageNum();
+        Integer pageSize = qo.getPageSize();
+        String userInfoKeyPrefix = RedisKeyUtil.getUserInfoKey("");
+        for (String key : keys) {
+            UserDetail userDetail = (UserDetail) redisUtil.get(key);
+            String username = AESUtil.decrypt(userDetail.getUsername());
+            if (StringUtil.isEmpty(keyword) || username.contains(keyword)) {
+                SysUserOnlineVO vo = new SysUserOnlineVO();
+                vo.setUsername(username);
+                vo.setToken(key.replace(userInfoKeyPrefix,""));
+                vo.setLoginIp(userDetail.getLoginIp());
+                vo.setLoginDate(userDetail.getLoginDate());
+                list.add(vo);
+            }
+        }
+        int size = list.size();
+        list = list.stream()
+                .limit(pageSize)
+                .skip((long) (pageNum - 1) * pageSize)
+                .toList();
+        IPage<SysUserOnlineVO> page = new Page<>(pageNum,pageSize);
+        page.setTotal(size);
+        page.setRecords(list);
+        return page;
+    }
+
+    @Override
+    public Boolean onlineKill(String token) {
+        String userKillKey = RedisKeyUtil.getUserKillKey(token);
+        String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
+        long expire = redisUtil.getExpire(userInfoKey);
+        if (expire > 0) {
+            redisUtil.set(userKillKey,DEFAULT,expire);
+            redisUtil.delete(userInfoKey);
+        }
+        return true;
     }
 
     private void saveOrUpdate(Long userId, List<Long> roleIds) {

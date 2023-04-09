@@ -112,7 +112,7 @@ public class RedisUtil {
     }
 
     public long getExpire(String key) {
-        return redissonClient.getBucket(key).getExpireTime();
+        return redisTemplate.getExpire(key);
     }
 
     public void setIfAbsent(String key, Object value) {
@@ -135,6 +135,8 @@ public class RedisUtil {
         return redisTemplate.hasKey(key);
     }
 
+
+
     public long incrementAndGet(String key) {
         RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
         atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
@@ -152,6 +154,10 @@ public class RedisUtil {
         long newValue = atomicLong.addAndGet(value);
         atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
         return newValue;
+    }
+
+    public Set<String> keys(String pattern) {
+        return redisTemplate.keys(pattern);
     }
 
     public long getAtomicValue(String key) {

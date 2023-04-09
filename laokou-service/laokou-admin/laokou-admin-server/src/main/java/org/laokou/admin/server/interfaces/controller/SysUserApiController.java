@@ -19,7 +19,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.SysUserDTO;
+import org.laokou.admin.client.vo.SysUserOnlineVO;
 import org.laokou.admin.client.vo.UserInfoVO;
+import org.laokou.admin.server.interfaces.qo.SysUserOnlineQo;
 import org.laokou.admin.server.interfaces.qo.SysUserQo;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.admin.client.vo.SysUserVO;
@@ -53,24 +55,29 @@ public class SysUserApiController {
     }
 
     @PostMapping("/online/query")
-    public void test() {
-
+    @PreAuthorize("hasAuthority('sys:user:online:query')")
+    @Operation(summary = "在线用户>查询",description = "系统用户>查询")
+    public HttpResult<IPage<SysUserOnlineVO>> query(@RequestBody SysUserOnlineQo qo) {
+        return new HttpResult<IPage<SysUserOnlineVO>>().ok(sysUserApplicationService.onlineQueryPage(qo));
     }
 
-    @PostMapping("/online/kill")
-    public void kill() {
-
+    @DeleteMapping("/online/kill")
+    @Operation(summary = "在线用户>强踢",description = "在线用户>强踢")
+    @OperateLog(module = "在线用户",name = "强制踢出")
+    @PreAuthorize("hasAuthority('sys:user:online:kill')")
+    public HttpResult<Boolean> kill(@RequestParam("token")String token) {
+        return new HttpResult<Boolean>().ok(sysUserApplicationService.onlineKill(token));
     }
 
-    @GetMapping("/userInfo")
+    @GetMapping("/info")
     @Operation(summary = "系统用户>用户信息",description = "系统用户>用户信息")
-    public HttpResult<UserInfoVO> userInfo() {
+    public HttpResult<UserInfoVO> info() {
         return new HttpResult<UserInfoVO>().ok(sysUserApplicationService.getUserInfo());
     }
 
     @GetMapping("/option/list")
     @Operation(summary = "系统用户>下拉框列表",description = "系统用户>下拉框列表")
-    public HttpResult<List<OptionVO>> optionList() {
+    public HttpResult<List<OptionVO>> option() {
         return new HttpResult<List<OptionVO>>().ok(sysUserApplicationService.getOptionList());
     }
 
