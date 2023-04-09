@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>laokou-cloud</artifactId>
+        <groupId>org.laokou</groupId>
+        <version>3.0.5</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>laokou-power-job</artifactId>
+
+    <properties>
+        <!--power-job版本-->
+        <power-job.version>4.3.1</power-job.version>
+        <!--spring-boot版本-->
+        <spring-boot.version>2.7.10</spring-boot.version>
+        <!--mysql版本-->
+        <mysql.version>8.0.31</mysql.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>tech.powerjob</groupId>
+            <artifactId>powerjob-server-extension</artifactId>
+            <version>${power-job.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>tech.powerjob</groupId>
+            <artifactId>powerjob-server-remote</artifactId>
+            <version>${power-job.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>tech.powerjob</groupId>
+            <artifactId>powerjob-server-common</artifactId>
+            <version>${power-job.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>tech.powerjob</groupId>
+            <artifactId>powerjob-server-monitor</artifactId>
+            <version>${power-job.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>tech.powerjob</groupId>
+            <artifactId>powerjob-server-persistence</artifactId>
+            <version>${power-job.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>tech.powerjob</groupId>
+            <artifactId>powerjob-server-core</artifactId>
+            <version>${power-job.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>tech.powerjob</groupId>
+            <artifactId>powerjob-server-migrate</artifactId>
+            <version>${power-job.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 定义 spring boot 版本 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

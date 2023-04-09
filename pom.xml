@@ -196,6 +196,7 @@
                 <MYSQL-DB-NACOS>nacos-config</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>seata-config</MYSQL-DB-SEATA>
                 <MYSQL-DB-XXL-JOB>xxl-job-config</MYSQL-DB-XXL-JOB>
+                <MYSQL-POWER-JOB>power-job-config</MYSQL-POWER-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>public</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
@@ -226,6 +227,7 @@
                 <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>kcloud_platform_seata</MYSQL-DB-SEATA>
                 <MYSQL-DB-XXL-JOB>kcloud_platform_xxl_job</MYSQL-DB-XXL-JOB>
+                <MYSQL-DB-POWER-JOB>kcloud_platform_alibaba_power_job</MYSQL-DB-POWER-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>1.com:8848</NACOS-DISCOVERY-ADDRESS>
@@ -253,6 +255,7 @@
                 <MYSQL-DB-NACOS>xxx</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>xxx</MYSQL-DB-SEATA>
                 <MYSQL-DB-XXL-JOB>xxx</MYSQL-DB-XXL-JOB>
+                <MYSQL-DB-POWER-JOB>xxx</MYSQL-DB-POWER-JOB>
                 <MYSQL-PORT>xxx</MYSQL-PORT>
                 <NACOS-NAMESPACE>xxx111222333444555666777888999</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>xxx</NACOS-DISCOVERY-ADDRESS>
