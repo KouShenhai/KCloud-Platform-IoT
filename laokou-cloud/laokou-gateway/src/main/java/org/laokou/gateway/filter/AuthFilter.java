@@ -83,7 +83,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
         if (OAUTH2_AUTH_URI.contains(requestUri)
                 && HttpMethod.POST.matches(request.getMethod().name())
                 && MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
-            return oauth2Decode(exchange,chain);
+            return oauth2Decode(exchange, chain);
         }
         // 获取token
         String token = ResponseUtil.getToken(request);
@@ -126,6 +126,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
             // 获取请求密码并解密
             Map<String, String> inParamsMap = HttpUtil.decodeParamMap((String) s, CharsetUtil.CHARSET_UTF_8);
             if (inParamsMap.containsKey(GatewayConstant.PASSWORD) && inParamsMap.containsKey(GatewayConstant.USERNAME)) {
+                log.info("密码模式认证...");
                 try {
                     String password = inParamsMap.get(GatewayConstant.PASSWORD);
                     String username = inParamsMap.get(GatewayConstant.USERNAME);
@@ -141,7 +142,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
                 }
             }
             else {
-                log.error("非法请求数据:{}", s);
+                log.info("非密码模式:{}", s);
             }
             return Mono.just(HttpUtil.toParams(inParamsMap, Charset.defaultCharset(), true));
         };

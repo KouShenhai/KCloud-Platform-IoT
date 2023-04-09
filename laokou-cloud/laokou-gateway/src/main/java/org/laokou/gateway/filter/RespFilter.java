@@ -53,7 +53,6 @@ public class RespFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         // 获取request对象
         ServerHttpRequest request = exchange.getRequest();
-        request.getHeaders();
         // 获取uri
         String requestUri = request.getPath().pathWithinApplication().value();
         // 表单提交
@@ -61,7 +60,7 @@ public class RespFilter implements GlobalFilter, Ordered {
         if (OAUTH2_AUTH_URI.contains(requestUri)
                 && HttpMethod.POST.matches(request.getMethod().name())
                 && MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
-            return oauth2Resp(exchange,chain);
+            return oauth2Resp(exchange, chain);
         } else {
             return chain.filter(exchange);
         }
@@ -91,9 +90,17 @@ public class RespFilter implements GlobalFilter, Ordered {
                         DataBufferUtils.release(dataBuffer);
                         String str = new String(content, StandardCharsets.UTF_8);
                         // str就是response的值
+                        String msg;
                         JsonNode node = JacksonUtil.readTree(str);
-                        String msg = node.get(GatewayConstant.ERROR_DESCRIPTION).asText();
-                        int code = node.get(GatewayConstant.ERROR).asInt();
+                        JsonNode jsonNode1 = node.get(GatewayConstant.ERROR);
+                        int code = jsonNode1.asInt();
+                        JsonNode jsonNode2 = node.get(GatewayConstant.ERROR_DESCRIPTION);
+                        if (jsonNode2 != null) {
+                            msg = jsonNode2.asText();
+                        } else {
+                            msg = jsonNode1.asText();
+                            code = 500;
+                        }
                         HttpResult result = ResponseUtil.response(code, msg);
                         byte[] uppedContent = JacksonUtil.toJsonStr(result).getBytes();
                         // 修改状态码
