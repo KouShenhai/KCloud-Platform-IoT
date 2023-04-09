@@ -53,7 +53,6 @@ public class RespFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         // 获取request对象
         ServerHttpRequest request = exchange.getRequest();
-        request.getHeaders();
         // 获取uri
         String requestUri = request.getPath().pathWithinApplication().value();
         // 表单提交
@@ -61,7 +60,7 @@ public class RespFilter implements GlobalFilter, Ordered {
         if (OAUTH2_AUTH_URI.contains(requestUri)
                 && HttpMethod.POST.matches(request.getMethod().name())
                 && MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
-            return oauth2Resp(exchange,chain);
+            return oauth2Resp(exchange, chain);
         } else {
             return chain.filter(exchange);
         }

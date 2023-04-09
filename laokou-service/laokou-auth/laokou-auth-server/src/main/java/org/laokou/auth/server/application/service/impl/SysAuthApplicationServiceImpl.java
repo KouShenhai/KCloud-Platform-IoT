@@ -115,17 +115,6 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
-    @Override
-    public Long getExpire(HttpServletRequest request) {
-        String token = getToken(request);
-        String tokenExpireKey = RedisKeyUtil.getUserInfoKey(token);
-        long expire = redisUtil.getExpire(tokenExpireKey);
-        if (expire > 0) {
-            return expire;
-        }
-        throw new CustomException(StatusCode.REFRESH_PAGE);
-    }
-
     private String getToken(HttpServletRequest request) {
         String token = request.getHeader(Constant.AUTHORIZATION_HEAD);
         if (StringUtil.isEmpty(token)) {

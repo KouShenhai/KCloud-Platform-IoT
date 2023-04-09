@@ -83,14 +83,4 @@ public class SysAuthApiController {
         return new HttpResult<String>().ok(sysAuthApplicationService.getPublicKey());
     }
 
-    /**
-     * 配置服务限流
-     * @return
-     */
-    @GetMapping("/expire")
-    @Operation(summary = "系统认证>过期时间",description = "系统认证>过期时间")
-    public HttpResult<Long> expire(HttpServletRequest request) {
-        return new HttpResult<Long>().ok(sysAuthApplicationService.getExpire(request));
-    }
-
 }
