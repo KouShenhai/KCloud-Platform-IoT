@@ -5,14 +5,16 @@
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
 # documentation.
-
-name: Java CI with Maven
+# 声明用途
+name: Java CI with Maven Central Repo Deployment
 
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  release:
+    types: [ released ]
 
 jobs:
   build:
@@ -30,3 +32,11 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean install
+    - name: Release Maven package
+      uses: samuelmeuli/action-maven-publish@v1
+      with:
+        # 一系列需要的密码
+        gpg_private_key: ${{ secrets.GPG_SECRET }}    # GPG 导出的那段长长的密钥
+        gpg_passphrase: ${{ secrets.GPG_PASSWORD }}   # 自己设置的 GPG 密码
+        nexus_username: ${{ secrets.OSSRH_USER }}     # sonatype 用户名（不是邮箱）
+        nexus_password: ${{ secrets.OSSRH_PASSWORD }} # sonatype 登录密码
