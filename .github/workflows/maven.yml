@@ -34,6 +34,7 @@ jobs:
           server-username: ${{ secrets.OSSRH_USERNAME }}
           server-password: ${{ secrets.OSSRH_PASSWORD }}
           gpg-passphrase: ${{ secrets.GPG_PASSWORD }}
+          gpg_private_key: ${{ secrets.GPG_SECRET }}
       - name: Build with Maven
         run: mvn clean install
       - name: Release Maven package
