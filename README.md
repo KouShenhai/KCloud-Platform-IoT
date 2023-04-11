@@ -189,7 +189,7 @@ tenant/tenant123
 
 ### 👍 Maven打包
 ```bash
-mvn install -Dmaven.test.skip=true
+mvn clean package
 ```
 
 ### ⚡ 环境配置
