@@ -39,6 +39,7 @@ jobs:
         run: mvn clean install
       - name: Release Maven package
         uses: samuelmeuli/action-maven-publish@v1
+        run: mvn --batch-mode -Dgpg.passphrase=${{ secrets.GPG_PASSWORD }} clean deploy
         with:
           gpg_private_key: ${{ secrets.GPG_SECRET }}
           gpg_passphrase: ${{ secrets.GPG_PASSWORD }}
