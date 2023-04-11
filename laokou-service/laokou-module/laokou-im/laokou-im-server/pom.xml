@@ -21,10 +21,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>laokou-im</artifactId>
-        <groupId>org.laokou</groupId>
+        <groupId>io.github.koushenhai</groupId>
         <version>3.0.5</version>
     </parent>
-    <groupId>org.laokou</groupId>
+    <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-im-server</artifactId>
     <dependencies>
         <dependency>
@@ -42,11 +42,11 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.laokou</groupId>
+            <groupId>io.github.koushenhai</groupId>
             <artifactId>laokou-im-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.laokou</groupId>
+            <groupId>io.github.koushenhai</groupId>
             <artifactId>laokou-common-swagger</artifactId>
         </dependency>
         <dependency>

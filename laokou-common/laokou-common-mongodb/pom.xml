@@ -4,11 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>laokou-common</artifactId>
-        <groupId>org.laokou</groupId>
+        <groupId>io.github.koushenhai</groupId>
         <version>3.0.5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.laokou</groupId>
     <artifactId>laokou-common-mongodb</artifactId>
 
     <dependencies>
@@ -17,7 +16,7 @@
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.laokou</groupId>
+            <groupId>io.github.koushenhai</groupId>
             <artifactId>laokou-common-core</artifactId>
         </dependency>
     </dependencies>

@@ -19,7 +19,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <groupId>org.laokou</groupId>
+    <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-common</artifactId>
     <version>3.0.5</version>
   </parent>
@@ -114,7 +114,7 @@
       <artifactId>httpclient5</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.laokou</groupId>
+      <groupId>io.github.koushenhai</groupId>
       <artifactId>laokou-common-i18n</artifactId>
       <exclusions>
         <exclusion>
@@ -124,7 +124,7 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.laokou</groupId>
+      <groupId>io.github.koushenhai</groupId>
       <artifactId>laokou-common-banner</artifactId>
     </dependency>
   </dependencies>
