@@ -38,8 +38,6 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
         <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
         <!--spring-boot版本-->
         <spring-boot.version>3.0.5</spring-boot.version>
@@ -314,10 +312,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>${maven-gpg-plugin.version}</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
@@ -325,30 +319,24 @@
                         <goals>
                             <goal>sign</goal>
                         </goals>
-                        <configuration>
-                            <!-- Prevent gpg from using pinentry programs -->
-                            <gpgArguments>
-                                <arg>--pinentry-mode</arg>
-                                <arg>loopback</arg>
-                            </gpgArguments>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <gpgArguments>
+                        <argument>--pinentry-mode</argument>
+                        <argument>loopback</argument>
+                    </gpgArguments>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>${nexus-staging-maven-plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -428,7 +416,7 @@
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>ossrh</id>
