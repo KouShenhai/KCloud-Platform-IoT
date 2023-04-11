@@ -20,11 +20,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.laokou</groupId>
+        <groupId>io.github.koushenhai</groupId>
         <artifactId>laokou-generator</artifactId>
         <version>3.0.5</version>
     </parent>
-    <groupId>org.laokou</groupId>
+    <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-generator-server</artifactId>
     <description>模板模块</description>
     <dependencies>
@@ -33,11 +33,11 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.laokou</groupId>
+            <groupId>io.github.koushenhai</groupId>
             <artifactId>laokou-common-jasypt</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.laokou</groupId>
+            <groupId>io.github.koushenhai</groupId>
             <artifactId>laokou-common-core</artifactId>
         </dependency>
         <dependency>

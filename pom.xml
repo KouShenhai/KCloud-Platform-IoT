@@ -20,7 +20,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.laokou</groupId>
+    <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-parent</artifactId>
     <version>3.0.5</version>
     <description>parent配置</description>
@@ -58,7 +58,7 @@
         <dependencies>
             <!-- 定义公共版本 -->
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-bom</artifactId>
                 <version>${laokou.version}</version>
                 <type>pom</type>
@@ -106,7 +106,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <repositories>
         <repository>
             <id>snapshots-repo</id>
@@ -187,7 +186,6 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
     <profiles>
         <!-- 开发环境 -->
         <profile>
@@ -283,6 +281,17 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <goals>deploy</goals>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>2.2.1</version>
                 <executions>
@@ -306,6 +315,10 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <failOnError>false</failOnError>
+                    <doclint>none</doclint>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -427,6 +440,10 @@
         <developerConnection>scm:git:https://github.com/KouShenhai/KCloud-Platform-Alibaba.git</developerConnection>
     </scm>
     <distributionManagement>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
         <snapshotRepository>
             <id>ossrh</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>

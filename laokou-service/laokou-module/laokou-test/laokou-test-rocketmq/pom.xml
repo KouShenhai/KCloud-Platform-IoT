@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>laokou-test</artifactId>
-        <groupId>org.laokou</groupId>
+        <groupId>io.github.koushenhai</groupId>
         <version>3.0.5</version>
     </parent>
-    <groupId>org.laokou</groupId>
+    <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-test-rocketmq</artifactId>
     <dependencies>
         <dependency>
@@ -19,11 +19,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.laokou</groupId>
+            <groupId>io.github.koushenhai</groupId>
             <artifactId>laokou-common-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.laokou</groupId>
+            <groupId>io.github.koushenhai</groupId>
             <artifactId>laokou-common-rocketmq</artifactId>
         </dependency>
     </dependencies>

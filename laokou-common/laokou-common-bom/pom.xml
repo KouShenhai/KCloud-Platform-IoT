@@ -21,7 +21,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.laokou</groupId>
+    <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-common-bom</artifactId>
     <version>3.0.5</version>
     <packaging>pom</packaging>
@@ -134,42 +134,42 @@
                 <version>${xxl-job.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-xxl-job</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-power-job</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-test-netty</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-register</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-test-juc</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-test-rocketmq</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-test-juc</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-test-rocketmq</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -179,87 +179,87 @@
                 <version>${ip2region.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-ip-region</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-pulsar</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-p6spy</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-clickhouse</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-freemarker</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-dubbo</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-graphql</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-kafka</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-neo4j</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-prometheus</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-banner</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-reptile</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-redis-search</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-r2dbc</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-easy-excel</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-jasypt</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-wechat-mp</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -269,12 +269,12 @@
                 <version>${hbase.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-dynamic-router</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-hbase</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -289,12 +289,12 @@
                 <version>${httpclient5.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-openfeign</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-i18n</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -304,27 +304,27 @@
                 <version>${shardingsphere.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-power-job</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-shardingsphere</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-api</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-freemarker</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-tenant</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -334,27 +334,27 @@
                 <version>${dynamic-datasource.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-data-cache</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-data-filter</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-log</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-security</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-sentinel</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -438,22 +438,22 @@
                 <version>${joda-time.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-easy-captcha</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-sentinel</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-cors</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-seata</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -473,7 +473,7 @@
                 <version>${hutool-all.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-core</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -489,22 +489,22 @@
                 <version>${jasypt.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-gateway</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-monitor</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-admin-server</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-admin-client</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -539,12 +539,12 @@
                 <version>${freemarker.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-generator-server</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-generator-client</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -554,12 +554,12 @@
                 <version>${redisson.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-redis</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-elasticsearch</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -569,52 +569,52 @@
                 <version>${elasticsearch.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-mybatis-plus</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-rocketmq</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-swagger</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-seata</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-oss</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-sms</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-auth-client</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-auth-server</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-im-client</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-im-server</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -629,17 +629,17 @@
                 <version>${jakarta.servlet-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-flowable-client</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-common-mongodb</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
+                <groupId>io.github.koushenhai</groupId>
                 <artifactId>laokou-flowable-server</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -675,4 +675,15 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
