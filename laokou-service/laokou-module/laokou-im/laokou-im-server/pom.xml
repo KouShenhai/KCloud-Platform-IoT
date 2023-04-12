@@ -21,7 +21,7 @@
     <parent>
         <artifactId>laokou-im</artifactId>
         <groupId>io.github.koushenhai</groupId>
-        <version>3.0.5</version>
+        <version>3.0.6-M1</version>
     </parent>
     <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-im-server</artifactId>

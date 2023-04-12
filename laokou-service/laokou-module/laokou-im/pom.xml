@@ -20,12 +20,12 @@
     <parent>
         <artifactId>laokou-module</artifactId>
         <groupId>io.github.koushenhai</groupId>
-        <version>3.0.5</version>
+        <version>3.0.6-M1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-im</artifactId>
-    <version>3.0.5</version>
+    <version>3.0.6-M1</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-im-client</module>

@@ -21,11 +21,11 @@
     <parent>
         <groupId>io.github.koushenhai</groupId>
         <artifactId>laokou-auth</artifactId>
-        <version>3.0.5</version>
+        <version>3.0.6-M1</version>
     </parent>
     <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-auth-server</artifactId>
-    <description>认证模块</description>
+    <description>系统认证</description>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>

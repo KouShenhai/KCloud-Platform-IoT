@@ -20,14 +20,16 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-parent</artifactId>
-    <version>3.0.5</version>
-    <description>parent配置</description>
+    <version>3.0.6-M1</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-common</module>
         <module>laokou-cloud</module>
         <module>laokou-service</module>
     </modules>
+    <name>laokou-parent</name>
+    <description>一款企业级微服务架构的云服务多租户SaaS平台</description>
+    <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
     <properties>
         <laokou.version>3.0.5</laokou.version>
         <java.version>17</java.version>
@@ -50,7 +52,6 @@
         <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
         <docker.registry.name>koushenhai</docker.registry.name>
         <docker.version>1.2.2</docker.version>
-        <maven.deploy.skip>true</maven.deploy.skip>
         <maven.compiler.release>17</maven.compiler.release>
     </properties>
     <dependencyManagement>
@@ -443,7 +444,7 @@
         </repository>
         <snapshotRepository>
             <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/release</url>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>

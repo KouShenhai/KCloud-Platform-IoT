@@ -20,12 +20,12 @@
 	<parent>
 		<groupId>io.github.koushenhai</groupId>
 		<artifactId>laokou-admin</artifactId>
-		<version>3.0.5</version>
+		<version>3.0.6-M1</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.koushenhai</groupId>
 	<artifactId>laokou-admin-server</artifactId>
-	<description>后台管理模块</description>
+	<description>系统管理</description>
     <dependencies>
 		<dependency>
 			<groupId>de.codecentric</groupId>

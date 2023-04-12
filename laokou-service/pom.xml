@@ -20,17 +20,16 @@
     <parent>
         <groupId>io.github.koushenhai</groupId>
         <artifactId>laokou-parent</artifactId>
-        <version>3.0.5</version>
+        <version>3.0.6-M1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-service</artifactId>
-    <version>3.0.5</version>
+    <version>3.0.6-M1</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-admin</module>
-        <module>laokou-generator</module>
         <module>laokou-module</module>
         <module>laokou-auth</module>
     </modules>

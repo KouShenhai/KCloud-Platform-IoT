@@ -21,7 +21,7 @@
 
     <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-common-bom</artifactId>
-    <version>3.0.5</version>
+    <version>3.0.6-M1</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -110,11 +110,25 @@
         <shardingsphere.version>5.3.2</shardingsphere.version>
         <!--p6spy版本-->
         <p6spy.version>3.9.1</p6spy.version>
+        <!--flyway-core版本-->
+        <flyway-core.version>9.16.3</flyway-core.version>
+        <!--flyway-mysql版本-->
+        <flyway-mysql.version>9.16.0</flyway-mysql.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-mysql</artifactId>
+                <version>${flyway-mysql.version}</version>
+            </dependency>
             <dependency>
                 <groupId>p6spy</groupId>
                 <artifactId>p6spy</artifactId>
