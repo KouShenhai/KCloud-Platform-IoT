@@ -21,7 +21,7 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 /**
  * @author laokou
  */
-public class SpringUtil {
+public class SpringExpressionUtil {
 
     private static final ExpressionParser PARSER = new SpelExpressionParser();
 

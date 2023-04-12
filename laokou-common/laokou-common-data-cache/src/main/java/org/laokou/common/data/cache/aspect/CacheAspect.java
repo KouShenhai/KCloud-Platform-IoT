@@ -20,7 +20,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.core.utils.SpringUtil;
+import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -53,7 +53,7 @@ public class CacheAspect {
         String key = dataCache.key();
         String name = dataCache.name();
         Object[] args = point.getArgs();
-        key = RedisKeyUtil.getDataCacheKey(name,SpringUtil.parse(key,parameterNames,args,Long.class));
+        key = RedisKeyUtil.getDataCacheKey(name, SpringExpressionUtil.parse(key,parameterNames,args,Long.class));
         switch (type) {
             case GET -> {
                 return get(key,point,expire);
