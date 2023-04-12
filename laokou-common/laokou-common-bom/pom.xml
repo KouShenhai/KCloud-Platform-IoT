@@ -644,6 +644,11 @@
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.github.koushenhai</groupId>
+                <artifactId>laokou-common-flyway</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
