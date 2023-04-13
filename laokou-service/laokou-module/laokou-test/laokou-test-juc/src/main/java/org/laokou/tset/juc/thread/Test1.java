@@ -50,7 +50,7 @@ public class Test1 {
             EXECUTOR.execute(() -> test(uuid));
             futures.add(voidCompletableFuture);
         }
-        CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new)).join();
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
         EXECUTOR.shutdown();
     }
 

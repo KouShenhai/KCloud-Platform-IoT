@@ -132,7 +132,7 @@ public class HttpUtil {
         RequestConfig requestConfig = RequestConfig.custom().build();
         HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
-        headers.forEach((k,v) -> httpPost.setHeader(k,v));
+        headers.forEach(httpPost::setHeader);
         httpPost.setConfig(requestConfig);
         String parameter = JacksonUtil.toJsonStr(param);
         StringEntity se = null;
