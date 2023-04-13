@@ -17,9 +17,12 @@ package org.laokou.gateway.filter;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.gateway.constant.GatewayConstant;
+import org.laokou.gateway.enums.ExceptionEnum;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -91,8 +94,18 @@ public class RespFilter implements GlobalFilter, Ordered {
                         String str = new String(content, StandardCharsets.UTF_8);
                         // str就是response的值
                         JsonNode node = JacksonUtil.readTree(str);
-                        String msg = node.get(GatewayConstant.ERROR_DESCRIPTION).asText();
-                        int code = node.get(GatewayConstant.ERROR).asInt();
+                        JsonNode msgNode = node.get(GatewayConstant.ERROR_DESCRIPTION);
+                        JsonNode codeNode = node.get(GatewayConstant.ERROR);
+                        String msg = "";
+                        int code = codeNode.asInt();
+                        if (msgNode != null) {
+                            msg = msgNode.asText();
+                        }
+                        if (code == 0) {
+                            CustomException ex = getThrow(codeNode.asText());
+                            code = ex.getCode();
+                            msg = ex.getMsg();
+                        }
                         HttpResult result = ResponseUtil.response(code, msg);
                         byte[] uppedContent = JacksonUtil.toJsonStr(result).getBytes();
                         // 修改状态码
@@ -109,5 +122,12 @@ public class RespFilter implements GlobalFilter, Ordered {
     @Override
     public int getOrder() {
         return NettyWriteResponseFilter.HIGHEST_PRECEDENCE + 1500;
+    }
+
+    private CustomException getThrow(String code) {
+        ExceptionEnum instance = ExceptionEnum.getInstance(code.toUpperCase());
+        return switch (instance) {
+            case INVALID_CLIENT -> new CustomException(StatusCode.INVALID_CLIENT, MessageUtil.getMessage(StatusCode.INVALID_CLIENT));
+        };
     }
 }

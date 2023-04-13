@@ -16,12 +16,10 @@
  * limitations under the License.
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>laokou-common</artifactId>
-        <groupId>io.github.koushenhai</groupId>
+        <groupId>org.laokou</groupId>
         <version>3.0.5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -29,11 +27,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-easy-excel</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-mybatis-plus</artifactId>
         </dependency>
         <dependency>
@@ -41,11 +39,11 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-ip-region</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-auth-client</artifactId>
         </dependency>
         <!-- 解析客户端操作系统、浏览器等 -->

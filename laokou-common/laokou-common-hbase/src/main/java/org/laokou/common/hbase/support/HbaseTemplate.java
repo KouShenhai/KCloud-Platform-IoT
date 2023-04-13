@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.common.hbase.support;
-import cn.hutool.core.util.ReflectUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.hbase.TableName;
@@ -89,11 +88,10 @@ public class HbaseTemplate{
                 final String type = annotation.type();
                 final String fieldName = field.getName();
                 if ("id".equals(type)) {
-                    ReflectUtil.setFieldValue(obj,fieldName,rowKey);
+                    field.set(obj,rowKey);
                 } else {
                     byte[] value = result.getValue(familyName.getBytes(StandardCharsets.UTF_8), fieldName.getBytes(StandardCharsets.UTF_8));
-                    log.info("获取到的值:{}",value);
-                    ReflectUtil.setFieldValue(obj,fieldName,new String(value));
+                    field.set(obj,new String(value));
                 }
             }
         }

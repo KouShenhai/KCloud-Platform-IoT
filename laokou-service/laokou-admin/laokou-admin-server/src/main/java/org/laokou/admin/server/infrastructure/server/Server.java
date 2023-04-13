@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.infrastructure.server;
-import cn.hutool.core.date.DateUnit;
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.net.NetUtil;
-import cn.hutool.core.util.NumberUtil;
+import lombok.SneakyThrows;
+import org.laokou.common.core.utils.NumberUtil;
 import lombok.Data;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.laokou.common.core.utils.DateUtil;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.CentralProcessor.TickType;
@@ -30,6 +30,7 @@ import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
 
 import java.io.Serial;
+import java.net.InetAddress;
 import java.util.*;
 import java.io.Serializable;
 import java.lang.management.ManagementFactory;
@@ -164,10 +165,11 @@ public class Server implements Serializable{
     /**
      * 设置服务器信息
      */
+    @SneakyThrows
     private void setSysInfo() {
         Properties props = System.getProperties();
-        sys.setComputerName(NetUtil.getLocalhost().getHostName());
-        sys.setComputerIp(NetUtil.getLocalhost().getHostAddress());
+        sys.setComputerName(InetAddress.getLocalHost().getHostName());
+        sys.setComputerIp(InetAddress.getLocalHost().getHostAddress());
         sys.setOsName(props.getProperty("os.name"));
         sys.setOsArch(props.getProperty("os.arch"));
         sys.setUserDir(props.getProperty("user.dir"));
@@ -302,7 +304,13 @@ class Jvm implements Serializable {
     public String getStartTime() {
         long time = ManagementFactory.getRuntimeMXBean().getStartTime();
         Date date = new Date(time);
-        return DateUtil.formatDateTime(date);
+        return DateFormatUtils.format(date, DateUtil.getTimePattern(DateUtil.YYYY_MM_DD_HH_MM_SS));
+    }
+
+    public static void main(String[] args) {
+        Server server = new Server();
+        String startTime = server.getJvm().getStartTime();
+        System.out.println(startTime);
     }
 
     /**
@@ -312,8 +320,8 @@ class Jvm implements Serializable {
         long time = ManagementFactory.getRuntimeMXBean().getStartTime();
         Date date = new Date(time);
 
-        //运行多少分钟
-        long runMs = DateUtil.between(date, new Date(), DateUnit.MS);
+        // 运行时间
+        long runMs = Math.abs(date.getTime() - (new Date()).getTime());
 
         long nd = 1000 * 24 * 60 * 60;
         long nh = 1000 * 60 * 60;
@@ -329,7 +337,6 @@ class Jvm implements Serializable {
 
 @Data
 class Cpu implements Serializable {
-
 
     @Serial
     private static final long serialVersionUID = 8621293532430186793L;
@@ -365,23 +372,23 @@ class Cpu implements Serializable {
 
 
     public double getTotal() {
-        return NumberUtil.round(NumberUtil.mul(total, 100), 2).doubleValue();
+        return NumberUtil.round("" + NumberUtil.mul(total, 100), 2).doubleValue();
     }
 
     public double getSys() {
-        return NumberUtil.round(NumberUtil.mul(sys / total, 100), 2).doubleValue();
+        return NumberUtil.round("" + NumberUtil.mul(sys / total, 100), 2).doubleValue();
     }
 
     public double getUsed() {
-        return NumberUtil.round(NumberUtil.mul(used / total, 100), 2).doubleValue();
+        return NumberUtil.round("" + NumberUtil.mul(used / total, 100), 2).doubleValue();
     }
 
     public double getWait() {
-        return NumberUtil.round(NumberUtil.mul(wait / total, 100), 2).doubleValue();
+        return NumberUtil.round("" + NumberUtil.mul(wait / total, 100), 2).doubleValue();
     }
 
     public double getFree() {
-        return NumberUtil.round(NumberUtil.mul(free / total, 100), 2).doubleValue();
+        return NumberUtil.round("" + NumberUtil.mul(free / total, 100), 2).doubleValue();
     }
 }
 

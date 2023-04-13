@@ -58,5 +58,5 @@ public @interface Lock4j {
     /**
      * 范围
      */
-    LockScope scope();
+    LockScope scope() default LockScope.DISTRIBUTED_LOCK;
 }

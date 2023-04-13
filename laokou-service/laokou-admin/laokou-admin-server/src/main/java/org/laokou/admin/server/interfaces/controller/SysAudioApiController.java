@@ -62,7 +62,7 @@ public class SysAudioApiController {
     @PostMapping("/syncIndex")
     @Operation(summary = "音频管理>同步索引",description = "音频管理>同步索引")
     @OperateLog(module = "音频管理",name = "同步索引")
-    @Lock4j(key = "audio_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
+    @Lock4j(key = "audio_sync_index_lock")
     @PreAuthorize("hasAuthority('sys:resource:audio:syncIndex')")
     public HttpResult<Boolean> syncIndex() throws InterruptedException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResource("audio", RedisKeyUtil.getSyncIndexKey("audio")));

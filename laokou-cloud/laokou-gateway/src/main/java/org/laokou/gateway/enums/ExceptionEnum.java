@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /**
+/**
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,17 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>laokou-generator</artifactId>
-        <groupId>io.github.koushenhai</groupId>
-        <version>3.0.5</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.koushenhai</groupId>
-    <artifactId>laokou-generator-client</artifactId>
 
-</project>
+package org.laokou.gateway.enums;
+
+/**
+ * @author laokou
+ */
+public enum ExceptionEnum {
+
+    INVALID_CLIENT("invalid_client");
+    private final String code;
+    ExceptionEnum(String code) {
+        this.code = code;
+    }
+
+    public static ExceptionEnum getInstance(String code) {
+       return ExceptionEnum.valueOf(code);
+    }
+
+}

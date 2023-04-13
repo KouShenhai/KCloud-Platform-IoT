@@ -177,14 +177,13 @@ tenant/tenant123
         └── laokou-power-job                       --- 任务调度  
         └── laokou-seata                           --- 分布式事务  
 ├── laokou-service         
-        └── laokou-generator                       --- 模板模块  
         └── laokou-auth                            --- 认证授权模块  
         └── laokou-admin                           --- 后台管理模块  
-        └── laokou-report                          --- 数据分析模块  
         └── laokou-modlule         
                 └── laokou-test                    --- 测试模块  
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-flowable                --- 工作流程模块  
+├── laokou-release       
 ~~~
 
 ### 👍 Maven打包

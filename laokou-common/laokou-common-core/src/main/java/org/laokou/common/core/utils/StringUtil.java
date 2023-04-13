@@ -14,11 +14,8 @@
  * limitations under the License.
  */
 package org.laokou.common.core.utils;
-
-import cn.hutool.core.text.StrFormatter;
 import org.apache.commons.lang3.StringUtils;
 import org.laokou.common.core.constant.Constant;
-
 import java.util.Collection;
 import java.util.Map;
 
@@ -252,28 +249,6 @@ public class StringUtil extends StringUtils
     }
 
     /**
-     * 格式化文本, {} 表示占位符<br>
-     * 此方法只是简单将占位符 {} 按照顺序替换为参数<br>
-     * 如果想输出 {} 使用 \\转义 { 即可，如果想输出 {} 之前的 \ 使用双转义符 \\\\ 即可<br>
-     * 例：<br>
-     * 通常使用：format("this is {} for {}", "a", "b") -> this is a for b<br>
-     * 转义{}： format("this is \\{} for {}", "a", "b") -> this is \{} for a<br>
-     * 转义\： format("this is \\\\{} for {}", "a", "b") -> this is \a for b<br>
-     * 
-     * @param template 文本模板，被替换的部分用 {} 表示
-     * @param params 参数值
-     * @return 格式化后的文本
-     */
-    public static String format(String template, Object... params)
-    {
-        if (isEmpty(params) || isEmpty(template))
-        {
-            return template;
-        }
-        return StrFormatter.format(template, params);
-    }
-
-    /**
      * 下划线转驼峰命名
      */
     public static String toUnderScoreCase(String str)
@@ -410,5 +385,46 @@ public class StringUtil extends StringUtils
             }
         }
         return sb.toString();
+    }
+
+    public static boolean startWithIgnoreCase(CharSequence str, CharSequence prefix) {
+        return startWith(str, prefix, true);
+    }
+
+    public static boolean startWith(CharSequence str, CharSequence prefix, boolean ignoreCase) {
+        return startWith(str, prefix, ignoreCase, false);
+    }
+
+    public static boolean startWith(CharSequence str, CharSequence prefix, boolean ignoreCase, boolean ignoreEquals) {
+        if (null != str && null != prefix) {
+            boolean isStartWith = str.toString().regionMatches(ignoreCase, 0, prefix.toString(), 0, prefix.length());
+            if (!isStartWith) {
+                return false;
+            } else {
+                return !ignoreEquals || !equals(str, prefix, ignoreCase);
+            }
+        } else if (ignoreEquals) {
+            return false;
+        } else {
+            return null == str && null == prefix;
+        }
+    }
+
+    public static boolean equals(CharSequence str1, CharSequence str2, boolean ignoreCase) {
+        if (null == str1) {
+            return str2 == null;
+        } else if (null == str2) {
+            return false;
+        } else {
+            return ignoreCase ? str1.toString().equalsIgnoreCase(str2.toString()) : str1.toString().contentEquals(str2);
+        }
+    }
+
+    public static boolean equals(char c1, char c2, boolean caseInsensitive) {
+        if (caseInsensitive) {
+            return Character.toLowerCase(c1) == Character.toLowerCase(c2);
+        } else {
+            return c1 == c2;
+        }
     }
 }

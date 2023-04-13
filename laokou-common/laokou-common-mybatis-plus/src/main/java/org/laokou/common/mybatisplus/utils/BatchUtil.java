@@ -23,7 +23,6 @@ import org.laokou.common.mybatisplus.service.BatchService;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -50,7 +49,7 @@ public class BatchUtil<T> {
         // 数据分组
         List<List<T>> partition = Lists.partition(dataList, batchNum);
         AtomicBoolean rollback = new AtomicBoolean(false);
-        List<Object> synchronizedList = Collections.synchronizedList(new ArrayList<>(partition.size()));
+        List<CompletableFuture<Void>> synchronizedList = new ArrayList<>(partition.size());
         partition.forEach(item -> {
             CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
                 transactionalUtil.execute(callback -> {
@@ -72,7 +71,7 @@ public class BatchUtil<T> {
             synchronizedList.add(completableFuture);
         });
         // 阻塞主线程
-        CompletableFuture.allOf(synchronizedList.toArray(CompletableFuture[]::new)).join();
+        CompletableFuture.allOf(synchronizedList.toArray(new CompletableFuture[0])).join();
         if (rollback.get()) {
             throw new CustomException("批量插入数据异常，数据已回滚");
         }
