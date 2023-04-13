@@ -19,11 +19,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>io.github.koushenhai</groupId>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-cloud</artifactId>
-        <version>3.0.6-M1</version>
+        <version>3.0.5</version>
     </parent>
-    <groupId>io.github.koushenhai</groupId>
+    <groupId>org.laokou</groupId>
     <artifactId>laokou-gateway</artifactId>
     <description>API网关</description>
 
@@ -33,7 +33,7 @@
             <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-i18n</artifactId>
         </dependency>
         <dependency>
@@ -120,7 +120,7 @@
             <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-core</artifactId>
             <exclusions>
                 <exclusion>

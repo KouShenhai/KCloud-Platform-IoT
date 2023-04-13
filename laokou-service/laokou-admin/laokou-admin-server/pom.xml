@@ -18,12 +18,12 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
-		<groupId>io.github.koushenhai</groupId>
+		<groupId>org.laokou</groupId>
 		<artifactId>laokou-admin</artifactId>
-		<version>3.0.6-M1</version>
+		<version>3.0.5</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>io.github.koushenhai</groupId>
+	<groupId>org.laokou</groupId>
 	<artifactId>laokou-admin-server</artifactId>
 	<description>系统管理</description>
     <dependencies>
@@ -32,19 +32,19 @@
 			<artifactId>spring-boot-admin-starter-client</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-shardingsphere</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-p6spy</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-easy-excel</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-oss</artifactId>
 		</dependency>
 		<dependency>
@@ -52,7 +52,7 @@
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-tenant</artifactId>
 		</dependency>
 		<dependency>
@@ -60,27 +60,27 @@
 			<artifactId>spring-boot-starter-undertow</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-cors</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-mybatis-plus</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-seata</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-data-filter</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-data-cache</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-security</artifactId>
 		</dependency>
 		<dependency>
@@ -96,7 +96,7 @@
 			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-elasticsearch</artifactId>
 		</dependency>
 		<dependency>
@@ -108,19 +108,19 @@
 			<artifactId>oshi-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-log</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-admin-client</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-auth-client</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-flowable-client</artifactId>
 		</dependency>
 		<dependency>
@@ -128,11 +128,11 @@
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-sentinel</artifactId>
 		</dependency>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-im-client</artifactId>
         </dependency>
 		<dependency>
@@ -140,11 +140,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-openfeign</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.github.koushenhai</groupId>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-dynamic-router</artifactId>
 		</dependency>
 		<dependency>

@@ -20,19 +20,19 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>laokou-flowable</artifactId>
-        <groupId>io.github.koushenhai</groupId>
-        <version>3.0.6-M1</version>
+        <groupId>org.laokou</groupId>
+        <version>3.0.5</version>
     </parent>
-    <groupId>io.github.koushenhai</groupId>
+    <groupId>org.laokou</groupId>
     <artifactId>laokou-flowable-server</artifactId>
-  <version>3.0.6-M1</version>
+  <version>3.0.5</version>
     <dependencies>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-p6spy</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-cors</artifactId>
         </dependency>
         <dependency>
@@ -44,11 +44,11 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-mybatis-plus</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-swagger</artifactId>
         </dependency>
         <dependency>
@@ -60,7 +60,7 @@
             <artifactId>flowable-spring-boot-starter-process</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-flowable-client</artifactId>
         </dependency>
         <dependency>
@@ -76,7 +76,7 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.github.koushenhai</groupId>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-seata</artifactId>
         </dependency>
     </dependencies>
