@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 package org.laokou.common.hbase.utils;
-import cn.hutool.core.util.ReflectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.hbase.annotation.HbaseFieldInfo;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +44,16 @@ public class FieldMappingUtil {
                     final String type = annotation.type();
                     final String name = annotation.name();
                     final String fieldName = field.getName();
+                    String value;
+                    try {
+                        value = field.get(item).toString();
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
                     if ("id".equals(type)) {
-                        row = ReflectUtil.getFieldValue(item,fieldName).toString();
+                        row = value;
                     } else {
-                        fieldMappingList.add(new FieldMapping(row,name,fieldName,ReflectUtil.getFieldValue(item,fieldName).toString()));
+                        fieldMappingList.add(new FieldMapping(row,name,fieldName,value));
                     }
                 }
             }

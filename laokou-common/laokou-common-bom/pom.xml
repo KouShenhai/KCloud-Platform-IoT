@@ -45,8 +45,6 @@
         <jsoup.version>1.15.4</jsoup.version>
         <!--commons-collections4版本-->
         <commons-collections4.version>4.4</commons-collections4.version>
-        <!--hutool-all版本-->
-        <hutool-all.version>5.8.15</hutool-all.version>
         <!--commons-lang3版本-->
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <!--commons-beanutils版本-->
@@ -475,11 +473,6 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool-all.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
