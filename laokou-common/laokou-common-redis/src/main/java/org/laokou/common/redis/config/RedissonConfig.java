@@ -18,7 +18,6 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
-import org.redisson.client.codec.Codec;
 import org.redisson.config.Config;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -26,7 +25,8 @@ import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import java.time.Duration;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +37,7 @@ import java.util.List;
 @ConditionalOnClass(Redisson.class)
 @Configuration
 @EnableConfigurationProperties(RedisProperties.class)
-public class RedisSessionConfig {
+public class RedissonConfig {
 
     private static final String REDIS_PROTOCOL_PREFIX = "redis://";
 
@@ -57,35 +57,35 @@ public class RedisSessionConfig {
      */
     @Bean(destroyMethod = "shutdown")
     @ConditionalOnMissingBean(RedissonClient.class)
-    public RedissonClient redisClient(RedisProperties properties) {
-        Config config;
-        final Duration duration = properties.getTimeout();
-        int timeout = duration == null ? 0 : (int) duration.toMillis();
+    public RedissonClient redisClient(ThreadPoolTaskExecutor taskExecutor, RedisProperties properties) {
+        Config config = new Config();
+        int timeout = (int) properties.getTimeout().toMillis();
+        int connectTimeout = (int) properties.getConnectTimeout().toMillis();
         if (properties.getSentinel() != null) {
-            config = new Config();
             config.useSentinelServers()
                     .setMasterName(properties.getSentinel().getMaster())
                     .addSentinelAddress(convertNodes(properties.isSsl(),properties.getSentinel().getNodes()))
                     .setDatabase(properties.getDatabase())
-                    .setConnectTimeout(timeout)
+                    .setTimeout(timeout)
+                    .setConnectTimeout(connectTimeout)
                     .setPassword(properties.getPassword());
         } else if (properties.getCluster() != null) {
-            config = new Config();
             config.useClusterServers()
                     .addNodeAddress(convertNodes(properties.isSsl(),properties.getCluster().getNodes()))
                     .setPassword(properties.getPassword())
-                    .setTimeout(timeout);
+                    .setTimeout(timeout)
+                    .setConnectTimeout(connectTimeout);
         } else {
-            config = new Config();
             config.useSingleServer()
                     .setAddress(convertAddress(properties.isSsl(),properties.getHost() ,properties.getPort()))
                     .setDatabase(properties.getDatabase())
                     .setPassword(properties.getPassword())
+                    .setConnectTimeout(connectTimeout)
                     .setTimeout(timeout);
         }
+        config.setExecutor(taskExecutor.getThreadPoolExecutor());
         // 使用json序列化方式
-        Codec codec = CustomJsonJacksonCodec.INSTANCE;
-        config.setCodec(codec);
+        config.setCodec(CustomJsonJacksonCodec.INSTANCE);
         return Redisson.create(config);
     }
 

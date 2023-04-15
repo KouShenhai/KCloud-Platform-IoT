@@ -20,7 +20,6 @@ import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
-import java.util.stream.Collectors;
 /**
  * 消息转换器配置
  * @author laokou
@@ -30,6 +29,6 @@ public class CloudConfig {
     @Bean
     @ConditionalOnMissingBean(HttpMessageConverters.class)
     public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
-        return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
+        return new HttpMessageConverters(converters.orderedStream().toList());
     }
 }
