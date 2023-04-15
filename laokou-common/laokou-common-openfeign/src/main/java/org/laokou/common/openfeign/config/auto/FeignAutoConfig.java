@@ -19,7 +19,6 @@ import feign.RequestTemplate;
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.common.core.utils.HttpContextUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import static org.laokou.common.core.constant.Constant.AUTHORIZATION_HEAD;
@@ -27,7 +26,6 @@ import static org.laokou.common.core.constant.Constant.AUTHORIZATION_HEAD;
  * @author laokou
  */
 @AutoConfiguration
-@EnableFeignClients
 public class FeignAutoConfig implements RequestInterceptor {
 
     @Bean
