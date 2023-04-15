@@ -15,9 +15,9 @@
  */
 package org.laokou.admin.server.infrastructure.server;
 import lombok.SneakyThrows;
-import org.laokou.common.core.utils.NumberUtil;
 import lombok.Data;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.laokou.common.core.utils.BigDecimalUtil;
 import org.laokou.common.core.utils.DateUtil;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
@@ -28,7 +28,6 @@ import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
 import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
-
 import java.io.Serial;
 import java.net.InetAddress;
 import java.util.*;
@@ -116,15 +115,10 @@ public class Server implements Serializable{
     public void copyTo() {
         SystemInfo si = new SystemInfo();
         HardwareAbstractionLayer hal = si.getHardware();
-
         setCpuInfo(hal.getProcessor());
-
         setMemInfo(hal.getMemory());
-
         setSysInfo();
-
         setJvmInfo();
-
         setSysFiles(si.getOperatingSystem());
     }
 
@@ -204,7 +198,7 @@ public class Server implements Serializable{
             sysFile.setTotal(convertFileSize(total));
             sysFile.setFree(convertFileSize(free));
             sysFile.setUsed(convertFileSize(used));
-            sysFile.setUsage(NumberUtil.mul(NumberUtil.div(used, total, 4), 100));
+            sysFile.setUsage(BigDecimalUtil.multiply(BigDecimalUtil.divide(used, total, 4), 100));
             files.add(sysFile);
         }
     }
@@ -265,19 +259,19 @@ class Jvm implements Serializable {
     private String home;
 
     public double getTotal() {
-        return NumberUtil.div(total, (1024 * 1024), 2);
+        return BigDecimalUtil.divide(total, (1024 * 1024), 2);
     }
 
     public double getMax() {
-        return NumberUtil.div(max, (1024 * 1024), 2);
+        return BigDecimalUtil.divide(max, (1024 * 1024), 2);
     }
 
     public double getFree() {
-        return NumberUtil.div(free, (1024 * 1024), 2);
+        return BigDecimalUtil.divide(free, (1024 * 1024), 2);
     }
 
     public double getUsed() {
-        return NumberUtil.div(total - free, (1024 * 1024), 2);
+        return BigDecimalUtil.divide(total - free, (1024 * 1024), 2);
     }
 
     public String getVersion() {
@@ -289,7 +283,7 @@ class Jvm implements Serializable {
     }
 
     public double getUsage() {
-        return NumberUtil.mul(NumberUtil.div(total - free, total, 4), 100);
+        return BigDecimalUtil.multiply(BigDecimalUtil.divide(total - free, total, 4), 100);
     }
     /**
      * 获取JDK名称
@@ -372,23 +366,23 @@ class Cpu implements Serializable {
 
 
     public double getTotal() {
-        return NumberUtil.round("" + NumberUtil.mul(total, 100), 2).doubleValue();
+        return BigDecimalUtil.round(BigDecimalUtil.multiply(total, 100), 2);
     }
 
     public double getSys() {
-        return NumberUtil.round("" + NumberUtil.mul(sys / total, 100), 2).doubleValue();
+        return BigDecimalUtil.round(BigDecimalUtil.multiply(sys / total, 100), 2);
     }
 
     public double getUsed() {
-        return NumberUtil.round("" + NumberUtil.mul(used / total, 100), 2).doubleValue();
+        return BigDecimalUtil.round(BigDecimalUtil.multiply(used / total, 100), 2);
     }
 
     public double getWait() {
-        return NumberUtil.round("" + NumberUtil.mul(wait / total, 100), 2).doubleValue();
+        return BigDecimalUtil.round(BigDecimalUtil.multiply(wait / total, 100), 2);
     }
 
     public double getFree() {
-        return NumberUtil.round("" + NumberUtil.mul(free / total, 100), 2).doubleValue();
+        return BigDecimalUtil.round(BigDecimalUtil.multiply(free / total, 100), 2);
     }
 }
 
@@ -414,20 +408,20 @@ class Mem implements Serializable {
     private double free;
 
     public double getTotal() {
-        return NumberUtil.div(total, (1024 * 1024 * 1024), 2);
+        return BigDecimalUtil.divide(total, (1024 * 1024 * 1024), 2);
     }
 
     public double getUsed() {
-        return NumberUtil.div(used, (1024 * 1024 * 1024), 2);
+        return BigDecimalUtil.divide(used, (1024 * 1024 * 1024), 2);
     }
 
 
     public double getFree() {
-        return NumberUtil.div(free, (1024 * 1024 * 1024), 2);
+        return BigDecimalUtil.divide(free, (1024 * 1024 * 1024), 2);
     }
 
     public double getUsage() {
-        return NumberUtil.mul(NumberUtil.div(used, total, 4), 100);
+        return BigDecimalUtil.multiply(BigDecimalUtil.divide(used, total, 4), 100);
     }
 }
 
