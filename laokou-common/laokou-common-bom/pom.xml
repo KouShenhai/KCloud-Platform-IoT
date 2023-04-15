@@ -109,11 +109,18 @@
         <flyway-core.version>9.16.3</flyway-core.version>
         <!--flyway-mysql版本-->
         <flyway-mysql.version>9.16.0</flyway-mysql.version>
+        <!--liquibase-core版本-->
+        <liquibase-core.version>4.21.0</liquibase-core.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase-core.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-core</artifactId>
@@ -152,32 +159,12 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-test-netty</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
                 <artifactId>laokou-register</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-test-juc</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-test-rocketmq</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-test-juc</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-test-rocketmq</artifactId>
+                <artifactId>laokou-common-liquibase</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

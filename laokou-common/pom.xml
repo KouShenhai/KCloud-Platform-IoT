@@ -74,6 +74,7 @@
         <module>laokou-common-shardingsphere</module>
         <module>laokou-common-p6spy</module>
         <module>laokou-common-flyway</module>
+        <module>laokou-common-liquibase</module>
     </modules>
 
 </project>

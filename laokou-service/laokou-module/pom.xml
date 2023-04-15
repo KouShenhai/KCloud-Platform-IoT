@@ -27,7 +27,6 @@
     <version>3.0.5</version>
     <artifactId>laokou-module</artifactId>
     <packaging>pom</packaging>
-
     <modules>
         <module>laokou-im</module>
         <module>laokou-flowable</module>

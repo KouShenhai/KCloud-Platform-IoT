@@ -16,7 +16,7 @@
 package org.laokou.common.redis.config.auto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.laokou.common.redis.config.CustomJsonJacksonCodec;
-import org.laokou.common.redis.config.RedisSessionConfig;
+import org.laokou.common.redis.config.RedissonConfig;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -34,7 +34,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @AutoConfiguration
 @ConditionalOnClass(LettuceConnectionFactory.class)
 @ComponentScan("org.laokou.common.redis")
-@Import(RedisSessionConfig.class)
+@Import(RedissonConfig.class)
 public class RedisAutoConfig {
 
     /**
