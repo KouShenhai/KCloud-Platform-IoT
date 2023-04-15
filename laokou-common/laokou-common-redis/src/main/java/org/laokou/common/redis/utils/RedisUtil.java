@@ -135,8 +135,6 @@ public class RedisUtil {
         return redisTemplate.hasKey(key);
     }
 
-
-
     public long incrementAndGet(String key) {
         RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
         atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
