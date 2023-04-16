@@ -20,7 +20,7 @@ import io.seata.common.util.StringUtils;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.hc.client5.http.utils.Base64;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.*;

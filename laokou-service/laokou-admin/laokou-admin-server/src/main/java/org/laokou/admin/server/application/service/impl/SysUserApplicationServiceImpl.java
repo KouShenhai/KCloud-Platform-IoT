@@ -41,7 +41,6 @@ import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.auth.client.user.UserDetail;
-import org.apache.commons.collections.CollectionUtils;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.jasypt.utils.AESUtil;
@@ -52,6 +51,8 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -100,7 +101,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         DynamicDataSourceContextHolder.push(DEFAULT_SOURCE);
         //删除中间表
         sysUserRoleService.remove(Wrappers.lambdaQuery(SysUserRoleDO.class).eq(SysUserRoleDO::getUserId, dto.getId()));
-        if (CollectionUtils.isNotEmpty(roleIds)) {
+        if (!CollectionUtils.isEmpty(roleIds)) {
             saveOrUpdate(dto.getId(),roleIds);
         }
         DynamicDataSourceContextHolder.clear();
@@ -192,7 +193,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         sysUserDO.setPassword(passwordEncoder.encode(dto.getPassword()));
         sysUserService.save(sysUserDO);
         List<Long> roleIds = dto.getRoleIds();
-        if (CollectionUtils.isNotEmpty(roleIds)) {
+        if (!CollectionUtils.isEmpty(roleIds)) {
             saveOrUpdate(sysUserDO.getId(),roleIds);
         }
         return true;
@@ -207,7 +208,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         IPage<SysUserVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         IPage<SysUserVO> userPage = sysUserService.getUserPage(page, qo);
         List<SysUserVO> records = userPage.getRecords();
-        if (CollectionUtils.isNotEmpty(records)) {
+        if (!CollectionUtils.isEmpty(records)) {
             records.forEach(item -> item.setUsername(AESUtil.decrypt(item.getUsername())));
         }
         return userPage;
@@ -242,7 +243,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     public List<OptionVO> getOptionList() {
         Long tenantId = UserUtil.getTenantId();
         List<OptionVO> optionList = sysUserService.getOptionList(tenantId);
-        if (CollectionUtils.isNotEmpty(optionList)) {
+        if (!CollectionUtils.isEmpty(optionList)) {
             optionList.forEach(item -> item.setLabel(AESUtil.decrypt(item.getLabel())));
         }
         return optionList;
@@ -303,7 +304,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
     private void saveOrUpdate(Long userId, List<Long> roleIds) {
         List<SysUserRoleDO> doList = new ArrayList<>(roleIds.size());
-        if (CollectionUtils.isNotEmpty(roleIds)) {
+        if (!CollectionUtils.isEmpty(roleIds)) {
             for (Long roleId : roleIds) {
                 SysUserRoleDO sysUserRoleDO = new SysUserRoleDO();
                 sysUserRoleDO.setRoleId(roleId);

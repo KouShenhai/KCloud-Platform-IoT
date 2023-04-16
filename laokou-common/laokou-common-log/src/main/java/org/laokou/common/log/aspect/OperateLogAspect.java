@@ -16,7 +16,7 @@
 package org.laokou.common.log.aspect;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.hc.core5.http.HttpHeaders;
 import org.aspectj.lang.annotation.Before;
 import org.laokou.auth.client.utils.UserUtil;

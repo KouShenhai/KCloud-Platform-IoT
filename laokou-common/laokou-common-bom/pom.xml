@@ -35,8 +35,6 @@
         <flowable.version>7.0.0.M1</flowable.version>
         <!--mybatis-plus版本 -->
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <!--commons-configuration2版本-->
-        <commons-configuration2.version>2.8.0</commons-configuration2.version>
         <!--redisson版本-->
         <redisson.version>3.19.3</redisson.version>
         <!--UserAgentUtils版本-->
@@ -47,24 +45,14 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <!--commons-lang3版本-->
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <!--commons-beanutils版本-->
-        <commons-beanutils.version>1.9.4</commons-beanutils.version>
-        <!--commons-io版本-->
-        <commons-io.version>2.11.0</commons-io.version>
-        <!--commons-logging版本-->
-        <commons-logging.version>1.2</commons-logging.version>
         <!--commons-fileupload版本-->
         <commons-fileupload.version>1.5</commons-fileupload.version>
-        <!--joda-time版本-->
-        <joda-time.version>2.12.2</joda-time.version>
         <!--jasypt版本-->
         <jasypt.version>3.0.5</jasypt.version>
         <!--captcha版本-->
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <!--guava版本-->
         <guava.version>31.0-jre</guava.version>
-        <!--commons-codec版本-->
-        <commons-codec.version>1.15</commons-codec.version>
         <!--freemarker模板引擎依赖-->
         <freemarker.version>2.3.32</freemarker.version>
         <!--oshi版本-->
@@ -397,39 +385,9 @@
                 <version>${commons-lang3.version}</version>
             </dependency>
             <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>${commons-codec.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>${commons-beanutils.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${commons-io.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-                <version>${commons-logging.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-configuration2</artifactId>
-                <version>${commons-configuration2.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>joda-time</groupId>
-                <artifactId>joda-time</artifactId>
-                <version>${joda-time.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
