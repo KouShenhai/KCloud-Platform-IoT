@@ -112,8 +112,8 @@
             <artifactId>laokou-common-dynamic-router</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-log4j2</artifactId>
         </dependency>
     </dependencies>
 
