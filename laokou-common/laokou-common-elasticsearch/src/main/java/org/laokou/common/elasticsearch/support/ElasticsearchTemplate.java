@@ -16,7 +16,6 @@
 package org.laokou.common.elasticsearch.support;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.DocWriteResponse;
@@ -68,6 +67,8 @@ import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
 import java.io.IOException;
 import java.util.*;
 /**
@@ -775,7 +776,7 @@ public class ElasticsearchTemplate {
         final List<SearchDTO> queryStringList = searchQo.getQueryStringList();
         //or查询
         final List<SearchDTO> orSearchList = searchQo.getOrSearchList();
-        if (CollectionUtils.isNotEmpty(orSearchList)) {
+        if (!CollectionUtils.isEmpty(orSearchList)) {
             //or查询
             BoolQueryBuilder orQuery = QueryBuilders.boolQuery();
             for (SearchDTO dto : orSearchList) {
@@ -783,7 +784,7 @@ public class ElasticsearchTemplate {
             }
             boolQueryBuilder.must(orQuery);
         }
-        if (CollectionUtils.isNotEmpty(queryStringList)) {
+        if (!CollectionUtils.isEmpty(queryStringList)) {
             //分词查询
             BoolQueryBuilder analysisQuery = QueryBuilders.boolQuery();
             for (SearchDTO dto : queryStringList) {
@@ -838,7 +839,7 @@ public class ElasticsearchTemplate {
         //匹配度倒排，数值越大匹配度越高
         searchSourceBuilder.sort("_score",SortOrder.DESC);
         //排序
-        if (CollectionUtils.isNotEmpty(sortFieldList)) {
+        if (!CollectionUtils.isEmpty(sortFieldList)) {
             for (SearchDTO dto : sortFieldList) {
                 SortOrder sortOrder;
                 final String desc = "desc";

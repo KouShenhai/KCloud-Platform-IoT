@@ -16,7 +16,7 @@
 package org.laokou.common.jasypt.utils;
 
 import lombok.SneakyThrows;
-import org.apache.commons.codec.binary.Base64;
+import org.apache.hc.client5.http.utils.Base64;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.springframework.util.Assert;

@@ -16,7 +16,6 @@
 package org.laokou.auth.server.infrastructure.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
-import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
@@ -49,6 +48,7 @@ import org.springframework.security.oauth2.server.authorization.context.Authoriz
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.security.Principal;
