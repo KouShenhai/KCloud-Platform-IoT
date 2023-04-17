@@ -64,7 +64,7 @@ public class TreeUtil {
         private Long id;
         private String name;
         private Long pid;
-        private List<T> children = new ArrayList<>(5);
+        private List<T> children;
         public TreeNo() {}
         public TreeNo(Long id, String name, Long pid, List<T> children) {
             this.id = id;

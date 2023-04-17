@@ -99,11 +99,28 @@
         <flyway-mysql.version>9.16.0</flyway-mysql.version>
         <!--liquibase-core版本-->
         <liquibase-core.version>4.21.0</liquibase-core.version>
+        <!--log4japi版本-->
+        <log4j.version>2.19.0</log4j.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
@@ -138,6 +155,11 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-xxl-job</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-log4j2</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

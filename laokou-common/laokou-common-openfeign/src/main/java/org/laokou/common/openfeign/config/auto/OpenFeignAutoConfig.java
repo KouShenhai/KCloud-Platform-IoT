@@ -26,7 +26,7 @@ import static org.laokou.common.core.constant.Constant.AUTHORIZATION_HEAD;
  * @author laokou
  */
 @AutoConfiguration
-public class FeignAutoConfig implements RequestInterceptor {
+public class OpenFeignAutoConfig implements RequestInterceptor {
 
     @Bean
     public feign.Logger.Level multipartLoggerLevel() {
