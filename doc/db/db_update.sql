@@ -68,3 +68,46 @@ INSERT INTO `boot_sys_menu` (`id`, `pid`, `permission`, `type`, `name`, `url`, `
 
 -- 2023/3/15 增加boot_sys_menu数据 老寇
 INSERT INTO `boot_sys_menu` (`id`, `pid`, `permission`, `type`, `name`, `url`, `icon`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `sort`, `version`, `visible`) VALUES ('1564996817056710710', '1535878154046939137', 'sys:tx:view', '0', '事务管理', 'http://127.0.0.1:7091', 'cascader', '1341620898007281665', '1341620898007281665', '2023-03-15 22:11:04', '2023-03-15 22:13:06', '0', '403', '2', '0');
+
+-- 2023/4/20 分表boot_sys_login_log数据 老寇
+CREATE TABLE `boot_sys_login_log_0` (
+                                        `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+                                        `creator` bigint DEFAULT NULL COMMENT '创建者',
+                                        `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                        `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+                                        `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+                                        `editor` bigint DEFAULT NULL COMMENT '编辑人',
+                                        `login_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '登录用户',
+                                        `request_ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'IP地址',
+                                        `request_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '归属地',
+                                        `browser` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '浏览器版本',
+                                        `os` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '操作系统',
+                                        `request_status` tinyint unsigned NOT NULL COMMENT '状态  0：成功   1：失败',
+                                        `msg` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '提示信息',
+                                        `login_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '登录类型',
+                                        `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
+                                        `tenant_id` bigint NOT NULL DEFAULT '0' COMMENT '租户id',
+                                        PRIMARY KEY (`id`),
+                                        KEY `idx_tenant_id_request_status` (`tenant_id`,`request_status`) USING BTREE COMMENT '租户编号_请求状态_索引'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='登录日志';
+
+CREATE TABLE `boot_sys_login_log_1` (
+                                        `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+                                        `creator` bigint DEFAULT NULL COMMENT '创建者',
+                                        `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                        `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+                                        `del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1已删除 0未删除',
+                                        `editor` bigint DEFAULT NULL COMMENT '编辑人',
+                                        `login_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '登录用户',
+                                        `request_ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'IP地址',
+                                        `request_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '归属地',
+                                        `browser` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '浏览器版本',
+                                        `os` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '操作系统',
+                                        `request_status` tinyint unsigned NOT NULL COMMENT '状态  0：成功   1：失败',
+                                        `msg` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '提示信息',
+                                        `login_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '登录类型',
+                                        `version` int NOT NULL DEFAULT '0' COMMENT '版本号',
+                                        `tenant_id` bigint NOT NULL DEFAULT '0' COMMENT '租户id',
+                                        PRIMARY KEY (`id`),
+                                        KEY `idx_tenant_id_request_status` (`tenant_id`,`request_status`) USING BTREE COMMENT '租户编号_请求状态_索引'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='登录日志';
