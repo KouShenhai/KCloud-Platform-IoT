@@ -145,7 +145,6 @@
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-kotlin</artifactId>
                 <version>${jackson-module-kotlin.version}</version>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>com.xuxueli</groupId>
