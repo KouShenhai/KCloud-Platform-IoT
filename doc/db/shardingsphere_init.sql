@@ -1,5 +1,8 @@
 -- ------------------------------------用户------------------------------------
-CREATE TABLE `boot_sys_user_0` (
+create database if not exists kcloud_platform_alibaba_user_0;
+create database if not exists kcloud_platform_alibaba_user_1;
+
+CREATE TABLE if not exists `boot_sys_user_0` (
                                    `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
                                    `username` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '用户名',
                                    `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '密码',
@@ -21,7 +24,7 @@ CREATE TABLE `boot_sys_user_0` (
                                    UNIQUE KEY `idx_tenant_id_mail` (`tenant_id`,`mail`) USING BTREE COMMENT '租户_邮箱_唯一索引',
                                    UNIQUE KEY `idx_tenant_id_mobile` (`tenant_id`,`mobile`) USING BTREE COMMENT '租户_手机号_唯一索引'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='用户';
-CREATE TABLE `boot_sys_user_1` (
+CREATE TABLE if not exists `boot_sys_user_1` (
                                    `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
                                    `username` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '用户名',
                                    `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '密码',
