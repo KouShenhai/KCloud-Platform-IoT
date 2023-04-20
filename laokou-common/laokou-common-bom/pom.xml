@@ -99,7 +99,7 @@
         <flyway-mysql.version>9.16.0</flyway-mysql.version>
         <!--liquibase-core版本-->
         <liquibase-core.version>4.21.0</liquibase-core.version>
-        <!--log4japi版本-->
+        <!--log4j版本-->
         <log4j.version>2.19.0</log4j.version>
     </properties>
 

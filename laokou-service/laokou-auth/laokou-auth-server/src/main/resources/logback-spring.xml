@@ -36,7 +36,7 @@
     </appender>
 
     <springProfile name="dev,test">
-        <logger name="org.laokou.flowable.server" level="info">
+        <logger name="org.laokou.auth.server" level="info">
             <appender-ref ref="STDOUT" />
         </logger>
         <root level="info">
@@ -44,7 +44,7 @@
         </root>
     </springProfile>
     <springProfile name="prod">
-        <logger name="org.laokou.flowable.server" level="error">
+        <logger name="org.laokou.auth.server" level="error">
             <appender-ref ref="STDOUT" />
         </logger>
         <root level="error">
