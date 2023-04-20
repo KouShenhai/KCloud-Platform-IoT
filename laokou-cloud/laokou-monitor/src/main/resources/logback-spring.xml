@@ -16,22 +16,39 @@
  * limitations under the License.
  */
 -->
-<configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml" />
-    <logger name="org.springframework.web" level="INFO"/>
-    <logger name="org.springboot.sample" level="TRACE" />
+<configuration >
+    <!--
+    %d         => 日期
+    %-5level   => 日志等级
+    %thread    => 日志类名
+    %logger{0} => 类名缩写
+    %msg       => 消息内容
+    %red       => 颜色（红色）
+    %n         => 换行
+    -->
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [ %red(%-5level)] - [%thread] - %logger{0} : %msg%n"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                ${LOG_PATTERN}
+            </pattern>
+        </encoder>
+    </appender>
 
-    <!-- 开发、测试环境 -->
     <springProfile name="dev,test">
-        <logger name="org.springframework.web" level="INFO"/>
-        <logger name="org.springboot.sample" level="INFO" />
-        <logger name="org.laokou.monitor" level="INFO" />
+        <logger name="org.laokou.monitor" level="info">
+            <appender-ref ref="STDOUT" />
+        </logger>
+        <root level="info">
+            <appender-ref ref="STDOUT" />
+        </root>
     </springProfile>
-
-    <!-- 生产环境 -->
     <springProfile name="prod">
-        <logger name="org.springframework.web" level="ERROR"/>
-        <logger name="org.springboot.sample" level="ERROR" />
-        <logger name="org.laokou.monitor" level="ERROR" />
+        <logger name="org.laokou.monitor" level="error">
+            <appender-ref ref="STDOUT" />
+        </logger>
+        <root level="error">
+            <appender-ref ref="STDOUT" />
+        </root>
     </springProfile>
 </configuration>

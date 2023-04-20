@@ -111,10 +111,6 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-dynamic-router</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-log4j2</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
