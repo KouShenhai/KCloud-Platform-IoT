@@ -28,6 +28,8 @@ public class RegexUtil {
 
     private static final String SOURCE_REGEX = "^[a-zA-Z]+_+([0-9]+)+$";
 
+    private static final String TIME_REGEX = "([0-1]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])";
+
     /**
      * 邮箱验证
      * @param mail
@@ -35,6 +37,15 @@ public class RegexUtil {
      */
     public static boolean mailRegex(String mail) {
         return Pattern.matches(MAIL_REGEX,mail);
+    }
+
+    /**
+     * 时间验证
+     * @param time
+     * @return
+     */
+    public static boolean timeRegex(String time) {
+        return Pattern.matches(TIME_REGEX,time);
     }
 
     /**
@@ -59,6 +70,7 @@ public class RegexUtil {
         System.out.println(mailRegex("24131760@qq"));
         boolean sourceRegex = sourceRegex("tenant_000001");
         System.out.println(sourceRegex);
+        System.out.println(timeRegex("11:22:22"));
     }
 
 }
