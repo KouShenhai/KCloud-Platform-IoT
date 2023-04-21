@@ -183,6 +183,7 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
     <profiles>
         <!-- 开发环境 -->
         <profile>

@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 package org.laokou.common.i18n.utils;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import java.nio.charset.StandardCharsets;
-import java.util.Locale;
-
 /**
- * https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#context-functionality-messagesource
+ * <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#context-functionality-messagesource">...</a>
  * @author laokou
  */
 public class MessageUtil {
@@ -33,7 +32,7 @@ public class MessageUtil {
     }
 
     public static String getMessage(int code) {
-        return resourceBundleMessageSource.getMessage("" + code, new String[0], Locale.CHINA);
+        return resourceBundleMessageSource.getMessage(String.valueOf(code), null, LocaleContextHolder.getLocale());
     }
 
     public static void main(String[] args) {
