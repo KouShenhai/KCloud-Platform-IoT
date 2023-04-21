@@ -16,6 +16,7 @@
 package org.laokou.admin.server.application.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.vo.SysDeptVO;
 import org.laokou.admin.server.application.service.SysMenuApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysMenuDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysMenuService;
@@ -135,7 +136,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
      * @return
      */
     private SysMenuVO buildMenu(List<SysMenuVO> menuList) {
-        TreeUtil.TreeNo<TreeUtil.TreeNo> rootNode = TreeUtil.rootRootNode();
+        TreeUtil.TreeNo<SysDeptVO> rootNode = TreeUtil.rootRootNode();
         SysMenuVO rootMenuNode = ConvertUtil.sourceToTarget(rootNode, SysMenuVO.class);
         return TreeUtil.buildTreeNode(menuList,rootMenuNode);
     }

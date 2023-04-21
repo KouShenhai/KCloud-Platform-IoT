@@ -25,13 +25,13 @@ import java.util.*;
  */
 @Data
 public class TreeUtil {
-    public static <T extends TreeNo> TreeNo<T> rootRootNode(String name) {
-        return new TreeNo<>(0L,name,null, new ArrayList<>(5));
+    public static <T extends TreeNo<T>> TreeNo<T> rootRootNode(String name) {
+        return new TreeNo<>(0L,name,null, new ArrayList<>(0));
     }
-    public static <T extends TreeNo> TreeNo<T> rootRootNode() {
+    public static <T extends TreeNo<T>> TreeNo<T> rootRootNode() {
         return rootRootNode("根节点");
     }
-    public static <T extends TreeNo> T buildTreeNode(List<T> treeNodes,T rootNode) {
+    public static <T extends TreeNo<T>> T buildTreeNode(List<T> treeNodes,T rootNode) {
         if (null == rootNode) {
             throw new CustomException("请构造根节点");
         }
@@ -44,21 +44,13 @@ public class TreeUtil {
         for (T treeNo : treeNodes) {
             T parent = nodeMap.get(treeNo.getPid());
             if (parent != null && treeNo.getPid().equals(parent.getId())) {
+                if (CollectionUtils.isEmpty(parent.getChildren())) {
+                    parent.setChildren(new ArrayList<>(0));
+                }
                 parent.getChildren().add(treeNo);
             }
         }
         return rootNode;
-    }
-    public static <T extends TreeNo> TreeNo findNode(Long id, List<TreeNo> nodeList) {
-        for (TreeNo treeNo : nodeList) {
-            if (CollectionUtils.isNotEmpty(treeNo.getChildren())) {
-                findNode(id,treeNo.getChildren());
-            }
-            if (id.equals(treeNo.getId())) {
-                return treeNo;
-            }
-        }
-        return null;
     }
     public static class TreeNo<T> {
         private Long id;
