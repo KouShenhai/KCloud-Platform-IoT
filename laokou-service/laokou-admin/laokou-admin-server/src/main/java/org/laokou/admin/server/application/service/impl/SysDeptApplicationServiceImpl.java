@@ -126,7 +126,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
      * @return
      */
     private SysDeptVO buildDept(List<SysDeptVO> deptList) {
-        TreeUtil.TreeNo<TreeUtil.TreeNo> rootNode = TreeUtil.rootRootNode();
+        TreeUtil.TreeNo<SysDeptVO> rootNode = TreeUtil.rootRootNode();
         SysDeptVO rootDeptNode = ConvertUtil.sourceToTarget(rootNode, SysDeptVO.class);
         return TreeUtil.buildTreeNode(deptList,rootDeptNode);
     }

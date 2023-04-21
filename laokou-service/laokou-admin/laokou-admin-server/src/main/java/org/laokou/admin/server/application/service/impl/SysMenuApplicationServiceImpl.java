@@ -135,7 +135,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
      * @return
      */
     private SysMenuVO buildMenu(List<SysMenuVO> menuList) {
-        TreeUtil.TreeNo<TreeUtil.TreeNo> rootNode = TreeUtil.rootRootNode();
+        TreeUtil.TreeNo<SysMenuVO> rootNode = TreeUtil.rootRootNode();
         SysMenuVO rootMenuNode = ConvertUtil.sourceToTarget(rootNode, SysMenuVO.class);
         return TreeUtil.buildTreeNode(menuList,rootMenuNode);
     }
