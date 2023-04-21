@@ -32,7 +32,7 @@ public class MessageUtil {
     }
 
     public static String getMessage(int code) {
-        return resourceBundleMessageSource.getMessage(String.valueOf(code), new String[0], LocaleContextHolder.getLocale());
+        return resourceBundleMessageSource.getMessage(String.valueOf(code), null, LocaleContextHolder.getLocale());
     }
 
     public static void main(String[] args) {

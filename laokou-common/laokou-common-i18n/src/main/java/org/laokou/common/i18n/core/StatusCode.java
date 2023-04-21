@@ -187,12 +187,6 @@ public interface StatusCode {
     int FORCE_KILL = 2017;
 
     /**
-     * auth => 2
-     * 系统繁忙，请刷新页面
-     */
-    int REFRESH_PAGE = 2018;
-
-    /**
      * sentinel => 5
      * 接口已被限流，请稍后再试
      */
