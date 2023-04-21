@@ -25,10 +25,10 @@ import java.util.*;
  */
 @Data
 public class TreeUtil {
-    public static <T extends TreeNo<T>> T rootRootNode(String name) {
-        return (T) new TreeNo<>(0L, name, null, new ArrayList<T>(5));
+    public static <T> TreeNo<T> rootRootNode(String name) {
+        return new TreeNo<>(0L, name, null, new ArrayList<>(0));
     }
-    public static <T extends TreeNo<T>> T rootRootNode() {
+    public static <T> TreeNo<T> rootRootNode() {
         return rootRootNode("根节点");
     }
     public static <T extends TreeNo<T>> T buildTreeNode(List<T> treeNodes,T rootNode) {
@@ -60,6 +60,7 @@ public class TreeUtil {
         }
         return null;
     }
+
     public static class TreeNo<T> {
         private Long id;
         private String name;
