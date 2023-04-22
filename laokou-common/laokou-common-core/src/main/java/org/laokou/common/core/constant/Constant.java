@@ -28,6 +28,7 @@ public interface Constant {
     String COMMA = ",";
 
     String AUTHORIZATION_HEAD = "Authorization";
+    String TRACE_ID = "trace-id";
 
     int NO = 0;
 

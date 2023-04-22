@@ -20,6 +20,7 @@ import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.*;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.HttpContextUtil;
@@ -31,6 +32,7 @@ import org.laokou.common.jasypt.utils.AESUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.tenant.service.SysSourceService;
+import org.slf4j.MDC;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -191,6 +193,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         authorizationService.save(oAuth2Authorization);
         // 清空上下文
         SecurityContextHolder.clearContext();
+        // 清空MDC
+        MDC.remove(Constant.TRACE_ID);
         return new OAuth2AccessTokenAuthenticationToken(
                 registeredClient, clientPrincipal, oAuth2AccessToken, oAuth2RefreshToken, Collections.emptyMap());
     }

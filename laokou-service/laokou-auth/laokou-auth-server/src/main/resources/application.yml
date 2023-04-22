@@ -23,7 +23,7 @@ spring:
     name: @pom.parent.artifactId@
   profiles:
     # dev|test|prod
-    active: @profile.active@
+    active: @PROFILE-ACTIVE@
   datasource:
     dynamic:
       datasource:

@@ -18,7 +18,7 @@ spring:
   application:
     name: @pom.artifactId@
   profiles:
-    active: @profile.active@
+    active: @PROFILE-ACTIVE@
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: @MYSQL-USERNAME@

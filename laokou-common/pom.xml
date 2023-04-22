@@ -76,6 +76,7 @@
         <module>laokou-common-flyway</module>
         <module>laokou-common-liquibase</module>
         <module>laokou-common-log4j2</module>
+        <module>laokou-common-trace</module>
     </modules>
 
 </project>

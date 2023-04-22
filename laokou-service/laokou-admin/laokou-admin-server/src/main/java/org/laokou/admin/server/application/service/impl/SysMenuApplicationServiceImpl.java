@@ -113,8 +113,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
 
     @Override
     public SysMenuVO treeMenu() {
-        List<SysMenuVO> menuList = queryMenuList(new SysMenuQo());
-        return buildMenu(menuList);
+        return buildMenu(queryMenuList(new SysMenuQo()));
     }
 
     @Override
@@ -125,8 +124,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
 
     @Override
     public SysMenuVO treeTenantMenu() {
-        List<SysMenuVO> tenantMenuList = sysMenuService.getTenantMenuList();
-        return buildMenu(tenantMenuList);
+        return buildMenu(sysMenuService.getTenantMenuList());
     }
 
     /**
@@ -135,7 +133,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
      * @return
      */
     private SysMenuVO buildMenu(List<SysMenuVO> menuList) {
-        TreeUtil.TreeNo<TreeUtil.TreeNo> rootNode = TreeUtil.rootRootNode();
+        TreeUtil.TreeNode<SysMenuVO> rootNode = TreeUtil.rootRootNode();
         SysMenuVO rootMenuNode = ConvertUtil.sourceToTarget(rootNode, SysMenuVO.class);
         return TreeUtil.buildTreeNode(menuList,rootMenuNode);
     }
