@@ -149,6 +149,7 @@ tenant/tenant123
         └── laokou-common-api                      --- API调用组件  
         └── laokou-common-banner                   --- Banner组件  
         └── laokou-common-oss                      --- 对象存储组件  
+        └── laokou-common-trace                    --- 链路跟踪组件  
         └── laokou-common-hbase                    --- 海量存储组件  
         └── laokou-common-dubbo                    --- 远程调用组件  
         └── laokou-common-jasypt                   --- 加密解密组件  

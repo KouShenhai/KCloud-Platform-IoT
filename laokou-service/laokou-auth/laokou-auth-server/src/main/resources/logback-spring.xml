@@ -26,29 +26,29 @@
     %red       => 颜色（红色）
     %n         => 换行
     -->
-    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [ %red(%-5level)] - [%thread] - %logger{0} : %msg%n"/>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %red(%-5level)] - [%thread,${PID}] - %logger{0} : %msg%n"/>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
                 ${LOG_PATTERN}
             </pattern>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
-
     <springProfile name="dev,test">
         <logger name="org.laokou.auth.server" level="info">
-            <appender-ref ref="STDOUT" />
+            <appender-ref ref="console" />
         </logger>
-        <root level="info">
-            <appender-ref ref="STDOUT" />
-        </root>
+        <logger name="com.alibaba.nacos" level="info">
+            <appender-ref ref="console" />
+        </logger>
     </springProfile>
     <springProfile name="prod">
         <logger name="org.laokou.auth.server" level="error">
-            <appender-ref ref="STDOUT" />
+            <appender-ref ref="console" />
         </logger>
-        <root level="error">
-            <appender-ref ref="STDOUT" />
-        </root>
+        <logger name="com.alibaba.nacos" level="error">
+            <appender-ref ref="console" />
+        </logger>
     </springProfile>
 </configuration>

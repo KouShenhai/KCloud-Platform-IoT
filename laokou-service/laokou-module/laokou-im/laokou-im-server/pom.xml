@@ -60,6 +60,10 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-trace</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

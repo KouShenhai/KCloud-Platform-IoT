@@ -47,8 +47,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
     public SysDeptVO treeDept() {
         SysDeptQo qo = new SysDeptQo();
         List<SysDeptVO> deptList = sysDeptService.getDeptList(qo);
-        SysDeptVO sysDeptVO = buildDept(deptList);
-        return sysDeptVO;
+        return buildDept(deptList);
     }
 
     @Override
@@ -122,11 +121,9 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
 
     /**
      * 组装树部门
-     * @param deptList
-     * @return
      */
     private SysDeptVO buildDept(List<SysDeptVO> deptList) {
-        TreeUtil.TreeNo<SysDeptVO> rootNode = TreeUtil.rootRootNode();
+        TreeUtil.TreeNode<SysDeptVO> rootNode = TreeUtil.rootRootNode();
         SysDeptVO rootDeptNode = ConvertUtil.sourceToTarget(rootNode, SysDeptVO.class);
         return TreeUtil.buildTreeNode(deptList,rootDeptNode);
     }

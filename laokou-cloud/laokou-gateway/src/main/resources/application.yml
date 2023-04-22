@@ -27,7 +27,7 @@ spring:
     name: @pom.artifactId@
   profiles:
     # dev|test|prod
-    active: @profile.active@
+    active: @PROFILE-ACTIVE@
   servlet:
     multipart:
       max-file-size: -1

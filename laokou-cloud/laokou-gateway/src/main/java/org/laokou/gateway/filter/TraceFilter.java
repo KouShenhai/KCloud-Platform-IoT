@@ -17,9 +17,13 @@
 package org.laokou.gateway.filter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.constant.Constant;
+import org.laokou.gateway.utils.ResponseUtil;
+import org.slf4j.MDC;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -39,8 +43,10 @@ public class TraceFilter implements GlobalFilter,Ordered {
         return Mono.fromRunnable(
                 () -> {
                     ServerHttpRequest request = exchange.getRequest();
-                    //String userId = ResponseUtil.getUserId(request);
-                    //String username = ResponseUtil.getUsername(request);
+                    String userId = ResponseUtil.getUserId(request);
+                    String tenantId = ResponseUtil.getTenantId(request);
+                    String username = ResponseUtil.getUsername(request);
+                    String traceId = ResponseUtil.getTraceId(request);
                     // EFK收集
                     try {
                         //
@@ -48,11 +54,11 @@ public class TraceFilter implements GlobalFilter,Ordered {
                         log.error("消息发送失败，失败消息：{}",e.getMessage());
                     }
                 }
-        ).then(chain.filter(exchange));
+        ).then(chain.filter(exchange)).doFinally(i -> MDC.remove(Constant.TRACE_ID));
     }
 
     @Override
     public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE + 500;
+        return Ordered.LOWEST_PRECEDENCE - 500;
     }
 }

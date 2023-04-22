@@ -108,13 +108,41 @@ public class ResponseUtil {
      * @param request 请求对象
      */
     public static String getUsername(ServerHttpRequest request){
-        //从header中获取username
+        // 从header中获取username
         String username = request.getHeaders().getFirst(GatewayConstant.REQUEST_USER_NAME);
-        //如果header中不存在username，则从参数中获取username
+        // 如果header中不存在username，则从参数中获取username
         if(StringUtil.isEmpty(username)){
             username = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USER_NAME);
         }
         return username == null ? "" : username.trim();
+    }
+
+    /**
+     * 获取tenantId
+     * @param request 请求对象
+     */
+    public static String getTenantId(ServerHttpRequest request){
+        // 从header中获取tenantId
+        String tenantId = request.getHeaders().getFirst(GatewayConstant.REQUEST_TENANT_ID);
+        // 如果header中不存在tenantId，则从参数中获取tenantId
+        if(StringUtil.isEmpty(tenantId)){
+            tenantId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_TENANT_ID);
+        }
+        return tenantId == null ? "" : tenantId.trim();
+    }
+
+    /**
+     * 获取traceId
+     * @param request 请求对象
+     */
+    public static String getTraceId(ServerHttpRequest request){
+        // 从header中获取traceId
+        String traceId = request.getHeaders().getFirst(Constant.TRACE_ID);
+        // 如果header中不存在traceId，则从参数中获取traceId
+        if(StringUtil.isEmpty(traceId)){
+            traceId = request.getQueryParams().getFirst(Constant.TRACE_ID);
+        }
+        return traceId == null ? "" : traceId.trim();
     }
 
     /**
