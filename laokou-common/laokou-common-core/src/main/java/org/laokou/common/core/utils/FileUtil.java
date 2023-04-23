@@ -42,10 +42,10 @@ public class FileUtil {
         EXT_MAP.put("video", ".mp4,.MP4,.AVI,.mov,.rmvb,.rm,.FLV,.mp4,.3GP,.flv");
     }
 
-    public static Boolean checkFileExt(String code,String fileSuffix) {
+    public static Boolean checkFileExt(String code,String fileExt) {
         String extValue = EXT_MAP.get(code);
         List<String> extList = Arrays.asList(extValue.split(Constant.COMMA));
-        return extList.contains(fileSuffix);
+        return extList.contains(fileExt);
     }
 
     /**
@@ -53,7 +53,7 @@ public class FileUtil {
      * @param fileName
      * @return
      */
-    public static String getFileSuffix(String fileName) {
+    public static String getFileExt(String fileName) {
         return fileName.substring(fileName.lastIndexOf(Constant.DOT));
     }
 

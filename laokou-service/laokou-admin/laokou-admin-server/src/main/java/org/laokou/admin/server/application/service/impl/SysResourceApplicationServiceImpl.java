@@ -122,7 +122,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         SysResourceVO resource = sysResourceService.getResourceById(id);
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + System.currentTimeMillis() + FileUtil.getFileSuffix(resource.getUrl()));
+        response.setHeader("Content-disposition", "attachment;filename=" + System.currentTimeMillis() + FileUtil.getFileExt(resource.getUrl()));
         InputStream inputStream = FileUtil.getInputStream(resource.getUrl());
         ServletOutputStream outputStream = response.getOutputStream();
         IOUtils.write(inputStream.readAllBytes(),outputStream);
@@ -204,8 +204,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         String contentType = file.getContentType();
         // 判断类型
         String fileName = file.getOriginalFilename();
-        String fileSuffix = FileUtil.getFileSuffix(fileName);
-        if (!FileUtil.checkFileExt(code,fileSuffix)) {
+        String fileExt = FileUtil.getFileExt(fileName);
+        if (!FileUtil.checkFileExt(code,fileExt)) {
             throw new CustomException("格式不正确，请重新上传资源");
         }
         return ossTemplate.upload(size,md5,fileName,contentType,inputStream);
