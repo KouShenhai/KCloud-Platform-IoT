@@ -16,8 +16,7 @@
 package org.laokou.auth.client.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.laokou.auth.client.enums.UserStatusEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,7 +29,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @JsonTypeInfo(use = JsonTypeInfo.Id.NAME) => 多态子类与抽象类绑定
+ * &#064;JsonTypeInfo(use  = JsonTypeInfo.Id.NAME) => 多态子类与抽象类绑定
  * @author laokou
  */
 @Getter

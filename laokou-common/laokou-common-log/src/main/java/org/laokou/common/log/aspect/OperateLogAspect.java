@@ -30,7 +30,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.ip.region.utils.AddressUtil;
-import org.laokou.common.jasypt.utils.AESUtil;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.event.OperateLogEvent;
 import org.springframework.core.NamedThreadLocal;
@@ -107,7 +106,7 @@ public class OperateLogAspect {
             event.setRequestUri(request.getRequestURI());
             event.setRequestIp(ip);
             event.setRequestAddress(AddressUtil.getRealAddress(ip));
-            event.setOperator(AESUtil.decrypt(UserUtil.getUserName()));
+            event.setOperator(UserUtil.getUserName());
             event.setCreator(UserUtil.getUserId());
             event.setDeptId(UserUtil.getDeptId());
             if (null != e) {
@@ -130,7 +129,7 @@ public class OperateLogAspect {
             } else {
                 String str = JacksonUtil.toJsonStr(obj);
                 if (Constant.RISK.contains(str)) {
-                    Map map = removeAny(JacksonUtil.toBean(str, Map.class), REMOVE_PARAMS);
+                    Map<String,String> map = removeAny(JacksonUtil.toMap(str, String.class,String.class), REMOVE_PARAMS);
                     event.setRequestParams(JacksonUtil.toJsonStr(map, true));
                 } else {
                     event.setRequestParams(str);
@@ -154,9 +153,9 @@ public class OperateLogAspect {
                && !(arg instanceof HttpServletResponse);
     }
 
-    private Map removeAny(Map map, String... keys) {
-        for(int var5 = 0; var5 < keys.length; ++var5) {
-            map.remove(keys[var5]);
+    private Map<String,String> removeAny(Map<String,String> map, String... keys) {
+        for (String key : keys) {
+            map.remove(key);
         }
         return map;
     }

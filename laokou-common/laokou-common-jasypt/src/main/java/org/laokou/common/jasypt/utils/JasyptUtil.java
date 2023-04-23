@@ -23,7 +23,7 @@ import java.lang.reflect.Field;
 public class JasyptUtil {
 
     @SneakyThrows
-    public static void setFieldValue(Object obj) {
+    public static <T> T getValue(T obj) {
         // 获取class所有字段（包括私有字段）
         Field[] fields = obj.getClass().getDeclaredFields();
         for (Field field : fields) {
@@ -41,12 +41,15 @@ public class JasyptUtil {
                 switch (jasypt.type()) {
                     case DECRYPT -> data = AESUtil.decrypt(data);
                     case ENCRYPT -> data = AESUtil.encrypt(data);
-                    default -> {}
+                    default -> {
+                        return null;
+                    }
                 }
                 // 属性赋值
                 field.set(obj,data);
             }
         }
+        return obj;
     }
 
 }

@@ -129,8 +129,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     @DS(Constant.TENANT)
     public Long unReadCount() {
         final Long userId = UserUtil.getUserId();
-        long count = sysMessageDetailService.messageCount(userId);
-        return count;
+        return (long) sysMessageDetailService.messageCount(userId);
     }
 
 }

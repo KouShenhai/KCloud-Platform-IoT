@@ -16,6 +16,7 @@
 package org.laokou.auth.client.utils;
 
 import org.laokou.auth.client.user.UserDetail;
+import org.laokou.common.jasypt.utils.AESUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -33,32 +34,41 @@ public class UserUtil {
     }
 
     /**
-     * 获取用户id
+     * 用户ID
+     * @return Long
      */
     public static Long getUserId() {
         return userDetail().getId();
     }
 
     /**
-     * 获取用户名
-     * @return
+     * 用户名
+     * @return String
      */
     public static String getUserName() {
-        return userDetail().getUsername();
+        return AESUtil.decrypt(userDetail().getUsername());
     }
 
     /**
-     * 部门id
-     * @return
+     * 部门ID
+     * @return Long
      */
     public static Long getDeptId() {
         return userDetail().getDeptId();
     }
 
+    /**
+     * 租户ID
+     * @return Long
+     */
     public static Long getTenantId() {
         return userDetail().getTenantId();
     }
 
+    /**
+     * 资源名称
+     * @return String
+     */
     public static String getSourceName() {
         return userDetail().getSourceName();
     }
