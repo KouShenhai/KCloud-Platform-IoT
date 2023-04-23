@@ -106,7 +106,7 @@ public class RespFilter implements GlobalFilter, Ordered {
                             code = ex.getCode();
                             msg = ex.getMsg();
                         }
-                        HttpResult result = ResponseUtil.response(code, msg);
+                        HttpResult<Boolean> result = ResponseUtil.response(code, msg);
                         byte[] uppedContent = JacksonUtil.toJsonStr(result).getBytes();
                         // 修改状态码
                         response.setStatusCode(HttpStatus.OK);

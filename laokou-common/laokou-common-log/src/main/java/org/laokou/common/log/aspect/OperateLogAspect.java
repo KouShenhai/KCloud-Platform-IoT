@@ -30,7 +30,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.ip.region.utils.AddressUtil;
-import org.laokou.common.jasypt.utils.AESUtil;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.event.OperateLogEvent;
 import org.springframework.core.NamedThreadLocal;
@@ -107,7 +106,7 @@ public class OperateLogAspect {
             event.setRequestUri(request.getRequestURI());
             event.setRequestIp(ip);
             event.setRequestAddress(AddressUtil.getRealAddress(ip));
-            event.setOperator(AESUtil.decrypt(UserUtil.getUserName()));
+            event.setOperator(UserUtil.getUserName());
             event.setCreator(UserUtil.getUserId());
             event.setDeptId(UserUtil.getDeptId());
             if (null != e) {

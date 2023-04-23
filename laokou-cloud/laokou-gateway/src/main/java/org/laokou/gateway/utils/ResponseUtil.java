@@ -45,7 +45,6 @@ public class ResponseUtil {
      * 前端响应
      * @param exchange exchange对象
      * @param data 数据
-     * @return
      */
     public static Mono<Void> response(ServerWebExchange exchange, Object data){
         DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(JacksonUtil.toJsonStr(data).getBytes(StandardCharsets.UTF_8));
@@ -59,19 +58,17 @@ public class ResponseUtil {
      * map响应体
      * @param code 响应编码
      * @param msg 响应信息
-     * @return
      */
-    public static HttpResult response(int code,String msg) {
-       return new HttpResult().error(code,msg);
+    public static HttpResult<Boolean> response(int code,String msg) {
+       return new HttpResult<Boolean>().error(code,msg);
     }
 
     /**
      * 获取错误map集合
      * @param code 错误码
-     * @return
      */
-    public static HttpResult error(int code) {
-        return new HttpResult().error(code);
+    public static HttpResult<Boolean> error(int code) {
+        return new HttpResult<Boolean>().error(code);
     }
 
     /**
@@ -149,7 +146,6 @@ public class ResponseUtil {
      * uri匹配
      * @param requestUri 请求uri
      * @param uris 忽略uris
-     * @return
      */
     public static boolean pathMatcher(String requestUri, List<String> uris) {
         for (String url : uris) {

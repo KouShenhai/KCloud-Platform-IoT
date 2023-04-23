@@ -252,10 +252,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @Override
     public UserInfoVO getUserInfo() {
         UserDetail userDetail = UserUtil.userDetail();
-        UserInfoVO userInfoVO = ConvertUtil.sourceToTarget(userDetail, UserInfoVO.class);
-        // 解密
-        JasyptUtil.setFieldValue(userInfoVO);
-        return userInfoVO;
+        return ConvertUtil.sourceToTarget(userDetail, UserInfoVO.class);
     }
 
     @Override

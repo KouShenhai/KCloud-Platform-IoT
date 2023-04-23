@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author laokou
@@ -82,7 +83,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             if (oAuth2Authorization == null) {
                 return true;
             }
-            UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) oAuth2Authorization.getAttribute(Principal.class.getName())).getPrincipal();
+            UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) Objects.requireNonNull(oAuth2Authorization.getAttribute(Principal.class.getName()))).getPrincipal();
             Long userId = userDetail.getId();
             // 清空
             oAuth2AuthorizationService.remove(oAuth2Authorization);
