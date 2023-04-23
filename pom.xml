@@ -19,7 +19,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-parent</artifactId>
+    <artifactId>KCloud-Platform-Alibaba</artifactId>
     <version>3.0.5</version>
     <packaging>pom</packaging>
     <modules>
@@ -27,7 +27,7 @@
         <module>laokou-cloud</module>
         <module>laokou-service</module>
     </modules>
-    <name>laokou-parent</name>
+    <name>KCloud-Platform-Alibaba</name>
     <description>一款企业级微服务架构的云服务多租户SaaS平台</description>
     <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
     <properties>
@@ -333,8 +333,10 @@
                 <!-- 在打包的时候，根据-P参数，加上需要的yml配置文件 -->
                 <includes>
                     <include>application.yml</include>
+                    <!--suppress UnresolvedMavenProperty -->
                     <include>application-${profile.active}.yml</include>
                     <include>bootstrap.yml</include>
+                    <!--suppress UnresolvedMavenProperty -->
                     <include>bootstrap-${profile.active}.yml</include>
                 </includes>
             </resource>
