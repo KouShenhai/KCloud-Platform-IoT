@@ -16,7 +16,7 @@
 package org.laokou.auth.client.utils;
 
 import org.laokou.auth.client.user.UserDetail;
-import org.laokou.common.jasypt.utils.JasyptUtil;
+import org.laokou.common.jasypt.utils.AESUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -26,10 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class UserUtil {
 
     public static UserDetail userDetail() {
-        UserDetail userDetail = (UserDetail) getAuthentication().getPrincipal();
-        // 解密
-        JasyptUtil.setFieldValue(userDetail);
-        return userDetail;
+        return (UserDetail) getAuthentication().getPrincipal();
     }
 
     public static Authentication getAuthentication() {
@@ -49,7 +46,7 @@ public class UserUtil {
      * @return String
      */
     public static String getUserName() {
-        return userDetail().getUsername();
+        return AESUtil.decrypt(userDetail().getUsername());
     }
 
     /**

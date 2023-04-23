@@ -18,8 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
 import org.laokou.auth.client.enums.UserStatusEnum;
-import org.laokou.common.jasypt.annotation.JasyptField;
-import org.laokou.common.jasypt.enums.TypeEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,14 +40,11 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
     @Serial
     private static final long serialVersionUID = 3319752558160144611L;
     private Long id;
-    @JasyptField(type = TypeEnum.DECRYPT)
     private String username;
     private String avatar;
     private Integer superAdmin;
     private Integer status;
-    @JasyptField(type = TypeEnum.DECRYPT)
     private transient String mail;
-    @JasyptField(type = TypeEnum.DECRYPT)
     private transient String mobile;
     private transient String password;
     private Long deptId;

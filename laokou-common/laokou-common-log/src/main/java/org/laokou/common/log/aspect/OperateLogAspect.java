@@ -129,7 +129,7 @@ public class OperateLogAspect {
             } else {
                 String str = JacksonUtil.toJsonStr(obj);
                 if (Constant.RISK.contains(str)) {
-                    Map map = removeAny(JacksonUtil.toBean(str, Map.class), REMOVE_PARAMS);
+                    Map<String,String> map = removeAny(JacksonUtil.toMap(str, String.class,String.class), REMOVE_PARAMS);
                     event.setRequestParams(JacksonUtil.toJsonStr(map, true));
                 } else {
                     event.setRequestParams(str);
@@ -153,9 +153,9 @@ public class OperateLogAspect {
                && !(arg instanceof HttpServletResponse);
     }
 
-    private Map removeAny(Map map, String... keys) {
-        for(int var5 = 0; var5 < keys.length; ++var5) {
-            map.remove(keys[var5]);
+    private Map<String,String> removeAny(Map<String,String> map, String... keys) {
+        for (String key : keys) {
+            map.remove(key);
         }
         return map;
     }

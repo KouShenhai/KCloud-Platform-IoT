@@ -145,8 +145,9 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
             throw new CustomException("用户编号不为空");
         }
         // 加密
-        JasyptUtil.setFieldValue(dto);
+        dto = JasyptUtil.getValue(dto);
         // 验证手机号唯一
+        assert dto != null;
         String mobile = dto.getMobile();
         if (StringUtil.isNotEmpty(mobile)) {
             long mobileCount = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getTenantId,UserUtil.getTenantId()).eq(SysUserDO::getMobile, mobile).ne(SysUserDO::getId, id));
@@ -252,7 +253,9 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     @Override
     public UserInfoVO getUserInfo() {
         UserDetail userDetail = UserUtil.userDetail();
-        return ConvertUtil.sourceToTarget(userDetail, UserInfoVO.class);
+        UserInfoVO userInfoVO = ConvertUtil.sourceToTarget(userDetail, UserInfoVO.class);
+        // 解密
+        return JasyptUtil.getValue(userInfoVO);
     }
 
     @Override
