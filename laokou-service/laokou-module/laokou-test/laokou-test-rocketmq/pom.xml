@@ -4,7 +4,7 @@
     <parent>
         <artifactId>laokou-test</artifactId>
         <groupId>org.laokou</groupId>
-        <version>3.0.5</version>
+        <version>3.0.6</version>
     </parent>
     <artifactId>laokou-test-rocketmq</artifactId>
     <dependencies>

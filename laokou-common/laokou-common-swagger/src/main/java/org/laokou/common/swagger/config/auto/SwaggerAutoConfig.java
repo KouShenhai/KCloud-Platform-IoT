@@ -42,7 +42,7 @@ public class SwaggerAutoConfig {
     @ConditionalOnMissingBean(OpenAPI.class)
     OpenAPI openApi() {
         return new OpenAPI()
-                .info(new Info().title("API文档").description("API文档").version("3.0.5")
+                .info(new Info().title("API文档").description("API文档").version("3.0.6")
                         .contact(new Contact().name("laokou").url("https://github.com/KouShenhai").email("2413176044@qq.com"))
                         .license(new License().name("Apache 2.0").url("https://www.apache.org/licenses/LICENSE-2.0.html")))
                         .externalDocs(new ExternalDocumentation().description("老寇云").url("https://github.com/KouShenhai"))
