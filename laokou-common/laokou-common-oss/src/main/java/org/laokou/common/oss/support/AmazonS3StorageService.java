@@ -70,7 +70,7 @@ public class AmazonS3StorageService extends AbstractStorageService<AmazonS3> {
 
     @Override
     public String getFileName(String fileName) {
-        return DateUtil.format(LocalDateTime.now(),DateUtil.YYYYMMDDHHMMSS) + getFileSuffix(fileName);
+        return DateUtil.format(LocalDateTime.now(),DateUtil.YYYYMMDDHHMMSS) + getFileExt(fileName);
     }
 
     @Override
