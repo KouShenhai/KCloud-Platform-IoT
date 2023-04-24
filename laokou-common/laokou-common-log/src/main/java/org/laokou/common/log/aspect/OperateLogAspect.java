@@ -29,6 +29,7 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.ip.region.utils.AddressUtil;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.event.OperateLogEvent;
@@ -75,7 +76,7 @@ public class OperateLogAspect {
 
     @Async
     protected void handleLog(final JoinPoint joinPoint,final Exception e) {
-        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+        HttpServletRequest request = RequestUtil.getHttpServletRequest();
         // 获取注解
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();

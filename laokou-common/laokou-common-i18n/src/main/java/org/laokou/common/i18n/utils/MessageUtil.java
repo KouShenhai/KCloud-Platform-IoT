@@ -22,7 +22,6 @@ import java.nio.charset.StandardCharsets;
  * @author laokou
  */
 public class MessageUtil {
-
     private static final ReloadableResourceBundleMessageSource resourceBundleMessageSource;
 
     static {
@@ -33,10 +32,6 @@ public class MessageUtil {
 
     public static String getMessage(int code) {
         return resourceBundleMessageSource.getMessage(String.valueOf(code), null, LocaleContextHolder.getLocale());
-    }
-
-    public static void main(String[] args) {
-        System.out.println(getMessage(200));
     }
 
 }

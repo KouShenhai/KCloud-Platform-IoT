@@ -14,5 +14,6 @@
         <module>laokou-test-rocketmq</module>
         <module>laokou-test-juc</module>
         <module>laokou-test-liquibase</module>
+        <module>laokou-test-web</module>
     </modules>
 </project>
