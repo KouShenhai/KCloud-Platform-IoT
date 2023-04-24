@@ -53,4 +53,6 @@ public interface Constant {
      */
     String DEFAULT_SOURCE = "master";
 
+    String ACCEPT_LANGUAGE = "Accept-Language";
+
 }

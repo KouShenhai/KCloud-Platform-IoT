@@ -39,7 +39,7 @@ public class ResponseUtil {
     /**
      * 拥有uri匹配
      */
-    public static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
+    private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
     /**
      * 前端响应

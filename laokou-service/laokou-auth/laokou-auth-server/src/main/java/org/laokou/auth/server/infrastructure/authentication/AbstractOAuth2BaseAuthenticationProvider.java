@@ -23,8 +23,8 @@ import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.DateUtil;
-import org.laokou.common.core.utils.HttpContextUtil;
 import org.laokou.common.core.utils.IpUtil;
+import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -103,7 +103,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
     @SneakyThrows
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+        HttpServletRequest request = RequestUtil.getHttpServletRequest();
         Authentication principal = login(request);
         return getToken(authentication,principal);
     }
@@ -215,6 +215,9 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
         // 验证验证码
         Boolean validate = sysCaptchaService.validate(uuid, captcha);
+        if (null == validate) {
+            CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_EXPIRED, MessageUtil.getMessage(StatusCode.CAPTCHA_EXPIRED));
+        }
         if (!validate) {
             loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR),request,tenantId);
             CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_ERROR, MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR));

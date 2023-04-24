@@ -17,7 +17,7 @@ package org.laokou.common.openfeign.config.auto;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import jakarta.servlet.http.HttpServletRequest;
-import org.laokou.common.core.utils.HttpContextUtil;
+import org.laokou.common.core.utils.RequestUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
@@ -37,7 +37,7 @@ public class OpenFeignAutoConfig implements RequestInterceptor {
 
     @Override
     public void apply(RequestTemplate template) {
-        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
+        HttpServletRequest request = RequestUtil.getHttpServletRequest();
         template.header(TRACE_ID,request.getHeader(TRACE_ID));
         template.header(AUTHORIZATION_HEAD,request.getHeader(AUTHORIZATION_HEAD));
     }

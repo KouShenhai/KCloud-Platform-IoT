@@ -15,16 +15,12 @@
  */
 package org.laokou.common.easy.captcha.service.impl;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
-import org.laokou.common.i18n.core.StatusCode;
-import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
 /**
- * 验证码实现类
  * @author laokou
  */
 @Service
@@ -34,26 +30,25 @@ public class SysCaptchaServiceImpl implements SysCaptchaService {
     private final RedisUtil redisUtil;
 
     @Override
-    public Boolean setCode(String uuid,String code) {
-        //保存到缓存
+    public void setCode(String uuid, String code) {
+        // 保存到缓存
         setCache(uuid,code);
-        return true;
     }
 
     @Override
     public Boolean validate(String uuid, String code) {
-        //获取验证码
+        // 获取验证码
         String captcha = getCache(uuid);
         if (StringUtil.isEmpty(captcha)) {
-            CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_EXPIRED, MessageUtil.getMessage(StatusCode.CAPTCHA_EXPIRED));
+            return null;
         }
-        //效验成功
+        // 效验成功
         return code.equalsIgnoreCase(captcha);
     }
 
     private void setCache(String key,String value) {
         key = RedisKeyUtil.getUserCaptchaKey(key);
-        //保存五分钟
+        // 保存五分钟
         redisUtil.set(key, value,60 * 5);
     }
 
