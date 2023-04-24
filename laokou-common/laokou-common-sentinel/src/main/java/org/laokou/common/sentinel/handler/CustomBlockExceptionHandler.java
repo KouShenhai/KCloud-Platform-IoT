@@ -41,7 +41,7 @@ public class CustomBlockExceptionHandler implements BlockExceptionHandler {
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
         PrintWriter writer = response.getWriter();
-        writer.write(JacksonUtil.toJsonStr(new HttpResult().error(StatusCode.API_BLOCK_REQUEST)));
+        writer.write(JacksonUtil.toJsonStr(new HttpResult<Boolean>().error(StatusCode.API_BLOCK_REQUEST)));
         writer.flush();
         writer.close();
     }
