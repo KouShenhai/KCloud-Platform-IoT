@@ -17,6 +17,10 @@
  */
 -->
 <configuration >
+    <springProperty  scope="context" name="LOG_NAME" source="spring.application.name"/>
+    <property name="LOG_PATH" value="logs"/>
+    <property name="MAX_FILE_SIZE" value="10MB"/>
+    <property name="MAX_HISTORY" value="7"/>
     <!--
     %d         => 日期
     %-5level   => 日志等级
@@ -35,20 +39,37 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}/${LOG_NAME}.log</File>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %-5level] - [%thread,${PID}] - %logger{0} : %msg%n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/%d{yyyyMMdd}/${LOG_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <MaxHistory>${MAX_HISTORY}</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
     <springProfile name="dev,test">
         <logger name="org.laokou.auth.server" level="info">
             <appender-ref ref="console" />
+            <appender-ref ref="file"/>
         </logger>
         <logger name="com.alibaba.nacos" level="info">
             <appender-ref ref="console" />
+            <appender-ref ref="file"/>
         </logger>
     </springProfile>
     <springProfile name="prod">
         <logger name="org.laokou.auth.server" level="error">
             <appender-ref ref="console" />
+            <appender-ref ref="file"/>
         </logger>
         <logger name="com.alibaba.nacos" level="error">
             <appender-ref ref="console" />
+            <appender-ref ref="file"/>
         </logger>
     </springProfile>
 </configuration>
