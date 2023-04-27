@@ -18,6 +18,7 @@ package org.laokou.gateway.filter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.slf4j.MDC;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -43,7 +44,7 @@ public class TraceFilter implements GlobalFilter,Ordered {
         String userId = ResponseUtil.getUserId(request);
         String tenantId = ResponseUtil.getTenantId(request);
         String username = ResponseUtil.getUsername(request);
-        String traceId = ResponseUtil.getTraceId(request);
+        String traceId = userId + IdGenerator.defaultSnowflakeId();
         MDC.put(Constant.TRACE_ID,traceId);
         MDC.put(Constant.USER_ID,userId);
         MDC.put(Constant.TENANT_ID,tenantId);
@@ -53,7 +54,7 @@ public class TraceFilter implements GlobalFilter,Ordered {
         log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}",requestUri,userId,username,tenantId,traceId);
         // 清除
         MDC.clear();
-        return chain.filter(exchange);
+        return chain.filter(exchange.mutate().request(request.mutate().header(Constant.TRACE_ID, traceId).build()).build());
     }
 
     @Override

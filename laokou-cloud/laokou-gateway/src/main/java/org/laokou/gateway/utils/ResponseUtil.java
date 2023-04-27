@@ -82,7 +82,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(token)){
             token = request.getQueryParams().getFirst(Constant.AUTHORIZATION_HEAD);
         }
-        return token == null ? "" : token.trim();
+        return StringUtil.isBlank(token) ? "" : token.trim();
     }
 
     /**
@@ -96,7 +96,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(userId)){
             userId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USER_ID);
         }
-        return userId == null ? "" : userId.trim();
+        return StringUtil.isBlank(userId) ? "" : userId.trim();
     }
 
 
@@ -111,7 +111,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(username)){
             username = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USER_NAME);
         }
-        return username == null ? "" : username.trim();
+        return StringUtil.isBlank(username) ? "" : username.trim();
     }
 
     /**
@@ -125,21 +125,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(tenantId)){
             tenantId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_TENANT_ID);
         }
-        return tenantId == null ? "" : tenantId.trim();
-    }
-
-    /**
-     * 获取traceId
-     * @param request 请求对象
-     */
-    public static String getTraceId(ServerHttpRequest request){
-        // 从header中获取traceId
-        String traceId = request.getHeaders().getFirst(GatewayConstant.REQUEST_TRACE_ID);
-        // 如果header中不存在traceId，则从参数中获取traceId
-        if(StringUtil.isEmpty(traceId)){
-            traceId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_TRACE_ID);
-        }
-        return traceId == null ? "" : traceId.trim();
+        return StringUtil.isBlank(tenantId) ? "" : tenantId.trim();
     }
 
     /**

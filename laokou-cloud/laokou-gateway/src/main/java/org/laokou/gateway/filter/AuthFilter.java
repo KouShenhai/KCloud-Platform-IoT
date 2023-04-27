@@ -88,8 +88,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
             return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.UNAUTHORIZED));
         }
         // 增加令牌
-        return chain.filter(exchange.mutate().request(request.mutate()
-                        .header(Constant.AUTHORIZATION_HEAD, token).build()).build());
+        return chain.filter(exchange.mutate().request(request.mutate().header(Constant.AUTHORIZATION_HEAD, token).build()).build());
     }
 
     @Override

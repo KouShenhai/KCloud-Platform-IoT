@@ -35,11 +35,6 @@ public interface GatewayConstant {
     String REQUEST_TENANT_ID = "Tenant-Id";
 
     /**
-     * 请求链-链路ID
-     */
-    String REQUEST_TRACE_ID = "Trace-Id";
-
-    /**
      * 密码模式-请求地址
      */
     String OAUTH2_AUTH_URI = "/auth/oauth2/token";
