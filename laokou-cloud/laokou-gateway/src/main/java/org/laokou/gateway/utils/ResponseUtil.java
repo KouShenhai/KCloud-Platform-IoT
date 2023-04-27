@@ -134,10 +134,10 @@ public class ResponseUtil {
      */
     public static String getTraceId(ServerHttpRequest request){
         // 从header中获取traceId
-        String traceId = request.getHeaders().getFirst(Constant.TRACE_ID);
+        String traceId = request.getHeaders().getFirst(GatewayConstant.REQUEST_TRACE_ID);
         // 如果header中不存在traceId，则从参数中获取traceId
         if(StringUtil.isEmpty(traceId)){
-            traceId = request.getQueryParams().getFirst(Constant.TRACE_ID);
+            traceId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_TRACE_ID);
         }
         return traceId == null ? "" : traceId.trim();
     }

@@ -17,14 +17,12 @@ package org.laokou.gateway.filter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.gateway.utils.PasswordUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.gateway.constant.GatewayConstant;
 import org.laokou.gateway.utils.ResponseUtil;
-import org.slf4j.MDC;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -71,24 +69,18 @@ public class AuthFilter implements GlobalFilter,Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         // 获取request对象
         ServerHttpRequest request = exchange.getRequest();
-        // 链路ID
-        String traceId = String.valueOf(IdGenerator.defaultSnowflakeId());
-        MDC.put(Constant.TRACE_ID, traceId);
-        // 构造器
-        ServerHttpRequest.Builder builder = exchange.getRequest().mutate().header(Constant.TRACE_ID, traceId);
         // 获取uri
         String requestUri = request.getPath().pathWithinApplication().value();
-        log.info("uri：{}", requestUri);
         // 请求放行，无需验证权限
         if (ResponseUtil.pathMatcher(requestUri,uris)){
-            return chain.filter(exchange.mutate().request(builder.build()).build());
+            return chain.filter(exchange);
         }
         // 表单提交
         MediaType mediaType = request.getHeaders().getContentType();
         if (OAUTH2_AUTH_URI.contains(requestUri)
                 && HttpMethod.POST.matches(request.getMethod().name())
                 && MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
-            return oauth2Decode(exchange,chain,traceId);
+            return oauth2Decode(exchange,chain);
         }
         // 获取token
         String token = ResponseUtil.getToken(request);
@@ -96,7 +88,8 @@ public class AuthFilter implements GlobalFilter,Ordered {
             return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.UNAUTHORIZED));
         }
         // 增加令牌
-        return chain.filter(exchange.mutate().request(builder.header(Constant.AUTHORIZATION_HEAD, token).build()).build());
+        return chain.filter(exchange.mutate().request(request.mutate()
+                        .header(Constant.AUTHORIZATION_HEAD, token).build()).build());
     }
 
     @Override
@@ -108,17 +101,15 @@ public class AuthFilter implements GlobalFilter,Ordered {
      * OAuth2解密
      * @param exchange
      * @param chain
-     * @param traceId
      * @return
      */
-    private Mono<Void> oauth2Decode(ServerWebExchange exchange, GatewayFilterChain chain,String traceId) {
+    private Mono<Void> oauth2Decode(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());
         Mono modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt());
         BodyInserter<Mono, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody, String.class);
         HttpHeaders headers = new HttpHeaders();
         headers.putAll(exchange.getRequest().getHeaders());
         headers.remove(HttpHeaders.CONTENT_LENGTH);
-        headers.set(Constant.TRACE_ID,traceId);
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
         CachedBodyOutputMessage outputMessage = new CachedBodyOutputMessage(exchange, headers);
         return bodyInserter.insert(outputMessage, new BodyInserterContext()).then(Mono.defer(() -> {

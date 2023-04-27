@@ -28,7 +28,10 @@ public interface Constant {
     String COMMA = ",";
 
     String AUTHORIZATION_HEAD = "Authorization";
+    String USER_NAME = "user-name";
     String TRACE_ID = "trace-id";
+    String USER_ID = "user-id";
+    String TENANT_ID = "tenant-id";
 
     int NO = 0;
 

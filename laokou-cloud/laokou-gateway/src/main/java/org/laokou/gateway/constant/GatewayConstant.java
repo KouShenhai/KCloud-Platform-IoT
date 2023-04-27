@@ -21,7 +21,7 @@ package org.laokou.gateway.constant;
 public interface GatewayConstant {
 
     /**
-     * 请求链-用户id
+     * 请求链-用户ID
      */
     String REQUEST_USER_ID = "User-Id";
     /**
@@ -30,9 +30,14 @@ public interface GatewayConstant {
     String REQUEST_USER_NAME = "User-Name";
 
     /**
-     * 请求链-租户id
+     * 请求链-租户ID
      */
     String REQUEST_TENANT_ID = "Tenant-Id";
+
+    /**
+     * 请求链-链路ID
+     */
+    String REQUEST_TRACE_ID = "Trace-Id";
 
     /**
      * 密码模式-请求地址
