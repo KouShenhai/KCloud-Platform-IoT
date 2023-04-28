@@ -146,7 +146,7 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
     @Override
     @JsonIgnore
     public boolean isEnabled() {
-        return this.status == UserStatusEnum.DISABLE.ordinal() ? false : true;
+        return this.status != UserStatusEnum.DISABLE.ordinal();
     }
 
     /**

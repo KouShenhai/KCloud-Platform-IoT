@@ -44,7 +44,6 @@ import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.jasypt.utils.AESUtil;
-import org.laokou.common.jasypt.utils.JasyptUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -144,10 +143,6 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (null == id) {
             throw new CustomException("用户编号不为空");
         }
-        // 加密
-        dto = JasyptUtil.getValue(dto);
-        // 验证手机号唯一
-        assert dto != null;
         String mobile = dto.getMobile();
         if (StringUtil.isNotEmpty(mobile)) {
             long mobileCount = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getTenantId,UserUtil.getTenantId()).eq(SysUserDO::getMobile, mobile).ne(SysUserDO::getId, id));
@@ -252,10 +247,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
     @Override
     public UserInfoVO getUserInfo() {
-        UserDetail userDetail = UserUtil.userDetail();
-        UserInfoVO userInfoVO = ConvertUtil.sourceToTarget(userDetail, UserInfoVO.class);
-        // 解密
-        return JasyptUtil.getValue(userInfoVO);
+        return ConvertUtil.sourceToTarget(UserUtil.userDetail(), UserInfoVO.class);
     }
 
     @Override
@@ -268,8 +260,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         Integer pageSize = qo.getPageSize();
         String userInfoKeyPrefix = RedisKeyUtil.getUserInfoKey("");
         for (String key : keys) {
-            UserDetail userDetail = (UserDetail) redisUtil.get(key);
-            String username = AESUtil.decrypt(userDetail.getUsername());
+            UserDetail userDetail = ConvertUtil.sourceToTarget(redisUtil.get(key), UserDetail.class);
+            String username = userDetail.getUsername();
             if (StringUtil.isEmpty(keyword) || username.contains(keyword)) {
                 SysUserOnlineVO vo = new SysUserOnlineVO();
                 vo.setUsername(username);
