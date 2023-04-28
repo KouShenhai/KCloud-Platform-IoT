@@ -35,6 +35,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+
+import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
+
 /**
  * @author laokou
  */
@@ -78,6 +81,7 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
         userDetail.setLoginIp(IpUtil.getIpAddr(request));
         // 登录时间
         userDetail.setLoginDate(DateUtil.now());
+        userDetail.setSourceName(DEFAULT_SOURCE);
         return userDetail;
     }
 }
