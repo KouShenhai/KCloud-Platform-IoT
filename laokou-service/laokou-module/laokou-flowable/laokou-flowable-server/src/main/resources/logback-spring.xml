@@ -61,6 +61,14 @@
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
+        <logger name="org.springframework.web" level="info">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="org.springboot.sample" level="info">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
     </springProfile>
     <springProfile name="prod">
         <logger name="org.laokou.flowable.server" level="error">
@@ -68,6 +76,14 @@
             <appender-ref ref="file"/>
         </logger>
         <logger name="com.alibaba.nacos" level="error">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="org.springframework.web" level="error">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="org.springboot.sample" level="error">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
