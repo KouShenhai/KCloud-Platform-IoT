@@ -71,7 +71,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
         if (id == null) {
             throw new CustomException("存储编号不为空");
         }
-        long useCount = sysOssService.count(Wrappers.lambdaQuery(SysOssDO.class).eq(SysOssDO::getStatus, Constant.YES));
+        long useCount = sysOssService.count(Wrappers.lambdaQuery(SysOssDO.class).eq(SysOssDO::getStatus, Constant.YES).eq(SysOssDO::getId,id));
         if (useCount > 0) {
             throw new CustomException("该配置正在使用，请修改其他配置");
         }

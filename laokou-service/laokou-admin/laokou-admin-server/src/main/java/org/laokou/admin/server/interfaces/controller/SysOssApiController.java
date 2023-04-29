@@ -49,6 +49,9 @@ public class SysOssApiController {
         return new HttpResult<IPage<SysOssVO>>().ok(sysOssApplicationService.queryOssPage(qo));
     }
 
+//    @PostMapping("upload")
+//    @Operation(summary = "系统存储>上传",description = "系统存储>上传")
+
     @PostMapping("/insert")
     @Operation(summary = "系统存储>新增",description = "系统存储>新增")
     @OperateLog(module = "系统存储",name = "存储新增")

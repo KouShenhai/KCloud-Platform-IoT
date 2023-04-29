@@ -36,5 +36,6 @@
         <module>laokou-sentinel</module>
         <module>laokou-xxl-job</module>
         <module>laokou-power-job</module>
+        <module>laokou-rocketmq-dashboard</module>
     </modules>
 </project>
