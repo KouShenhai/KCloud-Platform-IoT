@@ -17,8 +17,8 @@ package org.laokou.admin.client.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.laokou.common.jasypt.annotation.JasyptField;
-
+import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.jasypt.utils.AESUtil;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
@@ -42,10 +42,8 @@ public class SysUserDTO implements Serializable {
 
     private String avatar;
 
-    @JasyptField
     private String mail;
 
-    @JasyptField
     private String mobile;
 
     private Long editor;
@@ -54,4 +52,11 @@ public class SysUserDTO implements Serializable {
 
     private Integer version;
 
+    public void setMail(String mail) {
+        this.mail = StringUtil.isBlank(mail) ? "" : AESUtil.encrypt(mail);
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = StringUtil.isBlank(mobile) ? "" : AESUtil.encrypt(mobile);
+    }
 }

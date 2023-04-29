@@ -16,6 +16,7 @@
 package org.laokou.auth.server.infrastructure.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
@@ -49,7 +50,6 @@ import org.springframework.security.oauth2.server.authorization.token.DefaultOAu
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
@@ -63,6 +63,7 @@ import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
  * 邮件/手机/密码
  * @author laokou
  */
+@Slf4j
 public abstract class AbstractOAuth2BaseAuthenticationProvider implements AuthenticationProvider {
 
     protected final SysUserService sysUserService;
@@ -102,29 +103,27 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
     @SneakyThrows
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         HttpServletRequest request = RequestUtil.getHttpServletRequest();
-        Authentication principal = login(request);
-        return getToken(authentication,principal);
+        return getToken(authentication,login(request));
     }
 
     /**
      * Token是否支持认证（provider）
-     * @param authentication
-     * @return
+     * @param authentication 类型
+     * @return boolean
      */
     abstract public boolean supports(Class<?> authentication);
 
     /**
      * 登录
-     * @param request
-     * @return
-     * @throws IOException
+     * @param request request
+     * @return Authentication
+     * @throws IOException IOException
      */
     abstract Authentication login(HttpServletRequest request) throws IOException;
 
     /**
      * 认证类型
-     * @return
-     * @return
+     * @return AuthorizationGrantType
      */
     abstract AuthorizationGrantType getGrantType();
 
@@ -211,41 +210,60 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
         // 验证验证码
         Boolean validate = sysCaptchaService.validate(uuid, captcha);
+        int code;
+        String msg;
         if (null == validate) {
-            CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_EXPIRED, MessageUtil.getMessage(StatusCode.CAPTCHA_EXPIRED));
+            code = StatusCode.CAPTCHA_EXPIRED;
+            msg = MessageUtil.getMessage(code);
+            log.info("登录失败，状态码：{}，错误信息：{}",code,msg);
+            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(),msg ,request,tenantId);
+            CustomAuthExceptionHandler.throwError(code, msg);
         }
         if (!validate) {
-            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR),request,tenantId);
-            CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_ERROR, MessageUtil.getMessage(StatusCode.CAPTCHA_ERROR));
+            code = StatusCode.CAPTCHA_ERROR;
+            msg = MessageUtil.getMessage(code);
+            log.info("登录失败，状态码：{}，错误信息：{}",code,msg);
+            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), msg,request,tenantId);
+            CustomAuthExceptionHandler.throwError(code, msg);
         }
-        // 对称性AES加密
-        String encrypt = AESUtil.encrypt(loginName);
         // 多租户查询
-        UserDetail userDetail = sysUserService.getUserDetail(encrypt,tenantId,loginType);
+        UserDetail userDetail = sysUserService.getUserDetail(AESUtil.encrypt(loginName),tenantId,loginType);
         if (userDetail == null) {
-            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR),request,tenantId);
-            CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_PASSWORD_ERROR, MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR));
+            code = StatusCode.USERNAME_PASSWORD_ERROR;
+            msg = MessageUtil.getMessage(code);
+            log.info("登录失败，状态码：{}，错误信息：{}",code,msg);
+            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), msg,request,tenantId);
+            CustomAuthExceptionHandler.throwError(code, msg);
         }
         if (OAuth2PasswordAuthenticationProvider.GRANT_TYPE.equals(loginType)) {
             // 验证密码
             String clientPassword = userDetail.getPassword();
             if (!passwordEncoder.matches(password, clientPassword)) {
-                loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR), request,tenantId);
-                CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_PASSWORD_ERROR, MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR));
+                code = StatusCode.USERNAME_PASSWORD_ERROR;
+                msg = MessageUtil.getMessage(code);
+                log.info("登录失败，状态码：{}，错误信息：{}",code,msg);
+                loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), msg,request,tenantId);
+                CustomAuthExceptionHandler.throwError(code, msg);
             }
         }
         // 是否锁定
         if (!userDetail.isEnabled()) {
-            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.USERNAME_DISABLE),request,tenantId);
-            CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_DISABLE, MessageUtil.getMessage(StatusCode.USERNAME_DISABLE));
+            code = StatusCode.USERNAME_DISABLE;
+            msg = MessageUtil.getMessage(code);
+            log.info("登录失败，状态码：{}，错误信息：{}",code,msg);
+            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), msg,request,tenantId);
+            CustomAuthExceptionHandler.throwError(code, msg);
         }
         Long userId = userDetail.getId();
         Integer superAdmin = userDetail.getSuperAdmin();
         // 权限标识列表
         List<String> permissionsList = sysMenuService.getPermissionsList(tenantId,superAdmin,userId);
         if (CollectionUtils.isEmpty(permissionsList)) {
-            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), MessageUtil.getMessage(StatusCode.USERNAME_NOT_PERMISSION),request,tenantId);
-            CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_NOT_PERMISSION, MessageUtil.getMessage(StatusCode.USERNAME_NOT_PERMISSION));
+            code = StatusCode.USERNAME_NOT_PERMISSION;
+            msg = MessageUtil.getMessage(code);
+            log.info("登录失败，状态码：{}，错误信息：{}",code,msg);
+            loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), msg,request,tenantId);
+            CustomAuthExceptionHandler.throwError(code, msg);
         }
         // 部门列表
         List<Long> deptIds = sysDeptService.getDeptIds(superAdmin,userId,tenantId);
@@ -265,6 +283,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         userDetail.setLoginDate(DateUtil.now());
         // 登录成功
         loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.SUCCESS.ordinal(), AuthConstant.LOGIN_SUCCESS_MSG,request,tenantId);
+        log.info(AuthConstant.LOGIN_SUCCESS_MSG);
         return new UsernamePasswordAuthenticationToken(userDetail,loginName,userDetail.getAuthorities());
     }
 
