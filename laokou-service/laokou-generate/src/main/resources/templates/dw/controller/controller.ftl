@@ -1,11 +1,8 @@
-package com.dw.admin.module.${moduleName}.controller;
-
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.dw.admin.module.${moduleName}.dto.${className}DTO;
-import com.dw.admin.module.${moduleName}.qo.${className}Qo;
-import com.dw.admin.module.${moduleName}.service.${className}Service;
-import com.dw.admin.module.${moduleName}.vo.${className}VO;
-import com.dw.common.core.response.Result;
+import ${groupId}.module.${moduleName}.dto.${className}DTO;
+import ${groupId}.module.${moduleName}.qo.${className}Qo;
+import ${groupId}.admin.module.${moduleName}.service.${className}Service;
+import ${groupId}.admin.module.${moduleName}.vo.${className}VO;
+import ${groupId}.common.core.response.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

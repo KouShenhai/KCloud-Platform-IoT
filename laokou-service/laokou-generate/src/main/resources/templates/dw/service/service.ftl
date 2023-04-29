@@ -1,10 +1,9 @@
-package com.dw.admin.module.${moduleName}.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.dw.admin.module.${moduleName}.dto.${className}DTO;
-import com.dw.admin.module.${moduleName}.entity.${className};
-import com.dw.admin.module.${moduleName}.qo.${className}Qo;
-import com.dw.admin.module.${moduleName}.vo.${className}VO;
+import ${groupId}.admin.module.${moduleName}.dto.${className}DTO;
+import ${groupId}.admin.module.${moduleName}.entity.${className};
+import ${groupId}.admin.module.${moduleName}.qo.${className}Qo;
+import ${groupId}.admin.module.${moduleName}.vo.${className}VO;
 /**
  * @author ${author}
  */
