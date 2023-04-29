@@ -28,6 +28,10 @@
 	<description>系统管理</description>
     <dependencies>
 		<dependency>
+			<groupId>org.laokou</groupId>
+			<artifactId>laokou-common-logback</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-client</artifactId>
 		</dependency>

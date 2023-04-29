@@ -103,11 +103,18 @@
         <log4j.version>2.19.0</log4j.version>
         <!--logback-kafka-appender版本-->
         <logback-kafka-appender.version>0.2.0-RC2</logback-kafka-appender.version>
+        <!--rocketmq-logappender版本-->
+        <rocketmq-logappender.version>5.0.0-PREVIEW</rocketmq-logappender.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-logappender</artifactId>
+                <version>${rocketmq-logappender.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.github.danielwegener</groupId>
                 <artifactId>logback-kafka-appender</artifactId>
@@ -171,6 +178,11 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-log4j2</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-logback</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

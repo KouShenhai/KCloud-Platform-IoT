@@ -29,6 +29,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-logback</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
         </dependency>

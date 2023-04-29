@@ -17,7 +17,7 @@
  */
 -->
 <configuration >
-    <springProperty  scope="context" name="LOG_NAME" source="spring.application.name"/>
+    <springProperty  scope="context" name="APP_NAME" source="spring.application.name"/>
     <property name="LOG_PATH" value="logs"/>
     <property name="MAX_FILE_SIZE" value="10MB"/>
     <property name="MAX_HISTORY" value="7"/>
@@ -40,52 +40,86 @@
         </encoder>
     </appender>
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${LOG_PATH}/${LOG_NAME}.log</File>
+        <File>${LOG_PATH}/${APP_NAME}.log</File>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %-5level] - [%thread,${PID}] - %logger{0} : %msg%n</Pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/%d{yyyyMMdd}/${LOG_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <MaxHistory>${MAX_HISTORY}</MaxHistory>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
+    <appender name="rocketmq" class="org.apache.rocketmq.logappender.logback.RocketmqLogbackAppender">
+        <tag>logback</tag>
+        <topic>laokou-trace-topic</topic>
+        <producerGroup>laokou-producer-group</producerGroup>
+        <nameServerAddress>laokou.org:9876</nameServerAddress>
+        <layout>
+            <pattern>
+                {
+                    "app":"${APP_NAME}",
+                    "date":"%d{yyyy-MM-dd HH:mm:ss.SSS}",
+                    "userId":"%X{user-id}",
+                    "username":"%X{user-name}",
+                    "tenantId":"%X{tenant-id}",
+                    "traceId":"%X{trace-id}",
+                    "level":"%-5level",
+                    "pid":"${PID}",
+                    "thread":"%thread",
+                    "logger":"%logger{0}",
+                    "msg":"%msg"
+                }
+            </pattern>
+        </layout>
+    </appender>
+    <appender name="async" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="rocketmq"/>
+    </appender>
     <springProfile name="dev,test">
         <logger name="org.laokou.auth.server" level="info">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
+            <appender-ref ref="async"/>
         </logger>
         <logger name="com.alibaba.nacos" level="info">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
+            <appender-ref ref="async"/>
         </logger>
         <logger name="org.springframework.web" level="info">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
+            <appender-ref ref="async"/>
         </logger>
         <logger name="org.springboot.sample" level="info">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
+            <appender-ref ref="async"/>
         </logger>
     </springProfile>
     <springProfile name="prod">
         <logger name="org.laokou.auth.server" level="error">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
+            <appender-ref ref="async"/>
         </logger>
         <logger name="org.springframework.web" level="error">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
+            <appender-ref ref="async"/>
         </logger>
         <logger name="org.springboot.sample" level="error">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
+            <appender-ref ref="async"/>
         </logger>
         <logger name="com.alibaba.nacos" level="error">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
+            <appender-ref ref="async"/>
         </logger>
     </springProfile>
 </configuration>
