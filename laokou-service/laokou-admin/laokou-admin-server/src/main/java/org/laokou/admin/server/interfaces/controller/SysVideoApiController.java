@@ -29,7 +29,6 @@ import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.oss.vo.UploadVO;
 import org.laokou.common.redis.annotation.Lock4j;
-import org.laokou.common.redis.enums.LockScope;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;

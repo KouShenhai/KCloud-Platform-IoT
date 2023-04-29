@@ -260,8 +260,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         Integer pageSize = qo.getPageSize();
         String userInfoKeyPrefix = RedisKeyUtil.getUserInfoKey("");
         for (String key : keys) {
-            UserDetail userDetail = ConvertUtil.sourceToTarget(redisUtil.get(key), UserDetail.class);
-            String username = userDetail.getUsername();
+            UserDetail userDetail = (UserDetail) redisUtil.get(key);
+            String username = AESUtil.decrypt(userDetail.getUsername());
             if (StringUtil.isEmpty(keyword) || username.contains(keyword)) {
                 SysUserOnlineVO vo = new SysUserOnlineVO();
                 vo.setUsername(username);

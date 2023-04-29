@@ -65,6 +65,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 /**
  * @author laokou
@@ -117,13 +119,17 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         SysResourceVO resource = sysResourceService.getResourceById(id);
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + System.currentTimeMillis() + FileUtil.getFileExt(resource.getUrl()));
-        InputStream inputStream = FileUtil.getInputStream(resource.getUrl());
-        ServletOutputStream outputStream = response.getOutputStream();
-        IOUtils.write(inputStream.readAllBytes(),outputStream);
-        outputStream.flush();
-        outputStream.close();
-        inputStream.close();
+        response.setHeader("Content-disposition", "attachment;filename=" + resource.getTitle());
+        URL url = new URL(resource.getUrl());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoInput(true);
+        conn.setRequestMethod("GET");
+        conn.setConnectTimeout(6000);
+        try (InputStream inputStream = conn.getInputStream();
+             ServletOutputStream outputStream = response.getOutputStream()) {
+            IOUtils.copy(inputStream,outputStream);
+            conn.disconnect();
+        }
     }
 
     @Override
