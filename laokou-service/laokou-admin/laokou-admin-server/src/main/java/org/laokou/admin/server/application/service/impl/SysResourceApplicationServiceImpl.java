@@ -36,7 +36,7 @@ import org.laokou.admin.server.domain.sys.entity.SysResourceDO;
 import org.laokou.admin.server.domain.sys.repository.service.*;
 import org.laokou.admin.server.infrastructure.feign.workflow.WorkTaskApiFeignClient;
 import org.laokou.admin.server.infrastructure.index.ResourceIndex;
-import org.laokou.common.elasticsearch.support.ElasticsearchTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.oss.support.OssTemplate;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
 import org.laokou.common.core.utils.*;
