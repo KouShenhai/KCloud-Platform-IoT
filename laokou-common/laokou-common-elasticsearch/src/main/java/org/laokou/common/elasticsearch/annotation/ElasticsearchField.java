@@ -13,13 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.rocketmq.constant;
+package org.laokou.common.elasticsearch.annotation;
+import java.lang.annotation.*;
+
 /**
- * 队列常量值
+ * Elasticsearch注解
  * @author laokou
  */
-public interface RocketmqConstant {
+@Target({ElementType.FIELD,ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+public @interface ElasticsearchField {
 
-  String LAOKOU_TRACE_TOPIC = "laokou-trace-topic";
+    /**
+     * 默认 keyword
+     * @return
+     */
+    String type() default "keyword";
+
+    /**
+     * 0 not_analyzed 1 ik_smart 2.ik_max_word 3.ik-index(自定义分词器)
+     * @return
+     */
+    int participle() default 0;
 
 }

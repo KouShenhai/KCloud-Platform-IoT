@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,29 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.elasticsearch.annotation;
-import java.lang.annotation.*;
+
+package org.laokou.logstash.client.index;
+
+import lombok.Data;
+import org.laokou.common.elasticsearch.annotation.ElasticsearchField;
 
 /**
- * Elasticsearch注解
  * @author laokou
  */
-@Target({ElementType.FIELD,ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Inherited
-public @interface ElasticsearchFieldInfo {
+@Data
+public class TraceIndex {
 
-    /**
-     * 默认 keyword
-     * @return
-     */
-    String type() default "keyword";
-
-    /**
-     * 0 not_analyzed 1 ik_smart 2.ik_max_word 3.ik-index(自定义分词器)
-     * @return
-     */
-    int participle() default 0;
+    @ElasticsearchField
+    private String name;
 
 }

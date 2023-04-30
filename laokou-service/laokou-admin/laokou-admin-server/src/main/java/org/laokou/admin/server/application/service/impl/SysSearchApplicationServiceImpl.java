@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.application.service.SysSearchApplicationService;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.qo.SearchQo;
-import org.laokou.common.elasticsearch.support.ElasticsearchTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.elasticsearch.vo.SearchVO;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;

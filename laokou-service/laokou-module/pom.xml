@@ -31,5 +31,6 @@
         <module>laokou-im</module>
         <module>laokou-flowable</module>
         <module>laokou-test</module>
+        <module>laokou-logstash</module>
     </modules>
 </project>
