@@ -23,7 +23,6 @@
         <artifactId>laokou-cloud</artifactId>
         <version>3.0.6</version>
     </parent>
-    <groupId>org.laokou</groupId>
     <artifactId>laokou-gateway</artifactId>
     <description>API网关</description>
 
