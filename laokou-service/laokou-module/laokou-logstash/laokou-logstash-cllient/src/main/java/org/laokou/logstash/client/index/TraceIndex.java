@@ -34,9 +34,9 @@ public class TraceIndex implements Serializable {
     @ElasticsearchField
     private String app;
 
-    @ElasticsearchField
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS",timezone = "GMT+8")
+    @ElasticsearchField(type = "date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date timestamp;
 
     @ElasticsearchField
