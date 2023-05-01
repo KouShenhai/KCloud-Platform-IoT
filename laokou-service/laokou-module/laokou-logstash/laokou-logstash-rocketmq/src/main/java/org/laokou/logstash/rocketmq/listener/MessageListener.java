@@ -29,13 +29,17 @@ public class MessageListener implements RocketMQListener<MessageExt> {
     @Override
     @SneakyThrows
     public void onMessage(MessageExt messageExt) {
-        // 按月建立索引
-        String ym = DateUtil.format(LocalDateTime.now(), DateUtil.YYYYMM);
-        String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-        String indexAlias = TRACE_INDEX;
-        String indexName = indexAlias + "_" + ym;
-        elasticsearchTemplate.createIndex(indexName, indexAlias, TraceIndex.class);
-        elasticsearchTemplate.syncIndex(null,indexName,indexAlias,msg, TraceIndex.class);
+        try {
+            // 按月建立索引
+            String ym = DateUtil.format(LocalDateTime.now(), DateUtil.YYYYMM);
+            String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
+            String indexAlias = TRACE_INDEX;
+            String indexName = indexAlias + "_" + ym;
+            elasticsearchTemplate.createIndex(indexName, indexAlias, TraceIndex.class);
+            elasticsearchTemplate.syncIndex(null, indexName, indexAlias, msg, TraceIndex.class);
+        } catch (Exception e) {
+            log.error("同步数据报错：{}",e.getMessage());
+        }
     }
 
 }

@@ -76,43 +76,44 @@
         </layout>
     </appender>
     <appender name="async" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="file"/>
         <appender-ref ref="rocketmq"/>
     </appender>
     <springProfile name="dev,test">
         <logger name="org.laokou.gateway" level="info">
             <appender-ref ref="console" />
             <appender-ref ref="async"/>
+            <appender-ref ref="file"/>
         </logger>
         <logger name="com.alibaba.nacos" level="info">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
+            <appender-ref ref="file"/>
         </logger>
         <logger name="org.springframework.web" level="info">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
+            <appender-ref ref="file"/>
         </logger>
         <logger name="org.springboot.sample" level="info">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
+            <appender-ref ref="file"/>
         </logger>
     </springProfile>
     <springProfile name="prod">
         <logger name="org.laokou.gateway" level="error">
             <appender-ref ref="console" />
             <appender-ref ref="async"/>
+            <appender-ref ref="file"/>
         </logger>
         <logger name="com.alibaba.nacos" level="error">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
+            <appender-ref ref="file"/>
         </logger>
         <logger name="org.springframework.web" level="error">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
+            <appender-ref ref="file"/>
         </logger>
         <logger name="org.springboot.sample" level="error">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
+            <appender-ref ref="file"/>
         </logger>
     </springProfile>
 </configuration>

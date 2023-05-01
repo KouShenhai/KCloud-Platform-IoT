@@ -81,22 +81,19 @@
     <springProfile name="dev,test">
         <logger name="org.laokou.auth.server" level="info">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
             <appender-ref ref="file"/>
+            <appender-ref ref="async"/>
         </logger>
         <logger name="com.alibaba.nacos" level="info">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
             <appender-ref ref="file"/>
         </logger>
         <logger name="org.springframework.web" level="info">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
             <appender-ref ref="file"/>
         </logger>
         <logger name="org.springboot.sample" level="info">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
             <appender-ref ref="file"/>
         </logger>
     </springProfile>
@@ -108,17 +105,14 @@
         </logger>
         <logger name="org.springframework.web" level="error">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
             <appender-ref ref="file"/>
         </logger>
         <logger name="org.springboot.sample" level="error">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
             <appender-ref ref="file"/>
         </logger>
         <logger name="com.alibaba.nacos" level="error">
             <appender-ref ref="console" />
-            <appender-ref ref="async"/>
             <appender-ref ref="file"/>
         </logger>
     </springProfile>
