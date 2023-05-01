@@ -13,19 +13,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.laokou.logstash.client.index;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.laokou.common.elasticsearch.annotation.ElasticsearchField;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author laokou
  */
 @Data
-public class TraceIndex {
+public class TraceIndex implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -4314847178115273665L;
+    @ElasticsearchField
+    private String app;
 
     @ElasticsearchField
-    private String name;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS",timezone = "GMT+8")
+    private Date timestamp;
+
+    @ElasticsearchField
+    private String userId;
+
+    @ElasticsearchField
+    private String username;
+
+    @ElasticsearchField
+    private String tenantId;
+
+    @ElasticsearchField
+    private String traceId;
+
+    @ElasticsearchField
+    private String level;
+
+    @ElasticsearchField
+    private String pid;
+
+    @ElasticsearchField
+    private String thread;
+
+    @ElasticsearchField
+    private String logger;
+
+    @ElasticsearchField
+    private String msg;
 
 }

@@ -61,7 +61,7 @@
             <pattern>
                 {
                 "app":"${APP_NAME}",
-                "date":"%d{yyyy-MM-dd HH:mm:ss.SSS}",
+                "timestamp":"%d{yyyy-MM-dd HH:mm:ss.SSS}",
                 "userId":"%X{user-id}",
                 "username":"%X{user-name}",
                 "tenantId":"%X{tenant-id}",
