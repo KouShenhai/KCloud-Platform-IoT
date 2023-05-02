@@ -6,11 +6,11 @@
 时间：2022.06.15 ~ 至今  
 
 ### 📣 项目介绍
-<p align="center"><img src="doc/image/logo.png" width="250" height="100"></p>
+<div style="text-align: center;"><img src="doc/image/logo.png" width="625" height="205" alt="图标"/></div>
 KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的云服务平台。基于Spring Boot 3.0.6、Spring Cloud 2022.0.2、Spring Cloud Alibaba 2022.0.0.0-RC1 最新版本开发的多租户SaaS系统。
 遵循SpringBoot编程思想，高度模块化和可配置化。具备服务注册&发现、配置中心、服务限流、熔断降级、监控报警、多数据源、工作流、高亮搜索、定时任务、分布式缓存、分布式事务、分布式存储等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，实现RBAC权限、其中包含系统管理、系统监控、工作流程、数据分析等几大模块。
 遵循阿里代码规范，代码简洁、架构清晰，非常适合作为基础框架使用。
-<p align="center">
+<div style="text-align: center;">
     <a target="_blank" href="https://github.com/KouShenhai/KCloud-Platform-Alibaba"><img alt="GitHub stars" src="https://img.shields.io/github/stars/KouShenhai/KCloud-Platform-Alibaba?logo=github"></a>
     <a target="_blank" href="https://github.com/KouShenhai/KCloud-Platform-Alibaba"><img alt="GitHub forks" src="https://img.shields.io/github/forks/KouShenhai/KCloud-Platform-Alibaba?logo=github"></a>
     <a target="_blank" href="https://github.com/KouShenhai/KCloud-Platform-Alibaba"><img alt="GitHub watchers" src="https://img.shields.io/github/watchers/KouShenhai/KCloud-Platform-Alibaba?logo=github"></a>
@@ -23,7 +23,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
     <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.0.1&color=blue"></a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/JDK-17.0.4.1-blue.svg"/></a>
     <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流"></a>
-</p>
+</div>
 
 ### 💞 演示地址
 [http://175.178.69.253](http://175.178.69.253)  
@@ -138,6 +138,7 @@ tenant/tenant123
         └── laokou-common-mongodb                  --- 报表组件  
         └── laokou-common-graphql                  --- 查询组件  
         └── laokou-common-rocketmq                 --- 消息组件  
+        └── laokou-common-algorithm                --- 算法组件  
         └── laokou-common-power-job                --- 工作组件  
         └── laokou-common-freemarker               --- 模板组件  
         └── laokou-common-prometheus               --- 监控组件  
@@ -396,7 +397,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     </tr>
     <tr>
         <td><img alt="暂无图片" src="doc/image/33.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/34.png"/></td>
+        <td><img alt="暂无图片" src="doc/image/33.png"/></td>
     </tr>
     <tr>
         <td><img alt="暂无图片" src="doc/image/27.png"/></td>
@@ -435,13 +436,13 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 
 ### 🐼 鸣谢个人
 <a href="https://github.com/KouShenhai" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/KouShenhai/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/48756217?s=64&amp;v=4" alt="@KouShenhai" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
+        <img src="https://avatars.githubusercontent.com/u/48756217?s=64&amp;v=4" alt="@KouShenhai" height="32" width="32" data-view-component="true" class="avatar circle">
 </a>
 <a href="https://github.com/liang99" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/liang99/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/26246537?s=64&amp;v=4" alt="@liang99" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
+        <img src="https://avatars.githubusercontent.com/u/26246537?s=64&amp;v=4" alt="@liang99" height="32" width="32" data-view-component="true" class="avatar circle">
 </a>
 <a href="https://github.com/livk-cloud" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/livk-cloud/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/50291874?s=64&amp;v=4" alt="@livk-cloud" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
+        <img src="https://avatars.githubusercontent.com/u/50291874?s=64&amp;v=4" alt="@livk-cloud" height="32" width="32" data-view-component="true" class="avatar circle">
 </a>
 
 ### 🐸 联系
