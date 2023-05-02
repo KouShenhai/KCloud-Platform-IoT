@@ -184,7 +184,7 @@ tenant/tenant123
                 └── laokou-test                    --- 测试模块  
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-flowable                --- 工作流程模块  
-                └── laokou-logstash                --- 日志清洗模块  
+                └── laokou-logstash                --- 日志收集模块  
 ├── laokou-release       
 ~~~
 
