@@ -6,11 +6,11 @@
 时间：2022.06.15 ~ 至今  
 
 ### 📣 项目介绍
-<div style="text-align: center;"><img src="doc/image/logo.png" width="625" height="205" alt="图标"/></div>
+<p align="center"><img src="doc/image/logo.png" width="625" height="205" alt="图标"/></p>
 KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的云服务平台。基于Spring Boot 3.0.6、Spring Cloud 2022.0.2、Spring Cloud Alibaba 2022.0.0.0-RC1 最新版本开发的多租户SaaS系统。
 遵循SpringBoot编程思想，高度模块化和可配置化。具备服务注册&发现、配置中心、服务限流、熔断降级、监控报警、多数据源、工作流、高亮搜索、定时任务、分布式缓存、分布式事务、分布式存储等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，实现RBAC权限、其中包含系统管理、系统监控、工作流程、数据分析等几大模块。
 遵循阿里代码规范，代码简洁、架构清晰，非常适合作为基础框架使用。
-<div style="text-align: center;">
+<p align="center">
     <a target="_blank" href="https://github.com/KouShenhai/KCloud-Platform-Alibaba"><img alt="GitHub stars" src="https://img.shields.io/github/stars/KouShenhai/KCloud-Platform-Alibaba?logo=github"></a>
     <a target="_blank" href="https://github.com/KouShenhai/KCloud-Platform-Alibaba"><img alt="GitHub forks" src="https://img.shields.io/github/forks/KouShenhai/KCloud-Platform-Alibaba?logo=github"></a>
     <a target="_blank" href="https://github.com/KouShenhai/KCloud-Platform-Alibaba"><img alt="GitHub watchers" src="https://img.shields.io/github/watchers/KouShenhai/KCloud-Platform-Alibaba?logo=github"></a>
@@ -23,7 +23,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
     <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.0.1&color=blue"></a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/JDK-17.0.4.1-blue.svg"/></a>
     <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流"></a>
-</div>
+</p>
 
 ### 💞 演示地址
 [http://175.178.69.253](http://175.178.69.253)  
@@ -413,7 +413,9 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 ### 😘 参与贡献
 欢迎各路英雄好汉参与KCloud-Platform-Alibaba代码贡献，期待您的加入！  
 Fork本仓库 新建 feat_xxx_环境_时间（如 feat_laokou_dev_20230116） 分支提交代码，新建Pull Request！  
-我觉得没问题就会合并到主干分支，你也就成为正式贡献者啦！    
+我觉得没问题就会合并到主干分支，你也就成为正式贡献者啦！
+### 😸 代码提交
+<img alt="代码提交" src="doc/image/代码提交.png"/>
 
 ### 😻 开源协议
 KCloud-Platform-Alibaba 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
