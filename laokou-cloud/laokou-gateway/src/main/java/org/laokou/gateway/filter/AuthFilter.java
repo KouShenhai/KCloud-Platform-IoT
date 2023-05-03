@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 package org.laokou.gateway.filter;
-import cn.hutool.core.util.CharsetUtil;
-import cn.hutool.http.HttpUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
+import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.gateway.utils.PasswordUtil;
 import org.laokou.common.core.utils.StringUtil;
@@ -46,7 +45,6 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -73,7 +71,6 @@ public class AuthFilter implements GlobalFilter,Ordered {
         ServerHttpRequest request = exchange.getRequest();
         // 获取uri
         String requestUri = request.getPath().pathWithinApplication().value();
-        log.info("uri：{}", requestUri);
         // 请求放行，无需验证权限
         if (ResponseUtil.pathMatcher(requestUri,uris)){
             return chain.filter(exchange);
@@ -90,14 +87,13 @@ public class AuthFilter implements GlobalFilter,Ordered {
         if (StringUtil.isEmpty(token)) {
             return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.UNAUTHORIZED));
         }
-        ServerHttpRequest build = exchange.getRequest().mutate()
-                .header(Constant.AUTHORIZATION_HEAD, token).build();
-        return chain.filter(exchange.mutate().request(build).build());
+        // 增加令牌
+        return chain.filter(exchange.mutate().request(request.mutate().header(Constant.AUTHORIZATION_HEAD, token).build()).build());
     }
 
     @Override
     public int getOrder() {
-        return Ordered.LOWEST_PRECEDENCE;
+        return Ordered.LOWEST_PRECEDENCE - 1000;
     }
 
     /**
@@ -124,8 +120,9 @@ public class AuthFilter implements GlobalFilter,Ordered {
     private Function decrypt() {
         return s -> {
             // 获取请求密码并解密
-            Map<String, String> inParamsMap = HttpUtil.decodeParamMap((String) s, CharsetUtil.CHARSET_UTF_8);
+            Map<String, String> inParamsMap = MapUtil.parseParamMap((String) s);
             if (inParamsMap.containsKey(GatewayConstant.PASSWORD) && inParamsMap.containsKey(GatewayConstant.USERNAME)) {
+                log.info("密码模式认证...");
                 try {
                     String password = inParamsMap.get(GatewayConstant.PASSWORD);
                     String username = inParamsMap.get(GatewayConstant.USERNAME);
@@ -141,9 +138,9 @@ public class AuthFilter implements GlobalFilter,Ordered {
                 }
             }
             else {
-                log.error("非法请求数据:{}", s);
+                log.info("非密码模式:{}", s);
             }
-            return Mono.just(HttpUtil.toParams(inParamsMap, Charset.defaultCharset(), true));
+            return Mono.just(MapUtil.parseParams(inParamsMap));
         };
     }
 

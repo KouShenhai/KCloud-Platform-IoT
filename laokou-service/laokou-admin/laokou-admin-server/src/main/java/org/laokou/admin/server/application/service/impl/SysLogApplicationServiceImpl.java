@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysLogApplicationService;
 import org.laokou.auth.client.utils.UserUtil;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.qo.SysOperateLogQo;
@@ -55,6 +57,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
     }
 
     @Override
+    @DS(Constant.SHARDING_SPHERE_READWRITE)
     public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {
         sysLoginLogService.exportLoginLog(qo,response);
     }

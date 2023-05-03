@@ -28,6 +28,10 @@ public interface Constant {
     String COMMA = ",";
 
     String AUTHORIZATION_HEAD = "Authorization";
+    String USER_NAME = "user-name";
+    String TRACE_ID = "trace-id";
+    String USER_ID = "user-id";
+    String TENANT_ID = "tenant-id";
 
     int NO = 0;
 
@@ -38,5 +42,20 @@ public interface Constant {
     String AND = "&";
 
     int DEFAULT = 0;
+
+    String PLACE_HOLDER = "_%s";
+
+    String SHARDING_SPHERE = "shardingSphere";
+
+    String SHARDING_SPHERE_READWRITE = "shardingSphereReadWrite";
+
+    String TENANT = "#tenant";
+
+    /**
+     * 默认数据库
+     */
+    String DEFAULT_SOURCE = "master";
+
+    String ACCEPT_LANGUAGE = "Accept-Language";
 
 }

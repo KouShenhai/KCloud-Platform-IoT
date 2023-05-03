@@ -1,0 +1,50 @@
+dataSources:
+  ds0:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://laokou.org:3306/kcloud_platform_alibaba_user_0?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: koushenhai123456
+  ds1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://laokou.org:3306/kcloud_platform_alibaba_user_1?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: koushenhai123456
+
+rules:
+  - !SHARDING
+    tables:
+      boot_sys_user:
+        actualDataNodes: ds$->{0..1}.boot_sys_user_$->{0..1}
+        tableStrategy:
+          standard:
+            shardingColumn: id
+            shardingAlgorithmName: laokou-table-inline
+        databaseStrategy:
+          standard:
+            shardingColumn: tenant_id
+            shardingAlgorithmName: laokou-database-inline
+        keyGenerateStrategy:
+          column: id
+          keyGeneratorName: laokou-snowflake
+    shardingAlgorithms:
+      laokou-table-inline:
+        type: INLINE
+        props:
+          algorithm-expression: boot_sys_user_$->{id % 2}
+          # 开启全表扫描的范围查询
+          allow-range-query-with-inline-sharding: true
+      laokou-database-inline:
+        type: INLINE
+        props:
+          algorithm-expression: ds$->{tenant_id % 2}
+          # 开启全表扫描的范围查询
+          allow-range-query-with-inline-sharding: true
+    keyGenerators:
+      laokou-snowflake:
+        type: SNOWFLAKE
+        props:
+          max-vibration-offset: 1
+          # 允许回拨的时间间隔
+          max-tolerate-time-difference-milliseconds: 10

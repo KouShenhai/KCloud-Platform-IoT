@@ -16,47 +16,29 @@
 package org.laokou.common.jasypt.utils;
 
 import lombok.SneakyThrows;
-import org.apache.commons.codec.binary.Base64;
+import org.apache.hc.client5.http.utils.Base64;
 import org.laokou.common.core.utils.ResourceUtil;
-import org.laokou.common.core.utils.StringUtil;
 import org.springframework.util.Assert;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
  */
 public class AESUtil {
 
-
-    private static final ThreadLocal<String> SECRET_KEY_LOCAL;
-
-    static {
-        try {
-            byte[] bytes = ResourceUtil.getResource("secret_key.b64").getInputStream().readAllBytes();
-            SECRET_KEY_LOCAL = ThreadLocal.withInitial(() -> new String(bytes,StandardCharsets.UTF_8));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private static byte[] getSecretKey() {
         String secretKey = getKey();
-        Assert.notNull(StringUtil.isEmpty(secretKey),"密钥不能为空，请填写密钥");
         byte[] bytes = secretKey.getBytes(StandardCharsets.UTF_8);
         Assert.isTrue(bytes.length == 16,"密钥长度必须16位");
         return bytes;
     }
 
-    public static String getKey() {
-        return SECRET_KEY_LOCAL.get();
-    }
-
-    public static void setKey(String secretKey) {
-        SECRET_KEY_LOCAL.remove();
-        SECRET_KEY_LOCAL.set(secretKey);
+    @SneakyThrows
+    private static String getKey() {
+        byte[] bytes = ResourceUtil.getResource("secret_key.b64").getInputStream().readAllBytes();
+        return new String(bytes,StandardCharsets.UTF_8);
     }
 
     @SneakyThrows

@@ -27,29 +27,30 @@ import java.util.List;
  */
 public interface SysAuthApplicationService {
     /**
-     * 生成验证码
-     * @param request
-     * @return
+     * 验证码
+     * @param request 请求参数
+     * @return String
      */
     String captcha(HttpServletRequest request);
 
     /**
      * 退出登录
-     * @param request
-     * @return
+     * @param request 请求参数
+     * @return Boolean
      */
     Boolean logout(HttpServletRequest request);
 
     /**
-     * 获取下拉选项
-     * @return
+     * 下拉列表
+     * @return List<OptionVO>
      */
     List<OptionVO> getOptionList();
 
     /**
-     * 获取公钥
-     * @throws IOException
-     * @return
+     * 公钥
+     * @return 公钥
+     * @throws IOException IO异常
      */
     String getPublicKey() throws IOException;
+
 }

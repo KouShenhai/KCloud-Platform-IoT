@@ -1,1 +1,0 @@
-在线扩容messagequeue：sh ./mqadmin updateTopic -n 192.168.62.144:9876 -c DefaultCluster -t laokou-test -r 5 -w 5

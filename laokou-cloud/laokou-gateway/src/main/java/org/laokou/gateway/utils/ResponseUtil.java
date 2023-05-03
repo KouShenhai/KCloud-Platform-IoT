@@ -39,13 +39,12 @@ public class ResponseUtil {
     /**
      * 拥有uri匹配
      */
-    public static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
+    private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
     /**
      * 前端响应
      * @param exchange exchange对象
      * @param data 数据
-     * @return
      */
     public static Mono<Void> response(ServerWebExchange exchange, Object data){
         DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(JacksonUtil.toJsonStr(data).getBytes(StandardCharsets.UTF_8));
@@ -59,19 +58,17 @@ public class ResponseUtil {
      * map响应体
      * @param code 响应编码
      * @param msg 响应信息
-     * @return
      */
-    public static HttpResult response(int code,String msg) {
-       return new HttpResult().error(code,msg);
+    public static HttpResult<Boolean> response(int code,String msg) {
+       return new HttpResult<Boolean>().error(code,msg);
     }
 
     /**
      * 获取错误map集合
      * @param code 错误码
-     * @return
      */
-    public static HttpResult error(int code) {
-        return new HttpResult().error(code);
+    public static HttpResult<Boolean> error(int code) {
+        return new HttpResult<Boolean>().error(code);
     }
 
     /**
@@ -85,7 +82,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(token)){
             token = request.getQueryParams().getFirst(Constant.AUTHORIZATION_HEAD);
         }
-        return token == null ? "" : token.trim();
+        return StringUtil.isBlank(token) ? "" : token.trim();
     }
 
     /**
@@ -99,7 +96,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(userId)){
             userId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USER_ID);
         }
-        return userId == null ? "" : userId.trim();
+        return StringUtil.isBlank(userId) ? "" : userId.trim();
     }
 
 
@@ -108,20 +105,33 @@ public class ResponseUtil {
      * @param request 请求对象
      */
     public static String getUsername(ServerHttpRequest request){
-        //从header中获取username
-        String username = request.getHeaders().getFirst(GatewayConstant.REQUEST_USERNAME);
-        //如果header中不存在username，则从参数中获取username
+        // 从header中获取username
+        String username = request.getHeaders().getFirst(GatewayConstant.REQUEST_USER_NAME);
+        // 如果header中不存在username，则从参数中获取username
         if(StringUtil.isEmpty(username)){
-            username = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USERNAME);
+            username = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USER_NAME);
         }
-        return username == null ? "" : username.trim();
+        return StringUtil.isBlank(username) ? "" : username.trim();
+    }
+
+    /**
+     * 获取tenantId
+     * @param request 请求对象
+     */
+    public static String getTenantId(ServerHttpRequest request){
+        // 从header中获取tenantId
+        String tenantId = request.getHeaders().getFirst(GatewayConstant.REQUEST_TENANT_ID);
+        // 如果header中不存在tenantId，则从参数中获取tenantId
+        if(StringUtil.isEmpty(tenantId)){
+            tenantId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_TENANT_ID);
+        }
+        return StringUtil.isBlank(tenantId) ? "" : tenantId.trim();
     }
 
     /**
      * uri匹配
      * @param requestUri 请求uri
      * @param uris 忽略uris
-     * @return
      */
     public static boolean pathMatcher(String requestUri, List<String> uris) {
         for (String url : uris) {

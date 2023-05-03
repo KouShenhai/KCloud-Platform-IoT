@@ -18,11 +18,15 @@ package org.laokou.common.i18n.core;
 import lombok.Data;
 import org.laokou.common.i18n.utils.MessageUtil;
 
+import java.io.Serial;
 /**
  * @author laokou
  */
 @Data
 public class CustomException extends RuntimeException{
+
+    @Serial
+    private static final long serialVersionUID = 4102669900127613541L;
 
     private int code;
     private String msg;

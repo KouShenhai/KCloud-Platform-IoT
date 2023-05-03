@@ -16,22 +16,104 @@
  * limitations under the License.
  */
 -->
-<configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml" />
-    <logger name="org.springframework.web" level="INFO"/>
-    <logger name="org.springboot.sample" level="TRACE" />
-
-    <!-- 开发、测试环境 -->
+<configuration >
+    <springProperty  scope="context" name="APP_NAME" source="spring.application.name"/>
+    <property name="LOG_PATH" value="logs"/>
+    <property name="MAX_FILE_SIZE" value="10MB"/>
+    <property name="MAX_HISTORY" value="7"/>
+    <!--
+    %d         => 日期
+    %-5level   => 日志等级
+    %thread    => 日志类名
+    %logger{0} => 类名缩写
+    %msg       => 消息内容
+    %red       => 颜色（红色）
+    %n         => 换行
+    -->
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %red(%-5level)] - [%thread,${PID}] - %logger{0} : %msg%n"/>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                ${LOG_PATTERN}
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}/${APP_NAME}.log</File>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %-5level] - [%thread,${PID}] - %logger{0} : %msg%n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <MaxHistory>${MAX_HISTORY}</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <appender name="rocketmq" class="org.apache.rocketmq.logappender.logback.RocketmqLogbackAppender">
+        <tag>logback</tag>
+        <topic>laokou-trace-topic</topic>
+        <producerGroup>laokou-producer-group</producerGroup>
+        <nameServerAddress>laokou.org:9876</nameServerAddress>
+        <layout>
+            <pattern>
+                {
+                "app":"${APP_NAME}",
+                "timestamp":"%d{yyyy-MM-dd HH:mm:ss}",
+                "userId":"%X{user-id}",
+                "username":"%X{user-name}",
+                "tenantId":"%X{tenant-id}",
+                "traceId":"%X{trace-id}",
+                "level":"%-5level",
+                "pid":"${PID}",
+                "thread":"%thread",
+                "logger":"%logger{0}",
+                "msg":"%msg"
+                }
+            </pattern>
+        </layout>
+    </appender>
+    <appender name="async" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="rocketmq"/>
+    </appender>
     <springProfile name="dev,test">
-        <logger name="org.springframework.web" level="INFO"/>
-        <logger name="org.springboot.sample" level="INFO" />
-        <logger name="org.laokou.flowable.server" level="INFO" />
+        <logger name="org.laokou.flowable.server" level="info">
+            <appender-ref ref="console" />
+            <appender-ref ref="async"/>
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="com.alibaba.nacos" level="info">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="org.springframework.web" level="info">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="org.springframework.boot" level="info">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
     </springProfile>
-
-    <!-- 生产环境 -->
     <springProfile name="prod">
-        <logger name="org.springframework.web" level="ERROR"/>
-        <logger name="org.springboot.sample" level="ERROR" />
-        <logger name="org.laokou.flowable.server" level="ERROR" />
+        <logger name="org.laokou.flowable.server" level="error">
+            <appender-ref ref="console" />
+            <appender-ref ref="async"/>
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="com.alibaba.nacos" level="error">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="org.springframework.web" level="error">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="org.springframework.boot" level="error">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
     </springProfile>
 </configuration>

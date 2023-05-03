@@ -20,4 +20,6 @@ package org.laokou.common.rocketmq.constant;
  */
 public interface RocketmqConstant {
 
+  String LAOKOU_TRACE_TOPIC = "laokou-trace-topic";
+
 }

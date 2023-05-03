@@ -16,8 +16,15 @@
 package org.laokou.common.core.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.yaml.snakeyaml.util.UriEncoder;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -25,14 +32,49 @@ import java.util.Map;
  */
 public class MapUtil {
 
+    public static Map<String,String> parseParamMap(String params) {
+        String[] strings = params.split("&");
+        int length = strings.length;
+        if (length == 0) {
+            return new HashMap<>(0);
+        }
+        Map<String,String> paramMap = new HashMap<>(strings.length);
+        for (String string : strings) {
+            int index = string.indexOf("=");
+            if (index > -1) {
+                String key = string.substring(0, index);
+                String value = UriEncoder.decode(string.substring(index + 1));
+                paramMap.put(key,value);
+            }
+        }
+        return paramMap;
+    }
+
+    public static String parseParams(Map<String,String> paramMap) {
+        Iterator<Map.Entry<String, String>> iterator = paramMap.entrySet().iterator();
+        StringBuilder stringBuilder = new StringBuilder();
+        while (iterator.hasNext()) {
+            Map.Entry<String, String> entry = iterator.next();
+            String key = entry.getKey();
+            String value = entry.getValue();
+            stringBuilder.append(key).append("=").append(URLEncoder.encode(value,StandardCharsets.UTF_8)).append("&");
+        }
+        return StringUtils.substringBeforeLast(stringBuilder.toString(),"&");
+    }
+
+    public static void main(String[] args) {
+        String params = "k=1&v=2";
+        Map<String, String> stringStringMap = parseParamMap(params);
+        System.out.println(stringStringMap);
+        System.out.println(parseParams(stringStringMap));
+    }
+
     public static MultiValueMap<String, String> getParameters(HttpServletRequest request) {
         Map<String, String[]> parameterMap = request.getParameterMap();
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>(parameterMap.size());
         parameterMap.forEach((key, values) -> {
-            if (values.length > 0) {
-                for (String value : values) {
-                    parameters.add(key, value);
-                }
+            for (String value : values) {
+                parameters.add(key, value);
             }
         });
         return parameters;

@@ -16,9 +16,7 @@
 package org.laokou.common.core.utils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
+import org.laokou.common.core.constant.Constant;
 /**
  * IP工具类
  * @author laokou
@@ -26,37 +24,43 @@ import java.net.UnknownHostException;
 @Slf4j
 public class IpUtil {
 
-    private static final String UNKNOWN = "unknown";
+    private static final String IP_UNKNOWN = "unknown";
+    private static final String LOCAL_IP = "127.0.0.1";
+    private static final String LOCAL_NETWORK_SEGMENT = "0:0:0:0:0:0:0:1";
 
 	public static String getIpAddr(HttpServletRequest request) {
         if (request == null) {
-            return UNKNOWN;
+            return IP_UNKNOWN;
         }
         String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (conditionNull(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (conditionNull(ip)) {
             ip = request.getHeader("X-Forwarded-For");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (conditionNull(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (conditionNull(ip)) {
             ip = request.getHeader("X-Real-IP");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (conditionNull(ip)) {
             ip = request.getRemoteAddr();
         }
-        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip.split(",")[0];
+        return LOCAL_NETWORK_SEGMENT.equals(ip) ? LOCAL_IP : ip.split(Constant.COMMA)[0];
 	}
-    public static boolean internalIp(String ip)
-    {
+
+    public static boolean internalIp(String ip) {
         byte[] addr = textToNumericFormatV4(ip);
         if (null != addr) {
-            return internalIp(addr) || "127.0.0.1".equals(ip);
+            return internalIp(addr) || LOCAL_IP.equals(ip);
         }
         return false;
+    }
+
+    private static boolean conditionNull(String ip) {
+        return StringUtil.isBlank(ip) || IP_UNKNOWN.equalsIgnoreCase(ip);
     }
 
     private static boolean internalIp(byte[] addr) {

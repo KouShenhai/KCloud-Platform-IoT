@@ -65,13 +65,11 @@
         FROM boot_sys_menu a
         ,boot_sys_role b
         ,boot_sys_role_menu c
-        ,boot_sys_user d
         ,boot_sys_user_role e
         WHERE a.id = c.menu_id
         AND c.role_id = b.id
-        AND d.id = e.user_id
         AND b.id = e.role_id
-        AND d.id = #{userId}
+        AND e.user_id = #{userId}
         and a.del_flag = 0
         <if test="type != null">
             and a.type = #{type} and a.visible = 0

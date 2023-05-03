@@ -16,23 +16,28 @@
 package org.laokou.auth.server.domain.sys.repository.service.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
 import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
 import org.laokou.auth.server.infrastructure.authentication.OAuth2PasswordAuthenticationProvider;
-import org.laokou.common.core.constant.Constant;
-import org.laokou.common.core.utils.HttpContextUtil;
+import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.jasypt.utils.AESUtil;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+
+import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
+
 /**
  * @author laokou
  */
@@ -48,35 +53,35 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
         // 默认租户查询
-        UserDetail userDetail = sysUserService.getUserDetail(loginName,0L, OAuth2PasswordAuthenticationProvider.GRANT_TYPE);
-        HttpServletRequest request = HttpContextUtil.getHttpServletRequest();
-        String errMsg;
+        UserDetail userDetail = sysUserService.getUserDetail(AESUtil.encrypt(loginName),0L, OAuth2PasswordAuthenticationProvider.GRANT_TYPE);
+        HttpServletRequest request = RequestUtil.getHttpServletRequest();
         if (userDetail == null) {
-            errMsg = MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR);
-            throw new UsernameNotFoundException(errMsg);
+            throw new UsernameNotFoundException(MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR));
         }
         String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
         String clientPassword = userDetail.getPassword();
         if (!passwordEncoder.matches(password, clientPassword)) {
-            errMsg = MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR);
-            throw new UsernameNotFoundException(errMsg);
+            throw new UsernameNotFoundException(MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR));
         }
         // 是否锁定
         if (!userDetail.isEnabled()) {
-            errMsg = MessageUtil.getMessage(StatusCode.USERNAME_DISABLE);
-            throw new UsernameNotFoundException(errMsg);
+            throw new UsernameNotFoundException(MessageUtil.getMessage(StatusCode.USERNAME_DISABLE));
         }
-        Long userId = userDetail.getUserId();
+        Long userId = userDetail.getId();
         Integer superAdmin = userDetail.getSuperAdmin();
         // 权限标识列表
         List<String> permissionsList = sysMenuService.getPermissionsList(0L,superAdmin,userId);
         if (CollectionUtils.isEmpty(permissionsList)) {
-            errMsg = MessageUtil.getMessage(StatusCode.USERNAME_NOT_PERMISSION);
-            throw new UsernameNotFoundException(errMsg);
+            throw new UsernameNotFoundException(MessageUtil.getMessage(StatusCode.USERNAME_NOT_PERMISSION));
         }
         List<Long> deptIds = sysDeptService.getDeptIds(superAdmin, userId,0L);
         userDetail.setDeptIds(deptIds);
         userDetail.setPermissionList(permissionsList);
+        // 登录IP
+        userDetail.setLoginIp(IpUtil.getIpAddr(request));
+        // 登录时间
+        userDetail.setLoginDate(DateUtil.now());
+        userDetail.setSourceName(DEFAULT_SOURCE);
         return userDetail;
     }
 }

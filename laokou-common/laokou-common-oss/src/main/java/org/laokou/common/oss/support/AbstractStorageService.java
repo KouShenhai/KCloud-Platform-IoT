@@ -49,8 +49,8 @@ public abstract class AbstractStorageService<O> implements StorageService<O>{
      * @param fileName
      * @return
      */
-    public String getFileSuffix(String fileName) {
-        return FileUtil.getFileSuffix(fileName);
+    public String getFileExt(String fileName) {
+        return FileUtil.getFileExt(fileName);
     }
 
 }

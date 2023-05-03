@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 package org.laokou.common.core.utils;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.MapType;
@@ -38,7 +37,6 @@ public class JacksonUtil {
 
     /**
      * json字符转Bean
-     *
      * @param json  json string
      * @param clazz class
      * @param <T>   type
@@ -46,25 +44,26 @@ public class JacksonUtil {
      */
     @SneakyThrows
     public <T> T toBean(String json, Class<T> clazz) {
-        if (check(json, clazz)) {
-            return null;
-        }
-        if (clazz.isInstance(json)) {
-            return (T) json;
-        }
-        return MAPPER.readValue(json, clazz);
+        return MAPPER.readValue(json, javaType(clazz));
 
+    }
+
+    /**
+     * 创建JavaType
+     * @param clazz
+     * @return
+     */
+    public <T> JavaType javaType(Class<T> clazz) {
+        return MAPPER.getTypeFactory().constructType(clazz);
     }
 
     @SneakyThrows
     public <T> T toBean(InputStream inputStream, Class<T> clazz) {
-        return (inputStream == null || clazz == null) ? null :
-                MAPPER.readValue(inputStream, clazz);
+        return MAPPER.readValue(inputStream, javaType(clazz));
     }
 
     /**
-     * 序列化
-     *
+     * 序列化 为字符串
      * @param obj obj
      * @return json
      */
@@ -74,18 +73,17 @@ public class JacksonUtil {
     }
 
     /**
-     * 序列化
-     *
+     * 序列化 为字符串
      * @param obj obj
-     * @param flag 是否格式化
+     * @param isFormat 是否格式化
      * @return json
      */
     @SneakyThrows
-    public String toJsonStr(Object obj,boolean flag) {
-        if (obj instanceof String) {
-            return (String) obj;
+    public String toJsonStr(Object obj,boolean isFormat) {
+        if (obj instanceof String str) {
+            return str;
         }
-        if (flag) {
+        if (isFormat) {
             return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
         }
         return MAPPER.writeValueAsString(obj);
@@ -101,12 +99,17 @@ public class JacksonUtil {
      */
     @SneakyThrows
     public <T> List<T> toList(String json, Class<T> clazz) {
-        if (check(json, clazz)) {
-            return new ArrayList<>();
-        }
-        CollectionType collectionType = MAPPER.getTypeFactory()
-                .constructCollectionType(List.class, clazz);
-        return MAPPER.readValue(json, collectionType);
+        return MAPPER.readValue(json,collectionType(clazz));
+    }
+
+    /**
+     *
+     * @param clazz
+     * @return
+     * @param <T>
+     */
+    public <T> CollectionType collectionType(Class<T> clazz) {
+       return MAPPER.getTypeFactory().constructCollectionType(Collection.class,clazz);
     }
 
     /**
@@ -119,26 +122,19 @@ public class JacksonUtil {
      */
     @SneakyThrows
     public <K, V> Map<K, V> toMap(String json, Class<K> keyClass, Class<V> valueClass) {
-        if (check(json, keyClass, valueClass)) {
-            return Collections.emptyMap();
-        }
-        MapType mapType = MAPPER.getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
-        return MAPPER.readValue(json, mapType);
+        return MAPPER.readValue(json, mapType(keyClass,valueClass));
     }
 
-    @SneakyThrows
-    public Properties toProperties(InputStream inputStream) {
-        if (inputStream == null) {
-            return new Properties();
-        }
-        JavaType javaType = MAPPER.getTypeFactory().constructType(Properties.class);
-        return MAPPER.readValue(inputStream, javaType);
-    }
-
-    @SneakyThrows
-    public <T> T toBean(String json, TypeReference<T> typeReference) {
-        return check(json, typeReference) ? null :
-                MAPPER.readValue(json, typeReference);
+    /**
+     *
+     * @param keyClass
+     * @param valueClass
+     * @return
+     * @param <K>
+     * @param <V>
+     */
+    public <K,V> MapType mapType(Class<K> keyClass, Class<V> valueClass) {
+        return MAPPER.getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
     }
 
     @SneakyThrows
@@ -146,14 +142,10 @@ public class JacksonUtil {
         return MAPPER.readTree(json);
     }
 
-    private boolean check(String json, Object... checkObj) {
-        return json == null || json.isEmpty() || ObjectUtil.anyChecked(Objects::isNull, checkObj);
-    }
-
     public static void main(String[] args) {
         String json = "{\"name\":\"Jack\",\"age\":18}";
         System.out.println(toBean(json, String.class));
-        System.out.println(toJsonStr(new Date()));
+        System.out.println(toJsonStr(DateUtil.now()));
     }
 
 }

@@ -55,9 +55,8 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
             , OAuth2AuthorizationService authorizationService
             , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
             , SysSourceService sysSourceService
-            , SysAuthenticationService sysAuthenticationService
             , RedisUtil redisUtil) {
-        super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,sysAuthenticationService,redisUtil);
+        super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,redisUtil);
     }
 
     @Override

@@ -23,7 +23,7 @@ spring:
   application:
     name: @pom.artifactId@
   profiles:
-    active: @profile.active@
+    active: @PROFILE-ACTIVE@
 
 logging:
   config: classpath:logback-spring.xml

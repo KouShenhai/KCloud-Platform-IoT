@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 package org.laokou.common.log.service.impl;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.common.easy.excel.suppert.ExcelTemplate;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -41,12 +43,14 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper,SysLog
     private final ExcelTemplate<SysLoginLogQo,SysLoginLogVO> excelTemplate;
 
     @Override
+    @DS(Constant.SHARDING_SPHERE_READWRITE)
     public IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, SysLoginLogQo qo) {
         return this.baseMapper.getLoginLogList(page,qo);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @DS(Constant.SHARDING_SPHERE_READWRITE)
     public Boolean insertLoginLog(LoginLogEvent event) {
         SysLoginLogDO logDO = ConvertUtil.sourceToTarget(event, SysLoginLogDO.class);
         return baseMapper.insert(logDO) > 0 ? true : false;

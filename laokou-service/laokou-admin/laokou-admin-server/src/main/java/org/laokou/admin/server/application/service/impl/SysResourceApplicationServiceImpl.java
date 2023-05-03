@@ -36,7 +36,7 @@ import org.laokou.admin.server.domain.sys.entity.SysResourceDO;
 import org.laokou.admin.server.domain.sys.repository.service.*;
 import org.laokou.admin.server.infrastructure.feign.workflow.WorkTaskApiFeignClient;
 import org.laokou.admin.server.infrastructure.index.ResourceIndex;
-import org.laokou.common.elasticsearch.support.ElasticsearchTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.oss.support.OssTemplate;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
 import org.laokou.common.core.utils.*;
@@ -45,7 +45,6 @@ import org.laokou.admin.client.dto.SysResourceAuditDTO;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.auth.client.utils.UserUtil;
-import org.laokou.common.jasypt.utils.AESUtil;
 import org.laokou.common.log.event.AuditLogEvent;
 import org.laokou.common.log.service.SysAuditLogService;
 import org.laokou.common.log.vo.SysAuditLogVO;
@@ -66,6 +65,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 /**
  * @author laokou
@@ -99,16 +100,12 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         }
         String indexAlias = RESOURCE_INDEX;
         String indexName = indexAlias + "_" + code;
-        try {
-            // 删除索引
-            deleteResourceIndex(indexName);
-            // 创建索引
-            createResourceIndex(indexAlias, indexName);
-            // 同步索引
-            syncResourceIndex(code, indexName);
-        } catch (CustomException e) {
-            throw e;
-        }
+        // 删除索引
+        deleteResourceIndex(indexName);
+        // 创建索引
+        createResourceIndex(indexAlias, indexName);
+        // 同步索引
+        syncResourceIndex(code, indexName);
         return true;
     }
 
@@ -122,13 +119,17 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         SysResourceVO resource = sysResourceService.getResourceById(id);
         response.setContentType("application/octet-stream");
         response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + System.currentTimeMillis() + FileUtil.getFileSuffix(resource.getUrl()));
-        InputStream inputStream = FileUtil.getInputStream(resource.getUrl());
-        ServletOutputStream outputStream = response.getOutputStream();
-        IOUtils.write(inputStream.readAllBytes(),outputStream);
-        outputStream.flush();
-        outputStream.close();
-        inputStream.close();
+        response.setHeader("Content-disposition", "attachment;filename=" + resource.getTitle());
+        URL url = new URL(resource.getUrl());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoInput(true);
+        conn.setRequestMethod("GET");
+        conn.setConnectTimeout(6000);
+        try (InputStream inputStream = conn.getInputStream();
+             ServletOutputStream outputStream = response.getOutputStream()) {
+            IOUtils.copy(inputStream,outputStream);
+            conn.disconnect();
+        }
     }
 
     @Override
@@ -140,50 +141,36 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @GlobalTransactional
     public Boolean insertResource(SysResourceAuditDTO dto) {
-        try {
-            ValidatorUtil.validateEntity(dto);
-            log.info("分布式事务 XID:{}", RootContext.getXID());
-            SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
-            sysResourceDO.setEditor(UserUtil.getUserId());
-            sysResourceService.save(sysResourceDO);
-            Long id = sysResourceDO.getId();
-            // 开启任务
-            return insertAuditMessage(startTask(id, dto.getTitle()), dto);
-        } catch (Exception e) {
-            throw e;
-        }
+        ValidatorUtil.validateEntity(dto);
+        log.info("分布式事务 XID:{}", RootContext.getXID());
+        SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
+        sysResourceDO.setEditor(UserUtil.getUserId());
+        sysResourceService.save(sysResourceDO);
+        Long id = sysResourceDO.getId();
+        // 开启任务
+        return insertAuditMessage(startTask(id, dto.getTitle()), dto);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @GlobalTransactional
     public Boolean updateResource(SysResourceAuditDTO dto) {
-        try {
-            ValidatorUtil.validateEntity(dto);
-            log.info("分布式事务 XID:{}", RootContext.getXID());
-            Long resourceId = dto.getResourceId();
-            if (resourceId == null) {
-                throw new CustomException("资源编号不为空");
-            }
-            // 开启任务
-            return insertAuditMessage(startTask(resourceId, dto.getTitle()), dto);
-        } catch (Exception e) {
-            throw e;
+        ValidatorUtil.validateEntity(dto);
+        log.info("分布式事务 XID:{}", RootContext.getXID());
+        Long resourceId = dto.getResourceId();
+        if (resourceId == null) {
+            throw new CustomException("资源编号不为空");
         }
+        // 开启任务
+        return insertAuditMessage(startTask(resourceId, dto.getTitle()), dto);
     }
 
-    /**
-     * 插入资源审批表
-     * @param dto
-     * @param instanceId
-     * @return
-     */
-    private Boolean insertResourceAudit(SysResourceAuditDTO dto,String instanceId) {
+    private void insertResourceAudit(SysResourceAuditDTO dto, String instanceId) {
         SysResourceAuditDO sysResourceAuditDO = ConvertUtil.sourceToTarget(dto, SysResourceAuditDO.class);
         sysResourceAuditDO.setCreator(UserUtil.getUserId());
         sysResourceAuditDO.setStatus(AuditStatusEnum.INIT.ordinal());
         sysResourceAuditDO.setProcessInstanceId(instanceId);
-        return sysResourceAuditService.save(sysResourceAuditDO);
+        sysResourceAuditService.save(sysResourceAuditDO);
     }
 
     @Override
@@ -204,8 +191,9 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         String contentType = file.getContentType();
         // 判断类型
         String fileName = file.getOriginalFilename();
-        String fileSuffix = FileUtil.getFileSuffix(fileName);
-        if (!FileUtil.checkFileExt(code,fileSuffix)) {
+        assert fileName != null;
+        String fileExt = FileUtil.getFileExt(fileName);
+        if (!FileUtil.checkFileExt(code,fileExt)) {
             throw new CustomException("格式不正确，请重新上传资源");
         }
         return ossTemplate.upload(size,md5,fileName,contentType,inputStream);
@@ -293,66 +281,60 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @Transactional(rollbackFor = Exception.class)
     @GlobalTransactional
     public Boolean auditResourceTask(AuditDTO dto) {
-        try {
-            ValidatorUtil.validateEntity(dto);
-            log.info("分布式事务 XID:{}", RootContext.getXID());
-            HttpResult<AssigneeVO> result = workTaskApiFeignClient.audit(dto);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(), result.getMsg());
-            }
-            AssigneeVO vo = result.getData();
-            String assignee = vo.getAssignee();
-            String instanceId = vo.getInstanceId();
-            Map<String, Object> values = dto.getValues();
-            String instanceName = dto.getInstanceName();
-            String businessKey = dto.getBusinessKey();
-            Long businessId = Long.valueOf(businessKey);
-            String comment = dto.getComment();
-            String username = AESUtil.decrypt(UserUtil.getUsername());
-            Long userId = UserUtil.getUserId();
-            int auditStatus = Integer.valueOf(values.get(AUDIT_STATUS).toString());
-            int status;
-            boolean isAudit = false;
-            //1 审核中 2 审批拒绝 3审核通过
-            if (StringUtil.isNotEmpty(assignee)) {
-                // 审批中
-                status = AuditStatusEnum.AUDIT.ordinal();
-            } else {
-                // auditStatus => 0拒绝 1同意
-                if (AuditEnum.NO.ordinal() == auditStatus) {
-                    //审批拒绝
-                    status = AuditStatusEnum.REJECT.ordinal();
-                } else {
-                    // 审批通过
-                    status = AuditStatusEnum.AGREE.ordinal();
-                }
-            }
-            switch (AuditStatusEnum.getStatus(status)) {
-                // 审批中,发送审批消息通知
-                case AUDIT -> isAudit = true;
-                // 审批通过
-                case AGREE -> auditAgree(businessId, instanceId);
-                // 审批拒绝
-                default -> {
-                }
-            }
-            // 修改审批状态
-            updateAuditStatus(status, instanceId);
-            // 审核日志
-            insertAuditLog(businessId, auditStatus, comment, username, userId);
-            // 审批消息
-            if (isAudit) {
-                insertAuditMessage(assignee, businessId, instanceName);
-            }
-            return true;
-        } catch (Exception e) {
-            throw e;
+        ValidatorUtil.validateEntity(dto);
+        log.info("分布式事务 XID:{}", RootContext.getXID());
+        HttpResult<AssigneeVO> result = workTaskApiFeignClient.audit(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(), result.getMsg());
         }
+        AssigneeVO vo = result.getData();
+        String assignee = vo.getAssignee();
+        String instanceId = vo.getInstanceId();
+        Map<String, Object> values = dto.getValues();
+        String instanceName = dto.getInstanceName();
+        String businessKey = dto.getBusinessKey();
+        Long businessId = Long.valueOf(businessKey);
+        String comment = dto.getComment();
+        String username = UserUtil.getUserName();
+        Long userId = UserUtil.getUserId();
+        int auditStatus = Integer.parseInt(values.get(AUDIT_STATUS).toString());
+        int status;
+        boolean isAudit = false;
+        //1 审核中 2 审批拒绝 3审核通过
+        if (StringUtil.isNotEmpty(assignee)) {
+            // 审批中
+            status = AuditStatusEnum.AUDIT.ordinal();
+        } else {
+            // auditStatus => 0拒绝 1同意
+            if (AuditEnum.NO.ordinal() == auditStatus) {
+                //审批拒绝
+                status = AuditStatusEnum.REJECT.ordinal();
+            } else {
+                // 审批通过
+                status = AuditStatusEnum.AGREE.ordinal();
+            }
+        }
+        switch (AuditStatusEnum.getStatus(status)) {
+            // 审批中,发送审批消息通知
+            case AUDIT -> isAudit = true;
+            // 审批通过
+            case AGREE -> auditAgree(businessId, instanceId);
+            default -> {}
+        }
+        // 修改审批状态
+        updateAuditStatus(status, instanceId);
+        // 审核日志
+        insertAuditLog(businessId, auditStatus, comment, username, userId);
+        // 审批消息
+        if (isAudit) {
+            insertAuditMessage(assignee, businessId, instanceName);
+        }
+        return true;
     }
 
     /**
      * 审批通过
-     * @param businessId
+     * @param businessId 实例ID
      */
     private void auditAgree(Long businessId,String instanceId) {
         // 将资源审批表的信息写入资源表
@@ -374,8 +356,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
     /**
      * 修改审批状态
-     * @param status
-     * @param instanceId
+     * @param status 状态
+     * @param instanceId 实例ID
      */
     private void updateAuditStatus(int status,String instanceId) {
         // 修改状态
@@ -392,7 +374,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         AuditLogEvent auditLogEvent = new AuditLogEvent(this);
         auditLogEvent.setBusinessId(businessId);
         auditLogEvent.setAuditStatus(auditStatus);
-        auditLogEvent.setAuditDate(new Date());
+        auditLogEvent.setAuditDate(DateUtil.now());
         auditLogEvent.setAuditName(username);
         auditLogEvent.setCreator(userId);
         auditLogEvent.setComment(comment);
@@ -406,7 +388,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         TaskDTO dto = new TaskDTO();
         dto.setPageNum(qo.getPageNum());
         dto.setPageSize(qo.getPageSize());
-        dto.setUsername(AESUtil.decrypt(UserUtil.getUsername()));
+        dto.setUsername(UserUtil.getUserName());
         dto.setUserId(UserUtil.getUserId());
         dto.setProcessName(qo.getProcessName());
         dto.setProcessKey(PROCESS_KEY);
@@ -414,11 +396,11 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         if (!result.success()) {
             throw new CustomException(result.getCode(),result.getMsg());
         }
-        PageVO<TaskVO> taskVOPageVO = Optional.ofNullable(result.getData()).orElseGet(PageVO::new);
-        page.setRecords(taskVOPageVO.getRecords());
+        PageVO<TaskVO> taskPageVO = Optional.ofNullable(result.getData()).orElseGet(PageVO::new);
+        page.setRecords(taskPageVO.getRecords());
         page.setSize(dto.getPageSize());
         page.setCurrent(dto.getPageNum());
-        page.setTotal(Optional.ofNullable(taskVOPageVO.getTotal()).orElse(0L));
+        page.setTotal(Optional.ofNullable(taskPageVO.getTotal()).orElse(0L));
         return page;
     }
 
@@ -426,63 +408,51 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
     @Transactional(rollbackFor = Exception.class)
     @GlobalTransactional
     public Boolean resolveResourceTask(ResolveDTO dto) {
-        try {
-            HttpResult<AssigneeVO> result = workTaskApiFeignClient.resolve(dto);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(), result.getMsg());
-            }
-            // 发送通知
-            AssigneeVO vo = result.getData();
-            String assignee = vo.getAssignee();
-            Long businessId = Long.valueOf(dto.getBusinessKey());
-            String instanceName = dto.getInstanceName();
-            insertAuditMessage(assignee, businessId, instanceName);
-            return true;
-        } catch (Exception e) {
-            throw e;
+        HttpResult<AssigneeVO> result = workTaskApiFeignClient.resolve(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(), result.getMsg());
         }
+        // 发送通知
+        AssigneeVO vo = result.getData();
+        String assignee = vo.getAssignee();
+        Long businessId = Long.valueOf(dto.getBusinessKey());
+        String instanceName = dto.getInstanceName();
+        insertAuditMessage(assignee, businessId, instanceName);
+        return true;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     @GlobalTransactional
     public Boolean transferResourceTask(TransferDTO dto) {
-        try {
-            HttpResult<AssigneeVO> result = workTaskApiFeignClient.transfer(dto);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(), result.getMsg());
-            }
-            // 发送通知
-            AssigneeVO vo = result.getData();
-            String assignee = vo.getAssignee();
-            Long businessId = Long.valueOf(dto.getBusinessKey());
-            String instanceName = dto.getInstanceName();
-            insertAuditMessage(assignee, businessId, instanceName);
-            return true;
-        } catch (Exception e) {
-            throw e;
+        HttpResult<AssigneeVO> result = workTaskApiFeignClient.transfer(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(), result.getMsg());
         }
+        // 发送通知
+        AssigneeVO vo = result.getData();
+        String assignee = vo.getAssignee();
+        Long businessId = Long.valueOf(dto.getBusinessKey());
+        String instanceName = dto.getInstanceName();
+        insertAuditMessage(assignee, businessId, instanceName);
+        return true;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     @GlobalTransactional
     public Boolean delegateResourceTask(DelegateDTO dto) {
-        try {
-            HttpResult<AssigneeVO> result = workTaskApiFeignClient.delegate(dto);
-            if (!result.success()) {
-                throw new CustomException(result.getCode(), result.getMsg());
-            }
-            // 发送通知
-            AssigneeVO vo = result.getData();
-            String assignee = vo.getAssignee();
-            Long businessId = Long.valueOf(dto.getBusinessKey());
-            String instanceName = dto.getInstanceName();
-            insertResolveMessage(assignee, businessId, instanceName);
-            return true;
-        } catch (Exception e) {
-            throw e;
+        HttpResult<AssigneeVO> result = workTaskApiFeignClient.delegate(dto);
+        if (!result.success()) {
+            throw new CustomException(result.getCode(), result.getMsg());
         }
+        // 发送通知
+        AssigneeVO vo = result.getData();
+        String assignee = vo.getAssignee();
+        Long businessId = Long.valueOf(dto.getBusinessKey());
+        String instanceName = dto.getInstanceName();
+        insertResolveMessage(assignee, businessId, instanceName);
+        return true;
     }
 
     private void beforeSync() {
