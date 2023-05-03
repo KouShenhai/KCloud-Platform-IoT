@@ -284,7 +284,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         // 登录成功
         loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.SUCCESS.ordinal(), AuthConstant.LOGIN_SUCCESS_MSG,request,tenantId);
         log.info(AuthConstant.LOGIN_SUCCESS_MSG);
-        return new UsernamePasswordAuthenticationToken(userDetail,loginName,userDetail.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetail,AESUtil.encrypt(loginName),userDetail.getAuthorities());
     }
 
     private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(Authentication authentication) {

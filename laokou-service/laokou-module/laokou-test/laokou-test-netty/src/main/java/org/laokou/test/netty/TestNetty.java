@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.laokou.netty;
+package org.laokou.test.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
