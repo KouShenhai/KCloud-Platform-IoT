@@ -35,29 +35,29 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler, Ordere
 
 	@Override
 	public Mono<Void> handle(ServerWebExchange exchange, Throwable e) {
-		log.error("网关全局处理异常，异常信息:{}",e.getMessage());
+		log.error("网关全局处理异常，异常信息:{}", e.getMessage());
 		if (e instanceof NotFoundException) {
 			log.error("服务正在维护，请联系管理员");
-			return ResponseUtil.response(exchange,ResponseUtil.error(StatusCode.SERVICE_UNAVAILABLE));
+			return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.SERVICE_UNAVAILABLE));
 		}
 		if (e instanceof ResponseStatusException) {
 			int statusCode = ((ResponseStatusException) e).getStatusCode().value();
-			log.info("状态码：{}",statusCode);
+			log.info("状态码：{}", statusCode);
 			if (statusCode == StatusCode.NOT_FOUND) {
 				log.error("无法找到请求的资源");
-				return ResponseUtil.response(exchange,ResponseUtil.error(StatusCode.NOT_FOUND));
+				return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.NOT_FOUND));
 			} else {
 				log.error("服务器内部错误，无法完成请求");
-				return ResponseUtil.response(exchange,ResponseUtil.error(StatusCode.INTERNAL_SERVER_ERROR));
+				return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.INTERNAL_SERVER_ERROR));
 			}
 		}
-		if (BlockException.isBlockException(e)){
+		if (BlockException.isBlockException(e)) {
 			// 思路来源于SentinelGatewayBlockExceptionHandler
 			log.error("请求过于频繁，请稍后再试");
-			return ResponseUtil.response(exchange,ResponseUtil.error(StatusCode.SERVICE_BLOCK_REQUEST));
+			return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.SERVICE_BLOCK_REQUEST));
 		} else {
 			log.error("服务未知错误");
-			return ResponseUtil.response(exchange,ResponseUtil.error(StatusCode.SERVICE_UNKNOWN_ERROR));
+			return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.SERVICE_UNKNOWN_ERROR));
 		}
 	}
 

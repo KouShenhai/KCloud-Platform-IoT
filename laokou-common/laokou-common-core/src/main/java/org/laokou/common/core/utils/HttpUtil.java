@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.core.utils;
+
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -24,6 +25,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpEntityContainer;
 import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
@@ -132,7 +134,7 @@ public class HttpUtil {
         RequestConfig requestConfig = RequestConfig.custom().build();
         HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
-        headers.forEach((k,v) -> httpPost.setHeader(k,v));
+        headers.forEach(httpPost::setHeader);
         httpPost.setConfig(requestConfig);
         String parameter = JacksonUtil.toJsonStr(param);
         StringEntity se = null;
@@ -143,11 +145,9 @@ public class HttpUtil {
         }
         httpPost.setEntity(se);
 
-        CloseableHttpResponse response;
         String result = null;
         try {
-            response = httpClient.execute(httpPost);
-            HttpEntity httpEntity = response.getEntity();
+            HttpEntity httpEntity = httpClient.execute(httpPost, HttpEntityContainer::getEntity);
             result = EntityUtils.toString(httpEntity, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();

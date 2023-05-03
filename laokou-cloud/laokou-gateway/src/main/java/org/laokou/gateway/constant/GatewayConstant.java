@@ -21,13 +21,19 @@ package org.laokou.gateway.constant;
 public interface GatewayConstant {
 
     /**
-     * 请求链-用户id
+     * 请求链-用户ID
      */
-    String REQUEST_USER_ID = "userId";
+    String REQUEST_USER_ID = "User-Id";
     /**
      * 请求链-用户名
      */
-    String REQUEST_USERNAME = "username";
+    String REQUEST_USER_NAME = "User-Name";
+
+    /**
+     * 请求链-租户ID
+     */
+    String REQUEST_TENANT_ID = "Tenant-Id";
+
     /**
      * 密码模式-请求地址
      */

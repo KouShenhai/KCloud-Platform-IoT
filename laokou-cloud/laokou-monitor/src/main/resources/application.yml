@@ -28,4 +28,4 @@ spring:
     name: @artifactId@
   # dev|test|prod
   profiles:
-    active: @profile.active@
+    active: @PROFILE-ACTIVE@

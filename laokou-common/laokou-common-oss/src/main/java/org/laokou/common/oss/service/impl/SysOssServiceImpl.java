@@ -18,12 +18,12 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.common.oss.entity.SysOssDO;
 import org.laokou.common.oss.mapper.SysOssMapper;
 import org.laokou.common.oss.qo.SysOssQo;
 import org.laokou.common.oss.service.SysOssService;
 import org.laokou.common.oss.vo.SysOssVO;
-import org.laokou.common.tenant.processor.DsTenantProcessor;
 import org.springframework.stereotype.Service;
 
 /**
@@ -36,7 +36,7 @@ public class SysOssServiceImpl extends ServiceImpl<SysOssMapper, SysOssDO> imple
     private final SysOssMapper sysOssMapper;
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public SysOssVO queryOssConfig() {
         return sysOssMapper.queryOssConfig();
     }

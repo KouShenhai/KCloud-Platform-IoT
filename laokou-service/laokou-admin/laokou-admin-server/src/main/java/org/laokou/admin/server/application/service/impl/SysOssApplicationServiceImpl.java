@@ -33,7 +33,6 @@ import org.laokou.common.oss.service.SysOssService;
 import org.laokou.common.oss.vo.SysOssVO;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.tenant.processor.DsTenantProcessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +50,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public Boolean insertOss(SysOssDTO dto) {
         ValidatorUtil.validateEntity(dto);
         long count = sysOssService.count(Wrappers.lambdaQuery(SysOssDO.class).eq(SysOssDO::getName, dto.getName()));
@@ -65,14 +64,14 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public Boolean updateOss(SysOssDTO dto) {
         ValidatorUtil.validateEntity(dto);
         Long id = dto.getId();
         if (id == null) {
             throw new CustomException("存储编号不为空");
         }
-        long useCount = sysOssService.count(Wrappers.lambdaQuery(SysOssDO.class).eq(SysOssDO::getStatus, Constant.YES));
+        long useCount = sysOssService.count(Wrappers.lambdaQuery(SysOssDO.class).eq(SysOssDO::getStatus, Constant.YES).eq(SysOssDO::getId,id));
         if (useCount > 0) {
             throw new CustomException("该配置正在使用，请修改其他配置");
         }
@@ -89,13 +88,13 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public Boolean deleteOss(Long id) {
         return sysOssService.deleteOss(id);
     }
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public IPage<SysOssVO> queryOssPage(SysOssQo qo) {
         ValidatorUtil.validateEntity(qo);
         IPage<SysOssVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
@@ -103,14 +102,14 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
     }
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public SysOssVO getOssById(Long id) {
         return sysOssService.getOssById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public Boolean useOss(Long id) {
         LambdaQueryWrapper<SysOssDO> wrapper = Wrappers.lambdaQuery(SysOssDO.class)
                 .and(t -> t.eq(SysOssDO::getStatus, Constant.YES)
@@ -126,9 +125,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
         });
         sysOssService.updateBatchById(list);
         String ossConfigKey = RedisKeyUtil.getOssConfigKey(UserUtil.getTenantId());
-        if (redisUtil.hasKey(ossConfigKey)) {
-            redisUtil.delete(ossConfigKey);
-        }
+        redisUtil.delete(ossConfigKey);
         return true;
     }
 }

@@ -15,13 +15,13 @@
  */
 package org.laokou.common.data.filter.aspect;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.enums.SuperAdminEnum;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.mybatisplus.entity.BasePage;
 import org.laokou.auth.client.user.UserDetail;
-import org.apache.commons.collections.CollectionUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -81,7 +81,7 @@ public class DataFilterAspect {
         if (CollectionUtils.isNotEmpty(deptIds)) {
             sqlFilter.append("find_in_set(").append(tableAlias).append(dataFilter.deptId()).append(" , ").append("\"").append(StringUtil.join(deptIds,",")).append("\"").append(") or ");
         }
-        sqlFilter.append(tableAlias).append(dataFilter.userId()).append(" = ").append(userDetail.getUserId());
+        sqlFilter.append(tableAlias).append(dataFilter.userId()).append(" = ").append(userDetail.getId());
         sqlFilter.append(")");
         return sqlFilter.toString();
     }

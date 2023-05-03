@@ -16,18 +16,15 @@
  * limitations under the License.
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-parent</artifactId>
-        <version>3.0.5</version>
+        <artifactId>KCloud-Platform-Alibaba</artifactId>
+        <version>3.0.6</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.laokou</groupId>
     <artifactId>laokou-common</artifactId>
-    <version>3.0.5</version>
+    <version>3.0.6</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -73,6 +70,15 @@
         <module>laokou-common-clickhouse</module>
         <module>laokou-common-cors</module>
         <module>laokou-common-seata</module>
+        <module>laokou-common-xxl-job</module>
+        <module>laokou-common-shardingsphere</module>
+        <module>laokou-common-p6spy</module>
+        <module>laokou-common-flyway</module>
+        <module>laokou-common-liquibase</module>
+        <module>laokou-common-log4j2</module>
+        <module>laokou-common-trace</module>
+        <module>laokou-common-logback</module>
+        <module>laokou-common-algorithm</module>
     </modules>
 
 </project>

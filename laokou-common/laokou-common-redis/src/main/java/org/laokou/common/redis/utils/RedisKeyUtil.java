@@ -59,29 +59,12 @@ public final class RedisKeyUtil {
     }
 
     /**
-     * 消息消费Key
-     * @return
-     */
-    public static String getMessageConsumeKey() {
-        return "sys:message:consume";
-    }
-
-    /**
      * 全量同步索引Key
      * @return
      */
     public static String getSyncIndexKey(String code) {
         return "sys:resource:sync:" + code;
     }
-
-    /**
-     * 增量同步索引Key
-     * @return
-     */
-    public static String getSyncIndexIncrementKey(String code) {
-        return "sys:resource:sync:" + code + ":increment";
-    }
-
     /**
      * 未读消息key
      * @param userId
@@ -89,13 +72,6 @@ public final class RedisKeyUtil {
      */
     public static String getMessageUnReadKey(Long userId) {
         return "sys:message:unread:" + userId;
-    }
-
-    /**
-     * 账号踢出Key
-     */
-    public static String getAccountKillKey(String token) {
-        return "sys:account:kill:" + token;
     }
 
     /**
@@ -114,6 +90,15 @@ public final class RedisKeyUtil {
      */
     public static String getMailCodeKey(String mail) {
         return getUserCaptchaKey(mail);
+    }
+
+    /**
+     * 用户踢出Key
+     * @param token
+     * @return
+     */
+    public static String getUserKillKey(String token) {
+        return "sys:user:kill:" + token;
     }
 
 }

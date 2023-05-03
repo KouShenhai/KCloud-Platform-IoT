@@ -22,7 +22,6 @@ import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.ip.region.utils.AddressUtil;
 import org.laokou.common.log.event.LoginLogEvent;
 import org.springframework.http.HttpHeaders;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,7 +31,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class LoginLogUtil {
 
-    @Async
     public void recordLogin(String username,String loginType, Integer status, String msg, HttpServletRequest request,Long tenantId) {
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
         String ip = IpUtil.getIpAddr(request);

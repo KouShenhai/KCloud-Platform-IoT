@@ -15,9 +15,6 @@
  */
 package org.laokou.admin.client.vo;
 import lombok.Data;
-import org.laokou.common.jasypt.annotation.JasyptField;
-import org.laokou.common.jasypt.enums.TypeEnum;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
@@ -30,13 +27,10 @@ import java.util.List;
 public class UserInfoVO implements Serializable {
     @Serial
     private static final long serialVersionUID = 5297753219988591611L;
-    private Long userId;
-    private String imgUrl;
-    @JasyptField(type = TypeEnum.DECRYPT)
+    private Long id;
+    private String avatar;
     private String username;
-    @JasyptField(type = TypeEnum.DECRYPT)
     private String mobile;
-    @JasyptField(type = TypeEnum.DECRYPT)
     private String mail;
     private List<String> permissionList;
     private Long tenantId;
