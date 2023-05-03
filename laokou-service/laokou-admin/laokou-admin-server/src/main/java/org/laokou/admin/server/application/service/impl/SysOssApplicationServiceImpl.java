@@ -20,8 +20,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.laokou.admin.client.dto.SysOssDTO;
 import org.laokou.admin.server.application.service.SysOssApplicationService;
+import org.laokou.admin.server.application.service.SysResourceApplicationService;
 import org.laokou.common.oss.entity.SysOssDO;
 import org.laokou.common.oss.qo.SysOssQo;
 import org.laokou.auth.client.utils.UserUtil;
@@ -31,11 +33,12 @@ import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.oss.service.SysOssService;
 import org.laokou.common.oss.vo.SysOssVO;
+import org.laokou.common.oss.vo.UploadVO;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 /**
@@ -46,6 +49,7 @@ import java.util.List;
 public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
     private final SysOssService sysOssService;
+    private final SysResourceApplicationService sysResourceApplicationService;
     private final RedisUtil redisUtil;
 
     @Override
@@ -127,5 +131,11 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
         String ossConfigKey = RedisKeyUtil.getOssConfigKey(UserUtil.getTenantId());
         redisUtil.delete(ossConfigKey);
         return true;
+    }
+
+    @Override
+    @SneakyThrows
+    public UploadVO upload(MultipartFile file,String md5) {
+        return sysResourceApplicationService.uploadResource(null,file,md5);
     }
 }
