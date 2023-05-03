@@ -17,8 +17,9 @@ package org.laokou.admin.server.application.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.application.service.SysSearchApplicationService;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.qo.SearchQo;
-import org.laokou.common.elasticsearch.support.ElasticsearchTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.elasticsearch.vo.SearchVO;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ public class SysSearchApplicationServiceImpl implements SysSearchApplicationServ
     @Override
     public SearchVO<Map<String,Object>> searchResource(SearchQo qo) {
         ValidatorUtil.validateEntity(qo);
+        log.info("关键字：{}", JacksonUtil.toJsonStr(qo.getQueryStringList()));
         return elasticsearchTemplate.highlightSearchIndex(qo);
     }
 }

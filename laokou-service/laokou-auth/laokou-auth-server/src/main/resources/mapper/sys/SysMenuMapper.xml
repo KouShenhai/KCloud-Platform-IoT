@@ -28,13 +28,11 @@
         SELECT a.permission FROM boot_sys_menu as a
         ,boot_sys_role as b
         ,boot_sys_role_menu as c
-        ,boot_sys_user as d
         ,boot_sys_user_role as e
         WHERE a.id = c.menu_id
         AND c.role_id = b.id
-        AND d.id = e.user_id
         AND b.id = e.role_id
-        AND d.id = #{userId}
+        AND e.user_id = #{userId}
         and a.del_flag = 0 and a.type = 1
         GROUP BY a.permission
     </select>

@@ -15,7 +15,7 @@
  */
 package org.laokou.common.elasticsearch.utils;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.elasticsearch.annotation.ElasticsearchFieldInfo;
+import org.laokou.common.elasticsearch.annotation.ElasticsearchField;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +33,12 @@ public class FieldMappingUtil {
         List<FieldMapping> fieldMappingList = new ArrayList<>();
         for (Field field : fields) {
             // 获取字段上的FieldInfo对象
-            boolean annotationPresent = field.isAnnotationPresent(ElasticsearchFieldInfo.class);
+            boolean annotationPresent = field.isAnnotationPresent(ElasticsearchField.class);
             if (annotationPresent) {
-                ElasticsearchFieldInfo elasticsearchFieldInfo = field.getAnnotation(ElasticsearchFieldInfo.class);
+                ElasticsearchField elasticsearchField = field.getAnnotation(ElasticsearchField.class);
                 //获取字段名称
                 String name = field.getName();
-                fieldMappingList.add(new FieldMapping(name, elasticsearchFieldInfo.type(), elasticsearchFieldInfo.participle()));
+                fieldMappingList.add(new FieldMapping(name, elasticsearchField.type(), elasticsearchField.participle()));
             }
         }
         return fieldMappingList;

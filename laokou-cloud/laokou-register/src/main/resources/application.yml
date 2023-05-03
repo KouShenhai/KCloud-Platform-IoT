@@ -81,7 +81,7 @@ spring:
   application:
     name: @pom.artifactId@
   profiles:
-    active: @profile.active@
+    active: @PROFILE-ACTIVE@
   sql:
     init:
       platform: mysql

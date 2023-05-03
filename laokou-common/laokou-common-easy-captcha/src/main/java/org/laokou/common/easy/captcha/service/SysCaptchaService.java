@@ -24,9 +24,8 @@ public interface SysCaptchaService {
      * 图片验证码
      * @param uuid 唯一标识
      * @param code
-     * @return
      */
-    Boolean setCode(String uuid,String code);
+    void setCode(String uuid, String code);
 
     /**
      * 验证码效验

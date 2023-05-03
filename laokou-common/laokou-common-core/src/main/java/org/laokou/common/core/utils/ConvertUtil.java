@@ -20,8 +20,6 @@ import org.springframework.util.CollectionUtils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * @author laokou
  */
@@ -46,6 +44,6 @@ public class ConvertUtil extends BeanUtils{
         if (CollectionUtils.isEmpty(sourceList)) {
             return Collections.emptyList();
         }
-        return sourceList.stream().map(s -> sourceToTarget(s, target)).collect(Collectors.toList());
+        return sourceList.stream().map(s -> sourceToTarget(s, target)).toList();
     }
 }

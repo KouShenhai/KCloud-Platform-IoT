@@ -26,6 +26,8 @@ import java.io.IOException;
 public class AddressUtil {
 
     private static final Searcher SEARCHER;
+    private static final String LOCAL_NETWORK_DESC = "内网IP";
+    private static final String IGNORE_DESC = "0";
 
     static {
 
@@ -39,24 +41,23 @@ public class AddressUtil {
 
     @SneakyThrows
     public static String getRealAddress(String ip) {
-
         if (IpUtil.internalIp(ip)) {
-            return "内网IP";
+            return LOCAL_NETWORK_DESC;
         }
         return addressFormat(SEARCHER.search(ip));
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         String realAddress = getRealAddress("111.22.31.41");
         System.out.println(realAddress);
     }
 
     private static String addressFormat(String address) {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         String[] info = address.split("\\|");
-        for (String s : info) {
-            s = "0".equals(s) ? "" : s + " ";
-            stringBuffer.append(s);
+        for (String str : info) {
+            str = IGNORE_DESC.equals(str) ? "" : str + " ";
+            stringBuffer.append(str);
         }
         return stringBuffer.toString().trim();
     }

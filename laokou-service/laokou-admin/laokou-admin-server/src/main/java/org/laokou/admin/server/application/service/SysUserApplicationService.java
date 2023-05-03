@@ -17,7 +17,9 @@ package org.laokou.admin.server.application.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.laokou.admin.client.dto.SysUserDTO;
+import org.laokou.admin.client.vo.SysUserOnlineVO;
 import org.laokou.admin.client.vo.UserInfoVO;
+import org.laokou.admin.server.interfaces.qo.SysUserOnlineQo;
 import org.laokou.admin.server.interfaces.qo.SysUserQo;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.admin.client.vo.SysUserVO;
@@ -98,4 +100,17 @@ public interface SysUserApplicationService {
      */
     UserInfoVO getUserInfo();
 
+    /**
+     * 在线用户分页
+     * @param qo
+     * @return
+     */
+    IPage<SysUserOnlineVO> onlineQueryPage(SysUserOnlineQo qo);
+
+    /**
+     * 账号踢出
+     * @param token
+     * @return
+     */
+    Boolean onlineKill(String token);
 }

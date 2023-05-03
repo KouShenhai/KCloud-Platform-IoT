@@ -47,7 +47,6 @@ public class RedisUtil {
 
     /**  不设置过期时长 */
     public final static long NOT_EXPIRE = -1L;
-
     public RLock getLock(String key) {
         return redissonClient.getLock(key);
     }
@@ -112,6 +111,10 @@ public class RedisUtil {
         redissonClient.getBucket(key).set(value,expire, TimeUnit.SECONDS);
     }
 
+    public long getExpire(String key) {
+        return redisTemplate.getExpire(key);
+    }
+
     public void setIfAbsent(String key, Object value) {
         setIfAbsent(key,value,DEFAULT_EXPIRE);
     }
@@ -151,6 +154,10 @@ public class RedisUtil {
         return newValue;
     }
 
+    public Set<String> keys(String pattern) {
+        return redisTemplate.keys(pattern);
+    }
+
     public long getAtomicValue(String key) {
         return redissonClient.getAtomicLong(key).get();
     }
@@ -169,13 +176,13 @@ public class RedisUtil {
         return redissonClient.getMap(key).get(field);
     }
 
-    public Long getKeysSize() {
+    public long getKeysSize() {
         final Object obj = redisTemplate.execute((RedisCallback) RedisServerCommands::dbSize);
         return obj == null ? 0 : Long.parseLong(obj.toString());
     }
 
     public List<Map<String, String>> getCommandStatus() {
-        final Properties commandStats = (Properties) redisTemplate.execute((RedisCallback<Object>) connection -> connection.info("commandstats"));
+        Properties commandStats = (Properties) redisTemplate.execute((RedisCallback<Object>) connection -> connection.serverCommands().info("commandstats"));
         List<Map<String, String>> pieList = new ArrayList<>();
         assert commandStats != null;
         commandStats.stringPropertyNames().forEach(key -> {

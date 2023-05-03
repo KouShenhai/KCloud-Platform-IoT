@@ -41,9 +41,8 @@ public class SysAuthApiController {
     private final SysAuthApplicationService sysAuthApplicationService;
 
     /**
-     * 配置服务限流
-     * @param request
-     * @return
+     * 验证码
+     * @param request 请求参数
      */
     @GetMapping("/captcha")
     @Operation(summary = "系统认证>验证码",description = "系统认证>验证码")
@@ -53,9 +52,8 @@ public class SysAuthApiController {
     }
 
     /**
-     * 配置服务限流
-     * @param request
-     * @return
+     * 注销
+     * @param request 请求参数
      */
     @GetMapping("/logout")
     @Operation(summary = "系统认证>注销",description = "系统认证>注销")
@@ -64,8 +62,7 @@ public class SysAuthApiController {
     }
 
     /**
-     * 配置服务限流
-     * @return
+     * 租户下拉列表
      */
     @GetMapping("/tenant")
     @Operation(summary = "系统认证>租户",description = "系统认证>租户")
@@ -74,8 +71,7 @@ public class SysAuthApiController {
     }
 
     /**
-     * 配置服务限流
-     * @return
+     * 公钥
      */
     @GetMapping("/public_key")
     @Operation(summary = "系统认证>公钥",description = "系统认证>公钥")

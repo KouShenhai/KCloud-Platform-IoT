@@ -62,4 +62,12 @@ public class CustomAuthExceptionHandler {
         return new OAuth2AuthenticationException(error);
     }
 
+    public static OAuth2AuthenticationException getError(String errorCode,String description) {
+        return getError(errorCode,description,"");
+    }
+
+    public static OAuth2AuthenticationException getError(int errorCode,String description) {
+        return getError("" + errorCode,description,"");
+    }
+
 }
