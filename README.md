@@ -25,16 +25,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
     <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流"></a>
 </p>
 
-### 💞 演示地址
-[http://175.178.69.253](http://175.178.69.253)  
-系统账号   
-admin/admin123  
-test/test123  
-laok5/test123  
-
-系统租户   
-tenant/tenant123
-
 ### 🔖 在线文档
 [https://koushenhai.github.io](https://koushenhai.github.io)
 
@@ -181,12 +171,13 @@ tenant/tenant123
 ├── laokou-service         
         └── laokou-auth                            --- 认证授权模块  
         └── laokou-admin                           --- 后台管理模块  
-        └── laokou-modlule         
+        └── laokou-generate                        --- 模板生成模块  
+        └── laokou-modlule  
                 └── laokou-test                    --- 测试模块  
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-flowable                --- 工作流程模块  
                 └── laokou-logstash                --- 日志收集模块  
-├── laokou-release       
+├── laokou-release  
 ~~~
 
 ### 👍 Maven打包
@@ -227,8 +218,6 @@ spring:
 elasticsearch:
   #主机
   host: 127.0.0.1:9200
-  #节点
-  cluster-name: elasticsearch-node
 ```
 
 ### 📖 分布式事务AT
@@ -251,13 +240,6 @@ seata:
   enabled: true
   tx-service-group: default_tx_group
   data-source-proxy-mode: AT
-```
-
-
-### 🌵 JDK版本兼容
-##### 🌍 VM options配置
-```shell script
---add-opens=java.base/java.lang=ALL-UNNAMED
 ```
 
 ### 👻 数据权限
