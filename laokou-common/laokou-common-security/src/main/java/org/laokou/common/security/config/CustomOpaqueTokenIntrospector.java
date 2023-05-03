@@ -63,7 +63,7 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
             CustomAuthExceptionHandler.throwError(StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
         }
         assert oAuth2Authorization != null;
-        if (oAuth2Authorization.getAccessToken().isExpired()) {
+        if (!oAuth2Authorization.getAccessToken().isActive()) {
             CustomAuthExceptionHandler.throwError(StatusCode.UNAUTHORIZED,MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
         }
         Instant expiresAt = oAuth2Authorization.getAccessToken().getToken().getExpiresAt();
