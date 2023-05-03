@@ -29,7 +29,6 @@ import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.oss.vo.UploadVO;
 import org.laokou.common.redis.annotation.Lock4j;
-import org.laokou.common.redis.enums.LockScope;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -59,7 +58,7 @@ public class SysImageApiController {
     @PostMapping("/syncIndex")
     @Operation(summary = "图片管理>同步索引",description = "图片管理>同步索引")
     @OperateLog(module = "图片管理",name = "同步索引")
-    @Lock4j(key = "image_sync_index_lock", scope = LockScope.DISTRIBUTED_LOCK)
+    @Lock4j(key = "image_sync_index_lock")
     @PreAuthorize("hasAuthority('sys:resource:image:syncIndex')")
     public HttpResult<Boolean> syncIndex() throws InterruptedException {
         return new HttpResult<Boolean>().ok(sysResourceApplicationService.syncResource("image", RedisKeyUtil.getSyncIndexKey("image")));

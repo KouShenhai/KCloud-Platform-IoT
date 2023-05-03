@@ -56,10 +56,10 @@ public class SysUserDO extends BaseDO {
     private Integer superAdmin;
 
     /**
-     * 用户头像URL
+     * 头像
      */
-    @Schema(name = "imgUrl",description = "用户头像URL",example = "https://pic.cnblogs.com/avatar/simple_avatar.gif")
-    private String imgUrl;
+    @Schema(name = "avatar",description = "头像",example = "https://pic.cnblogs.com/avatar/simple_avatar.gif")
+    private String avatar;
 
     /**
      * 邮箱
@@ -69,9 +69,9 @@ public class SysUserDO extends BaseDO {
     private String mail;
 
     /**
-     * 用户状态 0 正常 1 停用
+     * 用户状态 0 正常 1 锁定
      */
-    @Schema(name = "status",description = "用户状态 0 正常 1 停用",example = "0")
+    @Schema(name = "status",description = "用户状态 0 正常 1 锁定",example = "0")
     private Integer status;
 
     /**

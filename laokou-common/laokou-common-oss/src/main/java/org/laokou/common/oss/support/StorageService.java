@@ -69,5 +69,5 @@ public interface StorageService<O> {
      * @param fileName
      * @return
      */
-    String getFileSuffix(String fileName);
+    String getFileExt(String fileName);
 }

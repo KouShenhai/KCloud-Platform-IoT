@@ -16,21 +16,23 @@
 
 package org.laokou.admin.server;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
 
 /**
  * @author laokou
  */
 @Slf4j
 @SpringBootTest(classes = AdminApplication.class)
+@RequiredArgsConstructor
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class RedisTest {
 
-    @Autowired
-    private RedisUtil redisUtil;
+    private final RedisUtil redisUtil;
 
     @Test
     public void redisAtomicLongTest() {

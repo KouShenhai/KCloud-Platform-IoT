@@ -25,7 +25,7 @@ import java.io.Serializable;
  * @author laokou
  */
 @Data
-public class SysDeptVO extends TreeUtil.TreeNo<SysDeptVO> implements Serializable {
+public class SysDeptVO extends TreeUtil.TreeNode<SysDeptVO> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 4116703987840123059L;

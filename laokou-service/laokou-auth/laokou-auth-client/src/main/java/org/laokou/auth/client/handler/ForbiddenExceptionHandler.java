@@ -16,25 +16,21 @@
 package org.laokou.auth.client.handler;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 /**
  * 无权限访问，异常处理器
  * @author laokou
  */
-@Slf4j
 @Component
 public class ForbiddenExceptionHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
-        log.error("错误信息：{}",accessDeniedException.getMessage());
         CustomAuthExceptionHandler.handleException(response, StatusCode.FORBIDDEN, MessageUtil.getMessage(StatusCode.FORBIDDEN));
     }
 }

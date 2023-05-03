@@ -16,11 +16,6 @@
 package org.laokou.common.core.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.*;
 /**
  * @author laokou
@@ -42,10 +37,10 @@ public class FileUtil {
         EXT_MAP.put("video", ".mp4,.MP4,.AVI,.mov,.rmvb,.rm,.FLV,.mp4,.3GP,.flv");
     }
 
-    public static Boolean checkFileExt(String code,String fileSuffix) {
+    public static Boolean checkFileExt(String code,String fileExt) {
         String extValue = EXT_MAP.get(code);
         List<String> extList = Arrays.asList(extValue.split(Constant.COMMA));
-        return extList.contains(fileSuffix);
+        return extList.contains(fileExt);
     }
 
     /**
@@ -53,24 +48,8 @@ public class FileUtil {
      * @param fileName
      * @return
      */
-    public static String getFileSuffix(String fileName) {
+    public static String getFileExt(String fileName) {
         return fileName.substring(fileName.lastIndexOf(Constant.DOT));
-    }
-
-    /**
-     * 获取流
-     * @param uri
-     * @return
-     */
-    public static InputStream getInputStream(String uri) throws IOException {
-        URL url = new URL(uri);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setDoOutput(true);
-        conn.setDoInput(true);
-        conn.connect();
-        conn.disconnect();
-        return conn.getInputStream();
     }
 
 }

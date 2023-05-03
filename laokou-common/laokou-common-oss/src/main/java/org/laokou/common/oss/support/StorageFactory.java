@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.oss.support;
+import com.amazonaws.services.s3.AmazonS3;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.i18n.core.CustomException;
@@ -33,7 +34,7 @@ public class StorageFactory {
 
     private final RedisUtil redisUtil;
 
-   public StorageService build(){
+   public StorageService<AmazonS3> build(){
        String ossConfigKey = RedisKeyUtil.getOssConfigKey(UserUtil.getTenantId());
        Object object = redisUtil.get(ossConfigKey);
        SysOssVO vo;

@@ -19,6 +19,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.laokou.admin.server.application.service.SysMessageApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDO;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
@@ -29,13 +30,13 @@ import org.laokou.admin.server.infrastructure.feign.im.ImApiFeignClient;
 import org.laokou.admin.server.interfaces.qo.SysMessageQo;
 import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
-import org.apache.commons.collections.CollectionUtils;
 import org.laokou.auth.client.utils.UserUtil;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.im.client.PushMsgDTO;
-import org.laokou.common.tenant.processor.DsTenantProcessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
@@ -56,11 +57,11 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public Boolean insertMessage(MessageDTO dto) {
         ValidatorUtil.validateEntity(dto);
         SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
-        messageDO.setCreateDate(new Date());
+        messageDO.setCreateDate(DateUtil.now());
         messageDO.setCreator(UserUtil.getUserId());
         sysMessageService.save(messageDO);
         Set<String> receiver = dto.getReceiver();
@@ -71,7 +72,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             SysMessageDetailDO detailDO = new SysMessageDetailDO();
             detailDO.setMessageId(messageDO.getId());
             detailDO.setUserId(Long.valueOf(next));
-            detailDO.setCreateDate(new Date());
+            detailDO.setCreateDate(DateUtil.now());
             detailDO.setCreator(UserUtil.getUserId());
             detailDOList.add(detailDO);
         }
@@ -94,7 +95,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public IPage<SysMessageVO> queryMessagePage(SysMessageQo qo) {
         ValidatorUtil.validateEntity(qo);
         IPage<SysMessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
@@ -103,7 +104,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public MessageDetailVO getMessageByDetailId(Long id) {
         Integer version = sysMessageDetailService.getVersion(id);
         sysMessageService.readMessage(id,version);
@@ -111,13 +112,13 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public MessageDetailVO getMessageById(Long id) {
         return sysMessageService.getMessageById(id);
     }
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public IPage<SysMessageVO> getUnReadList(SysMessageQo qo) {
         IPage<SysMessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         final Long userId = UserUtil.getUserId();
@@ -125,11 +126,10 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     @Override
-    @DS(DsTenantProcessor.TENANT)
+    @DS(Constant.TENANT)
     public Long unReadCount() {
         final Long userId = UserUtil.getUserId();
-        long count = sysMessageDetailService.messageCount(userId);
-        return count;
+        return (long) sysMessageDetailService.messageCount(userId);
     }
 
 }

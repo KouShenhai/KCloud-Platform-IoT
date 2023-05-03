@@ -16,22 +16,21 @@
  * limitations under the License.
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <artifactId>laokou-service</artifactId>
         <groupId>org.laokou</groupId>
-        <version>3.0.5</version>
+        <version>3.0.6</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
-    <version>3.0.5</version>
+    <version>3.0.6</version>
     <artifactId>laokou-module</artifactId>
     <packaging>pom</packaging>
-
     <modules>
         <module>laokou-im</module>
         <module>laokou-flowable</module>
         <module>laokou-test</module>
+        <module>laokou-logstash</module>
     </modules>
 </project>

@@ -33,32 +33,41 @@ public class UserUtil {
     }
 
     /**
-     * 获取用户id
+     * 用户ID
+     * @return Long
      */
     public static Long getUserId() {
-        return userDetail().getUserId();
+        return userDetail().getId();
     }
 
     /**
-     * 获取用户名
-     * @return
+     * 用户名
+     * @return String
      */
-    public static String getUsername() {
+    public static String getUserName() {
         return userDetail().getUsername();
     }
 
     /**
-     * 部门id
-     * @return
+     * 部门ID
+     * @return Long
      */
     public static Long getDeptId() {
         return userDetail().getDeptId();
     }
 
+    /**
+     * 租户ID
+     * @return Long
+     */
     public static Long getTenantId() {
         return userDetail().getTenantId();
     }
 
+    /**
+     * 资源名称
+     * @return String
+     */
     public static String getSourceName() {
         return userDetail().getSourceName();
     }

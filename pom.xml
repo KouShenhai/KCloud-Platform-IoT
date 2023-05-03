@@ -16,35 +16,35 @@
  * limitations under the License.
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-parent</artifactId>
-    <version>3.0.5</version>
-    <description>parent配置</description>
+    <artifactId>KCloud-Platform-Alibaba</artifactId>
+    <version>3.0.6</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-common</module>
         <module>laokou-cloud</module>
         <module>laokou-service</module>
     </modules>
+    <name>KCloud-Platform-Alibaba</name>
+    <description>一款企业级微服务架构的云服务多租户SaaS平台</description>
+    <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
     <properties>
-        <laokou.version>3.0.5</laokou.version>
+        <laokou.version>3.0.6</laokou.version>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.0.5</spring-boot.version>
+        <spring-boot.version>3.0.6</spring-boot.version>
         <!--spring-cloud版本-->
         <spring-cloud.version>2022.0.2</spring-cloud.version>
         <!--spring-framework版本-->
-        <spring-framework.version>6.0.7</spring-framework.version>
+        <spring-framework.version>6.0.8</spring-framework.version>
         <!--cloud-alibaba版本-->
-        <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
+        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
         <!--spring-doc版本-->
         <spring-doc.version>2.0.4</spring-doc.version>
         <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
@@ -103,13 +103,12 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <repositories>
         <repository>
             <id>snapshots-repo</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
             <releases>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </releases>
             <snapshots>
                 <enabled>true</enabled>
@@ -119,7 +118,7 @@
             <id>central</id>
             <url>https://repo.maven.apache.org/maven2</url>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
         </repository>
         <repository>
@@ -127,7 +126,7 @@
             <name>Spring release</name>
             <url>https://repo.spring.io/release</url>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
         </repository>
         <repository>
@@ -143,7 +142,7 @@
             <name>Spring Milestones</name>
             <url>https://repo.spring.io/milestone</url>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
         </repository>
         <repository>
@@ -151,7 +150,7 @@
             <name>OSS Snapshot repository</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
             <releases>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </releases>
             <snapshots>
                 <enabled>true</enabled>
@@ -170,14 +169,14 @@
             <name>Spring milestone</name>
             <url>https://repo.spring.io/milestone</url>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
         </pluginRepository>
         <pluginRepository>
             <id>snapshots-repo</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
             <releases>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </releases>
             <snapshots>
                 <enabled>true</enabled>
@@ -195,11 +194,13 @@
                 <MYSQL-HOST>127.0.0.1</MYSQL-HOST>
                 <MYSQL-DB-NACOS>nacos-config</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>seata-config</MYSQL-DB-SEATA>
+                <MYSQL-DB-XXL-JOB>xxl-job-config</MYSQL-DB-XXL-JOB>
+                <MYSQL-POWER-JOB>power-job-config</MYSQL-POWER-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>public</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
-                <NACOS-GROUP>DEFAULT_GROUP</NACOS-GROUP>
+                <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
                 <NACOS-USERNAME>nacos</NACOS-USERNAME>
                 <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
                 <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
@@ -207,7 +208,9 @@
                 <SEATA-PASSWORD>seata</SEATA-PASSWORD>
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
-                <profile.active>dev</profile.active>
+                <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
+                <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
+                <MAIL-USERNAME>xxx</MAIL-USERNAME>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -222,6 +225,8 @@
                 <MYSQL-HOST>laokou.org</MYSQL-HOST>
                 <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>kcloud_platform_seata</MYSQL-DB-SEATA>
+                <MYSQL-DB-XXL-JOB>kcloud_platform_xxl_job</MYSQL-DB-XXL-JOB>
+                <MYSQL-DB-POWER-JOB>kcloud_platform_alibaba_power_job</MYSQL-DB-POWER-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>1.com:8848</NACOS-DISCOVERY-ADDRESS>
@@ -234,7 +239,9 @@
                 <SEATA-PASSWORD>seata</SEATA-PASSWORD>
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
-                <profile.active>test</profile.active>
+                <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
+                <MAIL-PASSWORD>ENC(/GuIBb+rM1VYKHnngv5WZD9S7JHZ+6FpZvtoSTNsKPM=)</MAIL-PASSWORD>
+                <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
             </properties>
         </profile>
         <!-- 正式环境 -->
@@ -246,6 +253,8 @@
                 <MYSQL-HOST>xxx</MYSQL-HOST>
                 <MYSQL-DB-NACOS>xxx</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>xxx</MYSQL-DB-SEATA>
+                <MYSQL-DB-XXL-JOB>xxx</MYSQL-DB-XXL-JOB>
+                <MYSQL-DB-POWER-JOB>xxx</MYSQL-DB-POWER-JOB>
                 <MYSQL-PORT>xxx</MYSQL-PORT>
                 <NACOS-NAMESPACE>xxx111222333444555666777888999</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>xxx</NACOS-DISCOVERY-ADDRESS>
@@ -258,7 +267,10 @@
                 <SEATA-PASSWORD>xxx</SEATA-PASSWORD>
                 <SENTINEL-USERNAME>xxx</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>xxx</SENTINEL-PASSWORD>
-                <profile.active>prod</profile.active>
+                <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
+                <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
+                <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
+                <MAIL-USERNAME>xxx</MAIL-USERNAME>
             </properties>
         </profile>
     </profiles>
@@ -272,20 +284,12 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <arg>-Xlint:deprecation</arg>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M4</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.github.ferstl</groupId>
-                <artifactId>depgraph-maven-plugin</artifactId>
-                <version>4.0.2</version>
             </plugin>
             <plugin>
                 <groupId>com.spotify</groupId>
@@ -329,8 +333,10 @@
                 <!-- 在打包的时候，根据-P参数，加上需要的yml配置文件 -->
                 <includes>
                     <include>application.yml</include>
+                    <!--suppress UnresolvedMavenProperty -->
                     <include>application-${profile.active}.yml</include>
                     <include>bootstrap.yml</include>
+                    <!--suppress UnresolvedMavenProperty -->
                     <include>bootstrap-${profile.active}.yml</include>
                 </includes>
             </resource>

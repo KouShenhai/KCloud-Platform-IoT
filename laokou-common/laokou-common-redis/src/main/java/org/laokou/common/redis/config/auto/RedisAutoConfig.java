@@ -16,13 +16,12 @@
 package org.laokou.common.redis.config.auto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.laokou.common.redis.config.CustomJsonJacksonCodec;
-import org.laokou.common.redis.config.RedisSessionConfig;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.laokou.common.redis.config.RedissonConfig;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -32,10 +31,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * Redis配置
  * @author laokou
  */
-@Configuration
 @AutoConfiguration
+@ConditionalOnClass(LettuceConnectionFactory.class)
 @ComponentScan("org.laokou.common.redis")
-@Import(RedisSessionConfig.class)
+@Import(RedissonConfig.class)
 public class RedisAutoConfig {
 
     /**
@@ -44,7 +43,7 @@ public class RedisAutoConfig {
      */
     @Bean("redisTemplate")
     @ConditionalOnMissingBean(RedisTemplate.class)
-    public RedisTemplate<String, Object> redisTemplate(@Autowired(required = false) LettuceConnectionFactory lettuceConnectionFactory) {
+    public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(lettuceConnectionFactory);
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = getJsonRedisSerializer();

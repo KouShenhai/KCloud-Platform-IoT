@@ -17,6 +17,8 @@
 package org.laokou.im.server.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.im.client.PushMsgDTO;
 import org.laokou.im.server.config.WebSocketServer;
 import org.laokou.im.server.service.ImService;
@@ -27,6 +29,7 @@ import java.io.IOException;
 /**
  * @author laokou
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ImServiceImpl implements ImService {
@@ -35,6 +38,7 @@ public class ImServiceImpl implements ImService {
 
     @Override
     public Boolean pusMessage(PushMsgDTO dto) throws IOException {
+        log.info("推送人：{}", JacksonUtil.toJsonStr(dto.getReceiver()));
         for (String receiver : dto.getReceiver()) {
             webSocketServer.sendMessages(dto.getMsg(), receiver);
         }

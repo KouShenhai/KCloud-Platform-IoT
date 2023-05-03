@@ -70,7 +70,7 @@ public class AmazonS3StorageService extends AbstractStorageService<AmazonS3> {
 
     @Override
     public String getFileName(String fileName) {
-        return DateUtil.format(LocalDateTime.now(),DateUtil.YYYYMMDDHHMMSS) + getFileSuffix(fileName);
+        return DateUtil.format(LocalDateTime.now(),DateUtil.YYYYMMDDHHMMSS) + getFileExt(fileName);
     }
 
     @Override
@@ -79,17 +79,16 @@ public class AmazonS3StorageService extends AbstractStorageService<AmazonS3> {
         String secretKey = vo.getSecretKey();
         String region = vo.getRegion();
         String endpoint = vo.getEndpoint();
-        Boolean pathStyleAccessEnabled = vo.getPathStyleAccessEnabled() == 1 ? true : false;
+        Boolean pathStyleAccessEnabled = vo.getPathStyleAccessEnabled() == 1;
         ClientConfiguration clientConfiguration = new ClientConfiguration();
         AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(endpoint, region);
         AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
         AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(awsCredentials);
-        AmazonS3 amazonS3 = AmazonS3Client.builder()
+        return AmazonS3Client.builder()
                 .withEndpointConfiguration(endpointConfiguration)
                 .withClientConfiguration(clientConfiguration)
                 .withCredentials(awsCredentialsProvider)
                 .withPathStyleAccessEnabled(pathStyleAccessEnabled)
                 .build();
-        return amazonS3;
     }
 }

@@ -24,7 +24,7 @@
             ,username
             ,super_admin
             ,create_date
-            ,img_url
+            ,avatar
             ,`status`
             ,dept_id
             FROM boot_sys_user
@@ -50,8 +50,8 @@
             <if test="dto.password != null and dto.password != ''">
                 password = #{dto.password},
             </if>
-            <if test="dto.imgUrl != null and dto.imgUrl != ''">
-                img_url = #{dto.imgUrl},
+            <if test="dto.avatar != null and dto.avatar != ''">
+                avatar = #{dto.avatar},
             </if>
             <if test="dto.mail != null and dto.mail != ''">
                 mail = #{dto.mail},

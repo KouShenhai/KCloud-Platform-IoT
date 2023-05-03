@@ -57,8 +57,7 @@ public class SecurityAutoConfig {
                 // 基于token，关闭session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeHttpRequests().requestMatchers(
-                        "/v3/api-docs/**"
+                .authorizeHttpRequests().requestMatchers("/v3/api-docs/**"
                         , "/swagger-ui.html"
                         , "/swagger-ui/**"
                         , "/actuator/**").permitAll()

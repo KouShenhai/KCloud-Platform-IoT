@@ -20,10 +20,10 @@
 <mapper namespace="org.laokou.auth.server.domain.sys.repository.mapper.SysUserMapper">
 
     <select id="getUserDetail" resultType="org.laokou.auth.client.user.UserDetail">
-     SELECT a.id as userId
+     SELECT a.id as id
     ,a.username as username
     ,a.password as password
-    ,a.img_url as imgUrl
+    ,a.avatar as avatar
     ,a.super_admin as superAdmin
     ,a.status as status
     ,a.mail as mail

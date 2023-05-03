@@ -30,7 +30,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import java.io.IOException;
 
 /**
@@ -45,9 +44,9 @@ import java.io.IOException;
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
 @EnableEncryptableProperties
-@EnableFeignClients
 @EnableAsync
 @RequiredArgsConstructor
+@EnableFeignClients
 public class AdminApplication implements CommandLineRunner {
 
     private final RouterUtil routerUtil;
