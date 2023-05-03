@@ -34,7 +34,7 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean update(EmployeeDTO dto) {
+    public Boolean update(${className}DTO dto) {
         String id = dto.getId();
         if (StringUtils.isBlank(id)) {
             throw new SysException("ID不为空");
