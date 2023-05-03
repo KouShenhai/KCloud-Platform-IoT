@@ -156,6 +156,7 @@ public class OAuth2AuthorizationServerConfig {
         // 令牌 => JWT配置
         map.from(token::getAccessTokenTimeToLive).to(tokenBuilder::accessTokenTimeToLive);
         map.from(token::getRefreshTokenTimeToLive).to(tokenBuilder::refreshTokenTimeToLive);
+        map.from(token::getAuthorizationCodeTimeToLive).to(tokenBuilder::authorizationCodeTimeToLive);
         // 客户端配置，包括验证密钥或需要授权页面
         map.from(client::isRequireAuthorizationConsent).to(clientBuilder::requireAuthorizationConsent);
         // 注册

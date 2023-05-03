@@ -41,6 +41,7 @@ public class OAuth2AuthorizationServerProperties {
 
     @Data
     public static class Token {
+
         /**
          * Set the time-to-live for a refresh token.
          */
@@ -50,6 +51,11 @@ public class OAuth2AuthorizationServerProperties {
          * Set the time-to-live for an access token.
          */
         private Duration accessTokenTimeToLive;
+
+        /**
+         * Set the time-to-live for an authorization code.
+         */
+        private Duration authorizationCodeTimeToLive;
     }
 
     @Data
