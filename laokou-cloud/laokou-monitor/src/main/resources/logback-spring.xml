@@ -65,7 +65,7 @@
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
-        <logger name="org.springboot.sample" level="info">
+        <logger name="org.springframework.boot" level="info">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
@@ -83,7 +83,7 @@
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
-        <logger name="org.springboot.sample" level="error">
+        <logger name="org.springframework.boot" level="error">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
