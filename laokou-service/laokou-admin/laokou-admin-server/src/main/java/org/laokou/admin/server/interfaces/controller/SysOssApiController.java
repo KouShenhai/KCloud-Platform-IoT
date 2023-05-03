@@ -28,8 +28,10 @@ import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.oss.vo.SysOssVO;
+import org.laokou.common.oss.vo.UploadVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
@@ -49,8 +51,11 @@ public class SysOssApiController {
         return new HttpResult<IPage<SysOssVO>>().ok(sysOssApplicationService.queryOssPage(qo));
     }
 
-//    @PostMapping("upload")
-//    @Operation(summary = "系统存储>上传",description = "系统存储>上传")
+    @PostMapping("upload")
+    @Operation(summary = "系统存储>上传",description = "系统存储>上传")
+    public HttpResult<UploadVO> upload(@RequestPart("file")MultipartFile file,@RequestParam("md5")String md5) {
+        return new HttpResult<UploadVO>().ok(sysOssApplicationService.upload(file,md5));
+    }
 
     @PostMapping("/insert")
     @Operation(summary = "系统存储>新增",description = "系统存储>新增")

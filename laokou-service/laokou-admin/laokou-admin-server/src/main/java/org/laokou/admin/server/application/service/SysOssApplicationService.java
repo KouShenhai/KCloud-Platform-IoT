@@ -19,6 +19,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.laokou.admin.client.dto.SysOssDTO;
 import org.laokou.common.oss.qo.SysOssQo;
 import org.laokou.common.oss.vo.SysOssVO;
+import org.laokou.common.oss.vo.UploadVO;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
@@ -67,4 +69,12 @@ public interface SysOssApplicationService {
      * @return
      */
     Boolean useOss(Long id);
+
+    /**
+     * 上传文件
+     * @param file
+     * @param md5
+     * @return
+     */
+    UploadVO upload(MultipartFile file,String md5);
 }

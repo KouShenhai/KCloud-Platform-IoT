@@ -30,6 +30,7 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * @author laokou
@@ -79,11 +80,20 @@ public class DataFilterAspect {
         List<Long> deptIds = userDetail.getDeptIds();
         sqlFilter.append("(");
         if (CollectionUtils.isNotEmpty(deptIds)) {
-            sqlFilter.append("find_in_set(").append(tableAlias).append(dataFilter.deptId()).append(" , ").append("\"").append(StringUtil.join(deptIds,",")).append("\"").append(") or ");
+            sqlFilter.append(tableAlias).append(dataFilter.deptId()).append(" in (");
+            sqlFilter.append(String.join(",",deptIds.stream().map(String::valueOf).toArray(String[]::new)));
+            sqlFilter.append(") or ");
         }
         sqlFilter.append(tableAlias).append(dataFilter.userId()).append(" = ").append(userDetail.getId());
         sqlFilter.append(")");
         return sqlFilter.toString();
+    }
+
+    public static void main(String[] args) {
+        List<Long> list = new ArrayList<>();
+        list.add(1L);
+        list.add(2L);
+        System.out.println(String.join(",",list.stream().map(String::valueOf).toArray(String[]::new)));
     }
 
 }
