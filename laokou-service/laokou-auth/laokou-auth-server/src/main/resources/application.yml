@@ -64,6 +64,7 @@ spring:
       authorization-server:
         enabled: true
         token:
+          authorizationCodeTimeToLive: 1h
           accessTokenTimeToLive: 1h
           refreshTokenTimeToLive: 6h
         client:

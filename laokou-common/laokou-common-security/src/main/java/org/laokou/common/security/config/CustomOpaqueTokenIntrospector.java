@@ -17,7 +17,6 @@ package org.laokou.common.security.config;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -25,10 +24,11 @@ import org.laokou.common.jasypt.utils.AESUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationCode;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.stereotype.Component;
 import java.security.Principal;
@@ -44,6 +44,7 @@ import java.util.Objects;
 public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
     private final OAuth2AuthorizationService oAuth2AuthorizationService;
+    private static final String AUTHORIZATION_CODE = "authorization_code";
     private final RedisUtil redisUtil;
 
     @Override
@@ -58,19 +59,21 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
         if (obj != null) {
             return decryptInfo((UserDetail) obj);
         }
-        OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+        OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token, null);
         if (oAuth2Authorization == null) {
             CustomAuthExceptionHandler.throwError(StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
         }
         assert oAuth2Authorization != null;
-        if (!oAuth2Authorization.getAccessToken().isActive()) {
+        String grantType = oAuth2Authorization.getAuthorizationGrantType().getValue();
+        boolean isExpired = (!AUTHORIZATION_CODE.equals(grantType) && Objects.requireNonNull(oAuth2Authorization.getToken(OAuth2AccessToken.class)).isExpired()) || (AUTHORIZATION_CODE.equals(grantType) && Objects.requireNonNull(oAuth2Authorization.getToken(OAuth2AuthorizationCode.class)).isExpired());
+        if (isExpired) {
             CustomAuthExceptionHandler.throwError(StatusCode.UNAUTHORIZED,MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
         }
         Instant expiresAt = oAuth2Authorization.getAccessToken().getToken().getExpiresAt();
         Instant nowAt = Instant.now();
         long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
         Object principal = ((UsernamePasswordAuthenticationToken) Objects.requireNonNull(oAuth2Authorization.getAttribute(Principal.class.getName()))).getPrincipal();
-        UserDetail userDetail = ConvertUtil.sourceToTarget(principal, UserDetail.class);
+        UserDetail userDetail = (UserDetail) principal;
         redisUtil.set(userInfoKey,userDetail,expireTime);
         // 解密
         return decryptInfo(userDetail);

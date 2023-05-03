@@ -226,8 +226,10 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.FAIL.ordinal(), msg,request,tenantId);
             CustomAuthExceptionHandler.throwError(code, msg);
         }
+        // 加密
+        String encryptName = AESUtil.encrypt(loginName);
         // 多租户查询
-        UserDetail userDetail = sysUserService.getUserDetail(AESUtil.encrypt(loginName),tenantId,loginType);
+        UserDetail userDetail = sysUserService.getUserDetail(encryptName,tenantId,loginType);
         if (userDetail == null) {
             code = StatusCode.USERNAME_PASSWORD_ERROR;
             msg = MessageUtil.getMessage(code);
@@ -284,7 +286,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         // 登录成功
         loginLogUtil.recordLogin(loginName,loginType, ResultStatusEnum.SUCCESS.ordinal(), AuthConstant.LOGIN_SUCCESS_MSG,request,tenantId);
         log.info(AuthConstant.LOGIN_SUCCESS_MSG);
-        return new UsernamePasswordAuthenticationToken(userDetail,AESUtil.encrypt(loginName),userDetail.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetail,encryptName,userDetail.getAuthorities());
     }
 
     private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(Authentication authentication) {
