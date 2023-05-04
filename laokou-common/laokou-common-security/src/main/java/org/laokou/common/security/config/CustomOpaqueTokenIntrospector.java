@@ -24,11 +24,10 @@ import org.laokou.common.jasypt.utils.AESUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
-import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationCode;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.stereotype.Component;
 import java.security.Principal;
@@ -44,7 +43,6 @@ import java.util.Objects;
 public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
     private final OAuth2AuthorizationService oAuth2AuthorizationService;
-    private static final String AUTHORIZATION_CODE = "authorization_code";
     private final RedisUtil redisUtil;
 
     @Override
@@ -57,16 +55,15 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
         String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
         obj = redisUtil.get(userInfoKey);
         if (obj != null) {
+            // 解密
             return decryptInfo((UserDetail) obj);
         }
-        OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token, null);
+        OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
         if (oAuth2Authorization == null) {
             CustomAuthExceptionHandler.throwError(StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
         }
         assert oAuth2Authorization != null;
-        String grantType = oAuth2Authorization.getAuthorizationGrantType().getValue();
-        boolean isExpired = (!AUTHORIZATION_CODE.equals(grantType) && Objects.requireNonNull(oAuth2Authorization.getToken(OAuth2AccessToken.class)).isExpired()) || (AUTHORIZATION_CODE.equals(grantType) && Objects.requireNonNull(oAuth2Authorization.getToken(OAuth2AuthorizationCode.class)).isExpired());
-        if (isExpired) {
+        if (!Objects.requireNonNull(oAuth2Authorization.getAccessToken()).isActive()) {
             CustomAuthExceptionHandler.throwError(StatusCode.UNAUTHORIZED,MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
         }
         Instant expiresAt = oAuth2Authorization.getAccessToken().getToken().getExpiresAt();

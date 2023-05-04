@@ -17,6 +17,7 @@ package org.laokou.auth.server.domain.sys.repository.service.impl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.user.UserDetail;
+import org.laokou.auth.server.domain.sys.repository.mapper.AuthenticationMapper;
 import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
 import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
 import org.laokou.auth.server.infrastructure.authentication.OAuth2PasswordAuthenticationProvider;
@@ -33,11 +34,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
 import java.util.List;
-
 import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
-
 /**
  * @author laokou
  */
@@ -49,11 +47,15 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
     private final SysMenuService sysMenuService;
     private final SysDeptService sysDeptService;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationMapper authenticationMapper;
 
     @Override
     public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
         // 默认租户查询
-        UserDetail userDetail = sysUserService.getUserDetail(AESUtil.encrypt(loginName),0L, OAuth2PasswordAuthenticationProvider.GRANT_TYPE);
+        String encryptName = AESUtil.encrypt(loginName);
+        // 删除过期token
+        authenticationMapper.deleteToken(encryptName);
+        UserDetail userDetail = sysUserService.getUserDetail(encryptName,0L, OAuth2PasswordAuthenticationProvider.GRANT_TYPE);
         HttpServletRequest request = RequestUtil.getHttpServletRequest();
         if (userDetail == null) {
             throw new UsernameNotFoundException(MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR));
