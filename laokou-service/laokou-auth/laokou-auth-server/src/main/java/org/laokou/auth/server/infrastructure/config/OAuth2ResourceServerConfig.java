@@ -29,10 +29,10 @@ public class OAuth2ResourceServerConfig {
     /**
      * 不拦截拦截静态资源
      * 如果您不想要警告消息并且需要性能优化，则可以为静态资源引入第二个过滤器链
-     * https://github.com/spring-projects/spring-security/issues/10938
-     * @param http
-     * @return
-     * @throws Exception
+     * <a href="https://github.com/spring-projects/spring-security/issues/10938">...</a>
+     * @param http http
+     * @return defaultSecurityFilterChain
+     * @throws Exception Exception
      */
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -59,6 +59,7 @@ public class OAuth2ResourceServerConfig {
                 .logout()
                 // 清除session
                 .invalidateHttpSession(true)
+                .clearAuthentication(true)
                 .and()
                 .build();
     }
