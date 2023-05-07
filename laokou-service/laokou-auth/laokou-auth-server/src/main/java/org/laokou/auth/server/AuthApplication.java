@@ -18,8 +18,9 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.dynamic.router.utils.RouterUtil;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -47,7 +48,9 @@ public class AuthApplication implements CommandLineRunner {
     public static void main(String[] args) {
         // SpringSecurity 子线程读取父线程的上下文
         System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
-        SpringApplication.run(AuthApplication.class, args);
+        new SpringApplicationBuilder(AuthApplication.class)
+                .web(WebApplicationType.SERVLET)
+                .run(args);
     }
 
     @Override
