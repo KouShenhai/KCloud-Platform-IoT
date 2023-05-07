@@ -1,5 +1,4 @@
 package org.laokou.logstash.rocketmq.listener;
-
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +11,7 @@ import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.rocketmq.constant.RocketmqConstant;
 import org.laokou.logstash.client.index.TraceIndex;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -33,20 +33,31 @@ public class MessageListener implements RocketMQListener<MessageExt> {
     public void onMessage(MessageExt messageExt) {
         try {
             // 按月建立索引
-            String ym = DateUtil.format(LocalDateTime.now(), DateUtil.YYYYMM);
             String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
             // 清洗数据
             TraceIndex traceIndex = JacksonUtil.toBean(msg, TraceIndex.class);
             if (StringUtil.isBlank(traceIndex.getTraceId())) {
                 return;
             }
-            String indexAlias = TRACE_INDEX;
-            String indexName = indexAlias + "_" + ym;
-            elasticsearchTemplate.createIndex(indexName, indexAlias, TraceIndex.class);
-            elasticsearchTemplate.syncIndex(null, indexName, indexAlias, msg, TraceIndex.class);
+            String ym = DateUtil.format(LocalDateTime.now(), DateUtil.YYYYMM);
+            String indexName = TRACE_INDEX + "_" + ym;
+            elasticsearchTemplate.syncIndexAsync(null, indexName, msg);
         } catch (Exception e) {
             log.error("同步数据报错：{}",e.getMessage());
         }
+    }
+
+    /**
+     * 每个月最后一天的23：50：00创建下一个的索引
+     */
+    @Scheduled(cron = "0 50 23 L * ?")
+    @SneakyThrows
+    public void scheduleCreateIndexTask() {
+        // 按月建立索引
+        String ym = DateUtil.format(DateUtil.plusDays(LocalDateTime.now(),1), DateUtil.YYYYMM);
+        String indexAlias = TRACE_INDEX;
+        String indexName = indexAlias + "_" + ym;
+        elasticsearchTemplate.createAsyncIndex(indexName, indexAlias, TraceIndex.class);
     }
 
 }

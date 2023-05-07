@@ -62,10 +62,46 @@ public class DateUtil {
         return localDateTime.format(dateTimeFormatter);
     }
 
-    public static LocalDateTime parse(String format,int index) {
+    /**
+     * 转换
+     * @param dateTime 时间
+     * @param index 索引
+     * @return LocalDateTime
+     */
+    public static LocalDateTime parse(String dateTime,int index) {
         String timePattern = getTimePattern(index);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern);
-        return LocalDateTime.parse(format,dateTimeFormatter);
+        return LocalDateTime.parse(dateTime,dateTimeFormatter);
+    }
+
+    /**
+     * 获取 前/后 x天 的时间
+     * @param localDateTime 时间
+     * @param day 天
+     * @return LocalDateTime
+     */
+    public static LocalDateTime plusDays(LocalDateTime localDateTime,int day) {
+        return localDateTime.plusDays(day);
+    }
+
+    /**
+     * 获取 前/后 x月 的时间
+     * @param localDateTime 时间
+     * @param month 月
+     * @return LocalDateTime
+     */
+    public static LocalDateTime plusMonths(LocalDateTime localDateTime,int month) {
+        return localDateTime.plusMonths(month);
+    }
+
+    /**
+     * 获取 前/后 x年 的时间
+     * @param localDateTime 时间
+     * @param year 年
+     * @return LocalDateTime
+     */
+    public static LocalDateTime plusYears(LocalDateTime localDateTime,int year) {
+        return localDateTime.plusYears(year);
     }
 
     public static Date now() {

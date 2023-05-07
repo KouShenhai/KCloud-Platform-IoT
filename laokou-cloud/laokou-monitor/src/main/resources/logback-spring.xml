@@ -53,7 +53,7 @@
         </rollingPolicy>
     </appender>
     <springProfile name="dev,test">
-        <logger name="org.laokou.monitor" level="info">
+        <logger name="org.laokou" level="info">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
@@ -61,17 +61,13 @@
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
-        <logger name="org.springframework.web" level="info">
-            <appender-ref ref="console" />
-            <appender-ref ref="file"/>
-        </logger>
-        <logger name="org.springframework.boot" level="info">
+        <logger name="org.springframework" level="info">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
     </springProfile>
     <springProfile name="prod">
-        <logger name="org.laokou.monitor" level="error">
+        <logger name="org.laokou" level="error">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
@@ -79,11 +75,7 @@
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
-        <logger name="org.springframework.web" level="error">
-            <appender-ref ref="console" />
-            <appender-ref ref="file"/>
-        </logger>
-        <logger name="org.springframework.boot" level="error">
+        <logger name="org.springframework" level="error">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
