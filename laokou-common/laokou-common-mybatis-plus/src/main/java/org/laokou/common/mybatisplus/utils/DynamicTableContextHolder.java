@@ -13,20 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.mybatisplus.config;
-import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
-import org.laokou.common.core.constant.Constant;
-import org.laokou.common.mybatisplus.utils.DynamicTableContextHolder;
+
+package org.laokou.common.mybatisplus.utils;
+
 /**
  * @author laokou
  */
-public class DynamicTableNameHandler implements TableNameHandler {
-    @Override
-    public String dynamicTableName(String sql, String tableName) {
-        if (tableName.endsWith(Constant.PLACE_HOLDER)) {
-            return DynamicTableContextHolder.get();
-        }
-        return tableName;
+public class DynamicTableContextHolder {
+
+    private static final ThreadLocal<String> CONTEXT_HOLDER = new InheritableThreadLocal<>();
+
+    public static void set(String tableName) {
+        CONTEXT_HOLDER.set(tableName);
+    }
+
+    public static void clear() {
+        CONTEXT_HOLDER.remove();
+    }
+
+    public static String get() {
+        return CONTEXT_HOLDER.get();
     }
 
 }

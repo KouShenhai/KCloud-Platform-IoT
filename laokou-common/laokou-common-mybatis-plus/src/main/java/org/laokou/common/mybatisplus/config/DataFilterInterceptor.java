@@ -59,7 +59,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
                     // 新sql写入
                     PluginUtils.mpBoundSql(boundSql).sql(newSql);
                 }
-            } catch (Exception ex) {}
+            } catch (Exception ignored) {}
         }
     }
 

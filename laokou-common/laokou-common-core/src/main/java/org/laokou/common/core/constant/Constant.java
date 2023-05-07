@@ -43,7 +43,7 @@ public interface Constant {
 
     int DEFAULT = 0;
 
-    String PLACE_HOLDER = "_%s";
+    String PLACE_HOLDER = "$$";
 
     String SHARDING_SPHERE = "shardingSphere";
 

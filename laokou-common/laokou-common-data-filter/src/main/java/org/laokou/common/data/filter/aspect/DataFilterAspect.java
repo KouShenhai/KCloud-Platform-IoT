@@ -50,7 +50,7 @@ public class DataFilterAspect {
                 return;
             }
             try {
-                //否则进行数据过滤
+                // 否则数据过滤
                 String sqlFilter = getSqlFilter(userDetail, point);
                 basePage.setSqlFilter(sqlFilter);
             }catch (Exception ex){

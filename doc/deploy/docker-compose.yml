@@ -51,12 +51,3 @@ services:
     ports:
       - "5000:5000"
     restart: on-failure
-  laokou-elasticsearch-service:
-    tty: true
-    image: registry.cn-hangzhou.aliyuncs.com/koushenhai/laokou-elasticsearch-server:3.0.6
-    container_name: laokou-elasticsearch
-    environment:
-      - TZ="Asia/Shanghai"
-    ports:
-      - "10003:10003"
-    restart: on-failure

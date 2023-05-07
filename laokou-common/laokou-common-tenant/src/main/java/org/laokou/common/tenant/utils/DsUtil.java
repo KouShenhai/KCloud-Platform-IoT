@@ -73,7 +73,7 @@ public class DsUtil {
         properties.setDriverClassName(sourceVO.getDriverClassName());
         // 验证数据源
         connDs(properties);
-        DynamicRoutingDataSource dynamicRoutingDataSource = dynamicUtil.getDynamicDataSource();
+        DynamicRoutingDataSource dynamicRoutingDataSource = dynamicUtil.getDataSource();
         DefaultDataSourceCreator dataSourceCreator = dynamicUtil.getDefaultDataSourceCreator();
         DataSource dataSource = dataSourceCreator.createDataSource(properties);
         dynamicRoutingDataSource.addDataSource(sourceName,dataSource);

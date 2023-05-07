@@ -30,7 +30,6 @@ public class AddressUtil {
     private static final String IGNORE_DESC = "0";
 
     static {
-
         try {
             byte[] bytes = ResourceUtil.getResource("ip2region.xdb").getInputStream().readAllBytes();
             SEARCHER = Searcher.newWithBuffer(bytes);
