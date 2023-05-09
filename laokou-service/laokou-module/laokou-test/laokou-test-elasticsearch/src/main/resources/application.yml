@@ -1,0 +1,7 @@
+server:
+  port: 8087
+
+spring:
+  elasticsearch:
+    uris:
+      - es.org:9200
