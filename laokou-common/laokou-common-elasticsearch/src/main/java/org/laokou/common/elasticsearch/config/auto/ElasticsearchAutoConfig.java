@@ -108,7 +108,7 @@ public class ElasticsearchAutoConfig {
 
     static class DefaultRestClientBuilderCustomizer implements RestClientBuilderCustomizer {
 
-        private static final PropertyMapper map = PropertyMapper.get();
+        private static final PropertyMapper MAP = PropertyMapper.get();
 
         private final ElasticsearchProperties properties;
 
@@ -123,18 +123,18 @@ public class ElasticsearchAutoConfig {
         @Override
         public void customize(HttpAsyncClientBuilder builder) {
             builder.setDefaultCredentialsProvider(new PropertiesCredentialsProvider(this.properties));
-            map.from(this.properties::isSocketKeepAlive)
+            MAP.from(this.properties::isSocketKeepAlive)
                     .to((keepAlive) -> builder
                             .setDefaultIOReactorConfig(IOReactorConfig.custom().setSoKeepAlive(keepAlive).build()));
         }
 
         @Override
         public void customize(RequestConfig.Builder builder) {
-            map.from(this.properties::getConnectionTimeout)
+            MAP.from(this.properties::getConnectionTimeout)
                     .whenNonNull()
                     .asInt(Duration::toMillis)
                     .to(builder::setConnectTimeout);
-            map.from(this.properties::getSocketTimeout)
+            MAP.from(this.properties::getSocketTimeout)
                     .whenNonNull()
                     .asInt(Duration::toMillis)
                     .to(builder::setSocketTimeout);

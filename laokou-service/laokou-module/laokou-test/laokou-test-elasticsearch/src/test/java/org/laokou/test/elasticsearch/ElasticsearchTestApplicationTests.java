@@ -9,7 +9,6 @@ import org.laokou.common.elasticsearch.template.NewElasticsearchTemplate;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.test.context.TestConstructor;
 
 import java.util.List;
@@ -44,7 +43,7 @@ class ElasticsearchTestApplicationTests {
     @Test
     void createIndex() {
         String indexName = "laokou_test_202305";
-        newElasticsearchTemplate.createIndex(indexName,"laokou_test",resourceIndex, ResourceIndex.class);
+        newElasticsearchTemplate.createIndex(indexName,"laokou_test", ResourceIndex.class);
     }
 
     @Test

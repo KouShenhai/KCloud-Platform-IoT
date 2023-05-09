@@ -624,7 +624,7 @@ public class NewElasticsearchTemplate {
      * @param indexName 索引名称
      */
     @SneakyThrows
-    public <TDocument> void createIndex(String indexName,String indexAlias,TDocument document,Class<TDocument> clazz) {
+    public <TDocument> void createIndex(String indexName,String indexAlias,Class<TDocument> clazz) {
         // 判断索引是否存在
         boolean indexExists = isIndexExists(indexName);
         if (indexExists) {
@@ -641,9 +641,7 @@ public class NewElasticsearchTemplate {
         List<FieldMapping> fieldInfo = FieldMappingUtil.getFieldInfo(clazz);
         TypeMapping.Builder builder = new TypeMapping.Builder();
         builder.dynamic(DynamicMapping.True);
-        fieldInfo.forEach(item -> {
-            builder.properties(item.getField(),value -> value.keyword(key -> key.boost(100.00)));
-        });
+        fieldInfo.forEach(item -> builder.properties(item.getField(), fn -> fn.keyword(v -> v)));
         return builder.build();
     }
 

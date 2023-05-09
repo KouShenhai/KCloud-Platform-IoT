@@ -4,4 +4,6 @@ server:
 spring:
   elasticsearch:
     uris:
-      - es.org:9200
+      - 1
+    username: 1
+    password: 1
