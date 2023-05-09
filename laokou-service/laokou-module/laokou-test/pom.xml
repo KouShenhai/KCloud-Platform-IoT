@@ -15,5 +15,6 @@
         <module>laokou-test-juc</module>
         <module>laokou-test-liquibase</module>
         <module>laokou-test-web</module>
+        <module>laokou-test-elasticsearch</module>
     </modules>
 </project>

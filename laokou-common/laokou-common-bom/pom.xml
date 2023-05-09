@@ -191,6 +191,11 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-skywalking</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-log4j2</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
