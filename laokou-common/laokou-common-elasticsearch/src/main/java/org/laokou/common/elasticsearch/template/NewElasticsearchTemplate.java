@@ -14,68 +14,23 @@
  * limitations under the License.
  */
 package org.laokou.common.elasticsearch.template;
-
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.mapping.DynamicMapping;
+import co.elastic.clients.elasticsearch._types.mapping.Property;
+import co.elastic.clients.elasticsearch._types.mapping.TypeMapping;
 import co.elastic.clients.elasticsearch.indices.ExistsRequest;
+import co.elastic.clients.util.ObjectBuilder;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.lucene.queryparser.classic.QueryParser;
-import org.elasticsearch.action.ActionListener;
-import org.elasticsearch.action.DocWriteResponse;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.bulk.BulkItemResponse;
-import org.elasticsearch.action.bulk.BulkRequest;
-import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.delete.DeleteRequest;
-import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.support.IndicesOptions;
-import org.elasticsearch.action.support.WriteRequest;
-import org.elasticsearch.action.support.master.AcknowledgedResponse;
-import org.elasticsearch.action.update.UpdateRequest;
-import org.elasticsearch.action.update.UpdateResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.indices.CreateIndexRequest;
-import org.elasticsearch.client.indices.CreateIndexResponse;
-import org.elasticsearch.client.indices.GetIndexRequest;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.script.Script;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.Aggregations;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
-import org.elasticsearch.search.sort.SortOrder;
-import org.elasticsearch.xcontent.XContentBuilder;
-import org.elasticsearch.xcontent.XContentFactory;
-import org.elasticsearch.xcontent.XContentType;
-import org.laokou.common.core.utils.EmptyUtil;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.elasticsearch.constant.EsConstant;
-import org.laokou.common.elasticsearch.dto.AggregationDTO;
-import org.laokou.common.elasticsearch.dto.SearchDTO;
-import org.laokou.common.elasticsearch.qo.SearchQo;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
-import org.laokou.common.elasticsearch.vo.SearchVO;
-import org.laokou.common.i18n.core.CustomException;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author laokou
@@ -519,30 +474,6 @@ public class NewElasticsearchTemplate {
 //        return bulkRequest;
 //    }
 //
-//    /**
-//     * 创建ES索引
-//     * @param indexName 索引名称
-//     * @param indexAlias 别名
-//     * @param clazz 类型
-//     * @return Boolean
-//     * @throws IOException IOException
-//     */
-//    public Boolean createIndex(String indexName,String indexAlias,Class<?> clazz) throws IOException {
-//        // 判断索引是否存在
-//        boolean indexExists = isIndexExists(indexName);
-//        if (indexExists) {
-//            log.error("索引【{}】已存在，创建失败",indexName);
-//            return false;
-//        }
-//        // 创建索引
-//        boolean createResult = createIndexAndCreateMapping(indexName,indexAlias, FieldMappingUtil.getFieldInfo(clazz));
-//        if (!createResult) {
-//            log.info("索引【{}】创建失败",indexName);
-//            return false;
-//        }
-//        log.info("索引：[{}]创建成功",indexName);
-//        return true;
-//    }
 //
 //    /**
 //     * 异步创建ES索引
@@ -666,9 +597,9 @@ public class NewElasticsearchTemplate {
     /**
      * 索引是否存在
      * @param indexNames 索引集合名称
-     * @return Boolean
+     * @return boolean
      */
-    public Boolean isIndexExists(List<String> indexNames) {
+    public boolean isIndexExists(List<String> indexNames) {
         try {
             ExistsRequest existsRequest = ExistsRequest.of(exists -> exists.index(indexNames));
             return elasticsearchClient.indices().exists(existsRequest).value();
@@ -681,10 +612,39 @@ public class NewElasticsearchTemplate {
     /**
      * 索引是否存在
      * @param indexName 索引名称
-     * @return Boolean
+     * @return boolean
      */
-    public Boolean isIndexExists(String indexName) {
+    public boolean isIndexExists(String indexName) {
         return isIndexExists(List.of(indexName));
+    }
+
+    /**
+     * <a href="https://www.elastic.co/guide/en/elasticsearch/client/java-api-client/8.6/package-structure.html">...</a>
+     * 创建ES索引
+     * @param indexName 索引名称
+     */
+    @SneakyThrows
+    public <TDocument> void createIndex(String indexName,String indexAlias,TDocument document,Class<TDocument> clazz) {
+        // 判断索引是否存在
+        boolean indexExists = isIndexExists(indexName);
+        if (indexExists) {
+            log.error("索引【{}】已存在，创建失败",indexName);
+            return;
+        }
+        elasticsearchClient.indices().create(request -> request.index(indexName)
+                .aliases(indexAlias, fn -> fn.isWriteIndex(true))
+                .mappings(getMapping(clazz))
+        );
+    }
+
+    private <TDocument> TypeMapping getMapping(Class<TDocument> clazz) {
+        List<FieldMapping> fieldInfo = FieldMappingUtil.getFieldInfo(clazz);
+        TypeMapping.Builder builder = new TypeMapping.Builder();
+        builder.dynamic(DynamicMapping.True);
+        fieldInfo.forEach(item -> {
+            builder.properties(item.getField(),value -> value.keyword(key -> key.boost(100.00)));
+        });
+        return builder.build();
     }
 
 //    /**
