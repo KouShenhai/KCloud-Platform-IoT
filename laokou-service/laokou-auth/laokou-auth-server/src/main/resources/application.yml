@@ -73,7 +73,7 @@ spring:
           id: 95TxSsTPFA3tF12TBSMmUVK0da
           clientId: 95TxSsTPFA3tF12TBSMmUVK0da
           clientName: OAuth2认证
-          clientSecret: $2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO
+          clientSecret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
           clientAuthenticationMethods:
             - client_secret_basic
           authorizationGrantTypes:

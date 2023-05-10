@@ -788,4 +788,3 @@ CREATE TABLE `boot_sys_tenant` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment='租户';
 INSERT INTO `boot_sys_tenant` (`id`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `version`, `name`, `source_id`, `package_id`) VALUES ('1', '1341620898007281665', '1537114827246292994', '2023-02-06 12:32:05', '2023-02-15 15:45:06', '0', '6', '阿里巴巴集团', '1', '2');
 -- ------------------------------------租户------------------------------------
-
