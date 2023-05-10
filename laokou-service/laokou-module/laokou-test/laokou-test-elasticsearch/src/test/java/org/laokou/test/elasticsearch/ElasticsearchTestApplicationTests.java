@@ -9,6 +9,7 @@ import org.laokou.common.elasticsearch.template.NewElasticsearchTemplate;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.test.context.TestConstructor;
 
 import java.util.List;
@@ -50,6 +51,11 @@ class ElasticsearchTestApplicationTests {
     void mapping() {
         List<FieldMapping> fieldInfo = FieldMappingUtil.getFieldInfo(ResourceIndex.class);
         log.info("{}", JacksonUtil.toJsonStr(fieldInfo));
+    }
+
+    @Test
+    void annotation() {
+        //@Field
     }
 
 }
