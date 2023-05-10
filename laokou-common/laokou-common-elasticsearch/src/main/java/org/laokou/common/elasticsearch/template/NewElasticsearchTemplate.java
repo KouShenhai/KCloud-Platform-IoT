@@ -23,6 +23,7 @@ import co.elastic.clients.util.ObjectBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.elasticsearch.constant.EsConstant;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
 import org.springframework.stereotype.Component;
@@ -641,8 +642,19 @@ public class NewElasticsearchTemplate {
         List<FieldMapping> fieldInfo = FieldMappingUtil.getFieldInfo(clazz);
         TypeMapping.Builder builder = new TypeMapping.Builder();
         builder.dynamic(DynamicMapping.True);
-        fieldInfo.forEach(item -> builder.properties(item.getField(), fn -> fn.keyword(v -> v)));
+        fieldInfo.forEach(item -> properties(builder,item));
         return builder.build();
+    }
+
+    private void properties(TypeMapping.Builder builder,FieldMapping mapping) {
+        String field = mapping.getField();
+        String type = mapping.getType();
+        Integer participle = mapping.getParticiple();
+        if (EsConstant.IK_INDEX.equals(participle)) {
+            builder.properties(field, fn -> fn.text(t -> t.searchAnalyzer("ik_smart").analyzer("ik_max_word")));
+        } else {
+            builder.properties(field, fn -> fn.keyword(k -> k));
+        }
     }
 
 //    /**
