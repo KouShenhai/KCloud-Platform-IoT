@@ -15,15 +15,20 @@
  */
 
 package org.laokou.auth.server.infrastructure.config;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.*;
+
 /**
  * @author laokou
  */
 @Configuration
+@ConditionalOnProperty(havingValue = "true",matchIfMissing = true,prefix = OAuth2AuthorizationServerProperties.PREFIX,name = "enabled")
 public class OAuth2ResourceServerConfig {
 
     /**
@@ -35,33 +40,19 @@ public class OAuth2ResourceServerConfig {
      * @throws Exception Exception
      */
     @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests().requestMatchers(
-                 "/v3/api-docs/**"
-                        , "/swagger-ui.html"
-                        , "/swagger-ui/**"
-                        , "/oauth2/captcha"
-                        , "/oauth2/logout"
-                        , "/oauth2/tenant"
-                        , "/oauth2/public_key"
-                        , "/actuator/**")
-                .permitAll()
-                .and()
-                .authorizeHttpRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .csrf().disable()
+    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,OAuth2AuthorizationServerProperties properties) throws Exception {
+        Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns()).orElse(new HashSet<>(0));
+        return http.authorizeHttpRequests().requestMatchers(patterns.toArray(String[]::new)).permitAll()
+                .and().authorizeHttpRequests()
+                .anyRequest().authenticated()
+                .and().csrf().disable()
                 // 自定义登录页面
                 // https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
                 // 登录页面 -> DefaultLoginPageGeneratingFilter
                 .formLogin(Customizer.withDefaults())
-                .logout()
                 // 清除session
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .and()
-                .build();
+                .logout().invalidateHttpSession(true).clearAuthentication(true)
+                .and().build();
     }
 
 }

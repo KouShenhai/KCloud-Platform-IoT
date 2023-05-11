@@ -79,22 +79,10 @@ import java.util.List;
 @ConditionalOnProperty(havingValue = "true",matchIfMissing = true,prefix = OAuth2AuthorizationServerProperties.PREFIX,name = "enabled")
 public class OAuth2AuthorizationServerConfig {
 
+    private static final String PATTERN = "/error";
+
     /**
-     *
-     * @param http
-     * @param authorizationServerSettings
-     * @param authorizationService
-     * @param sysUserService
-     * @param sysMenuService
-     * @param sysDeptService
-     * @param loginLogUtil
-     * @param passwordEncoder
-     * @param sysCaptchaService
-     * @param tokenGenerator
-     * @param sysSourceService
-     * @param redisUtil
-     * @return
-     * @throws Exception
+     * OAuth2AuthorizationServer核心配置
      */
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -124,8 +112,7 @@ public class OAuth2AuthorizationServerConfig {
         DefaultSecurityFilterChain defaultSecurityFilterChain = http.securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
                 .authorizeHttpRequests(authorizeRequests -> {
                     // 忽略error
-                    authorizeRequests.requestMatchers("/error").permitAll();
-                    authorizeRequests.anyRequest().authenticated();
+                    authorizeRequests.requestMatchers(PATTERN).permitAll().anyRequest().authenticated();
                 })
                 .csrf(csrf -> csrf.ignoringRequestMatchers(authorizationServerConfigurer.getEndpointsMatcher()))
                 .apply(authorizationServerConfigurer
@@ -140,8 +127,7 @@ public class OAuth2AuthorizationServerConfig {
     }
 
     /**
-     * @param jdbcTemplate
-     * @return
+     * 注册信息
      */
     @Bean
     @ConditionalOnMissingBean(RegisteredClientRepository.class)
@@ -188,9 +174,7 @@ public class OAuth2AuthorizationServerConfig {
     }
 
     /**
-     *
-     * @param jwtEncoder
-     * @return
+     * 配置
      */
     @Bean
     OAuth2TokenGenerator<OAuth2Token> oAuth2TokenGenerator(JwtEncoder jwtEncoder) {
@@ -199,8 +183,7 @@ public class OAuth2AuthorizationServerConfig {
     }
 
     /**
-     *
-     * @return
+     * 配置
      */
     @Bean
     @ConditionalOnMissingBean(AuthorizationServerSettings.class)
@@ -209,8 +192,8 @@ public class OAuth2AuthorizationServerConfig {
     }
 
     /**
-     *
-     * @return
+     * 密码编码器
+     * @return PasswordEncoder
      */
     @Bean
     @ConditionalOnMissingBean(PasswordEncoder.class)
@@ -220,9 +203,9 @@ public class OAuth2AuthorizationServerConfig {
 
     /**
      *
-     * @param jdbcTemplate
-     * @param registeredClientRepository
-     * @return
+     * @param jdbcTemplate jdbc模板
+     * @param registeredClientRepository 注册信息
+     * @return OAuth2AuthorizationService
      */
     @Bean
     @ConditionalOnMissingBean(OAuth2AuthorizationService.class)
@@ -231,14 +214,10 @@ public class OAuth2AuthorizationServerConfig {
     }
 
     /**
-     *
-     * @param passwordEncoder
-     * @param userDetailsService
-     * @return
+     * 配置
      */
     @Bean
-    AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder
-            , UserDetailsService userDetailsService) {
+    AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
         daoAuthenticationProvider.setUserDetailsService(userDetailsService);
@@ -247,11 +226,10 @@ public class OAuth2AuthorizationServerConfig {
 
     /**
      * JWK资源
-     * @return
      */
     @Bean
-    JWKSource<SecurityContext> jwkSource() {
-        RSAKey rsaKey = getRSAKey();
+    JWKSource<SecurityContext> jwkSource(OAuth2AuthorizationServerProperties properties) {
+        RSAKey rsaKey = getRsaKey(properties);
         JWKSet jwkSet = new JWKSet(rsaKey);
         return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
     }
@@ -259,23 +237,19 @@ public class OAuth2AuthorizationServerConfig {
     /**
      * JWT解码器
      * 客户端认证授权后，需要访问用户信息，解码器可以从令牌中解析用户信息
-     * @return
-     * @throws CertificateException
      */
     @Bean
-    JwtDecoder jwtDecoder() throws CertificateException, IOException {
+    JwtDecoder jwtDecoder(OAuth2AuthorizationServerProperties properties) throws CertificateException, IOException {
         CertificateFactory certificateFactory = CertificateFactory.getInstance("x.509");
         // 读取cer公钥证书来配置解码器
-        InputStream inputStream = ResourceUtil.getResource("auth.cer").getInputStream();
+        InputStream inputStream = ResourceUtil.getResource(properties.getJwtDecoder().getPath()).getInputStream();
         Certificate certificate = certificateFactory.generateCertificate(inputStream);
         RSAPublicKey publicKey = (RSAPublicKey) certificate.getPublicKey();
         return NimbusJwtDecoder.withPublicKey(publicKey).build();
     }
 
     /**
-     *
-     * @param jwkSource
-     * @return
+     * 配置
      */
     @Bean
     JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
@@ -283,10 +257,10 @@ public class OAuth2AuthorizationServerConfig {
     }
 
     /**
-     *
-     * @param jdbcTemplate
-     * @param registeredClientRepository
-     * @return
+     * 配置
+     * @param jdbcTemplate jdbc模板
+     * @param registeredClientRepository 注册信息
+     * @return OAuth2AuthorizationConsentService
      */
     @Bean
     @ConditionalOnMissingBean(OAuth2AuthorizationConsentService.class)
@@ -295,14 +269,16 @@ public class OAuth2AuthorizationServerConfig {
     }
 
     /**
-     * 获取RSA密钥
-     * @return
+     * RSA密钥
+     * @param properties 配置
+     * @return RSAKey
      */
     @SneakyThrows
-    private RSAKey getRSAKey() {
-        String alias = "auth";
-        String password = "koushenhai";
-        String path = "auth.jks";
+    private RSAKey getRsaKey(OAuth2AuthorizationServerProperties properties) {
+        OAuth2AuthorizationServerProperties.JwkSource jwkSource = properties.getJwkSource();
+        String alias = jwkSource.getAlias();
+        String password = jwkSource.getPassword();
+        String path = jwkSource.getPath();
         InputStream inputStream = ResourceUtil.getResource(path).getInputStream();
         KeyStore jks = KeyStore.getInstance("jks");
         char[] pwd = password.toCharArray();
