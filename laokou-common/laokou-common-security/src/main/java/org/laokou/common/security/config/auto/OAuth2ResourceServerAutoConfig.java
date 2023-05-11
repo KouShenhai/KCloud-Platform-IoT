@@ -17,8 +17,10 @@ package org.laokou.common.security.config.auto;
 import org.laokou.auth.client.handler.ForbiddenExceptionHandler;
 import org.laokou.auth.client.handler.InvalidAuthenticationEntryPoint;
 import org.laokou.common.security.config.CustomOpaqueTokenIntrospector;
+import org.laokou.common.security.config.OAuth2ResourceServerProperties;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -29,48 +31,46 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 /**
  * @author laokou
  */
 @EnableWebSecurity
 @Configuration
 @EnableMethodSecurity
-@AutoConfigureAfter({AuthorizationAutoConfig.class})
-@Import(value = {CustomOpaqueTokenIntrospector.class
+@AutoConfigureAfter({OAuth2AuthorizationAutoConfig.class})
+@Import(value = { CustomOpaqueTokenIntrospector.class
         , ForbiddenExceptionHandler.class
-        , InvalidAuthenticationEntryPoint.class})
-public class SecurityAutoConfig {
+        , OAuth2ResourceServerProperties.class
+        , InvalidAuthenticationEntryPoint.class
+})
+@ConditionalOnProperty(havingValue = "true",matchIfMissing = true,prefix = OAuth2ResourceServerProperties.PREFIX,name = "enabled")
+public class OAuth2ResourceServerAutoConfig {
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE + 1000)
     @ConditionalOnMissingBean(SecurityFilterChain.class)
-    SecurityFilterChain resourceFilterChain(
-            CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector
+    SecurityFilterChain resourceFilterChain(CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector
             , InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint
             , ForbiddenExceptionHandler forbiddenExceptionHandler
+            , OAuth2ResourceServerProperties properties
             , HttpSecurity http) throws Exception {
-        return http
-                .csrf().disable()
-                .cors()
-                .and()
-                .sessionManagement()
+        Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns()).orElseGet(HashSet::new);
+        return http.csrf().disable()
+                .cors().disable()
                 // 基于token，关闭session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeHttpRequests().requestMatchers("/v3/api-docs/**"
-                        , "/swagger-ui.html"
-                        , "/swagger-ui/**"
-                        , "/actuator/**").permitAll()
-                .and()
-                .authorizeHttpRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().authorizeHttpRequests().requestMatchers(patterns.toArray(String[]::new)).permitAll()
+                .and().authorizeHttpRequests()
+                .anyRequest().authenticated()
                 // https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
                 // 除非提供自定义的 OpaqueTokenIntrospector，否则资源服务器将回退到 NimbusOpaqueTokenIntrospector
-                .oauth2ResourceServer(oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
-                        .accessDeniedHandler(forbiddenExceptionHandler)
-                        .authenticationEntryPoint(invalidAuthenticationEntryPoint))
+                .and().oauth2ResourceServer(oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
+                        .accessDeniedHandler(forbiddenExceptionHandler).authenticationEntryPoint(invalidAuthenticationEntryPoint))
                 .build();
     }
 

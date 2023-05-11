@@ -39,6 +39,16 @@ spring:
       enabled: true
       max-file-size: -1
       max-request-size: -1
+  security:
+    oauth2:
+      resource-server:
+        enabled: true
+        requestMatcher:
+          patterns:
+            - /v3/api-docs/**
+            - /swagger-ui.html
+            - /swagger-ui/**
+            - /actuator/**
   cloud:
     # sentinel
     sentinel:

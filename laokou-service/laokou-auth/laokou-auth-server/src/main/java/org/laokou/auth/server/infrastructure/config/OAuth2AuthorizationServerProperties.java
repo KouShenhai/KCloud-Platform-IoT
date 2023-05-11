@@ -38,6 +38,9 @@ public class OAuth2AuthorizationServerProperties {
     private Token token;
     private Client client;
     private Registration registration;
+    private RequestMatcher requestMatcher;
+    private JwkSource jwkSource;
+    private JwtDecoder jwtDecoder;
 
     @Data
     public static class Token {
@@ -80,6 +83,23 @@ public class OAuth2AuthorizationServerProperties {
         private Set<String> authorizationGrantTypes;
         private Set<String> scopes;
         private Set<String> redirectUris;
+    }
+
+    @Data
+    public static class RequestMatcher {
+        private Set<String> patterns;
+    }
+
+    @Data
+    public static class JwkSource {
+        private String alias;
+        private String password;
+        private String path;
+    }
+
+    @Data
+    public static class JwtDecoder {
+        private String path;
     }
 
 }

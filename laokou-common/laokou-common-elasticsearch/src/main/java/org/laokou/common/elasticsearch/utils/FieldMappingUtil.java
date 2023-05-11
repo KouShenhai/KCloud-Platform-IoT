@@ -26,7 +26,7 @@ import java.util.List;
 @Slf4j
 public class FieldMappingUtil {
 
-    public static List<FieldMapping> getFieldInfo(Class clazz) {
+    public static <TDocument> List<FieldMapping> getFieldInfo(Class<TDocument> clazz) {
         // 返回class中的所有字段（包括私有字段）
         Field[] fields = clazz.getDeclaredFields();
         // 创建FieldMapping集合

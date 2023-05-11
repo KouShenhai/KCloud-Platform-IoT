@@ -91,3 +91,19 @@ spring:
           redirectUris:
             - http://127.0.0.1:8000
             - http://127.0.0.1:8001
+        requestMatcher:
+          patterns:
+            - /v3/api-docs/**
+            - /swagger-ui.html
+            - /swagger-ui/**
+            - /oauth2/captcha
+            - /oauth2/logout
+            - /oauth2/tenant
+            - /oauth2/public_key
+            - /actuator/**
+        jwkSource:
+          path: auth.jks
+          alias: auth
+          password: koushenhai
+        jwtDecoder:
+          path: auth.cer
