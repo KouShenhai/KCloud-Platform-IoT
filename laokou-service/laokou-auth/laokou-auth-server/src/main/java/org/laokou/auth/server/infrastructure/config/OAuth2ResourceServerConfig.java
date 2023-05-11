@@ -41,7 +41,7 @@ public class OAuth2ResourceServerConfig {
      */
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,OAuth2AuthorizationServerProperties properties) throws Exception {
-        Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns()).orElse(new HashSet<>(0));
+        Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns()).orElseGet(HashSet::new);
         return http.authorizeHttpRequests().requestMatchers(patterns.toArray(String[]::new)).permitAll()
                 .and().authorizeHttpRequests()
                 .anyRequest().authenticated()
