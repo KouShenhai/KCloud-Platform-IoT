@@ -42,7 +42,7 @@ import java.util.Set;
 @EnableWebSecurity
 @Configuration
 @EnableMethodSecurity
-@AutoConfigureAfter({AuthorizationAutoConfig.class})
+@AutoConfigureAfter({OAuth2AuthorizationAutoConfig.class})
 @Import(value = { CustomOpaqueTokenIntrospector.class
         , ForbiddenExceptionHandler.class
         , OAuth2ResourceServerProperties.class

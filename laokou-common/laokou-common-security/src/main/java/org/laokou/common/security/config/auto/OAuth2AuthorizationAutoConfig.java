@@ -33,7 +33,7 @@ import javax.sql.DataSource;
  */
 @AutoConfiguration(before = {JdbcTemplateAutoConfiguration.class})
 @ConditionalOnClass({DataSource.class})
-public class AuthorizationAutoConfig {
+public class OAuth2AuthorizationAutoConfig {
 
     @Bean
     @ConditionalOnMissingBean(OAuth2AuthorizationService.class)
