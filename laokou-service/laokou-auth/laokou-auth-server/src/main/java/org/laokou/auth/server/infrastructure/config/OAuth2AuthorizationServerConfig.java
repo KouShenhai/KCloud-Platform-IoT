@@ -79,6 +79,9 @@ import java.util.List;
 @ConditionalOnProperty(havingValue = "true",matchIfMissing = true,prefix = OAuth2AuthorizationServerProperties.PREFIX,name = "enabled")
 public class OAuth2AuthorizationServerConfig {
 
+    /**
+     * 忽略error
+     */
     private static final String PATTERN = "/error";
 
     /**
@@ -111,7 +114,6 @@ public class OAuth2AuthorizationServerConfig {
                         , new OAuth2AuthorizationCodeRequestAuthenticationConverter())))));
         DefaultSecurityFilterChain defaultSecurityFilterChain = http.securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
                 .authorizeHttpRequests(authorizeRequests -> {
-                    // 忽略error
                     authorizeRequests.requestMatchers(PATTERN).permitAll().anyRequest().authenticated();
                 })
                 .csrf(csrf -> csrf.ignoringRequestMatchers(authorizationServerConfigurer.getEndpointsMatcher()))
