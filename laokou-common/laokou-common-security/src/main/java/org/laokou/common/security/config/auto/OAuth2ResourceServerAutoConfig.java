@@ -51,6 +51,13 @@ import java.util.Set;
 @ConditionalOnProperty(havingValue = "true",matchIfMissing = true,prefix = OAuth2ResourceServerProperties.PREFIX,name = "enabled")
 public class OAuth2ResourceServerAutoConfig {
 
+    private static final String[] IGNORE_URIS = {
+              "/v3/api-docs/**"
+            , "/swagger-ui.html"
+            , "/swagger-ui/**"
+            , "/actuator/**"
+    };
+
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE + 1000)
     @ConditionalOnMissingBean(SecurityFilterChain.class)
@@ -64,7 +71,9 @@ public class OAuth2ResourceServerAutoConfig {
                 .cors().disable()
                 // 基于token，关闭session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeHttpRequests().requestMatchers(patterns.toArray(String[]::new)).permitAll()
+                .and().authorizeHttpRequests()
+                .requestMatchers(IGNORE_URIS).permitAll()
+                .requestMatchers(patterns.toArray(String[]::new)).permitAll()
                 .and().authorizeHttpRequests()
                 .anyRequest().authenticated()
                 // https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
