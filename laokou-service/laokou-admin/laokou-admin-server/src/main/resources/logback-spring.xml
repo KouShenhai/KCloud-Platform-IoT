@@ -25,12 +25,12 @@
     %d         => 日期
     %-5level   => 日志等级
     %thread    => 日志类名
-    %logger{0} => 类名缩写
+    %logger    => 类名缩写
     %msg       => 消息内容
     %red       => 颜色（红色）
     %n         => 换行
     -->
-    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} ---> [%X{trace-id}] - [ %red(%-5level)] - [%thread,${PID}] - %logger{0} : %msg%n"/>
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} ---> [%X{trace-id}] - [ %red(%-5level)] - [%thread,${PID}] - %logger : %msg%n"/>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
@@ -42,7 +42,7 @@
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>${LOG_PATH}/${APP_NAME}.log</File>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%d{yyyy-MM-dd HH:mm:ss} ---> [%X{trace-id}] - [ %-5level] - [%thread,${PID}] - %logger{0} : %msg%n</Pattern>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} ---> [%X{trace-id}] - [ %-5level] - [%thread,${PID}] - %logger : %msg%n</Pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
@@ -69,7 +69,7 @@
                 "level":"%-5level",
                 "pid":"${PID}",
                 "thread":"%thread",
-                "logger":"%logger{0}",
+                "logger":"%logger",
                 "msg":"%msg"
                 }
             </pattern>
