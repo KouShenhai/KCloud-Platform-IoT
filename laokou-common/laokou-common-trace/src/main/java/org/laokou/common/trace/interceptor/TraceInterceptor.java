@@ -15,6 +15,7 @@
  */
 
 package org.laokou.common.trace.interceptor;
+import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.constant.Constant;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 /**
  * @author laokou
  */
+@NonNullApi
 public class TraceInterceptor implements HandlerInterceptor {
 
     @Override

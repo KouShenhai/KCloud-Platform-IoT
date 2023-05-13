@@ -96,20 +96,8 @@
 			<artifactId>jasypt-spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-elasticsearch</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-loadbalancer</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.github.oshi</groupId>
@@ -125,15 +113,15 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
+			<artifactId>laokou-common-nacos</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-auth-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-flowable-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>

@@ -23,11 +23,13 @@ import java.util.Locale;
  */
 public class LocaleUtil {
 
+    private static final String SPLIT = "-";
+
     public static Locale toLocale(String language) {
         if (StringUtils.isBlank(language)) {
             return LocaleContextHolder.getLocale();
         }
-        String[] str = language.split("-");
+        String[] str = language.split(SPLIT);
         // 国家 地区
         return new Locale(str[0], str[1]);
     }
