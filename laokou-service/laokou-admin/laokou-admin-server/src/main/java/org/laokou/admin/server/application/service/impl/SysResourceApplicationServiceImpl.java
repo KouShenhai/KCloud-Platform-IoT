@@ -194,7 +194,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         String fileName = file.getOriginalFilename();
         assert fileName != null;
         String fileExt = FileUtil.getFileExt(fileName);
-        if (StringUtil.isNotBlank(code) && !FileUtil.checkFileExt(code,fileExt)) {
+        if (StringUtil.isNotEmpty(code) && !FileUtil.checkFileExt(code,fileExt)) {
             throw new CustomException("格式不正确，请重新上传资源");
         }
         return ossTemplate.upload(size,md5,fileName,contentType,inputStream);

@@ -62,7 +62,7 @@ public class IpUtil {
     }
 
     private static boolean conditionNull(String ip) {
-        return StringUtil.isBlank(ip) || IP_UNKNOWN.equalsIgnoreCase(ip);
+        return StringUtil.isEmpty(ip) || IP_UNKNOWN.equalsIgnoreCase(ip);
     }
 
     private static boolean internalIp(byte[] addr) {

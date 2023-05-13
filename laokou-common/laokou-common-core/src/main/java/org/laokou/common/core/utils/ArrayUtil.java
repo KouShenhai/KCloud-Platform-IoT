@@ -21,7 +21,7 @@ import org.apache.commons.lang3.ArrayUtils;
 /**
  * @author laokou
  */
-public class ArrayUtil extends ArrayUtils {
+public class ArrayUtil {
 
     public static boolean isNotEmpty(Object[] array) {
         return ArrayUtils.isNotEmpty(array);
