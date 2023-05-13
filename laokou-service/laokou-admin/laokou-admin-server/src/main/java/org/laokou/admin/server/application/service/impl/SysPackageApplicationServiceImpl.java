@@ -15,12 +15,12 @@
  */
 package org.laokou.admin.server.application.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysPackageApplicationService;
 import org.laokou.auth.client.utils.UserUtil;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.i18n.core.CustomException;
@@ -48,7 +48,7 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
 
     private final SysPackageService sysPackageService;
     private final SysPackageMenuService sysPackageMenuService;
-    private final BatchUtil<SysPackageMenuDO> batchUtil;
+    private final BatchUtil batchUtil;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -109,7 +109,7 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
     }
 
     private boolean saveOrUpdate(List<Long> menuIds,Long id) {
-        if (CollectionUtils.isNotEmpty(menuIds)) {
+        if (CollectionUtil.isNotEmpty(menuIds)) {
             List<SysPackageMenuDO> list = new ArrayList<>(menuIds.size());
             for (Long menuId : menuIds) {
                 SysPackageMenuDO sysPackageMenuDO = new SysPackageMenuDO();

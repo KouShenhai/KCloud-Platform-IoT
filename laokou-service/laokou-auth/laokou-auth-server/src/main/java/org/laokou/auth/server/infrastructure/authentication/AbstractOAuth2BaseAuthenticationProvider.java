@@ -22,6 +22,7 @@ import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.common.core.enums.ResultStatusEnum;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.RequestUtil;
@@ -49,7 +50,6 @@ import org.springframework.security.oauth2.server.authorization.context.Authoriz
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
@@ -260,7 +260,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
         Integer superAdmin = userDetail.getSuperAdmin();
         // 权限标识列表
         List<String> permissionsList = sysMenuService.getPermissionsList(tenantId,superAdmin,userId);
-        if (CollectionUtils.isEmpty(permissionsList)) {
+        if (CollectionUtil.isEmpty(permissionsList)) {
             code = StatusCode.USERNAME_NOT_PERMISSION;
             msg = MessageUtil.getMessage(code);
             log.info("登录失败，状态码：{}，错误信息：{}",code,msg);

@@ -16,7 +16,6 @@
 package org.laokou.common.core.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.util.CollectionUtils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +40,7 @@ public class ConvertUtil extends BeanUtils{
     }
 
     public static <T> List<T> sourceToTarget(Collection<?> sourceList, Class<T> target) {
-        if (CollectionUtils.isEmpty(sourceList)) {
+        if (CollectionUtil.isEmpty(sourceList)) {
             return Collections.emptyList();
         }
         return sourceList.stream().map(s -> sourceToTarget(s, target)).toList();

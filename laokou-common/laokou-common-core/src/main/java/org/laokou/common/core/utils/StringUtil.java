@@ -23,11 +23,19 @@ import org.apache.commons.lang3.StringUtils;
 public class StringUtil {
 
     public static boolean isNotEmpty(String str) {
-        return StringUtils.isNotBlank(str);
+        return StringUtils.isNotEmpty(str);
     }
 
     public static boolean isEmpty(String str) {
-        return StringUtils.isBlank(str);
+        return StringUtils.isEmpty(str);
+    }
+
+    public static String removeStart(String str, String remove) {
+        return StringUtils.removeStart(str,remove);
+    }
+
+    public static String substringBetween(String str, String open, String close) {
+        return StringUtils.substringBetween(str,open,close);
     }
 
 }

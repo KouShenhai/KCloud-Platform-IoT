@@ -83,7 +83,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(token)){
             token = request.getQueryParams().getFirst(Constant.AUTHORIZATION_HEAD);
         }
-        return StringUtil.isBlank(token) ? "" : token.trim();
+        return StringUtil.isEmpty(token) ? "" : token.trim();
     }
 
     /**
@@ -97,7 +97,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(userId)){
             userId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USER_ID);
         }
-        return StringUtil.isBlank(userId) ? "" : userId.trim();
+        return StringUtil.isEmpty(userId) ? "" : userId.trim();
     }
 
 
@@ -112,7 +112,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(username)){
             username = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USER_NAME);
         }
-        return StringUtil.isBlank(username) ? "" : username.trim();
+        return StringUtil.isEmpty(username) ? "" : username.trim();
     }
 
     /**
@@ -126,7 +126,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(tenantId)){
             tenantId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_TENANT_ID);
         }
-        return StringUtil.isBlank(tenantId) ? "" : tenantId.trim();
+        return StringUtil.isEmpty(tenantId) ? "" : tenantId.trim();
     }
 
     /**

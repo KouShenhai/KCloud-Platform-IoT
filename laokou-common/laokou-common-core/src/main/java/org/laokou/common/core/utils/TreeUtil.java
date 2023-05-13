@@ -15,7 +15,6 @@
  */
 package org.laokou.common.core.utils;
 import lombok.Data;
-import org.apache.commons.collections4.CollectionUtils;
 import org.laokou.common.i18n.core.CustomException;
 
 import java.util.*;
@@ -44,7 +43,7 @@ public class TreeUtil {
         for (T treeNo : treeNodes) {
             T parent = nodeMap.get(treeNo.getPid());
             if (parent != null && treeNo.getPid().equals(parent.getId())) {
-                if (CollectionUtils.isEmpty(parent.getChildren())) {
+                if (CollectionUtil.isEmpty(parent.getChildren())) {
                     parent.setChildren(new ArrayList<>(0));
                 }
                 parent.getChildren().add(treeNo);

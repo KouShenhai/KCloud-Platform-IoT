@@ -83,15 +83,15 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
      */
     private UserDetail decryptInfo(UserDetail userDetail) {
         String username = userDetail.getUsername();
-        if (StringUtil.isNotBlank(username)) {
+        if (StringUtil.isNotEmpty(username)) {
             userDetail.setUsername(AESUtil.decrypt(username));
         }
         String mail = userDetail.getMail();
-        if (StringUtil.isNotBlank(mail)) {
+        if (StringUtil.isNotEmpty(mail)) {
             userDetail.setMail(AESUtil.decrypt(mail));
         }
         String mobile = userDetail.getMobile();
-        if (StringUtil.isNotBlank(mail)) {
+        if (StringUtil.isNotEmpty(mail)) {
             userDetail.setMobile(AESUtil.decrypt(mobile));
         }
         return userDetail;

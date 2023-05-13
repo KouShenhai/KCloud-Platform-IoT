@@ -31,6 +31,7 @@ import org.laokou.admin.server.domain.sys.repository.service.SysUserRoleService;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
 import org.laokou.admin.server.interfaces.qo.SysUserOnlineQo;
 import org.laokou.common.core.constant.Constant;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.admin.server.interfaces.qo.SysUserQo;
 import org.laokou.admin.client.vo.SysUserVO;
@@ -50,7 +51,6 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +74,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
     private final PasswordEncoder passwordEncoder;
 
-    private final BatchUtil<SysUserRoleDO> batchUtil;
+    private final BatchUtil batchUtil;
     private final RedisUtil redisUtil;
 
     @Override
@@ -86,7 +86,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (null == id) {
             throw new CustomException("用户编号不为空");
         }
-        if (CollectionUtils.isEmpty(dto.getRoleIds())) {
+        if (CollectionUtil.isEmpty(dto.getRoleIds())) {
             throw new CustomException("所选角色不少于一个，请重新选择");
         }
         if (dto.getDeptId() == null) {
@@ -100,7 +100,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         DynamicDataSourceContextHolder.push(DEFAULT_SOURCE);
         //删除中间表
         sysUserRoleService.remove(Wrappers.lambdaQuery(SysUserRoleDO.class).eq(SysUserRoleDO::getUserId, dto.getId()));
-        if (!CollectionUtils.isEmpty(roleIds)) {
+        if (!CollectionUtil.isEmpty(roleIds)) {
             saveOrUpdate(dto.getId(),roleIds);
         }
         DynamicDataSourceContextHolder.clear();
@@ -174,7 +174,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         if (count > 0) {
             throw new CustomException("用户名已存在，请重新填写");
         }
-        if (CollectionUtils.isEmpty(dto.getRoleIds())) {
+        if (CollectionUtil.isEmpty(dto.getRoleIds())) {
             throw new CustomException("所选角色不少于一个，请重新选择");
         }
         if (dto.getDeptId() == null) {
@@ -189,7 +189,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         sysUserDO.setPassword(passwordEncoder.encode(dto.getPassword()));
         sysUserService.save(sysUserDO);
         List<Long> roleIds = dto.getRoleIds();
-        if (!CollectionUtils.isEmpty(roleIds)) {
+        if (!CollectionUtil.isEmpty(roleIds)) {
             saveOrUpdate(sysUserDO.getId(),roleIds);
         }
         return true;
@@ -204,7 +204,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         IPage<SysUserVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
         IPage<SysUserVO> userPage = sysUserService.getUserPage(page, qo);
         List<SysUserVO> records = userPage.getRecords();
-        if (!CollectionUtils.isEmpty(records)) {
+        if (!CollectionUtil.isEmpty(records)) {
             records.forEach(item -> item.setUsername(AESUtil.decrypt(item.getUsername())));
         }
         return userPage;
@@ -239,7 +239,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
     public List<OptionVO> getOptionList() {
         Long tenantId = UserUtil.getTenantId();
         List<OptionVO> optionList = sysUserService.getOptionList(tenantId);
-        if (!CollectionUtils.isEmpty(optionList)) {
+        if (!CollectionUtil.isEmpty(optionList)) {
             optionList.forEach(item -> item.setLabel(AESUtil.decrypt(item.getLabel())));
         }
         return optionList;
@@ -296,7 +296,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
     private void saveOrUpdate(Long userId, List<Long> roleIds) {
         List<SysUserRoleDO> doList = new ArrayList<>(roleIds.size());
-        if (!CollectionUtils.isEmpty(roleIds)) {
+        if (!CollectionUtil.isEmpty(roleIds)) {
             for (Long roleId : roleIds) {
                 SysUserRoleDO sysUserRoleDO = new SysUserRoleDO();
                 sysUserRoleDO.setRoleId(roleId);

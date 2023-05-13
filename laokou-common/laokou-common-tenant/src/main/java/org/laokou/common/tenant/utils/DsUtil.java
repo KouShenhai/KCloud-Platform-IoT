@@ -22,7 +22,7 @@ import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourcePrope
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
@@ -87,7 +87,6 @@ public class DsUtil {
 
     /**
      * 连接数据库
-     * @param properties
      */
     @SneakyThrows
     private void connDs(DataSourceProperty properties) {
@@ -113,23 +112,14 @@ public class DsUtil {
                 tables.add(tableName);
             }
             List<String> list = TABLES.stream().filter(item -> !tables.contains(item)).collect(Collectors.toList());
-            if (CollectionUtils.isNotEmpty(list)) {
-                throw new CustomException(String.format("%s不存在，请检查数据库表",list.stream().collect(Collectors.joining("、"))));
+            if (CollectionUtil.isNotEmpty(list)) {
+                throw new CustomException(String.format("%s不存在，请检查数据库表", String.join("、", list)));
             }
-        } catch (Exception e) {
-            throw e;
         } finally {
             if (connection != null) {
                 connection.close();
             }
         }
-    }
-
-    public static void main(String[] args) {
-        List<Integer> int1 = List.of(1, 2);
-        ArrayList<Integer> int2 = new ArrayList<>();
-        List<Integer> collect = int1.stream().filter(i -> !int2.contains(i)).collect(Collectors.toList());
-        System.out.println(collect);
     }
 
 }
