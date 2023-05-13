@@ -56,7 +56,8 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.elasticsearch.xcontent.XContentBuilder;
 import org.elasticsearch.xcontent.XContentFactory;
 import org.elasticsearch.xcontent.XContentType;
-import org.laokou.common.core.utils.EmptyUtil;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.StringUtil;
 import org.laokou.common.elasticsearch.constant.EsConstant;
 import org.laokou.common.elasticsearch.dto.AggregationDTO;
 import org.laokou.common.elasticsearch.dto.SearchDTO;
@@ -93,7 +94,7 @@ public class ElasticsearchTemplate {
      */
     public Boolean syncBatchIndex(String indexName, String jsonDataList) throws IOException {
         // 判空
-        if (EmptyUtil.isEmpty(jsonDataList)) {
+        if (StringUtil.isEmpty(jsonDataList)) {
             log.error("数据为空，无法批量同步数据");
             return false;
         }
@@ -138,7 +139,7 @@ public class ElasticsearchTemplate {
      */
     public Boolean updateBatchIndex(String indexName, String jsonDataList, Class<?> clazz) {
         //判空
-        if (EmptyUtil.isEmpty(jsonDataList)) {
+        if (StringUtil.isEmpty(jsonDataList)) {
             log.error("数据为空，无法批量修改数据");
             return false;
         }
@@ -256,7 +257,7 @@ public class ElasticsearchTemplate {
      * @return Boolean
      */
     public Boolean deleteBatchIndex(String indexName, List<String> ids) {
-        if (EmptyUtil.isEmpty(ids)) {
+        if (CollectionUtil.isEmpty(ids)) {
             log.error("ids为空，不能批量删除数据");
             return false;
         }
@@ -392,7 +393,7 @@ public class ElasticsearchTemplate {
      */
     public void syncAsyncBatchIndex(String indexName, String jsonDataList) {
         // 判空
-        if (EmptyUtil.isEmpty(jsonDataList)) {
+        if (StringUtil.isEmpty(jsonDataList)) {
             log.error("数据为空，无法批量异步同步数据");
             return;
         }
@@ -835,7 +836,7 @@ public class ElasticsearchTemplate {
         final List<SearchDTO> queryStringList = searchQo.getQueryStringList();
         // or查询
         final List<SearchDTO> orSearchList = searchQo.getOrSearchList();
-        if (EmptyUtil.isNotEmpty(orSearchList)) {
+        if (CollectionUtil.isNotEmpty(orSearchList)) {
             // or查询
             BoolQueryBuilder orQuery = QueryBuilders.boolQuery();
             for (SearchDTO dto : orSearchList) {
@@ -843,7 +844,7 @@ public class ElasticsearchTemplate {
             }
             boolQueryBuilder.must(orQuery);
         }
-        if (EmptyUtil.isNotEmpty(queryStringList)) {
+        if (CollectionUtil.isNotEmpty(queryStringList)) {
             // 分词查询
             BoolQueryBuilder analysisQuery = QueryBuilders.boolQuery();
             for (SearchDTO dto : queryStringList) {
@@ -898,7 +899,7 @@ public class ElasticsearchTemplate {
         // 匹配度倒排，数值越大匹配度越高
         searchSourceBuilder.sort("_score",SortOrder.DESC);
         // 排序
-        if (EmptyUtil.isNotEmpty(sortFieldList)) {
+        if (CollectionUtil.isNotEmpty(sortFieldList)) {
             for (SearchDTO dto : sortFieldList) {
                 SortOrder sortOrder;
                 final String desc = "desc";
@@ -937,7 +938,7 @@ public class ElasticsearchTemplate {
         String groupKey = aggregationKey.getGroupKey();
         String script = aggregationKey.getScript();
         TermsAggregationBuilder aggregationBuilder;
-        if (EmptyUtil.isNotEmpty(field)) {
+        if (StringUtil.isNotEmpty(field)) {
             aggregationBuilder = AggregationBuilders.terms(groupKey).field(field).size(100000);
         } else {
             aggregationBuilder = AggregationBuilders.terms(groupKey).script(new Script(script)).size(100000);

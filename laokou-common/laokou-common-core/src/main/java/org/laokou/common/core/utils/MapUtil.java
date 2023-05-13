@@ -16,6 +16,7 @@
 package org.laokou.common.core.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -32,8 +33,18 @@ import java.util.Map;
  */
 public class MapUtil {
 
+    private static final String AND = "&";
+
+    public static boolean isNotEmpty(Map<?,?> map) {
+        return MapUtils.isNotEmpty(map);
+    }
+
+    public static boolean isEmpty(Map<?,?> map) {
+        return MapUtils.isEmpty(map);
+    }
+
     public static Map<String,String> parseParamMap(String params) {
-        String[] strings = params.split("&");
+        String[] strings = params.split(AND);
         int length = strings.length;
         if (length == 0) {
             return new HashMap<>(0);
@@ -59,14 +70,7 @@ public class MapUtil {
             String value = entry.getValue();
             stringBuilder.append(key).append("=").append(URLEncoder.encode(value,StandardCharsets.UTF_8)).append("&");
         }
-        return StringUtils.substringBeforeLast(stringBuilder.toString(),"&");
-    }
-
-    public static void main(String[] args) {
-        String params = "k=1&v=2";
-        Map<String, String> stringStringMap = parseParamMap(params);
-        System.out.println(stringStringMap);
-        System.out.println(parseParams(stringStringMap));
+        return StringUtils.substringBeforeLast(stringBuilder.toString(),AND);
     }
 
     public static MultiValueMap<String, String> getParameters(HttpServletRequest request) {

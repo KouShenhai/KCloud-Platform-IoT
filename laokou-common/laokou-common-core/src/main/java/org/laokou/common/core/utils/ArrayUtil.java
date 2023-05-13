@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.laokou.common.core.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * @author laokou
  */
-public class StringUtil {
+public class ArrayUtil extends ArrayUtils {
 
-    public static boolean isNotEmpty(String str) {
-        return StringUtils.isNotBlank(str);
+    public static boolean isNotEmpty(Object[] array) {
+        return ArrayUtils.isNotEmpty(array);
     }
 
-    public static boolean isEmpty(String str) {
-        return StringUtils.isBlank(str);
+    public static boolean isEmpty(Object[] array) {
+        return ArrayUtils.isEmpty(array);
     }
 
 }

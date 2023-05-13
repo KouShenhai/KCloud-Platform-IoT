@@ -16,7 +16,11 @@
 
 package org.laokou.admin.server;
 
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
+import com.alibaba.nacos.api.naming.NamingService;
+import com.alibaba.nacos.api.naming.pojo.Instance;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.constant.ServiceConstant;
@@ -25,6 +29,8 @@ import org.laokou.common.nacos.utils.ServiceUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.test.context.TestConstructor;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -36,11 +42,17 @@ import org.springframework.test.context.TestConstructor;
 public class ServiceInstanceTest {
 
     private final ServiceUtil serviceUtil;
+    private final NacosDiscoveryProperties nacosDiscoveryProperties;
+    private final NamingService namingService;
 
     @Test
+    @SneakyThrows
     void test() {
         ServiceInstance serviceInstance = serviceUtil.getServiceInstance(ServiceConstant.LAOKOU_FLOWABLE);
+        log.info("properties：{}",JacksonUtil.toJsonStr(nacosDiscoveryProperties));
         log.info("data -> ：{}", JacksonUtil.toJsonStr(serviceInstance));
+        List<Instance> allInstances = namingService.getAllInstances(ServiceConstant.LAOKOU_FLOWABLE);
+        log.info("获取服务列表：{}",JacksonUtil.toJsonStr(allInstances));
     }
 
 }
