@@ -15,10 +15,20 @@
  */
 
 package org.laokou.common.nacos.utils;
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
+import com.alibaba.nacos.api.NacosFactory;
+import com.alibaba.nacos.api.PropertyKeyConst;
+import com.alibaba.nacos.api.naming.NamingService;
+import com.alibaba.nacos.api.naming.pojo.Instance;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.laokou.common.nacos.enums.InstanceEnum;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Properties;
 
 /**
  * <a href="https://github.com/alibaba/spring-cloud-alibaba/wiki/Nacos-discovery">...</a>
@@ -29,9 +39,47 @@ import org.springframework.stereotype.Component;
 public class ServiceUtil {
 
     private final LoadBalancerClient loadBalancerClient;
+    private final NacosDiscoveryProperties nacosDiscoveryProperties;
 
     public ServiceInstance getServiceInstance(String serviceId) {
         return loadBalancerClient.choose(serviceId);
+    }
+
+    public void registerInstance() {
+        instance(null,InstanceEnum.REGISTER);
+    }
+
+    public void registerInstance(Double wight) {
+        instance(wight,InstanceEnum.REGISTER);
+    }
+
+    public void deregisterInstance() {
+        instance(null,InstanceEnum.DEREGISTER);
+    }
+
+    @SneakyThrows
+    private void instance(Double wight,InstanceEnum instanceEnum) {
+        Properties properties = new Properties();
+        properties.put(PropertyKeyConst.NAMESPACE,nacosDiscoveryProperties.getNamespace());
+        properties.put(PropertyKeyConst.SERVER_ADDR,nacosDiscoveryProperties.getServerAddr());
+        String serviceName = nacosDiscoveryProperties.getService();
+        NamingService namingService = NacosFactory.createNamingService(properties);
+        List<Instance> allInstances = namingService.getAllInstances(serviceName);
+        for (Instance instance : allInstances) {
+            String ip = nacosDiscoveryProperties.getIp();
+            if (ip.equals(instance.getIp())) {
+                switch (instanceEnum) {
+                    case REGISTER -> {
+                        if (wight != null) {
+                            instance.setWeight(wight);
+                        }
+                        namingService.registerInstance(serviceName, instance);
+                    }
+                    case DEREGISTER -> namingService.deregisterInstance(serviceName,instance);
+                    default -> {}
+                }
+            }
+        }
     }
 
 }
