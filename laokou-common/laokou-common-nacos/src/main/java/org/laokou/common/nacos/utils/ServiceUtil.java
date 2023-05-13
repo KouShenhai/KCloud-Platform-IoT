@@ -46,19 +46,19 @@ public class ServiceUtil {
     }
 
     public void registerInstance() {
-        instance(null,InstanceEnum.REGISTER);
+        instance(1.0,InstanceEnum.REGISTER);
     }
 
-    public void registerInstance(Double wight) {
+    public void registerInstance(double wight) {
         instance(wight,InstanceEnum.REGISTER);
     }
 
     public void deregisterInstance() {
-        instance(null,InstanceEnum.DEREGISTER);
+        instance(1.0,InstanceEnum.DEREGISTER);
     }
 
     @SneakyThrows
-    private void instance(Double wight,InstanceEnum instanceEnum) {
+    private void instance(double wight,InstanceEnum instanceEnum) {
         Properties properties = new Properties();
         properties.put(PropertyKeyConst.NAMESPACE,nacosDiscoveryProperties.getNamespace());
         properties.put(PropertyKeyConst.SERVER_ADDR,nacosDiscoveryProperties.getServerAddr());
@@ -70,9 +70,7 @@ public class ServiceUtil {
             if (ip.equals(instance.getIp())) {
                 switch (instanceEnum) {
                     case REGISTER -> {
-                        if (wight != null) {
-                            instance.setWeight(wight);
-                        }
+                        instance.setWeight(wight);
                         namingService.registerInstance(serviceName, instance);
                     }
                     case DEREGISTER -> namingService.deregisterInstance(serviceName,instance);
