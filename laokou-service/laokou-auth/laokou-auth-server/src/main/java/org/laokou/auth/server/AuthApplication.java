@@ -17,6 +17,7 @@ package org.laokou.auth.server;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.dynamic.router.utils.RouterUtil;
+import org.laokou.common.nacos.utils.ServiceUtil;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -44,7 +45,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class AuthApplication implements CommandLineRunner {
 
     private final RouterUtil routerUtil;
-
+    private final ServiceUtil serviceUtil;
     public static void main(String[] args) {
         // SpringSecurity 子线程读取父线程的上下文
         System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
@@ -56,5 +57,6 @@ public class AuthApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         routerUtil.initRouter();
+        serviceUtil.deregisterInstance();
     }
 }

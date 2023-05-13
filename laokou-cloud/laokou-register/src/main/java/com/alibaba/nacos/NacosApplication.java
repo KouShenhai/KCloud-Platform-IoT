@@ -20,6 +20,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
+import static com.alibaba.nacos.sys.env.EnvUtil.NACOS_HOME_KEY;
+
 /**
  * @version 2.2.0
  * Nacos starter.
@@ -31,6 +34,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableEncryptableProperties
 public class NacosApplication{
     public static void main(String[] args) {
+        System.setProperty(NACOS_HOME_KEY,"nacos/data/protocol/raft");
         SpringApplication.run(NacosApplication.class, args);
     }
 }
