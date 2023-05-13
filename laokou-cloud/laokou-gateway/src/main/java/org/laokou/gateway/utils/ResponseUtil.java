@@ -29,7 +29,8 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.util.Set;
+
 /**
  * 响应工具
  * @author laokou
@@ -133,7 +134,7 @@ public class ResponseUtil {
      * @param requestUri 请求uri
      * @param uris 忽略uris
      */
-    public static boolean pathMatcher(String requestUri, List<String> uris) {
+    public static boolean pathMatcher(String requestUri, Set<String> uris) {
         for (String url : uris) {
             if (ANT_PATH_MATCHER.match(url, requestUri)) {
                 return true;

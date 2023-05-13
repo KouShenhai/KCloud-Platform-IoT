@@ -45,8 +45,8 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import static org.laokou.gateway.constant.GatewayConstant.OAUTH2_AUTH_URI;
 /**
@@ -63,7 +63,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
     /**
      * 不拦截的urls
      */
-    private List<String> uris;
+    private Set<String> uris;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
