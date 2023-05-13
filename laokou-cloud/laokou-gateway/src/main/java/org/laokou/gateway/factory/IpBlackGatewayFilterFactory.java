@@ -21,7 +21,7 @@ import io.netty.handler.ipfilter.IpSubnetFilterRule;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.laokou.common.core.constant.Constant;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;

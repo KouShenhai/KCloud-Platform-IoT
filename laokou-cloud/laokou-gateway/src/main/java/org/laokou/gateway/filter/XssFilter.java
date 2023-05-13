@@ -16,7 +16,7 @@
 package org.laokou.gateway.filter;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.core.utils.XssUtil;
 import org.laokou.gateway.constant.GatewayConstant;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

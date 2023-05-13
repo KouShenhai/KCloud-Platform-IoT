@@ -15,7 +15,7 @@
  */
 package org.laokou.common.easy.captcha.service.impl;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;

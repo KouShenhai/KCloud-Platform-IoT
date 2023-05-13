@@ -15,7 +15,7 @@
  */
 package org.laokou.common.redis.utils;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.redisson.api.*;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;

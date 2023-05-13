@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.tenant.service.SysSourceService;

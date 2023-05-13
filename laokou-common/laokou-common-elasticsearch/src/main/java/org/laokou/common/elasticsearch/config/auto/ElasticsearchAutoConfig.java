@@ -32,6 +32,7 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.RestHighLevelClientBuilder;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -42,7 +43,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.util.StringUtils;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
@@ -93,7 +93,7 @@ public class ElasticsearchAutoConfig {
     }
 
     private HttpHost createHttpHost(URI uri) {
-        if (!StringUtils.hasLength(uri.getUserInfo())) {
+        if (!StringUtil.hasText(uri.getUserInfo())) {
             return HttpHost.create(uri.toString());
         }
         try {
@@ -145,7 +145,7 @@ public class ElasticsearchAutoConfig {
     private static class PropertiesCredentialsProvider extends BasicCredentialsProvider {
 
         PropertiesCredentialsProvider(ElasticsearchProperties properties) {
-            if (StringUtils.hasText(properties.getUsername())) {
+            if (StringUtil.hasText(properties.getUsername())) {
                 Credentials credentials = new UsernamePasswordCredentials(properties.getUsername(),
                         properties.getPassword());
                 setCredentials(AuthScope.ANY, credentials);
@@ -167,7 +167,7 @@ public class ElasticsearchAutoConfig {
         }
 
         private boolean hasUserInfo(URI uri) {
-            return uri != null && StringUtils.hasLength(uri.getUserInfo());
+            return uri != null && StringUtil.hasText(uri.getUserInfo());
         }
 
         private void addUserInfoCredentials(URI uri) {

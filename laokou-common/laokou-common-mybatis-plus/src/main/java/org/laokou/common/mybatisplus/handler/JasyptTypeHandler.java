@@ -18,7 +18,7 @@ package org.laokou.common.mybatisplus.handler;
 
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.AESUtil;
 import org.springframework.stereotype.Component;
 

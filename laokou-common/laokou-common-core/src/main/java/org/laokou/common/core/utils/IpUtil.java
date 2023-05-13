@@ -17,6 +17,8 @@ package org.laokou.common.core.utils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
+import org.laokou.common.i18n.utils.StringUtil;
+
 /**
  * IP工具类
  * @author laokou

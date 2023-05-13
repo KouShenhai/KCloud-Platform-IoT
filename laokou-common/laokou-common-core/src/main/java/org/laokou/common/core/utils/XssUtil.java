@@ -17,6 +17,7 @@ package org.laokou.common.core.utils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
+import org.laokou.common.i18n.utils.StringUtil;
 
 import java.util.regex.Pattern;
 

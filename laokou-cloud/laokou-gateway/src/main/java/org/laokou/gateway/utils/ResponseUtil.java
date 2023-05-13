@@ -16,7 +16,7 @@
 package org.laokou.gateway.utils;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.gateway.constant.GatewayConstant;
 import org.springframework.core.io.buffer.DataBuffer;

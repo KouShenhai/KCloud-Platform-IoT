@@ -22,15 +22,13 @@ import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.slf4j.MDC;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.util.MultiValueMap;
-import org.springframework.util.StringUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 /**
@@ -80,7 +78,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
         MultiValueMap<String, String> parameters = MapUtil.getParameters(request);
         // 判断scope
         String scope = parameters.getFirst(OAuth2ParameterNames.SCOPE);
-        if (StringUtils.hasText(scope) && parameters.get(OAuth2ParameterNames.SCOPE).size() != 1) {
+        if (StringUtil.hasText(scope) && parameters.get(OAuth2ParameterNames.SCOPE).size() != 1) {
             CustomAuthExceptionHandler.throwError(StatusCode.INVALID_SCOPE, MessageUtil.getMessage(StatusCode.INVALID_SCOPE));
         }
         // 获取上下文认证信息

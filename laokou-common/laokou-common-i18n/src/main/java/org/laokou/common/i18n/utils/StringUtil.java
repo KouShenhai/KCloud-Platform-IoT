@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.core.utils;
+package org.laokou.common.i18n.utils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.lang.Nullable;
 
 /**
  * @author laokou
@@ -36,6 +37,22 @@ public class StringUtil {
 
     public static String substringBetween(String str, String open, String close) {
         return StringUtils.substringBetween(str,open,close);
+    }
+
+    public static boolean hasText(@Nullable String str) {
+        return str != null && !str.isEmpty() && containsText(str);
+    }
+
+    private static boolean containsText(CharSequence str) {
+        int strLen = str.length();
+
+        for(int i = 0; i < strLen; ++i) {
+            if (!Character.isWhitespace(str.charAt(i))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

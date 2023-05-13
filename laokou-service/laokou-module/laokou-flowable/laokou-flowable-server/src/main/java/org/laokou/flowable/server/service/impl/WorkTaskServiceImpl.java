@@ -16,7 +16,6 @@
 package org.laokou.flowable.server.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.seata.common.util.StringUtils;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -200,7 +199,7 @@ public class WorkTaskServiceImpl implements WorkTaskService {
         if (task == null) {
             throw new CustomException("任务不存在");
         }
-        if (!StringUtils.equals(owner,task.getAssignee())) {
+        if (!owner.equals(task.getAssignee())) {
             throw new CustomException("该用户无法操作任务");
         }
     }
