@@ -16,7 +16,6 @@
 package org.laokou.common.log.aspect;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.hc.core5.http.HttpHeaders;
 import org.aspectj.lang.annotation.Before;
 import org.laokou.auth.client.utils.UserUtil;
@@ -120,7 +119,7 @@ public class OperateLogAspect {
             event.setMethodName(className + "." + methodName + "()");
             event.setRequestMethod(request.getMethod());
             Object obj;
-            if (CollectionUtils.isEmpty(params)) {
+            if (CollectionUtil.isEmpty(params)) {
                 obj = null;
             } else {
                 obj = params.get(0);

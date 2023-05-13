@@ -37,6 +37,7 @@ import org.laokou.admin.server.domain.sys.repository.service.*;
 import org.laokou.admin.server.infrastructure.feign.workflow.WorkTaskApiFeignClient;
 import org.laokou.admin.server.infrastructure.index.ResourceIndex;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.oss.support.OssTemplate;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
 import org.laokou.common.core.utils.*;
@@ -193,7 +194,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         String fileName = file.getOriginalFilename();
         assert fileName != null;
         String fileExt = FileUtil.getFileExt(fileName);
-        if (StringUtil.isNotBlank(code) && !FileUtil.checkFileExt(code,fileExt)) {
+        if (StringUtil.isNotEmpty(code) && !FileUtil.checkFileExt(code,fileExt)) {
             throw new CustomException("格式不正确，请重新上传资源");
         }
         return ossTemplate.upload(size,md5,fileName,contentType,inputStream);

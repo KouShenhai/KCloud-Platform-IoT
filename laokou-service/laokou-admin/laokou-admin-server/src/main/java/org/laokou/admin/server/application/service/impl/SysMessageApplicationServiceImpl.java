@@ -19,7 +19,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.laokou.admin.server.application.service.SysMessageApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDO;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
@@ -32,6 +31,7 @@ import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.constant.Constant;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -53,7 +53,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
     private final SysMessageDetailService sysMessageDetailService;
     private final ImApiFeignClient imApiFeignClient;
-    private final BatchUtil<SysMessageDetailDO> batchUtil;
+    private final BatchUtil batchUtil;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -76,7 +76,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             detailDO.setCreator(UserUtil.getUserId());
             detailDOList.add(detailDO);
         }
-        if (CollectionUtils.isNotEmpty(detailDOList)) {
+        if (CollectionUtil.isNotEmpty(detailDOList)) {
             batchUtil.insertBatch(detailDOList,500,sysMessageDetailService);
         }
         // 平台-发送消息
@@ -85,7 +85,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     }
 
     private void pushMsg(Set<String> receiver) {
-        if (CollectionUtils.isNotEmpty(receiver)) {
+        if (CollectionUtil.isNotEmpty(receiver)) {
             PushMsgDTO pushMsgDTO = new PushMsgDTO();
             pushMsgDTO.setMsg("您有一条未读消息，请注意查收");
             pushMsgDTO.setReceiver(receiver);

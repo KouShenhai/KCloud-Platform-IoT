@@ -19,6 +19,10 @@
             <groupId>com.github.danielwegener</groupId>
             <artifactId>logback-kafka-appender</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

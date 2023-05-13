@@ -16,11 +16,9 @@
 package org.laokou.flowable.server.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.seata.common.util.StringUtils;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.MapUtils;
 import org.apache.hc.client5.http.utils.Base64;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.*;
@@ -31,6 +29,7 @@ import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
+import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.flowable.client.dto.*;
@@ -89,7 +88,7 @@ public class WorkTaskServiceImpl implements WorkTaskService {
             throw new CustomException("非审批任务，请处理任务");
         }
         // 审批处理
-        if (MapUtils.isNotEmpty(values)) {
+        if (MapUtil.isNotEmpty(values)) {
             taskService.complete(taskId, values);
         } else {
             taskService.complete(taskId);
@@ -200,7 +199,7 @@ public class WorkTaskServiceImpl implements WorkTaskService {
         if (task == null) {
             throw new CustomException("任务不存在");
         }
-        if (!StringUtils.equals(owner,task.getAssignee())) {
+        if (!owner.equals(task.getAssignee())) {
             throw new CustomException("该用户无法操作任务");
         }
     }

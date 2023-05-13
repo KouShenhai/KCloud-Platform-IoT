@@ -44,7 +44,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class AuthApplication implements CommandLineRunner {
 
     private final RouterUtil routerUtil;
-
     public static void main(String[] args) {
         // SpringSecurity 子线程读取父线程的上下文
         System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);

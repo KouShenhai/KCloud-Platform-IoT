@@ -21,6 +21,7 @@ import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
 import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
 import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
 import org.laokou.auth.server.infrastructure.authentication.OAuth2PasswordAuthenticationProvider;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.IpUtil;
@@ -33,7 +34,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import java.util.List;
 import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
 /**
@@ -70,7 +70,7 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
         Integer superAdmin = userDetail.getSuperAdmin();
         // 权限标识列表
         List<String> permissionsList = sysMenuService.getPermissionsList(0L,superAdmin,userId);
-        if (CollectionUtils.isEmpty(permissionsList)) {
+        if (CollectionUtil.isEmpty(permissionsList)) {
             throw new UsernameNotFoundException(MessageUtil.getMessage(StatusCode.USERNAME_NOT_PERMISSION));
         }
         List<Long> deptIds = sysDeptService.getDeptIds(superAdmin, userId,0L);

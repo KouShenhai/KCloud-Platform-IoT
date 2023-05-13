@@ -15,7 +15,6 @@
  */
 
 package org.laokou.common.i18n.utils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import java.util.Locale;
 /**
@@ -23,11 +22,13 @@ import java.util.Locale;
  */
 public class LocaleUtil {
 
+    private static final String SPLIT = "-";
+
     public static Locale toLocale(String language) {
-        if (StringUtils.isBlank(language)) {
+        if (StringUtil.isEmpty(language)) {
             return LocaleContextHolder.getLocale();
         }
-        String[] str = language.split("-");
+        String[] str = language.split(SPLIT);
         // 国家 地区
         return new Locale(str[0], str[1]);
     }

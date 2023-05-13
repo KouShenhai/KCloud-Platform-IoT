@@ -16,7 +16,7 @@
 package org.laokou.gateway.utils;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.gateway.constant.GatewayConstant;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -29,7 +29,8 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.util.Set;
+
 /**
  * 响应工具
  * @author laokou
@@ -82,7 +83,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(token)){
             token = request.getQueryParams().getFirst(Constant.AUTHORIZATION_HEAD);
         }
-        return StringUtil.isBlank(token) ? "" : token.trim();
+        return StringUtil.isEmpty(token) ? "" : token.trim();
     }
 
     /**
@@ -96,7 +97,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(userId)){
             userId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USER_ID);
         }
-        return StringUtil.isBlank(userId) ? "" : userId.trim();
+        return StringUtil.isEmpty(userId) ? "" : userId.trim();
     }
 
 
@@ -111,7 +112,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(username)){
             username = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USER_NAME);
         }
-        return StringUtil.isBlank(username) ? "" : username.trim();
+        return StringUtil.isEmpty(username) ? "" : username.trim();
     }
 
     /**
@@ -125,7 +126,7 @@ public class ResponseUtil {
         if(StringUtil.isEmpty(tenantId)){
             tenantId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_TENANT_ID);
         }
-        return StringUtil.isBlank(tenantId) ? "" : tenantId.trim();
+        return StringUtil.isEmpty(tenantId) ? "" : tenantId.trim();
     }
 
     /**
@@ -133,7 +134,7 @@ public class ResponseUtil {
      * @param requestUri 请求uri
      * @param uris 忽略uris
      */
-    public static boolean pathMatcher(String requestUri, List<String> uris) {
+    public static boolean pathMatcher(String requestUri, Set<String> uris) {
         for (String url : uris) {
             if (ANT_PATH_MATCHER.match(url, requestUri)) {
                 return true;

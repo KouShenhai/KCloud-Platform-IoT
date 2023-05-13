@@ -17,7 +17,7 @@ package org.laokou.common.security.config;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AESUtil;
@@ -83,15 +83,15 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
      */
     private UserDetail decryptInfo(UserDetail userDetail) {
         String username = userDetail.getUsername();
-        if (StringUtil.isNotBlank(username)) {
+        if (StringUtil.isNotEmpty(username)) {
             userDetail.setUsername(AESUtil.decrypt(username));
         }
         String mail = userDetail.getMail();
-        if (StringUtil.isNotBlank(mail)) {
+        if (StringUtil.isNotEmpty(mail)) {
             userDetail.setMail(AESUtil.decrypt(mail));
         }
         String mobile = userDetail.getMobile();
-        if (StringUtil.isNotBlank(mail)) {
+        if (StringUtil.isNotEmpty(mail)) {
             userDetail.setMobile(AESUtil.decrypt(mobile));
         }
         return userDetail;

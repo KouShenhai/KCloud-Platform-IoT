@@ -60,8 +60,8 @@
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-loadbalancer</artifactId>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-nacos</artifactId>
         </dependency>
         <!-- 监控依赖 -->
         <dependency>
@@ -95,28 +95,8 @@
             <artifactId>sentinel-datasource-nacos</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.github.openfeign</groupId>
-            <artifactId>feign-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-circuitbreaker-sentinel</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
         <dependency>
             <groupId>de.codecentric</groupId>

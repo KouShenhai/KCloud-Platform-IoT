@@ -22,7 +22,7 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.rocketmq.constant.RocketmqConstant;
 import org.laokou.logstash.client.index.TraceIndex;
@@ -51,7 +51,7 @@ public class MessageListener implements RocketMQListener<MessageExt> {
             String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
             // 清洗数据
             TraceIndex traceIndex = JacksonUtil.toBean(msg, TraceIndex.class);
-            if (StringUtil.isBlank(traceIndex.getTraceId())) {
+            if (StringUtil.isEmpty(traceIndex.getTraceId())) {
                 return;
             }
             String ym = DateUtil.format(LocalDateTime.now(), DateUtil.YYYYMM);

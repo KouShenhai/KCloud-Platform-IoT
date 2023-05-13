@@ -18,7 +18,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.collections4.CollectionUtils;
 import org.laokou.admin.server.application.service.SysRoleApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysRoleDO;
 import org.laokou.admin.server.domain.sys.entity.SysRoleDeptDO;
@@ -30,6 +29,7 @@ import org.laokou.admin.server.interfaces.qo.SysRoleQo;
 import org.laokou.admin.client.dto.SysRoleDTO;
 import org.laokou.admin.client.vo.SysRoleVO;
 import org.laokou.auth.client.utils.UserUtil;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.core.utils.ConvertUtil;
@@ -95,7 +95,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
     }
 
     private void saveOrUpdate(Long roleId, List<Long> menuIds, List<Long> deptIds) {
-        if (CollectionUtils.isNotEmpty(menuIds)) {
+        if (CollectionUtil.isNotEmpty(menuIds)) {
             List<SysRoleMenuDO> roleMenuList = new ArrayList<>(menuIds.size());
             for (Long menuId : menuIds) {
                 SysRoleMenuDO roleMenuDO = new SysRoleMenuDO();
@@ -105,7 +105,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
             }
             batchUtil.insertBatch(roleMenuList,500,sysRoleMenuService);
         }
-        if (CollectionUtils.isNotEmpty(deptIds)) {
+        if (CollectionUtil.isNotEmpty(deptIds)) {
             List<SysRoleDeptDO> roleDeptList = new ArrayList<>(deptIds.size());
             for (Long deptId : deptIds) {
                 SysRoleDeptDO roleDeptDO = new SysRoleDeptDO();

@@ -20,7 +20,7 @@ import com.baomidou.dynamic.datasource.processor.DsProcessor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.tenant.utils.DsUtil;
 import org.springframework.stereotype.Component;
 

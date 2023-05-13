@@ -33,6 +33,15 @@ management:
         enabled: false
 nacos:
   core:
+    protocol:
+      raft:
+        data:
+          cli_service_thread_num: 4
+          core_thread_num: 8
+          election_timeout_ms: 5000
+          read_index_type: ReadOnlySafe
+          rpc_request_timeout_ms: 5000
+          snapshot_interval_secs: 30
     auth:
       caching:
         enabled: true

@@ -16,8 +16,8 @@
 
 package org.laokou.admin.server;
 
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
@@ -31,6 +31,6 @@ import java.util.List;
 public class CollectionTest {
     public static void main(String[] args) {
         List<String> list = new ArrayList<>();
-        System.out.println(CollectionUtils.isNotEmpty(list));
+        System.out.println(CollectionUtil.isNotEmpty(list));
     }
 }

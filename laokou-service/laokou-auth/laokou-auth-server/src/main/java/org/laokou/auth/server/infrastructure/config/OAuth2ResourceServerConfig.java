@@ -15,7 +15,10 @@
  */
 
 package org.laokou.auth.server.infrastructure.config;
+import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -27,9 +30,17 @@ import java.util.*;
 /**
  * @author laokou
  */
+@Data
+@ConfigurationProperties(prefix = "ignore")
 @Configuration
+@RefreshScope
 @ConditionalOnProperty(havingValue = "true",matchIfMissing = true,prefix = OAuth2AuthorizationServerProperties.PREFIX,name = "enabled")
 public class OAuth2ResourceServerConfig {
+
+    /**
+     * 不拦截的urls
+     */
+    private Set<String> uris;
 
     /**
      * 不拦截拦截静态资源
@@ -42,7 +53,9 @@ public class OAuth2ResourceServerConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,OAuth2AuthorizationServerProperties properties) throws Exception {
         Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns()).orElseGet(HashSet::new);
-        return http.authorizeHttpRequests().requestMatchers(patterns.toArray(String[]::new)).permitAll()
+        return http.authorizeHttpRequests()
+                .requestMatchers(uris.toArray(String[]::new)).permitAll()
+                .requestMatchers(patterns.toArray(String[]::new)).permitAll()
                 .and().authorizeHttpRequests()
                 .anyRequest().authenticated()
                 .and().csrf().disable()

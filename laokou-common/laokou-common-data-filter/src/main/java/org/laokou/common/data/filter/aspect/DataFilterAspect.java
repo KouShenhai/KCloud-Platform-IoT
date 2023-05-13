@@ -15,10 +15,10 @@
  */
 package org.laokou.common.data.filter.aspect;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.enums.SuperAdminEnum;
-import org.laokou.common.core.utils.StringUtil;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.mybatisplus.entity.BasePage;
 import org.laokou.auth.client.user.UserDetail;
@@ -79,7 +79,7 @@ public class DataFilterAspect {
         // 用户列表
         List<Long> deptIds = userDetail.getDeptIds();
         sqlFilter.append("(");
-        if (CollectionUtils.isNotEmpty(deptIds)) {
+        if (CollectionUtil.isNotEmpty(deptIds)) {
             sqlFilter.append(tableAlias).append(dataFilter.deptId()).append(" in (");
             sqlFilter.append(String.join(",",deptIds.stream().map(String::valueOf).toArray(String[]::new)));
             sqlFilter.append(") or ");

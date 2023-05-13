@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.security.config.auto;
+import lombok.Data;
 import org.laokou.auth.client.handler.ForbiddenExceptionHandler;
 import org.laokou.auth.client.handler.InvalidAuthenticationEntryPoint;
 import org.laokou.common.security.config.CustomOpaqueTokenIntrospector;
@@ -21,6 +22,8 @@ import org.laokou.common.security.config.OAuth2ResourceServerProperties;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -37,6 +40,8 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
+ * 关闭oauth2,请在yml配置spring.oauth2.resource-server.enabled=false
+ * 关闭security，请排除SecurityAutoConfiguration、ManagementWebSecurityAutoConfiguration
  * @author laokou
  */
 @EnableWebSecurity
@@ -48,15 +53,16 @@ import java.util.Set;
         , OAuth2ResourceServerProperties.class
         , InvalidAuthenticationEntryPoint.class
 })
+@RefreshScope
+@Data
+@ConfigurationProperties(prefix = "ignore")
 @ConditionalOnProperty(havingValue = "true",matchIfMissing = true,prefix = OAuth2ResourceServerProperties.PREFIX,name = "enabled")
 public class OAuth2ResourceServerAutoConfig {
 
-    private static final String[] IGNORE_URIS = {
-              "/v3/api-docs/**"
-            , "/swagger-ui.html"
-            , "/swagger-ui/**"
-            , "/actuator/**"
-    };
+    /**
+     * 不拦截的urls
+     */
+    private Set<String> uris;
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE + 1000)
@@ -66,13 +72,14 @@ public class OAuth2ResourceServerAutoConfig {
             , ForbiddenExceptionHandler forbiddenExceptionHandler
             , OAuth2ResourceServerProperties properties
             , HttpSecurity http) throws Exception {
-        Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns()).orElseGet(HashSet::new);
+        OAuth2ResourceServerProperties.RequestMatcher requestMatcher = Optional.ofNullable(properties.getRequestMatcher()).orElseGet(OAuth2ResourceServerProperties.RequestMatcher::new);
+        Set<String> patterns = Optional.ofNullable(requestMatcher.getPatterns()).orElseGet(HashSet::new);
         return http.csrf().disable()
                 .cors().disable()
                 // 基于token，关闭session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
-                .requestMatchers(IGNORE_URIS).permitAll()
+                .requestMatchers(uris.toArray(String[]::new)).permitAll()
                 .requestMatchers(patterns.toArray(String[]::new)).permitAll()
                 .and().authorizeHttpRequests()
                 .anyRequest().authenticated()

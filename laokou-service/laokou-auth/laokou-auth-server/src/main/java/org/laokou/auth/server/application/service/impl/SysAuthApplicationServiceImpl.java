@@ -28,6 +28,7 @@ import org.laokou.auth.server.application.service.SysAuthApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.tenant.service.SysTenantService;

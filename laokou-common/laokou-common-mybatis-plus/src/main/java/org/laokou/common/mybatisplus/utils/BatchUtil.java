@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class BatchUtil<T> {
+public class BatchUtil {
 
     private final TransactionalUtil transactionalUtil;
     private final ThreadPoolTaskExecutor taskExecutor;
@@ -45,7 +45,7 @@ public class BatchUtil<T> {
      * @param service 基础service
      */
     @SneakyThrows
-    public void insertBatch(List<T> dataList, int batchNum, BatchService<T> service) {
+    public <T> void insertBatch(List<T> dataList, int batchNum, BatchService<T> service) {
         // 数据分组
         List<List<T>> partition = Lists.partition(dataList, batchNum);
         AtomicBoolean rollback = new AtomicBoolean(false);
