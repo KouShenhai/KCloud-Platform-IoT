@@ -28,12 +28,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import static org.laokou.common.core.constant.Constant.AND;
+
 /**
  * @author laokou
  */
 public class MapUtil {
 
-    private static final String AND = "&";
 
     public static boolean isNotEmpty(Map<?,?> map) {
         return MapUtils.isNotEmpty(map);
