@@ -16,6 +16,7 @@
 package org.laokou.admin.client.vo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.laokou.common.core.utils.TreeUtil;
 
 import java.io.Serial;
@@ -25,6 +26,7 @@ import java.io.Serializable;
  * @author laokou
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class SysDeptVO extends TreeUtil.TreeNode<SysDeptVO> implements Serializable {
 
     @Serial

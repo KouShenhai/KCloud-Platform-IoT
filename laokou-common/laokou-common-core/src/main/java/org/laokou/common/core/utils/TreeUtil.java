@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 package org.laokou.common.core.utils;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.core.CustomException;
 
 import java.util.*;
@@ -51,50 +53,13 @@ public class TreeUtil {
         }
         return rootNode;
     }
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class TreeNode<T> {
         private Long id;
         private String name;
         private Long pid;
         private List<T> children;
-        public TreeNode() {}
-        public TreeNode(Long id, String name, Long pid, List<T> children) {
-            this.id = id;
-            this.name = name;
-            this.pid = pid;
-            this.children = children;
-        }
-        @Override
-        public String toString() {
-            return new StringJoiner(", ", TreeNode.class.getSimpleName() + "[", "]")
-                    .add("id='" + id + "'")
-                    .add("name='" + name + "'")
-                    .add("pid='" + pid + "'")
-                    .add("children=" + children)
-                    .toString();
-        }
-        public Long getId() {
-            return id;
-        }
-        public void setId(Long id) {
-            this.id = id;
-        }
-        public String getName() {
-            return name;
-        }
-        public void setName(String name) {
-            this.name = name;
-        }
-        public Long getPid() {
-            return pid;
-        }
-        public void setPid(Long pid) {
-            this.pid = pid;
-        }
-        public List<T> getChildren() {
-            return children;
-        }
-        public void setChildren(List<T> children) {
-            this.children = children;
-        }
     }
 }
