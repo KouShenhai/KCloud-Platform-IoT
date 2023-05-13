@@ -40,6 +40,8 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
+ * 关闭oauth2,请在yml配置spring.oauth2.resource-server.enabled=false
+ * 关闭security，请排除SecurityAutoConfiguration、ManagementWebSecurityAutoConfiguration
  * @author laokou
  */
 @EnableWebSecurity
