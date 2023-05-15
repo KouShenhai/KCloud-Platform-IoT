@@ -38,7 +38,6 @@ public class IdGenerator {
 
     /**
      * 默认雪花ID
-     * @return
      */
     public static long defaultSnowflakeId() {
         return instance.nextId();
