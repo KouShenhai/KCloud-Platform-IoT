@@ -27,7 +27,6 @@ import org.laokou.gateway.utils.ResponseUtil;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.cloud.gateway.filter.NettyWriteResponseFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
@@ -121,7 +120,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return NettyWriteResponseFilter.HIGHEST_PRECEDENCE + 1500;
+        return Ordered.HIGHEST_PRECEDENCE + 1500;
     }
 
     private CustomException getThrow(String code) {

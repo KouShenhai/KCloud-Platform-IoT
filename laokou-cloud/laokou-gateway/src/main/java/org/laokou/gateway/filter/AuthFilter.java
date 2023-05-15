@@ -98,9 +98,6 @@ public class AuthFilter implements GlobalFilter,Ordered {
 
     /**
      * OAuth2解密
-     * @param exchange
-     * @param chain
-     * @return
      */
     private Mono<Void> oauth2Decode(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());
