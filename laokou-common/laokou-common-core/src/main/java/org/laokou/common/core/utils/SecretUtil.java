@@ -24,7 +24,7 @@ public class SecretUtil {
 
     private static final long TIMEOUT_MILLIS = 60 * 1000L;
 
-    public static boolean verification(String sign,String appKey,String appSecret,long timestamp,Long userId,String username,Long tenantId) {
+    public static boolean verification(String sign,String appKey,String appSecret,long timestamp,long userId,String username,long tenantId) {
         // 判断时间戳
         long nowTimestamp = System.currentTimeMillis();
         long maxTimestamp = nowTimestamp + TIMEOUT_MILLIS;
@@ -39,7 +39,7 @@ public class SecretUtil {
     /**
      * MD5(appKey+appSecret+timestamp+userId+username+tenantId)转为小写
      */
-    private static String sign(String appKey,String appSecret,long timestamp,Long userId,String username,Long tenantId) {
+    private static String sign(String appKey,String appSecret,long timestamp,long userId,String username,long tenantId) {
         String str = appKey
                 + appSecret
                 + timestamp
