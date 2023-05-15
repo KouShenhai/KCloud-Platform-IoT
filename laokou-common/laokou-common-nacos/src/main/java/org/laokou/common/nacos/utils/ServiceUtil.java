@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.laokou.common.nacos.utils;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.nacos.api.NacosFactory;
@@ -22,20 +21,20 @@ import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.nacos.enums.InstanceEnum;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Properties;
-
 /**
  * <a href="https://github.com/alibaba/spring-cloud-alibaba/wiki/Nacos-discovery">...</a>
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ServiceUtil {
 
     private final LoadBalancerClient loadBalancerClient;
@@ -55,11 +54,8 @@ public class ServiceUtil {
 
     @SneakyThrows
     private void instance(InstanceEnum instanceEnum) {
-        Properties properties = new Properties();
-        properties.put(PropertyKeyConst.NAMESPACE,nacosDiscoveryProperties.getNamespace());
-        properties.put(PropertyKeyConst.SERVER_ADDR,nacosDiscoveryProperties.getServerAddr());
         String serviceName = nacosDiscoveryProperties.getService();
-        NamingService namingService = NacosFactory.createNamingService(properties);
+        NamingService namingService = getNamingService();
         List<Instance> allInstances = namingService.getAllInstances(serviceName);
         for (Instance instance : allInstances) {
             String ip = nacosDiscoveryProperties.getIp();
@@ -71,6 +67,14 @@ public class ServiceUtil {
                 }
             }
         }
+    }
+
+    @SneakyThrows
+    private NamingService getNamingService() {
+        Properties properties = new Properties();
+        properties.put(PropertyKeyConst.NAMESPACE,nacosDiscoveryProperties.getNamespace());
+        properties.put(PropertyKeyConst.SERVER_ADDR,nacosDiscoveryProperties.getServerAddr());
+        return NacosFactory.createNamingService(properties);
     }
 
 }
