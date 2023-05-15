@@ -19,9 +19,14 @@ import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
+import com.alibaba.nacos.client.naming.event.InstancesChangeEvent;
+import com.alibaba.nacos.common.notify.Event;
+import com.alibaba.nacos.common.notify.listener.Subscriber;
 import com.github.benmanes.caffeine.cache.Cache;
+import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
@@ -37,12 +42,14 @@ import java.util.Collection;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 /**
- * https://github.com/alibaba/spring-cloud-alibaba/blob/2.2.x/spring-cloud-alibaba-examples/nacos-example/nacos-config-example/src/main/java/com/alibaba/cloud/examples/example/ConfigListenerExample.java
+ * <a href="https://github.com/alibaba/spring-cloud-alibaba/blob/2.2.x/spring-cloud-alibaba-examples/nacos-example/nacos-config-example/src/main/java/com/alibaba/cloud/examples/example/ConfigListenerExample.java">...</a>
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class NacosRouteDefinitionRepository implements RouteDefinitionRepository, ApplicationEventPublisherAware {
+@Slf4j
+@NonNullApi
+public class NacosRouteDefinitionRepository extends Subscriber<InstancesChangeEvent> implements RouteDefinitionRepository, ApplicationEventPublisherAware {
 
     private static final String DATA_ID = "router.json";
 
@@ -56,6 +63,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
     @PostConstruct
     public void init() throws NacosException {
+        log.info("初始化路由配置");
         String group = nacosConfigProperties.getGroup();
         ConfigService configService = nacosConfigManager.getConfigService();
         configService.addListener(DATA_ID,group,new Listener() {
@@ -65,6 +73,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
             }
             @Override
             public void receiveConfigInfo(String configInfo) {
+                log.info("收到配置变动通知");
                 // 清除缓存
                 caffeineCache.invalidateAll();
                 // 刷新事件
@@ -82,7 +91,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
                 // pull nacos config info
                 String group = nacosConfigProperties.getGroup();
                 ConfigService configService = nacosConfigManager.getConfigService();
-                String configInfo = configService.getConfig(DATA_ID, group, 3000);
+                String configInfo = configService.getConfig(DATA_ID, group, 5000);
                 definitions = JacksonUtil.toList(configInfo,RouteDefinition.class);
                 return Flux.fromIterable(definitions).doOnNext(route -> caffeineCache.put(route.getId(),route));
             } catch (Exception e) {
@@ -105,5 +114,15 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
     @Override
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
+    }
+
+    @Override
+    public void onEvent(InstancesChangeEvent instancesChangeEvent) {
+        log.info("收到 InstancesChangeEvent 订阅事件：");
+    }
+
+    @Override
+    public Class<? extends Event> subscribeType() {
+        return InstancesChangeEvent.class;
     }
 }
