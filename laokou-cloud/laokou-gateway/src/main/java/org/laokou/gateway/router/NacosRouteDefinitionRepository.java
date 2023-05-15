@@ -19,9 +19,6 @@ import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
-import com.alibaba.nacos.client.naming.event.InstancesChangeEvent;
-import com.alibaba.nacos.common.notify.Event;
-import com.alibaba.nacos.common.notify.listener.Subscriber;
 import com.github.benmanes.caffeine.cache.Cache;
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PostConstruct;
@@ -49,7 +46,7 @@ import java.util.concurrent.Executors;
 @RequiredArgsConstructor
 @Slf4j
 @NonNullApi
-public class NacosRouteDefinitionRepository extends Subscriber<InstancesChangeEvent> implements RouteDefinitionRepository, ApplicationEventPublisherAware {
+public class NacosRouteDefinitionRepository implements RouteDefinitionRepository, ApplicationEventPublisherAware {
 
     private static final String DATA_ID = "router.json";
 
@@ -116,13 +113,4 @@ public class NacosRouteDefinitionRepository extends Subscriber<InstancesChangeEv
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
-    @Override
-    public void onEvent(InstancesChangeEvent instancesChangeEvent) {
-        log.info("收到 InstancesChangeEvent 订阅事件");
-    }
-
-    @Override
-    public Class<? extends Event> subscribeType() {
-        return InstancesChangeEvent.class;
-    }
 }
