@@ -33,7 +33,6 @@ public class RsaUtil {
     /**
      * base64解密
      * @param key 私钥
-     * @return
      */
     public static byte[] decryptBase64(String key) {
         return Base64.decodeBase64(key);
@@ -67,14 +66,8 @@ public class RsaUtil {
         return new String(Objects.requireNonNull(readByte(in)));
     }
 
-    public static byte[] readByte(InputStream is) {
-        try {
-            byte[] r = new byte[is.available()];
-            is.read(r);
-            return r;
-        } catch (Exception var2) {
-            log.error("context", var2);
-            return new byte[0];
-        }
+    @SneakyThrows
+    public static byte[] readByte(InputStream inputStream) {
+       return inputStream.readAllBytes();
     }
 }
