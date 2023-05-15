@@ -118,7 +118,7 @@ public class NacosRouteDefinitionRepository extends Subscriber<InstancesChangeEv
 
     @Override
     public void onEvent(InstancesChangeEvent instancesChangeEvent) {
-        log.info("收到 InstancesChangeEvent 订阅事件：");
+        log.info("收到 InstancesChangeEvent 订阅事件");
     }
 
     @Override
