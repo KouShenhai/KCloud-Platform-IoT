@@ -13,14 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.laokou.common.core.utils;
-
 import org.laokou.common.i18n.core.CustomException;
 import org.springframework.util.DigestUtils;
-
 import java.nio.charset.StandardCharsets;
-
 /**
  * @author laokou
  */
@@ -34,13 +30,10 @@ public class SecretUtil {
         long maxTimestamp = nowTimestamp + TIMEOUT_MILLIS;
         long minTimestamp = nowTimestamp - TIMEOUT_MILLIS;
         if (timestamp > maxTimestamp || timestamp < minTimestamp) {
-            throw new CustomException("验签失败，请检查配置");
+            throw new CustomException("请求参数不合法");
         }
         String newSign = sign(appKey,appSecret,timestamp,userId,username,tenantId);
-        if (!sign.equals(newSign)) {
-            throw new CustomException("验签失败，请检查配置");
-        }
-        return true;
+        return sign.equals(newSign);
     }
 
     /**
