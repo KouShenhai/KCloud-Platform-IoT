@@ -21,6 +21,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AESUtil;
+import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -94,6 +95,8 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
         if (StringUtil.isNotEmpty(mail)) {
             userDetail.setMobile(AESUtil.decrypt(mobile));
         }
+        // 写入当前线程
+        UserContextHolder.set(userDetail.getId());
         return userDetail;
     }
 

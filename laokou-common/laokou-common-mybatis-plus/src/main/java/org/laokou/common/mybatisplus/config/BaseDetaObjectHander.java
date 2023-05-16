@@ -17,7 +17,7 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-import org.laokou.auth.client.utils.UserUtil;
+import org.laokou.common.core.holder.UserContextHolder;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import static org.laokou.common.core.constant.Constant.NO;
@@ -42,15 +42,15 @@ public class BaseDetaObjectHander implements MetaObjectHandler {
         this.strictInsertFill(metaObject, UPDATE_DATE, LocalDateTime::now, LocalDateTime.class);
         this.strictInsertFill(metaObject, DEL_FLAG, () -> NO, Integer.class);
         this.strictInsertFill(metaObject, VERSION, () -> NO, Integer.class);
-        this.strictInsertFill(metaObject, CREATOR, UserUtil::getUserId,Long.class);
-        this.strictInsertFill(metaObject, EDITOR, UserUtil::getUserId,Long.class);
+        this.strictInsertFill(metaObject, CREATOR, UserContextHolder::get,Long.class);
+        this.strictInsertFill(metaObject, EDITOR, UserContextHolder::get,Long.class);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         log.info("update fill .......");
         this.strictUpdateFill(metaObject, UPDATE_DATE, LocalDateTime::now, LocalDateTime.class);
-        this.strictUpdateFill(metaObject, EDITOR, UserUtil::getUserId,Long.class);
+        this.strictUpdateFill(metaObject, EDITOR, UserContextHolder::get,Long.class);
     }
 
 }
