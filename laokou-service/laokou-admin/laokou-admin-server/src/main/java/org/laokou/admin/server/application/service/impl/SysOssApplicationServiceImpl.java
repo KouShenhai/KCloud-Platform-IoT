@@ -120,7 +120,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
                         .or()
                         .eq(SysOssDO::getId, id));
         List<SysOssDO> list = sysOssService.list(wrapper);
-        list.stream().forEach(item -> {
+        list.forEach(item -> {
             if (id.equals(item.getId())) {
                 item.setStatus(Constant.YES);
             } else {
