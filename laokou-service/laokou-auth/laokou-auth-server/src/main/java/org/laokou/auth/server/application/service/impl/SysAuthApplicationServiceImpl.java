@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.user.UserDetail;
+import org.laokou.auth.client.vo.SecretInfoVO;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
@@ -44,6 +45,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
+
+import static org.laokou.common.core.utils.SecretUtil.APP_KEY;
+import static org.laokou.common.core.utils.SecretUtil.APP_SECRET;
 
 /**
  * @author laokou
@@ -112,9 +116,10 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     }
 
     @Override
-    public String getPublicKey() throws IOException {
+    public SecretInfoVO getSecretInfo() throws IOException {
         byte[] bytes = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream().readAllBytes();
-        return new String(bytes, StandardCharsets.UTF_8);
+        String publicKey = new String(bytes, StandardCharsets.UTF_8);
+        return new SecretInfoVO(APP_KEY,APP_SECRET,publicKey);
     }
 
     private String getToken(HttpServletRequest request) {

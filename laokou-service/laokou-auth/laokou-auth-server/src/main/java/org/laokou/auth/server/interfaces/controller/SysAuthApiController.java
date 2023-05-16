@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.constant.AuthConstant;
+import org.laokou.auth.client.vo.SecretInfoVO;
 import org.laokou.auth.server.application.service.SysAuthApplicationService;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.i18n.core.HttpResult;
@@ -71,12 +72,12 @@ public class SysAuthApiController {
     }
 
     /**
-     * 公钥
+     * 认证信息
      */
-    @GetMapping("/public_key")
-    @Operation(summary = "系统认证>公钥",description = "系统认证>公钥")
-    public HttpResult<String> publicKey() throws IOException {
-        return new HttpResult<String>().ok(sysAuthApplicationService.getPublicKey());
+    @GetMapping("/secret_info")
+    @Operation(summary = "系统认证>认证信息",description = "系统认证>认证信息")
+    public HttpResult<SecretInfoVO> secretInfo() throws IOException {
+        return new HttpResult<SecretInfoVO>().ok(sysAuthApplicationService.getSecretInfo());
     }
 
 }
