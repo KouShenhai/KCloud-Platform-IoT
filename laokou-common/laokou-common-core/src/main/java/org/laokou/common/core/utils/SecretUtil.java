@@ -22,7 +22,10 @@ import java.nio.charset.StandardCharsets;
  */
 public class SecretUtil {
 
-    private static final long TIMEOUT_MILLIS = 60 * 1000L;
+    public static final String APP_KEY = "eaz95v1ba6b05f6c4";
+    public static final String APP_SECRET = "vb05f6c45d67340zaz95v7fa6d49v99zx";
+
+    private static final long TIMEOUT_MILLIS = 30 * 1000L;
 
     public static boolean verification(String sign,String appKey,String appSecret,long timestamp,long userId,String username,long tenantId) {
         // 判断时间戳

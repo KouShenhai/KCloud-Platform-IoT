@@ -16,6 +16,7 @@
 package org.laokou.auth.server.application.service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.auth.client.vo.SecretInfoVO;
 import org.laokou.common.core.vo.OptionVO;
 
 import java.io.IOException;
@@ -47,10 +48,10 @@ public interface SysAuthApplicationService {
     List<OptionVO> getOptionList();
 
     /**
-     * 公钥
-     * @return 公钥
+     * 获取认证信息
+     * @return 认证信息
      * @throws IOException IO异常
      */
-    String getPublicKey() throws IOException;
+    SecretInfoVO getSecretInfo() throws IOException;
 
 }
