@@ -42,12 +42,14 @@ public abstract class BaseDO implements Serializable {
      * 创建人
      */
     @Schema(name = "creator",description = "创建人")
+    @TableField(fill = FieldFill.INSERT)
     private Long creator;
 
     /**
      * 修改人
      */
     @Schema(name = "editor",description = "修改人")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long editor;
 
     /**
