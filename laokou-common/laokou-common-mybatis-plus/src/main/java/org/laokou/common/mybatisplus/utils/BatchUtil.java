@@ -55,17 +55,16 @@ public class BatchUtil {
                 transactionalUtil.execute(callback -> {
                     try {
                         service.insertBatch(item);
-                        return true;
                     } catch (Exception e) {
                         // 回滚标识
                         rollback.set(true);
-                        log.error("错误信息：批量插入数据异常，设置回滚标识");
-                        return false;
+                        log.error("批量插入数据异常，已设置回滚标识，错误信息：{}",e.getMessage());
                     } finally {
                         if (rollback.get()) {
                             callback.setRollbackOnly();
                         }
                     }
+                    return true;
                 });
             }, taskExecutor);
             synchronizedList.add(completableFuture);
