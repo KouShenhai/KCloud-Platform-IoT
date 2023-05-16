@@ -85,7 +85,6 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
         if (count > 0) {
             throw new CustomException("角色已存在，请重新填写");
         }
-        roleDO.setCreator(UserUtil.getUserId());
         roleDO.setDeptId(UserUtil.getDeptId());
         roleDO.setTenantId(UserUtil.getTenantId());
         sysRoleService.save(roleDO);
@@ -133,7 +132,6 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
         }
         Integer version = sysRoleService.getVersion(id);
         SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
-        roleDO.setEditor(UserUtil.getUserId());
         roleDO.setVersion(version);
         sysRoleService.updateById(roleDO);
         //删除中间表

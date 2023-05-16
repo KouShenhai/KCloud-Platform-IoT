@@ -18,8 +18,7 @@ package org.laokou.admin.client.vo;
 
 import lombok.Data;
 
-import java.util.Date;
-
+import java.time.LocalDateTime;
 /**
  * @author laokou
  */
@@ -27,7 +26,7 @@ import java.util.Date;
 public class SysUserOnlineVO{
 
     private String token;
-    private Date loginDate;
+    private LocalDateTime loginDate;
     private String username;
     private String loginIp;
 

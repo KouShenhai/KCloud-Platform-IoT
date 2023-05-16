@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysTenantApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysUserDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
-import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.enums.SuperAdminEnum;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.core.CustomException;
@@ -66,7 +65,6 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
             throw new CustomException("该数据源已被使用，清重新选择");
         }
         SysTenantDO sysTenantDO = ConvertUtil.sourceToTarget(dto, SysTenantDO.class);
-        sysTenantDO.setCreator(UserUtil.getUserId());
         sysTenantService.save(sysTenantDO);
         // 初始化用户
         initUser(sysTenantDO.getId());
@@ -98,7 +96,6 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
         Integer version = sysTenantService.getVersion(id);
         SysTenantDO sysTenantDO = ConvertUtil.sourceToTarget(dto, SysTenantDO.class);
         sysTenantDO.setVersion(version);
-        sysTenantDO.setEditor(UserUtil.getUserId());
         return sysTenantService.updateById(sysTenantDO);
     }
 
@@ -115,7 +112,6 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
         SysUserDO sysUserDO = new SysUserDO();
         sysUserDO.setTenantId(tenantId);
         sysUserDO.setUsername(tenantUsername);
-        sysUserDO.setCreator(UserUtil.getUserId());
         sysUserDO.setSuperAdmin(SuperAdminEnum.YES.ordinal());
         sysUserDO.setPassword(passwordEncoder.encode(tenantPassword));
         sysUserDO.setTenantId(tenantId);

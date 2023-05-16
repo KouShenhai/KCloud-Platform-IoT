@@ -40,7 +40,7 @@ public class WebSocketServer {
      */
     private static int onlineCount = 0;
     /**
-     * concurrent包的线程安全Set,用来存放每个客户端对应的websocketserver对象
+     * concurrent包的线程安全Set,用来存放每个客户端对应的WebsocketServer对象
      */
     private static CopyOnWriteArraySet<WebSocketServer> webSocketServerCopyOnWriteArraySet = new CopyOnWriteArraySet<>();
     /**
@@ -53,8 +53,6 @@ public class WebSocketServer {
     private String userId;
     /**
      * 连接成功后回调方法
-     * @param session
-     * @param userId
      */
     @OnOpen
     public void onOpen(Session session, @PathParam("userId")String userId) {
@@ -65,7 +63,7 @@ public class WebSocketServer {
         if (addFlag) {
             addOnlineCount();
         }
-        log.info("新加入：{}",userId,",在线人数：{}",getOnlineCount());
+        log.info("新加入：{}，在线人数：{}",userId,getOnlineCount());
     }
     /**
      * 连接关闭调用
@@ -80,12 +78,10 @@ public class WebSocketServer {
     }
     /**
      * 收到客户端消息后调用
-     * @param message
-     * @throws IOException
      */
     @OnMessage
     public void onMessage(String message) throws IOException {
-        log.info("收到来自：{}",this.userId,"的消息:{}",message);
+        log.info("收到来自：{}的消息:{}",this.userId,message);
         if(StringUtil.isNotEmpty(message)) {
             JsonNode node = JacksonUtil.readTree(message);
             log.info("接到数据：{}",message);
@@ -95,7 +91,6 @@ public class WebSocketServer {
     }
     /**
      * 发生错误时调用
-     * @param throwable
      */
     @OnError
     public void onError(Throwable throwable){
@@ -104,17 +99,12 @@ public class WebSocketServer {
     }
     /**
      * 发送消息
-     * @param message
-     * @throws IOException
      */
    private void sendMessage(String message) throws IOException {
         this.session.getBasicRemote().sendText(message);
    }
     /**
      * 发送自定义消息
-     * @param message
-     * @param userId
-     * @throws IOException
      */
     public synchronized void sendMessages(String message,String userId)throws IOException{
         for (WebSocketServer webSocketServer : webSocketServerCopyOnWriteArraySet){
@@ -129,7 +119,6 @@ public class WebSocketServer {
     }
     /**
      * 返回在线数
-     * @return
      */
     private static synchronized int getOnlineCount(){
         return onlineCount;

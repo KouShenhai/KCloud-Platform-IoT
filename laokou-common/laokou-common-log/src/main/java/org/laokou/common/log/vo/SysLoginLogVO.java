@@ -18,7 +18,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 /**
  * @author laokou
  */
@@ -65,5 +65,5 @@ public class SysLoginLogVO implements Serializable {
     /**
      * 登录时间
      */
-    private Date createDate;
+    private LocalDateTime createDate;
 }

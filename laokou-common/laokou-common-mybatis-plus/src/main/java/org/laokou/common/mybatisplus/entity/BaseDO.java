@@ -20,7 +20,8 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 /**
  * 基础实体类，所有实体都需要继承
  * @author laokou
@@ -57,14 +58,14 @@ public abstract class BaseDO implements Serializable {
      */
     @Schema(name = "createDate",description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
-    private Date createDate;
+    private LocalDateTime createDate;
 
     /**
      * 修改时间
      */
     @Schema(name = "updateDate",description = "修改时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateDate;
+    private LocalDateTime updateDate;
 
     /**
      * 删除标识 0 未删除 1已删除

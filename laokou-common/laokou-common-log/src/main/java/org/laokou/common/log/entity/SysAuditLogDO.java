@@ -20,8 +20,7 @@ import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BaseDO;
 
 import java.io.Serial;
-import java.util.Date;
-
+import java.time.LocalDateTime;
 /**
  * @author laokou
  */
@@ -35,7 +34,7 @@ public class SysAuditLogDO extends BaseDO {
 
     private String auditName;
 
-    private Date auditDate;
+    private LocalDateTime auditDate;
 
     private Integer auditStatus;
 

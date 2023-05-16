@@ -21,7 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author laokou
@@ -37,7 +37,7 @@ public class TraceIndex implements Serializable {
     @ElasticsearchField(type = "date")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
     @ElasticsearchField
     private String userId;

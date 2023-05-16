@@ -145,7 +145,6 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         ValidatorUtil.validateEntity(dto);
         log.info("分布式事务 XID:{}", RootContext.getXID());
         SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
-        sysResourceDO.setEditor(UserUtil.getUserId());
         sysResourceService.save(sysResourceDO);
         Long id = sysResourceDO.getId();
         // 开启任务
@@ -168,7 +167,6 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
     private void insertResourceAudit(SysResourceAuditDTO dto, String instanceId) {
         SysResourceAuditDO sysResourceAuditDO = ConvertUtil.sourceToTarget(dto, SysResourceAuditDO.class);
-        sysResourceAuditDO.setCreator(UserUtil.getUserId());
         sysResourceAuditDO.setStatus(AuditStatusEnum.INIT.ordinal());
         sysResourceAuditDO.setProcessInstanceId(instanceId);
         sysResourceAuditService.save(sysResourceAuditDO);

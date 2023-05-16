@@ -19,7 +19,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author laokou
@@ -31,7 +31,7 @@ public class SysAuditLogVO implements Serializable {
     private static final long serialVersionUID = -683682454620817254L;
     private Long id;
     private String auditName;
-    private Date auditDate;
+    private LocalDateTime auditDate;
     private Integer auditStatus;
     private String comment;
 

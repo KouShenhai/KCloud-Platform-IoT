@@ -107,7 +107,6 @@ public class OperateLogAspect {
             event.setRequestIp(ip);
             event.setRequestAddress(AddressUtil.getRealAddress(ip));
             event.setOperator(UserUtil.getUserName());
-            event.setCreator(UserUtil.getUserId());
             event.setDeptId(UserUtil.getDeptId());
             if (null != e) {
                 event.setRequestStatus(ResultStatusEnum.FAIL.ordinal());

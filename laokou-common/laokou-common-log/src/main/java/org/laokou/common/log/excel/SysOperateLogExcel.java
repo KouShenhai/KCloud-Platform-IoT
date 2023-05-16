@@ -23,8 +23,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
-
+import java.time.LocalDateTime;
 /**
  * @author laokou
  */
@@ -125,7 +124,7 @@ public class SysOperateLogExcel implements Serializable {
      */
     @ExcelProperty(index = 12,value = "操作时间")
     @ColumnWidth(value = 20)
-    private Date createDate;
+    private LocalDateTime createDate;
 
     /**
      * 耗时（毫秒）

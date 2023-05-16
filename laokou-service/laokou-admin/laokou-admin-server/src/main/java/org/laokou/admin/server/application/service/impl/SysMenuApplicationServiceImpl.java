@@ -86,7 +86,6 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
         Integer version = sysMenuService.getVersion(id);
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
         menuDO.setVersion(version);
-        menuDO.setEditor(UserUtil.getUserId());
         return sysMenuService.updateById(menuDO);
     }
 
@@ -100,7 +99,6 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
             throw new CustomException("菜单已存在，请重新填写");
         }
         SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
-        menuDO.setCreator(UserUtil.getUserId());
         return sysMenuService.save(menuDO);
     }
 

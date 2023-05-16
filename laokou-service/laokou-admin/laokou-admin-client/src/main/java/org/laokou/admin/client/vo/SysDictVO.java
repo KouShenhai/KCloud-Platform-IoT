@@ -18,7 +18,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 /**
  * @author laokou
  */
@@ -48,7 +48,7 @@ public class SysDictVO implements Serializable {
     /**
      * 创建时间
      */
-    private Date createDate;
+    private LocalDateTime createDate;
 
     /**
      * 排序

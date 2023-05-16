@@ -184,7 +184,6 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
             throw new CustomException("请输入密码");
         }
         SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
-        sysUserDO.setCreator(UserUtil.getUserId());
         sysUserDO.setTenantId(UserUtil.getTenantId());
         sysUserDO.setPassword(passwordEncoder.encode(dto.getPassword()));
         sysUserService.save(sysUserDO);
