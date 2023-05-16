@@ -67,7 +67,6 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
         }
         Long tenantId = UserUtil.getTenantId();
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
-        sysDeptDO.setCreator(UserUtil.getUserId());
         sysDeptDO.setTenantId(tenantId);
         sysDeptService.save(sysDeptDO);
         return true;
@@ -93,7 +92,6 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
         Integer version = sysDeptService.getVersion(id);
         SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
         sysDeptDO.setVersion(version);
-        sysDeptDO.setEditor(UserUtil.getUserId());
         sysDeptService.updateById(sysDeptDO);
         return true;
     }

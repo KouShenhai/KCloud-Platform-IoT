@@ -18,7 +18,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 /**
  * @author laokou
  */
@@ -33,7 +33,7 @@ public class SysMessageVO implements Serializable {
 
     private String content;
 
-    private Date createDate;
+    private LocalDateTime createDate;
 
     private Integer type;
 

@@ -19,7 +19,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author laokou
@@ -93,7 +93,7 @@ public class SysOperateLogVO implements Serializable {
     /**
      * 操作时间
      */
-    private Date createDate;
+    private LocalDateTime createDate;
 
     /**
      * 耗时（毫秒）

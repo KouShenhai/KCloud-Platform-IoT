@@ -65,7 +65,6 @@ public class SysSourceApplicationServiceImpl implements SysSourceApplicationServ
             throw new CustomException("数据源名称必须包含字母、下划线和数字，例如：tenant_000001");
         }
         SysSourceDO tenantSourceDO = ConvertUtil.sourceToTarget(dto, SysSourceDO.class);
-        tenantSourceDO.setCreator(UserUtil.getUserId());
         return sysSourceService.save(tenantSourceDO);
     }
 
@@ -88,7 +87,6 @@ public class SysSourceApplicationServiceImpl implements SysSourceApplicationServ
         Integer version = sysSourceService.getVersion(id);
         SysSourceDO sourceDO = ConvertUtil.sourceToTarget(dto, SysSourceDO.class);
         sourceDO.setVersion(version);
-        sourceDO.setEditor(UserUtil.getUserId());
         return sysSourceService.updateById(sourceDO);
     }
 

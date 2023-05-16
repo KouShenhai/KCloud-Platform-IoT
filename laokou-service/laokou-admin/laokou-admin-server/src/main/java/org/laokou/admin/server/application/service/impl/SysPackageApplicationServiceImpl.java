@@ -19,7 +19,6 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysPackageApplicationService;
-import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.vo.OptionVO;
@@ -59,7 +58,6 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
             throw new CustomException("套餐名称已存在，请重新填写");
         }
         SysPackageDO sysPackageDO = ConvertUtil.sourceToTarget(dto, SysPackageDO.class);
-        sysPackageDO.setCreator(UserUtil.getUserId());
         sysPackageService.save(sysPackageDO);
         return saveOrUpdate(dto.getMenuIds(),sysPackageDO.getId());
     }
@@ -79,7 +77,6 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
         Integer version = sysPackageService.getVersion(id);
         SysPackageDO sysPackageDO = ConvertUtil.sourceToTarget(dto, SysPackageDO.class);
         sysPackageDO.setVersion(version);
-        sysPackageDO.setEditor(UserUtil.getUserId());
         sysPackageService.updateById(sysPackageDO);
         sysPackageMenuService.remove(Wrappers.lambdaQuery(SysPackageMenuDO.class).eq(SysPackageMenuDO::getPackageId,id));
         return saveOrUpdate(dto.getMenuIds(),id);

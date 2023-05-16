@@ -16,9 +16,11 @@
 package org.laokou.common.core.utils;
 import org.laokou.common.i18n.core.CustomException;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * 日期处理
@@ -108,12 +110,43 @@ public class DateUtil {
         return localDateTime.plusYears(year);
     }
 
-    public static Date now() {
-        return new Date();
+    public static LocalDateTime now() {
+        return LocalDateTime.now();
+    }
+
+    public static LocalDateTime getDateTimeOfTimestamp(long timestamp) {
+        Instant instant = Instant.ofEpochMilli(timestamp);
+        ZoneId zoneId = ZoneId.systemDefault();
+        return LocalDateTime.ofInstant(instant,zoneId);
+    }
+
+    public static long getTimestampOfDateTime(LocalDateTime localDateTime) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        return localDateTime.atZone(zoneId).toInstant().toEpochMilli();
+    }
+
+    public static long getDays(LocalDateTime start,LocalDateTime end) {
+        return Duration.between(start,end).toDays();
+    }
+
+    public static long getHours(LocalDateTime start,LocalDateTime end) {
+        return Duration.between(start,end).toHours();
+    }
+
+    public static long getMinutes(LocalDateTime start,LocalDateTime end) {
+        return Duration.between(start,end).toMinutes();
+    }
+
+    public static long getSeconds(LocalDateTime start,LocalDateTime end) {
+        return Duration.between(start,end).toSeconds();
+    }
+
+    public static long getMillis(LocalDateTime start,LocalDateTime end) {
+        return Duration.between(start,end).toMillis();
     }
 
     public static void main(String[] args) {
-        System.out.println(format(LocalDateTime.now(), YYYYMMDDHHMMSS));
+        System.out.println(format(DateUtil.now(), YYYYMMDDHHMMSS));
         System.out.println(parse("20230311001155",YYYYMMDDHHMMSS));
     }
 

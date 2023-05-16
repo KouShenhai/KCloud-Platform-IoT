@@ -21,7 +21,7 @@ import org.springframework.context.ApplicationEvent;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Clock;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author laokou
@@ -35,7 +35,7 @@ public class AuditLogEvent extends ApplicationEvent implements Serializable {
 
     private String auditName;
 
-    private Date auditDate;
+    private LocalDateTime auditDate;
 
     private Integer auditStatus;
 

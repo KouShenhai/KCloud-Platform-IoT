@@ -27,7 +27,6 @@ import org.laokou.common.core.constant.Constant;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.admin.client.vo.SysDictVO;
 import org.laokou.admin.client.dto.SysDictDTO;
-import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.i18n.core.CustomException;
@@ -70,7 +69,6 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
             throw new CustomException("字典已存在，请重新填写");
         }
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
-        dictDO.setCreator(UserUtil.getUserId());
         return sysDictService.save(dictDO);
     }
 
@@ -89,7 +87,6 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
         }
         SysDictDO dictDO = ConvertUtil.sourceToTarget(dto, SysDictDO.class);
         Integer version = sysDictService.getVersion(id);
-        dictDO.setEditor(UserUtil.getUserId());
         dictDO.setVersion(version);
         return sysDictService.updateById(dictDO);
     }

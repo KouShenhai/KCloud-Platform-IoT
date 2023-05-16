@@ -25,6 +25,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -53,7 +54,7 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
     private Long tenantId;
     private String sourceName;
     private String loginIp;
-    private Date loginDate;
+    private LocalDateTime loginDate;
 
     @Override
     public boolean equals(Object o) {

@@ -16,7 +16,6 @@
 package org.laokou.admin.server.infrastructure.server;
 import lombok.SneakyThrows;
 import lombok.Data;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.laokou.common.core.utils.BigDecimalUtil;
 import org.laokou.common.core.utils.DateUtil;
 import oshi.SystemInfo;
@@ -30,10 +29,10 @@ import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
 import java.io.Serial;
 import java.net.InetAddress;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.io.Serializable;
 import java.lang.management.ManagementFactory;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.Properties;
 /**
@@ -296,9 +295,9 @@ class Jvm implements Serializable {
      * JDK启动时间
      */
     public String getStartTime() {
-        long time = ManagementFactory.getRuntimeMXBean().getStartTime();
-        Date date = new Date(time);
-        return DateFormatUtils.format(date, DateUtil.getTimePattern(DateUtil.YYYY_MM_DD_HH_MM_SS));
+        long timestamp = ManagementFactory.getRuntimeMXBean().getStartTime();
+        LocalDateTime localDateTime = DateUtil.getDateTimeOfTimestamp(timestamp);
+        return DateUtil.format(localDateTime, DateUtil.YYYY_MM_DD_HH_MM_SS);
     }
 
     public static void main(String[] args) {
@@ -311,19 +310,12 @@ class Jvm implements Serializable {
      * JDK运行时间
      */
     public String getRunTime() {
-        long time = ManagementFactory.getRuntimeMXBean().getStartTime();
-        Date date = new Date(time);
-
-        // 运行时间
-        long runMs = Math.abs(date.getTime() - (new Date()).getTime());
-
-        long nd = 1000 * 24 * 60 * 60;
-        long nh = 1000 * 60 * 60;
-        long nm = 1000 * 60;
-
-        long day = runMs / nd;
-        long hour = runMs % nd / nh;
-        long min = runMs % nd % nh / nm;
+        long timestamp = ManagementFactory.getRuntimeMXBean().getStartTime();
+        LocalDateTime start = DateUtil.getDateTimeOfTimestamp(timestamp);
+        LocalDateTime end = DateUtil.now();
+        long day = DateUtil.getDays(start,end);
+        long hour = DateUtil.getHours(start,end);
+        long min = DateUtil.getMinutes(start,end);
         return day + "天" + hour + "小时" + min + "分钟";
     }
 }

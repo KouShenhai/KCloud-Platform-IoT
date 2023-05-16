@@ -54,7 +54,7 @@ public class MessageListener implements RocketMQListener<MessageExt> {
             if (StringUtil.isEmpty(traceIndex.getTraceId())) {
                 return;
             }
-            String ym = DateUtil.format(LocalDateTime.now(), DateUtil.YYYYMM);
+            String ym = DateUtil.format(DateUtil.now(), DateUtil.YYYYMM);
             String indexName = TRACE_INDEX + "_" + ym;
             elasticsearchTemplate.syncIndexAsync(null, indexName, msg);
         } catch (Exception e) {
@@ -69,7 +69,7 @@ public class MessageListener implements RocketMQListener<MessageExt> {
     @SneakyThrows
     public void scheduleCreateIndexTask() {
         // 按月建立索引
-        String ym = DateUtil.format(DateUtil.plusDays(LocalDateTime.now(),1), DateUtil.YYYYMM);
+        String ym = DateUtil.format(DateUtil.plusDays(DateUtil.now(),1), DateUtil.YYYYMM);
         String indexAlias = TRACE_INDEX;
         String indexName = indexAlias + "_" + ym;
         elasticsearchTemplate.createAsyncIndex(indexName, indexAlias, TraceIndex.class);

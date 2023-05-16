@@ -62,7 +62,6 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
             throw new CustomException("存储名称已存在，请重新填写");
         }
         SysOssDO sysOssDO = ConvertUtil.sourceToTarget(dto, SysOssDO.class);
-        sysOssDO.setCreator(UserUtil.getUserId());
         return sysOssService.save(sysOssDO);
     }
 
@@ -86,7 +85,6 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
         Integer version = sysOssService.getVersion(id);
         SysOssDO sysOssDO = ConvertUtil.sourceToTarget(dto, SysOssDO.class);
         sysOssDO.setVersion(version);
-        sysOssDO.setEditor(UserUtil.getUserId());
         return sysOssService.updateById(sysOssDO);
     }
 
