@@ -18,9 +18,8 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
-import java.util.Date;
+import java.time.LocalDateTime;
 import static org.laokou.common.core.constant.Constant.NO;
-
 /**
  * @author laokou
  */
@@ -36,8 +35,8 @@ public class BaseDetaObjectHander implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("insert fill .........");
-        this.strictInsertFill(metaObject, CREATE_DATE, Date::new, Date.class);
-        this.strictInsertFill(metaObject, UPDATE_DATE, Date::new, Date.class);
+        this.strictInsertFill(metaObject, CREATE_DATE, LocalDateTime::now, LocalDateTime.class);
+        this.strictInsertFill(metaObject, UPDATE_DATE, LocalDateTime::now, LocalDateTime.class);
         this.strictInsertFill(metaObject, DEL_FLAG, () -> NO, Integer.class);
         this.strictInsertFill(metaObject, VERSION, () -> NO, Integer.class);
     }
@@ -45,7 +44,7 @@ public class BaseDetaObjectHander implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         log.info("update fill .......");
-        this.strictUpdateFill(metaObject, UPDATE_DATE, Date::new, Date.class);
+        this.strictUpdateFill(metaObject, UPDATE_DATE, LocalDateTime::now, LocalDateTime.class);
     }
 
 }

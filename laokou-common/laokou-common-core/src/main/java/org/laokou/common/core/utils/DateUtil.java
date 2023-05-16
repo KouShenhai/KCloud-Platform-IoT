@@ -57,9 +57,13 @@ public class DateUtil {
     }
 
     public static String format(LocalDateTime localDateTime,int index) {
-        String timePattern = getTimePattern(index);
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern);
+        DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(index);
         return localDateTime.format(dateTimeFormatter);
+    }
+
+    public static DateTimeFormatter getDateTimeFormatter(int index) {
+        String timePattern = getTimePattern(index);
+        return DateTimeFormatter.ofPattern(timePattern);
     }
 
     /**
