@@ -33,10 +33,10 @@ public abstract class BaseDO implements Serializable {
     @Serial
     private static final long serialVersionUID = -5855413730985647400L;
     /**
-     * ID
+     * id
      */
     @TableId(type = IdType.AUTO)
-    @Schema(name = "ID",description = "编号")
+    @Schema(name = "id",description = "编号")
     private Long id;
 
     /**
