@@ -96,7 +96,7 @@ spring:
             - /oauth2/captcha
             - /oauth2/logout
             - /oauth2/tenant
-            - /oauth2/public_key
+            - /oauth2/secret_info
         jwkSource:
           path: auth.jks
           alias: auth

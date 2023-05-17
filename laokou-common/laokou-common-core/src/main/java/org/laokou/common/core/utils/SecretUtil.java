@@ -42,7 +42,7 @@ public class SecretUtil {
     }
 
     /**
-     * MD5(appKey+appSecret+timestamp+userId+username+tenantId)转为小写
+     * MD5(appKey+appSecret+timestamp+userId+username+tenantId)
      */
     private static String sign(long timestamp,long userId,String username,long tenantId) {
         String str = APP_KEY

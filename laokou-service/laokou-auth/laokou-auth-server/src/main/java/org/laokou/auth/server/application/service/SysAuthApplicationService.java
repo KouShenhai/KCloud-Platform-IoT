@@ -48,8 +48,8 @@ public interface SysAuthApplicationService {
     List<OptionVO> getOptionList();
 
     /**
-     * 获取认证信息
-     * @return 认证信息
+     * 获取密钥配置
+     * @return 密钥配置
      * @throws IOException IO异常
      */
     SecretInfoVO getSecretInfo() throws IOException;
