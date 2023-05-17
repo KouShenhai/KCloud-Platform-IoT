@@ -33,10 +33,10 @@ public abstract class BaseDO implements Serializable {
     @Serial
     private static final long serialVersionUID = -5855413730985647400L;
     /**
-     * id
+     * ID
      */
     @TableId(type = IdType.AUTO)
-    @Schema(name = "id",description = "编号")
+    @Schema(name = "ID",description = "编号")
     private Long id;
 
     /**
@@ -68,9 +68,9 @@ public abstract class BaseDO implements Serializable {
     private LocalDateTime updateDate;
 
     /**
-     * 删除标识 0 未删除 1已删除
+     * 删除标识 0未删除 1已删除
      */
-    @Schema(name = "delFlag",description = "删除标识 0 未删除 1已删除")
+    @Schema(name = "delFlag",description = "删除标识 0未删除 1已删除")
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private Integer delFlag;
