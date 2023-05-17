@@ -22,12 +22,12 @@ import java.nio.charset.StandardCharsets;
  */
 public class SecretUtil {
 
-    public static final String APP_KEY = "eaz95v1ba6b05f6c4";
+    public static final String APP_KEY = "laokou2023";
     public static final String APP_SECRET = "vb05f6c45d67340zaz95v7fa6d49v99zx";
 
     private static final long TIMEOUT_MILLIS = 30 * 1000L;
 
-    public static boolean verification(String sign,String appKey,String appSecret,long timestamp,long userId,String username,long tenantId) {
+    public static void verification(String sign,long timestamp,long userId,String username,long tenantId) {
         // 判断时间戳
         long nowTimestamp = System.currentTimeMillis();
         long maxTimestamp = nowTimestamp + TIMEOUT_MILLIS;
@@ -35,16 +35,18 @@ public class SecretUtil {
         if (timestamp > maxTimestamp || timestamp < minTimestamp) {
             throw new CustomException("请求参数不合法");
         }
-        String newSign = sign(appKey,appSecret,timestamp,userId,username,tenantId);
-        return sign.equals(newSign);
+        String newSign = sign(timestamp,userId,username,tenantId);
+        if (!sign.equals(newSign)) {
+            throw new CustomException("验签失败，请检查配置");
+        }
     }
 
     /**
      * MD5(appKey+appSecret+timestamp+userId+username+tenantId)转为小写
      */
-    private static String sign(String appKey,String appSecret,long timestamp,long userId,String username,long tenantId) {
-        String str = appKey
-                + appSecret
+    private static String sign(long timestamp,long userId,String username,long tenantId) {
+        String str = APP_KEY
+                + APP_SECRET
                 + timestamp
                 + userId
                 + username

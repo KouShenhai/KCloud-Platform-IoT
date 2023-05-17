@@ -68,9 +68,9 @@ public abstract class BaseDO implements Serializable {
     private LocalDateTime updateDate;
 
     /**
-     * 删除标识 0 未删除 1已删除
+     * 删除标识 0未删除 1已删除
      */
-    @Schema(name = "delFlag",description = "删除标识 0 未删除 1已删除")
+    @Schema(name = "delFlag",description = "删除标识 0未删除 1已删除")
     @TableField(fill = FieldFill.INSERT)
     @TableLogic
     private Integer delFlag;
