@@ -14,29 +14,27 @@
  * limitations under the License.
  */
 
-package org.laokou.auth.client.vo;
+package org.laokou.gateway.properties;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.stereotype.Component;
 
-import java.io.Serial;
-import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @author laokou
  */
+@Component
+@RefreshScope
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Schema(name = "SecretInfoVO",description = "密钥配置")
-public class SecretInfoVO implements Serializable {
+@ConfigurationProperties(prefix = "ignore")
+public class CustomProperties {
 
-    @Serial
-    private static final long serialVersionUID = 5798768808595385129L;
-    private String appKey;
-    private String appSecret;
-    private String publicKey;
+    /**
+     * 不拦截的urls
+     */
+    private Set<String> uris;
 
 }

@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 package org.laokou.gateway.filter;
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.gateway.properties.CustomProperties;
 import org.laokou.gateway.utils.PasswordUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.gateway.constant.GatewayConstant;
 import org.laokou.gateway.utils.ResponseUtil;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutputMessage;
@@ -46,7 +45,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 import static org.laokou.gateway.constant.GatewayConstant.OAUTH2_AUTH_URI;
 /**
@@ -55,15 +53,10 @@ import static org.laokou.gateway.constant.GatewayConstant.OAUTH2_AUTH_URI;
  */
 @Component
 @Slf4j
-@RefreshScope
-@Data
-@ConfigurationProperties(prefix = "ignore")
+@RequiredArgsConstructor
 public class AuthFilter implements GlobalFilter,Ordered {
 
-    /**
-     * 不拦截的urls
-     */
-    private Set<String> uris;
+    private final CustomProperties customProperties;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -72,7 +65,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
         // 获取uri
         String requestUri = request.getPath().pathWithinApplication().value();
         // 请求放行，无需验证权限
-        if (ResponseUtil.pathMatcher(requestUri,uris)){
+        if (ResponseUtil.pathMatcher(requestUri, customProperties.getUris())){
             return chain.filter(exchange);
         }
         // 表单提交

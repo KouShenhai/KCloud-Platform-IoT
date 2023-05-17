@@ -72,10 +72,10 @@ public class SysAuthApiController {
     }
 
     /**
-     * 认证信息
+     * 密钥配置
      */
     @GetMapping("/secret_info")
-    @Operation(summary = "系统认证>认证信息",description = "系统认证>认证信息")
+    @Operation(summary = "系统认证>密钥配置",description = "系统认证>密钥配置")
     public HttpResult<SecretInfoVO> secretInfo() throws IOException {
         return new HttpResult<SecretInfoVO>().ok(sysAuthApplicationService.getSecretInfo());
     }
