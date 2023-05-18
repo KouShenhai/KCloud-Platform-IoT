@@ -15,6 +15,7 @@
  */
 package org.laokou.gateway.filter;
 import com.fasterxml.jackson.databind.JsonNode;
+import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.core.CustomException;
@@ -43,12 +44,15 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
+
 import static org.laokou.gateway.constant.GatewayConstant.OAUTH2_AUTH_URI;
 /**
  * @author laokou
  */
 @Component
 @Slf4j
+@NonNullApi
 public class RespFilter implements GlobalFilter, Ordered {
 
     @Override
@@ -70,9 +74,6 @@ public class RespFilter implements GlobalFilter, Ordered {
 
     /**
      * OAuth2响应
-     * @param exchange
-     * @param chain
-     * @return
      */
     private Mono<Void> oauth2Resp(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpResponse response = exchange.getResponse();
@@ -81,8 +82,9 @@ public class RespFilter implements GlobalFilter, Ordered {
             @Override
             public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
                 String contentType = getDelegate().getHeaders().getFirst(HttpHeaders.CONTENT_TYPE);
+                assert contentType != null;
                 if (contentType.contains(MediaType.APPLICATION_JSON_VALUE)
-                        && response.getStatusCode().value() != StatusCode.OK
+                        && Objects.requireNonNull(response.getStatusCode()).value() != StatusCode.OK
                         && body instanceof Flux) {
                     Flux<? extends DataBuffer> fluxBody = (Flux<? extends DataBuffer>) body;
                     return super.writeWith(fluxBody.map(dataBuffer -> {
