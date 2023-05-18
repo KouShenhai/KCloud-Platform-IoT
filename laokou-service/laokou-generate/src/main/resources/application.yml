@@ -2,20 +2,22 @@ server:
   port: 8886
 
 mybatis-plus:
-  mapper-locations: classpath*:/mapper/**/.xml
+  mapper-locations: classpath*:/mapper/*.xml
 spring:
   datasource:
-    # 连接池
-    hikari:
-      minimum-idle: 4
-      maximum-pool-size: 16
-      connection-timeout: 10000
-      idle-timeout: 30000
-      connection-init-sql: set names utf8mb4
-    # 数据库连接地址
-    url: jdbc:mysql://127.0.0.1:3306/dw_order?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT&allowMultiQueries=true&useSSL=false
-    # 数据库用户名
-    username: root
-    # 密码
-    password: koushenhai123456
-    driver-class-name: com.mysql.jdbc.Driver
+    dynamic:
+      primary: master
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/iot_cabinet?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+          username: root
+          password: koushenhai123456
+          hikari:
+            max-lifetime: 120000
+            maximum-pool-size: 16
+            minimum-idle: 16
+            connection-timeout: 10000
+            idle-timeout: 30000
+            connection-init-sql: set names utf8mb4
