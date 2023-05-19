@@ -20,7 +20,7 @@ class GenerateApplicationTests {
 
 	@Test
 	void contextLoads() {
-		String tableName = "dw_product_alarm_item";
+		String tableName = "dw_product_stock_change";
 		String className = "ProductAlarmItem";
 		List<ColumnVO> columns = columnMapper.getColumns(tableName);
 		List<ColumnVO> list = columns.stream().filter(i -> !ignoreColumns.contains(i.getColumnName())).toList();
@@ -36,10 +36,10 @@ class GenerateApplicationTests {
 		stringBuilder.append("import lombok.EqualsAndHashCode;\n");
 		stringBuilder.append("@EqualsAndHashCode(callSuper = true)\n");
 		stringBuilder.append("@Data\n");
-		stringBuilder.append("@TableName(\"" + tableName + "\")\n");
-		stringBuilder.append("public class " + className + " extends BaseEntity {\n\n");
+		stringBuilder.append("@TableName(\"").append(tableName).append("\")\n");
+		stringBuilder.append("public class ").append(className).append(" extends BaseEntity {\n\n");
 		for (ColumnVO vo : list) {
-			stringBuilder.append("    ").append("@ApiModelProperty(\"" + vo.getColumnComment() + "\")").append("\n");
+			stringBuilder.append("    ").append("@ApiModelProperty(\"").append(vo.getColumnComment()).append("\")").append("\n");
 			stringBuilder.append("    ").append("private String ").append(StringUtil.toCamelCase(vo.getColumnName())).append(";").append("\n\n");
 		}
 		stringBuilder.append("}\n");
