@@ -49,7 +49,7 @@ public class BatchUtil {
         // 数据分组
         List<List<T>> partition = Lists.partition(dataList, batchNum);
         AtomicBoolean rollback = new AtomicBoolean(false);
-        List<CompletableFuture<Void>> synchronizedList = new ArrayList<>(partition.size());
+        List<CompletableFuture<Void>> list = new ArrayList<>(partition.size());
         partition.forEach(item -> {
             CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
                 transactionalUtil.execute(callback -> {
@@ -67,10 +67,10 @@ public class BatchUtil {
                     return true;
                 });
             }, taskExecutor);
-            synchronizedList.add(completableFuture);
+            list.add(completableFuture);
         });
         // 阻塞主线程
-        CompletableFuture.allOf(synchronizedList.toArray(new CompletableFuture[0])).join();
+        CompletableFuture.allOf(list.toArray(new CompletableFuture[0])).join();
         if (rollback.get()) {
             throw new CustomException("批量插入数据异常，数据已回滚");
         }
