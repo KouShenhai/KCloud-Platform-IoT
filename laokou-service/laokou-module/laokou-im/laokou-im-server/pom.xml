@@ -21,7 +21,7 @@
     <parent>
         <artifactId>laokou-im</artifactId>
         <groupId>org.laokou</groupId>
-        <version>3.0.6</version>
+        <version>3.0.7</version>
     </parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-im-server</artifactId>
