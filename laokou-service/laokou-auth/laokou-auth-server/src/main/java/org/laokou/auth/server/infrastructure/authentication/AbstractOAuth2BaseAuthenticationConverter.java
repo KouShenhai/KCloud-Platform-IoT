@@ -40,7 +40,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 
     /**
      * 类型
-     * @return
+     * @return String
      */
     abstract String getGrantType();
 
