@@ -46,7 +46,7 @@ public class RedisAutoConfig {
     public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(lettuceConnectionFactory);
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = getJsonRedisSerializer();
+        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = getJsonRedisSerializer();
         // string序列化
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         // key
@@ -62,10 +62,10 @@ public class RedisAutoConfig {
         return redisTemplate;
     }
 
-    private Jackson2JsonRedisSerializer getJsonRedisSerializer() {
+    private Jackson2JsonRedisSerializer<Object> getJsonRedisSerializer() {
         // Json序列化配置
         ObjectMapper objectMapper = CustomJsonJacksonCodec.getObjectMapper();
-        return new Jackson2JsonRedisSerializer(objectMapper,Object.class);
+        return new Jackson2JsonRedisSerializer<>(objectMapper,Object.class);
     }
 
 }

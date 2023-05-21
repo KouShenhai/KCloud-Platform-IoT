@@ -61,23 +61,24 @@ public class RedissonConfig {
         Config config = new Config();
         int timeout = (int) properties.getTimeout().toMillis();
         int connectTimeout = (int) properties.getConnectTimeout().toMillis();
+        boolean enabled = properties.getSsl().isEnabled();
         if (properties.getSentinel() != null) {
             config.useSentinelServers()
                     .setMasterName(properties.getSentinel().getMaster())
-                    .addSentinelAddress(convertNodes(properties.isSsl(),properties.getSentinel().getNodes()))
+                    .addSentinelAddress(convertNodes(enabled,properties.getSentinel().getNodes()))
                     .setDatabase(properties.getDatabase())
                     .setTimeout(timeout)
                     .setConnectTimeout(connectTimeout)
                     .setPassword(properties.getPassword());
         } else if (properties.getCluster() != null) {
             config.useClusterServers()
-                    .addNodeAddress(convertNodes(properties.isSsl(),properties.getCluster().getNodes()))
+                    .addNodeAddress(convertNodes(enabled,properties.getCluster().getNodes()))
                     .setPassword(properties.getPassword())
                     .setTimeout(timeout)
                     .setConnectTimeout(connectTimeout);
         } else {
             config.useSingleServer()
-                    .setAddress(convertAddress(properties.isSsl(),properties.getHost() ,properties.getPort()))
+                    .setAddress(convertAddress(enabled,properties.getHost() ,properties.getPort()))
                     .setDatabase(properties.getDatabase())
                     .setPassword(properties.getPassword())
                     .setConnectTimeout(connectTimeout)
