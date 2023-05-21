@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.*;
@@ -53,19 +54,17 @@ public class OAuth2ResourceServerConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,OAuth2AuthorizationServerProperties properties) throws Exception {
         Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns()).orElseGet(HashSet::new);
-        return http.authorizeHttpRequests()
-                .requestMatchers(uris.toArray(String[]::new)).permitAll()
-                .requestMatchers(patterns.toArray(String[]::new)).permitAll()
-                .and().authorizeHttpRequests()
-                .anyRequest().authenticated()
-                .and().csrf().disable()
+        return http.authorizeHttpRequests(request -> request.requestMatchers(uris.toArray(String[]::new)).permitAll()
+                        .requestMatchers(patterns.toArray(String[]::new)).permitAll()
+                        .anyRequest().authenticated())
+                .csrf(AbstractHttpConfigurer::disable)
                 // 自定义登录页面
                 // https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
                 // 登录页面 -> DefaultLoginPageGeneratingFilter
                 .formLogin(Customizer.withDefaults())
                 // 清除session
-                .logout().invalidateHttpSession(true).clearAuthentication(true)
-                .and().build();
+                .logout(logout -> logout.clearAuthentication(true).invalidateHttpSession(true))
+                .build();
     }
 
 }

@@ -24,11 +24,11 @@ import java.util.Random;
  */
 public class RandomSelectAlgorithm<T> extends AbstractSelectAlgorithm<T>{
 
-    private Random random = new Random(System.currentTimeMillis());
+    private final Random RANDOM = new Random(System.currentTimeMillis());
 
     @Override
     public T select(List<T> list, Object arg) {
-        int value = this.random.nextInt(list.size());
+        int value = this.RANDOM.nextInt(list.size());
         return list.get(value);
     }
 }

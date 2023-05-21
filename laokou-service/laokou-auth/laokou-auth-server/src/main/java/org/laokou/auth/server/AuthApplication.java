@@ -20,6 +20,7 @@ import org.laokou.common.dynamic.router.utils.RouterUtil;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -34,7 +35,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
  * @author laokou
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {OAuth2AuthorizationServerAutoConfiguration.class})
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties

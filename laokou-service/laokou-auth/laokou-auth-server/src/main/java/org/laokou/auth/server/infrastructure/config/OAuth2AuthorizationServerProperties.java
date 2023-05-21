@@ -17,6 +17,9 @@
 package org.laokou.auth.server.infrastructure.config;
 
 import lombok.Data;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.i18n.utils.StringUtil;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.settings.ConfigurationSettingNames;
@@ -25,13 +28,14 @@ import java.time.Duration;
 import java.util.Set;
 
 /**
+ * {@link OAuth2AuthorizationServerProperties}
  * {@link ConfigurationSettingNames}
  * @author laokou
  */
 @Data
 @Component
 @ConfigurationProperties(prefix = OAuth2AuthorizationServerProperties.PREFIX)
-public class OAuth2AuthorizationServerProperties {
+public class OAuth2AuthorizationServerProperties implements InitializingBean {
     public static final String PREFIX = "spring.security.oauth2.authorization-server";
 
     private boolean enabled = true;
@@ -41,6 +45,23 @@ public class OAuth2AuthorizationServerProperties {
     private RequestMatcher requestMatcher;
     private JwkSource jwkSource;
     private JwtDecoder jwtDecoder;
+
+    @Override
+    public void afterPropertiesSet() {
+        validateRegistration(getRegistration());
+    }
+
+    private void validateRegistration(Registration registration) {
+        if (!StringUtil.hasText(registration.clientId)) {
+            throw new IllegalStateException("客户端ID不能为空");
+        }
+        if (CollectionUtil.isEmpty(registration.clientAuthenticationMethods)) {
+            throw new IllegalStateException("客户端身份验证方法不能为空");
+        }
+        if (CollectionUtil.isEmpty(registration.authorizationGrantTypes)) {
+            throw new IllegalStateException("授权认证类型不能为空");
+        }
+    }
 
     @Data
     public static class Token {
@@ -83,6 +104,7 @@ public class OAuth2AuthorizationServerProperties {
         private Set<String> authorizationGrantTypes;
         private Set<String> scopes;
         private Set<String> redirectUris;
+        private Set<String> postLogoutRedirectUris;
     }
 
     @Data
