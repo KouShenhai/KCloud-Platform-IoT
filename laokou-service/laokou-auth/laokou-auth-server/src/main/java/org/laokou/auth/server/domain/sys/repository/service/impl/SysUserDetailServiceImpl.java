@@ -27,7 +27,7 @@ import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.jasypt.utils.AESUtil;
+import org.laokou.common.jasypt.utils.AesUtil;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -51,7 +51,7 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
         // 默认租户查询
-        String encryptName = AESUtil.encrypt(loginName);
+        String encryptName = AesUtil.encrypt(loginName);
         UserDetail userDetail = sysUserService.getUserDetail(encryptName,0L, OAuth2PasswordAuthenticationProvider.GRANT_TYPE);
         HttpServletRequest request = RequestUtil.getHttpServletRequest();
         if (userDetail == null) {

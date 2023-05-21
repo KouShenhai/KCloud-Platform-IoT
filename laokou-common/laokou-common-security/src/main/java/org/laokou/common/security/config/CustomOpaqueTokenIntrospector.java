@@ -20,7 +20,7 @@ import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.jasypt.utils.AESUtil;
+import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -85,15 +85,15 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
     private UserDetail decryptInfo(UserDetail userDetail) {
         String username = userDetail.getUsername();
         if (StringUtil.isNotEmpty(username)) {
-            userDetail.setUsername(AESUtil.decrypt(username));
+            userDetail.setUsername(AesUtil.decrypt(username));
         }
         String mail = userDetail.getMail();
         if (StringUtil.isNotEmpty(mail)) {
-            userDetail.setMail(AESUtil.decrypt(mail));
+            userDetail.setMail(AesUtil.decrypt(mail));
         }
         String mobile = userDetail.getMobile();
         if (StringUtil.isNotEmpty(mail)) {
-            userDetail.setMobile(AESUtil.decrypt(mobile));
+            userDetail.setMobile(AesUtil.decrypt(mobile));
         }
         // 写入当前线程
         UserContextHolder.set(userDetail.getId());

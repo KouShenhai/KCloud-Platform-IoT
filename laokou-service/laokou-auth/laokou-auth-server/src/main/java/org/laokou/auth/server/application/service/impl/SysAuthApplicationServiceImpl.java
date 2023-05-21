@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.jasypt.utils.RsaUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.tenant.service.SysTenantService;
@@ -117,9 +118,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     @Override
     public SecretInfoVO getSecretInfo() throws IOException {
-        byte[] bytes = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream().readAllBytes();
-        String publicKey = new String(bytes, StandardCharsets.UTF_8);
-        return new SecretInfoVO(APP_KEY,APP_SECRET,publicKey);
+        return new SecretInfoVO(APP_KEY,APP_SECRET, RsaUtil.getPublicKey());
     }
 
     private String getToken(HttpServletRequest request) {

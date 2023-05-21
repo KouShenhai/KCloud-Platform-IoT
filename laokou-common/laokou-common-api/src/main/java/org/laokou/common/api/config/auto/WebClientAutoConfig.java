@@ -31,7 +31,6 @@ public class WebClientAutoConfig {
 
     /**
      * 只允许注入一次
-     * @return
      */
     @Bean
     @ConditionalOnMissingBean(WebClient.class)

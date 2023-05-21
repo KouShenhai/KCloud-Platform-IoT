@@ -44,7 +44,7 @@ import org.laokou.common.i18n.core.CustomException;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
-import org.laokou.common.jasypt.utils.AESUtil;
+import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -204,7 +204,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         IPage<SysUserVO> userPage = sysUserService.getUserPage(page, qo);
         List<SysUserVO> records = userPage.getRecords();
         if (!CollectionUtil.isEmpty(records)) {
-            records.forEach(item -> item.setUsername(AESUtil.decrypt(item.getUsername())));
+            records.forEach(item -> item.setUsername(AesUtil.decrypt(item.getUsername())));
         }
         return userPage;
     }
@@ -239,7 +239,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         Long tenantId = UserUtil.getTenantId();
         List<OptionVO> optionList = sysUserService.getOptionList(tenantId);
         if (!CollectionUtil.isEmpty(optionList)) {
-            optionList.forEach(item -> item.setLabel(AESUtil.decrypt(item.getLabel())));
+            optionList.forEach(item -> item.setLabel(AesUtil.decrypt(item.getLabel())));
         }
         return optionList;
     }
@@ -260,7 +260,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
         String userInfoKeyPrefix = RedisKeyUtil.getUserInfoKey("");
         for (String key : keys) {
             UserDetail userDetail = (UserDetail) redisUtil.get(key);
-            String username = AESUtil.decrypt(userDetail.getUsername());
+            String username = AesUtil.decrypt(userDetail.getUsername());
             if (StringUtil.isEmpty(keyword) || username.contains(keyword)) {
                 SysUserOnlineVO vo = new SysUserOnlineVO();
                 vo.setUsername(username);

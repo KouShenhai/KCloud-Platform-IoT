@@ -29,7 +29,7 @@ import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.jasypt.utils.AESUtil;
+import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.tenant.service.SysSourceService;
@@ -227,7 +227,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
             CustomAuthExceptionHandler.throwError(code, msg);
         }
         // 加密
-        String encryptName = AESUtil.encrypt(loginName);
+        String encryptName = AesUtil.encrypt(loginName);
         // 多租户查询
         UserDetail userDetail = sysUserService.getUserDetail(encryptName,tenantId,loginType);
         if (userDetail == null) {

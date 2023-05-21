@@ -19,8 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.jasypt.utils.RsaUtil;
 import org.laokou.gateway.properties.CustomProperties;
-import org.laokou.gateway.utils.PasswordUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.gateway.constant.GatewayConstant;
 import org.laokou.gateway.utils.ResponseUtil;
@@ -118,10 +118,10 @@ public class AuthFilter implements GlobalFilter,Ordered {
                     String username = inParamsMap.get(GatewayConstant.USERNAME);
                     // 返回修改后报文字符
                     if (StringUtil.isNotEmpty(password)) {
-                        inParamsMap.put(GatewayConstant.PASSWORD, PasswordUtil.decode(password));
+                        inParamsMap.put(GatewayConstant.PASSWORD, RsaUtil.decryptByPrivateKey(password));
                     }
                     if (StringUtil.isNotEmpty(username)) {
-                        inParamsMap.put(GatewayConstant.USERNAME, PasswordUtil.decode(username));
+                        inParamsMap.put(GatewayConstant.USERNAME, RsaUtil.decryptByPrivateKey(username));
                     }
                 } catch (Exception e) {
                     log.error("错误信息：{}",e.getMessage());

@@ -1,0 +1,35 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "spring.security.oauth2.authorization-server.enabled",
+      "type": "java.lang.Boolean",
+      "description": "是否开启OAuth2认证，默认开启.",
+      "defaultValue": true
+    },
+    {
+      "name": "spring.security.oauth2.authorization-server.token",
+      "type": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties$Token",
+      "description": "Token配置.",
+      "sourceType": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties"
+    },
+    {
+      "name": "spring.security.oauth2.authorization-server.client",
+      "type": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties$Client",
+      "description": "Client配置.",
+      "sourceType": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties"
+    },
+    {
+      "name": "spring.security.oauth2.authorization-server.registration",
+      "type": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties$Registration",
+      "description": "Registration配置.",
+      "sourceType": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties"
+    },
+    {
+      "name": "spring.security.oauth2.authorization-server.request-matcher",
+      "type": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties$RequestMatcher",
+      "description": "RequestMatcher配置.",
+      "sourceType": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties"
+    }
+  ]
+}

@@ -25,6 +25,13 @@ import org.laokou.common.nacos.utils.ServiceUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.test.context.TestConstructor;
+
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+
 /**
  * @author laokou
  */
@@ -41,6 +48,18 @@ public class ServiceInstanceTest {
     void test() {
         ServiceInstance serviceInstance = serviceUtil.getServiceInstance(ServiceConstant.LAOKOU_FLOWABLE);
         log.info("data -> ：{}", JacksonUtil.toJsonStr(serviceInstance));
+    }
+
+    @Test
+    void test2() throws NoSuchAlgorithmException {
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        keyPairGenerator.initialize(2048);
+        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+        System.out.println(privateKey);
+        System.out.println();
+        System.out.println(publicKey);
     }
 
 }
