@@ -16,21 +16,19 @@
  * limitations under the License.
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>laokou-flowable</artifactId>
-        <groupId>org.laokou</groupId>
-        <version>3.0.7</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.laokou</groupId>
-    <artifactId>laokou-flowable-client</artifactId>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.generate.mapper.ColumnMapper">
 
-    <dependencies>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-core</artifactId>
-        </dependency>
-    </dependencies>
+    <select id="getColumns" resultType="org.laokou.generate.vo.ColumnVO">
+        select
+            column_name,
+            column_comment
+        from
+            information_schema.`columns`
+        where
+            table_name = #{tableName}
+        order by
+            ordinal_position
+    </select>
 
-</project>
+</mapper>

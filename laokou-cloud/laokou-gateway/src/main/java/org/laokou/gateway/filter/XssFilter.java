@@ -73,12 +73,12 @@ public class XssFilter implements GlobalFilter, Ordered {
             return chain.filter(exchange);
         }
         String[] query = rawQuery.split(Constant.AND);
-        StringBuffer sb = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
         for (String str : query) {
-            sb.append(XssUtil.clean(str)).append(Constant.AND);
+            stringBuilder.append(XssUtil.clean(str)).append(Constant.AND);
         }
         // 过滤后，重新构建请求体
-        rawQuery = sb.toString();
+        rawQuery = stringBuilder.toString();
         rawQuery = rawQuery.substring(0,rawQuery.length() - 1);
         URI newUri = UriComponentsBuilder.fromUri(uri)
                 .replaceQuery(rawQuery)

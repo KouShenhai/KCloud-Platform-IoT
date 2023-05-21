@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.laokou.tset.juc.thread;
+package org.laokou.test.juc.thread;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,10 +27,10 @@ import java.util.concurrent.*;
  */
 public class Test1 {
 
-    private static Map<String,String> map = new ConcurrentHashMap<>(10000);
-    private static Map<String,Boolean> map2 = new ConcurrentHashMap<>(10000);
+    private static final Map<String,String> map = new ConcurrentHashMap<>(10000);
+    private static final Map<String,Boolean> map2 = new ConcurrentHashMap<>(10000);
 
-    private static LinkedBlockingQueue<String> linkedBlockingQueue = new LinkedBlockingQueue<>(256);
+    private static final LinkedBlockingQueue<String> linkedBlockingQueue = new LinkedBlockingQueue<>(256);
 
     public static void main(String[] args) {
         ThreadPoolExecutor EXECUTOR = new ThreadPoolExecutor(
@@ -73,7 +73,7 @@ public class Test1 {
 
     public static void test(String uuid) {
         String o = map.get(uuid);
-        if (o != null && o.length() > 0 && !"".equals(o)) {
+        if (o != null && o.length() > 0) {
             map2.put(uuid,true);
             // 唤醒线程
             synchronized (o) {
