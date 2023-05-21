@@ -19,7 +19,7 @@ package org.laokou.common.mybatisplus.handler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.jasypt.utils.AESUtil;
+import org.laokou.common.jasypt.utils.AesUtil;
 import org.springframework.stereotype.Component;
 
 import java.sql.CallableStatement;
@@ -36,7 +36,7 @@ public class JasyptTypeHandler implements TypeHandler<String> {
     @Override
     public void setParameter(PreparedStatement preparedStatement, int parameterIndex, String content, JdbcType jdbcType) throws SQLException {
         if (StringUtil.isNotEmpty(content)) {
-            content = AESUtil.encrypt(content);
+            content = AesUtil.encrypt(content);
         }
         preparedStatement.setString(parameterIndex,content);
     }
@@ -47,7 +47,7 @@ public class JasyptTypeHandler implements TypeHandler<String> {
         if (StringUtil.isEmpty(data)) {
             return "";
         }
-        return AESUtil.decrypt(data.trim());
+        return AesUtil.decrypt(data.trim());
     }
 
     @Override
@@ -56,7 +56,7 @@ public class JasyptTypeHandler implements TypeHandler<String> {
         if (StringUtil.isEmpty(data)) {
             return "";
         }
-        return AESUtil.decrypt(data.trim());
+        return AesUtil.decrypt(data.trim());
     }
 
     @Override
@@ -65,7 +65,7 @@ public class JasyptTypeHandler implements TypeHandler<String> {
         if (StringUtil.isEmpty(data)) {
             return "";
         }
-        return AESUtil.decrypt(data.trim());
+        return AesUtil.decrypt(data.trim());
     }
 
 }

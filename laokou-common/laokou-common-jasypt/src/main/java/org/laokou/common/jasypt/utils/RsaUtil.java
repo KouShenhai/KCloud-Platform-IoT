@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.gateway.utils;
+package org.laokou.common.jasypt.utils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
+import org.apache.hc.client5.http.utils.Base64;
 import org.laokou.common.core.utils.ResourceUtil;
-
 import javax.crypto.Cipher;
-import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Objects;
@@ -30,9 +29,11 @@ import java.util.Objects;
 @Slf4j
 public class RsaUtil {
 
+    private static final String ALGORITHM = "RSA";
+
     /**
      * base64解密
-     * @param key 私钥
+     * @param key 密钥
      */
     public static byte[] decryptBase64(String key) {
         return Base64.decodeBase64(key);
@@ -40,32 +41,33 @@ public class RsaUtil {
 
     /**
      * 通过私钥解密
-     * @param data 加密字符串
-     * @param key 私钥
+     * @param bytes 加密字符串
+     * @param keyBytes 私钥
      */
-    public static byte[] decryptByPrivateKey(byte[] data, String key) throws Exception {
-        byte[] keyBytes = decryptBase64(key);
+    public static byte[] decryptByPrivateKey(byte[] bytes, byte[] keyBytes) throws Exception {
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
         Key privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
         cipher.init(2, privateKey);
-        return cipher.doFinal(data);
+        return cipher.doFinal(bytes);
     }
 
     public static String decryptByPrivateKey(String data) throws Exception {
-        byte[] bytes = decryptByPrivateKey(decryptBase64(data), getPrivateKey());
-        return new String(bytes);
+        byte[] bytes = decryptByPrivateKey(decryptBase64(data), decryptBase64(getPrivateKey()));
+        return new String(Objects.requireNonNull(bytes),StandardCharsets.UTF_8);
     }
 
     @SneakyThrows
     public static String getPrivateKey() {
-        InputStream in = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream();
-        return new String(Objects.requireNonNull(readByte(in)));
+        byte[] bytes = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream().readAllBytes();
+        return new String(Objects.requireNonNull(bytes),StandardCharsets.UTF_8);
     }
 
     @SneakyThrows
-    public static byte[] readByte(InputStream inputStream) {
-       return inputStream.readAllBytes();
+    public static String getPublicKey() {
+        byte[] bytes = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream().readAllBytes();
+        return new String(Objects.requireNonNull(bytes), StandardCharsets.UTF_8);
     }
+
 }

@@ -26,7 +26,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
  */
-public class AESUtil {
+public class AesUtil {
 
     private static byte[] getSecretKey() {
         String secretKey = getKey();
@@ -37,7 +37,7 @@ public class AESUtil {
 
     @SneakyThrows
     private static String getKey() {
-        byte[] bytes = ResourceUtil.getResource("secret_key.b64").getInputStream().readAllBytes();
+        byte[] bytes = ResourceUtil.getResource("conf/secret_key.b64").getInputStream().readAllBytes();
         return new String(bytes,StandardCharsets.UTF_8);
     }
 
