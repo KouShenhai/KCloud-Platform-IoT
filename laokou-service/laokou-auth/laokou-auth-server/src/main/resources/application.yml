@@ -97,9 +97,3 @@ spring:
             - /oauth2/logout
             - /oauth2/tenant
             - /oauth2/secret_info
-        jwkSource:
-          path: auth.jks
-          alias: auth
-          password: koushenhai
-        jwtDecoder:
-          path: auth.cer

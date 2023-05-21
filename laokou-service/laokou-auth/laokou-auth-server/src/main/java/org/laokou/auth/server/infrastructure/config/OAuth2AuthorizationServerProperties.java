@@ -28,7 +28,7 @@ import java.time.Duration;
 import java.util.Set;
 
 /**
- * {@link OAuth2AuthorizationServerProperties}
+ * {@link org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerProperties}
  * {@link ConfigurationSettingNames}
  * @author laokou
  */
@@ -43,8 +43,6 @@ public class OAuth2AuthorizationServerProperties implements InitializingBean {
     private Client client;
     private Registration registration;
     private RequestMatcher requestMatcher;
-    private JwkSource jwkSource;
-    private JwtDecoder jwtDecoder;
 
     @Override
     public void afterPropertiesSet() {
@@ -104,24 +102,11 @@ public class OAuth2AuthorizationServerProperties implements InitializingBean {
         private Set<String> authorizationGrantTypes;
         private Set<String> scopes;
         private Set<String> redirectUris;
-        private Set<String> postLogoutRedirectUris;
     }
 
     @Data
     public static class RequestMatcher {
         private Set<String> patterns;
-    }
-
-    @Data
-    public static class JwkSource {
-        private String alias;
-        private String password;
-        private String path;
-    }
-
-    @Data
-    public static class JwtDecoder {
-        private String path;
     }
 
 }
