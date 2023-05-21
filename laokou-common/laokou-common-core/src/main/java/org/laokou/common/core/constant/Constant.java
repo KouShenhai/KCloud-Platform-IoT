@@ -32,6 +32,8 @@ public interface Constant {
     String TRACE_ID = "trace-id";
     String USER_ID = "user-id";
     String TENANT_ID = "tenant-id";
+    String SIGN = "sign";
+    String TIMESTAMP = "timestamp";
 
     int NO = 0;
 
