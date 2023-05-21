@@ -48,6 +48,7 @@ import org.springframework.security.oauth2.server.authorization.*;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
@@ -68,11 +69,6 @@ import java.util.List;
 @ConditionalOnProperty(havingValue = "true",matchIfMissing = true,prefix = OAuth2AuthorizationServerProperties.PREFIX,name = "enabled")
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2AuthorizationServerConfig {
-
-    /**
-     * 错误
-     */
-    private static final String ERROR_PATTERN = "/error";
 
     /**
      * 登录
@@ -97,6 +93,7 @@ class OAuth2AuthorizationServerConfig {
     , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
     , SysSourceService sysSourceService
     , RedisUtil redisUtil) throws Exception {
+        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
         OAuth2AuthorizationServerConfigurer oAuth2AuthorizationServerConfigurer = http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 // https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
                 .tokenEndpoint((tokenEndpoint) ->
@@ -114,10 +111,9 @@ class OAuth2AuthorizationServerConfig {
                 .oidc(Customizer.withDefaults())
                 .authorizationService(authorizationService)
                 .authorizationServerSettings(authorizationServerSettings);
-        http.securityMatcher().authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers(ERROR_PATTERN).permitAll().anyRequest().authenticated())
-                .exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_PATTERN)))
-                .apply(oAuth2AuthorizationServerConfigurer);
-        return http.build();
+        http.apply(oAuth2AuthorizationServerConfigurer);
+        return http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_PATTERN)))
+                .build();
     }
 
     /**
@@ -160,9 +156,6 @@ class OAuth2AuthorizationServerConfig {
         registration.getRedirectUris().forEach(redirectUri -> map.from(redirectUri)
                 .whenNonNull()
                 .to(registrationBuilder::redirectUri));
-        registration.getPostLogoutRedirectUris().forEach(postLogoutRedirectUris -> map.from(postLogoutRedirectUris)
-                .whenNonNull()
-                .to(registrationBuilder::postLogoutRedirectUri));
         registrationBuilder.tokenSettings(tokenBuilder.build());
         registrationBuilder.clientSettings(clientBuilder.build());
         JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
