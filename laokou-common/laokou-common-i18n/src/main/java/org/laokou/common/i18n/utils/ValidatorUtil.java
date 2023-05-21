@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 /**
- * https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-validating-bean-constraints
+ * <a href="https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-validating-bean-constraints">...</a>
  * @author laokou
  */
 public class ValidatorUtil {
@@ -47,10 +47,6 @@ public class ValidatorUtil {
             String message = violationSet.iterator().next().getMessage();
             throw new CustomException(message);
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 
 }
