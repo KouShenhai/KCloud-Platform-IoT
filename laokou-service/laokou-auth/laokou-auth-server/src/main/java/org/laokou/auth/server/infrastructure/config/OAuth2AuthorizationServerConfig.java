@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 package org.laokou.auth.server.infrastructure.config;
-import com.nimbusds.jose.jwk.JWKSet;
-import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import lombok.SneakyThrows;
 import org.laokou.auth.server.domain.sys.repository.service.*;
 import org.laokou.auth.server.infrastructure.authentication.*;
-import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.tenant.service.SysSourceService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerJwtAutoConfiguration;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,9 +42,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.OAuth2Token;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.authorization.*;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
@@ -61,35 +57,35 @@ import org.springframework.security.oauth2.server.authorization.token.JwtGenerat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2RefreshTokenGenerator;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.oauth2.server.authorization.web.authentication.*;
-import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.KeyStore;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 /**
+ * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}
  * @author laokou
  */
 @Configuration
 @ConditionalOnProperty(havingValue = "true",matchIfMissing = true,prefix = OAuth2AuthorizationServerProperties.PREFIX,name = "enabled")
-public class OAuth2AuthorizationServerConfig {
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+class OAuth2AuthorizationServerConfig {
 
     /**
-     * 忽略error
+     * 错误
      */
-    private static final String PATTERN = "/error";
+    private static final String ERROR_PATTERN = "/error";
 
     /**
+     * 登录
+     */
+    private static final String LOGIN_PATTERN = "/login";
+
+    /**
+     * <a href="https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html">...</a>
      * OAuth2AuthorizationServer核心配置
      */
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http
+    SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http
     , AuthorizationServerSettings authorizationServerSettings
     , OAuth2AuthorizationService authorizationService
     , SysUserService sysUserService
@@ -101,31 +97,27 @@ public class OAuth2AuthorizationServerConfig {
     , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
     , SysSourceService sysSourceService
     , RedisUtil redisUtil) throws Exception {
-        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
-        authorizationServerConfigurer.oidc(Customizer.withDefaults());
-        http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
-                .apply(authorizationServerConfigurer.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(
-                List.of(new OAuth2PasswordAuthenticationConverter()
-                        , new OAuth2MobileAuthenticationConverter()
-                        , new OAuth2MailAuthenticationConverter()
-                        , new OAuth2AuthorizationCodeAuthenticationConverter()
-                        , new OAuth2ClientCredentialsAuthenticationConverter()
-                        , new OAuth2RefreshTokenAuthenticationConverter()
-                        , new OAuth2AuthorizationCodeRequestAuthenticationConverter())))));
-        DefaultSecurityFilterChain defaultSecurityFilterChain = http.securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
-                .authorizeHttpRequests(authorizeRequests -> {
-                    authorizeRequests.requestMatchers(PATTERN).permitAll().anyRequest().authenticated();
-                })
-                .csrf(csrf -> csrf.ignoringRequestMatchers(authorizationServerConfigurer.getEndpointsMatcher()))
-                .apply(authorizationServerConfigurer
-                        .authorizationService(authorizationService)
-                        .authorizationServerSettings(authorizationServerSettings))
-                .and()
-                .build();
-        http.authenticationProvider(new OAuth2PasswordAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,redisUtil))
-                .authenticationProvider(new OAuth2MobileAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,redisUtil))
-                .authenticationProvider(new OAuth2MailAuthenticationProvider(sysUserService,sysMenuService,sysDeptService,loginLogUtil,passwordEncoder,sysCaptchaService,authorizationService,tokenGenerator, sysSourceService,redisUtil));
-        return defaultSecurityFilterChain;
+        OAuth2AuthorizationServerConfigurer oAuth2AuthorizationServerConfigurer = http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+                // https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
+                .tokenEndpoint((tokenEndpoint) ->
+                        tokenEndpoint
+                                .accessTokenRequestConverter(new DelegatingAuthenticationConverter(List.of(new OAuth2PasswordAuthenticationConverter()
+                                        , new OAuth2MobileAuthenticationConverter()
+                                        , new OAuth2MailAuthenticationConverter()
+                                        , new OAuth2AuthorizationCodeAuthenticationConverter()
+                                        , new OAuth2ClientCredentialsAuthenticationConverter()
+                                        , new OAuth2RefreshTokenAuthenticationConverter()
+                                        , new OAuth2AuthorizationCodeRequestAuthenticationConverter())))
+                                .authenticationProvider(new OAuth2PasswordAuthenticationProvider(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder, sysCaptchaService, authorizationService, tokenGenerator, sysSourceService, redisUtil))
+                                .authenticationProvider(new OAuth2MobileAuthenticationProvider(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder, sysCaptchaService, authorizationService, tokenGenerator, sysSourceService, redisUtil))
+                                .authenticationProvider(new OAuth2MailAuthenticationProvider(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder, sysCaptchaService, authorizationService, tokenGenerator, sysSourceService, redisUtil)))
+                .oidc(Customizer.withDefaults())
+                .authorizationService(authorizationService)
+                .authorizationServerSettings(authorizationServerSettings);
+        http.securityMatcher().authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers(ERROR_PATTERN).permitAll().anyRequest().authenticated())
+                .exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_PATTERN)))
+                .apply(oAuth2AuthorizationServerConfigurer);
+        return http.build();
     }
 
     /**
@@ -140,7 +132,7 @@ public class OAuth2AuthorizationServerConfig {
         RegisteredClient.Builder registrationBuilder = RegisteredClient.withId(registration.getId());
         TokenSettings.Builder tokenBuilder = TokenSettings.builder();
         ClientSettings.Builder clientBuilder = ClientSettings.builder();
-        PropertyMapper map = PropertyMapper.get();
+        PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
         // 令牌 => JWT配置
         map.from(token::getAccessTokenTimeToLive).to(tokenBuilder::accessTokenTimeToLive);
         map.from(token::getRefreshTokenTimeToLive).to(tokenBuilder::refreshTokenTimeToLive);
@@ -168,6 +160,9 @@ public class OAuth2AuthorizationServerConfig {
         registration.getRedirectUris().forEach(redirectUri -> map.from(redirectUri)
                 .whenNonNull()
                 .to(registrationBuilder::redirectUri));
+        registration.getPostLogoutRedirectUris().forEach(postLogoutRedirectUris -> map.from(postLogoutRedirectUris)
+                .whenNonNull()
+                .to(registrationBuilder::postLogoutRedirectUri));
         registrationBuilder.tokenSettings(tokenBuilder.build());
         registrationBuilder.clientSettings(clientBuilder.build());
         JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
@@ -227,30 +222,6 @@ public class OAuth2AuthorizationServerConfig {
     }
 
     /**
-     * JWK资源
-     */
-    @Bean
-    JWKSource<SecurityContext> jwkSource(OAuth2AuthorizationServerProperties properties) {
-        RSAKey rsaKey = getRsaKey(properties);
-        JWKSet jwkSet = new JWKSet(rsaKey);
-        return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
-    }
-
-    /**
-     * JWT解码器
-     * 客户端认证授权后，需要访问用户信息，解码器可以从令牌中解析用户信息
-     */
-    @Bean
-    JwtDecoder jwtDecoder(OAuth2AuthorizationServerProperties properties) throws CertificateException, IOException {
-        CertificateFactory certificateFactory = CertificateFactory.getInstance("x.509");
-        // 读取cer公钥证书来配置解码器
-        InputStream inputStream = ResourceUtil.getResource(properties.getJwtDecoder().getPath()).getInputStream();
-        Certificate certificate = certificateFactory.generateCertificate(inputStream);
-        RSAPublicKey publicKey = (RSAPublicKey) certificate.getPublicKey();
-        return NimbusJwtDecoder.withPublicKey(publicKey).build();
-    }
-
-    /**
      * 配置
      */
     @Bean
@@ -268,24 +239,6 @@ public class OAuth2AuthorizationServerConfig {
     @ConditionalOnMissingBean(OAuth2AuthorizationConsentService.class)
     OAuth2AuthorizationConsentService authorizationConsentService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
         return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
-    }
-
-    /**
-     * RSA密钥
-     * @param properties 配置
-     * @return RSAKey
-     */
-    @SneakyThrows
-    private RSAKey getRsaKey(OAuth2AuthorizationServerProperties properties) {
-        OAuth2AuthorizationServerProperties.JwkSource jwkSource = properties.getJwkSource();
-        String alias = jwkSource.getAlias();
-        String password = jwkSource.getPassword();
-        String path = jwkSource.getPath();
-        InputStream inputStream = ResourceUtil.getResource(path).getInputStream();
-        KeyStore jks = KeyStore.getInstance("jks");
-        char[] pwd = password.toCharArray();
-        jks.load(inputStream,pwd);
-        return RSAKey.load(jks, alias, pwd);
     }
 
 }

@@ -61,23 +61,24 @@ public class RedissonConfig {
         Config config = new Config();
         int timeout = (int) properties.getTimeout().toMillis();
         int connectTimeout = (int) properties.getConnectTimeout().toMillis();
+        boolean isSSL = properties.getSsl().isEnabled();
         if (properties.getSentinel() != null) {
             config.useSentinelServers()
                     .setMasterName(properties.getSentinel().getMaster())
-                    .addSentinelAddress(convertNodes(properties.isSsl(),properties.getSentinel().getNodes()))
+                    .addSentinelAddress(convertNodes(isSSL,properties.getSentinel().getNodes()))
                     .setDatabase(properties.getDatabase())
                     .setTimeout(timeout)
                     .setConnectTimeout(connectTimeout)
                     .setPassword(properties.getPassword());
         } else if (properties.getCluster() != null) {
             config.useClusterServers()
-                    .addNodeAddress(convertNodes(properties.isSsl(),properties.getCluster().getNodes()))
+                    .addNodeAddress(convertNodes(isSSL,properties.getCluster().getNodes()))
                     .setPassword(properties.getPassword())
                     .setTimeout(timeout)
                     .setConnectTimeout(connectTimeout);
         } else {
             config.useSingleServer()
-                    .setAddress(convertAddress(properties.isSsl(),properties.getHost() ,properties.getPort()))
+                    .setAddress(convertAddress(isSSL,properties.getHost() ,properties.getPort()))
                     .setDatabase(properties.getDatabase())
                     .setPassword(properties.getPassword())
                     .setConnectTimeout(connectTimeout)
@@ -93,17 +94,17 @@ public class RedissonConfig {
         return isSsl ? REDISS_PROTOCOL_PREFIX : REDIS_PROTOCOL_PREFIX;
     }
 
-    private String convertAddress(boolean isSsl,String host,int port) {
-        return getProtocolPrefix(isSsl) + host + ":" + port;
+    private String convertAddress(boolean isSSL,String host,int port) {
+        return getProtocolPrefix(isSSL) + host + ":" + port;
     }
 
-    private String[] convertNodes(boolean isSsl,List<String> nodeList) {
+    private String[] convertNodes(boolean isSSL,List<String> nodeList) {
         List<String> nodes = new ArrayList<>(nodeList.size());
         for (String node : nodeList) {
             if (node.startsWith(REDISS_PROTOCOL_PREFIX) || node.startsWith(REDIS_PROTOCOL_PREFIX)) {
                 nodes.add(node);
             } else {
-                nodes.add(getProtocolPrefix(isSsl) + node);
+                nodes.add(getProtocolPrefix(isSSL) + node);
             }
         }
         return nodes.toArray(new String[0]);

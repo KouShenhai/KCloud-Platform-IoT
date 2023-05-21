@@ -42,8 +42,6 @@ public class RsaUtil {
      * 通过私钥解密
      * @param data 加密字符串
      * @param key 私钥
-     * @return
-     * @throws Exception
      */
     public static byte[] decryptByPrivateKey(byte[] data, String key) throws Exception {
         byte[] keyBytes = decryptBase64(key);
