@@ -81,6 +81,7 @@
         <module>laokou-common-algorithm</module>
         <module>laokou-common-skywalking</module>
         <module>laokou-common-nacos</module>
+        <module>laokou-common-xss</module>
     </modules>
 
 </project>
