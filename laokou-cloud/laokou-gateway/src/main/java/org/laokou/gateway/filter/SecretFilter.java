@@ -51,11 +51,11 @@ public class SecretFilter implements GlobalFilter, Ordered {
         String username = ResponseUtil.getUsername(request);
         String sign = ResponseUtil.getSign(request);
         String timestamp = ResponseUtil.getTimestamp(request);
-        try {
-            SecretUtil.verification(sign, Long.parseLong(timestamp), Long.parseLong(userId), username, Long.parseLong(tenantId));
-        } catch (CustomException e) {
-            return ResponseUtil.response(exchange, ResponseUtil.response(e.getCode(),e.getMsg()));
-        }
+//        try {
+//            SecretUtil.verification(sign, Long.parseLong(timestamp), Long.parseLong(userId), username, Long.parseLong(tenantId));
+//        } catch (CustomException e) {
+//            return ResponseUtil.response(exchange, ResponseUtil.response(e.getCode(),e.getMsg()));
+//        }
         return chain.filter(exchange);
     }
 
