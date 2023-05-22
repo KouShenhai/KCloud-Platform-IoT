@@ -22,7 +22,6 @@ import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.HttpEntityContainer;
@@ -55,7 +54,6 @@ public class HttpUtil {
         //创建HttpClient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
         String resultString = "";
-        CloseableHttpResponse response = null;
         try {
             //创建uri
             URIBuilder builder = new URIBuilder(url);
@@ -77,11 +75,8 @@ public class HttpUtil {
             // 执行请求
             resultString = httpClient.execute(httpGet, handler -> EntityUtils.toString(handler.getEntity(),StandardCharsets.UTF_8));
         } catch (Exception e) {
-            log.error("调用失败，错误信息:{}",e);
+            log.error("调用失败，错误信息:{}",e.getMessage());
         } finally {
-            if (response != null) {
-                response.close();
-            }
             httpClient.close();
         }
         log.info("打印：{}",resultString);
@@ -89,10 +84,9 @@ public class HttpUtil {
     }
 
     @SneakyThrows
-    public static String doPost(String url,Map<String, String> params,Map<String,String> headers) throws IOException {
+    public static String doPost(String url,Map<String, String> params,Map<String,String> headers) {
         //创建HttpClient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        CloseableHttpResponse response = null;
         String resultString = "";
         try {
             //创建Http Post请求
@@ -117,11 +111,8 @@ public class HttpUtil {
                 resultString = httpClient.execute(httpPost, handler -> EntityUtils.toString(handler.getEntity(),StandardCharsets.UTF_8));
             }
         }catch (Exception e) {
-            log.error("接口调用失败:{}",e);
+            log.error("接口调用失败:{}",e.getMessage());
         }finally {
-            if (response != null) {
-                response.close();
-            }
             httpClient.close();
         }
         log.info("打印：{}",resultString);
@@ -157,8 +148,6 @@ public class HttpUtil {
 
     /**
      * 转换为驼峰json字符串
-     * @param data
-     * @return
      */
     public static String transformerUnderHumpData(String data) {
         data = data.toLowerCase();

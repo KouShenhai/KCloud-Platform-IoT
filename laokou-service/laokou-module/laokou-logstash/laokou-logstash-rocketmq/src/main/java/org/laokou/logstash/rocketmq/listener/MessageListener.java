@@ -29,8 +29,6 @@ import org.laokou.logstash.client.index.TraceIndex;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-
 /**
  * @author laokou
  */
@@ -63,7 +61,7 @@ public class MessageListener implements RocketMQListener<MessageExt> {
     }
 
     /**
-     * 每个月最后一天的23：50：00创建下一个的索引
+     * 每个月最后一天的23：50：00创建下一月个的索引
      */
     @Scheduled(cron = "0 50 23 L * ?")
     @SneakyThrows
