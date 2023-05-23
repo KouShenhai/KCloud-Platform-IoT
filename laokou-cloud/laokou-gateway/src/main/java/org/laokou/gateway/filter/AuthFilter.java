@@ -54,7 +54,7 @@ import static org.laokou.gateway.constant.GatewayConstant.OAUTH2_AUTH_URI;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class AuthFilter implements GlobalFilter,Ordered {
+public class AuthFilter implements GlobalFilter, Ordered {
 
     private final CustomProperties customProperties;
 
@@ -73,7 +73,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
         if (OAUTH2_AUTH_URI.contains(requestUri)
                 && HttpMethod.POST.matches(request.getMethod().name())
                 && MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
-            return oauth2Decode(exchange,chain);
+            return oauth2Decode(exchange, chain);
         }
         // 获取token
         String token = ResponseUtil.getToken(request);
@@ -91,6 +91,9 @@ public class AuthFilter implements GlobalFilter,Ordered {
 
     /**
      * OAuth2解密
+     * @param chain chain
+     * @param exchange exchange
+     * @return Mono<Void>
      */
     private Mono<Void> oauth2Decode(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());
@@ -124,7 +127,7 @@ public class AuthFilter implements GlobalFilter,Ordered {
                         inParamsMap.put(GatewayConstant.USERNAME, RsaUtil.decryptByPrivateKey(username));
                     }
                 } catch (Exception e) {
-                    log.error("错误信息：{}",e.getMessage());
+                    log.error("错误信息：{}", e.getMessage());
                 }
             }
             else {

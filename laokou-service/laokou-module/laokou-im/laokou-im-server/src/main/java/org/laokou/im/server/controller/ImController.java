@@ -40,7 +40,7 @@ public class ImController {
     private final ImService imService;
 
     @PostMapping("/push")
-    @Operation(summary = "即时通讯>推送",description = "即时通讯>推送")
+    @Operation(summary = "即时通讯>推送", description = "即时通讯>推送")
     public HttpResult<Boolean> push(@RequestBody PushMsgDTO dto) throws IOException {
         return new HttpResult<Boolean>().ok(imService.pusMessage(dto));
     }

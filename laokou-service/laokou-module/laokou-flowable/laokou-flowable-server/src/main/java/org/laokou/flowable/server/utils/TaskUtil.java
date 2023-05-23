@@ -26,7 +26,7 @@ public class TaskUtil {
 
     private final TaskMapper taskMapper;
 
-    public String getAssignee (String processInstanceId) {
+    public String getAssignee(String processInstanceId) {
         return taskMapper.getAssignee(processInstanceId);
     }
 }

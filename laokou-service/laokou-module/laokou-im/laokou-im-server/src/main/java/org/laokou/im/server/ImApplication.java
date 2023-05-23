@@ -24,7 +24,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 public class ImApplication {
 
-    public static void main(String[] args) {
+    /**
+     * 启动.
+     * @param args args
+     */
+    public static void main(final String[] args) {
         SpringApplication.run(ImApplication.class, args);
     }
 
