@@ -99,6 +99,7 @@ class OAuth2AuthorizationServerConfig {
                 .tokenEndpoint((tokenEndpoint) ->
                         tokenEndpoint
                                 .accessTokenRequestConverter(new DelegatingAuthenticationConverter(List.of(new OAuth2PasswordAuthenticationConverter()
+                                        , new OAuth2DeviceCodeAuthenticationConverter()
                                         , new OAuth2MobileAuthenticationConverter()
                                         , new OAuth2MailAuthenticationConverter()
                                         , new OAuth2AuthorizationCodeAuthenticationConverter()
