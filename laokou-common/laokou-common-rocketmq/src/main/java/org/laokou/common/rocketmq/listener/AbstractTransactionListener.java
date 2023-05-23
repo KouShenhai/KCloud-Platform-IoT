@@ -35,11 +35,11 @@ public abstract class AbstractTransactionListener implements RocketMQLocalTransa
         Object payload = message.getPayload();
         log.info("执行本地事务");
         try {
-            executeLocalTransaction(payload,transactionId);
+            executeLocalTransaction(payload, transactionId);
             log.info("事务提交");
             return RocketMQLocalTransactionState.COMMIT;
         } catch (Exception e) {
-            log.error("事务回滚：{}",e.getMessage());
+            log.error("事务回滚：{}", e.getMessage());
             return RocketMQLocalTransactionState.ROLLBACK;
         }
     }
@@ -59,9 +59,9 @@ public abstract class AbstractTransactionListener implements RocketMQLocalTransa
 
     /**
      * 本地事务实现
-     * @param transactionId
-     * @param obj
-     * @return
+     * @param transactionId transactionId
+     * @param obj obj
+     * @return void
      */
     protected abstract void executeLocalTransaction(Object obj, String transactionId);
 
