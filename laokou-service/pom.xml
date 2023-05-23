@@ -33,5 +33,6 @@
         <module>laokou-module</module>
         <module>laokou-auth</module>
         <module>laokou-generate</module>
+        <module>laokou-module/laokou-test/laokou-test-webflux</module>
     </modules>
 </project>
