@@ -20,8 +20,8 @@ class GenerateApplicationTests {
 
 	@Test
 	void contextLoads() {
-		String tableName = "dw_product_stock_change";
-		String className = "ProductAlarmItem";
+		String tableName = "dw_alarm_rule";
+		String className = "AlarmRule";
 		List<ColumnVO> columns = columnMapper.getColumns(tableName);
 		List<ColumnVO> list = columns.stream().filter(i -> !ignoreColumns.contains(i.getColumnName())).toList();
 		print(list,tableName,className);
