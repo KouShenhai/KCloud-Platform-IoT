@@ -14,20 +14,24 @@
  * limitations under the License.
  */
 
-package org.laokou.tset.juc;
+package org.laokou.test.juc;
 
-import org.laokou.common.core.utils.JacksonUtil;
-
+import java.time.LocalDate;
+import java.time.Period;
 /**
  * @author laokou
  */
 public class JsonTest {
     public static void main(String[] args) {
-        String[] strings = {"1"};
-        String s = JacksonUtil.toJsonStr(strings);
-        User user = new User(1,strings);
-        System.out.println(s);
-        System.out.println(JacksonUtil.toJsonStr(user));
+        LocalDate now = LocalDate.now();
+        LocalDate localDate = LocalDate.of(2023, 5, 25);
+        int days = Period.between(now, localDate).getDays();
+        System.out.println(days);
+//        String[] strings = {"1"};
+//        String s = JacksonUtil.toJsonStr(strings);
+//        User user = new User(1,strings);
+//        System.out.println(s);
+//        System.out.println(JacksonUtil.toJsonStr(user));
     }
     static class User {
         public User(int age,String[] name) {
