@@ -16,10 +16,7 @@
 package org.laokou.common.core.utils;
 import org.laokou.common.i18n.core.CustomException;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -127,6 +124,10 @@ public class DateUtil {
 
     public static long getDays(LocalDateTime start,LocalDateTime end) {
         return Duration.between(start,end).toDays();
+    }
+
+    public static long getDays(LocalDate start,LocalDate end) {
+        return Period.between(start,end).getDays();
     }
 
     public static long getHours(LocalDateTime start,LocalDateTime end) {
