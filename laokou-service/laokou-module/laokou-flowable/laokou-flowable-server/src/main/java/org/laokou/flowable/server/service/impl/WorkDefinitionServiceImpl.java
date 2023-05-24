@@ -129,7 +129,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
             }
             return Base64.encodeBase64String(outputStream.toByteArray());
         } catch (IOException e) {
-            log.error("错误信息：{}",e.getMessage());
+            log.error("错误信息：{}", e.getMessage());
             return "";
         }
     }
@@ -138,7 +138,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteDefinition(String deploymentId) {
         // true允许级联删除 不设置会导致数据库关联异常
-        repositoryService.deleteDeployment(deploymentId,true);
+        repositoryService.deleteDeployment(deploymentId, true);
         return true;
     }
 

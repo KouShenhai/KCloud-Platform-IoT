@@ -117,22 +117,23 @@ public class WebSocketServer {
             }
         }
     }
+
     /**
-     * 返回在线数
+     * 返回在线数.
      */
-    private static synchronized int getOnlineCount(){
+    private static synchronized int getOnlineCount() {
         return onlineCount;
     }
     /**
      * 连接人数增加时
      */
-    private static synchronized void addOnlineCount(){
+    private static synchronized void addOnlineCount() {
         WebSocketServer.onlineCount++;
     }
     /**
      * 连接人数减少时
      */
-    private static synchronized void subOnlineCount(){
+    private static synchronized void subOnlineCount() {
         WebSocketServer.onlineCount--;
     }
 }
