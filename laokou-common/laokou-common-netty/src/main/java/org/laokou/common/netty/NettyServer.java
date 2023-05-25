@@ -25,12 +25,15 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author laokou
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Slf4j
 public class NettyServer implements Runnable {
 
 	private String ip;
@@ -60,10 +63,11 @@ public class NettyServer implements Runnable {
 			serverBootstrap.childHandler(null);
 			// 绑定端口，等待启动
 			ChannelFuture channelFuture = serverBootstrap.bind(this.ip, this.port).sync();
+			log.info("启动成功，地址：{}，端口：{}",this.ip,this.port);
 			// 监听端口关闭
 			channelFuture.channel().closeFuture().sync();
 		} catch (Exception e) {
-
+			log.error("绑定失败，地址：{}，端口：{}，错误信息:{}",this.ip,this.port,e.getMessage());
 		} finally {
 			// 释放资源
 			boss.shutdownGracefully();
