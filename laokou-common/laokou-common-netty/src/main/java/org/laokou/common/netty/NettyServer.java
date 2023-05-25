@@ -25,15 +25,12 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * @author laokou
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Slf4j
 public class NettyServer implements Runnable {
 
 	private String ip;
@@ -59,7 +56,7 @@ public class NettyServer implements Runnable {
 			serverBootstrap.option(ChannelOption.SO_RCVBUF, 1024 * 1024);
 			// 设置缓冲区阈值
 			serverBootstrap.childOption(ChannelOption.WRITE_BUFFER_WATER_MARK,new WriteBufferWaterMark(1024 * 1024,5 * 1024 * 1024));
-			// 对work添加handler
+			// 对worker添加handler
 			serverBootstrap.childHandler(null);
 			// 绑定端口，等待启动
 			ChannelFuture channelFuture = serverBootstrap.bind(this.ip, this.port).sync();
