@@ -13,44 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.laokou.test.netty;
 
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.*;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-
-import java.net.InetSocketAddress;
+import org.laokou.common.netty.NettyServer;
 
 /**
  * @author laokou
  */
 public class TestNetty {
-    public static void main(String[] args) throws InterruptedException {
-        // 创建一组线性
-        NioEventLoopGroup eventLoopGroup = new NioEventLoopGroup();
-        try {
-            // 初始化Server
-            ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(eventLoopGroup);
-            serverBootstrap.channel(NioServerSocketChannel.class);
-            serverBootstrap.localAddress(new InetSocketAddress("localhost",8885));
-            // 设置收到数据后处理Handler
-            serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
-                @Override
-                protected void initChannel(SocketChannel channel) {
-                    channel.pipeline().addLast(new ChannelInboundHandlerAdapter());
-                }
-            });
-            // 绑定端口，开始提供服务
-            ChannelFuture channelFuture = serverBootstrap.bind().sync();
-            channelFuture.channel().closeFuture().sync();
-        } catch (Exception e) {
-
-        } finally {
-            eventLoopGroup.shutdownGracefully().sync();
-        }
+    public static void main(String[] args) {
+        NettyServer nettyServer = new NettyServer("127.0.0.1", 8081);
+        Thread thread = new Thread(nettyServer);
+        thread.start();
     }
 }

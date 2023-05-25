@@ -52,7 +52,7 @@ public class NettyServer implements Runnable {
 			// 设置管道工厂（非阻塞，用来建立新的accept连接）
 			serverBootstrap.channel(NioServerSocketChannel.class);
 			// 请求队列的最大长度
-			serverBootstrap.option(NioChannelOption.SO_BACKLOG, 512);
+			serverBootstrap.option(NioChannelOption.SO_BACKLOG, 1024);
 			// 维持长连接
 			serverBootstrap.childOption(ChannelOption.SO_KEEPALIVE,true);
 			// 获取接收缓冲区大小
@@ -60,7 +60,7 @@ public class NettyServer implements Runnable {
 			// 设置缓冲区阈值
 			serverBootstrap.childOption(ChannelOption.WRITE_BUFFER_WATER_MARK,new WriteBufferWaterMark(1024 * 1024,5 * 1024 * 1024));
 			// 对worker添加handler
-			serverBootstrap.childHandler(null);
+			serverBootstrap.childHandler(new CustomChannelInitializer());
 			// 绑定端口，等待启动
 			ChannelFuture channelFuture = serverBootstrap.bind(this.ip, this.port).sync();
 			log.info("启动成功，地址：{}，端口：{}",this.ip,this.port);

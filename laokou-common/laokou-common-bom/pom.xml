@@ -64,7 +64,7 @@
         <!--rocketmq版本-->
         <rocketmq.version>2.2.3</rocketmq.version>
         <!--jakarta.servlet-api版本-->
-        <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
+        <jakarta-servlet-api.version>6.0.0</jakarta-servlet-api.version>
         <!--easyexcel版本-->
         <easyexcel.version>3.2.1</easyexcel.version>
         <!--junit版本-->
@@ -120,6 +120,11 @@
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
                 <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-netty</artifactId>
+                <version>${laokou.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
@@ -644,7 +649,7 @@
             <dependency>
                 <groupId>jakarta.servlet</groupId>
                 <artifactId>jakarta.servlet-api</artifactId>
-                <version>${jakarta.servlet-api.version}</version>
+                <version>${jakarta-servlet-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>

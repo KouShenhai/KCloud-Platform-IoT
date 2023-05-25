@@ -18,7 +18,7 @@
 -->
 <configuration >
     <springProperty  scope="context" name="APP_NAME" source="spring.application.name"/>
-    <property name="LOG_PATH" value="logs"/>
+    <property name="LOG_PATH" value="./logs"/>
     <property name="MAX_FILE_SIZE" value="10MB"/>
     <property name="MAX_HISTORY" value="7"/>
     <!--
