@@ -24,6 +24,8 @@ public class TestNetty {
     public static void main(String[] args) {
         NettyServer nettyServer = new NettyServer("127.0.0.1", 8081);
         Thread thread = new Thread(nettyServer);
+
+        ///wwwwwwwwwwwwwwwwwwwww
         thread.start();
     }
 }
