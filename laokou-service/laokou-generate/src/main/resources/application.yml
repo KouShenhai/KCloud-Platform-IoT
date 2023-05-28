@@ -11,9 +11,9 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/iot_cabinet?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+          url: jdbc:mysql://127.0.0.1:3306/xxx?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
           username: root
-          password: koushenhai123456
+          password: xxx
           hikari:
             max-lifetime: 120000
             maximum-pool-size: 16

@@ -82,6 +82,7 @@
         <module>laokou-common-skywalking</module>
         <module>laokou-common-nacos</module>
         <module>laokou-common-xss</module>
-    </modules>
+		<module>laokou-common-netty</module>
+	</modules>
 
 </project>

@@ -64,7 +64,7 @@
         <!--rocketmq版本-->
         <rocketmq.version>2.2.3</rocketmq.version>
         <!--jakarta.servlet-api版本-->
-        <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
+        <jakarta-servlet-api.version>6.0.0</jakarta-servlet-api.version>
         <!--easyexcel版本-->
         <easyexcel.version>3.2.1</easyexcel.version>
         <!--junit版本-->
@@ -109,11 +109,23 @@
         <rocketmq-logappender.version>5.0.0-PREVIEW</rocketmq-logappender.version>
         <!--kafka版本-->
         <kafka.version>3.0.4</kafka.version>
+        <!--netty版本-->
+        <netty.version>4.1.92.Final</netty.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-netty</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-nacos</artifactId>
@@ -637,7 +649,7 @@
             <dependency>
                 <groupId>jakarta.servlet</groupId>
                 <artifactId>jakarta.servlet-api</artifactId>
-                <version>${jakarta.servlet-api.version}</version>
+                <version>${jakarta-servlet-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
