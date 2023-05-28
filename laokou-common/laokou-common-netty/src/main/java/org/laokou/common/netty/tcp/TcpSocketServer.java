@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.netty;
+package org.laokou.common.netty.tcp;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 @Slf4j
-public class NettyServer implements Runnable {
+public class TcpSocketServer implements Runnable {
 
 	private String ip;
 	private int port;
@@ -60,7 +60,7 @@ public class NettyServer implements Runnable {
 			// 设置缓冲区阈值
 			serverBootstrap.childOption(ChannelOption.WRITE_BUFFER_WATER_MARK,new WriteBufferWaterMark(1024 * 1024,5 * 1024 * 1024));
 			// 对worker添加handler
-			serverBootstrap.childHandler(new CustomChannelInitializer());
+			serverBootstrap.childHandler(new TcpChannelInitializer());
 			// 绑定端口，等待启动
 			ChannelFuture channelFuture = serverBootstrap.bind(this.ip, this.port).sync();
 			log.info("启动成功，地址：{}，端口：{}",this.ip,this.port);

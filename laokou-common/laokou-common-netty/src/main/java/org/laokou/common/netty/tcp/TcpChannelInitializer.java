@@ -14,40 +14,31 @@
  * limitations under the License.
  */
 
-package org.laokou.common.netty;
-
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+package org.laokou.common.netty.tcp;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.timeout.IdleStateHandler;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
  */
-public class CustomChannelInitializer extends ChannelInitializer<SocketChannel> {
-
-    /**
-     * 结束标识
-     */
-    private static final short END_FLAG = 0xff;
+public class TcpChannelInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
     protected void initChannel(SocketChannel socketChannel) {
+        // 责任链模式
         ChannelPipeline pipeline = socketChannel.pipeline();
-        // 粘包分隔
-        ByteBuf delimiter = Unpooled.buffer(1);
-        delimiter.writeByte(END_FLAG);
-        pipeline.addLast(new DelimiterBasedFrameDecoder(1024,delimiter));
         // 解码
-        pipeline.addLast();
+        pipeline.addLast("decoder",new TcpDecoder());
         // 编码
-        pipeline.addLast();
+        pipeline.addLast("encoder",new TcpEncoder());
         // 心跳检测
-        pipeline.addLast();
+        pipeline.addLast("heartbeat",new IdleStateHandler(60,0,0, TimeUnit.SECONDS));
         // 消息处理
-        pipeline.addLast();
+        pipeline.addLast("handler",new TcpHandler());
     }
 
 }

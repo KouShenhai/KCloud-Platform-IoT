@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.test.netty;
-import org.laokou.common.netty.tcp.TcpSocketServer;
-
+package org.laokou.common.netty.tcp;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.MessageToByteEncoder;
 /**
  * @author laokou
  */
-public class TestNetty {
-    public static void main(String[] args) throws Exception {
-        TcpSocketServer tcpSocketServer = new TcpSocketServer("127.0.0.1", 8081);
-        Thread thread = new Thread(tcpSocketServer);
-        thread.start();
+public class TcpEncoder extends MessageToByteEncoder<BasePackage> {
+    @Override
+    protected void encode(ChannelHandlerContext channelHandlerContext, BasePackage basePackage, ByteBuf byteBuf) {
+        byteBuf.writeInt(basePackage.getLen());
+        byteBuf.writeBytes(basePackage.getBody());
     }
 }
