@@ -33,8 +33,8 @@ public class CustomExceptionHandler {
 	 * 处理自定义异常
 	 */
 	@ExceptionHandler({CustomException.class})
-	public HttpResult handleRenException(CustomException ex){
-		return new HttpResult().error(ex.getCode(),ex.getMsg());
+	public HttpResult<?> handleRenException(CustomException ex){
+		return new HttpResult<>().error(ex.getCode(),ex.getMsg());
 	}
 
 }
