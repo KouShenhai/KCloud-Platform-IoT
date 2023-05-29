@@ -60,16 +60,16 @@ public class ResponseUtil {
      * @param code 响应编码
      * @param msg 响应信息
      */
-    public static HttpResult<Boolean> response(int code,String msg) {
-       return new HttpResult<Boolean>().error(code,msg);
+    public static HttpResult<?> response(int code,String msg) {
+       return new HttpResult<>().error(code,msg);
     }
 
     /**
      * 获取错误map集合
      * @param code 错误码
      */
-    public static HttpResult<Boolean> error(int code) {
-        return new HttpResult<Boolean>().error(code);
+    public static HttpResult<?> error(int code) {
+        return new HttpResult<>().error(code);
     }
 
     /**

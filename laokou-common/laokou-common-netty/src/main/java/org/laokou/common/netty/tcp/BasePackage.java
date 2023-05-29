@@ -13,16 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.test.netty;
-import org.laokou.common.netty.tcp.TcpSocketServer;
+
+package org.laokou.common.netty.tcp;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author laokou
  */
-public class TestNetty {
-    public static void main(String[] args) throws Exception {
-        TcpSocketServer tcpSocketServer = new TcpSocketServer("127.0.0.1", 8081);
-        Thread thread = new Thread(tcpSocketServer);
-        thread.start();
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class BasePackage {
+
+    private int len;
+    private byte[] body;
+
 }

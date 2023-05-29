@@ -13,16 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.test.netty;
-import org.laokou.common.netty.tcp.TcpSocketServer;
+
+package org.laokou.common.netty.tcp;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.ReplayingDecoder;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-public class TestNetty {
-    public static void main(String[] args) throws Exception {
-        TcpSocketServer tcpSocketServer = new TcpSocketServer("127.0.0.1", 8081);
-        Thread thread = new Thread(tcpSocketServer);
-        thread.start();
+@Slf4j
+public class TcpDecoder extends ReplayingDecoder<Void> {
+
+    @Override
+    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) {
+        int len = byteBuf.readInt();
+        byte[] body = new byte[len];
+        byteBuf.readBytes(body);
+        list.add(new BasePackage(len,body));
     }
 }

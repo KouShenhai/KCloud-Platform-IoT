@@ -13,16 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.test.netty;
-import org.laokou.common.netty.tcp.TcpSocketServer;
+
+package org.laokou.common.netty.tcp;
+
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.extern.slf4j.Slf4j;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author laokou
  */
-public class TestNetty {
-    public static void main(String[] args) throws Exception {
-        TcpSocketServer tcpSocketServer = new TcpSocketServer("127.0.0.1", 8081);
-        Thread thread = new Thread(tcpSocketServer);
-        thread.start();
+@Slf4j
+public class TcpHandler extends SimpleChannelInboundHandler<BasePackage> {
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, BasePackage basePackage) {
+        log.info("服务器接收到消息，长度：{}，消息体：{}",basePackage.getLen(),basePackage.getBody());
+        System.out.println(new String(basePackage.getBody(), StandardCharsets.UTF_8));
     }
 }
