@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 package org.laokou.im.server;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * @author laokou
@@ -29,7 +30,9 @@ public class ImApplication {
      * @param args args
      */
     public static void main(final String[] args) {
-        SpringApplication.run(ImApplication.class, args);
+        new SpringApplicationBuilder(ImApplication.class)
+                .web(WebApplicationType.REACTIVE)
+                .run(args);
     }
 
 }
