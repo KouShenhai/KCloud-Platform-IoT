@@ -54,7 +54,7 @@ public class WebSocketServer{
             // 监听端口关闭
             channelFuture.channel().closeFuture().sync();
         } catch (Exception e) {
-            log.error("绑定失败，端口：{}，错误信息:{}",PORT,e.getMessage());
+            log.error("启动失败，端口：{}，错误信息:{}",PORT,e.getMessage());
         } finally {
             // 释放资源
             boss.shutdownGracefully();
