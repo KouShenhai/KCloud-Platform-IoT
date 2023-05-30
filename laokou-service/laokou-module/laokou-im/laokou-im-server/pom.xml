@@ -31,14 +31,8 @@
             <artifactId>laokou-common-logback</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-netty</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
