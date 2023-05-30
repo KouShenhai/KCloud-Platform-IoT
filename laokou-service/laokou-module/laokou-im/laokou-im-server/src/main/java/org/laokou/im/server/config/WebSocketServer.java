@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,127 +13,58 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.laokou.im.server.config;
-import com.fasterxml.jackson.databind.JsonNode;
-import jakarta.websocket.*;
-import jakarta.websocket.server.PathParam;
-import jakarta.websocket.server.ServerEndpoint;
-import lombok.Data;
+
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
-import java.io.IOException;
-import java.util.concurrent.CopyOnWriteArraySet;
+
 /**
  * @author laokou
  */
-@Component
-@Data
 @Slf4j
-@ServerEndpoint("/ws/{userId}")
-public class WebSocketServer {
+@Component
+@RequiredArgsConstructor
+public class WebSocketServer{
 
-    private static final String USER_KEY = "userId";
-    /**
-     * 静态变量，用来记录当前在线连接数。设计成线程安全
-     */
-    private static int onlineCount = 0;
-    /**
-     * concurrent包的线程安全Set,用来存放每个客户端对应的WebsocketServer对象
-     */
-    private static CopyOnWriteArraySet<WebSocketServer> webSocketServerCopyOnWriteArraySet = new CopyOnWriteArraySet<>();
-    /**
-     * 与某些客户端的连接会话，需要通过它来给客户打发送数据
-     */
-    private Session session;
-    /**
-     * 接收userId
-     */
-    private String userId;
-    /**
-     * 连接成功后回调方法
-     */
-    @OnOpen
-    public void onOpen(Session session, @PathParam("userId")String userId) {
-        this.session = session;
-        //先设置在添加
-        this.userId = userId;
-        boolean addFlag = webSocketServerCopyOnWriteArraySet.add(this);
-        if (addFlag) {
-            addOnlineCount();
-        }
-        log.info("新加入：{}，在线人数：{}",userId,getOnlineCount());
-    }
-    /**
-     * 连接关闭调用
-     */
-    @OnClose
-    public void onClose() {
-        boolean removeFlag = webSocketServerCopyOnWriteArraySet.remove(this);
-        if (removeFlag) {
-            subOnlineCount();
-        }
-         log.info("当前在线人数：{}",getOnlineCount());
-    }
-    /**
-     * 收到客户端消息后调用
-     */
-    @OnMessage
-    public void onMessage(String message) throws IOException {
-        log.info("收到来自：{}的消息:{}",this.userId,message);
-        if(StringUtil.isNotEmpty(message)) {
-            JsonNode node = JacksonUtil.readTree(message);
-            log.info("接到数据：{}",message);
-            final String userId = node.get(USER_KEY).asText();
-            sendMessages(message,userId);
-        }
-    }
-    /**
-     * 发生错误时调用
-     */
-    @OnError
-    public void onError(Throwable throwable){
-        log.error("发生错误：{}",throwable.getMessage());
-        throwable.printStackTrace();
-    }
-    /**
-     * 发送消息
-     */
-   private void sendMessage(String message) throws IOException {
-        this.session.getBasicRemote().sendText(message);
-   }
-    /**
-     * 发送自定义消息
-     */
-    public synchronized void sendMessages(String message,String userId)throws IOException{
-        for (WebSocketServer webSocketServer : webSocketServerCopyOnWriteArraySet){
-            if (StringUtil.isEmpty(userId)) {
-                log.info("推送消息给:{},推送内容：{}" , webSocketServer.userId, message);
-                webSocketServer.sendMessage(message);
-            } else if (userId.equals(webSocketServer.userId)) {
-                log.info("推送消息给:{},推送内容：{}" , webSocketServer.userId, message);
-                webSocketServer.sendMessage(message);
-            }
-        }
-    }
+    private final WebsocketChannelInitializer websocketChannelInitializer;
+    private static final int PORT = 7777;
 
-    /**
-     * 返回在线数.
-     */
-    private static synchronized int getOnlineCount() {
-        return onlineCount;
-    }
-    /**
-     * 连接人数增加时
-     */
-    private static synchronized void addOnlineCount() {
-        WebSocketServer.onlineCount++;
-    }
-    /**
-     * 连接人数减少时
-     */
-    private static synchronized void subOnlineCount() {
-        WebSocketServer.onlineCount--;
+    public void start() {
+        // boss负责监听端口
+        EventLoopGroup boss = new NioEventLoopGroup();
+        // work负责线程读写
+        EventLoopGroup work = new NioEventLoopGroup();
+        try {
+            // 配置引导
+            ServerBootstrap serverBootstrap = new ServerBootstrap();
+            // 绑定线程组
+            serverBootstrap.group(boss,work)
+                    // 指定通道
+                    .channel(NioServerSocketChannel.class)
+                    // 维持长连接
+                    .childOption(ChannelOption.SO_KEEPALIVE,true)
+                    // 请求队列最大长度
+                    .option(ChannelOption.SO_BACKLOG,1024)
+                    .childHandler(websocketChannelInitializer);
+            // 服务器异步操作绑定
+            ChannelFuture channelFuture = serverBootstrap.bind(PORT).sync();
+            log.info("启动成功，端口：{}",PORT);
+            // 监听端口关闭
+            channelFuture.channel().closeFuture().sync();
+        } catch (Exception e) {
+            log.error("启动失败，端口：{}，错误信息:{}",PORT,e.getMessage());
+        } finally {
+            // 释放资源
+            boss.shutdownGracefully();
+            work.shutdownGracefully();
+        }
     }
 }

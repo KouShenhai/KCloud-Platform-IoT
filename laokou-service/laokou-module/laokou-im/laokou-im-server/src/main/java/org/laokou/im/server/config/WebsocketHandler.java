@@ -14,23 +14,34 @@
  * limitations under the License.
  */
 
-package org.laokou.common.netty.tcp;
+package org.laokou.im.server.config;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
-
-import java.nio.charset.StandardCharsets;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
+@Component
 @Slf4j
-public class TcpHandler extends SimpleChannelInboundHandler<BasePackage> {
+public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+    @Override
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
+        String body = textWebSocketFrame.text();
+        log.info("接收消息：{}",body);
+    }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, BasePackage basePackage) {
-        log.info("服务器接收到消息，长度：{}，消息体：{}",basePackage.getLen(),basePackage.getBody());
-        System.out.println(new String(basePackage.getBody(), StandardCharsets.UTF_8));
+    public void channelActive(ChannelHandlerContext ctx) {
+        log.info("建立连接");
     }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) {
+        log.info("断开连接");
+    }
+
 }

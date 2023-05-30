@@ -14,34 +14,28 @@
  * limitations under the License.
  */
 
-package org.laokou.im.server.service.impl;
+package org.laokou.im.server.listener;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.im.client.PushMsgDTO;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.im.server.config.WebSocketServer;
-import org.laokou.im.server.service.ImService;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Slf4j
-@Service
+@Component
 @RequiredArgsConstructor
-public class ImServiceImpl implements ImService {
+public class WebsocketListener implements ApplicationListener<ApplicationReadyEvent> {
 
+    private final ThreadPoolTaskExecutor taskExecutor;
     private final WebSocketServer webSocketServer;
 
     @Override
-    public Boolean pusMessage(PushMsgDTO dto) throws IOException {
-        log.info("推送人：{}", JacksonUtil.toJsonStr(dto.getReceiver()));
-        for (String receiver : dto.getReceiver()) {
-            webSocketServer.sendMessages(dto.getMsg(), receiver);
-        }
-        return true;
+    public void onApplicationEvent(@NotNull ApplicationReadyEvent event) {
+        taskExecutor.execute(webSocketServer::start);
     }
 }
