@@ -22,15 +22,20 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
 @Slf4j
+@Component
+@RequiredArgsConstructor
 public class WebSocketServer{
 
-    private static final int PORT = 8088;
+    private final WebsocketChannelInitializer websocketChannelInitializer;
+    private static final int PORT = 7777;
 
     public void start() {
         // boss负责监听端口
@@ -44,10 +49,11 @@ public class WebSocketServer{
             serverBootstrap.group(boss,work)
                     // 指定通道
                     .channel(NioServerSocketChannel.class)
-                    // 心跳机制，默认7200
+                    // 维持长连接
                     .childOption(ChannelOption.SO_KEEPALIVE,true)
                     // 请求队列最大长度
-                    .option(ChannelOption.SO_BACKLOG,1024);
+                    .option(ChannelOption.SO_BACKLOG,1024)
+                    .childHandler(websocketChannelInitializer);
             // 服务器异步操作绑定
             ChannelFuture channelFuture = serverBootstrap.bind(PORT).sync();
             log.info("启动成功，端口：{}",PORT);
