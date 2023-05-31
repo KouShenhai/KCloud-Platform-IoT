@@ -45,6 +45,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
             String param = uri.substring(index + 1);
             Map<String, String> paramMap = MapUtil.parseParamMap(param);
             String Authorization = getAuthorization(paramMap);
+            // 从redis响应式读取
             request.setUri(uri.substring(0,index));
         } else if (msg instanceof TextWebSocketFrame textWebSocketFrame) {
             System.out.println(11);
