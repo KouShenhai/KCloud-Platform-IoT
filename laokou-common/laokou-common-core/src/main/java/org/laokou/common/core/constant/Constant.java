@@ -53,6 +53,8 @@ public interface Constant {
 
     String TENANT = "#tenant";
 
+    String QUESTION_MARK = "?";
+
     /**
      * 默认数据库
      */

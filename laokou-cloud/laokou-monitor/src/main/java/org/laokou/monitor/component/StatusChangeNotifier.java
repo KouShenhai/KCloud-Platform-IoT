@@ -19,6 +19,7 @@ import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
 import de.codecentric.boot.admin.server.domain.events.InstanceEvent;
 import de.codecentric.boot.admin.server.domain.events.InstanceStatusChangedEvent;
 import de.codecentric.boot.admin.server.notify.AbstractStatusChangeNotifier;
+import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -28,9 +29,10 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
+@NonNullApi
 public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
-    public StatusChangeNotifier(InstanceRepository repositpry) {
-        super(repositpry);
+    public StatusChangeNotifier(InstanceRepository instanceRepository) {
+        super(instanceRepository);
     }
 
     @Override
