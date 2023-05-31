@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<configuration >
+    <springProperty  scope="context" name="APP_NAME" source="spring.application.name"/>
+    <property name="LOG_PATH" value="./logs"/>
+    <property name="MAX_FILE_SIZE" value="10MB"/>
+    <property name="MAX_HISTORY" value="7"/>
+    <!--
+    %d         => 日期
+    %-5level   => 日志等级
+    %thread    => 日志类名
+    %logger    => 类名缩写
+    %msg       => 消息内容
+    %red       => 颜色（红色）
+    %n         => 换行
+    -->
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %red(%-5level)] - [%thread,${PID}] - %logger : %msg%n"/>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                ${LOG_PATTERN}
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}/${APP_NAME}.log</File>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %-5level] - [%thread,${PID}] - %logger : %msg%n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <MaxHistory>${MAX_HISTORY}</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <appender name="rocketmq" class="org.apache.rocketmq.logappender.logback.RocketmqLogbackAppender">
+        <tag>logback</tag>
+        <topic>laokou-trace-topic</topic>
+        <producerGroup>laokou-producer-group</producerGroup>
+        <nameServerAddress>laokou.org:9876</nameServerAddress>
+        <layout>
+            <pattern>
+                {
+                "app":"${APP_NAME}",
+                "timestamp":"%d{yyyy-MM-dd HH:mm:ss}",
+                "userId":"%X{user-id}",
+                "username":"%X{user-name}",
+                "tenantId":"%X{tenant-id}",
+                "traceId":"%X{trace-id}",
+                "level":"%-5level",
+                "pid":"${PID}",
+                "thread":"%thread",
+                "logger":"%logger",
+                "msg":"%msg"
+                }
+            </pattern>
+        </layout>
+    </appender>
+    <appender name="async" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="rocketmq"/>
+    </appender>
+    <springProfile name="dev,test">
+        <logger name="org.laokou" level="info">
+            <appender-ref ref="console" />
+            <appender-ref ref="async"/>
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="com.alibaba.nacos" level="info">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="org.springframework" level="info">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
+    </springProfile>
+    <springProfile name="prod">
+        <logger name="org.laokou" level="error">
+            <appender-ref ref="console" />
+            <appender-ref ref="async"/>
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="com.alibaba.nacos" level="error">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="org.springframework" level="error">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
+    </springProfile>
+</configuration>
