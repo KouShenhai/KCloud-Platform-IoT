@@ -16,9 +16,12 @@
 
 package org.laokou.im.server.config;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -27,11 +30,21 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
+@ChannelHandler.Sharable
 public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        if (msg instanceof FullHttpRequest request) {
+            log.info("333");
+        } else if (msg instanceof WebSocketFrame webSocketFrame) {
+            log.info("444");
+        }
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
-        String body = textWebSocketFrame.text();
-        log.info("接收消息：{}",body);
+        log.info("22222");
     }
 
     @Override
