@@ -18,6 +18,8 @@ spring:
   cloud:
     # nacos
     nacos:
+      username: ${NACOS-USERNAME}
+      password: ${NACOS-PASSWORD}
       discovery:
         enabled: false
       config:
