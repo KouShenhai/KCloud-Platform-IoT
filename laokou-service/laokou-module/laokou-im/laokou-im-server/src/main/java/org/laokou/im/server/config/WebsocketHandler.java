@@ -20,6 +20,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         if (msg instanceof FullHttpRequest request) {
-            log.info("333");
+            HttpHeaders headers = request.headers();
         } else if (msg instanceof WebSocketFrame webSocketFrame) {
             log.info("444");
         }

@@ -5,8 +5,6 @@ spring:
     nacos:
       username: ${NACOS-USERNAME}
       password: ${NACOS-PASSWORD}
-      discovery:
-        enabled: false
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
