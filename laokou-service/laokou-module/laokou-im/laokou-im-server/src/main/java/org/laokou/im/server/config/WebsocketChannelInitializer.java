@@ -54,9 +54,9 @@ public class WebsocketChannelInitializer extends ChannelInitializer<SocketChanne
         pipeline.addLast(new ChunkedWriteHandler());
         // 最大内容长度
         pipeline.addLast(new HttpObjectAggregator(MAX_CONTENT_LENGTH));
-        // websocket协议
-        pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH));
         // 自定义处理器
         pipeline.addLast(websocketHandler);
+        // websocket协议
+        pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH));
     }
 }
