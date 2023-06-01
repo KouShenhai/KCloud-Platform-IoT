@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.im.server;
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -21,6 +22,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
  * @author laokou
  */
 @SpringBootApplication
+@EnableEncryptableProperties
 public class ImApplication {
 
     /**

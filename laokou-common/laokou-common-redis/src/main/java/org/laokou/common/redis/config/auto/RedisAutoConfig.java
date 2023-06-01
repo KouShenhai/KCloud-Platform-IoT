@@ -36,15 +36,15 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @ConditionalOnClass(LettuceConnectionFactory.class)
 @ComponentScan("org.laokou.common.redis")
 @Import(RedissonConfig.class)
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class RedisAutoConfig {
 
     /**
      * 自定义RedisTemplate
-     * @return
+     * @return RedisTemplate<String, Object>
      */
     @Bean("redisTemplate")
     @ConditionalOnMissingBean(RedisTemplate.class)
-    @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
     public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(lettuceConnectionFactory);

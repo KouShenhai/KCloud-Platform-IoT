@@ -26,7 +26,7 @@ import java.util.Set;
  * @author laokou
  */
 @Data
-public class PushMsgDTO implements Serializable {
+public class WsMsgDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -4930262464816447000L;
