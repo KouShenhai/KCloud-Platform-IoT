@@ -11,7 +11,7 @@ public class WebfluxTestApplication {
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(WebfluxTestApplication.class)
-                .web(WebApplicationType.SERVLET)
+                .web(WebApplicationType.REACTIVE)
                 .run(args);    }
 
 }
