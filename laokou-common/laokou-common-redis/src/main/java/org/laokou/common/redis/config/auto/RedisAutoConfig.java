@@ -20,7 +20,6 @@ import org.laokou.common.redis.config.RedissonConfig;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
@@ -36,7 +35,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @ConditionalOnClass(LettuceConnectionFactory.class)
 @ComponentScan("org.laokou.common.redis")
 @Import(RedissonConfig.class)
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class RedisAutoConfig {
 
     /**
