@@ -21,10 +21,12 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -35,7 +37,10 @@ import java.util.Map;
 @Component
 @Slf4j
 @ChannelHandler.Sharable
+@RequiredArgsConstructor
 public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+
+    private final ReactiveStringRedisTemplate reactiveStringRedisTemplate;
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -46,6 +51,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
             Map<String, String> paramMap = MapUtil.parseParamMap(param);
             String Authorization = getAuthorization(paramMap);
             // 从redis响应式读取
+            reactiveStringRedisTemplate.opsForValue().get("ddd");
             request.setUri(uri.substring(0,index));
         } else if (msg instanceof TextWebSocketFrame textWebSocketFrame) {
             System.out.println(11);

@@ -19,7 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.admin.server.infrastructure.feign.im.ImApiFeignClient;
-import org.laokou.im.client.PushMsgDTO;
+import org.laokou.im.client.WsMsgDTO;
 /**
  * 服务降级
  * @author laokou
@@ -31,7 +31,7 @@ public class ImApiFeignClientFallback implements ImApiFeignClient {
     private final Throwable throwable;
 
     @Override
-    public HttpResult<Boolean> push(PushMsgDTO dto) {
+    public HttpResult<Boolean> push(WsMsgDTO dto) {
         log.error("即时通讯服务未启动，报错原因：{}",throwable.getMessage());
         return new HttpResult<Boolean>().ok(false);
     }

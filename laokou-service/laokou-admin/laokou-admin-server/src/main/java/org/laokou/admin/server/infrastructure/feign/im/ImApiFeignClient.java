@@ -17,7 +17,7 @@ package org.laokou.admin.server.infrastructure.feign.im;
 import org.laokou.admin.server.infrastructure.feign.im.factory.ImApiFeignClientFallbackFactory;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.core.constant.ServiceConstant;
-import org.laokou.im.client.PushMsgDTO;
+import org.laokou.im.client.WsMsgDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +35,6 @@ public interface ImApiFeignClient {
      * @return
      */
     @PostMapping("/api/push")
-    HttpResult<Boolean> push(@RequestBody PushMsgDTO dto);
+    HttpResult<Boolean> push(@RequestBody WsMsgDTO dto);
 
 }

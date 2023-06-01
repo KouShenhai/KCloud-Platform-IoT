@@ -36,7 +36,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
-import org.laokou.im.client.PushMsgDTO;
+import org.laokou.im.client.WsMsgDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
@@ -86,11 +86,11 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
     private void pushMsg(Set<String> receiver) {
         if (CollectionUtil.isNotEmpty(receiver)) {
-            PushMsgDTO pushMsgDTO = new PushMsgDTO();
-            pushMsgDTO.setMsg("您有一条未读消息，请注意查收");
-            pushMsgDTO.setReceiver(receiver);
+            WsMsgDTO wsMsgDTO = new WsMsgDTO();
+            wsMsgDTO.setMsg("您有一条未读消息，请注意查收");
+            wsMsgDTO.setReceiver(receiver);
             // 推送消息
-            imApiFeignClient.push(pushMsgDTO);
+            imApiFeignClient.push(wsMsgDTO);
         }
     }
 
