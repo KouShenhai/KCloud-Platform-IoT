@@ -16,6 +16,7 @@
 
 package org.laokou.im.server.listener;
 
+import io.micrometer.common.lang.NonNullApi;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.laokou.im.server.config.WebSocketServer;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
+@NonNullApi
 public class WebsocketListener implements ApplicationListener<ApplicationReadyEvent> {
 
     private final ThreadPoolTaskExecutor taskExecutor;
