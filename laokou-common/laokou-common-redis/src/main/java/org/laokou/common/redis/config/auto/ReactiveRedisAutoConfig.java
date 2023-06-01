@@ -29,7 +29,7 @@ import reactor.core.publisher.Flux;
 /**
  * @author laokou
  */
-@AutoConfiguration(after = RedisAutoConfig.class)
+@AutoConfiguration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
 @ConditionalOnClass({ ReactiveRedisConnectionFactory.class, ReactiveRedisTemplate.class, Flux.class })
 public class ReactiveRedisAutoConfig {
