@@ -51,7 +51,7 @@ public class RedissonConfig {
         return bloomFilter;
     }
 
-    @Bean
+    @Bean(destroyMethod = "shutdown")
     @ConditionalOnMissingBean(RedissonReactiveClient.class)
     public RedissonReactiveClient redissonReactiveClient(RedissonClient redissonClient) {
         return redissonClient.reactive();
