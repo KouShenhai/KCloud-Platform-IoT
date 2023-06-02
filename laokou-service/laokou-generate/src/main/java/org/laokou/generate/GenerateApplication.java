@@ -1,7 +1,8 @@
 package org.laokou.generate;
 
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 /**
  * @author laokou
@@ -10,7 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GenerateApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GenerateApplication.class, args);
+		new SpringApplicationBuilder(GenerateApplication.class)
+				.web(WebApplicationType.SERVLET)
+				.run(args);
 	}
 
 }

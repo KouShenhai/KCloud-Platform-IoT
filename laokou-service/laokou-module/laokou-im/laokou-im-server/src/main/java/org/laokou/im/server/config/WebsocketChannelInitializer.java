@@ -22,7 +22,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
-import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
@@ -42,10 +41,8 @@ public class WebsocketChannelInitializer extends ChannelInitializer<SocketChanne
     private static final int MAX_CONTENT_LENGTH = 65535;
 
     @Override
-    protected void initChannel(SocketChannel channel) throws Exception {
+    protected void initChannel(SocketChannel channel) {
         ChannelPipeline pipeline = channel.pipeline();
-        // 日志打印
-        pipeline.addLast(new LoggingHandler());
         // 心跳检测
         pipeline.addLast(new IdleStateHandler(15,0,0, TimeUnit.SECONDS));
         // HTTP解码器

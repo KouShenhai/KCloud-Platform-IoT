@@ -65,6 +65,7 @@ public class WebSocketServer{
             // 释放资源
             boss.shutdownGracefully();
             work.shutdownGracefully();
+            log.info("优雅关闭，释放资源");
         }
     }
 }

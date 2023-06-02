@@ -16,10 +16,12 @@
 package org.laokou.common.openfeign.config.auto;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import feign.Retryer;
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.common.core.utils.RequestUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import static org.laokou.common.core.constant.Constant.AUTHORIZATION_HEAD;
 import static org.laokou.common.core.constant.Constant.TRACE_ID;
@@ -28,6 +30,7 @@ import static org.laokou.common.core.constant.Constant.TRACE_ID;
  * @author laokou
  */
 @AutoConfiguration
+@ComponentScan("org.laokou.common.openfeign")
 public class OpenFeignAutoConfig implements RequestInterceptor {
 
     @Bean
@@ -41,4 +44,12 @@ public class OpenFeignAutoConfig implements RequestInterceptor {
         template.header(TRACE_ID,request.getHeader(TRACE_ID));
         template.header(AUTHORIZATION_HEAD,request.getHeader(AUTHORIZATION_HEAD));
     }
+
+    @Bean
+    public Retryer retryer() {
+        // 最大请求次数为5，初始间隔时间为100ms
+        // 下次间隔时间1.5倍递增，重试间最大间隔时间为1s
+        return new Retryer.Default();
+    }
+
 }

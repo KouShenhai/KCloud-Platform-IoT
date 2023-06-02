@@ -19,7 +19,9 @@ import java.io.IOException;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 /**
  * @author spilledyear@outlook.com
@@ -29,6 +31,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SeataApplication {
     public static void main(String[] args) throws IOException {
         // run the spring-boot application
-        SpringApplication.run(SeataApplication.class, args);
+        new SpringApplicationBuilder(SeataApplication.class)
+                .web(WebApplicationType.SERVLET)
+                .run(args);
     }
 }

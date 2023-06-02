@@ -16,8 +16,9 @@
 package org.laokou.flowable.server;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * @author laokou
@@ -28,7 +29,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class FlowableApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FlowableApplication.class, args);
+        new SpringApplicationBuilder(FlowableApplication.class)
+                .web(WebApplicationType.SERVLET)
+                .run(args);
     }
 
 }

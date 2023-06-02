@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
  * Redis工具类
  * @author laokou
  */
+@Component
 @RequiredArgsConstructor
 public class RedisUtil {
 
@@ -132,6 +133,10 @@ public class RedisUtil {
 
     public boolean hasKey(String key) {
         return redisTemplate.hasKey(key);
+    }
+
+    public boolean hasHashKey(String key,String field) {
+        return redissonClient.getMap(key).containsKey(field);
     }
 
     public long incrementAndGet(String key) {

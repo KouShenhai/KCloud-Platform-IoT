@@ -26,6 +26,9 @@ public final class RedisKeyUtil {
         return "sys:user:captcha:" + uuid;
     }
 
+    /**
+     * 菜单树Key
+     */
     public static String getResourceTreeKey(Long userId) {
         return "sys:resource:tree:" + userId;
     }
@@ -60,15 +63,12 @@ public final class RedisKeyUtil {
 
     /**
      * 全量同步索引Key
-     * @return
      */
     public static String getSyncIndexKey(String code) {
         return "sys:resource:sync:" + code;
     }
     /**
      * 未读消息key
-     * @param userId
-     * @return
      */
     public static String getMessageUnReadKey(Long userId) {
         return "sys:message:unread:" + userId;
@@ -76,8 +76,6 @@ public final class RedisKeyUtil {
 
     /**
      * 手机验证码Key
-     * @param mobile
-     * @return
      */
     public static String getMobileCodeKey(String mobile) {
         return getUserCaptchaKey(mobile);
@@ -85,8 +83,6 @@ public final class RedisKeyUtil {
 
     /**
      * 邮箱验证码Key
-     * @param mail
-     * @return
      */
     public static String getMailCodeKey(String mail) {
         return getUserCaptchaKey(mail);
@@ -94,11 +90,23 @@ public final class RedisKeyUtil {
 
     /**
      * 用户踢出Key
-     * @param token
-     * @return
      */
     public static String getUserKillKey(String token) {
         return "sys:user:kill:" + token;
+    }
+
+    /**
+     * 所有通道Key
+     */
+    public static String getAllChannelKey() {
+        return "ws:all:channel";
+    }
+
+    /**
+     * 用户通道Key
+     */
+    public static String getUserChannelKey() {
+        return "ws:user:channel";
     }
 
 }
