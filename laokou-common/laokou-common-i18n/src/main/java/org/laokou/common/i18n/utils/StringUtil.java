@@ -23,7 +23,7 @@ import org.springframework.lang.Nullable;
  */
 public class StringUtil {
 
-    private static final char SEPARATOR = '_';
+    private static final char UNDERLINE = '_';
 
     public static boolean isNotEmpty(String str) {
         return StringUtils.isNotEmpty(str);
@@ -47,13 +47,16 @@ public class StringUtil {
 
     private static boolean containsText(CharSequence str) {
         int strLen = str.length();
-
         for(int i = 0; i < strLen; ++i) {
             if (!Character.isWhitespace(str.charAt(i))) {
                 return true;
             }
         }
         return false;
+    }
+
+    public static String substringBeforeLast(String str, String separator) {
+        return StringUtils.substringBeforeLast(str,separator);
     }
 
     public static String toCamelCase(String s) {
@@ -65,7 +68,7 @@ public class StringUtil {
         boolean upperCase = false;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (c == SEPARATOR) {
+            if (c == UNDERLINE) {
                 upperCase = true;
             }
             else if (upperCase) {

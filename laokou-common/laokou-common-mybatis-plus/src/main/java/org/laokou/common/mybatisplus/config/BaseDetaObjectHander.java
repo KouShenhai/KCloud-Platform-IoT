@@ -20,7 +20,7 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
-import static org.laokou.common.core.constant.Constant.NO;
+import static org.laokou.common.core.constant.Constant.DEFAULT;
 /**
  * @author laokou
  */
@@ -40,8 +40,8 @@ public class BaseDetaObjectHander implements MetaObjectHandler {
         log.info("insert fill .........");
         this.strictInsertFill(metaObject, CREATE_DATE, LocalDateTime::now, LocalDateTime.class);
         this.strictInsertFill(metaObject, UPDATE_DATE, LocalDateTime::now, LocalDateTime.class);
-        this.strictInsertFill(metaObject, DEL_FLAG, () -> NO, Integer.class);
-        this.strictInsertFill(metaObject, VERSION, () -> NO, Integer.class);
+        this.strictInsertFill(metaObject, DEL_FLAG, () -> DEFAULT, Integer.class);
+        this.strictInsertFill(metaObject, VERSION, () -> DEFAULT, Integer.class);
         this.strictInsertFill(metaObject, CREATOR, UserContextHolder::get,Long.class);
         this.strictInsertFill(metaObject, EDITOR, UserContextHolder::get,Long.class);
     }

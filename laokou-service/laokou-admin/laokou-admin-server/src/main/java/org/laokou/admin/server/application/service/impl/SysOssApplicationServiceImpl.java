@@ -74,7 +74,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
         if (id == null) {
             throw new CustomException("存储编号不为空");
         }
-        long useCount = sysOssService.count(Wrappers.lambdaQuery(SysOssDO.class).eq(SysOssDO::getStatus, Constant.YES).eq(SysOssDO::getId,id));
+        long useCount = sysOssService.count(Wrappers.lambdaQuery(SysOssDO.class).eq(SysOssDO::getStatus, Constant.USE_STATUS).eq(SysOssDO::getId,id));
         if (useCount > 0) {
             throw new CustomException("该配置正在使用，请修改其他配置");
         }
@@ -114,15 +114,15 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
     @DS(Constant.TENANT)
     public Boolean useOss(Long id) {
         LambdaQueryWrapper<SysOssDO> wrapper = Wrappers.lambdaQuery(SysOssDO.class)
-                .and(t -> t.eq(SysOssDO::getStatus, Constant.YES)
+                .and(t -> t.eq(SysOssDO::getStatus, Constant.USE_STATUS)
                         .or()
                         .eq(SysOssDO::getId, id));
         List<SysOssDO> list = sysOssService.list(wrapper);
         list.forEach(item -> {
             if (id.equals(item.getId())) {
-                item.setStatus(Constant.YES);
+                item.setStatus(Constant.USE_STATUS);
             } else {
-                item.setStatus(Constant.NO);
+                item.setStatus(Constant.DEFAULT);
             }
         });
         sysOssService.updateBatchById(list);
