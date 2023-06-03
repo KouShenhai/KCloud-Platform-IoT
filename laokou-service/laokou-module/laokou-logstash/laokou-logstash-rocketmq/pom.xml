@@ -34,6 +34,12 @@
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-nacos</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba.cloud</groupId>
+                    <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

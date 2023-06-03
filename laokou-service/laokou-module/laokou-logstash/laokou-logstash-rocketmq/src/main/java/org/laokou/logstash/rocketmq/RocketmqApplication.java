@@ -19,14 +19,12 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author laokou
  */
 @SpringBootApplication
-@EnableDiscoveryClient
 @EnableEncryptableProperties
 @EnableScheduling
 public class RocketmqApplication {
