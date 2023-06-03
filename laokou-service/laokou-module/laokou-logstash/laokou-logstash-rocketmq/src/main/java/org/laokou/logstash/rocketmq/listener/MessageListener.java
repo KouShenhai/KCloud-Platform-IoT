@@ -35,7 +35,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@RocketMQMessageListener(consumerGroup = "laokou-consumer-group", topic = RocketmqConstant.LAOKOU_TRACE_TOPIC)
+@RocketMQMessageListener(consumerGroup = "laokou-logstash-consumer-group", topic = RocketmqConstant.LAOKOU_TRACE_TOPIC)
 public class MessageListener implements RocketMQListener<MessageExt> {
 
     private final ElasticsearchTemplate elasticsearchTemplate;

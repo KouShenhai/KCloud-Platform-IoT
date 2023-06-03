@@ -72,9 +72,9 @@ public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinit
         if (!result.success()) {
             throw new CustomException(result.getCode(), result.getMsg());
         }
-        PageVO<DefinitionVO> definitionVOPageVO = Optional.ofNullable(result.getData()).orElseGet(PageVO::new);
-        page.setRecords(definitionVOPageVO.getRecords());
-        page.setTotal(Optional.ofNullable(definitionVOPageVO.getTotal()).orElse(0L));
+        PageVO<DefinitionVO> definitionVoPageVo = Optional.ofNullable(result.getData()).orElseGet(PageVO::new);
+        page.setRecords(definitionVoPageVo.getRecords());
+        page.setTotal(Optional.ofNullable(definitionVoPageVo.getTotal()).orElse(0L));
         return page;
     }
 

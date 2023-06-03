@@ -77,7 +77,9 @@ public class WebSocketServer extends Server {
      */
     public void send(Long userId,String msg) {
         Channel channel = USER_MAP.get(userId);
-        channel.writeAndFlush(new TextWebSocketFrame(msg));
+        if (channel != null) {
+            channel.writeAndFlush(new TextWebSocketFrame(msg));
+        }
     }
 
 }

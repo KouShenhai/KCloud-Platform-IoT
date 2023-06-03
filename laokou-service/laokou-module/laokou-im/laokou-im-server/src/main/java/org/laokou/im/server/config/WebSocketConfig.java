@@ -16,7 +16,6 @@
 
 package org.laokou.im.server.config;
 
-import org.laokou.common.netty.config.Server;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
@@ -29,8 +28,8 @@ import org.springframework.context.annotation.Configuration;
 @RefreshScope
 public class WebSocketConfig {
 
-    @Bean(initMethod = "start",destroyMethod = "stop")
-    public Server websocketServer(WebsocketChannelInitializer websocketChannelInitializer,TaskExecutionProperties taskExecutionProperties) {
+    @Bean(name = "websocketServer",initMethod = "start",destroyMethod = "stop")
+    public WebSocketServer websocketServer(WebsocketChannelInitializer websocketChannelInitializer,TaskExecutionProperties taskExecutionProperties) {
         return new WebSocketServer(websocketChannelInitializer,taskExecutionProperties);
     }
 
