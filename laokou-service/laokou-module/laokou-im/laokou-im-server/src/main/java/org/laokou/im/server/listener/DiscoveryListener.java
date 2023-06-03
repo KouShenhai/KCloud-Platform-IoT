@@ -16,6 +16,7 @@
 
 package org.laokou.im.server.listener;
 
+import io.micrometer.common.lang.NonNullApi;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -35,6 +36,7 @@ import java.net.InetAddress;
 @Component
 @RequiredArgsConstructor
 @ConfigurationProperties(prefix = "spring.application")
+@NonNullApi
 public class DiscoveryListener implements ApplicationListener<ApplicationReadyEvent> {
 
     private final ServiceUtil serviceUtil;

@@ -25,7 +25,6 @@ import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysMessageDetailService;
 import org.laokou.admin.server.domain.sys.repository.service.SysMessageService;
 import org.laokou.admin.client.dto.MessageDTO;
-import org.laokou.admin.server.infrastructure.feign.im.ImApiFeignClient;
 import org.laokou.admin.server.interfaces.qo.SysMessageQo;
 import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
@@ -34,8 +33,12 @@ import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
+import org.laokou.common.rocketmq.constant.RocketmqConstant;
+import org.laokou.common.rocketmq.dto.RocketmqDTO;
+import org.laokou.common.rocketmq.template.RocketTemplate;
 import org.laokou.im.client.WsMsgDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -53,8 +56,9 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     private final SysMessageService sysMessageService;
 
     private final SysMessageDetailService sysMessageDetailService;
-    private final ImApiFeignClient imApiFeignClient;
     private final BatchUtil batchUtil;
+    private static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
+    private final RocketTemplate rocketTemplate;
 
     @Override
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
@@ -80,7 +84,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
         if (CollectionUtil.isNotEmpty(detailDOList)) {
             batchUtil.insertBatch(detailDOList,500,sysMessageDetailService);
         }
-        // 平台-发送消息
+        // 推送消息
         pushMsg(receiver);
         return true;
     }
@@ -88,10 +92,10 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     private void pushMsg(Set<String> receiver) {
         if (CollectionUtil.isNotEmpty(receiver)) {
             WsMsgDTO wsMsgDTO = new WsMsgDTO();
-            wsMsgDTO.setMsg("您有一条未读消息，请注意查收");
+            wsMsgDTO.setMsg(DEFAULT_MESSAGE);
             wsMsgDTO.setReceiver(receiver);
-            // 推送消息
-            imApiFeignClient.push(wsMsgDTO);
+            // 异步发送
+            rocketTemplate.sendAsyncMessage(RocketmqConstant.LAOKOU_MESSAGE_TOPIC,new RocketmqDTO(JacksonUtil.toJsonStr(wsMsgDTO)));
         }
     }
 
@@ -130,7 +134,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     @DS(Constant.TENANT)
     public Long unReadCount() {
         final Long userId = UserUtil.getUserId();
-        return (long) sysMessageDetailService.messageCount(userId);
+        return (long) sysMessageDetailService.unReadCount(userId);
     }
 
 }

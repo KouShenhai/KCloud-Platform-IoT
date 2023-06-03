@@ -20,8 +20,6 @@ package org.laokou.test.netty;
  */
 public class TestNetty {
     public static void main(String[] args) throws Exception {
-        TcpSocketServer tcpSocketServer = new TcpSocketServer("127.0.0.1", 8081);
-        Thread thread = new Thread(tcpSocketServer);
-        thread.start();
+
     }
 }

@@ -53,7 +53,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
     private static final String WS_HEADER_NAME = "Upgrade";
     private static final String WS_HEADER_VALUE = "websocket";
     private final RedisUtil redisUtil;
-    private static final Map<Long,Channel> USER_MAP = new ConcurrentHashMap<>();
+    public static final Map<Long,Channel> USER_MAP = new ConcurrentHashMap<>();
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -65,10 +65,6 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
-
-    }
-
-    public void send() {
 
     }
 

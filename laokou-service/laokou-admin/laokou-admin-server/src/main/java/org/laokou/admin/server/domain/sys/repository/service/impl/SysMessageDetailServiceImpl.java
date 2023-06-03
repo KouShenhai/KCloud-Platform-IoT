@@ -41,7 +41,7 @@ public class SysMessageDetailServiceImpl extends ServiceImpl<SysMessageDetailMap
     }
 
     @Override
-    public Integer messageCount(Long userId) {
-        return this.baseMapper.messageCount(userId);
+    public Integer unReadCount(Long userId) {
+        return this.baseMapper.unReadCount(userId);
     }
 }

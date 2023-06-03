@@ -39,6 +39,6 @@ public interface SysMessageDetailMapper extends BaseMapper<SysMessageDetailDO>, 
      * @param userId
      * @return
      */
-    Integer messageCount(@Param("userId") Long userId);
+    Integer unReadCount(@Param("userId") Long userId);
 
 }

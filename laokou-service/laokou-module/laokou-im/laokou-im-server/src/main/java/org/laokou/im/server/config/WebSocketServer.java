@@ -18,14 +18,18 @@ package org.laokou.im.server.config;
 
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.netty.config.Server;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
+
+import static org.laokou.im.server.config.WebsocketHandler.USER_MAP;
 
 /**
  * @author laokou
@@ -65,4 +69,17 @@ public class WebSocketServer extends Server {
                 // websocket处理类
                 .childHandler(websocketChannelInitializer);
     }
+
+    /**
+     * 发送消息
+     * @param userId 用户ID
+     * @param msg 消息
+     */
+    public void send(Long userId,String msg) {
+        Channel channel = USER_MAP.get(userId);
+        if (channel != null) {
+            channel.writeAndFlush(new TextWebSocketFrame(msg));
+        }
+    }
+
 }

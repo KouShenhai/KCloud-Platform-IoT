@@ -34,5 +34,5 @@ public interface SysMessageDetailService extends BatchService<SysMessageDetailDO
      * @param userId
      * @return
      */
-    Integer messageCount(Long userId);
+    Integer unReadCount(Long userId);
 }
