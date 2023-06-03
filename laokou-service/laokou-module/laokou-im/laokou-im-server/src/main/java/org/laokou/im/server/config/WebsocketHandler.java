@@ -17,33 +17,27 @@ package org.laokou.im.server.config;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.*;
-import io.netty.channel.group.ChannelGroup;
-import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.ReferenceCountUtil;
-import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.core.constant.Constant;
-import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.im.server.enums.TypeEnum;
+import org.laokou.im.server.serialize.WebSocketChannelSerializable;
 import org.springframework.stereotype.Component;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -79,13 +73,11 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
-        channelGroup(ctx.channel(),TypeEnum.ADD);
         log.info("建立连接：{}",ctx.channel().id().asLongText());
     }
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) {
-        channelGroup(ctx.channel(),TypeEnum.REMOVE);
         log.info("断开连接：{}",ctx.channel().id().asLongText());
     }
 
@@ -121,52 +113,12 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
             }
             UserDetail userDetail = (UserDetail) obj;
             Channel channel = ctx.channel();
-            ChannelId channelId = channel.id();
             Long userId = userDetail.getId();
             String userChannelKey = RedisKeyUtil.getUserChannelKey();
-            byte[] channelSerialize = serialize(channelId);
-            redisUtil.hSet(userChannelKey,userId.toString(),channelSerialize,RedisUtil.HOUR_ONE_EXPIRE);
+            redisUtil.hSet(userChannelKey,userId.toString(),new WebSocketChannelSerializable(channel),RedisUtil.HOUR_ONE_EXPIRE);
         } catch (Exception e) {
             log.error("错误信息：{}",e.getMessage());
         }
-    }
-
-    private byte[] serialize(Object obj)throws Exception {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-        oos.writeObject(obj);
-        oos.close();
-        return outputStream.toByteArray();
-    }
-
-    private <T> T deserialize(Object obj,Class<T> clazz) {
-        byte[] bytes = (byte[]) obj;
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
-        return JacksonUtil.toBean(inputStream,clazz);
-    }
-
-    @SneakyThrows
-    private Channel channelGroup(Channel channel,TypeEnum type) {
-        String channelGroupKey = RedisKeyUtil.getChannelGroupKey();
-        String ip = InetAddress.getLocalHost().getHostAddress();
-        int port = WebSocketServer.PORT;
-        String hashKey = ip + Constant.UNDERLINE + port;
-        Object obj = redisUtil.hGet(channelGroupKey, hashKey);
-        if (obj == null) {
-            DefaultChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-            redisUtil.hSet(channelGroupKey,hashKey,serialize(channelGroup));
-            return null;
-        }
-        ChannelGroup channelGroup = deserialize(obj, ChannelGroup.class);
-        switch (type) {
-            case ADD -> channelGroup.add(channel);
-            case FIND -> {
-                return channelGroup.find(channel.id());
-            }
-            case REMOVE -> channelGroup.remove(channel);
-            default -> {}
-        }
-        return null;
     }
 
     private void handleRequestError(ChannelHandlerContext ctx,HttpResponseStatus httpResponseStatus) {

@@ -51,31 +51,47 @@ public abstract class Server {
      */
     public synchronized void start() {
         int port = getPort();
+        if (isRunning) {
+            log.error("已启动，端口：{}",port);
+            return;
+        }
         AbstractBootstrap<?, ?> bootstrap = init();
         try {
             // 服务器异步操作绑定
-            ChannelFuture channelFuture = bootstrap.bind(port).sync();
-            log.info("启动成功，端口：{}",port);
-            isRunning = true;
+            // sync                 -> 等待任务结束，如果任务产生异常或被中断则抛出异常，否则返回Future自身
+            // awaitUninterruptibly -> 等待任务结束，任务不可中断
+            ChannelFuture channelFuture = bootstrap.bind(port).awaitUninterruptibly();
             // 监听端口关闭
-            channelFuture.channel().closeFuture().sync();
+            channelFuture.channel().closeFuture().addListener(future -> {
+               if (isRunning) {
+                   stop();
+               }
+            });
+            if (channelFuture.cause() != null) {
+                log.error("启动失败，错误信息：{}",channelFuture.cause().getMessage());
+            }
+            if (channelFuture.isSuccess()) {
+                log.info("启动成功，端口：{}", port);
+                isRunning = true;
+            }
         } catch (Exception e) {
             log.error("启动失败，端口：{}，错误信息:{}",port,e.getMessage());
-        } finally {
-            if (!isRunning) {
-                log.info("未启动，不能关闭");
-                isRunning = false;
-            } else {
-                // 释放资源
-                if (boss != null) {
-                    boss.shutdownGracefully();
-                }
-                if (work != null) {
-                    work.shutdownGracefully();
-                }
-                log.info("优雅关闭，释放资源");
-            }
         }
+    }
+
+    /**
+     * 关闭
+     */
+    public synchronized void stop() {
+        // 释放资源
+        if (boss != null) {
+            boss.shutdownGracefully();
+        }
+        if (work != null) {
+            work.shutdownGracefully();
+        }
+        log.info("优雅关闭，释放资源");
+        isRunning = false;
     }
 
 }

@@ -14,15 +14,23 @@
  * limitations under the License.
  */
 
-package org.laokou.im.server.enums;
+package org.laokou.im.server.serialize;
+
+import io.netty.channel.Channel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-public enum TypeEnum {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class WebSocketChannelSerializable implements Serializable {
 
-    ADD,
-    REMOVE,
-    FIND
+    private Channel channel;
 
 }
