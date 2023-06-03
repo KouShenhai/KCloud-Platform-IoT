@@ -20,11 +20,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
 /**
  * @author laokou
  */
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class})
 @EnableEncryptableProperties
+@EnableDiscoveryClient(autoRegister = false)
 public class ImApplication {
 
     /**

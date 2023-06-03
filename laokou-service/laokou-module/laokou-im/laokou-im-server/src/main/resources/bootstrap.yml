@@ -5,6 +5,9 @@ spring:
     nacos:
       username: ${NACOS-USERNAME}
       password: ${NACOS-PASSWORD}
+      discovery:
+        server-addr: ${NACOS-DISCOVERY-ADDRESS}
+        namespace: ${NACOS-NAMESPACE}
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
@@ -17,6 +20,9 @@ spring:
         # Data Id 在默认的组 DEFAULT_GROUP,不支持配置的动态刷新
         extension-configs:
           - data-id: application-common.yaml
+            group: ${NACOS-GROUP}
+            refresh: true
+          - data-id: application-common-rocketmq.yaml
             group: ${NACOS-GROUP}
             refresh: true
           - data-id: application-common-redis.yaml

@@ -16,28 +16,36 @@
 
 package org.laokou.im.server.listener;
 
-import io.micrometer.common.lang.NonNullApi;
-import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.laokou.common.nacos.utils.ServiceUtil;
 import org.laokou.im.server.config.WebSocketServer;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationListener;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
+
+import java.net.InetAddress;
 
 /**
  * @author laokou
  */
+@Data
 @Component
 @RequiredArgsConstructor
-@NonNullApi
-public class WebsocketListener implements ApplicationListener<ApplicationReadyEvent> {
+@ConfigurationProperties(prefix = "spring.application")
+public class DiscoveryListener implements ApplicationListener<ApplicationReadyEvent> {
 
-    private final ThreadPoolTaskExecutor taskExecutor;
-    private final WebSocketServer webSocketServer;
+    private final ServiceUtil serviceUtil;
+    private String name;
 
     @Override
-    public void onApplicationEvent(@NotNull ApplicationReadyEvent event) {
-        taskExecutor.execute(webSocketServer::start);
+    @SneakyThrows
+    public void onApplicationEvent(ApplicationReadyEvent event) {
+        String ip = InetAddress.getLocalHost().getHostAddress();
+        int port = WebSocketServer.PORT;
+        serviceUtil.registerInstance(name,ip,port);
     }
+
 }

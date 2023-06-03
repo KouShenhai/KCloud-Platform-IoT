@@ -77,4 +77,10 @@ public class ServiceUtil {
         return NacosFactory.createNamingService(properties);
     }
 
+    @SneakyThrows
+    public void registerInstance(String serviceName,String ip,int port) {
+        NamingService namingService = getNamingService();
+        namingService.registerInstance(serviceName,ip,port);
+    }
+
 }
