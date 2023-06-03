@@ -58,7 +58,6 @@ public class TestNetty2 {
                 }
             });
             ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8081).sync();
-            System.out.println(33);
             channelFuture.channel().closeFuture().sync();
         } finally {
             eventLoopGroup.shutdownGracefully();
