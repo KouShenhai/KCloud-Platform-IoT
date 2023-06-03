@@ -26,14 +26,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.netty.config.Server;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 /**
  * @author laokou
  */
 @Slf4j
 @RequiredArgsConstructor
-@RefreshScope
 public class WebSocketServer extends Server {
 
     private final WebsocketChannelInitializer websocketChannelInitializer;

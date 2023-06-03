@@ -35,11 +35,11 @@ import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.im.server.serialize.WebSocketChannelSerializable;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author laokou
@@ -53,6 +53,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
     private static final String WS_HEADER_NAME = "Upgrade";
     private static final String WS_HEADER_VALUE = "websocket";
     private final RedisUtil redisUtil;
+    private static final Map<Long,Channel> USER_MAP = new ConcurrentHashMap<>();
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -67,7 +68,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
     }
 
-    private void sendMessage() {
+    public void send() {
 
     }
 
@@ -114,8 +115,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
             UserDetail userDetail = (UserDetail) obj;
             Channel channel = ctx.channel();
             Long userId = userDetail.getId();
-            String userChannelKey = RedisKeyUtil.getUserChannelKey();
-            redisUtil.hSet(userChannelKey,userId.toString(),new WebSocketChannelSerializable(channel),RedisUtil.HOUR_ONE_EXPIRE);
+            USER_MAP.put(userId,channel);
         } catch (Exception e) {
             log.error("错误信息：{}",e.getMessage());
         }

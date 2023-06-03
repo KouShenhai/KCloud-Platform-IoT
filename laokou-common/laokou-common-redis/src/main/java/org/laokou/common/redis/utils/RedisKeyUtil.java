@@ -96,13 +96,6 @@ public final class RedisKeyUtil {
     }
 
     /**
-     * 所有通道Key
-     */
-    public static String getChannelGroupKey() {
-        return "ws:channel:group";
-    }
-
-    /**
      * 用户通道Key
      */
     public static String getUserChannelKey() {
