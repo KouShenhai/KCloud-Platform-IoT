@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.im.server.config;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
@@ -23,11 +24,11 @@ import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
-import io.netty.handler.codec.http.websocketx.PingWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.ReferenceCountUtil;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.core.constant.Constant;
@@ -36,9 +37,11 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
+
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author laokou
@@ -48,15 +51,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
 public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
-
-    // TODO 存储到redis，channel序列化为字节数组
-
     private static final String WS_HEADER_NAME = "Upgrade";
     private static final String WS_HEADER_VALUE = "websocket";
     private final RedisUtil redisUtil;
-    private static final Map<String,ChannelId> USER_MAP = new ConcurrentHashMap<>();
     private static final ChannelGroup CHANNEL_GROUP = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-    private static final String WS_USER_PREFIX = "ws-user-";
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -91,6 +89,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
         return Authorization;
     }
 
+    @SneakyThrows
     private void initInfo(ChannelHandlerContext ctx, FullHttpRequest request) {
         if (request.decoderResult().isFailure() || !WS_HEADER_VALUE.equals(request.headers().get(WS_HEADER_NAME))) {
             handleRequestError(ctx,HttpResponseStatus.BAD_REQUEST);
@@ -116,10 +115,21 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
         Channel channel = ctx.channel();
         ChannelId channelId = channel.id();
         Long userId = userDetail.getId();
-        String wsUserKey = WS_USER_PREFIX + userId;
-        if (!USER_MAP.containsKey(wsUserKey)) {
-            USER_MAP.put(wsUserKey,channelId);
-        }
+        String userChannelKey = RedisKeyUtil.getUserChannelKey();
+        serialize(channelId);
+        //redisUtil.hSet(userChannelKey,userId.toString(),null,RedisUtil.HOUR_ONE_EXPIRE);
+    }
+
+    private byte[] serialize(Object obj)throws Exception {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(outputStream);
+        oos.writeObject(obj);
+        oos.close();
+        return outputStream.toByteArray();
+    }
+
+    private <T> T deserialize(Object obj,Class<T> clazz) {
+        return null;
     }
 
     private void handleRequestError(ChannelHandlerContext ctx,HttpResponseStatus httpResponseStatus) {
