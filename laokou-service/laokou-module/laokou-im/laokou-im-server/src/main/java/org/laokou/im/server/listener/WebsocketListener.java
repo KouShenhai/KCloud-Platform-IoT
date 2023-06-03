@@ -20,7 +20,6 @@ import io.micrometer.common.lang.NonNullApi;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.laokou.im.server.config.WebSocketServer;
-import org.springframework.beans.factory.DisposableBean;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -32,7 +31,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @NonNullApi
-public class WebsocketListener implements ApplicationListener<ApplicationReadyEvent>, DisposableBean {
+public class WebsocketListener implements ApplicationListener<ApplicationReadyEvent> {
 
     private final ThreadPoolTaskExecutor taskExecutor;
     private final WebSocketServer webSocketServer;
@@ -40,10 +39,5 @@ public class WebsocketListener implements ApplicationListener<ApplicationReadyEv
     @Override
     public void onApplicationEvent(@NotNull ApplicationReadyEvent event) {
         taskExecutor.execute(webSocketServer::start);
-    }
-
-    @Override
-    public void destroy() {
-        webSocketServer.stop();
     }
 }

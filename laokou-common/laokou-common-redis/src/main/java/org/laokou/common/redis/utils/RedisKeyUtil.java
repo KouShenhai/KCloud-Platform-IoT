@@ -98,8 +98,8 @@ public final class RedisKeyUtil {
     /**
      * 所有通道Key
      */
-    public static String getAllChannelKey() {
-        return "ws:all:channel";
+    public static String getChannelGroupKey() {
+        return "ws:channel:group";
     }
 
     /**

@@ -65,6 +65,10 @@
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>
+        <logger name="io.netty" level="info">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
     </springProfile>
     <springProfile name="prod">
         <logger name="org.laokou" level="error">
@@ -76,6 +80,10 @@
             <appender-ref ref="file"/>
         </logger>
         <logger name="org.springframework" level="error">
+            <appender-ref ref="console" />
+            <appender-ref ref="file"/>
+        </logger>
+        <logger name="io.netty" level="error">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
         </logger>

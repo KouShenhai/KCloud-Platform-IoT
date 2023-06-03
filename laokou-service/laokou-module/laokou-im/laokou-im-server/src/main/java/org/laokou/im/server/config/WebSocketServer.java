@@ -39,7 +39,7 @@ import org.springframework.stereotype.Component;
 public class WebSocketServer extends Server {
 
     private final WebsocketChannelInitializer websocketChannelInitializer;
-    private static final int PORT = 7777;
+    public static final int PORT = 7777;
     private static final String POOL_NAME = "laokou-websocket-pool";
     private final TaskExecutionProperties taskExecutionProperties;
 

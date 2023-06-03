@@ -62,25 +62,20 @@ public abstract class Server {
         } catch (Exception e) {
             log.error("启动失败，端口：{}，错误信息:{}",port,e.getMessage());
         } finally {
-            stop();
+            if (!isRunning) {
+                log.info("未启动，不能关闭");
+                isRunning = false;
+            } else {
+                // 释放资源
+                if (boss != null) {
+                    boss.shutdownGracefully();
+                }
+                if (work != null) {
+                    work.shutdownGracefully();
+                }
+                log.info("优雅关闭，释放资源");
+            }
         }
-    }
-
-    /**
-     * 关闭
-     */
-    public synchronized void stop() {
-        if (!isRunning) {
-            log.info("未启动，不能关闭");
-        }
-        // 释放资源
-        if (boss != null) {
-            boss.shutdownGracefully();
-        }
-        if (work != null) {
-            work.shutdownGracefully();
-        }
-        log.info("优雅关闭，释放资源");
     }
 
 }
