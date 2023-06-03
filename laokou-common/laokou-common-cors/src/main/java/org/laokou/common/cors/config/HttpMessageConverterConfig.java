@@ -19,7 +19,6 @@ package org.laokou.common.cors.config;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
@@ -35,7 +34,9 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TimeZone;
 
 /**
  * @author laokou
@@ -72,16 +73,6 @@ public class HttpMessageConverterConfig {
         converter.setObjectMapper(mapper);
         log.info("jackson配置加载完毕");
         return converter;
-    }
-
-    public static void main(String[] args) {
-        StdDateFormat stdDateFormat = new StdDateFormat();
-        TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
-        stdDateFormat.setTimeZone(timeZone);
-        stdDateFormat.withLocale(Locale.SIMPLIFIED_CHINESE);
-        String format = stdDateFormat.format(DateUtil.now());
-        System.out.println(format);
-        System.out.println(new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_MM_DD_HH_MM_SS)).format(DateUtil.now()));
     }
 
 }
