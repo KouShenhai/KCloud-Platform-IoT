@@ -16,14 +16,17 @@
 
 package org.laokou.im.server.config;
 
+import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.netty.config.Server;
+import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,40 +35,38 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class WebSocketServer{
+@RefreshScope
+public class WebSocketServer extends Server {
 
     private final WebsocketChannelInitializer websocketChannelInitializer;
     private static final int PORT = 7777;
+    private static final String POOL_NAME = "laokou-websocket-pool";
+    private final TaskExecutionProperties taskExecutionProperties;
 
-    public void start() {
+    @Override
+    protected int getPort() {
+        return PORT;
+    }
+
+    @Override
+    protected AbstractBootstrap<?, ?> init() {
+        // 核心线程数
+        int coreSize = taskExecutionProperties.getPool().getCoreSize();
         // boss负责监听端口
-        EventLoopGroup boss = new NioEventLoopGroup();
+        boss = new NioEventLoopGroup(1,new DefaultThreadFactory(POOL_NAME,10));
         // work负责线程读写
-        EventLoopGroup work = new NioEventLoopGroup();
-        try {
-            // 配置引导
-            ServerBootstrap serverBootstrap = new ServerBootstrap();
-            // 绑定线程组
-            serverBootstrap.group(boss,work)
-                    // 指定通道
-                    .channel(NioServerSocketChannel.class)
-                    // 维持长连接
-                    .childOption(ChannelOption.SO_KEEPALIVE,true)
-                    // 请求队列最大长度
-                    .option(ChannelOption.SO_BACKLOG,1024)
-                    .childHandler(websocketChannelInitializer);
-            // 服务器异步操作绑定
-            ChannelFuture channelFuture = serverBootstrap.bind(PORT).sync();
-            log.info("启动成功，端口：{}",PORT);
-            // 监听端口关闭
-            channelFuture.channel().closeFuture().sync();
-        } catch (Exception e) {
-            log.error("启动失败，端口：{}，错误信息:{}",PORT,e.getMessage());
-        } finally {
-            // 释放资源
-            boss.shutdownGracefully();
-            work.shutdownGracefully();
-            log.info("优雅关闭，释放资源");
-        }
+        work = new NioEventLoopGroup(coreSize,new DefaultThreadFactory(POOL_NAME,10));
+        // 配置引导
+        ServerBootstrap serverBootstrap = new ServerBootstrap();
+        // 绑定线程组
+       return serverBootstrap.group(boss,work)
+                // 指定通道
+                .channel(NioServerSocketChannel.class)
+                // 维持长连接
+                .childOption(ChannelOption.SO_KEEPALIVE,true)
+                // 请求队列最大长度
+                .option(ChannelOption.SO_BACKLOG,1024)
+                // websocket处理类
+                .childHandler(websocketChannelInitializer);
     }
 }

@@ -38,6 +38,7 @@ import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.im.client.WsMsgDTO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
@@ -56,7 +57,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     private final BatchUtil batchUtil;
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @DS(Constant.TENANT)
     public Boolean insertMessage(MessageDTO dto) {
         ValidatorUtil.validateEntity(dto);

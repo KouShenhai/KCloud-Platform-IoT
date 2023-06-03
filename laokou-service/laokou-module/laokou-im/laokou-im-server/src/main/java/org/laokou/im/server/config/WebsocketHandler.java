@@ -49,6 +49,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
+    // TODO 存储到redis，channel序列化为字节数组
+
     private static final String WS_HEADER_NAME = "Upgrade";
     private static final String WS_HEADER_VALUE = "websocket";
     private final RedisUtil redisUtil;
@@ -60,15 +62,6 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (msg instanceof FullHttpRequest request) {
             initInfo(ctx,request);
-        } else if (msg instanceof PingWebSocketFrame pingWebSocketFrame) {
-            System.out.println(22);
-        } else if (msg instanceof TextWebSocketFrame textWebSocketFrame) {
-            String body = textWebSocketFrame.text();
-            ChannelId channelId = USER_MAP.get(WS_USER_PREFIX);
-            if (channelId.equals(ctx.channel().id())) {
-                Channel channel = CHANNEL_GROUP.find(channelId);
-                channel.writeAndFlush(new TextWebSocketFrame(body));
-            }
         }
         super.channelRead(ctx, msg);
     }
@@ -85,7 +78,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
     }
 
     @Override
-    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+    public void handlerRemoved(ChannelHandlerContext ctx) {
         CHANNEL_GROUP.remove(ctx.channel());
         log.info("断开连接：{}",ctx.channel().id().asLongText());
     }
