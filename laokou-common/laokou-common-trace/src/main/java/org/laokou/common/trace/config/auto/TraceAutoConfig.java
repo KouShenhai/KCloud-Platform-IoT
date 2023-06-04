@@ -27,7 +27,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @AutoConfiguration
 @ComponentScan("org.laokou.common.trace")
-public class WebMvcAutoConfig implements WebMvcConfigurer {
+public class TraceAutoConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

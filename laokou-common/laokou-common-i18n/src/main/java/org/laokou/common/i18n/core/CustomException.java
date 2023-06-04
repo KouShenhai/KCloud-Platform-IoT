@@ -16,6 +16,7 @@
 package org.laokou.common.i18n.core;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 
 import java.io.Serial;
@@ -23,6 +24,7 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class CustomException extends RuntimeException{
 
     @Serial

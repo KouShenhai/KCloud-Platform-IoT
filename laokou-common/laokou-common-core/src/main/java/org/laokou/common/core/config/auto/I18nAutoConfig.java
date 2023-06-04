@@ -16,14 +16,18 @@
 
 package org.laokou.common.core.config.auto;
 
+import org.laokou.common.core.interceptor.I18nInterceptor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author laokou
  */
 @AutoConfiguration
-@ComponentScan("org.laokou.common.core")
-public class CoreAutoConfig {
-
+public class I18nAutoConfig implements WebMvcConfigurer {
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new I18nInterceptor()).addPathPatterns("/**");
+    }
 }

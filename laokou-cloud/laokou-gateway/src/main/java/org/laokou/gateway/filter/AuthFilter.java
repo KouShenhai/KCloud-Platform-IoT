@@ -36,6 +36,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ReactiveHttpOutputMessage;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -140,6 +141,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
     private ServerHttpRequestDecorator requestDecorator(ServerWebExchange exchange, HttpHeaders headers, CachedBodyOutputMessage outputMessage) {
         return new ServerHttpRequestDecorator(exchange.getRequest()) {
             @Override
+            @NonNull
             public HttpHeaders getHeaders() {
                 long contentLength = headers.getContentLength();
                 HttpHeaders httpHeaders = new HttpHeaders();
@@ -153,6 +155,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
             }
 
             @Override
+            @NonNull
             public Flux<DataBuffer> getBody() {
                 return outputMessage.getBody();
             }
