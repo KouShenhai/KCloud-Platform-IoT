@@ -14,24 +14,20 @@
  * limitations under the License.
  */
 
-package org.laokou.common.idempotent.aspect;
+package org.laokou.auth.client.vo;
 
-import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author laokou
  */
-@Aspect
-@Slf4j
-@Component
-public class IdempotentAspect {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class IdempotentToken {
 
-    @Before("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
-    public void before() {
-
-    }
+    private String token;
 
 }

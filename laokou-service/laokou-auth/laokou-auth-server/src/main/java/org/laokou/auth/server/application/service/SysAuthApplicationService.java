@@ -16,6 +16,7 @@
 package org.laokou.auth.server.application.service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.auth.client.vo.IdempotentToken;
 import org.laokou.auth.client.vo.SecretInfoVO;
 import org.laokou.common.core.vo.OptionVO;
 
@@ -53,5 +54,11 @@ public interface SysAuthApplicationService {
      * @throws IOException IO异常
      */
     SecretInfoVO getSecretInfo() throws IOException;
+
+    /**
+     * 接口幂等性令牌
+     * @return IdempotentToken
+     */
+    IdempotentToken idempotentToken();
 
 }

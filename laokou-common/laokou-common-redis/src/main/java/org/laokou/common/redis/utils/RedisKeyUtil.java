@@ -96,6 +96,13 @@ public final class RedisKeyUtil {
     }
 
     /**
+     * 接口幂等性令牌Key
+     */
+    public static String getIdempotentTokenKey(String token) {
+        return "sys:idempotent:token:" + token;
+    }
+
+    /**
      * 用户通道Key
      */
     public static String getUserChannelKey() {

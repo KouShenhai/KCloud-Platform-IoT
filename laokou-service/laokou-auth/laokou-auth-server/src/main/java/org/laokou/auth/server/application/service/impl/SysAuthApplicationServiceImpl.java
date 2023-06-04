@@ -17,10 +17,12 @@ package org.laokou.auth.server.application.service.impl;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.base.Captcha;
 import jakarta.servlet.http.HttpServletRequest;
+import jodd.util.Base64;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.user.UserDetail;
+import org.laokou.auth.client.vo.IdempotentToken;
 import org.laokou.auth.client.vo.SecretInfoVO;
 import org.laokou.auth.server.application.service.SysAuthApplicationService;
 import org.laokou.common.core.constant.Constant;
@@ -41,6 +43,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.stereotype.Service;
 import java.awt.*;
 import java.security.Principal;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Objects;
 import static org.laokou.common.core.utils.SecretUtil.APP_KEY;
@@ -116,12 +119,27 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
         return new SecretInfoVO(APP_KEY,APP_SECRET, RsaUtil.getPublicKey());
     }
 
+    @Override
+    public IdempotentToken idempotentToken() {
+        String token = getToken();
+        String idempotentTokenKey = RedisKeyUtil.getIdempotentTokenKey(token);
+        redisUtil.set(idempotentTokenKey,Constant.DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);
+        return new IdempotentToken(token);
+    }
+
     private String getToken(HttpServletRequest request) {
         String token = request.getHeader(Constant.AUTHORIZATION_HEAD);
         if (StringUtil.isEmpty(token)) {
             throw new CustomException("令牌不存在");
         }
         return token.substring(7);
+    }
+
+    private String getToken() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[20];
+        random.nextBytes(bytes);
+        return Base64.encodeToString(bytes);
     }
 
 }
