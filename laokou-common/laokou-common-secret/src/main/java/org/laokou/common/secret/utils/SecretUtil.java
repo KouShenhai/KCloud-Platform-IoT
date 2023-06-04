@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.core.utils;
+package org.laokou.common.secret.utils;
 import org.laokou.common.i18n.core.CustomException;
 import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;

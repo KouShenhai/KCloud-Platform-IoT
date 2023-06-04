@@ -23,7 +23,6 @@
         <version>3.1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.laokou</groupId>
     <version>3.1.0</version>
     <artifactId>laokou-module</artifactId>
     <packaging>pom</packaging>
@@ -32,5 +31,6 @@
         <module>laokou-flowable</module>
         <module>laokou-test</module>
         <module>laokou-logstash</module>
+        <module>laokou-api</module>
     </modules>
 </project>

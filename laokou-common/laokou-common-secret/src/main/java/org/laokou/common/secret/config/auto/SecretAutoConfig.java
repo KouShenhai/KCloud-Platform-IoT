@@ -14,25 +14,16 @@
  * limitations under the License.
  */
 
-package org.laokou.common.api.config.auto;
+package org.laokou.common.secret.config.auto;
+
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+
 /**
  * @author laokou
  */
-//@AutoConfiguration
-//public class ApiAutoConfig {
-//
-//    /**
-//     * 只允许注入一次
-//     */
-//    @Bean
-//    @ConditionalOnMissingBean(WebClient.class)
-//    public WebClient webClient() {
-//        // 超时配置
-//        HttpClient httpClient = HttpClient.create()
-//                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000);
-//        return WebClient.builder()
-//                .clientConnector(new ReactorClientHttpConnector(httpClient))
-//                .build();
-//    }
-//
-//}
+@AutoConfiguration
+@ComponentScan("org.laokou.common.secret")
+public class SecretAutoConfig {
+
+}
