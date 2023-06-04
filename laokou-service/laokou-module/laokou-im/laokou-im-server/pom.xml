@@ -53,7 +53,7 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-rocketmq</artifactId>
+            <artifactId>laokou-common-cors</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -63,7 +63,7 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-trace</artifactId>
+            <artifactId>laokou-common-rocketmq</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>

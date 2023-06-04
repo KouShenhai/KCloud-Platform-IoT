@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 package org.laokou.common.data.filter.aspect;
+
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.client.utils.UserUtil;
-import org.laokou.common.core.enums.SuperAdminEnum;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.data.filter.annotation.DataFilter;
-import org.laokou.common.mybatisplus.entity.BasePage;
-import org.laokou.auth.client.user.UserDetail;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.laokou.auth.client.user.UserDetail;
+import org.laokou.auth.client.utils.UserUtil;
+import org.laokou.common.core.enums.SuperAdminEnum;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.data.filter.annotation.DataFilter;
+import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.mybatisplus.entity.BasePage;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 /**
  * @author laokou
@@ -87,13 +87,6 @@ public class DataFilterAspect {
         sqlFilter.append(tableAlias).append(dataFilter.userId()).append(" = ").append(userDetail.getId());
         sqlFilter.append(")");
         return sqlFilter.toString();
-    }
-
-    public static void main(String[] args) {
-        List<Long> list = new ArrayList<>();
-        list.add(1L);
-        list.add(2L);
-        System.out.println(String.join(",",list.stream().map(String::valueOf).toArray(String[]::new)));
     }
 
 }
