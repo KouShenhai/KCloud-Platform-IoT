@@ -20,6 +20,7 @@ import org.redisson.api.*;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.util.*;
@@ -211,6 +212,10 @@ public class RedisUtil {
             dataMap.put(key, value);
         }
         return dataMap;
+    }
+
+    public <T> T execute(RedisScript<T> script, List<String> keys, Object... args) {
+        return redisTemplate.execute(script, keys, args);
     }
 
 }

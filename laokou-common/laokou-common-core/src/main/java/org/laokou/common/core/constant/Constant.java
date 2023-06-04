@@ -125,4 +125,9 @@ public interface Constant {
      */
     String ACCEPT_LANGUAGE = "Accept-Language";
 
+    /**
+     * 接口幂等性
+     */
+    String REQUEST_ID = "request-id";
+
 }
