@@ -14,37 +14,31 @@
  * limitations under the License.
  */
 
-package org.laokou.common.trace.interceptor;
+package org.laokou.common.core.interceptor;
 
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.constant.Constant;
-import org.slf4j.MDC;
+import org.laokou.common.i18n.utils.LocaleUtil;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
  * @author laokou
  */
 @NonNullApi
-public class TraceInterceptor implements HandlerInterceptor {
+public class I18nInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String traceId = request.getHeader(Constant.TRACE_ID);
-        String userId = request.getHeader(Constant.USER_ID);
-        String username = request.getHeader(Constant.USER_NAME);
-        String tenantId = request.getHeader(Constant.TENANT_ID);
-        MDC.put(Constant.TRACE_ID,traceId);
-        MDC.put(Constant.USER_ID,userId);
-        MDC.put(Constant.TENANT_ID,tenantId);
-        MDC.put(Constant.USER_NAME,username);
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String language = request.getHeader(Constant.ACCEPT_LANGUAGE);
+        LocaleContextHolder.setDefaultLocale(LocaleUtil.toLocale(language));
         return true;
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        MDC.clear();
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        LocaleContextHolder.resetLocaleContext();
     }
-
 }
