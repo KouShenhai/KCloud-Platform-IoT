@@ -1,6 +1,5 @@
-if redis.call('EXISTS',KEYS[1]) == 1 then
-    -- 删除token
-    redis.call("DEL",KEYS[1])
+if redis.call('exists',KEYS[1]) == 1 then
+    redis.call('del', KEYS[1])
     return true
 else
     return false
