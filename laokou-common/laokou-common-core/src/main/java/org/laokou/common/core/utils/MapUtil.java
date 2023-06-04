@@ -17,7 +17,7 @@ package org.laokou.common.core.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.yaml.snakeyaml.util.UriEncoder;
@@ -71,7 +71,7 @@ public class MapUtil {
             String value = entry.getValue();
             stringBuilder.append(key).append("=").append(URLEncoder.encode(value,StandardCharsets.UTF_8)).append("&");
         }
-        return StringUtils.substringBeforeLast(stringBuilder.toString(),AND);
+        return StringUtil.substringBeforeLast(stringBuilder.toString(),AND);
     }
 
     public static MultiValueMap<String, String> getParameters(HttpServletRequest request) {

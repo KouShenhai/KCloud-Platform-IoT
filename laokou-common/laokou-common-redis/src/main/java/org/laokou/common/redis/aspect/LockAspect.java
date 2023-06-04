@@ -42,14 +42,11 @@ public class LockAspect {
     private final LockFactory factory;
 
     @Around(value = "@annotation(org.laokou.common.redis.annotation.Lock4j)")
-    public void around(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         //获取注解
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
-        if (null == method) {
-            return;
-        }
         Lock4j lock4j = method.getAnnotation(Lock4j.class);
         if (lock4j == null) {
             lock4j = AnnotationUtils.findAnnotation(method,Lock4j.class);
@@ -76,6 +73,7 @@ public class LockAspect {
             //释放锁
             locks.unlock(type,key);
         }
+        return null;
     }
 
 }

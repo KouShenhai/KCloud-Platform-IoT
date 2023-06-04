@@ -35,6 +35,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.rocketmq.constant.RocketmqConstant;
 import org.laokou.common.rocketmq.dto.RocketmqDTO;
@@ -63,6 +64,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     @Override
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @DS(Constant.TENANT)
+    @Idempotent
     public Boolean insertMessage(MessageDTO dto) {
         ValidatorUtil.validateEntity(dto);
         SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
