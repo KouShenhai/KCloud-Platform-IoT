@@ -139,7 +139,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
         └── laokou-common-i18n                     --- 国际化组件  
         └── laokou-common-tenant                   --- 多租户组件  
         └── laokou-common-easy-captcha             --- 验证码组件  
-        └── laokou-common-secret                   --- API验签组件  
         └── laokou-common-banner                   --- Banner组件  
         └── laokou-common-oss                      --- 对象存储组件  
         └── laokou-common-trace                    --- 链路跟踪组件  
@@ -148,6 +147,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
         └── laokou-common-dubbo                    --- 远程调用组件  
         └── laokou-common-netty                    --- 网络通讯组件  
         └── laokou-common-jasypt                   --- 加密解密组件  
+        └── laokou-common-secret                   --- 接口验签组件  
         └── laokou-common-logback                  --- 日志收集组件  
         └── laokou-common-xxl-job                  --- 任务调度组件  
         └── laokou-common-security                 --- 认证授权组件  
@@ -178,6 +178,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
         └── laokou-admin                           --- 后台管理模块  
         └── laokou-generate                        --- 模板生成模块  
         └── laokou-modlule  
+                └── laokou-api                     --- API模块  
                 └── laokou-test                    --- 测试模块  
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-flowable                --- 工作流程模块  
