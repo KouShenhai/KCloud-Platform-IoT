@@ -14,28 +14,25 @@
  * limitations under the License.
  */
 
-package org.laokou.auth.client.vo;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.io.Serial;
-import java.io.Serializable;
-
+package org.laokou.common.api.config.auto;
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Schema(name = "SecretInfoVO",description = "密钥配置")
-public class SecretInfoVO implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 5798768808595385129L;
-    @Schema(name = "publicKey",description = "公钥")
-    private String publicKey;
-
-}
+//@AutoConfiguration
+//public class ApiAutoConfig {
+//
+//    /**
+//     * 只允许注入一次
+//     */
+//    @Bean
+//    @ConditionalOnMissingBean(WebClient.class)
+//    public WebClient webClient() {
+//        // 超时配置
+//        HttpClient httpClient = HttpClient.create()
+//                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000);
+//        return WebClient.builder()
+//                .clientConnector(new ReactorClientHttpConnector(httpClient))
+//                .build();
+//    }
+//
+//}
