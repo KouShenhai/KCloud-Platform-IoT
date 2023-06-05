@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.redis.annotation;
+package org.laokou.common.lock.annotation;
 
-import org.laokou.common.redis.enums.LockScope;
-import org.laokou.common.redis.enums.LockType;
+import org.laokou.common.lock.enums.LockScope;
+import org.laokou.common.lock.enums.LockType;
 
 import java.lang.annotation.*;
 
@@ -30,7 +30,6 @@ public @interface Lock4j {
 
     /**
      * 键
-     * @return
      */
     String key();
 

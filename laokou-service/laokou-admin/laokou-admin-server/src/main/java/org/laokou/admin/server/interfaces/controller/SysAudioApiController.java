@@ -25,11 +25,11 @@ import org.laokou.admin.server.application.service.WorkflowTaskApplicationServic
 import org.laokou.admin.client.dto.SysResourceAuditDTO;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
+import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.log.vo.SysAuditLogVO;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.oss.vo.UploadVO;
-import org.laokou.common.redis.annotation.Lock4j;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;

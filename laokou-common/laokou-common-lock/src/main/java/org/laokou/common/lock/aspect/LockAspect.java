@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.redis.aspect;
+package org.laokou.common.lock.aspect;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.core.CustomException;
-import org.laokou.common.redis.annotation.Lock4j;
-import org.laokou.common.redis.factory.LockFactory;
-import org.laokou.common.redis.factory.Locks;
+import org.laokou.common.lock.annotation.Lock4j;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.redis.enums.LockScope;
-import org.laokou.common.redis.enums.LockType;
+import org.laokou.common.lock.enums.LockScope;
+import org.laokou.common.lock.enums.LockType;
+import org.laokou.common.lock.factory.LockFactory;
+import org.laokou.common.lock.factory.Locks;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
@@ -41,7 +41,7 @@ public class LockAspect {
 
     private final LockFactory factory;
 
-    @Around(value = "@annotation(org.laokou.common.redis.annotation.Lock4j)")
+    @Around(value = "@annotation(org.laokou.common.lock.annotation.Lock4j)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         //获取注解
         Signature signature = joinPoint.getSignature();

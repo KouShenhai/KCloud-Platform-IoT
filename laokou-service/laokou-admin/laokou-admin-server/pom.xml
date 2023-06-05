@@ -65,6 +65,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
+			<artifactId>laokou-common-lock</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-tenant</artifactId>
 		</dependency>
 		<dependency>

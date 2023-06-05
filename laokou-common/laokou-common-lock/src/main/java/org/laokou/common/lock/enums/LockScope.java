@@ -13,25 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.redis.factory;
+package org.laokou.common.lock.enums;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.redis.enums.LockScope;
-import org.springframework.stereotype.Component;
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class LockFactory {
 
-    private final RedisUtil redisUtil;
+public enum  LockScope {
 
-    public Locks build(LockScope scope) {
-        return switch (scope) {
-            case DISTRIBUTED_LOCK -> new RedissonLock(redisUtil);
-        };
-    }
+    /**
+     * 分布式锁
+     */
+    DISTRIBUTED_LOCK
 
 }

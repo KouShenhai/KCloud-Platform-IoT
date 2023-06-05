@@ -84,6 +84,7 @@
         <module>laokou-common-xss</module>
 		<module>laokou-common-netty</module>
         <module>laokou-common-idempotent</module>
+        <module>laokou-common-lock</module>
     </modules>
 
 </project>
