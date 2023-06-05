@@ -28,6 +28,7 @@ import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.core.constant.Constant;
@@ -35,6 +36,7 @@ import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -52,13 +54,14 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
     private static final String WS_HEADER_NAME = "Upgrade";
     private static final String WS_HEADER_VALUE = "websocket";
-    private final RedisUtil redisUtil;
+    private final ReactiveRedisTemplate<String,Object> reactiveRedisTemplate;
     public static final Map<String,Channel> USER_MAP = new ConcurrentHashMap<>();
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    @SneakyThrows
+    public void channelRead(ChannelHandlerContext ctx, Object msg) {
         if (msg instanceof FullHttpRequest request) {
-            initInfo(ctx,request);
+            initWsInfo(ctx,request,msg);
         }
         super.channelRead(ctx, msg);
     }
@@ -86,7 +89,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
         return Authorization;
     }
 
-    private void initInfo(ChannelHandlerContext ctx, FullHttpRequest request) {
+    private void initWsInfo(ChannelHandlerContext ctx, FullHttpRequest request,Object msg) {
         try {
             if (request.decoderResult().isFailure() || !WS_HEADER_VALUE.equals(request.headers().get(WS_HEADER_NAME))) {
                 handleRequestError(ctx, HttpResponseStatus.BAD_REQUEST);
@@ -103,15 +106,16 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
                 return;
             }
             String userInfoKey = RedisKeyUtil.getUserInfoKey(Authorization);
-            Object obj = redisUtil.get(userInfoKey);
-            if (obj == null) {
-                handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
-                return;
-            }
-            UserDetail userDetail = (UserDetail) obj;
-            Channel channel = ctx.channel();
-            Long userId = userDetail.getId();
-            USER_MAP.put(userId.toString(),channel);
+            reactiveRedisTemplate.opsForValue().get(userInfoKey).subscribe(obj -> {
+                if (obj == null) {
+                    handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
+                    return;
+                }
+                UserDetail userDetail = (UserDetail) obj;
+                Channel channel = ctx.channel();
+                Long userId = userDetail.getId();
+                USER_MAP.put(userId.toString(),channel);
+            });
         } catch (Exception e) {
             log.error("错误信息：{}",e.getMessage());
         }
