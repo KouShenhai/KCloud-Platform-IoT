@@ -50,8 +50,8 @@ public class JacksonUtil {
 
     /**
      * 创建JavaType
-     * @param clazz
-     * @return
+     * @param clazz 类型
+     * @return JavaType
      */
     public <T> JavaType javaType(Class<T> clazz) {
         return MAPPER.getTypeFactory().constructType(clazz);
@@ -91,7 +91,6 @@ public class JacksonUtil {
 
     /**
      * json to List
-     *
      * @param json  json数组
      * @param clazz 类型
      * @param <T>   泛型
@@ -102,12 +101,6 @@ public class JacksonUtil {
         return MAPPER.readValue(json,collectionType(clazz));
     }
 
-    /**
-     *
-     * @param clazz
-     * @return
-     * @param <T>
-     */
     public <T> CollectionType collectionType(Class<T> clazz) {
        return MAPPER.getTypeFactory().constructCollectionType(Collection.class,clazz);
     }
@@ -125,16 +118,12 @@ public class JacksonUtil {
         return MAPPER.readValue(json, mapType(keyClass,valueClass));
     }
 
-    /**
-     *
-     * @param keyClass
-     * @param valueClass
-     * @return
-     * @param <K>
-     * @param <V>
-     */
     public <K,V> MapType mapType(Class<K> keyClass, Class<V> valueClass) {
         return MAPPER.getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
+    }
+
+    public <T> T toValue(Object obj,Class<T> clazz) {
+        return MAPPER.convertValue(obj,clazz);
     }
 
     @SneakyThrows

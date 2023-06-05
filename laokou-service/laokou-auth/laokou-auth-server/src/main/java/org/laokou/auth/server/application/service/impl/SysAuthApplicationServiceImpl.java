@@ -46,8 +46,6 @@ import java.security.Principal;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Objects;
-import static org.laokou.common.core.utils.SecretUtil.APP_KEY;
-import static org.laokou.common.core.utils.SecretUtil.APP_SECRET;
 /**
  * @author laokou
  */
@@ -116,7 +114,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 
     @Override
     public SecretInfoVO getSecretInfo() {
-        return new SecretInfoVO(APP_KEY,APP_SECRET, RsaUtil.getPublicKey());
+        return new SecretInfoVO(RsaUtil.getPublicKey());
     }
 
     @Override

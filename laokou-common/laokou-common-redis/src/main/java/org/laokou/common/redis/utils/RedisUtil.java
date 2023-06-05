@@ -21,7 +21,6 @@ import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
-import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +28,6 @@ import java.util.concurrent.TimeUnit;
  * Redis工具类
  * @author laokou
  */
-@Component
 @RequiredArgsConstructor
 public class RedisUtil {
 

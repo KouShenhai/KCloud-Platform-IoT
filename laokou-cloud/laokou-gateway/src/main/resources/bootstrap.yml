@@ -28,6 +28,9 @@ spring:
         refresh-enabled: true
         file-extension: yaml
         extension-configs:
+          - data-id: application-common-redis.yaml
+            group: ${NACOS-GROUP}
+            refresh: true
           - data-id: application-common.yaml
             group: ${NACOS-GROUP}
             refresh: true

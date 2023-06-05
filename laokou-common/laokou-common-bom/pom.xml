@@ -140,6 +140,11 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-lock</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-nacos</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -405,7 +410,7 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-api</artifactId>
+                <artifactId>laokou-common-secret</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

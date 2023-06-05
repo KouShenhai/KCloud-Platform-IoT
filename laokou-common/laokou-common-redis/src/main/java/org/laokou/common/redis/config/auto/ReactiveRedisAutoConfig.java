@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 package org.laokou.common.redis.config.auto;
+import org.laokou.common.redis.config.RedissonConfig;
+import org.laokou.common.redis.utils.ReactiveRedisUtil;
+import org.redisson.api.RedissonClient;
+import org.redisson.api.RedissonReactiveClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
@@ -29,9 +34,10 @@ import reactor.core.publisher.Flux;
 /**
  * @author laokou
  */
-@AutoConfiguration(after = RedisAutoConfig.class)
+@AutoConfiguration
+@ComponentScan("org.laokou.common.redis")
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
-@ConditionalOnClass({ ReactiveRedisConnectionFactory.class, ReactiveRedisTemplate.class, Flux.class })
+@ConditionalOnClass({RedissonConfig.class,ReactiveRedisConnectionFactory.class, ReactiveRedisTemplate.class, Flux.class })
 public class ReactiveRedisAutoConfig {
 
     @Bean
@@ -55,6 +61,18 @@ public class ReactiveRedisAutoConfig {
     public ReactiveStringRedisTemplate reactiveStringRedisTemplate(
             ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
         return new ReactiveStringRedisTemplate(reactiveRedisConnectionFactory);
+    }
+
+    @Bean(destroyMethod = "shutdown")
+    @ConditionalOnMissingBean(RedissonReactiveClient.class)
+    public RedissonReactiveClient redissonReactiveClient(RedissonClient redissonClient) {
+        return redissonClient.reactive();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(ReactiveRedisUtil.class)
+    public ReactiveRedisUtil reactiveRedisUtil(RedissonReactiveClient redissonReactiveClient) {
+        return new ReactiveRedisUtil(redissonReactiveClient);
     }
 
 }

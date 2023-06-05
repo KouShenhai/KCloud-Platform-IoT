@@ -35,8 +35,7 @@ public class SecretInfoVO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 5798768808595385129L;
-    private String appKey;
-    private String appSecret;
+    @Schema(name = "publicKey",description = "公钥")
     private String publicKey;
 
 }
