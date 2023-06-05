@@ -102,11 +102,4 @@ public final class RedisKeyUtil {
         return "sys:idempotent:token:" + token;
     }
 
-    /**
-     * 用户通道Key
-     */
-    public static String getUserChannelKey() {
-        return "ws:user:channel";
-    }
-
 }
