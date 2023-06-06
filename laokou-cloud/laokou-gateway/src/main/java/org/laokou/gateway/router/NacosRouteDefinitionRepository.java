@@ -24,6 +24,7 @@ import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
@@ -31,7 +32,6 @@ import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
     @Override
     public Flux<RouteDefinition> getRouteDefinitions() {
         Collection<RouteDefinition> definitions = caffeineCache.asMap().values();
-        if (CollectionUtils.isEmpty(definitions)) {
+        if (CollectionUtil.isEmpty(definitions)) {
             try {
                 // pull nacos config info
                 String group = nacosConfigProperties.getGroup();
