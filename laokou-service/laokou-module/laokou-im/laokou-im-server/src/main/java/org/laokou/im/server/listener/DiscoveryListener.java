@@ -17,6 +17,7 @@
 package org.laokou.im.server.listener;
 
 import io.micrometer.common.lang.NonNullApi;
+import jakarta.annotation.PreDestroy;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -48,6 +49,14 @@ public class DiscoveryListener implements ApplicationListener<ApplicationReadyEv
         String ip = InetAddress.getLocalHost().getHostAddress();
         int port = WebSocketServer.PORT;
         serviceUtil.registerInstance(name,ip,port);
+    }
+
+    @SneakyThrows
+    @PreDestroy
+    public void close() {
+        String ip = InetAddress.getLocalHost().getHostAddress();
+        int port = WebSocketServer.PORT;
+        serviceUtil.deregisterInstance(name,ip,port);
     }
 
 }

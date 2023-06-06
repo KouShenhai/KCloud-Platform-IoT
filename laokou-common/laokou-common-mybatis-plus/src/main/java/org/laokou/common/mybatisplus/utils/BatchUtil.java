@@ -57,7 +57,7 @@ public class BatchUtil {
                         service.insertBatch(item);
                     } catch (Exception e) {
                         // 回滚标识
-                        rollback.set(true);
+                        rollback.compareAndSet(false,true);
                         log.error("批量插入数据异常，已设置回滚标识，错误信息：{}",e.getMessage());
                     } finally {
                         if (rollback.get()) {
