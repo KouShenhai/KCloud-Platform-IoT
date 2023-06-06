@@ -34,9 +34,8 @@ import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.redis.utils.ReactiveRedisUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
-import org.laokou.common.redis.utils.RedisUtil;
-import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -54,14 +53,14 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
     private static final String WS_HEADER_NAME = "Upgrade";
     private static final String WS_HEADER_VALUE = "websocket";
-    private final ReactiveRedisTemplate<String,Object> reactiveRedisTemplate;
+    private final ReactiveRedisUtil reactiveRedisUtil;
     public static final Map<String,Channel> USER_MAP = new ConcurrentHashMap<>();
 
     @Override
     @SneakyThrows
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         if (msg instanceof FullHttpRequest request) {
-            initWsInfo(ctx,request,msg);
+            initWsInfo(ctx,request);
         }
         super.channelRead(ctx, msg);
     }
@@ -89,7 +88,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
         return Authorization;
     }
 
-    private void initWsInfo(ChannelHandlerContext ctx, FullHttpRequest request,Object msg) {
+    private void initWsInfo(ChannelHandlerContext ctx, FullHttpRequest request) {
         try {
             if (request.decoderResult().isFailure() || !WS_HEADER_VALUE.equals(request.headers().get(WS_HEADER_NAME))) {
                 handleRequestError(ctx, HttpResponseStatus.BAD_REQUEST);
@@ -106,7 +105,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
                 return;
             }
             String userInfoKey = RedisKeyUtil.getUserInfoKey(Authorization);
-            reactiveRedisTemplate.opsForValue().get(userInfoKey).subscribe(obj -> {
+            reactiveRedisUtil.get(userInfoKey).subscribe(obj -> {
                 if (obj == null) {
                     handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
                     return;

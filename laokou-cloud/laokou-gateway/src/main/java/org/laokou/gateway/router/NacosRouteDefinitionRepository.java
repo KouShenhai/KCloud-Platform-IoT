@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 package org.laokou.gateway.router;
+
 import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
@@ -43,7 +44,6 @@ import java.util.concurrent.Executors;
  * @author laokou
  */
 @Component
-@RequiredArgsConstructor
 @Slf4j
 @NonNullApi
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository, ApplicationEventPublisherAware {
@@ -57,6 +57,12 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
     private final Cache<String,RouteDefinition> caffeineCache;
 
     private ApplicationEventPublisher applicationEventPublisher;
+
+    public NacosRouteDefinitionRepository(NacosConfigManager nacosConfigManager, NacosConfigProperties nacosConfigProperties) {
+        this.nacosConfigManager = nacosConfigManager;
+        this.nacosConfigProperties = nacosConfigProperties;
+        this.caffeineCache = Caffeine.newBuilder().initialCapacity(30).build();;
+    }
 
     @PostConstruct
     public void init() throws NacosException {
