@@ -21,6 +21,8 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * @author laokou
  */
@@ -30,7 +32,7 @@ public abstract class Server {
     /**
      * 运行标记
      */
-    protected boolean isRunning;
+    protected AtomicBoolean running = new AtomicBoolean(false);
     protected EventLoopGroup boss;
     protected EventLoopGroup work;
 
@@ -49,9 +51,9 @@ public abstract class Server {
     /**
      * 开始
      */
-    public synchronized void start() {
+    public void start() {
         int port = getPort();
-        if (isRunning) {
+        if (running.get()) {
             log.error("已启动，端口：{}",port);
             return;
         }
@@ -63,7 +65,7 @@ public abstract class Server {
             ChannelFuture channelFuture = bootstrap.bind(port).awaitUninterruptibly();
             // 监听端口关闭
             channelFuture.channel().closeFuture().addListener(future -> {
-               if (isRunning) {
+               if (running.get()) {
                    stop();
                }
             });
@@ -72,7 +74,7 @@ public abstract class Server {
             }
             if (channelFuture.isSuccess()) {
                 log.info("启动成功，端口：{}", port);
-                isRunning = true;
+                this.running.compareAndSet(false, true);
             }
         } catch (Exception e) {
             log.error("启动失败，端口：{}，错误信息:{}",port,e.getMessage());
@@ -82,16 +84,17 @@ public abstract class Server {
     /**
      * 关闭
      */
-    public synchronized void stop() {
-        // 释放资源
-        if (boss != null) {
-            boss.shutdownGracefully();
+    public void stop() {
+        if (this.running.compareAndSet(true, false)) {
+            // 释放资源
+            if (boss != null) {
+                boss.shutdownGracefully();
+            }
+            if (work != null) {
+                work.shutdownGracefully();
+            }
+            log.info("优雅关闭，释放资源");
         }
-        if (work != null) {
-            work.shutdownGracefully();
-        }
-        log.info("优雅关闭，释放资源");
-        isRunning = false;
     }
 
 }
