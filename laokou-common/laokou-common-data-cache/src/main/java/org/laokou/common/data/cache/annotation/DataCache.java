@@ -45,7 +45,6 @@ public @interface DataCache {
      * 过期时间
      * 单位秒
      * 默认10分钟
-     * @return
      */
     long expire() default 600;
 

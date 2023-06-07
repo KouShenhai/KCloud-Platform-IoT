@@ -16,7 +16,7 @@
 
 package org.laokou.common.core.utils;
 
-import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
 
@@ -26,7 +26,7 @@ import java.util.Collection;
 public class CollectionUtil {
 
     public static boolean isNotEmpty(Collection<?> collection) {
-        return CollectionUtils.isNotEmpty(collection);
+        return !isEmpty(collection);
     }
 
     public static boolean isEmpty(Collection<?> collection) {

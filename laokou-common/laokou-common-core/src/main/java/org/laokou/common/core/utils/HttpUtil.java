@@ -41,7 +41,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /**
- * http工具类
  * @author laokou
  */
 @Slf4j

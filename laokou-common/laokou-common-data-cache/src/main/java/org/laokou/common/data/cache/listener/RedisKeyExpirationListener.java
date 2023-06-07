@@ -13,34 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.laokou.common.data.cache.listener;
 
 import com.github.benmanes.caffeine.cache.Cache;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
-import org.springframework.data.redis.connection.MessageListener;
-import org.springframework.data.redis.listener.PatternTopic;
+import org.springframework.data.redis.listener.KeyExpirationEventMessageListener;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
-
 /**
  * @author laokou
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
-public class RedisDeleteListener implements MessageListener {
+public class RedisKeyExpirationListener extends KeyExpirationEventMessageListener {
 
-    public static final PatternTopic TOPIC = new PatternTopic("__keyevent@0__:del");
     private final Cache<String,Object> caffeineCache;
+
+    public RedisKeyExpirationListener(RedisMessageListenerContainer listenerContainer, Cache<String,Object> caffeineCache) {
+        super(listenerContainer);
+        this.caffeineCache = caffeineCache;
+    }
 
     @Override
     public void onMessage(Message message, byte[] pattern) {
         String key = new String(message.getBody(), StandardCharsets.UTF_8);
-        log.info("监听key为{}的删除事件",key);
+        log.info("监听key为{}的过期事件",key);
         caffeineCache.invalidate(key);
     }
 }
