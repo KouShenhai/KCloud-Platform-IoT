@@ -32,7 +32,7 @@ public class SwaggerConfig {
     @Lazy(value = false)
     public List<GroupedOpenApi> openApis(RouteDefinitionLocator locator) {
         List<GroupedOpenApi> groups = new ArrayList<>();
-        locator.getRouteDefinitions().filter(routeDefinition -> routeDefinition.getId().matches("laokou-.*")).doOnNext(routeDefinition -> {
+        locator.getRouteDefinitions().filter(routeDefinition -> routeDefinition.getId().matches("laokou-.*")).subscribe(routeDefinition -> {
             String name = routeDefinition.getId().replaceAll("laokou-", "");
             GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").group(name).build();
         });
