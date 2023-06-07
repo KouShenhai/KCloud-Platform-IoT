@@ -16,6 +16,8 @@
 
 package org.laokou.common.data.cache.config.auto;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
@@ -36,6 +38,11 @@ public class DataCacheAutoConfig {
         RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
         redisMessageListenerContainer.setConnectionFactory(lettuceConnectionFactory);
         return redisMessageListenerContainer;
+    }
+
+    @Bean
+    public Cache<String, Object> caffeineCache() {
+        return Caffeine.newBuilder().initialCapacity(100).build();
     }
 
 }
