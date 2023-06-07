@@ -27,8 +27,8 @@ public class CacheConfig {
 
     @Bean
     public Cache<String, Object> caffeineCache() {
-        return Caffeine.newBuilder().maximumSize(4096)
-                .initialCapacity(400)
+        return Caffeine.newBuilder()
+                .initialCapacity(100)
                 .build();
     }
 
