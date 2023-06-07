@@ -16,13 +16,30 @@
 
 package org.laokou.common.data.cache.config.auto;
 
+import org.laokou.common.data.cache.listener.RedisDeleteListener;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
 /**
  * @author laokou
  */
 @AutoConfiguration
 @ComponentScan("org.laokou.common.data.cache")
+@ConditionalOnClass(LettuceConnectionFactory.class)
 public class DataCacheAutoConfig {
+
+    @Bean
+    public RedisMessageListenerContainer redisMessageListenerContainer(LettuceConnectionFactory lettuceConnectionFactory,RedisDeleteListener redisDeleteListener) {
+        RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
+        // 设置factory
+        redisMessageListenerContainer.setConnectionFactory(lettuceConnectionFactory);
+        // 监听所有key的删除事件
+        redisMessageListenerContainer.addMessageListener(redisDeleteListener, RedisDeleteListener.TOPIC);
+        return redisMessageListenerContainer;
+    }
+
 }
