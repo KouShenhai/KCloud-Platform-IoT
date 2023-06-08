@@ -57,6 +57,7 @@ public class OAuth2ResourceServerConfig {
         return http.authorizeHttpRequests(request -> request.requestMatchers(uris.toArray(String[]::new)).permitAll()
                         .requestMatchers(patterns.toArray(String[]::new)).permitAll()
                         .anyRequest().authenticated())
+                .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 // 自定义登录页面
                 // https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
