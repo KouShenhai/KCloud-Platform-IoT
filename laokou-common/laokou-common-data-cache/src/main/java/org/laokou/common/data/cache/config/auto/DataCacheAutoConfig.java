@@ -33,6 +33,9 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 @ConditionalOnClass(LettuceConnectionFactory.class)
 public class DataCacheAutoConfig {
 
+    /**
+     * redis 需要配置  notify-keyspace-events KEA
+     */
     @Bean
     public RedisMessageListenerContainer redisMessageListenerContainer(LettuceConnectionFactory lettuceConnectionFactory) {
         RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
