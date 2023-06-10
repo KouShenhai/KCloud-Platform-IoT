@@ -180,7 +180,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 
 ### ✈ 启动系统
 - 1.必须启动Mysql、Redis
-- 2.可选启动Sentinel、RocketMQ、ElasticSearch、MongoDB
+- 2.可选启动RocketMQ、ElasticSearch、MongoDB
 - 3.将doc/config/dev目录下的zip压缩文件都导入Nacos（注：更改maven相关配置）
 - 4.运行doc/db/db_init.sql、shardingsphere_init.sql、db_update.sql（运行多租户需执行db_tenant_init.sql）
 - 5.按顺序启动laokou-register、laokou-seata、laokou-gateway、laokou-auth、laokou-admin、laokou-flowable、laokou-im（其他服务根据实际情况启动）
