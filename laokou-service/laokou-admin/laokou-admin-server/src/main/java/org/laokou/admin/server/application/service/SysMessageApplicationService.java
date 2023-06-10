@@ -66,4 +66,11 @@ public interface SysMessageApplicationService {
      */
     Long unReadCount();
 
+    /**
+     * 推送消息
+     * @param dto
+     * @return
+     */
+    Boolean pushMessage(MessageDTO dto);
+
 }

@@ -253,29 +253,49 @@
         <profile>
             <id>prod</id>
             <properties>
-                <MYSQL-USERNAME>xxx</MYSQL-USERNAME>
-                <MYSQL-PASSWORD>xxx</MYSQL-PASSWORD>
-                <MYSQL-HOST>xxx</MYSQL-HOST>
-                <MYSQL-DB-NACOS>xxx</MYSQL-DB-NACOS>
-                <MYSQL-DB-SEATA>xxx</MYSQL-DB-SEATA>
-                <MYSQL-DB-XXL-JOB>xxx</MYSQL-DB-XXL-JOB>
-                <MYSQL-DB-POWER-JOB>xxx</MYSQL-DB-POWER-JOB>
-                <MYSQL-PORT>xxx</MYSQL-PORT>
-                <NACOS-NAMESPACE>xxx111222333444555666777888999</NACOS-NAMESPACE>
-                <NACOS-DISCOVERY-ADDRESS>xxx</NACOS-DISCOVERY-ADDRESS>
-                <NACOS-CONFIG-ADDRESS>xxx</NACOS-CONFIG-ADDRESS>
-                <NACOS-GROUP>xxx</NACOS-GROUP>
-                <NACOS-USERNAME>xxx</NACOS-USERNAME>
-                <NACOS-PASSWORD>xxx</NACOS-PASSWORD>
-                <SEATA-GROUP>xxx</SEATA-GROUP>
-                <SEATA-USERNAME>xxx</SEATA-USERNAME>
-                <SEATA-PASSWORD>xxx</SEATA-PASSWORD>
-                <SENTINEL-USERNAME>xxx</SENTINEL-USERNAME>
-                <SENTINEL-PASSWORD>xxx</SENTINEL-PASSWORD>
-                <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-USERNAME>${MYSQL-USERNAME:ENC(DuWAWIwLQL7R8lDfksUa3w==)}</MYSQL-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-PASSWORD>${MYSQL-PASSWORD:ENC(d8GwIeLi+yrnFnaZFqs7s5hGuoSpupWofYMTOKhnSBA=)}</MYSQL-PASSWORD>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-HOST>${MYSQL-HOST:laokou.org}</MYSQL-HOST>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-DB-NACOS>${MYSQL-DB-NACOS:kcloud_platform_nacos}</MYSQL-DB-NACOS>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-DB-SEATA>${MYSQL-DB-SEATA:kcloud_platform_seata}</MYSQL-DB-SEATA>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-DB-XXL-JOB>${MYSQL-DB-XXL-JOB:kcloud_platform_xxl_job}</MYSQL-DB-XXL-JOB>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-DB-POWER-JOB>${MYSQL-DB-POWER-JOB:kcloud_platform_alibaba_power_job}</MYSQL-DB-POWER-JOB>
+                <!--suppress UnresolvedMavenProperty -->
+                <MYSQL-PORT>${MYSQL-PORT:3306}</MYSQL-PORT>
+                <!--suppress UnresolvedMavenProperty -->
+                <NACOS-NAMESPACE>${NACOS-NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
+                <!--suppress UnresolvedMavenProperty -->
+                <NACOS-DISCOVERY-ADDRESS>${NACOS-DISCOVERY-ADDRESS:1.com:8848}</NACOS-DISCOVERY-ADDRESS>
+                <!--suppress UnresolvedMavenProperty -->
+                <NACOS-CONFIG-ADDRESS>${NACOS-CONFIG-ADDRESS:1.com:8848}</NACOS-CONFIG-ADDRESS>
+                <!--suppress UnresolvedMavenProperty -->
+                <NACOS-GROUP>${NACOS-GROUP:LAOKOU_GROUP}</NACOS-GROUP>
+                <!--suppress UnresolvedMavenProperty -->
+                <NACOS-USERNAME>${NACOS-USERNAME:nacos}</NACOS-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <NACOS-PASSWORD>${NACOS-PASSWORD:nacos}</NACOS-PASSWORD>
+                <!--suppress UnresolvedMavenProperty -->
+                <SEATA-GROUP>${SEATA-GROUP:SEATA_GROUP}</SEATA-GROUP>
+                <!--suppress UnresolvedMavenProperty -->
+                <SEATA-USERNAME>${SEATA-USERNAME:seata}</SEATA-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <SEATA-PASSWORD>${SEATA-PASSWORD:seata}</SEATA-PASSWORD>
+                <!--suppress UnresolvedMavenProperty -->
+                <SENTINEL-USERNAME>${SENTINEL-USERNAME:sentinel}</SENTINEL-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <SENTINEL-PASSWORD>${SENTINEL-PASSWORD:sentinel}</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
-                <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
-                <MAIL-USERNAME>xxx</MAIL-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <MAIL-PASSWORD>${MAIL-PASSWORD:ENC(/GuIBb+rM1VYKHnngv5WZD9S7JHZ+6FpZvtoSTNsKPM=)}</MAIL-PASSWORD>
+                <!--suppress UnresolvedMavenProperty -->
+                <MAIL-USERNAME>${MAIL-USERNAME:2413176044@qq.com}</MAIL-USERNAME>
             </properties>
         </profile>
     </profiles>
