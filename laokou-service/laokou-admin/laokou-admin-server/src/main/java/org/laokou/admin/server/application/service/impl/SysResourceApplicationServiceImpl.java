@@ -470,7 +470,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
         dto.setTitle(title);
         dto.setReceiver(set);
         dto.setType(MessageTypeEnum.REMIND.ordinal());
-        sysMessageApplicationService.insertMessage(dto);
+        sysMessageApplicationService.pushMessage(dto);
     }
 
     @Async

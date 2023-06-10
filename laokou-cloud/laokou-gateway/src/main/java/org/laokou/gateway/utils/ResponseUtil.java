@@ -116,34 +116,6 @@ public class ResponseUtil {
     }
 
     /**
-     * 获取sign
-     * @param request 请求对象
-     */
-    public static String getSign(ServerHttpRequest request){
-        // 从header中获取sign
-        String sign = request.getHeaders().getFirst(GatewayConstant.REQUEST_SIGN);
-        // 如果header中不存在sign，则从参数中获取sign
-        if(StringUtil.isEmpty(sign)){
-            sign = request.getQueryParams().getFirst(GatewayConstant.REQUEST_SIGN);
-        }
-        return StringUtil.isEmpty(sign) ? "" : sign.trim();
-    }
-
-    /**
-     * 获取timestamp
-     * @param request 请求对象
-     */
-    public static String getTimestamp(ServerHttpRequest request){
-        // 从header中获取timestamp
-        String timestamp = request.getHeaders().getFirst(GatewayConstant.REQUEST_TIMESTAMP);
-        // 如果header中不存在timestamp，则从参数中获取timestamp
-        if(StringUtil.isEmpty(timestamp)){
-            timestamp = request.getQueryParams().getFirst(GatewayConstant.REQUEST_TIMESTAMP);
-        }
-        return StringUtil.isEmpty(timestamp) ? "" : timestamp.trim();
-    }
-
-    /**
      * 获取tenantId
      * @param request 请求对象
      */
