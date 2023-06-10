@@ -2,7 +2,6 @@
 项目：KCloud-Platform-Alibaba  
 作者：老寇  
 语言：Java  
-职位：Java工程师   
 时间：2022.06.15 ~ 至今  
 
 ### 📣 项目介绍
@@ -43,26 +42,20 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 🚀 搜索管理：通过关键字搜索并高亮显示（默认ES）    
 🚀 流程定义：流程定义、挂起、激活、查看、删除（默认数据库）    
 🚀 接口文档：Open Api Doc 3    
-🚀 服务监控：服务内存监控及报警     
+🚀 服务监控：服务监控及报警     
 🚀 缓存监控：Redis内存监控    
-🚀 主机监控：服务器内存或磁盘监控    
+🚀 主机监控：服务器监控    
 🚀 存储管理：存储信息增删改查，兼容Amazon S3（数据库隔离）    
 🚀 租户管理：租户信息增删改查增删改查（默认数据库）       
 🚀 套餐管理：自定义租户菜单增删改查（默认数据库）    
 🚀 数据源管理：数据源信息增删改查（默认数据库）         
 🚀 资源管理：视频、图片、音频信息增删改查，资源审批（Seata AT模式）、处理、转办、委派，审批日志，数据同步（批量同步到ES）（默认数据库）          
-🚀 用户登录：账号密码、（多租户）、授权码登录（默认数据库）、手机号、邮件（请运行认证模式测试脚本.http）      
-
-### 🚩 下个版本
-🚀 统计报表：用户画像（未开发）         
-🚀 代码生成器：（未开发）         
-🚀 微信公众号管理：微信公众号一体化管理（未开发）        
+🚀 用户登录：账号密码登录（多租户）、授权码登录（默认数据库）、手机号或邮件登录（请运行认证模式测试脚本.http）       
 
 ### 💡 系统架构
 ![](doc/image/老寇云平台架构图-阿里巴巴.png)
 
 ### ✂ 技术体系
-
 #### 🎯 Spring全家桶及核心技术版本
 | 组件                          | 版本              |
 |:----------------------------|:----------------|
@@ -84,8 +77,8 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 | OpenResty                   | 1.21.4.1        |
 | Netty                       | 4.1.92.Final    |
 | HBase                       | 2.5.3           |
-#### 🍺 相关技术
 
+#### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
 - 认证授权：Spring Security OAuth2 Authorization Server
@@ -93,8 +86,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Sentinel
 - 分库分表&读写分离：ShardingSphere
-- 分布式事务：Seata
-- 消息队列：RocketMQ & Kafka
+- 分布式事务：Seata & RocketMQ
 - 分布式数据库：HBase
 - 服务监控：Spring Boot Admin & Prometheus
 - 链路跟踪：SkyWalking
@@ -184,143 +176,15 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-flowable                --- 工作流程模块  
                 └── laokou-logstash                --- 日志收集模块  
-├── laokou-release  
 ~~~
-
-### 👍 Maven打包
-```bash
-mvn clean package
-```
-
-### ⚡ 环境配置
-#### 🐜 服务配置
-```yaml
-spring:
-  # https://www.kancloud.cn/tracy5546/dynamic-datasource/2264611
-  # 多数据源
-  datasource:
-    dynamic:
-      primary: master
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/kcloud_platform_alibaba?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
-          username: root
-          password: 123456
-          hikari:
-            max-lifetime: 120000
-            maximum-pool-size: 16
-            minimum-idle: 16
-  # redis
-  data:
-    redis:
-      #主机
-      host: 127.0.0.1
-      #端口
-      port: 6379
-      #连接超时时长（毫秒）
-      timeout: 6000ms 
-# elasticsearch
-elasticsearch:
-  #主机
-  host: 127.0.0.1:9200
-```
-
-### 📖 分布式事务AT
-#### 🍸 服务配置
-```yaml
-# seata
-seata:
-  config:
-    type: nacos
-    nacos:
-      server-addr: 127.0.0.1:8848
-      namespace: xxx-xxx-xxx-xx
-      group: SEATA_GROUP
-  registry:
-    type: nacos
-    nacos:
-      namespace: xxx-xxx-xxx-xx
-      group: SEATA_GROUP
-      server-addr: 127.0.0.1:8848
-  enabled: true
-  tx-service-group: default_tx_group
-  data-source-proxy-mode: AT
-```
-
-### 👻 数据权限
-##### ☁ 代码引入
-```java
-@Service
-@RequiredArgsConstructor
-public class SysUserApplicationServiceImpl implements SysUserApplicationService {
-    
-    private final SysUserService sysUserService;
-
-    @Override
-    @DataFilter(tableAlias = "boot_sys_user")
-    public IPage<SysUserVO> queryUserPage(SysUserQO qo) {
-        IPage<SysUserVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysUserService.getUserPage(page,qo);
-    }
-}
-```
-
-### 🔆 二级缓存
-##### 🔧 代码引入
-```java
-public class SysUserApiController {
-    @DataCache(name = "user", key = "#id")
-    public HttpResult<SysUserVO> detail(@RequestParam("id") Long id) {
-        return new HttpResult<SysUserVO>().ok(sysUserApplicationService.getUserById(id));
-    }
-}
-```
-
-##### ⚓ 代码引入
-```shell
-@Service
-@Slf4j
-@RequiredArgsConstructor
-public class SysResourceApplicationServiceImpl implements SysResourceApplicationService {
-    
-    /**
-     * 使用openfeign调用时,每个被调用服务都需要加 @Transactional
-     */ 
-    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
-    @GlobalTransactional
-    public Boolean insertResource(SysResourceAuditDTO dto) {
-        log.info("分布式事务 XID:{}", RootContext.getXID());
-        SysResourceDO sysResourceDO = ConvertUtil.sourceToTarget(dto, SysResourceDO.class);
-        sysResourceDO.setEditor(UserUtil.getUserId());
-        sysResourceService.save(sysResourceDO);
-        Long id = sysResourceDO.getId();
-        String instanceId = startTask(id, sysResourceDO.getTitle());
-        dto.setResourceId(id);
-        return insertResourceAudit(dto,instanceId);
-    }
-    
-}
-```
 
 ### ✈ 启动系统
 - 1.必须启动Mysql、Redis
 - 2.可选启动Sentinel、RocketMQ、ElasticSearch、MongoDB
 - 3.将doc/config/dev目录下的zip压缩文件都导入Nacos（注：更改maven相关配置）
-- 4.运行doc/db/db_init.sql、shardingsphere_init.sql、db_update.sql（如果使用租户，需要运行doc/db/db_tenant_init.sql）
-- 5.按顺序启动laokou-register、laokou-seata、laokou-gateway、laokou-auth、laokou-admin、laokou-flowable、laokou-im（其他的服务根据实际情况启动）
+- 4.运行doc/db/db_init.sql、shardingsphere_init.sql、db_update.sql（运行多租户需执行db_tenant_init.sql）
+- 5.按顺序启动laokou-register、laokou-seata、laokou-gateway、laokou-auth、laokou-admin、laokou-flowable、laokou-im（其他服务根据实际情况启动）
 - 6.使用flowable审批，第一次启动，需要在流程定义上传流程图（下载模板，然后上传即可）
-
-### 😋 高可用系统构建
-- [x] 严格遵循阿里规范，注重代码质量
-- [x] 集群部署，减少单点故障
-- [x] 服务限流
-- [x] 超时和重试机制
-- [x] 熔断机制
-- [x] 异步调用
-- [x] 多级缓存
-- [x] 服务监控报警
 
 ### 🎵 项目截图
 <table>
@@ -403,12 +267,12 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 欢迎各路英雄好汉参与KCloud-Platform-Alibaba代码贡献，期待您的加入！  
 Fork本仓库 新建 feat_xxx_环境_时间（如 feat_laokou_dev_20230116） 分支提交代码，新建Pull Request！  
 我觉得没问题就会合并到主干分支，你也就成为正式贡献者啦！
+
 ### 😸 代码提交
 <img alt="代码提交" src="doc/image/代码提交.png"/>
 
 ### 😻 开源协议
 KCloud-Platform-Alibaba 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
-![](doc/image/apache2.png)
 
 ### 👀 项目地址
 Github 后端地址：[KCloud-Platform-Alibaba](https://github.com/KouShenhai/KCloud-Platform-Alibaba)  
