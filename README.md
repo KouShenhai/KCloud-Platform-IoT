@@ -178,14 +178,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
                 └── laokou-logstash                --- 日志收集模块  
 ~~~
 
-### ✈ 启动系统
-- 1.必须启动Mysql、Redis
-- 2.可选启动RocketMQ、ElasticSearch、MongoDB
-- 3.将doc/config/dev目录下的zip压缩文件都导入Nacos（注：更改maven相关配置）
-- 4.运行doc/db/db_init.sql、shardingsphere_init.sql、db_update.sql（运行多租户需执行db_tenant_init.sql）
-- 5.按顺序启动laokou-register、laokou-seata、laokou-gateway、laokou-auth、laokou-admin、laokou-flowable、laokou-im（其他服务根据实际情况启动）
-- 6.使用flowable审批，第一次启动，需要在流程定义上传流程图（下载模板，然后上传即可）
-
 ### 🎵 项目截图
 <table>
     <tr>
@@ -262,12 +254,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - 采用Apache2.0开源协议，并且承诺永不参与商业用途，仅供大家无偿使用（点个star，拜托啦~🙏）
 - 采用Apache2.0开源协议，并且承诺永不参与商业用途，仅供大家无偿使用（点个star，拜托啦~🙏）
 - 采用Apache2.0开源协议，并且承诺永不参与商业用途，仅供大家无偿使用（点个star，拜托啦~🙏）
-
-### 😘 参与贡献
-欢迎各路英雄好汉参与KCloud-Platform-Alibaba代码贡献，期待您的加入！Fork本仓库 新建 feat_xxx_环境_时间（如 feat_laokou_dev_20230116） 分支提交代码，新建Pull Request！我觉得没问题就会合并到主干分支，你也就成为正式贡献者啦！
-
-### 😸 代码提交
-<img alt="代码提交" src="doc/image/代码提交.png"/>
 
 ### 😻 开源协议
 KCloud-Platform-Alibaba 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
