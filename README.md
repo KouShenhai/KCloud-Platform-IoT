@@ -96,7 +96,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - 多级缓存：Caffeine & Redis
 - 统计报表：MongoDB
 - 对象存储：Amazon S3
-- 服务部署：Docker
+- 自动化部署：Docker
 - 网络通讯：Netty
 - 持续集成&交付：Jenkins
 - 持久层框架：Mybatis Plus
