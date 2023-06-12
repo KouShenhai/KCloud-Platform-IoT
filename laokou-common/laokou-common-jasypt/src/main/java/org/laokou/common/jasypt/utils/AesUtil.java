@@ -37,7 +37,7 @@ public class AesUtil {
 
     @SneakyThrows
     private static String getKey() {
-        byte[] bytes = ResourceUtil.getResource("conf/secret_key.b64").getInputStream().readAllBytes();
+        byte[] bytes = ResourceUtil.getResource("conf/secretKey.b64").getInputStream().readAllBytes();
         return new String(bytes,StandardCharsets.UTF_8);
     }
 
