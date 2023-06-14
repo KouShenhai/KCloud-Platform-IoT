@@ -26,11 +26,11 @@ server:
     # 证书位置
     key-store: classpath:scg-keystore.p12
     # 证书别名
-    key-alias: gateway
+    key-alias: ${spring.application.name}
     # 秘钥类型
     key-store-type: PKCS12
     # 口令
-    key-store-password: koushenhai
+    key-store-password: laokou
 
 # spring
 spring:
@@ -73,3 +73,7 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+      httpclient:
+        ssl:
+          # 信任所有下游证书
+          use-insecure-trust-manager: true

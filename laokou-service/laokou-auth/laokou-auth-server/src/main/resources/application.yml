@@ -16,6 +16,17 @@
 # server
 server:
   port: 1111
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 口令
+    key-store-password: laokou
 
 # spring
 spring:
