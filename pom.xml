@@ -195,14 +195,14 @@
             <id>dev</id>
             <properties>
                 <MYSQL-USERNAME>root</MYSQL-USERNAME>
-                <MYSQL-PASSWORD>123456</MYSQL-PASSWORD>
+                <MYSQL-PASSWORD>laokou123</MYSQL-PASSWORD>
                 <MYSQL-HOST>127.0.0.1</MYSQL-HOST>
-                <MYSQL-DB-NACOS>nacos-config</MYSQL-DB-NACOS>
-                <MYSQL-DB-SEATA>seata-config</MYSQL-DB-SEATA>
-                <MYSQL-DB-XXL-JOB>xxl-job-config</MYSQL-DB-XXL-JOB>
-                <MYSQL-POWER-JOB>power-job-config</MYSQL-POWER-JOB>
+                <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
+                <MYSQL-DB-SEATA>kcloud_platform_seata</MYSQL-DB-SEATA>
+                <MYSQL-DB-XXL-JOB>kcloud_platform_xxl_job</MYSQL-DB-XXL-JOB>
+                <MYSQL-DB-POWER-JOB>kcloud_platform_alibaba_power_job</MYSQL-DB-POWER-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
-                <NACOS-NAMESPACE>public</NACOS-NAMESPACE>
+                <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
                 <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
@@ -225,8 +225,8 @@
         <profile>
             <id>test</id>
             <properties>
-                <MYSQL-USERNAME>ENC(DuWAWIwLQL7R8lDfksUa3w==)</MYSQL-USERNAME>
-                <MYSQL-PASSWORD>ENC(d8GwIeLi+yrnFnaZFqs7s5hGuoSpupWofYMTOKhnSBA=)</MYSQL-PASSWORD>
+                <MYSQL-USERNAME>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</MYSQL-USERNAME>
+                <MYSQL-PASSWORD>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</MYSQL-PASSWORD>
                 <MYSQL-HOST>laokou.org</MYSQL-HOST>
                 <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>kcloud_platform_seata</MYSQL-DB-SEATA>
@@ -245,7 +245,7 @@
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
-                <MAIL-PASSWORD>ENC(/GuIBb+rM1VYKHnngv5WZD9S7JHZ+6FpZvtoSTNsKPM=)</MAIL-PASSWORD>
+                <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
                 <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
             </properties>
         </profile>
@@ -254,9 +254,9 @@
             <id>prod</id>
             <properties>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-USERNAME>${MYSQL-USERNAME:ENC(DuWAWIwLQL7R8lDfksUa3w==)}</MYSQL-USERNAME>
+                <MYSQL-USERNAME>${MYSQL-USERNAME:ENC(aEwhK+oj5wQ/pJfRcfwXAw==)}</MYSQL-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-PASSWORD>${MYSQL-PASSWORD:ENC(d8GwIeLi+yrnFnaZFqs7s5hGuoSpupWofYMTOKhnSBA=)}</MYSQL-PASSWORD>
+                <MYSQL-PASSWORD>${MYSQL-PASSWORD:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</MYSQL-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
                 <MYSQL-HOST>${MYSQL-HOST:laokou.org}</MYSQL-HOST>
                 <!--suppress UnresolvedMavenProperty -->
@@ -293,7 +293,7 @@
                 <SENTINEL-PASSWORD>${SENTINEL-PASSWORD:sentinel}</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
                 <!--suppress UnresolvedMavenProperty -->
-                <MAIL-PASSWORD>${MAIL-PASSWORD:ENC(/GuIBb+rM1VYKHnngv5WZD9S7JHZ+6FpZvtoSTNsKPM=)}</MAIL-PASSWORD>
+                <MAIL-PASSWORD>${MAIL-PASSWORD:ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)}</MAIL-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
                 <MAIL-USERNAME>${MAIL-USERNAME:2413176044@qq.com}</MAIL-USERNAME>
             </properties>

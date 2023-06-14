@@ -134,7 +134,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    protected Authentication getToken(Authentication authentication,Authentication principal) throws IOException {
+    public Authentication getToken(Authentication authentication, Authentication principal) throws IOException {
         // 仿照授权码模式
         // 生成token（access_token + refresh_token）
         AbstractOAuth2BaseAuthenticationToken abstractOAuth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;
