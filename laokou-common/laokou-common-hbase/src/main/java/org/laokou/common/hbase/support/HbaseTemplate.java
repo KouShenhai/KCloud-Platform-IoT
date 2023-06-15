@@ -26,6 +26,7 @@ import org.laokou.common.hbase.utils.HbaseFieldUtil;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,7 +59,9 @@ public class HbaseTemplate{
         table.close();
     }
 
-    public Object getByRowKey(String tableName,String rowKey,String familyName) throws IOException, InstantiationException, IllegalAccessException {
+    public Object getByRowKey(String tableName,String rowKey,String familyName)
+            throws IOException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+
         long startTime = System.currentTimeMillis();
         Table table = hbaseConnection.getTable(TableName.valueOf(tableName));
         Get get = new Get(rowKey.getBytes(StandardCharsets.UTF_8));
@@ -73,10 +76,12 @@ public class HbaseTemplate{
      * 获取返回数据
      * @return
      */
-    private Object getResult(String tableName,Result result,String familyName,String rowKey) throws IllegalAccessException, InstantiationException {
+    private Object getResult(String tableName,Result result,String familyName,String rowKey)
+            throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+
         Class<?> clazz = HbaseFieldUtil.getClazz(tableName);
         Field[] fields = clazz.getDeclaredFields();
-        Object obj = clazz.newInstance();
+        Object obj = clazz.getDeclaredConstructor().newInstance();
         for (Field field : fields) {
             //true表示获取私有对象
             field.setAccessible(true);
