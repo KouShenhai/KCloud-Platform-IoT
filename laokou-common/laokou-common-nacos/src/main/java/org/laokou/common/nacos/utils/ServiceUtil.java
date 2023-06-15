@@ -83,4 +83,10 @@ public class ServiceUtil {
         namingService.registerInstance(serviceName,ip,port);
     }
 
+    @SneakyThrows
+    public void deregisterInstance(String serviceName,String ip,int port) {
+        NamingService namingService = getNamingService();
+        namingService.deregisterInstance(serviceName,ip,port);
+    }
+
 }

@@ -15,45 +15,57 @@
  */
 package org.laokou.common.i18n.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.lang.Nullable;
+import org.springframework.util.StringUtils;
 
 /**
  * @author laokou
  */
 public class StringUtil {
 
-    private static final char SEPARATOR = '_';
+    private static final char UNDERLINE = '_';
 
     public static boolean isNotEmpty(String str) {
-        return StringUtils.isNotEmpty(str);
+        return hasText(str);
     }
 
     public static boolean isEmpty(String str) {
-        return StringUtils.isEmpty(str);
+        return !hasText(str);
     }
 
     public static String removeStart(String str, String remove) {
-        return StringUtils.removeStart(str,remove);
+        if (!isEmpty(str) && !isEmpty(remove)) {
+            return str.startsWith(remove) ? str.substring(remove.length()) : str;
+        } else {
+            return str;
+        }
     }
 
     public static String substringBetween(String str, String open, String close) {
-        return StringUtils.substringBetween(str,open,close);
+        if (ObjectUtils.allNotNull(str, open, close)) {
+            int start = str.indexOf(open);
+            if (start != -1) {
+                int end = str.indexOf(close, start + open.length());
+                if (end != -1) {
+                    return str.substring(start + open.length(), end);
+                }
+            }
+        }
+        return null;
     }
 
     public static boolean hasText(@Nullable String str) {
-        return str != null && !str.isEmpty() && containsText(str);
+        return StringUtils.hasText(str);
     }
 
-    private static boolean containsText(CharSequence str) {
-        int strLen = str.length();
-
-        for(int i = 0; i < strLen; ++i) {
-            if (!Character.isWhitespace(str.charAt(i))) {
-                return true;
-            }
+    public static String substringBeforeLast(String str, String separator) {
+        if (!isEmpty(str) && !isEmpty(separator)) {
+            int pos = str.lastIndexOf(separator);
+            return pos == -1 ? str : str.substring(0, pos);
+        } else {
+            return str;
         }
-        return false;
     }
 
     public static String toCamelCase(String s) {
@@ -65,7 +77,7 @@ public class StringUtil {
         boolean upperCase = false;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (c == SEPARATOR) {
+            if (c == UNDERLINE) {
                 upperCase = true;
             }
             else if (upperCase) {

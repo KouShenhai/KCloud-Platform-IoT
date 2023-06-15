@@ -18,6 +18,7 @@ jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    password: 5201314wumeihua
 
 spring:
   application:

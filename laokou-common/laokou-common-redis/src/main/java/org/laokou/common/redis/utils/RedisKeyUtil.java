@@ -96,10 +96,10 @@ public final class RedisKeyUtil {
     }
 
     /**
-     * 用户通道Key
+     * 接口幂等性令牌Key
      */
-    public static String getUserChannelKey() {
-        return "ws:user:channel";
+    public static String getIdempotentTokenKey(String token) {
+        return "sys:idempotent:token:" + token;
     }
 
 }

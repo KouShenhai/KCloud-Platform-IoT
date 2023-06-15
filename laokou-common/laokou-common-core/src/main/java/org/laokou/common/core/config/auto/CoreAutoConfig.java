@@ -26,6 +26,4 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("org.laokou.common.core")
 public class CoreAutoConfig {
 
-
-
 }

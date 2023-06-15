@@ -16,13 +16,36 @@
 
 package org.laokou.common.data.cache.config.auto;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
 /**
  * @author laokou
  */
 @AutoConfiguration
 @ComponentScan("org.laokou.common.data.cache")
+@ConditionalOnClass(LettuceConnectionFactory.class)
 public class DataCacheAutoConfig {
+
+    /**
+     * redis 需要配置  notify-keyspace-events KEA
+     */
+    @Bean
+    public RedisMessageListenerContainer redisMessageListenerContainer(LettuceConnectionFactory lettuceConnectionFactory) {
+        RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
+        redisMessageListenerContainer.setConnectionFactory(lettuceConnectionFactory);
+        return redisMessageListenerContainer;
+    }
+
+    @Bean
+    public Cache<String, Object> caffeineCache() {
+        return Caffeine.newBuilder().initialCapacity(100).build();
+    }
+
 }

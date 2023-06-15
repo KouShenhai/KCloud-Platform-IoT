@@ -32,6 +32,10 @@
 			<artifactId>laokou-common-logback</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.laokou</groupId>
+			<artifactId>laokou-common-idempotent</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-client</artifactId>
 		</dependency>
@@ -61,6 +65,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>
+			<artifactId>laokou-common-lock</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-tenant</artifactId>
 		</dependency>
 		<dependency>
@@ -82,10 +90,6 @@
 		<dependency>
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-data-filter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.laokou</groupId>
-			<artifactId>laokou-common-data-cache</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>

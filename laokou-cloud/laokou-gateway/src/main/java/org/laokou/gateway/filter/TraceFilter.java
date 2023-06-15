@@ -45,17 +45,13 @@ public class TraceFilter implements GlobalFilter,Ordered {
         String tenantId = ResponseUtil.getTenantId(request);
         String username = ResponseUtil.getUsername(request);
         String traceId = userId + IdGenerator.defaultSnowflakeId();
-        String sign = ResponseUtil.getSign(request);
-        String timestamp = ResponseUtil.getTimestamp(request);
         MDC.put(Constant.TRACE_ID,traceId);
         MDC.put(Constant.USER_ID,userId);
         MDC.put(Constant.TENANT_ID,tenantId);
         MDC.put(Constant.USER_NAME,username);
-        MDC.put(Constant.SIGN,sign);
-        MDC.put(Constant.TIMESTAMP,timestamp);
         // 获取uri
         String requestUri = request.getPath().pathWithinApplication().value();
-        log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}，签名：{}，时间戳：{}",requestUri,userId,username,tenantId,traceId,sign,timestamp);
+        log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}",requestUri,userId,username,tenantId,traceId);
         // 清除
         MDC.clear();
         return chain.filter(exchange.mutate().request(request.mutate().header(Constant.TRACE_ID, traceId).build()).build());

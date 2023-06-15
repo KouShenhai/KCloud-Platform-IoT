@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.constant.AuthConstant;
+import org.laokou.auth.client.vo.IdempotentToken;
 import org.laokou.auth.client.vo.SecretInfoVO;
 import org.laokou.auth.server.application.service.SysAuthApplicationService;
 import org.laokou.common.core.vo.OptionVO;
@@ -78,6 +79,15 @@ public class SysAuthApiController {
     @Operation(summary = "系统认证>密钥配置",description = "系统认证>密钥配置")
     public HttpResult<SecretInfoVO> secretInfo() throws IOException {
         return new HttpResult<SecretInfoVO>().ok(sysAuthApplicationService.getSecretInfo());
+    }
+
+    /**
+     * 密钥配置
+     */
+    @GetMapping("/idempotent_token")
+    @Operation(summary = "系统认证>接口幂等性令牌",description = "系统认证>接口幂等性令牌")
+    public HttpResult<IdempotentToken> idempotentToken() {
+        return new HttpResult<IdempotentToken>().ok(sysAuthApplicationService.idempotentToken());
     }
 
 }

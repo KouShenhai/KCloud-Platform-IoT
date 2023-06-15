@@ -15,13 +15,12 @@
  */
 
 package org.laokou.common.trace.interceptor;
+
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.constant.Constant;
-import org.laokou.common.i18n.utils.LocaleUtil;
 import org.slf4j.MDC;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
@@ -36,19 +35,16 @@ public class TraceInterceptor implements HandlerInterceptor {
         String userId = request.getHeader(Constant.USER_ID);
         String username = request.getHeader(Constant.USER_NAME);
         String tenantId = request.getHeader(Constant.TENANT_ID);
-        String language = request.getHeader(Constant.ACCEPT_LANGUAGE);
         MDC.put(Constant.TRACE_ID,traceId);
         MDC.put(Constant.USER_ID,userId);
         MDC.put(Constant.TENANT_ID,tenantId);
         MDC.put(Constant.USER_NAME,username);
-        LocaleContextHolder.setDefaultLocale(LocaleUtil.toLocale(language));
         return true;
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         MDC.clear();
-        LocaleContextHolder.resetLocaleContext();
     }
 
 }

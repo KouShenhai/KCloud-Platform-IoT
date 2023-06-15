@@ -17,17 +17,18 @@ package org.laokou.auth.server.application.service.impl;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.base.Captcha;
 import jakarta.servlet.http.HttpServletRequest;
+import jodd.util.Base64;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.user.UserDetail;
+import org.laokou.auth.client.vo.IdempotentToken;
 import org.laokou.auth.client.vo.SecretInfoVO;
+import org.laokou.auth.server.application.service.SysAuthApplicationService;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.i18n.core.CustomException;
-import org.laokou.auth.server.application.service.SysAuthApplicationService;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
@@ -41,15 +42,10 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.stereotype.Service;
 import java.awt.*;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.security.Principal;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Objects;
-
-import static org.laokou.common.core.utils.SecretUtil.APP_KEY;
-import static org.laokou.common.core.utils.SecretUtil.APP_SECRET;
-
 /**
  * @author laokou
  */
@@ -117,8 +113,16 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
     }
 
     @Override
-    public SecretInfoVO getSecretInfo() throws IOException {
-        return new SecretInfoVO(APP_KEY,APP_SECRET, RsaUtil.getPublicKey());
+    public SecretInfoVO getSecretInfo() {
+        return new SecretInfoVO(RsaUtil.getPublicKey());
+    }
+
+    @Override
+    public IdempotentToken idempotentToken() {
+        String token = getToken();
+        String idempotentTokenKey = RedisKeyUtil.getIdempotentTokenKey(token);
+        redisUtil.set(idempotentTokenKey,Constant.DEFAULT,RedisUtil.HOUR_ONE_EXPIRE);
+        return new IdempotentToken(token);
     }
 
     private String getToken(HttpServletRequest request) {
@@ -127,6 +131,13 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
             throw new CustomException("令牌不存在");
         }
         return token.substring(7);
+    }
+
+    private String getToken() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[20];
+        random.nextBytes(bytes);
+        return Base64.encodeToString(bytes);
     }
 
 }

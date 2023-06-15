@@ -52,7 +52,7 @@ public class MessageListener implements RocketMQListener<MessageExt> {
         String body = dto.getBody();
         WsMsgDTO msgDTO = JacksonUtil.toBean(body,WsMsgDTO.class);
         for (String userId : msgDTO.getReceiver()) {
-            taskExecutor.execute(() -> websocketServer.send(Long.parseLong(userId),msgDTO.getMsg()));
+            taskExecutor.execute(() -> websocketServer.send(userId,msgDTO.getMsg()));
         }
     }
 }

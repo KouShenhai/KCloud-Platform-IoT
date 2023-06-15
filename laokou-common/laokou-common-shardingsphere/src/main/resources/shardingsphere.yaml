@@ -4,13 +4,13 @@ dataSources:
     driverClassName: com.mysql.cj.jdbc.Driver
     jdbcUrl: jdbc:mysql://laokou.org:3306/kcloud_platform_alibaba_user_0?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
-    password: koushenhai123456
+    password: laokou123
   ds1:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
     jdbcUrl: jdbc:mysql://laokou.org:3306/kcloud_platform_alibaba_user_1?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
-    password: koushenhai123456
+    password: laokou123
 
 rules:
   - !SHARDING

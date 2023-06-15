@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.client.dto.MessageDTO;
+import org.laokou.admin.client.vo.MessageDetailVO;
+import org.laokou.admin.client.vo.SysMessageVO;
 import org.laokou.admin.server.application.service.SysMessageApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDO;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysMessageDetailService;
 import org.laokou.admin.server.domain.sys.repository.service.SysMessageService;
-import org.laokou.admin.client.dto.MessageDTO;
 import org.laokou.admin.server.interfaces.qo.SysMessageQo;
-import org.laokou.admin.client.vo.MessageDetailVO;
-import org.laokou.admin.client.vo.SysMessageVO;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.CollectionUtil;
@@ -35,6 +36,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.rocketmq.constant.RocketmqConstant;
 import org.laokou.common.rocketmq.dto.RocketmqDTO;
@@ -43,7 +45,11 @@ import org.laokou.im.client.WsMsgDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
@@ -63,7 +69,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
     @Override
     @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     @DS(Constant.TENANT)
-    public Boolean insertMessage(MessageDTO dto) {
+    public Boolean pushMessage(MessageDTO dto) {
         ValidatorUtil.validateEntity(dto);
         SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
         messageDO.setCreateDate(DateUtil.now());
@@ -85,11 +91,6 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             batchUtil.insertBatch(detailDOList,500,sysMessageDetailService);
         }
         // 推送消息
-        pushMsg(receiver);
-        return true;
-    }
-
-    private void pushMsg(Set<String> receiver) {
         if (CollectionUtil.isNotEmpty(receiver)) {
             WsMsgDTO wsMsgDTO = new WsMsgDTO();
             wsMsgDTO.setMsg(DEFAULT_MESSAGE);
@@ -97,6 +98,13 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
             // 异步发送
             rocketTemplate.sendAsyncMessage(RocketmqConstant.LAOKOU_MESSAGE_TOPIC,new RocketmqDTO(JacksonUtil.toJsonStr(wsMsgDTO)));
         }
+        return true;
+    }
+
+    @Override
+    @Idempotent
+    public Boolean insertMessage(MessageDTO dto) {
+        return pushMessage(dto);
     }
 
     @Override

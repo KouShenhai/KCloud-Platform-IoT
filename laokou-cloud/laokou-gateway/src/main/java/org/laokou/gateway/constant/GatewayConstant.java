@@ -35,16 +35,6 @@ public interface GatewayConstant {
     String REQUEST_TENANT_ID = "Tenant-Id";
 
     /**
-     * 请求链-签名
-     */
-    String REQUEST_SIGN = "Sign";
-
-    /**
-     * 请求链-时间戳
-     */
-    String REQUEST_TIMESTAMP = "Timestamp";
-
-    /**
      * 密码模式-请求地址
      */
     String OAUTH2_AUTH_URI = "/auth/oauth2/token";

@@ -17,7 +17,10 @@ package org.laokou.common.core.utils;
 import org.laokou.common.i18n.core.CustomException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Locale;
+
 /**
  * 日期处理
  * @author laokou
@@ -39,6 +42,21 @@ public class DateUtil {
     public static final int YYYYMM = 2;
 
     /**
+     * yyyy-MM-dd
+     */
+    public static final int YYYY_MM_DD = 3;
+
+    /**
+     * yyyy年MM月dd日
+     */
+    public static final int YYYY_MM_DD_TEXT = 4;
+
+    /**
+     * yyyy.MM.dd
+     */
+    public static final int YYYY_DOT_MM_DOT_DD = 5;
+
+    /**
      * 星期一
      */
     public static final int MONDAY = 0;
@@ -50,6 +68,9 @@ public class DateUtil {
               "yyyy-MM-dd HH:mm:ss"
             , "yyyyMMddHHmmss"
             , "yyyyMM"
+            , "yyyy-MM-dd"
+            , "yyyy年MM月dd日"
+            , "yyyy.MM.dd"
     };
 
     /**
@@ -78,6 +99,11 @@ public class DateUtil {
         return localDateTime.format(dateTimeFormatter);
     }
 
+    public static String format(LocalDate localDate,int index) {
+        DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(index);
+        return localDate.format(dateTimeFormatter);
+    }
+
     public static DateTimeFormatter getDateTimeFormatter(int index) {
         String timePattern = getTimePattern(index);
         return DateTimeFormatter.ofPattern(timePattern);
@@ -89,10 +115,22 @@ public class DateUtil {
      * @param index 索引
      * @return LocalDateTime
      */
-    public static LocalDateTime parse(String dateTime,int index) {
+    public static LocalDateTime parseTime(String dateTime,int index) {
         String timePattern = getTimePattern(index);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern);
         return LocalDateTime.parse(dateTime,dateTimeFormatter);
+    }
+
+    /**
+     * 转换
+     * @param dateTime 日期
+     * @param index 索引
+     * @return LocalDateTime
+     */
+    public static LocalDate parseDate(String dateTime,int index) {
+        String timePattern = getTimePattern(index);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(timePattern);
+        return LocalDate.parse(dateTime,dateTimeFormatter);
     }
 
     /**
@@ -182,6 +220,10 @@ public class DateUtil {
 
     public static LocalDate getLastDayOfMonth(LocalDate localDate) {
         return localDate.with(TemporalAdjusters.lastDayOfMonth());
+    }
+
+    public static String getDayOfWeekText(LocalDate localDate) {
+        return localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
     }
 
 }

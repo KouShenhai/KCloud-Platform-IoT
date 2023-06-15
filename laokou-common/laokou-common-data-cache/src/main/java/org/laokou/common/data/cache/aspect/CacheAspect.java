@@ -48,6 +48,7 @@ public class CacheAspect {
         if (dataCache == null) {
             dataCache = AnnotationUtils.findAnnotation(method,DataCache.class);
         }
+        assert dataCache != null;
         long expire = dataCache.expire();
         CacheEnum type = dataCache.type();
         String key = dataCache.key();

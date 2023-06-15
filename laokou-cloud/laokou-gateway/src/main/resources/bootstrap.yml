@@ -21,6 +21,8 @@ spring:
       discovery:
         server-addr: ${NACOS-DISCOVERY-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
+        # https
+        secure: true
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
@@ -28,6 +30,9 @@ spring:
         refresh-enabled: true
         file-extension: yaml
         extension-configs:
+          - data-id: application-common-redis.yaml
+            group: ${NACOS-GROUP}
+            refresh: true
           - data-id: application-common.yaml
             group: ${NACOS-GROUP}
             refresh: true

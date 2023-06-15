@@ -75,7 +75,7 @@ public class WebSocketServer extends Server {
      * @param userId 用户ID
      * @param msg 消息
      */
-    public void send(Long userId,String msg) {
+    public void send(String userId,String msg) {
         Channel channel = USER_MAP.get(userId);
         if (channel != null) {
             channel.writeAndFlush(new TextWebSocketFrame(msg));

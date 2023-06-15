@@ -17,9 +17,12 @@ package org.laokou.common.redis.config.auto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.laokou.common.redis.config.CustomJsonJacksonCodec;
 import org.laokou.common.redis.config.RedissonConfig;
+import org.laokou.common.redis.utils.RedisUtil;
+import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
@@ -32,6 +35,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author laokou
  */
 @AutoConfiguration
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnClass(LettuceConnectionFactory.class)
 @ComponentScan("org.laokou.common.redis")
 @Import(RedissonConfig.class)
@@ -66,6 +70,11 @@ public class RedisAutoConfig {
         // Json序列化配置
         ObjectMapper objectMapper = CustomJsonJacksonCodec.getObjectMapper();
         return new Jackson2JsonRedisSerializer<>(objectMapper,Object.class);
+    }
+
+    @Bean
+    public RedisUtil redisUtil(RedissonClient redissonClient,RedisTemplate<String,Object> redisTemplate) {
+        return new RedisUtil(redisTemplate,redissonClient);
     }
 
 }

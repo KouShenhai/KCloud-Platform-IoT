@@ -18,7 +18,6 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
-import org.redisson.api.RedissonReactiveClient;
 import org.redisson.config.Config;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -49,12 +48,6 @@ public class RedissonConfig {
         RBloomFilter<String> bloomFilter = redisson.getBloomFilter(RedisKeyUtil.getBloomFilterKey());
         bloomFilter.tryInit(10000,0.01);
         return bloomFilter;
-    }
-
-    @Bean(destroyMethod = "shutdown")
-    @ConditionalOnMissingBean(RedissonReactiveClient.class)
-    public RedissonReactiveClient redissonReactiveClient(RedissonClient redissonClient) {
-        return redissonClient.reactive();
     }
 
     /**

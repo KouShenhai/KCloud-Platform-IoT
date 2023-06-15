@@ -16,6 +16,17 @@
 # server
 server:
   port: 1111
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 口令
+    key-store-password: laokou
 
 # spring
 spring:
@@ -72,7 +83,7 @@ spring:
         registration:
           id: 95TxSsTPFA3tF12TBSMmUVK0da
           client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-          client-name: OAuth2认证
+          client-name: OAuth2.1认证
           client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
           client-authentication-methods:
             - client_secret_basic
@@ -97,3 +108,4 @@ spring:
             - /oauth2/logout
             - /oauth2/tenant
             - /oauth2/secret_info
+            - /oauth2/idempotent_token

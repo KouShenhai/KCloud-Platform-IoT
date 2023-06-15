@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.security.config;
+import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
@@ -45,6 +46,7 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
     private final OAuth2AuthorizationService oAuth2AuthorizationService;
     private final RedisUtil redisUtil;
+    private final Cache<String, Object> caffeineCache;
 
     @Override
     public OAuth2AuthenticatedPrincipal introspect(String token) {
@@ -54,10 +56,16 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
             CustomAuthExceptionHandler.throwError(StatusCode.FORCE_KILL, MessageUtil.getMessage(StatusCode.FORCE_KILL));
         }
         String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
+        obj = caffeineCache.getIfPresent(userInfoKey);
+        if (obj != null) {
+            return (UserDetail) obj;
+        }
         obj = redisUtil.get(userInfoKey);
         if (obj != null) {
             // 解密
-            return decryptInfo((UserDetail) obj);
+            UserDetail userDetail = decryptInfo((UserDetail) obj);
+            caffeineCache.put(userInfoKey,userDetail);
+            return userDetail;
         }
         OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
         if (oAuth2Authorization == null) {
