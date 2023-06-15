@@ -57,26 +57,26 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 
 ### ✂ 技术体系
 #### 🎯 Spring全家桶及核心技术版本
-| 组件                          | 版本              |
-|:----------------------------|:----------------|
-| Spring Boot                 | 3.1.0           |
-| Spring Cloud                | 2022.0.3        |
-| Spring Cloud Alibaba        | 2022.0.0.0-RC2  |
-| Spring Boot Admin           | 3.0.4           |
-| Spring Authorization Server | 1.1.0           |
-| Mybatis Plus                | 3.5.3.1         |
-| Nacos                       | 2.2.0.1         |
-| Seata                       | 1.6.1           |
-| Sentinel                    | 1.8.6           |
-| Mysql                       | 8.0.31          |
-| Redis                       | 7.0.8           |
-| Elasticsearch               | 8.6.2           |
-| RocketMQ                    | 5.0.0           |
-| Flowable                    | 7.0.0.M1        |
-| ShardingSphere              | 5.3.2           |
-| OpenResty                   | 1.21.4.1        |
-| Netty                       | 4.1.92.Final    |
-| HBase                       | 2.5.3           |
+| 组件                          | 版本             |
+|:----------------------------|:---------------|
+| Spring Boot                 | 3.1.0          |
+| Spring Cloud                | 2022.0.3       |
+| Spring Cloud Alibaba        | 2022.0.0.0-RC2 |
+| Spring Boot Admin           | 3.0.4          |
+| Spring Authorization Server | 1.1.0          |
+| Mybatis Plus                | 3.5.3.1        |
+| Nacos                       | 2.2.0.1        |
+| Seata                       | 1.6.1          |
+| Sentinel                    | 1.8.6          |
+| Mysql                       | 8.0.33         |
+| Redis                       | 7.0.11         |
+| Elasticsearch               | 8.6.2          |
+| RocketMQ                    | 5.1.1          |
+| Flowable                    | 7.0.0.M1       |
+| ShardingSphere              | 5.3.2          |
+| OpenResty                   | 1.21.4.1       |
+| Netty                       | 4.1.92.Final   |
+| HBase                       | 2.5.3          |
 
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
