@@ -54,7 +54,7 @@
         <!--captcha版本-->
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <!--guava版本-->
-        <guava.version>31.0-jre</guava.version>
+        <guava.version>32.0.0-jre</guava.version>
         <!--freemarker模板引擎依赖-->
         <freemarker.version>2.3.32</freemarker.version>
         <!--oshi版本-->
