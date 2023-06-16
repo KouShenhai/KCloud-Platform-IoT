@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.openfeign.config.auto;
+
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import feign.Retryer;
@@ -51,5 +52,12 @@ public class OpenFeignAutoConfig implements RequestInterceptor {
         // 下次间隔时间1.5倍递增，重试间最大间隔时间为1s
         return new Retryer.Default();
     }
+
+    //@Bean
+//    public SSLContext sslContext() {
+//        return SSLContextBuilder.create()
+//                .loadTrustMaterial(ResourceUtils)
+//                .build();
+//    }
 
 }

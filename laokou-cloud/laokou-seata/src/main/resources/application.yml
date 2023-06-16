@@ -63,7 +63,6 @@ seata:
       cluster: default
       username: @NACOS-USERNAME@
       password: @NACOS-PASSWORD@
-      context-path:
   store:
     mode: db
     db:
