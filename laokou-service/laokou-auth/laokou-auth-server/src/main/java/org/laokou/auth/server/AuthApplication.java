@@ -30,7 +30,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import static org.laokou.common.core.constant.Constant.REGISTER_TRUST_CERT_PATH;
 import static org.laokou.common.core.constant.Constant.TRUE;
 
 /**
@@ -54,7 +53,6 @@ public class AuthApplication implements CommandLineRunner {
         System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
         System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
         System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-        System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, REGISTER_TRUST_CERT_PATH);
         new SpringApplicationBuilder(AuthApplication.class)
                 .web(WebApplicationType.SERVLET)
                 .run(args);

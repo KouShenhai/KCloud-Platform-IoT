@@ -132,6 +132,4 @@ public interface Constant {
 
     String TRUE = "true";
 
-    String REGISTER_TRUST_CERT_PATH = "register.cer";
-
 }
