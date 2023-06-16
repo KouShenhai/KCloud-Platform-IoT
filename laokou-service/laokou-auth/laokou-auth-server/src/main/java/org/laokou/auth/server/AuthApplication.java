@@ -53,6 +53,7 @@ public class AuthApplication implements CommandLineRunner {
         System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
         System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
         System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+        System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "doc/config/tls/register.cer");
         new SpringApplicationBuilder(AuthApplication.class)
                 .web(WebApplicationType.SERVLET)
                 .run(args);
