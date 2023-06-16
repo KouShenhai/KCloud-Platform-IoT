@@ -130,4 +130,8 @@ public interface Constant {
      */
     String REQUEST_ID = "request-id";
 
+    String TRUE = "true";
+
+    String REGISTER_TRUST_CERT_PATH = "register.cer";
+
 }
