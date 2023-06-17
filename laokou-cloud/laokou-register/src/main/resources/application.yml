@@ -87,6 +87,17 @@ server:
       max-days: 30
       pattern: '%h %l %u %t "%r" %s %b %D %{User-Agent}i %{Request-Source}i'
     basedir: logs
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 口令
+    key-store-password: laokou
 spring:
   application:
     name: @pom.artifactId@

@@ -23,6 +23,8 @@ spring:
       discovery:
         server-addr: ${NACOS-DISCOVERY-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
+        # https
+        secure: true
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}

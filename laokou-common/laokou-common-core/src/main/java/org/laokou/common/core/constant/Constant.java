@@ -130,4 +130,6 @@ public interface Constant {
      */
     String REQUEST_ID = "request-id";
 
+    String TRUE = "true";
+
 }

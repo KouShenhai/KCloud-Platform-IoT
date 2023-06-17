@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package org.laokou.auth.server;
+
+import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.dynamic.router.utils.RouterUtil;
@@ -27,6 +29,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import static org.laokou.common.core.constant.Constant.TRUE;
 
 /**
  * 架构演变
@@ -43,11 +47,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @EnableDiscoveryClient
 @RequiredArgsConstructor
 public class AuthApplication implements CommandLineRunner {
-
     private final RouterUtil routerUtil;
     public static void main(String[] args) {
         // SpringSecurity 子线程读取父线程的上下文
         System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+        // https://github.com/alibaba/nacos/pull/3654
+        // 请查看 HttpLoginProcessor
+        System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+        System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+        System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "doc/config/tls/register.cer");
         new SpringApplicationBuilder(AuthApplication.class)
                 .web(WebApplicationType.SERVLET)
                 .run(args);
