@@ -41,6 +41,9 @@ public class SecretUtil {
 		if (StringUtil.isEmpty(appSecret)) {
 			throw new CustomException("appSecret不为空");
 		}
+		if (!APP_SECRET.equals(appSecret)) {
+			throw new CustomException("appSecret不存在");
+		}
 		if (StringUtil.isEmpty(nonce)) {
 			throw new CustomException("nonce不为空");
 		}
