@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,12 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.test.juc;
-/**
- * @author laokou
- */
-public class JsonTest {
-    public static void main(String[] args) {
-    }
 
-}
+导出证书命令： keytool -exportcert -v -alias laokou-register -keystore scg-keystore.p12  -storepass laokou -file register.cer
+
+导入证书命令：keytool -import -alias register -keystore trust-scg-keystore.p12 -file register.cer

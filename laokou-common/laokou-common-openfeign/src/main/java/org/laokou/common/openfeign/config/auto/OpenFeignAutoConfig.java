@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 package org.laokou.common.openfeign.config.auto;
+
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import feign.Retryer;
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.common.core.utils.RequestUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -27,6 +29,7 @@ import static org.laokou.common.core.constant.Constant.AUTHORIZATION_HEAD;
 import static org.laokou.common.core.constant.Constant.TRACE_ID;
 
 /**
+ * openfeign关闭ssl {@link FeignAutoConfiguration}
  * @author laokou
  */
 @AutoConfiguration
