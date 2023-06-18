@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.service.impl;
+
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -38,31 +39,33 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper,SysLoginLogDO> implements SysLoginLogService {
+public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLoginLogDO>
+		implements SysLoginLogService {
 
-    private final ExcelTemplate<SysLoginLogQo,SysLoginLogVO> excelTemplate;
+	private final ExcelTemplate<SysLoginLogQo, SysLoginLogVO> excelTemplate;
 
-    @Override
-    @DS(Constant.SHARDING_SPHERE_READWRITE)
-    public IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, SysLoginLogQo qo) {
-        return this.baseMapper.getLoginLogList(page,qo);
-    }
+	@Override
+	@DS(Constant.SHARDING_SPHERE_READWRITE)
+	public IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, SysLoginLogQo qo) {
+		return this.baseMapper.getLoginLogList(page, qo);
+	}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    @DS(Constant.SHARDING_SPHERE_READWRITE)
-    public Boolean insertLoginLog(LoginLogEvent event) {
-        SysLoginLogDO logDO = ConvertUtil.sourceToTarget(event, SysLoginLogDO.class);
-        return baseMapper.insert(logDO) > 0 ? true : false;
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	@DS(Constant.SHARDING_SPHERE_READWRITE)
+	public Boolean insertLoginLog(LoginLogEvent event) {
+		SysLoginLogDO logDO = ConvertUtil.sourceToTarget(event, SysLoginLogDO.class);
+		return baseMapper.insert(logDO) > 0 ? true : false;
+	}
 
-    @Override
-    public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {
-        excelTemplate.export(500,response,qo,this, SysLoginLogExcel.class);
-    }
+	@Override
+	public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {
+		excelTemplate.export(500, response, qo, this, SysLoginLogExcel.class);
+	}
 
-    @Override
-    public void resultList(SysLoginLogQo qo, ResultHandler<SysLoginLogVO> resultHandler) {
-        this.baseMapper.resultList(qo,resultHandler);
-    }
+	@Override
+	public void resultList(SysLoginLogQo qo, ResultHandler<SysLoginLogVO> resultHandler) {
+		this.baseMapper.resultList(qo, resultHandler);
+	}
+
 }

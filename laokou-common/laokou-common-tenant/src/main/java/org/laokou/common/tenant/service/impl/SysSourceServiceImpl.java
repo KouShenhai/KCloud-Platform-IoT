@@ -34,39 +34,39 @@ import java.util.List;
 @Service
 public class SysSourceServiceImpl extends ServiceImpl<SysSourceMapper, SysSourceDO> implements SysSourceService {
 
-    @Override
-    public IPage<SysSourceVO> querySourcePage(IPage<SysSourceVO> page, SysSourceQo qo) {
-        return this.baseMapper.querySourcePage(page,qo);
-    }
+	@Override
+	public IPage<SysSourceVO> querySourcePage(IPage<SysSourceVO> page, SysSourceQo qo) {
+		return this.baseMapper.querySourcePage(page, qo);
+	}
 
-    @Override
-    public Integer getVersion(Long id) {
-        return this.baseMapper.getVersion(id);
-    }
+	@Override
+	public Integer getVersion(Long id) {
+		return this.baseMapper.getVersion(id);
+	}
 
-    @Override
-    public void deleteSource(Long id) {
-        this.baseMapper.deleteById(id);
-    }
+	@Override
+	public void deleteSource(Long id) {
+		this.baseMapper.deleteById(id);
+	}
 
-    @Override
-    public String querySourceName(Long tenantId) {
-        return this.baseMapper.querySourceName(tenantId);
-    }
+	@Override
+	public String querySourceName(Long tenantId) {
+		return this.baseMapper.querySourceName(tenantId);
+	}
 
-    @Override
-    public SysSourceVO querySource(String sourceName) {
-        return this.baseMapper.querySource(sourceName);
-    }
+	@Override
+	public SysSourceVO querySource(String sourceName) {
+		return this.baseMapper.querySource(sourceName);
+	}
 
-    @Override
-    public SysSourceVO getSourceById(Long id) {
-        return this.baseMapper.getSourceById(id);
-    }
+	@Override
+	public SysSourceVO getSourceById(Long id) {
+		return this.baseMapper.getSourceById(id);
+	}
 
-    @Override
-    public List<OptionVO> getOptionList() {
-        return this.baseMapper.getOptionList();
-    }
+	@Override
+	public List<OptionVO> getOptionList() {
+		return this.baseMapper.getOptionList();
+	}
 
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.client.vo;
+
 import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
@@ -21,17 +22,27 @@ import java.util.List;
 
 /**
  * 用户信息VO
+ *
  * @author laokou
  */
 @Data
 public class UserInfoVO implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 5297753219988591611L;
-    private Long id;
-    private String avatar;
-    private String username;
-    private String mobile;
-    private String mail;
-    private List<String> permissionList;
-    private Long tenantId;
+
+	@Serial
+	private static final long serialVersionUID = 5297753219988591611L;
+
+	private Long id;
+
+	private String avatar;
+
+	private String username;
+
+	private String mobile;
+
+	private String mail;
+
+	private List<String> permissionList;
+
+	private Long tenantId;
+
 }

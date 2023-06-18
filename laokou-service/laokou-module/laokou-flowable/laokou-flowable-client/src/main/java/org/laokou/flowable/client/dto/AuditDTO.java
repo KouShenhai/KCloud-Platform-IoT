@@ -29,48 +29,49 @@ import java.util.Map;
 @Data
 public class AuditDTO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -945627686622034109L;
-    /**
-     * 任务id
-     */
-    @NotBlank(message = "任务编号不为空")
-    private String taskId;
+	@Serial
+	private static final long serialVersionUID = -945627686622034109L;
 
-    /**
-     * 任务名称
-     */
-    @NotBlank(message = "任务名称不为空")
-    private String taskName;
+	/**
+	 * 任务id
+	 */
+	@NotBlank(message = "任务编号不为空")
+	private String taskId;
 
-    /**
-     * 审批意见
-     */
-    @NotBlank(message = "审批意见不为空")
-    private String comment;
+	/**
+	 * 任务名称
+	 */
+	@NotBlank(message = "任务名称不为空")
+	private String taskName;
 
-    /**
-     * 流程实例id
-     */
-    @NotBlank(message = "流程实例编号不为空")
-    private String instanceId;
+	/**
+	 * 审批意见
+	 */
+	@NotBlank(message = "审批意见不为空")
+	private String comment;
 
-    /**
-     * 业务key
-     */
-    @NotBlank(message = "业务编号不为空")
-    private String businessKey;
+	/**
+	 * 流程实例id
+	 */
+	@NotBlank(message = "流程实例编号不为空")
+	private String instanceId;
 
-    /**
-     * 流程实例名称
-     */
-    @NotBlank(message = "流程实例名称不为空")
-    private String instanceName;
+	/**
+	 * 业务key
+	 */
+	@NotBlank(message = "业务编号不为空")
+	private String businessKey;
 
-    /**
-     * 流程变量
-     */
-    @NotNull(message = "流程变量不为空")
-    private Map<String,Object> values;
+	/**
+	 * 流程实例名称
+	 */
+	@NotBlank(message = "流程实例名称不为空")
+	private String instanceName;
+
+	/**
+	 * 流程变量
+	 */
+	@NotNull(message = "流程变量不为空")
+	private Map<String, Object> values;
 
 }

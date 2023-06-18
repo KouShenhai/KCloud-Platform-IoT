@@ -34,85 +34,87 @@ import java.util.stream.Collectors;
 @RequestMapping("/workflow")
 public class WorkflowController {
 
-    @Resource
-    private WorkflowService workflowService;
-    @Resource
-    private WorkflowInfoRepository workflowInfoRepository;
+	@Resource
+	private WorkflowService workflowService;
 
-    @PostMapping("/save")
-    public ResultDTO<Long> save(@RequestBody SaveWorkflowRequest req) throws ParseException {
-        return ResultDTO.success(workflowService.saveWorkflow(req));
-    }
+	@Resource
+	private WorkflowInfoRepository workflowInfoRepository;
 
-    @PostMapping("/copy")
-    public ResultDTO<Long> copy(Long workflowId, Long appId) {
-        return ResultDTO.success(workflowService.copyWorkflow(workflowId,appId));
-    }
+	@PostMapping("/save")
+	public ResultDTO<Long> save(@RequestBody SaveWorkflowRequest req) throws ParseException {
+		return ResultDTO.success(workflowService.saveWorkflow(req));
+	}
 
-    @GetMapping("/disable")
-    public ResultDTO<Void> disableWorkflow(Long workflowId, Long appId) {
-        workflowService.disableWorkflow(workflowId, appId);
-        return ResultDTO.success(null);
-    }
+	@PostMapping("/copy")
+	public ResultDTO<Long> copy(Long workflowId, Long appId) {
+		return ResultDTO.success(workflowService.copyWorkflow(workflowId, appId));
+	}
 
-    @GetMapping("/enable")
-    public ResultDTO<Void> enableWorkflow(Long workflowId, Long appId) {
-        workflowService.enableWorkflow(workflowId, appId);
-        return ResultDTO.success(null);
-    }
+	@GetMapping("/disable")
+	public ResultDTO<Void> disableWorkflow(Long workflowId, Long appId) {
+		workflowService.disableWorkflow(workflowId, appId);
+		return ResultDTO.success(null);
+	}
 
-    @GetMapping("/delete")
-    public ResultDTO<Void> deleteWorkflow(Long workflowId, Long appId) {
-        workflowService.deleteWorkflow(workflowId, appId);
-        return ResultDTO.success(null);
-    }
+	@GetMapping("/enable")
+	public ResultDTO<Void> enableWorkflow(Long workflowId, Long appId) {
+		workflowService.enableWorkflow(workflowId, appId);
+		return ResultDTO.success(null);
+	}
 
-    @PostMapping("/list")
-    public ResultDTO<PageResult<WorkflowInfoVO>> list(@RequestBody QueryWorkflowInfoRequest req) {
+	@GetMapping("/delete")
+	public ResultDTO<Void> deleteWorkflow(Long workflowId, Long appId) {
+		workflowService.deleteWorkflow(workflowId, appId);
+		return ResultDTO.success(null);
+	}
 
-        Sort sort = Sort.by(Sort.Direction.DESC, "gmtCreate");
-        PageRequest pageRequest = PageRequest.of(req.getIndex(), req.getPageSize(), sort);
-        Page<WorkflowInfoDO> wfPage;
+	@PostMapping("/list")
+	public ResultDTO<PageResult<WorkflowInfoVO>> list(@RequestBody QueryWorkflowInfoRequest req) {
 
-        // 排除已删除数据
-        int nStatus = SwitchableStatus.DELETED.getV();
-        // 无查询条件，查询全部
-        if (req.getWorkflowId() == null && StringUtils.isEmpty(req.getKeyword())) {
-            wfPage = workflowInfoRepository.findByAppIdAndStatusNot(req.getAppId(), nStatus, pageRequest);
-        }else if (req.getWorkflowId() != null) {
-            wfPage = workflowInfoRepository.findByIdAndStatusNot(req.getWorkflowId(), nStatus, pageRequest);
-        }else {
-            String condition = "%" + req.getKeyword() + "%";
-            wfPage = workflowInfoRepository.findByAppIdAndStatusNotAndWfNameLike(req.getAppId(), nStatus, condition, pageRequest);
-        }
-        return ResultDTO.success(convertPage(wfPage));
-    }
+		Sort sort = Sort.by(Sort.Direction.DESC, "gmtCreate");
+		PageRequest pageRequest = PageRequest.of(req.getIndex(), req.getPageSize(), sort);
+		Page<WorkflowInfoDO> wfPage;
 
-    @GetMapping("/run")
-    public ResultDTO<Long> runWorkflow(Long workflowId, Long appId,
-                                       @RequestParam(required = false,defaultValue = "0") Long delay,
-                                       @RequestParam(required = false) String initParams
-                                       ) {
-        return ResultDTO.success(workflowService.runWorkflow(workflowId, appId, initParams, delay));
-    }
+		// 排除已删除数据
+		int nStatus = SwitchableStatus.DELETED.getV();
+		// 无查询条件，查询全部
+		if (req.getWorkflowId() == null && StringUtils.isEmpty(req.getKeyword())) {
+			wfPage = workflowInfoRepository.findByAppIdAndStatusNot(req.getAppId(), nStatus, pageRequest);
+		}
+		else if (req.getWorkflowId() != null) {
+			wfPage = workflowInfoRepository.findByIdAndStatusNot(req.getWorkflowId(), nStatus, pageRequest);
+		}
+		else {
+			String condition = "%" + req.getKeyword() + "%";
+			wfPage = workflowInfoRepository.findByAppIdAndStatusNotAndWfNameLike(req.getAppId(), nStatus, condition,
+					pageRequest);
+		}
+		return ResultDTO.success(convertPage(wfPage));
+	}
 
-    @GetMapping("/fetch")
-    public ResultDTO<WorkflowInfoVO> fetchWorkflow(Long workflowId, Long appId) {
-        WorkflowInfoDO workflowInfoDO = workflowService.fetchWorkflow(workflowId, appId);
-        return ResultDTO.success(WorkflowInfoVO.from(workflowInfoDO));
-    }
+	@GetMapping("/run")
+	public ResultDTO<Long> runWorkflow(Long workflowId, Long appId,
+			@RequestParam(required = false, defaultValue = "0") Long delay,
+			@RequestParam(required = false) String initParams) {
+		return ResultDTO.success(workflowService.runWorkflow(workflowId, appId, initParams, delay));
+	}
 
-    @PostMapping("/saveNode")
-    public ResultDTO<List<WorkflowNodeInfoDO>> addWorkflowNode(@RequestBody List<SaveWorkflowNodeRequest> request) {
-        return ResultDTO.success(workflowService.saveWorkflowNode(request));
-    }
+	@GetMapping("/fetch")
+	public ResultDTO<WorkflowInfoVO> fetchWorkflow(Long workflowId, Long appId) {
+		WorkflowInfoDO workflowInfoDO = workflowService.fetchWorkflow(workflowId, appId);
+		return ResultDTO.success(WorkflowInfoVO.from(workflowInfoDO));
+	}
 
+	@PostMapping("/saveNode")
+	public ResultDTO<List<WorkflowNodeInfoDO>> addWorkflowNode(@RequestBody List<SaveWorkflowNodeRequest> request) {
+		return ResultDTO.success(workflowService.saveWorkflowNode(request));
+	}
 
-    private static PageResult<WorkflowInfoVO> convertPage(Page<WorkflowInfoDO> originPage) {
+	private static PageResult<WorkflowInfoVO> convertPage(Page<WorkflowInfoDO> originPage) {
 
-        PageResult<WorkflowInfoVO> newPage = new PageResult<>(originPage);
-        newPage.setData(originPage.getContent().stream().map(WorkflowInfoVO::from).collect(Collectors.toList()));
-        return newPage;
-    }
+		PageResult<WorkflowInfoVO> newPage = new PageResult<>(originPage);
+		newPage.setData(originPage.getContent().stream().map(WorkflowInfoVO::from).collect(Collectors.toList()));
+		return newPage;
+	}
 
 }

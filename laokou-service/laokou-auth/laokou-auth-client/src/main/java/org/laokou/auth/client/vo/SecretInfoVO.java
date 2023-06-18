@@ -30,12 +30,13 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "SecretInfoVO",description = "密钥配置")
+@Schema(name = "SecretInfoVO", description = "密钥配置")
 public class SecretInfoVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 5798768808595385129L;
-    @Schema(name = "publicKey",description = "公钥")
-    private String publicKey;
+	@Serial
+	private static final long serialVersionUID = 5798768808595385129L;
+
+	@Schema(name = "publicKey", description = "公钥")
+	private String publicKey;
 
 }

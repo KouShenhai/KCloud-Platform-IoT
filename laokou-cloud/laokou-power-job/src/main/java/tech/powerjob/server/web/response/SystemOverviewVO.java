@@ -14,17 +14,22 @@ import tech.powerjob.server.common.module.ServerInfo;
 @Data
 public class SystemOverviewVO {
 
-    private long jobCount;
-    private long runningInstanceCount;
-    private long failedInstanceCount;
-    /**
-     * 服务器时区
-     */
-    private String timezone;
-    /**
-     * 服务器时间
-     */
-    private String serverTime;
+	private long jobCount;
 
-    private ServerInfo serverInfo;
+	private long runningInstanceCount;
+
+	private long failedInstanceCount;
+
+	/**
+	 * 服务器时区
+	 */
+	private String timezone;
+
+	/**
+	 * 服务器时间
+	 */
+	private String serverTime;
+
+	private ServerInfo serverInfo;
+
 }

@@ -26,10 +26,11 @@ import java.io.Serializable;
 @Data
 public class MessageDetailVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -2804860432974152927L;
-    private String title;
+	@Serial
+	private static final long serialVersionUID = -2804860432974152927L;
 
-    private String content;
+	private String title;
+
+	private String content;
 
 }

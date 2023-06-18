@@ -14,56 +14,62 @@
  * limitations under the License.
  */
 package org.laokou.common.log.vo;
+
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 /**
  * @author laokou
  */
 @Data
 public class SysLoginLogVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 4351525994459806638L;
-    private Long id;
-    /**
-     * 登录用户
-     */
-    private String loginName;
+	@Serial
+	private static final long serialVersionUID = 4351525994459806638L;
 
-    /**
-     * IP地址
-     */
-    private String requestIp;
-    /**
-     * 归属地
-     */
-    private String requestAddress;
+	private Long id;
 
-    /**
-     * 浏览器版本
-     */
-    private String browser;
+	/**
+	 * 登录用户
+	 */
+	private String loginName;
 
-    /**
-     * 操作系统
-     */
-    private String os;
+	/**
+	 * IP地址
+	 */
+	private String requestIp;
 
-    /**
-     * 状态  0：成功   1：失败
-     */
-    private Integer requestStatus;
+	/**
+	 * 归属地
+	 */
+	private String requestAddress;
 
-    /**
-     * 提示信息
-     */
-    private String msg;
+	/**
+	 * 浏览器版本
+	 */
+	private String browser;
 
-    /**
-     * 登录时间
-     */
-    private LocalDateTime createDate;
+	/**
+	 * 操作系统
+	 */
+	private String os;
+
+	/**
+	 * 状态 0：成功 1：失败
+	 */
+	private Integer requestStatus;
+
+	/**
+	 * 提示信息
+	 */
+	private String msg;
+
+	/**
+	 * 登录时间
+	 */
+	private LocalDateTime createDate;
+
 }

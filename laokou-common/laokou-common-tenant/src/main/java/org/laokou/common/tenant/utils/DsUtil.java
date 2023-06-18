@@ -45,81 +45,82 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DsUtil {
 
-    private final SysSourceService sysSourceService;
-    private final DynamicUtil dynamicUtil;
+	private final SysSourceService sysSourceService;
 
-    private static final List<String> TABLES = List.of("boot_sys_dict"
-                , "boot_sys_message"
-                , "boot_sys_message_detail"
-                , "boot_sys_oss"
-                , "boot_sys_oss_log");
+	private final DynamicUtil dynamicUtil;
 
-    public String loadDs(String sourceName) {
-        if (StringUtil.isEmpty(sourceName)) {
-            throw new CustomException("数据源名称不能为空");
-        }
-        if (!checkDs(sourceName)) {
-            addDs(sourceName);
-        }
-        return sourceName;
-    }
+	private static final List<String> TABLES = List.of("boot_sys_dict", "boot_sys_message", "boot_sys_message_detail",
+			"boot_sys_oss", "boot_sys_oss_log");
 
-    private void addDs(String sourceName) {
-        SysSourceVO sourceVO = sysSourceService.querySource(sourceName);
-        DataSourceProperty properties = new DataSourceProperty ();
-        properties.setUsername(sourceVO.getUsername());
-        properties.setPassword(sourceVO.getPassword());
-        properties.setUrl(sourceVO.getUrl());
-        properties.setDriverClassName(sourceVO.getDriverClassName());
-        // 验证数据源
-        connDs(properties);
-        DynamicRoutingDataSource dynamicRoutingDataSource = dynamicUtil.getDataSource();
-        DefaultDataSourceCreator dataSourceCreator = dynamicUtil.getDefaultDataSourceCreator();
-        DataSource dataSource = dataSourceCreator.createDataSource(properties);
-        dynamicRoutingDataSource.addDataSource(sourceName,dataSource);
-    }
+	public String loadDs(String sourceName) {
+		if (StringUtil.isEmpty(sourceName)) {
+			throw new CustomException("数据源名称不能为空");
+		}
+		if (!checkDs(sourceName)) {
+			addDs(sourceName);
+		}
+		return sourceName;
+	}
 
-    private boolean checkDs(String sourceName) {
-        Map<String, DataSource> dataSources = dynamicUtil.getDataSources();
-        return dataSources.containsKey(sourceName);
-    }
+	private void addDs(String sourceName) {
+		SysSourceVO sourceVO = sysSourceService.querySource(sourceName);
+		DataSourceProperty properties = new DataSourceProperty();
+		properties.setUsername(sourceVO.getUsername());
+		properties.setPassword(sourceVO.getPassword());
+		properties.setUrl(sourceVO.getUrl());
+		properties.setDriverClassName(sourceVO.getDriverClassName());
+		// 验证数据源
+		connDs(properties);
+		DynamicRoutingDataSource dynamicRoutingDataSource = dynamicUtil.getDataSource();
+		DefaultDataSourceCreator dataSourceCreator = dynamicUtil.getDefaultDataSourceCreator();
+		DataSource dataSource = dataSourceCreator.createDataSource(properties);
+		dynamicRoutingDataSource.addDataSource(sourceName, dataSource);
+	}
 
+	private boolean checkDs(String sourceName) {
+		Map<String, DataSource> dataSources = dynamicUtil.getDataSources();
+		return dataSources.containsKey(sourceName);
+	}
 
-    /**
-     * 连接数据库
-     */
-    @SneakyThrows
-    private void connDs(DataSourceProperty properties) {
-        Connection connection;
-        try {
-            Class.forName(properties.getDriverClassName());
-        } catch (Exception e) {
-            log.error("数据源驱动加载失败，错误信息：{}",e.getMessage());
-            throw new CustomException("数据源驱动加载失败，请检查相关配置");
-        }
-        try {
-            connection = DriverManager.getConnection(properties.getUrl(), properties.getUsername(), properties.getPassword());
-        } catch (Exception e) {
-            log.error("数据源连接失败，错误信息：{}",e.getMessage());
-            throw new CustomException("数据源连接失败，请检查相关配置");
-        }
-        try {
-            String sql = "select table_name from information_schema.tables where table_schema = (select database())";
-            ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
-            List<String> tables = new ArrayList<>(TABLES.size());
-            while (resultSet.next()) {
-                String tableName = resultSet.getString("table_name");
-                tables.add(tableName);
-            }
-            List<String> list = TABLES.stream().filter(item -> !tables.contains(item)).collect(Collectors.toList());
-            if (CollectionUtil.isNotEmpty(list)) {
-                throw new CustomException(String.format("%s不存在，请检查数据库表", String.join("、", list)));
-            }
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
+	/**
+	 * 连接数据库
+	 */
+	@SneakyThrows
+	private void connDs(DataSourceProperty properties) {
+		Connection connection;
+		try {
+			Class.forName(properties.getDriverClassName());
+		}
+		catch (Exception e) {
+			log.error("数据源驱动加载失败，错误信息：{}", e.getMessage());
+			throw new CustomException("数据源驱动加载失败，请检查相关配置");
+		}
+		try {
+			connection = DriverManager.getConnection(properties.getUrl(), properties.getUsername(),
+					properties.getPassword());
+		}
+		catch (Exception e) {
+			log.error("数据源连接失败，错误信息：{}", e.getMessage());
+			throw new CustomException("数据源连接失败，请检查相关配置");
+		}
+		try {
+			String sql = "select table_name from information_schema.tables where table_schema = (select database())";
+			ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
+			List<String> tables = new ArrayList<>(TABLES.size());
+			while (resultSet.next()) {
+				String tableName = resultSet.getString("table_name");
+				tables.add(tableName);
+			}
+			List<String> list = TABLES.stream().filter(item -> !tables.contains(item)).collect(Collectors.toList());
+			if (CollectionUtil.isNotEmpty(list)) {
+				throw new CustomException(String.format("%s不存在，请检查数据库表", String.join("、", list)));
+			}
+		}
+		finally {
+			if (connection != null) {
+				connection.close();
+			}
+		}
+	}
 
 }

@@ -14,36 +14,39 @@
  * limitations under the License.
  */
 package org.laokou.auth.server.domain.sys.repository.mapper;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+
 /**
  * 菜单类
+ *
  * @author laokou
  */
 @Mapper
 @Repository
 public interface SysMenuMapper {
 
-    /**
-     * 查询所有权限列表
-     * @return
-     */
-    List<String> getPermissionsList();
+	/**
+	 * 查询所有权限列表
+	 * @return
+	 */
+	List<String> getPermissionsList();
 
-    /**
-     * 查询用户权限列表
-     * @param userId
-     * @return
-     */
-    List<String> getPermissionsListByUserId(@Param("userId") Long userId);
+	/**
+	 * 查询用户权限列表
+	 * @param userId
+	 * @return
+	 */
+	List<String> getPermissionsListByUserId(@Param("userId") Long userId);
 
-    /**
-     * 获取租户权限标识
-     * @param tenantId
-     * @return
-     */
-    List<String> getTenantPermissionList(Long tenantId);
+	/**
+	 * 获取租户权限标识
+	 * @param tenantId
+	 * @return
+	 */
+	List<String> getTenantPermissionList(Long tenantId);
 
 }

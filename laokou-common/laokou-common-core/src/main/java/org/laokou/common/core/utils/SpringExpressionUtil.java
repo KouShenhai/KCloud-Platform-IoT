@@ -15,23 +15,25 @@
  */
 
 package org.laokou.common.core.utils;
+
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
+
 /**
  * @author laokou
  */
 public class SpringExpressionUtil {
 
-    private static final ExpressionParser PARSER = new SpelExpressionParser();
+	private static final ExpressionParser PARSER = new SpelExpressionParser();
 
-    public static <T> T parse(String key,String[] parameterNames, Object[] args, Class<T> clazz) {
-        StandardEvaluationContext context = new StandardEvaluationContext();
-        for (int i = 0; i < parameterNames.length; i++) {
-            context.setVariable(parameterNames[i],args[i]);
-        }
-        PARSER.parseExpression(key).getValue(context,clazz);
-        return PARSER.parseExpression(key).getValue(context,clazz);
-    }
+	public static <T> T parse(String key, String[] parameterNames, Object[] args, Class<T> clazz) {
+		StandardEvaluationContext context = new StandardEvaluationContext();
+		for (int i = 0; i < parameterNames.length; i++) {
+			context.setVariable(parameterNames[i], args[i]);
+		}
+		PARSER.parseExpression(key).getValue(context, clazz);
+		return PARSER.parseExpression(key).getValue(context, clazz);
+	}
 
 }

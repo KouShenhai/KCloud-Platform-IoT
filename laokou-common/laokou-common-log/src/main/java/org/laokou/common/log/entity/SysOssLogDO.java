@@ -28,14 +28,18 @@ import java.io.Serial;
  */
 @Data
 @TableName("boot_sys_oss_log")
-@Schema(name = "SysOssLogDO",description = "系统存储日志实体类")
+@Schema(name = "SysOssLogDO", description = "系统存储日志实体类")
 public class SysOssLogDO extends BaseDO {
 
-    @Serial
-    private static final long serialVersionUID = -5956984981904163817L;
-    private String md5;
-    private String url;
-    private String fileName;
-    private Long fileSize;
+	@Serial
+	private static final long serialVersionUID = -5956984981904163817L;
+
+	private String md5;
+
+	private String url;
+
+	private String fileName;
+
+	private Long fileSize;
 
 }

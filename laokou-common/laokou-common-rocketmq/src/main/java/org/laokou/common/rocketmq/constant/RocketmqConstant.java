@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 package org.laokou.common.rocketmq.constant;
+
 /**
  * 队列常量值
+ *
  * @author laokou
  */
 public interface RocketmqConstant {
 
-  String LAOKOU_TRACE_TOPIC = "laokou-trace-topic";
-  String LAOKOU_MESSAGE_TOPIC = "laokou-message-topic";
+	String LAOKOU_TRACE_TOPIC = "laokou-trace-topic";
+
+	String LAOKOU_MESSAGE_TOPIC = "laokou-message-topic";
 
 }

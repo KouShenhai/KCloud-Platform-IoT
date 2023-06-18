@@ -30,19 +30,24 @@ import java.time.Clock;
 @Getter
 @Setter
 public class OssLogEvent extends ApplicationEvent implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 3776732013732856552L;
 
-    private String md5;
-    private String url;
-    private String fileName;
-    private Long fileSize;
+	@Serial
+	private static final long serialVersionUID = 3776732013732856552L;
 
-    public OssLogEvent(Object source) {
-        super(source);
-    }
+	private String md5;
 
-    public OssLogEvent(Object source, Clock clock) {
-        super(source, clock);
-    }
+	private String url;
+
+	private String fileName;
+
+	private Long fileSize;
+
+	public OssLogEvent(Object source) {
+		super(source);
+	}
+
+	public OssLogEvent(Object source, Clock clock) {
+		super(source, clock);
+	}
+
 }

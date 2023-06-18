@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.client.dto;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -22,23 +23,28 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
+
 /**
  * @author laokou
  */
 @Data
 public class SysRoleDTO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -310458579347980263L;
-    private Long id;
+	@Serial
+	private static final long serialVersionUID = -310458579347980263L;
 
-    @NotBlank(message = "角色名称不为空")
-    private String name;
-    @NotNull(message = "角色排序不为空")
-    private Integer sort;
-    @NotEmpty(message = "所选菜单不少于一个，请重新选择")
-    private List<Long> menuIds;
-    @NotEmpty(message = "所选部门不少于一个，请重新选择")
-    private List<Long> deptIds;
+	private Long id;
+
+	@NotBlank(message = "角色名称不为空")
+	private String name;
+
+	@NotNull(message = "角色排序不为空")
+	private Integer sort;
+
+	@NotEmpty(message = "所选菜单不少于一个，请重新选择")
+	private List<Long> menuIds;
+
+	@NotEmpty(message = "所选部门不少于一个，请重新选择")
+	private List<Long> deptIds;
 
 }

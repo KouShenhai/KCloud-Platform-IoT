@@ -34,28 +34,29 @@ import java.util.List;
 @Service
 public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenantDO> implements SysTenantService {
 
-    @Override
-    public List<OptionVO> getOptionList() {
-        return this.baseMapper.getOptionList();
-    }
+	@Override
+	public List<OptionVO> getOptionList() {
+		return this.baseMapper.getOptionList();
+	}
 
-    @Override
-    public Integer getVersion(Long id) {
-        return this.baseMapper.getVersion(id);
-    }
+	@Override
+	public Integer getVersion(Long id) {
+		return this.baseMapper.getVersion(id);
+	}
 
-    @Override
-    public IPage<SysTenantVO> queryTenantPage(IPage<SysTenantVO> page, SysTenantQo qo) {
-        return this.baseMapper.queryTenantPage(page,qo);
-    }
+	@Override
+	public IPage<SysTenantVO> queryTenantPage(IPage<SysTenantVO> page, SysTenantQo qo) {
+		return this.baseMapper.queryTenantPage(page, qo);
+	}
 
-    @Override
-    public SysTenantVO getTenantById(Long id) {
-        return this.baseMapper.getTenantById(id);
-    }
+	@Override
+	public SysTenantVO getTenantById(Long id) {
+		return this.baseMapper.getTenantById(id);
+	}
 
-    @Override
-    public void deleteTenant(Long id) {
-        this.baseMapper.deleteById(id);
-    }
+	@Override
+	public void deleteTenant(Long id) {
+		this.baseMapper.deleteById(id);
+	}
+
 }

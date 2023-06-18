@@ -30,13 +30,18 @@ import java.util.Set;
 @Component
 @ConfigurationProperties(prefix = OAuth2ResourceServerProperties.PREFIX)
 public class OAuth2ResourceServerProperties {
-    public static final String PREFIX = "spring.security.oauth2.resource-server";
-    private boolean enabled = true;
-    private RequestMatcher requestMatcher;
 
-    @Data
-    public static class RequestMatcher {
-        private Set<String> patterns;
-    }
+	public static final String PREFIX = "spring.security.oauth2.resource-server";
+
+	private boolean enabled = true;
+
+	private RequestMatcher requestMatcher;
+
+	@Data
+	public static class RequestMatcher {
+
+		private Set<String> patterns;
+
+	}
 
 }

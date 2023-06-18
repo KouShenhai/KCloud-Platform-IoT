@@ -28,8 +28,10 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "sms.gyy")
 public class GuoYangYunProperties {
 
-    private String templateId;
-    private String signId;
-    private String appcode;
+	private String templateId;
+
+	private String signId;
+
+	private String appcode;
 
 }

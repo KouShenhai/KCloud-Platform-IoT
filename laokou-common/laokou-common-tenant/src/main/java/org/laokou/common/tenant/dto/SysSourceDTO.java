@@ -28,18 +28,24 @@ import java.io.Serializable;
 @Data
 public class SysSourceDTO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -2121545002296157366L;
-    private Long id;
-    @NotBlank(message = "数据源名称不为空")
-    private String name;
-    @NotBlank(message = "数据源驱动不为空")
-    private String driverClassName;
-    @NotBlank(message = "数据源用户名不为空")
-    private String username;
-    @NotBlank(message = "数据源密码不为空")
-    private String password;
-    @NotBlank(message = "数据源连接不为空")
-    private String url;
+	@Serial
+	private static final long serialVersionUID = -2121545002296157366L;
+
+	private Long id;
+
+	@NotBlank(message = "数据源名称不为空")
+	private String name;
+
+	@NotBlank(message = "数据源驱动不为空")
+	private String driverClassName;
+
+	@NotBlank(message = "数据源用户名不为空")
+	private String username;
+
+	@NotBlank(message = "数据源密码不为空")
+	private String password;
+
+	@NotBlank(message = "数据源连接不为空")
+	private String url;
 
 }

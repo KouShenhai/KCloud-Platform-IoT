@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysMonitorApplicationService;
 import org.laokou.admin.client.vo.CacheVO;
 import org.laokou.admin.server.infrastructure.server.Server;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
+
 /**
  * @author laokou
  */
@@ -27,21 +29,22 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SysMonitorApplicationServiceImpl implements SysMonitorApplicationService {
 
-    private final RedisUtil redisUtil;
+	private final RedisUtil redisUtil;
 
-    @Override
-    public CacheVO getCacheInfo() {
-        CacheVO vo = new CacheVO();
-        vo.setCommandStats(redisUtil.getCommandStatus());
-        vo.setInfo(redisUtil.getInfo());
-        vo.setKeysSize(redisUtil.getKeysSize());
-        return vo;
-    }
+	@Override
+	public CacheVO getCacheInfo() {
+		CacheVO vo = new CacheVO();
+		vo.setCommandStats(redisUtil.getCommandStatus());
+		vo.setInfo(redisUtil.getInfo());
+		vo.setKeysSize(redisUtil.getKeysSize());
+		return vo;
+	}
 
-    @Override
-    public Server getServerInfo() {
-        Server server = new Server();
-        server.copyTo();
-        return server;
-    }
+	@Override
+	public Server getServerInfo() {
+		Server server = new Server();
+		server.copyTo();
+		return server;
+	}
+
 }

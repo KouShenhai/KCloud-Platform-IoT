@@ -32,13 +32,11 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 @EnableEncryptableProperties
 public class FlowableApplication {
 
-    public static void main(String[] args) {
-        System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-        System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-        System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
-        new SpringApplicationBuilder(FlowableApplication.class)
-                .web(WebApplicationType.SERVLET)
-                .run(args);
-    }
+	public static void main(String[] args) {
+		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		new SpringApplicationBuilder(FlowableApplication.class).web(WebApplicationType.SERVLET).run(args);
+	}
 
 }

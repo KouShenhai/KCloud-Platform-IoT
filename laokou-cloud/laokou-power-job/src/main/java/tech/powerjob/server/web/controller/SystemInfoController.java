@@ -36,42 +36,44 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SystemInfoController {
 
-    private final JobInfoRepository jobInfoRepository;
+	private final JobInfoRepository jobInfoRepository;
 
-    private final InstanceInfoRepository instanceInfoRepository;
+	private final InstanceInfoRepository instanceInfoRepository;
 
-    private final ServerInfoService serverInfoService;
+	private final ServerInfoService serverInfoService;
 
-    private final WorkerClusterQueryService workerClusterQueryService;
+	private final WorkerClusterQueryService workerClusterQueryService;
 
-    @GetMapping("/listWorker")
-    public ResultDTO<List<WorkerStatusVO>> listWorker(Long appId) {
+	@GetMapping("/listWorker")
+	public ResultDTO<List<WorkerStatusVO>> listWorker(Long appId) {
 
-        List<WorkerInfo> workerInfos = workerClusterQueryService.getAllWorkers(appId);
-        return ResultDTO.success(workerInfos.stream().map(WorkerStatusVO::new).collect(Collectors.toList()));
-    }
+		List<WorkerInfo> workerInfos = workerClusterQueryService.getAllWorkers(appId);
+		return ResultDTO.success(workerInfos.stream().map(WorkerStatusVO::new).collect(Collectors.toList()));
+	}
 
-    @GetMapping("/overview")
-    public ResultDTO<SystemOverviewVO> getSystemOverview(Long appId) {
+	@GetMapping("/overview")
+	public ResultDTO<SystemOverviewVO> getSystemOverview(Long appId) {
 
-        SystemOverviewVO overview = new SystemOverviewVO();
+		SystemOverviewVO overview = new SystemOverviewVO();
 
-        // 总任务数量
-        overview.setJobCount(jobInfoRepository.countByAppIdAndStatusNot(appId, SwitchableStatus.DELETED.getV()));
-        // 运行任务数
-        overview.setRunningInstanceCount(instanceInfoRepository.countByAppIdAndStatus(appId, InstanceStatus.RUNNING.getV()));
-        // 近期失败任务数（24H内）
-        Date date = DateUtils.addDays(new Date(), -1);
-        overview.setFailedInstanceCount(instanceInfoRepository.countByAppIdAndStatusAndGmtCreateAfter(appId, InstanceStatus.FAILED.getV(), date));
+		// 总任务数量
+		overview.setJobCount(jobInfoRepository.countByAppIdAndStatusNot(appId, SwitchableStatus.DELETED.getV()));
+		// 运行任务数
+		overview.setRunningInstanceCount(
+				instanceInfoRepository.countByAppIdAndStatus(appId, InstanceStatus.RUNNING.getV()));
+		// 近期失败任务数（24H内）
+		Date date = DateUtils.addDays(new Date(), -1);
+		overview.setFailedInstanceCount(instanceInfoRepository.countByAppIdAndStatusAndGmtCreateAfter(appId,
+				InstanceStatus.FAILED.getV(), date));
 
-        // 服务器时区
-        overview.setTimezone(TimeZone.getDefault().getDisplayName());
-        // 服务器时间
-        overview.setServerTime(DateFormatUtils.format(new Date(), OmsConstant.TIME_PATTERN));
+		// 服务器时区
+		overview.setTimezone(TimeZone.getDefault().getDisplayName());
+		// 服务器时间
+		overview.setServerTime(DateFormatUtils.format(new Date(), OmsConstant.TIME_PATTERN));
 
-        overview.setServerInfo(serverInfoService.fetchServiceInfo());
+		overview.setServerInfo(serverInfoService.fetchServiceInfo());
 
-        return ResultDTO.success(overview);
-    }
+		return ResultDTO.success(overview);
+	}
 
 }

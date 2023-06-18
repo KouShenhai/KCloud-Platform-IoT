@@ -30,12 +30,15 @@ import java.util.List;
 @Data
 public class SysPackageDTO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 9203124235085714232L;
-    private Long id;
-    @NotBlank(message = "请输入套餐名称")
-    private String name;
-    @NotEmpty(message = "所选菜单不少于一个，请重新选择")
-    private List<Long> menuIds;
+	@Serial
+	private static final long serialVersionUID = 9203124235085714232L;
+
+	private Long id;
+
+	@NotBlank(message = "请输入套餐名称")
+	private String name;
+
+	@NotEmpty(message = "所选菜单不少于一个，请重新选择")
+	private List<Long> menuIds;
 
 }

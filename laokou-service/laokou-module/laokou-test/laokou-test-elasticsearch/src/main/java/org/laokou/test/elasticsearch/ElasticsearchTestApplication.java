@@ -11,8 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableEncryptableProperties
 public class ElasticsearchTestApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ElasticsearchTestApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(ElasticsearchTestApplication.class, args);
+	}
 
 }

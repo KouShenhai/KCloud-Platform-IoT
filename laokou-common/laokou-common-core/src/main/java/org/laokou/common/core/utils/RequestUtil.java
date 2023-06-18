@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.core.utils;
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestAttributes;
@@ -25,10 +26,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 public class RequestUtil {
 
-    public static HttpServletRequest getHttpServletRequest(){
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        Assert.notNull(requestAttributes,"requestAttributes not be null");
-        return ((ServletRequestAttributes)requestAttributes).getRequest();
-    }
+	public static HttpServletRequest getHttpServletRequest() {
+		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+		Assert.notNull(requestAttributes, "requestAttributes not be null");
+		return ((ServletRequestAttributes) requestAttributes).getRequest();
+	}
 
 }

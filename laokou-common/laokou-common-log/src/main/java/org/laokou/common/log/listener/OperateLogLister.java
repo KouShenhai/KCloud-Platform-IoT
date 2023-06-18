@@ -30,12 +30,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OperateLogLister implements ApplicationListener<OperateLogEvent> {
 
-    private final SysOperateLogService sysOperateLogService;
+	private final SysOperateLogService sysOperateLogService;
 
-    @Override
-    @Async
-    public void onApplicationEvent(OperateLogEvent event) {
-        sysOperateLogService.insertOperateLog(event);
-    }
+	@Override
+	@Async
+	public void onApplicationEvent(OperateLogEvent event) {
+		sysOperateLogService.insertOperateLog(event);
+	}
 
 }

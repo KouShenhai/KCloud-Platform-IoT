@@ -45,29 +45,33 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class IdempotentAspect {
 
-    private final RedisUtil redisUtil;
-    private static final DefaultRedisScript<Boolean> REDIS_SCRIPT;
+	private final RedisUtil redisUtil;
 
-    static {
-        try {
-            Resource resource = ResourceUtil.getResource("idempotent.lua");
-            REDIS_SCRIPT = new DefaultRedisScript<>(new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8), Boolean.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	private static final DefaultRedisScript<Boolean> REDIS_SCRIPT;
 
-    @Before("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
-    public void before() {
-        HttpServletRequest request = RequestUtil.getHttpServletRequest();
-        String requestId = request.getHeader(Constant.REQUEST_ID);
-        if (StringUtil.isEmpty(requestId)) {
-            throw new CustomException("提交失败，令牌不为空");
-        }
-        Boolean result = redisUtil.execute(REDIS_SCRIPT, Collections.singletonList(RedisKeyUtil.getIdempotentTokenKey(requestId)));
-        if (!result) {
-            throw new CustomException("不可重复提交请求");
-        }
-    }
+	static {
+		try {
+			Resource resource = ResourceUtil.getResource("idempotent.lua");
+			REDIS_SCRIPT = new DefaultRedisScript<>(
+					new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8), Boolean.class);
+		}
+		catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Before("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
+	public void before() {
+		HttpServletRequest request = RequestUtil.getHttpServletRequest();
+		String requestId = request.getHeader(Constant.REQUEST_ID);
+		if (StringUtil.isEmpty(requestId)) {
+			throw new CustomException("提交失败，令牌不为空");
+		}
+		Boolean result = redisUtil.execute(REDIS_SCRIPT,
+				Collections.singletonList(RedisKeyUtil.getIdempotentTokenKey(requestId)));
+		if (!result) {
+			throw new CustomException("不可重复提交请求");
+		}
+	}
 
 }

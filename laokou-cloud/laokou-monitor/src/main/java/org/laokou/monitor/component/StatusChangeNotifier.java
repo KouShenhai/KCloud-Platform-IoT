@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.monitor.component;
+
 import de.codecentric.boot.admin.server.domain.entities.Instance;
 import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
 import de.codecentric.boot.admin.server.domain.events.InstanceEvent;
@@ -23,38 +24,43 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+
 /**
  * 通知配置
+ *
  * @author laokou
  */
 @Slf4j
 @Component
 @NonNullApi
 public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
-    public StatusChangeNotifier(InstanceRepository instanceRepository) {
-        super(instanceRepository);
-    }
 
-    @Override
-    protected Mono<Void> doNotify(InstanceEvent event, Instance instance) {
-        return Mono.fromRunnable(() -> {
-            if (event instanceof InstanceStatusChangedEvent eventStatus) {
-                String status = eventStatus.getStatusInfo().getStatus();
-                switch (status) {
-                    //健康检查没通过
-                    case "DOWN" -> log.info("健康检查没通过");
+	public StatusChangeNotifier(InstanceRepository instanceRepository) {
+		super(instanceRepository);
+	}
 
-                    //服务离线
-                    case "OFFLINE" -> log.info("服务离线");
+	@Override
+	protected Mono<Void> doNotify(InstanceEvent event, Instance instance) {
+		return Mono.fromRunnable(() -> {
+			if (event instanceof InstanceStatusChangedEvent eventStatus) {
+				String status = eventStatus.getStatusInfo().getStatus();
+				switch (status) {
+					// 健康检查没通过
+					case "DOWN" -> log.info("健康检查没通过");
 
-                    //服务上线
-                    case "UP" -> log.info("服务上线");
+					// 服务离线
+					case "OFFLINE" -> log.info("服务离线");
 
-                    //服务未知异常
-                    case "UNKNOWN" -> log.error("服务未知异常");
-                    default -> {}
-                }
-            }
-        });
-    }
+					// 服务上线
+					case "UP" -> log.info("服务上线");
+
+					// 服务未知异常
+					case "UNKNOWN" -> log.error("服务未知异常");
+					default -> {
+					}
+				}
+			}
+		});
+	}
+
 }

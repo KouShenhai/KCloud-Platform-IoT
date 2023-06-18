@@ -33,14 +33,16 @@ import static org.laokou.common.core.constant.Constant.TENANT;
 @Component
 public class DsTenantProcessor extends DsProcessor {
 
-    @Override
-    public boolean matches(String key) {
-        return key.startsWith(TENANT);
-    }
+	@Override
+	public boolean matches(String key) {
+		return key.startsWith(TENANT);
+	}
 
-    @Override
-    public String doDetermineDatasource(MethodInvocation invocation, String key) {
-        DsUtil dsUtil = SpringContextUtil.getBean(DsUtil.class);
-        return dsUtil.loadDs(StringUtil.isNotEmpty(UserUtil.getSourceName()) ? UserUtil.getSourceName() : DEFAULT_SOURCE);
-    }
+	@Override
+	public String doDetermineDatasource(MethodInvocation invocation, String key) {
+		DsUtil dsUtil = SpringContextUtil.getBean(DsUtil.class);
+		return dsUtil
+				.loadDs(StringUtil.isNotEmpty(UserUtil.getSourceName()) ? UserUtil.getSourceName() : DEFAULT_SOURCE);
+	}
+
 }

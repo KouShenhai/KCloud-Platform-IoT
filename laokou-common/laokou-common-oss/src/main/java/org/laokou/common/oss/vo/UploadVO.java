@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.oss.vo;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,8 +32,9 @@ import java.io.Serializable;
 @Builder
 public class UploadVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -8398370701382335473L;
-    private String url;
+	@Serial
+	private static final long serialVersionUID = -8398370701382335473L;
+
+	private String url;
 
 }

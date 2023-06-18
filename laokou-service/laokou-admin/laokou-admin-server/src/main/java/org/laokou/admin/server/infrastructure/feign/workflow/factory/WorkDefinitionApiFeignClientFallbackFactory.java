@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.infrastructure.feign.workflow.factory;
+
 import org.laokou.admin.server.infrastructure.feign.workflow.fallback.WorkDefinitionApiFeignClientFallback;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**
  * 回调工厂
+ *
  * @author laokou
  */
 @Component
-public class WorkDefinitionApiFeignClientFallbackFactory implements FallbackFactory<WorkDefinitionApiFeignClientFallback> {
+public class WorkDefinitionApiFeignClientFallbackFactory
+		implements FallbackFactory<WorkDefinitionApiFeignClientFallback> {
 
-    @Override
-    public WorkDefinitionApiFeignClientFallback create(Throwable throwable) {
-        return new WorkDefinitionApiFeignClientFallback(throwable);
-    }
+	@Override
+	public WorkDefinitionApiFeignClientFallback create(Throwable throwable) {
+		return new WorkDefinitionApiFeignClientFallback(throwable);
+	}
+
 }

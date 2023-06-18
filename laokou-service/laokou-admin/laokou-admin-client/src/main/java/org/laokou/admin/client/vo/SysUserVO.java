@@ -14,25 +14,37 @@
  * limitations under the License.
  */
 package org.laokou.admin.client.vo;
+
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+
 /**
  * @author laokou
  */
 @Data
 public class SysUserVO implements Serializable {
-    @Serial
-    private static final long serialVersionUID = -1038298439681609692L;
-    private Long id;
-    private LocalDateTime createDate;
-    private String username;
-    private String avatar;
-    private Long deptId;
-    private Integer superAdmin;
-    private Integer status;
-    private List<Long> roleIds;
+
+	@Serial
+	private static final long serialVersionUID = -1038298439681609692L;
+
+	private Long id;
+
+	private LocalDateTime createDate;
+
+	private String username;
+
+	private String avatar;
+
+	private Long deptId;
+
+	private Integer superAdmin;
+
+	private Integer status;
+
+	private List<Long> roleIds;
+
 }

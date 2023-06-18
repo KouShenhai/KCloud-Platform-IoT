@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.prometheus.config.auto;
+
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
@@ -21,6 +22,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
+
 /**
  * @author laokou
  */
@@ -29,11 +31,12 @@ import org.springframework.core.env.Environment;
 @ComponentScan("org.laokou.common.prometheus")
 public class PrometheusAutoConfig {
 
-    private final Environment environment;
+	private final Environment environment;
 
-    @Bean
-    MeterRegistryCustomizer<MeterRegistry> configurer() {
-        return (registry) -> registry.config().commonTags("application", environment.getProperty("spring.application.name"));
-    }
+	@Bean
+	MeterRegistryCustomizer<MeterRegistry> configurer() {
+		return (registry) -> registry.config().commonTags("application",
+				environment.getProperty("spring.application.name"));
+	}
 
 }

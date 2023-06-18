@@ -16,7 +16,9 @@ import java.util.List;
 class GenerateApplicationTests {
 
 	private final ColumnMapper columnMapper;
-	private final List<String> ignoreColumns = List.of("id","create_by","create_time","update_by","update_time","sys_org_code","tenant_id");
+
+	private final List<String> ignoreColumns = List.of("id", "create_by", "create_time", "update_by", "update_time",
+			"sys_org_code", "tenant_id");
 
 	@Test
 	void contextLoads() {
@@ -24,10 +26,10 @@ class GenerateApplicationTests {
 		String className = "AlarmRule";
 		List<ColumnVO> columns = columnMapper.getColumns(tableName);
 		List<ColumnVO> list = columns.stream().filter(i -> !ignoreColumns.contains(i.getColumnName())).toList();
-		print(list,tableName,className);
+		print(list, tableName, className);
 	}
 
-	private void print(List<ColumnVO> list,String tableName,String className) {
+	private void print(List<ColumnVO> list, String tableName, String className) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("import com.baomidou.mybatisplus.annotation.TableName;\n");
 		stringBuilder.append("import com.dw.common.mybatisplus.base.BaseEntity;\n");
@@ -39,8 +41,10 @@ class GenerateApplicationTests {
 		stringBuilder.append("@TableName(\"").append(tableName).append("\")\n");
 		stringBuilder.append("public class ").append(className).append(" extends BaseEntity {\n\n");
 		for (ColumnVO vo : list) {
-			stringBuilder.append("    ").append("@ApiModelProperty(\"").append(vo.getColumnComment()).append("\")").append("\n");
-			stringBuilder.append("    ").append("private String ").append(StringUtil.toCamelCase(vo.getColumnName())).append(";").append("\n\n");
+			stringBuilder.append("    ").append("@ApiModelProperty(\"").append(vo.getColumnComment()).append("\")")
+					.append("\n");
+			stringBuilder.append("    ").append("private String ").append(StringUtil.toCamelCase(vo.getColumnName()))
+					.append(";").append("\n\n");
 		}
 		stringBuilder.append("}\n");
 		System.out.println(stringBuilder);

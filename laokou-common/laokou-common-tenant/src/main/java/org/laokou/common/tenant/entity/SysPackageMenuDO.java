@@ -28,19 +28,22 @@ import java.io.Serializable;
  */
 @Data
 @TableName("boot_sys_package_menu")
-@Schema(name = "SysPackageMenuDO",description = "系统套餐菜单实体类")
+@Schema(name = "SysPackageMenuDO", description = "系统套餐菜单实体类")
 public class SysPackageMenuDO implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 683935513335526615L;
-    /**
-     * 套餐id
-     */
-    @Schema(name = "packageId",description = "套餐id")
-    private Long packageId;
-    /**
-     * 菜单id
-     */
-    @Schema(name = "menuId",description = "菜单id")
-    private Long menuId;
+
+	@Serial
+	private static final long serialVersionUID = 683935513335526615L;
+
+	/**
+	 * 套餐id
+	 */
+	@Schema(name = "packageId", description = "套餐id")
+	private Long packageId;
+
+	/**
+	 * 菜单id
+	 */
+	@Schema(name = "menuId", description = "菜单id")
+	private Long menuId;
 
 }

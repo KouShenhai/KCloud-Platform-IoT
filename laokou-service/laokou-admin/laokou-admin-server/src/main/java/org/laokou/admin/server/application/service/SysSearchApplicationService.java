@@ -15,7 +15,6 @@
  */
 package org.laokou.admin.server.application.service;
 
-
 import org.laokou.common.elasticsearch.qo.SearchQo;
 import org.laokou.common.elasticsearch.vo.SearchVO;
 
@@ -24,11 +23,11 @@ import org.laokou.common.elasticsearch.vo.SearchVO;
  */
 public interface SysSearchApplicationService {
 
-    /**
-     * 资源高亮搜索
-     * @param form
-     * @return
-     */
-    SearchVO searchResource(SearchQo form);
+	/**
+	 * 资源高亮搜索
+	 * @param form
+	 * @return
+	 */
+	SearchVO searchResource(SearchQo form);
 
 }

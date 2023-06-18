@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.entity;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -23,25 +24,27 @@ import java.io.Serializable;
 
 /**
  * 系统用户角色
+ *
  * @author laokou
  */
 @Data
 @TableName("boot_sys_user_role")
-@Schema(name = "SysUserRoleDO",description = "系统用户角色实体类")
+@Schema(name = "SysUserRoleDO", description = "系统用户角色实体类")
 public class SysUserRoleDO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -3464670573494984526L;
-    /**
-     * 角色id
-     */
-    @Schema(name = "roleId",description = "角色id")
-    private Long roleId;
+	@Serial
+	private static final long serialVersionUID = -3464670573494984526L;
 
-    /**
-     * 用户id
-     */
-    @Schema(name = "userId",description = "用户id")
-    private Long userId;
+	/**
+	 * 角色id
+	 */
+	@Schema(name = "roleId", description = "角色id")
+	private Long roleId;
+
+	/**
+	 * 用户id
+	 */
+	@Schema(name = "userId", description = "用户id")
+	private Long userId;
 
 }

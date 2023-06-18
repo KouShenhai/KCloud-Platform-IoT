@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.monitor;
+
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.WebApplicationType;
@@ -28,10 +29,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 @EnableEncryptableProperties
 public class MonitorApplication {
 
-    public static void main(String[] args) {
-        new SpringApplicationBuilder(MonitorApplication.class)
-                .web(WebApplicationType.SERVLET)
-                .run(args);
-    }
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(MonitorApplication.class).web(WebApplicationType.SERVLET).run(args);
+	}
 
 }

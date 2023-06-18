@@ -34,8 +34,11 @@ import java.util.List;
 @Builder
 public class PageVO<T> implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 483921799089968341L;
-    private List<T> records;
-    private Long total;
+	@Serial
+	private static final long serialVersionUID = 483921799089968341L;
+
+	private List<T> records;
+
+	private Long total;
+
 }

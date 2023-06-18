@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.entity;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.common.mybatisplus.entity.BaseDO;
@@ -23,31 +24,33 @@ import java.io.Serial;
 
 /**
  * 系统消息
+ *
  * @author laokou
  */
 @Data
 @TableName("boot_sys_message")
-@Schema(name = "SysMessageDO",description = "系统消息实体类")
+@Schema(name = "SysMessageDO", description = "系统消息实体类")
 public class SysMessageDO extends BaseDO {
 
-    @Serial
-    private static final long serialVersionUID = -8162940421790076067L;
-    /**
-     * 消息标题
-     */
-    @Schema(name = "title",description = "消息标题")
-    private String title;
+	@Serial
+	private static final long serialVersionUID = -8162940421790076067L;
 
-    /**
-     * 消息内容
-     */
-    @Schema(name = "content",description = "消息内容")
-    private String content;
+	/**
+	 * 消息标题
+	 */
+	@Schema(name = "title", description = "消息标题")
+	private String title;
 
-    /**
-     * 消息类型 0 通知 1 提醒
-     */
-    @Schema(name = "type",description = "消息类型 0 通知 1 提醒")
-    private Integer type;
+	/**
+	 * 消息内容
+	 */
+	@Schema(name = "content", description = "消息内容")
+	private String content;
+
+	/**
+	 * 消息类型 0 通知 1 提醒
+	 */
+	@Schema(name = "type", description = "消息类型 0 通知 1 提醒")
+	private Integer type;
 
 }

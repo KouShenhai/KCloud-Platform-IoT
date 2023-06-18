@@ -28,6 +28,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class IdempotentToken {
 
-    private String token;
+	private String token;
 
 }

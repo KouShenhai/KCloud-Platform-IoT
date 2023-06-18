@@ -25,19 +25,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ValidateController {
 
-    private final TimingStrategyService timingStrategyService;
+	private final TimingStrategyService timingStrategyService;
 
-    @GetMapping("/timeExpression")
-    public ResultDTO<List<String>> checkTimeExpression(TimeExpressionType timeExpressionType,
-                                                       String timeExpression,
-                                                       @RequestParam(required = false) Long startTime,
-                                                       @RequestParam(required = false) Long endTime
-    ) {
-        try {
-            timingStrategyService.validate(timeExpressionType, timeExpression, startTime, endTime);
-            return ResultDTO.success(timingStrategyService.calculateNextTriggerTimes(timeExpressionType, timeExpression, startTime, endTime));
-        } catch (Exception e) {
-            return ResultDTO.success(Lists.newArrayList(ExceptionUtils.getMessage(e)));
-        }
-    }
+	@GetMapping("/timeExpression")
+	public ResultDTO<List<String>> checkTimeExpression(TimeExpressionType timeExpressionType, String timeExpression,
+			@RequestParam(required = false) Long startTime, @RequestParam(required = false) Long endTime) {
+		try {
+			timingStrategyService.validate(timeExpressionType, timeExpression, startTime, endTime);
+			return ResultDTO.success(timingStrategyService.calculateNextTriggerTimes(timeExpressionType, timeExpression,
+					startTime, endTime));
+		}
+		catch (Exception e) {
+			return ResultDTO.success(Lists.newArrayList(ExceptionUtils.getMessage(e)));
+		}
+	}
+
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.i18n.utils;
+
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -23,30 +24,32 @@ import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 /**
- * <a href="https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-validating-bean-constraints">...</a>
+ * <a href=
+ * "https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-validating-bean-constraints">...</a>
+ *
  * @author laokou
  */
 public class ValidatorUtil {
 
-    private static final ReloadableResourceBundleMessageSource validateBundleMessageSource;
+	private static final ReloadableResourceBundleMessageSource VALIDATE_BUNDLE_MESSAGE_SOURCE;
 
-    static {
-        validateBundleMessageSource = new ReloadableResourceBundleMessageSource();
-        validateBundleMessageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
-        validateBundleMessageSource.setBasename("classpath:i18n/validation");
-    }
+	static {
+		VALIDATE_BUNDLE_MESSAGE_SOURCE = new ReloadableResourceBundleMessageSource();
+		VALIDATE_BUNDLE_MESSAGE_SOURCE.setDefaultEncoding(StandardCharsets.UTF_8.name());
+		VALIDATE_BUNDLE_MESSAGE_SOURCE.setBasename("classpath:i18n/validation");
+	}
 
-    /**
-     * 校验对象
-     * @param obj 待校验对象
-     */
-    public static void validateEntity(Object obj) {
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<Object>> violationSet = validator.validate(obj);
-        if (!violationSet.isEmpty()) {
-            String message = violationSet.iterator().next().getMessage();
-            throw new CustomException(message);
-        }
-    }
+	/**
+	 * 校验对象
+	 * @param obj 待校验对象
+	 */
+	public static void validateEntity(Object obj) {
+		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+		Set<ConstraintViolation<Object>> violationSet = validator.validate(obj);
+		if (!violationSet.isEmpty()) {
+			String message = violationSet.iterator().next().getMessage();
+			throw new CustomException(message);
+		}
+	}
 
 }

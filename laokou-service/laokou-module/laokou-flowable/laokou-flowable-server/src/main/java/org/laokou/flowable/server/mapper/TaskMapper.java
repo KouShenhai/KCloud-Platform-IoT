@@ -14,19 +14,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaskMapper {
 
-    /**
-     * 获取审批人或处理人
-     * @param instanceId instanceId
-     * @return String
-     */
-    String getAssignee(@Param("instanceId")String instanceId);
+	/**
+	 * 获取审批人或处理人
+	 * @param instanceId instanceId
+	 * @return String
+	 */
+	String getAssignee(@Param("instanceId") String instanceId);
 
-    /**
-     * 分页查询任务
-     * @param page page
-     * @param dto dto
-     * @return IPage<TaskVO>
-     */
-    IPage<TaskVO> getTakePage(IPage<TaskVO> page, @Param("dto")TaskDTO dto);
+	/**
+	 * 分页查询任务
+	 * @param page page
+	 * @param dto dto
+	 * @return IPage<TaskVO>
+	 */
+	IPage<TaskVO> getTakePage(IPage<TaskVO> page, @Param("dto") TaskDTO dto);
 
 }

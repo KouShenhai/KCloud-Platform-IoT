@@ -15,6 +15,7 @@
  */
 
 package org.laokou.common.swagger.config.auto;
+
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -28,31 +29,29 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+
 /**
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnProperty(prefix = "openapi"
-        ,name = "enabled"
-        ,havingValue = "true"
-        ,matchIfMissing = true)
+@ConditionalOnProperty(prefix = "openapi", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class SwaggerAutoConfig {
 
-    @Bean
-    @ConditionalOnMissingBean(OpenAPI.class)
-    OpenAPI openApi() {
-        return new OpenAPI()
-                .info(new Info().title("API文档").description("API文档").version("3.1.0")
-                        .contact(new Contact().name("laokou").url("https://github.com/KouShenhai").email("2413176044@qq.com"))
-                        .license(new License().name("Apache 2.0").url("https://www.apache.org/licenses/LICENSE-2.0.html")))
-                        .externalDocs(new ExternalDocumentation().description("老寇云").url("https://github.com/KouShenhai"))
-                        .addSecurityItem(new SecurityRequirement().addList(Constant.AUTHORIZATION_HEAD))
-                        .components(new Components().addSecuritySchemes(Constant.AUTHORIZATION_HEAD
-                                , new SecurityScheme().name(Constant.AUTHORIZATION_HEAD)
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme("bearer")
-                                        .bearerFormat("JWT")));
+	@Bean
+	@ConditionalOnMissingBean(OpenAPI.class)
+	OpenAPI openApi() {
+		return new OpenAPI()
+				.info(new Info().title("API文档").description("API文档").version("3.1.0")
+						.contact(new Contact().name("laokou").url("https://github.com/KouShenhai")
+								.email("2413176044@qq.com"))
+						.license(new License().name("Apache 2.0")
+								.url("https://www.apache.org/licenses/LICENSE-2.0.html")))
+				.externalDocs(new ExternalDocumentation().description("老寇云").url("https://github.com/KouShenhai"))
+				.addSecurityItem(new SecurityRequirement().addList(Constant.AUTHORIZATION_HEAD))
+				.components(new Components().addSecuritySchemes(Constant.AUTHORIZATION_HEAD,
+						new SecurityScheme().name(Constant.AUTHORIZATION_HEAD).type(SecurityScheme.Type.HTTP)
+								.scheme("bearer").bearerFormat("JWT")));
 
-    }
+	}
 
 }

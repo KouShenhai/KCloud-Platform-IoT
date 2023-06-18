@@ -17,11 +17,13 @@ import java.util.List;
 @Component
 public class TransportServiceAwareProcessor {
 
-    public TransportServiceAwareProcessor(TransportService transportService, List<TransportServiceAware> transportServiceAwares) {
-        log.info("[TransportServiceAwareProcessor] current transportService: {}", transportService);
-        transportServiceAwares.forEach(aware -> {
-            aware.setTransportService(transportService);
-            log.info("[TransportServiceAwareProcessor] set transportService for: {} successfully", aware);
-        });
-    }
+	public TransportServiceAwareProcessor(TransportService transportService,
+			List<TransportServiceAware> transportServiceAwares) {
+		log.info("[TransportServiceAwareProcessor] current transportService: {}", transportService);
+		transportServiceAwares.forEach(aware -> {
+			aware.setTransportService(transportService);
+			log.info("[TransportServiceAwareProcessor] set transportService for: {} successfully", aware);
+		});
+	}
+
 }

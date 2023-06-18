@@ -28,11 +28,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MailTemplate {
 
-    private final MailService mailService;
+	private final MailService mailService;
 
-    @SneakyThrows
-    public boolean send(String mail) {
-        return mailService.sendMail(mail);
-    }
+	@SneakyThrows
+	public boolean send(String mail) {
+		return mailService.sendMail(mail);
+	}
 
 }

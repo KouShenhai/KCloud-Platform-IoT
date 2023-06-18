@@ -14,57 +14,59 @@
  * limitations under the License.
  */
 package org.laokou.flowable.server.service;
+
 import org.laokou.flowable.client.dto.DefinitionDTO;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 /**
  * @author laokou
  */
 public interface WorkDefinitionService {
 
-    /**
-     * 新增流程文件
-     * @param in
-     * @return
-     */
-    Boolean insertDefinition(InputStream in);
+	/**
+	 * 新增流程文件
+	 * @param in
+	 * @return
+	 */
+	Boolean insertDefinition(InputStream in);
 
-    /**
-     * 分页查询流程
-     * @param dto
-     * @return
-     */
-    PageVO<DefinitionVO> queryDefinitionPage(DefinitionDTO dto);
+	/**
+	 * 分页查询流程
+	 * @param dto
+	 * @return
+	 */
+	PageVO<DefinitionVO> queryDefinitionPage(DefinitionDTO dto);
 
-    /**
-     * 查看流程图
-     * @param definitionId
-     * @return
-     */
-    String diagramDefinition(String definitionId);
+	/**
+	 * 查看流程图
+	 * @param definitionId
+	 * @return
+	 */
+	String diagramDefinition(String definitionId);
 
-    /**
-     * 删除流程
-     * @param deploymentId
-     * @return
-     */
-    Boolean deleteDefinition(String deploymentId);
+	/**
+	 * 删除流程
+	 * @param deploymentId
+	 * @return
+	 */
+	Boolean deleteDefinition(String deploymentId);
 
-    /**
-     * 挂起流程
-     * @param definitionId
-     * @return
-     */
-    Boolean suspendDefinition(String definitionId);
+	/**
+	 * 挂起流程
+	 * @param definitionId
+	 * @return
+	 */
+	Boolean suspendDefinition(String definitionId);
 
-    /**
-     * 激活流程
-     * @param definitionId
-     * @return
-     */
-    Boolean activateDefinition(String definitionId);
+	/**
+	 * 激活流程
+	 * @param definitionId
+	 * @return
+	 */
+	Boolean activateDefinition(String definitionId);
 
 }

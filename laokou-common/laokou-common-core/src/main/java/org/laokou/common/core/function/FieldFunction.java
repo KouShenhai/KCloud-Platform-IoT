@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 package org.laokou.common.core.function;
+
 import java.io.Serializable;
 import java.util.function.Function;
+
 /**
  * @author laokou
  */
 @FunctionalInterface
-public interface FieldFunction<T> extends Function<T,Object>, Serializable {
+public interface FieldFunction<T> extends Function<T, Object>, Serializable {
+
 }

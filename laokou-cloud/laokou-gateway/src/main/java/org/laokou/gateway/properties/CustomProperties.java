@@ -32,9 +32,9 @@ import java.util.Set;
 @ConfigurationProperties(prefix = "ignore")
 public class CustomProperties {
 
-    /**
-     * 不拦截的urls
-     */
-    private Set<String> uris;
+	/**
+	 * 不拦截的urls
+	 */
+	private Set<String> uris;
 
 }

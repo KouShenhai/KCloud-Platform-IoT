@@ -15,6 +15,7 @@
  */
 
 package org.laokou.flowable.server.controller;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -36,44 +37,46 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/work/definition/api")
 @RequiredArgsConstructor
-@Tag(name = "Work Definition API" ,description = "流程定义API")
+@Tag(name = "Work Definition API", description = "流程定义API")
 public class WorkDefinitionApiController {
-    private final WorkDefinitionService workDefinitionService;
 
-    @PostMapping(value = "/insert")
-    @Operation(summary = "流程定义>新增流程",description = "流程定义>新增流程")
-    public HttpResult<Boolean> insert(@Valid @NotNull(message = "请上传相关流程图") @RequestPart("file") MultipartFile file) throws IOException {
-        return new HttpResult<Boolean>().ok(workDefinitionService.insertDefinition(file.getInputStream()));
-    }
+	private final WorkDefinitionService workDefinitionService;
 
-    @PostMapping(value = "/query")
-    @Operation(summary = "流程定义>查询流程",description = "流程定义>查询流程")
-    public HttpResult<PageVO<DefinitionVO>> query(@RequestBody DefinitionDTO dto) {
-        return new HttpResult<PageVO<DefinitionVO>>().ok(workDefinitionService.queryDefinitionPage(dto));
-    }
+	@PostMapping(value = "/insert")
+	@Operation(summary = "流程定义>新增流程", description = "流程定义>新增流程")
+	public HttpResult<Boolean> insert(@Valid @NotNull(message = "请上传相关流程图") @RequestPart("file") MultipartFile file)
+			throws IOException {
+		return new HttpResult<Boolean>().ok(workDefinitionService.insertDefinition(file.getInputStream()));
+	}
 
-    @GetMapping(value = "/diagram")
-    @Operation(summary = "流程定义>流程图",description = "流程定义>流程图")
-    public HttpResult<String> diagram(@RequestParam("definitionId")String definitionId) {
-        return new HttpResult<String>().ok(workDefinitionService.diagramDefinition(definitionId));
-    }
+	@PostMapping(value = "/query")
+	@Operation(summary = "流程定义>查询流程", description = "流程定义>查询流程")
+	public HttpResult<PageVO<DefinitionVO>> query(@RequestBody DefinitionDTO dto) {
+		return new HttpResult<PageVO<DefinitionVO>>().ok(workDefinitionService.queryDefinitionPage(dto));
+	}
 
-    @DeleteMapping(value = "/delete")
-    @Operation(summary = "流程定义>删除流程",description = "流程定义>删除流程")
-    public HttpResult<Boolean> delete(@RequestParam("deploymentId")String deploymentId) {
-        return new HttpResult<Boolean>().ok(workDefinitionService.deleteDefinition(deploymentId));
-    }
+	@GetMapping(value = "/diagram")
+	@Operation(summary = "流程定义>流程图", description = "流程定义>流程图")
+	public HttpResult<String> diagram(@RequestParam("definitionId") String definitionId) {
+		return new HttpResult<String>().ok(workDefinitionService.diagramDefinition(definitionId));
+	}
 
-    @PutMapping(value = "/suspend")
-    @Operation(summary = "流程定义>挂起流程",description = "流程定义>挂起流程")
-    public HttpResult<Boolean> suspend(@RequestParam("definitionId")String definitionId) {
-        return new HttpResult<Boolean>().ok(workDefinitionService.suspendDefinition(definitionId));
-    }
+	@DeleteMapping(value = "/delete")
+	@Operation(summary = "流程定义>删除流程", description = "流程定义>删除流程")
+	public HttpResult<Boolean> delete(@RequestParam("deploymentId") String deploymentId) {
+		return new HttpResult<Boolean>().ok(workDefinitionService.deleteDefinition(deploymentId));
+	}
 
-    @PutMapping(value = "/activate")
-    @Operation(summary = "流程定义>激活流程",description = "流程定义>激活流程")
-    public HttpResult<Boolean> activate(@RequestParam("definitionId")String definitionId) {
-        return new HttpResult<Boolean>().ok(workDefinitionService.activateDefinition(definitionId));
-    }
+	@PutMapping(value = "/suspend")
+	@Operation(summary = "流程定义>挂起流程", description = "流程定义>挂起流程")
+	public HttpResult<Boolean> suspend(@RequestParam("definitionId") String definitionId) {
+		return new HttpResult<Boolean>().ok(workDefinitionService.suspendDefinition(definitionId));
+	}
+
+	@PutMapping(value = "/activate")
+	@Operation(summary = "流程定义>激活流程", description = "流程定义>激活流程")
+	public HttpResult<Boolean> activate(@RequestParam("definitionId") String definitionId) {
+		return new HttpResult<Boolean>().ok(workDefinitionService.activateDefinition(definitionId));
+	}
 
 }

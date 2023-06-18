@@ -15,46 +15,45 @@
  */
 package org.laokou.common.lock.factory;
 
-
 import org.laokou.common.lock.enums.LockType;
 
 /**
  * @author laokou
  */
-public abstract class AbstractLock<T> implements Locks{
+public abstract class AbstractLock<T> implements Locks {
 
-    @Override
-    public Boolean tryLock(LockType type, String key, long expire, long timeout) throws InterruptedException {
-        return tryLock(getLock(type,key),expire,timeout);
-    }
+	@Override
+	public Boolean tryLock(LockType type, String key, long expire, long timeout) throws InterruptedException {
+		return tryLock(getLock(type, key), expire, timeout);
+	}
 
-    @Override
-    public void unlock(LockType type, String key) {
-        unlock(getLock(type,key));
-    }
+	@Override
+	public void unlock(LockType type, String key) {
+		unlock(getLock(type, key));
+	}
 
-    /**
-     * 获取锁
-     * @param type
-     * @param key
-     * @return
-     */
-    public abstract T getLock(LockType type,String key);
+	/**
+	 * 获取锁
+	 * @param type
+	 * @param key
+	 * @return
+	 */
+	public abstract T getLock(LockType type, String key);
 
-    /**
-     * 获取锁
-     * @param lock
-     * @param expire
-     * @param timeout
-     * @return
-     * @throws InterruptedException
-     */
-    public abstract Boolean tryLock(T lock,long expire,long timeout) throws InterruptedException;
+	/**
+	 * 获取锁
+	 * @param lock
+	 * @param expire
+	 * @param timeout
+	 * @return
+	 * @throws InterruptedException
+	 */
+	public abstract Boolean tryLock(T lock, long expire, long timeout) throws InterruptedException;
 
-    /**
-     * 释放锁
-     * @param lock
-     */
-    public abstract void unlock(T lock);
+	/**
+	 * 释放锁
+	 * @param lock
+	 */
+	public abstract void unlock(T lock);
 
 }

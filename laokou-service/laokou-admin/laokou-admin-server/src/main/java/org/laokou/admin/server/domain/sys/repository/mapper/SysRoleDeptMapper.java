@@ -20,6 +20,7 @@ import org.laokou.admin.server.domain.sys.entity.SysRoleDeptDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.laokou.common.mybatisplus.mapper.BatchMapper;
 import org.springframework.stereotype.Repository;
+
 /**
  * @author laokou
  */

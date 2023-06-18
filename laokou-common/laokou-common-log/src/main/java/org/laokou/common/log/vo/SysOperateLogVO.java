@@ -27,77 +27,79 @@ import java.time.LocalDateTime;
 @Data
 public class SysOperateLogVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 1872256681096135224L;
-    private Long id;
-    /**
-     * 模块名称，如：系统菜单
-     */
-    private String module;
+	@Serial
+	private static final long serialVersionUID = 1872256681096135224L;
 
-    /**
-     * 操作名称
-     */
-    private String operation;
+	private Long id;
 
-    /**
-     * 请求URI
-     */
-    private String requestUri;
+	/**
+	 * 模块名称，如：系统菜单
+	 */
+	private String module;
 
-    /**
-     * 请求方式
-     */
-    private String requestMethod;
+	/**
+	 * 操作名称
+	 */
+	private String operation;
 
-    /**
-     * 请求参数
-     */
-    private String requestParams;
+	/**
+	 * 请求URI
+	 */
+	private String requestUri;
 
-    /**
-     * 浏览器版本
-     */
-    private String userAgent;
+	/**
+	 * 请求方式
+	 */
+	private String requestMethod;
 
-    /**
-     * IP地址
-     */
-    private String requestIp;
+	/**
+	 * 请求参数
+	 */
+	private String requestParams;
 
-    /**
-     * 归属地
-     */
-    private String requestAddress;
+	/**
+	 * 浏览器版本
+	 */
+	private String userAgent;
 
-    /**
-     * 状态  0：成功   1：失败
-     */
-    private Integer requestStatus;
+	/**
+	 * IP地址
+	 */
+	private String requestIp;
 
-    /**
-     * 操作人
-     */
-    private String operator;
+	/**
+	 * 归属地
+	 */
+	private String requestAddress;
 
-    /**
-     * 错误信息
-     */
-    private String errorMsg;
+	/**
+	 * 状态 0：成功 1：失败
+	 */
+	private Integer requestStatus;
 
-    /**
-     * 方法名称
-     */
-    private String methodName;
+	/**
+	 * 操作人
+	 */
+	private String operator;
 
-    /**
-     * 操作时间
-     */
-    private LocalDateTime createDate;
+	/**
+	 * 错误信息
+	 */
+	private String errorMsg;
 
-    /**
-     * 耗时（毫秒）
-     */
-    private Long takeTime;
+	/**
+	 * 方法名称
+	 */
+	private String methodName;
+
+	/**
+	 * 操作时间
+	 */
+	private LocalDateTime createDate;
+
+	/**
+	 * 耗时（毫秒）
+	 */
+	private Long takeTime;
 
 }

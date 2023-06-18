@@ -14,20 +14,24 @@
  * limitations under the License.
  */
 package org.laokou.common.tenant.service.impl;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.laokou.common.tenant.entity.SysPackageMenuDO;
 import org.laokou.common.tenant.service.SysPackageMenuService;
 import org.laokou.common.tenant.mapper.SysPackageMenuMapper;
 import org.springframework.stereotype.Service;
 import java.util.List;
+
 /**
  * @author laokou
  */
 @Service
-public class SysPackageMenuServiceImpl extends ServiceImpl<SysPackageMenuMapper, SysPackageMenuDO> implements SysPackageMenuService {
+public class SysPackageMenuServiceImpl extends ServiceImpl<SysPackageMenuMapper, SysPackageMenuDO>
+		implements SysPackageMenuService {
 
-    @Override
-    public void insertBatch(List<SysPackageMenuDO> list) {
-        this.baseMapper.insertBatch(list);
-    }
+	@Override
+	public void insertBatch(List<SysPackageMenuDO> list) {
+		this.baseMapper.insertBatch(list);
+	}
+
 }

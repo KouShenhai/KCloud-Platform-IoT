@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.mybatisplus.utils;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionCallback;
@@ -26,10 +27,10 @@ import org.springframework.transaction.support.TransactionTemplate;
 @RequiredArgsConstructor
 public class TransactionalUtil {
 
-    private final TransactionTemplate transactionTemplate;
+	private final TransactionTemplate transactionTemplate;
 
-    public <T> T execute(TransactionCallback<T> action) {
-        return transactionTemplate.execute(action);
-    }
+	public <T> T execute(TransactionCallback<T> action) {
+		return transactionTemplate.execute(action);
+	}
 
 }

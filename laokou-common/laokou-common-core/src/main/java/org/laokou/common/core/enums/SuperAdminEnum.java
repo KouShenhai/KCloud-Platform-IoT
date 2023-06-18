@@ -20,12 +20,14 @@ package org.laokou.common.core.enums;
  * @author laokou
  */
 public enum SuperAdminEnum {
-    /**
-     * 否
-     */
-    NO,
-    /**
-     * 是
-     */
-    YES
+
+	/**
+	 * 否
+	 */
+	NO,
+	/**
+	 * 是
+	 */
+	YES
+
 }

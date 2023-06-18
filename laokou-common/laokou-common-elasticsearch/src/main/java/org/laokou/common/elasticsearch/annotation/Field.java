@@ -23,16 +23,16 @@ import java.lang.annotation.*;
  * @author laokou
  */
 @Documented
-@Target({ElementType.FIELD})
+@Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Field {
 
-   String value();
+	String value();
 
-   FieldTypeEnum type() default FieldTypeEnum.KEYWORD;
+	FieldTypeEnum type() default FieldTypeEnum.KEYWORD;
 
-   String searchAnalyzer() default "";
+	String searchAnalyzer() default "";
 
-   String analyzer() default "";
+	String analyzer() default "";
 
 }

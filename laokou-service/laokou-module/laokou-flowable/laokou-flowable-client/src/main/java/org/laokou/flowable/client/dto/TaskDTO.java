@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.flowable.client.dto;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -26,17 +27,24 @@ import java.io.Serializable;
  */
 @Data
 public class TaskDTO implements Serializable {
-    @Serial
-    private static final long serialVersionUID = -3817507884449344739L;
-    @NotNull(message = "显示页码不为空")
-    private Integer pageNum;
-    @NotNull(message = "显示条数不为空")
-    private Integer pageSize;
-    private String processName;
-    @NotNull(message = "用户编号不为空")
-    private Long userId;
-    @NotBlank(message = "用户名不为空")
-    private String username;
-    private String processKey;
+
+	@Serial
+	private static final long serialVersionUID = -3817507884449344739L;
+
+	@NotNull(message = "显示页码不为空")
+	private Integer pageNum;
+
+	@NotNull(message = "显示条数不为空")
+	private Integer pageSize;
+
+	private String processName;
+
+	@NotNull(message = "用户编号不为空")
+	private Long userId;
+
+	@NotBlank(message = "用户名不为空")
+	private String username;
+
+	private String processKey;
 
 }

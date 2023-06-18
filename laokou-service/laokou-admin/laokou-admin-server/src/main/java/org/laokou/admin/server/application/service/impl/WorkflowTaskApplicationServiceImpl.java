@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
 import org.laokou.admin.server.infrastructure.feign.workflow.WorkTaskApiFeignClient;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.core.HttpResult;
 import org.springframework.stereotype.Service;
+
 /**
  * @author laokou
  */
@@ -27,15 +29,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicationService {
 
-    private final WorkTaskApiFeignClient workTaskApiFeignClient;
+	private final WorkTaskApiFeignClient workTaskApiFeignClient;
 
-    @Override
-    public String diagramProcess(String processInstanceId) {
-        HttpResult<String> result = workTaskApiFeignClient.diagram(processInstanceId);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(),result.getMsg());
-        }
-        return result.getData();
-    }
+	@Override
+	public String diagramProcess(String processInstanceId) {
+		HttpResult<String> result = workTaskApiFeignClient.diagram(processInstanceId);
+		if (!result.success()) {
+			throw new CustomException(result.getCode(), result.getMsg());
+		}
+		return result.getData();
+	}
 
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.shardingsphere.config.auto;
+
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 

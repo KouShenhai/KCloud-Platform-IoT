@@ -33,98 +33,102 @@ import java.util.stream.Collectors;
 @RequestMapping("/job")
 public class JobController {
 
-    @Resource
-    private JobService jobService;
-    @Resource
-    private JobInfoRepository jobInfoRepository;
+	@Resource
+	private JobService jobService;
 
-    @PostMapping("/save")
-    public ResultDTO<Void> saveJobInfo(@RequestBody SaveJobInfoRequest request) {
-        jobService.saveJob(request);
-        return ResultDTO.success(null);
-    }
+	@Resource
+	private JobInfoRepository jobInfoRepository;
 
-    @PostMapping("/copy")
-    public ResultDTO<JobInfoVO> copyJob(String jobId) {
-        return ResultDTO.success(JobInfoVO.from(jobService.copyJob(Long.valueOf(jobId))));
-    }
+	@PostMapping("/save")
+	public ResultDTO<Void> saveJobInfo(@RequestBody SaveJobInfoRequest request) {
+		jobService.saveJob(request);
+		return ResultDTO.success(null);
+	}
 
-    @GetMapping("/export")
-    public ResultDTO<SaveJobInfoRequest> exportJob(String jobId) {
-        return ResultDTO.success(jobService.exportJob(Long.valueOf(jobId)));
-    }
+	@PostMapping("/copy")
+	public ResultDTO<JobInfoVO> copyJob(String jobId) {
+		return ResultDTO.success(JobInfoVO.from(jobService.copyJob(Long.valueOf(jobId))));
+	}
 
-    @GetMapping("/disable")
-    public ResultDTO<Void> disableJob(String jobId) {
-        jobService.disableJob(Long.valueOf(jobId));
-        return ResultDTO.success(null);
-    }
+	@GetMapping("/export")
+	public ResultDTO<SaveJobInfoRequest> exportJob(String jobId) {
+		return ResultDTO.success(jobService.exportJob(Long.valueOf(jobId)));
+	}
 
-    @GetMapping("/delete")
-    public ResultDTO<Void> deleteJob(String jobId) {
-        jobService.deleteJob(Long.valueOf(jobId));
-        return ResultDTO.success(null);
-    }
+	@GetMapping("/disable")
+	public ResultDTO<Void> disableJob(String jobId) {
+		jobService.disableJob(Long.valueOf(jobId));
+		return ResultDTO.success(null);
+	}
 
-    @GetMapping("/run")
-    public ResultDTO<Long> runImmediately(String appId, String jobId, @RequestParam(required = false) String instanceParams) {
-        return ResultDTO.success(jobService.runJob(Long.valueOf(appId), Long.valueOf(jobId), instanceParams, 0L));
-    }
+	@GetMapping("/delete")
+	public ResultDTO<Void> deleteJob(String jobId) {
+		jobService.deleteJob(Long.valueOf(jobId));
+		return ResultDTO.success(null);
+	}
 
-    @PostMapping("/list")
-    public ResultDTO<PageResult<JobInfoVO>> listJobs(@RequestBody QueryJobInfoRequest request) {
+	@GetMapping("/run")
+	public ResultDTO<Long> runImmediately(String appId, String jobId,
+			@RequestParam(required = false) String instanceParams) {
+		return ResultDTO.success(jobService.runJob(Long.valueOf(appId), Long.valueOf(jobId), instanceParams, 0L));
+	}
 
-        Sort sort = Sort.by(Sort.Direction.ASC, "id");
-        PageRequest pageRequest = PageRequest.of(request.getIndex(), request.getPageSize(), sort);
-        Page<JobInfoDO> jobInfoPage;
+	@PostMapping("/list")
+	public ResultDTO<PageResult<JobInfoVO>> listJobs(@RequestBody QueryJobInfoRequest request) {
 
-        // 无查询条件，查询全部
-        if (request.getJobId() == null && StringUtils.isEmpty(request.getKeyword())) {
-            jobInfoPage = jobInfoRepository.findByAppIdAndStatusNot(request.getAppId(), SwitchableStatus.DELETED.getV(), pageRequest);
-            return ResultDTO.success(convertPage(jobInfoPage));
-        }
+		Sort sort = Sort.by(Sort.Direction.ASC, "id");
+		PageRequest pageRequest = PageRequest.of(request.getIndex(), request.getPageSize(), sort);
+		Page<JobInfoDO> jobInfoPage;
 
-        // 有 jobId，直接精确查询
-        if (request.getJobId() != null) {
+		// 无查询条件，查询全部
+		if (request.getJobId() == null && StringUtils.isEmpty(request.getKeyword())) {
+			jobInfoPage = jobInfoRepository.findByAppIdAndStatusNot(request.getAppId(), SwitchableStatus.DELETED.getV(),
+					pageRequest);
+			return ResultDTO.success(convertPage(jobInfoPage));
+		}
 
-            Optional<JobInfoDO> jobInfoOpt = jobInfoRepository.findById(request.getJobId());
+		// 有 jobId，直接精确查询
+		if (request.getJobId() != null) {
 
-            PageResult<JobInfoVO> result = new PageResult<>();
+			Optional<JobInfoDO> jobInfoOpt = jobInfoRepository.findById(request.getJobId());
 
-            if (!jobInfoOpt.isPresent()) {
-                result.setTotalPages(0);
-                result.setTotalItems(0);
-                result.setData(Lists.newLinkedList());
-                return ResultDTO.success(result);
-            }
+			PageResult<JobInfoVO> result = new PageResult<>();
 
-            if (!jobInfoOpt.get().getAppId().equals(request.getAppId())){
-                return ResultDTO.failed("请输入该app下的jobId");
-            }
+			if (!jobInfoOpt.isPresent()) {
+				result.setTotalPages(0);
+				result.setTotalItems(0);
+				result.setData(Lists.newLinkedList());
+				return ResultDTO.success(result);
+			}
 
-            result.setIndex(0);
-            result.setPageSize(request.getPageSize());
+			if (!jobInfoOpt.get().getAppId().equals(request.getAppId())) {
+				return ResultDTO.failed("请输入该app下的jobId");
+			}
 
-            result.setTotalItems(1);
-            result.setTotalPages(1);
-            result.setData(Lists.newArrayList(JobInfoVO.from(jobInfoOpt.get())));
+			result.setIndex(0);
+			result.setPageSize(request.getPageSize());
 
-            return ResultDTO.success(result);
-        }
+			result.setTotalItems(1);
+			result.setTotalPages(1);
+			result.setData(Lists.newArrayList(JobInfoVO.from(jobInfoOpt.get())));
 
-        // 模糊查询
-        String condition = "%" + request.getKeyword() + "%";
-        jobInfoPage = jobInfoRepository.findByAppIdAndJobNameLikeAndStatusNot(request.getAppId(), condition, SwitchableStatus.DELETED.getV(), pageRequest);
-        return ResultDTO.success(convertPage(jobInfoPage));
-    }
+			return ResultDTO.success(result);
+		}
 
+		// 模糊查询
+		String condition = "%" + request.getKeyword() + "%";
+		jobInfoPage = jobInfoRepository.findByAppIdAndJobNameLikeAndStatusNot(request.getAppId(), condition,
+				SwitchableStatus.DELETED.getV(), pageRequest);
+		return ResultDTO.success(convertPage(jobInfoPage));
+	}
 
-    private static PageResult<JobInfoVO> convertPage(Page<JobInfoDO> jobInfoPage) {
-        List<JobInfoVO> jobInfoVOList = jobInfoPage.getContent().stream().map(JobInfoVO::from).collect(Collectors.toList());
+	private static PageResult<JobInfoVO> convertPage(Page<JobInfoDO> jobInfoPage) {
+		List<JobInfoVO> jobInfoVOList = jobInfoPage.getContent().stream().map(JobInfoVO::from)
+				.collect(Collectors.toList());
 
-        PageResult<JobInfoVO> pageResult = new PageResult<>(jobInfoPage);
-        pageResult.setData(jobInfoVOList);
-        return pageResult;
-    }
+		PageResult<JobInfoVO> pageResult = new PageResult<>(jobInfoPage);
+		pageResult.setData(jobInfoVOList);
+		return pageResult;
+	}
 
 }

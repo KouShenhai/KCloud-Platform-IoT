@@ -33,33 +33,34 @@ import java.util.List;
 @Repository
 @Mapper
 public interface SysDictMapper extends BaseMapper<SysDictDO> {
-    /**
-     * 分页查询字典
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysDictVO> getDictList(IPage<SysDictVO> page, @Param("qo") SysDictQo qo);
 
-    /**
-     * 下拉框选项
-     * @param type
-     * @return
-     */
-    List<OptionVO> getOptionList(@Param("type") String type);
+	/**
+	 * 分页查询字典
+	 * @param page
+	 * @param qo
+	 * @return
+	 */
+	IPage<SysDictVO> getDictList(IPage<SysDictVO> page, @Param("qo") SysDictQo qo);
 
-    /**
-     * 根据id查询字典
-     * @param id
-     * @return
-     */
-    SysDictVO getDictById(@Param("id") Long id);
+	/**
+	 * 下拉框选项
+	 * @param type
+	 * @return
+	 */
+	List<OptionVO> getOptionList(@Param("type") String type);
 
-    /**
-     * 获取版本号
-     * @param id
-     * @return
-     */
-    Integer getVersion(@Param("id")Long id);
+	/**
+	 * 根据id查询字典
+	 * @param id
+	 * @return
+	 */
+	SysDictVO getDictById(@Param("id") Long id);
+
+	/**
+	 * 获取版本号
+	 * @param id
+	 * @return
+	 */
+	Integer getVersion(@Param("id") Long id);
 
 }

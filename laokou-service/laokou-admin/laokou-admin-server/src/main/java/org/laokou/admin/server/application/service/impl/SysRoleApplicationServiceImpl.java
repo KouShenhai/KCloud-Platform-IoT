@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -39,6 +40,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * @author laokou
  */
@@ -46,106 +48,105 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SysRoleApplicationServiceImpl implements SysRoleApplicationService {
 
-    private final SysRoleService sysRoleService;
+	private final SysRoleService sysRoleService;
 
-    private final SysRoleMenuService sysRoleMenuService;
+	private final SysRoleMenuService sysRoleMenuService;
 
-    private final SysRoleDeptService sysRoleDeptService;
+	private final SysRoleDeptService sysRoleDeptService;
 
-    private final BatchUtil batchUtil;
+	private final BatchUtil batchUtil;
 
-    @Override
-    @DataFilter(tableAlias = "boot_sys_role")
-    public IPage<SysRoleVO> queryRolePage(SysRoleQo qo) {
-        ValidatorUtil.validateEntity(qo);
-        qo.setTenantId(UserUtil.getTenantId());
-        IPage<SysRoleVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysRoleService.getRolePage(page,qo);
-    }
+	@Override
+	@DataFilter(tableAlias = "boot_sys_role")
+	public IPage<SysRoleVO> queryRolePage(SysRoleQo qo) {
+		ValidatorUtil.validateEntity(qo);
+		qo.setTenantId(UserUtil.getTenantId());
+		IPage<SysRoleVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+		return sysRoleService.getRolePage(page, qo);
+	}
 
-    @Override
-    public List<SysRoleVO> getRoleList(SysRoleQo qo) {
-        qo.setTenantId(UserUtil.getTenantId());
-        return sysRoleService.getRoleList(qo);
-    }
+	@Override
+	public List<SysRoleVO> getRoleList(SysRoleQo qo) {
+		qo.setTenantId(UserUtil.getTenantId());
+		return sysRoleService.getRoleList(qo);
+	}
 
-    @Override
-    public SysRoleVO getRoleById(Long id) {
-        return sysRoleService.getRoleById(id);
-    }
+	@Override
+	public SysRoleVO getRoleById(Long id) {
+		return sysRoleService.getRoleById(id);
+	}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean insertRole(SysRoleDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
-        long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class)
-                        .eq(SysRoleDO::getTenantId,UserUtil.getTenantId())
-                .eq(SysRoleDO::getName, roleDO.getName()));
-        if (count > 0) {
-            throw new CustomException("角色已存在，请重新填写");
-        }
-        roleDO.setDeptId(UserUtil.getDeptId());
-        roleDO.setTenantId(UserUtil.getTenantId());
-        sysRoleService.save(roleDO);
-        List<Long> menuIds = dto.getMenuIds();
-        saveOrUpdate(roleDO.getId(),menuIds,dto.getDeptIds());
-        return true;
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean insertRole(SysRoleDTO dto) {
+		ValidatorUtil.validateEntity(dto);
+		SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
+		long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class)
+				.eq(SysRoleDO::getTenantId, UserUtil.getTenantId()).eq(SysRoleDO::getName, roleDO.getName()));
+		if (count > 0) {
+			throw new CustomException("角色已存在，请重新填写");
+		}
+		roleDO.setDeptId(UserUtil.getDeptId());
+		roleDO.setTenantId(UserUtil.getTenantId());
+		sysRoleService.save(roleDO);
+		List<Long> menuIds = dto.getMenuIds();
+		saveOrUpdate(roleDO.getId(), menuIds, dto.getDeptIds());
+		return true;
+	}
 
-    private void saveOrUpdate(Long roleId, List<Long> menuIds, List<Long> deptIds) {
-        if (CollectionUtil.isNotEmpty(menuIds)) {
-            List<SysRoleMenuDO> roleMenuList = new ArrayList<>(menuIds.size());
-            for (Long menuId : menuIds) {
-                SysRoleMenuDO roleMenuDO = new SysRoleMenuDO();
-                roleMenuDO.setMenuId(menuId);
-                roleMenuDO.setRoleId(roleId);
-                roleMenuList.add(roleMenuDO);
-            }
-            batchUtil.insertBatch(roleMenuList,500,sysRoleMenuService);
-        }
-        if (CollectionUtil.isNotEmpty(deptIds)) {
-            List<SysRoleDeptDO> roleDeptList = new ArrayList<>(deptIds.size());
-            for (Long deptId : deptIds) {
-                SysRoleDeptDO roleDeptDO = new SysRoleDeptDO();
-                roleDeptDO.setDeptId(deptId);
-                roleDeptDO.setRoleId(roleId);
-                roleDeptList.add(roleDeptDO);
-            }
-            batchUtil.insertBatch(roleDeptList,500,sysRoleDeptService);
-        }
-    }
+	private void saveOrUpdate(Long roleId, List<Long> menuIds, List<Long> deptIds) {
+		if (CollectionUtil.isNotEmpty(menuIds)) {
+			List<SysRoleMenuDO> roleMenuList = new ArrayList<>(menuIds.size());
+			for (Long menuId : menuIds) {
+				SysRoleMenuDO roleMenuDO = new SysRoleMenuDO();
+				roleMenuDO.setMenuId(menuId);
+				roleMenuDO.setRoleId(roleId);
+				roleMenuList.add(roleMenuDO);
+			}
+			batchUtil.insertBatch(roleMenuList, 500, sysRoleMenuService);
+		}
+		if (CollectionUtil.isNotEmpty(deptIds)) {
+			List<SysRoleDeptDO> roleDeptList = new ArrayList<>(deptIds.size());
+			for (Long deptId : deptIds) {
+				SysRoleDeptDO roleDeptDO = new SysRoleDeptDO();
+				roleDeptDO.setDeptId(deptId);
+				roleDeptDO.setRoleId(roleId);
+				roleDeptList.add(roleDeptDO);
+			}
+			batchUtil.insertBatch(roleDeptList, 500, sysRoleDeptService);
+		}
+	}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean updateRole(SysRoleDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        Long id = dto.getId();
-        if (id == null) {
-            throw new CustomException("角色编号不为空");
-        }
-        long count = sysRoleService.count(Wrappers.lambdaQuery(SysRoleDO.class)
-                .eq(SysRoleDO::getTenantId,UserUtil.getTenantId())
-                .eq(SysRoleDO::getName, dto.getName()).ne(SysRoleDO::getId,dto.getId()));
-        if (count > 0) {
-            throw new CustomException("角色已存在，请重新填写");
-        }
-        Integer version = sysRoleService.getVersion(id);
-        SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
-        roleDO.setVersion(version);
-        sysRoleService.updateById(roleDO);
-        //删除中间表
-        sysRoleMenuService.remove(Wrappers.lambdaQuery(SysRoleMenuDO.class).eq(SysRoleMenuDO::getRoleId,dto.getId()));
-        sysRoleDeptService.remove(Wrappers.lambdaQuery(SysRoleDeptDO.class).eq(SysRoleDeptDO::getRoleId,dto.getId()));
-        saveOrUpdate(roleDO.getId(),dto.getMenuIds(),dto.getDeptIds());
-        return true;
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean updateRole(SysRoleDTO dto) {
+		ValidatorUtil.validateEntity(dto);
+		Long id = dto.getId();
+		if (id == null) {
+			throw new CustomException("角色编号不为空");
+		}
+		long count = sysRoleService
+				.count(Wrappers.lambdaQuery(SysRoleDO.class).eq(SysRoleDO::getTenantId, UserUtil.getTenantId())
+						.eq(SysRoleDO::getName, dto.getName()).ne(SysRoleDO::getId, dto.getId()));
+		if (count > 0) {
+			throw new CustomException("角色已存在，请重新填写");
+		}
+		Integer version = sysRoleService.getVersion(id);
+		SysRoleDO roleDO = ConvertUtil.sourceToTarget(dto, SysRoleDO.class);
+		roleDO.setVersion(version);
+		sysRoleService.updateById(roleDO);
+		// 删除中间表
+		sysRoleMenuService.remove(Wrappers.lambdaQuery(SysRoleMenuDO.class).eq(SysRoleMenuDO::getRoleId, dto.getId()));
+		sysRoleDeptService.remove(Wrappers.lambdaQuery(SysRoleDeptDO.class).eq(SysRoleDeptDO::getRoleId, dto.getId()));
+		saveOrUpdate(roleDO.getId(), dto.getMenuIds(), dto.getDeptIds());
+		return true;
+	}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean deleteRole(Long id) {
-        sysRoleService.deleteRole(id);
-        return true;
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean deleteRole(Long id) {
+		sysRoleService.deleteRole(id);
+		return true;
+	}
 
 }

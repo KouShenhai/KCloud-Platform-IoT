@@ -24,25 +24,27 @@ import java.io.Serializable;
 
 /**
  * 系统角色部门
+ *
  * @author laokou
  */
 @Data
 @TableName("boot_sys_role_dept")
-@Schema(name = "SysRoleDeptDO",description = "系统角色部门实体类")
+@Schema(name = "SysRoleDeptDO", description = "系统角色部门实体类")
 public class SysRoleDeptDO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 8958375447263625932L;
-    /**
-     * 角色id
-     */
-    @Schema(name = "roleId",description = "角色id",example = "666")
-    private Long roleId;
+	@Serial
+	private static final long serialVersionUID = 8958375447263625932L;
 
-    /**
-     * 部门id
-     */
-    @Schema(name = "deptId",description = "部门id",example = "999")
-    private Long deptId;
+	/**
+	 * 角色id
+	 */
+	@Schema(name = "roleId", description = "角色id", example = "666")
+	private Long roleId;
+
+	/**
+	 * 部门id
+	 */
+	@Schema(name = "deptId", description = "部门id", example = "999")
+	private Long deptId;
 
 }

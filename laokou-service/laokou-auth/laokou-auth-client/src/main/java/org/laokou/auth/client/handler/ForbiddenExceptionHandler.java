@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.auth.client.handler;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.i18n.core.StatusCode;
@@ -22,15 +23,20 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
+
 /**
  * 无权限访问，异常处理器
+ *
  * @author laokou
  */
 @Component
 public class ForbiddenExceptionHandler implements AccessDeniedHandler {
 
-    @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
-        CustomAuthExceptionHandler.handleException(response, StatusCode.FORBIDDEN, MessageUtil.getMessage(StatusCode.FORBIDDEN));
-    }
+	@Override
+	public void handle(HttpServletRequest request, HttpServletResponse response,
+			AccessDeniedException accessDeniedException) throws IOException {
+		CustomAuthExceptionHandler.handleException(response, StatusCode.FORBIDDEN,
+				MessageUtil.getMessage(StatusCode.FORBIDDEN));
+	}
+
 }

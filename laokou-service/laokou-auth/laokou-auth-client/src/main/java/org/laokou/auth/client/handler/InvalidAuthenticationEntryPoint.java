@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.auth.client.handler;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -29,21 +30,25 @@ import java.io.IOException;
 
 /**
  * 无效认证
+ *
  * @author laokou
  */
 @Slf4j
 @Component
 public class InvalidAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-        if (authException instanceof InsufficientAuthenticationException) {
-            CustomAuthExceptionHandler.handleException(response, StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
-        }
-        if (authException instanceof OAuth2AuthenticationException oAuth2AuthenticationException) {
-            String message = oAuth2AuthenticationException.getError().getDescription();
-            int errorCode = Integer.parseInt(oAuth2AuthenticationException.getError().getErrorCode());
-            CustomAuthExceptionHandler.handleException(response, errorCode, message);
-        }
-    }
+	@Override
+	public void commence(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException authException) throws IOException {
+		if (authException instanceof InsufficientAuthenticationException) {
+			CustomAuthExceptionHandler.handleException(response, StatusCode.UNAUTHORIZED,
+					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
+		}
+		if (authException instanceof OAuth2AuthenticationException oAuth2AuthenticationException) {
+			String message = oAuth2AuthenticationException.getError().getDescription();
+			int errorCode = Integer.parseInt(oAuth2AuthenticationException.getError().getErrorCode());
+			CustomAuthExceptionHandler.handleException(response, errorCode, message);
+		}
+	}
+
 }

@@ -24,35 +24,36 @@ import org.laokou.admin.server.interfaces.qo.SysMessageQo;
 import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
 import org.springframework.stereotype.Service;
+
 /**
  * @author laokou
  */
 @Service
 public class SysMessageServiceImpl extends ServiceImpl<SysMessageMapper, SysMessageDO> implements SysMessageService {
 
-    @Override
-    public IPage<SysMessageVO> getMessageList(IPage<SysMessageVO> page, SysMessageQo qo) {
-        return this.baseMapper.getMessageList(page,qo);
-    }
+	@Override
+	public IPage<SysMessageVO> getMessageList(IPage<SysMessageVO> page, SysMessageQo qo) {
+		return this.baseMapper.getMessageList(page, qo);
+	}
 
-    @Override
-    public MessageDetailVO getMessageByDetailId(Long id) {
-        return this.baseMapper.getMessageByDetailId(id);
-    }
+	@Override
+	public MessageDetailVO getMessageByDetailId(Long id) {
+		return this.baseMapper.getMessageByDetailId(id);
+	}
 
-    @Override
-    public IPage<SysMessageVO> getUnReadList(IPage<SysMessageVO> page,Integer type, Long userId) {
-        return this.baseMapper.getUnReadList(page,type,userId);
-    }
+	@Override
+	public IPage<SysMessageVO> getUnReadList(IPage<SysMessageVO> page, Integer type, Long userId) {
+		return this.baseMapper.getUnReadList(page, type, userId);
+	}
 
-    @Override
-    public void readMessage(Long id,Integer version) {
-        this.baseMapper.readMessage(id,version);
-    }
+	@Override
+	public void readMessage(Long id, Integer version) {
+		this.baseMapper.readMessage(id, version);
+	}
 
-    @Override
-    public MessageDetailVO getMessageById(Long id) {
-        return this.baseMapper.getMessageById(id);
-    }
+	@Override
+	public MessageDetailVO getMessageById(Long id) {
+		return this.baseMapper.getMessageById(id);
+	}
 
 }

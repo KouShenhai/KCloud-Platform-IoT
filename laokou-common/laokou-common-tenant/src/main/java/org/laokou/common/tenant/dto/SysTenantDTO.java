@@ -29,14 +29,18 @@ import java.io.Serializable;
 @Data
 public class SysTenantDTO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -3978973545182419917L;
-    @NotBlank(message = "请输入租户名称")
-    private String name;
-    private Long id;
-    @NotNull(message = "请选择数据源")
-    private Long sourceId;
-    @NotNull(message = "请选择套餐")
-    private Long packageId;
+	@Serial
+	private static final long serialVersionUID = -3978973545182419917L;
+
+	@NotBlank(message = "请输入租户名称")
+	private String name;
+
+	private Long id;
+
+	@NotNull(message = "请选择数据源")
+	private Long sourceId;
+
+	@NotNull(message = "请选择套餐")
+	private Long packageId;
 
 }

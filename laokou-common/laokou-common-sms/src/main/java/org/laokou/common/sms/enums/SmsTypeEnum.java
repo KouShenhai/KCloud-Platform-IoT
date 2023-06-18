@@ -21,9 +21,9 @@ package org.laokou.common.sms.enums;
  */
 public enum SmsTypeEnum {
 
-    /**
-     * 国阳云
-     */
-    GUO_YANG_YUN
+	/**
+	 * 国阳云
+	 */
+	GUO_YANG_YUN
 
 }

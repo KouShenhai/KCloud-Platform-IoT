@@ -27,37 +27,38 @@ import java.util.List;
  */
 public interface SysDeptService extends IService<SysDeptDO> {
 
-    /**
-     * 获取部门
-     * @param qo
-     * @return
-     */
-    List<SysDeptVO> getDeptList(SysDeptQo qo);
+	/**
+	 * 获取部门
+	 * @param qo
+	 * @return
+	 */
+	List<SysDeptVO> getDeptList(SysDeptQo qo);
 
-    /**
-     * 删除部门
-     * @param id
-     */
-    void deleteDept(Long id);
+	/**
+	 * 删除部门
+	 * @param id
+	 */
+	void deleteDept(Long id);
 
-    /**
-     * 通过id查询部门
-     * @param id
-     * @return
-     */
-    SysDeptVO getDept(Long id);
+	/**
+	 * 通过id查询部门
+	 * @param id
+	 * @return
+	 */
+	SysDeptVO getDept(Long id);
 
-    /**
-     * 通过角色id获取部门ids
-     * @param roleId
-     * @return
-     */
-    List<Long> getDeptIdsByRoleId(Long roleId);
+	/**
+	 * 通过角色id获取部门ids
+	 * @param roleId
+	 * @return
+	 */
+	List<Long> getDeptIdsByRoleId(Long roleId);
 
-    /**
-     * 获取版本号
-     * @param id
-     * @return
-     */
-    Integer getVersion(Long id);
+	/**
+	 * 获取版本号
+	 * @param id
+	 * @return
+	 */
+	Integer getVersion(Long id);
+
 }

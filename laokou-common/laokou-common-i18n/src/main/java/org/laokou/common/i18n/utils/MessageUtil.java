@@ -14,24 +14,29 @@
  * limitations under the License.
  */
 package org.laokou.common.i18n.utils;
+
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import java.nio.charset.StandardCharsets;
+
 /**
- * <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#context-functionality-messagesource">...</a>
+ * <a href=
+ * "https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#context-functionality-messagesource">...</a>
+ *
  * @author laokou
  */
 public class MessageUtil {
-    private static final ReloadableResourceBundleMessageSource resourceBundleMessageSource;
 
-    static {
-        resourceBundleMessageSource = new ReloadableResourceBundleMessageSource();
-        resourceBundleMessageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
-        resourceBundleMessageSource.setBasename("classpath:i18n/message");
-    }
+	private static final ReloadableResourceBundleMessageSource resourceBundleMessageSource;
 
-    public static String getMessage(int code) {
-        return resourceBundleMessageSource.getMessage(String.valueOf(code), null, LocaleContextHolder.getLocale());
-    }
+	static {
+		resourceBundleMessageSource = new ReloadableResourceBundleMessageSource();
+		resourceBundleMessageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
+		resourceBundleMessageSource.setBasename("classpath:i18n/message");
+	}
+
+	public static String getMessage(int code) {
+		return resourceBundleMessageSource.getMessage(String.valueOf(code), null, LocaleContextHolder.getLocale());
+	}
 
 }

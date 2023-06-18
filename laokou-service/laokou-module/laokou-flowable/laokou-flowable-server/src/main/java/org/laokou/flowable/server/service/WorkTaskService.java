@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.flowable.server.service;
+
 import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
@@ -25,54 +26,54 @@ import java.io.IOException;
  */
 public interface WorkTaskService {
 
-    /**
-     * 审批任务
-     * @param dto
-     * @return
-     */
-    AssigneeVO auditTask(AuditDTO dto);
+	/**
+	 * 审批任务
+	 * @param dto
+	 * @return
+	 */
+	AssigneeVO auditTask(AuditDTO dto);
 
-    /**
-     * 处理任务
-     * @param dto
-     * @return
-     */
-    AssigneeVO resolveTask(ResolveDTO dto);
+	/**
+	 * 处理任务
+	 * @param dto
+	 * @return
+	 */
+	AssigneeVO resolveTask(ResolveDTO dto);
 
-    /**
-     * 开始任务
-     * @param dto
-     * @return
-     */
-    AssigneeVO startTask(ProcessDTO dto);
+	/**
+	 * 开始任务
+	 * @param dto
+	 * @return
+	 */
+	AssigneeVO startTask(ProcessDTO dto);
 
-    /**
-     * 任务分页
-     * @param dto
-     * @return
-     */
-    PageVO<TaskVO> queryTaskPage(TaskDTO dto);
+	/**
+	 * 任务分页
+	 * @param dto
+	 * @return
+	 */
+	PageVO<TaskVO> queryTaskPage(TaskDTO dto);
 
-    /**
-     * 任务流程图
-     * @param processInstanceId
-     * @return
-     * @throws IOException
-     */
-    String diagramTask(String processInstanceId) throws IOException;
+	/**
+	 * 任务流程图
+	 * @param processInstanceId
+	 * @return
+	 * @throws IOException
+	 */
+	String diagramTask(String processInstanceId) throws IOException;
 
-    /**
-     * 转办任务
-     * @param dto
-     * @return
-     */
-    AssigneeVO transferTask(TransferDTO dto);
+	/**
+	 * 转办任务
+	 * @param dto
+	 * @return
+	 */
+	AssigneeVO transferTask(TransferDTO dto);
 
-    /**
-     * 委派任务
-     * @param dto
-     * @return
-     */
-    AssigneeVO delegateTask(DelegateDTO dto);
+	/**
+	 * 委派任务
+	 * @param dto
+	 * @return
+	 */
+	AssigneeVO delegateTask(DelegateDTO dto);
 
 }

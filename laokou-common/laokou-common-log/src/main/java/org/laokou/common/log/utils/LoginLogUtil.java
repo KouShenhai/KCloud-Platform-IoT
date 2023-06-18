@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.utils;
+
 import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -31,24 +32,25 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class LoginLogUtil {
 
-    public void recordLogin(String username,String loginType, Integer status, String msg, HttpServletRequest request,Long tenantId) {
-        UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
-        String ip = IpUtil.getIpAddr(request);
-        //获取客户端操作系统
-        String os = userAgent.getOperatingSystem().getName();
-        //获取客户端浏览器
-        String browser = userAgent.getBrowser().getName();
-        LoginLogEvent event = new LoginLogEvent(this);
-        event.setLoginName(username);
-        event.setRequestIp(ip);
-        event.setRequestAddress(AddressUtil.getRealAddress(ip));
-        event.setBrowser(browser);
-        event.setOs(os);
-        event.setMsg(msg);
-        event.setLoginType(loginType);
-        event.setRequestStatus(status);
-        event.setTenantId(tenantId);
-        SpringContextUtil.publishEvent(event);
-    }
+	public void recordLogin(String username, String loginType, Integer status, String msg, HttpServletRequest request,
+			Long tenantId) {
+		UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
+		String ip = IpUtil.getIpAddr(request);
+		// 获取客户端操作系统
+		String os = userAgent.getOperatingSystem().getName();
+		// 获取客户端浏览器
+		String browser = userAgent.getBrowser().getName();
+		LoginLogEvent event = new LoginLogEvent(this);
+		event.setLoginName(username);
+		event.setRequestIp(ip);
+		event.setRequestAddress(AddressUtil.getRealAddress(ip));
+		event.setBrowser(browser);
+		event.setOs(os);
+		event.setMsg(msg);
+		event.setLoginType(loginType);
+		event.setRequestStatus(status);
+		event.setTenantId(tenantId);
+		SpringContextUtil.publishEvent(event);
+	}
 
 }

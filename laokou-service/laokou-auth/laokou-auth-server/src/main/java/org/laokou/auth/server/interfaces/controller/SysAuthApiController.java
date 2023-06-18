@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.auth.server.interfaces.controller;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,62 +33,63 @@ import java.util.List;
 
 /**
  * 系统认证控制器
+ *
  * @author laokou
  */
 @RestController
-@Tag(name = "Sys Auth API",description = "系统认证API")
+@Tag(name = "Sys Auth API", description = "系统认证API")
 @RequiredArgsConstructor
 @RequestMapping("/oauth2")
 public class SysAuthApiController {
 
-    private final SysAuthApplicationService sysAuthApplicationService;
+	private final SysAuthApplicationService sysAuthApplicationService;
 
-    /**
-     * 验证码
-     * @param request 请求参数
-     */
-    @GetMapping("/captcha")
-    @Operation(summary = "系统认证>验证码",description = "系统认证>验证码")
-    @Parameter(name = AuthConstant.UUID,description = "唯一标识",example = "1111")
-    public HttpResult<String> captcha(HttpServletRequest request) {
-        return new HttpResult<String>().ok(sysAuthApplicationService.captcha(request));
-    }
+	/**
+	 * 验证码
+	 * @param request 请求参数
+	 */
+	@GetMapping("/captcha")
+	@Operation(summary = "系统认证>验证码", description = "系统认证>验证码")
+	@Parameter(name = AuthConstant.UUID, description = "唯一标识", example = "1111")
+	public HttpResult<String> captcha(HttpServletRequest request) {
+		return new HttpResult<String>().ok(sysAuthApplicationService.captcha(request));
+	}
 
-    /**
-     * 注销
-     * @param request 请求参数
-     */
-    @GetMapping("/logout")
-    @Operation(summary = "系统认证>注销",description = "系统认证>注销")
-    public HttpResult<Boolean> logout(HttpServletRequest request) {
-        return new HttpResult<Boolean>().ok(sysAuthApplicationService.logout(request));
-    }
+	/**
+	 * 注销
+	 * @param request 请求参数
+	 */
+	@GetMapping("/logout")
+	@Operation(summary = "系统认证>注销", description = "系统认证>注销")
+	public HttpResult<Boolean> logout(HttpServletRequest request) {
+		return new HttpResult<Boolean>().ok(sysAuthApplicationService.logout(request));
+	}
 
-    /**
-     * 租户下拉列表
-     */
-    @GetMapping("/tenant")
-    @Operation(summary = "系统认证>租户",description = "系统认证>租户")
-    public HttpResult<List<OptionVO>> optionList() {
-        return new HttpResult<List<OptionVO>>().ok(sysAuthApplicationService.getOptionList());
-    }
+	/**
+	 * 租户下拉列表
+	 */
+	@GetMapping("/tenant")
+	@Operation(summary = "系统认证>租户", description = "系统认证>租户")
+	public HttpResult<List<OptionVO>> optionList() {
+		return new HttpResult<List<OptionVO>>().ok(sysAuthApplicationService.getOptionList());
+	}
 
-    /**
-     * 密钥配置
-     */
-    @GetMapping("/secret_info")
-    @Operation(summary = "系统认证>密钥配置",description = "系统认证>密钥配置")
-    public HttpResult<SecretInfoVO> secretInfo() throws IOException {
-        return new HttpResult<SecretInfoVO>().ok(sysAuthApplicationService.getSecretInfo());
-    }
+	/**
+	 * 密钥配置
+	 */
+	@GetMapping("/secret_info")
+	@Operation(summary = "系统认证>密钥配置", description = "系统认证>密钥配置")
+	public HttpResult<SecretInfoVO> secretInfo() throws IOException {
+		return new HttpResult<SecretInfoVO>().ok(sysAuthApplicationService.getSecretInfo());
+	}
 
-    /**
-     * 密钥配置
-     */
-    @GetMapping("/idempotent_token")
-    @Operation(summary = "系统认证>接口幂等性令牌",description = "系统认证>接口幂等性令牌")
-    public HttpResult<IdempotentToken> idempotentToken() {
-        return new HttpResult<IdempotentToken>().ok(sysAuthApplicationService.idempotentToken());
-    }
+	/**
+	 * 密钥配置
+	 */
+	@GetMapping("/idempotent_token")
+	@Operation(summary = "系统认证>接口幂等性令牌", description = "系统认证>接口幂等性令牌")
+	public HttpResult<IdempotentToken> idempotentToken() {
+		return new HttpResult<IdempotentToken>().ok(sysAuthApplicationService.idempotentToken());
+	}
 
 }

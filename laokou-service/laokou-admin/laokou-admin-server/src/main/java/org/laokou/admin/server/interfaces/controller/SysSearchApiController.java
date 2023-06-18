@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.interfaces.controller;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -27,23 +28,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
+
 /**
  * 搜索管理控制器
+ *
  * @author laokou
  */
 @RestController
-@Tag(name = "Sys Search Api",description = "系统搜索API")
+@Tag(name = "Sys Search Api", description = "系统搜索API")
 @RequestMapping("/sys/search/api")
 @RequiredArgsConstructor
 public class SysSearchApiController {
 
-    private final SysSearchApplicationService sysSearchApplicationService;
+	private final SysSearchApplicationService sysSearchApplicationService;
 
-    @PostMapping("/resource")
-    @Operation(summary = "系统搜索>资源",description = "系统搜索>资源")
-    @PreAuthorize("hasAuthority('sys:search:resource:query')")
-    public HttpResult<SearchVO<Map<String,Object>>> searchResource(@RequestBody SearchQo form) {
-        return new HttpResult<SearchVO<Map<String,Object>>>().ok(sysSearchApplicationService.searchResource(form));
-    }
+	@PostMapping("/resource")
+	@Operation(summary = "系统搜索>资源", description = "系统搜索>资源")
+	@PreAuthorize("hasAuthority('sys:search:resource:query')")
+	public HttpResult<SearchVO<Map<String, Object>>> searchResource(@RequestBody SearchQo form) {
+		return new HttpResult<SearchVO<Map<String, Object>>>().ok(sysSearchApplicationService.searchResource(form));
+	}
 
 }

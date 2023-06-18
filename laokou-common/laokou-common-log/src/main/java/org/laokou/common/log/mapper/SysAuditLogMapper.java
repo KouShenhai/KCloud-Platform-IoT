@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.mapper;
+
 import java.util.*;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,6 +22,7 @@ import org.apache.ibatis.annotations.Param;
 import org.laokou.common.log.entity.SysAuditLogDO;
 import org.laokou.common.log.vo.SysAuditLogVO;
 import org.springframework.stereotype.Repository;
+
 /**
  * @author laokou
  */
@@ -28,12 +30,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SysAuditLogMapper extends BaseMapper<SysAuditLogDO> {
 
-    /**
-     * 查询资源审核日志
-     * @param businessId
-     * @param type
-     * @return
-     */
-    List<SysAuditLogVO> getAuditLogList(@Param("businessId") Long businessId, @Param("type")Integer type);
+	/**
+	 * 查询资源审核日志
+	 * @param businessId
+	 * @param type
+	 * @return
+	 */
+	List<SysAuditLogVO> getAuditLogList(@Param("businessId") Long businessId, @Param("type") Integer type);
 
 }

@@ -45,34 +45,34 @@ import java.util.TimeZone;
 @Slf4j
 public class HttpMessageConverterConfig {
 
-    @Bean("jackson2HttpMessageConverter")
-    @Order(Ordered.LOWEST_PRECEDENCE - 10000)
-    public MappingJackson2HttpMessageConverter jackson2HttpMessageConverter(){
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
-        // 时区
-        TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
-        DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_MM_DD_HH_MM_SS);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_MM_DD_HH_MM_SS));
-        simpleDateFormat.setTimeZone(timeZone);
-        mapper.setDateFormat(simpleDateFormat);
-        mapper.setTimeZone(timeZone);
-        // Long类型转String类型
-        JavaTimeModule javaTimeModule = new JavaTimeModule();
-        javaTimeModule.addSerializer(Long.class, ToStringSerializer.instance);
-        javaTimeModule.addSerializer(Long.TYPE,ToStringSerializer.instance);
-        // LocalDateTime
-        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
-        javaTimeModule.addDeserializer(LocalDateTime.class,new LocalDateTimeDeserializer(dateTimeFormatter));
-        // 中文转换
-        List<MediaType> list = new ArrayList<>(1);
-        list.add(MediaType.APPLICATION_JSON);
-        converter.setSupportedMediaTypes(list);
-        mapper.registerModule(javaTimeModule);
-        converter.setObjectMapper(mapper);
-        log.info("jackson配置加载完毕");
-        return converter;
-    }
+	@Bean("jackson2HttpMessageConverter")
+	@Order(Ordered.LOWEST_PRECEDENCE - 10000)
+	public MappingJackson2HttpMessageConverter jackson2HttpMessageConverter() {
+		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		// 时区
+		TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_MM_DD_HH_MM_SS);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_MM_DD_HH_MM_SS));
+		simpleDateFormat.setTimeZone(timeZone);
+		mapper.setDateFormat(simpleDateFormat);
+		mapper.setTimeZone(timeZone);
+		// Long类型转String类型
+		JavaTimeModule javaTimeModule = new JavaTimeModule();
+		javaTimeModule.addSerializer(Long.class, ToStringSerializer.instance);
+		javaTimeModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
+		// LocalDateTime
+		javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
+		javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
+		// 中文转换
+		List<MediaType> list = new ArrayList<>(1);
+		list.add(MediaType.APPLICATION_JSON);
+		converter.setSupportedMediaTypes(list);
+		mapper.registerModule(javaTimeModule);
+		converter.setObjectMapper(mapper);
+		log.info("jackson配置加载完毕");
+		return converter;
+	}
 
 }

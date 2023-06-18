@@ -31,9 +31,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class AssigneeVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -2567274615004770287L;
-    private String assignee;
-    private String instanceId;
+	@Serial
+	private static final long serialVersionUID = -2567274615004770287L;
+
+	private String assignee;
+
+	private String instanceId;
 
 }

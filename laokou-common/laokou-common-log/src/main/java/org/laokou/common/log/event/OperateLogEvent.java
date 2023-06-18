@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.event;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Getter;
@@ -31,94 +32,96 @@ import java.time.Clock;
 @Setter
 public class OperateLogEvent extends ApplicationEvent implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -6523521638764501311L;
-    /**
-     * 模块名称，如：系统菜单
-     */
-    private String module;
+	@Serial
+	private static final long serialVersionUID = -6523521638764501311L;
 
-    /**
-     * 操作名称
-     */
-    private String operation;
+	/**
+	 * 模块名称，如：系统菜单
+	 */
+	private String module;
 
-    /**
-     * 请求URI
-     */
-    private String requestUri;
+	/**
+	 * 操作名称
+	 */
+	private String operation;
 
-    /**
-     * 请求方式
-     */
-    private String requestMethod;
+	/**
+	 * 请求URI
+	 */
+	private String requestUri;
 
-    /**
-     * 请求参数
-     */
-    private String requestParams;
+	/**
+	 * 请求方式
+	 */
+	private String requestMethod;
 
-    /**
-     * 浏览器版本
-     */
-    private String userAgent;
+	/**
+	 * 请求参数
+	 */
+	private String requestParams;
 
-    /**
-     * IP地址
-     */
-    private String requestIp;
+	/**
+	 * 浏览器版本
+	 */
+	private String userAgent;
 
-    /**
-     * 归属地
-     */
-    private String requestAddress;
+	/**
+	 * IP地址
+	 */
+	private String requestIp;
 
-    /**
-     * 状态  0：成功   1：失败
-     */
-    private Integer requestStatus;
+	/**
+	 * 归属地
+	 */
+	private String requestAddress;
 
-    /**
-     * 操作人
-     */
-    private String operator;
+	/**
+	 * 状态 0：成功 1：失败
+	 */
+	private Integer requestStatus;
 
-    /**
-     * 创建人
-     */
-    @JsonSerialize(using = ToStringSerializer.class)
-    private Long creator;
+	/**
+	 * 操作人
+	 */
+	private String operator;
 
-    /**
-     * 错误信息
-     */
-    private String errorMsg;
+	/**
+	 * 创建人
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long creator;
 
-    /**
-     * 方法名称
-     */
-    private String methodName;
+	/**
+	 * 错误信息
+	 */
+	private String errorMsg;
 
-    /**
-     * 部门id
-     */
-    private Long deptId;
+	/**
+	 * 方法名称
+	 */
+	private String methodName;
 
-    /**
-     * 租户id
-     */
-    private Long tenantId;
+	/**
+	 * 部门id
+	 */
+	private Long deptId;
 
-    /**
-     * 耗时（毫秒）
-     */
-    private Long takeTime;
+	/**
+	 * 租户id
+	 */
+	private Long tenantId;
 
-    public OperateLogEvent(Object source) {
-        super(source);
-    }
+	/**
+	 * 耗时（毫秒）
+	 */
+	private Long takeTime;
 
-    public OperateLogEvent(Object source, Clock clock) {
-        super(source, clock);
-    }
+	public OperateLogEvent(Object source) {
+		super(source);
+	}
+
+	public OperateLogEvent(Object source, Clock clock) {
+		super(source, clock);
+	}
+
 }

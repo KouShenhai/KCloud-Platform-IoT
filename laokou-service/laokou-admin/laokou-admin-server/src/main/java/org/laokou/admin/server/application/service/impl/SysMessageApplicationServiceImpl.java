@@ -59,90 +59,94 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class SysMessageApplicationServiceImpl implements SysMessageApplicationService {
 
-    private final SysMessageService sysMessageService;
+	private final SysMessageService sysMessageService;
 
-    private final SysMessageDetailService sysMessageDetailService;
-    private final BatchUtil batchUtil;
-    private static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
-    private final RocketTemplate rocketTemplate;
+	private final SysMessageDetailService sysMessageDetailService;
 
-    @Override
-    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
-    @DS(Constant.TENANT)
-    public Boolean pushMessage(MessageDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
-        messageDO.setCreateDate(DateUtil.now());
-        messageDO.setCreator(UserUtil.getUserId());
-        sysMessageService.save(messageDO);
-        Set<String> receiver = dto.getReceiver();
-        Iterator<String> iterator = receiver.iterator();
-        List<SysMessageDetailDO> detailDOList = new ArrayList<>(receiver.size());
-        while (iterator.hasNext()) {
-            String next = iterator.next();
-            SysMessageDetailDO detailDO = new SysMessageDetailDO();
-            detailDO.setMessageId(messageDO.getId());
-            detailDO.setUserId(Long.valueOf(next));
-            detailDO.setCreateDate(DateUtil.now());
-            detailDO.setCreator(UserUtil.getUserId());
-            detailDOList.add(detailDO);
-        }
-        if (CollectionUtil.isNotEmpty(detailDOList)) {
-            batchUtil.insertBatch(detailDOList,500,sysMessageDetailService);
-        }
-        // 推送消息
-        if (CollectionUtil.isNotEmpty(receiver)) {
-            WsMsgDTO wsMsgDTO = new WsMsgDTO();
-            wsMsgDTO.setMsg(DEFAULT_MESSAGE);
-            wsMsgDTO.setReceiver(receiver);
-            // 异步发送
-            rocketTemplate.sendAsyncMessage(RocketmqConstant.LAOKOU_MESSAGE_TOPIC,new RocketmqDTO(JacksonUtil.toJsonStr(wsMsgDTO)));
-        }
-        return true;
-    }
+	private final BatchUtil batchUtil;
 
-    @Override
-    @Idempotent
-    public Boolean insertMessage(MessageDTO dto) {
-        return pushMessage(dto);
-    }
+	private static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
 
-    @Override
-    @DS(Constant.TENANT)
-    public IPage<SysMessageVO> queryMessagePage(SysMessageQo qo) {
-        ValidatorUtil.validateEntity(qo);
-        IPage<SysMessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysMessageService.getMessageList(page,qo);
-    }
+	private final RocketTemplate rocketTemplate;
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    @DS(Constant.TENANT)
-    public MessageDetailVO getMessageByDetailId(Long id) {
-        Integer version = sysMessageDetailService.getVersion(id);
-        sysMessageService.readMessage(id,version);
-        return sysMessageService.getMessageByDetailId(id);
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
+	@DS(Constant.TENANT)
+	public Boolean pushMessage(MessageDTO dto) {
+		ValidatorUtil.validateEntity(dto);
+		SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
+		messageDO.setCreateDate(DateUtil.now());
+		messageDO.setCreator(UserUtil.getUserId());
+		sysMessageService.save(messageDO);
+		Set<String> receiver = dto.getReceiver();
+		Iterator<String> iterator = receiver.iterator();
+		List<SysMessageDetailDO> detailDOList = new ArrayList<>(receiver.size());
+		while (iterator.hasNext()) {
+			String next = iterator.next();
+			SysMessageDetailDO detailDO = new SysMessageDetailDO();
+			detailDO.setMessageId(messageDO.getId());
+			detailDO.setUserId(Long.valueOf(next));
+			detailDO.setCreateDate(DateUtil.now());
+			detailDO.setCreator(UserUtil.getUserId());
+			detailDOList.add(detailDO);
+		}
+		if (CollectionUtil.isNotEmpty(detailDOList)) {
+			batchUtil.insertBatch(detailDOList, 500, sysMessageDetailService);
+		}
+		// 推送消息
+		if (CollectionUtil.isNotEmpty(receiver)) {
+			WsMsgDTO wsMsgDTO = new WsMsgDTO();
+			wsMsgDTO.setMsg(DEFAULT_MESSAGE);
+			wsMsgDTO.setReceiver(receiver);
+			// 异步发送
+			rocketTemplate.sendAsyncMessage(RocketmqConstant.LAOKOU_MESSAGE_TOPIC,
+					new RocketmqDTO(JacksonUtil.toJsonStr(wsMsgDTO)));
+		}
+		return true;
+	}
 
-    @Override
-    @DS(Constant.TENANT)
-    public MessageDetailVO getMessageById(Long id) {
-        return sysMessageService.getMessageById(id);
-    }
+	@Override
+	@Idempotent
+	public Boolean insertMessage(MessageDTO dto) {
+		return pushMessage(dto);
+	}
 
-    @Override
-    @DS(Constant.TENANT)
-    public IPage<SysMessageVO> getUnReadList(SysMessageQo qo) {
-        IPage<SysMessageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        final Long userId = UserUtil.getUserId();
-        return sysMessageService.getUnReadList(page,qo.getType(),userId);
-    }
+	@Override
+	@DS(Constant.TENANT)
+	public IPage<SysMessageVO> queryMessagePage(SysMessageQo qo) {
+		ValidatorUtil.validateEntity(qo);
+		IPage<SysMessageVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+		return sysMessageService.getMessageList(page, qo);
+	}
 
-    @Override
-    @DS(Constant.TENANT)
-    public Long unReadCount() {
-        final Long userId = UserUtil.getUserId();
-        return (long) sysMessageDetailService.unReadCount(userId);
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	@DS(Constant.TENANT)
+	public MessageDetailVO getMessageByDetailId(Long id) {
+		Integer version = sysMessageDetailService.getVersion(id);
+		sysMessageService.readMessage(id, version);
+		return sysMessageService.getMessageByDetailId(id);
+	}
+
+	@Override
+	@DS(Constant.TENANT)
+	public MessageDetailVO getMessageById(Long id) {
+		return sysMessageService.getMessageById(id);
+	}
+
+	@Override
+	@DS(Constant.TENANT)
+	public IPage<SysMessageVO> getUnReadList(SysMessageQo qo) {
+		IPage<SysMessageVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+		final Long userId = UserUtil.getUserId();
+		return sysMessageService.getUnReadList(page, qo.getType(), userId);
+	}
+
+	@Override
+	@DS(Constant.TENANT)
+	public Long unReadCount() {
+		final Long userId = UserUtil.getUserId();
+		return (long) sysMessageDetailService.unReadCount(userId);
+	}
 
 }

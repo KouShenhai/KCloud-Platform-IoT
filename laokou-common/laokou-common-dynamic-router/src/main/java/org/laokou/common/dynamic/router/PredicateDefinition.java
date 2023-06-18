@@ -101,4 +101,5 @@ public class PredicateDefinition {
 		sb.append('}');
 		return sb.toString();
 	}
+
 }

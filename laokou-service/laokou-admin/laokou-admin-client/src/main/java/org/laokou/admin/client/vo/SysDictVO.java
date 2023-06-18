@@ -14,45 +14,52 @@
  * limitations under the License.
  */
 package org.laokou.admin.client.vo;
+
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 /**
  * @author laokou
  */
 @Data
 public class SysDictVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -6470971513332280668L;
-    private Long id;
-    /**
-     * 标签
-     */
-    private String dictLabel;
-    /**
-     * 类型
-     */
-    private String type;
-    /**
-     * 值
-     */
-    private String dictValue;
-    /**
-     * 备注
-     */
-    private String remark;
+	@Serial
+	private static final long serialVersionUID = -6470971513332280668L;
 
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createDate;
+	private Long id;
 
-    /**
-     * 排序
-     */
-    private Integer sort;
+	/**
+	 * 标签
+	 */
+	private String dictLabel;
+
+	/**
+	 * 类型
+	 */
+	private String type;
+
+	/**
+	 * 值
+	 */
+	private String dictValue;
+
+	/**
+	 * 备注
+	 */
+	private String remark;
+
+	/**
+	 * 创建时间
+	 */
+	private LocalDateTime createDate;
+
+	/**
+	 * 排序
+	 */
+	private Integer sort;
 
 }

@@ -26,6 +26,7 @@ import org.laokou.common.oss.vo.UploadVO;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
+
 /**
  * @author laokou
  */
@@ -33,37 +34,37 @@ import java.io.InputStream;
 @Component
 public class OssTemplate {
 
-    private final SysOssLogService sysOssLogService;
+	private final SysOssLogService sysOssLogService;
 
-    private final StorageFactory storageFactory;
+	private final StorageFactory storageFactory;
 
-    public UploadVO upload(long fileSize, String md5, String fileName, String contentType, InputStream inputStream) {
-        // 是否上传
-        SysOssLogDO logDO = sysOssLogService.getLogByMd5(md5);
-        if (null != logDO) {
-            return UploadVO.builder().url(logDO.getUrl()).build();
-        }
-        long file100M = 100 * 1024 * 1024;
-        if (fileSize > file100M) {
-            throw new CustomException("单个文件上传不能超过100M，请重新选择文件并上传");
-        }
-        // 一次读取字节数
-        int limitRead = (int) (fileSize + 1);
-        // 上传文件
-        String url = storageFactory.build().upload(limitRead, fileSize, fileName, inputStream, contentType);
-        // 构建事件对象
-        OssLogEvent event = buildEvent(url, md5, fileName, fileSize);
-        SpringContextUtil.publishEvent(event);
-        return UploadVO.builder().url(url).build();
-    }
+	public UploadVO upload(long fileSize, String md5, String fileName, String contentType, InputStream inputStream) {
+		// 是否上传
+		SysOssLogDO logDO = sysOssLogService.getLogByMd5(md5);
+		if (null != logDO) {
+			return UploadVO.builder().url(logDO.getUrl()).build();
+		}
+		long file100M = 100 * 1024 * 1024;
+		if (fileSize > file100M) {
+			throw new CustomException("单个文件上传不能超过100M，请重新选择文件并上传");
+		}
+		// 一次读取字节数
+		int limitRead = (int) (fileSize + 1);
+		// 上传文件
+		String url = storageFactory.build().upload(limitRead, fileSize, fileName, inputStream, contentType);
+		// 构建事件对象
+		OssLogEvent event = buildEvent(url, md5, fileName, fileSize);
+		SpringContextUtil.publishEvent(event);
+		return UploadVO.builder().url(url).build();
+	}
 
-    private OssLogEvent buildEvent(String url, String md5,String fileName,Long fileSize) {
-        OssLogEvent ossLogEvent = new OssLogEvent(this);
-        ossLogEvent.setUrl(url);
-        ossLogEvent.setMd5(md5);
-        ossLogEvent.setFileName(fileName);
-        ossLogEvent.setFileSize(fileSize);
-        return ossLogEvent;
-    }
+	private OssLogEvent buildEvent(String url, String md5, String fileName, Long fileSize) {
+		OssLogEvent ossLogEvent = new OssLogEvent(this);
+		ossLogEvent.setUrl(url);
+		ossLogEvent.setMd5(md5);
+		ossLogEvent.setFileName(fileName);
+		ossLogEvent.setFileSize(fileSize);
+		return ossLogEvent;
+	}
 
 }

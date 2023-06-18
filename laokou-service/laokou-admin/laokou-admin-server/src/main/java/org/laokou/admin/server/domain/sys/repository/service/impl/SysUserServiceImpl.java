@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.service.impl;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.laokou.admin.client.dto.SysUserDTO;
@@ -26,35 +27,37 @@ import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.List;
+
 /**
  * @author laokou
  */
 @Service
 @Slf4j
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserDO> implements SysUserService {
-    @Override
-    public void updateUser(SysUserDTO dto) {
-        this.baseMapper.updateUser(dto);
-    }
 
-    @Override
-    public IPage<SysUserVO> getUserPage(IPage<SysUserVO> page, SysUserQo qo) {
-        return this.baseMapper.getUserPage(page, qo);
-    }
+	@Override
+	public void updateUser(SysUserDTO dto) {
+		this.baseMapper.updateUser(dto);
+	}
 
-    @Override
-    public void deleteUser(Long id) {
-        this.baseMapper.deleteById(id);
-    }
+	@Override
+	public IPage<SysUserVO> getUserPage(IPage<SysUserVO> page, SysUserQo qo) {
+		return this.baseMapper.getUserPage(page, qo);
+	}
 
-    @Override
-    public List<OptionVO> getOptionList(Long tenantId) {
-        return this.baseMapper.getOptionList(tenantId);
-    }
+	@Override
+	public void deleteUser(Long id) {
+		this.baseMapper.deleteById(id);
+	}
 
-    @Override
-    public Integer getVersion(Long id) {
-        return this.baseMapper.getVersion(id);
-    }
+	@Override
+	public List<OptionVO> getOptionList(Long tenantId) {
+		return this.baseMapper.getOptionList(tenantId);
+	}
+
+	@Override
+	public Integer getVersion(Long id) {
+		return this.baseMapper.getVersion(id);
+	}
 
 }

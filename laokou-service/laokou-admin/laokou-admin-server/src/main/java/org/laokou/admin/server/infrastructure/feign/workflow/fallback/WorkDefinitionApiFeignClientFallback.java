@@ -26,47 +26,49 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 服务降级
+ *
  * @author laokou
  */
 @Slf4j
 @AllArgsConstructor
 public class WorkDefinitionApiFeignClientFallback implements WorkDefinitionApiFeignClient {
 
-    private final Throwable throwable;
+	private final Throwable throwable;
 
-    @Override
-    public HttpResult<Boolean> insert(MultipartFile file) {
-        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<Boolean>().error("流程新增失败，请联系管理员");
-    }
+	@Override
+	public HttpResult<Boolean> insert(MultipartFile file) {
+		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
+		return new HttpResult<Boolean>().error("流程新增失败，请联系管理员");
+	}
 
-    @Override
-    public HttpResult<PageVO<DefinitionVO>> query(DefinitionDTO dto) {
-        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<PageVO<DefinitionVO>>().ok(new PageVO<>());
-    }
+	@Override
+	public HttpResult<PageVO<DefinitionVO>> query(DefinitionDTO dto) {
+		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
+		return new HttpResult<PageVO<DefinitionVO>>().ok(new PageVO<>());
+	}
 
-    @Override
-    public HttpResult<String> diagram(String definitionId) {
-        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<String>().error("流程图查看失败，请联系管理员");
-    }
+	@Override
+	public HttpResult<String> diagram(String definitionId) {
+		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
+		return new HttpResult<String>().error("流程图查看失败，请联系管理员");
+	}
 
-    @Override
-    public HttpResult<Boolean> delete(String deploymentId) {
-        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<Boolean>().error("流程删除失败，请联系管理员");
-    }
+	@Override
+	public HttpResult<Boolean> delete(String deploymentId) {
+		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
+		return new HttpResult<Boolean>().error("流程删除失败，请联系管理员");
+	}
 
-    @Override
-    public HttpResult<Boolean> suspend(String definitionId) {
-        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<Boolean>().error("流程挂起失败，请联系管理员");
-    }
+	@Override
+	public HttpResult<Boolean> suspend(String definitionId) {
+		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
+		return new HttpResult<Boolean>().error("流程挂起失败，请联系管理员");
+	}
 
-    @Override
-    public HttpResult<Boolean> activate(String definitionId) {
-        log.error("服务调用失败，报错原因：{}",throwable.getMessage());
-        return new HttpResult<Boolean>().error("流程激活失败，请联系管理员");
-    }
+	@Override
+	public HttpResult<Boolean> activate(String definitionId) {
+		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
+		return new HttpResult<Boolean>().error("流程激活失败，请联系管理员");
+	}
+
 }

@@ -14,19 +14,22 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.infrastructure.feign.workflow.factory;
+
 import org.laokou.admin.server.infrastructure.feign.workflow.fallback.WorkTaskApiFeignClientFallback;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**
  * 回调工厂
+ *
  * @author laokou
  */
 @Component
 public class WorkTaskApiFeignClientFallbackFactory implements FallbackFactory<WorkTaskApiFeignClientFallback> {
 
-    @Override
-    public WorkTaskApiFeignClientFallback create(Throwable throwable) {
-        return new WorkTaskApiFeignClientFallback(throwable);
-    }
+	@Override
+	public WorkTaskApiFeignClientFallback create(Throwable throwable) {
+		return new WorkTaskApiFeignClientFallback(throwable);
+	}
+
 }
