@@ -16,6 +16,7 @@
 package org.laokou.common.secret.utils;
 
 import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;
 
@@ -30,7 +31,19 @@ public class SecretUtil {
 
 	private static final long TIMEOUT_MILLIS = 30 * 1000L;
 
-	public static void verification(String sign, long timestamp, long userId, String username, long tenantId) {
+	public static void verification(String appKey, String appSecret, String sign, String nonce, long timestamp) {
+		if (StringUtil.isEmpty(appKey)) {
+			throw new CustomException("appKey不为空");
+		}
+		if (!APP_KEY.equals(appKey)) {
+			throw new CustomException("appKey不存在");
+		}
+		if (StringUtil.isEmpty(appSecret)) {
+			throw new CustomException("appSecret不为空");
+		}
+		if (StringUtil.isEmpty(nonce)) {
+			throw new CustomException("nonce不为空");
+		}
 		// 判断时间戳
 		long nowTimestamp = System.currentTimeMillis();
 		long maxTimestamp = nowTimestamp + TIMEOUT_MILLIS;
@@ -38,10 +51,10 @@ public class SecretUtil {
 		if (timestamp > maxTimestamp || timestamp < minTimestamp) {
 			throw new CustomException("请求参数不合法");
 		}
-		String newSign = sign(timestamp, userId, username, tenantId);
-		if (!sign.equals(newSign)) {
-			throw new CustomException("验签失败，请检查配置");
-		}
+		// String newSign = sign(timestamp);
+		// if (!sign.equals(newSign)) {
+		// throw new CustomException("验签失败，请检查配置");
+		// }
 	}
 
 	/**

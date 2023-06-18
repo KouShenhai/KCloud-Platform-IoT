@@ -147,6 +147,7 @@ public class OperateLogAspect {
 			return event;
 		}
 		catch (Exception ex) {
+			log.error("错误信息：{}", ex.getMessage());
 			throw ex;
 		}
 		finally {
