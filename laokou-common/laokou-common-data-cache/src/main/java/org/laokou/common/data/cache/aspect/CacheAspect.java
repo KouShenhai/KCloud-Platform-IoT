@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.data.cache.aspect;
+
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -29,6 +30,7 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+
 /**
  * @author laokou
  */
@@ -36,57 +38,59 @@ import java.lang.reflect.Method;
 @Aspect
 @RequiredArgsConstructor
 public class CacheAspect {
-    private final RedisUtil redisUtil;
-    private final Cache<String,Object> caffeineCache;
 
-    @Around("@annotation(org.laokou.common.data.cache.annotation.DataCache)")
-    public Object around(ProceedingJoinPoint point) throws Throwable {
-        MethodSignature signature = (MethodSignature) point.getSignature();
-        Method method = signature.getMethod();
-        String[] parameterNames = signature.getParameterNames();
-        DataCache dataCache = method.getAnnotation(DataCache.class);
-        if (dataCache == null) {
-            dataCache = AnnotationUtils.findAnnotation(method,DataCache.class);
-        }
-        assert dataCache != null;
-        long expire = dataCache.expire();
-        CacheEnum type = dataCache.type();
-        String key = dataCache.key();
-        String name = dataCache.name();
-        Object[] args = point.getArgs();
-        key = RedisKeyUtil.getDataCacheKey(name, SpringExpressionUtil.parse(key,parameterNames,args,Long.class));
-        switch (type) {
-            case GET -> {
-                return get(key,point,expire);
-            }
-            case PUT -> put(key,point,expire);
-            case DEL -> del(key);
-            default -> {
-                return point.proceed();
-            }
-        }
-        return point.proceed();
-    }
+	private final RedisUtil redisUtil;
 
-    private void put(String key ,ProceedingJoinPoint point,long expire) throws Throwable {
-        Object value = point.proceed();
-        redisUtil.set(key,value,expire);
-        caffeineCache.put(key,value);
-    }
+	private final Cache<String, Object> caffeineCache;
 
-    private Object get(String key,ProceedingJoinPoint point,long expire) throws Throwable {
-        Object obj = caffeineCache.get(key,t -> redisUtil.get(key));
-        if (obj != null) {
-            return obj;
-        }
-        Object value = point.proceed();
-        redisUtil.setIfAbsent(key,value,expire);
-        return value;
-    }
+	@Around("@annotation(org.laokou.common.data.cache.annotation.DataCache)")
+	public Object around(ProceedingJoinPoint point) throws Throwable {
+		MethodSignature signature = (MethodSignature) point.getSignature();
+		Method method = signature.getMethod();
+		String[] parameterNames = signature.getParameterNames();
+		DataCache dataCache = method.getAnnotation(DataCache.class);
+		if (dataCache == null) {
+			dataCache = AnnotationUtils.findAnnotation(method, DataCache.class);
+		}
+		assert dataCache != null;
+		long expire = dataCache.expire();
+		CacheEnum type = dataCache.type();
+		String key = dataCache.key();
+		String name = dataCache.name();
+		Object[] args = point.getArgs();
+		key = RedisKeyUtil.getDataCacheKey(name, SpringExpressionUtil.parse(key, parameterNames, args, Long.class));
+		switch (type) {
+			case GET -> {
+				return get(key, point, expire);
+			}
+			case PUT -> put(key, point, expire);
+			case DEL -> del(key);
+			default -> {
+				return point.proceed();
+			}
+		}
+		return point.proceed();
+	}
 
-    private void del(String key) {
-        redisUtil.delete(key);
-        caffeineCache.invalidate(key);
-    }
+	private void put(String key, ProceedingJoinPoint point, long expire) throws Throwable {
+		Object value = point.proceed();
+		redisUtil.set(key, value, expire);
+		caffeineCache.put(key, value);
+	}
+
+	private Object get(String key, ProceedingJoinPoint point, long expire) throws Throwable {
+		Object obj = caffeineCache.get(key, t -> redisUtil.get(key));
+		if (obj != null) {
+			return obj;
+		}
+		Object value = point.proceed();
+		redisUtil.setIfAbsent(key, value, expire);
+		return value;
+	}
+
+	private void del(String key) {
+		redisUtil.delete(key);
+		caffeineCache.invalidate(key);
+	}
 
 }

@@ -32,42 +32,42 @@ import java.nio.charset.StandardCharsets;
  */
 public class CustomAuthExceptionHandler {
 
-    public static final String ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
+	public static final String ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
-    public static void handleException(HttpServletResponse response, int code, String message) throws IOException {
-        response.setStatus(HttpStatus.OK.value());
-        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
-        PrintWriter writer = response.getWriter();
-        writer.write(JacksonUtil.toJsonStr(new HttpResult().error(code,message)));
-        writer.flush();
-        writer.close();
-    }
+	public static void handleException(HttpServletResponse response, int code, String message) throws IOException {
+		response.setStatus(HttpStatus.OK.value());
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
+		PrintWriter writer = response.getWriter();
+		writer.write(JacksonUtil.toJsonStr(new HttpResult().error(code, message)));
+		writer.flush();
+		writer.close();
+	}
 
-    public static void throwError(int errorCode,String description) {
-        throwError("" + errorCode,description,"");
-    }
+	public static void throwError(int errorCode, String description) {
+		throwError("" + errorCode, description, "");
+	}
 
-    public static void throwError(String errorCode,String description) {
-        throwError(errorCode,description,"");
-    }
+	public static void throwError(String errorCode, String description) {
+		throwError(errorCode, description, "");
+	}
 
-    public static void throwError(String errorCode,String description,String uri) {
-        OAuth2Error error = new OAuth2Error(errorCode, description,uri);
-        throw new OAuth2AuthenticationException(error);
-    }
+	public static void throwError(String errorCode, String description, String uri) {
+		OAuth2Error error = new OAuth2Error(errorCode, description, uri);
+		throw new OAuth2AuthenticationException(error);
+	}
 
-    public static OAuth2AuthenticationException getError(String errorCode,String description,String uri) {
-        OAuth2Error error = new OAuth2Error(errorCode, description,uri);
-        return new OAuth2AuthenticationException(error);
-    }
+	public static OAuth2AuthenticationException getError(String errorCode, String description, String uri) {
+		OAuth2Error error = new OAuth2Error(errorCode, description, uri);
+		return new OAuth2AuthenticationException(error);
+	}
 
-    public static OAuth2AuthenticationException getError(String errorCode,String description) {
-        return getError(errorCode,description,"");
-    }
+	public static OAuth2AuthenticationException getError(String errorCode, String description) {
+		return getError(errorCode, description, "");
+	}
 
-    public static OAuth2AuthenticationException getError(int errorCode,String description) {
-        return getError("" + errorCode,description,"");
-    }
+	public static OAuth2AuthenticationException getError(int errorCode, String description) {
+		return getError("" + errorCode, description, "");
+	}
 
 }

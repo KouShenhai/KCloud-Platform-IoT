@@ -28,49 +28,52 @@ import java.io.Serial;
 @TableName("boot_sys_login_log")
 public class SysLoginLogDO extends BaseDO {
 
-    @Serial
-    private static final long serialVersionUID = 4289483981365827983L;
-    /**
-     * 登录用户
-     */
-    private String loginName;
+	@Serial
+	private static final long serialVersionUID = 4289483981365827983L;
 
-    /**
-     * ip地址
-     */
-    private String requestIp;
-    /**
-     * 操作地点
-     */
-     private String requestAddress;
+	/**
+	 * 登录用户
+	 */
+	private String loginName;
 
-    /**
-     * 浏览器
-     */
-    private String browser;
+	/**
+	 * ip地址
+	 */
+	private String requestIp;
 
-    /**
-     * 操作系统
-     */
-    private String os;
+	/**
+	 * 操作地点
+	 */
+	private String requestAddress;
 
-    /**
-     * 状态  0：成功   1：失败
-     */
-    private Integer requestStatus;
+	/**
+	 * 浏览器
+	 */
+	private String browser;
 
-    /**
-     * 提示信息
-     */
-    private String msg;
+	/**
+	 * 操作系统
+	 */
+	private String os;
 
-    /**
-     * 登录类型
-     */
-    private String loginType;
+	/**
+	 * 状态 0：成功 1：失败
+	 */
+	private Integer requestStatus;
 
-    /**
-     * 租户id
-     */
-    private Long tenantId;
+	/**
+	 * 提示信息
+	 */
+	private String msg;
+
+	/**
+	 * 登录类型
+	 */
+	private String loginType;
+
+	/**
+	 * 租户id
+	 */
+	private Long tenantId;
+
 }

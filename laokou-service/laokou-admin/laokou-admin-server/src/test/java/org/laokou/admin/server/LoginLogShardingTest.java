@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 package org.laokou.admin.server;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.SpringBootTest;
+
 /**
  * @author laokou
  */

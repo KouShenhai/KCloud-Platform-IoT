@@ -38,21 +38,23 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 public class RouterUtil {
-    private final Environment env;
-    private static final String APPLICATION_PREFIX = "laokou-";
 
-   public void initRouter() throws IOException, TemplateException {
-       String appId = env.getProperty("spring.application.name");
-       Map<String,Object> dataMap = new HashMap<>(2);
-       String name = appId.replace(APPLICATION_PREFIX,"");
-       dataMap.put("appId",appId);
-       dataMap.put("name",name);
-       InputStream inputStream = ResourceUtil.getResource("init_router.json").getInputStream();
-       byte[] bytes = inputStream.readAllBytes();
-       String template = new String(bytes, StandardCharsets.UTF_8);
-       String content = TemplateUtil.getContent(template, dataMap);
-       RouteDefinition routeDefinition = JacksonUtil.toBean(content, RouteDefinition.class);
-       log.info("获取路由信息：{}",JacksonUtil.toJsonStr(routeDefinition,true));
-   }
+	private final Environment env;
+
+	private static final String APPLICATION_PREFIX = "laokou-";
+
+	public void initRouter() throws IOException, TemplateException {
+		String appId = env.getProperty("spring.application.name");
+		Map<String, Object> dataMap = new HashMap<>(2);
+		String name = appId.replace(APPLICATION_PREFIX, "");
+		dataMap.put("appId", appId);
+		dataMap.put("name", name);
+		InputStream inputStream = ResourceUtil.getResource("init_router.json").getInputStream();
+		byte[] bytes = inputStream.readAllBytes();
+		String template = new String(bytes, StandardCharsets.UTF_8);
+		String content = TemplateUtil.getContent(template, dataMap);
+		RouteDefinition routeDefinition = JacksonUtil.toBean(content, RouteDefinition.class);
+		log.info("获取路由信息：{}", JacksonUtil.toJsonStr(routeDefinition, true));
+	}
 
 }

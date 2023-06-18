@@ -29,51 +29,52 @@ import java.util.List;
  */
 public interface SysSourceService extends IService<SysSourceDO> {
 
-    /**
-     * 分页查询多租户数据源
-     * @param qo
-     * @param page
-     * @return
-     */
-    IPage<SysSourceVO> querySourcePage(IPage<SysSourceVO> page, SysSourceQo qo);
+	/**
+	 * 分页查询多租户数据源
+	 * @param qo
+	 * @param page
+	 * @return
+	 */
+	IPage<SysSourceVO> querySourcePage(IPage<SysSourceVO> page, SysSourceQo qo);
 
-    /**
-     * 获取版本号
-     * @param id
-     * @return
-     */
-    Integer getVersion(Long id);
+	/**
+	 * 获取版本号
+	 * @param id
+	 * @return
+	 */
+	Integer getVersion(Long id);
 
-    /**
-     * 删除多租户数据源
-     * @param id
-     */
-    void deleteSource(Long id);
+	/**
+	 * 删除多租户数据源
+	 * @param id
+	 */
+	void deleteSource(Long id);
 
-    /**
-     * 查询数据源名称
-     * @param tenantId
-     * @return
-     */
-    String querySourceName(Long tenantId);
+	/**
+	 * 查询数据源名称
+	 * @param tenantId
+	 * @return
+	 */
+	String querySourceName(Long tenantId);
 
-    /**
-     * 查询数据源信息
-     * @param sourceName
-     * @return
-     */
-    SysSourceVO querySource(String sourceName);
+	/**
+	 * 查询数据源信息
+	 * @param sourceName
+	 * @return
+	 */
+	SysSourceVO querySource(String sourceName);
 
-    /**
-     * 数据源详情
-     * @param id
-     * @return
-     */
-    SysSourceVO getSourceById(Long id);
+	/**
+	 * 数据源详情
+	 * @param id
+	 * @return
+	 */
+	SysSourceVO getSourceById(Long id);
 
-    /**
-     * 获取下拉框
-     * @return
-     */
-    List<OptionVO> getOptionList();
+	/**
+	 * 获取下拉框
+	 * @return
+	 */
+	List<OptionVO> getOptionList();
+
 }

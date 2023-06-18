@@ -25,37 +25,38 @@ import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.Topic;
 import org.springframework.lang.Nullable;
+
 /**
  * @author laokou
  */
 public class KeyDeleteEventMessageListener extends KeyspaceEventMessageListener implements MessageListener {
 
-    private static final Topic KEYEVENT_DELETE_TOPIC = new PatternTopic("__keyevent@*__:del");
+	private static final Topic KEYEVENT_DELETE_TOPIC = new PatternTopic("__keyevent@*__:del");
 
-    @Nullable
-    private ApplicationEventPublisher publisher;
+	@Nullable
+	private ApplicationEventPublisher publisher;
 
-    public KeyDeleteEventMessageListener(RedisMessageListenerContainer listenerContainer) {
-        super(listenerContainer);
-    }
+	public KeyDeleteEventMessageListener(RedisMessageListenerContainer listenerContainer) {
+		super(listenerContainer);
+	}
 
-    protected void doRegister(RedisMessageListenerContainer listenerContainer) {
-        listenerContainer.addMessageListener(this, KEYEVENT_DELETE_TOPIC);
-    }
+	protected void doRegister(RedisMessageListenerContainer listenerContainer) {
+		listenerContainer.addMessageListener(this, KEYEVENT_DELETE_TOPIC);
+	}
 
-    protected void doHandleMessage(Message message) {
-        this.publishEvent(new RedisKeyspaceEvent(message.getBody()));
-    }
+	protected void doHandleMessage(Message message) {
+		this.publishEvent(new RedisKeyspaceEvent(message.getBody()));
+	}
 
-    protected void publishEvent(RedisKeyspaceEvent event) {
-        if (this.publisher != null) {
-            this.publisher.publishEvent(event);
-        }
+	protected void publishEvent(RedisKeyspaceEvent event) {
+		if (this.publisher != null) {
+			this.publisher.publishEvent(event);
+		}
 
-    }
+	}
 
-    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-        this.publisher = applicationEventPublisher;
-    }
+	public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+		this.publisher = applicationEventPublisher;
+	}
 
 }

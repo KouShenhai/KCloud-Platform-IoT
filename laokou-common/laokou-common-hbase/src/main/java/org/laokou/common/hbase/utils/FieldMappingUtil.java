@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.hbase.utils;
+
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.hbase.annotation.HbaseFieldInfo;
 import java.lang.reflect.Field;
@@ -26,39 +27,41 @@ import java.util.List;
 @Slf4j
 public class FieldMappingUtil {
 
-    public static List<FieldMapping> getFieldInfo(List<? extends Object> list) {
-        List<FieldMapping> fieldMappingList = new ArrayList<>();
-        list.stream().forEach(item -> {
-            final Class<?> clazz = item.getClass();
-            //返回class中的所有字段（包括私有字段）
-            final Field[] fields = clazz.getDeclaredFields();
-            String row = "";
-            for (Field field : fields) {
-                //true表示获取私有对象
-                field.setAccessible(true);
-                //获取字段上的FieldInfo对象
-                final boolean annotationPresent = field.isAnnotationPresent(HbaseFieldInfo.class);
-                if (annotationPresent) {
-                    final HbaseFieldInfo annotation = field.getAnnotation(HbaseFieldInfo.class);
-                    //获取字段名称
-                    final String type = annotation.type();
-                    final String name = annotation.name();
-                    final String fieldName = field.getName();
-                    String value;
-                    try {
-                        value = field.get(item).toString();
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                    if ("id".equals(type)) {
-                        row = value;
-                    } else {
-                        fieldMappingList.add(new FieldMapping(row,name,fieldName,value));
-                    }
-                }
-            }
-        });
-        return fieldMappingList;
-    }
+	public static List<FieldMapping> getFieldInfo(List<? extends Object> list) {
+		List<FieldMapping> fieldMappingList = new ArrayList<>();
+		list.stream().forEach(item -> {
+			final Class<?> clazz = item.getClass();
+			// 返回class中的所有字段（包括私有字段）
+			final Field[] fields = clazz.getDeclaredFields();
+			String row = "";
+			for (Field field : fields) {
+				// true表示获取私有对象
+				field.setAccessible(true);
+				// 获取字段上的FieldInfo对象
+				final boolean annotationPresent = field.isAnnotationPresent(HbaseFieldInfo.class);
+				if (annotationPresent) {
+					final HbaseFieldInfo annotation = field.getAnnotation(HbaseFieldInfo.class);
+					// 获取字段名称
+					final String type = annotation.type();
+					final String name = annotation.name();
+					final String fieldName = field.getName();
+					String value;
+					try {
+						value = field.get(item).toString();
+					}
+					catch (IllegalAccessException e) {
+						throw new RuntimeException(e);
+					}
+					if ("id".equals(type)) {
+						row = value;
+					}
+					else {
+						fieldMappingList.add(new FieldMapping(row, name, fieldName, value));
+					}
+				}
+			}
+		});
+		return fieldMappingList;
+	}
 
 }

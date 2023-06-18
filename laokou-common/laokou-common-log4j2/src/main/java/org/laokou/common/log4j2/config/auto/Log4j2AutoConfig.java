@@ -25,4 +25,5 @@ import org.springframework.context.annotation.ComponentScan;
 @AutoConfiguration
 @ComponentScan("org.laokou.common.log4j2")
 public class Log4j2AutoConfig {
+
 }

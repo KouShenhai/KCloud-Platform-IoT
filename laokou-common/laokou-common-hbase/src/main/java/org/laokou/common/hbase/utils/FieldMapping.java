@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 package org.laokou.common.hbase.utils;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 /**
  * @author laokou
  */
@@ -25,12 +27,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FieldMapping {
 
-    private String row;
+	private String row;
 
-    private String family;
+	private String family;
 
-    private String qualifier;
+	private String qualifier;
 
-    private String value;
+	private String value;
 
 }

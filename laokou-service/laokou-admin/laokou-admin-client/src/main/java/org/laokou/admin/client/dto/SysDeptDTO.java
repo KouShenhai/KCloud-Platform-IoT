@@ -28,17 +28,18 @@ import java.io.Serializable;
 @Data
 public class SysDeptDTO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -4984183236399313199L;
-    private Long id;
+	@Serial
+	private static final long serialVersionUID = -4984183236399313199L;
 
-    @NotNull(message = "请选择上级部门")
-    private Long pid;
+	private Long id;
 
-    @NotBlank(message = "部门名称不为空")
-    private String name;
+	@NotNull(message = "请选择上级部门")
+	private Long pid;
 
-    @NotNull(message = "部门排序不为空")
-    private Integer sort;
+	@NotBlank(message = "部门名称不为空")
+	private String name;
+
+	@NotNull(message = "部门排序不为空")
+	private Integer sort;
 
 }

@@ -31,19 +31,19 @@ import org.springframework.context.annotation.ComponentScan;
 @ConditionalOnClass(XxlJobProperties.class)
 public class XxlJobAutoConfig {
 
-    @Bean
-    public XxlJobSpringExecutor xxlJobExecutor(XxlJobProperties properties) {
-        XxlJobProperties.Admin admin = properties.getAdmin();
-        XxlJobProperties.Executor executor = properties.getExecutor();
-        XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
-        xxlJobSpringExecutor.setAdminAddresses(admin.getAddress());
-        xxlJobSpringExecutor.setAppname(executor.getAppName());
-        xxlJobSpringExecutor.setIp(executor.getIp());
-        xxlJobSpringExecutor.setPort(executor.getPort());
-        xxlJobSpringExecutor.setAccessToken(executor.getAccessToken());
-        xxlJobSpringExecutor.setLogPath(executor.getLogPath());
-        xxlJobSpringExecutor.setLogRetentionDays(executor.getLogRetentionDays());
-        return xxlJobSpringExecutor;
-    }
+	@Bean
+	public XxlJobSpringExecutor xxlJobExecutor(XxlJobProperties properties) {
+		XxlJobProperties.Admin admin = properties.getAdmin();
+		XxlJobProperties.Executor executor = properties.getExecutor();
+		XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
+		xxlJobSpringExecutor.setAdminAddresses(admin.getAddress());
+		xxlJobSpringExecutor.setAppname(executor.getAppName());
+		xxlJobSpringExecutor.setIp(executor.getIp());
+		xxlJobSpringExecutor.setPort(executor.getPort());
+		xxlJobSpringExecutor.setAccessToken(executor.getAccessToken());
+		xxlJobSpringExecutor.setLogPath(executor.getLogPath());
+		xxlJobSpringExecutor.setLogRetentionDays(executor.getLogRetentionDays());
+		return xxlJobSpringExecutor;
+	}
 
 }

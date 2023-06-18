@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.service;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.common.easy.excel.service.ResultService;
@@ -26,27 +27,28 @@ import org.laokou.common.log.vo.SysLoginLogVO;
 /**
  * @author laokou
  */
-public interface SysLoginLogService extends IService<SysLoginLogDO>,ResultService<SysLoginLogQo,SysLoginLogVO> {
-    /**
-     * 分页查询登录日志
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, SysLoginLogQo qo);
+public interface SysLoginLogService extends IService<SysLoginLogDO>, ResultService<SysLoginLogQo, SysLoginLogVO> {
 
-    /**
-     * 新增登录日志
-     * @param event
-     * @return
-     */
-    Boolean insertLoginLog(LoginLogEvent event);
+	/**
+	 * 分页查询登录日志
+	 * @param page
+	 * @param qo
+	 * @return
+	 */
+	IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, SysLoginLogQo qo);
 
-    /**
-     * 导出登录日志
-     * @param qo
-     * @param response
-     */
-    void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response);
+	/**
+	 * 新增登录日志
+	 * @param event
+	 * @return
+	 */
+	Boolean insertLoginLog(LoginLogEvent event);
+
+	/**
+	 * 导出登录日志
+	 * @param qo
+	 * @param response
+	 */
+	void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response);
 
 }

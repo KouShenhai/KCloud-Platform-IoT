@@ -26,8 +26,11 @@ import java.io.Serializable;
 @Data
 public class SysDeptQo implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 789096430357175843L;
-    private String name;
-    private Long tenantId;
+	@Serial
+	private static final long serialVersionUID = 789096430357175843L;
+
+	private String name;
+
+	private Long tenantId;
+
 }

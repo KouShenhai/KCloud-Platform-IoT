@@ -29,16 +29,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SmsFactory {
 
-    @Value("${sms.type}")
-    private Integer type;
+	@Value("${sms.type}")
+	private Integer type;
 
-    private final GuoYangYunSmsServiceImpl guoYangYunServiceImpl;
+	private final GuoYangYunSmsServiceImpl guoYangYunServiceImpl;
 
-    public SmsService build() {
-        if (SmsTypeEnum.GUO_YANG_YUN.ordinal() == type) {
-            return guoYangYunServiceImpl;
-        }
-        throw new CustomException("请检查SMS配置");
-    }
+	public SmsService build() {
+		if (SmsTypeEnum.GUO_YANG_YUN.ordinal() == type) {
+			return guoYangYunServiceImpl;
+		}
+		throw new CustomException("请检查SMS配置");
+	}
 
 }

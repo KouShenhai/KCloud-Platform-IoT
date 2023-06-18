@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.event;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
@@ -29,27 +30,30 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class AuditLogEvent extends ApplicationEvent implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1532877866226749304L;
-    private Long businessId;
 
-    private String auditName;
+	@Serial
+	private static final long serialVersionUID = 1532877866226749304L;
 
-    private LocalDateTime auditDate;
+	private Long businessId;
 
-    private Integer auditStatus;
+	private String auditName;
 
-    private String comment;
+	private LocalDateTime auditDate;
 
-    private Long creator;
+	private Integer auditStatus;
 
-    private Integer type;
+	private String comment;
 
-    public AuditLogEvent(Object source) {
-        super(source);
-    }
+	private Long creator;
 
-    public AuditLogEvent(Object source, Clock clock) {
-        super(source, clock);
-    }
+	private Integer type;
+
+	public AuditLogEvent(Object source) {
+		super(source);
+	}
+
+	public AuditLogEvent(Object source, Clock clock) {
+		super(source, clock);
+	}
+
 }

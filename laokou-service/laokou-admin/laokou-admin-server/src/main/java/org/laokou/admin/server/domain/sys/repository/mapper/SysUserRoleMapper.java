@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.laokou.admin.server.domain.sys.entity.SysUserRoleDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.laokou.common.mybatisplus.mapper.BatchMapper;
 import org.springframework.stereotype.Repository;
+
 /**
  * @author laokou
  */
 @Repository
 @Mapper
 public interface SysUserRoleMapper extends BaseMapper<SysUserRoleDO>, BatchMapper<SysUserRoleDO> {
-
 
 }

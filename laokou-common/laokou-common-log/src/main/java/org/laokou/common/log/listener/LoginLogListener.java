@@ -30,11 +30,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoginLogListener implements ApplicationListener<LoginLogEvent> {
 
-    private final SysLoginLogService sysLoginLogService;
+	private final SysLoginLogService sysLoginLogService;
 
-    @Override
-    @Async
-    public void onApplicationEvent(LoginLogEvent event) {
-        sysLoginLogService.insertLoginLog(event);
-    }
+	@Override
+	@Async
+	public void onApplicationEvent(LoginLogEvent event) {
+		sysLoginLogService.insertLoginLog(event);
+	}
+
 }

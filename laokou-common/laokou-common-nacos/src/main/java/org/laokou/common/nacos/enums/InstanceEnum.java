@@ -21,13 +21,13 @@ package org.laokou.common.nacos.enums;
  */
 public enum InstanceEnum {
 
-    /**
-     * 注册
-     */
-    REGISTER,
-    /**
-     * 注销
-     */
-    DEREGISTER,
+	/**
+	 * 注册
+	 */
+	REGISTER,
+	/**
+	 * 注销
+	 */
+	DEREGISTER,
 
 }

@@ -10,6 +10,9 @@ import lombok.Data;
  */
 @Data
 public class AppAssertRequest {
-    private String appName;
-    private String password;
+
+	private String appName;
+
+	private String password;
+
 }

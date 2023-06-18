@@ -28,11 +28,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SmsTemplate {
 
-    private final SmsFactory factory;
+	private final SmsFactory factory;
 
-    @SneakyThrows
-    public boolean send(String mobile) {
-        return factory.build().sendSms(mobile);
-    }
+	@SneakyThrows
+	public boolean send(String mobile) {
+		return factory.build().sendSms(mobile);
+	}
 
 }

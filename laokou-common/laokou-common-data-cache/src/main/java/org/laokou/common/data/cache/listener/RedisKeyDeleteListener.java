@@ -29,19 +29,21 @@ import java.nio.charset.StandardCharsets;
  */
 @Component
 @Slf4j
-public class RedisKeyDeleteListener extends KeyDeleteEventMessageListener{
+public class RedisKeyDeleteListener extends KeyDeleteEventMessageListener {
 
-    private final Cache<String,Object> caffeineCache;
+	private final Cache<String, Object> caffeineCache;
 
-    public RedisKeyDeleteListener(RedisMessageListenerContainer listenerContainer, Cache<String,Object> caffeineCache) {
-        super(listenerContainer);
-        this.caffeineCache = caffeineCache;
-    }
+	public RedisKeyDeleteListener(RedisMessageListenerContainer listenerContainer,
+			Cache<String, Object> caffeineCache) {
+		super(listenerContainer);
+		this.caffeineCache = caffeineCache;
+	}
 
-    @Override
-    public void onMessage(Message message, byte[] pattern) {
-        String key = new String(message.getBody(), StandardCharsets.UTF_8);
-        log.info("监听key为{}的删除事件",key);
-        caffeineCache.invalidate(key);
-    }
+	@Override
+	public void onMessage(Message message, byte[] pattern) {
+		String key = new String(message.getBody(), StandardCharsets.UTF_8);
+		log.info("监听key为{}的删除事件", key);
+		caffeineCache.invalidate(key);
+	}
+
 }

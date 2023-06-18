@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 package org.laokou.common.elasticsearch.utils;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 /**
  * 属性、类型、分词器
+ *
  * @author laokou
  */
 @Data
@@ -26,10 +29,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FieldMapping {
 
-    private String field;
+	private String field;
 
-    private String type;
+	private String type;
 
-    private Integer participle;
+	private Integer participle;
 
 }

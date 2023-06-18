@@ -11,9 +11,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class GenerateApplication {
 
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(GenerateApplication.class)
-				.web(WebApplicationType.SERVLET)
-				.run(args);
+		new SpringApplicationBuilder(GenerateApplication.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }

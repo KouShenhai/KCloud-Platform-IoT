@@ -39,10 +39,8 @@ import java.io.IOException;
 import static org.laokou.common.core.constant.Constant.TRUE;
 
 /**
- * 架构演变
- * 单机架构（两层架构）
- * 三层架构（集中式架构）
- * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
+ * 架构演变 单机架构（两层架构） 三层架构（集中式架构） DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
+ *
  * @author laokou
  */
 @SpringBootApplication
@@ -55,21 +53,20 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 @EnableFeignClients
 public class AdminApplication implements CommandLineRunner {
 
-    private final RouterUtil routerUtil;
+	private final RouterUtil routerUtil;
 
-    public static void main(String[] args) {
-        // SpringSecurity 子线程读取父线程的上下文
-        System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-        System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-        System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
-        System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
-        new SpringApplicationBuilder(AdminApplication.class)
-                .web(WebApplicationType.SERVLET)
-                .run(args);
-    }
+	public static void main(String[] args) {
+		// SpringSecurity 子线程读取父线程的上下文
+		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+		new SpringApplicationBuilder(AdminApplication.class).web(WebApplicationType.SERVLET).run(args);
+	}
 
-    @Override
-    public void run(String... args) throws TemplateException, IOException {
-        routerUtil.initRouter();
-    }
+	@Override
+	public void run(String... args) throws TemplateException, IOException {
+		routerUtil.initRouter();
+	}
+
 }

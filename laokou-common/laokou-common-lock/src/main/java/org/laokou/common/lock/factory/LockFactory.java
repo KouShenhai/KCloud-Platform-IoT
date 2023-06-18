@@ -27,12 +27,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LockFactory {
 
-    private final RedisUtil redisUtil;
+	private final RedisUtil redisUtil;
 
-    public Locks build(LockScope scope) {
-        return switch (scope) {
-            case DISTRIBUTED_LOCK -> new RedissonLock(redisUtil);
-        };
-    }
+	public Locks build(LockScope scope) {
+		return switch (scope) {
+			case DISTRIBUTED_LOCK -> new RedissonLock(redisUtil);
+		};
+	}
 
 }

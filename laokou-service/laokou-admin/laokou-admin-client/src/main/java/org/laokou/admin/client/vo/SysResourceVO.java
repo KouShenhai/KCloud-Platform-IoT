@@ -26,14 +26,21 @@ import java.io.Serializable;
 @Data
 public class SysResourceVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -1676369424218639545L;
-    private Long id;
-    private String title;
-    private String url;
-    private Integer status;
-    private String code;
-    private String remark;
-    private String processInstanceId;
+	@Serial
+	private static final long serialVersionUID = -1676369424218639545L;
+
+	private Long id;
+
+	private String title;
+
+	private String url;
+
+	private Integer status;
+
+	private String code;
+
+	private String remark;
+
+	private String processInstanceId;
 
 }

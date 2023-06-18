@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.qo;
+
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BasePage;
 
@@ -25,12 +26,13 @@ import java.io.Serial;
 @Data
 public class SysLoginLogQo extends BasePage {
 
-    @Serial
-    private static final long serialVersionUID = -3186936106036144210L;
-    private String loginName;
+	@Serial
+	private static final long serialVersionUID = -3186936106036144210L;
 
-    private Integer requestStatus;
+	private String loginName;
 
-    private Long tenantId;
+	private Integer requestStatus;
+
+	private Long tenantId;
 
 }

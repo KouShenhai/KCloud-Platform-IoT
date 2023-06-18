@@ -23,17 +23,17 @@ import org.laokou.admin.server.infrastructure.server.Server;
  */
 public interface SysMonitorApplicationService {
 
-    /**
-     * 获取缓存信息
-     * @return
-     */
-    CacheVO getCacheInfo();
+	/**
+	 * 获取缓存信息
+	 * @return
+	 */
+	CacheVO getCacheInfo();
 
-    /**
-     * 获取服务器信息
-     * @return
-     * @throws Exception
-     */
-    Server getServerInfo() throws Exception;
+	/**
+	 * 获取服务器信息
+	 * @return
+	 * @throws Exception
+	 */
+	Server getServerInfo() throws Exception;
 
 }

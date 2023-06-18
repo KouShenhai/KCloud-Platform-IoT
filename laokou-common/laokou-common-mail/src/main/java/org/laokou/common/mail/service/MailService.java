@@ -24,13 +24,13 @@ import java.io.IOException;
  */
 public interface MailService {
 
-    /**
-     * 发送邮件
-     * @param toMail
-     * @return
-     * @throws TemplateException
-     * @throws IOException
-     */
-    Boolean sendMail(String toMail) throws TemplateException, IOException;
+	/**
+	 * 发送邮件
+	 * @param toMail
+	 * @return
+	 * @throws TemplateException
+	 * @throws IOException
+	 */
+	Boolean sendMail(String toMail) throws TemplateException, IOException;
 
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.mybatisplus.entity;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -25,29 +26,30 @@ import java.io.Serializable;
  * @author laokou
  */
 @Data
-@Schema(name = "BasePage",description = "基础分页实体类")
+@Schema(name = "BasePage", description = "基础分页实体类")
 public abstract class BasePage implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 6412915892334241813L;
-    /**
-     * 页码
-     */
-    @NotNull(message = "显示页码不为空")
-    @Schema(name = "pageNum",description = "页码")
-    private Integer pageNum;
+	@Serial
+	private static final long serialVersionUID = 6412915892334241813L;
 
-    /**
-     *
-     */
-    @NotNull(message = "显示条数不为空")
-    @Schema(name = "pageSize",description = "条数")
-    private Integer pageSize;
+	/**
+	 * 页码
+	 */
+	@NotNull(message = "显示页码不为空")
+	@Schema(name = "pageNum", description = "页码")
+	private Integer pageNum;
 
-    /**
-     * sql拼接
-     */
-    @Schema(name = "sqlFilter",description = "sql拼接")
-    private String sqlFilter;
+	/**
+	 *
+	 */
+	@NotNull(message = "显示条数不为空")
+	@Schema(name = "pageSize", description = "条数")
+	private Integer pageSize;
+
+	/**
+	 * sql拼接
+	 */
+	@Schema(name = "sqlFilter", description = "sql拼接")
+	private String sqlFilter;
 
 }

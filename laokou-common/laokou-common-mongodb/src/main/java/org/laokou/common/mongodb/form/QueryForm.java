@@ -14,41 +14,41 @@
  * limitations under the License.
  */
 package org.laokou.common.mongodb.form;
+
 import lombok.Data;
 import org.laokou.common.mongodb.dto.SearchDTO;
 import java.io.Serializable;
 import java.util.List;
+
 /**
  * @author laokou
  */
 @Data
 public class QueryForm implements Serializable {
 
-    /**
-     * 页码
-     */
-    private Integer pageNum = 1;
+	/**
+	 * 页码
+	 */
+	private Integer pageNum = 1;
 
-    /**
-     * 条数
-     */
-    private Integer pageSize = 10;
+	/**
+	 * 条数
+	 */
+	private Integer pageSize = 10;
 
-    /**
-     * 模糊条件查询
-     */
-    private List<SearchDTO> likeSearchList;
+	/**
+	 * 模糊条件查询
+	 */
+	private List<SearchDTO> likeSearchList;
 
-    /**
-     * 表名
-     */
-    private String collectionName;
+	/**
+	 * 表名
+	 */
+	private String collectionName;
 
-    /**
-     * 是否分页
-     */
-    private boolean needPage = false;
-
-
+	/**
+	 * 是否分页
+	 */
+	private boolean needPage = false;
 
 }

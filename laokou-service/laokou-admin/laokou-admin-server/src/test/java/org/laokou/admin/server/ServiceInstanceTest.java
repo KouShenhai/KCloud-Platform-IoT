@@ -15,6 +15,7 @@
  */
 
 package org.laokou.admin.server;
+
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -41,25 +42,25 @@ import java.security.interfaces.RSAPublicKey;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class ServiceInstanceTest {
 
-    private final ServiceUtil serviceUtil;
+	private final ServiceUtil serviceUtil;
 
-    @Test
-    @SneakyThrows
-    void test() {
-        ServiceInstance serviceInstance = serviceUtil.getServiceInstance(ServiceConstant.LAOKOU_FLOWABLE);
-        log.info("data -> ：{}", JacksonUtil.toJsonStr(serviceInstance));
-    }
+	@Test
+	@SneakyThrows
+	void test() {
+		ServiceInstance serviceInstance = serviceUtil.getServiceInstance(ServiceConstant.LAOKOU_FLOWABLE);
+		log.info("data -> ：{}", JacksonUtil.toJsonStr(serviceInstance));
+	}
 
-    @Test
-    void test2() throws NoSuchAlgorithmException {
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(2048);
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-        System.out.println(privateKey);
-        System.out.println();
-        System.out.println(publicKey);
-    }
+	@Test
+	void test2() throws NoSuchAlgorithmException {
+		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+		keyPairGenerator.initialize(2048);
+		KeyPair keyPair = keyPairGenerator.generateKeyPair();
+		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+		System.out.println(privateKey);
+		System.out.println();
+		System.out.println(publicKey);
+	}
 
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.logstash.client.index;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.laokou.common.elasticsearch.annotation.ElasticsearchField;
@@ -29,41 +30,42 @@ import java.time.LocalDateTime;
 @Data
 public class TraceIndex implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -4314847178115273665L;
-    @ElasticsearchField
-    private String app;
+	@Serial
+	private static final long serialVersionUID = -4314847178115273665L;
 
-    @ElasticsearchField(type = "date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private LocalDateTime timestamp;
+	@ElasticsearchField
+	private String app;
 
-    @ElasticsearchField
-    private String userId;
+	@ElasticsearchField(type = "date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	private LocalDateTime timestamp;
 
-    @ElasticsearchField
-    private String username;
+	@ElasticsearchField
+	private String userId;
 
-    @ElasticsearchField
-    private String tenantId;
+	@ElasticsearchField
+	private String username;
 
-    @ElasticsearchField
-    private String traceId;
+	@ElasticsearchField
+	private String tenantId;
 
-    @ElasticsearchField
-    private String level;
+	@ElasticsearchField
+	private String traceId;
 
-    @ElasticsearchField
-    private String pid;
+	@ElasticsearchField
+	private String level;
 
-    @ElasticsearchField
-    private String thread;
+	@ElasticsearchField
+	private String pid;
 
-    @ElasticsearchField
-    private String logger;
+	@ElasticsearchField
+	private String thread;
 
-    @ElasticsearchField
-    private String msg;
+	@ElasticsearchField
+	private String logger;
+
+	@ElasticsearchField
+	private String msg;
 
 }

@@ -27,8 +27,9 @@ import java.io.Serial;
 @Data
 public class SysPackageQo extends BasePage {
 
-    @Serial
-    private static final long serialVersionUID = -19295990609090340L;
-    private String name;
+	@Serial
+	private static final long serialVersionUID = -19295990609090340L;
+
+	private String name;
 
 }

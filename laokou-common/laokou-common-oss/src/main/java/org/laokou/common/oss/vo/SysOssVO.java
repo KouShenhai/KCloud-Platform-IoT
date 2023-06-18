@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.oss.vo;
+
 import lombok.Data;
 
 import java.io.Serial;
@@ -21,21 +22,31 @@ import java.io.Serializable;
 
 /**
  * oss
+ *
  * @author laokou
  */
 @Data
 public class SysOssVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 863106401406515312L;
-    private Long id;
-    private String name;
-    private String endpoint;
-    private String region;
-    private String accessKey;
-    private String secretKey;
-    private String bucketName;
-    private Integer status;
-    private Integer pathStyleAccessEnabled;
+	@Serial
+	private static final long serialVersionUID = 863106401406515312L;
+
+	private Long id;
+
+	private String name;
+
+	private String endpoint;
+
+	private String region;
+
+	private String accessKey;
+
+	private String secretKey;
+
+	private String bucketName;
+
+	private Integer status;
+
+	private Integer pathStyleAccessEnabled;
 
 }

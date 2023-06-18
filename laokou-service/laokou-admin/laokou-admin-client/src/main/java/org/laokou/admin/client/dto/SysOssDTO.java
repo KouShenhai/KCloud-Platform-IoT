@@ -29,23 +29,32 @@ import java.io.Serializable;
 @Data
 public class SysOssDTO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 2765572823094626152L;
-    private Long id;
-    @NotBlank(message = "请输入名称")
-    private String name;
-    @NotBlank(message = "请输入终端地址")
-    private String endpoint;
-    private String region;
-    @NotBlank(message = "请输入访问密钥")
-    private String accessKey;
-    @NotBlank(message = "请输入用户密钥")
-    private String secretKey;
-    @NotBlank(message = "请输入桶名")
-    private String bucketName;
-    @NotNull(message = "请选择状态")
-    private Integer status;
-    @NotNull(message = "请选择路径样式访问")
-    private Integer pathStyleAccessEnabled;
+	@Serial
+	private static final long serialVersionUID = 2765572823094626152L;
+
+	private Long id;
+
+	@NotBlank(message = "请输入名称")
+	private String name;
+
+	@NotBlank(message = "请输入终端地址")
+	private String endpoint;
+
+	private String region;
+
+	@NotBlank(message = "请输入访问密钥")
+	private String accessKey;
+
+	@NotBlank(message = "请输入用户密钥")
+	private String secretKey;
+
+	@NotBlank(message = "请输入桶名")
+	private String bucketName;
+
+	@NotNull(message = "请选择状态")
+	private Integer status;
+
+	@NotNull(message = "请选择路径样式访问")
+	private Integer pathStyleAccessEnabled;
 
 }

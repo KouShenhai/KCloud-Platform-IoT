@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.event;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
@@ -29,57 +30,60 @@ import java.time.Clock;
 @Getter
 public class LoginLogEvent extends ApplicationEvent implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -325094951800650353L;
-    /**
-     * 登录用户
-     */
-    private String loginName;
+	@Serial
+	private static final long serialVersionUID = -325094951800650353L;
 
-    /**
-     * ip地址
-     */
-    private String requestIp;
-    /**
-     * 操作地点
-     */
-    private String requestAddress;
+	/**
+	 * 登录用户
+	 */
+	private String loginName;
 
-    /**
-     * 浏览器
-     */
-    private String browser;
+	/**
+	 * ip地址
+	 */
+	private String requestIp;
 
-    /**
-     * 操作系统
-     */
-    private String os;
+	/**
+	 * 操作地点
+	 */
+	private String requestAddress;
 
-    /**
-     * 状态  0：成功   1：失败
-     */
-    private Integer requestStatus;
+	/**
+	 * 浏览器
+	 */
+	private String browser;
 
-    /**
-     * 提示信息
-     */
-    private String msg;
+	/**
+	 * 操作系统
+	 */
+	private String os;
 
-    /**
-     * 类型
-     */
-    private String loginType;
+	/**
+	 * 状态 0：成功 1：失败
+	 */
+	private Integer requestStatus;
 
-    /**
-     * 租户id
-     */
-    private Long tenantId;
+	/**
+	 * 提示信息
+	 */
+	private String msg;
 
-    public LoginLogEvent(Object source) {
-        super(source);
-    }
+	/**
+	 * 类型
+	 */
+	private String loginType;
 
-    public LoginLogEvent(Object source, Clock clock) {
-        super(source, clock);
-    }
+	/**
+	 * 租户id
+	 */
+	private Long tenantId;
+
+	public LoginLogEvent(Object source) {
+		super(source);
+	}
+
+	public LoginLogEvent(Object source, Clock clock) {
+		super(source, clock);
+	}
+
 }

@@ -22,48 +22,48 @@ import org.laokou.common.i18n.utils.StringUtil;
 import java.util.regex.Pattern;
 
 /**
- * http://www.xwood.net/_site_domain_/_root/5870/5874/t_c280386.html
- * XSS过滤工具
+ * http://www.xwood.net/_site_domain_/_root/5870/5874/t_c280386.html XSS过滤工具
+ *
  * @author laokou
  */
 public class XssUtil {
 
-    private static final Pattern[] SCRIPT_PATTERNS = {
-            Pattern.compile("<script(.*?)></script>",Pattern.CASE_INSENSITIVE),
-            Pattern.compile("src[\r\n]*=[\r\n]*\'(.*?)\'",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
-            Pattern.compile("</script>",Pattern.CASE_INSENSITIVE),
-            Pattern.compile("<script(.*?)>",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
-            Pattern.compile("eval\\((.*?)\\)",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
-            Pattern.compile("expression\\((.*?)\\)",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
-            Pattern.compile("javascript:",Pattern.CASE_INSENSITIVE),
-            Pattern.compile("vbscript:",Pattern.CASE_INSENSITIVE),
-            Pattern.compile("onload(.*?)=",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
-            Pattern.compile("alert(.*?)", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
-            Pattern.compile("<", Pattern.MULTILINE | Pattern.DOTALL),
-            Pattern.compile(">", Pattern.MULTILINE | Pattern.DOTALL)
-    };
+	private static final Pattern[] SCRIPT_PATTERNS = {
+			Pattern.compile("<script(.*?)></script>", Pattern.CASE_INSENSITIVE),
+			Pattern.compile("src[\r\n]*=[\r\n]*\'(.*?)\'",
+					Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+			Pattern.compile("</script>", Pattern.CASE_INSENSITIVE),
+			Pattern.compile("<script(.*?)>", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+			Pattern.compile("eval\\((.*?)\\)", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+			Pattern.compile("expression\\((.*?)\\)", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+			Pattern.compile("javascript:", Pattern.CASE_INSENSITIVE),
+			Pattern.compile("vbscript:", Pattern.CASE_INSENSITIVE),
+			Pattern.compile("onload(.*?)=", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+			Pattern.compile("alert(.*?)", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+			Pattern.compile("<", Pattern.MULTILINE | Pattern.DOTALL),
+			Pattern.compile(">", Pattern.MULTILINE | Pattern.DOTALL) };
 
-    /**
-     * XSS过滤
-     */
-    public static String filter(String html){
-        return Jsoup.clean(html, Safelist.relaxed());
-    }
+	/**
+	 * XSS过滤
+	 */
+	public static String filter(String html) {
+		return Jsoup.clean(html, Safelist.relaxed());
+	}
 
-    public static String clean(String value) {
-        if (StringUtil.isNotEmpty(value)) {
-            value = value.replaceAll("\0|\n|\r","");
-            for (Pattern pattern : SCRIPT_PATTERNS) {
-                value = pattern.matcher(value).replaceAll("");
-            }
-            value = filter(value.replaceAll("'","\""));
-        }
-        return value;
-    }
+	public static String clean(String value) {
+		if (StringUtil.isNotEmpty(value)) {
+			value = value.replaceAll("\0|\n|\r", "");
+			for (Pattern pattern : SCRIPT_PATTERNS) {
+				value = pattern.matcher(value).replaceAll("");
+			}
+			value = filter(value.replaceAll("'", "\""));
+		}
+		return value;
+	}
 
-    public static void main(String[] args) {
-        String cleanValue = XssUtil.clean("<a>2222222</a>");
-        System.out.println(cleanValue);
-    }
+	public static void main(String[] args) {
+		String cleanValue = XssUtil.clean("<a>2222222</a>");
+		System.out.println(cleanValue);
+	}
 
 }

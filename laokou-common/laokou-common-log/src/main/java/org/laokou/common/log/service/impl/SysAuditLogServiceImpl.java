@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.service.impl;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.log.event.AuditLogEvent;
@@ -23,22 +24,24 @@ import org.laokou.common.log.service.SysAuditLogService;
 import org.laokou.common.log.vo.SysAuditLogVO;
 import org.springframework.stereotype.Service;
 import java.util.*;
+
 /**
  * @author laokou
  */
 @Service
-public class SysAuditLogServiceImpl extends ServiceImpl<SysAuditLogMapper, SysAuditLogDO> implements SysAuditLogService {
+public class SysAuditLogServiceImpl extends ServiceImpl<SysAuditLogMapper, SysAuditLogDO>
+		implements SysAuditLogService {
 
-    @Override
-    public List<SysAuditLogVO> getAuditLogList(Long businessId, Integer type) {
-        return baseMapper.getAuditLogList(businessId,type);
-    }
+	@Override
+	public List<SysAuditLogVO> getAuditLogList(Long businessId, Integer type) {
+		return baseMapper.getAuditLogList(businessId, type);
+	}
 
-    @Override
-    public Boolean insertAuditLog(AuditLogEvent dto) {
-        SysAuditLogDO auditDO = ConvertUtil.sourceToTarget(dto, SysAuditLogDO.class);
-        baseMapper.insert(auditDO);
-        return true;
-    }
+	@Override
+	public Boolean insertAuditLog(AuditLogEvent dto) {
+		SysAuditLogDO auditDO = ConvertUtil.sourceToTarget(dto, SysAuditLogDO.class);
+		baseMapper.insert(auditDO);
+		return true;
+	}
 
 }

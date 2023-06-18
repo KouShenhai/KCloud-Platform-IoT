@@ -33,19 +33,20 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 @ConditionalOnClass(LettuceConnectionFactory.class)
 public class DataCacheAutoConfig {
 
-    /**
-     * redis 需要配置  notify-keyspace-events KEA
-     */
-    @Bean
-    public RedisMessageListenerContainer redisMessageListenerContainer(LettuceConnectionFactory lettuceConnectionFactory) {
-        RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
-        redisMessageListenerContainer.setConnectionFactory(lettuceConnectionFactory);
-        return redisMessageListenerContainer;
-    }
+	/**
+	 * redis 需要配置 notify-keyspace-events KEA
+	 */
+	@Bean
+	public RedisMessageListenerContainer redisMessageListenerContainer(
+			LettuceConnectionFactory lettuceConnectionFactory) {
+		RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
+		redisMessageListenerContainer.setConnectionFactory(lettuceConnectionFactory);
+		return redisMessageListenerContainer;
+	}
 
-    @Bean
-    public Cache<String, Object> caffeineCache() {
-        return Caffeine.newBuilder().initialCapacity(100).build();
-    }
+	@Bean
+	public Cache<String, Object> caffeineCache() {
+		return Caffeine.newBuilder().initialCapacity(100).build();
+	}
 
 }

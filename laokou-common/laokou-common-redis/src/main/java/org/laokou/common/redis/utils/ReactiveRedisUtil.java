@@ -26,10 +26,10 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ReactiveRedisUtil {
 
-    private final RedissonReactiveClient redissonReactiveClient;
+	private final RedissonReactiveClient redissonReactiveClient;
 
-    public Mono<Object> get(String key) {
-        return redissonReactiveClient.getBucket(key).get();
-    }
+	public Mono<Object> get(String key) {
+		return redissonReactiveClient.getBucket(key).get();
+	}
 
 }

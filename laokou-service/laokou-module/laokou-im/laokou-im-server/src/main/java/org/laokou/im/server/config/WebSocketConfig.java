@@ -28,9 +28,10 @@ import org.springframework.context.annotation.Configuration;
 @RefreshScope
 public class WebSocketConfig {
 
-    @Bean(name = "websocketServer",initMethod = "start",destroyMethod = "stop")
-    public WebSocketServer websocketServer(WebsocketChannelInitializer websocketChannelInitializer,TaskExecutionProperties taskExecutionProperties) {
-        return new WebSocketServer(websocketChannelInitializer,taskExecutionProperties);
-    }
+	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
+	public WebSocketServer websocketServer(WebsocketChannelInitializer websocketChannelInitializer,
+			TaskExecutionProperties taskExecutionProperties) {
+		return new WebSocketServer(websocketChannelInitializer, taskExecutionProperties);
+	}
 
 }

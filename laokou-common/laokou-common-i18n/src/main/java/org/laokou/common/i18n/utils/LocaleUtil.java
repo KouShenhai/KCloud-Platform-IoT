@@ -15,22 +15,24 @@
  */
 
 package org.laokou.common.i18n.utils;
+
 import org.springframework.context.i18n.LocaleContextHolder;
 import java.util.Locale;
+
 /**
  * @author laokou
  */
 public class LocaleUtil {
 
-    private static final String SPLIT = "-";
+	private static final String SPLIT = "-";
 
-    public static Locale toLocale(String language) {
-        if (StringUtil.isEmpty(language)) {
-            return LocaleContextHolder.getLocale();
-        }
-        String[] str = language.split(SPLIT);
-        // 国家 地区
-        return new Locale(str[0], str[1]);
-    }
+	public static Locale toLocale(String language) {
+		if (StringUtil.isEmpty(language)) {
+			return LocaleContextHolder.getLocale();
+		}
+		String[] str = language.split(SPLIT);
+		// 国家 地区
+		return new Locale(str[0], str[1]);
+	}
 
 }

@@ -21,24 +21,24 @@ import java.lang.annotation.*;
  * 数据过滤
  * @author laokou
  */
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface DataFilter {
 
-    /**
-     * 表别名
-     */
-    String tableAlias();
+	/**
+	 * 表别名
+	 */
+	String tableAlias();
 
-    /**
-     * 用户ID
-     */
-    String userId() default "creator";
+	/**
+	 * 用户ID
+	 */
+	String userId() default "creator";
 
-    /**
-     * 部门ID
-     */
-    String deptId() default "dept_id";
+	/**
+	 * 部门ID
+	 */
+	String deptId() default "dept_id";
 
 }

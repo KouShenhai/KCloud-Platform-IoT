@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.security.config.auto;
+
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -31,26 +32,27 @@ import javax.sql.DataSource;
 /**
  * @author laokou
  */
-@AutoConfiguration(before = {JdbcTemplateAutoConfiguration.class})
-@ConditionalOnClass({DataSource.class})
+@AutoConfiguration(before = { JdbcTemplateAutoConfiguration.class })
+@ConditionalOnClass({ DataSource.class })
 public class OAuth2AuthorizationAutoConfig {
 
-    @Bean
-    @ConditionalOnMissingBean(OAuth2AuthorizationService.class)
-    public OAuth2AuthorizationService oauth2AuthorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
-        return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
-    }
+	@Bean
+	@ConditionalOnMissingBean(OAuth2AuthorizationService.class)
+	public OAuth2AuthorizationService oauth2AuthorizationService(JdbcTemplate jdbcTemplate,
+			RegisteredClientRepository registeredClientRepository) {
+		return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
+	}
 
-    @Bean
-    @ConditionalOnMissingBean(RegisteredClientRepository.class)
-    public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
-        return new JdbcRegisteredClientRepository(jdbcTemplate);
-    }
+	@Bean
+	@ConditionalOnMissingBean(RegisteredClientRepository.class)
+	public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
+		return new JdbcRegisteredClientRepository(jdbcTemplate);
+	}
 
-    @Bean
-    @ConditionalOnMissingBean(PasswordEncoder.class)
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
+	@Bean
+	@ConditionalOnMissingBean(PasswordEncoder.class)
+	public PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
 
 }

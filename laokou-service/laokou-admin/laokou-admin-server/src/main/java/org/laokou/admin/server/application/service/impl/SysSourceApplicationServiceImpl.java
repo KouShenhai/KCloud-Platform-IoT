@@ -44,67 +44,70 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SysSourceApplicationServiceImpl implements SysSourceApplicationService {
 
-    private final SysSourceService sysSourceService;
-    @Override
-    public IPage<SysSourceVO> querySourcePage(SysSourceQo qo) {
-        ValidatorUtil.validateEntity(qo);
-        IPage<SysSourceVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysSourceService.querySourcePage(page,qo);
-    }
+	private final SysSourceService sysSourceService;
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean insertSource(SysSourceDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        long count = sysSourceService.count(Wrappers.lambdaQuery(SysSourceDO.class).eq(SysSourceDO::getName, dto.getName()));
-        if (count > 0) {
-            throw new CustomException("数据源名称已存在，请重新填写");
-        }
-        boolean sourceRegex = RegexUtil.sourceRegex(dto.getName());
-        if (!sourceRegex) {
-            throw new CustomException("数据源名称必须包含字母、下划线和数字，例如：tenant_000001");
-        }
-        SysSourceDO tenantSourceDO = ConvertUtil.sourceToTarget(dto, SysSourceDO.class);
-        return sysSourceService.save(tenantSourceDO);
-    }
+	@Override
+	public IPage<SysSourceVO> querySourcePage(SysSourceQo qo) {
+		ValidatorUtil.validateEntity(qo);
+		IPage<SysSourceVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+		return sysSourceService.querySourcePage(page, qo);
+	}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean updateSource(SysSourceDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        Long id = dto.getId();
-        if (id == null) {
-            throw new CustomException("数据源编号不为空");
-        }
-        boolean sourceRegex = RegexUtil.sourceRegex(dto.getName());
-        if (!sourceRegex) {
-            throw new CustomException("数据源名称必须包含字母、下划线和数字，例如：tenant_000001");
-        }
-        long count = sysSourceService.count(Wrappers.lambdaQuery(SysSourceDO.class).eq(SysSourceDO::getName, dto.getName()).ne(SysSourceDO::getId,dto.getId()));
-        if (count > 0) {
-            throw new CustomException("数据源名称已存在，请重新填写");
-        }
-        Integer version = sysSourceService.getVersion(id);
-        SysSourceDO sourceDO = ConvertUtil.sourceToTarget(dto, SysSourceDO.class);
-        sourceDO.setVersion(version);
-        return sysSourceService.updateById(sourceDO);
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean insertSource(SysSourceDTO dto) {
+		ValidatorUtil.validateEntity(dto);
+		long count = sysSourceService
+				.count(Wrappers.lambdaQuery(SysSourceDO.class).eq(SysSourceDO::getName, dto.getName()));
+		if (count > 0) {
+			throw new CustomException("数据源名称已存在，请重新填写");
+		}
+		boolean sourceRegex = RegexUtil.sourceRegex(dto.getName());
+		if (!sourceRegex) {
+			throw new CustomException("数据源名称必须包含字母、下划线和数字，例如：tenant_000001");
+		}
+		SysSourceDO tenantSourceDO = ConvertUtil.sourceToTarget(dto, SysSourceDO.class);
+		return sysSourceService.save(tenantSourceDO);
+	}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean deleteSource(Long id) {
-        sysSourceService.deleteSource(id);
-        return true;
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean updateSource(SysSourceDTO dto) {
+		ValidatorUtil.validateEntity(dto);
+		Long id = dto.getId();
+		if (id == null) {
+			throw new CustomException("数据源编号不为空");
+		}
+		boolean sourceRegex = RegexUtil.sourceRegex(dto.getName());
+		if (!sourceRegex) {
+			throw new CustomException("数据源名称必须包含字母、下划线和数字，例如：tenant_000001");
+		}
+		long count = sysSourceService.count(Wrappers.lambdaQuery(SysSourceDO.class)
+				.eq(SysSourceDO::getName, dto.getName()).ne(SysSourceDO::getId, dto.getId()));
+		if (count > 0) {
+			throw new CustomException("数据源名称已存在，请重新填写");
+		}
+		Integer version = sysSourceService.getVersion(id);
+		SysSourceDO sourceDO = ConvertUtil.sourceToTarget(dto, SysSourceDO.class);
+		sourceDO.setVersion(version);
+		return sysSourceService.updateById(sourceDO);
+	}
 
-    @Override
-    public SysSourceVO getSourceById(Long id) {
-        return sysSourceService.getSourceById(id);
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean deleteSource(Long id) {
+		sysSourceService.deleteSource(id);
+		return true;
+	}
 
-    @Override
-    public List<OptionVO> getOptionList() {
-        return sysSourceService.getOptionList();
-    }
+	@Override
+	public SysSourceVO getSourceById(Long id) {
+		return sysSourceService.getSourceById(id);
+	}
+
+	@Override
+	public List<OptionVO> getOptionList() {
+		return sysSourceService.getOptionList();
+	}
 
 }

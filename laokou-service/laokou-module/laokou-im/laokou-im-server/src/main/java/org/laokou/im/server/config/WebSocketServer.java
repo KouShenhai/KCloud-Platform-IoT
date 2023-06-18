@@ -38,48 +38,51 @@ import static org.laokou.im.server.config.WebsocketHandler.USER_MAP;
 @RequiredArgsConstructor
 public class WebSocketServer extends Server {
 
-    private final WebsocketChannelInitializer websocketChannelInitializer;
-    public static final int PORT = 7777;
-    private static final String POOL_NAME = "laokou-websocket-pool";
-    private final TaskExecutionProperties taskExecutionProperties;
+	private final WebsocketChannelInitializer websocketChannelInitializer;
 
-    @Override
-    protected int getPort() {
-        return PORT;
-    }
+	public static final int PORT = 7777;
 
-    @Override
-    protected AbstractBootstrap<?, ?> init() {
-        // 核心线程数
-        int coreSize = taskExecutionProperties.getPool().getCoreSize();
-        // boss负责监听端口
-        boss = new NioEventLoopGroup(1,new DefaultThreadFactory(POOL_NAME,10));
-        // work负责线程读写
-        work = new NioEventLoopGroup(coreSize,new DefaultThreadFactory(POOL_NAME,10));
-        // 配置引导
-        ServerBootstrap serverBootstrap = new ServerBootstrap();
-        // 绑定线程组
-       return serverBootstrap.group(boss,work)
-                // 指定通道
-                .channel(NioServerSocketChannel.class)
-                // 维持长连接
-                .childOption(ChannelOption.SO_KEEPALIVE,true)
-                // 请求队列最大长度
-                .option(ChannelOption.SO_BACKLOG,1024)
-                // websocket处理类
-                .childHandler(websocketChannelInitializer);
-    }
+	private static final String POOL_NAME = "laokou-websocket-pool";
 
-    /**
-     * 发送消息
-     * @param userId 用户ID
-     * @param msg 消息
-     */
-    public void send(String userId,String msg) {
-        Channel channel = USER_MAP.get(userId);
-        if (channel != null) {
-            channel.writeAndFlush(new TextWebSocketFrame(msg));
-        }
-    }
+	private final TaskExecutionProperties taskExecutionProperties;
+
+	@Override
+	protected int getPort() {
+		return PORT;
+	}
+
+	@Override
+	protected AbstractBootstrap<?, ?> init() {
+		// 核心线程数
+		int coreSize = taskExecutionProperties.getPool().getCoreSize();
+		// boss负责监听端口
+		boss = new NioEventLoopGroup(1, new DefaultThreadFactory(POOL_NAME, 10));
+		// work负责线程读写
+		work = new NioEventLoopGroup(coreSize, new DefaultThreadFactory(POOL_NAME, 10));
+		// 配置引导
+		ServerBootstrap serverBootstrap = new ServerBootstrap();
+		// 绑定线程组
+		return serverBootstrap.group(boss, work)
+				// 指定通道
+				.channel(NioServerSocketChannel.class)
+				// 维持长连接
+				.childOption(ChannelOption.SO_KEEPALIVE, true)
+				// 请求队列最大长度
+				.option(ChannelOption.SO_BACKLOG, 1024)
+				// websocket处理类
+				.childHandler(websocketChannelInitializer);
+	}
+
+	/**
+	 * 发送消息
+	 * @param userId 用户ID
+	 * @param msg 消息
+	 */
+	public void send(String userId, String msg) {
+		Channel channel = USER_MAP.get(userId);
+		if (channel != null) {
+			channel.writeAndFlush(new TextWebSocketFrame(msg));
+		}
+	}
 
 }

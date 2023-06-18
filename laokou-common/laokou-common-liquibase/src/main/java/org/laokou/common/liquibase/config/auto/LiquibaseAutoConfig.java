@@ -21,6 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * https://docs.liquibase.com/tools-integrations/springboot/springboot.html
+ *
  * @author laokou
  */
 @AutoConfiguration

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.client.vo;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.laokou.common.core.utils.TreeUtil;
@@ -23,38 +24,44 @@ import java.io.Serializable;
 
 /**
  * 系统菜单VO
+ *
  * @author laokou
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class SysMenuVO extends TreeUtil.TreeNode<SysMenuVO> implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 9057183259302756376L;
-    /**
-     * 图标
-     */
-    private String icon;
+	@Serial
+	private static final long serialVersionUID = 9057183259302756376L;
 
-    /**
-     * 类型   0：菜单   1：按钮
-     */
-    private Integer type;
-    /**
-     * 排序
-     */
-    private Integer sort;
-    /**
-     * 资源URL
-     */
-    private String url;
-    /**
-     * 权限标识
-     */
-    private String permission;
+	/**
+	 * 图标
+	 */
+	private String icon;
 
-    /**
-     * 状态 0显示 1隐藏
-     */
-    private Integer visible;
+	/**
+	 * 类型 0：菜单 1：按钮
+	 */
+	private Integer type;
+
+	/**
+	 * 排序
+	 */
+	private Integer sort;
+
+	/**
+	 * 资源URL
+	 */
+	private String url;
+
+	/**
+	 * 权限标识
+	 */
+	private String permission;
+
+	/**
+	 * 状态 0显示 1隐藏
+	 */
+	private Integer visible;
+
 }

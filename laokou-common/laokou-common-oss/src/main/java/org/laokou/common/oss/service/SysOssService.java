@@ -26,39 +26,39 @@ import org.laokou.common.oss.vo.SysOssVO;
  */
 public interface SysOssService extends IService<SysOssDO> {
 
-    /**
-     * 查询OSS配置
-     * @return
-     */
-    SysOssVO queryOssConfig();
+	/**
+	 * 查询OSS配置
+	 * @return
+	 */
+	SysOssVO queryOssConfig();
 
-    /**
-     * 删除oss
-     * @param id
-     * @return
-     */
-    Boolean deleteOss(Long id);
+	/**
+	 * 删除oss
+	 * @param id
+	 * @return
+	 */
+	Boolean deleteOss(Long id);
 
-    /**
-     * 获取版本号
-     * @param id
-     * @return
-     */
-    Integer getVersion(Long id);
+	/**
+	 * 获取版本号
+	 * @param id
+	 * @return
+	 */
+	Integer getVersion(Long id);
 
-    /**
-     * 分页查询
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page, SysOssQo qo);
+	/**
+	 * 分页查询
+	 * @param page
+	 * @param qo
+	 * @return
+	 */
+	IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page, SysOssQo qo);
 
-    /**
-     * 查看详情
-     * @param id
-     * @return
-     */
-    SysOssVO getOssById(Long id);
+	/**
+	 * 查看详情
+	 * @param id
+	 * @return
+	 */
+	SysOssVO getOssById(Long id);
 
 }

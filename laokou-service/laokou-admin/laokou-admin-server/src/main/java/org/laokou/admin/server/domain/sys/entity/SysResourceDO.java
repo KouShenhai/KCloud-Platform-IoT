@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.entity;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.common.mybatisplus.entity.BaseDO;
@@ -23,37 +24,39 @@ import java.io.Serial;
 
 /**
  * 系统资源
+ *
  * @author laokou
  */
 @Data
 @TableName("boot_sys_resource")
-@Schema(name = "SysResourceDO",description = "系统资源实体类")
+@Schema(name = "SysResourceDO", description = "系统资源实体类")
 public class SysResourceDO extends BaseDO {
 
-    @Serial
-    private static final long serialVersionUID = 2664768869857899888L;
-    /**
-     * 资源标题
-     */
-    @Schema(name = "title",description = "资源标题")
-    private String title;
+	@Serial
+	private static final long serialVersionUID = 2664768869857899888L;
 
-    /**
-     * 资源URL
-     */
-    @Schema(name = "url",description = "资源URL")
-    private String url;
+	/**
+	 * 资源标题
+	 */
+	@Schema(name = "title", description = "资源标题")
+	private String title;
 
-    /**
-     * 资源编码
-     */
-    @Schema(name = "code",description = "资源编码")
-    private String code;
+	/**
+	 * 资源URL
+	 */
+	@Schema(name = "url", description = "资源URL")
+	private String url;
 
-    /**
-     * 资源备注
-     */
-    @Schema(name = "remark",description = "资源备注")
-    private String remark;
+	/**
+	 * 资源编码
+	 */
+	@Schema(name = "code", description = "资源编码")
+	private String code;
+
+	/**
+	 * 资源备注
+	 */
+	@Schema(name = "remark", description = "资源备注")
+	private String remark;
 
 }

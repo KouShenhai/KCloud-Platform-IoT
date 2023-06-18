@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.gateway.exception;
+
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.core.StatusCode;
@@ -25,8 +26,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
 /**
  * 异常处理器
+ *
  * @author laokou
  */
 @Component
@@ -46,7 +49,8 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler, Ordere
 			if (statusCode == StatusCode.NOT_FOUND) {
 				log.error("无法找到请求的资源");
 				return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.NOT_FOUND));
-			} else {
+			}
+			else {
 				log.error("服务器内部错误，无法完成请求");
 				return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.INTERNAL_SERVER_ERROR));
 			}
@@ -55,7 +59,8 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler, Ordere
 			// 思路来源于SentinelGatewayBlockExceptionHandler
 			log.error("请求过于频繁，请稍后再试");
 			return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.SERVICE_BLOCK_REQUEST));
-		} else {
+		}
+		else {
 			log.error("服务未知错误");
 			return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.SERVICE_UNKNOWN_ERROR));
 		}

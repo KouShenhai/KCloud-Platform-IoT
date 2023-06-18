@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.mybatisplus.entity;
+
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -24,63 +25,65 @@ import java.time.LocalDateTime;
 
 /**
  * 基础实体类，所有实体都需要继承
+ *
  * @author laokou
  */
 @Data
-@Schema(name = "BaseDO",description = "基础对象实体类")
+@Schema(name = "BaseDO", description = "基础对象实体类")
 public abstract class BaseDO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -5855413730985647400L;
-    /**
-     * id
-     */
-    @TableId(type = IdType.AUTO)
-    @Schema(name = "id",description = "编号")
-    private Long id;
+	@Serial
+	private static final long serialVersionUID = -5855413730985647400L;
 
-    /**
-     * 创建人
-     */
-    @Schema(name = "creator",description = "创建人")
-    @TableField(fill = FieldFill.INSERT)
-    private Long creator;
+	/**
+	 * id
+	 */
+	@TableId(type = IdType.AUTO)
+	@Schema(name = "id", description = "编号")
+	private Long id;
 
-    /**
-     * 修改人
-     */
-    @Schema(name = "editor",description = "修改人")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long editor;
+	/**
+	 * 创建人
+	 */
+	@Schema(name = "creator", description = "创建人")
+	@TableField(fill = FieldFill.INSERT)
+	private Long creator;
 
-    /**
-     * 创建时间
-     */
-    @Schema(name = "createDate",description = "创建时间")
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createDate;
+	/**
+	 * 修改人
+	 */
+	@Schema(name = "editor", description = "修改人")
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private Long editor;
 
-    /**
-     * 修改时间
-     */
-    @Schema(name = "updateDate",description = "修改时间")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateDate;
+	/**
+	 * 创建时间
+	 */
+	@Schema(name = "createDate", description = "创建时间")
+	@TableField(fill = FieldFill.INSERT)
+	private LocalDateTime createDate;
 
-    /**
-     * 删除标识 0未删除 1已删除
-     */
-    @Schema(name = "delFlag",description = "删除标识 0未删除 1已删除")
-    @TableField(fill = FieldFill.INSERT)
-    @TableLogic
-    private Integer delFlag;
+	/**
+	 * 修改时间
+	 */
+	@Schema(name = "updateDate", description = "修改时间")
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	private LocalDateTime updateDate;
 
-    /**
-     * 版本号
-     */
-    @Version
-    @Schema(name = "version",description = "版本号")
-    @TableField(fill = FieldFill.INSERT)
-    private Integer version;
+	/**
+	 * 删除标识 0未删除 1已删除
+	 */
+	@Schema(name = "delFlag", description = "删除标识 0未删除 1已删除")
+	@TableField(fill = FieldFill.INSERT)
+	@TableLogic
+	private Integer delFlag;
+
+	/**
+	 * 版本号
+	 */
+	@Version
+	@Schema(name = "version", description = "版本号")
+	@TableField(fill = FieldFill.INSERT)
+	private Integer version;
 
 }

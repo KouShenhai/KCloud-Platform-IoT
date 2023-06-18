@@ -33,39 +33,40 @@ import java.sql.SQLException;
 @Component
 public class JasyptTypeHandler implements TypeHandler<String> {
 
-    @Override
-    public void setParameter(PreparedStatement preparedStatement, int parameterIndex, String content, JdbcType jdbcType) throws SQLException {
-        if (StringUtil.isNotEmpty(content)) {
-            content = AesUtil.encrypt(content);
-        }
-        preparedStatement.setString(parameterIndex,content);
-    }
+	@Override
+	public void setParameter(PreparedStatement preparedStatement, int parameterIndex, String content, JdbcType jdbcType)
+			throws SQLException {
+		if (StringUtil.isNotEmpty(content)) {
+			content = AesUtil.encrypt(content);
+		}
+		preparedStatement.setString(parameterIndex, content);
+	}
 
-    @Override
-    public String getResult(ResultSet resultSet, String columnName) throws SQLException {
-        String data = resultSet.getString(columnName);
-        if (StringUtil.isEmpty(data)) {
-            return "";
-        }
-        return AesUtil.decrypt(data.trim());
-    }
+	@Override
+	public String getResult(ResultSet resultSet, String columnName) throws SQLException {
+		String data = resultSet.getString(columnName);
+		if (StringUtil.isEmpty(data)) {
+			return "";
+		}
+		return AesUtil.decrypt(data.trim());
+	}
 
-    @Override
-    public String getResult(ResultSet resultSet, int columnIndex) throws SQLException {
-        String data = resultSet.getString(columnIndex);
-        if (StringUtil.isEmpty(data)) {
-            return "";
-        }
-        return AesUtil.decrypt(data.trim());
-    }
+	@Override
+	public String getResult(ResultSet resultSet, int columnIndex) throws SQLException {
+		String data = resultSet.getString(columnIndex);
+		if (StringUtil.isEmpty(data)) {
+			return "";
+		}
+		return AesUtil.decrypt(data.trim());
+	}
 
-    @Override
-    public String getResult(CallableStatement callableStatement, int columnIndex) throws SQLException {
-        String data = callableStatement.getString(columnIndex);
-        if (StringUtil.isEmpty(data)) {
-            return "";
-        }
-        return AesUtil.decrypt(data.trim());
-    }
+	@Override
+	public String getResult(CallableStatement callableStatement, int columnIndex) throws SQLException {
+		String data = callableStatement.getString(columnIndex);
+		if (StringUtil.isEmpty(data)) {
+			return "";
+		}
+		return AesUtil.decrypt(data.trim());
+	}
 
 }

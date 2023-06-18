@@ -23,6 +23,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import java.util.*;
+
 /**
  * @author laokou
  */
@@ -30,32 +31,32 @@ import java.util.*;
 @Repository
 public interface SysDeptMapper extends BaseMapper<SysDeptDO> {
 
-    /**
-     * 查询部门列表
-     * @param qo
-     * @return
-     */
-    List<SysDeptVO> getDeptList(@Param("qo") SysDeptQo qo);
+	/**
+	 * 查询部门列表
+	 * @param qo
+	 * @return
+	 */
+	List<SysDeptVO> getDeptList(@Param("qo") SysDeptQo qo);
 
-    /**
-     * 根据id获取部门
-     * @param id
-     * @return
-     */
-    SysDeptVO getDept(@Param("id") Long id);
+	/**
+	 * 根据id获取部门
+	 * @param id
+	 * @return
+	 */
+	SysDeptVO getDept(@Param("id") Long id);
 
-    /**
-     * 根据角色id获取部门ids
-     * @param roleId
-     * @return
-     */
-    List<Long> getDeptIdsByRoleId(@Param("roleId") Long roleId);
+	/**
+	 * 根据角色id获取部门ids
+	 * @param roleId
+	 * @return
+	 */
+	List<Long> getDeptIdsByRoleId(@Param("roleId") Long roleId);
 
-    /**
-     * 获取版本号
-     * @param id
-     * @return
-     */
-    Integer getVersion(@Param("id") Long id);
+	/**
+	 * 获取版本号
+	 * @param id
+	 * @return
+	 */
+	Integer getVersion(@Param("id") Long id);
 
 }

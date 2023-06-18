@@ -28,15 +28,16 @@ import java.io.Serial;
  */
 @Data
 @TableName("boot_sys_package")
-@Schema(name = "SysPackageDO",description = "系统套餐实体类")
+@Schema(name = "SysPackageDO", description = "系统套餐实体类")
 public class SysPackageDO extends BaseDO {
 
-    @Serial
-    private static final long serialVersionUID = -8966416332004844411L;
-    /**
-     * 套餐名称
-     */
-    @Schema(name = "name",description = "套餐名称")
-    private String name;
+	@Serial
+	private static final long serialVersionUID = -8966416332004844411L;
+
+	/**
+	 * 套餐名称
+	 */
+	@Schema(name = "name", description = "套餐名称")
+	private String name;
 
 }

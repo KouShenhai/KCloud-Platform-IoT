@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.client.vo;
+
 import lombok.Data;
 
 import java.io.Serial;
@@ -24,12 +25,14 @@ import java.io.Serializable;
  */
 @Data
 public class SysRoleVO implements Serializable {
-    @Serial
-    private static final long serialVersionUID = -3805903746359810600L;
-    private Long id;
 
-    private String name;
+	@Serial
+	private static final long serialVersionUID = -3805903746359810600L;
 
-    private Integer sort;
+	private Long id;
+
+	private String name;
+
+	private Integer sort;
 
 }

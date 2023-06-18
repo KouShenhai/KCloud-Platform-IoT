@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -33,6 +34,7 @@ import org.laokou.common.tenant.vo.SysTenantVO;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  * @author laokou
  */
@@ -40,81 +42,88 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class SysTenantApplicationServiceImpl implements SysTenantApplicationService {
 
-    private final SysTenantService sysTenantService;
-    private final SysUserService sysUserService;
-    private final PasswordEncoder passwordEncoder;
+	private final SysTenantService sysTenantService;
 
-    @Override
-    public IPage<SysTenantVO> queryTenantPage(SysTenantQo qo) {
-        ValidatorUtil.validateEntity(qo);
-        IPage<SysTenantVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysTenantService.queryTenantPage(page,qo);
-    }
+	private final SysUserService sysUserService;
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean insertTenant(SysTenantDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        long count = sysTenantService.count(Wrappers.lambdaQuery(SysTenantDO.class).eq(SysTenantDO::getName, dto.getName()));
-        if (count > 0) {
-            throw new CustomException("租户名称已存在，请重新填写");
-        }
-        Long sourceId = dto.getSourceId();
-        long useSourceCount = sysTenantService.count(Wrappers.lambdaQuery(SysTenantDO.class).eq(SysTenantDO::getSourceId, sourceId));
-        if (useSourceCount > 0) {
-            throw new CustomException("该数据源已被使用，清重新选择");
-        }
-        SysTenantDO sysTenantDO = ConvertUtil.sourceToTarget(dto, SysTenantDO.class);
-        sysTenantService.save(sysTenantDO);
-        // 初始化用户
-        initUser(sysTenantDO.getId());
-        return true;
-    }
+	private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public SysTenantVO getTenantById(Long id) {
-        return sysTenantService.getTenantById(id);
-    }
+	@Override
+	public IPage<SysTenantVO> queryTenantPage(SysTenantQo qo) {
+		ValidatorUtil.validateEntity(qo);
+		IPage<SysTenantVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+		return sysTenantService.queryTenantPage(page, qo);
+	}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean updateTenant(SysTenantDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        Long id = dto.getId();
-        if (id == null) {
-            throw new CustomException("租户编号不为空");
-        }
-        long count = sysTenantService.count(Wrappers.lambdaQuery(SysTenantDO.class).eq(SysTenantDO::getName, dto.getName()).ne(SysTenantDO::getId,id));
-        if (count > 0) {
-            throw new CustomException("租户名称已存在，请重新填写");
-        }
-        Long sourceId = dto.getSourceId();
-        long useSourceCount = sysTenantService.count(Wrappers.lambdaQuery(SysTenantDO.class).eq(SysTenantDO::getSourceId, sourceId).ne(SysTenantDO::getId, id));
-        if (useSourceCount > 0) {
-            throw new CustomException("该数据源已被使用，清重新选择");
-        }
-        Integer version = sysTenantService.getVersion(id);
-        SysTenantDO sysTenantDO = ConvertUtil.sourceToTarget(dto, SysTenantDO.class);
-        sysTenantDO.setVersion(version);
-        return sysTenantService.updateById(sysTenantDO);
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean insertTenant(SysTenantDTO dto) {
+		ValidatorUtil.validateEntity(dto);
+		long count = sysTenantService
+				.count(Wrappers.lambdaQuery(SysTenantDO.class).eq(SysTenantDO::getName, dto.getName()));
+		if (count > 0) {
+			throw new CustomException("租户名称已存在，请重新填写");
+		}
+		Long sourceId = dto.getSourceId();
+		long useSourceCount = sysTenantService
+				.count(Wrappers.lambdaQuery(SysTenantDO.class).eq(SysTenantDO::getSourceId, sourceId));
+		if (useSourceCount > 0) {
+			throw new CustomException("该数据源已被使用，清重新选择");
+		}
+		SysTenantDO sysTenantDO = ConvertUtil.sourceToTarget(dto, SysTenantDO.class);
+		sysTenantService.save(sysTenantDO);
+		// 初始化用户
+		initUser(sysTenantDO.getId());
+		return true;
+	}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean deleteTenant(Long id) {
-        sysTenantService.deleteTenant(id);
-        return true;
-    }
+	@Override
+	public SysTenantVO getTenantById(Long id) {
+		return sysTenantService.getTenantById(id);
+	}
 
-    private void initUser(Long tenantId) {
-        String tenantUsername = "tenant";
-        String tenantPassword = "tenant123";
-        SysUserDO sysUserDO = new SysUserDO();
-        sysUserDO.setTenantId(tenantId);
-        sysUserDO.setUsername(tenantUsername);
-        sysUserDO.setSuperAdmin(SuperAdminEnum.YES.ordinal());
-        sysUserDO.setPassword(passwordEncoder.encode(tenantPassword));
-        sysUserDO.setTenantId(tenantId);
-        sysUserService.save(sysUserDO);
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean updateTenant(SysTenantDTO dto) {
+		ValidatorUtil.validateEntity(dto);
+		Long id = dto.getId();
+		if (id == null) {
+			throw new CustomException("租户编号不为空");
+		}
+		long count = sysTenantService.count(Wrappers.lambdaQuery(SysTenantDO.class)
+				.eq(SysTenantDO::getName, dto.getName()).ne(SysTenantDO::getId, id));
+		if (count > 0) {
+			throw new CustomException("租户名称已存在，请重新填写");
+		}
+		Long sourceId = dto.getSourceId();
+		long useSourceCount = sysTenantService.count(Wrappers.lambdaQuery(SysTenantDO.class)
+				.eq(SysTenantDO::getSourceId, sourceId).ne(SysTenantDO::getId, id));
+		if (useSourceCount > 0) {
+			throw new CustomException("该数据源已被使用，清重新选择");
+		}
+		Integer version = sysTenantService.getVersion(id);
+		SysTenantDO sysTenantDO = ConvertUtil.sourceToTarget(dto, SysTenantDO.class);
+		sysTenantDO.setVersion(version);
+		return sysTenantService.updateById(sysTenantDO);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean deleteTenant(Long id) {
+		sysTenantService.deleteTenant(id);
+		return true;
+	}
+
+	private void initUser(Long tenantId) {
+		String tenantUsername = "tenant";
+		String tenantPassword = "tenant123";
+		SysUserDO sysUserDO = new SysUserDO();
+		sysUserDO.setTenantId(tenantId);
+		sysUserDO.setUsername(tenantUsername);
+		sysUserDO.setSuperAdmin(SuperAdminEnum.YES.ordinal());
+		sysUserDO.setPassword(passwordEncoder.encode(tenantPassword));
+		sysUserDO.setTenantId(tenantId);
+		sysUserService.save(sysUserDO);
+	}
+
 }

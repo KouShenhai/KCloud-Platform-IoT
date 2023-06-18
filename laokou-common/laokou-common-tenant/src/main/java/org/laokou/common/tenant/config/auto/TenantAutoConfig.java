@@ -27,4 +27,5 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan("org.laokou.common.tenant.mapper")
 @ComponentScan("org.laokou.common.tenant")
 public class TenantAutoConfig {
+
 }

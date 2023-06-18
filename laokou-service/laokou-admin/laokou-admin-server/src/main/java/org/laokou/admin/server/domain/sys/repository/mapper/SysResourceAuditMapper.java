@@ -28,11 +28,11 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface SysResourceAuditMapper extends BaseMapper<SysResourceAuditDO> {
 
-    /**
-     * 获取版本号
-     * @param instanceId
-     * @return
-     */
-    Integer getVersion(@Param("instanceId")String instanceId);
+	/**
+	 * 获取版本号
+	 * @param instanceId
+	 * @return
+	 */
+	Integer getVersion(@Param("instanceId") String instanceId);
 
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.servlet.ServletOutputStream;
@@ -46,85 +47,85 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WorkflowDefinitionApplicationServiceImpl implements WorkflowDefinitionApplicationService {
 
-    private final WorkDefinitionApiFeignClient workDefinitionApiFeignClient;
+	private final WorkDefinitionApiFeignClient workDefinitionApiFeignClient;
 
-    @Override
-    public Boolean insertDefinition(MultipartFile file) {
-        HttpResult<Boolean> result = workDefinitionApiFeignClient.insert(file);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(), result.getMsg());
-        }
-        return true;
-    }
+	@Override
+	public Boolean insertDefinition(MultipartFile file) {
+		HttpResult<Boolean> result = workDefinitionApiFeignClient.insert(file);
+		if (!result.success()) {
+			throw new CustomException(result.getCode(), result.getMsg());
+		}
+		return true;
+	}
 
-    @Override
-    public IPage<DefinitionVO> queryDefinitionPage(DefinitionQo qo) {
-        ValidatorUtil.validateEntity(qo);
-        Integer pageSize = qo.getPageSize();
-        Integer pageNum = qo.getPageNum();
-        IPage<DefinitionVO> page = new Page<>(pageNum,pageSize);
-        String processName = qo.getProcessName();
-        DefinitionDTO dto = new DefinitionDTO();
-        dto.setPageNum(pageNum);
-        dto.setPageSize(pageSize);
-        dto.setProcessName(processName);
-        HttpResult<PageVO<DefinitionVO>> result = workDefinitionApiFeignClient.query(dto);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(), result.getMsg());
-        }
-        PageVO<DefinitionVO> definitionVoPageVo = Optional.ofNullable(result.getData()).orElseGet(PageVO::new);
-        page.setRecords(definitionVoPageVo.getRecords());
-        page.setTotal(Optional.ofNullable(definitionVoPageVo.getTotal()).orElse(0L));
-        return page;
-    }
+	@Override
+	public IPage<DefinitionVO> queryDefinitionPage(DefinitionQo qo) {
+		ValidatorUtil.validateEntity(qo);
+		Integer pageSize = qo.getPageSize();
+		Integer pageNum = qo.getPageNum();
+		IPage<DefinitionVO> page = new Page<>(pageNum, pageSize);
+		String processName = qo.getProcessName();
+		DefinitionDTO dto = new DefinitionDTO();
+		dto.setPageNum(pageNum);
+		dto.setPageSize(pageSize);
+		dto.setProcessName(processName);
+		HttpResult<PageVO<DefinitionVO>> result = workDefinitionApiFeignClient.query(dto);
+		if (!result.success()) {
+			throw new CustomException(result.getCode(), result.getMsg());
+		}
+		PageVO<DefinitionVO> definitionVoPageVo = Optional.ofNullable(result.getData()).orElseGet(PageVO::new);
+		page.setRecords(definitionVoPageVo.getRecords());
+		page.setTotal(Optional.ofNullable(definitionVoPageVo.getTotal()).orElse(0L));
+		return page;
+	}
 
-    @Override
-    public String diagramDefinition(String definitionId) {
-        HttpResult<String> result = workDefinitionApiFeignClient.diagram(definitionId);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(),result.getMsg());
-        }
-        return result.getData();
-    }
+	@Override
+	public String diagramDefinition(String definitionId) {
+		HttpResult<String> result = workDefinitionApiFeignClient.diagram(definitionId);
+		if (!result.success()) {
+			throw new CustomException(result.getCode(), result.getMsg());
+		}
+		return result.getData();
+	}
 
-    @Override
-    public Boolean deleteDefinition(String deploymentId) {
-        HttpResult<Boolean> result = workDefinitionApiFeignClient.delete(deploymentId);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(), result.getMsg());
-        }
-        return true;
-    }
+	@Override
+	public Boolean deleteDefinition(String deploymentId) {
+		HttpResult<Boolean> result = workDefinitionApiFeignClient.delete(deploymentId);
+		if (!result.success()) {
+			throw new CustomException(result.getCode(), result.getMsg());
+		}
+		return true;
+	}
 
-    @Override
-    public Boolean suspendDefinition(String definitionId) {
-        HttpResult<Boolean> result = workDefinitionApiFeignClient.suspend(definitionId);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(), result.getMsg());
-        }
-        return true;
-    }
+	@Override
+	public Boolean suspendDefinition(String definitionId) {
+		HttpResult<Boolean> result = workDefinitionApiFeignClient.suspend(definitionId);
+		if (!result.success()) {
+			throw new CustomException(result.getCode(), result.getMsg());
+		}
+		return true;
+	}
 
-    @Override
-    public Boolean activateDefinition(String definitionId) {
-        HttpResult<Boolean> result = workDefinitionApiFeignClient.activate(definitionId);
-        if (!result.success()) {
-            throw new CustomException(result.getCode(), result.getMsg());
-        }
-        return true;
-    }
+	@Override
+	public Boolean activateDefinition(String definitionId) {
+		HttpResult<Boolean> result = workDefinitionApiFeignClient.activate(definitionId);
+		if (!result.success()) {
+			throw new CustomException(result.getCode(), result.getMsg());
+		}
+		return true;
+	}
 
-    @Override
-    public void downloadTemplate(HttpServletResponse response) throws IOException {
-        response.setContentType("application/octet-stream");
-        response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=audit.bpmn20.xml");
-        InputStream inputStream = ResourceUtil.getResource("/process/template/audit.bpmn20.xml").getInputStream();
-        ServletOutputStream outputStream = response.getOutputStream();
-        IOUtils.write(inputStream.readAllBytes(),outputStream);
-        outputStream.flush();
-        outputStream.close();
-        inputStream.close();
-    }
+	@Override
+	public void downloadTemplate(HttpServletResponse response) throws IOException {
+		response.setContentType("application/octet-stream");
+		response.setCharacterEncoding("utf-8");
+		response.setHeader("Content-disposition", "attachment;filename=audit.bpmn20.xml");
+		InputStream inputStream = ResourceUtil.getResource("/process/template/audit.bpmn20.xml").getInputStream();
+		ServletOutputStream outputStream = response.getOutputStream();
+		IOUtils.write(inputStream.readAllBytes(), outputStream);
+		outputStream.flush();
+		outputStream.close();
+		inputStream.close();
+	}
 
 }

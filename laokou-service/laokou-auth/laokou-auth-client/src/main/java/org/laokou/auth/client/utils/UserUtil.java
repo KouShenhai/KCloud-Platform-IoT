@@ -24,52 +24,52 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class UserUtil {
 
-    public static UserDetail userDetail() {
-        return (UserDetail) getAuthentication().getPrincipal();
-    }
+	public static UserDetail userDetail() {
+		return (UserDetail) getAuthentication().getPrincipal();
+	}
 
-    public static Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
-    }
+	public static Authentication getAuthentication() {
+		return SecurityContextHolder.getContext().getAuthentication();
+	}
 
-    /**
-     * 用户ID
-     * @return Long
-     */
-    public static Long getUserId() {
-        return userDetail().getId();
-    }
+	/**
+	 * 用户ID
+	 * @return Long
+	 */
+	public static Long getUserId() {
+		return userDetail().getId();
+	}
 
-    /**
-     * 用户名
-     * @return String
-     */
-    public static String getUserName() {
-        return userDetail().getUsername();
-    }
+	/**
+	 * 用户名
+	 * @return String
+	 */
+	public static String getUserName() {
+		return userDetail().getUsername();
+	}
 
-    /**
-     * 部门ID
-     * @return Long
-     */
-    public static Long getDeptId() {
-        return userDetail().getDeptId();
-    }
+	/**
+	 * 部门ID
+	 * @return Long
+	 */
+	public static Long getDeptId() {
+		return userDetail().getDeptId();
+	}
 
-    /**
-     * 租户ID
-     * @return Long
-     */
-    public static Long getTenantId() {
-        return userDetail().getTenantId();
-    }
+	/**
+	 * 租户ID
+	 * @return Long
+	 */
+	public static Long getTenantId() {
+		return userDetail().getTenantId();
+	}
 
-    /**
-     * 资源名称
-     * @return String
-     */
-    public static String getSourceName() {
-        return userDetail().getSourceName();
-    }
+	/**
+	 * 资源名称
+	 * @return String
+	 */
+	public static String getSourceName() {
+		return userDetail().getSourceName();
+	}
 
 }

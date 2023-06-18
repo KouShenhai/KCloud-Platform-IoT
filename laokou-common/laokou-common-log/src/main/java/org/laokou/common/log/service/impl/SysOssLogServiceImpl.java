@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.service.impl;
+
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -26,27 +27,27 @@ import org.laokou.common.log.mapper.SysOssLogMapper;
 import org.laokou.common.log.service.SysOssLogService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  * @author laokou
  */
 @Service
 public class SysOssLogServiceImpl extends ServiceImpl<SysOssLogMapper, SysOssLogDO> implements SysOssLogService {
 
-    @Override
-    @DS(Constant.TENANT)
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean insertLog(OssLogEvent event) {
-        SysOssLogDO sysOssLogDO = ConvertUtil.sourceToTarget(event, SysOssLogDO.class);
-        return this.baseMapper.insert(sysOssLogDO) > 0 ? true : false;
-    }
+	@Override
+	@DS(Constant.TENANT)
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean insertLog(OssLogEvent event) {
+		SysOssLogDO sysOssLogDO = ConvertUtil.sourceToTarget(event, SysOssLogDO.class);
+		return this.baseMapper.insert(sysOssLogDO) > 0 ? true : false;
+	}
 
-    @Override
-    @DS(Constant.TENANT)
-    public SysOssLogDO getLogByMd5(String md5) {
-        LambdaQueryWrapper<SysOssLogDO> queryWrapper = Wrappers.lambdaQuery(SysOssLogDO.class)
-                .select(SysOssLogDO::getUrl)
-                .eq(SysOssLogDO::getMd5, md5);
-        return this.baseMapper.selectOne(queryWrapper);
-    }
+	@Override
+	@DS(Constant.TENANT)
+	public SysOssLogDO getLogByMd5(String md5) {
+		LambdaQueryWrapper<SysOssLogDO> queryWrapper = Wrappers.lambdaQuery(SysOssLogDO.class)
+				.select(SysOssLogDO::getUrl).eq(SysOssLogDO::getMd5, md5);
+		return this.baseMapper.selectOne(queryWrapper);
+	}
 
 }

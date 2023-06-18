@@ -28,27 +28,28 @@ import java.io.Serial;
  */
 @Data
 @TableName("boot_sys_tenant")
-@Schema(name = "SysTenantDO",description = "系统多租户实体类")
+@Schema(name = "SysTenantDO", description = "系统多租户实体类")
 public class SysTenantDO extends BaseDO {
 
-    @Serial
-    private static final long serialVersionUID = -6290324458980136421L;
-    /**
-     * 多租户名称
-     */
-    @Schema(name = "name",description = "多租户名称")
-    private String name;
+	@Serial
+	private static final long serialVersionUID = -6290324458980136421L;
 
-    /**
-     * 数据源id
-     */
-    @Schema(name = "sourceId",description = "数据源id")
-    private Long sourceId;
+	/**
+	 * 多租户名称
+	 */
+	@Schema(name = "name", description = "多租户名称")
+	private String name;
 
-    /**
-     * 套餐id
-     */
-    @Schema(name = "packageId",description = "套餐id")
-    private Long packageId;
+	/**
+	 * 数据源id
+	 */
+	@Schema(name = "sourceId", description = "数据源id")
+	private Long sourceId;
+
+	/**
+	 * 套餐id
+	 */
+	@Schema(name = "packageId", description = "套餐id")
+	private Long packageId;
 
 }

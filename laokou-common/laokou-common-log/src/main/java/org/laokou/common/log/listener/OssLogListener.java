@@ -30,11 +30,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OssLogListener implements ApplicationListener<OssLogEvent> {
 
-    private final SysOssLogService sysOssLogService;
+	private final SysOssLogService sysOssLogService;
 
-    @Override
-    @Async
-    public void onApplicationEvent(OssLogEvent event) {
-        sysOssLogService.insertLog(event);
-    }
+	@Override
+	@Async
+	public void onApplicationEvent(OssLogEvent event) {
+		sysOssLogService.insertLog(event);
+	}
+
 }

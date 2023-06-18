@@ -36,24 +36,27 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class WebsocketChannelInitializer extends ChannelInitializer<SocketChannel> {
 
-    private final WebsocketHandler websocketHandler;
-    private static final String WEBSOCKET_PATH = "/ws";
-    private static final int MAX_CONTENT_LENGTH = 65535;
+	private final WebsocketHandler websocketHandler;
 
-    @Override
-    protected void initChannel(SocketChannel channel) {
-        ChannelPipeline pipeline = channel.pipeline();
-        // 心跳检测
-        pipeline.addLast(new IdleStateHandler(15,0,0, TimeUnit.SECONDS));
-        // HTTP解码器
-        pipeline.addLast(new HttpServerCodec());
-        // 块状方式写入
-        pipeline.addLast(new ChunkedWriteHandler());
-        // 最大内容长度
-        pipeline.addLast(new HttpObjectAggregator(MAX_CONTENT_LENGTH));
-        // 自定义处理器
-        pipeline.addLast(websocketHandler);
-        // websocket协议
-        pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH));
-    }
+	private static final String WEBSOCKET_PATH = "/ws";
+
+	private static final int MAX_CONTENT_LENGTH = 65535;
+
+	@Override
+	protected void initChannel(SocketChannel channel) {
+		ChannelPipeline pipeline = channel.pipeline();
+		// 心跳检测
+		pipeline.addLast(new IdleStateHandler(15, 0, 0, TimeUnit.SECONDS));
+		// HTTP解码器
+		pipeline.addLast(new HttpServerCodec());
+		// 块状方式写入
+		pipeline.addLast(new ChunkedWriteHandler());
+		// 最大内容长度
+		pipeline.addLast(new HttpObjectAggregator(MAX_CONTENT_LENGTH));
+		// 自定义处理器
+		pipeline.addLast(websocketHandler);
+		// websocket协议
+		pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH));
+	}
+
 }

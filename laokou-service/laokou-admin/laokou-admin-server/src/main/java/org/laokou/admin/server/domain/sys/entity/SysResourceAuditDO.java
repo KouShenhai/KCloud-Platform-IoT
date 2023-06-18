@@ -28,51 +28,52 @@ import java.io.Serial;
  */
 @Data
 @TableName("boot_sys_resource_audit")
-@Schema(name = "SysResourceAuditDO",description = "系统资源审批实体类")
+@Schema(name = "SysResourceAuditDO", description = "系统资源审批实体类")
 public class SysResourceAuditDO extends BaseDO {
 
-    @Serial
-    private static final long serialVersionUID = -2335690532963777527L;
-    /**
-     * 资源编号
-     */
-    @Schema(name = "resourceId",description = "资源编号")
-    private Long resourceId;
+	@Serial
+	private static final long serialVersionUID = -2335690532963777527L;
 
-    /**
-     * 资源标题
-     */
-    @Schema(name = "title",description = "资源标题")
-    private String title;
+	/**
+	 * 资源编号
+	 */
+	@Schema(name = "resourceId", description = "资源编号")
+	private Long resourceId;
 
-    /**
-     * 资源URL
-     */
-    @Schema(name = "url",description = "资源URL")
-    private String url;
+	/**
+	 * 资源标题
+	 */
+	@Schema(name = "title", description = "资源标题")
+	private String title;
 
-    /**
-     * 资源编码
-     */
-    @Schema(name = "code",description = "资源编码")
-    private String code;
+	/**
+	 * 资源URL
+	 */
+	@Schema(name = "url", description = "资源URL")
+	private String url;
 
-    /**
-     * 资源备注
-     */
-    @Schema(name = "remark",description = "资源备注")
-    private String remark;
+	/**
+	 * 资源编码
+	 */
+	@Schema(name = "code", description = "资源编码")
+	private String code;
 
-    /**
-     * 流程id
-     */
-    @Schema(name = "processInstanceId",description = "流程id")
-    private String processInstanceId;
+	/**
+	 * 资源备注
+	 */
+	@Schema(name = "remark", description = "资源备注")
+	private String remark;
 
-    /**
-     * 资源状态 0 待审核 1 审核中 2 审批驳回 3 审批通过
-     */
-    @Schema(name = "status",description = "资源状态 0 待审核 1 审核中 2 审批驳回 3 审批通过")
-    private Integer status;
+	/**
+	 * 流程id
+	 */
+	@Schema(name = "processInstanceId", description = "流程id")
+	private String processInstanceId;
+
+	/**
+	 * 资源状态 0 待审核 1 审核中 2 审批驳回 3 审批通过
+	 */
+	@Schema(name = "status", description = "资源状态 0 待审核 1 审核中 2 审批驳回 3 审批通过")
+	private Integer status;
 
 }

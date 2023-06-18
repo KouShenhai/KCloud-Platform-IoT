@@ -30,6 +30,7 @@ import org.laokou.im.server.config.WebSocketServer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
+
 /**
  * @author laokou
  */
@@ -39,20 +40,22 @@ import java.nio.charset.StandardCharsets;
 @RocketMQMessageListener(consumerGroup = "laokou-message-consumer-group", topic = RocketmqConstant.LAOKOU_MESSAGE_TOPIC)
 public class MessageListener implements RocketMQListener<MessageExt> {
 
-    private final WebSocketServer websocketServer;
-    private final ThreadPoolTaskExecutor taskExecutor;
+	private final WebSocketServer websocketServer;
 
-    @Override
-    public void onMessage(MessageExt messageExt) {
-        String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-        if (StringUtil.isEmpty(message)) {
-            return;
-        }
-        RocketmqDTO dto = JacksonUtil.toBean(message, RocketmqDTO.class);
-        String body = dto.getBody();
-        WsMsgDTO msgDTO = JacksonUtil.toBean(body,WsMsgDTO.class);
-        for (String userId : msgDTO.getReceiver()) {
-            taskExecutor.execute(() -> websocketServer.send(userId,msgDTO.getMsg()));
-        }
-    }
+	private final ThreadPoolTaskExecutor taskExecutor;
+
+	@Override
+	public void onMessage(MessageExt messageExt) {
+		String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
+		if (StringUtil.isEmpty(message)) {
+			return;
+		}
+		RocketmqDTO dto = JacksonUtil.toBean(message, RocketmqDTO.class);
+		String body = dto.getBody();
+		WsMsgDTO msgDTO = JacksonUtil.toBean(body, WsMsgDTO.class);
+		for (String userId : msgDTO.getReceiver()) {
+			taskExecutor.execute(() -> websocketServer.send(userId, msgDTO.getMsg()));
+		}
+	}
+
 }

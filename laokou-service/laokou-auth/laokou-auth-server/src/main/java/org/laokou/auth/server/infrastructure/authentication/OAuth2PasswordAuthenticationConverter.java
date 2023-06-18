@@ -24,13 +24,15 @@ import java.util.Map;
  * @author laokou
  */
 public class OAuth2PasswordAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {
-    @Override
-    String getGrantType() {
-        return OAuth2PasswordAuthenticationProvider.GRANT_TYPE;
-    }
 
-    @Override
-    Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-        return new OAuth2PasswordAuthenticationToken(clientPrincipal,additionalParameters);
-    }
+	@Override
+	String getGrantType() {
+		return OAuth2PasswordAuthenticationProvider.GRANT_TYPE;
+	}
+
+	@Override
+	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
+		return new OAuth2PasswordAuthenticationToken(clientPrincipal, additionalParameters);
+	}
+
 }

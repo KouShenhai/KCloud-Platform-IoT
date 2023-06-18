@@ -14,38 +14,40 @@
  * limitations under the License.
  */
 package org.laokou.auth.client.constant;
+
 /**
  * @author laokou
  */
 public interface AuthConstant {
-   /**
-    * 唯一标识
-    */
-   String UUID = "uuid";
 
-   /**
-    * 验证码
-    */
-   String CAPTCHA = "captcha";
+	/**
+	 * 唯一标识
+	 */
+	String UUID = "uuid";
 
-   /**
-    * 租户id
-    */
-   String TENANT_ID = "tenantId";
+	/**
+	 * 验证码
+	 */
+	String CAPTCHA = "captcha";
 
-   /**
-    * 登录成功
-    */
-   String LOGIN_SUCCESS_MSG = "登录成功";
+	/**
+	 * 租户id
+	 */
+	String TENANT_ID = "tenantId";
 
-   /**
-    * 邮箱
-    */
-   String MAIL = "mail";
+	/**
+	 * 登录成功
+	 */
+	String LOGIN_SUCCESS_MSG = "登录成功";
 
-   /**
-    * 手机
-    */
-   String MOBILE = "mobile";
+	/**
+	 * 邮箱
+	 */
+	String MAIL = "mail";
+
+	/**
+	 * 手机
+	 */
+	String MOBILE = "mobile";
 
 }

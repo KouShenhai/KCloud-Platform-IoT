@@ -29,22 +29,23 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @NonNullApi
 public class TraceInterceptor implements HandlerInterceptor {
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String traceId = request.getHeader(Constant.TRACE_ID);
-        String userId = request.getHeader(Constant.USER_ID);
-        String username = request.getHeader(Constant.USER_NAME);
-        String tenantId = request.getHeader(Constant.TENANT_ID);
-        MDC.put(Constant.TRACE_ID,traceId);
-        MDC.put(Constant.USER_ID,userId);
-        MDC.put(Constant.TENANT_ID,tenantId);
-        MDC.put(Constant.USER_NAME,username);
-        return true;
-    }
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+		String traceId = request.getHeader(Constant.TRACE_ID);
+		String userId = request.getHeader(Constant.USER_ID);
+		String username = request.getHeader(Constant.USER_NAME);
+		String tenantId = request.getHeader(Constant.TENANT_ID);
+		MDC.put(Constant.TRACE_ID, traceId);
+		MDC.put(Constant.USER_ID, userId);
+		MDC.put(Constant.TENANT_ID, tenantId);
+		MDC.put(Constant.USER_NAME, username);
+		return true;
+	}
 
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        MDC.clear();
-    }
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+			Exception ex) {
+		MDC.clear();
+	}
 
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service.impl;
+
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -31,6 +32,7 @@ import org.laokou.common.log.vo.SysLoginLogVO;
 import org.laokou.common.log.vo.SysOperateLogVO;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
+
 /**
  * @author laokou
  */
@@ -38,36 +40,36 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SysLogApplicationServiceImpl implements SysLogApplicationService {
 
-    private final SysOperateLogService sysOperateLogService;
+	private final SysOperateLogService sysOperateLogService;
 
-    private final SysLoginLogService sysLoginLogService;
+	private final SysLoginLogService sysLoginLogService;
 
-    @Override
-    @DataFilter(tableAlias = "boot_sys_operate_log")
-    public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQo qo) {
-        ValidatorUtil.validateEntity(qo);
-        qo.setTenantId(UserUtil.getTenantId());
-        IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysOperateLogService.getOperateLogList(page,qo);
-    }
+	@Override
+	@DataFilter(tableAlias = "boot_sys_operate_log")
+	public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQo qo) {
+		ValidatorUtil.validateEntity(qo);
+		qo.setTenantId(UserUtil.getTenantId());
+		IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+		return sysOperateLogService.getOperateLogList(page, qo);
+	}
 
-    @Override
-    public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) {
-        sysOperateLogService.exportOperateLog(qo,response);
-    }
+	@Override
+	public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) {
+		sysOperateLogService.exportOperateLog(qo, response);
+	}
 
-    @Override
-    @DS(Constant.SHARDING_SPHERE_READWRITE)
-    public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {
-        sysLoginLogService.exportLoginLog(qo,response);
-    }
+	@Override
+	@DS(Constant.SHARDING_SPHERE_READWRITE)
+	public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {
+		sysLoginLogService.exportLoginLog(qo, response);
+	}
 
-    @Override
-    public IPage<SysLoginLogVO> queryLoginLogPage(SysLoginLogQo qo) {
-        ValidatorUtil.validateEntity(qo);
-        qo.setTenantId(UserUtil.getTenantId());
-        IPage<SysLoginLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysLoginLogService.getLoginLogList(page,qo);
-    }
+	@Override
+	public IPage<SysLoginLogVO> queryLoginLogPage(SysLoginLogQo qo) {
+		ValidatorUtil.validateEntity(qo);
+		qo.setTenantId(UserUtil.getTenantId());
+		IPage<SysLoginLogVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+		return sysLoginLogService.getLoginLogList(page, qo);
+	}
 
 }

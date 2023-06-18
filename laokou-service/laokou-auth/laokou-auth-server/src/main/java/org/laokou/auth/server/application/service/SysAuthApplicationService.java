@@ -25,40 +25,42 @@ import java.util.List;
 
 /**
  * auth服务
+ *
  * @author laokou
  */
 public interface SysAuthApplicationService {
-    /**
-     * 验证码
-     * @param request 请求参数
-     * @return String
-     */
-    String captcha(HttpServletRequest request);
 
-    /**
-     * 退出登录
-     * @param request 请求参数
-     * @return Boolean
-     */
-    Boolean logout(HttpServletRequest request);
+	/**
+	 * 验证码
+	 * @param request 请求参数
+	 * @return String
+	 */
+	String captcha(HttpServletRequest request);
 
-    /**
-     * 下拉列表
-     * @return List<OptionVO>
-     */
-    List<OptionVO> getOptionList();
+	/**
+	 * 退出登录
+	 * @param request 请求参数
+	 * @return Boolean
+	 */
+	Boolean logout(HttpServletRequest request);
 
-    /**
-     * 获取密钥配置
-     * @return 密钥配置
-     * @throws IOException IO异常
-     */
-    SecretInfoVO getSecretInfo() throws IOException;
+	/**
+	 * 下拉列表
+	 * @return List<OptionVO>
+	 */
+	List<OptionVO> getOptionList();
 
-    /**
-     * 接口幂等性令牌
-     * @return IdempotentToken
-     */
-    IdempotentToken idempotentToken();
+	/**
+	 * 获取密钥配置
+	 * @return 密钥配置
+	 * @throws IOException IO异常
+	 */
+	SecretInfoVO getSecretInfo() throws IOException;
+
+	/**
+	 * 接口幂等性令牌
+	 * @return IdempotentToken
+	 */
+	IdempotentToken idempotentToken();
 
 }

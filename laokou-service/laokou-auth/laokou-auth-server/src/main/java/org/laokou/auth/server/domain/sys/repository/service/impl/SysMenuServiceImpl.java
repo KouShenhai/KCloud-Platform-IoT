@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.auth.server.domain.sys.repository.service.impl;
+
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.server.domain.sys.repository.mapper.SysMenuMapper;
 import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
@@ -21,21 +22,25 @@ import org.laokou.common.core.enums.SuperAdminEnum;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import static org.laokou.common.core.constant.Constant.DEFAULT;
+
 /**
  * @author laokou
  */
 @Service
 @RequiredArgsConstructor
 public class SysMenuServiceImpl implements SysMenuService {
-    private final SysMenuMapper sysMenuMapper;
-    @Override
-    public List<String> getPermissionsList(Long tenantId,Integer superAdmin,Long userId) {
-        if (SuperAdminEnum.YES.ordinal() == superAdmin) {
-            if (tenantId != DEFAULT) {
-                return sysMenuMapper.getTenantPermissionList(tenantId);
-            }
-            return sysMenuMapper.getPermissionsList();
-        }
-        return sysMenuMapper.getPermissionsListByUserId(userId);
-    }
+
+	private final SysMenuMapper sysMenuMapper;
+
+	@Override
+	public List<String> getPermissionsList(Long tenantId, Integer superAdmin, Long userId) {
+		if (SuperAdminEnum.YES.ordinal() == superAdmin) {
+			if (tenantId != DEFAULT) {
+				return sysMenuMapper.getTenantPermissionList(tenantId);
+			}
+			return sysMenuMapper.getPermissionsList();
+		}
+		return sysMenuMapper.getPermissionsListByUserId(userId);
+	}
+
 }

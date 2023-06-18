@@ -21,18 +21,18 @@ package org.laokou.common.mybatisplus.utils;
  */
 public class DynamicTableContextHolder {
 
-    private static final ThreadLocal<String> CONTEXT_HOLDER = new InheritableThreadLocal<>();
+	private static final ThreadLocal<String> CONTEXT_HOLDER = new InheritableThreadLocal<>();
 
-    public static void set(String tableName) {
-        CONTEXT_HOLDER.set(tableName);
-    }
+	public static void set(String tableName) {
+		CONTEXT_HOLDER.set(tableName);
+	}
 
-    public static void clear() {
-        CONTEXT_HOLDER.remove();
-    }
+	public static void clear() {
+		CONTEXT_HOLDER.remove();
+	}
 
-    public static String get() {
-        return CONTEXT_HOLDER.get();
-    }
+	public static String get() {
+		return CONTEXT_HOLDER.get();
+	}
 
 }

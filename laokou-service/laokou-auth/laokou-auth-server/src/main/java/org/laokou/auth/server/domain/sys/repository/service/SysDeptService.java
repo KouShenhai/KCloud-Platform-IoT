@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.auth.server.domain.sys.repository.service;
+
 import java.util.List;
 
 /**
@@ -21,13 +22,13 @@ import java.util.List;
  */
 public interface SysDeptService {
 
-    /**
-     * 查询deptIds
-     * @param superAdmin
-     * @param userId
-     * @param tenantId
-     * @return
-     */
-    List<Long> getDeptIds(Integer superAdmin,Long userId,Long tenantId);
+	/**
+	 * 查询deptIds
+	 * @param superAdmin
+	 * @param userId
+	 * @param tenantId
+	 * @return
+	 */
+	List<Long> getDeptIds(Integer superAdmin, Long userId, Long tenantId);
 
 }

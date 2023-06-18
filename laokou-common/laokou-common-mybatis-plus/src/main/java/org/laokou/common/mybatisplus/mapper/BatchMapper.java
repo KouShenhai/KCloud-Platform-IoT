@@ -29,10 +29,10 @@ import java.util.List;
 @Mapper
 public interface BatchMapper<T> {
 
-    /**
-     * 批量插入
-     * @param list
-     */
-    void insertBatch(@Param("list") List<T> list);
+	/**
+	 * 批量插入
+	 * @param list
+	 */
+	void insertBatch(@Param("list") List<T> list);
 
 }

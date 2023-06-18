@@ -22,6 +22,7 @@ import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
 import org.laokou.common.core.enums.SuperAdminEnum;
 import org.springframework.stereotype.Service;
 import java.util.List;
+
 /**
  * @author laokou
  */
@@ -29,13 +30,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SysDeptServiceImpl implements SysDeptService {
 
-    private final SysDeptMapper sysDeptMapper;
+	private final SysDeptMapper sysDeptMapper;
 
-    @Override
-    public List<Long> getDeptIds(Integer superAdmin,Long userId,Long tenantId) {
-        if (SuperAdminEnum.YES.ordinal() == superAdmin) {
-            return sysDeptMapper.getDeptIds(tenantId);
-        }
-        return sysDeptMapper.getDeptIdsByUserId(userId,tenantId);
-    }
+	@Override
+	public List<Long> getDeptIds(Integer superAdmin, Long userId, Long tenantId) {
+		if (SuperAdminEnum.YES.ordinal() == superAdmin) {
+			return sysDeptMapper.getDeptIds(tenantId);
+		}
+		return sysDeptMapper.getDeptIdsByUserId(userId, tenantId);
+	}
+
 }

@@ -26,15 +26,22 @@ import java.io.Serializable;
  */
 @Data
 public class SysResourceAuditDTO implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 944715502102587415L;
-    private Long resourceId;
-    @NotBlank(message = "请输入标题")
-    private String title;
-    @NotBlank(message = "资源不存在，请重新上传")
-    private String url;
-    @NotBlank(message = "请输入类型")
-    private String code;
-    @NotBlank(message = "请输入备注")
-    private String remark;
+
+	@Serial
+	private static final long serialVersionUID = 944715502102587415L;
+
+	private Long resourceId;
+
+	@NotBlank(message = "请输入标题")
+	private String title;
+
+	@NotBlank(message = "资源不存在，请重新上传")
+	private String url;
+
+	@NotBlank(message = "请输入类型")
+	private String code;
+
+	@NotBlank(message = "请输入备注")
+	private String remark;
+
 }

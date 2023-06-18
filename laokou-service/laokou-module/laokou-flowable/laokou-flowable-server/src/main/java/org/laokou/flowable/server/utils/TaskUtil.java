@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 package org.laokou.flowable.server.utils;
+
 import lombok.RequiredArgsConstructor;
 import org.laokou.flowable.server.mapper.TaskMapper;
 import org.springframework.stereotype.Component;
+
 /**
  * @author laokou
  */
@@ -24,9 +26,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TaskUtil {
 
-    private final TaskMapper taskMapper;
+	private final TaskMapper taskMapper;
 
-    public String getAssignee(String processInstanceId) {
-        return taskMapper.getAssignee(processInstanceId);
-    }
+	public String getAssignee(String processInstanceId) {
+		return taskMapper.getAssignee(processInstanceId);
+	}
+
 }

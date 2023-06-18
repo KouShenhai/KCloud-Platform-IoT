@@ -14,63 +14,67 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.service;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysMenuDO;
 import org.laokou.admin.server.interfaces.qo.SysMenuQo;
 import org.laokou.admin.client.vo.SysMenuVO;
 import org.laokou.auth.client.user.UserDetail;
 import java.util.List;
+
 /**
  * 菜单类
+ *
  * @author laokou
  */
 public interface SysMenuService extends IService<SysMenuDO> {
 
-    /**
-     * 获取菜单列表
-     * @param userDetail
-     * @param type
-     * @return
-     */
-    List<SysMenuVO> getMenuList(UserDetail userDetail, Integer type);
+	/**
+	 * 获取菜单列表
+	 * @param userDetail
+	 * @param type
+	 * @return
+	 */
+	List<SysMenuVO> getMenuList(UserDetail userDetail, Integer type);
 
-    /**
-     * 查询列表
-     * @param qo
-     * @return
-     */
-    List<SysMenuVO> queryMenuList(SysMenuQo qo);
+	/**
+	 * 查询列表
+	 * @param qo
+	 * @return
+	 */
+	List<SysMenuVO> queryMenuList(SysMenuQo qo);
 
-    /**
-     * 根据id查询菜单
-     * @param id
-     * @return
-     */
-    SysMenuVO getMenuById(Long id);
+	/**
+	 * 根据id查询菜单
+	 * @param id
+	 * @return
+	 */
+	SysMenuVO getMenuById(Long id);
 
-    /**
-     * 根据id删除菜单
-     * @param id
-     */
-    void deleteMenu(Long id);
+	/**
+	 * 根据id删除菜单
+	 * @param id
+	 */
+	void deleteMenu(Long id);
 
-    /**
-     * 根据角色id查询菜单ids
-     * @param roleId
-     * @return
-     */
-    List<Long> getMenuIdsByRoleId(Long roleId);
+	/**
+	 * 根据角色id查询菜单ids
+	 * @param roleId
+	 * @return
+	 */
+	List<Long> getMenuIdsByRoleId(Long roleId);
 
-    /**
-     * 获取版本号
-     * @param id
-     * @return
-     */
-    Integer getVersion(Long id);
+	/**
+	 * 获取版本号
+	 * @param id
+	 * @return
+	 */
+	Integer getVersion(Long id);
 
-    /**
-     * 获取租户菜单
-     * @return
-     */
-    List<SysMenuVO> getTenantMenuList();
+	/**
+	 * 获取租户菜单
+	 * @return
+	 */
+	List<SysMenuVO> getTenantMenuList();
+
 }

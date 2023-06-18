@@ -28,12 +28,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SentinelApplication {
 
-    public static void main(String[] args) {
-        triggerSentinelInit();
-        SpringApplication.run(SentinelApplication.class, args);
-    }
+	public static void main(String[] args) {
+		triggerSentinelInit();
+		SpringApplication.run(SentinelApplication.class, args);
+	}
 
-    private static void triggerSentinelInit() {
-        new Thread(() -> InitExecutor.doInit()).start();
-    }
+	private static void triggerSentinelInit() {
+		new Thread(() -> InitExecutor.doInit()).start();
+	}
+
 }

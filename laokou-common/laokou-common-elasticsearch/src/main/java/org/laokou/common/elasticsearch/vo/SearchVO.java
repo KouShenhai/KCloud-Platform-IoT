@@ -27,17 +27,18 @@ import java.util.List;
 @Data
 public class SearchVO<T> implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -8960349384828203957L;
-    private Integer pageNum;
+	@Serial
+	private static final long serialVersionUID = -8960349384828203957L;
 
-    private Integer pageSize;
+	private Integer pageNum;
 
-    private List<T> records;
+	private Integer pageSize;
 
-    /**
-     * 数据总条数
-     */
-    private Long total;
+	private List<T> records;
+
+	/**
+	 * 数据总条数
+	 */
+	private Long total;
 
 }

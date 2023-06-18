@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.mybatisplus.service;
+
 import java.util.List;
 
 /**
@@ -21,10 +22,10 @@ import java.util.List;
  */
 public interface BatchService<T> {
 
-    /**
-     * 批量新增
-     * @param list
-     */
-    void insertBatch(List<T> list);
+	/**
+	 * 批量新增
+	 * @param list
+	 */
+	void insertBatch(List<T> list);
 
 }

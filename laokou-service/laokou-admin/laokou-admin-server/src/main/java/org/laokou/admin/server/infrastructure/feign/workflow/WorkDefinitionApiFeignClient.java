@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.infrastructure.feign.workflow;
+
 import org.laokou.admin.server.infrastructure.feign.workflow.factory.WorkDefinitionApiFeignClientFallbackFactory;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.constant.ServiceConstant;
@@ -32,58 +33,59 @@ import java.io.IOException;
 /**
  * @author laokou
  */
-@FeignClient(contextId = "workDefinition",value = Constant.HTTPS_PROTOCOL + ServiceConstant.LAOKOU_FLOWABLE,path = "/work/definition/api", fallbackFactory = WorkDefinitionApiFeignClientFallbackFactory.class)
+@FeignClient(contextId = "workDefinition", value = Constant.HTTPS_PROTOCOL + ServiceConstant.LAOKOU_FLOWABLE,
+		path = "/work/definition/api", fallbackFactory = WorkDefinitionApiFeignClientFallbackFactory.class)
 @Service
 public interface WorkDefinitionApiFeignClient {
 
-    /**
-     * 新增流程
-     * @param file
-     * @return
-     * @throws IOException
-     */
-    @PostMapping(value = "/insert",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    HttpResult<Boolean> insert(@RequestPart("file") MultipartFile file);
+	/**
+	 * 新增流程
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	@PostMapping(value = "/insert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	HttpResult<Boolean> insert(@RequestPart("file") MultipartFile file);
 
-    /**
-     * 查询流程
-     * @param dto
-     * @return
-     */
-    @PostMapping(value = "/query")
-    HttpResult<PageVO<DefinitionVO>> query(@RequestBody DefinitionDTO dto);
+	/**
+	 * 查询流程
+	 * @param dto
+	 * @return
+	 */
+	@PostMapping(value = "/query")
+	HttpResult<PageVO<DefinitionVO>> query(@RequestBody DefinitionDTO dto);
 
-    /**
-     * 流程图
-     * @param definitionId
-     * @return
-     * @return
-     */
-    @GetMapping(value = "/diagram")
-    HttpResult<String> diagram(@RequestParam("definitionId")String definitionId);
+	/**
+	 * 流程图
+	 * @param definitionId
+	 * @return
+	 * @return
+	 */
+	@GetMapping(value = "/diagram")
+	HttpResult<String> diagram(@RequestParam("definitionId") String definitionId);
 
-    /**
-     * 删除流程
-     * @param deploymentId
-     * @return
-     */
-    @DeleteMapping(value = "/delete")
-    HttpResult<Boolean> delete(@RequestParam("deploymentId")String deploymentId);
+	/**
+	 * 删除流程
+	 * @param deploymentId
+	 * @return
+	 */
+	@DeleteMapping(value = "/delete")
+	HttpResult<Boolean> delete(@RequestParam("deploymentId") String deploymentId);
 
-    /**
-     * 挂起流程
-     * @param definitionId
-     * @return
-     */
-    @PutMapping(value = "/suspend")
-    HttpResult<Boolean> suspend(@RequestParam("definitionId")String definitionId);
+	/**
+	 * 挂起流程
+	 * @param definitionId
+	 * @return
+	 */
+	@PutMapping(value = "/suspend")
+	HttpResult<Boolean> suspend(@RequestParam("definitionId") String definitionId);
 
-    /**
-     * 激活流程
-     * @param definitionId
-     * @return
-     */
-    @PutMapping(value = "/activate")
-    HttpResult<Boolean> activate(@RequestParam("definitionId")String definitionId);
+	/**
+	 * 激活流程
+	 * @param definitionId
+	 * @return
+	 */
+	@PutMapping(value = "/activate")
+	HttpResult<Boolean> activate(@RequestParam("definitionId") String definitionId);
 
 }

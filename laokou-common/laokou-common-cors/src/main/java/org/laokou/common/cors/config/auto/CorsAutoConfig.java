@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.cors.config.auto;
+
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.cors.config.HttpMessageConverterConfig;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -34,25 +35,25 @@ import org.springframework.web.filter.CorsFilter;
 @Slf4j
 public class CorsAutoConfig {
 
-    @Bean
-    @ConditionalOnMissingBean(CorsFilter.class)
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
-        // 允许所有域名跨域
-        config.addAllowedOriginPattern(CorsConfiguration.ALL);
-        // 允许证书
-        config.setAllowCredentials(true);
-        // 允许所有方法
-        config.addAllowedMethod(CorsConfiguration.ALL);
-        // 允许任何头
-        config.addAllowedHeader(CorsConfiguration.ALL);
-        // 每一个小时，异步请求都发起预检请求 => 发送两次请求 第一次OPTION 第二次GET/POT/PUT/DELETE
-        config.setMaxAge(3600L);
-        UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
-        configurationSource.registerCorsConfiguration("/**",config);
-        log.info("cors加载完毕");
-        return new CorsFilter(configurationSource);
-    }
+	@Bean
+	@ConditionalOnMissingBean(CorsFilter.class)
+	@Order(Ordered.HIGHEST_PRECEDENCE)
+	public CorsFilter corsFilter() {
+		CorsConfiguration config = new CorsConfiguration();
+		// 允许所有域名跨域
+		config.addAllowedOriginPattern(CorsConfiguration.ALL);
+		// 允许证书
+		config.setAllowCredentials(true);
+		// 允许所有方法
+		config.addAllowedMethod(CorsConfiguration.ALL);
+		// 允许任何头
+		config.addAllowedHeader(CorsConfiguration.ALL);
+		// 每一个小时，异步请求都发起预检请求 => 发送两次请求 第一次OPTION 第二次GET/POT/PUT/DELETE
+		config.setMaxAge(3600L);
+		UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
+		configurationSource.registerCorsConfiguration("/**", config);
+		log.info("cors加载完毕");
+		return new CorsFilter(configurationSource);
+	}
 
 }

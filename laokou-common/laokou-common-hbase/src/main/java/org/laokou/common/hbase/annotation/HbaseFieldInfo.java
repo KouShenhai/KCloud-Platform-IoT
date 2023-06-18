@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 package org.laokou.common.hbase.annotation;
+
 import java.lang.annotation.*;
+
 /**
  * @author laokou
  */
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD,ElementType.METHOD})
+@Target({ ElementType.FIELD, ElementType.METHOD })
 public @interface HbaseFieldInfo {
 
-    String type() default "field";
+	String type() default "field";
 
-    String name() default "articleInfo";
+	String name() default "articleInfo";
 
 }
