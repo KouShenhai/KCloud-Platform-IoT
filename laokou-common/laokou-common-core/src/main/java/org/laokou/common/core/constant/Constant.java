@@ -132,4 +132,6 @@ public interface Constant {
 
     String TRUE = "true";
 
+    String HTTPS_PROTOCOL = "https://";
+
 }

@@ -272,9 +272,9 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-NAMESPACE>${NACOS-NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-DISCOVERY-ADDRESS>${NACOS-DISCOVERY-ADDRESS:1.com:8848}</NACOS-DISCOVERY-ADDRESS>
+                <NACOS-DISCOVERY-ADDRESS>${NACOS-DISCOVERY-ADDRESS:https://127.0.0.1:8848}</NACOS-DISCOVERY-ADDRESS>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-CONFIG-ADDRESS>${NACOS-CONFIG-ADDRESS:1.com:8848}</NACOS-CONFIG-ADDRESS>
+                <NACOS-CONFIG-ADDRESS>${NACOS-CONFIG-ADDRESS:https://127.0.0.1:8848}</NACOS-CONFIG-ADDRESS>
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-GROUP>${NACOS-GROUP:LAOKOU_GROUP}</NACOS-GROUP>
                 <!--suppress UnresolvedMavenProperty -->

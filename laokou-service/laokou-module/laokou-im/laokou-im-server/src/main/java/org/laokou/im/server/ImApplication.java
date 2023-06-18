@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.im.server;
+import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +22,8 @@ import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDeta
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+import static org.laokou.common.core.constant.Constant.TRUE;
 
 /**
  * @author laokou
@@ -35,6 +38,9 @@ public class ImApplication {
      * @param args args
      */
     public static void main(final String[] args) {
+        System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+        System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+        System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
         new SpringApplicationBuilder(ImApplication.class)
                 .web(WebApplicationType.REACTIVE)
                 .run(args);

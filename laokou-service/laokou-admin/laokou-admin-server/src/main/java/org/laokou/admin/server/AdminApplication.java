@@ -17,12 +17,13 @@
  * limitations under the License.
  */
 package org.laokou.admin.server;
+
+import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.dynamic.router.utils.RouterUtil;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -32,7 +33,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
+
 import java.io.IOException;
+
+import static org.laokou.common.core.constant.Constant.TRUE;
 
 /**
  * 架构演变
@@ -55,6 +59,9 @@ public class AdminApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         // SpringSecurity 子线程读取父线程的上下文
+        System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+        System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+        System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
         System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
         new SpringApplicationBuilder(AdminApplication.class)
                 .web(WebApplicationType.SERVLET)

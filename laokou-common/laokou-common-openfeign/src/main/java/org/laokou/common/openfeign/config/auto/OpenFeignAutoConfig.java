@@ -53,11 +53,4 @@ public class OpenFeignAutoConfig implements RequestInterceptor {
         return new Retryer.Default();
     }
 
-    //@Bean
-//    public SSLContext sslContext() {
-//        return SSLContextBuilder.create()
-//                .loadTrustMaterial(ResourceUtils)
-//                .build();
-//    }
-
 }

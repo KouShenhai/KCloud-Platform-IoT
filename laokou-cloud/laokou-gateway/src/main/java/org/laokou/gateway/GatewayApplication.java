@@ -22,6 +22,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+import static org.laokou.common.core.constant.Constant.TRUE;
+
 /**
  * @author laokou
  */
@@ -30,7 +32,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 public class GatewayApplication {
     public static void main(String[] args) {
-        System.setProperty(TlsSystemConfig.TLS_ENABLE, "true");
+        System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+        System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+        System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
         new SpringApplicationBuilder(GatewayApplication.class)
                 .web(WebApplicationType.REACTIVE)
                 .run(args);
