@@ -20,7 +20,8 @@
 <mapper namespace="org.laokou.flowable.server.mapper.TaskMapper">
 
     <select id="getAssignee" resultType="string">
-        SELECT a.assignee_ FROM act_hi_actinst a JOIN act_ru_task b ON b.id_ = a.task_id_
+        SELECT a.assignee_ FROM ACT_HI_ACTINST a
+            JOIN ACT_RU_TASK b ON b.id_ = a.task_id_
             WHERE act_type_ = 'userTask' AND b.proc_inst_id_ = #{instanceId}
     </select>
 
@@ -37,10 +38,10 @@
         c.name_ AS processInstanceName,
         c.business_key_ as businessKey
         FROM
-        act_hi_actinst a
-        join act_ru_task b on a.task_id_ = b.id_
-        join (select name_,business_key_,proc_inst_id_ from act_ru_execution where business_key_ <![CDATA[ <> ]]> '') c on a.proc_inst_id_ = c.proc_inst_id_
-        join act_re_procdef d on d.id_ = a.proc_def_id_
+        ACT_HI_ACTINST a
+        join ACT_RU_TASK b on a.task_id_ = b.id_
+        join (select name_,business_key_,proc_inst_id_ from ACT_RU_EXECUTION where business_key_ <![CDATA[ <> ]]> '') c on a.proc_inst_id_ = c.proc_inst_id_
+        join ACT_RE_PROCDEF d on d.id_ = a.proc_def_id_
         where
         a.assignee_ = #{dto.userId}
         and b.suspension_state_ = 1
