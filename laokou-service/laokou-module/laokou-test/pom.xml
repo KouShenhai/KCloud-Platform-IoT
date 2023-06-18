@@ -10,13 +10,6 @@
     <version>3.1.0</version>
     <packaging>pom</packaging>
     <modules>
-        <module>laokou-test-netty</module>
-        <module>laokou-test-rocketmq</module>
-        <module>laokou-test-juc</module>
-        <module>laokou-test-liquibase</module>
-        <module>laokou-test-web</module>
-        <module>laokou-test-webflux</module>
         <module>laokou-test-elasticsearch</module>
-        <module>laokou-test-nio</module>
     </modules>
 </project>

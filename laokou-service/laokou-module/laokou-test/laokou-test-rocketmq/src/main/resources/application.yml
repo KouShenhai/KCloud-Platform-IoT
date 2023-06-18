@@ -1,7 +1,0 @@
-server:
-  port: 8888
-
-rocketmq:
-  producer:
-    group: laokou-producer-group
-  name-server: laokou.org:9876
