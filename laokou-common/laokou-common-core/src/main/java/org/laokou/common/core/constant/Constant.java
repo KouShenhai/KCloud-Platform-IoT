@@ -78,6 +78,11 @@ public interface Constant {
 	String TIMESTAMP = "timestamp";
 
 	/**
+	 * 随机标识
+	 */
+	String NONCE = "nonce";
+
+	/**
 	 * 使用状态
 	 */
 	int USE_STATUS = 1;
@@ -132,8 +137,14 @@ public interface Constant {
 	 */
 	String REQUEST_ID = "request-id";
 
+	/**
+	 * true
+	 */
 	String TRUE = "true";
 
+	/**
+	 * HTTPS协议
+	 */
 	String HTTPS_PROTOCOL = "https://";
 
 }

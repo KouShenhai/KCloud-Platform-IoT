@@ -20,8 +20,6 @@ package org.laokou.common.core.constant;
  */
 public interface ServiceConstant {
 
-	String LAOKOU_IM = "laokou-im";
-
 	String LAOKOU_FLOWABLE = "laokou-flowable";
 
 }
