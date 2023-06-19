@@ -60,16 +60,6 @@ public class StringUtil {
 		return StringUtils.hasText(str);
 	}
 
-	public static String substringBeforeLast(String str, String separator) {
-		if (!isEmpty(str) && !isEmpty(separator)) {
-			int pos = str.lastIndexOf(separator);
-			return pos == -1 ? str : str.substring(0, pos);
-		}
-		else {
-			return str;
-		}
-	}
-
 	public static String toCamelCase(String s) {
 		if (s == null) {
 			return null;
