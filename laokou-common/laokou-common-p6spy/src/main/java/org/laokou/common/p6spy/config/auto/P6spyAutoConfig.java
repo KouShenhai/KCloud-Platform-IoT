@@ -25,4 +25,5 @@ import org.springframework.context.annotation.ComponentScan;
 @AutoConfiguration
 @ComponentScan("org.laokou.common.p6spy")
 public class P6spyAutoConfig {
+
 }

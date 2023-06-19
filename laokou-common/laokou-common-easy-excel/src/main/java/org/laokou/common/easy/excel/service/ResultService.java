@@ -20,13 +20,13 @@ import org.apache.ibatis.session.ResultHandler;
 /**
  * @author laokou
  */
-public interface ResultService<Q,T> {
+public interface ResultService<Q, T> {
 
-    /**
-     * 返回数据
-     * @param q
-     * @param resultHandler
-     */
-    void resultList(Q q, ResultHandler<T> resultHandler);
+	/**
+	 * 返回数据
+	 * @param q
+	 * @param resultHandler
+	 */
+	void resultList(Q q, ResultHandler<T> resultHandler);
 
 }

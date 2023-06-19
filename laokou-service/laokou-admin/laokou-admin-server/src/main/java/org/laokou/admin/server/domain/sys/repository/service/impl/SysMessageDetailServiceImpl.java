@@ -27,21 +27,22 @@ import java.util.List;
  * @author laokou
  */
 @Service
-public class SysMessageDetailServiceImpl extends ServiceImpl<SysMessageDetailMapper, SysMessageDetailDO> implements SysMessageDetailService {
+public class SysMessageDetailServiceImpl extends ServiceImpl<SysMessageDetailMapper, SysMessageDetailDO>
+		implements SysMessageDetailService {
 
+	@Override
+	public Integer getVersion(Long id) {
+		return this.baseMapper.getVersion(id);
+	}
 
-    @Override
-    public Integer getVersion(Long id) {
-        return this.baseMapper.getVersion(id);
-    }
+	@Override
+	public void insertBatch(List<SysMessageDetailDO> list) {
+		this.baseMapper.insertBatch(list);
+	}
 
-    @Override
-    public void insertBatch(List<SysMessageDetailDO> list) {
-        this.baseMapper.insertBatch(list);
-    }
+	@Override
+	public Integer unReadCount(Long userId) {
+		return this.baseMapper.unReadCount(userId);
+	}
 
-    @Override
-    public Integer unReadCount(Long userId) {
-        return this.baseMapper.unReadCount(userId);
-    }
 }

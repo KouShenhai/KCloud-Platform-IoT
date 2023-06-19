@@ -21,45 +21,45 @@ package org.laokou.common.elasticsearch.enums;
  */
 public enum FieldTypeEnum {
 
-    /**
-     * 文本
-     */
-    TEXT,
-    /**
-     * 文本
-     */
-    KEYWORD,
-    /**
-     * 长整型
-     */
-    LONG,
-    /**
-     * 整型
-     */
-    INTEGER,
-    /**
-     * 整型
-     */
-    SHORT,
-    /**
-     * 字节
-     */
-    BYTE,
-    /**
-     * 双浮点
-     */
-    DOUBLE,
-    /**
-     * 双浮点
-     */
-    FLOAT,
-    /**
-     * 日期
-     */
-    DATE,
-    /**
-     * 布尔
-     */
-    BOOLEAN,
+	/**
+	 * 文本
+	 */
+	TEXT,
+	/**
+	 * 文本
+	 */
+	KEYWORD,
+	/**
+	 * 长整型
+	 */
+	LONG,
+	/**
+	 * 整型
+	 */
+	INTEGER,
+	/**
+	 * 整型
+	 */
+	SHORT,
+	/**
+	 * 字节
+	 */
+	BYTE,
+	/**
+	 * 双浮点
+	 */
+	DOUBLE,
+	/**
+	 * 双浮点
+	 */
+	FLOAT,
+	/**
+	 * 日期
+	 */
+	DATE,
+	/**
+	 * 布尔
+	 */
+	BOOLEAN,
 
 }

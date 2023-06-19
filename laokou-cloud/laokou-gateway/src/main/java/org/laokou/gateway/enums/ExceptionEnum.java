@@ -21,14 +21,16 @@ package org.laokou.gateway.enums;
  */
 public enum ExceptionEnum {
 
-    INVALID_CLIENT("invalid_client");
-    private final String code;
-    ExceptionEnum(String code) {
-        this.code = code;
-    }
+	INVALID_CLIENT("invalid_client");
 
-    public static ExceptionEnum getInstance(String code) {
-       return ExceptionEnum.valueOf(code);
-    }
+	private final String code;
+
+	ExceptionEnum(String code) {
+		this.code = code;
+	}
+
+	public static ExceptionEnum getInstance(String code) {
+		return ExceptionEnum.valueOf(code);
+	}
 
 }

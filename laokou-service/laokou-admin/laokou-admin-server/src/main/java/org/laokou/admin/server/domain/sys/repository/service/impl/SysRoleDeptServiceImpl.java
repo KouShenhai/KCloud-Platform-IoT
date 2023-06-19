@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.service.impl;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.laokou.admin.server.domain.sys.entity.SysRoleDeptDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysRoleDeptMapper;
@@ -26,10 +27,12 @@ import java.util.List;
  * @author laokou
  */
 @Service
-public class SysRoleDeptServiceImpl extends ServiceImpl<SysRoleDeptMapper, SysRoleDeptDO> implements SysRoleDeptService {
+public class SysRoleDeptServiceImpl extends ServiceImpl<SysRoleDeptMapper, SysRoleDeptDO>
+		implements SysRoleDeptService {
 
-    @Override
-    public void insertBatch(List<SysRoleDeptDO> list) {
-        this.baseMapper.insertBatch(list);
-    }
+	@Override
+	public void insertBatch(List<SysRoleDeptDO> list) {
+		this.baseMapper.insertBatch(list);
+	}
+
 }

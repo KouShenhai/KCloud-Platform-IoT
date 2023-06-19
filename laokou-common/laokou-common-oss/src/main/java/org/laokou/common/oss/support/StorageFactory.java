@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.oss.support;
+
 import com.amazonaws.services.s3.AmazonS3;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.utils.UserUtil;
@@ -23,6 +24,7 @@ import org.laokou.common.oss.vo.SysOssVO;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
+
 /**
  * @author laokou
  */
@@ -30,24 +32,25 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class StorageFactory {
 
-    private final SysOssService sysOssService;
+	private final SysOssService sysOssService;
 
-    private final RedisUtil redisUtil;
+	private final RedisUtil redisUtil;
 
-   public StorageService<AmazonS3> build(){
-       String ossConfigKey = RedisKeyUtil.getOssConfigKey(UserUtil.getTenantId());
-       Object object = redisUtil.get(ossConfigKey);
-       SysOssVO vo;
-       if (object == null) {
-           vo = sysOssService.queryOssConfig();
-           if (null == vo) {
-               throw new CustomException("请配置OSS");
-           }
-           redisUtil.set(ossConfigKey, vo, RedisUtil.HOUR_ONE_EXPIRE);
-       } else {
-           vo = (SysOssVO) object;
-       }
-       return new AmazonS3StorageService(vo);
-   }
+	public StorageService<AmazonS3> build() {
+		String ossConfigKey = RedisKeyUtil.getOssConfigKey(UserUtil.getTenantId());
+		Object object = redisUtil.get(ossConfigKey);
+		SysOssVO vo;
+		if (object == null) {
+			vo = sysOssService.queryOssConfig();
+			if (null == vo) {
+				throw new CustomException("请配置OSS");
+			}
+			redisUtil.set(ossConfigKey, vo, RedisUtil.HOUR_ONE_EXPIRE);
+		}
+		else {
+			vo = (SysOssVO) object;
+		}
+		return new AmazonS3StorageService(vo);
+	}
 
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.service;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysDictDO;
@@ -27,38 +28,39 @@ import java.util.List;
  */
 public interface SysDictService extends IService<SysDictDO> {
 
-    /**
-     * 分页查询字典
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysDictVO> getDictList(IPage<SysDictVO> page, SysDictQo qo);
+	/**
+	 * 分页查询字典
+	 * @param page
+	 * @param qo
+	 * @return
+	 */
+	IPage<SysDictVO> getDictList(IPage<SysDictVO> page, SysDictQo qo);
 
-    /**
-     * 根据id查询字典
-     * @param id
-     * @return
-     */
-    SysDictVO getDictById(Long id);
+	/**
+	 * 根据id查询字典
+	 * @param id
+	 * @return
+	 */
+	SysDictVO getDictById(Long id);
 
-    /**
-     * 根据id删除字典
-     * @param id
-     */
-    void deleteDict(Long id);
+	/**
+	 * 根据id删除字典
+	 * @param id
+	 */
+	void deleteDict(Long id);
 
-    /**
-     * 获取版本号
-     * @param id
-     * @return
-     */
-    Integer getVersion(Long id);
+	/**
+	 * 获取版本号
+	 * @param id
+	 * @return
+	 */
+	Integer getVersion(Long id);
 
-    /**
-     * 下拉列表查询
-     * @param type
-     * @return
-     */
-    List<OptionVO> getOptionList(String type);
+	/**
+	 * 下拉列表查询
+	 * @param type
+	 * @return
+	 */
+	List<OptionVO> getOptionList(String type);
+
 }

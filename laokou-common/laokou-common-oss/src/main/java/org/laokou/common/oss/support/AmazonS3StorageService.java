@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.oss.support;
+
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -36,59 +37,59 @@ import java.time.LocalDateTime;
  */
 public class AmazonS3StorageService extends AbstractStorageService<AmazonS3> {
 
-    public AmazonS3StorageService(SysOssVO vo) {
-        this.vo = vo;
-    }
+	public AmazonS3StorageService(SysOssVO vo) {
+		this.vo = vo;
+	}
 
-    @Override
-    public void createBucket(AmazonS3 amazonS3) {
-        String bucketName = vo.getBucketName();
-        // bucketName不存在则新建
-        if (!amazonS3.doesBucketExistV2(bucketName)) {
-            amazonS3.createBucket(bucketName);
-        }
-    }
+	@Override
+	public void createBucket(AmazonS3 amazonS3) {
+		String bucketName = vo.getBucketName();
+		// bucketName不存在则新建
+		if (!amazonS3.doesBucketExistV2(bucketName)) {
+			amazonS3.createBucket(bucketName);
+		}
+	}
 
-    @Override
-    public void putObject(AmazonS3 amazonS3, int readLimit, long size, String fileName, InputStream inputStream,String contentType) {
-        // 上传文件
-        String bucketName = vo.getBucketName();
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentLength(size);
-        objectMetadata.setContentType(contentType);
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName,fileName , inputStream, objectMetadata);
-        putObjectRequest.getRequestClientOptions().setReadLimit(readLimit);
-        amazonS3.putObject(putObjectRequest);
-    }
+	@Override
+	public void putObject(AmazonS3 amazonS3, int readLimit, long size, String fileName, InputStream inputStream,
+			String contentType) {
+		// 上传文件
+		String bucketName = vo.getBucketName();
+		ObjectMetadata objectMetadata = new ObjectMetadata();
+		objectMetadata.setContentLength(size);
+		objectMetadata.setContentType(contentType);
+		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fileName, inputStream, objectMetadata);
+		putObjectRequest.getRequestClientOptions().setReadLimit(readLimit);
+		amazonS3.putObject(putObjectRequest);
+	}
 
-    @Override
-    public String getUrl(AmazonS3 amazonS3,String fileName) {
-        String bucketName = vo.getBucketName();
-        URL url = amazonS3.getUrl(bucketName, fileName);
-        return url.toString();
-    }
+	@Override
+	public String getUrl(AmazonS3 amazonS3, String fileName) {
+		String bucketName = vo.getBucketName();
+		URL url = amazonS3.getUrl(bucketName, fileName);
+		return url.toString();
+	}
 
-    @Override
-    public String getFileName(String fileName) {
-        return DateUtil.format(DateUtil.now(),DateUtil.YYYYMMDDHHMMSS) + getFileExt(fileName);
-    }
+	@Override
+	public String getFileName(String fileName) {
+		return DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + getFileExt(fileName);
+	}
 
-    @Override
-    protected AmazonS3 getObj() {
-        String accessKey = vo.getAccessKey();
-        String secretKey = vo.getSecretKey();
-        String region = vo.getRegion();
-        String endpoint = vo.getEndpoint();
-        Boolean pathStyleAccessEnabled = vo.getPathStyleAccessEnabled() == 1;
-        ClientConfiguration clientConfiguration = new ClientConfiguration();
-        AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(endpoint, region);
-        AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
-        AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(awsCredentials);
-        return AmazonS3Client.builder()
-                .withEndpointConfiguration(endpointConfiguration)
-                .withClientConfiguration(clientConfiguration)
-                .withCredentials(awsCredentialsProvider)
-                .withPathStyleAccessEnabled(pathStyleAccessEnabled)
-                .build();
-    }
+	@Override
+	protected AmazonS3 getObj() {
+		String accessKey = vo.getAccessKey();
+		String secretKey = vo.getSecretKey();
+		String region = vo.getRegion();
+		String endpoint = vo.getEndpoint();
+		Boolean pathStyleAccessEnabled = vo.getPathStyleAccessEnabled() == 1;
+		ClientConfiguration clientConfiguration = new ClientConfiguration();
+		AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(
+				endpoint, region);
+		AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
+		AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(awsCredentials);
+		return AmazonS3Client.builder().withEndpointConfiguration(endpointConfiguration)
+				.withClientConfiguration(clientConfiguration).withCredentials(awsCredentialsProvider)
+				.withPathStyleAccessEnabled(pathStyleAccessEnabled).build();
+	}
+
 }

@@ -28,10 +28,13 @@ import java.util.Map;
 @Data
 public class CacheVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 9153324620769020304L;
-    private Long keysSize;
-    private Map<String,String> info;
-    private List<Map<String,String>> commandStats;
+	@Serial
+	private static final long serialVersionUID = 9153324620769020304L;
+
+	private Long keysSize;
+
+	private Map<String, String> info;
+
+	private List<Map<String, String>> commandStats;
 
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.entity;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,40 +25,42 @@ import java.io.Serial;
 
 /**
  * 系统部门
+ *
  * @author laokou
  */
 @Data
 @TableName("boot_sys_dept")
-@Schema(name = "SysDeptDO",description = "系统部门实体类")
+@Schema(name = "SysDeptDO", description = "系统部门实体类")
 public class SysDeptDO extends BaseDO {
 
-    @Serial
-    private static final long serialVersionUID = 5119306834026407994L;
-    /**
-     * 父部门ID
-     */
-    @TableField("pid")
-    @Schema(name = "pid",description = "父部门ID",example = "0")
-    private Long pid;
+	@Serial
+	private static final long serialVersionUID = 5119306834026407994L;
 
-    /**
-     * 部门名称
-     */
-    @TableField("name")
-    @Schema(name = "name",description = "部门名称",example = "老寇云集团")
-    private String name;
+	/**
+	 * 父部门ID
+	 */
+	@TableField("pid")
+	@Schema(name = "pid", description = "父部门ID", example = "0")
+	private Long pid;
 
-    /**
-     * 排序
-     */
-    @TableField("sort")
-    @Schema(name = "sort",description = "部门排序",example = "1")
-    private Integer sort;
+	/**
+	 * 部门名称
+	 */
+	@TableField("name")
+	@Schema(name = "name", description = "部门名称", example = "老寇云集团")
+	private String name;
 
-    /**
-     * 租户id
-     */
-    @Schema(name = "tenantId",description = "租户id")
-    private Long tenantId;
+	/**
+	 * 排序
+	 */
+	@TableField("sort")
+	@Schema(name = "sort", description = "部门排序", example = "1")
+	private Integer sort;
+
+	/**
+	 * 租户id
+	 */
+	@Schema(name = "tenantId", description = "租户id")
+	private Long tenantId;
 
 }

@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface ColumnMapper {
 
-    List<ColumnVO> getColumns(@Param("tableName")String tableName);
+	List<ColumnVO> getColumns(@Param("tableName") String tableName);
 
 }

@@ -19,6 +19,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import java.util.*;
+
 /**
  * @author laokou
  */
@@ -26,19 +27,19 @@ import java.util.*;
 @Mapper
 public interface SysDeptMapper {
 
-    /**
-     * 根据userId查询deptIds
-     * @param userId
-     * @param tenantId
-     * @return
-     */
-    List<Long> getDeptIdsByUserId(@Param("userId")Long userId,@Param("tenantId")Long tenantId);
+	/**
+	 * 根据userId查询deptIds
+	 * @param userId
+	 * @param tenantId
+	 * @return
+	 */
+	List<Long> getDeptIdsByUserId(@Param("userId") Long userId, @Param("tenantId") Long tenantId);
 
-    /**
-     * 查询deptIds
-     * @param tenantId
-     * @return
-     */
-    List<Long> getDeptIds(@Param("tenantId")Long tenantId);
+	/**
+	 * 查询deptIds
+	 * @param tenantId
+	 * @return
+	 */
+	List<Long> getDeptIds(@Param("tenantId") Long tenantId);
 
 }

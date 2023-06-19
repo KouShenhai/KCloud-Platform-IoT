@@ -7,7 +7,8 @@ import java.io.Serializable;
 @Data
 public class ColumnVO implements Serializable {
 
-    private String columnName;
-    private String columnComment;
+	private String columnName;
+
+	private String columnComment;
 
 }

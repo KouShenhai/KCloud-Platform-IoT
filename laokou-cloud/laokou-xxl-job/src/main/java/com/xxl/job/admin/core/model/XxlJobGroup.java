@@ -10,68 +10,74 @@ import java.util.List;
  */
 public class XxlJobGroup {
 
-    private int id;
-    private String appname;
-    private String title;
-    private int addressType;        // 执行器地址类型：0=自动注册、1=手动录入
-    private String addressList;     // 执行器地址列表，多地址逗号分隔(手动录入)
-    private Date updateTime;
+	private int id;
 
-    // registry list
-    private List<String> registryList;  // 执行器地址列表(系统注册)
-    public List<String> getRegistryList() {
-        if (addressList!=null && addressList.trim().length()>0) {
-            registryList = new ArrayList<String>(Arrays.asList(addressList.split(",")));
-        }
-        return registryList;
-    }
+	private String appname;
 
-    public int getId() {
-        return id;
-    }
+	private String title;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	private int addressType; // 执行器地址类型：0=自动注册、1=手动录入
 
-    public String getAppname() {
-        return appname;
-    }
+	private String addressList; // 执行器地址列表，多地址逗号分隔(手动录入)
 
-    public void setAppname(String appname) {
-        this.appname = appname;
-    }
+	private Date updateTime;
 
-    public String getTitle() {
-        return title;
-    }
+	// registry list
+	private List<String> registryList; // 执行器地址列表(系统注册)
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public List<String> getRegistryList() {
+		if (addressList != null && addressList.trim().length() > 0) {
+			registryList = new ArrayList<String>(Arrays.asList(addressList.split(",")));
+		}
+		return registryList;
+	}
 
-    public int getAddressType() {
-        return addressType;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setAddressType(int addressType) {
-        this.addressType = addressType;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getAddressList() {
-        return addressList;
-    }
+	public String getAppname() {
+		return appname;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public void setAppname(String appname) {
+		this.appname = appname;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setAddressList(String addressList) {
-        this.addressList = addressList;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public int getAddressType() {
+		return addressType;
+	}
+
+	public void setAddressType(int addressType) {
+		this.addressType = addressType;
+	}
+
+	public String getAddressList() {
+		return addressList;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public void setAddressList(String addressList) {
+		this.addressList = addressList;
+	}
 
 }

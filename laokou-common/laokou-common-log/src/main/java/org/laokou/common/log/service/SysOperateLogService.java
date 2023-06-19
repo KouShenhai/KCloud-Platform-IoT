@@ -27,28 +27,29 @@ import org.laokou.common.log.vo.SysOperateLogVO;
 /**
  * @author laokou
  */
-public interface SysOperateLogService extends IService<SysOperateLogDO>,ResultService<SysOperateLogQo,SysOperateLogVO> {
+public interface SysOperateLogService
+		extends IService<SysOperateLogDO>, ResultService<SysOperateLogQo, SysOperateLogVO> {
 
-    /**
-     * 分页查询操作日志
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysOperateLogVO> getOperateLogList(IPage<SysOperateLogVO> page, SysOperateLogQo qo);
+	/**
+	 * 分页查询操作日志
+	 * @param page
+	 * @param qo
+	 * @return
+	 */
+	IPage<SysOperateLogVO> getOperateLogList(IPage<SysOperateLogVO> page, SysOperateLogQo qo);
 
-    /**
-     * 新增登录日志
-     * @param event
-     * @return
-     */
-    Boolean insertOperateLog(OperateLogEvent event);
+	/**
+	 * 新增登录日志
+	 * @param event
+	 * @return
+	 */
+	Boolean insertOperateLog(OperateLogEvent event);
 
-    /**
-     * 导出操作日志
-     * @param qo
-     * @param response
-     */
-    void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response);
+	/**
+	 * 导出操作日志
+	 * @param qo
+	 * @param response
+	 */
+	void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response);
 
 }

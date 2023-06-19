@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.gateway.config;
+
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.context.annotation.Bean;
@@ -21,21 +22,25 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * 网关swagger 3配置
+ *
  * @author laokou
  */
 @Configuration
 public class SwaggerConfig {
 
-    @Bean
-    @Lazy(value = false)
-    public List<GroupedOpenApi> openApis(RouteDefinitionLocator locator) {
-        List<GroupedOpenApi> groups = new ArrayList<>();
-        locator.getRouteDefinitions().filter(routeDefinition -> routeDefinition.getId().matches("laokou-.*")).subscribe(routeDefinition -> {
-            String name = routeDefinition.getId().replaceAll("laokou-", "");
-            GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").group(name).build();
-        });
-        return groups;
-    }
+	@Bean
+	@Lazy(value = false)
+	public List<GroupedOpenApi> openApis(RouteDefinitionLocator locator) {
+		List<GroupedOpenApi> groups = new ArrayList<>();
+		locator.getRouteDefinitions().filter(routeDefinition -> routeDefinition.getId().matches("laokou-.*"))
+				.subscribe(routeDefinition -> {
+					String name = routeDefinition.getId().replaceAll("laokou-", "");
+					GroupedOpenApi.builder().pathsToMatch("/" + name + "/**").group(name).build();
+				});
+		return groups;
+	}
+
 }

@@ -21,13 +21,13 @@ package org.laokou.admin.client.enums;
 
 public enum MessageTypeEnum {
 
-    /**
-     * 通知
-     */
-    NOTICE,
-    /**
-     * 提醒
-     */
-    REMIND
+	/**
+	 * 通知
+	 */
+	NOTICE,
+	/**
+	 * 提醒
+	 */
+	REMIND
 
 }

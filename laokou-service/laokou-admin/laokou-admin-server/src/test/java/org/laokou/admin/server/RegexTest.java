@@ -29,15 +29,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(classes = AdminApplication.class)
 public class RegexTest {
 
-    @Test
-    public void test() {
-        SysSourceDTO dto = new SysSourceDTO();
-        dto.setName("啊啊啊1");
-        dto.setDriverClassName("ee");
-        dto.setUrl("ww");
-        dto.setUsername("ddd");
-        dto.setPassword("33");
-        ValidatorUtil.validateEntity(dto);
-    }
+	@Test
+	public void test() {
+		SysSourceDTO dto = new SysSourceDTO();
+		dto.setName("啊啊啊1");
+		dto.setDriverClassName("ee");
+		dto.setUrl("ww");
+		dto.setUsername("ddd");
+		dto.setPassword("33");
+		ValidatorUtil.validateEntity(dto);
+	}
 
 }

@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 package org.laokou.auth.server.domain.sys.repository.service;
+
 import java.util.List;
 
 /**
  * 菜单类
+ *
  * @author laokou
  */
 public interface SysMenuService {
 
-    /**
-     * 查询权限标识列表
-     * @param superAdmin
-     * @param userId
-     * @param tenantId
-     * @return
-     */
-    List<String> getPermissionsList(Long tenantId,Integer superAdmin,Long userId);
+	/**
+	 * 查询权限标识列表
+	 * @param superAdmin
+	 * @param userId
+	 * @param tenantId
+	 * @return
+	 */
+	List<String> getPermissionsList(Long tenantId, Integer superAdmin, Long userId);
 
 }

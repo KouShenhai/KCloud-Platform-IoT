@@ -20,21 +20,21 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableEncryptableProperties
 public class PowerJobApplication {
 
-    private static final String TIPS = "\n\n" +
-            "******************* PowerJob Tips *******************\n" +
-            "如果应用无法启动，我们建议您仔细阅读以下文档来解决:\n" +
-            "if server can't startup, we recommend that you read the documentation to find a solution:\n" +
-            "https://www.yuque.com/powerjob/guidence/problem\n" +
-            "******************* PowerJob Tips *******************\n\n";
+	private static final String TIPS = "\n\n" + "******************* PowerJob Tips *******************\n"
+			+ "如果应用无法启动，我们建议您仔细阅读以下文档来解决:\n"
+			+ "if server can't startup, we recommend that you read the documentation to find a solution:\n"
+			+ "https://www.yuque.com/powerjob/guidence/problem\n"
+			+ "******************* PowerJob Tips *******************\n\n";
 
-    public static void main(String[] args) {
-        // Start SpringBoot application.
-        try {
-            SpringApplication.run(PowerJobApplication.class, args);
-        } catch (Throwable t) {
-            log.error(TIPS);
-            throw t;
-        }
-    }
+	public static void main(String[] args) {
+		// Start SpringBoot application.
+		try {
+			SpringApplication.run(PowerJobApplication.class, args);
+		}
+		catch (Throwable t) {
+			log.error(TIPS);
+			throw t;
+		}
+	}
 
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.flowable.client.vo;
+
 import lombok.Data;
 
 import java.io.Serial;
@@ -25,31 +26,32 @@ import java.io.Serializable;
 @Data
 public class DefinitionVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -2308324118562026040L;
-    /**
-     * 流程定义id
-     */
-    private String definitionId;
+	@Serial
+	private static final long serialVersionUID = -2308324118562026040L;
 
-    /**
-     * 流程名称
-     */
-    private String processName;
+	/**
+	 * 流程定义id
+	 */
+	private String definitionId;
 
-    /**
-     * 流程key
-     */
-    private String processKey;
+	/**
+	 * 流程名称
+	 */
+	private String processName;
 
-    /**
-     * 部署id
-     */
-    private String deploymentId;
+	/**
+	 * 流程key
+	 */
+	private String processKey;
 
-    /**
-     * 流程定义状态 1激活 2中止
-     */
-    private Boolean suspended;
+	/**
+	 * 部署id
+	 */
+	private String deploymentId;
+
+	/**
+	 * 流程定义状态 1激活 2中止
+	 */
+	private Boolean suspended;
 
 }

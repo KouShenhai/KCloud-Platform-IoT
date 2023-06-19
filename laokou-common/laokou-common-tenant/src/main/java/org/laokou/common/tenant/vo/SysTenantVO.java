@@ -27,11 +27,15 @@ import java.io.Serializable;
 @Data
 public class SysTenantVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -5244147777398551087L;
-    private String name;
-    private Long id;
-    private Long sourceId;
-    private Long packageId;
+	@Serial
+	private static final long serialVersionUID = -5244147777398551087L;
+
+	private String name;
+
+	private Long id;
+
+	private Long sourceId;
+
+	private Long packageId;
 
 }

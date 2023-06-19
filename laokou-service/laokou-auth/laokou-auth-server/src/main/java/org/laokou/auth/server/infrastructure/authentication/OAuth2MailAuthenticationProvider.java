@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.auth.server.infrastructure.authentication;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.constant.AuthConstant;
@@ -43,49 +44,48 @@ import java.io.IOException;
 @Slf4j
 public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-    public static final String GRANT_TYPE = "mail";
+	public static final String GRANT_TYPE = "mail";
 
-    public OAuth2MailAuthenticationProvider(SysUserService sysUserService
-            , SysMenuService sysMenuService
-            , SysDeptService sysDeptService
-            , LoginLogUtil loginLogUtil
-            , PasswordEncoder passwordEncoder
-            , SysCaptchaService sysCaptchaService
-            , OAuth2AuthorizationService oAuth2AuthorizationService
-            , OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator
-            , SysSourceService sysSourceService
-            , RedisUtil redisUtil) {
-        super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder,sysCaptchaService,oAuth2AuthorizationService,tokenGenerator, sysSourceService,redisUtil);
-    }
+	public OAuth2MailAuthenticationProvider(SysUserService sysUserService, SysMenuService sysMenuService,
+			SysDeptService sysDeptService, LoginLogUtil loginLogUtil, PasswordEncoder passwordEncoder,
+			SysCaptchaService sysCaptchaService, OAuth2AuthorizationService oAuth2AuthorizationService,
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService,
+			RedisUtil redisUtil) {
+		super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder, sysCaptchaService,
+				oAuth2AuthorizationService, tokenGenerator, sysSourceService, redisUtil);
+	}
 
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return OAuth2MailAuthenticationToken.class.isAssignableFrom(authentication);
-    }
+	@Override
+	public boolean supports(Class<?> authentication) {
+		return OAuth2MailAuthenticationToken.class.isAssignableFrom(authentication);
+	}
 
-    @Override
-    Authentication login(HttpServletRequest request) throws IOException {
-        // 判断验证码
-        String code = request.getParameter(OAuth2ParameterNames.CODE);
-        log.info("验证码：{}",code);
-        if (StringUtil.isEmpty(code)) {
-            CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_NOT_NULL, MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
-        }
-        String mail = request.getParameter(AuthConstant.MAIL);
-        log.info("邮箱：{}",mail);
-        if (StringUtil.isEmpty(mail)) {
-            CustomAuthExceptionHandler.throwError(StatusCode.MAIL_NOT_NULL, MessageUtil.getMessage(StatusCode.MAIL_NOT_NULL));
-        }
-        boolean isMail = RegexUtil.mailRegex(mail);
-        if (!isMail) {
-            CustomAuthExceptionHandler.throwError(StatusCode.MAIL_ERROR, MessageUtil.getMessage(StatusCode.MAIL_ERROR));
-        }
-        // 获取用户信息,并认证信息
-        return super.getUserInfo(mail, "", request,code,mail);
-    }
+	@Override
+	Authentication login(HttpServletRequest request) throws IOException {
+		// 判断验证码
+		String code = request.getParameter(OAuth2ParameterNames.CODE);
+		log.info("验证码：{}", code);
+		if (StringUtil.isEmpty(code)) {
+			CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_NOT_NULL,
+					MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
+		}
+		String mail = request.getParameter(AuthConstant.MAIL);
+		log.info("邮箱：{}", mail);
+		if (StringUtil.isEmpty(mail)) {
+			CustomAuthExceptionHandler.throwError(StatusCode.MAIL_NOT_NULL,
+					MessageUtil.getMessage(StatusCode.MAIL_NOT_NULL));
+		}
+		boolean isMail = RegexUtil.mailRegex(mail);
+		if (!isMail) {
+			CustomAuthExceptionHandler.throwError(StatusCode.MAIL_ERROR, MessageUtil.getMessage(StatusCode.MAIL_ERROR));
+		}
+		// 获取用户信息,并认证信息
+		return super.getUserInfo(mail, "", request, code, mail);
+	}
 
-    @Override
-    AuthorizationGrantType getGrantType() {
-        return new AuthorizationGrantType(GRANT_TYPE);
-    }
+	@Override
+	AuthorizationGrantType getGrantType() {
+		return new AuthorizationGrantType(GRANT_TYPE);
+	}
+
 }

@@ -15,6 +15,7 @@
  */
 
 package com.alibaba.nacos;
+
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
@@ -26,20 +27,18 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import static com.alibaba.nacos.sys.env.EnvUtil.NACOS_HOME_KEY;
 
 /**
- * @version 2.2.0
- * Nacos starter.
+ * @version 2.2.0 Nacos starter.
  * @author nacos
  */
 @SpringBootApplication(scanBasePackages = "com.alibaba.nacos")
 @ServletComponentScan
 @EnableScheduling
 @EnableEncryptableProperties
-public class NacosApplication{
-    public static void main(String[] args) {
-        System.setProperty(NACOS_HOME_KEY,"nacos/data/protocol/raft");
-        new SpringApplicationBuilder(NacosApplication.class)
-                .web(WebApplicationType.SERVLET)
-                .run(args);
-    }
-}
+public class NacosApplication {
 
+	public static void main(String[] args) {
+		System.setProperty(NACOS_HOME_KEY, "nacos/data/protocol/raft");
+		new SpringApplicationBuilder(NacosApplication.class).web(WebApplicationType.SERVLET).run(args);
+	}
+
+}

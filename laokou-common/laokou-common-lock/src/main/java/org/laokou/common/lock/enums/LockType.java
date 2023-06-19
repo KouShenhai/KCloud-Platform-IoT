@@ -21,24 +21,24 @@ package org.laokou.common.lock.enums;
 
 public enum LockType {
 
-    /**
-     * 普通锁
-     */
-    LOCK,
+	/**
+	 * 普通锁
+	 */
+	LOCK,
 
-    /**
-     * 公平锁
-     */
-    FAIR,
+	/**
+	 * 公平锁
+	 */
+	FAIR,
 
-    /**
-     * 读锁
-     */
-    READ,
+	/**
+	 * 读锁
+	 */
+	READ,
 
-    /**
-     * 写锁
-     */
-    WRITE
+	/**
+	 * 写锁
+	 */
+	WRITE
 
 }

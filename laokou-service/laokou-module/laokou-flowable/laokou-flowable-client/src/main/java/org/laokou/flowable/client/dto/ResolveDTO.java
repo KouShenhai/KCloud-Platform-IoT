@@ -26,12 +26,17 @@ import java.io.Serializable;
  */
 @Data
 public class ResolveDTO implements Serializable {
-    @NotBlank(message = "任务编号不为空")
-    private String taskId;
-    @NotBlank(message = "流程实例编号不为空")
-    private String instanceId;
-    @NotBlank(message = "业务编号不为空")
-    private String businessKey;
-    @NotBlank(message = "流程实例名称不为空")
-    private String instanceName;
+
+	@NotBlank(message = "任务编号不为空")
+	private String taskId;
+
+	@NotBlank(message = "流程实例编号不为空")
+	private String instanceId;
+
+	@NotBlank(message = "业务编号不为空")
+	private String businessKey;
+
+	@NotBlank(message = "流程实例名称不为空")
+	private String instanceName;
+
 }

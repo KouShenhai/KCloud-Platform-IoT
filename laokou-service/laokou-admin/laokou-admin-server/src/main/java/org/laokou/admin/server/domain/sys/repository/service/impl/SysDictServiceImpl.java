@@ -33,29 +33,29 @@ import java.util.List;
 @Service
 public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDictDO> implements SysDictService {
 
-    @Override
-    public IPage<SysDictVO> getDictList(IPage<SysDictVO> page, SysDictQo qo) {
-        return this.baseMapper.getDictList(page,qo);
-    }
+	@Override
+	public IPage<SysDictVO> getDictList(IPage<SysDictVO> page, SysDictQo qo) {
+		return this.baseMapper.getDictList(page, qo);
+	}
 
-    @Override
-    public SysDictVO getDictById(Long id) {
-        return this.baseMapper.getDictById(id);
-    }
+	@Override
+	public SysDictVO getDictById(Long id) {
+		return this.baseMapper.getDictById(id);
+	}
 
-    @Override
-    public void deleteDict(Long id) {
-        this.baseMapper.deleteById(id);
-    }
+	@Override
+	public void deleteDict(Long id) {
+		this.baseMapper.deleteById(id);
+	}
 
-    @Override
-    public Integer getVersion(Long id) {
-        return this.baseMapper.getVersion(id);
-    }
+	@Override
+	public Integer getVersion(Long id) {
+		return this.baseMapper.getVersion(id);
+	}
 
-    @Override
-    public List<OptionVO> getOptionList(String type) {
-        return this.baseMapper.getOptionList(type);
-    }
+	@Override
+	public List<OptionVO> getOptionList(String type) {
+		return this.baseMapper.getOptionList(type);
+	}
 
 }

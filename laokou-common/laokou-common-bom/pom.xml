@@ -102,7 +102,7 @@
         <!--liquibase-core版本-->
         <liquibase-core.version>4.21.0</liquibase-core.version>
         <!--log4j版本-->
-        <log4j.version>2.19.0</log4j.version>
+        <log4j.version>2.20.0</log4j.version>
         <!--logback-kafka-appender版本-->
         <logback-kafka-appender.version>0.2.0-RC2</logback-kafka-appender.version>
         <!--rocketmq-logappender版本-->

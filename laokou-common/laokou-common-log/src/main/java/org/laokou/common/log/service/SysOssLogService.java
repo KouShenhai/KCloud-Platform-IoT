@@ -24,18 +24,18 @@ import org.laokou.common.log.event.OssLogEvent;
  */
 public interface SysOssLogService extends IService<SysOssLogDO> {
 
-    /**
-     * 新增日志
-     * @param event
-     * @return
-     */
-    Boolean insertLog(OssLogEvent event);
+	/**
+	 * 新增日志
+	 * @param event
+	 * @return
+	 */
+	Boolean insertLog(OssLogEvent event);
 
-    /**
-     * 获取文件日志
-     * @param md5
-     * @return
-     */
-    SysOssLogDO getLogByMd5(String md5);
+	/**
+	 * 获取文件日志
+	 * @param md5
+	 * @return
+	 */
+	SysOssLogDO getLogByMd5(String md5);
 
 }

@@ -11,18 +11,22 @@ import lombok.Data;
 @Data
 public class ModifyUserInfoRequest {
 
-    private Long id;
+	private Long id;
 
-    private String username;
-    private String password;
-    private String webHook;
+	private String username;
 
-    /**
-     * 手机号
-     */
-    private String phone;
-    /**
-     * 邮箱地址
-     */
-    private String email;
+	private String password;
+
+	private String webHook;
+
+	/**
+	 * 手机号
+	 */
+	private String phone;
+
+	/**
+	 * 邮箱地址
+	 */
+	private String email;
+
 }

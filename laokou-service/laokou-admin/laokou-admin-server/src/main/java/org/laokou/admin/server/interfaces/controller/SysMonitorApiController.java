@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.interfaces.controller;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -24,27 +25,28 @@ import org.laokou.common.i18n.core.HttpResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 /**
  * @author laokou
  */
 @RestController
-@Tag(name = "Sys Monitor API",description = "系统监控API")
+@Tag(name = "Sys Monitor API", description = "系统监控API")
 @RequestMapping("/sys/monitor/api")
 @RequiredArgsConstructor
 public class SysMonitorApiController {
 
-    private final SysMonitorApplicationService sysMonitorApplicationService;
+	private final SysMonitorApplicationService sysMonitorApplicationService;
 
-    @GetMapping("/cache")
-    @Operation(summary = "系统监控>缓存",description = "系统监控>缓存")
-    public HttpResult<CacheVO> redis() {
-        return new HttpResult<CacheVO>().ok(sysMonitorApplicationService.getCacheInfo());
-    }
+	@GetMapping("/cache")
+	@Operation(summary = "系统监控>缓存", description = "系统监控>缓存")
+	public HttpResult<CacheVO> redis() {
+		return new HttpResult<CacheVO>().ok(sysMonitorApplicationService.getCacheInfo());
+	}
 
-    @GetMapping("/server")
-    @Operation(summary = "系统监控>主机",description = "系统监控>主机")
-    public HttpResult<Server> server() throws Exception {
-        return new HttpResult<Server>().ok(sysMonitorApplicationService.getServerInfo());
-    }
+	@GetMapping("/server")
+	@Operation(summary = "系统监控>主机", description = "系统监控>主机")
+	public HttpResult<Server> server() throws Exception {
+		return new HttpResult<Server>().ok(sysMonitorApplicationService.getServerInfo());
+	}
 
 }

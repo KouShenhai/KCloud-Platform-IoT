@@ -27,4 +27,5 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("org.laokou.common.oss")
 @MapperScan("org.laokou.common.oss.mapper")
 public class OssAutoConfig {
+
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.interfaces.controller;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,56 +38,56 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/sys/source/api")
-@Tag(name = "Sys Source Api",description = "系统数据源API")
+@Tag(name = "Sys Source Api", description = "系统数据源API")
 @RequiredArgsConstructor
 public class SysSourceApiController {
 
-    private final SysSourceApplicationService sysSourceApplicationService;
+	private final SysSourceApplicationService sysSourceApplicationService;
 
-    @PostMapping("/query")
-    @Operation(summary = "系统数据源>查询",description = "系统数据源>查询")
-    @PreAuthorize("hasAuthority('sys:source:query')")
-    public HttpResult<IPage<SysSourceVO>> query(@RequestBody SysSourceQo qo) {
-        return new HttpResult<IPage<SysSourceVO>>().ok(sysSourceApplicationService.querySourcePage(qo));
-    }
+	@PostMapping("/query")
+	@Operation(summary = "系统数据源>查询", description = "系统数据源>查询")
+	@PreAuthorize("hasAuthority('sys:source:query')")
+	public HttpResult<IPage<SysSourceVO>> query(@RequestBody SysSourceQo qo) {
+		return new HttpResult<IPage<SysSourceVO>>().ok(sysSourceApplicationService.querySourcePage(qo));
+	}
 
-    @PostMapping("/insert")
-    @Operation(summary = "系统数据源>新增",description = "系统数据源>新增")
-    @OperateLog(module = "系统数据源",name = "数据源新增")
-    @PreAuthorize("hasAuthority('sys:source:insert')")
-    public HttpResult<Boolean> insert(@RequestBody SysSourceDTO dto) {
-        return new HttpResult<Boolean>().ok(sysSourceApplicationService.insertSource(dto));
-    }
+	@PostMapping("/insert")
+	@Operation(summary = "系统数据源>新增", description = "系统数据源>新增")
+	@OperateLog(module = "系统数据源", name = "数据源新增")
+	@PreAuthorize("hasAuthority('sys:source:insert')")
+	public HttpResult<Boolean> insert(@RequestBody SysSourceDTO dto) {
+		return new HttpResult<Boolean>().ok(sysSourceApplicationService.insertSource(dto));
+	}
 
-    @GetMapping("/detail")
-    @Operation(summary = "系统数据源>查看",description = "系统数据源>查看")
-    @DataCache(name = "source",key = "#id")
-    public HttpResult<SysSourceVO> detail(@RequestParam("id")Long id) {
-        return new HttpResult<SysSourceVO>().ok(sysSourceApplicationService.getSourceById(id));
-    }
+	@GetMapping("/detail")
+	@Operation(summary = "系统数据源>查看", description = "系统数据源>查看")
+	@DataCache(name = "source", key = "#id")
+	public HttpResult<SysSourceVO> detail(@RequestParam("id") Long id) {
+		return new HttpResult<SysSourceVO>().ok(sysSourceApplicationService.getSourceById(id));
+	}
 
-    @PutMapping("/update")
-    @Operation(summary = "系统数据源>修改",description = "系统数据源>修改")
-    @OperateLog(module = "系统数据源",name = "数据源修改")
-    @PreAuthorize("hasAuthority('sys:source:update')")
-    @DataCache(name = "source",key = "#dto.id",type = CacheEnum.DEL)
-    public HttpResult<Boolean> update(@RequestBody SysSourceDTO dto) {
-        return new HttpResult<Boolean>().ok(sysSourceApplicationService.updateSource(dto));
-    }
+	@PutMapping("/update")
+	@Operation(summary = "系统数据源>修改", description = "系统数据源>修改")
+	@OperateLog(module = "系统数据源", name = "数据源修改")
+	@PreAuthorize("hasAuthority('sys:source:update')")
+	@DataCache(name = "source", key = "#dto.id", type = CacheEnum.DEL)
+	public HttpResult<Boolean> update(@RequestBody SysSourceDTO dto) {
+		return new HttpResult<Boolean>().ok(sysSourceApplicationService.updateSource(dto));
+	}
 
-    @DeleteMapping("/delete")
-    @Operation(summary = "系统数据源>删除",description = "系统数据源>删除")
-    @OperateLog(module = "系统数据源",name = "数据源删除")
-    @PreAuthorize("hasAuthority('sys:source:delete')")
-    @DataCache(name = "source",key = "#id",type = CacheEnum.DEL)
-    public HttpResult<Boolean> delete(@RequestParam("id")Long id) {
-        return new HttpResult<Boolean>().ok(sysSourceApplicationService.deleteSource(id));
-    }
+	@DeleteMapping("/delete")
+	@Operation(summary = "系统数据源>删除", description = "系统数据源>删除")
+	@OperateLog(module = "系统数据源", name = "数据源删除")
+	@PreAuthorize("hasAuthority('sys:source:delete')")
+	@DataCache(name = "source", key = "#id", type = CacheEnum.DEL)
+	public HttpResult<Boolean> delete(@RequestParam("id") Long id) {
+		return new HttpResult<Boolean>().ok(sysSourceApplicationService.deleteSource(id));
+	}
 
-    @GetMapping("/option/list")
-    @Operation(summary = "系统数据源>下拉框列表",description = "系统数据源>下拉框列表")
-    public HttpResult<List<OptionVO>> optionList() {
-        return new HttpResult<List<OptionVO>>().ok(sysSourceApplicationService.getOptionList());
-    }
+	@GetMapping("/option/list")
+	@Operation(summary = "系统数据源>下拉框列表", description = "系统数据源>下拉框列表")
+	public HttpResult<List<OptionVO>> optionList() {
+		return new HttpResult<List<OptionVO>>().ok(sysSourceApplicationService.getOptionList());
+	}
 
 }

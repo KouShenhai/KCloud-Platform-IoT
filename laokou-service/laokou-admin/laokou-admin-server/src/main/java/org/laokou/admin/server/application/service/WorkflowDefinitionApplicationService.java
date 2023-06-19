@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.admin.server.interfaces.qo.DefinitionQo;
@@ -27,51 +28,52 @@ import java.io.IOException;
  */
 public interface WorkflowDefinitionApplicationService {
 
-    /**
-     * 新增流程文件
-     * @param file
-     * @return
-     */
-    Boolean insertDefinition(MultipartFile file);
+	/**
+	 * 新增流程文件
+	 * @param file
+	 * @return
+	 */
+	Boolean insertDefinition(MultipartFile file);
 
-    /**
-     * 分页查询流程
-     * @param qo
-     * @return
-     */
-    IPage<DefinitionVO> queryDefinitionPage(DefinitionQo qo);
+	/**
+	 * 分页查询流程
+	 * @param qo
+	 * @return
+	 */
+	IPage<DefinitionVO> queryDefinitionPage(DefinitionQo qo);
 
-    /**
-     * 查看流程图
-     * @param definitionId
-     * @return
-     */
-    String diagramDefinition(String definitionId);
+	/**
+	 * 查看流程图
+	 * @param definitionId
+	 * @return
+	 */
+	String diagramDefinition(String definitionId);
 
-    /**
-     * 删除流程
-     * @param deploymentId
-     * @return
-     */
-    Boolean deleteDefinition(String deploymentId);
+	/**
+	 * 删除流程
+	 * @param deploymentId
+	 * @return
+	 */
+	Boolean deleteDefinition(String deploymentId);
 
-    /**
-     * 挂起流程
-     * @param definitionId
-     * @return
-     */
-    Boolean suspendDefinition(String definitionId);
+	/**
+	 * 挂起流程
+	 * @param definitionId
+	 * @return
+	 */
+	Boolean suspendDefinition(String definitionId);
 
-    /**
-     * 激活流程
-     * @param definitionId
-     * @return
-     */
-    Boolean activateDefinition(String definitionId);
+	/**
+	 * 激活流程
+	 * @param definitionId
+	 * @return
+	 */
+	Boolean activateDefinition(String definitionId);
 
-    /**
-     * 下载模板
-     * @param response
-     */
-    void downloadTemplate(HttpServletResponse response) throws IOException;
+	/**
+	 * 下载模板
+	 * @param response
+	 */
+	void downloadTemplate(HttpServletResponse response) throws IOException;
+
 }

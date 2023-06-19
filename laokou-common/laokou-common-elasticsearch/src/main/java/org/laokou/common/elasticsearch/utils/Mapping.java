@@ -32,11 +32,15 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Mapping implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 8143541847786243252L;
-    private String field;
-    private FieldTypeEnum type;
-    private String searchAnalyzer;
-    private String analyzer;
+	@Serial
+	private static final long serialVersionUID = 8143541847786243252L;
+
+	private String field;
+
+	private FieldTypeEnum type;
+
+	private String searchAnalyzer;
+
+	private String analyzer;
 
 }

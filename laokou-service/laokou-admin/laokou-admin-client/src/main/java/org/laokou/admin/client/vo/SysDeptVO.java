@@ -29,8 +29,9 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 public class SysDeptVO extends TreeUtil.TreeNode<SysDeptVO> implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 4116703987840123059L;
-    private Integer sort;
+	@Serial
+	private static final long serialVersionUID = 4116703987840123059L;
+
+	private Integer sort;
 
 }

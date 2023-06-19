@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.tenant.service;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.common.mybatisplus.service.BatchService;
 import org.laokou.common.tenant.entity.SysPackageMenuDO;
@@ -22,6 +23,5 @@ import org.laokou.common.tenant.entity.SysPackageMenuDO;
  * @author laokou
  */
 public interface SysPackageMenuService extends BatchService<SysPackageMenuDO>, IService<SysPackageMenuDO> {
-
 
 }

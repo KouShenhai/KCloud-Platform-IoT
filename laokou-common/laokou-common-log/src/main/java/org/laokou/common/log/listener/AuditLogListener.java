@@ -28,13 +28,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class AuditLogListener  implements ApplicationListener<AuditLogEvent> {
+public class AuditLogListener implements ApplicationListener<AuditLogEvent> {
 
-    private final SysAuditLogService sysAuditLogService;
+	private final SysAuditLogService sysAuditLogService;
 
-    @Override
-    @Async
-    public void onApplicationEvent(AuditLogEvent event) {
-        sysAuditLogService.insertAuditLog(event);
-    }
+	@Override
+	@Async
+	public void onApplicationEvent(AuditLogEvent event) {
+		sysAuditLogService.insertAuditLog(event);
+	}
+
 }

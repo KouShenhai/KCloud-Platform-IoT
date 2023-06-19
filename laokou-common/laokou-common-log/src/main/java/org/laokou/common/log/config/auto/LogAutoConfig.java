@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.config.auto;
+
 import org.laokou.common.easy.excel.suppert.ExcelTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

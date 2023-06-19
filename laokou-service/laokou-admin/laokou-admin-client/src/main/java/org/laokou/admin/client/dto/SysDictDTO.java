@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.client.dto;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -27,31 +28,38 @@ import java.io.Serializable;
 @Data
 public class SysDictDTO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 9211125481081880084L;
-    private Long id;
-    /**
-     * 字典名称
-     */
-    @NotBlank(message = "字典名称不为空")
-    private String dictLabel;
-    /**
-     * 字典类型
-     */
-    @NotBlank(message = "字典类型不为空")
-    private String type;
-    /**
-     * 字典值
-     */
-    @NotBlank(message = "字典值不为空")
-    private String dictValue;
-    /**
-     * 备注
-     */
-    private String remark;
-    /**
-     * 字典排序
-     */
-    @NotNull(message = "字典排序不为空")
-    private Integer sort;
+	@Serial
+	private static final long serialVersionUID = 9211125481081880084L;
+
+	private Long id;
+
+	/**
+	 * 字典名称
+	 */
+	@NotBlank(message = "字典名称不为空")
+	private String dictLabel;
+
+	/**
+	 * 字典类型
+	 */
+	@NotBlank(message = "字典类型不为空")
+	private String type;
+
+	/**
+	 * 字典值
+	 */
+	@NotBlank(message = "字典值不为空")
+	private String dictValue;
+
+	/**
+	 * 备注
+	 */
+	private String remark;
+
+	/**
+	 * 字典排序
+	 */
+	@NotNull(message = "字典排序不为空")
+	private Integer sort;
+
 }

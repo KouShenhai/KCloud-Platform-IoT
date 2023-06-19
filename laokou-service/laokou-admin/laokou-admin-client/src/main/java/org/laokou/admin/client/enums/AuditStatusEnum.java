@@ -23,30 +23,30 @@ import org.laokou.common.i18n.core.CustomException;
  */
 public enum AuditStatusEnum {
 
-    /**
-     * 待审批
-     */
-    INIT,
-    /**
-     * 审批中
-     */
-    AUDIT,
-    /**
-     * 审批拒绝
-     */
-    REJECT,
-    /**
-     * 审批通过
-     */
-    AGREE;
+	/**
+	 * 待审批
+	 */
+	INIT,
+	/**
+	 * 审批中
+	 */
+	AUDIT,
+	/**
+	 * 审批拒绝
+	 */
+	REJECT,
+	/**
+	 * 审批通过
+	 */
+	AGREE;
 
-    public static AuditStatusEnum getStatus(int status) {
-        for (AuditStatusEnum en : AuditStatusEnum.values()) {
-            if (en.ordinal() == status) {
-                return en;
-            }
-        }
-        throw new CustomException("审批状态不存在");
-    }
+	public static AuditStatusEnum getStatus(int status) {
+		for (AuditStatusEnum en : AuditStatusEnum.values()) {
+			if (en.ordinal() == status) {
+				return en;
+			}
+		}
+		throw new CustomException("审批状态不存在");
+	}
 
 }

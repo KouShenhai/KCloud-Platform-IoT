@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.mybatisplus.config.auto;
+
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
@@ -37,44 +38,45 @@ import javax.sql.DataSource;
 
 /**
  * mybatis-plus的配置
+ *
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnClass({DataSource.class})
+@ConditionalOnClass({ DataSource.class })
 @Import(BaseDetaObjectHander.class)
 @ComponentScan("org.laokou.common.mybatisplus")
 public class MybatisPlusAutoConfig {
 
-    @Bean
-    @ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
-        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
-        // 数据权限
-        mybatisPlusInterceptor.addInnerInterceptor(new DataFilterInterceptor());
-        // 分页插件
-        mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
-        // 乐观锁
-        mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
-        // 防止全表更新与删除
-        mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
-        // 动态表名
-        DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
-        dynamicTableNameInnerInterceptor.setTableNameHandler(new DynamicTableNameHandler());
-        mybatisPlusInterceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
-        return mybatisPlusInterceptor;
-    }
+	@Bean
+	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
+	public MybatisPlusInterceptor mybatisPlusInterceptor() {
+		MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+		// 数据权限
+		mybatisPlusInterceptor.addInnerInterceptor(new DataFilterInterceptor());
+		// 分页插件
+		mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+		// 乐观锁
+		mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+		// 防止全表更新与删除
+		mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+		// 动态表名
+		DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
+		dynamicTableNameInnerInterceptor.setTableNameHandler(new DynamicTableNameHandler());
+		mybatisPlusInterceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
+		return mybatisPlusInterceptor;
+	}
 
-    @Bean(name = "transactionTemplate")
-    @ConditionalOnMissingBean(TransactionOperations.class)
-    public TransactionTemplate transactionTemplate(PlatformTransactionManager transactionManager) {
-        TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
-        transactionTemplate.setReadOnly(false);
-        // 事务隔离级别设置为读已提交
-        transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
-        // 事务超时时间,单位s
-        transactionTemplate.setTimeout(120);
-        transactionTemplate.setName("laokou-transaction-template");
-        return transactionTemplate;
-    }
+	@Bean(name = "transactionTemplate")
+	@ConditionalOnMissingBean(TransactionOperations.class)
+	public TransactionTemplate transactionTemplate(PlatformTransactionManager transactionManager) {
+		TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+		transactionTemplate.setReadOnly(false);
+		// 事务隔离级别设置为读已提交
+		transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+		// 事务超时时间,单位s
+		transactionTemplate.setTimeout(120);
+		transactionTemplate.setName("laokou-transaction-template");
+		return transactionTemplate;
+	}
 
 }

@@ -23,12 +23,12 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
  */
 public class IdUtil {
 
-    public static long defaultId() {
-        return IdWorker.getId();
-    }
+	public static long defaultId() {
+		return IdWorker.getId();
+	}
 
-    public static String defaultStrId() {
-        return IdWorker.getIdStr();
-    }
+	public static String defaultStrId() {
+		return IdWorker.getIdStr();
+	}
 
 }

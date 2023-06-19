@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.redis.config.auto;
+
 import org.laokou.common.redis.config.RedissonConfig;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
 import org.redisson.api.RedissonClient;
@@ -31,48 +32,46 @@ import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import reactor.core.publisher.Flux;
+
 /**
  * @author laokou
  */
 @AutoConfiguration
 @ComponentScan("org.laokou.common.redis")
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
-@ConditionalOnClass({RedissonConfig.class,ReactiveRedisConnectionFactory.class, ReactiveRedisTemplate.class, Flux.class })
+@ConditionalOnClass({ RedissonConfig.class, ReactiveRedisConnectionFactory.class, ReactiveRedisTemplate.class,
+		Flux.class })
 public class ReactiveRedisAutoConfig {
 
-    @Bean
-    @ConditionalOnMissingBean(name = "reactiveRedisTemplate")
-    public ReactiveRedisTemplate<Object, Object> reactiveRedisTemplate(
-            ReactiveRedisConnectionFactory reactiveRedisConnectionFactory, ResourceLoader resourceLoader) {
-        JdkSerializationRedisSerializer jdkSerializer = new JdkSerializationRedisSerializer(
-                resourceLoader.getClassLoader());
-        RedisSerializationContext<Object, Object> serializationContext = RedisSerializationContext
-                .newSerializationContext()
-                .key(jdkSerializer)
-                .value(jdkSerializer)
-                .hashKey(jdkSerializer)
-                .hashValue(jdkSerializer)
-                .build();
-        return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory, serializationContext);
-    }
+	@Bean
+	@ConditionalOnMissingBean(name = "reactiveRedisTemplate")
+	public ReactiveRedisTemplate<Object, Object> reactiveRedisTemplate(
+			ReactiveRedisConnectionFactory reactiveRedisConnectionFactory, ResourceLoader resourceLoader) {
+		JdkSerializationRedisSerializer jdkSerializer = new JdkSerializationRedisSerializer(
+				resourceLoader.getClassLoader());
+		RedisSerializationContext<Object, Object> serializationContext = RedisSerializationContext
+				.newSerializationContext().key(jdkSerializer).value(jdkSerializer).hashKey(jdkSerializer)
+				.hashValue(jdkSerializer).build();
+		return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory, serializationContext);
+	}
 
-    @Bean
-    @ConditionalOnMissingBean(name = "reactiveStringRedisTemplate")
-    public ReactiveStringRedisTemplate reactiveStringRedisTemplate(
-            ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
-        return new ReactiveStringRedisTemplate(reactiveRedisConnectionFactory);
-    }
+	@Bean
+	@ConditionalOnMissingBean(name = "reactiveStringRedisTemplate")
+	public ReactiveStringRedisTemplate reactiveStringRedisTemplate(
+			ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
+		return new ReactiveStringRedisTemplate(reactiveRedisConnectionFactory);
+	}
 
-    @Bean(destroyMethod = "shutdown")
-    @ConditionalOnMissingBean(RedissonReactiveClient.class)
-    public RedissonReactiveClient redissonReactiveClient(RedissonClient redissonClient) {
-        return redissonClient.reactive();
-    }
+	@Bean(destroyMethod = "shutdown")
+	@ConditionalOnMissingBean(RedissonReactiveClient.class)
+	public RedissonReactiveClient redissonReactiveClient(RedissonClient redissonClient) {
+		return redissonClient.reactive();
+	}
 
-    @Bean
-    @ConditionalOnMissingBean(ReactiveRedisUtil.class)
-    public ReactiveRedisUtil reactiveRedisUtil(RedissonReactiveClient redissonReactiveClient) {
-        return new ReactiveRedisUtil(redissonReactiveClient);
-    }
+	@Bean
+	@ConditionalOnMissingBean(ReactiveRedisUtil.class)
+	public ReactiveRedisUtil reactiveRedisUtil(RedissonReactiveClient redissonReactiveClient) {
+		return new ReactiveRedisUtil(redissonReactiveClient);
+	}
 
 }

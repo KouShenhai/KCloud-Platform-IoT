@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.laokou.admin.server.domain.sys.entity.SysRoleDO;
@@ -23,48 +24,50 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+
 /**
  * 角色类
+ *
  * @author laokou
  */
 @Mapper
 @Repository
 public interface SysRoleMapper extends BaseMapper<SysRoleDO> {
 
-    /**
-     * 通过用户id查询角色Ids
-     * @param userId
-     * @return
-     */
-    List<Long> getRoleIdsByUserId(@Param("userId") Long userId);
+	/**
+	 * 通过用户id查询角色Ids
+	 * @param userId
+	 * @return
+	 */
+	List<Long> getRoleIdsByUserId(@Param("userId") Long userId);
 
-    /**
-     * 分页查询角色
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysRoleVO> getRoleList(IPage<SysRoleVO> page, @Param("qo") SysRoleQo qo);
+	/**
+	 * 分页查询角色
+	 * @param page
+	 * @param qo
+	 * @return
+	 */
+	IPage<SysRoleVO> getRoleList(IPage<SysRoleVO> page, @Param("qo") SysRoleQo qo);
 
-    /**
-     * 根据id查询角色
-     * @param id
-     * @return
-     */
-    SysRoleVO getRoleById(@Param("id") Long id);
+	/**
+	 * 根据id查询角色
+	 * @param id
+	 * @return
+	 */
+	SysRoleVO getRoleById(@Param("id") Long id);
 
-    /**
-     * 查询角色列表
-     * @param qo
-     * @return
-     */
-    List<SysRoleVO> getRoleList(@Param("qo") SysRoleQo qo);
+	/**
+	 * 查询角色列表
+	 * @param qo
+	 * @return
+	 */
+	List<SysRoleVO> getRoleList(@Param("qo") SysRoleQo qo);
 
-    /**
-     * 获取版本号
-     * @param id
-     * @return
-     */
-    Integer getVersion(@Param("id") Long id);
+	/**
+	 * 获取版本号
+	 * @param id
+	 * @return
+	 */
+	Integer getVersion(@Param("id") Long id);
 
 }

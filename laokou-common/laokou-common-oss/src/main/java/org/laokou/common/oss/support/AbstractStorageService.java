@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.oss.support;
+
 import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.oss.vo.SysOssVO;
 
@@ -22,35 +23,36 @@ import java.io.InputStream;
 /**
  * @author laokou
  */
-public abstract class AbstractStorageService<O> implements StorageService<O>{
-    protected SysOssVO vo;
+public abstract class AbstractStorageService<O> implements StorageService<O> {
 
-    public String upload(int limitRead, long size, String fileName, InputStream inputStream, String contentType) {
-        // 修改文件名
-        String newFileName = getFileName(fileName);
-        // 获取连接对象
-        O obj = getObj();
-        // 创建bucket
-        createBucket(obj);
-        // 上传文件
-        putObject(obj,limitRead,size,newFileName,inputStream,contentType);
-        // 获取地址
-        return getUrl(obj, newFileName);
-    }
+	protected SysOssVO vo;
 
-    /**
-     * 获取连接对象
-     * @return
-     */
-    protected abstract O getObj();
+	public String upload(int limitRead, long size, String fileName, InputStream inputStream, String contentType) {
+		// 修改文件名
+		String newFileName = getFileName(fileName);
+		// 获取连接对象
+		O obj = getObj();
+		// 创建bucket
+		createBucket(obj);
+		// 上传文件
+		putObject(obj, limitRead, size, newFileName, inputStream, contentType);
+		// 获取地址
+		return getUrl(obj, newFileName);
+	}
 
-    /**
-     * 文件后缀
-     * @param fileName
-     * @return
-     */
-    public String getFileExt(String fileName) {
-        return FileUtil.getFileExt(fileName);
-    }
+	/**
+	 * 获取连接对象
+	 * @return
+	 */
+	protected abstract O getObj();
+
+	/**
+	 * 文件后缀
+	 * @param fileName
+	 * @return
+	 */
+	public String getFileExt(String fileName) {
+		return FileUtil.getFileExt(fileName);
+	}
 
 }

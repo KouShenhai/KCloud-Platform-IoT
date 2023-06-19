@@ -32,22 +32,22 @@ import org.springframework.test.context.TestConstructor;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class RedisTest {
 
-    private final RedisUtil redisUtil;
+	private final RedisUtil redisUtil;
 
-    @Test
-    public void redisAtomicLongTest() {
-        String key = "laokou";
-        long l4 = redisUtil.addAndGet(key, 10);
-        long l = redisUtil.incrementAndGet(key);
-        long l1 = redisUtil.incrementAndGet(key);
-        long l2 = redisUtil.decrementAndGet(key);
-        long l3 = redisUtil.getAtomicValue(key);
-        Object o = redisUtil.get(key);
-        log.info("{}",l);
-        log.info("{}",l1);
-        log.info("{}",l2);
-        log.info("{}",l3);
-        log.info("{}",o);
-    }
+	@Test
+	public void redisAtomicLongTest() {
+		String key = "laokou";
+		long l4 = redisUtil.addAndGet(key, 10);
+		long l = redisUtil.incrementAndGet(key);
+		long l1 = redisUtil.incrementAndGet(key);
+		long l2 = redisUtil.decrementAndGet(key);
+		long l3 = redisUtil.getAtomicValue(key);
+		Object o = redisUtil.get(key);
+		log.info("{}", l);
+		log.info("{}", l1);
+		log.info("{}", l2);
+		log.info("{}", l3);
+		log.info("{}", o);
+	}
 
 }

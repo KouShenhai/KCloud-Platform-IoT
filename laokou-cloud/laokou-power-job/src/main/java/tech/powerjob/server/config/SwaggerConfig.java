@@ -14,8 +14,8 @@ import tech.powerjob.server.common.PowerJobServerConfigKey;
 import tech.powerjob.server.remote.server.self.ServerInfoService;
 
 /**
- * Configuration class for Swagger UI.
- * migrate to <a href="https://springdoc.org/">springdoc</a> from v4.3.1
+ * Configuration class for Swagger UI. migrate to
+ * <a href="https://springdoc.org/">springdoc</a> from v4.3.1
  * <a href="http://localhost:7700/swagger-ui/index.html#/">api address</a>
  *
  * @author tjq
@@ -27,35 +27,30 @@ import tech.powerjob.server.remote.server.self.ServerInfoService;
 @ConditionalOnProperty(name = PowerJobServerConfigKey.SWAGGER_UI_ENABLE, havingValue = "true")
 @RequiredArgsConstructor
 public class SwaggerConfig {
-    
-    private final ServerInfoService serverInfoService;
 
-    @Bean
-    public OpenAPI springShopOpenAPI() {
-        final Contact contact = new Contact();
-        contact.setName("Team PowerJob");
-        contact.setUrl("http://www.powerjob.tech");
-        contact.setEmail("tengjiqi@gmail.com");
+	private final ServerInfoService serverInfoService;
 
-        // apiInfo()用来创建该Api的基本信息（这些基本信息会展现在文档页面中
-        return new OpenAPI()
-                .info(new Info().title("PowerJob")
-                        .description("Distributed scheduling and computing framework.")
-                        .version(serverInfoService.fetchServiceInfo().getVersion())
-                        .contact(contact)
-                        .license(new License().name("Apache License 2.0").url("https://github.com/PowerJob/PowerJob/blob/master/LICENSE")));
-    }
+	@Bean
+	public OpenAPI springShopOpenAPI() {
+		final Contact contact = new Contact();
+		contact.setName("Team PowerJob");
+		contact.setUrl("http://www.powerjob.tech");
+		contact.setEmail("tengjiqi@gmail.com");
 
-    @Bean
-    public GroupedOpenApi createRestApi() {
+		// apiInfo()用来创建该Api的基本信息（这些基本信息会展现在文档页面中
+		return new OpenAPI().info(new Info().title("PowerJob")
+				.description("Distributed scheduling and computing framework.")
+				.version(serverInfoService.fetchServiceInfo().getVersion()).contact(contact).license(new License()
+						.name("Apache License 2.0").url("https://github.com/PowerJob/PowerJob/blob/master/LICENSE")));
+	}
 
-        log.warn("[OpenAPI] openapi has been activated, make sure you want to enable it!");
+	@Bean
+	public GroupedOpenApi createRestApi() {
 
-        return GroupedOpenApi.builder()
-                .group("PowerJob-ALL")
-                .pathsToMatch("/**")
-                .build();
+		log.warn("[OpenAPI] openapi has been activated, make sure you want to enable it!");
 
-    }
-    
+		return GroupedOpenApi.builder().group("PowerJob-ALL").pathsToMatch("/**").build();
+
+	}
+
 }

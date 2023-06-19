@@ -14,20 +14,23 @@
  * limitations under the License.
  */
 package org.laokou.auth.server.domain.sys.repository.service;
+
 import org.laokou.auth.client.user.UserDetail;
+
 /**
  * 用户类
+ *
  * @author laokou
  */
 public interface SysUserService {
 
-    /**
-     * 获取用户信息
-     * @param loginName 登录名
-     * @param tenantId 租户id
-     * @param loginType 登录类型
-     * @return
-     */
-    UserDetail getUserDetail(String loginName,Long tenantId,String loginType);
+	/**
+	 * 获取用户信息
+	 * @param loginName 登录名
+	 * @param tenantId 租户id
+	 * @param loginType 登录类型
+	 * @return
+	 */
+	UserDetail getUserDetail(String loginName, Long tenantId, String loginType);
 
 }

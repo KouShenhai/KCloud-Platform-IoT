@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.mapper;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,6 +24,7 @@ import org.laokou.common.log.entity.SysLoginLogDO;
 import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.vo.SysLoginLogVO;
 import org.springframework.stereotype.Repository;
+
 /**
  * @author laokou
  */
@@ -30,18 +32,19 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface SysLoginLogMapper extends BaseMapper<SysLoginLogDO> {
 
-    /**
-     * 分页查询登录日志
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, @Param("qo") SysLoginLogQo qo);
+	/**
+	 * 分页查询登录日志
+	 * @param page
+	 * @param qo
+	 * @return
+	 */
+	IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, @Param("qo") SysLoginLogQo qo);
 
-    /**
-     * 查询登录日志
-     * @param qo
-     * @param handler
-     */
-    void resultList(@Param("qo") SysLoginLogQo qo, ResultHandler<SysLoginLogVO> handler);
+	/**
+	 * 查询登录日志
+	 * @param qo
+	 * @param handler
+	 */
+	void resultList(@Param("qo") SysLoginLogQo qo, ResultHandler<SysLoginLogVO> handler);
+
 }

@@ -27,12 +27,17 @@ import java.time.LocalDateTime;
 @Data
 public class SysAuditLogVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -683682454620817254L;
-    private Long id;
-    private String auditName;
-    private LocalDateTime auditDate;
-    private Integer auditStatus;
-    private String comment;
+	@Serial
+	private static final long serialVersionUID = -683682454620817254L;
+
+	private Long id;
+
+	private String auditName;
+
+	private LocalDateTime auditDate;
+
+	private Integer auditStatus;
+
+	private String comment;
 
 }

@@ -30,58 +30,63 @@ import java.util.stream.Collectors;
 @RequestMapping("/wfInstance")
 public class WorkflowInstanceController {
 
-    @Resource
-    private CacheService cacheService;
-    @Resource
-    private WorkflowInstanceService workflowInstanceService;
-    @Resource
-    private WorkflowInstanceInfoRepository workflowInstanceInfoRepository;
+	@Resource
+	private CacheService cacheService;
 
-    @GetMapping("/stop")
-    public ResultDTO<Void> stopWfInstance(Long wfInstanceId, Long appId) {
-        workflowInstanceService.stopWorkflowInstanceEntrance(wfInstanceId, appId);
-        return ResultDTO.success(null);
-    }
+	@Resource
+	private WorkflowInstanceService workflowInstanceService;
 
-    @RequestMapping("/retry")
-    public ResultDTO<Void> retryWfInstance(Long wfInstanceId, Long appId) {
-        workflowInstanceService.retryWorkflowInstance(wfInstanceId, appId);
-        return ResultDTO.success(null);
-    }
+	@Resource
+	private WorkflowInstanceInfoRepository workflowInstanceInfoRepository;
 
-    @RequestMapping("/markNodeAsSuccess")
-    public ResultDTO<Void> markNodeAsSuccess(Long wfInstanceId, Long appId, Long nodeId) {
-        workflowInstanceService.markNodeAsSuccess(appId, wfInstanceId, nodeId);
-        return ResultDTO.success(null);
-    }
+	@GetMapping("/stop")
+	public ResultDTO<Void> stopWfInstance(Long wfInstanceId, Long appId) {
+		workflowInstanceService.stopWorkflowInstanceEntrance(wfInstanceId, appId);
+		return ResultDTO.success(null);
+	}
 
+	@RequestMapping("/retry")
+	public ResultDTO<Void> retryWfInstance(Long wfInstanceId, Long appId) {
+		workflowInstanceService.retryWorkflowInstance(wfInstanceId, appId);
+		return ResultDTO.success(null);
+	}
 
-    @GetMapping("/info")
-    public ResultDTO<WorkflowInstanceInfoVO> getInfo(Long wfInstanceId, Long appId) {
-        WorkflowInstanceInfoDO wfInstanceDO = workflowInstanceService.fetchWfInstance(wfInstanceId, appId);
-        return ResultDTO.success(WorkflowInstanceInfoVO.from(wfInstanceDO, cacheService.getWorkflowName(wfInstanceDO.getWorkflowId())));
-    }
+	@RequestMapping("/markNodeAsSuccess")
+	public ResultDTO<Void> markNodeAsSuccess(Long wfInstanceId, Long appId, Long nodeId) {
+		workflowInstanceService.markNodeAsSuccess(appId, wfInstanceId, nodeId);
+		return ResultDTO.success(null);
+	}
 
-    @PostMapping("/list")
-    public ResultDTO<PageResult<WorkflowInstanceInfoVO>> listWfInstance(@RequestBody QueryWorkflowInstanceRequest req) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "gmtModified");
-        PageRequest pageable = PageRequest.of(req.getIndex(), req.getPageSize(), sort);
+	@GetMapping("/info")
+	public ResultDTO<WorkflowInstanceInfoVO> getInfo(Long wfInstanceId, Long appId) {
+		WorkflowInstanceInfoDO wfInstanceDO = workflowInstanceService.fetchWfInstance(wfInstanceId, appId);
+		return ResultDTO.success(
+				WorkflowInstanceInfoVO.from(wfInstanceDO, cacheService.getWorkflowName(wfInstanceDO.getWorkflowId())));
+	}
 
-        WorkflowInstanceInfoDO queryEntity = new WorkflowInstanceInfoDO();
-        BeanUtils.copyProperties(req, queryEntity);
+	@PostMapping("/list")
+	public ResultDTO<PageResult<WorkflowInstanceInfoVO>> listWfInstance(@RequestBody QueryWorkflowInstanceRequest req) {
+		Sort sort = Sort.by(Sort.Direction.DESC, "gmtModified");
+		PageRequest pageable = PageRequest.of(req.getIndex(), req.getPageSize(), sort);
 
-        if (!StringUtils.isEmpty(req.getStatus())) {
-            queryEntity.setStatus(WorkflowInstanceStatus.valueOf(req.getStatus()).getV());
-        }
+		WorkflowInstanceInfoDO queryEntity = new WorkflowInstanceInfoDO();
+		BeanUtils.copyProperties(req, queryEntity);
 
-        Page<WorkflowInstanceInfoDO> ps = workflowInstanceInfoRepository.findAll(Example.of(queryEntity), pageable);
+		if (!StringUtils.isEmpty(req.getStatus())) {
+			queryEntity.setStatus(WorkflowInstanceStatus.valueOf(req.getStatus()).getV());
+		}
 
-        return ResultDTO.success(convertPage(ps));
-    }
+		Page<WorkflowInstanceInfoDO> ps = workflowInstanceInfoRepository.findAll(Example.of(queryEntity), pageable);
 
-    private PageResult<WorkflowInstanceInfoVO> convertPage(Page<WorkflowInstanceInfoDO> ps) {
-        PageResult<WorkflowInstanceInfoVO> pr = new PageResult<>(ps);
-        pr.setData(ps.getContent().stream().map(x -> WorkflowInstanceInfoVO.from(x, cacheService.getWorkflowName(x.getWorkflowId()))).collect(Collectors.toList()));
-        return pr;
-    }
+		return ResultDTO.success(convertPage(ps));
+	}
+
+	private PageResult<WorkflowInstanceInfoVO> convertPage(Page<WorkflowInstanceInfoDO> ps) {
+		PageResult<WorkflowInstanceInfoVO> pr = new PageResult<>(ps);
+		pr.setData(ps.getContent().stream()
+				.map(x -> WorkflowInstanceInfoVO.from(x, cacheService.getWorkflowName(x.getWorkflowId())))
+				.collect(Collectors.toList()));
+		return pr;
+	}
+
 }

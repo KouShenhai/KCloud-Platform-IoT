@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 package org.laokou.common.easy.captcha.service.impl;
+
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
+
 /**
  * @author laokou
  */
@@ -27,38 +29,38 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SysCaptchaServiceImpl implements SysCaptchaService {
 
-    private final RedisUtil redisUtil;
+	private final RedisUtil redisUtil;
 
-    @Override
-    public void setCode(String uuid, String code) {
-        // 保存到缓存
-        setCache(uuid,code);
-    }
+	@Override
+	public void setCode(String uuid, String code) {
+		// 保存到缓存
+		setCache(uuid, code);
+	}
 
-    @Override
-    public Boolean validate(String uuid, String code) {
-        // 获取验证码
-        String captcha = getCache(uuid);
-        if (StringUtil.isEmpty(captcha)) {
-            return null;
-        }
-        // 效验成功
-        return code.equalsIgnoreCase(captcha);
-    }
+	@Override
+	public Boolean validate(String uuid, String code) {
+		// 获取验证码
+		String captcha = getCache(uuid);
+		if (StringUtil.isEmpty(captcha)) {
+			return null;
+		}
+		// 效验成功
+		return code.equalsIgnoreCase(captcha);
+	}
 
-    private void setCache(String key,String value) {
-        key = RedisKeyUtil.getUserCaptchaKey(key);
-        // 保存五分钟
-        redisUtil.set(key, value,60 * 5);
-    }
+	private void setCache(String key, String value) {
+		key = RedisKeyUtil.getUserCaptchaKey(key);
+		// 保存五分钟
+		redisUtil.set(key, value, 60 * 5);
+	}
 
-    private String getCache(String uuid) {
-        String key = RedisKeyUtil.getUserCaptchaKey(uuid);
-        Object captcha = redisUtil.get(key);
-        if (captcha != null) {
-            redisUtil.delete(key);
-        }
-        return captcha != null ? captcha.toString() : "";
-    }
+	private String getCache(String uuid) {
+		String key = RedisKeyUtil.getUserCaptchaKey(uuid);
+		Object captcha = redisUtil.get(key);
+		if (captcha != null) {
+			redisUtil.delete(key);
+		}
+		return captcha != null ? captcha.toString() : "";
+	}
 
 }

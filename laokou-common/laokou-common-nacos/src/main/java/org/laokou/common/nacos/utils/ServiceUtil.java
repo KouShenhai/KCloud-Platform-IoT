@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.nacos.utils;
+
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.PropertyKeyConst;
@@ -28,8 +29,10 @@ import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Properties;
+
 /**
  * <a href="https://github.com/alibaba/spring-cloud-alibaba/wiki/Nacos-discovery">...</a>
+ *
  * @author laokou
  */
 @Component
@@ -37,56 +40,58 @@ import java.util.Properties;
 @Slf4j
 public class ServiceUtil {
 
-    private final LoadBalancerClient loadBalancerClient;
-    private final NacosDiscoveryProperties nacosDiscoveryProperties;
+	private final LoadBalancerClient loadBalancerClient;
 
-    public ServiceInstance getServiceInstance(String serviceId) {
-        return loadBalancerClient.choose(serviceId);
-    }
+	private final NacosDiscoveryProperties nacosDiscoveryProperties;
 
-    public void registerInstance() {
-        instance(InstanceEnum.REGISTER);
-    }
+	public ServiceInstance getServiceInstance(String serviceId) {
+		return loadBalancerClient.choose(serviceId);
+	}
 
-    public void deregisterInstance() {
-        instance(InstanceEnum.DEREGISTER);
-    }
+	public void registerInstance() {
+		instance(InstanceEnum.REGISTER);
+	}
 
-    @SneakyThrows
-    private void instance(InstanceEnum instanceEnum) {
-        String serviceName = nacosDiscoveryProperties.getService();
-        NamingService namingService = getNamingService();
-        List<Instance> allInstances = namingService.getAllInstances(serviceName);
-        for (Instance instance : allInstances) {
-            String ip = nacosDiscoveryProperties.getIp();
-            if (ip.equals(instance.getIp())) {
-                switch (instanceEnum) {
-                    case REGISTER -> namingService.registerInstance(serviceName, instance);
-                    case DEREGISTER -> namingService.deregisterInstance(serviceName,instance);
-                    default -> {}
-                }
-            }
-        }
-    }
+	public void deregisterInstance() {
+		instance(InstanceEnum.DEREGISTER);
+	}
 
-    @SneakyThrows
-    private NamingService getNamingService() {
-        Properties properties = new Properties();
-        properties.put(PropertyKeyConst.NAMESPACE,nacosDiscoveryProperties.getNamespace());
-        properties.put(PropertyKeyConst.SERVER_ADDR,nacosDiscoveryProperties.getServerAddr());
-        return NacosFactory.createNamingService(properties);
-    }
+	@SneakyThrows
+	private void instance(InstanceEnum instanceEnum) {
+		String serviceName = nacosDiscoveryProperties.getService();
+		NamingService namingService = getNamingService();
+		List<Instance> allInstances = namingService.getAllInstances(serviceName);
+		for (Instance instance : allInstances) {
+			String ip = nacosDiscoveryProperties.getIp();
+			if (ip.equals(instance.getIp())) {
+				switch (instanceEnum) {
+					case REGISTER -> namingService.registerInstance(serviceName, instance);
+					case DEREGISTER -> namingService.deregisterInstance(serviceName, instance);
+					default -> {
+					}
+				}
+			}
+		}
+	}
 
-    @SneakyThrows
-    public void registerInstance(String serviceName,String ip,int port) {
-        NamingService namingService = getNamingService();
-        namingService.registerInstance(serviceName,ip,port);
-    }
+	@SneakyThrows
+	private NamingService getNamingService() {
+		Properties properties = new Properties();
+		properties.put(PropertyKeyConst.NAMESPACE, nacosDiscoveryProperties.getNamespace());
+		properties.put(PropertyKeyConst.SERVER_ADDR, nacosDiscoveryProperties.getServerAddr());
+		return NacosFactory.createNamingService(properties);
+	}
 
-    @SneakyThrows
-    public void deregisterInstance(String serviceName,String ip,int port) {
-        NamingService namingService = getNamingService();
-        namingService.deregisterInstance(serviceName,ip,port);
-    }
+	@SneakyThrows
+	public void registerInstance(String serviceName, String ip, int port) {
+		NamingService namingService = getNamingService();
+		namingService.registerInstance(serviceName, ip, port);
+	}
+
+	@SneakyThrows
+	public void deregisterInstance(String serviceName, String ip, int port) {
+		NamingService namingService = getNamingService();
+		namingService.deregisterInstance(serviceName, ip, port);
+	}
 
 }

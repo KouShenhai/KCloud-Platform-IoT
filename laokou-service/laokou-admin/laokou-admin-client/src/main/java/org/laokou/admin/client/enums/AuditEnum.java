@@ -20,12 +20,14 @@ package org.laokou.admin.client.enums;
  * @author laokou
  */
 public enum AuditEnum {
-    /**
-     * 拒绝
-     */
-    NO,
-    /**
-     * 通过
-     */
-    YES
+
+	/**
+	 * 拒绝
+	 */
+	NO,
+	/**
+	 * 通过
+	 */
+	YES
+
 }

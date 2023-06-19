@@ -27,10 +27,12 @@ import java.util.List;
  * @author laokou
  */
 @Service
-public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenuDO> implements SysRoleMenuService{
+public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenuDO>
+		implements SysRoleMenuService {
 
-    @Override
-    public void insertBatch(List<SysRoleMenuDO> list) {
-        this.baseMapper.insertBatch(list);
-    }
+	@Override
+	public void insertBatch(List<SysRoleMenuDO> list) {
+		this.baseMapper.insertBatch(list);
+	}
+
 }

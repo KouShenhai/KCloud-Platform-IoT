@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.oss.service.impl;
+
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -33,31 +34,33 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SysOssServiceImpl extends ServiceImpl<SysOssMapper, SysOssDO> implements SysOssService {
 
-    private final SysOssMapper sysOssMapper;
+	private final SysOssMapper sysOssMapper;
 
-    @Override
-    @DS(Constant.TENANT)
-    public SysOssVO queryOssConfig() {
-        return sysOssMapper.queryOssConfig();
-    }
-    @Override
-    public Boolean deleteOss(Long id) {
-        this.baseMapper.deleteById(id);
-        return true;
-    }
+	@Override
+	@DS(Constant.TENANT)
+	public SysOssVO queryOssConfig() {
+		return sysOssMapper.queryOssConfig();
+	}
 
-    @Override
-    public Integer getVersion(Long id) {
-        return this.baseMapper.getVersion(id);
-    }
+	@Override
+	public Boolean deleteOss(Long id) {
+		this.baseMapper.deleteById(id);
+		return true;
+	}
 
-    @Override
-    public IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page, SysOssQo qo) {
-        return this.baseMapper.queryOssPage(page,qo);
-    }
+	@Override
+	public Integer getVersion(Long id) {
+		return this.baseMapper.getVersion(id);
+	}
 
-    @Override
-    public SysOssVO getOssById(Long id) {
-        return this.baseMapper.getOssById(id);
-    }
+	@Override
+	public IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page, SysOssQo qo) {
+		return this.baseMapper.queryOssPage(page, qo);
+	}
+
+	@Override
+	public SysOssVO getOssById(Long id) {
+		return this.baseMapper.getOssById(id);
+	}
+
 }

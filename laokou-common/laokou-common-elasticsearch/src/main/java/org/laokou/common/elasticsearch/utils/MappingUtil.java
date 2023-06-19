@@ -14,32 +14,34 @@
  * limitations under the License.
  */
 package org.laokou.common.elasticsearch.utils;
+
 import org.laokou.common.elasticsearch.annotation.Field;
 import org.laokou.common.elasticsearch.enums.FieldTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * @author laokou
  */
 public class MappingUtil {
 
-    public static <TDocument>List<Mapping> mappingList(Class<TDocument> clazz) {
-        // 获取所有字段（包含私有）
-        java.lang.reflect.Field[] fields = clazz.getDeclaredFields();
-        List<Mapping> mappingList = new ArrayList<>(fields.length);
-        for (java.lang.reflect.Field field : fields) {
-            boolean annotationPresent = field.isAnnotationPresent(Field.class);
-            if (annotationPresent) {
-                Field f = field.getAnnotation(Field.class);
-                String fieldName = f.value();
-                FieldTypeEnum fieldType = f.type();
-                String analyzer = f.analyzer();
-                String searchAnalyzer = f.searchAnalyzer();
-                mappingList.add(new Mapping(fieldName,fieldType,searchAnalyzer,analyzer));
-            }
-        }
-        return mappingList;
-    }
+	public static <TDocument> List<Mapping> mappingList(Class<TDocument> clazz) {
+		// 获取所有字段（包含私有）
+		java.lang.reflect.Field[] fields = clazz.getDeclaredFields();
+		List<Mapping> mappingList = new ArrayList<>(fields.length);
+		for (java.lang.reflect.Field field : fields) {
+			boolean annotationPresent = field.isAnnotationPresent(Field.class);
+			if (annotationPresent) {
+				Field f = field.getAnnotation(Field.class);
+				String fieldName = f.value();
+				FieldTypeEnum fieldType = f.type();
+				String analyzer = f.analyzer();
+				String searchAnalyzer = f.searchAnalyzer();
+				mappingList.add(new Mapping(fieldName, fieldType, searchAnalyzer, analyzer));
+			}
+		}
+		return mappingList;
+	}
 
 }

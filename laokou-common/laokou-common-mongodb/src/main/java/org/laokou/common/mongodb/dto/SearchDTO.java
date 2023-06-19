@@ -26,11 +26,11 @@ import java.io.Serializable;
 @Data
 public class SearchDTO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 1894680310541017681L;
-    private String field;
+	@Serial
+	private static final long serialVersionUID = 1894680310541017681L;
 
-    private String value;
+	private String field;
 
-    
+	private String value;
+
 }

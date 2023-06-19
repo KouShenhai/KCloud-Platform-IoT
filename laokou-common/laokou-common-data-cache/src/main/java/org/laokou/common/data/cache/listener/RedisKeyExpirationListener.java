@@ -23,6 +23,7 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
+
 /**
  * @author laokou
  */
@@ -30,17 +31,19 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class RedisKeyExpirationListener extends KeyExpirationEventMessageListener {
 
-    private final Cache<String,Object> caffeineCache;
+	private final Cache<String, Object> caffeineCache;
 
-    public RedisKeyExpirationListener(RedisMessageListenerContainer listenerContainer, Cache<String,Object> caffeineCache) {
-        super(listenerContainer);
-        this.caffeineCache = caffeineCache;
-    }
+	public RedisKeyExpirationListener(RedisMessageListenerContainer listenerContainer,
+			Cache<String, Object> caffeineCache) {
+		super(listenerContainer);
+		this.caffeineCache = caffeineCache;
+	}
 
-    @Override
-    public void onMessage(Message message, byte[] pattern) {
-        String key = new String(message.getBody(), StandardCharsets.UTF_8);
-        log.info("监听key为{}的过期事件",key);
-        caffeineCache.invalidate(key);
-    }
+	@Override
+	public void onMessage(Message message, byte[] pattern) {
+		String key = new String(message.getBody(), StandardCharsets.UTF_8);
+		log.info("监听key为{}的过期事件", key);
+		caffeineCache.invalidate(key);
+	}
+
 }

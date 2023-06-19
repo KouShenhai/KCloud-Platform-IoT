@@ -22,16 +22,17 @@ import java.io.Serializable;
 
 /**
  * 搜索DTO
+ *
  * @author laokou
  */
 @Data
 public class SearchDTO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 3570397340773143088L;
-    private String field;
+	@Serial
+	private static final long serialVersionUID = 3570397340773143088L;
 
-    private String value;
+	private String field;
 
-    
+	private String value;
+
 }

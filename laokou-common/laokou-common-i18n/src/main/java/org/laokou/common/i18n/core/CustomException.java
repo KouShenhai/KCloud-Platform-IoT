@@ -20,33 +20,35 @@ import lombok.EqualsAndHashCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 
 import java.io.Serial;
+
 /**
  * @author laokou
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class CustomException extends RuntimeException{
+public class CustomException extends RuntimeException {
 
-    @Serial
-    private static final long serialVersionUID = 4102669900127613541L;
+	@Serial
+	private static final long serialVersionUID = 4102669900127613541L;
 
-    private int code;
-    private String msg;
+	private int code;
 
-    public CustomException(int code) {
-        this.code = code;
-        this.msg = MessageUtil.getMessage(code);
-    }
+	private String msg;
 
-    public CustomException(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
+	public CustomException(int code) {
+		this.code = code;
+		this.msg = MessageUtil.getMessage(code);
+	}
 
-    public CustomException(String msg) {
-        super(msg);
-        this.code = StatusCode.INTERNAL_SERVER_ERROR;
-        this.msg = msg;
-    }
+	public CustomException(int code, String msg) {
+		this.code = code;
+		this.msg = msg;
+	}
+
+	public CustomException(String msg) {
+		super(msg);
+		this.code = StatusCode.INTERNAL_SERVER_ERROR;
+		this.msg = msg;
+	}
 
 }

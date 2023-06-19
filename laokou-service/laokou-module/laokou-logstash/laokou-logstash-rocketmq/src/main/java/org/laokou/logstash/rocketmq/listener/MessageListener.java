@@ -30,6 +30,7 @@ import org.laokou.logstash.client.index.TraceIndex;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
+
 /**
  * @author laokou
  */
@@ -39,39 +40,41 @@ import java.nio.charset.StandardCharsets;
 @RocketMQMessageListener(consumerGroup = "laokou-logstash-consumer-group", topic = RocketmqConstant.LAOKOU_TRACE_TOPIC)
 public class MessageListener implements RocketMQListener<MessageExt> {
 
-    private final ElasticsearchTemplate elasticsearchTemplate;
-    private static final String TRACE_INDEX = "laokou_trace";
+	private final ElasticsearchTemplate elasticsearchTemplate;
 
-    @Override
-    @SneakyThrows
-    public void onMessage(MessageExt messageExt) {
-        try {
-            // 按月建立索引
-            String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-            // 清洗数据
-            TraceIndex traceIndex = JacksonUtil.toBean(msg, TraceIndex.class);
-            if (StringUtil.isEmpty(traceIndex.getTraceId())) {
-                return;
-            }
-            String ym = DateUtil.format(DateUtil.now(), DateUtil.YYYYMM);
-            String indexName = TRACE_INDEX + "_" + ym;
-            elasticsearchTemplate.syncIndexAsync(null, indexName, msg);
-        } catch (Exception e) {
-            log.error("同步数据报错：{}",e.getMessage());
-        }
-    }
+	private static final String TRACE_INDEX = "laokou_trace";
 
-    /**
-     * 每个月最后一天的23：50：00创建下一个月的索引
-     */
-    @Scheduled(cron = "0 50 23 L * ?")
-    @SneakyThrows
-    public void scheduleCreateIndexTask() {
-        // 按月建立索引
-        String ym = DateUtil.format(DateUtil.plusDays(DateUtil.now(),1), DateUtil.YYYYMM);
-        String indexAlias = TRACE_INDEX;
-        String indexName = indexAlias + "_" + ym;
-        elasticsearchTemplate.createAsyncIndex(indexName, indexAlias, TraceIndex.class);
-    }
+	@Override
+	@SneakyThrows
+	public void onMessage(MessageExt messageExt) {
+		try {
+			// 按月建立索引
+			String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
+			// 清洗数据
+			TraceIndex traceIndex = JacksonUtil.toBean(msg, TraceIndex.class);
+			if (StringUtil.isEmpty(traceIndex.getTraceId())) {
+				return;
+			}
+			String ym = DateUtil.format(DateUtil.now(), DateUtil.YYYYMM);
+			String indexName = TRACE_INDEX + "_" + ym;
+			elasticsearchTemplate.syncIndexAsync(null, indexName, msg);
+		}
+		catch (Exception e) {
+			log.error("同步数据报错：{}", e.getMessage());
+		}
+	}
+
+	/**
+	 * 每个月最后一天的23：50：00创建下一个月的索引
+	 */
+	@Scheduled(cron = "0 50 23 L * ?")
+	@SneakyThrows
+	public void scheduleCreateIndexTask() {
+		// 按月建立索引
+		String ym = DateUtil.format(DateUtil.plusDays(DateUtil.now(), 1), DateUtil.YYYYMM);
+		String indexAlias = TRACE_INDEX;
+		String indexName = indexAlias + "_" + ym;
+		elasticsearchTemplate.createAsyncIndex(indexName, indexAlias, TraceIndex.class);
+	}
 
 }

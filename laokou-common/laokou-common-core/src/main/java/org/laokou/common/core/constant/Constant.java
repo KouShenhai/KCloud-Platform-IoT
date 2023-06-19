@@ -14,122 +14,137 @@
  * limitations under the License.
  */
 package org.laokou.common.core.constant;
+
 /**
  * 常量
+ *
  * @author laokou
  */
 public interface Constant {
 
-    /**
-     * 分割
-     */
-    String FORWARD_SLASH = "/";
+	/**
+	 * 分割
+	 */
+	String FORWARD_SLASH = "/";
 
-    /**
-     * 分割
-     */
-    String DOT = ".";
+	/**
+	 * 分割
+	 */
+	String DOT = ".";
 
-    /**
-     * 分割
-     */
-    String RISK = ":";
+	/**
+	 * 分割
+	 */
+	String RISK = ":";
 
-    /**
-     * 分割
-     */
-    String COMMA = ",";
+	/**
+	 * 分割
+	 */
+	String COMMA = ",";
 
-    /**
-     * 认证
-     */
-    String AUTHORIZATION_HEAD = "Authorization";
+	/**
+	 * 认证
+	 */
+	String AUTHORIZATION_HEAD = "Authorization";
 
-    /**
-     * 用户名
-     */
-    String USER_NAME = "user-name";
+	/**
+	 * 用户名
+	 */
+	String USER_NAME = "user-name";
 
-    /**
-     * 链路ID
-     */
-    String TRACE_ID = "trace-id";
+	/**
+	 * 链路ID
+	 */
+	String TRACE_ID = "trace-id";
 
-    /**
-     * 用户ID
-     */
-    String USER_ID = "user-id";
+	/**
+	 * 用户ID
+	 */
+	String USER_ID = "user-id";
 
-    /**
-     * 租户
-     */
-    String TENANT_ID = "tenant-id";
+	/**
+	 * 租户
+	 */
+	String TENANT_ID = "tenant-id";
 
-    /**
-     * 签名
-     */
-    String SIGN = "sign";
+	/**
+	 * 签名
+	 */
+	String SIGN = "sign";
 
-    /**
-     * 时间戳
-     */
-    String TIMESTAMP = "timestamp";
+	/**
+	 * 时间戳
+	 */
+	String TIMESTAMP = "timestamp";
 
-    /**
-     * 使用状态
-     */
-    int USE_STATUS = 1;
+	/**
+	 * 随机标识
+	 */
+	String NONCE = "nonce";
 
-    /**
-     * 默认
-     */
-    int DEFAULT = 0;
+	/**
+	 * 使用状态
+	 */
+	int USE_STATUS = 1;
 
-    /**
-     * 并
-     */
-    String AND = "&";
+	/**
+	 * 默认
+	 */
+	int DEFAULT = 0;
 
-    /**
-     * 表切换
-     */
-    String PLACE_HOLDER = "$$";
+	/**
+	 * 并
+	 */
+	String AND = "&";
 
-    /**
-     * 分库分表
-     */
-    String SHARDING_SPHERE = "shardingSphere";
+	/**
+	 * 表切换
+	 */
+	String PLACE_HOLDER = "$$";
 
-    /**
-     * 读写分离
-     */
-    String SHARDING_SPHERE_READWRITE = "shardingSphereReadWrite";
+	/**
+	 * 分库分表
+	 */
+	String SHARDING_SPHERE = "shardingSphere";
 
-    /**
-     * 多租户
-     */
-    String TENANT = "#tenant";
+	/**
+	 * 读写分离
+	 */
+	String SHARDING_SPHERE_READWRITE = "shardingSphereReadWrite";
 
-    /**
-     * 请求参数
-     */
-    String QUESTION_MARK = "?";
+	/**
+	 * 多租户
+	 */
+	String TENANT = "#tenant";
 
-    /**
-     * 默认数据库
-     */
-    String DEFAULT_SOURCE = "master";
+	/**
+	 * 请求参数
+	 */
+	String QUESTION_MARK = "?";
 
-    /**
-     * 国际化
-     */
-    String ACCEPT_LANGUAGE = "Accept-Language";
+	/**
+	 * 默认数据库
+	 */
+	String DEFAULT_SOURCE = "master";
 
-    /**
-     * 接口幂等性
-     */
-    String REQUEST_ID = "request-id";
+	/**
+	 * 国际化
+	 */
+	String ACCEPT_LANGUAGE = "Accept-Language";
 
-    String TRUE = "true";
+	/**
+	 * 接口幂等性
+	 */
+	String REQUEST_ID = "request-id";
+
+	/**
+	 * true
+	 */
+	String TRUE = "true";
+
+	/**
+	 * HTTPS协议
+	 */
+	String HTTPS_PROTOCOL = "https://";
 
 }

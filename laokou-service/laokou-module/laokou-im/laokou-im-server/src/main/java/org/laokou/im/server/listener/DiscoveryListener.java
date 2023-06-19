@@ -40,23 +40,24 @@ import java.net.InetAddress;
 @NonNullApi
 public class DiscoveryListener implements ApplicationListener<ApplicationReadyEvent> {
 
-    private final ServiceUtil serviceUtil;
-    private String name;
+	private final ServiceUtil serviceUtil;
 
-    @Override
-    @SneakyThrows
-    public void onApplicationEvent(ApplicationReadyEvent event) {
-        String ip = InetAddress.getLocalHost().getHostAddress();
-        int port = WebSocketServer.PORT;
-        serviceUtil.registerInstance(name,ip,port);
-    }
+	private String name;
 
-    @SneakyThrows
-    @PreDestroy
-    public void close() {
-        String ip = InetAddress.getLocalHost().getHostAddress();
-        int port = WebSocketServer.PORT;
-        serviceUtil.deregisterInstance(name,ip,port);
-    }
+	@Override
+	@SneakyThrows
+	public void onApplicationEvent(ApplicationReadyEvent event) {
+		String ip = InetAddress.getLocalHost().getHostAddress();
+		int port = WebSocketServer.PORT;
+		serviceUtil.registerInstance(name, ip, port);
+	}
+
+	@SneakyThrows
+	@PreDestroy
+	public void close() {
+		String ip = InetAddress.getLocalHost().getHostAddress();
+		int port = WebSocketServer.PORT;
+		serviceUtil.deregisterInstance(name, ip, port);
+	}
 
 }

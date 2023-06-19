@@ -20,8 +20,10 @@ package org.laokou.admin.client.enums;
  * @author laokou
  */
 public enum AuditTypeEnum {
-    /**
-     * 资源
-     */
-    RESOURCE
+
+	/**
+	 * 资源
+	 */
+	RESOURCE
+
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.log.service.impl;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.laokou.common.easy.excel.suppert.ExcelTemplate;
@@ -36,31 +37,31 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-public class SysOperateLogServiceImpl extends ServiceImpl<SysOperateLogMapper, SysOperateLogDO> implements SysOperateLogService {
+public class SysOperateLogServiceImpl extends ServiceImpl<SysOperateLogMapper, SysOperateLogDO>
+		implements SysOperateLogService {
 
-    private final ExcelTemplate<SysOperateLogQo,SysOperateLogVO> excelTemplate;
+	private final ExcelTemplate<SysOperateLogQo, SysOperateLogVO> excelTemplate;
 
-    @Override
-    public IPage<SysOperateLogVO> getOperateLogList(IPage<SysOperateLogVO> page, SysOperateLogQo qo) {
-        return baseMapper.getOperateLogList(page,qo);
-    }
+	@Override
+	public IPage<SysOperateLogVO> getOperateLogList(IPage<SysOperateLogVO> page, SysOperateLogQo qo) {
+		return baseMapper.getOperateLogList(page, qo);
+	}
 
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean insertOperateLog(OperateLogEvent event) {
+		SysOperateLogDO logDO = ConvertUtil.sourceToTarget(event, SysOperateLogDO.class);
+		return baseMapper.insert(logDO) > 0 ? true : false;
+	}
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean insertOperateLog(OperateLogEvent event) {
-        SysOperateLogDO logDO = ConvertUtil.sourceToTarget(event, SysOperateLogDO.class);
-        return baseMapper.insert(logDO) > 0 ? true : false;
-    }
+	@Override
+	public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) {
+		excelTemplate.export(500, response, qo, this, SysOperateLogExcel.class);
+	}
 
-    @Override
-    public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) {
-        excelTemplate.export(500,response,qo,this, SysOperateLogExcel.class);
-    }
+	@Override
+	public void resultList(SysOperateLogQo qo, ResultHandler<SysOperateLogVO> resultHandler) {
+		this.baseMapper.resultList(qo, resultHandler);
+	}
 
-
-    @Override
-    public void resultList(SysOperateLogQo qo, ResultHandler<SysOperateLogVO> resultHandler) {
-        this.baseMapper.resultList(qo,resultHandler);
-    }
 }

@@ -32,64 +32,67 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 /**
- * RemoteAddrRoutePredicateFactory
- * IP黑名单
+ * RemoteAddrRoutePredicateFactory IP黑名单
+ *
  * @author laokou
  */
 @Component
 public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<IpBlackGatewayFilterFactory.Config> {
 
-    @Override
-    public GatewayFilter apply(Config config) {
-        return (exchange, chain) -> {
-            if (StringUtil.isEmpty(config.sources)) {
-                return chain.filter(exchange);
-            }
-            List<IpSubnetFilterRule> sources = convert(Arrays.asList(config.sources.split(Constant.COMMA)));
-            InetSocketAddress remoteAddress = config.remoteAddressResolver.resolve(exchange);
-            for (IpSubnetFilterRule source : sources) {
-                if (source.matches(remoteAddress)) {
-                    return ResponseUtil.response(exchange,ResponseUtil.error(StatusCode.IP_BLACK));
-                }
-            }
-            return chain.filter(exchange);
-        };
-    }
+	@Override
+	public GatewayFilter apply(Config config) {
+		return (exchange, chain) -> {
+			if (StringUtil.isEmpty(config.sources)) {
+				return chain.filter(exchange);
+			}
+			List<IpSubnetFilterRule> sources = convert(Arrays.asList(config.sources.split(Constant.COMMA)));
+			InetSocketAddress remoteAddress = config.remoteAddressResolver.resolve(exchange);
+			for (IpSubnetFilterRule source : sources) {
+				if (source.matches(remoteAddress)) {
+					return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.IP_BLACK));
+				}
+			}
+			return chain.filter(exchange);
+		};
+	}
 
-    public IpBlackGatewayFilterFactory() {
-        super(Config.class);
-    }
+	public IpBlackGatewayFilterFactory() {
+		super(Config.class);
+	}
 
-    @Data
-    static class Config {
+	@Data
+	static class Config {
 
-        private String sources;
+		private String sources;
 
-        private volatile RemoteAddressResolver remoteAddressResolver;
+		private volatile RemoteAddressResolver remoteAddressResolver;
 
-        public Config() {
-            remoteAddressResolver = new RemoteAddressResolver() {};
-        }
+		public Config() {
+			remoteAddressResolver = new RemoteAddressResolver() {
+			};
+		}
 
-    }
+	}
 
-    private void addSource(List<IpSubnetFilterRule> sources, String source) {
-        if (!source.contains(Constant.FORWARD_SLASH)) {
-            source = source + "/32";
-        }
-        String[] ipAddressCidrPrefix = source.split(Constant.FORWARD_SLASH, 2);
-        String ipAddress = ipAddressCidrPrefix[0];
-        int cidrPrefix = Integer.parseInt(ipAddressCidrPrefix[1]);
-        sources.add(new IpSubnetFilterRule(ipAddress, cidrPrefix, IpFilterRuleType.ACCEPT));
-    }
+	private void addSource(List<IpSubnetFilterRule> sources, String source) {
+		if (!source.contains(Constant.FORWARD_SLASH)) {
+			source = source + "/32";
+		}
+		String[] ipAddressCidrPrefix = source.split(Constant.FORWARD_SLASH, 2);
+		String ipAddress = ipAddressCidrPrefix[0];
+		int cidrPrefix = Integer.parseInt(ipAddressCidrPrefix[1]);
+		sources.add(new IpSubnetFilterRule(ipAddress, cidrPrefix, IpFilterRuleType.ACCEPT));
+	}
 
-    @NotNull
-    private List<IpSubnetFilterRule> convert(List<String> values) {
-        List<IpSubnetFilterRule> sources = new ArrayList<>();
-        for (String arg : values) {
-            addSource(sources, arg);
-        }
-        return sources;
-    }
+	@NotNull
+	private List<IpSubnetFilterRule> convert(List<String> values) {
+		List<IpSubnetFilterRule> sources = new ArrayList<>();
+		for (String arg : values) {
+			addSource(sources, arg);
+		}
+		return sources;
+	}
+
 }

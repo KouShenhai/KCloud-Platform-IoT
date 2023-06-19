@@ -34,29 +34,30 @@ import java.util.List;
 @Service
 public class SysPackageServiceImpl extends ServiceImpl<SysPackageMapper, SysPackageDO> implements SysPackageService {
 
-    @Override
-    public Integer getVersion(Long id) {
-        return this.baseMapper.getVersion(id);
-    }
+	@Override
+	public Integer getVersion(Long id) {
+		return this.baseMapper.getVersion(id);
+	}
 
-    @Override
-    public Boolean deletePackage(Long id) {
-        this.baseMapper.deleteById(id);
-        return true;
-    }
+	@Override
+	public Boolean deletePackage(Long id) {
+		this.baseMapper.deleteById(id);
+		return true;
+	}
 
-    @Override
-    public IPage<SysPackageVO> queryPackagePage(IPage<SysPackageVO> page, SysPackageQo qo) {
-        return this.baseMapper.queryPackagePage(page,qo);
-    }
+	@Override
+	public IPage<SysPackageVO> queryPackagePage(IPage<SysPackageVO> page, SysPackageQo qo) {
+		return this.baseMapper.queryPackagePage(page, qo);
+	}
 
-    @Override
-    public SysPackageVO getPackageById(Long id) {
-        return this.baseMapper.getPackageById(id);
-    }
+	@Override
+	public SysPackageVO getPackageById(Long id) {
+		return this.baseMapper.getPackageById(id);
+	}
 
-    @Override
-    public List<OptionVO> getOptionList() {
-        return this.baseMapper.getOptionList();
-    }
+	@Override
+	public List<OptionVO> getOptionList() {
+		return this.baseMapper.getOptionList();
+	}
+
 }

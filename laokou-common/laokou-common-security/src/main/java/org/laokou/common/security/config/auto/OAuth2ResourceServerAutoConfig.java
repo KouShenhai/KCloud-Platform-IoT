@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.security.config.auto;
+
 import lombok.Data;
 import org.laokou.auth.client.handler.ForbiddenExceptionHandler;
 import org.laokou.auth.client.handler.InvalidAuthenticationEntryPoint;
@@ -43,50 +44,51 @@ import java.util.Set;
 /**
  * 关闭oauth2,请在yml配置spring.oauth2.resource-server.enabled=false
  * 关闭security，请排除SecurityAutoConfiguration、ManagementWebSecurityAutoConfiguration
+ *
  * @author laokou
  */
 @EnableWebSecurity
 @Configuration
 @EnableMethodSecurity
-@AutoConfigureAfter({OAuth2AuthorizationAutoConfig.class})
-@Import(value = { CustomOpaqueTokenIntrospector.class
-        , ForbiddenExceptionHandler.class
-        , OAuth2ResourceServerProperties.class
-        , InvalidAuthenticationEntryPoint.class
-})
+@AutoConfigureAfter({ OAuth2AuthorizationAutoConfig.class })
+@Import(value = { CustomOpaqueTokenIntrospector.class, ForbiddenExceptionHandler.class,
+		OAuth2ResourceServerProperties.class, InvalidAuthenticationEntryPoint.class })
 @RefreshScope
 @Data
 @ConfigurationProperties(prefix = "ignore")
-@ConditionalOnProperty(havingValue = "true",matchIfMissing = true,prefix = OAuth2ResourceServerProperties.PREFIX,name = "enabled")
+@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = OAuth2ResourceServerProperties.PREFIX,
+		name = "enabled")
 public class OAuth2ResourceServerAutoConfig {
 
-    /**
-     * 不拦截的urls
-     */
-    private Set<String> uris;
+	/**
+	 * 不拦截的urls
+	 */
+	private Set<String> uris;
 
-    @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE + 1000)
-    @ConditionalOnMissingBean(SecurityFilterChain.class)
-    SecurityFilterChain resourceFilterChain(CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector
-            , InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint
-            , ForbiddenExceptionHandler forbiddenExceptionHandler
-            , OAuth2ResourceServerProperties properties
-            , HttpSecurity http) throws Exception {
-        OAuth2ResourceServerProperties.RequestMatcher requestMatcher = Optional.ofNullable(properties.getRequestMatcher()).orElseGet(OAuth2ResourceServerProperties.RequestMatcher::new);
-        Set<String> patterns = Optional.ofNullable(requestMatcher.getPatterns()).orElseGet(HashSet::new);
-        return http.csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
-                // 基于token，关闭session
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(request -> request.requestMatchers(uris.toArray(String[]::new)).permitAll()
-                        .requestMatchers(patterns.toArray(String[]::new)).permitAll()
-                        .anyRequest().authenticated())
-                // https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
-                // 除非提供自定义的 OpaqueTokenIntrospector，否则资源服务器将回退到 NimbusOpaqueTokenIntrospector
-                .oauth2ResourceServer(oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
-                        .accessDeniedHandler(forbiddenExceptionHandler).authenticationEntryPoint(invalidAuthenticationEntryPoint))
-                .build();
-    }
+	@Bean
+	@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
+	@ConditionalOnMissingBean(SecurityFilterChain.class)
+	SecurityFilterChain resourceFilterChain(CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector,
+			InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint,
+			ForbiddenExceptionHandler forbiddenExceptionHandler, OAuth2ResourceServerProperties properties,
+			HttpSecurity http) throws Exception {
+		OAuth2ResourceServerProperties.RequestMatcher requestMatcher = Optional
+				.ofNullable(properties.getRequestMatcher())
+				.orElseGet(OAuth2ResourceServerProperties.RequestMatcher::new);
+		Set<String> patterns = Optional.ofNullable(requestMatcher.getPatterns()).orElseGet(HashSet::new);
+		return http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable)
+				// 基于token，关闭session
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authorizeHttpRequests(request -> request.requestMatchers(uris.toArray(String[]::new)).permitAll()
+						.requestMatchers(patterns.toArray(String[]::new)).permitAll().anyRequest().authenticated())
+				// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
+				// 除非提供自定义的 OpaqueTokenIntrospector，否则资源服务器将回退到
+				// NimbusOpaqueTokenIntrospector
+				.oauth2ResourceServer(
+						oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
+								.accessDeniedHandler(forbiddenExceptionHandler)
+								.authenticationEntryPoint(invalidAuthenticationEntryPoint))
+				.build();
+	}
 
 }

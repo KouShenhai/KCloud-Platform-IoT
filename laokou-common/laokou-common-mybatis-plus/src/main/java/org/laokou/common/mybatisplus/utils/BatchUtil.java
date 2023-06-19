@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.mybatisplus.utils;
+
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -35,45 +36,48 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Component
 public class BatchUtil {
 
-    private final TransactionalUtil transactionalUtil;
-    private final ThreadPoolTaskExecutor taskExecutor;
+	private final TransactionalUtil transactionalUtil;
 
-    /**
-     * 批量新增
-     * @param dataList 集合
-     * @param batchNum 每组多少条数据
-     * @param service 基础service
-     */
-    @SneakyThrows
-    public <T> void insertBatch(List<T> dataList, int batchNum, BatchService<T> service) {
-        // 数据分组
-        List<List<T>> partition = Lists.partition(dataList, batchNum);
-        AtomicBoolean rollback = new AtomicBoolean(false);
-        List<CompletableFuture<Void>> list = new ArrayList<>(partition.size());
-        partition.forEach(item -> {
-            CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
-                transactionalUtil.execute(callback -> {
-                    try {
-                        service.insertBatch(item);
-                    } catch (Exception e) {
-                        // 回滚标识
-                        rollback.compareAndSet(false,true);
-                        log.error("批量插入数据异常，已设置回滚标识，错误信息：{}",e.getMessage());
-                    } finally {
-                        if (rollback.get()) {
-                            callback.setRollbackOnly();
-                        }
-                    }
-                    return true;
-                });
-            }, taskExecutor);
-            list.add(completableFuture);
-        });
-        // 阻塞主线程
-        CompletableFuture.allOf(list.toArray(new CompletableFuture[0])).join();
-        if (rollback.get()) {
-            throw new CustomException("批量插入数据异常，数据已回滚");
-        }
-    }
+	private final ThreadPoolTaskExecutor taskExecutor;
+
+	/**
+	 * 批量新增
+	 * @param dataList 集合
+	 * @param batchNum 每组多少条数据
+	 * @param service 基础service
+	 */
+	@SneakyThrows
+	public <T> void insertBatch(List<T> dataList, int batchNum, BatchService<T> service) {
+		// 数据分组
+		List<List<T>> partition = Lists.partition(dataList, batchNum);
+		AtomicBoolean rollback = new AtomicBoolean(false);
+		List<CompletableFuture<Void>> list = new ArrayList<>(partition.size());
+		partition.forEach(item -> {
+			CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
+				transactionalUtil.execute(callback -> {
+					try {
+						service.insertBatch(item);
+					}
+					catch (Exception e) {
+						// 回滚标识
+						rollback.compareAndSet(false, true);
+						log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", e.getMessage());
+					}
+					finally {
+						if (rollback.get()) {
+							callback.setRollbackOnly();
+						}
+					}
+					return true;
+				});
+			}, taskExecutor);
+			list.add(completableFuture);
+		});
+		// 阻塞主线程
+		CompletableFuture.allOf(list.toArray(new CompletableFuture[0])).join();
+		if (rollback.get()) {
+			throw new CustomException("批量插入数据异常，数据已回滚");
+		}
+	}
 
 }

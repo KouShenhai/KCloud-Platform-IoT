@@ -25,13 +25,15 @@ import java.util.Map;
  * @author laokou
  */
 public class OAuth2MailAuthenticationToken extends AbstractOAuth2BaseAuthenticationToken {
-    /**
-     * Sub-class constructor.
-     *
-     * @param clientPrincipal      the authenticated client principal
-     * @param additionalParameters the additional parameters
-     */
-    protected OAuth2MailAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-        super(new AuthorizationGrantType(OAuth2MailAuthenticationProvider.GRANT_TYPE),clientPrincipal, additionalParameters);
-    }
+
+	/**
+	 * Sub-class constructor.
+	 * @param clientPrincipal the authenticated client principal
+	 * @param additionalParameters the additional parameters
+	 */
+	protected OAuth2MailAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
+		super(new AuthorizationGrantType(OAuth2MailAuthenticationProvider.GRANT_TYPE), clientPrincipal,
+				additionalParameters);
+	}
+
 }

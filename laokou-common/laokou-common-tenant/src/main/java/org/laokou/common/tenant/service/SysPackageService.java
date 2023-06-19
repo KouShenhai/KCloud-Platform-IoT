@@ -29,38 +29,39 @@ import java.util.List;
  */
 public interface SysPackageService extends IService<SysPackageDO> {
 
-    /**
-     * 获取版本号
-     * @param id
-     * @return
-     */
-    Integer getVersion(Long id);
+	/**
+	 * 获取版本号
+	 * @param id
+	 * @return
+	 */
+	Integer getVersion(Long id);
 
-    /**
-     * 删除套餐
-     * @param id
-     * @return
-     */
-    Boolean deletePackage(Long id);
+	/**
+	 * 删除套餐
+	 * @param id
+	 * @return
+	 */
+	Boolean deletePackage(Long id);
 
-    /**
-     * 查询套餐
-     * @param qo
-     * @param page
-     * @return
-     */
-    IPage<SysPackageVO> queryPackagePage(IPage<SysPackageVO> page, SysPackageQo qo);
+	/**
+	 * 查询套餐
+	 * @param qo
+	 * @param page
+	 * @return
+	 */
+	IPage<SysPackageVO> queryPackagePage(IPage<SysPackageVO> page, SysPackageQo qo);
 
-    /**
-     * 查询详情
-     * @param id
-     * @return
-     */
-    SysPackageVO getPackageById(Long id);
+	/**
+	 * 查询详情
+	 * @param id
+	 * @return
+	 */
+	SysPackageVO getPackageById(Long id);
 
-    /**
-     * 获取下拉框
-     * @return
-     */
-    List<OptionVO> getOptionList();
+	/**
+	 * 获取下拉框
+	 * @return
+	 */
+	List<OptionVO> getOptionList();
+
 }

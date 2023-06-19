@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.lock.aspect;
+
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.lock.annotation.Lock4j;
@@ -30,6 +31,7 @@ import org.laokou.common.lock.factory.Locks;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
+
 /**
  * @author laokou
  */
@@ -39,41 +41,44 @@ import java.lang.reflect.Method;
 @RequiredArgsConstructor
 public class LockAspect {
 
-    private final LockFactory factory;
+	private final LockFactory factory;
 
-    @Around(value = "@annotation(org.laokou.common.lock.annotation.Lock4j)")
-    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        //获取注解
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
-        Lock4j lock4j = method.getAnnotation(Lock4j.class);
-        if (lock4j == null) {
-            lock4j = AnnotationUtils.findAnnotation(method,Lock4j.class);
-        }
-        assert lock4j != null;
-        // 时间戳
-        String key = lock4j.key() + System.currentTimeMillis();
-        long expire = lock4j.expire();
-        long timeout = lock4j.timeout();
-        final LockType type = lock4j.type();
-        final LockScope scope = lock4j.scope();
-        Locks locks = factory.build(scope);
-        // 设置锁的自动过期时间，则执行业务的时间一定要小于锁的自动过期时间，否则就会报错
-        try {
-            if (locks.tryLock(type,key,expire,timeout)) {
-                joinPoint.proceed();
-            } else {
-                throw new CustomException("前方拥堵，请稍后再试");
-            }
-        } catch (Throwable throwable) {
-            log.error("异常信息：{}",throwable.getMessage());
-            throw throwable;
-        } finally {
-            //释放锁
-            locks.unlock(type,key);
-        }
-        return null;
-    }
+	@Around(value = "@annotation(org.laokou.common.lock.annotation.Lock4j)")
+	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+		// 获取注解
+		Signature signature = joinPoint.getSignature();
+		MethodSignature methodSignature = (MethodSignature) signature;
+		Method method = methodSignature.getMethod();
+		Lock4j lock4j = method.getAnnotation(Lock4j.class);
+		if (lock4j == null) {
+			lock4j = AnnotationUtils.findAnnotation(method, Lock4j.class);
+		}
+		assert lock4j != null;
+		// 时间戳
+		String key = lock4j.key() + System.currentTimeMillis();
+		long expire = lock4j.expire();
+		long timeout = lock4j.timeout();
+		final LockType type = lock4j.type();
+		final LockScope scope = lock4j.scope();
+		Locks locks = factory.build(scope);
+		// 设置锁的自动过期时间，则执行业务的时间一定要小于锁的自动过期时间，否则就会报错
+		try {
+			if (locks.tryLock(type, key, expire, timeout)) {
+				joinPoint.proceed();
+			}
+			else {
+				throw new CustomException("前方拥堵，请稍后再试");
+			}
+		}
+		catch (Throwable throwable) {
+			log.error("异常信息：{}", throwable.getMessage());
+			throw throwable;
+		}
+		finally {
+			// 释放锁
+			locks.unlock(type, key);
+		}
+		return null;
+	}
 
 }

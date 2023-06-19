@@ -13,7 +13,7 @@ public class XxlJobApplication {
 
 	public static void main(String[] args) {
 		// 账号/密码 => admin/123456
-        SpringApplication.run(XxlJobApplication.class, args);
+		SpringApplication.run(XxlJobApplication.class, args);
 	}
 
 }

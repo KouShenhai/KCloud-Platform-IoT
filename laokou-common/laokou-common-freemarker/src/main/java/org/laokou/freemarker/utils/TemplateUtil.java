@@ -15,6 +15,7 @@
  */
 
 package org.laokou.freemarker.utils;
+
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -27,18 +28,19 @@ import java.util.Map;
  */
 public class TemplateUtil extends FreeMarkerTemplateUtils {
 
-    private static final Configuration CONFIGURATION;
+	private static final Configuration CONFIGURATION;
 
-    static {
-        CONFIGURATION = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
-    }
+	static {
+		CONFIGURATION = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+	}
 
-    public static String getContent(String template, Map<String, Object> params) throws IOException, TemplateException {
-        Template temp = getTemplate(template);
-        return processTemplateIntoString(temp, params);
-    }
+	public static String getContent(String template, Map<String, Object> params) throws IOException, TemplateException {
+		Template temp = getTemplate(template);
+		return processTemplateIntoString(temp, params);
+	}
 
-    private static Template getTemplate(String template) throws IOException {
-        return new Template("template",template,CONFIGURATION);
-    }
+	private static Template getTemplate(String template) throws IOException {
+		return new Template("template", template, CONFIGURATION);
+	}
+
 }

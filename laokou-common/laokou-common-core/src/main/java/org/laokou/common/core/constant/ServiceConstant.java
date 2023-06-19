@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 package org.laokou.common.core.constant;
+
 /**
  * @author laokou
  */
 public interface ServiceConstant {
 
-    String LAOKOU_IM = "laokou-im";
-    String LAOKOU_FLOWABLE = "laokou-flowable";
+	String LAOKOU_FLOWABLE = "laokou-flowable";
 
 }

@@ -28,10 +28,13 @@ import java.util.List;
 @Data
 public class SysPackageVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 8402916009194734921L;
-    private Long id;
-    private String name;
-    private List<Long> menuIds;
+	@Serial
+	private static final long serialVersionUID = 8402916009194734921L;
+
+	private Long id;
+
+	private String name;
+
+	private List<Long> menuIds;
 
 }

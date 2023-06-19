@@ -29,8 +29,10 @@ import java.util.List;
 @Slf4j
 @SpringBootTest(classes = AdminApplication.class)
 public class CollectionTest {
-    public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
-        System.out.println(CollectionUtil.isNotEmpty(list));
-    }
+
+	public static void main(String[] args) {
+		List<String> list = new ArrayList<>();
+		System.out.println(CollectionUtil.isNotEmpty(list));
+	}
+
 }

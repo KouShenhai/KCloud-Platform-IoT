@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.List;
+
 /**
  * @author laokou
  */
@@ -40,53 +41,54 @@ import java.util.List;
 @Component
 public class DataFilterAspect {
 
-    @Before("@annotation(org.laokou.common.data.filter.annotation.DataFilter)")
-    public void before(JoinPoint point) {
-        Object params = point.getArgs()[0];
-        if (params instanceof BasePage basePage) {
-            UserDetail userDetail = UserUtil.userDetail();
-            // 超级管理员不过滤数据
-            if (userDetail.getSuperAdmin() == SuperAdminEnum.YES.ordinal()) {
-                return;
-            }
-            try {
-                // 否则数据过滤
-                String sqlFilter = getSqlFilter(userDetail, point);
-                basePage.setSqlFilter(sqlFilter);
-            }catch (Exception ex){
-                log.error("错误信息:{}",ex.getMessage());
-            }
-        }
-    }
+	@Before("@annotation(org.laokou.common.data.filter.annotation.DataFilter)")
+	public void before(JoinPoint point) {
+		Object params = point.getArgs()[0];
+		if (params instanceof BasePage basePage) {
+			UserDetail userDetail = UserUtil.userDetail();
+			// 超级管理员不过滤数据
+			if (userDetail.getSuperAdmin() == SuperAdminEnum.YES.ordinal()) {
+				return;
+			}
+			try {
+				// 否则数据过滤
+				String sqlFilter = getSqlFilter(userDetail, point);
+				basePage.setSqlFilter(sqlFilter);
+			}
+			catch (Exception ex) {
+				log.error("错误信息:{}", ex.getMessage());
+			}
+		}
+	}
 
-    /**
-     * 获取数据过滤的SQL
-     */
-    private String getSqlFilter(UserDetail userDetail, JoinPoint point) {
-        MethodSignature signature = (MethodSignature) point.getSignature();
-        Method method = signature.getMethod();
-        DataFilter dataFilter = method.getAnnotation(DataFilter.class);
-        if (dataFilter == null) {
-            dataFilter = AnnotationUtils.findAnnotation(method,DataFilter.class);
-        }
-        // 获取表的别名
-        assert dataFilter != null;
-        String tableAlias = dataFilter.tableAlias();
-        if(StringUtil.isNotEmpty(tableAlias)){
-            tableAlias +=  ".";
-        }
-        StringBuilder sqlFilter = new StringBuilder();
-        // 用户列表
-        List<Long> deptIds = userDetail.getDeptIds();
-        sqlFilter.append("(");
-        if (CollectionUtil.isNotEmpty(deptIds)) {
-            sqlFilter.append(tableAlias).append(dataFilter.deptId()).append(" in (");
-            sqlFilter.append(String.join(",",deptIds.stream().map(String::valueOf).toArray(String[]::new)));
-            sqlFilter.append(") or ");
-        }
-        sqlFilter.append(tableAlias).append(dataFilter.userId()).append(" = ").append(userDetail.getId());
-        sqlFilter.append(")");
-        return sqlFilter.toString();
-    }
+	/**
+	 * 获取数据过滤的SQL
+	 */
+	private String getSqlFilter(UserDetail userDetail, JoinPoint point) {
+		MethodSignature signature = (MethodSignature) point.getSignature();
+		Method method = signature.getMethod();
+		DataFilter dataFilter = method.getAnnotation(DataFilter.class);
+		if (dataFilter == null) {
+			dataFilter = AnnotationUtils.findAnnotation(method, DataFilter.class);
+		}
+		// 获取表的别名
+		assert dataFilter != null;
+		String tableAlias = dataFilter.tableAlias();
+		if (StringUtil.isNotEmpty(tableAlias)) {
+			tableAlias += ".";
+		}
+		StringBuilder sqlFilter = new StringBuilder();
+		// 用户列表
+		List<Long> deptIds = userDetail.getDeptIds();
+		sqlFilter.append("(");
+		if (CollectionUtil.isNotEmpty(deptIds)) {
+			sqlFilter.append(tableAlias).append(dataFilter.deptId()).append(" in (");
+			sqlFilter.append(String.join(",", deptIds.stream().map(String::valueOf).toArray(String[]::new)));
+			sqlFilter.append(") or ");
+		}
+		sqlFilter.append(tableAlias).append(dataFilter.userId()).append(" = ").append(userDetail.getId());
+		sqlFilter.append(")");
+		return sqlFilter.toString();
+	}
 
 }

@@ -18,12 +18,13 @@ import java.util.List;
 @Component
 public class ServerInfoAwareProcessor {
 
-    public ServerInfoAwareProcessor(ServerInfoService serverInfoService, List<ServerInfoAware> awareList) {
-        final ServerInfo serverInfo = serverInfoService.fetchServiceInfo();
-        log.info("[ServerInfoAwareProcessor] current server info: {}", serverInfo);
-        awareList.forEach(aware -> {
-            aware.setServerInfo(serverInfo);
-            log.info("[ServerInfoAwareProcessor] set ServerInfo for: {} successfully", aware);
-        });
-    }
+	public ServerInfoAwareProcessor(ServerInfoService serverInfoService, List<ServerInfoAware> awareList) {
+		final ServerInfo serverInfo = serverInfoService.fetchServiceInfo();
+		log.info("[ServerInfoAwareProcessor] current server info: {}", serverInfo);
+		awareList.forEach(aware -> {
+			aware.setServerInfo(serverInfo);
+			log.info("[ServerInfoAwareProcessor] set ServerInfo for: {} successfully", aware);
+		});
+	}
+
 }

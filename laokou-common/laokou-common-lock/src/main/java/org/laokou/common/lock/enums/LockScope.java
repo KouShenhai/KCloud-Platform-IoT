@@ -19,11 +19,11 @@ package org.laokou.common.lock.enums;
  * @author laokou
  */
 
-public enum  LockScope {
+public enum LockScope {
 
-    /**
-     * 分布式锁
-     */
-    DISTRIBUTED_LOCK
+	/**
+	 * 分布式锁
+	 */
+	DISTRIBUTED_LOCK
 
 }

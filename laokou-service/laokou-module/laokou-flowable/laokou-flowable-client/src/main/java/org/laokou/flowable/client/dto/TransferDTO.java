@@ -15,6 +15,7 @@
  */
 
 package org.laokou.flowable.client.dto;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.io.Serial;
@@ -25,12 +26,14 @@ import java.io.Serializable;
  */
 @Data
 public class TransferDTO extends ResolveDTO implements Serializable {
-    @Serial
-    private static final long serialVersionUID = -9069535207783920486L;
 
-    @NotNull(message = "用户编号不为空")
-    private Long userId;
+	@Serial
+	private static final long serialVersionUID = -9069535207783920486L;
 
-    @NotNull(message = "转派人员编号不为空")
-    private Long assignee;
+	@NotNull(message = "用户编号不为空")
+	private Long userId;
+
+	@NotNull(message = "转派人员编号不为空")
+	private Long assignee;
+
 }

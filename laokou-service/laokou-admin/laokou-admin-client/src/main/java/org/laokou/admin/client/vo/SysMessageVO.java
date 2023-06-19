@@ -14,27 +14,30 @@
  * limitations under the License.
  */
 package org.laokou.admin.client.vo;
+
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 /**
  * @author laokou
  */
 @Data
 public class SysMessageVO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -8577186146037405223L;
-    private Long id;
+	@Serial
+	private static final long serialVersionUID = -8577186146037405223L;
 
-    private String title;
+	private Long id;
 
-    private String content;
+	private String title;
 
-    private LocalDateTime createDate;
+	private String content;
 
-    private Integer type;
+	private LocalDateTime createDate;
+
+	private Integer type;
 
 }

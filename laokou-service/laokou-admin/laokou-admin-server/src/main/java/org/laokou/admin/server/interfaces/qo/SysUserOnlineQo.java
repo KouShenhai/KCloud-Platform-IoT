@@ -24,5 +24,7 @@ import org.laokou.common.mybatisplus.entity.BasePage;
  */
 @Data
 public class SysUserOnlineQo extends BasePage {
-    private String username;
+
+	private String username;
+
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.common.mybatisplus.config;
+
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,39 +31,42 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.laokou.common.mybatisplus.entity.BasePage;
 import java.util.Map;
+
 /**
  * @author laokou
  */
 @Slf4j
 public class DataFilterInterceptor implements InnerInterceptor {
 
-    @Override
-    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
-        if (parameter instanceof Map map) {
-            try {
-                Object qo = map.get("qo");
-                if (qo instanceof BasePage basePage) {
-                    // 获取aop拼接的sql
-                    String sqlFilter = basePage.getSqlFilter();
-                    // 获取select查询语句
-                    Select select = (Select) CCJSqlParserUtil.parse(boundSql.getSql());
-                    PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
-                    // 获取where
-                    Expression expression = plainSelect.getWhere();
-                    if (null == expression) {
-                        plainSelect.setWhere(new StringValue(sqlFilter));
-                    } else {
-                        AndExpression andExpression = new AndExpression(expression,new StringValue(sqlFilter));
-                        plainSelect.setWhere(andExpression);
-                    }
-                    String newSql = select.toString().replaceAll("'","").replaceAll("\"","'");
-                    // 新sql写入
-                    PluginUtils.mpBoundSql(boundSql).sql(newSql);
-                }
-            } catch (Exception ignored) {}
-        }
-    }
-
-
+	@Override
+	public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
+			ResultHandler resultHandler, BoundSql boundSql) {
+		if (parameter instanceof Map map) {
+			try {
+				Object qo = map.get("qo");
+				if (qo instanceof BasePage basePage) {
+					// 获取aop拼接的sql
+					String sqlFilter = basePage.getSqlFilter();
+					// 获取select查询语句
+					Select select = (Select) CCJSqlParserUtil.parse(boundSql.getSql());
+					PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
+					// 获取where
+					Expression expression = plainSelect.getWhere();
+					if (null == expression) {
+						plainSelect.setWhere(new StringValue(sqlFilter));
+					}
+					else {
+						AndExpression andExpression = new AndExpression(expression, new StringValue(sqlFilter));
+						plainSelect.setWhere(andExpression);
+					}
+					String newSql = select.toString().replaceAll("'", "").replaceAll("\"", "'");
+					// 新sql写入
+					PluginUtils.mpBoundSql(boundSql).sql(newSql);
+				}
+			}
+			catch (Exception ignored) {
+			}
+		}
+	}
 
 }

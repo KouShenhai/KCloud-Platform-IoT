@@ -15,11 +15,15 @@
  */
 package org.laokou.flowable.server;
 
+import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+import static org.laokou.common.core.constant.Constant.TRUE;
+
 /**
  * @author laokou
  */
@@ -28,10 +32,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableEncryptableProperties
 public class FlowableApplication {
 
-    public static void main(String[] args) {
-        new SpringApplicationBuilder(FlowableApplication.class)
-                .web(WebApplicationType.SERVLET)
-                .run(args);
-    }
+	public static void main(String[] args) {
+		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		new SpringApplicationBuilder(FlowableApplication.class).web(WebApplicationType.SERVLET).run(args);
+	}
 
 }

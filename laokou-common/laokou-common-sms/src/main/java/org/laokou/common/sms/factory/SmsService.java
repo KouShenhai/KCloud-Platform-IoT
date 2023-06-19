@@ -25,13 +25,13 @@ import java.io.IOException;
  */
 public interface SmsService {
 
-    /**
-     * 发送短信
-     * @param mobile
-     * @return
-     * @throws TemplateException
-     * @throws IOException
-     */
-    Boolean sendSms(String mobile) throws TemplateException, IOException;
+	/**
+	 * 发送短信
+	 * @param mobile
+	 * @return
+	 * @throws TemplateException
+	 * @throws IOException
+	 */
+	Boolean sendSms(String mobile) throws TemplateException, IOException;
 
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.laokou.admin.client.dto.SysUserDTO;
@@ -29,36 +30,39 @@ import java.util.List;
 
 /**
  * 用户类
+ *
  * @author laokou
  */
 @Mapper
 @Repository
 public interface SysUserMapper extends BaseMapper<SysUserDO> {
-    /**
-     * 分页查询用户
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysUserVO> getUserPage(IPage<SysUserVO> page, @Param("qo") SysUserQo qo);
 
-    /**
-     * 更新用户
-     * @param dto
-     */
-    void updateUser(@Param("dto") SysUserDTO dto);
+	/**
+	 * 分页查询用户
+	 * @param page
+	 * @param qo
+	 * @return
+	 */
+	IPage<SysUserVO> getUserPage(IPage<SysUserVO> page, @Param("qo") SysUserQo qo);
 
-    /**
-     * 获取下拉用户选择列表
-     * @param tenantId
-     * @return
-     */
-    List<OptionVO> getOptionList(Long tenantId);
+	/**
+	 * 更新用户
+	 * @param dto
+	 */
+	void updateUser(@Param("dto") SysUserDTO dto);
 
-    /**
-     * 获取版本号
-     * @param id
-     * @return
-     */
-    Integer getVersion(@Param("id") Long id);
+	/**
+	 * 获取下拉用户选择列表
+	 * @param tenantId
+	 * @return
+	 */
+	List<OptionVO> getOptionList(Long tenantId);
+
+	/**
+	 * 获取版本号
+	 * @param id
+	 * @return
+	 */
+	Integer getVersion(@Param("id") Long id);
+
 }

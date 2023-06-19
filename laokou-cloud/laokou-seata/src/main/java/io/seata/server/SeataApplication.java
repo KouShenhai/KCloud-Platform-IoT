@@ -15,6 +15,7 @@
  */
 package io.seata.server;
 
+import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,13 +24,16 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 /**
  * @author spilledyear@outlook.com
  */
-@SpringBootApplication(scanBasePackages = {"io.seata"})
+@SpringBootApplication(scanBasePackages = { "io.seata" })
 @EnableEncryptableProperties
 public class SeataApplication {
-    public static void main(String[] args) {
-        // run the spring-boot application
-        new SpringApplicationBuilder(SeataApplication.class)
-                .web(WebApplicationType.SERVLET)
-                .run(args);
-    }
+
+	public static void main(String[] args) {
+		// run the spring-boot application
+		System.setProperty(TlsSystemConfig.TLS_ENABLE, "true");
+		System.setProperty(TlsSystemConfig.CLIENT_AUTH, "true");
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		new SpringApplicationBuilder(SeataApplication.class).web(WebApplicationType.SERVLET).run(args);
+	}
+
 }

@@ -29,10 +29,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class RocketmqApplication {
 
-    public static void main(String[] args) {
-        new SpringApplicationBuilder(RocketmqApplication.class)
-                .web(WebApplicationType.SERVLET)
-                .run(args);
-    }
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(RocketmqApplication.class).web(WebApplicationType.SERVLET).run(args);
+	}
 
 }

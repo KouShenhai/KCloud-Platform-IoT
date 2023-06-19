@@ -27,24 +27,35 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = XxlJobProperties.PREFIX)
 public class XxlJobProperties {
-    public static final String PREFIX = "xxl.job";
 
-    private Admin admin;
-    private Executor executor;
+	public static final String PREFIX = "xxl.job";
 
-    @Data
-    public static class Admin {
-        private String address;
-    }
+	private Admin admin;
 
-    @Data
-    public static class Executor {
-        private String appName;
-        private String ip;
-        private Integer port;
-        private String accessToken;
-        private String logPath;
-        private Integer logRetentionDays;
-    }
+	private Executor executor;
+
+	@Data
+	public static class Admin {
+
+		private String address;
+
+	}
+
+	@Data
+	public static class Executor {
+
+		private String appName;
+
+		private String ip;
+
+		private Integer port;
+
+		private String accessToken;
+
+		private String logPath;
+
+		private Integer logRetentionDays;
+
+	}
 
 }

@@ -21,9 +21,9 @@ package org.laokou.common.oss.enums;
 
 public enum OssTypeEnum {
 
-    /**
-     * s3协议
-     */
-    S3
+	/**
+	 * s3协议
+	 */
+	S3
 
 }

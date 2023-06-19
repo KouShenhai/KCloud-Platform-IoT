@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 package org.laokou.auth.client.enums;
+
 /**
  * 用户状态
  * @author laokou
  */
 public enum UserStatusEnum {
-    /**
-     * 正常
-     */
-    ENABLED,
-    /**
-     * 禁用
-     */
-    DISABLE
+
+	/**
+	 * 正常
+	 */
+	ENABLED,
+	/**
+	 * 禁用
+	 */
+	DISABLE
+
 }

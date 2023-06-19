@@ -31,12 +31,13 @@ import org.springframework.test.context.TestConstructor;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @RequiredArgsConstructor
 public class AuthTest {
-    private final PasswordEncoder passwordEncoder;
 
-    @Test
-    public void test() {
-        String encode = passwordEncoder.encode("FpHwIfw4wY92dO");
-        log.info("{}",encode);
-    }
+	private final PasswordEncoder passwordEncoder;
+
+	@Test
+	public void test() {
+		String encode = passwordEncoder.encode("FpHwIfw4wY92dO");
+		log.info("{}", encode);
+	}
 
 }

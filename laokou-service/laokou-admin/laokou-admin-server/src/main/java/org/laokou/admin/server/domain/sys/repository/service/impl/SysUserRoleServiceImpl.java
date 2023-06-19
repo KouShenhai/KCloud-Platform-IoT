@@ -27,10 +27,12 @@ import java.util.List;
  * @author laokou
  */
 @Service
-public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRoleDO> implements SysUserRoleService {
+public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRoleDO>
+		implements SysUserRoleService {
 
-    @Override
-    public void insertBatch(List<SysUserRoleDO> list) {
-        this.baseMapper.insertBatch(list);
-    }
+	@Override
+	public void insertBatch(List<SysUserRoleDO> list) {
+		this.baseMapper.insertBatch(list);
+	}
+
 }

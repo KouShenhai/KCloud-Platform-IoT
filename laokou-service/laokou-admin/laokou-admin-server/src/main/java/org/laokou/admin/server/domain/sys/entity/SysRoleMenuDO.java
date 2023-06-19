@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.entity;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -23,25 +24,27 @@ import java.io.Serializable;
 
 /**
  * 系统角色菜单
+ *
  * @author laokou
  */
 @Data
 @TableName("boot_sys_role_menu")
-@Schema(name = "SysRoleMenuDO",description = "系统角色菜单实体类")
+@Schema(name = "SysRoleMenuDO", description = "系统角色菜单实体类")
 public class SysRoleMenuDO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -4300621783981688988L;
-    /**
-     * 菜单id
-     */
-    @Schema(name = "menuId",description = "菜单id")
-    private Long menuId;
+	@Serial
+	private static final long serialVersionUID = -4300621783981688988L;
 
-    /**
-     * 角色id
-     */
-    @Schema(name = "roleId",description = "角色id")
-    private Long roleId;
+	/**
+	 * 菜单id
+	 */
+	@Schema(name = "menuId", description = "菜单id")
+	private Long menuId;
+
+	/**
+	 * 角色id
+	 */
+	@Schema(name = "roleId", description = "角色id")
+	private Long roleId;
 
 }

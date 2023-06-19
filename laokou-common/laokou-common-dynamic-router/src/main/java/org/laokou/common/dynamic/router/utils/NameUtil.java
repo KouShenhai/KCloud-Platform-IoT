@@ -21,10 +21,10 @@ package org.laokou.common.dynamic.router.utils;
  */
 public class NameUtil {
 
-    private static final String GENERATED_NAME_PREFIX = "_genkey_";
+	private static final String GENERATED_NAME_PREFIX = "_genkey_";
 
-    public static String generateName(int i) {
-        return GENERATED_NAME_PREFIX + i;
-    }
+	public static String generateName(int i) {
+		return GENERATED_NAME_PREFIX + i;
+	}
 
 }

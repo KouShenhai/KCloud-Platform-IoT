@@ -28,13 +28,14 @@ import java.util.Set;
 @Data
 public class WsMsgDTO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -4930262464816447000L;
-    /**
-     * 接收者
-     */
-    private Set<String> receiver;
+	@Serial
+	private static final long serialVersionUID = -4930262464816447000L;
 
-    private String msg;
+	/**
+	 * 接收者
+	 */
+	private Set<String> receiver;
+
+	private String msg;
 
 }

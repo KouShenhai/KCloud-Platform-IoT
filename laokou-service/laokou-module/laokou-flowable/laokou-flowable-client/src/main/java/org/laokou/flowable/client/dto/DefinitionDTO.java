@@ -27,12 +27,17 @@ import java.io.Serializable;
  */
 @Data
 public class DefinitionDTO implements Serializable {
-    @Serial
-    private static final long serialVersionUID = -818653141079850719L;
-    @NotNull(message = "显示页码不为空")
-    private Integer pageNum;
-    @NotNull(message = "显示条数不为空")
-    private Integer pageSize;
-    @NotNull(message = "显示条数不为空")
-    private String processName;
+
+	@Serial
+	private static final long serialVersionUID = -818653141079850719L;
+
+	@NotNull(message = "显示页码不为空")
+	private Integer pageNum;
+
+	@NotNull(message = "显示条数不为空")
+	private Integer pageSize;
+
+	@NotNull(message = "显示条数不为空")
+	private String processName;
+
 }

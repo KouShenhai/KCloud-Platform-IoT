@@ -34,31 +34,32 @@ import java.util.List;
 @Repository
 public interface SysPackageMapper extends BaseMapper<SysPackageDO> {
 
-    /**
-     * 获取版本号
-     * @param id
-     * @return
-     */
-    Integer getVersion(Long id);
+	/**
+	 * 获取版本号
+	 * @param id
+	 * @return
+	 */
+	Integer getVersion(Long id);
 
-    /**
-     * 获取详情
-     * @param id
-     * @return
-     */
-    SysPackageVO getPackageById(Long id);
+	/**
+	 * 获取详情
+	 * @param id
+	 * @return
+	 */
+	SysPackageVO getPackageById(Long id);
 
-    /**
-     * 查询套餐
-     * @param page
-     * @param qo
-     * @return
-     */
-    IPage<SysPackageVO> queryPackagePage(IPage<SysPackageVO> page,@Param("qo") SysPackageQo qo);
+	/**
+	 * 查询套餐
+	 * @param page
+	 * @param qo
+	 * @return
+	 */
+	IPage<SysPackageVO> queryPackagePage(IPage<SysPackageVO> page, @Param("qo") SysPackageQo qo);
 
-    /**
-     * 获取下拉框
-     * @return
-     */
-    List<OptionVO> getOptionList();
+	/**
+	 * 获取下拉框
+	 * @return
+	 */
+	List<OptionVO> getOptionList();
+
 }

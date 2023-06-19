@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.application.service;
+
 import java.io.IOException;
+
 /**
  * @author laokou
  */
 public interface WorkflowTaskApplicationService {
 
-    /**
-     * 任务流程图
-     * @param processInstanceId
-     * @return
-     * @throws IOException
-     */
-    String diagramProcess(String processInstanceId) throws IOException;
+	/**
+	 * 任务流程图
+	 * @param processInstanceId
+	 * @return
+	 * @throws IOException
+	 */
+	String diagramProcess(String processInstanceId) throws IOException;
+
 }

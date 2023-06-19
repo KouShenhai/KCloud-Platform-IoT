@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.interfaces.qo;
+
 import lombok.Data;
 import org.laokou.common.mybatisplus.entity.BasePage;
 
@@ -25,8 +26,9 @@ import java.io.Serial;
 @Data
 public class TaskQo extends BasePage {
 
-    @Serial
-    private static final long serialVersionUID = -9002891015776356767L;
-    private String processName;
+	@Serial
+	private static final long serialVersionUID = -9002891015776356767L;
+
+	private String processName;
 
 }

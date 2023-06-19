@@ -30,16 +30,16 @@ import java.util.Map;
 @Component
 public class DynamicUtil {
 
-    public DynamicRoutingDataSource getDataSource() {
-        return SpringContextUtil.getBean(DynamicRoutingDataSource.class);
-    }
+	public DynamicRoutingDataSource getDataSource() {
+		return SpringContextUtil.getBean(DynamicRoutingDataSource.class);
+	}
 
-    public Map<String, DataSource> getDataSources() {
-        return getDataSource().getDataSources();
-    }
+	public Map<String, DataSource> getDataSources() {
+		return getDataSource().getDataSources();
+	}
 
-    public DefaultDataSourceCreator getDefaultDataSourceCreator() {
-        return SpringContextUtil.getBean(DefaultDataSourceCreator.class);
-    }
+	public DefaultDataSourceCreator getDefaultDataSourceCreator() {
+		return SpringContextUtil.getBean(DefaultDataSourceCreator.class);
+	}
 
 }

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.entity;
+
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.laokou.common.mybatisplus.entity.BaseDO;
@@ -23,39 +24,45 @@ import java.io.Serial;
 
 /**
  * 系统字典
+ *
  * @author laokou
  */
 @Data
 @TableName("boot_sys_dict")
-@Schema(name = "SysDictDO",description = "系统字典实体类")
+@Schema(name = "SysDictDO", description = "系统字典实体类")
 public class SysDictDO extends BaseDO {
 
-    @Serial
-    private static final long serialVersionUID = 956432385619473630L;
-    /**
-     * 字典名称
-     */
-    @Schema(name = "dictLabel",description = "字典名称")
-    private String dictLabel;
-    /**
-     * 字典类型
-     */
-    @Schema(name = "type",description = "字典类型")
-    private String type;
-    /**
-     * 字典值
-     */
-    @Schema(name = "dictValue",description = "字典值")
-    private String dictValue;
-    /**
-     * 字典备注
-     */
-    @Schema(name = "remark",description = "字典备注",example = "OSS枚举")
-    private String remark;
-    /**
-     * 字典排序
-     */
-    @Schema(name = "sort",description = "字典排序",example = "1")
-    private Integer sort;
+	@Serial
+	private static final long serialVersionUID = 956432385619473630L;
+
+	/**
+	 * 字典名称
+	 */
+	@Schema(name = "dictLabel", description = "字典名称")
+	private String dictLabel;
+
+	/**
+	 * 字典类型
+	 */
+	@Schema(name = "type", description = "字典类型")
+	private String type;
+
+	/**
+	 * 字典值
+	 */
+	@Schema(name = "dictValue", description = "字典值")
+	private String dictValue;
+
+	/**
+	 * 字典备注
+	 */
+	@Schema(name = "remark", description = "字典备注", example = "OSS枚举")
+	private String remark;
+
+	/**
+	 * 字典排序
+	 */
+	@Schema(name = "sort", description = "字典排序", example = "1")
+	private Integer sort;
 
 }

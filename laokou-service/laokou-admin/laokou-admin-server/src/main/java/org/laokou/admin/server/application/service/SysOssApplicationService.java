@@ -27,54 +27,54 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface SysOssApplicationService {
 
-    /**
-     * 新增oss
-     * @param dto
-     * @return
-     */
-    Boolean insertOss(SysOssDTO dto);
+	/**
+	 * 新增oss
+	 * @param dto
+	 * @return
+	 */
+	Boolean insertOss(SysOssDTO dto);
 
-    /**
-     * 修改oss
-     * @param dto
-     * @return
-     */
-    Boolean updateOss(SysOssDTO dto);
+	/**
+	 * 修改oss
+	 * @param dto
+	 * @return
+	 */
+	Boolean updateOss(SysOssDTO dto);
 
-    /**
-     * 删除oss
-     * @param id
-     * @return
-     */
-    Boolean deleteOss(Long id);
+	/**
+	 * 删除oss
+	 * @param id
+	 * @return
+	 */
+	Boolean deleteOss(Long id);
 
-    /**
-     * 查询oss
-     * @param qo
-     * @return
-     */
-    IPage<SysOssVO> queryOssPage(SysOssQo qo);
+	/**
+	 * 查询oss
+	 * @param qo
+	 * @return
+	 */
+	IPage<SysOssVO> queryOssPage(SysOssQo qo);
 
+	/**
+	 * 查询详情
+	 * @param id
+	 * @return
+	 */
+	SysOssVO getOssById(Long id);
 
-    /**
-     * 查询详情
-     * @param id
-     * @return
-     */
-    SysOssVO getOssById(Long id);
+	/**
+	 * 启用oss
+	 * @param id
+	 * @return
+	 */
+	Boolean useOss(Long id);
 
-    /**
-     * 启用oss
-     * @param id
-     * @return
-     */
-    Boolean useOss(Long id);
+	/**
+	 * 上传文件
+	 * @param file
+	 * @param md5
+	 * @return
+	 */
+	UploadVO upload(MultipartFile file, String md5);
 
-    /**
-     * 上传文件
-     * @param file
-     * @param md5
-     * @return
-     */
-    UploadVO upload(MultipartFile file,String md5);
 }

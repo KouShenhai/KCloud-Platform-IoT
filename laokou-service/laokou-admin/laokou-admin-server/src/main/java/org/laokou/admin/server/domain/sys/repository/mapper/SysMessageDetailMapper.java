@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.laokou.common.mybatisplus.mapper.BatchMapper;
 import org.springframework.stereotype.Repository;
+
 /**
  * @author laokou
  */
@@ -27,18 +29,18 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface SysMessageDetailMapper extends BaseMapper<SysMessageDetailDO>, BatchMapper<SysMessageDetailDO> {
 
-    /**
-     * 获取版本号
-     * @param id 主键
-     * @return 返回版本号
-     */
-    Integer getVersion(@Param("id")Long id);
+	/**
+	 * 获取版本号
+	 * @param id 主键
+	 * @return 返回版本号
+	 */
+	Integer getVersion(@Param("id") Long id);
 
-    /**
-     * 未读消息数
-     * @param userId
-     * @return
-     */
-    Integer unReadCount(@Param("userId") Long userId);
+	/**
+	 * 未读消息数
+	 * @param userId
+	 * @return
+	 */
+	Integer unReadCount(@Param("userId") Long userId);
 
 }

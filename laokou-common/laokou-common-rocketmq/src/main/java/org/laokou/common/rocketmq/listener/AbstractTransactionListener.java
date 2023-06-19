@@ -15,6 +15,7 @@
  */
 
 package org.laokou.common.rocketmq.listener;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
@@ -29,47 +30,51 @@ import java.util.Objects;
 @Slf4j
 public abstract class AbstractTransactionListener implements RocketMQLocalTransactionListener {
 
-    @Override
-    public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object args) {
-        String transactionId = Objects.requireNonNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID)).toString();
-        Object payload = message.getPayload();
-        log.info("执行本地事务");
-        try {
-            executeLocalTransaction(payload, transactionId);
-            log.info("事务提交");
-            return RocketMQLocalTransactionState.COMMIT;
-        } catch (Exception e) {
-            log.error("事务回滚：{}", e.getMessage());
-            return RocketMQLocalTransactionState.ROLLBACK;
-        }
-    }
+	@Override
+	public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object args) {
+		String transactionId = Objects.requireNonNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID))
+				.toString();
+		Object payload = message.getPayload();
+		log.info("执行本地事务");
+		try {
+			executeLocalTransaction(payload, transactionId);
+			log.info("事务提交");
+			return RocketMQLocalTransactionState.COMMIT;
+		}
+		catch (Exception e) {
+			log.error("事务回滚：{}", e.getMessage());
+			return RocketMQLocalTransactionState.ROLLBACK;
+		}
+	}
 
-    @Override
-    public RocketMQLocalTransactionState checkLocalTransaction(Message message) {
-        String transactionId = Objects.requireNonNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID)).toString();
-        log.info("事务回查");
-        if (checkLocalTransaction(transactionId)) {
-            log.info("事务回查后，提交");
-            return RocketMQLocalTransactionState.COMMIT;
-        } else {
-            log.info("事务回查后，回滚");
-            return RocketMQLocalTransactionState.ROLLBACK;
-        }
-    }
+	@Override
+	public RocketMQLocalTransactionState checkLocalTransaction(Message message) {
+		String transactionId = Objects.requireNonNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID))
+				.toString();
+		log.info("事务回查");
+		if (checkLocalTransaction(transactionId)) {
+			log.info("事务回查后，提交");
+			return RocketMQLocalTransactionState.COMMIT;
+		}
+		else {
+			log.info("事务回查后，回滚");
+			return RocketMQLocalTransactionState.ROLLBACK;
+		}
+	}
 
-    /**
-     * 本地事务实现
-     * @param transactionId transactionId
-     * @param obj obj
-     * @return void
-     */
-    protected abstract void executeLocalTransaction(Object obj, String transactionId);
+	/**
+	 * 本地事务实现
+	 * @param transactionId transactionId
+	 * @param obj obj
+	 * @return void
+	 */
+	protected abstract void executeLocalTransaction(Object obj, String transactionId);
 
-    /**
-     * 本地事务检查
-     * @param transactionId
-     * @return
-     */
-    protected abstract boolean checkLocalTransaction(String transactionId);
+	/**
+	 * 本地事务检查
+	 * @param transactionId
+	 * @return
+	 */
+	protected abstract boolean checkLocalTransaction(String transactionId);
 
 }

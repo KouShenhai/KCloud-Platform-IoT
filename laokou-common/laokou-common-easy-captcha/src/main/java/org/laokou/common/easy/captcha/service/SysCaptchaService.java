@@ -20,18 +20,19 @@ package org.laokou.common.easy.captcha.service;
  */
 public interface SysCaptchaService {
 
-    /**
-     * 图片验证码
-     * @param uuid 唯一标识
-     * @param code
-     */
-    void setCode(String uuid, String code);
+	/**
+	 * 图片验证码
+	 * @param uuid 唯一标识
+	 * @param code
+	 */
+	void setCode(String uuid, String code);
 
-    /**
-     * 验证码效验
-     * @param uuid
-     * @param code
-     * @return
-     */
-    Boolean validate(String uuid,String code);
+	/**
+	 * 验证码效验
+	 * @param uuid
+	 * @param code
+	 * @return
+	 */
+	Boolean validate(String uuid, String code);
+
 }

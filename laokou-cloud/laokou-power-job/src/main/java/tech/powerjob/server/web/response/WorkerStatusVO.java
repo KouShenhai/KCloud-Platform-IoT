@@ -18,82 +18,91 @@ import java.text.DecimalFormat;
 @NoArgsConstructor
 public class WorkerStatusVO {
 
-    private String address;
-    private String cpuLoad;
-    private String memoryLoad;
-    private String diskLoad;
+	private String address;
 
-    private String protocol;
-    private String tag;
-    private String lastActiveTime;
+	private String cpuLoad;
 
-    private Integer lightTaskTrackerNum;
+	private String memoryLoad;
 
-    private Integer heavyTaskTrackerNum;
+	private String diskLoad;
 
-    private long lastOverloadTime;
+	private String protocol;
 
-    private boolean overloading;
+	private String tag;
 
-    /**
-     * 1 -> 健康，绿色，2 -> 一般，橙色，3 -> 糟糕，红色，9999 -> 非在线机器
-     */
-    private int status;
+	private String lastActiveTime;
 
-    /**
-     *  12.3%(4 cores)
-     */
-    private static final String CPU_FORMAT = "%s / %s cores";
-    /**
-     *  27.7%(2.9/8.0 GB)
-     */
-    private static final String OTHER_FORMAT = "%s%%（%s / %s GB）";
-    private static final DecimalFormat df = new DecimalFormat("#.#");
+	private Integer lightTaskTrackerNum;
 
-    private static final double THRESHOLD = 0.8;
+	private Integer heavyTaskTrackerNum;
 
-    public WorkerStatusVO(WorkerInfo workerInfo) {
+	private long lastOverloadTime;
 
-        SystemMetrics systemMetrics = workerInfo.getSystemMetrics();
+	private boolean overloading;
 
-        this.status = 1;
-        this.address = workerInfo.getAddress();
-        this.cpuLoad = String.format(CPU_FORMAT, df.format(systemMetrics.getCpuLoad()), systemMetrics.getCpuProcessors());
-        if (systemMetrics.getCpuLoad() > systemMetrics.getCpuProcessors() * THRESHOLD) {
-            this.status ++;
-        }
+	/**
+	 * 1 -> 健康，绿色，2 -> 一般，橙色，3 -> 糟糕，红色，9999 -> 非在线机器
+	 */
+	private int status;
 
-        String menL = df.format(systemMetrics.getJvmMemoryUsage() * 100);
-        String menUsed = df.format(systemMetrics.getJvmUsedMemory());
-        String menMax = df.format(systemMetrics.getJvmMaxMemory());
-        this.memoryLoad = String.format(OTHER_FORMAT, menL, menUsed, menMax);
-        if (systemMetrics.getJvmMemoryUsage() > THRESHOLD) {
-            this.status ++;
-        }
+	/**
+	 * 12.3%(4 cores)
+	 */
+	private static final String CPU_FORMAT = "%s / %s cores";
 
-        String diskL = df.format(systemMetrics.getDiskUsage() * 100);
-        String diskUsed = df.format(systemMetrics.getDiskUsed());
-        String diskMax = df.format(systemMetrics.getDiskTotal());
-        this.diskLoad = String.format(OTHER_FORMAT, diskL, diskUsed, diskMax);
-        if (systemMetrics.getDiskUsage() > THRESHOLD) {
-            this.status ++;
-        }
+	/**
+	 * 27.7%(2.9/8.0 GB)
+	 */
+	private static final String OTHER_FORMAT = "%s%%（%s / %s GB）";
 
-        if (workerInfo.overload()){
-            // 超载的情况直接置为 3
-            this.status = 3;
-        }
+	private static final DecimalFormat df = new DecimalFormat("#.#");
 
-        if (workerInfo.timeout()) {
-            this.status = 9999;
-        }
+	private static final double THRESHOLD = 0.8;
 
-        this.protocol = workerInfo.getProtocol();
-        this.tag = CommonUtils.formatString(workerInfo.getTag());
-        this.lastActiveTime = CommonUtils.formatTime(workerInfo.getLastActiveTime());
-        this.lightTaskTrackerNum = workerInfo.getLightTaskTrackerNum();
-        this.heavyTaskTrackerNum = workerInfo.getHeavyTaskTrackerNum();
-        this.lastOverloadTime = workerInfo.getLastOverloadTime();
-        this.overloading = workerInfo.isOverloading();
-    }
+	public WorkerStatusVO(WorkerInfo workerInfo) {
+
+		SystemMetrics systemMetrics = workerInfo.getSystemMetrics();
+
+		this.status = 1;
+		this.address = workerInfo.getAddress();
+		this.cpuLoad = String.format(CPU_FORMAT, df.format(systemMetrics.getCpuLoad()),
+				systemMetrics.getCpuProcessors());
+		if (systemMetrics.getCpuLoad() > systemMetrics.getCpuProcessors() * THRESHOLD) {
+			this.status++;
+		}
+
+		String menL = df.format(systemMetrics.getJvmMemoryUsage() * 100);
+		String menUsed = df.format(systemMetrics.getJvmUsedMemory());
+		String menMax = df.format(systemMetrics.getJvmMaxMemory());
+		this.memoryLoad = String.format(OTHER_FORMAT, menL, menUsed, menMax);
+		if (systemMetrics.getJvmMemoryUsage() > THRESHOLD) {
+			this.status++;
+		}
+
+		String diskL = df.format(systemMetrics.getDiskUsage() * 100);
+		String diskUsed = df.format(systemMetrics.getDiskUsed());
+		String diskMax = df.format(systemMetrics.getDiskTotal());
+		this.diskLoad = String.format(OTHER_FORMAT, diskL, diskUsed, diskMax);
+		if (systemMetrics.getDiskUsage() > THRESHOLD) {
+			this.status++;
+		}
+
+		if (workerInfo.overload()) {
+			// 超载的情况直接置为 3
+			this.status = 3;
+		}
+
+		if (workerInfo.timeout()) {
+			this.status = 9999;
+		}
+
+		this.protocol = workerInfo.getProtocol();
+		this.tag = CommonUtils.formatString(workerInfo.getTag());
+		this.lastActiveTime = CommonUtils.formatTime(workerInfo.getLastActiveTime());
+		this.lightTaskTrackerNum = workerInfo.getLightTaskTrackerNum();
+		this.heavyTaskTrackerNum = workerInfo.getHeavyTaskTrackerNum();
+		this.lastOverloadTime = workerInfo.getLastOverloadTime();
+		this.overloading = workerInfo.isOverloading();
+	}
+
 }

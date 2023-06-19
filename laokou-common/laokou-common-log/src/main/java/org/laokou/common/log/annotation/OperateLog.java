@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 package org.laokou.common.log.annotation;
+
 import java.lang.annotation.*;
+
 /**
  * 自定义操作日志注解
  * @author laokou
  */
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface OperateLog {
 
-    String module();
+	String module();
 
-    String name();
+	String name();
 
 }

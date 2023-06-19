@@ -26,6 +26,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+
 /**
  * @author laokou
  */
@@ -33,34 +34,22 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    private final AdminServerProperties adminServerProperties;
+	private final AdminServerProperties adminServerProperties;
 
-    @Bean
-    @ConditionalOnMissingBean(SecurityFilterChain.class)
-    SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
-        SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
-        successHandler.setTargetUrlParameter("redirectTo");
-        successHandler.setDefaultTargetUrl(adminServerProperties.path("/"));
-        return http.authorizeHttpRequests()
-                .requestMatchers(adminServerProperties.path("/assets/**")
-                        , adminServerProperties.path("/variables.css")
-                        , adminServerProperties.path("/actuator/**")
-                        , adminServerProperties.path("/instances/**")
-                        , adminServerProperties.path("/login")).permitAll()
-                .dispatcherTypeMatchers(DispatcherType.ASYNC)
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage(adminServerProperties.path("/login"))
-                .successHandler(successHandler)
-                .and()
-                .logout()
-                .logoutUrl(adminServerProperties.path("/logout"))
-                .and()
-                .httpBasic(Customizer.withDefaults())
-                .csrf().disable()
-                .build();
-    }
+	@Bean
+	@ConditionalOnMissingBean(SecurityFilterChain.class)
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
+		successHandler.setTargetUrlParameter("redirectTo");
+		successHandler.setDefaultTargetUrl(adminServerProperties.path("/"));
+		return http.authorizeHttpRequests()
+				.requestMatchers(adminServerProperties.path("/assets/**"), adminServerProperties.path("/variables.css"),
+						adminServerProperties.path("/actuator/**"), adminServerProperties.path("/instances/**"),
+						adminServerProperties.path("/login"))
+				.permitAll().dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll().anyRequest().authenticated().and()
+				.formLogin().loginPage(adminServerProperties.path("/login")).successHandler(successHandler).and()
+				.logout().logoutUrl(adminServerProperties.path("/logout")).and().httpBasic(Customizer.withDefaults())
+				.csrf().disable().build();
+	}
+
 }

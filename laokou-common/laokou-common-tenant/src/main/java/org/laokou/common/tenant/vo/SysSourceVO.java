@@ -26,12 +26,20 @@ import java.io.Serializable;
  */
 @Data
 public class SysSourceVO implements Serializable {
-    @Serial
-    private static final long serialVersionUID = -7491902201011005534L;
-    private Long id;
-    private String name;
-    private String driverClassName;
-    private String username;
-    private String password;
-    private String url;
+
+	@Serial
+	private static final long serialVersionUID = -7491902201011005534L;
+
+	private Long id;
+
+	private String name;
+
+	private String driverClassName;
+
+	private String username;
+
+	private String password;
+
+	private String url;
+
 }

@@ -29,24 +29,23 @@ import java.io.Serializable;
 @Data
 public class ResourceIndex implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -3715061850731611381L;
-    @ElasticsearchField(type = "long")
-    @JsonSerialize(using = ToStringSerializer.class)
-    private Long id;
+	@Serial
+	private static final long serialVersionUID = -3715061850731611381L;
 
-    @ElasticsearchField(type = "text",participle = 3)
-    private String title;
+	@ElasticsearchField(type = "long")
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long id;
 
-    @ElasticsearchField
-    private String code;
+	@ElasticsearchField(type = "text", participle = 3)
+	private String title;
 
-    @ElasticsearchField(type = "text",participle = 3)
-    private String remark;
+	@ElasticsearchField
+	private String code;
 
-    @ElasticsearchField
-    private String ymd;
+	@ElasticsearchField(type = "text", participle = 3)
+	private String remark;
 
-
+	@ElasticsearchField
+	private String ymd;
 
 }
