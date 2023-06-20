@@ -60,17 +60,21 @@ public class MapUtil {
 		return paramMap;
 	}
 
-	public static String parseParams(Map<String, String> paramMap) {
+	public static String parseParams(Map<String, String> paramMap,boolean isEncode) {
 		Iterator<Map.Entry<String, String>> iterator = paramMap.entrySet().iterator();
 		StringBuilder stringBuilder = new StringBuilder();
 		while (iterator.hasNext()) {
 			Map.Entry<String, String> entry = iterator.next();
 			String key = entry.getKey();
 			String value = entry.getValue();
-			stringBuilder.append(key).append("=").append(URLEncoder.encode(value, StandardCharsets.UTF_8)).append(AND);
+			stringBuilder.append(key).append("=").append(isEncode ? URLEncoder.encode(value, StandardCharsets.UTF_8) : value).append(AND);
 		}
 		String str = stringBuilder.toString();
 		return str.substring(0,str.length() - 1);
+	}
+
+	public static String parseParams(Map<String, String> paramMap) {
+		return parseParams(paramMap,true);
 	}
 
 	public static MultiValueMap<String, String> getParameters(HttpServletRequest request) {
