@@ -52,6 +52,12 @@ public class HttpResult<T> implements Serializable {
 	@Schema(name = "data", description = "响应结果")
 	private T data;
 
+	/**
+	 * 链路ID
+	 */
+	@Schema(name = "traceId",description = "链路ID")
+	private String traceId;
+
 	public boolean success() {
 		return this.code == StatusCode.OK;
 	}
