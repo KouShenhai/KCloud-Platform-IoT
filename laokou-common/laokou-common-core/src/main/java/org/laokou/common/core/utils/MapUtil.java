@@ -17,7 +17,6 @@ package org.laokou.common.core.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.collections4.MapUtils;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.yaml.snakeyaml.util.UriEncoder;
@@ -61,16 +60,21 @@ public class MapUtil {
 		return paramMap;
 	}
 
-	public static String parseParams(Map<String, String> paramMap) {
+	public static String parseParams(Map<String, String> paramMap,boolean isEncode) {
 		Iterator<Map.Entry<String, String>> iterator = paramMap.entrySet().iterator();
 		StringBuilder stringBuilder = new StringBuilder();
 		while (iterator.hasNext()) {
 			Map.Entry<String, String> entry = iterator.next();
 			String key = entry.getKey();
 			String value = entry.getValue();
-			stringBuilder.append(key).append("=").append(URLEncoder.encode(value, StandardCharsets.UTF_8)).append("&");
+			stringBuilder.append(key).append("=").append(isEncode ? URLEncoder.encode(value, StandardCharsets.UTF_8) : value).append(AND);
 		}
-		return StringUtil.substringBeforeLast(stringBuilder.toString(), AND);
+		String str = stringBuilder.toString();
+		return str.substring(0,str.length() - 1);
+	}
+
+	public static String parseParams(Map<String, String> paramMap) {
+		return parseParams(paramMap,true);
 	}
 
 	public static MultiValueMap<String, String> getParameters(HttpServletRequest request) {
