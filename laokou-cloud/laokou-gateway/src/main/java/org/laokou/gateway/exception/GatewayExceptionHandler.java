@@ -16,6 +16,7 @@
 package org.laokou.gateway.exception;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
+import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.gateway.utils.ResponseUtil;
@@ -34,6 +35,7 @@ import reactor.core.publisher.Mono;
  */
 @Component
 @Slf4j
+@NonNullApi
 public class GatewayExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 
 	@Override

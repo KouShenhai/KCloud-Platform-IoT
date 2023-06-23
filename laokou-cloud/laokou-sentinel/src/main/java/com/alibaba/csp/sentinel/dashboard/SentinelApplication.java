@@ -15,6 +15,7 @@
  */
 package com.alibaba.csp.sentinel.dashboard;
 
+import ch.qos.logback.core.util.ExecutorServiceUtil;
 import com.alibaba.csp.sentinel.init.InitExecutor;
 
 import org.springframework.boot.SpringApplication;
@@ -34,7 +35,7 @@ public class SentinelApplication {
 	}
 
 	private static void triggerSentinelInit() {
-		new Thread(() -> InitExecutor.doInit()).start();
+		ExecutorServiceUtil.newExecutorService().execute(InitExecutor::doInit);
 	}
 
 }
