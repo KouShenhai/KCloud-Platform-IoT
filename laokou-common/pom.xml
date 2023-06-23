@@ -85,6 +85,7 @@
 		<module>laokou-common-netty</module>
         <module>laokou-common-idempotent</module>
         <module>laokou-common-lock</module>
+        <module>laokou-common-monitor</module>
     </modules>
 
 </project>
