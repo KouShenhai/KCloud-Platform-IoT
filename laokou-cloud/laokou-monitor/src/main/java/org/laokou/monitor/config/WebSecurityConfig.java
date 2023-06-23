@@ -22,8 +22,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
@@ -42,14 +42,18 @@ public class WebSecurityConfig {
 		SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
 		successHandler.setTargetUrlParameter("redirectTo");
 		successHandler.setDefaultTargetUrl(adminServerProperties.path("/"));
-		return http.authorizeHttpRequests()
-				.requestMatchers(adminServerProperties.path("/assets/**"), adminServerProperties.path("/variables.css"),
-						adminServerProperties.path("/actuator/**"), adminServerProperties.path("/instances/**"),
-						adminServerProperties.path("/login"))
-				.permitAll().dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll().anyRequest().authenticated().and()
-				.formLogin().loginPage(adminServerProperties.path("/login")).successHandler(successHandler).and()
-				.logout().logoutUrl(adminServerProperties.path("/logout")).and().httpBasic(Customizer.withDefaults())
-				.csrf().disable().build();
+		return http
+				.authorizeHttpRequests(request -> request
+						.requestMatchers(adminServerProperties.path("/assets/**"),
+								adminServerProperties.path("/variables.css"),
+								adminServerProperties.path("/actuator/**"), adminServerProperties.path("/instances/**"),
+								adminServerProperties.path("/login"))
+						.permitAll().dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll().anyRequest()
+						.authenticated())
+				.formLogin(
+						login -> login.loginPage(adminServerProperties.path("/login")).successHandler(successHandler))
+				.logout(logout -> logout.logoutUrl(adminServerProperties.path("/logout")))
+				.httpBasic(AbstractHttpConfigurer::disable).build();
 	}
 
 }
