@@ -24,6 +24,7 @@ import org.laokou.admin.server.application.service.WorkflowDefinitionApplication
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.admin.server.interfaces.qo.DefinitionQo;
 import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class WorkflowDefinitionApiController {
 
 	private final WorkflowDefinitionApplicationService workflowDefinitionApplicationService;
 
+	@TraceLog
 	@PostMapping("/insert")
 	@Operation(summary = "流程定义>新增", description = "流程定义>新增")
 	@OperateLog(module = "流程定义", name = "流程新增")
@@ -49,6 +51,7 @@ public class WorkflowDefinitionApiController {
 		return new HttpResult<Boolean>().ok(workflowDefinitionApplicationService.insertDefinition(file));
 	}
 
+	@TraceLog
 	@PostMapping("/query")
 	@Operation(summary = "流程定义>查询", description = "流程定义>查询")
 	@PreAuthorize("hasAuthority('workflow:definition:query')")
@@ -56,6 +59,7 @@ public class WorkflowDefinitionApiController {
 		return new HttpResult<IPage<DefinitionVO>>().ok(workflowDefinitionApplicationService.queryDefinitionPage(qo));
 	}
 
+	@TraceLog
 	@GetMapping("/image")
 	@Operation(summary = "流程定义>图片", description = "流程定义>图片")
 	@PreAuthorize("hasAuthority('workflow:definition:diagram')")
@@ -63,6 +67,7 @@ public class WorkflowDefinitionApiController {
 		return new HttpResult<String>().ok(workflowDefinitionApplicationService.diagramDefinition(definitionId));
 	}
 
+	@TraceLog
 	@DeleteMapping("/delete")
 	@Operation(summary = "流程定义>删除", description = "流程定义>删除")
 	@OperateLog(module = "流程定义", name = "流程删除")
@@ -71,6 +76,7 @@ public class WorkflowDefinitionApiController {
 		return new HttpResult<Boolean>().ok(workflowDefinitionApplicationService.deleteDefinition(deploymentId));
 	}
 
+	@TraceLog
 	@PutMapping("/suspend")
 	@Operation(summary = "流程定义>挂起", description = "流程定义>挂起")
 	@OperateLog(module = "流程定义", name = "流程挂起")
@@ -79,6 +85,7 @@ public class WorkflowDefinitionApiController {
 		return new HttpResult<Boolean>().ok(workflowDefinitionApplicationService.suspendDefinition(definitionId));
 	}
 
+	@TraceLog
 	@PutMapping("/activate")
 	@Operation(summary = "流程定义>激活", description = "流程定义>激活")
 	@OperateLog(module = "流程定义", name = "流程激活")
@@ -87,6 +94,7 @@ public class WorkflowDefinitionApiController {
 		return new HttpResult<Boolean>().ok(workflowDefinitionApplicationService.activateDefinition(definitionId));
 	}
 
+	@TraceLog
 	@GetMapping("/template")
 	@Operation(summary = "流程定义>模板", description = "流程定义>模板")
 	@PreAuthorize("hasAuthority('workflow:definition:template')")

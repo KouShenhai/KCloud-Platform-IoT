@@ -26,6 +26,7 @@ import org.laokou.auth.client.vo.SecretInfoVO;
 import org.laokou.auth.server.application.service.SysAuthApplicationService;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -48,6 +49,7 @@ public class SysAuthApiController {
 	 * 验证码
 	 * @param request 请求参数
 	 */
+	@TraceLog
 	@GetMapping("/captcha")
 	@Operation(summary = "系统认证>验证码", description = "系统认证>验证码")
 	@Parameter(name = AuthConstant.UUID, description = "唯一标识", example = "1111")
@@ -59,6 +61,7 @@ public class SysAuthApiController {
 	 * 注销
 	 * @param request 请求参数
 	 */
+	@TraceLog
 	@GetMapping("/logout")
 	@Operation(summary = "系统认证>注销", description = "系统认证>注销")
 	public HttpResult<Boolean> logout(HttpServletRequest request) {
@@ -68,6 +71,7 @@ public class SysAuthApiController {
 	/**
 	 * 租户下拉列表
 	 */
+	@TraceLog
 	@GetMapping("/tenant")
 	@Operation(summary = "系统认证>租户", description = "系统认证>租户")
 	public HttpResult<List<OptionVO>> optionList() {
@@ -77,6 +81,7 @@ public class SysAuthApiController {
 	/**
 	 * 密钥配置
 	 */
+	@TraceLog
 	@GetMapping("/secret_info")
 	@Operation(summary = "系统认证>密钥配置", description = "系统认证>密钥配置")
 	public HttpResult<SecretInfoVO> secretInfo() throws IOException {
@@ -86,6 +91,7 @@ public class SysAuthApiController {
 	/**
 	 * 密钥配置
 	 */
+	@TraceLog
 	@GetMapping("/idempotent_token")
 	@Operation(summary = "系统认证>接口幂等性令牌", description = "系统认证>接口幂等性令牌")
 	public HttpResult<IdempotentToken> idempotentToken() {

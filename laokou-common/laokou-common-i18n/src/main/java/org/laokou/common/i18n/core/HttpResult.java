@@ -55,7 +55,7 @@ public class HttpResult<T> implements Serializable {
 	/**
 	 * 链路ID
 	 */
-	@Schema(name = "traceId",description = "链路ID")
+	@Schema(name = "traceId", description = "链路ID")
 	private String traceId;
 
 	public boolean success() {

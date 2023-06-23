@@ -74,7 +74,7 @@ public class ResponseUtil {
 		return new HttpResult<>().error(code);
 	}
 
-	public static String getParamValue(ServerHttpRequest request,String paramName) {
+	public static String getParamValue(ServerHttpRequest request, String paramName) {
 		// 从header中获取
 		String paramValue = request.getHeaders().getFirst(paramName);
 		// 从参数中获取

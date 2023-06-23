@@ -24,6 +24,7 @@ import org.laokou.admin.server.application.service.SysResourceApplicationService
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
 import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.laokou.flowable.client.dto.AuditDTO;
 import org.laokou.flowable.client.dto.DelegateDTO;
 import org.laokou.flowable.client.dto.ResolveDTO;
@@ -43,6 +44,7 @@ public class WorkflowTaskApiController {
 
 	private final SysResourceApplicationService sysResourceApplicationService;
 
+	@TraceLog
 	@PostMapping(value = "/resource/query")
 	@Operation(summary = "流程任务>资源>查询任务", description = "流程任务>资源>查询任务")
 	@PreAuthorize("hasAuthority('workflow:task:resource:query')")
@@ -50,6 +52,7 @@ public class WorkflowTaskApiController {
 		return new HttpResult<IPage<TaskVO>>().ok(sysResourceApplicationService.queryResourceTask(qo));
 	}
 
+	@TraceLog
 	@PostMapping(value = "/resource/audit")
 	@Operation(summary = "流程任务>资源>审批任务", description = "流程任务>资源>审批任务")
 	@OperateLog(module = "流程任务", name = "审批任务")
@@ -58,12 +61,14 @@ public class WorkflowTaskApiController {
 		return new HttpResult<Boolean>().ok(sysResourceApplicationService.auditResourceTask(dto));
 	}
 
+	@TraceLog
 	@GetMapping(value = "/resource/detail")
 	@Operation(summary = "流程任务>资源>任务详情", description = "流程任务>资源>任务详情")
 	public HttpResult<SysResourceVO> detailResource(@RequestParam("id") Long id) {
 		return new HttpResult<SysResourceVO>().ok(sysResourceApplicationService.getResourceAuditByResourceId(id));
 	}
 
+	@TraceLog
 	@PostMapping(value = "/resource/resolve")
 	@Operation(summary = "流程任务>资源>处理任务", description = "流程任务>资源>处理任务")
 	@OperateLog(module = "流程任务", name = "处理任务")
@@ -72,6 +77,7 @@ public class WorkflowTaskApiController {
 		return new HttpResult<Boolean>().ok(sysResourceApplicationService.resolveResourceTask(dto));
 	}
 
+	@TraceLog
 	@PostMapping(value = "/resource/transfer")
 	@Operation(summary = "流程任务>资源>转办任务", description = "流程任务>资源>转办任务")
 	@OperateLog(module = "流程任务", name = "转办任务")
@@ -80,6 +86,7 @@ public class WorkflowTaskApiController {
 		return new HttpResult<Boolean>().ok(sysResourceApplicationService.transferResourceTask(dto));
 	}
 
+	@TraceLog
 	@PostMapping(value = "/resource/delegate")
 	@Operation(summary = "流程任务>资源>委派任务", description = "流程任务>资源>委派任务")
 	@OperateLog(module = "流程任务", name = "委派任务")

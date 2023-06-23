@@ -46,7 +46,7 @@ public class DataCacheAutoConfig {
 
 	@Bean
 	public Cache<String, Object> caffeineCache() {
-		return Caffeine.newBuilder().initialCapacity(100).build();
+		return Caffeine.newBuilder().maximumSize(4096).build();
 	}
 
 }

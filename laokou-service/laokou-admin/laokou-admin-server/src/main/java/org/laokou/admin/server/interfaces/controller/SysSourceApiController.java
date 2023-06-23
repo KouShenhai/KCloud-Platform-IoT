@@ -28,6 +28,7 @@ import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.tenant.qo.SysSourceQo;
 import org.laokou.common.tenant.vo.SysSourceVO;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,7 @@ public class SysSourceApiController {
 
 	private final SysSourceApplicationService sysSourceApplicationService;
 
+	@TraceLog
 	@PostMapping("/query")
 	@Operation(summary = "系统数据源>查询", description = "系统数据源>查询")
 	@PreAuthorize("hasAuthority('sys:source:query')")
@@ -51,6 +53,7 @@ public class SysSourceApiController {
 		return new HttpResult<IPage<SysSourceVO>>().ok(sysSourceApplicationService.querySourcePage(qo));
 	}
 
+	@TraceLog
 	@PostMapping("/insert")
 	@Operation(summary = "系统数据源>新增", description = "系统数据源>新增")
 	@OperateLog(module = "系统数据源", name = "数据源新增")
@@ -59,6 +62,7 @@ public class SysSourceApiController {
 		return new HttpResult<Boolean>().ok(sysSourceApplicationService.insertSource(dto));
 	}
 
+	@TraceLog
 	@GetMapping("/detail")
 	@Operation(summary = "系统数据源>查看", description = "系统数据源>查看")
 	@DataCache(name = "source", key = "#id")
@@ -66,6 +70,7 @@ public class SysSourceApiController {
 		return new HttpResult<SysSourceVO>().ok(sysSourceApplicationService.getSourceById(id));
 	}
 
+	@TraceLog
 	@PutMapping("/update")
 	@Operation(summary = "系统数据源>修改", description = "系统数据源>修改")
 	@OperateLog(module = "系统数据源", name = "数据源修改")
@@ -75,6 +80,7 @@ public class SysSourceApiController {
 		return new HttpResult<Boolean>().ok(sysSourceApplicationService.updateSource(dto));
 	}
 
+	@TraceLog
 	@DeleteMapping("/delete")
 	@Operation(summary = "系统数据源>删除", description = "系统数据源>删除")
 	@OperateLog(module = "系统数据源", name = "数据源删除")
@@ -84,6 +90,7 @@ public class SysSourceApiController {
 		return new HttpResult<Boolean>().ok(sysSourceApplicationService.deleteSource(id));
 	}
 
+	@TraceLog
 	@GetMapping("/option/list")
 	@Operation(summary = "系统数据源>下拉框列表", description = "系统数据源>下拉框列表")
 	public HttpResult<List<OptionVO>> optionList() {

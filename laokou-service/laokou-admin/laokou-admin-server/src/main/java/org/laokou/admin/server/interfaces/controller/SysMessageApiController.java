@@ -27,6 +27,7 @@ import org.laokou.admin.client.vo.SysMessageVO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
@@ -42,6 +43,7 @@ public class SysMessageApiController {
 
 	private final SysMessageApplicationService sysMessageApplicationService;
 
+	@TraceLog
 	@PostMapping("/insert")
 	@Operation(summary = "系统消息>新增", description = "系统消息>新增")
 	@OperateLog(module = "系统消息", name = "消息新增")
@@ -50,6 +52,7 @@ public class SysMessageApiController {
 		return new HttpResult<Boolean>().ok(sysMessageApplicationService.insertMessage(dto));
 	}
 
+	@TraceLog
 	@PostMapping("/query")
 	@Operation(summary = "系统消息>查询", description = "系统消息>查询")
 	@PreAuthorize("hasAuthority('sys:message:query')")
@@ -57,6 +60,7 @@ public class SysMessageApiController {
 		return new HttpResult<IPage<SysMessageVO>>().ok(sysMessageApplicationService.queryMessagePage(qo));
 	}
 
+	@TraceLog
 	@GetMapping("/get")
 	@Operation(summary = "系统消息>查看", description = "系统消息>查看")
 	@OperateLog(module = "系统消息", name = "消息查看")
@@ -65,6 +69,7 @@ public class SysMessageApiController {
 		return new HttpResult<MessageDetailVO>().ok(sysMessageApplicationService.getMessageByDetailId(id));
 	}
 
+	@TraceLog
 	@GetMapping("/detail")
 	@Operation(summary = "系统消息>详情", description = "系统消息>详情")
 	@PreAuthorize("hasAuthority('sys:message:detail')")
@@ -73,12 +78,14 @@ public class SysMessageApiController {
 		return new HttpResult<MessageDetailVO>().ok(sysMessageApplicationService.getMessageById(id));
 	}
 
+	@TraceLog
 	@PostMapping("/unread/list")
 	@Operation(summary = "系统消息>未读", description = "系统消息>未读")
 	public HttpResult<IPage<SysMessageVO>> unread(@RequestBody SysMessageQo qo) {
 		return new HttpResult<IPage<SysMessageVO>>().ok(sysMessageApplicationService.getUnReadList(qo));
 	}
 
+	@TraceLog
 	@GetMapping("/count")
 	@Operation(summary = "系统消息>统计", description = "系统消息>统计")
 	public HttpResult<Long> count() {

@@ -29,6 +29,7 @@ import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.oss.vo.SysOssVO;
 import org.laokou.common.oss.vo.UploadVO;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,6 +45,7 @@ public class SysOssApiController {
 
 	private final SysOssApplicationService sysOssApplicationService;
 
+	@TraceLog
 	@PostMapping("/query")
 	@Operation(summary = "系统存储>查询", description = "系统存储>查询")
 	@PreAuthorize("hasAuthority('sys:oss:query')")
@@ -51,12 +53,14 @@ public class SysOssApiController {
 		return new HttpResult<IPage<SysOssVO>>().ok(sysOssApplicationService.queryOssPage(qo));
 	}
 
+	@TraceLog
 	@PostMapping("upload")
 	@Operation(summary = "系统存储>上传", description = "系统存储>上传")
 	public HttpResult<UploadVO> upload(@RequestPart("file") MultipartFile file, @RequestParam("md5") String md5) {
 		return new HttpResult<UploadVO>().ok(sysOssApplicationService.upload(file, md5));
 	}
 
+	@TraceLog
 	@PostMapping("/insert")
 	@Operation(summary = "系统存储>新增", description = "系统存储>新增")
 	@OperateLog(module = "系统存储", name = "存储新增")
@@ -65,6 +69,7 @@ public class SysOssApiController {
 		return new HttpResult<Boolean>().ok(sysOssApplicationService.insertOss(dto));
 	}
 
+	@TraceLog
 	@GetMapping("/use")
 	@Operation(summary = "系统存储>启用", description = "系统存储>启用")
 	@OperateLog(module = "系统存储", name = "存储启用")
@@ -73,6 +78,7 @@ public class SysOssApiController {
 		return new HttpResult<Boolean>().ok(sysOssApplicationService.useOss(id));
 	}
 
+	@TraceLog
 	@GetMapping("/detail")
 	@Operation(summary = "系统存储>查看", description = "系统存储>查看")
 	@DataCache(name = "oss", key = "#id")
@@ -80,6 +86,7 @@ public class SysOssApiController {
 		return new HttpResult<SysOssVO>().ok(sysOssApplicationService.getOssById(id));
 	}
 
+	@TraceLog
 	@PutMapping("/update")
 	@Operation(summary = "系统存储>修改", description = "系统存储>修改")
 	@OperateLog(module = "系统存储", name = "存储修改")
@@ -89,6 +96,7 @@ public class SysOssApiController {
 		return new HttpResult<Boolean>().ok(sysOssApplicationService.updateOss(dto));
 	}
 
+	@TraceLog
 	@DeleteMapping("/delete")
 	@Operation(summary = "系统存储>删除", description = "系统存储>删除")
 	@OperateLog(module = "系统存储", name = "存储删除")

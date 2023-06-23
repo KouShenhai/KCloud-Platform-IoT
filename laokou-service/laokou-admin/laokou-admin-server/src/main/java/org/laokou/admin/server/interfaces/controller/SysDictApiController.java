@@ -28,6 +28,7 @@ import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,18 +48,21 @@ public class SysDictApiController {
 	private final SysDictApplicationService sysDictApplicationService;
 
 	@PostMapping(value = "/query")
+	@TraceLog
 	@Operation(summary = "系统字典>查询", description = "系统字典>查询")
 	@PreAuthorize("hasAuthority('sys:dict:query')")
 	public HttpResult<IPage<SysDictVO>> query(@RequestBody SysDictQo qo) {
 		return new HttpResult<IPage<SysDictVO>>().ok(sysDictApplicationService.queryDictPage(qo));
 	}
 
+	@TraceLog
 	@GetMapping("/option/list")
 	@Operation(summary = "系统字典>下拉框列表", description = "系统字典>下拉框列表")
 	public HttpResult<List<OptionVO>> optionList(@RequestParam("type") String type) {
 		return new HttpResult<List<OptionVO>>().ok(sysDictApplicationService.getOptionList(type));
 	}
 
+	@TraceLog
 	@GetMapping(value = "/detail")
 	@Operation(summary = "系统字典>详情", description = "系统字典>详情")
 	@DataCache(name = "dict", key = "#id")
@@ -66,6 +70,7 @@ public class SysDictApiController {
 		return new HttpResult<SysDictVO>().ok(sysDictApplicationService.getDictById(id));
 	}
 
+	@TraceLog
 	@PostMapping(value = "/insert")
 	@Operation(summary = "系统字典>新增", description = "系统字典>新增")
 	@OperateLog(module = "系统字典", name = "字典新增")
@@ -74,6 +79,7 @@ public class SysDictApiController {
 		return new HttpResult<Boolean>().ok(sysDictApplicationService.insertDict(dto));
 	}
 
+	@TraceLog
 	@PutMapping(value = "/update")
 	@Operation(summary = "系统字典>修改", description = "系统字典>修改")
 	@OperateLog(module = "系统字典", name = "字典修改")
@@ -83,6 +89,7 @@ public class SysDictApiController {
 		return new HttpResult<Boolean>().ok(sysDictApplicationService.updateDict(dto));
 	}
 
+	@TraceLog
 	@DeleteMapping(value = "/delete")
 	@Operation(summary = "系统字典>删除", description = "系统字典>删除")
 	@OperateLog(module = "系统字典", name = "字典删除")

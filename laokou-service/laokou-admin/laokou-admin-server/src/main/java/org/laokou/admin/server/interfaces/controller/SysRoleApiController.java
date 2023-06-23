@@ -27,6 +27,7 @@ import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -44,6 +45,7 @@ public class SysRoleApiController {
 
 	private final SysRoleApplicationService sysRoleApplicationService;
 
+	@TraceLog
 	@PostMapping("/query")
 	@Operation(summary = "系统角色>查询", description = "系统角色>查询")
 	@PreAuthorize("hasAuthority('sys:role:query')")
@@ -51,12 +53,14 @@ public class SysRoleApiController {
 		return new HttpResult<IPage<SysRoleVO>>().ok(sysRoleApplicationService.queryRolePage(qo));
 	}
 
+	@TraceLog
 	@PostMapping("/list")
 	@Operation(summary = "系统角色>列表", description = "系统角色>列表")
 	public HttpResult<List<SysRoleVO>> list(@RequestBody SysRoleQo qo) {
 		return new HttpResult<List<SysRoleVO>>().ok(sysRoleApplicationService.getRoleList(qo));
 	}
 
+	@TraceLog
 	@GetMapping("/detail")
 	@Operation(summary = "系统角色>详情", description = "系统角色>详情")
 	@DataCache(name = "role", key = "#id")
@@ -64,6 +68,7 @@ public class SysRoleApiController {
 		return new HttpResult<SysRoleVO>().ok(sysRoleApplicationService.getRoleById(id));
 	}
 
+	@TraceLog
 	@PostMapping("/insert")
 	@Operation(summary = "系统角色>新增", description = "系统角色>新增")
 	@OperateLog(module = "系统角色", name = "角色新增")
@@ -72,6 +77,7 @@ public class SysRoleApiController {
 		return new HttpResult<Boolean>().ok(sysRoleApplicationService.insertRole(dto));
 	}
 
+	@TraceLog
 	@PutMapping("/update")
 	@Operation(summary = "系统角色>修改", description = "系统角色>修改")
 	@OperateLog(module = "系统角色", name = "角色修改")
@@ -81,6 +87,7 @@ public class SysRoleApiController {
 		return new HttpResult<Boolean>().ok(sysRoleApplicationService.updateRole(dto));
 	}
 
+	@TraceLog
 	@DeleteMapping("/delete")
 	@Operation(summary = "系统角色>删除", description = "系统角色>删除")
 	@OperateLog(module = "系统角色", name = "角色删除")
