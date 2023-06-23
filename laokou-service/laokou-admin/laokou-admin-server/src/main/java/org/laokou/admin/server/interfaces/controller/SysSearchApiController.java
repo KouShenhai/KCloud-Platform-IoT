@@ -22,6 +22,7 @@ import org.laokou.admin.server.application.service.SysSearchApplicationService;
 import org.laokou.common.elasticsearch.qo.SearchQo;
 import org.laokou.common.elasticsearch.vo.SearchVO;
 import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,6 +43,7 @@ public class SysSearchApiController {
 
 	private final SysSearchApplicationService sysSearchApplicationService;
 
+	@TraceLog
 	@PostMapping("/resource")
 	@Operation(summary = "系统搜索>资源", description = "系统搜索>资源")
 	@PreAuthorize("hasAuthority('sys:search:resource:query')")

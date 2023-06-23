@@ -27,6 +27,7 @@ import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.tenant.dto.SysTenantDTO;
 import org.laokou.common.tenant.qo.SysTenantQo;
 import org.laokou.common.tenant.vo.SysTenantVO;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,7 @@ public class SysTenantApiController {
 
 	private final SysTenantApplicationService sysTenantApplicationService;
 
+	@TraceLog
 	@PostMapping("/query")
 	@Operation(summary = "系统租户>查询", description = "系统租户>查询")
 	@PreAuthorize("hasAuthority('sys:tenant:query')")
@@ -48,6 +50,7 @@ public class SysTenantApiController {
 		return new HttpResult<IPage<SysTenantVO>>().ok(sysTenantApplicationService.queryTenantPage(qo));
 	}
 
+	@TraceLog
 	@PostMapping("/insert")
 	@Operation(summary = "系统租户>新增", description = "系统租户>新增")
 	@OperateLog(module = "系统租户", name = "租户新增")
@@ -56,6 +59,7 @@ public class SysTenantApiController {
 		return new HttpResult<Boolean>().ok(sysTenantApplicationService.insertTenant(dto));
 	}
 
+	@TraceLog
 	@GetMapping("/detail")
 	@Operation(summary = "系统租户>查看", description = "系统租户>查看")
 	@DataCache(name = "tenant", key = "#id")
@@ -63,6 +67,7 @@ public class SysTenantApiController {
 		return new HttpResult<SysTenantVO>().ok(sysTenantApplicationService.getTenantById(id));
 	}
 
+	@TraceLog
 	@PutMapping("/update")
 	@Operation(summary = "系统租户>修改", description = "系统租户>修改")
 	@OperateLog(module = "系统租户", name = "租户修改")
@@ -72,6 +77,7 @@ public class SysTenantApiController {
 		return new HttpResult<Boolean>().ok(sysTenantApplicationService.updateTenant(dto));
 	}
 
+	@TraceLog
 	@DeleteMapping("/delete")
 	@Operation(summary = "系统租户>删除", description = "系统租户>删除")
 	@OperateLog(module = "系统租户", name = "租户删除")

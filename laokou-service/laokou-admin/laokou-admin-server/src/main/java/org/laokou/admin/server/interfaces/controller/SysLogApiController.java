@@ -27,6 +27,7 @@ import org.laokou.common.log.qo.SysOperateLogQo;
 import org.laokou.common.log.vo.SysLoginLogVO;
 import org.laokou.common.log.vo.SysOperateLogVO;
 import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class SysLogApiController {
 
 	private final SysLogApplicationService sysLogApplicationService;
 
+	@TraceLog
 	@PostMapping(value = "/operate/query")
 	@Operation(summary = "系统日志>操作日志>查询", description = "系统日志>操作日志>查询")
 	@PreAuthorize("hasAuthority('sys:log:operate:query')")
@@ -51,6 +53,7 @@ public class SysLogApiController {
 		return new HttpResult<IPage<SysOperateLogVO>>().ok(sysLogApplicationService.queryOperateLogPage(qo));
 	}
 
+	@TraceLog
 	@PostMapping(value = "/operate/export")
 	@Operation(summary = "系统日志>操作日志>导出", description = "系统日志>操作日志>导出")
 	@OperateLog(module = "操作日志", name = "日志导出")
@@ -59,6 +62,7 @@ public class SysLogApiController {
 		sysLogApplicationService.exportOperateLog(qo, response);
 	}
 
+	@TraceLog
 	@PostMapping(value = "/login/query")
 	@Operation(summary = "系统日志>登录日志>查询", description = "系统日志>登录日志>查询")
 	@PreAuthorize("hasAuthority('sys:log:login:query')")
@@ -66,6 +70,7 @@ public class SysLogApiController {
 		return new HttpResult<IPage<SysLoginLogVO>>().ok(sysLogApplicationService.queryLoginLogPage(qo));
 	}
 
+	@TraceLog
 	@PostMapping(value = "/login/export")
 	@Operation(summary = "系统日志>登录日志>导出", description = "系统日志>登录日志>导出")
 	@OperateLog(module = "登录日志", name = "日志导出")

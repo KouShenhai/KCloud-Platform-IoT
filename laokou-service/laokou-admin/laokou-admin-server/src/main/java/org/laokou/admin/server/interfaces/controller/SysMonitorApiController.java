@@ -22,6 +22,7 @@ import org.laokou.admin.server.application.service.SysMonitorApplicationService;
 import org.laokou.admin.client.vo.CacheVO;
 import org.laokou.admin.server.infrastructure.server.Server;
 import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,12 +38,14 @@ public class SysMonitorApiController {
 
 	private final SysMonitorApplicationService sysMonitorApplicationService;
 
+	@TraceLog
 	@GetMapping("/cache")
 	@Operation(summary = "系统监控>缓存", description = "系统监控>缓存")
 	public HttpResult<CacheVO> redis() {
 		return new HttpResult<CacheVO>().ok(sysMonitorApplicationService.getCacheInfo());
 	}
 
+	@TraceLog
 	@GetMapping("/server")
 	@Operation(summary = "系统监控>主机", description = "系统监控>主机")
 	public HttpResult<Server> server() throws Exception {

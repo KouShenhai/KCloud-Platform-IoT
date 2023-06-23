@@ -44,7 +44,7 @@ public class LockAspect {
 	private final LockFactory factory;
 
 	@Around(value = "@annotation(org.laokou.common.lock.annotation.Lock4j)")
-	public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
 		// 获取注解
 		Signature signature = joinPoint.getSignature();
 		MethodSignature methodSignature = (MethodSignature) signature;

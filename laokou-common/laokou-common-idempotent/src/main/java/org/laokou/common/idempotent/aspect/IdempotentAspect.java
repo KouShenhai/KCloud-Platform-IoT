@@ -61,7 +61,7 @@ public class IdempotentAspect {
 	}
 
 	@Before("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
-	public void before() {
+	public void doBefore() {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String requestId = request.getHeader(Constant.REQUEST_ID);
 		if (StringUtil.isEmpty(requestId)) {

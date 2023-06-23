@@ -44,7 +44,7 @@ public class CacheAspect {
 	private final Cache<String, Object> caffeineCache;
 
 	@Around("@annotation(org.laokou.common.data.cache.annotation.DataCache)")
-	public Object around(ProceedingJoinPoint point) throws Throwable {
+	public Object doAround(ProceedingJoinPoint point) throws Throwable {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
 		String[] parameterNames = signature.getParameterNames();

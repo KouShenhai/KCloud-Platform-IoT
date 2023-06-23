@@ -28,6 +28,7 @@ import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.tenant.dto.SysPackageDTO;
 import org.laokou.common.tenant.qo.SysPackageQo;
 import org.laokou.common.tenant.vo.SysPackageVO;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -43,6 +44,7 @@ public class SysPackageApiController {
 
 	private final SysPackageApplicationService sysPackageApplicationService;
 
+	@TraceLog
 	@PostMapping("/query")
 	@Operation(summary = "系统套餐>查询", description = "系统套餐>查询")
 	@PreAuthorize("hasAuthority('sys:package:query')")
@@ -50,6 +52,7 @@ public class SysPackageApiController {
 		return new HttpResult<IPage<SysPackageVO>>().ok(sysPackageApplicationService.queryPackagePage(qo));
 	}
 
+	@TraceLog
 	@PostMapping("/insert")
 	@Operation(summary = "系统套餐>新增", description = "系统套餐>新增")
 	@OperateLog(module = "系统套餐", name = "套餐新增")
@@ -58,6 +61,7 @@ public class SysPackageApiController {
 		return new HttpResult<Boolean>().ok(sysPackageApplicationService.insertPackage(dto));
 	}
 
+	@TraceLog
 	@GetMapping("/detail")
 	@Operation(summary = "系统套餐>查看", description = "系统套餐>查看")
 	@DataCache(name = "package", key = "#id")
@@ -65,6 +69,7 @@ public class SysPackageApiController {
 		return new HttpResult<SysPackageVO>().ok(sysPackageApplicationService.getPackageById(id));
 	}
 
+	@TraceLog
 	@PutMapping("/update")
 	@Operation(summary = "系统套餐>修改", description = "系统套餐>修改")
 	@OperateLog(module = "系统套餐", name = "套餐修改")
@@ -74,6 +79,7 @@ public class SysPackageApiController {
 		return new HttpResult<Boolean>().ok(sysPackageApplicationService.updatePackage(dto));
 	}
 
+	@TraceLog
 	@DeleteMapping("/delete")
 	@Operation(summary = "系统套餐>删除", description = "系统套餐>删除")
 	@OperateLog(module = "系统套餐", name = "套餐删除")
@@ -83,6 +89,7 @@ public class SysPackageApiController {
 		return new HttpResult<Boolean>().ok(sysPackageApplicationService.deletePackage(id));
 	}
 
+	@TraceLog
 	@GetMapping("/option/list")
 	@Operation(summary = "系统套餐>下拉框列表", description = "系统套餐>下拉框列表")
 	public HttpResult<List<OptionVO>> optionList() {

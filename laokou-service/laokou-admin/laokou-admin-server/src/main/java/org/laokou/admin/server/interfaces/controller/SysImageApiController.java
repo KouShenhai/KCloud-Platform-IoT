@@ -31,6 +31,7 @@ import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.oss.vo.UploadVO;
 import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,7 @@ public class SysImageApiController {
 
 	private final WorkflowTaskApplicationService workflowTaskApplicationService;
 
+	@TraceLog
 	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Operation(summary = "图片管理>上传", description = "图片管理>上传")
 	public HttpResult<UploadVO> upload(@RequestPart("file") MultipartFile file, @RequestParam("md5") String md5)
@@ -58,6 +60,7 @@ public class SysImageApiController {
 		return new HttpResult<UploadVO>().ok(sysResourceApplicationService.uploadResource("image", file, md5));
 	}
 
+	@TraceLog
 	@PostMapping("/syncIndex")
 	@Operation(summary = "图片管理>同步索引", description = "图片管理>同步索引")
 	@OperateLog(module = "图片管理", name = "同步索引")
@@ -68,6 +71,7 @@ public class SysImageApiController {
 				.ok(sysResourceApplicationService.syncResource("image", RedisKeyUtil.getSyncIndexKey("image")));
 	}
 
+	@TraceLog
 	@PostMapping("/query")
 	@Operation(summary = "图片管理>查询", description = "图片管理>查询")
 	@PreAuthorize("hasAuthority('sys:resource:image:query')")
@@ -75,6 +79,7 @@ public class SysImageApiController {
 		return new HttpResult<IPage<SysResourceVO>>().ok(sysResourceApplicationService.queryResourcePage(qo));
 	}
 
+	@TraceLog
 	@GetMapping(value = "/detail")
 	@Operation(summary = "图片管理>详情", description = "图片管理>详情")
 	@PreAuthorize("hasAuthority('sys:resource:image:detail')")
@@ -82,6 +87,7 @@ public class SysImageApiController {
 		return new HttpResult<SysResourceVO>().ok(sysResourceApplicationService.getResourceById(id));
 	}
 
+	@TraceLog
 	@GetMapping(value = "/download")
 	@Operation(summary = "图片管理>下载", description = "图片管理>下载")
 	@PreAuthorize("hasAuthority('sys:resource:image:download')")
@@ -89,6 +95,7 @@ public class SysImageApiController {
 		sysResourceApplicationService.downLoadResource(id, response);
 	}
 
+	@TraceLog
 	@PostMapping(value = "/insert")
 	@Operation(summary = "图片管理>新增", description = "图片管理>新增")
 	@OperateLog(module = "图片管理", name = "图片新增")
@@ -97,6 +104,7 @@ public class SysImageApiController {
 		return new HttpResult<Boolean>().ok(sysResourceApplicationService.insertResource(dto));
 	}
 
+	@TraceLog
 	@PutMapping(value = "/update")
 	@Operation(summary = "图片管理>修改", description = "图片管理>修改")
 	@OperateLog(module = "图片管理", name = "图片修改")
@@ -105,6 +113,7 @@ public class SysImageApiController {
 		return new HttpResult<Boolean>().ok(sysResourceApplicationService.updateResource(dto));
 	}
 
+	@TraceLog
 	@DeleteMapping(value = "/delete")
 	@Operation(summary = "图片管理>删除", description = "图片管理>删除")
 	@OperateLog(module = "图片管理", name = "图片删除")
@@ -113,6 +122,7 @@ public class SysImageApiController {
 		return new HttpResult<Boolean>().ok(sysResourceApplicationService.deleteResource(id));
 	}
 
+	@TraceLog
 	@GetMapping(value = "/diagram")
 	@Operation(summary = "图片管理>流程图", description = "图片管理>流程图")
 	@PreAuthorize("hasAuthority('sys:resource:image:diagram')")
@@ -120,6 +130,7 @@ public class SysImageApiController {
 		return new HttpResult<String>().ok(workflowTaskApplicationService.diagramProcess(processInstanceId));
 	}
 
+	@TraceLog
 	@GetMapping("/auditLog")
 	@Operation(summary = "图片管理>审批日志", description = "图片管理>审批日志")
 	@PreAuthorize("hasAuthority('sys:resource:image:auditLog')")

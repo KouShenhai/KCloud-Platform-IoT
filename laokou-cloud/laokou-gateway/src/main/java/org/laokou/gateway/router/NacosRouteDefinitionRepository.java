@@ -66,7 +66,6 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		this.nacosConfigManager = nacosConfigManager;
 		this.nacosConfigProperties = nacosConfigProperties;
 		this.caffeineCache = Caffeine.newBuilder().initialCapacity(30).build();
-		;
 	}
 
 	@PostConstruct
