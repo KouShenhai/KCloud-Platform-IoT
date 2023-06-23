@@ -21,21 +21,6 @@ package org.laokou.gateway.constant;
 public interface GatewayConstant {
 
 	/**
-	 * 请求链-用户ID
-	 */
-	String REQUEST_USER_ID = "User-Id";
-
-	/**
-	 * 请求链-用户名
-	 */
-	String REQUEST_USER_NAME = "User-Name";
-
-	/**
-	 * 请求链-租户ID
-	 */
-	String REQUEST_TENANT_ID = "Tenant-Id";
-
-	/**
 	 * 密码模式-请求地址
 	 */
 	String OAUTH2_AUTH_URI = "/auth/oauth2/token";
@@ -59,15 +44,5 @@ public interface GatewayConstant {
 	 * 密码模式-密码
 	 */
 	String PASSWORD = "password";
-
-	/**
-	 * xss 请求头
-	 */
-	String XSS_TICKET_HEADER = "xss-ticket";
-
-	/**
-	 * xss 白名单
-	 */
-	String XSS_TICKET_VALUE = "xss-white";
 
 }

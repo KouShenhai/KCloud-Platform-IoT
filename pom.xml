@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-Alibaba</artifactId>
-    <version>3.1.0</version>
+    <version>3.1.1</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-common</module>
@@ -31,14 +31,14 @@
     <description>一款企业级微服务架构的云服务多租户SaaS平台</description>
     <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
     <properties>
-        <laokou.version>3.1.0</laokou.version>
+        <laokou.version>3.1.1</laokou.version>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.1.0</spring-boot.version>
+        <spring-boot.version>3.1.1</spring-boot.version>
         <!--spring-cloud版本-->
         <spring-cloud.version>2022.0.3</spring-cloud.version>
         <!--spring-framework版本-->
