@@ -15,11 +15,9 @@
  */
 package org.laokou.gateway.utils;
 
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.core.HttpResult;
-import org.laokou.gateway.constant.GatewayConstant;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +27,7 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
@@ -75,60 +74,14 @@ public class ResponseUtil {
 		return new HttpResult<>().error(code);
 	}
 
-	/**
-	 * 获取token
-	 * @param request 请求对象
-	 */
-	public static String getToken(ServerHttpRequest request) {
-		// 从header中获取token
-		String token = request.getHeaders().getFirst(Constant.AUTHORIZATION_HEAD);
-		// 如果header中不存在Authorization，则从参数中获取Authorization
-		if (StringUtil.isEmpty(token)) {
-			token = request.getQueryParams().getFirst(Constant.AUTHORIZATION_HEAD);
+	public static String getParamValue(ServerHttpRequest request,String paramName) {
+		// 从header中获取
+		String paramValue = request.getHeaders().getFirst(paramName);
+		// 从参数中获取
+		if (StringUtil.isEmpty(paramValue)) {
+			paramValue = request.getQueryParams().getFirst(paramName);
 		}
-		return StringUtil.isEmpty(token) ? "" : token.trim();
-	}
-
-	/**
-	 * 获取userId
-	 * @param request 请求对象
-	 */
-	public static String getUserId(ServerHttpRequest request) {
-		// 从header中获取userId
-		String userId = request.getHeaders().getFirst(GatewayConstant.REQUEST_USER_ID);
-		// 如果header中不存在userId，则从参数中获取userId
-		if (StringUtil.isEmpty(userId)) {
-			userId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USER_ID);
-		}
-		return StringUtil.isEmpty(userId) ? "" : userId.trim();
-	}
-
-	/**
-	 * 获取username
-	 * @param request 请求对象
-	 */
-	public static String getUsername(ServerHttpRequest request) {
-		// 从header中获取username
-		String username = request.getHeaders().getFirst(GatewayConstant.REQUEST_USER_NAME);
-		// 如果header中不存在username，则从参数中获取username
-		if (StringUtil.isEmpty(username)) {
-			username = request.getQueryParams().getFirst(GatewayConstant.REQUEST_USER_NAME);
-		}
-		return StringUtil.isEmpty(username) ? "" : username.trim();
-	}
-
-	/**
-	 * 获取tenantId
-	 * @param request 请求对象
-	 */
-	public static String getTenantId(ServerHttpRequest request) {
-		// 从header中获取tenantId
-		String tenantId = request.getHeaders().getFirst(GatewayConstant.REQUEST_TENANT_ID);
-		// 如果header中不存在tenantId，则从参数中获取tenantId
-		if (StringUtil.isEmpty(tenantId)) {
-			tenantId = request.getQueryParams().getFirst(GatewayConstant.REQUEST_TENANT_ID);
-		}
-		return StringUtil.isEmpty(tenantId) ? "" : tenantId.trim();
+		return StringUtil.isEmpty(paramValue) ? "" : paramValue.trim();
 	}
 
 	/**

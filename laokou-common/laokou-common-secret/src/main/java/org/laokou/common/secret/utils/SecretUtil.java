@@ -17,12 +17,14 @@ package org.laokou.common.secret.utils;
 
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;
 
 /**
  * @author laokou
  */
+@Component
 public class SecretUtil {
 
 	public static final String APP_KEY = "laokou2023";
@@ -31,7 +33,7 @@ public class SecretUtil {
 
 	private static final long TIMEOUT_MILLIS = 30 * 1000L;
 
-	public static void verification(String appKey, String appSecret, String sign, String nonce, long timestamp) {
+	public void verification(String appKey, String appSecret, String sign, String nonce, long timestamp) {
 		if (StringUtil.isEmpty(appKey)) {
 			throw new CustomException("appKey不为空");
 		}
@@ -63,8 +65,8 @@ public class SecretUtil {
 	/**
 	 * MD5(appKey+appSecret+timestamp+userId+username+tenantId)
 	 */
-	private static String sign(long timestamp, long userId, String username, long tenantId) {
-		String str = APP_KEY + APP_SECRET + timestamp + userId + username + tenantId;
+	private String sign(long timestamp) {
+		String str = APP_KEY + APP_SECRET + timestamp;
 		return DigestUtils.md5DigestAsHex(str.getBytes(StandardCharsets.UTF_8));
 	}
 

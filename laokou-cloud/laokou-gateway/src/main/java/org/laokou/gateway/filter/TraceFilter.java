@@ -30,6 +30,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import static org.laokou.common.core.constant.Constant.*;
+
 /**
  * 请求链路
  *
@@ -43,21 +45,20 @@ public class TraceFilter implements GlobalFilter, Ordered {
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerHttpRequest request = exchange.getRequest();
-		String userId = ResponseUtil.getUserId(request);
-		String tenantId = ResponseUtil.getTenantId(request);
-		String username = ResponseUtil.getUsername(request);
+		String userId = ResponseUtil.getParamValue(request,USER_ID);
+		String tenantId = ResponseUtil.getParamValue(request,TENANT_ID);
+		String username = ResponseUtil.getParamValue(request,USER_NAME);
 		String traceId = userId + IdGenerator.defaultSnowflakeId();
-		MDC.put(Constant.TRACE_ID, traceId);
-		MDC.put(Constant.USER_ID, userId);
-		MDC.put(Constant.TENANT_ID, tenantId);
-		MDC.put(Constant.USER_NAME, username);
+		MDC.put(TRACE_ID, traceId);
+		MDC.put(USER_ID, userId);
+		MDC.put(TENANT_ID, tenantId);
+		MDC.put(USER_NAME, username);
 		// 获取uri
 		String requestUri = request.getPath().pathWithinApplication().value();
 		log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}", requestUri, userId, username, tenantId, traceId);
 		// 清除
 		MDC.clear();
-		return chain
-				.filter(exchange.mutate().request(request.mutate().header(Constant.TRACE_ID, traceId).build()).build());
+		return chain.filter(exchange.mutate().request(request.mutate().header(Constant.TRACE_ID, traceId).build()).build());
 	}
 
 	@Override

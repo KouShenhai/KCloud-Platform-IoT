@@ -17,13 +17,12 @@ package org.laokou.gateway.filter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.StatusCode;
-import org.laokou.common.jasypt.utils.RsaUtil;
-import org.laokou.gateway.properties.CustomProperties;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.jasypt.utils.RsaUtil;
 import org.laokou.gateway.constant.GatewayConstant;
+import org.laokou.gateway.properties.CustomProperties;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -46,8 +45,11 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 import java.util.Map;
 import java.util.function.Function;
+
+import static org.laokou.common.core.constant.Constant.AUTHORIZATION_HEAD;
 import static org.laokou.gateway.constant.GatewayConstant.OAUTH2_AUTH_URI;
 
 /**
@@ -79,13 +81,12 @@ public class AuthFilter implements GlobalFilter, Ordered {
 			return oauth2Decode(exchange, chain);
 		}
 		// 获取token
-		String token = ResponseUtil.getToken(request);
+		String token = ResponseUtil.getParamValue(request,AUTHORIZATION_HEAD);
 		if (StringUtil.isEmpty(token)) {
 			return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.UNAUTHORIZED));
 		}
 		// 增加令牌
-		return chain.filter(
-				exchange.mutate().request(request.mutate().header(Constant.AUTHORIZATION_HEAD, token).build()).build());
+		return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION_HEAD, token).build()).build());
 	}
 
 	@Override
@@ -101,9 +102,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
 	 */
 	private Mono<Void> oauth2Decode(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());
-		Mono modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt());
-		BodyInserter<Mono, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody,
-				String.class);
+		Mono<String> modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt());
+		BodyInserter<Mono<String>, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody, String.class);
 		HttpHeaders headers = new HttpHeaders();
 		headers.putAll(exchange.getRequest().getHeaders());
 		headers.remove(HttpHeaders.CONTENT_LENGTH);
@@ -115,10 +115,10 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		}));
 	}
 
-	private Function decrypt() {
+	private Function<String,Mono<String>> decrypt() {
 		return s -> {
 			// 获取请求密码并解密
-			Map<String, String> inParamsMap = MapUtil.parseParamMap((String) s);
+			Map<String, String> inParamsMap = MapUtil.parseParamMap(s);
 			if (inParamsMap.containsKey(GatewayConstant.PASSWORD)
 					&& inParamsMap.containsKey(GatewayConstant.USERNAME)) {
 				log.info("密码模式认证...");
