@@ -19,9 +19,10 @@ package org.laokou.common.trace.interceptor;
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.laokou.common.core.constant.Constant;
 import org.slf4j.MDC;
 import org.springframework.web.servlet.HandlerInterceptor;
+
+import static org.laokou.common.core.constant.Constant.*;
 
 /**
  * @author laokou
@@ -31,14 +32,14 @@ public class TraceInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		String traceId = request.getHeader(Constant.TRACE_ID);
-		String userId = request.getHeader(Constant.USER_ID);
-		String username = request.getHeader(Constant.USER_NAME);
-		String tenantId = request.getHeader(Constant.TENANT_ID);
-		MDC.put(Constant.TRACE_ID, traceId);
-		MDC.put(Constant.USER_ID, userId);
-		MDC.put(Constant.TENANT_ID, tenantId);
-		MDC.put(Constant.USER_NAME, username);
+		String traceId = request.getHeader(TRACE_ID);
+		String userId = request.getHeader(USER_ID);
+		String username = request.getHeader(USER_NAME);
+		String tenantId = request.getHeader(TENANT_ID);
+		MDC.put(TRACE_ID, traceId);
+		MDC.put(USER_ID, userId);
+		MDC.put(TENANT_ID, tenantId);
+		MDC.put(USER_NAME, username);
 		return true;
 	}
 

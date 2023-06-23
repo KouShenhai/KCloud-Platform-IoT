@@ -81,12 +81,13 @@ public class AuthFilter implements GlobalFilter, Ordered {
 			return oauth2Decode(exchange, chain);
 		}
 		// 获取token
-		String token = ResponseUtil.getParamValue(request,AUTHORIZATION_HEAD);
+		String token = ResponseUtil.getParamValue(request, AUTHORIZATION_HEAD);
 		if (StringUtil.isEmpty(token)) {
 			return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.UNAUTHORIZED));
 		}
 		// 增加令牌
-		return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION_HEAD, token).build()).build());
+		return chain
+				.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION_HEAD, token).build()).build());
 	}
 
 	@Override
@@ -103,7 +104,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
 	private Mono<Void> oauth2Decode(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());
 		Mono<String> modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt());
-		BodyInserter<Mono<String>, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody, String.class);
+		BodyInserter<Mono<String>, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody,
+				String.class);
 		HttpHeaders headers = new HttpHeaders();
 		headers.putAll(exchange.getRequest().getHeaders());
 		headers.remove(HttpHeaders.CONTENT_LENGTH);
@@ -115,7 +117,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		}));
 	}
 
-	private Function<String,Mono<String>> decrypt() {
+	private Function<String, Mono<String>> decrypt() {
 		return s -> {
 			// 获取请求密码并解密
 			Map<String, String> inParamsMap = MapUtil.parseParamMap(s);
