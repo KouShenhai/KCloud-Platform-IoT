@@ -50,7 +50,7 @@ public class BatchUtil {
 		// 数据分组
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
-		partition.forEach(item -> CompletableFuture.runAsync(() -> transactionalUtil.execute(callback -> {
+		partition.forEach(item -> CompletableFuture.runAsync(() -> transactionalUtil.executeWithoutResult(callback -> {
 			try {
 				service.insertBatch(item);
 			}
@@ -64,7 +64,6 @@ public class BatchUtil {
 					callback.setRollbackOnly();
 				}
 			}
-			return true;
 		}), taskExecutor));
 	}
 
