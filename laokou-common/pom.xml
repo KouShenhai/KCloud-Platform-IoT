@@ -20,11 +20,12 @@
     <parent>
         <groupId>org.laokou</groupId>
         <artifactId>KCloud-Platform-Alibaba</artifactId>
-        <version>3.1.1</version>
+        <version>${laokou.version}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-common</artifactId>
-    <version>3.1.1</version>
+    <version>${laokou.version}</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -73,8 +74,6 @@
         <module>laokou-common-xxl-job</module>
         <module>laokou-common-shardingsphere</module>
         <module>laokou-common-p6spy</module>
-        <module>laokou-common-flyway</module>
-        <module>laokou-common-liquibase</module>
         <module>laokou-common-log4j2</module>
         <module>laokou-common-trace</module>
         <module>laokou-common-logback</module>
@@ -85,6 +84,8 @@
 		<module>laokou-common-netty</module>
         <module>laokou-common-idempotent</module>
         <module>laokou-common-lock</module>
+        <module>laokou-common-monitor</module>
+        <module>laokou-common-influxdb</module>
     </modules>
 
 </project>

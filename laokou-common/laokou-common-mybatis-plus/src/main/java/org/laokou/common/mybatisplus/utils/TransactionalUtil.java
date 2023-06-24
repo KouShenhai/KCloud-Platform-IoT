@@ -17,8 +17,11 @@ package org.laokou.common.mybatisplus.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import java.util.function.Consumer;
 
 /**
  * @author laokou
@@ -29,8 +32,12 @@ public class TransactionalUtil {
 
 	private final TransactionTemplate transactionTemplate;
 
-	public <T> T execute(TransactionCallback<T> action) {
-		return transactionTemplate.execute(action);
+	public <T> void execute(TransactionCallback<T> action) {
+		transactionTemplate.execute(action);
+	}
+
+	public void executeWithoutResult(Consumer<TransactionStatus> action) {
+		transactionTemplate.executeWithoutResult(action);
 	}
 
 }

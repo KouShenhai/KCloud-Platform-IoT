@@ -27,10 +27,6 @@ server:
     key-store-type: PKCS12
     # 口令
     key-store-password: laokou
-    # 信任库
-    trust-store-type: ${server.ssl.key-store-type}
-    trust-store-password: ${server.ssl.key-store-password}
-    trust-store: classpath:trust-scg-keystore.p12
 
 # spring
 spring:
@@ -39,6 +35,8 @@ spring:
   profiles:
     # 环境 dev|test|prod
     active: @PROFILE-ACTIVE@
+  # https://spring.io/blog/2023/06/07/securing-spring-boot-applications-with-ssl
+
   datasource:
     dynamic:
       datasource:

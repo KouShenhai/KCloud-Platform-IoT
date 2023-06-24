@@ -21,7 +21,7 @@
 
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common-bom</artifactId>
-    <version>3.1.1</version>
+    <version>${laokou.version}</version>
     <packaging>pom</packaging>
     <properties>
         <laokou.version>3.1.1</laokou.version>
@@ -30,7 +30,7 @@
         <!--lombok版本-->
         <lombok.version>1.18.26</lombok.version>
         <!--mysql版本-->
-        <mysql.version>8.0.31</mysql.version>
+        <mysql.version>8.0.33</mysql.version>
         <!--admin版本-->
         <spring-boot-admin.version>3.0.4</spring-boot-admin.version>
         <!--flowable版本-->
@@ -82,7 +82,7 @@
         <!--jna版本-->
         <jna.version>5.13.0</jna.version>
         <!--hibernate-validator版本-->
-        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+        <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <!--hbase版本-->
         <hbase.version>2.5.3</hbase.version>
         <!--ip2region版本-->
@@ -95,12 +95,6 @@
         <shardingsphere.version>5.3.2</shardingsphere.version>
         <!--p6spy版本-->
         <p6spy.version>3.9.1</p6spy.version>
-        <!--flyway-core版本-->
-        <flyway-core.version>9.16.3</flyway-core.version>
-        <!--flyway-mysql版本-->
-        <flyway-mysql.version>9.16.0</flyway-mysql.version>
-        <!--liquibase-core版本-->
-        <liquibase-core.version>4.21.0</liquibase-core.version>
         <!--log4j版本-->
         <log4j.version>2.20.0</log4j.version>
         <!--logback-kafka-appender版本-->
@@ -110,9 +104,9 @@
         <!--kafka版本-->
         <kafka.version>3.0.4</kafka.version>
         <!--netty版本-->
-        <netty.version>4.1.92.Final</netty.version>
+        <netty.version>4.1.94.Final</netty.version>
         <!--aop版本-->
-        <aop.version>3.0.5</aop.version>
+        <aop.version>3.1.1</aop.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -131,6 +125,11 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-netty</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-monitor</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -187,21 +186,6 @@
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-slf4j-impl</artifactId>
                 <version>${log4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-core</artifactId>
-                <version>${liquibase-core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-core</artifactId>
-                <version>${flyway-core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-mysql</artifactId>
-                <version>${flyway-mysql.version}</version>
             </dependency>
             <dependency>
                 <groupId>p6spy</groupId>
@@ -261,11 +245,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-register</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-liquibase</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -681,11 +660,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-flowable-server</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-flyway</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

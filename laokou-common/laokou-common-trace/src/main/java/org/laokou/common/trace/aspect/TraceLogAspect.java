@@ -35,15 +35,15 @@ import static org.laokou.common.core.constant.Constant.TRACE_ID;
 @Slf4j
 public class TraceLogAspect {
 
-    @SneakyThrows
-    @Around("@annotation(org.laokou.common.trace.annotation.TraceLog)")
-    public Object doAround(ProceedingJoinPoint point) {
-        Object proceed = point.proceed();
-        if (proceed instanceof HttpResult<?> result) {
-            result.setTraceId(MDC.get(TRACE_ID));
-            return result;
-        }
-        return proceed;
-    }
+	@SneakyThrows
+	@Around("@annotation(org.laokou.common.trace.annotation.TraceLog)")
+	public Object doAround(ProceedingJoinPoint point) {
+		Object proceed = point.proceed();
+		if (proceed instanceof HttpResult<?> result) {
+			result.setTraceId(MDC.get(TRACE_ID));
+			return result;
+		}
+		return proceed;
+	}
 
 }

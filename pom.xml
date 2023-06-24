@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-Alibaba</artifactId>
-    <version>3.1.1</version>
+    <version>${laokou.version}</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-common</module>
@@ -42,7 +42,7 @@
         <!--spring-cloud版本-->
         <spring-cloud.version>2022.0.3</spring-cloud.version>
         <!--spring-framework版本-->
-        <spring-framework.version>6.0.9</spring-framework.version>
+        <spring-framework.version>6.0.10</spring-framework.version>
         <!--cloud-alibaba版本-->
         <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
         <!--spring-doc版本-->

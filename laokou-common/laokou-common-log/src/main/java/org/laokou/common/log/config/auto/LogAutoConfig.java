@@ -15,11 +15,9 @@
  */
 package org.laokou.common.log.config.auto;
 
-import org.laokou.common.easy.excel.suppert.ExcelTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 
 /**
  * @author laokou
@@ -27,7 +25,6 @@ import org.springframework.context.annotation.Import;
 @AutoConfiguration
 @ComponentScan("org.laokou.common.log")
 @MapperScan("org.laokou.common.log.mapper")
-@Import(ExcelTemplate.class)
 public class LogAutoConfig {
 
 }

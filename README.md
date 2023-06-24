@@ -75,7 +75,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 | Flowable                    | 7.0.0.M1       |
 | ShardingSphere              | 5.3.2          |
 | OpenResty                   | 1.21.4.1       |
-| Netty                       | 4.1.92.Final   |
+| Netty                       | 4.1.94.Final   |
 | HBase                       | 2.5.3          |
 
 #### 🍺 相关技术
@@ -87,6 +87,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - 服务熔断&降级&限流：Sentinel
 - 分库分表&读写分离：ShardingSphere
 - 分布式事务：Seata & RocketMQ
+- 消息队列：RabbitMQ & RocketMQ
 - 分布式数据库：HBase
 - 服务监控：Spring Boot Admin & Prometheus
 - 链路跟踪：SkyWalking
@@ -275,6 +276,7 @@ GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KClou
 [若依社区](https://www.ruoyi.vip)  
 [苞米豆社区](https://baomidou.com/)  
 [livk-cloud社区](https://gitter.im/livk-cloud/community)  
+[laokouyun社区](https://github.com/laokouyun)  
 
 ### 🐼 鸣谢个人
 <a href="https://github.com/KouShenhai" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/KouShenhai/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
