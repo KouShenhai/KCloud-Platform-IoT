@@ -275,6 +275,7 @@ GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KClou
 [若依社区](https://www.ruoyi.vip)  
 [苞米豆社区](https://baomidou.com/)  
 [livk-cloud社区](https://gitter.im/livk-cloud/community)  
+[laokouyun社区](https://github.com/laokouyun)  
 
 ### 🐼 鸣谢个人
 <a href="https://github.com/KouShenhai" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/KouShenhai/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
