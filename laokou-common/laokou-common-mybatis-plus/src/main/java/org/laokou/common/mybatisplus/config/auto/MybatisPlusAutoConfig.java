@@ -20,7 +20,6 @@ import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerIntercep
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import org.laokou.common.mybatisplus.config.BaseDetaObjectHander;
 import org.laokou.common.mybatisplus.config.DataFilterInterceptor;
 import org.laokou.common.mybatisplus.config.DynamicTableNameHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -28,7 +27,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.TransactionOperations;
@@ -43,7 +41,6 @@ import javax.sql.DataSource;
  */
 @AutoConfiguration
 @ConditionalOnClass({ DataSource.class })
-@Import(BaseDetaObjectHander.class)
 @ComponentScan("org.laokou.common.mybatisplus")
 public class MybatisPlusAutoConfig {
 

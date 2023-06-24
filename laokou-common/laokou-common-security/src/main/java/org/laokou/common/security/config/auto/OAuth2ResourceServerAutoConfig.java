@@ -27,7 +27,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -51,8 +50,6 @@ import java.util.Set;
 @Configuration
 @EnableMethodSecurity
 @AutoConfigureAfter({ OAuth2AuthorizationAutoConfig.class })
-@Import(value = { CustomOpaqueTokenIntrospector.class, ForbiddenExceptionHandler.class,
-		OAuth2ResourceServerProperties.class, InvalidAuthenticationEntryPoint.class })
 @RefreshScope
 @Data
 @ConfigurationProperties(prefix = "ignore")

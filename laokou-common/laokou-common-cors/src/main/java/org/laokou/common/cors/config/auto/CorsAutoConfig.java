@@ -16,11 +16,9 @@
 package org.laokou.common.cors.config.auto;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.cors.config.HttpMessageConverterConfig;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.cors.CorsConfiguration;
@@ -31,7 +29,6 @@ import org.springframework.web.filter.CorsFilter;
  * @author laokou
  */
 @AutoConfiguration
-@Import(HttpMessageConverterConfig.class)
 @Slf4j
 public class CorsAutoConfig {
 
