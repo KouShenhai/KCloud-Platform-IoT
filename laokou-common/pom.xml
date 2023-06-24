@@ -21,6 +21,7 @@
         <groupId>org.laokou</groupId>
         <artifactId>KCloud-Platform-Alibaba</artifactId>
         <version>${laokou.version}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-common</artifactId>
