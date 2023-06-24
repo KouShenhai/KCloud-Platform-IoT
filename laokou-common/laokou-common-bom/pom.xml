@@ -30,7 +30,7 @@
         <!--lombok版本-->
         <lombok.version>1.18.26</lombok.version>
         <!--mysql版本-->
-        <mysql.version>8.0.31</mysql.version>
+        <mysql.version>8.0.33</mysql.version>
         <!--admin版本-->
         <spring-boot-admin.version>3.0.4</spring-boot-admin.version>
         <!--flowable版本-->
@@ -95,12 +95,6 @@
         <shardingsphere.version>5.3.2</shardingsphere.version>
         <!--p6spy版本-->
         <p6spy.version>3.9.1</p6spy.version>
-        <!--flyway-core版本-->
-        <flyway-core.version>9.16.3</flyway-core.version>
-        <!--flyway-mysql版本-->
-        <flyway-mysql.version>9.16.0</flyway-mysql.version>
-        <!--liquibase-core版本-->
-        <liquibase-core.version>4.21.0</liquibase-core.version>
         <!--log4j版本-->
         <log4j.version>2.20.0</log4j.version>
         <!--logback-kafka-appender版本-->
@@ -112,7 +106,7 @@
         <!--netty版本-->
         <netty.version>4.1.94.Final</netty.version>
         <!--aop版本-->
-        <aop.version>3.0.5</aop.version>
+        <aop.version>3.1.1</aop.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -194,21 +188,6 @@
                 <version>${log4j.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-core</artifactId>
-                <version>${liquibase-core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-core</artifactId>
-                <version>${flyway-core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-mysql</artifactId>
-                <version>${flyway-mysql.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>p6spy</groupId>
                 <artifactId>p6spy</artifactId>
                 <version>${p6spy.version}</version>
@@ -266,11 +245,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-register</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-liquibase</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -686,11 +660,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-flowable-server</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-flyway</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

@@ -32,5 +32,6 @@
         <module>laokou-test</module>
         <module>laokou-logstash</module>
         <module>laokou-api</module>
+        <module>laokou-flyway</module>
     </modules>
 </project>

@@ -23,7 +23,7 @@ import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.mybatisplus.service.BatchService;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -51,30 +51,20 @@ public class BatchUtil {
 		// 数据分组
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
-		List<CompletableFuture<Void>> list = new ArrayList<>(partition.size());
-		partition.forEach(item -> {
-			CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
-				transactionalUtil.execute(callback -> {
-					try {
-						service.insertBatch(item);
-					}
-					catch (Exception e) {
-						// 回滚标识
-						rollback.compareAndSet(false, true);
-						log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", e.getMessage());
-					}
-					finally {
-						if (rollback.get()) {
-							callback.setRollbackOnly();
-						}
-					}
-					return true;
-				});
-			}, taskExecutor);
-			list.add(completableFuture);
-		});
-		// 阻塞主线程
-		CompletableFuture.allOf(list.toArray(new CompletableFuture[0])).join();
+		partition.forEach(item -> CompletableFuture.runAsync(() -> transactionalUtil.execute(callback -> {
+			try {
+				service.insertBatch(item);
+			} catch (Exception e) {
+				// 回滚标识
+				rollback.compareAndSet(false, true);
+				log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", e.getMessage());
+			} finally {
+				if (rollback.get()) {
+					callback.setRollbackOnly();
+				}
+			}
+			return true;
+		}), taskExecutor));
 		if (rollback.get()) {
 			throw new CustomException("批量插入数据异常，数据已回滚");
 		}

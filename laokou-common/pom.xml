@@ -74,8 +74,6 @@
         <module>laokou-common-xxl-job</module>
         <module>laokou-common-shardingsphere</module>
         <module>laokou-common-p6spy</module>
-        <module>laokou-common-flyway</module>
-        <module>laokou-common-liquibase</module>
         <module>laokou-common-log4j2</module>
         <module>laokou-common-trace</module>
         <module>laokou-common-logback</module>
