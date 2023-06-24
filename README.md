@@ -91,7 +91,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一款企业级微服务架构的
 - 分布式数据库：HBase
 - 服务监控：Spring Boot Admin & Prometheus
 - 链路跟踪：SkyWalking
-- 任务调度：Power Job
+- 任务调度：XXL Job
 - 日志分析：EFK
 - 负载均衡：OpenResty
 - 多级缓存：Caffeine & Redis
