@@ -24,7 +24,7 @@
     <version>${laokou.version}</version>
     <packaging>pom</packaging>
     <properties>
-        <laokou.version>${spring-boot.version}</laokou.version>
+        <laokou.version>3.1.1</laokou.version>
         <!--spring-boot版本-->
         <spring-boot.version>3.1.1</spring-boot.version>
         <!--lombok版本-->
