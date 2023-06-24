@@ -24,30 +24,26 @@ import org.flywaydb.core.api.Location;
  */
 public class FlywaySync {
 
-    private static final String URL = "jdbc:mysql://192.168.1.100:3306/%s?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false";
+	private static final String URL = "jdbc:mysql://192.168.1.100:3306/%s?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false";
 
-    private static final String USERNAME = "root";
+	private static final String USERNAME = "root";
 
-    private static final String PASSWORD = "laokou123";
+	private static final String PASSWORD = "laokou123";
 
-    public static void main(String[] args) {
-        // base
-        Flyway flyway = Flyway.configure()
-                .dataSource(String.format(URL,""), USERNAME, PASSWORD)
-                .locations(new Location("test"))
-                .load();
-        flyway.migrate();
-        // sharding1
+	public static void main(String[] args) {
+		// base
+		Flyway flyway = Flyway.configure().dataSource(String.format(URL, ""), USERNAME, PASSWORD)
+				.locations(new Location("test")).load();
+		flyway.migrate();
+		// sharding1
 
+		// sharding2
 
-        // sharding2
+		// tenant
 
+		// nacos
 
-        // tenant
-
-        // nacos
-
-        // seata
-    }
+		// seata
+	}
 
 }

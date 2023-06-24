@@ -19,7 +19,6 @@ import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.mybatisplus.service.BatchService;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -54,20 +53,19 @@ public class BatchUtil {
 		partition.forEach(item -> CompletableFuture.runAsync(() -> transactionalUtil.execute(callback -> {
 			try {
 				service.insertBatch(item);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				// 回滚标识
 				rollback.compareAndSet(false, true);
 				log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", e.getMessage());
-			} finally {
+			}
+			finally {
 				if (rollback.get()) {
 					callback.setRollbackOnly();
 				}
 			}
 			return true;
 		}), taskExecutor));
-		if (rollback.get()) {
-			throw new CustomException("批量插入数据异常，数据已回滚");
-		}
 	}
 
 }
