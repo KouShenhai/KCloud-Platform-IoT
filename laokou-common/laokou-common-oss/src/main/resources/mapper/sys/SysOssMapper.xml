@@ -30,14 +30,14 @@
             bucket_name,
             path_style_access_enabled
         FROM
-            boot_sys_oss
+            BOOT_SYS_OSS
         WHERE
             del_flag = 0
           AND `status` = 1
     </select>
 
     <select id="getVersion" resultType="integer">
-        select version from boot_sys_oss where id = #{id}
+        select VERSION from BOOT_SYS_OSS where id = #{id}
     </select>
     <select id="queryOssPage" resultType="org.laokou.common.oss.vo.SysOssVO">
         SELECT
@@ -51,7 +51,7 @@
         `status`,
         path_style_access_enabled
         FROM
-        boot_sys_oss
+        BOOT_SYS_OSS
         WHERE
         del_flag = 0
         <if test="qo.name != null and qo.name != ''">
@@ -72,7 +72,7 @@
             `status`,
             path_style_access_enabled
         FROM
-            boot_sys_oss
+            BOOT_SYS_OSS
         WHERE id = #{id}
     </select>
 

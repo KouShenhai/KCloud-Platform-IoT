@@ -82,7 +82,7 @@
         <!--jna版本-->
         <jna.version>5.13.0</jna.version>
         <!--hibernate-validator版本-->
-        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+        <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <!--hbase版本-->
         <hbase.version>2.5.3</hbase.version>
         <!--ip2region版本-->
@@ -110,7 +110,7 @@
         <!--kafka版本-->
         <kafka.version>3.0.4</kafka.version>
         <!--netty版本-->
-        <netty.version>4.1.92.Final</netty.version>
+        <netty.version>4.1.94.Final</netty.version>
         <!--aop版本-->
         <aop.version>3.0.5</aop.version>
     </properties>
@@ -131,6 +131,11 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-netty</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-monitor</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

@@ -35,6 +35,18 @@ spring:
   profiles:
     # 环境 dev|test|prod
     active: @PROFILE-ACTIVE@
+  # https://spring.io/blog/2023/06/07/securing-spring-boot-applications-with-ssl
+  ssl:
+    bundle:
+      pem:
+        monitor:
+          key:
+            alias: monitor
+            password: laokou
+          truststore:
+            private-key-password: laokou
+            certificate: "classpath:monitor.crt"
+
   datasource:
     dynamic:
       datasource:

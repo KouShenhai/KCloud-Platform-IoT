@@ -20,6 +20,7 @@ package org.laokou.admin.server;
 
 import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import de.codecentric.boot.admin.client.config.SpringBootAdminClientAutoConfiguration;
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.dynamic.router.utils.RouterUtil;
@@ -43,7 +44,7 @@ import static org.laokou.common.core.constant.Constant.TRUE;
  *
  * @author laokou
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {SpringBootAdminClientAutoConfiguration.class})
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)

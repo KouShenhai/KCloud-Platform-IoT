@@ -19,7 +19,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.server.domain.sys.repository.mapper.SysRoleMenuMapper">
     <insert id="insertBatch" useGeneratedKeys="false">
-      insert into boot_sys_role_menu(role_id,menu_id)
+      insert into BOOT_SYS_ROLE_MENU(ROLE_ID,MENU_ID)
       values
           <foreach collection="list" item="item" separator=",">
                (#{item.roleId},#{item.menuId})

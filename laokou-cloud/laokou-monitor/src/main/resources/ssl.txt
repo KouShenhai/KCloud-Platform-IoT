@@ -14,4 +14,17 @@
  * limitations under the License.
  */
 
-PKCS12转为JKS命令：keytool -importkeystore -srckeystore scg-keystore.p12 -srcstoretype PKCS12 -deststoretype JKS -destkeystore keystore.jks
+生成自签证书:
+
+    openssl genrsa -out monitor.key 4096
+
+    openssl req -new -key monitor.key -out monitor.csr
+
+    openssl req -text -noout -verify -in monitor.csr
+
+    openssl x509 -req -days 3650 -in monitor.csr -signkey monitor.key -out monitor.crt
+
+    openssl x509 -req -extfile v3.ext -days 3650 -in monitor.csr -CA monitor.crt -CAkey monitor.key -CAcreateserial -out monitor.crt
+
+
+    openssl x509 -req   -extfile <(printf "subjectAltName=DNS:localhost")    -days 3650  -in monitor.csr  -CA monitor.crt   -CAkey monitor.key  -CAcreateserial   -out monitor.crt
