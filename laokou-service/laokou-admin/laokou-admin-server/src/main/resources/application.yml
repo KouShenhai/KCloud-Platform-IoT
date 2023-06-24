@@ -27,6 +27,7 @@ server:
     key-store-type: PKCS12
     # 口令
     key-store-password: laokou
+    bundle: monitor
 
 # spring
 spring:
