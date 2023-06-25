@@ -86,6 +86,7 @@
         <module>laokou-common-lock</module>
         <module>laokou-common-monitor</module>
         <module>laokou-common-influxdb</module>
+        <module>laokou-common-rabbitmq</module>
     </modules>
 
 </project>
