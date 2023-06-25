@@ -67,7 +67,7 @@ public class GeneratorMain {
 	private static String OUTPUT_DIR = "";
 
 	public static void main(String[] args) {
-		// 默认生成到 KCloud-Platform-Alibaba\laokou-service
+		// 默认生成到 KCloud-Platform-Alibaba
 		if (StringUtil.isEmpty(OUTPUT_DIR)) {
 			OUTPUT_DIR = Objects.requireNonNull(GeneratorMain.class.getClassLoader().getResource("")).getPath();
 			OUTPUT_DIR = OUTPUT_DIR.substring(0, OUTPUT_DIR.length() - 15) + File.separator + "src" + File.separator

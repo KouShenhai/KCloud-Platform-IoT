@@ -48,7 +48,7 @@ public final class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEng
 	}
 
 	public static String subBefore(CharSequence string, CharSequence separator, boolean isLastSeparator) {
-		if (!StringUtil.isEmpty(string) && separator != null) {
+		if (StringUtil.isNotEmpty(string)) {
 			String str = string.toString();
 			String sep = separator.toString();
 			if (sep.isEmpty()) {
