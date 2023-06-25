@@ -68,5 +68,4 @@ public final class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEng
 			return null == string ? null : string.toString();
 		}
 	}
-
 }
