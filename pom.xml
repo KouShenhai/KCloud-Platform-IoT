@@ -217,9 +217,6 @@
                 <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
                 <MAIL-USERNAME>xxx</MAIL-USERNAME>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <!-- 测试环境 -->
         <profile>
@@ -247,6 +244,9 @@
                 <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
                 <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
                 <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
+                <activation>
+                    <activeByDefault>true</activeByDefault>
+                </activation>
             </properties>
         </profile>
         <!-- 正式环境 -->
