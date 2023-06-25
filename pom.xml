@@ -244,10 +244,10 @@
                 <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
                 <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
                 <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
-                <activation>
-                    <activeByDefault>true</activeByDefault>
-                </activation>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
         <!-- 正式环境 -->
         <profile>
