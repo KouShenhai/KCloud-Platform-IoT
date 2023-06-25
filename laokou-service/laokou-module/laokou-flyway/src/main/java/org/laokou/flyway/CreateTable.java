@@ -27,88 +27,87 @@ import java.util.List;
  */
 public class CreateTable {
 
-    private static final String URL = "jdbc:mysql://192.168.1.100:3306/?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false";
+	private static final String URL = "jdbc:mysql://192.168.1.100:3306/?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false";
 
-    private static final String USERNAME = "root";
+	private static final String USERNAME = "root";
 
-    private static final String PASSWORD = "laokou123";
+	private static final String PASSWORD = "laokou123";
 
-    public static void main(String[] args) {
-        List<String> tableList = List.of("kcloud_platform_alibaba"
-                , "kcloud_platform_flowable"
-                , "kcloud_platform_nacos"
-                , "kcloud_platform_alibaba_tenant"
-                , "kcloud_platform_alibaba_user_0"
-                , "kcloud_platform_alibaba_user_1"
-                , "kcloud_platform_xxl_job"
-                , "kcloud_platform_seata");
-        tableList.forEach(item -> {
-            Connection connection;
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-            }
-            catch (Exception e) {
-                throw new RuntimeException("数据源驱动加载失败，请检查相关配置");
-            }
-            try {
-                connection = DriverManager.getConnection(URL, USERNAME,
-                        PASSWORD);
-            }
-            catch (Exception e) {
-                throw new RuntimeException("数据源连接失败，请检查相关配置");
-            }
-            try {
-                Statement statement;
-                try {
-                    statement = connection.createStatement();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
-                    statement.executeUpdate(createDB(item));
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
-                    statement.executeUpdate(createTable(item));
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            } finally {
-                if (connection != null) {
-                    try {
-                        connection.close();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
-    }
+	public static void main(String[] args) {
+		List<String> tableList = List.of("kcloud_platform_alibaba", "kcloud_platform_flowable", "kcloud_platform_nacos",
+				"kcloud_platform_alibaba_tenant", "kcloud_platform_alibaba_user_0", "kcloud_platform_alibaba_user_1",
+				"kcloud_platform_xxl_job", "kcloud_platform_seata");
+		tableList.forEach(item -> {
+			Connection connection;
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			}
+			catch (Exception e) {
+				throw new RuntimeException("数据源驱动加载失败，请检查相关配置");
+			}
+			try {
+				connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			}
+			catch (Exception e) {
+				throw new RuntimeException("数据源连接失败，请检查相关配置");
+			}
+			try {
+				Statement statement;
+				try {
+					statement = connection.createStatement();
+				}
+				catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+				try {
+					statement.executeUpdate(createDB(item));
+				}
+				catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+				try {
+					statement.executeUpdate(createTable(item));
+				}
+				catch (SQLException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			finally {
+				if (connection != null) {
+					try {
+						connection.close();
+					}
+					catch (SQLException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}
+		});
+	}
 
-    private static String createDB(String dbName) {
-        return String.format("""
-                create database if not exists `%s`;
-                """,dbName);
-    }
+	private static String createDB(String dbName) {
+		return String.format("""
+				create database if not exists `%s`;
+				""", dbName);
+	}
 
-    private static String createTable(String dbName) {
-        return String.format("""
-                CREATE TABLE IF NOT EXISTS `%s`.`flyway_schema_history` (
-                                                         `installed_rank` int NOT NULL,
-                                                         `version` varchar(50) DEFAULT NULL,
-                                                         `description` varchar(200) NOT NULL,
-                                                         `type` varchar(20) NOT NULL,
-                                                         `script` varchar(1000) NOT NULL,
-                                                         `checksum` int DEFAULT NULL,
-                                                         `installed_by` varchar(100) NOT NULL,
-                                                         `installed_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                                         `execution_time` int NOT NULL,
-                                                         `success` tinyint(1) NOT NULL,
-                                                         PRIMARY KEY (`installed_rank`),
-                                                         KEY `flyway_schema_history_s_idx` (`success`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-                """,dbName);
-    }
+	private static String createTable(String dbName) {
+		return String.format("""
+				CREATE TABLE IF NOT EXISTS `%s`.`flyway_schema_history` (
+				                                         `installed_rank` int NOT NULL,
+				                                         `version` varchar(50) DEFAULT NULL,
+				                                         `description` varchar(200) NOT NULL,
+				                                         `type` varchar(20) NOT NULL,
+				                                         `script` varchar(1000) NOT NULL,
+				                                         `checksum` int DEFAULT NULL,
+				                                         `installed_by` varchar(100) NOT NULL,
+				                                         `installed_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				                                         `execution_time` int NOT NULL,
+				                                         `success` tinyint(1) NOT NULL,
+				                                         PRIMARY KEY (`installed_rank`),
+				                                         KEY `flyway_schema_history_s_idx` (`success`)
+				) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+				""", dbName);
+	}
 
 }
