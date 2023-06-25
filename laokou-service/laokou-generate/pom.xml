@@ -36,7 +36,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>6.0.2</version>
+            <version>6.0.3</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
