@@ -55,7 +55,7 @@ public class OAuth2AuthorizationServerProperties implements InitializingBean {
 	}
 
 	private void validateRegistration(Registration registration) {
-		if (!StringUtil.hasText(registration.clientId)) {
+		if (StringUtil.isEmpty(registration.clientId)) {
 			throw new IllegalStateException("客户端ID不能为空");
 		}
 		if (CollectionUtil.isEmpty(registration.clientAuthenticationMethods)) {

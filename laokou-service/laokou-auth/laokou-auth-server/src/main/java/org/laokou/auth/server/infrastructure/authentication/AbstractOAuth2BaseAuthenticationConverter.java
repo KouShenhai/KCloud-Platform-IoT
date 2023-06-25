@@ -81,7 +81,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		MultiValueMap<String, String> parameters = MapUtil.getParameters(request);
 		// 判断scope
 		String scope = parameters.getFirst(OAuth2ParameterNames.SCOPE);
-		if (StringUtil.hasText(scope) && parameters.get(OAuth2ParameterNames.SCOPE).size() != 1) {
+		if (StringUtil.isNotEmpty(scope) && parameters.get(OAuth2ParameterNames.SCOPE).size() != 1) {
 			CustomAuthExceptionHandler.throwError(StatusCode.INVALID_SCOPE,
 					MessageUtil.getMessage(StatusCode.INVALID_SCOPE));
 		}
