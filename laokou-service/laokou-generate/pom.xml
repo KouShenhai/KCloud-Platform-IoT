@@ -18,6 +18,10 @@
 			<artifactId>laokou-common-mybatis-plus</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-generator</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
@@ -25,6 +29,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-undertow</artifactId>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>org.laokou</groupId>
+			<artifactId>laokou-common-easy-excel</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>6.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 </project>
