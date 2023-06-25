@@ -97,7 +97,7 @@ public class ElasticsearchAutoConfig {
 	}
 
 	private HttpHost createHttpHost(URI uri) {
-		if (!StringUtil.hasText(uri.getUserInfo())) {
+		if (StringUtil.isEmpty(uri.getUserInfo())) {
 			return HttpHost.create(uri.toString());
 		}
 		try {
@@ -143,7 +143,7 @@ public class ElasticsearchAutoConfig {
 	private static class PropertiesCredentialsProvider extends BasicCredentialsProvider {
 
 		PropertiesCredentialsProvider(ElasticsearchProperties properties) {
-			if (StringUtil.hasText(properties.getUsername())) {
+			if (StringUtil.isNotEmpty(properties.getUsername())) {
 				Credentials credentials = new UsernamePasswordCredentials(properties.getUsername(),
 						properties.getPassword());
 				setCredentials(AuthScope.ANY, credentials);
@@ -162,7 +162,7 @@ public class ElasticsearchAutoConfig {
 		}
 
 		private boolean hasUserInfo(URI uri) {
-			return uri != null && StringUtil.hasText(uri.getUserInfo());
+			return uri != null && StringUtil.isNotEmpty(uri.getUserInfo());
 		}
 
 		private void addUserInfoCredentials(URI uri) {

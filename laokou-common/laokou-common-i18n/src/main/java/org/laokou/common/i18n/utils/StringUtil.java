@@ -15,7 +15,6 @@
  */
 package org.laokou.common.i18n.utils;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
@@ -24,14 +23,20 @@ import org.springframework.util.StringUtils;
  */
 public class StringUtil {
 
-	private static final char UNDERLINE = '_';
-
 	public static boolean isNotEmpty(String str) {
 		return hasText(str);
 	}
 
 	public static boolean isEmpty(String str) {
 		return !hasText(str);
+	}
+
+	public static boolean isEmpty(CharSequence sequence) {
+		return !hasText(sequence);
+	}
+
+	public static boolean isNotEmpty(CharSequence sequence) {
+		return hasText(sequence);
 	}
 
 	public static String removeStart(String str, String remove) {
@@ -43,8 +48,22 @@ public class StringUtil {
 		}
 	}
 
+	public static boolean allNotNull(Object... values) {
+		if (values == null) {
+			return false;
+		}
+		else {
+			for (Object val : values) {
+				if (val == null) {
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+
 	public static String substringBetween(String str, String open, String close) {
-		if (ObjectUtils.allNotNull(str, open, close)) {
+		if (allNotNull(str, open, close)) {
 			int start = str.indexOf(open);
 			if (start != -1) {
 				int end = str.indexOf(close, start + open.length());
@@ -60,27 +79,8 @@ public class StringUtil {
 		return StringUtils.hasText(str);
 	}
 
-	public static String toCamelCase(String s) {
-		if (s == null) {
-			return null;
-		}
-		s = s.toLowerCase();
-		StringBuilder sb = new StringBuilder(s.length());
-		boolean upperCase = false;
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-			if (c == UNDERLINE) {
-				upperCase = true;
-			}
-			else if (upperCase) {
-				sb.append(Character.toUpperCase(c));
-				upperCase = false;
-			}
-			else {
-				sb.append(c);
-			}
-		}
-		return sb.toString();
+	public static boolean hasText(@Nullable CharSequence sequence) {
+		return StringUtils.hasText(sequence);
 	}
 
 }
