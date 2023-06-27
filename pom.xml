@@ -223,8 +223,8 @@
             <id>test</id>
             <properties>
                 <MYSQL-USERNAME>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</MYSQL-USERNAME>
-                <MYSQL-PASSWORD>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</MYSQL-PASSWORD>
-                <MYSQL-HOST>laokou.org</MYSQL-HOST>
+                <MYSQL-PASSWORD>koushenhai123456</MYSQL-PASSWORD>
+                <MYSQL-HOST>116.205.134.255</MYSQL-HOST>
                 <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>kcloud_platform_seata</MYSQL-DB-SEATA>
                 <MYSQL-DB-XXL-JOB>kcloud_platform_xxl_job</MYSQL-DB-XXL-JOB>
