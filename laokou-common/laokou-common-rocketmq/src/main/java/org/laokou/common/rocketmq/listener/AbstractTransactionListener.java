@@ -66,14 +66,13 @@ public abstract class AbstractTransactionListener implements RocketMQLocalTransa
 	 * 本地事务实现
 	 * @param transactionId transactionId
 	 * @param obj obj
-	 * @return void
 	 */
 	protected abstract void executeLocalTransaction(Object obj, String transactionId);
 
 	/**
 	 * 本地事务检查
-	 * @param transactionId
-	 * @return
+	 * @param transactionId transactionId
+	 * @return boolean
 	 */
 	protected abstract boolean checkLocalTransaction(String transactionId);
 
