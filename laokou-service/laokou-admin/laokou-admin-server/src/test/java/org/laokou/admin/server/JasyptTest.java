@@ -20,6 +20,7 @@ import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.laokou.common.jasypt.utils.AesUtil;
 
 /**
  * @author laokou
@@ -118,7 +119,7 @@ public class JasyptTest {
 
 	public static void main(String[] args) {
 		String factor = "5201314wumeihua";
-		String plainText = "elastic";
+		String plainText = "laokou123";
 		String encryptWithMD5Str = encryptWithMD5(plainText, factor);
 		String decryptWithMD5Str = decryptWithMD5(encryptWithMD5Str, factor);
 
@@ -129,6 +130,8 @@ public class JasyptTest {
 		System.out.println();
 		System.out.println("采用SHA512加密前原文密文：" + encryptWithSHA512Str);
 		System.out.println("采用SHA512解密后密文原文:" + decryptWithSHA512Str);
+		System.out.println(AesUtil.encrypt("root"));
+		System.out.println(AesUtil.encrypt("laokou123"));
 	}
 
 }
