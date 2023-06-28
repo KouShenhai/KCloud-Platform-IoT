@@ -23,15 +23,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.tenant.service.SysSourceService;
 import org.laokou.common.tenant.vo.SysSourceVO;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -104,7 +106,9 @@ public class DsUtil {
 			throw new CustomException("数据源连接失败，请检查相关配置");
 		}
 		try {
-			String sql = "select table_name from information_schema.tables where table_schema = (select database())";
+			String sql = """
+					select table_name from information_schema.tables where table_schema = (select database())
+					""";
 			ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
 			List<String> tables = new ArrayList<>(TABLES.size());
 			while (resultSet.next()) {

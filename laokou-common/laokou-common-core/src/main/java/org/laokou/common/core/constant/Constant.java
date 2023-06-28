@@ -147,4 +147,14 @@ public interface Constant {
 	 */
 	String HTTPS_PROTOCOL = "https://";
 
+	/**
+	 * 用户名
+	 */
+	String USERNAME = "username";
+
+	/**
+	 * 密码
+	 */
+	String PASSWORD = "password";
+
 }
