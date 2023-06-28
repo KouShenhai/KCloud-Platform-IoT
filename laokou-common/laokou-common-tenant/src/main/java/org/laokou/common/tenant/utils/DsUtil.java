@@ -17,8 +17,8 @@
 package org.laokou.common.tenant.utils;
 
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
+import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
 import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
-import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -104,7 +104,9 @@ public class DsUtil {
 			throw new CustomException("数据源连接失败，请检查相关配置");
 		}
 		try {
-			String sql = "select table_name from information_schema.tables where table_schema = (select database())";
+			String sql = """
+						select table_name from information_schema.tables where table_schema = (select database())
+						""";
 			ResultSet resultSet = connection.prepareStatement(sql).executeQuery();
 			List<String> tables = new ArrayList<>(TABLES.size());
 			while (resultSet.next()) {
