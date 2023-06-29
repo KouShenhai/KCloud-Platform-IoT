@@ -22,7 +22,7 @@ spring:
         server-addr: ${NACOS-DISCOVERY-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
         # https
-        secure: true
+        secure: @SSL-ENABLED@
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
