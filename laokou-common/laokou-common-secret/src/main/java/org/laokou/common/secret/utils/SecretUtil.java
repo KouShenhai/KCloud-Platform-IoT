@@ -29,9 +29,9 @@ import java.util.Map;
 @Component
 public class SecretUtil {
 
-	public static final String APP_KEY = "laokou2023";
+	private static final String APP_KEY = "laokou2023";
 
-	public static final String APP_SECRET = "vb05f6c45d67340zaz95v7fa6d49v99zx";
+	private static final String APP_SECRET = "vb05f6c45d67340zaz95v7fa6d49v99zx";
 
 	private static final long TIMEOUT_MILLIS = 30 * 1000L;
 
