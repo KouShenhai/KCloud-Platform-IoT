@@ -15,11 +15,13 @@
  */
 package org.laokou.common.secret.utils;
 
+import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 /**
  * @author laokou
@@ -33,7 +35,7 @@ public class SecretUtil {
 
 	private static final long TIMEOUT_MILLIS = 30 * 1000L;
 
-	public void verification(String appKey, String appSecret, String sign, String nonce, long timestamp) {
+	public static void verification(String appKey, String appSecret, String sign, String nonce, String timestamp, Map<String,String> map) {
 		if (StringUtil.isEmpty(appKey)) {
 			throw new CustomException("appKey不为空");
 		}
@@ -49,24 +51,32 @@ public class SecretUtil {
 		if (StringUtil.isEmpty(nonce)) {
 			throw new CustomException("nonce不为空");
 		}
+		if (StringUtil.isEmpty(timestamp)) {
+			throw new CustomException("timestamp不为空");
+		}
+		long ts = Long.parseLong(timestamp);
 		// 判断时间戳
 		long nowTimestamp = System.currentTimeMillis();
 		long maxTimestamp = nowTimestamp + TIMEOUT_MILLIS;
 		long minTimestamp = nowTimestamp - TIMEOUT_MILLIS;
-		if (timestamp > maxTimestamp || timestamp < minTimestamp) {
-			throw new CustomException("请求参数不合法");
+		if (ts > maxTimestamp || ts < minTimestamp) {
+			throw new CustomException("timestamp已超时");
 		}
-		// String newSign = sign(timestamp);
-		// if (!sign.equals(newSign)) {
-		// throw new CustomException("验签失败，请检查配置");
-		// }
+		if (StringUtil.isEmpty(sign)) {
+			throw new CustomException("sign不能为空");
+		}
+		String params = MapUtil.parseParams(map, false);
+		String newSing = sign(appKey, appSecret, nonce, ts, params);
+		if (!sign.equals(newSing)) {
+			throw new CustomException("Api验签失败，请检查配置");
+		}
 	}
 
 	/**
-	 * MD5(appKey+appSecret+timestamp+userId+username+tenantId)
+	 * MD5(appKey+appSecret+nonce+timestamp+params)
 	 */
-	private String sign(long timestamp) {
-		String str = APP_KEY + APP_SECRET + timestamp;
+	private static String sign(String appKey, String appSecret, String nonce, long timestamp,String params) {
+		String str = appKey + appSecret + nonce + timestamp + params;
 		return DigestUtils.md5DigestAsHex(str.getBytes(StandardCharsets.UTF_8));
 	}
 

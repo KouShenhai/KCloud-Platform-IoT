@@ -89,7 +89,7 @@ server:
     basedir: logs
   ssl:
     # 开启证书
-    enabled: true
+    enabled: @SSL-ENABLED@
     # 证书位置
     key-store: classpath:scg-keystore.p12
     # 证书别名
