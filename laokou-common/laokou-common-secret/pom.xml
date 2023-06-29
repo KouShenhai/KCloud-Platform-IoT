@@ -34,6 +34,10 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

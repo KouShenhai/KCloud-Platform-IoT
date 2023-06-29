@@ -1,1 +1,1 @@
-在线扩容队列（MessageQueue）：sh ./mqadmin updateTopic -n laokou.org:9876 -c DefaultCluster -t laokou-test -r 5 -w 5
+在线扩容队列（MessageQueue）：sh ./mqadmin updateTopic -n 192.168.1.100:9876 -c DefaultCluster -t laokou-test -r 5 -w 5

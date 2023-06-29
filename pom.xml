@@ -214,9 +214,13 @@
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
+                <SSL-ENABLED>false</SSL-ENABLED>
                 <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
                 <MAIL-USERNAME>xxx</MAIL-USERNAME>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
         <!-- 测试环境 -->
         <profile>
@@ -224,7 +228,7 @@
             <properties>
                 <MYSQL-USERNAME>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</MYSQL-USERNAME>
                 <MYSQL-PASSWORD>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</MYSQL-PASSWORD>
-                <MYSQL-HOST>laokou.org</MYSQL-HOST>
+                <MYSQL-HOST>192.168.1.100</MYSQL-HOST>
                 <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>kcloud_platform_seata</MYSQL-DB-SEATA>
                 <MYSQL-DB-XXL-JOB>kcloud_platform_xxl_job</MYSQL-DB-XXL-JOB>
@@ -242,12 +246,10 @@
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
+                <SSL-ENABLED>true</SSL-ENABLED>
                 <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
                 <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <!-- 正式环境 -->
         <profile>
@@ -258,7 +260,7 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <MYSQL-PASSWORD>${MYSQL-PASSWORD:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</MYSQL-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-HOST>${MYSQL-HOST:laokou.org}</MYSQL-HOST>
+                <MYSQL-HOST>${MYSQL-HOST:192.168.1.100}</MYSQL-HOST>
                 <!--suppress UnresolvedMavenProperty -->
                 <MYSQL-DB-NACOS>${MYSQL-DB-NACOS:kcloud_platform_nacos}</MYSQL-DB-NACOS>
                 <!--suppress UnresolvedMavenProperty -->
@@ -292,6 +294,7 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <SENTINEL-PASSWORD>${SENTINEL-PASSWORD:sentinel}</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
+                <SSL-ENABLED>true</SSL-ENABLED>
                 <!--suppress UnresolvedMavenProperty -->
                 <MAIL-PASSWORD>${MAIL-PASSWORD:ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)}</MAIL-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
