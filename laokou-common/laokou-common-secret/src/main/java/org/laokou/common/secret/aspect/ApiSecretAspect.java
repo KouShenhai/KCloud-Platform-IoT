@@ -33,22 +33,26 @@ import org.springframework.util.MultiValueMap;
 @Slf4j
 public class ApiSecretAspect {
 
-    private static final String NONCE = "nonce";
-    private static final String TIMESTAMP = "timestamp";
-    private static final String SIGN = "sign";
-    private static final String APP_KEY = "app-key";
-    private static final String APP_SECRET = "app-secret";
+	private static final String NONCE = "nonce";
 
-    @Before("@annotation(org.laokou.common.secret.annotation.ApiSecret)")
-    public void doBefore() {
-        HttpServletRequest request = RequestUtil.getHttpServletRequest();
-        String nonce = request.getHeader(NONCE);
-        String timestamp = request.getHeader(TIMESTAMP);
-        String sign = request.getHeader(SIGN);
-        String appKey = request.getHeader(APP_KEY);
-        String appSecret = request.getHeader(APP_SECRET);
-        MultiValueMap<String, String> multiValueMap = MapUtil.getParameters(request);
-        SecretUtil.verification(appKey,appSecret,sign,nonce,timestamp, multiValueMap.toSingleValueMap());
-    }
+	private static final String TIMESTAMP = "timestamp";
+
+	private static final String SIGN = "sign";
+
+	private static final String APP_KEY = "app-key";
+
+	private static final String APP_SECRET = "app-secret";
+
+	@Before("@annotation(org.laokou.common.secret.annotation.ApiSecret)")
+	public void doBefore() {
+		HttpServletRequest request = RequestUtil.getHttpServletRequest();
+		String nonce = request.getHeader(NONCE);
+		String timestamp = request.getHeader(TIMESTAMP);
+		String sign = request.getHeader(SIGN);
+		String appKey = request.getHeader(APP_KEY);
+		String appSecret = request.getHeader(APP_SECRET);
+		MultiValueMap<String, String> multiValueMap = MapUtil.getParameters(request);
+		SecretUtil.verification(appKey, appSecret, sign, nonce, timestamp, multiValueMap.toSingleValueMap());
+	}
 
 }
