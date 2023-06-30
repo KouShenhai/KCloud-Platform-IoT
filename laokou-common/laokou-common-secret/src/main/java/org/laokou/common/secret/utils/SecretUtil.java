@@ -33,10 +33,10 @@ public class SecretUtil {
 
 	private static final String APP_SECRET = "vb05f6c45d67340zaz95v7fa6d49v99zx";
 
-	private static final long TIMEOUT_MILLIS = 30 * 1000L;
+	private static final long TIMEOUT_MILLIS = 60 * 1000L;
 
 	public static void verification(String appKey, String appSecret, String sign, String nonce, String timestamp,
-			Map<String, String> map) {
+									Map<String, String> map) {
 		if (StringUtil.isEmpty(appKey)) {
 			throw new CustomException("appKey不为空");
 		}
@@ -58,9 +58,9 @@ public class SecretUtil {
 		long ts = Long.parseLong(timestamp);
 		// 判断时间戳
 		long nowTimestamp = System.currentTimeMillis();
-		long maxTimestamp = nowTimestamp + TIMEOUT_MILLIS;
-		long minTimestamp = nowTimestamp - TIMEOUT_MILLIS;
-		if (ts > maxTimestamp || ts < minTimestamp) {
+		long maxTimestamp = ts + TIMEOUT_MILLIS;
+		long minTimestamp = ts - TIMEOUT_MILLIS;
+		if (nowTimestamp > maxTimestamp || nowTimestamp < minTimestamp) {
 			throw new CustomException("timestamp已超时");
 		}
 		if (StringUtil.isEmpty(sign)) {
@@ -79,6 +79,10 @@ public class SecretUtil {
 	private static String sign(String appKey, String appSecret, String nonce, long timestamp, String params) {
 		String str = appKey + appSecret + nonce + timestamp + params;
 		return DigestUtils.md5DigestAsHex(str.getBytes(StandardCharsets.UTF_8));
+	}
+
+	public static void main(String[] args) {
+		System.out.println(sign(APP_KEY, APP_SECRET, "1", 1688126191265L, ""));
 	}
 
 }

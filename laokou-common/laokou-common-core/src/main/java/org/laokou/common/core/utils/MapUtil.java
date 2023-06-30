@@ -61,6 +61,9 @@ public class MapUtil {
 	}
 
 	public static String parseParams(Map<String, String> paramMap, boolean isEncode) {
+		if (paramMap.isEmpty()) {
+			return "";
+		}
 		Iterator<Map.Entry<String, String>> iterator = paramMap.entrySet().iterator();
 		StringBuilder stringBuilder = new StringBuilder();
 		while (iterator.hasNext()) {

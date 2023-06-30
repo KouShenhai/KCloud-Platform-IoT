@@ -56,7 +56,7 @@
         <tag>logback</tag>
         <topic>laokou-trace-topic</topic>
         <producerGroup>laokou-producer-group</producerGroup>
-        <nameServerAddress>192.168.1.100:9876</nameServerAddress>
+        <nameServerAddress>192.168.30.128:9876</nameServerAddress>
         <layout>
             <pattern>
                 {
@@ -80,32 +80,20 @@
     </appender>
     <springProfile name="dev,test">
         <logger name="org.laokou" level="info">
-            <appender-ref ref="console" />
-            <appender-ref ref="file"/>
             <appender-ref ref="async"/>
         </logger>
-        <logger name="com.alibaba.nacos" level="info">
+        <root level="info">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
-        </logger>
-        <logger name="org.springframework" level="info">
-            <appender-ref ref="console" />
-            <appender-ref ref="file"/>
-        </logger>
+        </root>
     </springProfile>
     <springProfile name="prod">
         <logger name="org.laokou" level="error">
-            <appender-ref ref="console" />
             <appender-ref ref="async"/>
-            <appender-ref ref="file"/>
         </logger>
-        <logger name="org.springframework" level="error">
+        <root level="error">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
-        </logger>
-        <logger name="com.alibaba.nacos" level="error">
-            <appender-ref ref="console" />
-            <appender-ref ref="file"/>
-        </logger>
+        </root>
     </springProfile>
 </configuration>

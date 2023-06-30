@@ -56,25 +56,22 @@ public class BatchUtil {
 		// 数据库隔离级别设置为READ-COMMITTED => 读已提交
 		// set global transaction isolation level read committed; => 全局隔离级别
 		// set session transaction isolation level read committed; => 会话隔离级别
-		// select @@global.transaction_isolation,@@transaction_isolation 或 show variables
-		// like 'transaction_isolation'
-		partition.forEach(item -> {
-			futures.add(CompletableFuture.runAsync(() -> transactionalUtil.executeWithoutResult(callback -> {
-				try {
-					service.insertBatch(item);
+		// select @@global.transaction_isolation,@@transaction_isolation 或 show variables like 'transaction_isolation'
+		partition.forEach(item -> futures.add(CompletableFuture.runAsync(() -> transactionalUtil.executeWithoutResult(callback -> {
+			try {
+				service.insertBatch(item);
+			}
+			catch (Exception e) {
+				// 回滚标识
+				rollback.compareAndSet(false, true);
+				log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", e.getMessage());
+			}
+			finally {
+				if (rollback.get()) {
+					callback.setRollbackOnly();
 				}
-				catch (Exception e) {
-					// 回滚标识
-					rollback.compareAndSet(false, true);
-					log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", e.getMessage());
-				}
-				finally {
-					if (rollback.get()) {
-						callback.setRollbackOnly();
-					}
-				}
-			}), taskExecutor));
-		});
+			}
+		}), taskExecutor)));
 		// 阻塞主线程
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {

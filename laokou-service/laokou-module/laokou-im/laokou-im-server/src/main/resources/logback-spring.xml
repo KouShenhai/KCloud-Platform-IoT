@@ -53,39 +53,15 @@
         </rollingPolicy>
     </appender>
     <springProfile name="dev,test">
-        <logger name="org.laokou" level="info">
+        <root level="info">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
-        </logger>
-        <logger name="com.alibaba.nacos" level="info">
-            <appender-ref ref="console" />
-            <appender-ref ref="file"/>
-        </logger>
-        <logger name="org.springframework" level="info">
-            <appender-ref ref="console" />
-            <appender-ref ref="file"/>
-        </logger>
-        <logger name="io.netty" level="info">
-            <appender-ref ref="console" />
-            <appender-ref ref="file"/>
-        </logger>
+        </root>
     </springProfile>
     <springProfile name="prod">
-        <logger name="org.laokou" level="error">
+        <root level="error">
             <appender-ref ref="console" />
             <appender-ref ref="file"/>
-        </logger>
-        <logger name="com.alibaba.nacos" level="error">
-            <appender-ref ref="console" />
-            <appender-ref ref="file"/>
-        </logger>
-        <logger name="org.springframework" level="error">
-            <appender-ref ref="console" />
-            <appender-ref ref="file"/>
-        </logger>
-        <logger name="io.netty" level="error">
-            <appender-ref ref="console" />
-            <appender-ref ref="file"/>
-        </logger>
+        </root>
     </springProfile>
 </configuration>
