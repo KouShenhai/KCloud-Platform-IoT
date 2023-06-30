@@ -39,17 +39,13 @@ public class CustomAuthExceptionHandler {
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
 		PrintWriter writer = response.getWriter();
-		writer.write(JacksonUtil.toJsonStr(new HttpResult().error(code, message)));
+		writer.write(JacksonUtil.toJsonStr(new HttpResult<>().error(code, message)));
 		writer.flush();
 		writer.close();
 	}
 
 	public static void throwError(int errorCode, String description) {
-		throwError("" + errorCode, description, "");
-	}
-
-	public static void throwError(String errorCode, String description) {
-		throwError(errorCode, description, "");
+		throwError(String.valueOf(errorCode), description, "");
 	}
 
 	public static void throwError(String errorCode, String description, String uri) {
@@ -62,12 +58,8 @@ public class CustomAuthExceptionHandler {
 		return new OAuth2AuthenticationException(error);
 	}
 
-	public static OAuth2AuthenticationException getError(String errorCode, String description) {
-		return getError(errorCode, description, "");
-	}
-
 	public static OAuth2AuthenticationException getError(int errorCode, String description) {
-		return getError("" + errorCode, description, "");
+		return getError(String.valueOf(errorCode), description, "");
 	}
 
 }

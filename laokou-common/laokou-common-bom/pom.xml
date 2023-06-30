@@ -76,7 +76,7 @@
         <!--aws-java-sdk-s3版本-->
         <aws-java-sdk-s3.version>1.12.267</aws-java-sdk-s3.version>
         <!--dynamic-datasource版本-->
-        <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
+        <dynamic-datasource.version>4.0.0</dynamic-datasource.version>
         <!--httpclient5版本-->
         <httpclient5.version>5.2.1</httpclient5.version>
         <!--jna版本-->
@@ -399,7 +399,7 @@
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
                 <version>${dynamic-datasource.version}</version>
             </dependency>
             <dependency>
