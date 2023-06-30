@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ApiController {
 
-    @ApiSecret
-    @GetMapping()
-    public void test() {
-        System.out.println("33");
-    }
+	@ApiSecret
+	@GetMapping()
+	public void test() {
+		System.out.println("33");
+	}
 
 }

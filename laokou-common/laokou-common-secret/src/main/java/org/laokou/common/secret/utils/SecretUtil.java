@@ -36,7 +36,7 @@ public class SecretUtil {
 	private static final long TIMEOUT_MILLIS = 60 * 1000L;
 
 	public static void verification(String appKey, String appSecret, String sign, String nonce, String timestamp,
-									Map<String, String> map) {
+			Map<String, String> map) {
 		if (StringUtil.isEmpty(appKey)) {
 			throw new CustomException("appKey不为空");
 		}
