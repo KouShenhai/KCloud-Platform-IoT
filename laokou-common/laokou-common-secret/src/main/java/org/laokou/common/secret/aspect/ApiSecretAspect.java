@@ -25,6 +25,8 @@ import org.laokou.common.secret.utils.SecretUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
+import static org.laokou.common.core.constant.Constant.*;
+
 /**
  * @author laokou
  */
@@ -32,16 +34,6 @@ import org.springframework.util.MultiValueMap;
 @Aspect
 @Slf4j
 public class ApiSecretAspect {
-
-	private static final String NONCE = "nonce";
-
-	private static final String TIMESTAMP = "timestamp";
-
-	private static final String SIGN = "sign";
-
-	private static final String APP_KEY = "app-key";
-
-	private static final String APP_SECRET = "app-secret";
 
 	@Before("@annotation(org.laokou.common.secret.annotation.ApiSecret)")
 	public void doBefore() {
