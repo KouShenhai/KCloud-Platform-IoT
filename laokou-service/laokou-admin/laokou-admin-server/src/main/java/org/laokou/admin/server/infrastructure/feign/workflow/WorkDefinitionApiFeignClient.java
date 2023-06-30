@@ -16,7 +16,6 @@
 package org.laokou.admin.server.infrastructure.feign.workflow;
 
 import org.laokou.admin.server.infrastructure.feign.workflow.factory.WorkDefinitionApiFeignClientFallbackFactory;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.constant.ServiceConstant;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.dto.DefinitionDTO;
@@ -33,7 +32,7 @@ import java.io.IOException;
 /**
  * @author laokou
  */
-@FeignClient(contextId = "workDefinition", value = Constant.HTTPS_PROTOCOL + ServiceConstant.LAOKOU_FLOWABLE,
+@FeignClient(contextId = "workDefinition", value = ServiceConstant.LAOKOU_FLOWABLE,
 		path = "/work/definition/api", fallbackFactory = WorkDefinitionApiFeignClientFallbackFactory.class)
 @Service
 public interface WorkDefinitionApiFeignClient {

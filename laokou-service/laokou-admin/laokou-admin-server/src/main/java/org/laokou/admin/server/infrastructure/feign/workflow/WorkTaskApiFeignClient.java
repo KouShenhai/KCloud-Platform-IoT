@@ -16,7 +16,6 @@
 package org.laokou.admin.server.infrastructure.feign.workflow;
 
 import org.laokou.admin.server.infrastructure.feign.workflow.factory.WorkTaskApiFeignClientFallbackFactory;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.constant.ServiceConstant;
 import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.dto.*;
@@ -25,12 +24,15 @@ import org.laokou.flowable.client.vo.PageVO;
 import org.laokou.flowable.client.vo.TaskVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author laokou
  */
-@FeignClient(contextId = "workTask", value = Constant.HTTPS_PROTOCOL + ServiceConstant.LAOKOU_FLOWABLE,
+@FeignClient(contextId = "workTask", value = ServiceConstant.LAOKOU_FLOWABLE,
 		path = "/work/task/api", fallbackFactory = WorkTaskApiFeignClientFallbackFactory.class)
 @Service
 public interface WorkTaskApiFeignClient {

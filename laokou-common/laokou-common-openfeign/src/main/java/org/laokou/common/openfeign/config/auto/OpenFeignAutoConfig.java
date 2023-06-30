@@ -38,7 +38,7 @@ import static org.laokou.common.core.constant.Constant.TRACE_ID;
 public class OpenFeignAutoConfig implements RequestInterceptor {
 
 	@Bean
-	public feign.Logger.Level multipartLoggerLevel() {
+	public feign.Logger.Level loggerLevel() {
 		return feign.Logger.Level.FULL;
 	}
 

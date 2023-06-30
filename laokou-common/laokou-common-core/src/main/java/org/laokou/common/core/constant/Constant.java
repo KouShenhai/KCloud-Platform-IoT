@@ -143,11 +143,6 @@ public interface Constant {
 	String TRUE = "true";
 
 	/**
-	 * HTTPS协议
-	 */
-	String HTTPS_PROTOCOL = "https://";
-
-	/**
 	 * 用户名
 	 */
 	String USERNAME = "username";
