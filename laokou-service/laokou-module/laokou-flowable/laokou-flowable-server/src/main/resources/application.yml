@@ -27,7 +27,8 @@ server:
     key-store-type: PKCS12
     # 口令
     key-store-password: laokou
-
+  http2:
+    enabled: true
 #spring
 spring:
   application:
