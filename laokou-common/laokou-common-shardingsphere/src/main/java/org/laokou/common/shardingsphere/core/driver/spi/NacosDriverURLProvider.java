@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,10 +23,10 @@ import com.google.common.base.Preconditions;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.driver.jdbc.core.driver.ShardingSphereDriverURLProvider;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.PropertyUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.shardingsphere.utils.CryptoUtil;
+import org.springframework.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -35,9 +35,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.laokou.common.core.constant.Constant.PASSWORD;
-import static org.laokou.common.core.constant.Constant.USERNAME;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author laokou
@@ -45,11 +44,21 @@ import static org.laokou.common.core.constant.Constant.USERNAME;
 @Slf4j
 public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 
+	private static final String SHARDING_SPHERE_JDBC = "jdbc:shardingsphere:";
+
 	private static final String NACOS_TYPE = "nacos:";
 
 	private static final String LOCATION = "bootstrap.yml";
 
 	private static final String FORMAT = "yaml";
+
+	private static final Pattern ENC_PATTERN = Pattern.compile("^ENC\\((.*)\\)$");
+
+	private static final String PREFIX = "ENC(";
+
+	private static final String SUFFIX = ")";
+
+	private static final String PUBLIC_KEY = "public-key";
 
 	@Override
 	public boolean accept(String url) {
@@ -64,8 +73,8 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 		String group = properties.getGroup();
 		NacosConfigManager nacosConfigManager = new NacosConfigManager(properties);
 		ConfigService configService = nacosConfigManager.getConfigService();
-		String configPath = url.substring("jdbc:shardingsphere:".length());
-		String dataId = configPath.substring("nacos:".length());
+		String configPath = url.substring(SHARDING_SPHERE_JDBC.length());
+		String dataId = configPath.substring(NACOS_TYPE.length());
 		Preconditions.checkArgument(!dataId.isEmpty(), "Nacos dataId is required in ShardingSphere driver URL.");
 		String configInfo = configService.getConfig(dataId, group, 5000);
 		return resolvePropertyValue(configInfo).getBytes(StandardCharsets.UTF_8);
@@ -78,10 +87,10 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 		}
 		StringBuilder stringBuilder = new StringBuilder();
 		list.forEach(item -> {
-			if (item.contains(USERNAME) || item.contains(PASSWORD)) {
-				String[] val = item.split(Constant.RISK);
-				stringBuilder.append(val[0]).append(Constant.RISK).append(" ").append(AesUtil.decrypt(val[1].trim()))
-						.append("\n");
+			if (item.contains(PREFIX) && item.contains(SUFFIX)) {
+//				String[] val = item.split(Constant.RISK);
+//				stringBuilder.append(val[0]).append(Constant.RISK).append(" ").append(AesUtil.decrypt(val[1].trim()))
+//						.append("\n");
 			}
 			else {
 				stringBuilder.append(item).append("\n");
@@ -103,6 +112,23 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 			log.error("错误信息：{}", e.getMessage());
 		}
 		return list;
+	}
+
+	/**
+	 * 字符串解密
+	 */
+	private String decrypt(String publicKey, String cipherText) {
+		if (StringUtils.hasText(cipherText)) {
+			Matcher matcher = ENC_PATTERN.matcher(cipherText);
+			if (matcher.find()) {
+				try {
+					return CryptoUtil.decrypt(publicKey, matcher.group(1));
+				} catch (Exception e) {
+					log.error("ShardingSphere decrypt error ", e);
+				}
+			}
+		}
+		return cipherText;
 	}
 
 }

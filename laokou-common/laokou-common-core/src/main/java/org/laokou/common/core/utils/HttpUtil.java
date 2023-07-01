@@ -62,10 +62,10 @@ public class HttpUtil {
 
 	@SneakyThrows
 	public static String doGet(String url, Map<String, String> params, Map<String, String> headers,
-			boolean sslEnabled) {
+			boolean disableSsl) {
 		// 创建HttpClient对象
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-		if (sslEnabled) {
+		if (disableSsl) {
 			disableSsl(httpClientBuilder);
 		}
 		CloseableHttpClient httpClient = httpClientBuilder.build();
@@ -108,10 +108,10 @@ public class HttpUtil {
 
 	@SneakyThrows
 	public static String doPost(String url, Map<String, String> params, Map<String, String> headers,
-			boolean sslEnabled) {
+			boolean disableSsl) {
 		// 创建HttpClient对象
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-		if (sslEnabled) {
+		if (disableSsl) {
 			disableSsl(httpClientBuilder);
 		}
 		CloseableHttpClient httpClient = httpClientBuilder.build();
@@ -155,10 +155,10 @@ public class HttpUtil {
 	}
 
 	@SneakyThrows
-	public static String doJsonPost(String url, Object param, Map<String, String> headers, boolean sslEnabled) {
+	public static String doJsonPost(String url, Object param, Map<String, String> headers, boolean disableSsl) {
 		// 创建HttpClient对象
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-		if (sslEnabled) {
+		if (disableSsl) {
 			disableSsl(httpClientBuilder);
 		}
 		CloseableHttpClient httpClient = httpClientBuilder.build();
