@@ -23,6 +23,7 @@ import com.google.common.base.Preconditions;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.driver.jdbc.core.driver.ShardingSphereDriverURLProvider;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.PropertyUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.shardingsphere.utils.CryptoUtil;
@@ -82,9 +83,10 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 		if (list.isEmpty()) {
 			throw new RuntimeException("Nacos配置ShardingSphere不正确");
 		}
-		String publicKey = list.stream().filter(i -> i.startsWith(PUBLIC_KEY)).findFirst().get();
-		if (StringUtil.isNotEmpty(publicKey)) {
-			publicKey = publicKey.substring(11).trim();
+		List<String> strList = list.stream().filter(i -> i.startsWith(PUBLIC_KEY)).toList();
+		String publicKey = "";
+		if (CollectionUtil.isNotEmpty(strList)) {
+			publicKey = strList.get(0).substring(11).trim();
 		}
 		StringBuilder stringBuilder = new StringBuilder();
 		String finalPublicKey = publicKey;
