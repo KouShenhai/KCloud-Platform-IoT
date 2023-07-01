@@ -15,6 +15,8 @@
  */
 package org.laokou.admin.server.domain.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -34,6 +36,13 @@ public class SysUserRoleDO implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -3464670573494984526L;
+
+	/**
+	 * id
+	 */
+	@TableId(type = IdType.INPUT)
+	@Schema(name = "id", description = "id")
+	private Long id;
 
 	/**
 	 * 角色id

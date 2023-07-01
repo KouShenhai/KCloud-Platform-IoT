@@ -68,7 +68,8 @@ public class MybatisPlusAutoConfig {
 	public TransactionTemplate transactionTemplate(PlatformTransactionManager transactionManager) {
 		TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
 		transactionTemplate.setReadOnly(false);
-		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		// 新建事务
+		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		// 事务隔离级别设置为读已提交
 		transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
 		// 事务超时时间,单位s
