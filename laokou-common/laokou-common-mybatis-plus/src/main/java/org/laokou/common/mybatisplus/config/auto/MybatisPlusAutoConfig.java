@@ -70,8 +70,6 @@ public class MybatisPlusAutoConfig {
 		transactionTemplate.setReadOnly(false);
 		// 新建事务
 		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-		// 事务隔离级别设置为读已提交
-		transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
 		// 事务超时时间,单位s
 		transactionTemplate.setTimeout(120);
 		transactionTemplate.setName("laokou-transaction-template");
