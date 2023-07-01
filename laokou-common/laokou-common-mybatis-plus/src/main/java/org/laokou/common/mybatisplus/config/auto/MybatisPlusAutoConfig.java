@@ -67,6 +67,7 @@ public class MybatisPlusAutoConfig {
 	@ConditionalOnMissingBean(TransactionOperations.class)
 	public TransactionTemplate transactionTemplate(PlatformTransactionManager transactionManager) {
 		TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+		// 只读事务
 		transactionTemplate.setReadOnly(false);
 		// 新建事务
 		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
