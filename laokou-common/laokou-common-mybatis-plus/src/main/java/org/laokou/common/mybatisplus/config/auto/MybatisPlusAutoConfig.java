@@ -67,13 +67,15 @@ public class MybatisPlusAutoConfig {
 	@ConditionalOnMissingBean(TransactionOperations.class)
 	public TransactionTemplate transactionTemplate(PlatformTransactionManager transactionManager) {
 		TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
+		// 只读事务
 		transactionTemplate.setReadOnly(false);
 		// 新建事务
 		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-		// 事务隔离级别设置为读已提交
-		transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+		// 默认数据库隔离级别
+		transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_DEFAULT);
 		// 事务超时时间,单位s
 		transactionTemplate.setTimeout(120);
+		// 事务名称
 		transactionTemplate.setName("laokou-transaction-template");
 		return transactionTemplate;
 	}
