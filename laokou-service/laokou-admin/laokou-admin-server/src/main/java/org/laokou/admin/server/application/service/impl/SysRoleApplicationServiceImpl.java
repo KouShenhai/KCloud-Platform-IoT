@@ -31,6 +31,7 @@ import org.laokou.admin.client.dto.SysRoleDTO;
 import org.laokou.admin.client.vo.SysRoleVO;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.core.utils.ConvertUtil;
@@ -99,6 +100,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 			List<SysRoleMenuDO> roleMenuList = new ArrayList<>(menuIds.size());
 			for (Long menuId : menuIds) {
 				SysRoleMenuDO roleMenuDO = new SysRoleMenuDO();
+				roleMenuDO.setId(IdGenerator.defaultSnowflakeId());
 				roleMenuDO.setMenuId(menuId);
 				roleMenuDO.setRoleId(roleId);
 				roleMenuList.add(roleMenuDO);
@@ -109,6 +111,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 			List<SysRoleDeptDO> roleDeptList = new ArrayList<>(deptIds.size());
 			for (Long deptId : deptIds) {
 				SysRoleDeptDO roleDeptDO = new SysRoleDeptDO();
+				roleDeptDO.setId(IdGenerator.defaultSnowflakeId());
 				roleDeptDO.setDeptId(deptId);
 				roleDeptDO.setRoleId(roleId);
 				roleDeptList.add(roleDeptDO);
@@ -136,8 +139,14 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 		roleDO.setVersion(version);
 		sysRoleService.updateById(roleDO);
 		// 删除中间表
-		sysRoleMenuService.remove(Wrappers.lambdaQuery(SysRoleMenuDO.class).eq(SysRoleMenuDO::getRoleId, dto.getId()));
-		sysRoleDeptService.remove(Wrappers.lambdaQuery(SysRoleDeptDO.class).eq(SysRoleDeptDO::getRoleId, dto.getId()));
+		List<SysRoleMenuDO> list1 = sysRoleMenuService.list(Wrappers.lambdaQuery(SysRoleMenuDO.class).eq(SysRoleMenuDO::getRoleId, dto.getId()).select(SysRoleMenuDO::getId));
+		if (CollectionUtil.isNotEmpty(list1)) {
+			sysRoleMenuService.removeBatchByIds(list1.stream().map(SysRoleMenuDO::getId).toList());
+		}
+		List<SysRoleDeptDO> list2 = sysRoleDeptService.list(Wrappers.lambdaQuery(SysRoleDeptDO.class).eq(SysRoleDeptDO::getRoleId, dto.getId()).select(SysRoleDeptDO::getId));
+		if (CollectionUtil.isNotEmpty(list2)) {
+			sysRoleDeptService.removeBatchByIds(list2.stream().map(SysRoleDeptDO::getId).toList());
+		}
 		saveOrUpdate(roleDO.getId(), dto.getMenuIds(), dto.getDeptIds());
 		return true;
 	}

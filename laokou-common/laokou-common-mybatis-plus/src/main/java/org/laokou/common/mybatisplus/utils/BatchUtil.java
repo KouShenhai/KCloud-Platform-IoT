@@ -53,11 +53,6 @@ public class BatchUtil {
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
 		List<CompletableFuture<Void>> futures = new ArrayList<>(partition.size());
-		// 数据库隔离级别设置为READ-COMMITTED => 读已提交
-		// set global transaction isolation level read committed; => 全局隔离级别
-		// set session transaction isolation level read committed; => 会话隔离级别
-		// select @@global.transaction_isolation,@@transaction_isolation
-		// show variables like 'transaction_isolation'
 		partition.forEach(item -> futures
 				.add(CompletableFuture.runAsync(() -> transactionalUtil.executeWithoutResult(callback -> {
 					try {

@@ -33,6 +33,7 @@ import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
 import org.laokou.admin.server.interfaces.qo.SysUserOnlineQo;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.admin.server.interfaces.qo.SysUserQo;
 import org.laokou.admin.client.vo.SysUserVO;
@@ -101,7 +102,10 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 		List<Long> roleIds = dto.getRoleIds();
 		DynamicDataSourceContextHolder.push(DEFAULT_SOURCE);
 		// 删除中间表
-		sysUserRoleService.remove(Wrappers.lambdaQuery(SysUserRoleDO.class).eq(SysUserRoleDO::getUserId, dto.getId()));
+		List<SysUserRoleDO> list = sysUserRoleService.list(Wrappers.lambdaQuery(SysUserRoleDO.class).eq(SysUserRoleDO::getUserId, dto.getId()).select(SysUserRoleDO::getId));
+		if (CollectionUtil.isNotEmpty(list)) {
+			sysUserRoleService.removeBatchByIds(list.stream().map(SysUserRoleDO::getId).toList());
+		}
 		if (!CollectionUtil.isEmpty(roleIds)) {
 			saveOrUpdate(dto.getId(), roleIds);
 		}
@@ -303,6 +307,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 		if (!CollectionUtil.isEmpty(roleIds)) {
 			for (Long roleId : roleIds) {
 				SysUserRoleDO sysUserRoleDO = new SysUserRoleDO();
+				sysUserRoleDO.setId(IdGenerator.defaultSnowflakeId());
 				sysUserRoleDO.setRoleId(roleId);
 				sysUserRoleDO.setUserId(userId);
 				doList.add(sysUserRoleDO);
