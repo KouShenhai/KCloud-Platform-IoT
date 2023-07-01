@@ -75,6 +75,7 @@ public class MybatisPlusAutoConfig {
 		transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_DEFAULT);
 		// 事务超时时间,单位s
 		transactionTemplate.setTimeout(120);
+		// 事务名称
 		transactionTemplate.setName("laokou-transaction-template");
 		return transactionTemplate;
 	}
