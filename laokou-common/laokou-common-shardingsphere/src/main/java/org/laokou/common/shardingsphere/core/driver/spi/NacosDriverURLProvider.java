@@ -38,6 +38,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.laokou.common.core.constant.Constant.RISK;
+import static org.laokou.common.shardingsphere.utils.CryptoUtil.*;
+
 /**
  * @author laokou
  */
@@ -53,12 +56,6 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 	private static final String FORMAT = "yaml";
 
 	private static final Pattern ENC_PATTERN = Pattern.compile("^ENC\\((.*)\\)$");
-
-	private static final String PREFIX = "ENC(";
-
-	private static final String SUFFIX = ")";
-
-	private static final String PUBLIC_KEY = "public-key";
 
 	@Override
 	public boolean accept(String url) {
@@ -85,15 +82,22 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 		if (list.isEmpty()) {
 			throw new RuntimeException("Nacos配置ShardingSphere不正确");
 		}
+		String publicKey = list.stream().filter(i -> i.startsWith(PUBLIC_KEY)).findFirst().get();
+		if (StringUtil.isNotEmpty(publicKey)) {
+			publicKey = publicKey.substring(11).trim();
+		}
 		StringBuilder stringBuilder = new StringBuilder();
+		String finalPublicKey = publicKey;
 		list.forEach(item -> {
-			if (item.contains(PREFIX) && item.contains(SUFFIX)) {
-//				String[] val = item.split(Constant.RISK);
-//				stringBuilder.append(val[0]).append(Constant.RISK).append(" ").append(AesUtil.decrypt(val[1].trim()))
-//						.append("\n");
-			}
-			else {
-				stringBuilder.append(item).append("\n");
+			if (!item.startsWith(PUBLIC_KEY)) {
+				if (item.contains(PREFIX) && item.contains(SUFFIX)) {
+					int index = item.indexOf(RISK);
+					String key = item.substring(0, index + 2);
+					String val = item.substring(index + 2).trim();
+					stringBuilder.append(key).append(decrypt(finalPublicKey, val)).append("\n");
+				} else {
+					stringBuilder.append(item).append("\n");
+				}
 			}
 		});
 		return stringBuilder.toString();
@@ -123,7 +127,8 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 			if (matcher.find()) {
 				try {
 					return CryptoUtil.decrypt(publicKey, matcher.group(1));
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					log.error("ShardingSphere decrypt error ", e);
 				}
 			}
