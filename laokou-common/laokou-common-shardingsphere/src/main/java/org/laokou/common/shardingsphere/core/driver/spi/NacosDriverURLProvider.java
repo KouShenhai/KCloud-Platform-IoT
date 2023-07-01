@@ -95,7 +95,8 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 					String key = item.substring(0, index + 2);
 					String val = item.substring(index + 2).trim();
 					stringBuilder.append(key).append(decrypt(finalPublicKey, val)).append("\n");
-				} else {
+				}
+				else {
 					stringBuilder.append(item).append("\n");
 				}
 			}
