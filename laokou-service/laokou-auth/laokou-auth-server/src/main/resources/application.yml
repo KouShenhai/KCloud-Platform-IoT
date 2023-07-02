@@ -30,6 +30,7 @@ server:
     key-store-password: laokou
   http2:
     enabled: true
+  forward-headers-strategy: framework
 # spring
 spring:
   application:
