@@ -18,8 +18,6 @@ package org.laokou.gateway;
 
 import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
-import org.laokou.common.core.utils.HttpUtil;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -39,7 +37,6 @@ public class GatewayApplication {
 		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
-		HttpUtil.disableSsl(HttpClientBuilder.create());
 		new SpringApplicationBuilder(GatewayApplication.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 
