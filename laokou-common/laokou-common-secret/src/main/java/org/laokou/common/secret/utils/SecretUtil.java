@@ -81,8 +81,5 @@ public class SecretUtil {
 		return DigestUtils.md5DigestAsHex(str.getBytes(StandardCharsets.UTF_8));
 	}
 
-	public static void main(String[] args) {
-		System.out.println(sign(APP_KEY, APP_SECRET, "1", 1688126191265L, ""));
-	}
 
 }
