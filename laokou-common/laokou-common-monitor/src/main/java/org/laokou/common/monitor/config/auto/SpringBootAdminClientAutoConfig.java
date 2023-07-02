@@ -17,6 +17,7 @@
 
 package org.laokou.common.monitor.config.auto;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.codecentric.boot.admin.client.config.ClientProperties;
 import de.codecentric.boot.admin.client.config.InstanceProperties;
 import de.codecentric.boot.admin.client.config.SpringBootAdminClientEnabledCondition;
@@ -24,16 +25,10 @@ import de.codecentric.boot.admin.client.registration.*;
 import de.codecentric.boot.admin.client.registration.metadata.CompositeMetadataContributor;
 import de.codecentric.boot.admin.client.registration.metadata.MetadataContributor;
 import de.codecentric.boot.admin.client.registration.metadata.StartupDateMetadataContributor;
-import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.ServletContext;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
-import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
-import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
-import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
-import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactoryBuilder;
-import org.apache.hc.client5.http.ssl.TrustSelfSignedStrategy;
-import org.apache.hc.core5.ssl.SSLContexts;
+import org.laokou.common.core.utils.HttpUtil;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
@@ -62,12 +57,8 @@ import org.springframework.web.client.ExtractingResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import javax.net.ssl.SSLContext;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -155,8 +146,7 @@ public class SpringBootAdminClientAutoConfig {
 
 		@Bean
 		@ConditionalOnMissingBean
-		public RegistrationClient registrationClient(ClientProperties client)
-				throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+		public RegistrationClient registrationClient(ClientProperties client) {
 			RestTemplateBuilder builder = new RestTemplateBuilder().setConnectTimeout(client.getConnectTimeout());
 			builder.setReadTimeout(client.getReadTimeout());
 			if (client.getUsername() != null && client.getPassword() != null) {
@@ -164,46 +154,29 @@ public class SpringBootAdminClientAutoConfig {
 			}
 			RestTemplate build = builder.build();
 			HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-			disableSsl(httpClientBuilder);
+			HttpUtil.disableSsl(httpClientBuilder);
 			CloseableHttpClient closeableHttpClient = httpClientBuilder.build();
 			HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
 					closeableHttpClient);
 			List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-			CustomMappingJackson2HttpMessageConverter converter = new CustomMappingJackson2HttpMessageConverter();
+            MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+            converter.setObjectMapper(new ObjectMapper());
+            MediaType[] mediaTypes = new MediaType[]{
+                    MediaType.APPLICATION_JSON,
+                    MediaType.APPLICATION_OCTET_STREAM,
+                    MediaType.TEXT_HTML,
+                    MediaType.TEXT_PLAIN,
+                    MediaType.TEXT_XML,
+                    MediaType.APPLICATION_ATOM_XML,
+                    MediaType.APPLICATION_FORM_URLENCODED,
+                    MediaType.APPLICATION_PDF,
+            };
+            converter.setSupportedMediaTypes(Arrays.asList(mediaTypes));
 			messageConverters.add(converter);
 			build.setMessageConverters(messageConverters);
 			build.setRequestFactory(requestFactory);
 			build.setErrorHandler(new ExtractingResponseErrorHandler());
 			return new BlockingRegistrationClient(build);
-		}
-
-		@NonNullApi
-		static class CustomMappingJackson2HttpMessageConverter extends MappingJackson2HttpMessageConverter {
-
-			@Override
-			public void setSupportedMediaTypes(List<MediaType> supportedMediaTypes) {
-				List<MediaType> mediaTypes = new ArrayList<>(2);
-				mediaTypes.add(MediaType.valueOf(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));
-				mediaTypes.add(MediaType.valueOf("application/json"));
-				super.setSupportedMediaTypes(mediaTypes);
-			}
-
-		}
-
-		private static void disableSsl(HttpClientBuilder builder)
-				throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-			SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, new TrustSelfSignedStrategy() {
-				@Override
-				public boolean isTrusted(X509Certificate[] x509Certificates, String s) {
-					return true;
-				}
-			}).build();
-			SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactoryBuilder.create()
-					.setSslContext(sslContext).setTlsVersions("TLSv1.2").setHostnameVerifier((s, sslSession) -> true)
-					.build();
-			PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = PoolingHttpClientConnectionManagerBuilder
-					.create().setSSLSocketFactory(sslConnectionSocketFactory).build();
-			builder.setConnectionManager(poolingHttpClientConnectionManager);
 		}
 
 	}
