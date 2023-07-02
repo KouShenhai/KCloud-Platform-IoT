@@ -159,19 +159,12 @@ public class SpringBootAdminClientAutoConfig {
 			HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
 					closeableHttpClient);
 			List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-            MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-            converter.setObjectMapper(new ObjectMapper());
-            MediaType[] mediaTypes = new MediaType[]{
-                    MediaType.APPLICATION_JSON,
-                    MediaType.APPLICATION_OCTET_STREAM,
-                    MediaType.TEXT_HTML,
-                    MediaType.TEXT_PLAIN,
-                    MediaType.TEXT_XML,
-                    MediaType.APPLICATION_ATOM_XML,
-                    MediaType.APPLICATION_FORM_URLENCODED,
-                    MediaType.APPLICATION_PDF,
-            };
-            converter.setSupportedMediaTypes(Arrays.asList(mediaTypes));
+			MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+			converter.setObjectMapper(new ObjectMapper());
+			MediaType[] mediaTypes = new MediaType[] { MediaType.APPLICATION_JSON, MediaType.APPLICATION_OCTET_STREAM,
+					MediaType.TEXT_HTML, MediaType.TEXT_PLAIN, MediaType.TEXT_XML, MediaType.APPLICATION_ATOM_XML,
+					MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_PDF, };
+			converter.setSupportedMediaTypes(Arrays.asList(mediaTypes));
 			messageConverters.add(converter);
 			build.setMessageConverters(messageConverters);
 			build.setRequestFactory(requestFactory);
