@@ -84,7 +84,8 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
 		SysPackageDO sysPackageDO = ConvertUtil.sourceToTarget(dto, SysPackageDO.class);
 		sysPackageDO.setVersion(version);
 		sysPackageService.updateById(sysPackageDO);
-		List<SysPackageMenuDO> list = sysPackageMenuService.list(Wrappers.lambdaQuery(SysPackageMenuDO.class).eq(SysPackageMenuDO::getPackageId, id).select(SysPackageMenuDO::getId));
+		List<SysPackageMenuDO> list = sysPackageMenuService.list(Wrappers.lambdaQuery(SysPackageMenuDO.class)
+				.eq(SysPackageMenuDO::getPackageId, id).select(SysPackageMenuDO::getId));
 		if (CollectionUtil.isNotEmpty(list)) {
 			sysPackageMenuService.removeBatchByIds(list.stream().map(SysPackageMenuDO::getId).toList());
 		}

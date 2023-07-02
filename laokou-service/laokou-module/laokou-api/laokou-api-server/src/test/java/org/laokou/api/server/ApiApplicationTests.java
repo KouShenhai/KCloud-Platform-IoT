@@ -30,14 +30,9 @@ class ApiApplicationTests {
 		String appSecret = "vb05f6c45d67340zaz95v7fa6d49v99zx";
 		long timestamp = System.currentTimeMillis();
 		String nonce = UUID.randomUUID().toString();
-		mockMvc.perform(get("/get")
-				.header(APP_KEY,appKey)
-				.header(APP_SECRET,appSecret)
-				.header(TIMESTAMP,String.valueOf(timestamp))
-				.header(NONCE, nonce)
-				.header(SIGN,sign(appKey,appSecret,nonce,timestamp,"")))
-				.andExpect(status().isOk())
-				.andDo(print())
+		mockMvc.perform(get("/get").header(APP_KEY, appKey).header(APP_SECRET, appSecret)
+				.header(TIMESTAMP, String.valueOf(timestamp)).header(NONCE, nonce)
+				.header(SIGN, sign(appKey, appSecret, nonce, timestamp, ""))).andExpect(status().isOk()).andDo(print())
 				.andReturn();
 	}
 

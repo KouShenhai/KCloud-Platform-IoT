@@ -102,7 +102,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 		List<Long> roleIds = dto.getRoleIds();
 		DynamicDataSourceContextHolder.push(DEFAULT_SOURCE);
 		// 删除中间表
-		List<SysUserRoleDO> list = sysUserRoleService.list(Wrappers.lambdaQuery(SysUserRoleDO.class).eq(SysUserRoleDO::getUserId, dto.getId()).select(SysUserRoleDO::getId));
+		List<SysUserRoleDO> list = sysUserRoleService.list(Wrappers.lambdaQuery(SysUserRoleDO.class)
+				.eq(SysUserRoleDO::getUserId, dto.getId()).select(SysUserRoleDO::getId));
 		if (CollectionUtil.isNotEmpty(list)) {
 			sysUserRoleService.removeBatchByIds(list.stream().map(SysUserRoleDO::getId).toList());
 		}
