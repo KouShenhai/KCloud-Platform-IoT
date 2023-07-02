@@ -233,7 +233,7 @@ public class HttpUtil {
 	}
 
 	@SneakyThrows
-	private static void disableSsl(HttpClientBuilder builder) {
+	public static void disableSsl(HttpClientBuilder builder) {
 		X509TrustManager disabledTrustManager = new DisableValidationTrustManager();
 		TrustManager[] trustManagers = new TrustManager[] { disabledTrustManager };
 		SSLContext sslContext = SSLContext.getInstance("SSL");
