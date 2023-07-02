@@ -39,7 +39,8 @@ import static org.laokou.common.core.constant.Constant.TRUE;
  *
  * @author laokou
  */
-@SpringBootApplication(exclude = { OAuth2AuthorizationServerAutoConfiguration.class, SpringBootAdminClientAutoConfiguration.class })
+@SpringBootApplication(
+		exclude = { OAuth2AuthorizationServerAutoConfiguration.class, SpringBootAdminClientAutoConfiguration.class })
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties

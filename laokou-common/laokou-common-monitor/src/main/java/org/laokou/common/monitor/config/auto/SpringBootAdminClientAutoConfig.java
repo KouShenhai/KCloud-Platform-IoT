@@ -82,142 +82,146 @@ import static org.springframework.web.reactive.function.client.ExchangeFilterFun
 @AutoConfiguration
 @Conditional(SpringBootAdminClientEnabledCondition.class)
 @AutoConfigureAfter({ WebEndpointAutoConfiguration.class, RestTemplateAutoConfiguration.class,
-        WebClientAutoConfiguration.class })
+		WebClientAutoConfiguration.class })
 @EnableConfigurationProperties({ ClientProperties.class, InstanceProperties.class, ServerProperties.class,
-        ManagementServerProperties.class })
+		ManagementServerProperties.class })
 public class SpringBootAdminClientAutoConfig {
 
-    @Bean
-    @ConditionalOnMissingBean
-    public ApplicationRegistrator registrator(RegistrationClient registrationClient, ClientProperties client,
-                                              ApplicationFactory applicationFactory) {
-        return new DefaultApplicationRegistrator(applicationFactory, registrationClient, client.getAdminUrl(),
-                client.isRegisterOnce());
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public ApplicationRegistrator registrator(RegistrationClient registrationClient, ClientProperties client,
+			ApplicationFactory applicationFactory) {
+		return new DefaultApplicationRegistrator(applicationFactory, registrationClient, client.getAdminUrl(),
+				client.isRegisterOnce());
+	}
 
-    @Bean
-    @ConditionalOnMissingBean
-    public RegistrationApplicationListener registrationListener(ClientProperties client,
-                                                                ApplicationRegistrator registrator, Environment environment) {
-        RegistrationApplicationListener listener = new RegistrationApplicationListener(registrator);
-        listener.setAutoRegister(client.isAutoRegistration());
-        listener.setAutoDeregister(client.isAutoDeregistration(environment));
-        listener.setRegisterPeriod(client.getPeriod());
-        return listener;
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public RegistrationApplicationListener registrationListener(ClientProperties client,
+			ApplicationRegistrator registrator, Environment environment) {
+		RegistrationApplicationListener listener = new RegistrationApplicationListener(registrator);
+		listener.setAutoRegister(client.isAutoRegistration());
+		listener.setAutoDeregister(client.isAutoDeregistration(environment));
+		listener.setRegisterPeriod(client.getPeriod());
+		return listener;
+	}
 
-    @Bean
-    @ConditionalOnMissingBean
-    public StartupDateMetadataContributor startupDateMetadataContributor() {
-        return new StartupDateMetadataContributor();
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public StartupDateMetadataContributor startupDateMetadataContributor() {
+		return new StartupDateMetadataContributor();
+	}
 
-    @Configuration(proxyBeanMethods = false)
-    @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-    @AutoConfigureAfter(DispatcherServletAutoConfiguration.class)
-    public static class ServletConfiguration {
+	@Configuration(proxyBeanMethods = false)
+	@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+	@AutoConfigureAfter(DispatcherServletAutoConfiguration.class)
+	public static class ServletConfiguration {
 
-        @Bean
-        @Lazy(false)
-        @ConditionalOnMissingBean
-        public ApplicationFactory applicationFactory(InstanceProperties instance, ManagementServerProperties management,
-                                                     ServerProperties server, ServletContext servletContext, PathMappedEndpoints pathMappedEndpoints,
-                                                     WebEndpointProperties webEndpoint, ObjectProvider<List<MetadataContributor>> metadataContributors,
-                                                     DispatcherServletPath dispatcherServletPath) {
-            return new ServletApplicationFactory(instance, management, server, servletContext, pathMappedEndpoints,
-                    webEndpoint,
-                    new CompositeMetadataContributor(metadataContributors.getIfAvailable(Collections::emptyList)),
-                    dispatcherServletPath);
-        }
+		@Bean
+		@Lazy(false)
+		@ConditionalOnMissingBean
+		public ApplicationFactory applicationFactory(InstanceProperties instance, ManagementServerProperties management,
+				ServerProperties server, ServletContext servletContext, PathMappedEndpoints pathMappedEndpoints,
+				WebEndpointProperties webEndpoint, ObjectProvider<List<MetadataContributor>> metadataContributors,
+				DispatcherServletPath dispatcherServletPath) {
+			return new ServletApplicationFactory(instance, management, server, servletContext, pathMappedEndpoints,
+					webEndpoint,
+					new CompositeMetadataContributor(metadataContributors.getIfAvailable(Collections::emptyList)),
+					dispatcherServletPath);
+		}
 
-    }
+	}
 
-    @Configuration(proxyBeanMethods = false)
-    @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
-    public static class ReactiveConfiguration {
+	@Configuration(proxyBeanMethods = false)
+	@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
+	public static class ReactiveConfiguration {
 
-        @Bean
-        @Lazy(false)
-        @ConditionalOnMissingBean
-        public ApplicationFactory applicationFactory(InstanceProperties instance, ManagementServerProperties management,
-                                                     ServerProperties server, PathMappedEndpoints pathMappedEndpoints, WebEndpointProperties webEndpoint,
-                                                     ObjectProvider<List<MetadataContributor>> metadataContributors, WebFluxProperties webFluxProperties) {
-            return new ReactiveApplicationFactory(instance, management, server, pathMappedEndpoints, webEndpoint,
-                    new CompositeMetadataContributor(metadataContributors.getIfAvailable(Collections::emptyList)),
-                    webFluxProperties);
-        }
+		@Bean
+		@Lazy(false)
+		@ConditionalOnMissingBean
+		public ApplicationFactory applicationFactory(InstanceProperties instance, ManagementServerProperties management,
+				ServerProperties server, PathMappedEndpoints pathMappedEndpoints, WebEndpointProperties webEndpoint,
+				ObjectProvider<List<MetadataContributor>> metadataContributors, WebFluxProperties webFluxProperties) {
+			return new ReactiveApplicationFactory(instance, management, server, pathMappedEndpoints, webEndpoint,
+					new CompositeMetadataContributor(metadataContributors.getIfAvailable(Collections::emptyList)),
+					webFluxProperties);
+		}
 
-    }
+	}
 
-    @Configuration(proxyBeanMethods = false)
-    @ConditionalOnBean(RestTemplateBuilder.class)
-    public static class BlockingRegistrationClientConfig {
+	@Configuration(proxyBeanMethods = false)
+	@ConditionalOnBean(RestTemplateBuilder.class)
+	public static class BlockingRegistrationClientConfig {
 
-        @Bean
-        @ConditionalOnMissingBean
-        public RegistrationClient registrationClient(ClientProperties client) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-            RestTemplateBuilder builder = new RestTemplateBuilder().setConnectTimeout(client.getConnectTimeout());
-            builder.setReadTimeout(client.getReadTimeout());
-            if (client.getUsername() != null && client.getPassword() != null) {
-                builder = builder.basicAuthentication(client.getUsername(), client.getPassword());
-            }
-            RestTemplate build = builder.build();
-            HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-            disableSsl(httpClientBuilder);
-            CloseableHttpClient closeableHttpClient = httpClientBuilder.build();
-            HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(closeableHttpClient);
-            List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-            CustomMappingJackson2HttpMessageConverter converter = new CustomMappingJackson2HttpMessageConverter();
-            messageConverters.add(converter);
-            build.setMessageConverters(messageConverters);
-            build.setRequestFactory(requestFactory);
-            build.setErrorHandler(new ExtractingResponseErrorHandler());
-            return new BlockingRegistrationClient(build);
-        }
+		@Bean
+		@ConditionalOnMissingBean
+		public RegistrationClient registrationClient(ClientProperties client)
+				throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+			RestTemplateBuilder builder = new RestTemplateBuilder().setConnectTimeout(client.getConnectTimeout());
+			builder.setReadTimeout(client.getReadTimeout());
+			if (client.getUsername() != null && client.getPassword() != null) {
+				builder = builder.basicAuthentication(client.getUsername(), client.getPassword());
+			}
+			RestTemplate build = builder.build();
+			HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+			disableSsl(httpClientBuilder);
+			CloseableHttpClient closeableHttpClient = httpClientBuilder.build();
+			HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
+					closeableHttpClient);
+			List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+			CustomMappingJackson2HttpMessageConverter converter = new CustomMappingJackson2HttpMessageConverter();
+			messageConverters.add(converter);
+			build.setMessageConverters(messageConverters);
+			build.setRequestFactory(requestFactory);
+			build.setErrorHandler(new ExtractingResponseErrorHandler());
+			return new BlockingRegistrationClient(build);
+		}
 
-        @NonNullApi
-        static class CustomMappingJackson2HttpMessageConverter extends MappingJackson2HttpMessageConverter {
-            @Override
-            public void setSupportedMediaTypes(List<MediaType> supportedMediaTypes) {
-                List<MediaType> mediaTypes = new ArrayList<>(2);
-                mediaTypes.add(MediaType.valueOf(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));
-                mediaTypes.add(MediaType.valueOf("application/json"));
-                super.setSupportedMediaTypes(mediaTypes);
-            }
-        }
+		@NonNullApi
+		static class CustomMappingJackson2HttpMessageConverter extends MappingJackson2HttpMessageConverter {
 
-        private static void disableSsl(HttpClientBuilder builder) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-            SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, new TrustSelfSignedStrategy() {
-                @Override
-                public boolean isTrusted(X509Certificate[] x509Certificates, String s) {
-                    return true;
-                }
-            }).build();
-            SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactoryBuilder.create()
-                    .setSslContext(sslContext)
-                    .setTlsVersions("TLSv1.2")
-                    .setHostnameVerifier((s, sslSession) -> true)
-                    .build();
-            PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = PoolingHttpClientConnectionManagerBuilder
-                    .create().setSSLSocketFactory(sslConnectionSocketFactory).build();
-            builder.setConnectionManager(poolingHttpClientConnectionManager);
-        }
+			@Override
+			public void setSupportedMediaTypes(List<MediaType> supportedMediaTypes) {
+				List<MediaType> mediaTypes = new ArrayList<>(2);
+				mediaTypes.add(MediaType.valueOf(MediaType.TEXT_HTML_VALUE + ";charset=UTF-8"));
+				mediaTypes.add(MediaType.valueOf("application/json"));
+				super.setSupportedMediaTypes(mediaTypes);
+			}
 
-    }
+		}
 
-    @Configuration(proxyBeanMethods = false)
-    @ConditionalOnBean(WebClient.Builder.class)
-    @ConditionalOnMissingBean(RestTemplateBuilder.class)
-    public static class ReactiveRegistrationClientConfig {
+		private static void disableSsl(HttpClientBuilder builder)
+				throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+			SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, new TrustSelfSignedStrategy() {
+				@Override
+				public boolean isTrusted(X509Certificate[] x509Certificates, String s) {
+					return true;
+				}
+			}).build();
+			SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactoryBuilder.create()
+					.setSslContext(sslContext).setTlsVersions("TLSv1.2").setHostnameVerifier((s, sslSession) -> true)
+					.build();
+			PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = PoolingHttpClientConnectionManagerBuilder
+					.create().setSSLSocketFactory(sslConnectionSocketFactory).build();
+			builder.setConnectionManager(poolingHttpClientConnectionManager);
+		}
 
-        @Bean
-        @ConditionalOnMissingBean
-        public RegistrationClient registrationClient(ClientProperties client, WebClient.Builder webClient) {
-            if (client.getUsername() != null && client.getPassword() != null) {
-                webClient = webClient.filter(basicAuthentication(client.getUsername(), client.getPassword()));
-            }
-            return new ReactiveRegistrationClient(webClient.build(), client.getReadTimeout());
-        }
+	}
 
-    }
+	@Configuration(proxyBeanMethods = false)
+	@ConditionalOnBean(WebClient.Builder.class)
+	@ConditionalOnMissingBean(RestTemplateBuilder.class)
+	public static class ReactiveRegistrationClientConfig {
+
+		@Bean
+		@ConditionalOnMissingBean
+		public RegistrationClient registrationClient(ClientProperties client, WebClient.Builder webClient) {
+			if (client.getUsername() != null && client.getPassword() != null) {
+				webClient = webClient.filter(basicAuthentication(client.getUsername(), client.getPassword()));
+			}
+			return new ReactiveRegistrationClient(webClient.build(), client.getReadTimeout());
+		}
+
+	}
+
 }
