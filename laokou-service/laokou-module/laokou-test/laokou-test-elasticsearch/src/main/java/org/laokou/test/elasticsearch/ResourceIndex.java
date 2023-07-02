@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,6 @@ package org.laokou.test.elasticsearch;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
-import org.laokou.common.elasticsearch.annotation.ElasticsearchField;
 import org.laokou.common.elasticsearch.annotation.Field;
 import org.laokou.common.elasticsearch.constant.Constant;
 import org.laokou.common.elasticsearch.enums.FieldTypeEnum;
