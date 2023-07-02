@@ -81,5 +81,4 @@ public class SecretUtil {
 		return DigestUtils.md5DigestAsHex(str.getBytes(StandardCharsets.UTF_8));
 	}
 
-
 }

@@ -139,11 +139,13 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 		roleDO.setVersion(version);
 		sysRoleService.updateById(roleDO);
 		// 删除中间表
-		List<SysRoleMenuDO> list1 = sysRoleMenuService.list(Wrappers.lambdaQuery(SysRoleMenuDO.class).eq(SysRoleMenuDO::getRoleId, dto.getId()).select(SysRoleMenuDO::getId));
+		List<SysRoleMenuDO> list1 = sysRoleMenuService.list(Wrappers.lambdaQuery(SysRoleMenuDO.class)
+				.eq(SysRoleMenuDO::getRoleId, dto.getId()).select(SysRoleMenuDO::getId));
 		if (CollectionUtil.isNotEmpty(list1)) {
 			sysRoleMenuService.removeBatchByIds(list1.stream().map(SysRoleMenuDO::getId).toList());
 		}
-		List<SysRoleDeptDO> list2 = sysRoleDeptService.list(Wrappers.lambdaQuery(SysRoleDeptDO.class).eq(SysRoleDeptDO::getRoleId, dto.getId()).select(SysRoleDeptDO::getId));
+		List<SysRoleDeptDO> list2 = sysRoleDeptService.list(Wrappers.lambdaQuery(SysRoleDeptDO.class)
+				.eq(SysRoleDeptDO::getRoleId, dto.getId()).select(SysRoleDeptDO::getId));
 		if (CollectionUtil.isNotEmpty(list2)) {
 			sysRoleDeptService.removeBatchByIds(list2.stream().map(SysRoleDeptDO::getId).toList());
 		}
