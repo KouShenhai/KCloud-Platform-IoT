@@ -16,6 +16,7 @@
  */
 package org.laokou.api.server.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.secret.annotation.ApiSecret;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,12 +25,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @author laokou
  */
 @RestController
+@Slf4j
 public class ApiController {
 
 	@ApiSecret
 	@GetMapping("/get")
 	public void get() {
-		System.out.println("测试验签，验签通过");
+		log.info("测试验签，验签通过");
 	}
 
 }
