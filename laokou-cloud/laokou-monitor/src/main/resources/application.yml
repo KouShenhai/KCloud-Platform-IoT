@@ -31,10 +31,11 @@ server:
     key-alias: ${spring.application.name}
     # 秘钥类型
     key-store-type: PKCS12
-    # 口令
+    # 证书密码
     key-store-password: laokou
   http2:
     enabled: true
+
 # spring
 spring:
   application:

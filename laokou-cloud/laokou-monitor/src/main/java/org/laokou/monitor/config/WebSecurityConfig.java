@@ -18,15 +18,23 @@
 package org.laokou.monitor.config;
 
 import de.codecentric.boot.admin.server.config.AdminServerProperties;
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.reactive.ClientHttpConnector;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import reactor.netty.http.client.HttpClient;
+
+import javax.net.ssl.SSLException;
 
 /**
  * @author laokou
@@ -36,6 +44,14 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 public class WebSecurityConfig {
 
 	private final AdminServerProperties adminServerProperties;
+
+	@Bean
+	public ClientHttpConnector customHttpClient() throws SSLException {
+		// http://docs.spring-boot-admin.com/current/security.html
+		SslContext context = SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build();
+		HttpClient httpClient = HttpClient.create().secure(t -> t.sslContext(context));
+		return new ReactorClientHttpConnector(httpClient);
+	}
 
 	@Bean
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
@@ -54,7 +70,7 @@ public class WebSecurityConfig {
 				.formLogin(
 						login -> login.loginPage(adminServerProperties.path("/login")).successHandler(successHandler))
 				.logout(logout -> logout.logoutUrl(adminServerProperties.path("/logout")))
-				.httpBasic(AbstractHttpConfigurer::disable).build();
+				.csrf(AbstractHttpConfigurer::disable).build();
 	}
 
 }

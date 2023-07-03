@@ -18,6 +18,7 @@ package org.laokou.gateway;
 
 import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import de.codecentric.boot.admin.client.config.SpringBootAdminClientAutoConfiguration;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -28,7 +29,7 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {SpringBootAdminClientAutoConfiguration.class})
 @EnableEncryptableProperties
 @EnableDiscoveryClient
 public class GatewayApplication {
