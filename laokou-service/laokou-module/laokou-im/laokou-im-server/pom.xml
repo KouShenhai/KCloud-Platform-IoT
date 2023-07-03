@@ -32,6 +32,10 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-monitor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-im-client</artifactId>
             <exclusions>
                 <exclusion>

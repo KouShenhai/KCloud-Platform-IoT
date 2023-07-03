@@ -25,6 +25,9 @@ import de.codecentric.boot.admin.client.registration.*;
 import de.codecentric.boot.admin.client.registration.metadata.CompositeMetadataContributor;
 import de.codecentric.boot.admin.client.registration.metadata.MetadataContributor;
 import de.codecentric.boot.admin.client.registration.metadata.StartupDateMetadataContributor;
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import jakarta.servlet.ServletContext;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
@@ -51,12 +54,15 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.ExtractingResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.netty.http.client.HttpClient;
 
+import javax.net.ssl.SSLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -181,10 +187,13 @@ public class SpringBootAdminClientAutoConfig {
 
 		@Bean
 		@ConditionalOnMissingBean
-		public RegistrationClient registrationClient(ClientProperties client, WebClient.Builder webClient) {
+		public RegistrationClient registrationClient(ClientProperties client, WebClient.Builder webClient) throws SSLException {
 			if (client.getUsername() != null && client.getPassword() != null) {
 				webClient = webClient.filter(basicAuthentication(client.getUsername(), client.getPassword()));
 			}
+			SslContext context = SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build();
+			HttpClient httpClient = HttpClient.create().secure(t -> t.sslContext(context));
+			webClient.clientConnector(new ReactorClientHttpConnector(httpClient));
 			return new ReactiveRegistrationClient(webClient.build(), client.getReadTimeout());
 		}
 
