@@ -15,4 +15,4 @@
  *
  */
 
-证书导入JDK：keytool -import -v -trustcacerts -alias monitor -file monitor.cer -storepass changeit -keystore cacerts
+证书导入JDK：keytool -import -v -trustcacerts -alias laokou-monitor -file monitor.cer -storepass changeit -keystore cacerts
