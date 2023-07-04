@@ -31,7 +31,8 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class, SpringBootAdminClientAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class, SpringBootAdminClientAutoConfiguration.class,
+		ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableEncryptableProperties
 @EnableDiscoveryClient(autoRegister = false)
 public class ImApplication {

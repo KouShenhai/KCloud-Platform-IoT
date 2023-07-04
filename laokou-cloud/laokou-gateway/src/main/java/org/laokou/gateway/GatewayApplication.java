@@ -29,7 +29,7 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication(exclude = {SpringBootAdminClientAutoConfiguration.class})
+@SpringBootApplication(exclude = { SpringBootAdminClientAutoConfiguration.class })
 @EnableEncryptableProperties
 @EnableDiscoveryClient
 public class GatewayApplication {
