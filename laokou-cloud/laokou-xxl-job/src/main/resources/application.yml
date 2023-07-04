@@ -1,5 +1,6 @@
 jasypt:
   encryptor:
+    password: 5201314wumeihua
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
 management:
@@ -68,8 +69,8 @@ xxl:
   job:
     accessToken: default_token
     i18n: zh_CN
-    logretentiondays: 30
-    triggerpool:
+    intentionalities: 30
+    trigger-pool:
       fast:
         max: 200
       slow:

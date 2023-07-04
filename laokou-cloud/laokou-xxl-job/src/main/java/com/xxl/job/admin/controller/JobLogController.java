@@ -16,6 +16,8 @@ import com.xxl.job.core.biz.model.LogParam;
 import com.xxl.job.core.biz.model.LogResult;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.util.DateUtil;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,8 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +53,7 @@ public class JobLogController {
 
 	@RequestMapping
 	public String index(HttpServletRequest request, Model model,
-			@RequestParam(required = false, defaultValue = "0") Integer jobId) {
+						@RequestParam(required = false, defaultValue = "0") Integer jobId) {
 
 		// 执行器列表
 		List<XxlJobGroup> jobGroupList_all = xxlJobGroupDao.findAll();

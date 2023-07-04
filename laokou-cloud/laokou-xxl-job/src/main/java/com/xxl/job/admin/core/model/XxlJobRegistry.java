@@ -3,7 +3,9 @@ package com.xxl.job.admin.core.model;
 import java.util.Date;
 
 /**
- * Created by xuxueli on 16/9/30.
+ *
+ * @author xuxueli
+ * @date 16/9/30
  */
 public class XxlJobRegistry {
 

@@ -369,8 +369,9 @@ public final class CronExpression implements Serializable, Cloneable {
 		// the second immediately following it.
 		while (difference == 1000) {
 			newDate = getTimeAfter(lastDate);
-			if (newDate == null)
+			if (newDate == null) {
 				break;
+			}
 
 			difference = newDate.getTime() - lastDate.getTime();
 

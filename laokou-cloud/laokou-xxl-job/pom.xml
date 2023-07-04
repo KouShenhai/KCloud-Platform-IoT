@@ -11,10 +11,8 @@
     <properties>
         <!--xxl-job版本-->
         <xxl-job.version>2.4.0</xxl-job.version>
-        <!--spring-boot版本-->
-        <spring-boot.version>2.7.10</spring-boot.version>
         <!--mysql版本-->
-        <mysql.version>8.0.32</mysql.version>
+        <mysql.version>8.0.33</mysql.version>
         <!--mybatis版本-->
         <mybatis.version>3.0.2</mybatis.version>
     </properties>
@@ -60,19 +58,14 @@
             <artifactId>xxl-job-core</artifactId>
             <version>${xxl-job.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- 定义 spring boot 版本 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-parent</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
 </project>

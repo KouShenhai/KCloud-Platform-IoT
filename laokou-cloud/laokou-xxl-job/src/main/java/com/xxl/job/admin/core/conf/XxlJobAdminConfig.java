@@ -3,13 +3,13 @@ package com.xxl.job.admin.core.conf;
 import com.xxl.job.admin.core.alarm.JobAlarmer;
 import com.xxl.job.admin.core.scheduler.XxlJobScheduler;
 import com.xxl.job.admin.dao.*;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Arrays;
 
@@ -57,14 +57,14 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
 	@Value("${spring.mail.from}")
 	private String emailFrom;
 
-	@Value("${xxl.job.triggerpool.fast.max}")
+	@Value("${xxl.job.trigger-pool.fast.max}")
 	private int triggerPoolFastMax;
 
-	@Value("${xxl.job.triggerpool.slow.max}")
+	@Value("${xxl.job.trigger-pool.slow.max}")
 	private int triggerPoolSlowMax;
 
-	@Value("${xxl.job.logretentiondays}")
-	private int logretentiondays;
+	@Value("${xxl.job.intentionalities}")
+	private int intentionalities;
 
 	// dao, service
 
@@ -122,10 +122,10 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
 	}
 
 	public int getLogretentiondays() {
-		if (logretentiondays < 7) {
+		if (intentionalities < 7) {
 			return -1; // Limit greater than or equal to 7, otherwise close
 		}
-		return logretentiondays;
+		return intentionalities;
 	}
 
 	public XxlJobLogDao getXxlJobLogDao() {
