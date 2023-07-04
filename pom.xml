@@ -218,6 +218,7 @@
                 <SSL-ENABLED>false</SSL-ENABLED>
                 <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
                 <MAIL-USERNAME>xxx</MAIL-USERNAME>
+                <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -250,6 +251,7 @@
                 <SSL-ENABLED>true</SSL-ENABLED>
                 <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
                 <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
+                <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
             </properties>
         </profile>
         <!-- 正式环境 -->
@@ -300,6 +302,8 @@
                 <MAIL-PASSWORD>${MAIL-PASSWORD:ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)}</MAIL-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
                 <MAIL-USERNAME>${MAIL-USERNAME:2413176044@qq.com}</MAIL-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT-ENCRYPTOR-PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
             </properties>
         </profile>
     </profiles>
