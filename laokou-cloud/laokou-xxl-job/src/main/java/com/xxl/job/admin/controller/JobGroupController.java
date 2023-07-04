@@ -47,8 +47,8 @@ public class JobGroupController {
 	@ResponseBody
 	@PermissionLimit(adminuser = true)
 	public Map<String, Object> pageList(HttpServletRequest request,
-										@RequestParam(required = false, defaultValue = "0") int start,
-										@RequestParam(required = false, defaultValue = "10") int length, String appname, String title) {
+			@RequestParam(required = false, defaultValue = "0") int start,
+			@RequestParam(required = false, defaultValue = "10") int length, String appname, String title) {
 
 		// page query
 		List<XxlJobGroup> list = xxlJobGroupDao.pageList(start, length, appname, title);

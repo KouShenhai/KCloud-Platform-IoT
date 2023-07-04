@@ -53,7 +53,7 @@ public class JobLogController {
 
 	@RequestMapping
 	public String index(HttpServletRequest request, Model model,
-						@RequestParam(required = false, defaultValue = "0") Integer jobId) {
+			@RequestParam(required = false, defaultValue = "0") Integer jobId) {
 
 		// 执行器列表
 		List<XxlJobGroup> jobGroupList_all = xxlJobGroupDao.findAll();

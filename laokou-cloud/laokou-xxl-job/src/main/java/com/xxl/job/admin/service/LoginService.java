@@ -41,7 +41,7 @@ public class LoginService {
 	}
 
 	public ReturnT<String> login(HttpServletRequest request, HttpServletResponse response, String username,
-								 String password, boolean ifRemember) {
+			String password, boolean ifRemember) {
 
 		// param
 		if (username == null || username.trim().length() == 0 || password == null || password.trim().length() == 0) {

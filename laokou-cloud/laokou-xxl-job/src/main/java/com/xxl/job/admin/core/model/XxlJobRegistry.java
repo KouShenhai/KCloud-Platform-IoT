@@ -3,7 +3,6 @@ package com.xxl.job.admin.core.model;
 import java.util.Date;
 
 /**
- *
  * @author xuxueli
  * @date 16/9/30
  */

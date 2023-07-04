@@ -38,7 +38,7 @@ public class JobApiController {
 	@ResponseBody
 	@PermissionLimit(limit = false)
 	public ReturnT<String> api(HttpServletRequest request, @PathVariable("uri") String uri,
-							   @RequestBody(required = false) String data) {
+			@RequestBody(required = false) String data) {
 
 		// valid
 		if (!"POST".equalsIgnoreCase(request.getMethod())) {
