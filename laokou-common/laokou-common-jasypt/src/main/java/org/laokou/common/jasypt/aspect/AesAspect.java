@@ -32,29 +32,29 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class AesAspect {
 
-    @Before(value = "@annotation(org.laokou.common.jasypt.annotation.Aes)")
-    public void doBefore(JoinPoint point) {
-        Object arg = point.getArgs()[0];
+	@Before(value = "@annotation(org.laokou.common.jasypt.annotation.Aes)")
+	public void doBefore(JoinPoint point) {
+		Object arg = point.getArgs()[0];
 
-        MethodSignature methodSignature = (MethodSignature) point.getSignature();
-//        Method method = methodSignature.getMethod();
-//        Aes aes = AnnotationUtils.findAnnotation(method, Aes.class);
-//        Object proceed = point.proceed();
-//        switch (Objects.requireNonNull(aes).type()) {
-//            case ENCRYPT -> {
-//                if (proceed != null) {
-//                    return AesUtil.encrypt(proceed.toString());
-//                }
-//            }
-//            case DECRYPT -> {
-//                if (proceed != null) {
-//                    return AesUtil.decrypt(proceed.toString());
-//                }
-//            }
-//            default -> {
-//
-//            }
-//        }
-    }
+		MethodSignature methodSignature = (MethodSignature) point.getSignature();
+		// Method method = methodSignature.getMethod();
+		// Aes aes = AnnotationUtils.findAnnotation(method, Aes.class);
+		// Object proceed = point.proceed();
+		// switch (Objects.requireNonNull(aes).type()) {
+		// case ENCRYPT -> {
+		// if (proceed != null) {
+		// return AesUtil.encrypt(proceed.toString());
+		// }
+		// }
+		// case DECRYPT -> {
+		// if (proceed != null) {
+		// return AesUtil.decrypt(proceed.toString());
+		// }
+		// }
+		// default -> {
+		//
+		// }
+		// }
+	}
 
 }
