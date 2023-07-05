@@ -56,7 +56,7 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLo
 	@DS(Constant.SHARDING_SPHERE_READWRITE)
 	public Boolean insertLoginLog(LoginLogEvent event) {
 		SysLoginLogDO logDO = ConvertUtil.sourceToTarget(event, SysLoginLogDO.class);
-		return baseMapper.insert(logDO) > 0 ? true : false;
+		return baseMapper.insert(logDO) > 0;
 	}
 
 	@Override

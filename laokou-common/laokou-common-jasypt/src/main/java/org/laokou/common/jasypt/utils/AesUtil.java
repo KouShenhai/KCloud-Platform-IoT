@@ -23,6 +23,7 @@ import org.springframework.util.Assert;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -59,6 +60,11 @@ public class AesUtil {
 		cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, new IvParameterSpec(new byte[16]));
 		byte[] bytes = Base64.decodeBase64(data);
 		return new String(cipher.doFinal(bytes), StandardCharsets.UTF_8);
+	}
+
+	public static void transform(Object obj) {
+		Field[] fields = obj.getClass().getFields();
+
 	}
 
 }
