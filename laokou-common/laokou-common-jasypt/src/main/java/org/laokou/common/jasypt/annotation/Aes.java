@@ -24,7 +24,7 @@ import java.lang.annotation.*;
 /**
  * @author laokou
  */
-@Target({ ElementType.FIELD })
+@Target({ ElementType.FIELD,ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Aes {

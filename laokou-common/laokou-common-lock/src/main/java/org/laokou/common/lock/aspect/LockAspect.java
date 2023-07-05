@@ -62,13 +62,14 @@ public class LockAspect {
 		final LockType type = lock4j.type();
 		final LockScope scope = lock4j.scope();
 		Locks locks = factory.build(scope);
+		Object obj = null;
 		// 设置锁的自动过期时间，则执行业务的时间一定要小于锁的自动过期时间，否则就会报错
 		try {
 			if (locks.tryLock(type, key, expire, timeout)) {
-				joinPoint.proceed();
+				obj = joinPoint.proceed();
 			}
 			else {
-				throw new CustomException("前方拥堵，请稍后再试");
+				throw new CustomException("请求太频繁，请稍后再试");
 			}
 		}
 		catch (Throwable throwable) {
@@ -79,7 +80,7 @@ public class LockAspect {
 			// 释放锁
 			locks.unlock(type, key);
 		}
-		return null;
+		return obj;
 	}
 
 }

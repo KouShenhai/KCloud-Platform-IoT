@@ -73,7 +73,7 @@ public class SysVideoApiController {
 	@PostMapping("/syncIndex")
 	@Operation(summary = "视频管理>同步索引", description = "视频管理>同步索引")
 	@OperateLog(module = "视频管理", name = "同步索引")
-	@Lock4j(key = "video_sync_index_lock")
+	@Lock4j(key = "video_sync_index_lock_")
 	@PreAuthorize("hasAuthority('sys:resource:video:syncIndex')")
 	public HttpResult<Boolean> syncIndex() throws InterruptedException {
 		return new HttpResult<Boolean>()
