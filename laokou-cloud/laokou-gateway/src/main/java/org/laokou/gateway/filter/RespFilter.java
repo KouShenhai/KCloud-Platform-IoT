@@ -101,7 +101,10 @@ public class RespFilter implements GlobalFilter, Ordered {
 						JsonNode msgNode = node.get(GatewayConstant.ERROR_DESCRIPTION);
 						JsonNode codeNode = node.get(GatewayConstant.ERROR);
 						String msg = "";
-						int code = codeNode.asInt();
+						int code = 500;
+						if (codeNode != null) {
+							code = codeNode.asInt();
+						}
 						if (msgNode != null) {
 							msg = msgNode.asText();
 						}
