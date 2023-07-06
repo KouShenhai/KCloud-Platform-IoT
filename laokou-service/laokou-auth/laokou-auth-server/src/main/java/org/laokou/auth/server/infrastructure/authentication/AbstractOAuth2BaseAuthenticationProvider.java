@@ -143,13 +143,12 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	public Authentication getToken(Authentication authentication, Authentication principal) throws IOException {
 		// 仿照授权码模式
 		// 生成token（access_token + refresh_token）
-		AbstractOAuth2BaseAuthenticationToken abstractOAuth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;
+		AbstractOAuth2BaseAuthenticationToken auth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;
 		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
-				abstractOAuth2BaseAuthenticationToken);
+				auth2BaseAuthenticationToken);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 		if (registeredClient == null) {
 			CustomAuthExceptionHandler.throwError(StatusCode.INTERNAL_SERVER_ERROR, "registeredClient不存在");
-			return null;
 		}
 		// 获取认证范围
 		Set<String> scopes = registeredClient.getScopes();
@@ -242,7 +241,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
 			loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId);
 			CustomAuthExceptionHandler.throwError(code, msg);
-			return null;
 		}
 		if (OAuth2PasswordAuthenticationProvider.GRANT_TYPE.equals(loginType)) {
 			// 验证密码
