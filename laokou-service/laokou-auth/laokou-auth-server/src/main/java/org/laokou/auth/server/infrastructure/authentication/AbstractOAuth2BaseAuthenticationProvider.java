@@ -107,6 +107,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	}
 
 	@SneakyThrows
+	@Transactional(rollbackFor = Exception.class)
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		return getToken(authentication, login(request));
@@ -139,7 +140,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	 * @param principal
 	 * @return
 	 */
-	@Transactional(rollbackFor = Exception.class)
 	public Authentication getToken(Authentication authentication, Authentication principal) throws IOException {
 		// 仿照授权码模式
 		// 生成token（access_token + refresh_token）
@@ -147,6 +147,10 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
 				abstractOAuth2BaseAuthenticationToken);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
+		if (registeredClient == null) {
+			CustomAuthExceptionHandler.throwError(StatusCode.INTERNAL_SERVER_ERROR, "registeredClient不存在");
+			return null;
+		}
 		// 获取认证范围
 		Set<String> scopes = registeredClient.getScopes();
 		String loginName = principal.getCredentials().toString();
@@ -204,10 +208,9 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	 * @param captcha
 	 * @param uuid
 	 * @return
-	 * @throws IOException
 	 */
 	protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password,
-			HttpServletRequest request, String captcha, String uuid) throws IOException {
+			HttpServletRequest request, String captcha, String uuid) {
 		AuthorizationGrantType grantType = getGrantType();
 		String loginType = grantType.getValue();
 		Long tenantId = Long.valueOf(request.getParameter(AuthConstant.TENANT_ID));
@@ -222,7 +225,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId);
 			CustomAuthExceptionHandler.throwError(code, msg);
 		}
-		if (!validate) {
+		if (Boolean.FALSE.equals(validate)) {
 			code = StatusCode.CAPTCHA_ERROR;
 			msg = MessageUtil.getMessage(code);
 			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
@@ -239,6 +242,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
 			loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId);
 			CustomAuthExceptionHandler.throwError(code, msg);
+			return null;
 		}
 		if (OAuth2PasswordAuthenticationProvider.GRANT_TYPE.equals(loginType)) {
 			// 验证密码

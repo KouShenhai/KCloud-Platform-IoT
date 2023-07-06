@@ -26,6 +26,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author laokou
  */
@@ -47,7 +49,7 @@ public class DataCacheAutoConfig {
 
 	@Bean
 	public Cache<String, Object> caffeineCache() {
-		return Caffeine.newBuilder().maximumSize(4096).build();
+		return Caffeine.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).maximumSize(4096).build();
 	}
 
 }
