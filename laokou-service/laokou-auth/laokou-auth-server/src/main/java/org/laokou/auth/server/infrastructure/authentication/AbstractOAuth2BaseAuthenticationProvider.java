@@ -107,7 +107,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	}
 
 	@SneakyThrows
-	@Transactional(rollbackFor = Exception.class)
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		return getToken(authentication, login(request));
@@ -140,6 +139,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	 * @param principal
 	 * @return
 	 */
+	@Transactional(rollbackFor = Exception.class)
 	public Authentication getToken(Authentication authentication, Authentication principal) throws IOException {
 		// 仿照授权码模式
 		// 生成token（access_token + refresh_token）

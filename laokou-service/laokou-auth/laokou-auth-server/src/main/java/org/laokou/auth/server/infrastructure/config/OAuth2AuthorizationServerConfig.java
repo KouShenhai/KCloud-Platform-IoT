@@ -161,6 +161,8 @@ class OAuth2AuthorizationServerConfig {
 		registration.getScopes().forEach(scope -> map.from(scope).whenNonNull().to(registrationBuilder::scope));
 		registration.getRedirectUris()
 				.forEach(redirectUri -> map.from(redirectUri).whenNonNull().to(registrationBuilder::redirectUri));
+		registration.getPostLogoutRedirectUris().forEach(
+				redirectUri -> map.from(redirectUri).whenNonNull().to(registrationBuilder::postLogoutRedirectUri));
 		registrationBuilder.tokenSettings(tokenBuilder.build());
 		registrationBuilder.clientSettings(clientBuilder.build());
 		JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);

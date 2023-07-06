@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package org.laokou.common.security.config;
 
@@ -66,7 +66,7 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (obj != null) {
 			// 防止redis宕机，内存数据不能被及时删除
 			userDetail = (UserDetail) obj;
-			if (DateUtil.isBefore(DateUtil.now(),userDetail.getExpireDate())) {
+			if (DateUtil.isAfter(DateUtil.now(), userDetail.getExpireDate())) {
 				caffeineCache.invalidate(userInfoKey);
 				CustomAuthExceptionHandler.throwError(StatusCode.UNAUTHORIZED,
 						MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
@@ -98,7 +98,7 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 				.requireNonNull(oAuth2Authorization.getAttribute(Principal.class.getName()))).getPrincipal();
 		userDetail = (UserDetail) principal;
 		// 过期时间
-		userDetail.setExpireDate(DateUtil.plusSeconds(DateUtil.now(),expireTime));
+		userDetail.setExpireDate(DateUtil.plusSeconds(DateUtil.now(), expireTime));
 		redisUtil.set(userInfoKey, userDetail, expireTime);
 		// 解密
 		return decryptInfo(userDetail);

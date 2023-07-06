@@ -105,11 +105,11 @@ public class DateUtil {
 		return DateTimeFormatter.ofPattern(timePattern);
 	}
 
-	public static boolean isAfter(LocalDateTime localDateTime1,LocalDateTime localDateTime2) {
+	public static boolean isAfter(LocalDateTime localDateTime1, LocalDateTime localDateTime2) {
 		return localDateTime1.isAfter(localDateTime2);
 	}
 
-	public static boolean isBefore(LocalDateTime localDateTime1,LocalDateTime localDateTime2) {
+	public static boolean isBefore(LocalDateTime localDateTime1, LocalDateTime localDateTime2) {
 		return localDateTime1.isBefore(localDateTime2);
 	}
 
@@ -153,7 +153,7 @@ public class DateUtil {
 	 * @param seconds 秒
 	 * @return LocalDateTime
 	 */
-	public static LocalDateTime plusSeconds(LocalDateTime localDateTime,long seconds) {
+	public static LocalDateTime plusSeconds(LocalDateTime localDateTime, long seconds) {
 		return localDateTime.plusSeconds(seconds);
 	}
 

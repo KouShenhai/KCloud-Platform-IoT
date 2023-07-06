@@ -25,6 +25,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.settings.ConfigurationSettingNames;
 import org.springframework.stereotype.Component;
+
 import java.time.Duration;
 import java.util.Set;
 
@@ -120,6 +121,8 @@ public class OAuth2AuthorizationServerProperties implements InitializingBean {
 		private Set<String> scopes;
 
 		private Set<String> redirectUris;
+
+		private Set<String> postLogoutRedirectUris;
 
 	}
 
