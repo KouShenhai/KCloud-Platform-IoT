@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package org.laokou.common.jasypt.utils;
 
@@ -79,10 +79,11 @@ public class AesUtil {
 				switch (aes.type()) {
 					case DECRYPT -> data = decrypt(data);
 					case ENCRYPT -> data = encrypt(data);
-					default -> {}
+					default -> {
+					}
 				}
 				// 属性赋值
-				field.set(obj,data);
+				field.set(obj, data);
 			}
 		}
 	}

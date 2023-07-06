@@ -105,6 +105,14 @@ public class DateUtil {
 		return DateTimeFormatter.ofPattern(timePattern);
 	}
 
+	public static boolean isAfter(LocalDateTime localDateTime1, LocalDateTime localDateTime2) {
+		return localDateTime1.isAfter(localDateTime2);
+	}
+
+	public static boolean isBefore(LocalDateTime localDateTime1, LocalDateTime localDateTime2) {
+		return localDateTime1.isBefore(localDateTime2);
+	}
+
 	/**
 	 * 转换
 	 * @param dateTime 时间
@@ -132,31 +140,41 @@ public class DateUtil {
 	/**
 	 * 获取 前/后 x天 的时间
 	 * @param localDateTime 时间
-	 * @param day 天
+	 * @param days 天
 	 * @return LocalDateTime
 	 */
-	public static LocalDateTime plusDays(LocalDateTime localDateTime, int day) {
-		return localDateTime.plusDays(day);
+	public static LocalDateTime plusDays(LocalDateTime localDateTime, long days) {
+		return localDateTime.plusDays(days);
+	}
+
+	/**
+	 * 获取 前/后 x秒 的时间
+	 * @param localDateTime 时间
+	 * @param seconds 秒
+	 * @return LocalDateTime
+	 */
+	public static LocalDateTime plusSeconds(LocalDateTime localDateTime, long seconds) {
+		return localDateTime.plusSeconds(seconds);
 	}
 
 	/**
 	 * 获取 前/后 x月 的时间
 	 * @param localDateTime 时间
-	 * @param month 月
+	 * @param months 月
 	 * @return LocalDateTime
 	 */
-	public static LocalDateTime plusMonths(LocalDateTime localDateTime, int month) {
-		return localDateTime.plusMonths(month);
+	public static LocalDateTime plusMonths(LocalDateTime localDateTime, long months) {
+		return localDateTime.plusMonths(months);
 	}
 
 	/**
 	 * 获取 前/后 x年 的时间
 	 * @param localDateTime 时间
-	 * @param year 年
+	 * @param years 年
 	 * @return LocalDateTime
 	 */
-	public static LocalDateTime plusYears(LocalDateTime localDateTime, int year) {
-		return localDateTime.plusYears(year);
+	public static LocalDateTime plusYears(LocalDateTime localDateTime, long years) {
+		return localDateTime.plusYears(years);
 	}
 
 	public static LocalDateTime now() {

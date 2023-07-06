@@ -105,6 +105,9 @@ spring:
           redirect-uris:
             - http://127.0.0.1:8000
             - http://127.0.0.1:8001
+          post-logout-redirect-uris:
+            - http://127.0.0.1:8000
+            - http://127.0.0.1:8001
         request-matcher:
           patterns:
             - /oauth2/captcha
