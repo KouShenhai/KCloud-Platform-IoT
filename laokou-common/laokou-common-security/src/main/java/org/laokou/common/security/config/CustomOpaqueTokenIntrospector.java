@@ -62,6 +62,7 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		obj = caffeineCache.getIfPresent(userInfoKey);
 		if (obj != null) {
+
 			return (UserDetail) obj;
 		}
 		obj = redisUtil.get(userInfoKey);

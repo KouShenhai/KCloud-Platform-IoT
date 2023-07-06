@@ -52,11 +52,6 @@ public class AddressUtil {
 		return addressFormat(SEARCHER.search(ip));
 	}
 
-	public static void main(String[] args) {
-		String realAddress = getRealAddress("111.22.31.41");
-		System.out.println(realAddress);
-	}
-
 	private static String addressFormat(String address) {
 		StringBuilder stringBuffer = new StringBuilder();
 		String[] info = address.split("\\|");

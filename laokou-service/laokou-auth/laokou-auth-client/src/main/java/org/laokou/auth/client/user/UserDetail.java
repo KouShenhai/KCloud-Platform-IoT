@@ -74,6 +74,8 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 
 	private LocalDateTime loginDate;
 
+	private LocalDateTime expireDate;
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -116,7 +118,10 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 		if (!loginIp.equals(that.loginIp)) {
 			return false;
 		}
-		return loginDate.equals(that.loginDate);
+		if (!loginDate.equals(that.loginDate)) {
+			return false;
+		}
+		return expireDate.equals(that.expireDate);
 	}
 
 	@Override
@@ -133,6 +138,7 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 		result = 31 * result + sourceName.hashCode();
 		result = 31 * result + loginIp.hashCode();
 		result = 31 * result + loginDate.hashCode();
+		result = 31 * result + expireDate.hashCode();
 		return result;
 	}
 

@@ -14,8 +14,6 @@
         <power-job.version>4.3.1</power-job.version>
         <!--spring-boot版本-->
         <spring-boot.version>2.7.10</spring-boot.version>
-        <!--mysql版本-->
-        <mysql.version>8.0.31</mysql.version>
     </properties>
 
     <dependencies>

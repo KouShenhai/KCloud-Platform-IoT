@@ -16,9 +16,10 @@
  */
 package org.laokou.common.elasticsearch.utils;
 
-import org.laokou.common.elasticsearch.annotation.Field;
+import org.laokou.common.elasticsearch.annotation.EsField;
 import org.laokou.common.elasticsearch.enums.FieldTypeEnum;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,16 +30,16 @@ public class MappingUtil {
 
 	public static <TDocument> List<Mapping> mappingList(Class<TDocument> clazz) {
 		// 获取所有字段（包含私有）
-		java.lang.reflect.Field[] fields = clazz.getDeclaredFields();
+		Field[] fields = clazz.getDeclaredFields();
 		List<Mapping> mappingList = new ArrayList<>(fields.length);
-		for (java.lang.reflect.Field field : fields) {
-			boolean annotationPresent = field.isAnnotationPresent(Field.class);
+		for (Field field : fields) {
+			boolean annotationPresent = field.isAnnotationPresent(EsField.class);
 			if (annotationPresent) {
-				Field f = field.getAnnotation(Field.class);
-				String fieldName = f.value();
-				FieldTypeEnum fieldType = f.type();
-				String analyzer = f.analyzer();
-				String searchAnalyzer = f.searchAnalyzer();
+				EsField esField = field.getAnnotation(EsField.class);
+				String fieldName = esField.value();
+				FieldTypeEnum fieldType = esField.type();
+				String analyzer = esField.analyzer();
+				String searchAnalyzer = esField.searchAnalyzer();
 				mappingList.add(new Mapping(fieldName, fieldType, searchAnalyzer, analyzer));
 			}
 		}

@@ -67,11 +67,4 @@ public class RegexUtil {
 		return Pattern.matches(MOBILE_REGEX, mobile);
 	}
 
-	public static void main(String[] args) {
-		System.out.println(mailRegex("24131760@qq"));
-		boolean sourceRegex = sourceRegex("tenant_000001");
-		System.out.println(sourceRegex);
-		System.out.println(timeRegex("11:22:22"));
-	}
-
 }

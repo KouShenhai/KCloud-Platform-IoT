@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.flyway;
@@ -34,10 +34,10 @@ public class FlywaySync {
 	private static final String PASSWORD = "laokou123";
 
 	public static void main(String[] args) {
-		Map<String, String> tableMap = Map.of("kcloud_platform_alibaba", "base", "kcloud_platform_flowable", "flowable",
-				"kcloud_platform_nacos", "nacos", "kcloud_platform_alibaba_tenant", "tenant",
+		Map<String, String> tableMap = Map.of("kcloud_platform_alibaba", "base", "kcloud_platform_alibaba_flowable",
+				"flowable", "kcloud_platform_alibaba_nacos", "nacos", "kcloud_platform_alibaba_tenant", "tenant",
 				"kcloud_platform_alibaba_user_0", "user0", "kcloud_platform_alibaba_user_1", "user1",
-				"kcloud_platform_xxl_job", "xxl-job", "kcloud_platform_seata", "seata");
+				"kcloud_platform_alibaba_xxl_job", "xxl-job", "kcloud_platform_alibaba_seata", "seata");
 		tableMap.forEach((k, v) -> {
 			Flyway flyway = Flyway.configure().dataSource(String.format(URL, k), USERNAME, PASSWORD)
 					.locations(new Location(v)).load();

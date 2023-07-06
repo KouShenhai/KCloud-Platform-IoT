@@ -65,7 +65,7 @@ public class SysImageApiController {
 	@PostMapping("/syncIndex")
 	@Operation(summary = "图片管理>同步索引", description = "图片管理>同步索引")
 	@OperateLog(module = "图片管理", name = "同步索引")
-	@Lock4j(key = "image_sync_index_lock")
+	@Lock4j(key = "image_sync_index_lock_")
 	@PreAuthorize("hasAuthority('sys:resource:image:syncIndex')")
 	public HttpResult<Boolean> syncIndex() throws InterruptedException {
 		return new HttpResult<Boolean>()

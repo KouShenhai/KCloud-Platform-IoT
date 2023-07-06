@@ -68,7 +68,7 @@ public class SysAudioApiController {
 	@TraceLog
 	@Operation(summary = "音频管理>同步索引", description = "音频管理>同步索引")
 	@OperateLog(module = "音频管理", name = "同步索引")
-	@Lock4j(key = "audio_sync_index_lock")
+	@Lock4j(key = "audio_sync_index_lock_")
 	@PreAuthorize("hasAuthority('sys:resource:audio:syncIndex')")
 	public HttpResult<Boolean> syncIndex() throws InterruptedException {
 		return new HttpResult<Boolean>()

@@ -23,7 +23,8 @@ import org.laokou.common.i18n.utils.StringUtil;
 import java.util.regex.Pattern;
 
 /**
- * http://www.xwood.net/_site_domain_/_root/5870/5874/t_c280386.html XSS过滤工具
+ * <a href="http://www.xwood.net/_site_domain_/_root/5870/5874/t_c280386.html">...</a>
+ * XSS过滤工具
  *
  * @author laokou
  */
