@@ -19,7 +19,7 @@ package org.laokou.test.elasticsearch;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
-import org.laokou.common.elasticsearch.annotation.Field;
+import org.laokou.common.elasticsearch.annotation.EsField;
 import org.laokou.common.elasticsearch.constant.Constant;
 import org.laokou.common.elasticsearch.enums.FieldTypeEnum;
 
@@ -35,22 +35,22 @@ public class ResourceIndex implements Serializable {
 	@Serial
 	private static final long serialVersionUID = -3715061850731611381L;
 
-	@Field(value = "id", type = FieldTypeEnum.LONG)
+	@EsField(value = "id", type = FieldTypeEnum.LONG)
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
 
-	@Field(value = "title", type = FieldTypeEnum.TEXT, searchAnalyzer = Constant.IK_SEARCH_ANALYZER,
+	@EsField(value = "title", type = FieldTypeEnum.TEXT, searchAnalyzer = Constant.IK_SEARCH_ANALYZER,
 			analyzer = Constant.IK_ANALYZER)
 	private String title;
 
-	@Field(value = "code")
+	@EsField(value = "code")
 	private String code;
 
-	@Field(value = "remark", type = FieldTypeEnum.TEXT, searchAnalyzer = Constant.IK_SEARCH_ANALYZER,
+	@EsField(value = "remark", type = FieldTypeEnum.TEXT, searchAnalyzer = Constant.IK_SEARCH_ANALYZER,
 			analyzer = Constant.IK_ANALYZER)
 	private String remark;
 
-	@Field(value = "ymd")
+	@EsField(value = "ymd")
 	private String ymd;
 
 }

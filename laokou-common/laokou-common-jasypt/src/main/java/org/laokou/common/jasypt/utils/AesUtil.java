@@ -19,6 +19,7 @@ package org.laokou.common.jasypt.utils;
 import lombok.SneakyThrows;
 import org.apache.hc.client5.http.utils.Base64;
 import org.laokou.common.core.utils.ResourceUtil;
+import org.laokou.common.jasypt.annotation.Aes;
 import org.springframework.util.Assert;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -62,9 +63,28 @@ public class AesUtil {
 		return new String(cipher.doFinal(bytes), StandardCharsets.UTF_8);
 	}
 
-	public static void transform(Object obj) {
-		Field[] fields = obj.getClass().getFields();
-
+	public static void transform(Object obj) throws IllegalAccessException {
+		Field[] fields = obj.getClass().getDeclaredFields();
+		for (Field field : fields) {
+			boolean annotationPresent = field.isAnnotationPresent(Aes.class);
+			if (annotationPresent) {
+				// 私有属性
+				field.setAccessible(true);
+				Object o = field.get(obj);
+				if (o == null) {
+					continue;
+				}
+				String data = o.toString();
+				Aes aes = field.getAnnotation(Aes.class);
+				switch (aes.type()) {
+					case DECRYPT -> data = decrypt(data);
+					case ENCRYPT -> data = encrypt(data);
+					default -> {}
+				}
+				// 属性赋值
+				field.set(obj,data);
+			}
+		}
 	}
 
 }

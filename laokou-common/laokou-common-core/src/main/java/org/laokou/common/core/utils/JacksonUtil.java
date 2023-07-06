@@ -133,10 +133,4 @@ public class JacksonUtil {
 		return MAPPER.readTree(json);
 	}
 
-	public static void main(String[] args) {
-		String json = "{\"name\":\"Jack\",\"age\":18}";
-		System.out.println(toBean(json, String.class));
-		System.out.println(toJsonStr(DateUtil.now()));
-	}
-
 }
