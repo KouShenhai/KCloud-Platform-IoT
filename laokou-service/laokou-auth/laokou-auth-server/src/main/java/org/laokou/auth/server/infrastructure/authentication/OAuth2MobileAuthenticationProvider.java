@@ -66,18 +66,18 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
-			CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_NOT_NULL,
+			throw CustomAuthExceptionHandler.getError(StatusCode.CAPTCHA_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
 		}
 		String mobile = request.getParameter(AuthConstant.MOBILE);
 		log.info("手机：{}", mobile);
 		if (StringUtil.isEmpty(mobile)) {
-			CustomAuthExceptionHandler.throwError(StatusCode.MOBILE_NOT_NULL,
+			throw CustomAuthExceptionHandler.getError(StatusCode.MOBILE_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.MOBILE_NOT_NULL));
 		}
 		boolean isMobile = RegexUtil.mobileRegex(mobile);
 		if (!isMobile) {
-			CustomAuthExceptionHandler.throwError(StatusCode.MOBILE_ERROR,
+			throw CustomAuthExceptionHandler.getError(StatusCode.MOBILE_ERROR,
 					MessageUtil.getMessage(StatusCode.MOBILE_ERROR));
 		}
 		// 获取用户信息,并认证信息

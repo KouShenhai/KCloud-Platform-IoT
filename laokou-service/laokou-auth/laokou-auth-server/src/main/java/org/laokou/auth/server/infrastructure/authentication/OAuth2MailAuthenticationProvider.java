@@ -67,18 +67,19 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
-			CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_NOT_NULL,
+			throw CustomAuthExceptionHandler.getError(StatusCode.CAPTCHA_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
 		}
 		String mail = request.getParameter(AuthConstant.MAIL);
 		log.info("邮箱：{}", mail);
 		if (StringUtil.isEmpty(mail)) {
-			CustomAuthExceptionHandler.throwError(StatusCode.MAIL_NOT_NULL,
+			throw CustomAuthExceptionHandler.getError(StatusCode.MAIL_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.MAIL_NOT_NULL));
 		}
 		boolean isMail = RegexUtil.mailRegex(mail);
 		if (!isMail) {
-			CustomAuthExceptionHandler.throwError(StatusCode.MAIL_ERROR, MessageUtil.getMessage(StatusCode.MAIL_ERROR));
+			throw CustomAuthExceptionHandler.getError(StatusCode.MAIL_ERROR,
+					MessageUtil.getMessage(StatusCode.MAIL_ERROR));
 		}
 		// 获取用户信息,并认证信息
 		return super.getUserInfo(mail, "", request, code, mail);

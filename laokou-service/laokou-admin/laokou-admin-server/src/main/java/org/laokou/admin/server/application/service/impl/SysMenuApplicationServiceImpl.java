@@ -33,6 +33,7 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
 	private final RedisUtil redisUtil;
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public SysMenuVO getMenuList() {
 		UserDetail userDetail = UserUtil.userDetail();
 		Long userId = userDetail.getId();
@@ -64,11 +66,13 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public List<SysMenuVO> queryMenuList(SysMenuQo qo) {
 		return sysMenuService.queryMenuList(qo);
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public SysMenuVO getMenuById(Long id) {
 		return sysMenuService.getMenuById(id);
 	}
@@ -112,17 +116,19 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public SysMenuVO treeMenu() {
 		return buildMenu(queryMenuList(new SysMenuQo()));
 	}
 
 	@Override
-
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public List<Long> getMenuIdsByRoleId(Long roleId) {
 		return sysMenuService.getMenuIdsByRoleId(roleId);
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public SysMenuVO treeTenantMenu() {
 		return buildMenu(sysMenuService.getTenantMenuList());
 	}

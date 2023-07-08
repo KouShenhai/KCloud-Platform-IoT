@@ -40,7 +40,7 @@ public class SysOssLogServiceImpl extends ServiceImpl<SysOssLogMapper, SysOssLog
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertLog(OssLogEvent event) {
 		SysOssLogDO sysOssLogDO = ConvertUtil.sourceToTarget(event, SysOssLogDO.class);
-		return this.baseMapper.insert(sysOssLogDO) > 0 ? true : false;
+		return this.baseMapper.insert(sysOssLogDO) > 0;
 	}
 
 	@Override

@@ -75,7 +75,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		String tenantId = request.getParameter(AuthConstant.TENANT_ID);
 		log.info("租户编号：{}", tenantId);
 		if (StringUtil.isEmpty(tenantId)) {
-			CustomAuthExceptionHandler.throwError(StatusCode.TENANT_ID_NOT_NULL,
+			throw CustomAuthExceptionHandler.getError(StatusCode.TENANT_ID_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.TENANT_ID_NOT_NULL));
 		}
 		// 构建请求参数集合
@@ -83,7 +83,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		// 判断scope
 		String scope = parameters.getFirst(OAuth2ParameterNames.SCOPE);
 		if (StringUtil.isNotEmpty(scope) && parameters.get(OAuth2ParameterNames.SCOPE).size() != 1) {
-			CustomAuthExceptionHandler.throwError(StatusCode.INVALID_SCOPE,
+			throw CustomAuthExceptionHandler.getError(StatusCode.INVALID_SCOPE,
 					MessageUtil.getMessage(StatusCode.INVALID_SCOPE));
 		}
 		// 获取上下文认证信息

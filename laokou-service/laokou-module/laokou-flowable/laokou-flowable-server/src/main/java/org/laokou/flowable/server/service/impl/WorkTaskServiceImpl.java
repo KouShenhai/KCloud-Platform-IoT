@@ -43,7 +43,9 @@ import org.laokou.flowable.server.mapper.TaskMapper;
 import org.laokou.flowable.server.service.WorkTaskService;
 import org.laokou.flowable.server.utils.TaskUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -105,6 +107,7 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public AssigneeVO resolveTask(ResolveDTO dto) {
 		ValidatorUtil.validateEntity(dto);
 		String taskId = dto.getTaskId();
@@ -152,6 +155,7 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public PageVO<TaskVO> queryTaskPage(TaskDTO dto) {
 		ValidatorUtil.validateEntity(dto);
 		IPage<TaskVO> page = new Page<>(dto.getPageNum(), dto.getPageSize());
@@ -160,6 +164,7 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public String diagramTask(String processInstanceId) throws IOException {
 		final InputStream inputStream = getInputStream(processInstanceId);
 		final BufferedImage image = ImageIO.read(inputStream);
@@ -167,8 +172,7 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 		if (null != image) {
 			ImageIO.write(image, PNG, outputStream);
 		}
-		String base64String = Base64.encodeBase64String(outputStream.toByteArray());
-		return base64String;
+		return Base64.encodeBase64String(outputStream.toByteArray());
 	}
 
 	@Override

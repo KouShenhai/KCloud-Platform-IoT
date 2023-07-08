@@ -43,6 +43,9 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.awt.*;
 import java.security.Principal;
 import java.security.SecureRandom;
@@ -85,6 +88,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean logout(HttpServletRequest request) {
 		try {
 			String token = getToken(request);
@@ -118,6 +122,7 @@ public class SysAuthApplicationServiceImpl implements SysAuthApplicationService 
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public List<OptionVO> getOptionList() {
 		return sysTenantService.getOptionList();
 	}

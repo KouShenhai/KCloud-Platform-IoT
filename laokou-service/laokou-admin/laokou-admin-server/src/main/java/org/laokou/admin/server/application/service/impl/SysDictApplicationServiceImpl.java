@@ -33,6 +33,7 @@ import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -48,6 +49,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
 
 	@Override
 	@DS(Constant.TENANT)
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public IPage<SysDictVO> queryDictPage(SysDictQo qo) {
 		ValidatorUtil.validateEntity(qo);
 		IPage<SysDictVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
@@ -56,6 +58,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
 
 	@Override
 	@DS(Constant.TENANT)
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public SysDictVO getDictById(Long id) {
 		return sysDictService.getDictById(id);
 	}
@@ -105,6 +108,7 @@ public class SysDictApplicationServiceImpl implements SysDictApplicationService 
 
 	@Override
 	@DS(Constant.TENANT)
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public List<OptionVO> getOptionList(String type) {
 		return sysDictService.getOptionList(type);
 	}

@@ -28,7 +28,7 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-@TableName("BOOT_SYS_OSS")
+@TableName("boot_sys_oss")
 @Schema(name = "SysOssDO", description = "系统存储实体类")
 public class SysOssDO extends BaseDO {
 

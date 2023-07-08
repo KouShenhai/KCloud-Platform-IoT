@@ -39,6 +39,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 
 	@Override
 	@DataFilter(tableAlias = "boot_sys_role")
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public IPage<SysRoleVO> queryRolePage(SysRoleQo qo) {
 		ValidatorUtil.validateEntity(qo);
 		qo.setTenantId(UserUtil.getTenantId());
@@ -68,12 +70,14 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public List<SysRoleVO> getRoleList(SysRoleQo qo) {
 		qo.setTenantId(UserUtil.getTenantId());
 		return sysRoleService.getRoleList(qo);
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public SysRoleVO getRoleById(Long id) {
 		return sysRoleService.getRoleById(id);
 	}

@@ -45,15 +45,6 @@ public class CustomAuthExceptionHandler {
 		writer.close();
 	}
 
-	public static void throwError(int errorCode, String description) {
-		throwError(String.valueOf(errorCode), description, "");
-	}
-
-	public static void throwError(String errorCode, String description, String uri) {
-		OAuth2Error error = new OAuth2Error(errorCode, description, uri);
-		throw new OAuth2AuthenticationException(error);
-	}
-
 	public static OAuth2AuthenticationException getError(String errorCode, String description, String uri) {
 		OAuth2Error error = new OAuth2Error(errorCode, description, uri);
 		return new OAuth2AuthenticationException(error);

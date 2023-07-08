@@ -45,6 +45,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
@@ -91,6 +92,8 @@ public class RespFilter implements GlobalFilter, Ordered {
 						&& body instanceof Flux) {
 					Flux<? extends DataBuffer> fluxBody = (Flux<? extends DataBuffer>) body;
 					return super.writeWith(fluxBody.map(dataBuffer -> {
+						// 修改状态码
+						response.setStatusCode(HttpStatus.OK);
 						byte[] content = new byte[dataBuffer.readableByteCount()];
 						dataBuffer.read(content);
 						// 释放内容
@@ -100,14 +103,11 @@ public class RespFilter implements GlobalFilter, Ordered {
 						JsonNode node = JacksonUtil.readTree(str);
 						JsonNode msgNode = node.get(GatewayConstant.ERROR_DESCRIPTION);
 						JsonNode codeNode = node.get(GatewayConstant.ERROR);
-						String msg = "";
-						int code = 500;
-						if (codeNode != null) {
-							code = codeNode.asInt();
+						if (msgNode == null) {
+							return dataBufferFactory.wrap(new byte[0]);
 						}
-						if (msgNode != null) {
-							msg = msgNode.asText();
-						}
+						String msg = msgNode.asText();
+						int code = codeNode.asInt();
 						if (code == 0) {
 							CustomException ex = getThrow(codeNode.asText());
 							code = ex.getCode();
@@ -115,8 +115,6 @@ public class RespFilter implements GlobalFilter, Ordered {
 						}
 						HttpResult<?> result = ResponseUtil.response(code, msg);
 						byte[] uppedContent = JacksonUtil.toJsonStr(result).getBytes();
-						// 修改状态码
-						response.setStatusCode(HttpStatus.OK);
 						return dataBufferFactory.wrap(uppedContent);
 					}));
 				}

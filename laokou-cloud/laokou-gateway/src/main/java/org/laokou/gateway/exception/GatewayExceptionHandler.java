@@ -64,8 +64,8 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler, Ordere
 			return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.SERVICE_BLOCK_REQUEST));
 		}
 		else {
-			log.error("服务未知错误");
-			return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.SERVICE_UNKNOWN_ERROR));
+			log.error("请求已中断，请刷新页面");
+			return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.SERVICE_REQUEST_CLOSE));
 		}
 	}
 

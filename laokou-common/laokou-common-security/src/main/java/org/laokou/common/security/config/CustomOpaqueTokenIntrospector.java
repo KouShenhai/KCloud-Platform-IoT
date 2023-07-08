@@ -58,7 +58,8 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
 		Object obj = redisUtil.get(userKillKey);
 		if (obj != null) {
-			CustomAuthExceptionHandler.throwError(StatusCode.FORCE_KILL, MessageUtil.getMessage(StatusCode.FORCE_KILL));
+			throw CustomAuthExceptionHandler.getError(StatusCode.FORCE_KILL,
+					MessageUtil.getMessage(StatusCode.FORCE_KILL));
 		}
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		obj = caffeineCache.getIfPresent(userInfoKey);
@@ -68,7 +69,7 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			userDetail = (UserDetail) obj;
 			if (DateUtil.isAfter(DateUtil.now(), userDetail.getExpireDate())) {
 				caffeineCache.invalidate(userInfoKey);
-				CustomAuthExceptionHandler.throwError(StatusCode.UNAUTHORIZED,
+				throw CustomAuthExceptionHandler.getError(StatusCode.UNAUTHORIZED,
 						MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 			}
 			return userDetail;
@@ -83,12 +84,11 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token,
 				OAuth2TokenType.ACCESS_TOKEN);
 		if (oAuth2Authorization == null) {
-			CustomAuthExceptionHandler.throwError(StatusCode.UNAUTHORIZED,
+			throw CustomAuthExceptionHandler.getError(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
-		assert oAuth2Authorization != null;
 		if (!Objects.requireNonNull(oAuth2Authorization.getAccessToken()).isActive()) {
-			CustomAuthExceptionHandler.throwError(StatusCode.UNAUTHORIZED,
+			throw CustomAuthExceptionHandler.getError(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
 		Instant expiresAt = oAuth2Authorization.getAccessToken().getToken().getExpiresAt();

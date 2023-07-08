@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package org.laokou.admin.server.application.service.impl;
 
@@ -34,6 +34,7 @@ import org.laokou.common.tenant.service.SysTenantService;
 import org.laokou.common.tenant.vo.SysTenantVO;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -50,6 +51,7 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
 	private final PasswordEncoder passwordEncoder;
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public IPage<SysTenantVO> queryTenantPage(SysTenantQo qo) {
 		ValidatorUtil.validateEntity(qo);
 		IPage<SysTenantVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
@@ -79,6 +81,7 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public SysTenantVO getTenantById(Long id) {
 		return sysTenantService.getTenantById(id);
 	}
