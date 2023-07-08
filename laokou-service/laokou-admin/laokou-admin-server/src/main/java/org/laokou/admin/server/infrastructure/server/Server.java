@@ -323,8 +323,8 @@ class Jvm implements Serializable {
 		LocalDateTime start = DateUtil.getDateTimeOfTimestamp(timestamp);
 		LocalDateTime end = DateUtil.now();
 		long day = DateUtil.getDays(start, end);
-		long hour = DateUtil.getHours(start, end);
-		long min = DateUtil.getMinutes(start, end);
+		long hour = DateUtil.getHours(start, end) - 24 * day;
+		long min = DateUtil.getMinutes(start, end) - 60 * hour - 60 * 24 * day;
 		return day + "天" + hour + "小时" + min + "分钟";
 	}
 
