@@ -46,7 +46,7 @@ public class BatchUtil {
 	 * 批量新增
 	 * @param dataList 集合
 	 * @param batchNum 每组多少条数据
-	 * @param service 基础service
+	 * @param batchOps 函数
 	 */
 	@SneakyThrows
 	public <T> void insertBatch(List<T> dataList, int batchNum, Consumer<List<T>> batchOps) {
