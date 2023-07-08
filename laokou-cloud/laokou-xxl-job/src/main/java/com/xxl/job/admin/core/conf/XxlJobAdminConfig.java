@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * xxl-job config
@@ -24,11 +25,17 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
 
 	private static XxlJobAdminConfig adminConfig = null;
 
+	private static final int TRIGGER_POOL_FAST_MAX = 200;
+
+	private static final int TRIGGER_POOL_SLOW_MAX = 100;
+
+	private static final int INTENTIONALITIES = 7;
+
+	private static final List<String> I18N = Arrays.asList("zh_CN", "zh_TC", "en");
+
 	public static XxlJobAdminConfig getAdminConfig() {
 		return adminConfig;
 	}
-
-	// ---------------------- XxlJobScheduler ----------------------
 
 	private XxlJobScheduler xxlJobScheduler;
 
@@ -45,9 +52,6 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
 		xxlJobScheduler.destroy();
 	}
 
-	// ---------------------- XxlJobScheduler ----------------------
-
-	// conf
 	@Value("${xxl.job.i18n}")
 	private String i18n;
 
@@ -65,8 +69,6 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
 
 	@Value("${xxl.job.intentionalities}")
 	private int intentionalities;
-
-	// dao, service
 
 	@Resource
 	private XxlJobLogDao xxlJobLogDao;
@@ -93,8 +95,8 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
 	private JobAlarmer jobAlarmer;
 
 	public String getI18n() {
-		if (!Arrays.asList("zh_CN", "zh_TC", "en").contains(i18n)) {
-			return "zh_CN";
+		if (!I18N.contains(i18n)) {
+			return I18N.get(0);
 		}
 		return i18n;
 	}
@@ -108,22 +110,23 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
 	}
 
 	public int getTriggerPoolFastMax() {
-		if (triggerPoolFastMax < 200) {
-			return 200;
+		if (triggerPoolFastMax < TRIGGER_POOL_FAST_MAX) {
+			return TRIGGER_POOL_FAST_MAX;
 		}
 		return triggerPoolFastMax;
 	}
 
 	public int getTriggerPoolSlowMax() {
-		if (triggerPoolSlowMax < 100) {
-			return 100;
+		if (triggerPoolSlowMax < TRIGGER_POOL_SLOW_MAX) {
+			return TRIGGER_POOL_SLOW_MAX;
 		}
 		return triggerPoolSlowMax;
 	}
 
-	public int getLogretentiondays() {
-		if (intentionalities < 7) {
-			return -1; // Limit greater than or equal to 7, otherwise close
+	public int getIntentionalities() {
+		if (intentionalities < INTENTIONALITIES) {
+			// Limit greater than or equal to 7, otherwise close
+			return -1;
 		}
 		return intentionalities;
 	}

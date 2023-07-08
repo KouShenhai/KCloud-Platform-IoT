@@ -104,13 +104,13 @@ public class JobLogReportHelper {
 					}
 
 					// 2、log-clean: switch open & once each day
-					if (XxlJobAdminConfig.getAdminConfig().getLogretentiondays() > 0
+					if (XxlJobAdminConfig.getAdminConfig().getIntentionalities() > 0
 							&& System.currentTimeMillis() - lastCleanLogTime > 24 * 60 * 60 * 1000) {
 
 						// expire-time
 						Calendar expiredDay = Calendar.getInstance();
 						expiredDay.add(Calendar.DAY_OF_MONTH,
-								-1 * XxlJobAdminConfig.getAdminConfig().getLogretentiondays());
+								-1 * XxlJobAdminConfig.getAdminConfig().getIntentionalities());
 						expiredDay.set(Calendar.HOUR_OF_DAY, 0);
 						expiredDay.set(Calendar.MINUTE, 0);
 						expiredDay.set(Calendar.SECOND, 0);
