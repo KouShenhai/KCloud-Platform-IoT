@@ -289,6 +289,15 @@ GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KClou
 </a>
 <a href="https://github.com/livk-cloud" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/livk-cloud/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
         <img src="https://avatars.githubusercontent.com/u/50291874?s=64&amp;v=4" alt="@livk-cloud" height="32" width="32" data-view-component="true" class="avatar circle">
+</a>  
+<a href="https://github.com/liukefu2050" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/liukefu2050/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
+        <img src="https://avatars.githubusercontent.com/u/21030225?s=64&amp;v=4" alt="@liukefu2050" height="32" width="32" data-view-component="true" class="avatar circle">
+</a>
+<a href="https://github.com/HalfPomelo" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/HalfPomelo/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
+        <img src="https://avatars.githubusercontent.com/u/127269482?s=64&amp;v=4" alt="@HalfPomelo" height="32" width="32" data-view-component="true" class="avatar circle">
+</a>
+<a href="https://github.com/lixin" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/lixin/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
+        <img src="https://avatars.githubusercontent.com/u/69209385?s=64&amp;v=4" alt="@lixin" height="32" width="32" data-view-component="true" class="avatar circle">
 </a>
 
 ### 🐸 联系
