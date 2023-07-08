@@ -100,30 +100,28 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 		return true;
 	}
 
-	private void saveOrUpdate(Long roleId, List<Long> menuIds, List<Long> deptIds) {
-		if (CollectionUtil.isNotEmpty(menuIds)) {
-			List<SysRoleMenuDO> roleMenuList = new ArrayList<>(menuIds.size());
-			for (Long menuId : menuIds) {
-				SysRoleMenuDO roleMenuDO = new SysRoleMenuDO();
-				roleMenuDO.setId(IdGenerator.defaultSnowflakeId());
-				roleMenuDO.setMenuId(menuId);
-				roleMenuDO.setRoleId(roleId);
-				roleMenuList.add(roleMenuDO);
-			}
-			batchUtil.insertBatch(roleMenuList, 500, sysRoleMenuService);
-		}
-		if (CollectionUtil.isNotEmpty(deptIds)) {
-			List<SysRoleDeptDO> roleDeptList = new ArrayList<>(deptIds.size());
-			for (Long deptId : deptIds) {
-				SysRoleDeptDO roleDeptDO = new SysRoleDeptDO();
-				roleDeptDO.setId(IdGenerator.defaultSnowflakeId());
-				roleDeptDO.setDeptId(deptId);
-				roleDeptDO.setRoleId(roleId);
-				roleDeptList.add(roleDeptDO);
-			}
-			batchUtil.insertBatch(roleDeptList, 500, sysRoleDeptService);
-		}
-	}
+    private void saveOrUpdate(Long roleId, List<Long> menuIds, List<Long> deptIds) {
+        if (CollectionUtil.isNotEmpty(menuIds)) {
+            List<SysRoleMenuDO> roleMenuList = new ArrayList<>(menuIds.size());
+            for (Long menuId : menuIds) {
+                SysRoleMenuDO roleMenuDO = new SysRoleMenuDO();
+                roleMenuDO.setMenuId(menuId);
+                roleMenuDO.setRoleId(roleId);
+                roleMenuList.add(roleMenuDO);
+            }
+            batchUtil.insertBatch(roleMenuList,500,sysRoleMenuService::insertBatch);
+        }
+        if (CollectionUtil.isNotEmpty(deptIds)) {
+            List<SysRoleDeptDO> roleDeptList = new ArrayList<>(deptIds.size());
+            for (Long deptId : deptIds) {
+                SysRoleDeptDO roleDeptDO = new SysRoleDeptDO();
+                roleDeptDO.setDeptId(deptId);
+                roleDeptDO.setRoleId(roleId);
+                roleDeptList.add(roleDeptDO);
+            }
+            batchUtil.insertBatch(roleDeptList,500,sysRoleDeptService::insertBatch);
+        }
+    }
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)

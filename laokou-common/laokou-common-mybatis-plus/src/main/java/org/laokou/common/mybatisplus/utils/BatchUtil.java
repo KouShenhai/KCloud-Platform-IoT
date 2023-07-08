@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.core.CustomException;
-import org.laokou.common.mybatisplus.service.BatchService;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 
 /**
  * @author laokou
@@ -49,7 +49,7 @@ public class BatchUtil {
 	 * @param service 基础service
 	 */
 	@SneakyThrows
-	public <T> void insertBatch(List<T> dataList, int batchNum, BatchService<T> service) {
+	public <T> void insertBatch(List<T> dataList, int batchNum, Consumer<List<T>> batchOps) {
 		// 数据分组
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
@@ -57,7 +57,7 @@ public class BatchUtil {
 		partition.forEach(item -> futures
 				.add(CompletableFuture.runAsync(() -> transactionalUtil.executeWithoutResult(callback -> {
 					try {
-						service.insertBatch(item);
+						batchOps.accept(item);
 					}
 					catch (Exception e) {
 						// 回滚标识

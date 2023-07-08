@@ -15,10 +15,9 @@
  */
 package io.seata.server.logging.logback.appender;
 
-import java.util.ArrayList;
-
+import ch.qos.logback.classic.spi.ILoggingEvent;
 import net.logstash.logback.composite.JsonProvider;
-import net.logstash.logback.composite.JsonProviders;
+import net.logstash.logback.composite.loggingevent.LoggingEventJsonProviders;
 import net.logstash.logback.encoder.LogstashEncoder;
 
 /**
@@ -29,17 +28,17 @@ import net.logstash.logback.encoder.LogstashEncoder;
  */
 public class EnhancedLogstashEncoder extends LogstashEncoder {
 
-	/**
-	 * set exclude provider
-	 * @param excludedProviderClassName the excluded provider class name
-	 */
-	public void setExcludeProvider(String excludedProviderClassName) {
-		JsonProviders<?> providers = getFormatter().getProviders();
-		for (JsonProvider<?> provider : new ArrayList<>(providers.getProviders())) {
-			if (provider.getClass().getName().equals(excludedProviderClassName)) {
-				providers.removeProvider((JsonProvider) provider);
-			}
-		}
-	}
-
+    /**
+     * set exclude provider
+     *
+     * @param excludedProviderClassName the excluded provider class name
+     */
+    public void setExcludeProvider(String excludedProviderClassName) {
+        LoggingEventJsonProviders providers = getFormatter().getProviders();
+        for (JsonProvider<ILoggingEvent> provider : providers.getProviders()) {
+            if (provider.getClass().getName().equals(excludedProviderClassName)) {
+                providers.removeProvider(provider);
+            }
+        }
+    }
 }

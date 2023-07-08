@@ -120,19 +120,18 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
 		return sysPackageService.getOptionList();
 	}
 
-	private boolean saveOrUpdate(List<Long> menuIds, Long id) {
-		if (CollectionUtil.isNotEmpty(menuIds)) {
-			List<SysPackageMenuDO> list = new ArrayList<>(menuIds.size());
-			for (Long menuId : menuIds) {
-				SysPackageMenuDO sysPackageMenuDO = new SysPackageMenuDO();
-				sysPackageMenuDO.setId(IdGenerator.defaultSnowflakeId());
-				sysPackageMenuDO.setPackageId(id);
-				sysPackageMenuDO.setMenuId(menuId);
-				list.add(sysPackageMenuDO);
-			}
-			batchUtil.insertBatch(list, 500, sysPackageMenuService);
-		}
-		return true;
-	}
+    private boolean saveOrUpdate(List<Long> menuIds,Long id) {
+        if (CollectionUtil.isNotEmpty(menuIds)) {
+            List<SysPackageMenuDO> list = new ArrayList<>(menuIds.size());
+            for (Long menuId : menuIds) {
+                SysPackageMenuDO sysPackageMenuDO = new SysPackageMenuDO();
+                sysPackageMenuDO.setPackageId(id);
+                sysPackageMenuDO.setMenuId(menuId);
+                list.add(sysPackageMenuDO);
+            }
+            batchUtil.insertBatch(list,500,sysPackageMenuService::insertBatch);
+        }
+        return true;
+    }
 
 }

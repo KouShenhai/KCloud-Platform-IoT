@@ -308,18 +308,16 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 		return true;
 	}
 
-	private void saveOrUpdate(Long userId, List<Long> roleIds) {
-		List<SysUserRoleDO> doList = new ArrayList<>(roleIds.size());
-		if (!CollectionUtil.isEmpty(roleIds)) {
-			for (Long roleId : roleIds) {
-				SysUserRoleDO sysUserRoleDO = new SysUserRoleDO();
-				sysUserRoleDO.setId(IdGenerator.defaultSnowflakeId());
-				sysUserRoleDO.setRoleId(roleId);
-				sysUserRoleDO.setUserId(userId);
-				doList.add(sysUserRoleDO);
-			}
-			batchUtil.insertBatch(doList, 500, sysUserRoleService);
-		}
-	}
-
+    private void saveOrUpdate(Long userId, List<Long> roleIds) {
+        List<SysUserRoleDO> doList = new ArrayList<>(roleIds.size());
+        if (!CollectionUtil.isEmpty(roleIds)) {
+            for (Long roleId : roleIds) {
+                SysUserRoleDO sysUserRoleDO = new SysUserRoleDO();
+                sysUserRoleDO.setRoleId(roleId);
+                sysUserRoleDO.setUserId(userId);
+                doList.add(sysUserRoleDO);
+            }
+            batchUtil.insertBatch(doList,500,sysUserRoleService::insertBatch);
+        }
+    }
 }
