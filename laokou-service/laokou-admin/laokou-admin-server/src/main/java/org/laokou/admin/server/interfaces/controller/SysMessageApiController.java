@@ -27,6 +27,7 @@ import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,6 +50,7 @@ public class SysMessageApiController {
 	@Operation(summary = "系统消息>新增", description = "系统消息>新增")
 	@OperateLog(module = "系统消息", name = "消息新增")
 	@PreAuthorize("hasAuthority('sys:message:insert')")
+	@Idempotent
 	public HttpResult<Boolean> insert(@RequestBody MessageDTO dto) throws IOException {
 		return new HttpResult<Boolean>().ok(sysMessageApplicationService.insertMessage(dto));
 	}

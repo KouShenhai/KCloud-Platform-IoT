@@ -37,13 +37,13 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
-import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.rocketmq.constant.RocketmqConstant;
 import org.laokou.common.rocketmq.dto.RocketmqDTO;
 import org.laokou.common.rocketmq.template.RocketTemplate;
 import org.laokou.im.client.WsMsgDTO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,7 +73,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 	@Override
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 	@DS(Constant.TENANT)
-	public Boolean pushMessage(MessageDTO dto) {
+	public Boolean insertMessage(MessageDTO dto) {
 		ValidatorUtil.validateEntity(dto);
 		SysMessageDO messageDO = ConvertUtil.sourceToTarget(dto, SysMessageDO.class);
 		messageDO.setCreateDate(DateUtil.now());
@@ -107,13 +107,8 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 	}
 
 	@Override
-	@Idempotent
-	public Boolean insertMessage(MessageDTO dto) {
-		return pushMessage(dto);
-	}
-
-	@Override
 	@DS(Constant.TENANT)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public IPage<SysMessageVO> queryMessagePage(SysMessageQo qo) {
 		ValidatorUtil.validateEntity(qo);
 		IPage<SysMessageVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
@@ -131,12 +126,14 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
 	@Override
 	@DS(Constant.TENANT)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public MessageDetailVO getMessageById(Long id) {
 		return sysMessageService.getMessageById(id);
 	}
 
 	@Override
 	@DS(Constant.TENANT)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public IPage<SysMessageVO> getUnReadList(SysMessageQo qo) {
 		IPage<SysMessageVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
 		final Long userId = UserUtil.getUserId();
@@ -145,6 +142,8 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
 	@Override
 	@DS(Constant.TENANT)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW,
+			isolation = Isolation.READ_UNCOMMITTED, readOnly = true)
 	public Long unReadCount() {
 		final Long userId = UserUtil.getUserId();
 		return (long) sysMessageDetailService.unReadCount(userId);

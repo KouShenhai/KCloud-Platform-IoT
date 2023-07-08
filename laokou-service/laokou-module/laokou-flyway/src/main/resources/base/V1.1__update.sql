@@ -431,4 +431,5 @@ INSERT INTO `boot_sys_role_menu` VALUES (1745152945210794104, 139167754288778857
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-
+-- 2023/07/08 修改boot_sys_menu 老寇
+UPDATE `kcloud_platform_alibaba`.`boot_sys_menu` SET `pid` = 1537444981390794754, `permission` = 'monitor:service:view', `type` = 0, `name` = '服务监控', `url` = 'https://127.0.0.1:5000/monitor', `icon` = 'server', `creator` = 1341620898007281665, `editor` = NULL, `create_date` = '2022-07-17 17:39:45', `update_date` = '2023-07-08 15:20:23', `del_flag` = 0, `sort` = 3000, `version` = 6, `visible` = 0 WHERE `id` = 1538469199368712193;

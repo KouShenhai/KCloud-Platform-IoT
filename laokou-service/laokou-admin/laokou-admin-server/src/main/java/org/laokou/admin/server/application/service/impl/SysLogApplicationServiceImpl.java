@@ -17,6 +17,7 @@
 package org.laokou.admin.server.application.service.impl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,6 +34,8 @@ import org.laokou.common.log.vo.SysLoginLogVO;
 import org.laokou.common.log.vo.SysOperateLogVO;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author laokou
@@ -47,6 +50,7 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
 
 	@Override
 	@DataFilter(tableAlias = "boot_sys_operate_log")
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQo qo) {
 		ValidatorUtil.validateEntity(qo);
 		qo.setTenantId(UserUtil.getTenantId());
@@ -55,17 +59,20 @@ public class SysLogApplicationServiceImpl implements SysLogApplicationService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) {
 		sysOperateLogService.exportOperateLog(qo, response);
 	}
 
 	@Override
 	@DS(Constant.SHARDING_SPHERE_READWRITE)
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {
 		sysLoginLogService.exportLoginLog(qo, response);
 	}
 
 	@Override
+	@DSTransactional(rollbackFor = Exception.class)
 	public IPage<SysLoginLogVO> queryLoginLogPage(SysLoginLogQo qo) {
 		ValidatorUtil.validateEntity(qo);
 		qo.setTenantId(UserUtil.getTenantId());

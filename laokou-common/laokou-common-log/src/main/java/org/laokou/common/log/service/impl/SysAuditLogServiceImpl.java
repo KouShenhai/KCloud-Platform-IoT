@@ -24,6 +24,8 @@ import org.laokou.common.log.mapper.SysAuditLogMapper;
 import org.laokou.common.log.service.SysAuditLogService;
 import org.laokou.common.log.vo.SysAuditLogVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
 
 /**
@@ -39,6 +41,7 @@ public class SysAuditLogServiceImpl extends ServiceImpl<SysAuditLogMapper, SysAu
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertAuditLog(AuditLogEvent dto) {
 		SysAuditLogDO auditDO = ConvertUtil.sourceToTarget(dto, SysAuditLogDO.class);
 		baseMapper.insert(auditDO);

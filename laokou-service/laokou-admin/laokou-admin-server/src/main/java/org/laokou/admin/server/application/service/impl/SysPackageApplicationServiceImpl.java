@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package org.laokou.admin.server.application.service.impl;
 
@@ -36,6 +36,7 @@ import org.laokou.common.tenant.service.SysPackageMenuService;
 import org.laokou.common.tenant.service.SysPackageService;
 import org.laokou.common.tenant.vo.SysPackageVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -100,6 +101,7 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public IPage<SysPackageVO> queryPackagePage(SysPackageQo qo) {
 		ValidatorUtil.validateEntity(qo);
 		IPage<SysPackageVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
@@ -107,11 +109,13 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public SysPackageVO getPackageById(Long id) {
 		return sysPackageService.getPackageById(id);
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public List<OptionVO> getOptionList() {
 		return sysPackageService.getOptionList();
 	}

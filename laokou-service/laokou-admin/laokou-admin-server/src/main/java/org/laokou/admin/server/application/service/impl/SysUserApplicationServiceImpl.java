@@ -23,7 +23,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.SysUserDTO;
 import org.laokou.admin.client.vo.SysUserOnlineVO;
+import org.laokou.admin.client.vo.SysUserVO;
 import org.laokou.admin.client.vo.UserInfoVO;
 import org.laokou.admin.server.application.service.SysUserApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysUserDO;
@@ -32,20 +34,18 @@ import org.laokou.admin.server.domain.sys.repository.service.SysRoleService;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserRoleService;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
 import org.laokou.admin.server.interfaces.qo.SysUserOnlineQo;
+import org.laokou.admin.server.interfaces.qo.SysUserQo;
+import org.laokou.auth.client.user.UserDetail;
+import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.constant.Constant;
+import org.laokou.common.core.enums.SuperAdminEnum;
 import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.vo.OptionVO;
-import org.laokou.admin.server.interfaces.qo.SysUserQo;
-import org.laokou.admin.client.vo.SysUserVO;
-import org.laokou.admin.client.dto.SysUserDTO;
-import org.laokou.auth.client.utils.UserUtil;
-import org.laokou.common.core.enums.SuperAdminEnum;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.i18n.core.CustomException;
-import org.laokou.auth.client.user.UserDetail;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
@@ -53,6 +53,7 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 	private final RedisUtil redisUtil;
 
 	@Override
-	@DSTransactional
+	@DSTransactional(rollbackFor = Exception.class)
 	@DS(Constant.SHARDING_SPHERE)
 	public Boolean updateUser(SysUserDTO dto) {
 		ValidatorUtil.validateEntity(dto);
@@ -178,7 +179,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 	}
 
 	@Override
-	@DSTransactional
+	@DSTransactional(rollbackFor = Exception.class)
 	@DS(Constant.SHARDING_SPHERE)
 	public Boolean insertUser(SysUserDTO dto) {
 		ValidatorUtil.validateEntity(dto);
@@ -210,6 +211,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 	@Override
 	@DataFilter(tableAlias = "boot_sys_user")
 	@DS(Constant.SHARDING_SPHERE)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public IPage<SysUserVO> queryUserPage(SysUserQo qo) {
 		ValidatorUtil.validateEntity(qo);
 		qo.setTenantId(UserUtil.getTenantId());
@@ -224,6 +226,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
 	@Override
 	@DS(Constant.SHARDING_SPHERE)
+	@DSTransactional(rollbackFor = Exception.class)
 	public SysUserVO getUserById(Long id) {
 		SysUserDO sysUserDO = sysUserService.getById(id);
 		SysUserVO sysUserVO = ConvertUtil.sourceToTarget(sysUserDO, SysUserVO.class);
@@ -249,6 +252,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
 	@Override
 	@DS(Constant.SHARDING_SPHERE)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public List<OptionVO> getOptionList() {
 		Long tenantId = UserUtil.getTenantId();
 		List<OptionVO> optionList = sysUserService.getOptionList(tenantId);

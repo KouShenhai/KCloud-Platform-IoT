@@ -68,28 +68,28 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 		String uuid = request.getParameter(AuthConstant.UUID);
 		log.info("唯一标识：{}", uuid);
 		if (StringUtil.isEmpty(uuid)) {
-			CustomAuthExceptionHandler.throwError(StatusCode.IDENTIFIER_NOT_NULL,
+			throw CustomAuthExceptionHandler.getError(StatusCode.IDENTIFIER_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.IDENTIFIER_NOT_NULL));
 		}
 		// 判断验证码是否为空
 		String captcha = request.getParameter(AuthConstant.CAPTCHA);
 		log.info("验证码：{}", captcha);
 		if (StringUtil.isEmpty(captcha)) {
-			CustomAuthExceptionHandler.throwError(StatusCode.CAPTCHA_NOT_NULL,
+			throw CustomAuthExceptionHandler.getError(StatusCode.CAPTCHA_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
 		}
 		// 验证账号是否为空
 		String username = request.getParameter(OAuth2ParameterNames.USERNAME);
 		log.info("账号：{}", username);
 		if (StringUtil.isEmpty(username)) {
-			CustomAuthExceptionHandler.throwError(StatusCode.USERNAME_NOT_NULL,
+			throw CustomAuthExceptionHandler.getError(StatusCode.USERNAME_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.USERNAME_NOT_NULL));
 		}
 		// 验证密码是否为空
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 		log.info("密码：{}", password);
 		if (StringUtil.isEmpty(password)) {
-			CustomAuthExceptionHandler.throwError(StatusCode.PASSWORD_NOT_NULL,
+			throw CustomAuthExceptionHandler.getError(StatusCode.PASSWORD_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.PASSWORD_NOT_NULL));
 		}
 		// 获取用户信息,并认证信息

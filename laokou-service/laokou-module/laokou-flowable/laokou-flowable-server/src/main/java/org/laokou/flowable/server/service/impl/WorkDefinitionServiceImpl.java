@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.flowable.server.service.impl;
@@ -36,6 +36,7 @@ import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.laokou.flowable.server.service.WorkDefinitionService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -77,6 +78,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public PageVO<DefinitionVO> queryDefinitionPage(DefinitionDTO dto) {
 		ValidatorUtil.validateEntity(dto);
 		Integer pageNum = dto.getPageNum();
@@ -104,6 +106,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public String diagramDefinition(String definitionId) {
 		// 获取图片流
 		DefaultProcessDiagramGenerator diagramGenerator = new DefaultProcessDiagramGenerator();

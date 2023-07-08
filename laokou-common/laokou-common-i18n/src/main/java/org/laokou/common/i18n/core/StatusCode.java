@@ -65,9 +65,9 @@ public interface StatusCode {
 	int SERVICE_BLOCK_REQUEST = 1001;
 
 	/**
-	 * gateway => 1 未知错误
+	 * gateway => 1 请求已中断，请刷新页面
 	 */
-	int SERVICE_UNKNOWN_ERROR = 1002;
+	int SERVICE_REQUEST_CLOSE = 1002;
 
 	/**
 	 * gateway => 1 IP被列入黑名单，请联系管理员

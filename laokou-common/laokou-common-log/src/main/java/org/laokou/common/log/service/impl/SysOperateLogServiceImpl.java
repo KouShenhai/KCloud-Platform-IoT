@@ -18,13 +18,13 @@ package org.laokou.common.log.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.laokou.common.easy.excel.suppert.ExcelTemplate;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.log.event.OperateLogEvent;
+import org.laokou.common.easy.excel.suppert.ExcelTemplate;
 import org.laokou.common.log.entity.SysOperateLogDO;
+import org.laokou.common.log.event.OperateLogEvent;
 import org.laokou.common.log.excel.SysOperateLogExcel;
 import org.laokou.common.log.mapper.SysOperateLogMapper;
 import org.laokou.common.log.qo.SysOperateLogQo;
@@ -52,7 +52,7 @@ public class SysOperateLogServiceImpl extends ServiceImpl<SysOperateLogMapper, S
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertOperateLog(OperateLogEvent event) {
 		SysOperateLogDO logDO = ConvertUtil.sourceToTarget(event, SysOperateLogDO.class);
-		return baseMapper.insert(logDO) > 0 ? true : false;
+		return baseMapper.insert(logDO) > 0;
 	}
 
 	@Override

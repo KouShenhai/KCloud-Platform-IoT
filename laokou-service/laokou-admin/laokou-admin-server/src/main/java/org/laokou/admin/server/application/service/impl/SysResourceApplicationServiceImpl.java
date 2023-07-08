@@ -101,6 +101,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 	private static final String RESOURCE_INDEX = "laokou_resource";
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public IPage<SysResourceVO> queryResourcePage(SysResourceQo qo) {
 		ValidatorUtil.validateEntity(qo);
 		IPage<SysResourceVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
@@ -108,6 +109,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public Boolean syncResource(String code, String key) {
 		long resourceTotal = sysResourceService.getResourceTotal(code);
 		if (resourceTotal == 0) {
@@ -125,11 +127,13 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public SysResourceVO getResourceById(Long id) {
 		return sysResourceService.getResourceById(id);
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public void downLoadResource(Long id, HttpServletResponse response) throws IOException {
 		SysResourceVO resource = sysResourceService.getResourceById(id);
 		response.setContentType("application/octet-stream");
@@ -148,6 +152,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public SysResourceVO getResourceAuditByResourceId(Long id) {
 		return sysResourceService.getResourceAuditByResourceId(id);
 	}
@@ -195,6 +200,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
 	@Override
 	@SneakyThrows
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 	public UploadVO uploadResource(String code, MultipartFile file, String md5) {
 		if (file.isEmpty()) {
 			throw new CustomException("上传的文件不能为空");
@@ -213,6 +219,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 	}
 
 	@SneakyThrows
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	private void syncResourceIndex(String code, String indexName) {
 		beforeSync();
 		// https://mybatis.org/mybatis-3/zh/sqlmap-xml.html
@@ -256,6 +263,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public List<SysAuditLogVO> queryAuditLogList(Long businessId) {
 		return sysAuditLogService.getAuditLogList(businessId, AuditTypeEnum.RESOURCE.ordinal());
 	}
@@ -394,6 +402,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public IPage<TaskVO> queryResourceTask(TaskQo qo) {
 		IPage<TaskVO> page = new Page<>();
 		TaskDTO dto = new TaskDTO();
@@ -482,7 +491,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 		dto.setTitle(title);
 		dto.setReceiver(set);
 		dto.setType(MessageTypeEnum.REMIND.ordinal());
-		sysMessageApplicationService.pushMessage(dto);
+		sysMessageApplicationService.insertMessage(dto);
 	}
 
 	@Async

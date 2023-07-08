@@ -22,7 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
-import org.laokou.auth.server.domain.sys.repository.service.*;
+import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
+import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
+import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.DateUtil;
@@ -51,13 +53,16 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 import static org.laokou.common.core.constant.Constant.DEFAULT;
 import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
 
@@ -148,7 +153,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				auth2BaseAuthenticationToken);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 		if (registeredClient == null) {
-			CustomAuthExceptionHandler.throwError(StatusCode.INTERNAL_SERVER_ERROR, "registeredClient不存在");
+			throw CustomAuthExceptionHandler.getError(StatusCode.INTERNAL_SERVER_ERROR, "registeredClient不存在");
 		}
 		// 获取认证范围
 		Set<String> scopes = registeredClient.getScopes();
@@ -208,7 +213,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	 * @param uuid
 	 * @return
 	 */
-	protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password,
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password,
 			HttpServletRequest request, String captcha, String uuid) {
 		AuthorizationGrantType grantType = getGrantType();
 		String loginType = grantType.getValue();
@@ -222,14 +228,14 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			msg = MessageUtil.getMessage(code);
 			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
 			loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId);
-			CustomAuthExceptionHandler.throwError(code, msg);
+			throw CustomAuthExceptionHandler.getError(code, msg);
 		}
 		if (Boolean.FALSE.equals(validate)) {
 			code = StatusCode.CAPTCHA_ERROR;
 			msg = MessageUtil.getMessage(code);
 			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
 			loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId);
-			CustomAuthExceptionHandler.throwError(code, msg);
+			throw CustomAuthExceptionHandler.getError(code, msg);
 		}
 		// 加密
 		String encryptName = AesUtil.encrypt(loginName);
@@ -240,17 +246,18 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			msg = MessageUtil.getMessage(code);
 			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
 			loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId);
-			CustomAuthExceptionHandler.throwError(code, msg);
+			throw CustomAuthExceptionHandler.getError(code, msg);
 		}
 		if (OAuth2PasswordAuthenticationProvider.GRANT_TYPE.equals(loginType)) {
 			// 验证密码
+			assert userDetail != null;
 			String clientPassword = userDetail.getPassword();
 			if (!passwordEncoder.matches(password, clientPassword)) {
 				code = StatusCode.USERNAME_PASSWORD_ERROR;
 				msg = MessageUtil.getMessage(code);
 				log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
 				loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId);
-				CustomAuthExceptionHandler.throwError(code, msg);
+				throw CustomAuthExceptionHandler.getError(code, msg);
 			}
 		}
 		// 是否锁定
@@ -259,7 +266,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			msg = MessageUtil.getMessage(code);
 			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
 			loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId);
-			CustomAuthExceptionHandler.throwError(code, msg);
+			throw CustomAuthExceptionHandler.getError(code, msg);
 		}
 		Long userId = userDetail.getId();
 		Integer superAdmin = userDetail.getSuperAdmin();
@@ -270,7 +277,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			msg = MessageUtil.getMessage(code);
 			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
 			loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId);
-			CustomAuthExceptionHandler.throwError(code, msg);
+			throw CustomAuthExceptionHandler.getError(code, msg);
 		}
 		// 部门列表
 		List<Long> deptIds = sysDeptService.getDeptIds(superAdmin, userId, tenantId);

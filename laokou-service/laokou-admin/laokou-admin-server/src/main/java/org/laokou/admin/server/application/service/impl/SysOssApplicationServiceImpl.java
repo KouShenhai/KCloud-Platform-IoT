@@ -39,6 +39,7 @@ import org.laokou.common.oss.vo.UploadVO;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
@@ -103,6 +104,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
 	@Override
 	@DS(Constant.TENANT)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public IPage<SysOssVO> queryOssPage(SysOssQo qo) {
 		ValidatorUtil.validateEntity(qo);
 		IPage<SysOssVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
@@ -111,6 +113,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
 	@Override
 	@DS(Constant.TENANT)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public SysOssVO getOssById(Long id) {
 		return sysOssService.getOssById(id);
 	}
@@ -138,6 +141,7 @@ public class SysOssApplicationServiceImpl implements SysOssApplicationService {
 
 	@Override
 	@SneakyThrows
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
 	public UploadVO upload(MultipartFile file, String md5) {
 		return sysResourceApplicationService.uploadResource(null, file, md5);
 	}

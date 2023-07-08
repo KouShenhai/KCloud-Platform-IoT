@@ -32,6 +32,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.core.utils.TreeUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
 	private final SysUserService sysUserService;
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public SysDeptVO treeDept() {
 		SysDeptQo qo = new SysDeptQo();
 		List<SysDeptVO> deptList = sysDeptService.getDeptList(qo);
@@ -54,6 +56,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public List<SysDeptVO> queryDeptList(SysDeptQo qo) {
 		return sysDeptService.getDeptList(qo);
 	}
@@ -110,11 +113,13 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public SysDeptVO getDept(Long id) {
 		return sysDeptService.getDept(id);
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public List<Long> getDeptIdsByRoleId(Long roleId) {
 		return sysDeptService.getDeptIdsByRoleId(roleId);
 	}

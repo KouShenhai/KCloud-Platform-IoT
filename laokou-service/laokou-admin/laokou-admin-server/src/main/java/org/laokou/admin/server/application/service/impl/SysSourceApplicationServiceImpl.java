@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.admin.server.application.service.impl;
@@ -21,19 +21,19 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.server.application.service.SysSourceApplicationService;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.vo.OptionVO;
-import org.laokou.common.tenant.dto.SysSourceDTO;
-import org.laokou.admin.server.application.service.SysSourceApplicationService;
-import org.laokou.auth.client.utils.UserUtil;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.laokou.common.tenant.dto.SysSourceDTO;
 import org.laokou.common.tenant.entity.SysSourceDO;
 import org.laokou.common.tenant.qo.SysSourceQo;
 import org.laokou.common.tenant.service.SysSourceService;
 import org.laokou.common.tenant.vo.SysSourceVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -48,6 +48,7 @@ public class SysSourceApplicationServiceImpl implements SysSourceApplicationServ
 	private final SysSourceService sysSourceService;
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public IPage<SysSourceVO> querySourcePage(SysSourceQo qo) {
 		ValidatorUtil.validateEntity(qo);
 		IPage<SysSourceVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
@@ -102,11 +103,13 @@ public class SysSourceApplicationServiceImpl implements SysSourceApplicationServ
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public SysSourceVO getSourceById(Long id) {
 		return sysSourceService.getSourceById(id);
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public List<OptionVO> getOptionList() {
 		return sysSourceService.getOptionList();
 	}
