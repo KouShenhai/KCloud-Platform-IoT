@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 package org.laokou.common.mybatisplus.utils;
+
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.core.CustomException;
-import org.laokou.common.mybatisplus.service.BatchService;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 
 /**
  * @author laokou
@@ -40,12 +42,13 @@ public class BatchUtil {
 
     /**
      * 批量新增
+     *
      * @param dataList 集合
      * @param batchNum 每组多少条数据
-     * @param service 基础service
+     * @param batchOps 批量操作
      */
     @SneakyThrows
-    public <T> void insertBatch(List<T> dataList, int batchNum, BatchService<T> service) {
+    public <T> void insertBatch(List<T> dataList, int batchNum, Consumer<List<T>> batchOps) {
         // 数据分组
         List<List<T>> partition = Lists.partition(dataList, batchNum);
         AtomicBoolean rollback = new AtomicBoolean(false);
@@ -54,11 +57,11 @@ public class BatchUtil {
             CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
                 transactionalUtil.execute(callback -> {
                     try {
-                        service.insertBatch(item);
+                        batchOps.accept(item);
                     } catch (Exception e) {
                         // 回滚标识
-                        rollback.compareAndSet(false,true);
-                        log.error("批量插入数据异常，已设置回滚标识，错误信息：{}",e.getMessage());
+                        rollback.compareAndSet(false, true);
+                        log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", e.getMessage());
                     } finally {
                         if (rollback.get()) {
                             callback.setRollbackOnly();
