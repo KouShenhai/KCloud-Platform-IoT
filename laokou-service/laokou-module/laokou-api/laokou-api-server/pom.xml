@@ -5,13 +5,22 @@
     <parent>
         <artifactId>laokou-api</artifactId>
         <groupId>org.laokou</groupId>
-        <version>3.1.0</version>
+        <version>${laokou.version}</version>
     </parent>
     <artifactId>laokou-api-server</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-secret</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

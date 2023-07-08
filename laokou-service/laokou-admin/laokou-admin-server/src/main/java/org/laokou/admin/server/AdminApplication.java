@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  * <p>
  *
@@ -17,12 +17,14 @@
  * limitations under the License.
  */
 package org.laokou.admin.server;
+
+import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import de.codecentric.boot.admin.client.config.SpringBootAdminClientAutoConfiguration;
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.dynamic.router.utils.RouterUtil;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -32,16 +34,17 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
+
 import java.io.IOException;
 
+import static org.laokou.common.core.constant.Constant.TRUE;
+
 /**
- * 架构演变
- * 单机架构（两层架构）
- * 三层架构（集中式架构）
- * DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
+ * 架构演变 单机架构（两层架构） 三层架构（集中式架构） DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
+ *
  * @author laokou
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = { SpringBootAdminClientAutoConfiguration.class })
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
@@ -51,18 +54,20 @@ import java.io.IOException;
 @EnableFeignClients
 public class AdminApplication implements CommandLineRunner {
 
-    private final RouterUtil routerUtil;
+	private final RouterUtil routerUtil;
 
-    public static void main(String[] args) {
-        // SpringSecurity 子线程读取父线程的上下文
-        System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
-        new SpringApplicationBuilder(AdminApplication.class)
-                .web(WebApplicationType.SERVLET)
-                .run(args);
-    }
+	public static void main(String[] args) {
+		// SpringSecurity 子线程读取父线程的上下文
+		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+		new SpringApplicationBuilder(AdminApplication.class).web(WebApplicationType.SERVLET).run(args);
+	}
 
-    @Override
-    public void run(String... args) throws TemplateException, IOException {
-        routerUtil.initRouter();
-    }
+	@Override
+	public void run(String... args) throws TemplateException, IOException {
+		routerUtil.initRouter();
+	}
+
 }

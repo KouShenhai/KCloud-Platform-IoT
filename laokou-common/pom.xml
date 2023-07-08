@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- /**
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.laokou</groupId>
         <artifactId>KCloud-Platform-Alibaba</artifactId>
-        <version>3.1.0</version>
+        <version>${laokou.version}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-common</artifactId>
-    <version>3.1.0</version>
+    <version>${laokou.version}</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -73,8 +75,6 @@
         <module>laokou-common-xxl-job</module>
         <module>laokou-common-shardingsphere</module>
         <module>laokou-common-p6spy</module>
-        <module>laokou-common-flyway</module>
-        <module>laokou-common-liquibase</module>
         <module>laokou-common-log4j2</module>
         <module>laokou-common-trace</module>
         <module>laokou-common-logback</module>
@@ -85,6 +85,10 @@
 		<module>laokou-common-netty</module>
         <module>laokou-common-idempotent</module>
         <module>laokou-common-lock</module>
+        <module>laokou-common-monitor</module>
+        <module>laokou-common-influxdb</module>
+        <module>laokou-common-rabbitmq</module>
+        <module>laokou-common-test</module>
     </modules>
 
 </project>

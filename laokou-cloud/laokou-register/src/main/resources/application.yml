@@ -1,23 +1,24 @@
-#   /**
+#   /*
 #    * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
-#    * <p>
+#    * 
 #    * Licensed under the Apache License, Version 2.0 (the "License");
 #    * you may not use this file except in compliance with the License.
 #    * You may obtain a copy of the License at
-#    * <p>
+#    * 
 #    *   http://www.apache.org/licenses/LICENSE-2.0
-#    * <p>
+#    * 
 #    * Unless required by applicable law or agreed to in writing, software
 #    * distributed under the License is distributed on an "AS IS" BASIS,
 #    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    * See the License for the specific language governing permissions and
 #    * limitations under the License.
+#    * 
 #    */
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
-    password: 5201314wumeihua
+    password: @JASYPT-ENCRYPTOR-PASSWORD@
 
 db:
   num: 1
@@ -87,6 +88,19 @@ server:
       max-days: 30
       pattern: '%h %l %u %t "%r" %s %b %D %{User-Agent}i %{Request-Source}i'
     basedir: logs
+  ssl:
+    # 开启证书
+    enabled: @SSL-ENABLED@
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
 spring:
   application:
     name: @pom.artifactId@

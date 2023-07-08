@@ -28,43 +28,49 @@ import java.util.stream.Collectors;
 @RequestMapping("/user")
 public class UserInfoController {
 
-    @Resource
-    private UserService userService;
-    @Resource
-    private UserInfoRepository userInfoRepository;
+	@Resource
+	private UserService userService;
 
-    @PostMapping("save")
-    public ResultDTO<Void> save(@RequestBody ModifyUserInfoRequest request) {
-        UserInfoDO userInfoDO = new UserInfoDO();
-        BeanUtils.copyProperties(request, userInfoDO);
-        userService.save(userInfoDO);
-        return ResultDTO.success(null);
-    }
+	@Resource
+	private UserInfoRepository userInfoRepository;
 
-    @GetMapping("list")
-    public ResultDTO<List<UserItemVO>> list(@RequestParam(required = false) String name) {
+	@PostMapping("save")
+	public ResultDTO<Void> save(@RequestBody ModifyUserInfoRequest request) {
+		UserInfoDO userInfoDO = new UserInfoDO();
+		BeanUtils.copyProperties(request, userInfoDO);
+		userService.save(userInfoDO);
+		return ResultDTO.success(null);
+	}
 
-        List<UserInfoDO> result;
-        if (StringUtils.isEmpty(name)) {
-            result = userInfoRepository.findAll();
-        }else {
-            result = userInfoRepository.findByUsernameLike("%" + name + "%");
-        }
-        return ResultDTO.success(convert(result));
-    }
+	@GetMapping("list")
+	public ResultDTO<List<UserItemVO>> list(@RequestParam(required = false) String name) {
 
-    private static List<UserItemVO> convert(List<UserInfoDO> data) {
-        if (CollectionUtils.isEmpty(data)) {
-            return Lists.newLinkedList();
-        }
-        return data.stream().map(x -> new UserItemVO(x.getId(), x.getUsername())).collect(Collectors.toList());
-    }
+		List<UserInfoDO> result;
+		if (StringUtils.isEmpty(name)) {
+			result = userInfoRepository.findAll();
+		}
+		else {
+			result = userInfoRepository.findByUsernameLike("%" + name + "%");
+		}
+		return ResultDTO.success(convert(result));
+	}
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static final class UserItemVO {
-        private Long id;
-        private String username;
-    }
+	private static List<UserItemVO> convert(List<UserInfoDO> data) {
+		if (CollectionUtils.isEmpty(data)) {
+			return Lists.newLinkedList();
+		}
+		return data.stream().map(x -> new UserItemVO(x.getId(), x.getUsername())).collect(Collectors.toList());
+	}
+
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static final class UserItemVO {
+
+		private Long id;
+
+		private String username;
+
+	}
+
 }

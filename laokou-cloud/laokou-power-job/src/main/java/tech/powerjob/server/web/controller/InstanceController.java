@@ -32,7 +32,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 /**
  * 任务实例 Controller
  *
@@ -44,96 +43,98 @@ import java.util.stream.Collectors;
 @RequestMapping("/instance")
 public class InstanceController {
 
+	@Resource
+	private InstanceService instanceService;
 
+	@Resource
+	private InstanceLogService instanceLogService;
 
-    @Resource
-    private InstanceService instanceService;
-    @Resource
-    private InstanceLogService instanceLogService;
+	@Resource
+	private CacheService cacheService;
 
-    @Resource
-    private CacheService cacheService;
-    @Resource
-    private InstanceInfoRepository instanceInfoRepository;
+	@Resource
+	private InstanceInfoRepository instanceInfoRepository;
 
-    @GetMapping("/stop")
-    public ResultDTO<Void> stopInstance(Long appId,Long instanceId) {
-        instanceService.stopInstance(appId,instanceId);
-        return ResultDTO.success(null);
-    }
+	@GetMapping("/stop")
+	public ResultDTO<Void> stopInstance(Long appId, Long instanceId) {
+		instanceService.stopInstance(appId, instanceId);
+		return ResultDTO.success(null);
+	}
 
-    @GetMapping("/retry")
-    public ResultDTO<Void> retryInstance(String appId, Long instanceId) {
-        instanceService.retryInstance(Long.valueOf(appId), instanceId);
-        return ResultDTO.success(null);
-    }
+	@GetMapping("/retry")
+	public ResultDTO<Void> retryInstance(String appId, Long instanceId) {
+		instanceService.retryInstance(Long.valueOf(appId), instanceId);
+		return ResultDTO.success(null);
+	}
 
-    @GetMapping("/detail")
-    public ResultDTO<InstanceDetailVO> getInstanceDetail(Long instanceId) {
-        return ResultDTO.success(InstanceDetailVO.from(instanceService.getInstanceDetail(instanceId)));
-    }
+	@GetMapping("/detail")
+	public ResultDTO<InstanceDetailVO> getInstanceDetail(Long instanceId) {
+		return ResultDTO.success(InstanceDetailVO.from(instanceService.getInstanceDetail(instanceId)));
+	}
 
-    @GetMapping("/log")
-    public ResultDTO<StringPage> getInstanceLog(Long appId, Long instanceId, Long index) {
-        return ResultDTO.success(instanceLogService.fetchInstanceLog(appId, instanceId, index));
-    }
+	@GetMapping("/log")
+	public ResultDTO<StringPage> getInstanceLog(Long appId, Long instanceId, Long index) {
+		return ResultDTO.success(instanceLogService.fetchInstanceLog(appId, instanceId, index));
+	}
 
-    @GetMapping("/downloadLogUrl")
-    public ResultDTO<String> getDownloadUrl(Long appId, Long instanceId) {
-        return ResultDTO.success(instanceLogService.fetchDownloadUrl(appId, instanceId));
-    }
+	@GetMapping("/downloadLogUrl")
+	public ResultDTO<String> getDownloadUrl(Long appId, Long instanceId) {
+		return ResultDTO.success(instanceLogService.fetchDownloadUrl(appId, instanceId));
+	}
 
-    @GetMapping("/downloadLog")
-    public void downloadLogFile(Long instanceId , HttpServletResponse response) throws Exception {
+	@GetMapping("/downloadLog")
+	public void downloadLogFile(Long instanceId, HttpServletResponse response) throws Exception {
 
-        File file = instanceLogService.downloadInstanceLog(instanceId);
-        OmsFileUtils.file2HttpResponse(file, response);
-    }
+		File file = instanceLogService.downloadInstanceLog(instanceId);
+		OmsFileUtils.file2HttpResponse(file, response);
+	}
 
-    @GetMapping("/downloadLog4Console")
-    @SneakyThrows
-    public void downloadLog4Console(Long appId, Long instanceId , HttpServletResponse response) {
-        // 获取内部下载链接
-        String downloadUrl = instanceLogService.fetchDownloadUrl(appId, instanceId);
-        // 先下载到本机
-        String logFilePath = OmsFileUtils.genTemporaryWorkPath() + String.format("powerjob-%s-%s.log", appId, instanceId);
-        File logFile = new File(logFilePath);
+	@GetMapping("/downloadLog4Console")
+	@SneakyThrows
+	public void downloadLog4Console(Long appId, Long instanceId, HttpServletResponse response) {
+		// 获取内部下载链接
+		String downloadUrl = instanceLogService.fetchDownloadUrl(appId, instanceId);
+		// 先下载到本机
+		String logFilePath = OmsFileUtils.genTemporaryWorkPath()
+				+ String.format("powerjob-%s-%s.log", appId, instanceId);
+		File logFile = new File(logFilePath);
 
-        try {
-            FileUtils.copyURLToFile(new URL(downloadUrl), logFile);
+		try {
+			FileUtils.copyURLToFile(new URL(downloadUrl), logFile);
 
-            // 再推送到浏览器
-            OmsFileUtils.file2HttpResponse(logFile, response);
-        } finally {
-            FileUtils.forceDelete(logFile);
-        }
-    }
+			// 再推送到浏览器
+			OmsFileUtils.file2HttpResponse(logFile, response);
+		}
+		finally {
+			FileUtils.forceDelete(logFile);
+		}
+	}
 
-    @PostMapping("/list")
-    public ResultDTO<PageResult<InstanceInfoVO>> list(@RequestBody QueryInstanceRequest request) {
+	@PostMapping("/list")
+	public ResultDTO<PageResult<InstanceInfoVO>> list(@RequestBody QueryInstanceRequest request) {
 
-        Sort sort = Sort.by(Sort.Direction.DESC, "gmtModified");
-        PageRequest pageable = PageRequest.of(request.getIndex(), request.getPageSize(), sort);
+		Sort sort = Sort.by(Sort.Direction.DESC, "gmtModified");
+		PageRequest pageable = PageRequest.of(request.getIndex(), request.getPageSize(), sort);
 
-        InstanceInfoDO queryEntity = new InstanceInfoDO();
-        BeanUtils.copyProperties(request, queryEntity);
-        queryEntity.setType(request.getType().getV());
+		InstanceInfoDO queryEntity = new InstanceInfoDO();
+		BeanUtils.copyProperties(request, queryEntity);
+		queryEntity.setType(request.getType().getV());
 
-        if (!StringUtils.isEmpty(request.getStatus())) {
-            queryEntity.setStatus(InstanceStatus.valueOf(request.getStatus()).getV());
-        }
+		if (!StringUtils.isEmpty(request.getStatus())) {
+			queryEntity.setStatus(InstanceStatus.valueOf(request.getStatus()).getV());
+		}
 
-        Page<InstanceInfoDO> pageResult = instanceInfoRepository.findAll(Example.of(queryEntity), pageable);
-        return ResultDTO.success(convertPage(pageResult));
-    }
+		Page<InstanceInfoDO> pageResult = instanceInfoRepository.findAll(Example.of(queryEntity), pageable);
+		return ResultDTO.success(convertPage(pageResult));
+	}
 
-    private PageResult<InstanceInfoVO> convertPage(Page<InstanceInfoDO> page) {
-        List<InstanceInfoVO> content = page.getContent().stream()
-                .map(x -> InstanceInfoVO.from(x, cacheService.getJobName(x.getJobId()))).collect(Collectors.toList());
+	private PageResult<InstanceInfoVO> convertPage(Page<InstanceInfoDO> page) {
+		List<InstanceInfoVO> content = page.getContent().stream()
+				.map(x -> InstanceInfoVO.from(x, cacheService.getJobName(x.getJobId()))).collect(Collectors.toList());
 
-        PageResult<InstanceInfoVO> pageResult = new PageResult<>(page);
-        pageResult.setData(content);
-        return pageResult;
-    }
+		PageResult<InstanceInfoVO> pageResult = new PageResult<>(page);
+		pageResult.setData(content);
+		return pageResult;
+	}
 
 }

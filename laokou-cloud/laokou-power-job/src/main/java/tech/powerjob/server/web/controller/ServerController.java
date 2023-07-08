@@ -23,8 +23,7 @@ import java.util.Optional;
 import java.util.TimeZone;
 
 /**
- * 处理Worker请求的 Controller
- * Worker启动时，先请求assert验证appName的可用性，再根据得到的appId获取Server地址
+ * 处理Worker请求的 Controller Worker启动时，先请求assert验证appName的可用性，再根据得到的appId获取Server地址
  *
  * @author tjq
  * @since 2020/4/4
@@ -34,50 +33,54 @@ import java.util.TimeZone;
 @RequiredArgsConstructor
 public class ServerController implements ServerInfoAware {
 
-    private ServerInfo serverInfo;
-    private final TransportService transportService;
+	private ServerInfo serverInfo;
 
-    private final ServerElectionService serverElectionService;
+	private final TransportService transportService;
 
-    private final AppInfoRepository appInfoRepository;
+	private final ServerElectionService serverElectionService;
 
-    private final WorkerClusterQueryService workerClusterQueryService;
+	private final AppInfoRepository appInfoRepository;
 
-    @GetMapping("/assert")
-    public ResultDTO<Long> assertAppName(String appName) {
-        Optional<AppInfoDO> appInfoOpt = appInfoRepository.findByAppName(appName);
-        return appInfoOpt.map(appInfoDO -> ResultDTO.success(appInfoDO.getId())).
-                orElseGet(() -> ResultDTO.failed(String.format("app(%s) is not registered! Please register the app in oms-console first.", appName)));
-    }
+	private final WorkerClusterQueryService workerClusterQueryService;
 
-    @GetMapping("/acquire")
-    public ResultDTO<String> acquireServer(ServerDiscoveryRequest request) {
-        return ResultDTO.success(serverElectionService.elect(request));
-    }
+	@GetMapping("/assert")
+	public ResultDTO<Long> assertAppName(String appName) {
+		Optional<AppInfoDO> appInfoOpt = appInfoRepository.findByAppName(appName);
+		return appInfoOpt.map(appInfoDO -> ResultDTO.success(appInfoDO.getId())).orElseGet(() -> ResultDTO.failed(
+				String.format("app(%s) is not registered! Please register the app in oms-console first.", appName)));
+	}
 
-    @GetMapping("/hello")
-    public ResultDTO<JSONObject> ping(@RequestParam(required = false) boolean debug) {
-        JSONObject res = new JSONObject();
-        res.put("localHost", NetUtils.getLocalHost());
-        res.put("serverInfo", serverInfo);
-        res.put("serverTime", CommonUtils.formatTime(System.currentTimeMillis()));
-        res.put("serverTimeTs", System.currentTimeMillis());
-        res.put("serverTimeZone", TimeZone.getDefault().getDisplayName());
-        res.put("appIds", workerClusterQueryService.getAppId2ClusterStatus().keySet());
-        if (debug) {
-            res.put("appId2ClusterInfo", JSON.parseObject(JSON.toJSONString(workerClusterQueryService.getAppId2ClusterStatus())));
-        }
+	@GetMapping("/acquire")
+	public ResultDTO<String> acquireServer(ServerDiscoveryRequest request) {
+		return ResultDTO.success(serverElectionService.elect(request));
+	}
 
-        try {
-            res.put("defaultAddress", JSONObject.toJSON(transportService.defaultProtocol()));
-        } catch (Exception ignore) {
-        }
+	@GetMapping("/hello")
+	public ResultDTO<JSONObject> ping(@RequestParam(required = false) boolean debug) {
+		JSONObject res = new JSONObject();
+		res.put("localHost", NetUtils.getLocalHost());
+		res.put("serverInfo", serverInfo);
+		res.put("serverTime", CommonUtils.formatTime(System.currentTimeMillis()));
+		res.put("serverTimeTs", System.currentTimeMillis());
+		res.put("serverTimeZone", TimeZone.getDefault().getDisplayName());
+		res.put("appIds", workerClusterQueryService.getAppId2ClusterStatus().keySet());
+		if (debug) {
+			res.put("appId2ClusterInfo",
+					JSON.parseObject(JSON.toJSONString(workerClusterQueryService.getAppId2ClusterStatus())));
+		}
 
-        return ResultDTO.success(res);
-    }
+		try {
+			res.put("defaultAddress", JSONObject.toJSON(transportService.defaultProtocol()));
+		}
+		catch (Exception ignore) {
+		}
 
-    @Override
-    public void setServerInfo(ServerInfo serverInfo) {
-        this.serverInfo = serverInfo;
-    }
+		return ResultDTO.success(res);
+	}
+
+	@Override
+	public void setServerInfo(ServerInfo serverInfo) {
+		this.serverInfo = serverInfo;
+	}
+
 }

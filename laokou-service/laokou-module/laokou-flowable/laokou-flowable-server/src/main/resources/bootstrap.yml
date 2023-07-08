@@ -1,4 +1,4 @@
-#/**
+#/*
 # * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
 # * <p>
 # * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,6 +23,8 @@ spring:
       discovery:
         server-addr: ${NACOS-DISCOVERY-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
+        # https
+        secure: @SSL-ENABLED@
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}

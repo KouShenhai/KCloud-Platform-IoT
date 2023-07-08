@@ -1,17 +1,18 @@
-/**
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * 
  */
 
 package org.laokou.common.dynamic.router.utils;
@@ -38,21 +39,23 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 public class RouterUtil {
-    private final Environment env;
-    private static final String APPLICATION_PREFIX = "laokou-";
 
-   public void initRouter() throws IOException, TemplateException {
-       String appId = env.getProperty("spring.application.name");
-       Map<String,Object> dataMap = new HashMap<>(2);
-       String name = appId.replace(APPLICATION_PREFIX,"");
-       dataMap.put("appId",appId);
-       dataMap.put("name",name);
-       InputStream inputStream = ResourceUtil.getResource("init_router.json").getInputStream();
-       byte[] bytes = inputStream.readAllBytes();
-       String template = new String(bytes, StandardCharsets.UTF_8);
-       String content = TemplateUtil.getContent(template, dataMap);
-       RouteDefinition routeDefinition = JacksonUtil.toBean(content, RouteDefinition.class);
-       log.info("获取路由信息：{}",JacksonUtil.toJsonStr(routeDefinition,true));
-   }
+	private final Environment env;
+
+	private static final String APPLICATION_PREFIX = "laokou-";
+
+	public void initRouter() throws IOException, TemplateException {
+		String appId = env.getProperty("spring.application.name");
+		Map<String, Object> dataMap = new HashMap<>(2);
+		String name = appId.replace(APPLICATION_PREFIX, "");
+		dataMap.put("appId", appId);
+		dataMap.put("name", name);
+		InputStream inputStream = ResourceUtil.getResource("init_router.json").getInputStream();
+		byte[] bytes = inputStream.readAllBytes();
+		String template = new String(bytes, StandardCharsets.UTF_8);
+		String content = TemplateUtil.getContent(template, dataMap);
+		RouteDefinition routeDefinition = JacksonUtil.toBean(content, RouteDefinition.class);
+		log.info("获取路由信息：{}", JacksonUtil.toJsonStr(routeDefinition, true));
+	}
 
 }

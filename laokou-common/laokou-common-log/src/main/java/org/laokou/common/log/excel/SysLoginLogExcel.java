@@ -1,17 +1,18 @@
-/**
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 package org.laokou.common.log.excel;
 
@@ -30,76 +31,75 @@ import java.time.LocalDateTime;
 @Data
 public class SysLoginLogExcel implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 6831623123658797275L;
-    /**
-     * 登录用户
-     */
-    @ExcelProperty(index = 0,value = "登录用户")
-    @ColumnWidth(value = 20)
-    private String loginName;
+	@Serial
+	private static final long serialVersionUID = 6831623123658797275L;
 
-    /**
-     * IP地址
-     */
-    @ExcelProperty(index = 1,value = "IP地址")
-    @ColumnWidth(value = 20)
-    private String requestIp;
-    /**
-     * 归属地
-     */
-    @ExcelProperty(index = 2,value = "归属地")
-    @ColumnWidth(value = 20)
-    private String requestAddress;
+	/**
+	 * 登录用户
+	 */
+	@ExcelProperty(index = 0, value = "登录用户")
+	@ColumnWidth(value = 20)
+	private String loginName;
 
-    /**
-     * 浏览器版本
-     */
-    @ExcelProperty(index = 3,value = "浏览器版本")
-    @ColumnWidth(value = 40)
-    private String browser;
+	/**
+	 * IP地址
+	 */
+	@ExcelProperty(index = 1, value = "IP地址")
+	@ColumnWidth(value = 20)
+	private String requestIp;
 
-    /**
-     * 操作系统
-     */
-    @ExcelProperty(index = 4,value = "操作系统")
-    @ColumnWidth(value = 40)
-    private String os;
+	/**
+	 * 归属地
+	 */
+	@ExcelProperty(index = 2, value = "归属地")
+	@ColumnWidth(value = 20)
+	private String requestAddress;
 
-    /**
-     * 状态  0：成功   1：失败
-     */
-    @ExcelProperty(index = 5,value = "状态")
-    @ColumnWidth(value = 20)
-    private String requestStatusMsg;
+	/**
+	 * 浏览器版本
+	 */
+	@ExcelProperty(index = 3, value = "浏览器版本")
+	@ColumnWidth(value = 40)
+	private String browser;
 
-    /**
-     * 提示信息
-     */
-    @ExcelProperty(index = 6,value = "提示信息")
-    @ColumnWidth(value = 40)
-    private String msg;
+	/**
+	 * 操作系统
+	 */
+	@ExcelProperty(index = 4, value = "操作系统")
+	@ColumnWidth(value = 40)
+	private String os;
 
-    /**
-     * 登录时间
-     */
-    @ExcelProperty(index = 7,value = "登录时间")
-    @ColumnWidth(value = 20)
-    private LocalDateTime createDate;
+	/**
+	 * 状态 0：成功 1：失败
+	 */
+	@ExcelProperty(index = 5, value = "状态")
+	@ColumnWidth(value = 20)
+	private String requestStatusMsg;
 
-    @ExcelIgnore
-    private Integer requestStatus;
+	/**
+	 * 提示信息
+	 */
+	@ExcelProperty(index = 6, value = "提示信息")
+	@ColumnWidth(value = 40)
+	private String msg;
 
-    public void setRequestStatusMsg(Integer requestStatus) {
-        this.requestStatusMsg = requestStatus == 0 ? "成功" : "失败";
-    }
+	/**
+	 * 登录时间
+	 */
+	@ExcelProperty(index = 7, value = "登录时间")
+	@ColumnWidth(value = 20)
+	private LocalDateTime createDate;
 
-    public String getRequestStatusMsg() {
-        return requestStatusMsg;
-    }
+	@ExcelIgnore
+	private Integer requestStatus;
 
-    public void setRequestStatus(Integer requestStatus) {
-        setRequestStatusMsg(requestStatus);
-        this.requestStatus = requestStatus;
-    }
+	public void setRequestStatusMsg(Integer requestStatus) {
+		this.requestStatusMsg = requestStatus == 0 ? "成功" : "失败";
+	}
+
+	public void setRequestStatus(Integer requestStatus) {
+		setRequestStatusMsg(requestStatus);
+		this.requestStatus = requestStatus;
+	}
+
 }

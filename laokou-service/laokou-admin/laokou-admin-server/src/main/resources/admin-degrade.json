@@ -1,6 +1,6 @@
 [
   {
-    "resource": "POST:http://laokou-flowable/work/task/api/query",
+    "resource": "POST:https://laokou-flowable/work/task/api/query",
     "count": 200,
     "grade": 0,
     "slowRatioThreshold": 0.1,
@@ -8,15 +8,7 @@
     "timeWindow": 30
   },
   {
-    "resource": "POST:http://laokou-flowable/work/definition/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  },
-  {
-    "resource": "POST:http://laokou-im/api/push",
+    "resource": "POST:https://laokou-flowable/work/definition/api/query",
     "count": 200,
     "grade": 0,
     "slowRatioThreshold": 0.1,

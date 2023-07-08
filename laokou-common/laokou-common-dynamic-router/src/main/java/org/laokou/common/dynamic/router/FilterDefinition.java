@@ -38,7 +38,6 @@ public class FilterDefinition {
 
 	private Map<String, String> args = new LinkedHashMap<>();
 
-
 	public FilterDefinition() {
 	}
 

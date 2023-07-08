@@ -1,2 +1,3 @@
 org.laokou.common.redis.config.auto.RedisAutoConfig
 org.laokou.common.redis.config.auto.ReactiveRedisAutoConfig
+org.laokou.common.redis.config.RedissonConfig

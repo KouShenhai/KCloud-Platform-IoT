@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- /**
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -21,18 +22,18 @@
 
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common-bom</artifactId>
-    <version>3.1.0</version>
+    <version>${laokou.version}</version>
     <packaging>pom</packaging>
     <properties>
-        <laokou.version>3.1.0</laokou.version>
+        <laokou.version>3.1.1</laokou.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.1.0</spring-boot.version>
+        <spring-boot.version>3.1.1</spring-boot.version>
         <!--lombok版本-->
         <lombok.version>1.18.26</lombok.version>
         <!--mysql版本-->
-        <mysql.version>8.0.31</mysql.version>
+        <mysql.version>8.0.33</mysql.version>
         <!--admin版本-->
-        <spring-boot-admin.version>3.0.4</spring-boot-admin.version>
+        <spring-boot-admin.version>3.1.0</spring-boot-admin.version>
         <!--flowable版本-->
         <flowable.version>7.0.0.M1</flowable.version>
         <!--mybatis-plus版本 -->
@@ -70,19 +71,19 @@
         <!--junit版本-->
         <junit.version>4.13.2</junit.version>
         <!--spring-security-oauth2-authorization-server版本-->
-        <spring-security-oauth2-authorization-server.version>1.1.0</spring-security-oauth2-authorization-server.version>
+        <spring-security-oauth2-authorization-server.version>1.1.1</spring-security-oauth2-authorization-server.version>
         <!--spring-boot-starter-oauth2-resource-server版本-->
-        <spring-boot-starter-oauth2-resource-server.version>3.1.0</spring-boot-starter-oauth2-resource-server.version>
+        <spring-boot-starter-oauth2-resource-server.version>3.1.1</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
         <aws-java-sdk-s3.version>1.12.267</aws-java-sdk-s3.version>
         <!--dynamic-datasource版本-->
-        <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
+        <dynamic-datasource.version>4.0.0</dynamic-datasource.version>
         <!--httpclient5版本-->
         <httpclient5.version>5.2.1</httpclient5.version>
         <!--jna版本-->
         <jna.version>5.13.0</jna.version>
         <!--hibernate-validator版本-->
-        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+        <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <!--hbase版本-->
         <hbase.version>2.5.3</hbase.version>
         <!--ip2region版本-->
@@ -95,14 +96,8 @@
         <shardingsphere.version>5.3.2</shardingsphere.version>
         <!--p6spy版本-->
         <p6spy.version>3.9.1</p6spy.version>
-        <!--flyway-core版本-->
-        <flyway-core.version>9.16.3</flyway-core.version>
-        <!--flyway-mysql版本-->
-        <flyway-mysql.version>9.16.0</flyway-mysql.version>
-        <!--liquibase-core版本-->
-        <liquibase-core.version>4.21.0</liquibase-core.version>
         <!--log4j版本-->
-        <log4j.version>2.19.0</log4j.version>
+        <log4j.version>2.20.0</log4j.version>
         <!--logback-kafka-appender版本-->
         <logback-kafka-appender.version>0.2.0-RC2</logback-kafka-appender.version>
         <!--rocketmq-logappender版本-->
@@ -110,9 +105,9 @@
         <!--kafka版本-->
         <kafka.version>3.0.4</kafka.version>
         <!--netty版本-->
-        <netty.version>4.1.92.Final</netty.version>
+        <netty.version>4.1.94.Final</netty.version>
         <!--aop版本-->
-        <aop.version>3.0.5</aop.version>
+        <aop.version>3.1.1</aop.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -129,8 +124,23 @@
                 <version>${netty.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-test</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-netty</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-common-monitor</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -187,21 +197,6 @@
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-slf4j-impl</artifactId>
                 <version>${log4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-core</artifactId>
-                <version>${liquibase-core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-core</artifactId>
-                <version>${flyway-core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-mysql</artifactId>
-                <version>${flyway-mysql.version}</version>
             </dependency>
             <dependency>
                 <groupId>p6spy</groupId>
@@ -261,11 +256,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-register</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-liquibase</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -420,7 +410,7 @@
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
                 <version>${dynamic-datasource.version}</version>
             </dependency>
             <dependency>
@@ -485,6 +475,11 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
@@ -681,11 +676,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-flowable-server</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-flyway</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

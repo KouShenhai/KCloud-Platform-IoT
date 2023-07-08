@@ -1,17 +1,18 @@
-/**
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 package org.laokou.im.server.config;
 
@@ -51,83 +52,88 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
-    private static final String WS_HEADER_NAME = "Upgrade";
-    private static final String WS_HEADER_VALUE = "websocket";
-    private final ReactiveRedisUtil reactiveRedisUtil;
-    public static final Map<String,Channel> USER_MAP = new ConcurrentHashMap<>();
+	private static final String WS_HEADER_NAME = "Upgrade";
 
-    @Override
-    @SneakyThrows
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        if (msg instanceof FullHttpRequest request) {
-            initWsInfo(ctx,request);
-        }
-        super.channelRead(ctx, msg);
-    }
+	private static final String WS_HEADER_VALUE = "websocket";
 
-    @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
+	private final ReactiveRedisUtil reactiveRedisUtil;
 
-    }
+	public static final Map<String, Channel> USER_MAP = new ConcurrentHashMap<>();
 
-    @Override
-    public void handlerAdded(ChannelHandlerContext ctx) {
-        log.info("建立连接：{}",ctx.channel().id().asLongText());
-    }
+	@Override
+	@SneakyThrows
+	public void channelRead(ChannelHandlerContext ctx, Object msg) {
+		if (msg instanceof FullHttpRequest request) {
+			initWsInfo(ctx, request);
+		}
+		super.channelRead(ctx, msg);
+	}
 
-    @Override
-    public void handlerRemoved(ChannelHandlerContext ctx) {
-        log.info("断开连接：{}",ctx.channel().id().asLongText());
-    }
+	@Override
+	protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
 
-    private String getAuthorization(Map<String, String> paramMap) {
-        String Authorization = paramMap.getOrDefault(Constant.AUTHORIZATION_HEAD, "");
-        if (StringUtil.isNotEmpty(Authorization)) {
-            return Authorization.substring(7);
-        }
-        return Authorization;
-    }
+	}
 
-    private void initWsInfo(ChannelHandlerContext ctx, FullHttpRequest request) {
-        try {
-            if (request.decoderResult().isFailure() || !WS_HEADER_VALUE.equals(request.headers().get(WS_HEADER_NAME))) {
-                handleRequestError(ctx, HttpResponseStatus.BAD_REQUEST);
-                return;
-            }
-            String uri = request.uri();
-            int index = uri.indexOf(Constant.QUESTION_MARK);
-            String param = uri.substring(index + 1);
-            Map<String, String> paramMap = MapUtil.parseParamMap(param);
-            String Authorization = getAuthorization(paramMap);
-            request.setUri(uri.substring(0, index));
-            if (StringUtil.isEmpty(Authorization)) {
-                handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
-                return;
-            }
-            String userInfoKey = RedisKeyUtil.getUserInfoKey(Authorization);
-            reactiveRedisUtil.get(userInfoKey).subscribe(obj -> {
-                if (obj == null) {
-                    handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
-                    return;
-                }
-                UserDetail userDetail = (UserDetail) obj;
-                Channel channel = ctx.channel();
-                Long userId = userDetail.getId();
-                USER_MAP.put(userId.toString(),channel);
-            });
-        } catch (Exception e) {
-            log.error("错误信息：{}",e.getMessage());
-        }
-    }
+	@Override
+	public void handlerAdded(ChannelHandlerContext ctx) {
+		log.info("建立连接：{}", ctx.channel().id().asLongText());
+	}
 
-    private void handleRequestError(ChannelHandlerContext ctx,HttpResponseStatus httpResponseStatus) {
-        DefaultFullHttpResponse defaultFullHttpResponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, httpResponseStatus);
-        ByteBuf byteBuf = Unpooled.copiedBuffer(httpResponseStatus.toString(), StandardCharsets.UTF_8);
-        defaultFullHttpResponse.content().writeBytes(byteBuf);
-        // 释放资源
-        ReferenceCountUtil.release(byteBuf);
-        ctx.channel().writeAndFlush(defaultFullHttpResponse);
-        ctx.close();
-    }
+	@Override
+	public void handlerRemoved(ChannelHandlerContext ctx) {
+		log.info("断开连接：{}", ctx.channel().id().asLongText());
+	}
+
+	private String getAuthorization(Map<String, String> paramMap) {
+		String Authorization = paramMap.getOrDefault(Constant.AUTHORIZATION_HEAD, "");
+		if (StringUtil.isNotEmpty(Authorization)) {
+			return Authorization.substring(7);
+		}
+		return Authorization;
+	}
+
+	private void initWsInfo(ChannelHandlerContext ctx, FullHttpRequest request) {
+		try {
+			if (request.decoderResult().isFailure() || !WS_HEADER_VALUE.equals(request.headers().get(WS_HEADER_NAME))) {
+				handleRequestError(ctx, HttpResponseStatus.BAD_REQUEST);
+				return;
+			}
+			String uri = request.uri();
+			int index = uri.indexOf(Constant.QUESTION_MARK);
+			String param = uri.substring(index + 1);
+			Map<String, String> paramMap = MapUtil.parseParamMap(param);
+			String Authorization = getAuthorization(paramMap);
+			request.setUri(uri.substring(0, index));
+			if (StringUtil.isEmpty(Authorization)) {
+				handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
+				return;
+			}
+			String userInfoKey = RedisKeyUtil.getUserInfoKey(Authorization);
+			reactiveRedisUtil.get(userInfoKey).subscribe(obj -> {
+				if (obj == null) {
+					handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
+					return;
+				}
+				UserDetail userDetail = (UserDetail) obj;
+				Channel channel = ctx.channel();
+				Long userId = userDetail.getId();
+				USER_MAP.put(userId.toString(), channel);
+			});
+		}
+		catch (Exception e) {
+			log.error("错误信息：{}", e.getMessage());
+		}
+	}
+
+	private void handleRequestError(ChannelHandlerContext ctx, HttpResponseStatus httpResponseStatus) {
+		DefaultFullHttpResponse defaultFullHttpResponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
+				httpResponseStatus);
+		ByteBuf byteBuf = Unpooled.copiedBuffer(httpResponseStatus.toString(), StandardCharsets.UTF_8);
+		defaultFullHttpResponse.content().writeBytes(byteBuf);
+		// 释放资源
+		ReferenceCountUtil.release(byteBuf);
+		ctx.channel().writeAndFlush(defaultFullHttpResponse);
+		ctx.close();
+	}
 
 }

@@ -13,12 +13,24 @@
 #  limitations under the License.
 server:
   port: 7091
-
+  ssl:
+    # 开启证书
+    enabled: @SSL-ENABLED@
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
-    password: 5201314wumeihua
+    password: @JASYPT-ENCRYPTOR-PASSWORD@
 
 spring:
   application:
@@ -63,7 +75,6 @@ seata:
       cluster: default
       username: @NACOS-USERNAME@
       password: @NACOS-PASSWORD@
-      context-path:
   store:
     mode: db
     db:

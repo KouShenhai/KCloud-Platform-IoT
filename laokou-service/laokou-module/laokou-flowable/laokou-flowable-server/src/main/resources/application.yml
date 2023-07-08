@@ -1,4 +1,4 @@
-#/**
+#/*
 # * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
 # * <p>
 # * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,20 @@
 # server
 server:
   port: 10000
-
+  ssl:
+    # 开启证书
+    enabled: @SSL-ENABLED@
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
 #spring
 spring:
   application:

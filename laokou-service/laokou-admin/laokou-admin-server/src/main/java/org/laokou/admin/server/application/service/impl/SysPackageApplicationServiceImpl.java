@@ -1,19 +1,21 @@
-/**
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 package org.laokou.admin.server.application.service.impl;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -21,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysPackageApplicationService;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -33,6 +36,7 @@ import org.laokou.common.tenant.service.SysPackageMenuService;
 import org.laokou.common.tenant.service.SysPackageService;
 import org.laokou.common.tenant.vo.SysPackageVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -45,65 +49,76 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SysPackageApplicationServiceImpl implements SysPackageApplicationService {
 
-    private final SysPackageService sysPackageService;
-    private final SysPackageMenuService sysPackageMenuService;
-    private final BatchUtil batchUtil;
+	private final SysPackageService sysPackageService;
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean insertPackage(SysPackageDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        long count = sysPackageService.count(Wrappers.lambdaQuery(SysPackageDO.class).eq(SysPackageDO::getName, dto.getName()));
-        if (count > 0) {
-            throw new CustomException("套餐名称已存在，请重新填写");
-        }
-        SysPackageDO sysPackageDO = ConvertUtil.sourceToTarget(dto, SysPackageDO.class);
-        sysPackageService.save(sysPackageDO);
-        return saveOrUpdate(dto.getMenuIds(),sysPackageDO.getId());
-    }
+	private final SysPackageMenuService sysPackageMenuService;
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean updatePackage(SysPackageDTO dto) {
-        ValidatorUtil.validateEntity(dto);
-        Long id = dto.getId();
-        if (id == null) {
-            throw new CustomException("套餐编号不为空");
-        }
-        long count = sysPackageService.count(Wrappers.lambdaQuery(SysPackageDO.class).eq(SysPackageDO::getName, dto.getName()).ne(SysPackageDO::getId,id));
-        if (count > 0) {
-            throw new CustomException("套餐名称已存在，请重新填写");
-        }
-        Integer version = sysPackageService.getVersion(id);
-        SysPackageDO sysPackageDO = ConvertUtil.sourceToTarget(dto, SysPackageDO.class);
-        sysPackageDO.setVersion(version);
-        sysPackageService.updateById(sysPackageDO);
-        sysPackageMenuService.remove(Wrappers.lambdaQuery(SysPackageMenuDO.class).eq(SysPackageMenuDO::getPackageId,id));
-        return saveOrUpdate(dto.getMenuIds(),id);
-    }
+	private final BatchUtil batchUtil;
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean deletePackage(Long id) {
-        return sysPackageService.deletePackage(id);
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean insertPackage(SysPackageDTO dto) {
+		ValidatorUtil.validateEntity(dto);
+		long count = sysPackageService
+				.count(Wrappers.lambdaQuery(SysPackageDO.class).eq(SysPackageDO::getName, dto.getName()));
+		if (count > 0) {
+			throw new CustomException("套餐名称已存在，请重新填写");
+		}
+		SysPackageDO sysPackageDO = ConvertUtil.sourceToTarget(dto, SysPackageDO.class);
+		sysPackageService.save(sysPackageDO);
+		return saveOrUpdate(dto.getMenuIds(), sysPackageDO.getId());
+	}
 
-    @Override
-    public IPage<SysPackageVO> queryPackagePage(SysPackageQo qo) {
-        ValidatorUtil.validateEntity(qo);
-        IPage<SysPackageVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysPackageService.queryPackagePage(page,qo);
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean updatePackage(SysPackageDTO dto) {
+		ValidatorUtil.validateEntity(dto);
+		Long id = dto.getId();
+		if (id == null) {
+			throw new CustomException("套餐编号不为空");
+		}
+		long count = sysPackageService.count(Wrappers.lambdaQuery(SysPackageDO.class)
+				.eq(SysPackageDO::getName, dto.getName()).ne(SysPackageDO::getId, id));
+		if (count > 0) {
+			throw new CustomException("套餐名称已存在，请重新填写");
+		}
+		Integer version = sysPackageService.getVersion(id);
+		SysPackageDO sysPackageDO = ConvertUtil.sourceToTarget(dto, SysPackageDO.class);
+		sysPackageDO.setVersion(version);
+		sysPackageService.updateById(sysPackageDO);
+		List<SysPackageMenuDO> list = sysPackageMenuService.list(Wrappers.lambdaQuery(SysPackageMenuDO.class)
+				.eq(SysPackageMenuDO::getPackageId, id).select(SysPackageMenuDO::getId));
+		if (CollectionUtil.isNotEmpty(list)) {
+			sysPackageMenuService.removeBatchByIds(list.stream().map(SysPackageMenuDO::getId).toList());
+		}
+		return saveOrUpdate(dto.getMenuIds(), id);
+	}
 
-    @Override
-    public SysPackageVO getPackageById(Long id) {
-        return sysPackageService.getPackageById(id);
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean deletePackage(Long id) {
+		return sysPackageService.deletePackage(id);
+	}
 
-    @Override
-    public List<OptionVO> getOptionList() {
-        return sysPackageService.getOptionList();
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
+	public IPage<SysPackageVO> queryPackagePage(SysPackageQo qo) {
+		ValidatorUtil.validateEntity(qo);
+		IPage<SysPackageVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+		return sysPackageService.queryPackagePage(page, qo);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
+	public SysPackageVO getPackageById(Long id) {
+		return sysPackageService.getPackageById(id);
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
+	public List<OptionVO> getOptionList() {
+		return sysPackageService.getOptionList();
+	}
 
     private boolean saveOrUpdate(List<Long> menuIds,Long id) {
         if (CollectionUtil.isNotEmpty(menuIds)) {

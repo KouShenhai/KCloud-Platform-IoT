@@ -21,20 +21,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ResponseBody
-    @ExceptionHandler(Exception.class)
-    public ResultDTO<Void> exceptionHandler(Exception e) {
+	@ResponseBody
+	@ExceptionHandler(Exception.class)
+	public ResultDTO<Void> exceptionHandler(Exception e) {
 
-        // 不是所有异常都需要打印完整堆栈，后续可以定义内部的Exception，便于判断
-        if (e instanceof IllegalArgumentException || e instanceof PowerJobException) {
-            log.warn("[ControllerException] http request failed, message is {}.", e.getMessage());
-        } else if (e instanceof HttpMessageNotReadableException || e instanceof MethodArgumentTypeMismatchException) {
-            log.warn("[ControllerException] invalid http request params, exception is {}.", e.getMessage());
-        } else if (e instanceof HttpRequestMethodNotSupportedException) {
-            log.warn("[ControllerException] invalid http request method, exception is {}.", e.getMessage());
-        } else {
-            log.error("[ControllerException] http request failed.", e);
-        }
-        return ResultDTO.failed(ExceptionUtils.getMessage(e));
-    }
+		// 不是所有异常都需要打印完整堆栈，后续可以定义内部的Exception，便于判断
+		if (e instanceof IllegalArgumentException || e instanceof PowerJobException) {
+			log.warn("[ControllerException] http request failed, message is {}.", e.getMessage());
+		}
+		else if (e instanceof HttpMessageNotReadableException || e instanceof MethodArgumentTypeMismatchException) {
+			log.warn("[ControllerException] invalid http request params, exception is {}.", e.getMessage());
+		}
+		else if (e instanceof HttpRequestMethodNotSupportedException) {
+			log.warn("[ControllerException] invalid http request method, exception is {}.", e.getMessage());
+		}
+		else {
+			log.error("[ControllerException] http request failed.", e);
+		}
+		return ResultDTO.failed(ExceptionUtils.getMessage(e));
+	}
+
 }

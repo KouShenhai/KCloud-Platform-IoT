@@ -1,17 +1,18 @@
-/**
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * 
  */
 
 package org.laokou.common.trace.interceptor;
@@ -19,9 +20,10 @@ package org.laokou.common.trace.interceptor;
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.laokou.common.core.constant.Constant;
 import org.slf4j.MDC;
 import org.springframework.web.servlet.HandlerInterceptor;
+
+import static org.laokou.common.core.constant.Constant.*;
 
 /**
  * @author laokou
@@ -29,22 +31,23 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @NonNullApi
 public class TraceInterceptor implements HandlerInterceptor {
 
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String traceId = request.getHeader(Constant.TRACE_ID);
-        String userId = request.getHeader(Constant.USER_ID);
-        String username = request.getHeader(Constant.USER_NAME);
-        String tenantId = request.getHeader(Constant.TENANT_ID);
-        MDC.put(Constant.TRACE_ID,traceId);
-        MDC.put(Constant.USER_ID,userId);
-        MDC.put(Constant.TENANT_ID,tenantId);
-        MDC.put(Constant.USER_NAME,username);
-        return true;
-    }
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+		String traceId = request.getHeader(TRACE_ID);
+		String userId = request.getHeader(USER_ID);
+		String username = request.getHeader(USER_NAME);
+		String tenantId = request.getHeader(TENANT_ID);
+		MDC.put(TRACE_ID, traceId);
+		MDC.put(USER_ID, userId);
+		MDC.put(TENANT_ID, tenantId);
+		MDC.put(USER_NAME, username);
+		return true;
+	}
 
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        MDC.clear();
-    }
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+			Exception ex) {
+		MDC.clear();
+	}
 
 }

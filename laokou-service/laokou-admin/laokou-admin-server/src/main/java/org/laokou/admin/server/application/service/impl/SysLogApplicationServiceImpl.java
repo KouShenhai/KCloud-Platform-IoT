@@ -1,20 +1,23 @@
-/**
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 package org.laokou.admin.server.application.service.impl;
+
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,6 +34,9 @@ import org.laokou.common.log.vo.SysLoginLogVO;
 import org.laokou.common.log.vo.SysOperateLogVO;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
  * @author laokou
  */
@@ -38,36 +44,40 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SysLogApplicationServiceImpl implements SysLogApplicationService {
 
-    private final SysOperateLogService sysOperateLogService;
+	private final SysOperateLogService sysOperateLogService;
 
-    private final SysLoginLogService sysLoginLogService;
+	private final SysLoginLogService sysLoginLogService;
 
-    @Override
-    @DataFilter(tableAlias = "boot_sys_operate_log")
-    public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQo qo) {
-        ValidatorUtil.validateEntity(qo);
-        qo.setTenantId(UserUtil.getTenantId());
-        IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysOperateLogService.getOperateLogList(page,qo);
-    }
+	@Override
+	@DataFilter(tableAlias = "boot_sys_operate_log")
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQo qo) {
+		ValidatorUtil.validateEntity(qo);
+		qo.setTenantId(UserUtil.getTenantId());
+		IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+		return sysOperateLogService.getOperateLogList(page, qo);
+	}
 
-    @Override
-    public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) {
-        sysOperateLogService.exportOperateLog(qo,response);
-    }
+	@Override
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) {
+		sysOperateLogService.exportOperateLog(qo, response);
+	}
 
-    @Override
-    @DS(Constant.SHARDING_SPHERE_READWRITE)
-    public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {
-        sysLoginLogService.exportLoginLog(qo,response);
-    }
+	@Override
+	@DS(Constant.SHARDING_SPHERE_READWRITE)
+	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
+	public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {
+		sysLoginLogService.exportLoginLog(qo, response);
+	}
 
-    @Override
-    public IPage<SysLoginLogVO> queryLoginLogPage(SysLoginLogQo qo) {
-        ValidatorUtil.validateEntity(qo);
-        qo.setTenantId(UserUtil.getTenantId());
-        IPage<SysLoginLogVO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
-        return sysLoginLogService.getLoginLogList(page,qo);
-    }
+	@Override
+	@DSTransactional(rollbackFor = Exception.class)
+	public IPage<SysLoginLogVO> queryLoginLogPage(SysLoginLogQo qo) {
+		ValidatorUtil.validateEntity(qo);
+		qo.setTenantId(UserUtil.getTenantId());
+		IPage<SysLoginLogVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+		return sysLoginLogService.getLoginLogList(page, qo);
+	}
 
 }

@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- /**
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-Alibaba</artifactId>
-    <version>3.1.0</version>
+    <version>${laokou.version}</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-common</module>
@@ -28,21 +29,21 @@
         <module>laokou-service</module>
     </modules>
     <name>KCloud-Platform-Alibaba</name>
-    <description>一款企业级微服务架构的云服务多租户SaaS平台</description>
+    <description>一个企业级微服务架构的云服务多租户SaaS平台</description>
     <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
     <properties>
-        <laokou.version>3.1.0</laokou.version>
+        <laokou.version>3.1.1</laokou.version>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.1.0</spring-boot.version>
+        <spring-boot.version>3.1.1</spring-boot.version>
         <!--spring-cloud版本-->
         <spring-cloud.version>2022.0.3</spring-cloud.version>
         <!--spring-framework版本-->
-        <spring-framework.version>6.0.9</spring-framework.version>
+        <spring-framework.version>6.0.10</spring-framework.version>
         <!--cloud-alibaba版本-->
         <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
         <!--spring-doc版本-->
@@ -196,10 +197,10 @@
             <properties>
                 <MYSQL-USERNAME>root</MYSQL-USERNAME>
                 <MYSQL-PASSWORD>laokou123</MYSQL-PASSWORD>
-                <MYSQL-HOST>127.0.0.1</MYSQL-HOST>
-                <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
-                <MYSQL-DB-SEATA>kcloud_platform_seata</MYSQL-DB-SEATA>
-                <MYSQL-DB-XXL-JOB>kcloud_platform_xxl_job</MYSQL-DB-XXL-JOB>
+                <MYSQL-HOST>192.168.30.128</MYSQL-HOST>
+                <MYSQL-DB-NACOS>kcloud_platform_alibaba_nacos</MYSQL-DB-NACOS>
+                <MYSQL-DB-SEATA>kcloud_platform_alibaba_seata</MYSQL-DB-SEATA>
+                <MYSQL-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</MYSQL-DB-XXL-JOB>
                 <MYSQL-DB-POWER-JOB>kcloud_platform_alibaba_power_job</MYSQL-DB-POWER-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
@@ -214,8 +215,10 @@
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
+                <SSL-ENABLED>false</SSL-ENABLED>
                 <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
                 <MAIL-USERNAME>xxx</MAIL-USERNAME>
+                <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -227,15 +230,15 @@
             <properties>
                 <MYSQL-USERNAME>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</MYSQL-USERNAME>
                 <MYSQL-PASSWORD>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</MYSQL-PASSWORD>
-                <MYSQL-HOST>laokou.org</MYSQL-HOST>
-                <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
-                <MYSQL-DB-SEATA>kcloud_platform_seata</MYSQL-DB-SEATA>
-                <MYSQL-DB-XXL-JOB>kcloud_platform_xxl_job</MYSQL-DB-XXL-JOB>
+                <MYSQL-HOST>192.168.30.128</MYSQL-HOST>
+                <MYSQL-DB-NACOS>kcloud_platform_alibaba_nacos</MYSQL-DB-NACOS>
+                <MYSQL-DB-SEATA>kcloud_platform_alibaba_seata</MYSQL-DB-SEATA>
+                <MYSQL-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</MYSQL-DB-XXL-JOB>
                 <MYSQL-DB-POWER-JOB>kcloud_platform_alibaba_power_job</MYSQL-DB-POWER-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
-                <NACOS-DISCOVERY-ADDRESS>1.com:8848</NACOS-DISCOVERY-ADDRESS>
-                <NACOS-CONFIG-ADDRESS>1.com:8848</NACOS-CONFIG-ADDRESS>
+                <NACOS-DISCOVERY-ADDRESS>https://127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
+                <NACOS-CONFIG-ADDRESS>https://127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
                 <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
                 <NACOS-USERNAME>nacos</NACOS-USERNAME>
                 <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
@@ -245,8 +248,10 @@
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
+                <SSL-ENABLED>true</SSL-ENABLED>
                 <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
                 <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
+                <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
             </properties>
         </profile>
         <!-- 正式环境 -->
@@ -258,13 +263,13 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <MYSQL-PASSWORD>${MYSQL-PASSWORD:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</MYSQL-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-HOST>${MYSQL-HOST:laokou.org}</MYSQL-HOST>
+                <MYSQL-HOST>${MYSQL-HOST:192.168.1.100}</MYSQL-HOST>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-DB-NACOS>${MYSQL-DB-NACOS:kcloud_platform_nacos}</MYSQL-DB-NACOS>
+                <MYSQL-DB-NACOS>${MYSQL-DB-NACOS:kcloud_platform_alibaba_nacos}</MYSQL-DB-NACOS>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-DB-SEATA>${MYSQL-DB-SEATA:kcloud_platform_seata}</MYSQL-DB-SEATA>
+                <MYSQL-DB-SEATA>${MYSQL-DB-SEATA:kcloud_platform_alibaba_seata}</MYSQL-DB-SEATA>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-DB-XXL-JOB>${MYSQL-DB-XXL-JOB:kcloud_platform_xxl_job}</MYSQL-DB-XXL-JOB>
+                <MYSQL-DB-XXL-JOB>${MYSQL-DB-XXL-JOB:kcloud_platform_alibaba_xxl_job}</MYSQL-DB-XXL-JOB>
                 <!--suppress UnresolvedMavenProperty -->
                 <MYSQL-DB-POWER-JOB>${MYSQL-DB-POWER-JOB:kcloud_platform_alibaba_power_job}</MYSQL-DB-POWER-JOB>
                 <!--suppress UnresolvedMavenProperty -->
@@ -272,9 +277,9 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-NAMESPACE>${NACOS-NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-DISCOVERY-ADDRESS>${NACOS-DISCOVERY-ADDRESS:1.com:8848}</NACOS-DISCOVERY-ADDRESS>
+                <NACOS-DISCOVERY-ADDRESS>${NACOS-DISCOVERY-ADDRESS:https://127.0.0.1:8848}</NACOS-DISCOVERY-ADDRESS>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-CONFIG-ADDRESS>${NACOS-CONFIG-ADDRESS:1.com:8848}</NACOS-CONFIG-ADDRESS>
+                <NACOS-CONFIG-ADDRESS>${NACOS-CONFIG-ADDRESS:https://127.0.0.1:8848}</NACOS-CONFIG-ADDRESS>
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-GROUP>${NACOS-GROUP:LAOKOU_GROUP}</NACOS-GROUP>
                 <!--suppress UnresolvedMavenProperty -->
@@ -292,10 +297,13 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <SENTINEL-PASSWORD>${SENTINEL-PASSWORD:sentinel}</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
+                <SSL-ENABLED>true</SSL-ENABLED>
                 <!--suppress UnresolvedMavenProperty -->
                 <MAIL-PASSWORD>${MAIL-PASSWORD:ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)}</MAIL-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
                 <MAIL-USERNAME>${MAIL-USERNAME:2413176044@qq.com}</MAIL-USERNAME>
+                <!--suppress UnresolvedMavenProperty -->
+                <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT-ENCRYPTOR-PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
             </properties>
         </profile>
     </profiles>
