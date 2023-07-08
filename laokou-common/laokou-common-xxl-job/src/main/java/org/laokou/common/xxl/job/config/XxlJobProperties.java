@@ -55,7 +55,7 @@ public class XxlJobProperties {
 
 		private String logPath;
 
-		private Integer logRetentionDays;
+		private Integer intentionalities;
 
 	}
 
