@@ -15,21 +15,18 @@
  *
  */
 
-package org.laokou.common.jasypt.enums;
+package org.laokou.common.jasypt.config.auto;
+
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author laokou
  */
-public enum TypeEnums {
+@AutoConfiguration
+@ComponentScan("org.laokou.common.jasypt")
+public class JasyptAutoConfig {
 
-	/**
-	 * 加密
-	 */
-	ENCRYPT,
 
-	/**
-	 * 解密
-	 */
-	DECRYPT
 
 }
