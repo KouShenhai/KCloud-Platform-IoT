@@ -22,7 +22,6 @@ package org.laokou.common.sensitive.enums;
  */
 public enum TypeEnum {
 
-    MOBILE,
-    MAIL,
+	MOBILE, MAIL,
 
 }

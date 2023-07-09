@@ -73,7 +73,7 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 					MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
 		}
 		String mail = request.getParameter(AuthConstant.MAIL);
-		log.info("邮箱：{}", SensitiveUtil.format(TypeEnum.MAIL,mail));
+		log.info("邮箱：{}", SensitiveUtil.format(TypeEnum.MAIL, mail));
 		if (StringUtil.isEmpty(mail)) {
 			throw CustomAuthExceptionHandler.getError(StatusCode.MAIL_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.MAIL_NOT_NULL));

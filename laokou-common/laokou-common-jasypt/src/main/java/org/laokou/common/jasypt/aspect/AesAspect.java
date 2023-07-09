@@ -39,23 +39,25 @@ import java.util.Objects;
 @Slf4j
 public class AesAspect {
 
-    @Around("@annotation(org.laokou.common.jasypt.annotation.Jasypt)")
-    public Object doAround(ProceedingJoinPoint point) throws Throwable {
-        MethodSignature signature = (MethodSignature) point.getSignature();
-        Method method = signature.getMethod();
-        Jasypt jasypt = AnnotationUtils.findAnnotation(method, Jasypt.class);
-        Object proceed = point.proceed();
-        switch (Objects.requireNonNull(jasypt).type()) {
-            case AES -> {
-                if (proceed instanceof HttpResult<?> result) {
-                    Object data = result.getData();
-                    AesUtil.transform(data);
-                }
-            }
-            case MD5 -> {}
-            default -> { }
-        }
-        return proceed;
-    }
+	@Around("@annotation(org.laokou.common.jasypt.annotation.Jasypt)")
+	public Object doAround(ProceedingJoinPoint point) throws Throwable {
+		MethodSignature signature = (MethodSignature) point.getSignature();
+		Method method = signature.getMethod();
+		Jasypt jasypt = AnnotationUtils.findAnnotation(method, Jasypt.class);
+		Object proceed = point.proceed();
+		switch (Objects.requireNonNull(jasypt).type()) {
+			case AES -> {
+				if (proceed instanceof HttpResult<?> result) {
+					Object data = result.getData();
+					AesUtil.transform(data);
+				}
+			}
+			case MD5 -> {
+			}
+			default -> {
+			}
+		}
+		return proceed;
+	}
 
 }

@@ -27,6 +27,4 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("org.laokou.common.jasypt")
 public class JasyptAutoConfig {
 
-
-
 }

@@ -33,14 +33,14 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class SensitiveAspect {
 
-    @Around("@annotation(org.laokou.common.sensitive.annotation.Sensitive)")
-    public Object doAround(ProceedingJoinPoint point) throws Throwable {
-        Object proceed = point.proceed();
-        if (proceed instanceof HttpResult<?> result) {
-            Object data = result.getData();
-            SensitiveUtil.transform(data);
-        }
-        return proceed;
-    }
+	@Around("@annotation(org.laokou.common.sensitive.annotation.Sensitive)")
+	public Object doAround(ProceedingJoinPoint point) throws Throwable {
+		Object proceed = point.proceed();
+		if (proceed instanceof HttpResult<?> result) {
+			Object data = result.getData();
+			SensitiveUtil.transform(data);
+		}
+		return proceed;
+	}
 
 }

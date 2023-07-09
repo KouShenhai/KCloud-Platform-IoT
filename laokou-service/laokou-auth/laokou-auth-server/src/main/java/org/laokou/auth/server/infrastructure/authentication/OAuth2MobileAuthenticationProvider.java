@@ -72,7 +72,7 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 					MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
 		}
 		String mobile = request.getParameter(AuthConstant.MOBILE);
-		log.info("手机：{}", SensitiveUtil.format(TypeEnum.MOBILE,mobile));
+		log.info("手机：{}", SensitiveUtil.format(TypeEnum.MOBILE, mobile));
 		if (StringUtil.isEmpty(mobile)) {
 			throw CustomAuthExceptionHandler.getError(StatusCode.MOBILE_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.MOBILE_NOT_NULL));
