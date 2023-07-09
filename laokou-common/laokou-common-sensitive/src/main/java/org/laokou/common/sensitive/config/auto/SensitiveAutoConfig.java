@@ -15,20 +15,16 @@
  *
  */
 
-package org.laokou.common.jasypt.annotation;
+package org.laokou.common.sensitive.config.auto;
 
-import org.laokou.common.jasypt.enums.TypeEnum;
-
-import java.lang.annotation.*;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.FIELD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Aes {
-
-	TypeEnum type() default TypeEnum.ENCRYPT;
+@AutoConfiguration
+@ComponentScan("org.laokou.common.sensitive")
+public class SensitiveAutoConfig {
 
 }

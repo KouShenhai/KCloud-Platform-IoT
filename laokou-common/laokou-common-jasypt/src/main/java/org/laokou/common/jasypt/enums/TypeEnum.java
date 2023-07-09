@@ -15,20 +15,21 @@
  *
  */
 
-package org.laokou.common.jasypt.annotation;
-
-import org.laokou.common.jasypt.enums.TypeEnum;
-
-import java.lang.annotation.*;
+package org.laokou.common.jasypt.enums;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.FIELD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Aes {
+public enum TypeEnum {
 
-	TypeEnum type() default TypeEnum.ENCRYPT;
+	/**
+	 * 加密
+	 */
+	ENCRYPT,
+
+	/**
+	 * 解密
+	 */
+	DECRYPT
 
 }

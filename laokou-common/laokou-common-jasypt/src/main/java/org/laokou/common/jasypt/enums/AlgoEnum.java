@@ -14,21 +14,14 @@
  * limitations under the License.
  *
  */
-
-package org.laokou.common.jasypt.annotation;
-
-import org.laokou.common.jasypt.enums.TypeEnum;
-
-import java.lang.annotation.*;
+package org.laokou.common.jasypt.enums;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.FIELD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Aes {
 
-	TypeEnum type() default TypeEnum.ENCRYPT;
+public enum AlgoEnum {
+
+	AES, MD5
 
 }

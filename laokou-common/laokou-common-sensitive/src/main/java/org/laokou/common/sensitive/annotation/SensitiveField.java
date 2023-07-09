@@ -14,10 +14,9 @@
  * limitations under the License.
  *
  */
+package org.laokou.common.sensitive.annotation;
 
-package org.laokou.common.jasypt.annotation;
-
-import org.laokou.common.jasypt.enums.TypeEnum;
+import org.laokou.common.sensitive.enums.TypeEnum;
 
 import java.lang.annotation.*;
 
@@ -27,8 +26,8 @@ import java.lang.annotation.*;
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Aes {
+public @interface SensitiveField {
 
-	TypeEnum type() default TypeEnum.ENCRYPT;
+	TypeEnum type();
 
 }
