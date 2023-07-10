@@ -72,7 +72,7 @@ public abstract class Server {
 			// 服务器异步操作绑定
 			// sync -> 等待任务结束，如果任务产生异常或被中断则抛出异常，否则返回Future自身
 			// awaitUninterruptibly -> 等待任务结束，任务不可中断
-			ChannelFuture channelFuture = bootstrap.bind(port).awaitUninterruptibly();
+			ChannelFuture channelFuture = bind(bootstrap,port);
 			// 监听端口关闭
 			channelFuture.channel().closeFuture().addListener(future -> {
 				if (this.running.get()) {
@@ -106,6 +106,14 @@ public abstract class Server {
 			}
 			log.info("优雅关闭，释放资源");
 		}
+	}
+
+	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap,final int port) {
+		return bootstrap.bind(port).awaitUninterruptibly().addListener(future -> {
+			if (!future.isSuccess()) {
+				bind(bootstrap, port + 1);
+			}
+		});
 	}
 
 }
