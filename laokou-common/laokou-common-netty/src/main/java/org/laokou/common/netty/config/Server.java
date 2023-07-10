@@ -79,13 +79,6 @@ public abstract class Server {
 					stop();
 				}
 			});
-			if (channelFuture.cause() != null) {
-				log.error("启动失败，错误信息：{}", channelFuture.cause().getMessage());
-			}
-			if (channelFuture.isSuccess()) {
-				log.info("启动成功，端口：{}", port);
-				this.running.compareAndSet(false, true);
-			}
 		}
 		catch (Exception e) {
 			log.error("启动失败，端口：{}，错误信息:{}", port, e.getMessage());
@@ -111,10 +104,11 @@ public abstract class Server {
 	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap,final int port) {
 		return bootstrap.bind(port).awaitUninterruptibly().addListener(future -> {
 			if (!future.isSuccess()) {
-				log.error("绑定失败，端口：{}",port);
+				log.error("启动失败，端口{}被占用",port);
 				bind(bootstrap, port + 1);
 			} else {
-				log.info("绑定成功，端口：{}",port);
+				log.info("启动成功，端口{}已绑定", port);
+				this.running.compareAndSet(false, true);
 			}
 		});
 	}
