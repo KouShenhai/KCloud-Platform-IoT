@@ -111,7 +111,10 @@ public abstract class Server {
 	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap,final int port) {
 		return bootstrap.bind(port).awaitUninterruptibly().addListener(future -> {
 			if (!future.isSuccess()) {
+				log.error("绑定失败，端口：{}",port);
 				bind(bootstrap, port + 1);
+			} else {
+				log.info("绑定成功，端口：{}",port);
 			}
 		});
 	}
