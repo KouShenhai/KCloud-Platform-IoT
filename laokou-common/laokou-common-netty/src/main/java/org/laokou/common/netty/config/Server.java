@@ -23,7 +23,6 @@ import io.netty.channel.EventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author laokou
@@ -35,8 +34,6 @@ public abstract class Server {
 	 * 运行标记
 	 */
 	private final AtomicBoolean running = new AtomicBoolean(false);
-
-	private final AtomicInteger port = new AtomicInteger(0);
 
 	protected EventLoopGroup boss;
 
@@ -55,16 +52,12 @@ public abstract class Server {
 	protected abstract AbstractBootstrap<?, ?> init();
 
 	/**
-	 * 开始
+	 * 启动
 	 */
 	public void start() {
 		int port = getPort();
-		if (!this.port.compareAndSet(0, port)) {
-			log.error("端口{}已被使用，请更换端口", port);
-			return;
-		}
 		if (this.running.get()) {
-			log.error("已启动，端口：{}", port);
+			log.error("已启动监听，端口：{}", port);
 			return;
 		}
 		AbstractBootstrap<?, ?> bootstrap = init();
@@ -101,6 +94,9 @@ public abstract class Server {
 		}
 	}
 
+	/**
+	 * 绑定
+	 */
 	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap,final int port) {
 		return bootstrap.bind(port).awaitUninterruptibly().addListener(future -> {
 			if (!future.isSuccess()) {
