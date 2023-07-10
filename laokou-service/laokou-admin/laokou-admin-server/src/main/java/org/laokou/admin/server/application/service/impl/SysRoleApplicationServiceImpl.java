@@ -107,6 +107,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 				SysRoleMenuDO roleMenuDO = new SysRoleMenuDO();
 				roleMenuDO.setMenuId(menuId);
 				roleMenuDO.setRoleId(roleId);
+				roleMenuDO.setId(IdGenerator.defaultSnowflakeId());
 				roleMenuList.add(roleMenuDO);
 			}
 			batchUtil.insertBatch(roleMenuList, 500, sysRoleMenuService::insertBatch);
@@ -117,6 +118,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 				SysRoleDeptDO roleDeptDO = new SysRoleDeptDO();
 				roleDeptDO.setDeptId(deptId);
 				roleDeptDO.setRoleId(roleId);
+				roleDeptDO.setId(IdGenerator.defaultSnowflakeId());
 				roleDeptList.add(roleDeptDO);
 			}
 			batchUtil.insertBatch(roleDeptList, 500, sysRoleDeptService::insertBatch);

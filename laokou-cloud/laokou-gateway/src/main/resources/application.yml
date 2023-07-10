@@ -63,6 +63,10 @@ spring:
             data-type: json
     # loadbalancer
     loadbalancer:
+      cache:
+        caffeine:
+          spec: initialCapacity=256,expireAfterWrite=35s
+        enabled: true
       nacos:
         enabled: true
     # network
@@ -80,3 +84,8 @@ spring:
         ssl:
           # 信任所有下游证书
           use-insecure-trust-manager: true
+        # 日志
+        wiretap: true
+      httpserver:
+        # 日志
+        wiretap: true
