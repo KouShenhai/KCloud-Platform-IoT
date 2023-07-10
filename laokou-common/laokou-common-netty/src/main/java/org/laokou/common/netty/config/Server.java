@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.netty.config;
@@ -65,7 +65,7 @@ public abstract class Server {
 			// 服务器异步操作绑定
 			// sync -> 等待任务结束，如果任务产生异常或被中断则抛出异常，否则返回Future自身
 			// awaitUninterruptibly -> 等待任务结束，任务不可中断
-			ChannelFuture channelFuture = bind(bootstrap,port);
+			ChannelFuture channelFuture = bind(bootstrap, port);
 			// 监听端口关闭
 			channelFuture.channel().closeFuture().addListener(future -> {
 				if (this.running.get()) {
@@ -97,12 +97,13 @@ public abstract class Server {
 	/**
 	 * 绑定
 	 */
-	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap,final int port) {
+	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap, final int port) {
 		return bootstrap.bind(port).awaitUninterruptibly().addListener(future -> {
 			if (!future.isSuccess()) {
-				log.error("启动失败，端口{}被占用",port);
+				log.error("启动失败，端口{}被占用", port);
 				bind(bootstrap, port + 1);
-			} else {
+			}
+			else {
 				log.info("启动成功，端口{}已绑定", port);
 				this.running.compareAndSet(false, true);
 			}
