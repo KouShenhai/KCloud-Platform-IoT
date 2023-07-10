@@ -66,10 +66,12 @@ public class WebSocketServer extends Server {
 		return serverBootstrap.group(boss, work)
 				// 指定通道
 				.channel(NioServerSocketChannel.class)
-				// 维持长连接
+				// 开启TCP底层心跳，维持长连接
 				.childOption(ChannelOption.SO_KEEPALIVE, true)
 				// 请求队列最大长度
-				.option(ChannelOption.SO_BACKLOG, 1024)
+				.option(ChannelOption.SO_BACKLOG, 4096)
+				// 实时发送
+				.option(ChannelOption.TCP_NODELAY,false)
 				// websocket处理类
 				.childHandler(websocketChannelInitializer);
 	}
