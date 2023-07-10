@@ -5,7 +5,7 @@
  Source Server Type    : MySQL
  Source Server Version : 80033 (8.0.33)
  Source Host           : 192.168.1.100:3306
- Source Schema         : kcloud_platform_flowable
+ Source Schema         : kcloud_platform_alibaba_flowable
 
  Target Server Type    : MySQL
  Target Server Version : 80033 (8.0.33)
