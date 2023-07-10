@@ -71,7 +71,7 @@ public class WebSocketServer extends Server {
 				// 请求队列最大长度
 				.option(ChannelOption.SO_BACKLOG, 4096)
 				// 实时发送
-				.option(ChannelOption.TCP_NODELAY,false)
+				.option(ChannelOption.TCP_NODELAY, false)
 				// websocket处理类
 				.childHandler(websocketChannelInitializer);
 	}
