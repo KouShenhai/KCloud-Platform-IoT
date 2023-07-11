@@ -16,6 +16,8 @@
  */
 package org.laokou.im.server.config;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -41,7 +43,6 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author laokou
@@ -57,8 +58,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	private static final String WS_HEADER_VALUE = "websocket";
 
 	private final ReactiveRedisUtil reactiveRedisUtil;
-
-	public static final Map<String, Channel> USER_MAP = new ConcurrentHashMap<>();
+	public static final Cache<String, Channel> USER_MAP = Caffeine.newBuilder().initialCapacity(100).build();
 
 	@Override
 	@SneakyThrows

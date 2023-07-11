@@ -20,6 +20,8 @@ package org.laokou.im.server.listener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
+import org.apache.rocketmq.spring.annotation.ConsumeMode;
+import org.apache.rocketmq.spring.annotation.MessageModel;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.JacksonUtil;
@@ -31,6 +33,7 @@ import org.laokou.im.server.config.WebSocketServer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author laokou
@@ -38,7 +41,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@RocketMQMessageListener(consumerGroup = "laokou-message-consumer-group", topic = RocketmqConstant.LAOKOU_MESSAGE_TOPIC)
+@RocketMQMessageListener(consumerGroup = "laokou-message-consumer-group", topic = RocketmqConstant.LAOKOU_MESSAGE_TOPIC, messageModel = MessageModel.BROADCASTING, consumeMode = ConsumeMode.CONCURRENTLY)
 public class MessageListener implements RocketMQListener<MessageExt> {
 
 	private final WebSocketServer websocketServer;
@@ -55,7 +58,7 @@ public class MessageListener implements RocketMQListener<MessageExt> {
 		String body = dto.getBody();
 		WsMsgDTO msgDTO = JacksonUtil.toBean(body, WsMsgDTO.class);
 		for (String userId : msgDTO.getReceiver()) {
-			taskExecutor.execute(() -> websocketServer.send(userId, msgDTO.getMsg()));
+			CompletableFuture.runAsync(() -> websocketServer.send(userId, msgDTO.getMsg()),taskExecutor);
 		}
 	}
 
