@@ -131,8 +131,8 @@ public class RedisUtil {
 		return redissonClient.getBucket(key).get();
 	}
 
-	public void delete(String key) {
-		redissonClient.getKeys().delete(key);
+	public boolean delete(String key) {
+		return redissonClient.getKeys().delete(key) > 0;
 	}
 
 	public boolean hasKey(String key) {
@@ -185,7 +185,7 @@ public class RedisUtil {
 	}
 
 	public long getKeysSize() {
-		final Object obj = redisTemplate.execute((RedisCallback) RedisServerCommands::dbSize);
+		final Object obj = redisTemplate.execute(RedisServerCommands::dbSize);
 		return obj == null ? 0 : Long.parseLong(obj.toString());
 	}
 
@@ -205,7 +205,8 @@ public class RedisUtil {
 	}
 
 	public Map<String, String> getInfo() {
-		final Properties properties = (Properties) redisTemplate.execute((RedisCallback) RedisServerCommands::info);
+		final Properties properties = redisTemplate.execute(RedisServerCommands::info,
+				redisTemplate.isExposeConnection());
 		assert properties != null;
 		final Set<String> set = properties.stringPropertyNames();
 		final Iterator<String> iterator = set.iterator();

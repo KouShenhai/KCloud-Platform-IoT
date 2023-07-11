@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.redis.utils;
@@ -20,6 +20,8 @@ package org.laokou.common.redis.utils;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RedissonReactiveClient;
 import reactor.core.publisher.Mono;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
@@ -31,6 +33,14 @@ public class ReactiveRedisUtil {
 
 	public Mono<Object> get(String key) {
 		return redissonReactiveClient.getBucket(key).get();
+	}
+
+	public Mono<Void> set(String key, Object obj, long expire) {
+		return redissonReactiveClient.getBucket(key).set(obj, expire, TimeUnit.SECONDS);
+	}
+
+	public Mono<Long> delete(String key) {
+		return redissonReactiveClient.getKeys().delete(key);
 	}
 
 }

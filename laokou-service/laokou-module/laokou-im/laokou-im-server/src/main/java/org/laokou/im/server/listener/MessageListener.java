@@ -41,7 +41,8 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@RocketMQMessageListener(consumerGroup = "laokou-message-consumer-group", topic = RocketmqConstant.LAOKOU_MESSAGE_TOPIC, messageModel = MessageModel.BROADCASTING, consumeMode = ConsumeMode.CONCURRENTLY)
+@RocketMQMessageListener(consumerGroup = "laokou-message-consumer-group", topic = RocketmqConstant.LAOKOU_MESSAGE_TOPIC,
+		messageModel = MessageModel.BROADCASTING, consumeMode = ConsumeMode.CONCURRENTLY)
 public class MessageListener implements RocketMQListener<MessageExt> {
 
 	private final WebSocketServer websocketServer;
@@ -58,7 +59,7 @@ public class MessageListener implements RocketMQListener<MessageExt> {
 		String body = dto.getBody();
 		WsMsgDTO msgDTO = JacksonUtil.toBean(body, WsMsgDTO.class);
 		for (String userId : msgDTO.getReceiver()) {
-			CompletableFuture.runAsync(() -> websocketServer.send(userId, msgDTO.getMsg()),taskExecutor);
+			CompletableFuture.runAsync(() -> websocketServer.send(userId, msgDTO.getMsg()), taskExecutor);
 		}
 	}
 
