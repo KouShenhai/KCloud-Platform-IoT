@@ -68,10 +68,13 @@ public class IdempotentAspect {
 		if (StringUtil.isEmpty(requestId)) {
 			throw new CustomException("提交失败，令牌不为空");
 		}
-		Boolean result = redisUtil.execute(REDIS_SCRIPT,
-				Collections.singletonList(RedisKeyUtil.getIdempotentTokenKey(requestId)));
+		String idempotentTokenKey = RedisKeyUtil.getIdempotentTokenKey(requestId);
+		Boolean result = redisUtil.execute(REDIS_SCRIPT, Collections.singletonList(idempotentTokenKey));
 		if (!result) {
 			throw new CustomException("不可重复提交请求");
+		}
+		else {
+			redisUtil.delete(idempotentTokenKey);
 		}
 	}
 

@@ -16,6 +16,8 @@
  */
 package org.laokou.im.server.config;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -37,11 +39,11 @@ import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author laokou
@@ -58,7 +60,11 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	private final ReactiveRedisUtil reactiveRedisUtil;
 
-	public static final Map<String, Channel> USER_MAP = new ConcurrentHashMap<>();
+	public static final Cache<String, Channel> USER_CACHE;
+
+	static {
+		USER_CACHE = Caffeine.newBuilder().initialCapacity(100).build();
+	}
 
 	@Override
 	@SneakyThrows
@@ -81,7 +87,10 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	@Override
 	public void handlerRemoved(ChannelHandlerContext ctx) {
-		log.info("断开连接：{}", ctx.channel().id().asLongText());
+		// 移除channel
+		String channelId = ctx.channel().id().asLongText();
+		removeChannel(channelId);
+		log.info("断开连接：{}", channelId);
 	}
 
 	private String getAuthorization(Map<String, String> paramMap) {
@@ -116,8 +125,10 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 				}
 				UserDetail userDetail = (UserDetail) obj;
 				Channel channel = ctx.channel();
-				Long userId = userDetail.getId();
-				USER_MAP.put(userId.toString(), channel);
+				String userId = userDetail.getId().toString();
+				String userChannelKey = RedisKeyUtil.getUserChannelKey(channel.id().asLongText());
+				USER_CACHE.put(userId, channel);
+				reactiveRedisUtil.set(userChannelKey, userId, RedisUtil.HOUR_ONE_EXPIRE).subscribe();
 			});
 		}
 		catch (Exception e) {
@@ -134,6 +145,16 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 		ReferenceCountUtil.release(byteBuf);
 		ctx.channel().writeAndFlush(defaultFullHttpResponse);
 		ctx.close();
+	}
+
+	private void removeChannel(String channelId) {
+		String userChannelKey = RedisKeyUtil.getUserChannelKey(channelId);
+		reactiveRedisUtil.get(userChannelKey).subscribe(obj -> {
+			if (obj != null) {
+				USER_CACHE.invalidate(obj.toString());
+				reactiveRedisUtil.delete(userChannelKey).subscribe();
+			}
+		});
 	}
 
 }

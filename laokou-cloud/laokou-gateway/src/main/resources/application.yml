@@ -84,8 +84,8 @@ spring:
         ssl:
           # 信任所有下游证书
           use-insecure-trust-manager: true
-        # 日志
-        wiretap: true
+        # netty日志
+        wiretap: false
       httpserver:
-        # 日志
-        wiretap: true
+        # netty日志
+        wiretap: false

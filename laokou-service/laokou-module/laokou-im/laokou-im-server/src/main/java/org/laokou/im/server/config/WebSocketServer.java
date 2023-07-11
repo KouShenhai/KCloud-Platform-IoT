@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.netty.config.Server;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 
-import static org.laokou.im.server.config.WebsocketHandler.USER_MAP;
+import static org.laokou.im.server.config.WebsocketHandler.USER_CACHE;
 
 /**
  * @author laokou
@@ -82,7 +82,7 @@ public class WebSocketServer extends Server {
 	 * @param msg 消息
 	 */
 	public void send(String userId, String msg) {
-		Channel channel = USER_MAP.get(userId);
+		Channel channel = USER_CACHE.getIfPresent(userId);
 		if (channel != null) {
 			channel.writeAndFlush(new TextWebSocketFrame(msg));
 		}
