@@ -14,13 +14,24 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.core.constant;
+
+package org.laokou.common.dynamic.router.listener;
+
+import io.micrometer.common.lang.NonNullApi;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface ServiceConstant {
+@Component
+@NonNullApi
+public class ServiceListener implements ApplicationListener<ApplicationReadyEvent> {
 
-	String LAOKOU_FLOWABLE = "laokou-flowable";
+	@Override
+	public void onApplicationEvent(ApplicationReadyEvent event) {
+
+	}
 
 }

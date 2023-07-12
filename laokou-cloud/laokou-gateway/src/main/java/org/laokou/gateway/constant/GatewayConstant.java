@@ -27,11 +27,6 @@ public interface GatewayConstant {
 	String OAUTH2_AUTH_URI = "/auth/oauth2/token";
 
 	/**
-	 * 密码模式-用户名
-	 */
-	String USERNAME = "username";
-
-	/**
 	 * OAuth2错误信息
 	 */
 	String ERROR_DESCRIPTION = "error_description";
@@ -40,10 +35,5 @@ public interface GatewayConstant {
 	 * OAuth2错误码
 	 */
 	String ERROR = "error";
-
-	/**
-	 * 密码模式-密码
-	 */
-	String PASSWORD = "password";
 
 }

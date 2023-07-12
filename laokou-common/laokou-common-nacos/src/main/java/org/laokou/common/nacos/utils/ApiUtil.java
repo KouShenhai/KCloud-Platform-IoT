@@ -15,20 +15,29 @@
  *
  */
 
-package org.laokou.common.dynamic.router.utils;
+package org.laokou.common.nacos.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.alibaba.cloud.nacos.NacosConfigProperties;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.nacos.proxy.ProtocolProxy;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public class GsonUtil {
+@Component
+@RequiredArgsConstructor
+public class ApiUtil {
 
-	public static String toPrettyFormat(Object obj) {
-		// 关闭html转义
-		Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-		return gson.toJson(obj);
+	private final NacosConfigProperties nacosConfigProperties;
+
+	private final ProtocolProxy protocolProxy;
+
+	public String getToken() {
+		String tokenUri = protocolProxy.getTokenUri(nacosConfigProperties.getServerAddr());
+		String username = nacosConfigProperties.getUsername();
+		String password = nacosConfigProperties.getPassword();
+		return null;
 	}
 
 }

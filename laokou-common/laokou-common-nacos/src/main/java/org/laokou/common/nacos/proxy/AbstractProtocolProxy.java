@@ -15,20 +15,13 @@
  *
  */
 
-package org.laokou.common.dynamic.router.utils;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+package org.laokou.common.nacos.proxy;
 
 /**
  * @author laokou
  */
-public class GsonUtil {
+public abstract class AbstractProtocolProxy implements ProtocolProxy {
 
-	public static String toPrettyFormat(Object obj) {
-		// 关闭html转义
-		Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-		return gson.toJson(obj);
-	}
+	protected static final String TOKEN_URI_SUFFIX = "";
 
 }

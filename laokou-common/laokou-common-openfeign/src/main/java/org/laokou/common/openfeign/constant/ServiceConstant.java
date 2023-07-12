@@ -14,21 +14,13 @@
  * limitations under the License.
  *
  */
-
-package org.laokou.common.dynamic.router.utils;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+package org.laokou.common.openfeign.constant;
 
 /**
  * @author laokou
  */
-public class GsonUtil {
+public interface ServiceConstant {
 
-	public static String toPrettyFormat(Object obj) {
-		// 关闭html转义
-		Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-		return gson.toJson(obj);
-	}
+	String LAOKOU_FLOWABLE = "laokou-flowable";
 
 }

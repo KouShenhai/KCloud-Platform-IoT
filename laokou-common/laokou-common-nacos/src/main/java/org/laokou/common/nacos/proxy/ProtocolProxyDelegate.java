@@ -15,20 +15,32 @@
  *
  */
 
-package org.laokou.common.dynamic.router.utils;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+package org.laokou.common.nacos.proxy;
 
 /**
  * @author laokou
  */
-public class GsonUtil {
+public class ProtocolProxyDelegate implements ProtocolProxy {
 
-	public static String toPrettyFormat(Object obj) {
-		// 关闭html转义
-		Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-		return gson.toJson(obj);
+	private final boolean sslEnabled;
+
+	private final HttpProtocolProxy httpProtocolProxy;
+
+	private final HttpsProtocolProxy httpsProtocolProxy;
+
+	public ProtocolProxyDelegate(boolean sslEnabled) {
+		this.sslEnabled = sslEnabled;
+		this.httpProtocolProxy = new HttpProtocolProxy();
+		this.httpsProtocolProxy = new HttpsProtocolProxy();
+	}
+
+	@Override
+	public String getTokenUri(String serverAddr) {
+		return getProxy().getTokenUri(serverAddr);
+	}
+
+	private ProtocolProxy getProxy() {
+		return sslEnabled ? httpsProtocolProxy : httpProtocolProxy;
 	}
 
 }
