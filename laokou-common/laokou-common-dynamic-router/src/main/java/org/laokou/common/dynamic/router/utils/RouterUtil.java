@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.dynamic.router.utils;
@@ -51,10 +51,10 @@ public class RouterUtil {
 		dataMap.put("name", name);
 		String router = getRouter(dataMap);
 		RouteDefinition routeDefinition = JacksonUtil.toBean(router, RouteDefinition.class);
-		log.info("获取路由信息：{}", JacksonUtil.toJsonStr(routeDefinition, true));
+
 	}
 
-	private String getRouter(Map<String,Object> dataMap) throws IOException, TemplateException {
+	private String getRouter(Map<String, Object> dataMap) throws IOException, TemplateException {
 		InputStream inputStream = ResourceUtil.getResource("init_router.json").getInputStream();
 		byte[] bytes = inputStream.readAllBytes();
 		String template = new String(bytes, StandardCharsets.UTF_8);

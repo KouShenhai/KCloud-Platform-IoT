@@ -25,9 +25,9 @@ import com.google.gson.GsonBuilder;
  */
 public class GsonUtil {
 
-    private static String toPrettyFormat(Object obj) {
-        Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-        return gson.toJson(obj);
-    }
+	private static String toPrettyFormat(Object obj) {
+		Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+		return gson.toJson(obj);
+	}
 
 }

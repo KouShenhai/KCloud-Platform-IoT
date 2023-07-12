@@ -62,7 +62,7 @@ public class SecretUtil {
 		long maxTimestamp = ts + TIMEOUT_MILLIS;
 		long minTimestamp = ts - TIMEOUT_MILLIS;
 		if (nowTimestamp > maxTimestamp || nowTimestamp < minTimestamp) {
-			throw new CustomException("timestamp已超时");
+			throw new CustomException("timestamp已过期");
 		}
 		if (StringUtil.isEmpty(sign)) {
 			throw new CustomException("sign不能为空");
