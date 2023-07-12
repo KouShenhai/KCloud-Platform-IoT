@@ -62,7 +62,7 @@ public class SecretUtil {
 		long maxTimestamp = ts + TIMEOUT_MILLIS;
 		long minTimestamp = ts - TIMEOUT_MILLIS;
 		if (nowTimestamp > maxTimestamp || nowTimestamp < minTimestamp) {
-			throw new CustomException("timestamp已超时");
+			throw new CustomException("timestamp已过期");
 		}
 		if (StringUtil.isEmpty(sign)) {
 			throw new CustomException("sign不能为空");
@@ -78,7 +78,7 @@ public class SecretUtil {
 	 * MD5(appKey+appSecret+nonce+timestamp+params)
 	 */
 	private static String sign(String appKey, String appSecret, String nonce, long timestamp, String params) {
-		String str = appKey + appSecret + nonce + timestamp + params;
+		String str = appKey.concat(appSecret).concat(nonce).concat(String.valueOf(timestamp)).concat(params);
 		return DigestUtils.md5DigestAsHex(str.getBytes(StandardCharsets.UTF_8));
 	}
 

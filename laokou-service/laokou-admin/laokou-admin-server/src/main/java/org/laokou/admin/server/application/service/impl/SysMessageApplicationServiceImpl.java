@@ -38,9 +38,9 @@ import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
-import org.laokou.common.rocketmq.constant.RocketmqConstant;
-import org.laokou.common.rocketmq.dto.RocketmqDTO;
-import org.laokou.common.rocketmq.template.RocketTemplate;
+import org.laokou.common.rocketmq.constant.MqConstant;
+import org.laokou.common.rocketmq.dto.MqDTO;
+import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.im.client.WsMsgDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -68,7 +68,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 
 	private static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
 
-	private final RocketTemplate rocketTemplate;
+	private final RocketMqTemplate rocketMqTemplate;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
@@ -100,8 +100,8 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 			wsMsgDTO.setMsg(DEFAULT_MESSAGE);
 			wsMsgDTO.setReceiver(receiver);
 			// 异步发送
-			rocketTemplate.sendAsyncMessage(RocketmqConstant.LAOKOU_MESSAGE_TOPIC,
-					new RocketmqDTO(JacksonUtil.toJsonStr(wsMsgDTO)));
+			rocketMqTemplate.sendAsyncMessage(MqConstant.LAOKOU_MESSAGE_TOPIC,
+					new MqDTO(JacksonUtil.toJsonStr(wsMsgDTO)));
 		}
 		return true;
 	}

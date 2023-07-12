@@ -22,7 +22,6 @@ import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
-import org.laokou.gateway.constant.GatewayConstant;
 import org.laokou.gateway.properties.CustomProperties;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -50,7 +49,7 @@ import reactor.core.publisher.Mono;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.laokou.common.core.constant.Constant.AUTHORIZATION_HEAD;
+import static org.laokou.common.core.constant.Constant.*;
 import static org.laokou.gateway.constant.GatewayConstant.OAUTH2_AUTH_URI;
 
 /**
@@ -122,18 +121,17 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		return s -> {
 			// 获取请求密码并解密
 			Map<String, String> inParamsMap = MapUtil.parseParamMap(s);
-			if (inParamsMap.containsKey(GatewayConstant.PASSWORD)
-					&& inParamsMap.containsKey(GatewayConstant.USERNAME)) {
+			if (inParamsMap.containsKey(PASSWORD) && inParamsMap.containsKey(USERNAME)) {
 				log.info("密码模式认证...");
 				try {
-					String password = inParamsMap.get(GatewayConstant.PASSWORD);
-					String username = inParamsMap.get(GatewayConstant.USERNAME);
+					String password = inParamsMap.get(PASSWORD);
+					String username = inParamsMap.get(USERNAME);
 					// 返回修改后报文字符
 					if (StringUtil.isNotEmpty(password)) {
-						inParamsMap.put(GatewayConstant.PASSWORD, RsaUtil.decryptByPrivateKey(password));
+						inParamsMap.put(PASSWORD, RsaUtil.decryptByPrivateKey(password));
 					}
 					if (StringUtil.isNotEmpty(username)) {
-						inParamsMap.put(GatewayConstant.USERNAME, RsaUtil.decryptByPrivateKey(username));
+						inParamsMap.put(USERNAME, RsaUtil.decryptByPrivateKey(username));
 					}
 				}
 				catch (Exception e) {

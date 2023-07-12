@@ -12,28 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
-package org.laokou.gateway.constant;
+
+package org.laokou.common.dynamic.router.utils;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * @author laokou
  */
-public interface GatewayConstant {
+public class GsonUtil {
 
-	/**
-	 * 密码模式-请求地址
-	 */
-	String OAUTH2_AUTH_URI = "/auth/oauth2/token";
-
-	/**
-	 * OAuth2错误信息
-	 */
-	String ERROR_DESCRIPTION = "error_description";
-
-	/**
-	 * OAuth2错误码
-	 */
-	String ERROR = "error";
+	public static String toPrettyFormat(Object obj) {
+		// 关闭html转义
+		Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+		return gson.toJson(obj);
+	}
 
 }

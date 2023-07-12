@@ -26,11 +26,14 @@ import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.rocketmq.constant.RocketmqConstant;
 import org.laokou.logstash.client.index.TraceIndex;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
 import java.nio.charset.StandardCharsets;
+
+import static org.laokou.common.rocketmq.constant.MqConstant.LAOKOU_LOGSTASH_CONSUMER_GROUP;
+import static org.laokou.common.rocketmq.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 
 /**
  * @author laokou
@@ -38,7 +41,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@RocketMQMessageListener(consumerGroup = "laokou-logstash-consumer-group", topic = RocketmqConstant.LAOKOU_TRACE_TOPIC)
+@RocketMQMessageListener(consumerGroup = LAOKOU_LOGSTASH_CONSUMER_GROUP, topic = LAOKOU_TRACE_TOPIC)
 public class MessageListener implements RocketMQListener<MessageExt> {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;

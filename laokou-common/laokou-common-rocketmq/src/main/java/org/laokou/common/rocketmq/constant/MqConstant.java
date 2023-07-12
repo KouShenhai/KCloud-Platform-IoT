@@ -12,28 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
-package org.laokou.gateway.constant;
+package org.laokou.common.rocketmq.constant;
 
 /**
+ * 队列常量值
+ *
  * @author laokou
  */
-public interface GatewayConstant {
+public interface MqConstant {
 
-	/**
-	 * 密码模式-请求地址
-	 */
-	String OAUTH2_AUTH_URI = "/auth/oauth2/token";
+	String LAOKOU_TRACE_TOPIC = "laokou-trace-topic";
 
-	/**
-	 * OAuth2错误信息
-	 */
-	String ERROR_DESCRIPTION = "error_description";
+	String LAOKOU_MESSAGE_TOPIC = "laokou-message-topic";
 
-	/**
-	 * OAuth2错误码
-	 */
-	String ERROR = "error";
+	String LAOKOU_LOGSTASH_CONSUMER_GROUP = "laokou-logstash-consumer-group";
+
+	String LAOKOU_MESSAGE_CONSUMER_GROUP = "laokou-message-consumer-group";
 
 }

@@ -29,7 +29,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RocketmqDTO implements Serializable {
+public class MqDTO implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -6328542667576164499L;

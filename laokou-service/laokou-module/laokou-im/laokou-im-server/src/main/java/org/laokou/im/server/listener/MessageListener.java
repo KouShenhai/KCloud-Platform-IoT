@@ -26,14 +26,17 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.rocketmq.constant.RocketmqConstant;
-import org.laokou.common.rocketmq.dto.RocketmqDTO;
+import org.laokou.common.rocketmq.dto.MqDTO;
 import org.laokou.im.client.WsMsgDTO;
 import org.laokou.im.server.config.WebSocketServer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
+
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
+
+import static org.laokou.common.rocketmq.constant.MqConstant.LAOKOU_MESSAGE_CONSUMER_GROUP;
+import static org.laokou.common.rocketmq.constant.MqConstant.LAOKOU_MESSAGE_TOPIC;
 
 /**
  * @author laokou
@@ -41,7 +44,7 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@RocketMQMessageListener(consumerGroup = "laokou-message-consumer-group", topic = RocketmqConstant.LAOKOU_MESSAGE_TOPIC,
+@RocketMQMessageListener(consumerGroup = LAOKOU_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
 		messageModel = MessageModel.BROADCASTING, consumeMode = ConsumeMode.CONCURRENTLY)
 public class MessageListener implements RocketMQListener<MessageExt> {
 
@@ -55,7 +58,7 @@ public class MessageListener implements RocketMQListener<MessageExt> {
 		if (StringUtil.isEmpty(message)) {
 			return;
 		}
-		RocketmqDTO dto = JacksonUtil.toBean(message, RocketmqDTO.class);
+		MqDTO dto = JacksonUtil.toBean(message, MqDTO.class);
 		String body = dto.getBody();
 		WsMsgDTO msgDTO = JacksonUtil.toBean(body, WsMsgDTO.class);
 		for (String userId : msgDTO.getReceiver()) {

@@ -14,13 +14,33 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.core.constant;
+
+package org.laokou.common.nacos.proxy;
 
 /**
  * @author laokou
  */
-public interface ServiceConstant {
+public class ProtocolProxyDelegate implements ProtocolProxy {
 
-	String LAOKOU_FLOWABLE = "laokou-flowable";
+	private final boolean sslEnabled;
+
+	private final HttpProtocolProxy httpProtocolProxy;
+
+	private final HttpsProtocolProxy httpsProtocolProxy;
+
+	public ProtocolProxyDelegate(boolean sslEnabled) {
+		this.sslEnabled = sslEnabled;
+		this.httpProtocolProxy = new HttpProtocolProxy();
+		this.httpsProtocolProxy = new HttpsProtocolProxy();
+	}
+
+	@Override
+	public String getTokenUri(String serverAddr) {
+		return getProxy().getTokenUri(serverAddr);
+	}
+
+	private ProtocolProxy getProxy() {
+		return sslEnabled ? httpsProtocolProxy : httpProtocolProxy;
+	}
 
 }

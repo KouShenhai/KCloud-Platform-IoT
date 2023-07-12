@@ -12,28 +12,19 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
-package org.laokou.gateway.constant;
+
+package org.laokou.common.rocketmq.config.auto;
+
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author laokou
  */
-public interface GatewayConstant {
-
-	/**
-	 * 密码模式-请求地址
-	 */
-	String OAUTH2_AUTH_URI = "/auth/oauth2/token";
-
-	/**
-	 * OAuth2错误信息
-	 */
-	String ERROR_DESCRIPTION = "error_description";
-
-	/**
-	 * OAuth2错误码
-	 */
-	String ERROR = "error";
+@AutoConfiguration
+@ComponentScan("org.laokou.common.rocketmq")
+public class RocketMqAutoConfig {
 
 }

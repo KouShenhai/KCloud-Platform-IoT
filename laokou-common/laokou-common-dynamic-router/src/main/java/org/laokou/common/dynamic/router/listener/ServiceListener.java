@@ -14,17 +14,24 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.rocketmq.constant;
+
+package org.laokou.common.dynamic.router.listener;
+
+import io.micrometer.common.lang.NonNullApi;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
 /**
- * 队列常量值
- *
  * @author laokou
  */
-public interface RocketmqConstant {
+@Component
+@NonNullApi
+public class ServiceListener implements ApplicationListener<ApplicationReadyEvent> {
 
-	String LAOKOU_TRACE_TOPIC = "laokou-trace-topic";
+	@Override
+	public void onApplicationEvent(ApplicationReadyEvent event) {
 
-	String LAOKOU_MESSAGE_TOPIC = "laokou-message-topic";
+	}
 
 }

@@ -12,28 +12,32 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
-package org.laokou.gateway.constant;
+
+package org.laokou.common.nacos.utils;
+
+import com.alibaba.cloud.nacos.NacosConfigProperties;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.nacos.proxy.ProtocolProxy;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface GatewayConstant {
+@Component
+@RequiredArgsConstructor
+public class ApiUtil {
 
-	/**
-	 * 密码模式-请求地址
-	 */
-	String OAUTH2_AUTH_URI = "/auth/oauth2/token";
+	private final NacosConfigProperties nacosConfigProperties;
 
-	/**
-	 * OAuth2错误信息
-	 */
-	String ERROR_DESCRIPTION = "error_description";
+	private final ProtocolProxy protocolProxy;
 
-	/**
-	 * OAuth2错误码
-	 */
-	String ERROR = "error";
+	public String getToken() {
+		String tokenUri = protocolProxy.getTokenUri(nacosConfigProperties.getServerAddr());
+		String username = nacosConfigProperties.getUsername();
+		String password = nacosConfigProperties.getPassword();
+		return null;
+	}
 
 }

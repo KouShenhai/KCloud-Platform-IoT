@@ -15,16 +15,18 @@
  *
  */
 
-package org.laokou.common.rocketmq.config.auto;
-
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+package org.laokou.common.nacos.proxy;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
-@ComponentScan("org.laokou.common.rocketmq")
-public class RocketmqAutoConfig {
+public interface ProtocolProxy {
+
+	/**
+	 * token_uri
+	 * @return string
+	 * @param serverAddr
+	 */
+	String getTokenUri(String serverAddr);
 
 }

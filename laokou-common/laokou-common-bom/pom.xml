@@ -106,8 +106,8 @@
         <kafka.version>3.0.4</kafka.version>
         <!--netty版本-->
         <netty.version>4.1.94.Final</netty.version>
-        <!--aop版本-->
-        <aop.version>3.1.1</aop.version>
+        <!--gson版本-->
+        <gson.version>2.10.1</gson.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -116,7 +116,12 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-aop</artifactId>
-                <version>${aop.version}</version>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.netty</groupId>

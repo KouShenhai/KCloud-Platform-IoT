@@ -24,6 +24,7 @@ import de.codecentric.boot.admin.client.config.SpringBootAdminClientAutoConfigur
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.dynamic.router.utils.RouterUtil;
+import org.laokou.common.nacos.utils.ApiUtil;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -56,6 +57,8 @@ public class AdminApplication implements CommandLineRunner {
 
 	private final RouterUtil routerUtil;
 
+	private final ApiUtil apiUtil;
+
 	public static void main(String[] args) {
 		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
@@ -68,6 +71,7 @@ public class AdminApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws TemplateException, IOException {
 		routerUtil.initRouter();
+		apiUtil.getToken();
 	}
 
 }

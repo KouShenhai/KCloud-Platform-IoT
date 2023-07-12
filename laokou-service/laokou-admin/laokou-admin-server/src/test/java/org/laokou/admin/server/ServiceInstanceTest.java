@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.constant.ServiceConstant;
+import org.laokou.common.openfeign.constant.ServiceConstant;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.nacos.utils.ServiceUtil;
 import org.springframework.boot.test.context.SpringBootTest;
