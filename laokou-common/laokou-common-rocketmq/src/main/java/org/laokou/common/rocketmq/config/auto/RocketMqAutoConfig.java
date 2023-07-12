@@ -25,6 +25,6 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @AutoConfiguration
 @ComponentScan("org.laokou.common.rocketmq")
-public class RocketmqAutoConfig {
+public class RocketMqAutoConfig {
 
 }

@@ -14,17 +14,26 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.rocketmq.constant;
+package org.laokou.common.rocketmq.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
- * 队列常量值
- *
  * @author laokou
  */
-public interface RocketmqConstant {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class MqDTO implements Serializable {
 
-	String LAOKOU_TRACE_TOPIC = "laokou-trace-topic";
+	@Serial
+	private static final long serialVersionUID = -6328542667576164499L;
 
-	String LAOKOU_MESSAGE_TOPIC = "laokou-message-topic";
+	private String body;
 
 }
