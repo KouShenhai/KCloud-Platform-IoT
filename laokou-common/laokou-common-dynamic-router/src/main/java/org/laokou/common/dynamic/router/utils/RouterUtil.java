@@ -42,20 +42,23 @@ public class RouterUtil {
 
 	private final Environment env;
 
-	private static final String APPLICATION_PREFIX = "laokou-";
-
 	public void initRouter() throws IOException, TemplateException {
 		String appId = env.getProperty("spring.application.name");
+		assert appId != null;
 		Map<String, Object> dataMap = new HashMap<>(2);
-		String name = appId.replace(APPLICATION_PREFIX, "");
+		String name = appId.substring(6);
 		dataMap.put("appId", appId);
 		dataMap.put("name", name);
+		String router = getRouter(dataMap);
+		RouteDefinition routeDefinition = JacksonUtil.toBean(router, RouteDefinition.class);
+		log.info("获取路由信息：{}", JacksonUtil.toJsonStr(routeDefinition, true));
+	}
+
+	private String getRouter(Map<String,Object> dataMap) throws IOException, TemplateException {
 		InputStream inputStream = ResourceUtil.getResource("init_router.json").getInputStream();
 		byte[] bytes = inputStream.readAllBytes();
 		String template = new String(bytes, StandardCharsets.UTF_8);
-		String content = TemplateUtil.getContent(template, dataMap);
-		RouteDefinition routeDefinition = JacksonUtil.toBean(content, RouteDefinition.class);
-		log.info("获取路由信息：{}", JacksonUtil.toJsonStr(routeDefinition, true));
+		return TemplateUtil.getContent(template, dataMap);
 	}
 
 }
