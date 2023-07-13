@@ -72,6 +72,8 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 				throw CustomAuthExceptionHandler.getError(StatusCode.UNAUTHORIZED,
 						MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 			}
+			// 写入当前线程
+			UserContextHolder.set(userDetail.getId());
 			return userDetail;
 		}
 		obj = redisUtil.get(userInfoKey);
