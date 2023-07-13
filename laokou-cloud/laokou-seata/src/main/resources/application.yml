@@ -61,8 +61,8 @@ seata:
       server-addr: @NACOS-CONFIG-ADDRESS@
       namespace: @NACOS-NAMESPACE@
       group: @SEATA-GROUP@
-      username: nacos
-      password: nacos
+      username: @NACOS-USERNAME@
+      password: @NACOS-PASSWORD@
       context-path:
       data-id: seataServer.properties
   registry:
