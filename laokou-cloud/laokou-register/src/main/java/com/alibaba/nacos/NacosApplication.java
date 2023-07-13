@@ -36,7 +36,7 @@ import static com.alibaba.nacos.sys.env.EnvUtil.NACOS_HOME_KEY;
 public class NacosApplication {
 
 	public static void main(String[] args) {
-		System.setProperty(NACOS_HOME_KEY, "nacos/data/protocol/raft");
+		System.setProperty(NACOS_HOME_KEY, "nacos");
 		new SpringApplicationBuilder(NacosApplication.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

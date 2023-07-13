@@ -73,9 +73,6 @@ public class IdempotentAspect {
 		if (!result) {
 			throw new CustomException("不可重复提交请求");
 		}
-		else {
-			redisUtil.delete(idempotentTokenKey);
-		}
 	}
 
 }

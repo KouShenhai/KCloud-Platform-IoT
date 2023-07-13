@@ -3,16 +3,21 @@ spring:
   cloud:
     # nacos
     nacos:
-      username: ${NACOS-USERNAME}
-      password: ${NACOS-PASSWORD}
       discovery:
         server-addr: ${NACOS-DISCOVERY-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
+        username: ${NACOS-USERNAME}
+        password: ${NACOS-PASSWORD}
+        group: ${NACOS-GROUP}
         # https
         secure: @SSL-ENABLED@
+        # true 临时 false 持久
+        ephemeral: true
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
+        username: ${NACOS-USERNAME}
+        password: ${NACOS-PASSWORD}
         # https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/spring-cloud-alibaba-docs/src/main/asciidoc-zh/nacos-config.adoc
         # 指定读取的文件格式
         file-extension: yaml
