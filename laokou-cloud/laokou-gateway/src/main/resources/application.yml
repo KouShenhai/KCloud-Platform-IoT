@@ -17,8 +17,6 @@
 # tomcat
 server:
   port: 5555
-  tomcat:
-    connection-timeout: 600000
   compression:
     enabled: true
   ssl:
@@ -42,10 +40,12 @@ spring:
   profiles:
     # dev|test|prod
     active: @PROFILE-ACTIVE@
-  servlet:
+  webflux:
     multipart:
-      max-file-size: -1
-      max-request-size: -1
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-headers-size: 20
+      max-in-memory-size: 512
   cloud:
     # sentinel
     sentinel:

@@ -21,11 +21,12 @@ spring:
   profiles:
     # 环境 dev|test|prod
     active: @PROFILE-ACTIVE@
-  servlet:
+  webflux:
     multipart:
-      enabled: true
-      max-file-size: -1
-      max-request-size: -1
+      max-in-memory-size: 512
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-headers-size: 20
   cloud:
     inetutils:
       ignoredInterfaces:

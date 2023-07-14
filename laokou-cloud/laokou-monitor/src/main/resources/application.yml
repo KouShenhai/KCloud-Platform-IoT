@@ -19,9 +19,6 @@ server:
   port: 5000
   servlet:
     context-path: /monitor
-  tomcat:
-    max-connections: -1
-    connection-timeout: 600000
   ssl:
     # 开启证书
     enabled: @SSL-ENABLED@
