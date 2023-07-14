@@ -32,10 +32,7 @@ import org.laokou.admin.server.domain.sys.repository.service.SysMessageService;
 import org.laokou.admin.server.interfaces.qo.SysMessageQo;
 import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.constant.Constant;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.DateUtil;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.rocketmq.constant.MqConstant;
@@ -89,6 +86,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 			detailDO.setUserId(Long.valueOf(next));
 			detailDO.setCreateDate(DateUtil.now());
 			detailDO.setCreator(UserUtil.getUserId());
+			detailDO.setId(IdGenerator.defaultSnowflakeId());
 			detailDOList.add(detailDO);
 		}
 		if (CollectionUtil.isNotEmpty(detailDOList)) {

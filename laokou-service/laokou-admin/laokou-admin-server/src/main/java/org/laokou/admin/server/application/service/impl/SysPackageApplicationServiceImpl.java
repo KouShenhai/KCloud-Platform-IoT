@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysPackageApplicationService;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -126,6 +127,7 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
 				SysPackageMenuDO sysPackageMenuDO = new SysPackageMenuDO();
 				sysPackageMenuDO.setPackageId(id);
 				sysPackageMenuDO.setMenuId(menuId);
+				sysPackageMenuDO.setId(IdGenerator.defaultSnowflakeId());
 				list.add(sysPackageMenuDO);
 			}
 			batchUtil.insertBatch(list, 500, sysPackageMenuService::insertBatch);
