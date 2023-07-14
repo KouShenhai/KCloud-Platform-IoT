@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.client.dto.SysUserDTO;
 import org.laokou.admin.client.vo.SysUserOnlineVO;
 import org.laokou.admin.client.vo.SysUserVO;
@@ -68,6 +69,7 @@ import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SysUserApplicationServiceImpl implements SysUserApplicationService {
 
 	private final SysUserService sysUserService;
@@ -86,33 +88,39 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 	@DSTransactional(rollbackFor = Exception.class)
 	@DS(Constant.SHARDING_SPHERE)
 	public Boolean updateUser(SysUserDTO dto) {
-		ValidatorUtil.validateEntity(dto);
-		Long id = dto.getId();
-		if (null == id) {
-			throw new CustomException("用户编号不为空");
+		try {
+			ValidatorUtil.validateEntity(dto);
+			Long id = dto.getId();
+			if (null == id) {
+				throw new CustomException("用户编号不为空");
+			}
+			if (CollectionUtil.isEmpty(dto.getRoleIds())) {
+				throw new CustomException("所选角色不少于一个，请重新选择");
+			}
+			if (dto.getDeptId() == null) {
+				throw new CustomException("请选择部门");
+			}
+			dto.setEditor(UserUtil.getUserId());
+			Integer version = sysUserService.getVersion(id);
+			dto.setVersion(version);
+			sysUserService.updateUser(dto);
+			List<Long> roleIds = dto.getRoleIds();
+			DynamicDataSourceContextHolder.push(DEFAULT_SOURCE);
+			// 删除中间表
+			List<SysUserRoleDO> list = sysUserRoleService.list(Wrappers.lambdaQuery(SysUserRoleDO.class)
+					.eq(SysUserRoleDO::getUserId, dto.getId()).select(SysUserRoleDO::getId));
+			if (CollectionUtil.isNotEmpty(list)) {
+				sysUserRoleService.removeBatchByIds(list.stream().map(SysUserRoleDO::getId).toList());
+			}
+			if (!CollectionUtil.isEmpty(roleIds)) {
+				saveOrUpdate(dto.getId(), roleIds);
+			}
+		} catch (Exception ex) {
+			log.error("错误信息：{}", ex.getMessage());
+			throw ex;
+		} finally {
+			DynamicDataSourceContextHolder.clear();
 		}
-		if (CollectionUtil.isEmpty(dto.getRoleIds())) {
-			throw new CustomException("所选角色不少于一个，请重新选择");
-		}
-		if (dto.getDeptId() == null) {
-			throw new CustomException("请选择部门");
-		}
-		dto.setEditor(UserUtil.getUserId());
-		Integer version = sysUserService.getVersion(id);
-		dto.setVersion(version);
-		sysUserService.updateUser(dto);
-		List<Long> roleIds = dto.getRoleIds();
-		DynamicDataSourceContextHolder.push(DEFAULT_SOURCE);
-		// 删除中间表
-		List<SysUserRoleDO> list = sysUserRoleService.list(Wrappers.lambdaQuery(SysUserRoleDO.class)
-				.eq(SysUserRoleDO::getUserId, dto.getId()).select(SysUserRoleDO::getId));
-		if (CollectionUtil.isNotEmpty(list)) {
-			sysUserRoleService.removeBatchByIds(list.stream().map(SysUserRoleDO::getId).toList());
-		}
-		if (!CollectionUtil.isEmpty(roleIds)) {
-			saveOrUpdate(dto.getId(), roleIds);
-		}
-		DynamicDataSourceContextHolder.clear();
 		return true;
 	}
 
@@ -182,143 +190,159 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 	@DSTransactional(rollbackFor = Exception.class)
 	@DS(Constant.SHARDING_SPHERE)
 	public Boolean insertUser(SysUserDTO dto) {
-		ValidatorUtil.validateEntity(dto);
-		long count = sysUserService
-				.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername()));
-		if (count > 0) {
-			throw new CustomException("用户名已存在，请重新填写");
+			try {
+				ValidatorUtil.validateEntity(dto);
+				long count = sysUserService
+						.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getUsername, dto.getUsername()));
+				if (count > 0) {
+					throw new CustomException("用户名已存在，请重新填写");
+				}
+				if (CollectionUtil.isEmpty(dto.getRoleIds())) {
+					throw new CustomException("所选角色不少于一个，请重新选择");
+				}
+				if (dto.getDeptId() == null) {
+					throw new CustomException("请选择部门");
+				}
+				if (StringUtil.isEmpty(dto.getPassword())) {
+					throw new CustomException("请输入密码");
+				}
+				SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
+				sysUserDO.setTenantId(UserUtil.getTenantId());
+				sysUserDO.setPassword(passwordEncoder.encode(dto.getPassword()));
+				sysUserService.save(sysUserDO);
+				DynamicDataSourceContextHolder.push(DEFAULT_SOURCE);
+				List<Long> roleIds = dto.getRoleIds();
+				if (!CollectionUtil.isEmpty(roleIds)) {
+					saveOrUpdate(sysUserDO.getId(), roleIds);
+				}
+			} catch (Exception ex){
+				log.error("错误信息：{}", ex.getMessage());
+				throw ex;
+			} finally {
+				DynamicDataSourceContextHolder.clear();
+			}
+			return true;
 		}
-		if (CollectionUtil.isEmpty(dto.getRoleIds())) {
-			throw new CustomException("所选角色不少于一个，请重新选择");
-		}
-		if (dto.getDeptId() == null) {
-			throw new CustomException("请选择部门");
-		}
-		if (StringUtil.isEmpty(dto.getPassword())) {
-			throw new CustomException("请输入密码");
-		}
-		SysUserDO sysUserDO = ConvertUtil.sourceToTarget(dto, SysUserDO.class);
-		sysUserDO.setTenantId(UserUtil.getTenantId());
-		sysUserDO.setPassword(passwordEncoder.encode(dto.getPassword()));
-		sysUserService.save(sysUserDO);
-		List<Long> roleIds = dto.getRoleIds();
-		if (!CollectionUtil.isEmpty(roleIds)) {
-			saveOrUpdate(sysUserDO.getId(), roleIds);
-		}
-		return true;
-	}
 
-	@Override
-	@DataFilter(tableAlias = "boot_sys_user")
-	@DS(Constant.SHARDING_SPHERE)
-	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
-	public IPage<SysUserVO> queryUserPage(SysUserQo qo) {
-		ValidatorUtil.validateEntity(qo);
-		qo.setTenantId(UserUtil.getTenantId());
-		IPage<SysUserVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
-		IPage<SysUserVO> userPage = sysUserService.getUserPage(page, qo);
-		List<SysUserVO> records = userPage.getRecords();
-		if (!CollectionUtil.isEmpty(records)) {
-			records.forEach(item -> item.setUsername(AesUtil.decrypt(item.getUsername())));
+		@Override
+		@DataFilter(tableAlias = "boot_sys_user")
+		@DS(Constant.SHARDING_SPHERE)
+		@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
+		public IPage<SysUserVO> queryUserPage(SysUserQo qo) {
+			ValidatorUtil.validateEntity(qo);
+			qo.setTenantId(UserUtil.getTenantId());
+			IPage<SysUserVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+			IPage<SysUserVO> userPage = sysUserService.getUserPage(page, qo);
+			List<SysUserVO> records = userPage.getRecords();
+			if (!CollectionUtil.isEmpty(records)) {
+				records.forEach(item -> item.setUsername(AesUtil.decrypt(item.getUsername())));
+			}
+			return userPage;
 		}
-		return userPage;
-	}
 
-	@Override
-	@DS(Constant.SHARDING_SPHERE)
-	@DSTransactional(rollbackFor = Exception.class)
-	public SysUserVO getUserById(Long id) {
-		SysUserDO sysUserDO = sysUserService.getById(id);
-		SysUserVO sysUserVO = ConvertUtil.sourceToTarget(sysUserDO, SysUserVO.class);
-		DynamicDataSourceContextHolder.push(DEFAULT_SOURCE);
-		sysUserVO.setRoleIds(sysRoleService.getRoleIdsByUserId(sysUserVO.getId()));
-		DynamicDataSourceContextHolder.clear();
-		return sysUserVO;
-	}
-
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	@DS(Constant.SHARDING_SPHERE)
-	public Boolean deleteUser(Long id) {
-		SysUserDO sysUser = sysUserService.getById(id);
-		UserDetail userDetail = UserUtil.userDetail();
-		if (SuperAdminEnum.YES.ordinal() == sysUser.getSuperAdmin()
-				&& SuperAdminEnum.YES.ordinal() != userDetail.getSuperAdmin()) {
-			throw new CustomException("只有超级管理员才能删除");
+		@Override
+		@DS(Constant.SHARDING_SPHERE)
+		@DSTransactional(rollbackFor = Exception.class)
+		public SysUserVO getUserById(Long id) {
+			SysUserVO sysUserVO;
+			try {
+				SysUserDO sysUserDO = sysUserService.getById(id);
+				sysUserVO = ConvertUtil.sourceToTarget(sysUserDO, SysUserVO.class);
+				DynamicDataSourceContextHolder.push(DEFAULT_SOURCE);
+				sysUserVO.setRoleIds(sysRoleService.getRoleIdsByUserId(sysUserVO.getId()));
+			} catch (Exception ex) {
+				log.error("错误信息：{}", ex.getMessage());
+				sysUserVO = new SysUserVO();
+			} finally {
+				DynamicDataSourceContextHolder.clear();
+			}
+			return sysUserVO;
 		}
-		sysUserService.deleteUser(id);
-		return true;
-	}
 
-	@Override
-	@DS(Constant.SHARDING_SPHERE)
-	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
-	public List<OptionVO> getOptionList() {
-		Long tenantId = UserUtil.getTenantId();
-		List<OptionVO> optionList = sysUserService.getOptionList(tenantId);
-		if (!CollectionUtil.isEmpty(optionList)) {
-			optionList.forEach(item -> item.setLabel(AesUtil.decrypt(item.getLabel())));
+		@Override
+		@Transactional(rollbackFor = Exception.class)
+		@DS(Constant.SHARDING_SPHERE)
+		public Boolean deleteUser(Long id) {
+			SysUserDO sysUser = sysUserService.getById(id);
+			UserDetail userDetail = UserUtil.userDetail();
+			if (SuperAdminEnum.YES.ordinal() == sysUser.getSuperAdmin()
+					&& SuperAdminEnum.YES.ordinal() != userDetail.getSuperAdmin()) {
+				throw new CustomException("只有超级管理员才能删除");
+			}
+			sysUserService.deleteUser(id);
+			return true;
 		}
-		return optionList;
-	}
 
-	@Override
-	public UserInfoVO getUserInfo() {
-		return ConvertUtil.sourceToTarget(UserUtil.userDetail(), UserInfoVO.class);
-	}
+		@Override
+		@DS(Constant.SHARDING_SPHERE)
+		@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
+		public List<OptionVO> getOptionList() {
+			Long tenantId = UserUtil.getTenantId();
+			List<OptionVO> optionList = sysUserService.getOptionList(tenantId);
+			if (!CollectionUtil.isEmpty(optionList)) {
+				optionList.forEach(item -> item.setLabel(AesUtil.decrypt(item.getLabel())));
+			}
+			return optionList;
+		}
 
-	@Override
-	public IPage<SysUserOnlineVO> onlineQueryPage(SysUserOnlineQo qo) {
-		String userInfoKey = RedisKeyUtil.getUserInfoKey("*");
-		Set<String> keys = redisUtil.keys(userInfoKey);
-		List<SysUserOnlineVO> list = new ArrayList<>(keys.size());
-		String keyword = qo.getUsername();
-		Integer pageNum = qo.getPageNum();
-		Integer pageSize = qo.getPageSize();
-		String userInfoKeyPrefix = RedisKeyUtil.getUserInfoKey("");
-		for (String key : keys) {
-			UserDetail userDetail = (UserDetail) redisUtil.get(key);
-			String username = AesUtil.decrypt(userDetail.getUsername());
-			if (StringUtil.isEmpty(keyword) || username.contains(keyword)) {
-				SysUserOnlineVO vo = new SysUserOnlineVO();
-				vo.setUsername(username);
-				vo.setToken(key.replace(userInfoKeyPrefix, ""));
-				vo.setLoginIp(userDetail.getLoginIp());
-				vo.setLoginDate(userDetail.getLoginDate());
-				list.add(vo);
+		@Override
+		public UserInfoVO getUserInfo() {
+			return ConvertUtil.sourceToTarget(UserUtil.userDetail(), UserInfoVO.class);
+		}
+
+		@Override
+		public IPage<SysUserOnlineVO> onlineQueryPage(SysUserOnlineQo qo) {
+			String userInfoKey = RedisKeyUtil.getUserInfoKey("*");
+			Set<String> keys = redisUtil.keys(userInfoKey);
+			List<SysUserOnlineVO> list = new ArrayList<>(keys.size());
+			String keyword = qo.getUsername();
+			Integer pageNum = qo.getPageNum();
+			Integer pageSize = qo.getPageSize();
+			String userInfoKeyPrefix = RedisKeyUtil.getUserInfoKey("");
+			for (String key : keys) {
+				UserDetail userDetail = (UserDetail) redisUtil.get(key);
+				String username = AesUtil.decrypt(userDetail.getUsername());
+				if (StringUtil.isEmpty(keyword) || username.contains(keyword)) {
+					SysUserOnlineVO vo = new SysUserOnlineVO();
+					vo.setUsername(username);
+					vo.setToken(key.substring(userInfoKeyPrefix.length() - 1));
+					vo.setLoginIp(userDetail.getLoginIp());
+					vo.setLoginDate(userDetail.getLoginDate());
+					list.add(vo);
+				}
+			}
+			int size = list.size();
+			list = list.stream().limit(pageSize).skip((long) (pageNum - 1) * pageSize).toList();
+			IPage<SysUserOnlineVO> page = new Page<>(pageNum, pageSize);
+			page.setTotal(size);
+			page.setRecords(list);
+			return page;
+		}
+
+		@Override
+		public Boolean onlineKill(String token) {
+			String userKillKey = RedisKeyUtil.getUserKillKey(token);
+			String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
+			long expire = redisUtil.getExpire(userInfoKey);
+			if (expire > 0) {
+				redisUtil.set(userKillKey, DEFAULT, expire);
+				redisUtil.delete(userInfoKey);
+			}
+			return true;
+		}
+
+		private void saveOrUpdate(Long userId, List<Long> roleIds) {
+			List<SysUserRoleDO> doList = new ArrayList<>(roleIds.size());
+			if (!CollectionUtil.isEmpty(roleIds)) {
+				for (Long roleId : roleIds) {
+					SysUserRoleDO sysUserRoleDO = new SysUserRoleDO();
+					sysUserRoleDO.setRoleId(roleId);
+					sysUserRoleDO.setUserId(userId);
+					sysUserRoleDO.setId(IdGenerator.defaultSnowflakeId());
+					doList.add(sysUserRoleDO);
+				}
+				batchUtil.insertBatch(doList, 500, sysUserRoleService::insertBatch);
 			}
 		}
-		int size = list.size();
-		list = list.stream().limit(pageSize).skip((long) (pageNum - 1) * pageSize).toList();
-		IPage<SysUserOnlineVO> page = new Page<>(pageNum, pageSize);
-		page.setTotal(size);
-		page.setRecords(list);
-		return page;
-	}
-
-	@Override
-	public Boolean onlineKill(String token) {
-		String userKillKey = RedisKeyUtil.getUserKillKey(token);
-		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-		long expire = redisUtil.getExpire(userInfoKey);
-		if (expire > 0) {
-			redisUtil.set(userKillKey, DEFAULT, expire);
-			redisUtil.delete(userInfoKey);
-		}
-		return true;
-	}
-
-	private void saveOrUpdate(Long userId, List<Long> roleIds) {
-		List<SysUserRoleDO> doList = new ArrayList<>(roleIds.size());
-		if (!CollectionUtil.isEmpty(roleIds)) {
-			for (Long roleId : roleIds) {
-				SysUserRoleDO sysUserRoleDO = new SysUserRoleDO();
-				sysUserRoleDO.setRoleId(roleId);
-				sysUserRoleDO.setUserId(userId);
-				doList.add(sysUserRoleDO);
-			}
-			batchUtil.insertBatch(doList, 500, sysUserRoleService::insertBatch);
-		}
-	}
 
 }
