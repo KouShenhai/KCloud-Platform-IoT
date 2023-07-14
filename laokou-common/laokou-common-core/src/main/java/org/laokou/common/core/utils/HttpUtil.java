@@ -28,8 +28,6 @@ import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactoryBuilder;
-import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.HttpEntityContainer;
 import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
@@ -80,7 +78,7 @@ public class HttpUtil {
 				}
 			}
 			URI uri = builder.build();
-			// 创建http GET请求
+			// 创建GET请求
 			HttpGet httpGet = new HttpGet(uri);
 			if (headers != null && headers.size() > 0) {
 				for (Map.Entry<String, String> e : headers.entrySet()) {
@@ -118,7 +116,7 @@ public class HttpUtil {
 		CloseableHttpClient httpClient = httpClientBuilder.build();
 		String resultString = "";
 		try {
-			// 创建Http Post请求
+			// 创建Post请求
 			HttpPost httpPost = new HttpPost(url);
 			if (headers != null && headers.size() > 0) {
 				for (Map.Entry<String, String> e : headers.entrySet()) {
@@ -136,7 +134,7 @@ public class HttpUtil {
 				httpPost.setEntity(entity);
 				httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded;application/json;charset=UTF-8");
 				httpPost.setHeader(new BasicHeader("Accept", "*/*;charset=utf-8"));
-				// 执行http请求
+				// 执行请求
 				resultString = httpClient.execute(httpPost,
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
@@ -169,25 +167,18 @@ public class HttpUtil {
 		headers.forEach(httpPost::setHeader);
 		httpPost.setConfig(requestConfig);
 		String parameter = JacksonUtil.toJsonStr(param);
-		StringEntity se = null;
+		httpPost.setEntity(new StringEntity(parameter));
+		String resultString = "";
 		try {
-			se = new StringEntity(parameter);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		httpPost.setEntity(se);
-
-		String result = null;
-		try {
-			HttpEntity httpEntity = httpClient.execute(httpPost, HttpEntityContainer::getEntity);
-			result = EntityUtils.toString(httpEntity, StandardCharsets.UTF_8);
+			// 执行请求
+			resultString = httpClient.execute(httpPost,
+					handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-		log.info("打印：{}", result);
-		return result;
+		log.info("打印：{}", resultString);
+		return resultString;
 	}
 
 	/**
