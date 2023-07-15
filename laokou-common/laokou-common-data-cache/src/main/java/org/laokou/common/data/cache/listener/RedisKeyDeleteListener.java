@@ -34,6 +34,7 @@ import java.nio.charset.StandardCharsets;
 public class RedisKeyDeleteListener extends KeyDeleteEventMessageListener {
 
 	private final Cache<String, Object> caffeineCache;
+
 	private static final String ANY_MATCH_VALUE = ".*";
 
 	public RedisKeyDeleteListener(RedisMessageListenerContainer listenerContainer,
@@ -53,7 +54,7 @@ public class RedisKeyDeleteListener extends KeyDeleteEventMessageListener {
 
 	public static void main(String[] args) {
 		String key = "laokou:2";
-		System.out.println(key.matches("laokou:"+ ".*"));
+		System.out.println(key.matches("laokou:" + ".*"));
 	}
 
 }

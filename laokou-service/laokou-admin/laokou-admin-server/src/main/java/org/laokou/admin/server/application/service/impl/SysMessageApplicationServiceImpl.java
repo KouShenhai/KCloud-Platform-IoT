@@ -90,7 +90,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 			detailDOList.add(detailDO);
 		}
 		if (CollectionUtil.isNotEmpty(detailDOList)) {
-			batchUtil.insertBatch(detailDOList, 500, sysMessageDetailService::insertBatch);
+			batchUtil.insertBatch(detailDOList, sysMessageDetailService::insertBatch);
 		}
 		// 推送消息
 		if (CollectionUtil.isNotEmpty(receiver)) {
@@ -117,8 +117,9 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 	@Transactional(rollbackFor = Exception.class)
 	@DS(Constant.TENANT)
 	public MessageDetailVO getMessageByDetailId(Long id) {
+		final Long userId = UserUtil.getUserId();
 		Integer version = sysMessageDetailService.getVersion(id);
-		sysMessageService.readMessage(id, version);
+		sysMessageService.readMessage(id, version, userId);
 		return sysMessageService.getMessageByDetailId(id);
 	}
 

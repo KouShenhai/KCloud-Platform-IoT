@@ -42,6 +42,12 @@ public class BatchUtil {
 
 	private final ThreadPoolTaskExecutor taskExecutor;
 
+	private static final int DEFAULT_BATCH_NUM = 500;
+
+	public <T> void insertBatch(List<T> dataList, Consumer<List<T>> batchOps) {
+		insertBatch(dataList, DEFAULT_BATCH_NUM, batchOps);
+	}
+
 	/**
 	 * 批量新增
 	 * @param dataList 集合

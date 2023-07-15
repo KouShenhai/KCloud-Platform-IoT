@@ -130,7 +130,7 @@ public class SysPackageApplicationServiceImpl implements SysPackageApplicationSe
 				sysPackageMenuDO.setId(IdGenerator.defaultSnowflakeId());
 				list.add(sysPackageMenuDO);
 			}
-			batchUtil.insertBatch(list, 500, sysPackageMenuService::insertBatch);
+			batchUtil.insertBatch(list, sysPackageMenuService::insertBatch);
 		}
 		return true;
 	}
