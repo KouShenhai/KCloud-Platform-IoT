@@ -15,22 +15,23 @@
  */
 package io.seata.server.console.service;
 
+import io.seata.console.result.PageResult;
 import io.seata.server.console.param.GlobalLockParam;
 import io.seata.server.console.vo.GlobalLockVO;
-import io.seata.console.result.PageResult;
+
 
 /**
  * Global lock service
- *
  * @author wangzhongxiang
  */
 public interface GlobalLockService {
 
-	/**
-	 * Query locks by param
-	 * @param param the param
-	 * @return the list of GlobalLockVO
-	 */
-	PageResult<GlobalLockVO> query(GlobalLockParam param);
+    /**
+     * Query locks by param
+     * @param param the param
+     * @return the list of GlobalLockVO
+     */
+    PageResult<GlobalLockVO> query(GlobalLockParam param);
+
 
 }

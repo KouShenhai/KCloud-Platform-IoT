@@ -28,17 +28,17 @@ import net.logstash.logback.encoder.LogstashEncoder;
  */
 public class EnhancedLogstashEncoder extends LogstashEncoder {
 
-	/**
-	 * set exclude provider
-	 * @param excludedProviderClassName the excluded provider class name
-	 */
-	public void setExcludeProvider(String excludedProviderClassName) {
-		LoggingEventJsonProviders providers = getFormatter().getProviders();
-		for (JsonProvider<ILoggingEvent> provider : providers.getProviders()) {
-			if (provider.getClass().getName().equals(excludedProviderClassName)) {
-				providers.removeProvider(provider);
-			}
-		}
-	}
-
+    /**
+     * set exclude provider
+     *
+     * @param excludedProviderClassName the excluded provider class name
+     */
+    public void setExcludeProvider(String excludedProviderClassName) {
+        LoggingEventJsonProviders providers = getFormatter().getProviders();
+        for (JsonProvider<ILoggingEvent> provider : providers.getProviders()) {
+            if (provider.getClass().getName().equals(excludedProviderClassName)) {
+                providers.removeProvider(provider);
+            }
+        }
+    }
 }

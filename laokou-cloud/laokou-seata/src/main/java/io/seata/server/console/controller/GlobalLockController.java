@@ -15,16 +15,16 @@
  */
 package io.seata.server.console.controller;
 
-import javax.annotation.Resource;
-
-import io.seata.server.console.param.GlobalLockParam;
 import io.seata.console.result.PageResult;
-import io.seata.server.console.vo.GlobalLockVO;
+import io.seata.server.console.param.GlobalLockParam;
 import io.seata.server.console.service.GlobalLockService;
+import io.seata.server.console.vo.GlobalLockVO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * Global Lock Controller
@@ -35,17 +35,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/console/globalLock")
 public class GlobalLockController {
 
-	@Resource(type = GlobalLockService.class)
-	private GlobalLockService globalLockService;
+    @Resource(type = GlobalLockService.class)
+    private GlobalLockService globalLockService;
 
-	/**
-	 * Query locks by param
-	 * @param param the param
-	 * @return the list of GlobalLockVO
-	 */
-	@GetMapping("query")
-	public PageResult<GlobalLockVO> query(@ModelAttribute GlobalLockParam param) {
-		return globalLockService.query(param);
-	}
+    /**
+     * Query locks by param
+     *
+     * @param param the param
+     * @return the list of GlobalLockVO
+     */
+    @GetMapping("query")
+    public PageResult<GlobalLockVO> query(@ModelAttribute GlobalLockParam param) {
+        return globalLockService.query(param);
+    }
 
 }

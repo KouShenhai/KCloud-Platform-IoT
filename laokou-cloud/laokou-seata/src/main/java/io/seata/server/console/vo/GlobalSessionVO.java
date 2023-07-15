@@ -15,189 +15,203 @@
  */
 package io.seata.server.console.vo;
 
+import io.seata.core.constants.ServerTableColumnsName;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Set;
 
-import io.seata.core.constants.ServerTableColumnsName;
-
 /**
  * GlobalSessionVO
- *
  * @author zhongxiang.wang
  */
 public class GlobalSessionVO {
 
-	private String xid;
+    private String xid;
 
-	private String transactionId;
+    private String transactionId;
 
-	private Integer status;
+    private Integer status;
 
-	private String applicationId;
+    private String applicationId;
 
-	private String transactionServiceGroup;
+    private String transactionServiceGroup;
 
-	private String transactionName;
+    private String transactionName;
 
-	private Long timeout;
+    private Long timeout;
 
-	private Long beginTime;
+    private Long beginTime;
 
-	private String applicationData;
+    private String applicationData;
 
-	private Long gmtCreate;
+    private Long gmtCreate;
 
-	private Long gmtModified;
+    private Long gmtModified;
 
-	private Set<BranchSessionVO> branchSessionVOs;
+    private Set<BranchSessionVO> branchSessionVOs;
 
-	public GlobalSessionVO() {
 
-	}
+    public GlobalSessionVO() {
 
-	public GlobalSessionVO(String xid, Long transactionId, Integer status, String applicationId,
-			String transactionServiceGroup, String transactionName, Long timeout, Long beginTime,
-			String applicationData, Set<BranchSessionVO> branchSessionVOs) {
-		this.xid = xid;
-		this.transactionId = String.valueOf(transactionId);
-		this.status = status;
-		this.applicationId = applicationId;
-		this.transactionServiceGroup = transactionServiceGroup;
-		this.transactionName = transactionName;
-		this.timeout = timeout;
-		this.beginTime = beginTime;
-		this.applicationData = applicationData;
-		this.branchSessionVOs = branchSessionVOs;
-	}
+    }
 
-	public String getXid() {
-		return xid;
-	}
+    public GlobalSessionVO(String xid,
+                           Long transactionId,
+                           Integer status,
+                           String applicationId,
+                           String transactionServiceGroup,
+                           String transactionName,
+                           Long timeout,
+                           Long beginTime,
+                           String applicationData,
+                           Set<BranchSessionVO> branchSessionVOs) {
+        this.xid = xid;
+        this.transactionId = String.valueOf(transactionId);
+        this.status = status;
+        this.applicationId = applicationId;
+        this.transactionServiceGroup = transactionServiceGroup;
+        this.transactionName = transactionName;
+        this.timeout = timeout;
+        this.beginTime = beginTime;
+        this.applicationData = applicationData;
+        this.branchSessionVOs = branchSessionVOs;
+    }
 
-	public void setXid(String xid) {
-		this.xid = xid;
-	}
+    public String getXid() {
+        return xid;
+    }
 
-	public String getTransactionId() {
-		return transactionId;
-	}
+    public void setXid(String xid) {
+        this.xid = xid;
+    }
 
-	public void setTransactionId(Long transactionId) {
-		this.transactionId = String.valueOf(transactionId);
-	}
+    public String getTransactionId() {
+        return transactionId;
+    }
 
-	public Integer getStatus() {
-		return status;
-	}
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = String.valueOf(transactionId);
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public Integer getStatus() {
+        return status;
+    }
 
-	public String getApplicationId() {
-		return applicationId;
-	}
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-	public void setApplicationId(String applicationId) {
-		this.applicationId = applicationId;
-	}
+    public String getApplicationId() {
+        return applicationId;
+    }
 
-	public String getTransactionServiceGroup() {
-		return transactionServiceGroup;
-	}
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
+    }
 
-	public void setTransactionServiceGroup(String transactionServiceGroup) {
-		this.transactionServiceGroup = transactionServiceGroup;
-	}
+    public String getTransactionServiceGroup() {
+        return transactionServiceGroup;
+    }
 
-	public String getTransactionName() {
-		return transactionName;
-	}
+    public void setTransactionServiceGroup(String transactionServiceGroup) {
+        this.transactionServiceGroup = transactionServiceGroup;
+    }
 
-	public void setTransactionName(String transactionName) {
-		this.transactionName = transactionName;
-	}
+    public String getTransactionName() {
+        return transactionName;
+    }
 
-	public Long getTimeout() {
-		return timeout;
-	}
+    public void setTransactionName(String transactionName) {
+        this.transactionName = transactionName;
+    }
 
-	public void setTimeout(Long timeout) {
-		this.timeout = timeout;
-	}
+    public Long getTimeout() {
+        return timeout;
+    }
 
-	public Long getBeginTime() {
-		return beginTime;
-	}
+    public void setTimeout(Long timeout) {
+        this.timeout = timeout;
+    }
 
-	public void setBeginTime(Long beginTime) {
-		this.beginTime = beginTime;
-	}
+    public Long getBeginTime() {
+        return beginTime;
+    }
 
-	public String getApplicationData() {
-		return applicationData;
-	}
+    public void setBeginTime(Long beginTime) {
+        this.beginTime = beginTime;
+    }
 
-	public void setApplicationData(String applicationData) {
-		this.applicationData = applicationData;
-	}
+    public String getApplicationData() {
+        return applicationData;
+    }
 
-	public Long getGmtCreate() {
-		return gmtCreate;
-	}
+    public void setApplicationData(String applicationData) {
+        this.applicationData = applicationData;
+    }
 
-	public void setGmtCreate(Long gmtCreate) {
-		this.gmtCreate = gmtCreate;
-	}
+    public Long getGmtCreate() {
+        return gmtCreate;
+    }
 
-	public Long getGmtModified() {
-		return gmtModified;
-	}
+    public void setGmtCreate(Long gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
 
-	public void setGmtModified(Long gmtModified) {
-		this.gmtModified = gmtModified;
-	}
+    public Long getGmtModified() {
+        return gmtModified;
+    }
 
-	public Set<BranchSessionVO> getBranchSessionVOs() {
-		return branchSessionVOs;
-	}
+    public void setGmtModified(Long gmtModified) {
+        this.gmtModified = gmtModified;
+    }
 
-	public void setBranchSessionVOs(Set<BranchSessionVO> branchSessionVOs) {
-		this.branchSessionVOs = branchSessionVOs;
-	}
+    public Set<BranchSessionVO> getBranchSessionVOs() {
+        return branchSessionVOs;
+    }
 
-	public static GlobalSessionVO convert(ResultSet rs) throws SQLException {
-		GlobalSessionVO globalSessionVO = new GlobalSessionVO();
-		globalSessionVO.setXid(rs.getString(ServerTableColumnsName.GLOBAL_TABLE_XID));
-		globalSessionVO.setTransactionId(rs.getLong(ServerTableColumnsName.GLOBAL_TABLE_TRANSACTION_ID));
-		globalSessionVO.setStatus(rs.getInt(ServerTableColumnsName.GLOBAL_TABLE_STATUS));
-		globalSessionVO.setApplicationId(rs.getString(ServerTableColumnsName.GLOBAL_TABLE_APPLICATION_ID));
-		globalSessionVO.setTransactionServiceGroup(
-				rs.getString(ServerTableColumnsName.GLOBAL_TABLE_TRANSACTION_SERVICE_GROUP));
-		globalSessionVO.setTransactionName(rs.getString(ServerTableColumnsName.GLOBAL_TABLE_TRANSACTION_NAME));
-		globalSessionVO.setTimeout(rs.getLong(ServerTableColumnsName.GLOBAL_TABLE_TIMEOUT));
-		globalSessionVO.setBeginTime(rs.getLong(ServerTableColumnsName.GLOBAL_TABLE_BEGIN_TIME));
-		globalSessionVO.setApplicationData(rs.getString(ServerTableColumnsName.GLOBAL_TABLE_APPLICATION_DATA));
-		Timestamp gmtCreateTimestamp = rs.getTimestamp(ServerTableColumnsName.GLOBAL_TABLE_GMT_CREATE);
-		if (gmtCreateTimestamp != null) {
-			globalSessionVO.setGmtCreate(gmtCreateTimestamp.getTime());
-		}
-		Timestamp gmtModifiedTimestamp = rs.getTimestamp(ServerTableColumnsName.GLOBAL_TABLE_GMT_MODIFIED);
-		if (gmtModifiedTimestamp != null) {
-			globalSessionVO.setGmtModified(gmtModifiedTimestamp.getTime());
-		}
-		return globalSessionVO;
-	}
+    public void setBranchSessionVOs(Set<BranchSessionVO> branchSessionVOs) {
+        this.branchSessionVOs = branchSessionVOs;
+    }
 
-	@Override
-	public String toString() {
-		return "GlobalSessionVO{" + "xid='" + xid + '\'' + ", transactionId=" + transactionId + ", status=" + status
-				+ ", applicationId='" + applicationId + '\'' + ", transactionServiceGroup='" + transactionServiceGroup
-				+ '\'' + ", transactionName='" + transactionName + '\'' + ", timeout=" + timeout + ", beginTime="
-				+ beginTime + ", applicationData='" + applicationData + '\'' + ", gmtCreate=" + gmtCreate
-				+ ", gmtModified=" + gmtModified + ", branchSessionVOs=" + branchSessionVOs + '}';
-	}
+    public static GlobalSessionVO convert(ResultSet rs) throws SQLException {
+        GlobalSessionVO globalSessionVO = new GlobalSessionVO();
+        globalSessionVO.setXid(rs.getString(ServerTableColumnsName.GLOBAL_TABLE_XID));
+        globalSessionVO.setTransactionId(rs.getLong(ServerTableColumnsName.GLOBAL_TABLE_TRANSACTION_ID));
+        globalSessionVO.setStatus(rs.getInt(ServerTableColumnsName.GLOBAL_TABLE_STATUS));
+        globalSessionVO.setApplicationId(rs.getString(ServerTableColumnsName.GLOBAL_TABLE_APPLICATION_ID));
+        globalSessionVO.setTransactionServiceGroup(rs.getString(ServerTableColumnsName.GLOBAL_TABLE_TRANSACTION_SERVICE_GROUP));
+        globalSessionVO.setTransactionName(rs.getString(ServerTableColumnsName.GLOBAL_TABLE_TRANSACTION_NAME));
+        globalSessionVO.setTimeout(rs.getLong(ServerTableColumnsName.GLOBAL_TABLE_TIMEOUT));
+        globalSessionVO.setBeginTime(rs.getLong(ServerTableColumnsName.GLOBAL_TABLE_BEGIN_TIME));
+        globalSessionVO.setApplicationData(rs.getString(ServerTableColumnsName.GLOBAL_TABLE_APPLICATION_DATA));
+        Timestamp gmtCreateTimestamp = rs.getTimestamp(ServerTableColumnsName.GLOBAL_TABLE_GMT_CREATE);
+        if (gmtCreateTimestamp != null) {
+            globalSessionVO.setGmtCreate(gmtCreateTimestamp.getTime());
+        }
+        Timestamp gmtModifiedTimestamp = rs.getTimestamp(ServerTableColumnsName.GLOBAL_TABLE_GMT_MODIFIED);
+        if (gmtModifiedTimestamp != null) {
+            globalSessionVO.setGmtModified(gmtModifiedTimestamp.getTime());
+        }
+        return globalSessionVO;
+    }
 
+    @Override
+    public String toString() {
+        return "GlobalSessionVO{" +
+                "xid='" + xid + '\'' +
+                ", transactionId=" + transactionId +
+                ", status=" + status +
+                ", applicationId='" + applicationId + '\'' +
+                ", transactionServiceGroup='" + transactionServiceGroup + '\'' +
+                ", transactionName='" + transactionName + '\'' +
+                ", timeout=" + timeout +
+                ", beginTime=" + beginTime +
+                ", applicationData='" + applicationData + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
+                ", branchSessionVOs=" + branchSessionVOs +
+                '}';
+    }
 }

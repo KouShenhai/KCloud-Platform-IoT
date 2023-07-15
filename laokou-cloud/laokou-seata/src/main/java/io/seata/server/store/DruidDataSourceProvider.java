@@ -15,15 +15,15 @@
  */
 package io.seata.server.store;
 
-import javax.sql.DataSource;
-
+import com.alibaba.druid.pool.DruidDataSource;
 import io.seata.common.loader.LoadLevel;
 import io.seata.core.store.db.AbstractDataSourceProvider;
-import com.alibaba.druid.pool.DruidDataSource;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
 
 /**
  * The druid datasource provider
- *
  * @author zhangsen
  * @author ggndnn
  * @author will
@@ -31,29 +31,29 @@ import com.alibaba.druid.pool.DruidDataSource;
 @LoadLevel(name = "druid")
 public class DruidDataSourceProvider extends AbstractDataSourceProvider {
 
-	@Override
-	public DataSource generate() {
-		DruidDataSource ds = new DruidDataSource();
-		ds.setDriverClassName(getDriverClassName());
-		ds.setDriverClassLoader(getDriverClassLoader());
-		ds.setUrl(getUrl());
-		ds.setUsername(getUser());
-		ds.setPassword(getPassword());
-		ds.setInitialSize(getMinConn());
-		ds.setMaxActive(getMaxConn());
-		ds.setMinIdle(getMinConn());
-		ds.setMaxWait(getMaxWait());
-		ds.setTimeBetweenEvictionRunsMillis(120000);
-		ds.setMinEvictableIdleTimeMillis(300000);
-		ds.setTestWhileIdle(true);
-		ds.setTestOnBorrow(false);
-		ds.setPoolPreparedStatements(true);
-		ds.setMaxPoolPreparedStatementPerConnectionSize(20);
-		ds.setValidationQuery(getValidationQuery(getDBType()));
-		ds.setDefaultAutoCommit(true);
-		// fix issue 5030
-		ds.setUseOracleImplicitCache(false);
-		return ds;
-	}
-
+    @Override
+    public DataSource generate() {
+        DruidDataSource ds = new DruidDataSource();
+        ds.setDriverClassName(getDriverClassName());
+        ds.setDriverClassLoader(getDriverClassLoader());
+        ds.setUrl(getUrl());
+        ds.setUsername(getUser());
+        ds.setPassword(getPassword());
+        ds.setInitialSize(getMinConn());
+        ds.setMaxActive(getMaxConn());
+        ds.setMinIdle(getMinConn());
+        ds.setMaxWait(getMaxWait());
+        ds.setTimeBetweenEvictionRunsMillis(120000);
+        ds.setMinEvictableIdleTimeMillis(300000);
+        ds.setTestWhileIdle(true);
+        ds.setTestOnBorrow(false);
+        ds.setPoolPreparedStatements(true);
+        ds.setMaxPoolPreparedStatementPerConnectionSize(20);
+        ds.setValidationQuery(getValidationQuery(getDBType()));
+        ds.setDefaultAutoCommit(true);
+        // fix issue 5030
+        ds.setUseOracleImplicitCache(false);
+        ds.setDefaultTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+        return ds;
+    }
 }

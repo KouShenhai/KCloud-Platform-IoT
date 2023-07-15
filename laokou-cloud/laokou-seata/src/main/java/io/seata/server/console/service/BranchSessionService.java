@@ -15,21 +15,20 @@
  */
 package io.seata.server.console.service;
 
-import io.seata.server.console.vo.BranchSessionVO;
 import io.seata.console.result.PageResult;
+import io.seata.server.console.vo.BranchSessionVO;
 
 /**
  * Branch session service
- *
  * @author wangzhongxiang
  */
 public interface BranchSessionService {
 
-	/**
-	 * Query branch session by xid
-	 * @param xid the xid
-	 * @return the BranchSessionVO list
-	 */
-	PageResult<BranchSessionVO> queryByXid(String xid);
+    /**
+     * Query branch session by xid
+     * @param xid the xid
+     * @return the BranchSessionVO list
+     */
+    PageResult<BranchSessionVO> queryByXid(String xid);
 
 }

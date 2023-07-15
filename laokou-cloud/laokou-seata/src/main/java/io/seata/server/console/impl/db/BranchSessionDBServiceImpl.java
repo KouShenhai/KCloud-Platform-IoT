@@ -15,15 +15,6 @@
  */
 package io.seata.server.console.impl.db;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.sql.DataSource;
-
 import io.seata.common.ConfigurationKeys;
 import io.seata.common.exception.StoreException;
 import io.seata.common.loader.EnhancedServiceLoader;
@@ -39,6 +30,14 @@ import io.seata.server.console.vo.BranchSessionVO;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import static io.seata.common.DefaultValues.DEFAULT_STORE_DB_BRANCH_TABLE;
 
 /**
@@ -52,54 +51,51 @@ import static io.seata.common.DefaultValues.DEFAULT_STORE_DB_BRANCH_TABLE;
 @ConditionalOnExpression("#{'db'.equals('${sessionMode}')}")
 public class BranchSessionDBServiceImpl implements BranchSessionService {
 
-	private String branchTable;
+    private String branchTable;
 
-	private String dbType;
+    private String dbType;
 
-	private DataSource dataSource;
+    private DataSource dataSource;
 
-	public BranchSessionDBServiceImpl() {
-		Configuration configuration = ConfigurationFactory.getInstance();
-		branchTable = configuration.getConfig(ConfigurationKeys.STORE_DB_BRANCH_TABLE, DEFAULT_STORE_DB_BRANCH_TABLE);
-		dbType = configuration.getConfig(ConfigurationKeys.STORE_DB_TYPE);
-		if (StringUtils.isBlank(dbType)) {
-			throw new IllegalArgumentException(ConfigurationKeys.STORE_DB_TYPE + " should not be blank");
-		}
-		String dbDataSource = configuration.getConfig(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE);
-		if (StringUtils.isBlank(dbDataSource)) {
-			throw new IllegalArgumentException(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE + " should not be blank");
-		}
-		dataSource = EnhancedServiceLoader.load(DataSourceProvider.class, dbDataSource).provide();
-	}
+    public BranchSessionDBServiceImpl() {
+        Configuration configuration = ConfigurationFactory.getInstance();
+        branchTable = configuration.getConfig(ConfigurationKeys.STORE_DB_BRANCH_TABLE, DEFAULT_STORE_DB_BRANCH_TABLE);
+        dbType = configuration.getConfig(ConfigurationKeys.STORE_DB_TYPE);
+        if (StringUtils.isBlank(dbType)) {
+            throw new IllegalArgumentException(ConfigurationKeys.STORE_DB_TYPE + " should not be blank");
+        }
+        String dbDataSource = configuration.getConfig(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE);
+        if (StringUtils.isBlank(dbDataSource)) {
+            throw new IllegalArgumentException(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE + " should not be blank");
+        }
+        dataSource = EnhancedServiceLoader.load(DataSourceProvider.class, dbDataSource).provide();
+    }
 
-	@Override
-	public PageResult<BranchSessionVO> queryByXid(String xid) {
-		if (StringUtils.isBlank(xid)) {
-			throw new IllegalArgumentException("xid should not be blank");
-		}
+    @Override
+    public PageResult<BranchSessionVO> queryByXid(String xid) {
+        if (StringUtils.isBlank(xid)) {
+            throw new IllegalArgumentException("xid should not be blank");
+        }
 
-		String whereCondition = " where xid = ? ";
-		String branchSessionSQL = LogStoreSqlsFactory.getLogStoreSqls(dbType).getAllBranchSessionSQL(branchTable,
-				whereCondition);
+        String whereCondition = " where xid = ? ";
+        String branchSessionSQL = LogStoreSqlsFactory.getLogStoreSqls(dbType).getAllBranchSessionSQL(branchTable, whereCondition);
 
-		List<BranchSessionVO> list = new ArrayList<>();
-		ResultSet rs = null;
+        List<BranchSessionVO> list = new ArrayList<>();
+        ResultSet rs = null;
 
-		try (Connection conn = dataSource.getConnection();
-				PreparedStatement ps = conn.prepareStatement(branchSessionSQL)) {
-			ps.setObject(1, xid);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				list.add(BranchSessionVO.convert(rs));
-			}
-		}
-		catch (SQLException e) {
-			throw new StoreException(e);
-		}
-		finally {
-			IOUtil.close(rs);
-		}
-		return PageResult.success(list, list.size(), 0, 0, 0);
-	}
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(branchSessionSQL)) {
+            ps.setObject(1, xid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(BranchSessionVO.convert(rs));
+            }
+        } catch (SQLException e) {
+            throw new StoreException(e);
+        } finally {
+            IOUtil.close(rs);
+        }
+        return PageResult.success(list, list.size(), 0, 0, 0);
+    }
 
 }

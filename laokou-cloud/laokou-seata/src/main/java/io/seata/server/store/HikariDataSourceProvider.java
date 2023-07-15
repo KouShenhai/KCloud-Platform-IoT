@@ -17,6 +17,7 @@ package io.seata.server.store;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.util.IsolationLevel;
 import io.seata.common.loader.LoadLevel;
 import io.seata.core.store.db.AbstractDataSourceProvider;
 
@@ -25,38 +26,37 @@ import java.util.Properties;
 
 /**
  * The hikari datasource provider
- *
  * @author diguage
  * @author will
  */
 @LoadLevel(name = "hikari")
 public class HikariDataSourceProvider extends AbstractDataSourceProvider {
 
-	@Override
-	public DataSource generate() {
-		Properties properties = new Properties();
-		properties.setProperty("dataSource.cachePrepStmts", "true");
-		properties.setProperty("dataSource.prepStmtCacheSize", "250");
-		properties.setProperty("dataSource.prepStmtCacheSqlLimit", "2048");
-		properties.setProperty("dataSource.useServerPrepStmts", "true");
-		properties.setProperty("dataSource.useLocalSessionState", "true");
-		properties.setProperty("dataSource.rewriteBatchedStatements", "true");
-		properties.setProperty("dataSource.cacheResultSetMetadata", "true");
-		properties.setProperty("dataSource.cacheServerConfiguration", "true");
-		properties.setProperty("dataSource.elideSetAutoCommits", "true");
-		properties.setProperty("dataSource.maintainTimeStats", "false");
+    @Override
+    public DataSource generate() {
+        Properties properties = new Properties();
+        properties.setProperty("dataSource.cachePrepStmts", "true");
+        properties.setProperty("dataSource.prepStmtCacheSize", "250");
+        properties.setProperty("dataSource.prepStmtCacheSqlLimit", "2048");
+        properties.setProperty("dataSource.useServerPrepStmts", "true");
+        properties.setProperty("dataSource.useLocalSessionState", "true");
+        properties.setProperty("dataSource.rewriteBatchedStatements", "true");
+        properties.setProperty("dataSource.cacheResultSetMetadata", "true");
+        properties.setProperty("dataSource.cacheServerConfiguration", "true");
+        properties.setProperty("dataSource.elideSetAutoCommits", "true");
+        properties.setProperty("dataSource.maintainTimeStats", "false");
 
-		HikariConfig config = new HikariConfig(properties);
-		config.setDriverClassName(getDriverClassName());
-		config.setJdbcUrl(getUrl());
-		config.setUsername(getUser());
-		config.setPassword(getPassword());
-		config.setMaximumPoolSize(getMaxConn());
-		config.setMinimumIdle(getMinConn());
-		config.setAutoCommit(true);
-		config.setConnectionTimeout(getMaxWait());
-		config.setInitializationFailTimeout(-1);
-		return new HikariDataSource(config);
-	}
-
+        HikariConfig config = new HikariConfig(properties);
+        config.setDriverClassName(getDriverClassName());
+        config.setJdbcUrl(getUrl());
+        config.setUsername(getUser());
+        config.setPassword(getPassword());
+        config.setMaximumPoolSize(getMaxConn());
+        config.setMinimumIdle(getMinConn());
+        config.setAutoCommit(true);
+        config.setConnectionTimeout(getMaxWait());
+        config.setInitializationFailTimeout(-1);
+        config.setTransactionIsolation(IsolationLevel.TRANSACTION_READ_COMMITTED.name());
+        return new HikariDataSource(config);
+    }
 }

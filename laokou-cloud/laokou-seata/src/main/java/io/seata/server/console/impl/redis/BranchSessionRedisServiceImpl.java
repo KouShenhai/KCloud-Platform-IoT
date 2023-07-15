@@ -15,18 +15,19 @@
  */
 package io.seata.server.console.impl.redis;
 
-import java.util.ArrayList;
-import java.util.List;
 import io.seata.common.util.CollectionUtils;
 import io.seata.common.util.StringUtils;
 import io.seata.console.result.PageResult;
-import io.seata.server.console.vo.BranchSessionVO;
 import io.seata.core.store.BranchTransactionDO;
 import io.seata.server.console.service.BranchSessionService;
+import io.seata.server.console.vo.BranchSessionVO;
 import io.seata.server.storage.redis.store.RedisTransactionStoreManager;
 import org.springframework.beans.BeanUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Branch Session Redis ServiceImpl
@@ -39,27 +40,26 @@ import org.springframework.stereotype.Component;
 @ConditionalOnExpression("#{'redis'.equals('${sessionMode}')}")
 public class BranchSessionRedisServiceImpl implements BranchSessionService {
 
-	@Override
-	public PageResult<BranchSessionVO> queryByXid(String xid) {
-		if (StringUtils.isBlank(xid)) {
-			return PageResult.success();
-		}
+    @Override
+    public PageResult<BranchSessionVO> queryByXid(String xid) {
+        if (StringUtils.isBlank(xid)) {
+            return PageResult.success();
+        }
 
-		List<BranchSessionVO> branchSessionVos = new ArrayList<>();
+        List<BranchSessionVO> branchSessionVos = new ArrayList<>();
 
-		RedisTransactionStoreManager instance = RedisTransactionStoreManager.getInstance();
+        RedisTransactionStoreManager instance = RedisTransactionStoreManager.getInstance();
 
-		List<BranchTransactionDO> branchSessionDos = instance.findBranchSessionByXid(xid);
+        List<BranchTransactionDO> branchSessionDos = instance.findBranchSessionByXid(xid);
 
-		if (CollectionUtils.isNotEmpty(branchSessionDos)) {
-			for (BranchTransactionDO branchSessionDo : branchSessionDos) {
-				BranchSessionVO branchSessionVO = new BranchSessionVO();
-				BeanUtils.copyProperties(branchSessionDo, branchSessionVO);
-				branchSessionVos.add(branchSessionVO);
-			}
-		}
+        if (CollectionUtils.isNotEmpty(branchSessionDos)) {
+            for (BranchTransactionDO branchSessionDo : branchSessionDos) {
+                BranchSessionVO branchSessionVO = new BranchSessionVO();
+                BeanUtils.copyProperties(branchSessionDo, branchSessionVO);
+                branchSessionVos.add(branchSessionVO);
+            }
+        }
 
-		return PageResult.success(branchSessionVos, branchSessionVos.size(), 0, branchSessionVos.size());
-	}
-
+        return PageResult.success(branchSessionVos, branchSessionVos.size(), 0, branchSessionVos.size());
+    }
 }

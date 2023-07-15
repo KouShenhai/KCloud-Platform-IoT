@@ -15,9 +15,6 @@
  */
 package io.seata.server.transaction.at;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.seata.common.exception.StoreException;
 import io.seata.common.util.StringUtils;
@@ -29,6 +26,10 @@ import io.seata.server.coordinator.AbstractCore;
 import io.seata.server.session.BranchSession;
 import io.seata.server.session.GlobalSession;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.seata.common.Constants.AUTO_COMMIT;
 import static io.seata.common.Constants.SKIP_CHECK_LOCK;
 import static io.seata.core.exception.TransactionExceptionCode.LockKeyConflict;
@@ -39,66 +40,65 @@ import static io.seata.core.exception.TransactionExceptionCode.LockKeyConflict;
  * @author ph3636
  */
 public class ATCore extends AbstractCore {
+    
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    
+    public ATCore(RemotingServer remotingServer) {
+        super(remotingServer);
+    }
 
-	private final ObjectMapper objectMapper = new ObjectMapper();
+    @Override
+    public BranchType getHandleBranchType() {
+        return BranchType.AT;
+    }
 
-	public ATCore(RemotingServer remotingServer) {
-		super(remotingServer);
-	}
+    @Override
+    protected void branchSessionLock(GlobalSession globalSession, BranchSession branchSession)
+        throws TransactionException {
+        String applicationData = branchSession.getApplicationData();
+        boolean autoCommit = true;
+        boolean skipCheckLock = false;
+        if (StringUtils.isNotBlank(applicationData)) {
+            try {
+                Map<String, Object> data = objectMapper.readValue(applicationData, HashMap.class);
+                Object clientAutoCommit = data.get(AUTO_COMMIT);
+                if (clientAutoCommit != null && !(boolean)clientAutoCommit) {
+                    autoCommit = (boolean)clientAutoCommit;
+                }
+                Object clientSkipCheckLock = data.get(SKIP_CHECK_LOCK);
+                if (clientSkipCheckLock instanceof Boolean) {
+                    skipCheckLock = (boolean)clientSkipCheckLock;
+                }
+            } catch (IOException e) {
+                LOGGER.error("failed to get application data: {}", e.getMessage(), e);
+            }
+        }
+        try {
+            if (!branchSession.lock(autoCommit, skipCheckLock)) {
+                throw new BranchTransactionException(LockKeyConflict,
+                    String.format("Global lock acquire failed xid = %s branchId = %s", globalSession.getXid(),
+                        branchSession.getBranchId()));
+            }
+        } catch (StoreException e) {
+            Throwable cause = e.getCause();
+            if (cause instanceof BranchTransactionException) {
+                throw new BranchTransactionException(((BranchTransactionException)cause).getCode(),
+                    String.format("Global lock acquire failed xid = %s branchId = %s", globalSession.getXid(),
+                        branchSession.getBranchId()));
+            }
+            throw e;
+        }
+    }
 
-	@Override
-	public BranchType getHandleBranchType() {
-		return BranchType.AT;
-	}
+    @Override
+    protected void branchSessionUnlock(BranchSession branchSession) throws TransactionException {
+        branchSession.unlock();
+    }
 
-	@Override
-	protected void branchSessionLock(GlobalSession globalSession, BranchSession branchSession)
-			throws TransactionException {
-		String applicationData = branchSession.getApplicationData();
-		boolean autoCommit = true;
-		boolean skipCheckLock = false;
-		if (StringUtils.isNotBlank(applicationData)) {
-			try {
-				Map<String, Object> data = objectMapper.readValue(applicationData, HashMap.class);
-				Object clientAutoCommit = data.get(AUTO_COMMIT);
-				if (clientAutoCommit != null && !(boolean) clientAutoCommit) {
-					autoCommit = (boolean) clientAutoCommit;
-				}
-				Object clientSkipCheckLock = data.get(SKIP_CHECK_LOCK);
-				if (clientSkipCheckLock instanceof Boolean) {
-					skipCheckLock = (boolean) clientSkipCheckLock;
-				}
-			}
-			catch (IOException e) {
-				LOGGER.error("failed to get application data: {}", e.getMessage(), e);
-			}
-		}
-		try {
-			if (!branchSession.lock(autoCommit, skipCheckLock)) {
-				throw new BranchTransactionException(LockKeyConflict,
-						String.format("Global lock acquire failed xid = %s branchId = %s", globalSession.getXid(),
-								branchSession.getBranchId()));
-			}
-		}
-		catch (StoreException e) {
-			if (e.getCause() instanceof BranchTransactionException) {
-				throw new BranchTransactionException(((BranchTransactionException) e.getCause()).getCode(),
-						String.format("Global lock acquire failed xid = %s branchId = %s", globalSession.getXid(),
-								branchSession.getBranchId()));
-			}
-			throw e;
-		}
-	}
-
-	@Override
-	protected void branchSessionUnlock(BranchSession branchSession) throws TransactionException {
-		branchSession.unlock();
-	}
-
-	@Override
-	public boolean lockQuery(BranchType branchType, String resourceId, String xid, String lockKeys)
-			throws TransactionException {
-		return lockManager.isLockable(xid, resourceId, lockKeys);
-	}
+    @Override
+    public boolean lockQuery(BranchType branchType, String resourceId, String xid, String lockKeys)
+            throws TransactionException {
+        return lockManager.isLockable(xid, resourceId, lockKeys);
+    }
 
 }

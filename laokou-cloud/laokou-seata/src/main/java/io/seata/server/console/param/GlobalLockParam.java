@@ -15,102 +15,100 @@
  */
 package io.seata.server.console.param;
 
-import java.io.Serializable;
-
 import io.seata.console.param.BaseParam;
+
+import java.io.Serializable;
 
 /**
  * Global lock param
- *
  * @author zhongxiang.wang
  */
 public class GlobalLockParam extends BaseParam implements Serializable {
 
-	private static final long serialVersionUID = 615412528070131284L;
+    private static final long serialVersionUID = 615412528070131284L;
 
-	/**
-	 * the xid
-	 */
-	private String xid;
+    /**
+     * the xid
+     */
+    private String xid;
+    /**
+     * the table name
+     */
+    private String tableName;
+    /**
+     * the transaction id
+     */
+    private String transactionId;
+    /**
+     * the branch id
+     */
+    private String branchId;
+    /**
+     * the primary Key
+     */
+    private String pk;
+    /**
+     * the resourceId
+     */
+    private String resourceId;
 
-	/**
-	 * the table name
-	 */
-	private String tableName;
+    public String getTransactionId() {
+        return transactionId;
+    }
 
-	/**
-	 * the transaction id
-	 */
-	private String transactionId;
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
 
-	/**
-	 * the branch id
-	 */
-	private String branchId;
+    public String getBranchId() {
+        return branchId;
+    }
 
-	/**
-	 * the primary Key
-	 */
-	private String pk;
+    public void setBranchId(String branchId) {
+        this.branchId = branchId;
+    }
 
-	/**
-	 * the resourceId
-	 */
-	private String resourceId;
+    public String getXid() {
+        return xid;
+    }
 
-	public String getTransactionId() {
-		return transactionId;
-	}
+    public void setXid(String xid) {
+        this.xid = xid;
+    }
 
-	public void setTransactionId(String transactionId) {
-		this.transactionId = transactionId;
-	}
+    public String getTableName() {
+        return tableName;
+    }
 
-	public String getBranchId() {
-		return branchId;
-	}
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
-	public void setBranchId(String branchId) {
-		this.branchId = branchId;
-	}
+    public String getPk() {
+        return pk;
+    }
 
-	public String getXid() {
-		return xid;
-	}
+    public void setPk(String pk) {
+        this.pk = pk;
+    }
 
-	public void setXid(String xid) {
-		this.xid = xid;
-	}
+    public String getResourceId() {
+        return resourceId;
+    }
 
-	public String getTableName() {
-		return tableName;
-	}
+    public void setResourceId(String resourceId) {
+        this.resourceId = resourceId;
+    }
 
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
-
-	public String getPk() {
-		return pk;
-	}
-
-	public void setPk(String pk) {
-		this.pk = pk;
-	}
-
-	public String getResourceId() {
-		return resourceId;
-	}
-
-	public void setResourceId(String resourceId) {
-		this.resourceId = resourceId;
-	}
-
-	@Override
-	public String toString() {
-		return "GlobalLockParam{" + "xid='" + xid + '\'' + ", tableName='" + tableName + '\'' + ", transactionId='"
-				+ transactionId + '\'' + ", branchId='" + branchId + '\'' + ", pk='" + pk + '\'' + ", resourceId='"
-				+ resourceId + '\'' + '}';
-	}
-
+    @Override
+    public String toString() {
+        return "GlobalLockParam{" +
+                "xid='" + xid + '\'' +
+                ", tableName='" + tableName + '\'' +
+                ", transactionId='" + transactionId + '\'' +
+                ", branchId='" + branchId + '\'' +
+                ", pk='" + pk + '\'' +
+                ", resourceId='" + resourceId + '\'' +
+                '}';
+    }
 }

@@ -15,68 +15,92 @@
  */
 package io.seata.server;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import io.seata.core.rpc.Disposable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.web.context.WebServerInitializedEvent;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 
 /**
  * @author spilledyear@outlook.com
  */
 @Component
-public class ServerRunner implements CommandLineRunner, DisposableBean {
+public class ServerRunner implements CommandLineRunner, DisposableBean,
+    ApplicationListener<ApplicationEvent>, Ordered {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ServerRunner.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerRunner.class);
 
-	private boolean started = Boolean.FALSE;
+    private boolean started = Boolean.FALSE;
 
-	private static final List<Disposable> DISPOSABLE_LIST = new CopyOnWriteArrayList<>();
+    private int port;
 
-	public static void addDisposable(Disposable disposable) {
-		DISPOSABLE_LIST.add(disposable);
-	}
+    @Value("${logging.file.path}")
+    private String logPath;
 
-	@Override
-	public void run(String... args) {
-		try {
-			long start = System.currentTimeMillis();
-			Server.start(args);
-			started = true;
+    private static final List<Disposable> DISPOSABLE_LIST = new CopyOnWriteArrayList<>();
 
-			long cost = System.currentTimeMillis() - start;
-			LOGGER.info("seata server started in {} millSeconds", cost);
-		}
-		catch (Throwable e) {
-			started = Boolean.FALSE;
-			LOGGER.error("seata server start error: {} ", e.getMessage(), e);
-			System.exit(-1);
-		}
-	}
+    public static void addDisposable(Disposable disposable) {
+        DISPOSABLE_LIST.add(disposable);
+    }
 
-	public boolean started() {
-		return started;
-	}
+    @Override
+    public void run(String... args) {
+        try {
+            long start = System.currentTimeMillis();
+            Server.start(args);
+            started = true;
 
-	@Override
-	public void destroy() throws Exception {
+            long cost = System.currentTimeMillis() - start;
+            LOGGER.info("\r\n you can visit seata console UI on http://127.0.0.1:{}. \r\n you can visit seata console UI on https://127.0.0.1:{}. ", this.port, this.port);
+            LOGGER.info("\r\n log path: {}.", this.logPath);
+            LOGGER.info("seata server started in {} millSeconds", cost);
+        } catch (Throwable e) {
+            started = Boolean.FALSE;
+            LOGGER.error("seata server start error: {} ", e.getMessage(), e);
+            System.exit(-1);
+        }
+    }
 
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("destoryAll starting");
-		}
 
-		for (Disposable disposable : DISPOSABLE_LIST) {
-			disposable.destroy();
-		}
+    public boolean started() {
+        return started;
+    }
 
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("destoryAll finish");
-		}
-	}
+    @Override
+    public void destroy() throws Exception {
 
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("destoryAll starting");
+        }
+
+        for (Disposable disposable : DISPOSABLE_LIST) {
+            disposable.destroy();
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("destoryAll finish");
+        }
+    }
+
+    @Override
+    public void onApplicationEvent(ApplicationEvent event) {
+        if (event instanceof WebServerInitializedEvent) {
+            this.port = ((WebServerInitializedEvent)event).getWebServer().getPort();
+        }
+    }
+
+    @Override
+    public int getOrder() {
+        return Ordered.LOWEST_PRECEDENCE;
+    }
 }
