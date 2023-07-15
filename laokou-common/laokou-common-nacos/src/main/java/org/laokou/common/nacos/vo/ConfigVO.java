@@ -15,28 +15,52 @@
  *
  */
 
-package org.laokou.common.nacos.proxy;
+package org.laokou.common.nacos.vo;
+
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-public class HttpProtocolProxy extends AbstractProtocolProxy {
+@Data
+public class ConfigVO implements Serializable {
 
-	private static final String HTTP_PROTOCOL = "http://";
+	private String appName;
 
-	@Override
-	public String getTokenUri(String serverAddr) {
-		return HTTP_PROTOCOL.concat(serverAddr).concat(TOKEN_URI_SUFFIX);
-	}
+	private String configTags;
 
-	@Override
-	public String getConfigUri(String serverAddr) {
-		return HTTP_PROTOCOL.concat(serverAddr).concat(CONFIG_URI_SUFFIX);
-	}
+	private String content;
 
-	@Override
-	public boolean sslEnabled() {
-		return false;
-	}
+	private String createIp;
+
+	private Long createTime;
+
+	private String createUser;
+
+	private String dataId;
+
+	private String desc;
+
+	private String effect;
+
+	private String encryptedDataKey;
+
+	private String group;
+
+	private String id;
+
+	private String md5;
+
+	private Long modifyTime;
+
+	private String schema;
+
+	private String tenant;
+
+	private String type;
+
+	private String use;
 
 }

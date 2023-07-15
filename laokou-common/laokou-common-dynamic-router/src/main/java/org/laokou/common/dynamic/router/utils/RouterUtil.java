@@ -19,17 +19,23 @@ package org.laokou.common.dynamic.router.utils;
 
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.dynamic.router.RouteDefinition;
+import org.laokou.common.nacos.utils.ApiUtil;
+import org.laokou.common.nacos.vo.ConfigVO;
 import org.laokou.freemarker.utils.TemplateUtil;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,16 +48,40 @@ public class RouterUtil {
 
 	private final Environment env;
 
-	public void initRouter() throws IOException, TemplateException {
+	private final ApiUtil apiUtil;
+
+	@SneakyThrows
+	public void initRouter() {
 		String appId = env.getProperty("spring.application.name");
 		assert appId != null;
 		Map<String, Object> dataMap = new HashMap<>(2);
-		String name = appId.substring(6);
+		String name = appId.substring(7);
 		dataMap.put("appId", appId);
 		dataMap.put("name", name);
 		String router = getRouter(dataMap);
 		RouteDefinition routeDefinition = JacksonUtil.toBean(router, RouteDefinition.class);
-
+		// 获取nacos的token
+		String token = apiUtil.getToken();
+		// 拉取所有的路由配置
+		ConfigVO configInfo = apiUtil.getConfigInfo(token);
+		List<RouteDefinition> routeDefinitions = JacksonUtil.toList(configInfo.getContent(), RouteDefinition.class);
+		// 判断是否已经配置
+		if (CollectionUtil.isEmpty(routeDefinitions)) {
+			log.error("请配置动态路由");
+			return;
+		}
+		boolean isExist = routeDefinitions.stream().anyMatch(r -> r.getId().equals(routeDefinition.getId()));
+		// 添加并发布
+		if (!isExist) {
+			routeDefinitions.add(routeDefinition);
+			String toPrettyFormat = GsonUtil.toPrettyFormat(routeDefinitions);
+			configInfo.setContent(toPrettyFormat);
+			apiUtil.doConfigInfo(configInfo, token);
+			log.info("服务路由已添加并发布");
+		}
+		else {
+			log.info("服务路由已存在，无需添加");
+		}
 	}
 
 	private String getRouter(Map<String, Object> dataMap) throws IOException, TemplateException {

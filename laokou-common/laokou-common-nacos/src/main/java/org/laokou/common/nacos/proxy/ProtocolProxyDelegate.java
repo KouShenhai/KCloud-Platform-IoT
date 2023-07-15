@@ -39,6 +39,16 @@ public class ProtocolProxyDelegate implements ProtocolProxy {
 		return getProxy().getTokenUri(serverAddr);
 	}
 
+	@Override
+	public String getConfigUri(String serverAddr) {
+		return getProxy().getConfigUri(serverAddr);
+	}
+
+	@Override
+	public boolean sslEnabled() {
+		return getProxy().sslEnabled();
+	}
+
 	private ProtocolProxy getProxy() {
 		return sslEnabled ? httpsProtocolProxy : httpProtocolProxy;
 	}

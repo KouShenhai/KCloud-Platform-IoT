@@ -22,6 +22,8 @@ package org.laokou.common.nacos.proxy;
  */
 public abstract class AbstractProtocolProxy implements ProtocolProxy {
 
-	protected static final String TOKEN_URI_SUFFIX = "";
+	protected static final String TOKEN_URI_SUFFIX = "/nacos/v1/auth/users/login";
+
+	protected static final String CONFIG_URI_SUFFIX = "/nacos/v1/cs/configs";
 
 }

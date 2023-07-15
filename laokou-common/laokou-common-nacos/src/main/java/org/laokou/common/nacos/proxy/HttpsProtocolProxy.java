@@ -27,4 +27,14 @@ public class HttpsProtocolProxy extends AbstractProtocolProxy {
 		return serverAddr.concat(TOKEN_URI_SUFFIX);
 	}
 
+	@Override
+	public String getConfigUri(String serverAddr) {
+		return serverAddr.concat(CONFIG_URI_SUFFIX);
+	}
+
+	@Override
+	public boolean sslEnabled() {
+		return true;
+	}
+
 }

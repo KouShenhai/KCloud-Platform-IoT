@@ -18,6 +18,8 @@
 package org.laokou.common.dynamic.router.listener;
 
 import io.micrometer.common.lang.NonNullApi;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.dynamic.router.utils.RouterUtil;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -27,11 +29,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @NonNullApi
+@RequiredArgsConstructor
 public class ServiceListener implements ApplicationListener<ApplicationReadyEvent> {
+
+	private final RouterUtil routerUtil;
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-
+		routerUtil.initRouter();
 	}
 
 }

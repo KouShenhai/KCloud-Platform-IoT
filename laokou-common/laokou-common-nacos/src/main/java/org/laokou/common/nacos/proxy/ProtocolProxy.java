@@ -29,4 +29,17 @@ public interface ProtocolProxy {
 	 */
 	String getTokenUri(String serverAddr);
 
+	/**
+	 * config_uri
+	 * @param serverAddr
+	 * @return
+	 */
+	String getConfigUri(String serverAddr);
+
+	/**
+	 * ssl
+	 * @return
+	 */
+	boolean sslEnabled();
+
 }
