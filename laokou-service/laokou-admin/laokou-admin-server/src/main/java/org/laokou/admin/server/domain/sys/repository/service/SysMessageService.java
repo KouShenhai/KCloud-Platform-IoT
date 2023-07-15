@@ -56,8 +56,9 @@ public interface SysMessageService extends IService<SysMessageDO> {
 	 * 消息读取
 	 * @param version
 	 * @param id
+	 * @param userId
 	 */
-	void readMessage(Long id, Integer version);
+	void readMessage(Long id, Integer version, Long userId);
 
 	/**
 	 * 根据id查询消息
