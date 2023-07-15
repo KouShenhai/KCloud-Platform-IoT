@@ -77,7 +77,7 @@ public class MybatisPlusAutoConfig {
 	@Bean
 	@SneakyThrows
 	public IdentifierGenerator identifierGenerator() {
-		// 查看 DefaultIdentifierGenerator 可以自定义网卡信息哦
+		// 查看 DefaultIdentifierGenerator 可以自定义网卡信息哦，话不多说，就是怼源码
 		return new DefaultIdentifierGenerator(InetAddress.getLocalHost());
 	}
 
