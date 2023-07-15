@@ -16,11 +16,15 @@
  */
 package org.laokou.common.mybatisplus.config.auto;
 
+import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
+import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import lombok.SneakyThrows;
 import org.laokou.common.mybatisplus.config.DataFilterInterceptor;
 import org.laokou.common.mybatisplus.config.DynamicTableNameHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -34,6 +38,7 @@ import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
+import java.net.InetAddress;
 
 /**
  * mybatis-plus的配置
@@ -52,7 +57,7 @@ public class MybatisPlusAutoConfig {
 		// 数据权限
 		mybatisPlusInterceptor.addInnerInterceptor(new DataFilterInterceptor());
 		// 分页插件
-		mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+		mybatisPlusInterceptor.addInnerInterceptor(paginationInnerInterceptor());
 		// 乐观锁
 		mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
 		// 防止全表更新与删除
@@ -62,6 +67,18 @@ public class MybatisPlusAutoConfig {
 		dynamicTableNameInnerInterceptor.setTableNameHandler(new DynamicTableNameHandler());
 		mybatisPlusInterceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
 		return mybatisPlusInterceptor;
+	}
+
+	/**
+	 * <a href="https://baomidou.com/pages/568eb2/#spring-boot">...</a>
+	 * 生成雪花算法就是使用的这个，请查看{@link IdWorker}
+	 * 为什么要修改这个配置，集群环境可能会重复，网上的解决方案是加网卡信息（用zookeeper生成分布式ID也是可以哦，重写生成雪花算法的逻辑，mp官网支持自定义雪花算法生成）
+	 */
+	@Bean
+	@SneakyThrows
+	public IdentifierGenerator identifierGenerator() {
+		// 查看 DefaultIdentifierGenerator 可以自定义网卡信息哦
+		return new DefaultIdentifierGenerator(InetAddress.getLocalHost());
 	}
 
 	@Bean(name = "transactionTemplate")
@@ -79,6 +96,18 @@ public class MybatisPlusAutoConfig {
 		// 事务名称
 		transactionTemplate.setName("laokou-transaction-template");
 		return transactionTemplate;
+	}
+
+	/**
+	 * 解除每页500条限制
+	 */
+	private PaginationInnerInterceptor paginationInnerInterceptor() {
+		PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
+		// -1 不受限制
+		paginationInnerInterceptor.setMaxLimit(-1L);
+		// 溢出总页数后是进行处理，查看源码就知道是干啥的
+		paginationInnerInterceptor.setOverflow(true);
+		return paginationInnerInterceptor;
 	}
 
 }
