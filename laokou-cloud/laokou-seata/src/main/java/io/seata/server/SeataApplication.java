@@ -36,13 +36,16 @@ public class SeataApplication {
 			System.setProperty(TlsSystemConfig.CLIENT_AUTH, "true");
 			System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 			new SpringApplicationBuilder(SeataApplication.class).web(WebApplicationType.SERVLET).run(args);
-		} catch (Throwable t) {
-			// This exception is used to end `spring-boot-maven-plugin:process-aot`, so ignore it.
+		}
+		catch (Throwable t) {
+			// This exception is used to end `spring-boot-maven-plugin:process-aot`, so
+			// ignore it.
 			if ("org.springframework.boot.SpringApplication$AbandonedRunException".equals(t.getClass().getName())) {
 				throw t;
 			}
 
-			// In the `native-image`, if an exception occurs prematurely during the startup process, the exception log will not be recorded,
+			// In the `native-image`, if an exception occurs prematurely during the
+			// startup process, the exception log will not be recorded,
 			// so here we sleep for 20 seconds to observe the exception information.
 			if (NativeUtils.inNativeImage()) {
 				t.printStackTrace();

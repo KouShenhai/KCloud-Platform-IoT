@@ -35,18 +35,17 @@ import javax.annotation.Resource;
 @RequestMapping("/api/v1/console/globalSession")
 public class GlobalSessionController {
 
-    @Resource(type = GlobalSessionService.class)
-    private GlobalSessionService globalSessionService;
+	@Resource(type = GlobalSessionService.class)
+	private GlobalSessionService globalSessionService;
 
-    /**
-     * Query all globalSession
-     *
-     * @param param param for query globalSession
-     * @return the list of GlobalSessionVO
-     */
-    @GetMapping("query")
-    public PageResult<GlobalSessionVO> query(@ModelAttribute GlobalSessionParam param) {
-        return globalSessionService.query(param);
-    }
+	/**
+	 * Query all globalSession
+	 * @param param param for query globalSession
+	 * @return the list of GlobalSessionVO
+	 */
+	@GetMapping("query")
+	public PageResult<GlobalSessionVO> query(@ModelAttribute GlobalSessionParam param) {
+		return globalSessionService.query(param);
+	}
 
 }

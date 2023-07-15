@@ -35,18 +35,17 @@ import javax.annotation.Resource;
 @RequestMapping("/api/v1/console/globalLock")
 public class GlobalLockController {
 
-    @Resource(type = GlobalLockService.class)
-    private GlobalLockService globalLockService;
+	@Resource(type = GlobalLockService.class)
+	private GlobalLockService globalLockService;
 
-    /**
-     * Query locks by param
-     *
-     * @param param the param
-     * @return the list of GlobalLockVO
-     */
-    @GetMapping("query")
-    public PageResult<GlobalLockVO> query(@ModelAttribute GlobalLockParam param) {
-        return globalLockService.query(param);
-    }
+	/**
+	 * Query locks by param
+	 * @param param the param
+	 * @return the list of GlobalLockVO
+	 */
+	@GetMapping("query")
+	public PageResult<GlobalLockVO> query(@ModelAttribute GlobalLockParam param) {
+		return globalLockService.query(param);
+	}
 
 }

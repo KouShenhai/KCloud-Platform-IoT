@@ -30,7 +30,7 @@ import javax.annotation.Resource;
 @RequestMapping("console/branchSession")
 public class BranchSessionController {
 
-    @Resource(type = BranchSessionService.class)
-    private BranchSessionService branchSessionService;
+	@Resource(type = BranchSessionService.class)
+	private BranchSessionService branchSessionService;
 
 }
