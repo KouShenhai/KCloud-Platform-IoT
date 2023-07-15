@@ -22,6 +22,7 @@ import jakarta.annotation.PreDestroy;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.nacos.utils.ServiceUtil;
 import org.laokou.im.server.config.WebSocketServer;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,6 +43,8 @@ public class DiscoveryListener implements ApplicationListener<ApplicationReadyEv
 
 	private final ServiceUtil serviceUtil;
 
+	private final ConfigUtil configUtil;
+
 	@Value("${spring.application.name}")
 	private String appName;
 
@@ -49,8 +52,9 @@ public class DiscoveryListener implements ApplicationListener<ApplicationReadyEv
 	@SneakyThrows
 	public void onApplicationEvent(ApplicationReadyEvent event) {
 		String ip = InetAddress.getLocalHost().getHostAddress();
+		String group = configUtil.getGroup();
 		int port = WebSocketServer.PORT;
-		serviceUtil.registerInstance(appName, ip, port);
+		serviceUtil.registerInstance(appName, group, ip, port);
 	}
 
 	@SneakyThrows
@@ -58,7 +62,8 @@ public class DiscoveryListener implements ApplicationListener<ApplicationReadyEv
 	public void close() {
 		String ip = InetAddress.getLocalHost().getHostAddress();
 		int port = WebSocketServer.PORT;
-		serviceUtil.deregisterInstance(appName, ip, port);
+		String group = configUtil.getGroup();
+		serviceUtil.deregisterInstance(appName, group, ip, port);
 	}
 
 }
