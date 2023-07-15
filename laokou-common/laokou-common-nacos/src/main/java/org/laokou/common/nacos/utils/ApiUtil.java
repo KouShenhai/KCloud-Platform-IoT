@@ -19,8 +19,19 @@ package org.laokou.common.nacos.utils;
 
 import com.alibaba.cloud.nacos.NacosConfigProperties;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.laokou.common.core.utils.HttpUtil;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.nacos.proxy.ProtocolProxy;
+import org.laokou.common.nacos.vo.ConfigVO;
 import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.laokou.common.core.constant.Constant.PASSWORD;
+import static org.laokou.common.core.constant.Constant.USERNAME;
 
 /**
  * @author laokou
@@ -33,11 +44,56 @@ public class ApiUtil {
 
 	private final ProtocolProxy protocolProxy;
 
+	private final ConfigUtil configUtil;
+
+	private static final String ACCESS_TOKEN = "accessToken";
+
 	public String getToken() {
 		String tokenUri = protocolProxy.getTokenUri(nacosConfigProperties.getServerAddr());
+		Map<String, String> params = new HashMap<>(2);
 		String username = nacosConfigProperties.getUsername();
 		String password = nacosConfigProperties.getPassword();
-		return null;
+		params.put(USERNAME, username);
+		params.put(PASSWORD, password);
+		String result = HttpUtil.doPost(tokenUri, params, new HashMap<>(0), protocolProxy.sslEnabled());
+		return JacksonUtil.readTree(result).get(ACCESS_TOKEN).asText();
+	}
+
+	public ConfigVO getConfigInfo(String token) {
+		String configUri = protocolProxy.getConfigUri(nacosConfigProperties.getServerAddr());
+		String username = nacosConfigProperties.getUsername();
+		String group = configUtil.getGroup();
+		String nameSpace = configUtil.getNameSpace();
+		Map<String, String> params = new HashMap<>(7);
+		params.put("dataId", ConfigUtil.ROUTER_DATA_ID);
+		params.put("group", group);
+		params.put("namespaceId", nameSpace);
+		params.put("tenant", nameSpace);
+		params.put("show", "all");
+		params.put(ACCESS_TOKEN, token);
+		params.put(USERNAME, username);
+		String configInfo = HttpUtil.doGet(configUri, params, new HashMap<>(0), protocolProxy.sslEnabled());
+		return JacksonUtil.toBean(configInfo, ConfigVO.class);
+	}
+
+	public void doConfigInfo(ConfigVO vo, String token) {
+		String configUri = protocolProxy.getConfigUri(nacosConfigProperties.getServerAddr());
+		HttpUtil.doPost(configUri, getMap(vo, token), new HashMap<>(0), protocolProxy.sslEnabled());
+	}
+
+	@SneakyThrows
+	private Map<String, String> getMap(ConfigVO vo, String token) {
+		String username = nacosConfigProperties.getUsername();
+		Map<String, String> params = new HashMap<>(20);
+		params.put(ACCESS_TOKEN, token);
+		params.put(USERNAME, username);
+		Field[] fields = vo.getClass().getDeclaredFields();
+		for (Field field : fields) {
+			field.setAccessible(true);
+			Object o = field.get(vo);
+			params.put(field.getName(), o == null ? "" : o.toString());
+		}
+		return params;
 	}
 
 }

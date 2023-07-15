@@ -39,6 +39,10 @@
                     <groupId>com.alibaba.cloud</groupId>
                     <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.laokou</groupId>
+                    <artifactId>laokou-common-core</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
     </dependencies>

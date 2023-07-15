@@ -20,8 +20,6 @@ import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import de.codecentric.boot.admin.client.config.SpringBootAdminClientAutoConfiguration;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.dynamic.router.utils.RouterUtil;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
@@ -47,9 +45,7 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 @EnableAsync
 @EnableDiscoveryClient
 @RequiredArgsConstructor
-public class AuthApplication implements CommandLineRunner {
-
-	private final RouterUtil routerUtil;
+public class AuthApplication {
 
 	public static void main(String[] args) {
 		// SpringSecurity 子线程读取父线程的上下文
@@ -60,11 +56,6 @@ public class AuthApplication implements CommandLineRunner {
 		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		new SpringApplicationBuilder(AuthApplication.class).web(WebApplicationType.SERVLET).run(args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		routerUtil.initRouter();
 	}
 
 }

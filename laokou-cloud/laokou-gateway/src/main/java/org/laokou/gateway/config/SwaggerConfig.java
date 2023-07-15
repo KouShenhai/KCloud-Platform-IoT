@@ -38,7 +38,7 @@ public class SwaggerConfig {
 		List<GroupedOpenApi> groups = new ArrayList<>();
 		locator.getRouteDefinitions().filter(routeDefinition -> routeDefinition.getId().matches("laokou-.*"))
 				.subscribe(routeDefinition -> {
-					String name = routeDefinition.getId().substring(6);
+					String name = routeDefinition.getId().substring(7);
 					GroupedOpenApi.builder().pathsToMatch("/".concat(name).concat("/**")).group(name).build();
 				});
 		return groups;

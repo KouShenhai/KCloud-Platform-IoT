@@ -44,4 +44,8 @@ public class ConfigUtil {
 		return nacosConfigManager.getConfigService();
 	}
 
+	public String getNameSpace() {
+		return nacosConfigProperties.getNamespace();
+	}
+
 }
