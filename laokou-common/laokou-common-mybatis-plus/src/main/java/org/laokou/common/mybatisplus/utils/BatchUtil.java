@@ -68,7 +68,7 @@ public class BatchUtil {
 					catch (Exception e) {
 						// 回滚标识
 						rollback.compareAndSet(false, true);
-						log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", e.getMessage());
+						log.error("批量数据插入失败，已设置回滚标识，错误信息：{}", e.getMessage());
 					}
 					finally {
 						if (rollback.get()) {
@@ -79,7 +79,7 @@ public class BatchUtil {
 		// 阻塞主线程
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
-			throw new CustomException("批量插入数据异常，数据已回滚");
+			throw new CustomException("批量数据插入失败，数据已回滚");
 		}
 	}
 
