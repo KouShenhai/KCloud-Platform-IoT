@@ -15,17 +15,6 @@
  */
 package io.seata.server.session;
 
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 import io.seata.common.Constants;
 import io.seata.common.DefaultValues;
 import io.seata.common.XID;
@@ -46,9 +35,13 @@ import io.seata.server.store.StoreConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static io.seata.core.model.GlobalStatus.AsyncCommitting;
-import static io.seata.core.model.GlobalStatus.CommitRetrying;
-import static io.seata.core.model.GlobalStatus.Committing;
+import java.nio.ByteBuffer;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static io.seata.core.model.GlobalStatus.*;
 
 /**
  * The type Global session.
@@ -228,7 +221,7 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 
 	@Override
 	public void end() throws TransactionException {
-		if (isSuccessEnd()) {
+		if (GlobalStatus.isTwoPhaseSuccess(status)) {
 			// Clean locks first
 			clean();
 			for (SessionLifecycleListener lifecycleListener : lifecycleListeners) {
@@ -240,14 +233,6 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 				lifecycleListener.onFailEnd(this);
 			}
 		}
-	}
-
-	public boolean isSuccessEnd() {
-		if (status == GlobalStatus.Committed || status == GlobalStatus.Rollbacked
-				|| status == GlobalStatus.TimeoutRollbacked) {
-			return true;
-		}
-		return false;
 	}
 
 	public void clean() throws TransactionException {
@@ -305,7 +290,7 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 	}
 
 	@Override
-	public void removeBranch(BranchSession branchSession) throws TransactionException {
+	public void unlockBranch(BranchSession branchSession) throws TransactionException {
 		// do not unlock if global status in (Committing, CommitRetrying,
 		// AsyncCommitting),
 		// because it's already unlocked in 'DefaultCore.commit()'
@@ -315,10 +300,20 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 						"Unlock branch lock failed, xid = " + this.xid + ", branchId = " + branchSession.getBranchId());
 			}
 		}
+	}
+
+	@Override
+	public void removeBranch(BranchSession branchSession) throws TransactionException {
 		for (SessionLifecycleListener lifecycleListener : lifecycleListeners) {
 			lifecycleListener.onRemoveBranch(this, branchSession);
 		}
 		remove(branchSession);
+	}
+
+	@Override
+	public void removeAndUnlockBranch(BranchSession branchSession) throws TransactionException {
+		unlockBranch(branchSession);
+		removeBranch(branchSession);
 	}
 
 	/**

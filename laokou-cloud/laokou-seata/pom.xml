@@ -10,13 +10,13 @@
 
     <properties>
         <!--seata版本-->
-        <seata.version>1.6.1</seata.version>
+        <seata.version>1.7.0</seata.version>
         <!--spring-boot版本-->
         <spring-boot.version>2.7.10</spring-boot.version>
         <!--kafka-appender版本-->
         <kafka-appender.version>0.2.0-RC2</kafka-appender.version>
         <!--jedis版本-->
-        <jedis.version>3.2.0</jedis.version>
+        <jedis.version>3.6.3</jedis.version>
         <!--mock-jedis版本-->
         <mock-jedis.version>0.3.1</mock-jedis.version>
         <!--fastjson版本-->
@@ -172,6 +172,10 @@
             <groupId>com.github.danielwegener</groupId>
             <artifactId>logback-kafka-appender</artifactId>
             <version>${kafka-appender.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
         </dependency>
     </dependencies>
 

@@ -13,13 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package io.seata.server;
-
-import java.util.Properties;
+package io.seata.server.spring.listener;
 
 import io.seata.common.holder.ObjectHolder;
 import io.seata.common.util.StringUtils;
-import io.seata.server.store.StoreConfig;
 import io.seata.spring.boot.autoconfigure.SeataCoreEnvironmentPostProcessor;
 import io.seata.spring.boot.autoconfigure.SeataServerEnvironmentPostProcessor;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
@@ -30,11 +27,11 @@ import org.springframework.core.ResolvableType;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertiesPropertySource;
 
+import java.util.Properties;
+
 import static io.seata.common.Constants.OBJECT_KEY_SPRING_CONFIGURABLE_ENVIRONMENT;
 import static io.seata.common.DefaultValues.SERVICE_OFFSET_SPRING_BOOT;
-import static io.seata.core.constants.ConfigurationKeys.ENV_SEATA_PORT_KEY;
-import static io.seata.core.constants.ConfigurationKeys.SERVER_SERVICE_PORT_CAMEL;
-import static io.seata.core.constants.ConfigurationKeys.SERVER_SERVICE_PORT_CONFIG;
+import static io.seata.core.constants.ConfigurationKeys.*;
 
 /**
  * @author slievrly
@@ -58,9 +55,6 @@ public class ServerApplicationListener implements GenericApplicationListener {
 		ObjectHolder.INSTANCE.setObject(OBJECT_KEY_SPRING_CONFIGURABLE_ENVIRONMENT, environment);
 		SeataCoreEnvironmentPostProcessor.init();
 		SeataServerEnvironmentPostProcessor.init();
-		// Load by priority
-		System.setProperty("sessionMode", StoreConfig.getSessionMode().getName());
-		System.setProperty("lockMode", StoreConfig.getLockMode().getName());
 
 		String[] args = environmentPreparedEvent.getArgs();
 

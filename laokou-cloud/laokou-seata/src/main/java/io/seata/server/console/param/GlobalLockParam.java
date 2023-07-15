@@ -15,9 +15,9 @@
  */
 package io.seata.server.console.param;
 
-import java.io.Serializable;
-
 import io.seata.console.param.BaseParam;
+
+import java.io.Serializable;
 
 /**
  * Global lock param

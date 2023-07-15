@@ -220,7 +220,7 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 
 	@SneakyThrows
 	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
-	private void syncResourceIndex(String code, String indexName) {
+	public void syncResourceIndex(String code, String indexName) {
 		beforeSync();
 		// https://mybatis.org/mybatis-3/zh/sqlmap-xml.html
 		// FORWARD_ONLY 浮标向下移动

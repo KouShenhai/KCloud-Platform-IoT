@@ -15,9 +15,6 @@
  */
 package io.seata.server.coordinator;
 
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
-
 import io.seata.core.context.RootContext;
 import io.seata.core.exception.BranchTransactionException;
 import io.seata.core.exception.GlobalTransactionException;
@@ -41,12 +38,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
-import static io.seata.core.exception.TransactionExceptionCode.BranchTransactionNotExist;
-import static io.seata.core.exception.TransactionExceptionCode.FailedToAddBranch;
-import static io.seata.core.exception.TransactionExceptionCode.GlobalTransactionNotActive;
-import static io.seata.core.exception.TransactionExceptionCode.GlobalTransactionStatusInvalid;
-import static io.seata.core.exception.TransactionExceptionCode.FailedToSendBranchCommitRequest;
-import static io.seata.core.exception.TransactionExceptionCode.FailedToSendBranchRollbackRequest;
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
+
+import static io.seata.core.exception.TransactionExceptionCode.*;
 
 /**
  * The type abstract core.
@@ -179,8 +174,9 @@ public abstract class AbstractCore implements Core {
 
 	protected BranchStatus branchCommitSend(BranchCommitRequest request, GlobalSession globalSession,
 			BranchSession branchSession) throws IOException, TimeoutException {
-		BranchCommitResponse response = (BranchCommitResponse) remotingServer
-				.sendSyncRequest(branchSession.getResourceId(), branchSession.getClientId(), request);
+
+		BranchCommitResponse response = (BranchCommitResponse) remotingServer.sendSyncRequest(
+				branchSession.getResourceId(), branchSession.getClientId(), request, branchSession.isAT());
 		return response.getBranchStatus();
 	}
 
@@ -206,8 +202,9 @@ public abstract class AbstractCore implements Core {
 
 	protected BranchStatus branchRollbackSend(BranchRollbackRequest request, GlobalSession globalSession,
 			BranchSession branchSession) throws IOException, TimeoutException {
-		BranchRollbackResponse response = (BranchRollbackResponse) remotingServer
-				.sendSyncRequest(branchSession.getResourceId(), branchSession.getClientId(), request);
+
+		BranchRollbackResponse response = (BranchRollbackResponse) remotingServer.sendSyncRequest(
+				branchSession.getResourceId(), branchSession.getClientId(), request, branchSession.isAT());
 		return response.getBranchStatus();
 	}
 

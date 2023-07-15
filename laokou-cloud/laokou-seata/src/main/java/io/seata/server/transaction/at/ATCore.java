@@ -15,9 +15,6 @@
  */
 package io.seata.server.transaction.at;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.seata.common.exception.StoreException;
 import io.seata.common.util.StringUtils;
@@ -28,6 +25,10 @@ import io.seata.core.rpc.RemotingServer;
 import io.seata.server.coordinator.AbstractCore;
 import io.seata.server.session.BranchSession;
 import io.seata.server.session.GlobalSession;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static io.seata.common.Constants.AUTO_COMMIT;
 import static io.seata.common.Constants.SKIP_CHECK_LOCK;
@@ -81,8 +82,9 @@ public class ATCore extends AbstractCore {
 			}
 		}
 		catch (StoreException e) {
-			if (e.getCause() instanceof BranchTransactionException) {
-				throw new BranchTransactionException(((BranchTransactionException) e.getCause()).getCode(),
+			Throwable cause = e.getCause();
+			if (cause instanceof BranchTransactionException) {
+				throw new BranchTransactionException(((BranchTransactionException) cause).getCode(),
 						String.format("Global lock acquire failed xid = %s branchId = %s", globalSession.getXid(),
 								branchSession.getBranchId()));
 			}

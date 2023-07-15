@@ -15,11 +15,6 @@
  */
 package io.seata.server.session;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
 import io.seata.common.ConfigurationKeys;
 import io.seata.common.XID;
 import io.seata.common.exception.ShouldNeverHappenException;
@@ -39,6 +34,11 @@ import io.seata.server.store.StoreConfig;
 import io.seata.server.store.StoreConfig.SessionMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static io.seata.common.DefaultValues.DEFAULT_DISTRIBUTED_LOCK_EXPIRE_TIME;
 
@@ -110,6 +110,7 @@ public class SessionHolder {
 		if (null == sessionMode) {
 			sessionMode = StoreConfig.getSessionMode();
 		}
+		LOGGER.info("use session store mode: {}", sessionMode.getName());
 		if (SessionMode.DB.equals(sessionMode)) {
 			ROOT_SESSION_MANAGER = EnhancedServiceLoader.load(SessionManager.class, SessionMode.DB.getName());
 			ASYNC_COMMITTING_SESSION_MANAGER = EnhancedServiceLoader.load(SessionManager.class,
@@ -414,7 +415,7 @@ public class SessionHolder {
 			}
 		}
 		catch (Exception e) {
-			LOGGER.info("Exception running function with key = {}", key, e);
+			LOGGER.error("Exception running function with key = {}", key, e);
 		}
 		finally {
 			if (lock) {

@@ -15,18 +15,9 @@
  */
 package io.seata.server.coordinator;
 
-import java.time.Duration;
-import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 import io.netty.channel.Channel;
 import io.seata.common.thread.NamedThreadFactory;
 import io.seata.common.util.CollectionUtils;
-import io.seata.common.util.DurationUtil;
 import io.seata.config.ConfigurationFactory;
 import io.seata.core.constants.ConfigurationKeys;
 import io.seata.core.context.RootContext;
@@ -34,25 +25,7 @@ import io.seata.core.exception.TransactionException;
 import io.seata.core.model.GlobalStatus;
 import io.seata.core.protocol.AbstractMessage;
 import io.seata.core.protocol.AbstractResultMessage;
-import io.seata.core.protocol.transaction.AbstractTransactionRequestToTC;
-import io.seata.core.protocol.transaction.AbstractTransactionResponse;
-import io.seata.core.protocol.transaction.BranchRegisterRequest;
-import io.seata.core.protocol.transaction.BranchRegisterResponse;
-import io.seata.core.protocol.transaction.BranchReportRequest;
-import io.seata.core.protocol.transaction.BranchReportResponse;
-import io.seata.core.protocol.transaction.GlobalBeginRequest;
-import io.seata.core.protocol.transaction.GlobalBeginResponse;
-import io.seata.core.protocol.transaction.GlobalCommitRequest;
-import io.seata.core.protocol.transaction.GlobalCommitResponse;
-import io.seata.core.protocol.transaction.GlobalLockQueryRequest;
-import io.seata.core.protocol.transaction.GlobalLockQueryResponse;
-import io.seata.core.protocol.transaction.GlobalReportRequest;
-import io.seata.core.protocol.transaction.GlobalReportResponse;
-import io.seata.core.protocol.transaction.GlobalRollbackRequest;
-import io.seata.core.protocol.transaction.GlobalRollbackResponse;
-import io.seata.core.protocol.transaction.GlobalStatusRequest;
-import io.seata.core.protocol.transaction.GlobalStatusResponse;
-import io.seata.core.protocol.transaction.UndoLogDeleteRequest;
+import io.seata.core.protocol.transaction.*;
 import io.seata.core.rpc.Disposable;
 import io.seata.core.rpc.RemotingServer;
 import io.seata.core.rpc.RpcContext;
@@ -61,28 +34,22 @@ import io.seata.core.rpc.netty.ChannelManager;
 import io.seata.core.rpc.netty.NettyRemotingServer;
 import io.seata.server.AbstractTCInboundHandler;
 import io.seata.server.metrics.MetricsPublisher;
-import io.seata.server.session.BranchSession;
-import io.seata.server.session.GlobalSession;
-import io.seata.server.session.SessionCondition;
-import io.seata.server.session.SessionHelper;
-import io.seata.server.session.SessionHolder;
+import io.seata.server.session.*;
+import io.seata.server.store.StoreConfig;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
-import static io.seata.common.Constants.ASYNC_COMMITTING;
-import static io.seata.common.Constants.RETRY_COMMITTING;
-import static io.seata.common.Constants.RETRY_ROLLBACKING;
-import static io.seata.common.Constants.TX_TIMEOUT_CHECK;
-import static io.seata.common.Constants.UNDOLOG_DELETE;
-import static io.seata.common.DefaultValues.DEFAULT_ASYNC_COMMITTING_RETRY_PERIOD;
-import static io.seata.common.DefaultValues.DEFAULT_COMMITING_RETRY_PERIOD;
-import static io.seata.common.DefaultValues.DEFAULT_MAX_COMMIT_RETRY_TIMEOUT;
-import static io.seata.common.DefaultValues.DEFAULT_MAX_ROLLBACK_RETRY_TIMEOUT;
-import static io.seata.common.DefaultValues.DEFAULT_ROLLBACKING_RETRY_PERIOD;
-import static io.seata.common.DefaultValues.DEFAULT_ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE;
-import static io.seata.common.DefaultValues.DEFAULT_TIMEOUT_RETRY_PERIOD;
-import static io.seata.common.DefaultValues.DEFAULT_UNDO_LOG_DELETE_PERIOD;
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import static io.seata.common.Constants.*;
+import static io.seata.common.DefaultValues.*;
 
 /**
  * The type Default coordinator.
@@ -138,15 +105,13 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 	/**
 	 * the pool size of branch asynchronous remove thread pool
 	 */
-	private static final int BRANCH_ASYNC_POOL_SIZE = Runtime.getRuntime().availableProcessors();
+	private static final int BRANCH_ASYNC_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2;
 
-	private static final Duration MAX_COMMIT_RETRY_TIMEOUT = ConfigurationFactory.getInstance().getDuration(
-			ConfigurationKeys.MAX_COMMIT_RETRY_TIMEOUT, DurationUtil.DEFAULT_DURATION,
-			DEFAULT_MAX_COMMIT_RETRY_TIMEOUT);
+	private static final long MAX_COMMIT_RETRY_TIMEOUT = ConfigurationFactory.getInstance()
+			.getLong(ConfigurationKeys.MAX_COMMIT_RETRY_TIMEOUT, DEFAULT_MAX_COMMIT_RETRY_TIMEOUT);
 
-	private static final Duration MAX_ROLLBACK_RETRY_TIMEOUT = ConfigurationFactory.getInstance().getDuration(
-			ConfigurationKeys.MAX_ROLLBACK_RETRY_TIMEOUT, DurationUtil.DEFAULT_DURATION,
-			DEFAULT_MAX_ROLLBACK_RETRY_TIMEOUT);
+	private static final long MAX_ROLLBACK_RETRY_TIMEOUT = ConfigurationFactory.getInstance()
+			.getLong(ConfigurationKeys.MAX_ROLLBACK_RETRY_TIMEOUT, DEFAULT_MAX_ROLLBACK_RETRY_TIMEOUT);
 
 	private static final boolean ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE = ConfigurationFactory.getInstance().getBoolean(
 			ConfigurationKeys.ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE, DEFAULT_ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE);
@@ -170,14 +135,9 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 			GlobalStatus.TimeoutRollbackRetrying, GlobalStatus.RollbackRetrying, GlobalStatus.Rollbacking };
 
 	private final GlobalStatus[] retryCommittingStatuses = new GlobalStatus[] { GlobalStatus.Committing,
-			GlobalStatus.CommitRetrying };
+			GlobalStatus.CommitRetrying, GlobalStatus.Committed };
 
-	private final ThreadPoolExecutor branchRemoveExecutor = new ThreadPoolExecutor(BRANCH_ASYNC_POOL_SIZE,
-			BRANCH_ASYNC_POOL_SIZE, Integer.MAX_VALUE, TimeUnit.MILLISECONDS,
-			new ArrayBlockingQueue<>(
-					CONFIG.getInt(ConfigurationKeys.SESSION_BRANCH_ASYNC_QUEUE_SIZE, DEFAULT_BRANCH_ASYNC_QUEUE_SIZE)),
-			new NamedThreadFactory("branchSessionRemove", BRANCH_ASYNC_POOL_SIZE),
-			new ThreadPoolExecutor.CallerRunsPolicy());
+	private final ThreadPoolExecutor branchRemoveExecutor;
 
 	private RemotingServer remotingServer;
 
@@ -195,6 +155,20 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 		}
 		this.remotingServer = remotingServer;
 		this.core = new DefaultCore(remotingServer);
+		boolean enableBranchAsyncRemove = CONFIG.getBoolean(ConfigurationKeys.ENABLE_BRANCH_ASYNC_REMOVE,
+				DEFAULT_ENABLE_BRANCH_ASYNC_REMOVE);
+		// create branchRemoveExecutor
+		if (enableBranchAsyncRemove && StoreConfig.getSessionMode() != StoreConfig.SessionMode.FILE) {
+			branchRemoveExecutor = new ThreadPoolExecutor(BRANCH_ASYNC_POOL_SIZE, BRANCH_ASYNC_POOL_SIZE,
+					Integer.MAX_VALUE, TimeUnit.MILLISECONDS,
+					new ArrayBlockingQueue<>(CONFIG.getInt(ConfigurationKeys.SESSION_BRANCH_ASYNC_QUEUE_SIZE,
+							DEFAULT_BRANCH_ASYNC_QUEUE_SIZE)),
+					new NamedThreadFactory("branchSessionRemove", BRANCH_ASYNC_POOL_SIZE),
+					new ThreadPoolExecutor.CallerRunsPolicy());
+		}
+		else {
+			branchRemoveExecutor = null;
+		}
 	}
 
 	public static DefaultCoordinator getInstance(RemotingServer remotingServer) {
@@ -328,7 +302,10 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 					return false;
 				}
 
-				LOGGER.info("Global transaction[{}] is timeout and will be rollback.", globalSession.getXid());
+				LOGGER.warn(
+						"Global transaction[{}] is timeout and will be rollback,transaction begin time:{} and now:{}",
+						globalSession.getXid(), DateFormatUtils.ISO_DATE_FORMAT.format(globalSession.getBeginTime()),
+						DateFormatUtils.ISO_DATE_FORMAT.format(System.currentTimeMillis()));
 
 				globalSession.addSessionLifecycleListener(SessionHolder.getRootSessionManager());
 				globalSession.close();
@@ -369,14 +346,10 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 					// The function of this 'return' is 'continue'.
 					return;
 				}
-				if (isRetryTimeout(now, MAX_ROLLBACK_RETRY_TIMEOUT.toMillis(), rollbackingSession.getBeginTime())) {
+				if (isRetryTimeout(now, MAX_ROLLBACK_RETRY_TIMEOUT, rollbackingSession.getBeginTime())) {
 					if (ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE) {
 						rollbackingSession.clean();
 					}
-					// Prevent thread safety issues
-					SessionHolder.getRetryRollbackingSessionManager().removeGlobalSession(rollbackingSession);
-					LOGGER.error("Global transaction rollback retry timeout and has removed [{}]",
-							rollbackingSession.getXid());
 
 					SessionHelper.endRollbackFailed(rollbackingSession, true, true);
 
@@ -387,7 +360,7 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 				core.doGlobalRollback(rollbackingSession, true);
 			}
 			catch (TransactionException ex) {
-				LOGGER.info("Failed to retry rollbacking [{}] {} {}", rollbackingSession.getXid(), ex.getCode(),
+				LOGGER.error("Failed to retry rollbacking [{}] {} {}", rollbackingSession.getXid(), ex.getCode(),
 						ex.getMessage());
 			}
 		});
@@ -408,15 +381,12 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 		SessionHelper.forEach(committingSessions, committingSession -> {
 			try {
 				// prevent repeated commit
-				if (committingSession.getStatus() == GlobalStatus.Committing && !committingSession.isDeadSession()) {
+				if (GlobalStatus.Committing.equals(committingSession.getStatus())
+						&& !committingSession.isDeadSession()) {
 					// The function of this 'return' is 'continue'.
 					return;
 				}
-				if (isRetryTimeout(now, MAX_COMMIT_RETRY_TIMEOUT.toMillis(), committingSession.getBeginTime())) {
-					// Prevent thread safety issues
-					SessionHolder.getRetryCommittingSessionManager().removeGlobalSession(committingSession);
-					LOGGER.error("Global transaction commit retry timeout and has removed [{}]",
-							committingSession.getXid());
+				if (isRetryTimeout(now, MAX_COMMIT_RETRY_TIMEOUT, committingSession.getBeginTime())) {
 
 					// commit retry timeout event
 					SessionHelper.endCommitFailed(committingSession, true, true);
@@ -424,11 +394,15 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 					// The function of this 'return' is 'continue'.
 					return;
 				}
+				if (GlobalStatus.Committed.equals(committingSession.getStatus())
+						&& committingSession.getBranchSessions().isEmpty()) {
+					SessionHelper.endCommitted(committingSession, true);
+				}
 				committingSession.addSessionLifecycleListener(SessionHolder.getRootSessionManager());
 				core.doGlobalCommit(committingSession, true);
 			}
 			catch (TransactionException ex) {
-				LOGGER.info("Failed to retry committing [{}] {} {}", committingSession.getXid(), ex.getCode(),
+				LOGGER.error("Failed to retry committing [{}] {} {}", committingSession.getXid(), ex.getCode(),
 						ex.getMessage());
 			}
 		});
@@ -540,14 +514,18 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 		asyncCommitting.shutdown();
 		timeoutCheck.shutdown();
 		undoLogDelete.shutdown();
-		branchRemoveExecutor.shutdown();
+		if (branchRemoveExecutor != null) {
+			branchRemoveExecutor.shutdown();
+		}
 		try {
 			retryRollbacking.awaitTermination(TIMED_TASK_SHUTDOWN_MAX_WAIT_MILLS, TimeUnit.MILLISECONDS);
 			retryCommitting.awaitTermination(TIMED_TASK_SHUTDOWN_MAX_WAIT_MILLS, TimeUnit.MILLISECONDS);
 			asyncCommitting.awaitTermination(TIMED_TASK_SHUTDOWN_MAX_WAIT_MILLS, TimeUnit.MILLISECONDS);
 			timeoutCheck.awaitTermination(TIMED_TASK_SHUTDOWN_MAX_WAIT_MILLS, TimeUnit.MILLISECONDS);
 			undoLogDelete.awaitTermination(TIMED_TASK_SHUTDOWN_MAX_WAIT_MILLS, TimeUnit.MILLISECONDS);
-			branchRemoveExecutor.awaitTermination(TIMED_TASK_SHUTDOWN_MAX_WAIT_MILLS, TimeUnit.MILLISECONDS);
+			if (branchRemoveExecutor != null) {
+				branchRemoveExecutor.awaitTermination(TIMED_TASK_SHUTDOWN_MAX_WAIT_MILLS, TimeUnit.MILLISECONDS);
+			}
 		}
 		catch (InterruptedException ignore) {
 
@@ -591,6 +569,9 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 		 */
 		public BranchRemoveTask(GlobalSession globalSession, BranchSession branchSession) {
 			this.globalSession = globalSession;
+			if (branchSession == null) {
+				throw new IllegalArgumentException("BranchSession can`t be null!");
+			}
 			this.branchSession = branchSession;
 		}
 

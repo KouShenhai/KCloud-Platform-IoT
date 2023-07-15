@@ -15,10 +15,6 @@
  */
 package io.seata.server.session;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-
 import io.seata.common.util.CollectionUtils;
 import io.seata.config.Configuration;
 import io.seata.config.ConfigurationFactory;
@@ -36,6 +32,10 @@ import io.seata.server.store.StoreConfig.SessionMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 import static io.seata.common.DefaultValues.DEFAULT_ENABLE_BRANCH_ASYNC_REMOVE;
 
@@ -135,6 +135,10 @@ public class SessionHelper {
 					beginTime, retryBranch);
 		}
 		else {
+			if (globalSession.isSaga()) {
+				globalSession.setStatus(GlobalStatus.Committed);
+				globalSession.end();
+			}
 			MetricsPublisher.postSessionDoneEvent(globalSession, false, false);
 		}
 	}
@@ -202,6 +206,10 @@ public class SessionHelper {
 					beginTime, retryBranch);
 		}
 		else {
+			if (globalSession.isSaga()) {
+				globalSession.setStatus(GlobalStatus.Rollbacked);
+				globalSession.end();
+			}
 			MetricsPublisher.postSessionDoneEvent(globalSession, GlobalStatus.Rollbacked, false, false);
 		}
 	}
@@ -298,7 +306,8 @@ public class SessionHelper {
 	 */
 	public static void removeBranch(GlobalSession globalSession, BranchSession branchSession, boolean isAsync)
 			throws TransactionException {
-		if (Objects.equals(Boolean.TRUE, ENABLE_BRANCH_ASYNC_REMOVE) && isAsync) {
+		globalSession.unlockBranch(branchSession);
+		if (isEnableBranchRemoveAsync() && isAsync) {
 			COORDINATOR.doBranchRemoveAsync(globalSession, branchSession);
 		}
 		else {
@@ -316,14 +325,27 @@ public class SessionHelper {
 		if (branchSessions == null || branchSessions.isEmpty()) {
 			return;
 		}
-		if (Objects.equals(Boolean.TRUE, ENABLE_BRANCH_ASYNC_REMOVE) && isAsync) {
-			COORDINATOR.doBranchRemoveAllAsync(globalSession);
-		}
-		else {
-			for (BranchSession branchSession : branchSessions) {
-				globalSession.removeBranch(branchSession);
+		boolean isAsyncRemove = isEnableBranchRemoveAsync() && isAsync;
+		for (BranchSession branchSession : branchSessions) {
+			if (isAsyncRemove) {
+				globalSession.unlockBranch(branchSession);
+			}
+			else {
+				globalSession.removeAndUnlockBranch(branchSession);
 			}
 		}
+		if (isAsyncRemove) {
+			COORDINATOR.doBranchRemoveAllAsync(globalSession);
+		}
+	}
+
+	/**
+	 * if true, enable delete the branch asynchronously
+	 * @return the boolean
+	 */
+	private static boolean isEnableBranchRemoveAsync() {
+		return Objects.equals(Boolean.TRUE, DELAY_HANDLE_SESSION)
+				&& Objects.equals(Boolean.TRUE, ENABLE_BRANCH_ASYNC_REMOVE);
 	}
 
 }
