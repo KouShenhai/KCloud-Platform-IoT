@@ -263,6 +263,9 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 ### 😻 开源协议
 KCloud-Platform-Alibaba 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
 
+### 🔧 参与贡献
+请查看 [CONTRIBUTING.md](CONTRIBUTING.md)  
+
 ### 👀 项目地址
 Github 后端地址：[KCloud-Platform-Alibaba](https://github.com/KouShenhai/KCloud-Platform-Alibaba)  
 Github 前端地址：[KCloud-Antdv-Alibaba](https://github.com/KouShenhai/KCloud-Antdv-Alibaba)
