@@ -49,7 +49,7 @@ public class DataCacheAutoConfig {
 
 	@Bean
 	public Cache<String, Object> caffeineCache() {
-		return Caffeine.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).maximumSize(9216).build();
+		return Caffeine.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).initialCapacity(100).maximumSize(9216).build();
 	}
 
 }
