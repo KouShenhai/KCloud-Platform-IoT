@@ -166,6 +166,6 @@ public interface Constant {
 	/**
 	 * 加密协议版本
 	 */
-	String PROTOCOL_VERSION = "TLSv1.3";
+	String TLS_PROTOCOL_VERSION = "TLSv1.3";
 
 }
