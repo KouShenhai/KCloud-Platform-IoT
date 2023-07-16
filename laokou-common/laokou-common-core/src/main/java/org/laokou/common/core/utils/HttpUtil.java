@@ -227,7 +227,7 @@ public class HttpUtil {
 	public static void disableSsl(HttpClientBuilder builder) {
 		X509TrustManager disabledTrustManager = new DisableValidationTrustManager();
 		TrustManager[] trustManagers = new TrustManager[] { disabledTrustManager };
-		SSLContext sslContext = SSLContext.getInstance("SSL");
+		SSLContext sslContext = SSLContext.getInstance("TLS");
 		sslContext.init(null, trustManagers, new SecureRandom());
 		SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactoryBuilder.create()
 				.setSslContext(sslContext).setHostnameVerifier(new TrustAllHostnames()).build();
