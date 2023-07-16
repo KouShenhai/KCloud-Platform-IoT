@@ -47,6 +47,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.laokou.common.core.constant.Constant.TLS_PROTOCOL_VERSION;
+
 /**
  * @author laokou
  */
@@ -227,7 +229,9 @@ public class HttpUtil {
 	public static void disableSsl(HttpClientBuilder builder) {
 		X509TrustManager disabledTrustManager = new DisableValidationTrustManager();
 		TrustManager[] trustManagers = new TrustManager[] { disabledTrustManager };
-		SSLContext sslContext = SSLContext.getInstance("TLS");
+		// 怎么选择加密协议，请看 ProtocolVersion
+		// 为什么能找到对应的加密协议 请查看 SSLContextSpi
+		SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
 		sslContext.init(null, trustManagers, new SecureRandom());
 		SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactoryBuilder.create()
 				.setSslContext(sslContext).setHostnameVerifier(new TrustAllHostnames()).build();
