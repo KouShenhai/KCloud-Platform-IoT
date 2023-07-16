@@ -225,8 +225,12 @@ public class HttpUtil {
 
 	}
 
+	/**
+	 * 单向认证
+	 */
 	@SneakyThrows
 	public static void disableSsl(HttpClientBuilder builder) {
+		// X.509是密码学里公钥证书的格式标准，作为证书标准
 		X509TrustManager disabledTrustManager = new DisableValidationTrustManager();
 		TrustManager[] trustManagers = new TrustManager[] { disabledTrustManager };
 		// 怎么选择加密协议，请看 ProtocolVersion
