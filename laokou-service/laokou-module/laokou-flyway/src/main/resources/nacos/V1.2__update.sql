@@ -648,3 +648,6 @@ CREATE TABLE `users`  (
 INSERT INTO `users` VALUES ('nacos', '$2a$10$EuWPZHzz32dJN7jexM34MOeYirDdFAZm2kuWj7VEOJhhZkDrxfvUu', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- 2023/07/16 修改config_info 老寇
+UPDATE `kcloud_platform_alibaba_nacos`.`config_info` SET `data_id` = 'application-common-rocketmq.yaml', `group_id` = 'LAOKOU_GROUP', `content` = 'rocketmq:\n  producer:\n    group: laokou-producer-group\n  name-server: 192.168.30.128:9876\n  consumer:\n    pull-batch-size: 16', `md5` = '474c01617bf0ab50ab4f6ad9351cf83c', `gmt_create` = '2023-01-21 10:43:04', `gmt_modified` = '2023-07-16 15:18:23', `src_user` = 'nacos', `src_ip` = '0:0:0:0:0:0:0:1', `app_name` = '', `tenant_id` = 'a61abd4c-ef96-42a5-99a1-616adee531f3', `c_desc` = 'rocketmq公共配置', `c_use` = '', `effect` = '', `type` = 'yaml', `c_schema` = '', `encrypted_data_key` = '' WHERE `id` = 1270;
