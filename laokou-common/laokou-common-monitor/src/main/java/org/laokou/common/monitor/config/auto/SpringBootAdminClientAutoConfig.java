@@ -17,7 +17,6 @@
 
 package org.laokou.common.monitor.config.auto;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import de.codecentric.boot.admin.client.config.ClientProperties;
 import de.codecentric.boot.admin.client.config.InstanceProperties;
 import de.codecentric.boot.admin.client.config.SpringBootAdminClientEnabledCondition;
@@ -52,19 +51,13 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
-import org.springframework.http.MediaType;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.ExtractingResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.SSLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -164,17 +157,7 @@ public class SpringBootAdminClientAutoConfig {
 			CloseableHttpClient closeableHttpClient = httpClientBuilder.build();
 			HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
 					closeableHttpClient);
-			List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
-			MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-			converter.setObjectMapper(new ObjectMapper());
-			MediaType[] mediaTypes = new MediaType[] { MediaType.APPLICATION_JSON, MediaType.APPLICATION_OCTET_STREAM,
-					MediaType.TEXT_HTML, MediaType.TEXT_PLAIN, MediaType.TEXT_XML, MediaType.APPLICATION_ATOM_XML,
-					MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_PDF, };
-			converter.setSupportedMediaTypes(Arrays.asList(mediaTypes));
-			messageConverters.add(converter);
-			build.setMessageConverters(messageConverters);
 			build.setRequestFactory(requestFactory);
-			build.setErrorHandler(new ExtractingResponseErrorHandler());
 			return new BlockingRegistrationClient(build);
 		}
 
