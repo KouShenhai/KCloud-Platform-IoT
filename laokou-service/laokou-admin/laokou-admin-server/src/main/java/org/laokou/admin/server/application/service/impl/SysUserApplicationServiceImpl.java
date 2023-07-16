@@ -311,7 +311,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 			if (StringUtil.isEmpty(keyword) || username.contains(keyword)) {
 				SysUserOnlineVO vo = new SysUserOnlineVO();
 				vo.setUsername(username);
-				vo.setToken(key.substring(userInfoKeyPrefix.length() - 1));
+				vo.setToken(key.substring(userInfoKeyPrefix.length()));
 				vo.setLoginIp(userDetail.getLoginIp());
 				vo.setLoginDate(userDetail.getLoginDate());
 				list.add(vo);
