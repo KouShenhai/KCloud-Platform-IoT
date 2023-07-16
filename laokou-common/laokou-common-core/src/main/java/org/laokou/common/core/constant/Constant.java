@@ -163,4 +163,9 @@ public interface Constant {
 	 */
 	String APP_SECRET = "app-secret";
 
+	/**
+	 * 加密协议版本
+	 */
+	String PROTOCOL_VERSION = "TLSv1.3";
+
 }
