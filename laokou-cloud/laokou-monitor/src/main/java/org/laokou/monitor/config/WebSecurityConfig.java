@@ -22,7 +22,6 @@ import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import jakarta.servlet.DispatcherType;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,10 +39,7 @@ import javax.net.ssl.SSLException;
  * @author laokou
  */
 @Configuration
-@RequiredArgsConstructor
 public class WebSecurityConfig {
-
-	private final AdminServerProperties adminServerProperties;
 
 	@Bean
 	public ClientHttpConnector customHttpClient() throws SSLException {
@@ -55,7 +51,8 @@ public class WebSecurityConfig {
 
 	@Bean
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain securityFilterChain(HttpSecurity http, AdminServerProperties adminServerProperties)
+			throws Exception {
 		SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
 		successHandler.setTargetUrlParameter("redirectTo");
 		successHandler.setDefaultTargetUrl(adminServerProperties.path("/"));
