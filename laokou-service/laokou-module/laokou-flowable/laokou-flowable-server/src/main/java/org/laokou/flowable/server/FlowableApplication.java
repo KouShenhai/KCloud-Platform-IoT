@@ -18,7 +18,6 @@ package org.laokou.flowable.server;
 
 import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import de.codecentric.boot.admin.client.config.SpringBootAdminClientAutoConfiguration;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -29,7 +28,7 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication(exclude = { SpringBootAdminClientAutoConfiguration.class })
+@SpringBootApplication
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 public class FlowableApplication {

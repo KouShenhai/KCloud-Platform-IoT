@@ -22,6 +22,7 @@ import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import static io.undertow.server.handlers.builder.PredicatedHandlersParser.TRUE;
 
@@ -31,6 +32,7 @@ import static io.undertow.server.handlers.builder.PredicatedHandlersParser.TRUE;
 @SpringBootApplication
 @EnableAdminServer
 @EnableEncryptableProperties
+@EnableDiscoveryClient
 public class MonitorApplication {
 
 	public static void main(String[] args) {

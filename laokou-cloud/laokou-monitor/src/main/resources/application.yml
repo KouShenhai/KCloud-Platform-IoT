@@ -17,8 +17,6 @@
 # server
 server:
   port: 5000
-  servlet:
-    context-path: /monitor
   ssl:
     # 开启证书
     enabled: @SSL-ENABLED@
@@ -40,3 +38,6 @@ spring:
   # dev|test|prod
   profiles:
     active: @PROFILE-ACTIVE@
+  cloud:
+    config:
+      initialize-on-context-refresh: true

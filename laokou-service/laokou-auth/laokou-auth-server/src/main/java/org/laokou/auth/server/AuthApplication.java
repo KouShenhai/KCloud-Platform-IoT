@@ -18,7 +18,6 @@ package org.laokou.auth.server;
 
 import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import de.codecentric.boot.admin.client.config.SpringBootAdminClientAutoConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -37,8 +36,7 @@ import static org.laokou.common.core.constant.Constant.TRUE;
  *
  * @author laokou
  */
-@SpringBootApplication(
-		exclude = { OAuth2AuthorizationServerAutoConfiguration.class, SpringBootAdminClientAutoConfiguration.class })
+@SpringBootApplication(exclude = { OAuth2AuthorizationServerAutoConfiguration.class })
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties
