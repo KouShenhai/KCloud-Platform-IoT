@@ -6,7 +6,7 @@ server:
     # 证书位置
     key-store: classpath:scg-keystore.p12
     # 证书别名
-    key-alias: ${spring.application.name}
+    key-alias: @pom.parent.artifactId@
     # 秘钥类型
     key-store-type: PKCS12
     # 证书密码
@@ -17,7 +17,7 @@ server:
 #spring
 spring:
   application:
-    name: @pom.parent.artifactId@
+    name: @pom.parent.artifactId@-server
   profiles:
     # 环境 dev|test|prod
     active: @PROFILE-ACTIVE@
