@@ -17,6 +17,8 @@
 
 生成证书命令： keytool -genkey -alias laokou-gateway -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore scg-keystore.p12  -validity 3650
 
+生成证书命令（域名）：keytool -genkey -alias laokou-cert -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore scg-keystore.p12 -validity 3650 -dname "CN=127.0.0.1,OU=laokouyun,O=laokouyun,L=Shenzhen,ST=Guangzhou,C=CN" -storepass laokou -keypass laokou
+
 导出证书命令：keytool -exportcert -v -alias laokou-gateway -keystore scg-keystore.p12  -storepass laokou -file gateway.cer
 
 导入证书命令：keytool -import -alias gateway -keystore trust-scg-keystore.p12 -file gateway.cer

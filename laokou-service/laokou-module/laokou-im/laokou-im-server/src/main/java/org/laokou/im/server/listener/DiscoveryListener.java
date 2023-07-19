@@ -54,7 +54,7 @@ public class DiscoveryListener implements ApplicationListener<ApplicationReadyEv
 		String ip = InetAddress.getLocalHost().getHostAddress();
 		String group = configUtil.getGroup();
 		int port = WebSocketServer.PORT;
-		serviceUtil.registerInstance(appName, group, ip, port);
+		serviceUtil.registerInstance(appName.substring(0, 9), group, ip, port);
 	}
 
 	@SneakyThrows
@@ -63,7 +63,7 @@ public class DiscoveryListener implements ApplicationListener<ApplicationReadyEv
 		String ip = InetAddress.getLocalHost().getHostAddress();
 		int port = WebSocketServer.PORT;
 		String group = configUtil.getGroup();
-		serviceUtil.deregisterInstance(appName, group, ip, port);
+		serviceUtil.deregisterInstance(appName.substring(0, 9), group, ip, port);
 	}
 
 }
