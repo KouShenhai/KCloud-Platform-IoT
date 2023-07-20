@@ -33,7 +33,7 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class,
 		ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableEncryptableProperties
-@EnableDiscoveryClient(autoRegister = false)
+@EnableDiscoveryClient
 public class ImApplication {
 
 	/**

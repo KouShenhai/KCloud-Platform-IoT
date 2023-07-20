@@ -45,7 +45,7 @@ public class DiscoveryListener implements ApplicationListener<ApplicationReadyEv
 
 	private final ConfigUtil configUtil;
 
-	@Value("${spring.application.name}")
+	@Value("${server.name}")
 	private String appName;
 
 	@Override
