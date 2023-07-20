@@ -21,24 +21,29 @@ import de.codecentric.boot.admin.server.config.AdminServerProperties;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
-import jakarta.servlet.DispatcherType;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ClientHttpConnector;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
+import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
+import org.springframework.security.web.server.authentication.logout.RedirectServerLogoutSuccessHandler;
+import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
 import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.SSLException;
+import java.net.URI;
 
 /**
+ * <a href="https://github.com/codecentric/spring-boot-admin/blob/master/spring-boot-admin-samples/spring-boot-admin-sample-reactive/src/main/java/de/codecentric/boot/admin/SpringBootAdminReactiveApplication.java">...</a>
  * @author laokou
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class WebSecurityConfig {
 
 	@Bean
@@ -51,23 +56,34 @@ public class WebSecurityConfig {
 
 	@Bean
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
-	SecurityFilterChain securityFilterChain(HttpSecurity http, AdminServerProperties adminServerProperties)
-			throws Exception {
-		SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
-		successHandler.setTargetUrlParameter("redirectTo");
-		successHandler.setDefaultTargetUrl(adminServerProperties.path("/"));
+	SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http, AdminServerProperties adminServerProperties) {
 		return http
-				.authorizeHttpRequests(request -> request
-						.requestMatchers(adminServerProperties.path("/assets/**"),
-								adminServerProperties.path("/variables.css"),
-								adminServerProperties.path("/actuator/**"), adminServerProperties.path("/instances/**"),
-								adminServerProperties.path("/login"))
-						.permitAll().dispatcherTypeMatchers(DispatcherType.ASYNC).permitAll().anyRequest()
-						.authenticated())
-				.formLogin(
-						login -> login.loginPage(adminServerProperties.path("/login")).successHandler(successHandler))
-				.logout(logout -> logout.logoutUrl(adminServerProperties.path("/logout")))
-				.csrf(AbstractHttpConfigurer::disable).build();
+				.authorizeExchange(exchange ->
+						exchange.pathMatchers(adminServerProperties.path("/assets/**")
+										, adminServerProperties.path("/variables.css")
+								, adminServerProperties.path("/actuator/**")
+								, adminServerProperties.path("/instances/**")
+								, adminServerProperties.path("/login"))
+								.permitAll()
+								.anyExchange().authenticated())
+				.formLogin(login -> login.loginPage(adminServerProperties.path("/login"))
+						.authenticationSuccessHandler(loginSuccessHandler(adminServerProperties.path("/"))))
+				.logout(logout -> logout.logoutUrl(adminServerProperties.path("/logout")).logoutSuccessHandler(logoutSuccessHandler(adminServerProperties.path("/login?logout"))))
+				.httpBasic(Customizer.withDefaults())
+				.csrf(ServerHttpSecurity.CsrfSpec::disable)
+				.build();
+	}
+
+	private ServerLogoutSuccessHandler logoutSuccessHandler(String uri) {
+		RedirectServerLogoutSuccessHandler successHandler = new RedirectServerLogoutSuccessHandler();
+		successHandler.setLogoutSuccessUrl(URI.create(uri));
+		return successHandler;
+	}
+
+	private ServerAuthenticationSuccessHandler loginSuccessHandler(String uri) {
+		RedirectServerAuthenticationSuccessHandler successHandler = new RedirectServerAuthenticationSuccessHandler();
+		successHandler.setLocation(URI.create(uri));
+		return successHandler;
 	}
 
 }

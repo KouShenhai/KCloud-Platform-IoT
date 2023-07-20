@@ -13,11 +13,10 @@ server:
     key-store-password: laokou
   http2:
     enabled: false
-  forward-headers-strategy: native
 #spring
 spring:
   application:
-    name: @pom.parent.artifactId@-server
+    name: @pom.parent.artifactId@
   profiles:
     # 环境 dev|test|prod
     active: @PROFILE-ACTIVE@
