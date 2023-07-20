@@ -26,7 +26,6 @@ import de.codecentric.boot.admin.client.registration.metadata.MetadataContributo
 import de.codecentric.boot.admin.client.registration.metadata.StartupDateMetadataContributor;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import jakarta.servlet.ServletContext;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
@@ -58,6 +57,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.SSLException;
+import javax.net.ssl.X509TrustManager;
+import java.security.cert.X509Certificate;
 import java.util.Collections;
 import java.util.List;
 
@@ -175,11 +176,28 @@ public class SpringBootAdminClientAutoConfig {
 			if (client.getUsername() != null && client.getPassword() != null) {
 				webClient = webClient.filter(basicAuthentication(client.getUsername(), client.getPassword()));
 			}
-			SslContext context = SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE)
+			SslContext context = SslContextBuilder.forClient().trustManager(new DisableValidationTrustManager())
 					.build();
 			HttpClient httpClient = HttpClient.create().secure(t -> t.sslContext(context));
 			webClient.clientConnector(new ReactorClientHttpConnector(httpClient));
 			return new ReactiveRegistrationClient(webClient.build(), client.getReadTimeout());
+		}
+
+	}
+
+	static class DisableValidationTrustManager implements X509TrustManager {
+
+		DisableValidationTrustManager() {
+		}
+
+		public void checkClientTrusted(X509Certificate[] x509Certificates, String s) {
+		}
+
+		public void checkServerTrusted(X509Certificate[] x509Certificates, String s) {
+		}
+
+		public X509Certificate[] getAcceptedIssuers() {
+			return new X509Certificate[0];
 		}
 
 	}

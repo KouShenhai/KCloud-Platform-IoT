@@ -24,7 +24,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-import static io.undertow.server.handlers.builder.PredicatedHandlersParser.TRUE;
+import static java.lang.Boolean.TRUE;
 
 /**
  * @author laokou
@@ -36,10 +36,10 @@ import static io.undertow.server.handlers.builder.PredicatedHandlersParser.TRUE;
 public class MonitorApplication {
 
 	public static void main(String[] args) {
-		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+		System.setProperty(TlsSystemConfig.TLS_ENABLE, String.valueOf(TRUE));
+		System.setProperty(TlsSystemConfig.CLIENT_AUTH, String.valueOf(TRUE));
 		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
-		new SpringApplicationBuilder(MonitorApplication.class).web(WebApplicationType.SERVLET).run(args);
+		new SpringApplicationBuilder(MonitorApplication.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 
 }
