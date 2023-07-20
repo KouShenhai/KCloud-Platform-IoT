@@ -1,4 +1,5 @@
 server:
+  name: @pom.parent.artifactId@
   port: 10001
   ssl:
     # 开启证书
@@ -16,7 +17,7 @@ server:
 #spring
 spring:
   application:
-    name: @pom.parent.artifactId@
+    name: @pom.parent.artifactId@-server
   profiles:
     # 环境 dev|test|prod
     active: @PROFILE-ACTIVE@
