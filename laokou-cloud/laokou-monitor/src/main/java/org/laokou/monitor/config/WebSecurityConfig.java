@@ -40,7 +40,9 @@ import javax.net.ssl.SSLException;
 import java.net.URI;
 
 /**
- * <a href="https://github.com/codecentric/spring-boot-admin/blob/master/spring-boot-admin-samples/spring-boot-admin-sample-reactive/src/main/java/de/codecentric/boot/admin/SpringBootAdminReactiveApplication.java">...</a>
+ * <a href=
+ * "https://github.com/codecentric/spring-boot-admin/blob/master/spring-boot-admin-samples/spring-boot-admin-sample-reactive/src/main/java/de/codecentric/boot/admin/SpringBootAdminReactiveApplication.java">...</a>
+ *
  * @author laokou
  */
 @Configuration(proxyBeanMethods = false)
@@ -56,22 +58,18 @@ public class WebSecurityConfig {
 
 	@Bean
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
-	SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http, AdminServerProperties adminServerProperties) {
+	SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http,
+			AdminServerProperties adminServerProperties) {
 		return http
-				.authorizeExchange(exchange ->
-						exchange.pathMatchers(adminServerProperties.path("/assets/**")
-										, adminServerProperties.path("/variables.css")
-								, adminServerProperties.path("/actuator/**")
-								, adminServerProperties.path("/instances/**")
-								, adminServerProperties.path("/login"))
-								.permitAll()
-								.anyExchange().authenticated())
+				.authorizeExchange(exchange -> exchange.pathMatchers(adminServerProperties.path("/assets/**"),
+						adminServerProperties.path("/variables.css"), adminServerProperties.path("/actuator/**"),
+						adminServerProperties.path("/instances/**"), adminServerProperties.path("/login")).permitAll()
+						.anyExchange().authenticated())
 				.formLogin(login -> login.loginPage(adminServerProperties.path("/login"))
 						.authenticationSuccessHandler(loginSuccessHandler(adminServerProperties.path("/"))))
-				.logout(logout -> logout.logoutUrl(adminServerProperties.path("/logout")).logoutSuccessHandler(logoutSuccessHandler(adminServerProperties.path("/login?logout"))))
-				.httpBasic(Customizer.withDefaults())
-				.csrf(ServerHttpSecurity.CsrfSpec::disable)
-				.build();
+				.logout(logout -> logout.logoutUrl(adminServerProperties.path("/logout"))
+						.logoutSuccessHandler(logoutSuccessHandler(adminServerProperties.path("/login?logout"))))
+				.httpBasic(Customizer.withDefaults()).csrf(ServerHttpSecurity.CsrfSpec::disable).build();
 	}
 
 	private ServerLogoutSuccessHandler logoutSuccessHandler(String uri) {
