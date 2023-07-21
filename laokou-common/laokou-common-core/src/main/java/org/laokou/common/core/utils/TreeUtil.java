@@ -50,9 +50,6 @@ public class TreeUtil {
 		for (T treeNo : treeNodes) {
 			T parent = nodeMap.get(treeNo.getPid());
 			if (parent != null && treeNo.getPid().equals(parent.getId())) {
-				if (CollectionUtil.isEmpty(parent.getChildren())) {
-					parent.setChildren(new ArrayList<>(0));
-				}
 				parent.getChildren().add(treeNo);
 			}
 		}
@@ -70,7 +67,7 @@ public class TreeUtil {
 
 		private Long pid;
 
-		private List<T> children;
+		private List<T> children = new ArrayList<>(10);
 
 	}
 
