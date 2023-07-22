@@ -52,13 +52,10 @@ public class RabbitmqAutoConfig {
     }
 
     @Bean
-    public Binding bindingKey1(Queue gpsInfoQueue,TopicExchange gpsInfoTopicExchange) {
-        return BindingBuilder.bind(gpsInfoQueue).to(gpsInfoTopicExchange).with(MqConstant.LAOKOU_GPS_INFO_1_KEY);
-    }
-
-    @Bean
-    public Binding bindingKey2(Queue gpsInfoQueue,TopicExchange gpsInfoTopicExchange) {
-        return BindingBuilder.bind(gpsInfoQueue).to(gpsInfoTopicExchange).with(MqConstant.LAOKOU_GPS_INFO_2_KEY);
+    public Binding gpsInfoRouterKeyBinding(Queue gpsInfoQueue,TopicExchange gpsInfoTopicExchange) {
+        return BindingBuilder.bind(gpsInfoQueue)
+                .to(gpsInfoTopicExchange)
+                .with(MqConstant.LAOKOU_GPS_INFO_ROUTER_KEY);
     }
 
     @Bean

@@ -8,3 +8,10 @@ spring:
     username: root
     password: laokou123
     virtual-host: /
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+    template:
+      mandatory: true
