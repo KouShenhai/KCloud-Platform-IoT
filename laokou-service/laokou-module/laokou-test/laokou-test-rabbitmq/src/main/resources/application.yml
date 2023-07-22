@@ -1,0 +1,10 @@
+server:
+  port: 8086
+
+spring:
+  rabbitmq:
+    port: 5672
+    host: 192.168.30.130
+    username: root
+    password: laokou123
+    virtual-host: /
