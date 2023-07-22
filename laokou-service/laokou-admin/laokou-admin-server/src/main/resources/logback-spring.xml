@@ -55,8 +55,8 @@
     </appender>
     <appender name="rocketmq" class="org.apache.rocketmq.logappender.logback.RocketmqLogbackAppender">
         <tag>logback</tag>
-        <topic>laokou-trace-topic</topic>
-        <producerGroup>laokou-producer-group</producerGroup>
+        <topic>laokou_trace_topic</topic>
+        <producerGroup>laokou_producer_group</producerGroup>
         <nameServerAddress>192.168.30.128:9876</nameServerAddress>
         <layout>
             <pattern>

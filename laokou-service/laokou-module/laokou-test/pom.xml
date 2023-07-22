@@ -11,5 +11,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>laokou-test-elasticsearch</module>
+        <module>laokou-test-rabbitmq</module>
     </modules>
 </project>
