@@ -25,8 +25,6 @@ public interface MqConstant {
 
     String LAOKOU_GPS_INFO_QUEUE = "laokou.gps.info.queue";
 
-    String LAOKOU_GPS_INFO_1_KEY  = "1.#";
-
-    String LAOKOU_GPS_INFO_2_KEY = "2.#";
+    String LAOKOU_GPS_INFO_ROUTER_KEY  = "gps.info.#";
 
 }
