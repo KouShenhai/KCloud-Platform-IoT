@@ -20,11 +20,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
-import org.laokou.auth.server.domain.sys.repository.service.*;
+import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
+import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
+import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
+import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -38,8 +40,6 @@ import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
-
-import java.io.IOException;
 
 /**
  * @author laokou
@@ -64,7 +64,7 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 	}
 
 	@Override
-	Authentication login(HttpServletRequest request) throws IOException {
+	Authentication login(HttpServletRequest request) {
 		// 判断验证码
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);

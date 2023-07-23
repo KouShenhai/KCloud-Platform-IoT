@@ -131,3 +131,27 @@ Content-Disposition: form-data; name="grant_type"
 
 client_credentials
 --WebAppBoundary
+
+###
+
+# 获取设备码(默认数据库)
+POST https://{{host}}/oauth2/device_authorization
+Authorization: {{Authorization}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+###
+
+# 设备端模式(默认数据库)
+POST https://{{host}}/oauth2/token
+Authorization: {{Authorization}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="device_code"
+
+{{device_code}}
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+urn:ietf:params:oauth:grant-type:device_code
+--WebAppBoundary

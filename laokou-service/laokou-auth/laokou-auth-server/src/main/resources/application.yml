@@ -97,6 +97,8 @@ spring:
             - client_credentials
             - refresh_token
             - authorization_code
+            - urn:ietf:params:oauth:grant-type:device_code
+            - urn:ietf:params:oauth:grant-type:jwt-bearer
           scopes:
             - password
             - mail

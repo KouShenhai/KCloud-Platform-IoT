@@ -24,19 +24,12 @@ import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.MessageModel;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.rocketmq.dto.MqDTO;
-import org.laokou.im.client.WsMsgDTO;
-import org.laokou.im.server.config.WebSocketServer;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.laokou.common.rocketmq.constant.MqConstant;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.CompletableFuture;
 
-import static org.laokou.common.rocketmq.constant.MqConstant.LAOKOU_MESSAGE_CONSUMER_GROUP;
-import static org.laokou.common.rocketmq.constant.MqConstant.LAOKOU_MESSAGE_TOPIC;
+import static org.laokou.common.rocketmq.constant.MqConstant.*;
 
 /**
  * @author laokou
@@ -44,26 +37,18 @@ import static org.laokou.common.rocketmq.constant.MqConstant.LAOKOU_MESSAGE_TOPI
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@RocketMQMessageListener(consumerGroup = LAOKOU_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
-		messageModel = MessageModel.BROADCASTING, consumeMode = ConsumeMode.CONCURRENTLY)
-public class MessageListener implements RocketMQListener<MessageExt> {
+@RocketMQMessageListener(consumerGroup = LAOKOU_REMIND_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
+		selectorExpression = MqConstant.LAOKOU_REMIND_MESSAGE_TAG, messageModel = MessageModel.BROADCASTING,
+		consumeMode = ConsumeMode.CONCURRENTLY)
+public class RemindMessageListener implements RocketMQListener<MessageExt> {
 
-	private final WebSocketServer websocketServer;
-
-	private final ThreadPoolTaskExecutor taskExecutor;
+	private final MessageUtil messageUtil;
 
 	@Override
 	public void onMessage(MessageExt messageExt) {
 		String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-		if (StringUtil.isEmpty(message)) {
-			return;
-		}
-		MqDTO dto = JacksonUtil.toBean(message, MqDTO.class);
-		String body = dto.getBody();
-		WsMsgDTO msgDTO = JacksonUtil.toBean(body, WsMsgDTO.class);
-		for (String userId : msgDTO.getReceiver()) {
-			CompletableFuture.runAsync(() -> websocketServer.send(userId, msgDTO.getMsg()), taskExecutor);
-		}
+		log.info("接收到提醒消息：{}", message);
+		messageUtil.pushMessage(message);
 	}
 
 }

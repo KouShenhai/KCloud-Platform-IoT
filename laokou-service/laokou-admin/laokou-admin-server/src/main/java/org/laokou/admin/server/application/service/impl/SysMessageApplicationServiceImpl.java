@@ -22,6 +22,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.client.dto.MessageDTO;
+import org.laokou.admin.client.enums.MessageTypeEnum;
 import org.laokou.admin.client.vo.MessageDetailVO;
 import org.laokou.admin.client.vo.SysMessageVO;
 import org.laokou.admin.server.application.service.SysMessageApplicationService;
@@ -98,7 +99,7 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 			wsMsgDTO.setMsg(DEFAULT_MESSAGE);
 			wsMsgDTO.setReceiver(receiver);
 			// 异步发送
-			rocketMqTemplate.sendAsyncMessage(MqConstant.LAOKOU_MESSAGE_TOPIC,
+			rocketMqTemplate.sendAsyncMessage(MqConstant.LAOKOU_MESSAGE_TOPIC, getMessageTag(dto.getType()),
 					new MqDTO(JacksonUtil.toJsonStr(wsMsgDTO)));
 		}
 		return true;
@@ -146,6 +147,11 @@ public class SysMessageApplicationServiceImpl implements SysMessageApplicationSe
 	public Long unReadCount() {
 		final Long userId = UserUtil.getUserId();
 		return (long) sysMessageDetailService.unReadCount(userId);
+	}
+
+	private String getMessageTag(Integer type) {
+		return type == MessageTypeEnum.NOTICE.ordinal() ? MqConstant.LAOKOU_NOTICE_MESSAGE_TAG
+				: MqConstant.LAOKOU_REMIND_MESSAGE_TAG;
 	}
 
 }
