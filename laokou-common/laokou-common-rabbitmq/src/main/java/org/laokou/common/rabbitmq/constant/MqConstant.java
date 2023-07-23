@@ -17,14 +17,15 @@ package org.laokou.common.rabbitmq.constant;
 
 /**
  * <a href="https://spring.io/guides/gs/messaging-rabbitmq/">...</a>
+ *
  * @author laokou
  */
 public interface MqConstant {
 
-    String LAOKOU_GPS_INFO_TOPIC_EXCHANGE = "laokou.gps.info.topic.exchange";
+	String LAOKOU_GPS_INFO_TOPIC_EXCHANGE = "laokou.gps.info.topic.exchange";
 
-    String LAOKOU_GPS_INFO_QUEUE = "laokou.gps.info.queue";
+	String LAOKOU_GPS_INFO_QUEUE = "laokou.gps.info.queue";
 
-    String LAOKOU_GPS_INFO_ROUTER_KEY  = "gps.info.#";
+	String LAOKOU_GPS_INFO_ROUTER_KEY = "gps.info.#";
 
 }
