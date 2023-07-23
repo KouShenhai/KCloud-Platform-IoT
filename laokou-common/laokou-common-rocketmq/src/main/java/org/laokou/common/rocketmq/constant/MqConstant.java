@@ -27,8 +27,14 @@ public interface MqConstant {
 
 	String LAOKOU_MESSAGE_TOPIC = "laokou_message_topic";
 
+	String LAOKOU_NOTICE_MESSAGE_TAG = "notice";
+
+	String LAOKOU_REMIND_MESSAGE_TAG = "remind";
+
 	String LAOKOU_LOGSTASH_CONSUMER_GROUP = "laokou_logstash_consumer_group";
 
-	String LAOKOU_MESSAGE_CONSUMER_GROUP = "laokou_message_consumer_group";
+	String LAOKOU_REMIND_MESSAGE_CONSUMER_GROUP = "laokou_remind_message_consumer_group";
+
+	String LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP = "laokou_notice_message_consumer_group";
 
 }

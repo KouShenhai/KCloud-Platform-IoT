@@ -1,1 +1,5 @@
-在线扩容队列（MessageQueue）：sh ./mqadmin updateTopic -n 192.168.30.128:9876 -c DefaultCluster -t laokou-test -r 5 -w 5
+在线扩容队列（MessageQueue）：sh ./mqadmin updateTopic -n 127.0.0.1:9876 -c DefaultCluster -t laokou-test -r 5 -w 5
+
+删除消费者组：sh mqadmin deleteSubGroup -c DefaultCluster  -n 127.0.0.1:9876 -g laokou-message-consumer-group
+
+删除Topic：sh mqadmin deleteTopic -n 127.0.0.1:9876 -c DefaultCluster -t laokou-message-topic
