@@ -58,7 +58,7 @@ public class HttpUtil {
 	private static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 
 	public static String doGet(String url, Map<String, String> params, Map<String, String> headers) {
-		return doGet(url, params, headers);
+		return doGet(url, params, headers, false);
 	}
 
 	@SneakyThrows
