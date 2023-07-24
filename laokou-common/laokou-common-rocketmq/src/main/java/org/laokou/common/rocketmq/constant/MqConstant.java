@@ -37,4 +37,6 @@ public interface MqConstant {
 
 	String LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP = "laokou_notice_message_consumer_group";
 
+	String TOPIC_TAG = "%s:%s";
+
 }

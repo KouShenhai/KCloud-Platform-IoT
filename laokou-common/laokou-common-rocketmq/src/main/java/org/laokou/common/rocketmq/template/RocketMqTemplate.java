@@ -23,7 +23,7 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
-import org.laokou.common.core.constant.Constant;
+import org.laokou.common.rocketmq.constant.MqConstant;
 import org.laokou.common.rocketmq.dto.MqDTO;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.messaging.Message;
@@ -102,7 +102,7 @@ public class RocketMqTemplate implements InitializingBean {
 	 * @param dto dto
 	 */
 	public void sendAsyncMessage(String topic, String tag, MqDTO dto) {
-		rocketMQTemplate.asyncSend(topic + Constant.RISK + tag, dto, new SendCallback() {
+		rocketMQTemplate.asyncSend(String.format(MqConstant.TOPIC_TAG,topic,tag), dto, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("发送成功");
