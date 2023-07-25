@@ -53,9 +53,6 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
@@ -140,12 +137,11 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	/**
 	 * 获取token
-	 * @param authentication
-	 * @param principal
-	 * @return
+	 * @param authentication authentication
+	 * @param principal principal
+	 * @return Authentication
 	 */
-	@Transactional(rollbackFor = Exception.class)
-	public Authentication getToken(Authentication authentication, Authentication principal) throws IOException {
+	protected Authentication getToken(Authentication authentication, Authentication principal) throws IOException {
 		// 仿照授权码模式
 		// 生成token（access_token + refresh_token）
 		AbstractOAuth2BaseAuthenticationToken auth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;
@@ -206,15 +202,14 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	/**
 	 * 获取用户信息
-	 * @param loginName
-	 * @param password
-	 * @param request
-	 * @param captcha
-	 * @param uuid
-	 * @return
+	 * @param loginName 登录名
+	 * @param password 密码
+	 * @param request 请求参数
+	 * @param captcha 验证码
+	 * @param uuid 唯一标识
+	 * @return UsernamePasswordAuthenticationToken
 	 */
-	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
-	public UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password,
+	protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password,
 			HttpServletRequest request, String captcha, String uuid) {
 		AuthorizationGrantType grantType = getGrantType();
 		String loginType = grantType.getValue();
@@ -250,7 +245,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		}
 		if (OAuth2PasswordAuthenticationProvider.GRANT_TYPE.equals(loginType)) {
 			// 验证密码
-			assert userDetail != null;
 			String clientPassword = userDetail.getPassword();
 			if (!passwordEncoder.matches(password, clientPassword)) {
 				code = StatusCode.USERNAME_PASSWORD_ERROR;
