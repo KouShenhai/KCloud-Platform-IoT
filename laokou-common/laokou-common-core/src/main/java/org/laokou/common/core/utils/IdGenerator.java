@@ -24,8 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class IdGenerator {
 
-	private volatile static Snowflake instance;
-
 	/**
 	 * 数据标识
 	 */
@@ -36,15 +34,14 @@ public class IdGenerator {
 	 */
 	private static final long SYS_ID = 1L;
 
-	static {
-		instance = new Snowflake(DATA_ID, SYS_ID);
-	}
+	private static final Snowflake INSTANCE = new Snowflake(DATA_ID, SYS_ID);;
+
 
 	/**
 	 * 默认雪花ID
 	 */
 	public static long defaultSnowflakeId() {
-		return instance.nextId();
+		return INSTANCE.nextId();
 	}
 
 	static class Snowflake {
@@ -137,7 +134,6 @@ public class IdGenerator {
 
 		/**
 		 * 产生下一个ID
-		 * @return
 		 */
 		public synchronized long nextId() {
 			long currTimeStamp = getNewTimeStamp();
@@ -169,11 +165,6 @@ public class IdGenerator {
 					| sequence;
 		}
 
-	}
-
-	public static void main(String[] args) {
-		long snowflakeId = IdGenerator.defaultSnowflakeId();
-		log.info("雪花id：{}", snowflakeId);
 	}
 
 }
