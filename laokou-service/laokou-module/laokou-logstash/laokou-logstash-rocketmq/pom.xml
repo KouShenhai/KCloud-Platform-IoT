@@ -36,10 +36,6 @@
             <artifactId>laokou-common-nacos</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>com.alibaba.cloud</groupId>
-                    <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
-                </exclusion>
-                <exclusion>
                     <groupId>org.laokou</groupId>
                     <artifactId>laokou-common-core</artifactId>
                 </exclusion>
