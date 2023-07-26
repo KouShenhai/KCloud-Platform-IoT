@@ -32,33 +32,33 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("org.laokou.common.rabbitmq")
 public class RabbitmqAutoConfig {
 
-	@Bean
-	public Queue gpsInfoQueue() {
-		return QueueBuilder
-				// 非持久化
-				.nonDurable(MqConstant.LAOKOU_GPS_INFO_QUEUE).build();
-	}
-
-	@Bean
-	public TopicExchange gpsInfoTopicExchange() {
-		return ExchangeBuilder.topicExchange(MqConstant.LAOKOU_GPS_INFO_TOPIC_EXCHANGE)
-				// 持久化
-				.durable(true)
-				// 自动删除
-				.autoDelete().build();
-	}
-
-	@Bean
-	public Binding gpsInfoRouterKeyBinding(Queue gpsInfoQueue, TopicExchange gpsInfoTopicExchange) {
-		return BindingBuilder.bind(gpsInfoQueue).to(gpsInfoTopicExchange).with(MqConstant.LAOKOU_GPS_INFO_ROUTER_KEY);
-	}
-
-	@Bean
-	public SimpleMessageListenerContainer simpleMessageListenerContainer(ConnectionFactory connectionFactory) {
-		SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
-		simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
-		simpleMessageListenerContainer.setQueueNames(MqConstant.LAOKOU_GPS_INFO_QUEUE);
-		return simpleMessageListenerContainer;
-	}
+//	@Bean
+//	public Queue gpsInfoQueue() {
+//		return QueueBuilder
+//				// 非持久化
+//				.nonDurable(MqConstant.LAOKOU_GPS_INFO_QUEUE).build();
+//	}
+//
+//	@Bean
+//	public TopicExchange gpsInfoTopicExchange() {
+//		return ExchangeBuilder.topicExchange(MqConstant.LAOKOU_GPS_INFO_TOPIC_EXCHANGE)
+//				// 持久化
+//				.durable(true)
+//				// 自动删除
+//				.autoDelete().build();
+//	}
+//
+//	@Bean
+//	public Binding gpsInfoRouterKeyBinding(Queue gpsInfoQueue, TopicExchange gpsInfoTopicExchange) {
+//		return BindingBuilder.bind(gpsInfoQueue).to(gpsInfoTopicExchange).with(MqConstant.LAOKOU_GPS_INFO_ROUTER_KEY);
+//	}
+//
+//	@Bean
+//	public SimpleMessageListenerContainer simpleMessageListenerContainer(ConnectionFactory connectionFactory) {
+//		SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
+//		simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
+//		simpleMessageListenerContainer.setQueueNames(MqConstant.LAOKOU_GPS_INFO_QUEUE);
+//		return simpleMessageListenerContainer;
+//	}
 
 }
