@@ -51,33 +51,33 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 🚀 数据源管理：数据源信息增删改查（默认数据库）      
 🚀 代码生成器：自定义模板生成代码  
 🚀 资源管理：视频、图片、音频信息增删改查，资源审批（Seata AT模式）、处理、转办、委派，审批日志，数据同步（批量同步到ES）（默认数据库）          
-🚀 用户登录：账号密码登录（多租户）、授权码登录（默认数据库）、手机号或邮件登录（请运行认证模式测试脚本.http）
+🚀 用户登录：账号密码登录（多租户）、授权码登录（默认数据库）、手机号或邮件登录、设备授权码登录（请运行认证模式测试脚本.http）
 
 ### 💡 系统架构
 ![](doc/image/老寇云平台架构图-阿里巴巴.png)
 
 ### ✂ 技术体系
 #### 🎯 Spring全家桶及核心技术版本
-| 组件                          | 版本             |
-|:----------------------------|:---------------|
-| Spring Boot                 | 3.1.2          |
-| Spring Cloud                | 2022.0.3       |
-| Spring Cloud Alibaba        | 2022.0.0.0 |
-| Spring Boot Admin           | 3.1.2          |
-| Spring Authorization Server | 1.1.1          |
-| Mybatis Plus                | 3.5.3.1        |
-| Nacos                       | 2.2.0.1        |
-| Seata                       | 1.7.0          |
-| Sentinel                    | 1.8.6          |
-| Mysql                       | 8.0.33         |
-| Redis                       | 7.0.11         |
-| Elasticsearch               | 8.6.2          |
-| RocketMQ                    | 5.1.1          |
-| Flowable                    | 7.0.0.M1       |
-| ShardingSphere              | 5.3.2          |
-| OpenResty                   | 1.21.4.1       |
-| Netty                       | 4.1.94.Final   |
-| HBase                       | 2.5.3          |
+| 组件                          | 版本            |
+|:----------------------------|:--------------|
+| Spring Boot                 | 3.1.2         |
+| Spring Cloud                | 2022.0.3      |
+| Spring Cloud Alibaba        | 2022.0.0.0    |
+| Spring Boot Admin           | 3.1.2         |
+| Spring Authorization Server | 1.1.1         |
+| Mybatis Plus                | 3.5.3.1       |
+| Nacos                       | 2.2.0.1       |
+| Seata                       | 1.7.0         |
+| Sentinel                    | 1.8.6         |
+| Mysql                       | 8.0.33        |
+| Redis                       | 7.0.11        |
+| Elasticsearch               | 8.6.2         |
+| RocketMQ                    | 5.1.1         |
+| Flowable                    | 7.0.0.M1      |
+| ShardingSphere              | 5.3.2         |
+| OpenResty                   | 1.21.4.1      |
+| Netty                       | 4.1.94.Final  |
+| HBase                       | 2.5.3         |
 
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
