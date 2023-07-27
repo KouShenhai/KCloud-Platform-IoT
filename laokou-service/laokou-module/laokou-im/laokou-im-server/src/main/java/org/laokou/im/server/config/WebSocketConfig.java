@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.im.server.config;
@@ -30,10 +30,15 @@ import org.springframework.context.annotation.Configuration;
 @RefreshScope
 public class WebSocketConfig {
 
+	public static final int WEBSOCKET_PORT = 7777;
+
+	public static final String WEBSOCKET_POOL_NAME = "laokou-websocket-pool";
+
 	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
 	public Server websocketServer(WebsocketChannelInitializer websocketChannelInitializer,
-								  TaskExecutionProperties taskExecutionProperties) {
-		return new WebSocketServer(websocketChannelInitializer, taskExecutionProperties);
+			TaskExecutionProperties taskExecutionProperties) {
+		return new WebSocketAbstractServer(WEBSOCKET_PORT, WEBSOCKET_POOL_NAME, websocketChannelInitializer,
+				taskExecutionProperties);
 	}
 
 }

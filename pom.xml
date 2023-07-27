@@ -196,9 +196,9 @@
             <id>dev</id>
             <properties>
                 <MYSQL-USERNAME>root</MYSQL-USERNAME>
-                <MYSQL-PASSWORD>laokou123</MYSQL-PASSWORD>
-                <MYSQL-HOST>192.168.30.128</MYSQL-HOST>
-                <MYSQL-DB-NACOS>kcloud_platform_alibaba_nacos</MYSQL-DB-NACOS>
+                <MYSQL-PASSWORD>koushenhai123456</MYSQL-PASSWORD>
+                <MYSQL-HOST>127.0.0.1</MYSQL-HOST>
+                <MYSQL-DB-NACOS>kcloud_platform_nacos</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>kcloud_platform_alibaba_seata</MYSQL-DB-SEATA>
                 <MYSQL-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</MYSQL-DB-XXL-JOB>
                 <MYSQL-DB-POWER-JOB>kcloud_platform_alibaba_power_job</MYSQL-DB-POWER-JOB>

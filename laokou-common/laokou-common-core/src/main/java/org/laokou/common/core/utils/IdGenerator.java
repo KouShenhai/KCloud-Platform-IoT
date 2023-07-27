@@ -37,7 +37,7 @@ public class IdGenerator {
 	/**
 	 * 学花算法
 	 */
-	private static final Snowflake INSTANCE = new Snowflake(DATA_ID, SYS_ID);;
+	private static final Snowflake INSTANCE = new Snowflake(DATA_ID, SYS_ID);
 
 	/**
 	 * 默认雪花ID
