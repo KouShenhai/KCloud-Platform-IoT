@@ -277,7 +277,7 @@ GitLab 后端地址：[KCloud-Platform-Alibaba](https://gitlab.com/KouShenhai/KC
 GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KCloud-Antdv-Alibaba)
 
 ### 🐭 鸣谢组织
-[Spring官网](https://spring.io)  
+[Spring社区](https://spring.io)  
 [阿里巴巴社区](https://github.com/alibaba/spring-cloud-alibaba)  
 [人人社区](https://www.renren.io)   
 [若依社区](https://www.ruoyi.vip)  
