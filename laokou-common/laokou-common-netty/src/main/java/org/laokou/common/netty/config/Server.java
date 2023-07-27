@@ -110,4 +110,9 @@ public abstract class Server {
 		});
 	}
 
+	/**
+	 * 发送消息
+	 */
+	public abstract void send(String userId, String msg);
+
 }

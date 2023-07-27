@@ -76,16 +76,11 @@ public class WebSocketServer extends Server {
 				.childHandler(websocketChannelInitializer);
 	}
 
-	/**
-	 * 发送消息
-	 * @param userId 用户ID
-	 * @param msg 消息
-	 */
+	@Override
 	public void send(String userId, String msg) {
 		Channel channel = USER_CACHE.getIfPresent(userId);
 		if (channel != null) {
 			channel.writeAndFlush(new TextWebSocketFrame(msg));
 		}
 	}
-
 }
