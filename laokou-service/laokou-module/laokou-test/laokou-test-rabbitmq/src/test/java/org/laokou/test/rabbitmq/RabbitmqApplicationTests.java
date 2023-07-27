@@ -25,23 +25,23 @@ class RabbitmqApplicationTests {
 		rabbitTemplate.convertAndSend(MqConstant.LAOKOU_GPS_INFO_TOPIC_EXCHANGE, "gps.info.1", "GPS上报");
 	}
 
-	/**
-	 * RabbitHandler仅用于在转换后处理消息有效负载
-	 */
-	@Test
-	@RabbitListener(queues = MqConstant.LAOKOU_GPS_INFO_QUEUE)
-	void consumer1(Message message, Channel channel) {
-		log.info("consumer1:{}", message.getBody());
-	}
-
-	/**
-	 * RabbitHandler仅用于在转换后处理消息有效负载
-	 */
-	@Test
-	@RabbitHandler
-	@RabbitListener(queues = MqConstant.LAOKOU_GPS_INFO_QUEUE)
-	void consumer2(Message message, Channel channel) {
-		log.info("consumer2:{}", message.getBody());
-	}
+	// /**
+	// * RabbitHandler仅用于在转换后处理消息有效负载
+	// */
+	// @Test
+	// @RabbitListener(queues = MqConstant.LAOKOU_GPS_INFO_QUEUE)
+	// void consumer1(Message message, Channel channel) {
+	// log.info("consumer1:{}", message.getBody());
+	// }
+	//
+	// /**
+	// * RabbitHandler仅用于在转换后处理消息有效负载
+	// */
+	// @Test
+	// @RabbitHandler
+	// @RabbitListener(queues = MqConstant.LAOKOU_GPS_INFO_QUEUE)
+	// void consumer2(Message message, Channel channel) {
+	// log.info("consumer2:{}", message.getBody());
+	// }
 
 }

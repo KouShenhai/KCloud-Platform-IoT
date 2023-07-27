@@ -17,15 +17,17 @@
 
 package org.laokou.im.server.listener;
 
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.netty.config.Server;
 import org.laokou.common.rocketmq.dto.MqDTO;
 import org.laokou.im.client.WsMsgDTO;
-import org.laokou.im.server.config.WebSocketServer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -35,7 +37,7 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class MessageUtil {
 
-	private final WebSocketServer websocketServer;
+	private final Server websocketServer;
 
 	private final ThreadPoolTaskExecutor taskExecutor;
 
@@ -46,8 +48,11 @@ public class MessageUtil {
 		MqDTO dto = JacksonUtil.toBean(message, MqDTO.class);
 		String body = dto.getBody();
 		WsMsgDTO msgDTO = JacksonUtil.toBean(body, WsMsgDTO.class);
-		for (String userId : msgDTO.getReceiver()) {
-			CompletableFuture.runAsync(() -> websocketServer.send(userId, msgDTO.getMsg()), taskExecutor);
+		String msg = msgDTO.getMsg();
+		Set<String> receiver = msgDTO.getReceiver();
+		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(msg);
+		for (String clientId : receiver) {
+			CompletableFuture.runAsync(() -> websocketServer.send(clientId, webSocketFrame), taskExecutor);
 		}
 	}
 

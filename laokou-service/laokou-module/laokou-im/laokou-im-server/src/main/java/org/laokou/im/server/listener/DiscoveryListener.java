@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.nacos.utils.ServiceUtil;
-import org.laokou.im.server.config.WebSocketServer;
+import org.laokou.im.server.config.WebSocketConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -53,7 +53,7 @@ public class DiscoveryListener implements ApplicationListener<ApplicationReadyEv
 	public void onApplicationEvent(ApplicationReadyEvent event) {
 		String ip = InetAddress.getLocalHost().getHostAddress();
 		String group = configUtil.getGroup();
-		int port = WebSocketServer.PORT;
+		int port = WebSocketConfig.WEBSOCKET_PORT;
 		serviceUtil.registerInstance(appName, group, ip, port);
 	}
 
@@ -61,7 +61,7 @@ public class DiscoveryListener implements ApplicationListener<ApplicationReadyEv
 	@PreDestroy
 	public void close() {
 		String ip = InetAddress.getLocalHost().getHostAddress();
-		int port = WebSocketServer.PORT;
+		int port = WebSocketConfig.WEBSOCKET_PORT;
 		String group = configUtil.getGroup();
 		serviceUtil.deregisterInstance(appName, group, ip, port);
 	}

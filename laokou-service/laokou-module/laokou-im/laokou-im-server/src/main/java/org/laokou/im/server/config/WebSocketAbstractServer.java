@@ -20,14 +20,14 @@ package org.laokou.im.server.config;
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
+import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.DefaultThreadFactory;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.netty.config.Server;
+import org.laokou.common.netty.config.AbstractServer;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 
 import static org.laokou.im.server.config.WebsocketHandler.USER_CACHE;
@@ -36,30 +36,21 @@ import static org.laokou.im.server.config.WebsocketHandler.USER_CACHE;
  * @author laokou
  */
 @Slf4j
-@RequiredArgsConstructor
-public class WebSocketServer extends Server {
+public class WebSocketAbstractServer extends AbstractServer {
 
-	private final WebsocketChannelInitializer websocketChannelInitializer;
-
-	public static final int PORT = 7777;
-
-	private static final String POOL_NAME = "laokou-websocket-pool";
-
-	private final TaskExecutionProperties taskExecutionProperties;
-
-	@Override
-	protected int getPort() {
-		return PORT;
+	public WebSocketAbstractServer(int port, String poolName, ChannelInitializer<?> channelInitializer,
+			TaskExecutionProperties taskExecutionProperties) {
+		super(port, poolName, channelInitializer, taskExecutionProperties);
 	}
 
 	@Override
-	protected AbstractBootstrap<?, ?> init() {
+	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init() {
 		// 核心线程数
 		int coreSize = taskExecutionProperties.getPool().getCoreSize();
 		// boss负责监听端口
-		boss = new NioEventLoopGroup(1, new DefaultThreadFactory(POOL_NAME, 10));
+		boss = new NioEventLoopGroup(1, new DefaultThreadFactory(poolName, 10));
 		// work负责线程读写
-		work = new NioEventLoopGroup(coreSize, new DefaultThreadFactory(POOL_NAME, 10));
+		work = new NioEventLoopGroup(coreSize, new DefaultThreadFactory(poolName, 10));
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组
@@ -73,18 +64,14 @@ public class WebSocketServer extends Server {
 				// 实时发送
 				.option(ChannelOption.TCP_NODELAY, false)
 				// websocket处理类
-				.childHandler(websocketChannelInitializer);
+				.childHandler(channelInitializer);
 	}
 
-	/**
-	 * 发送消息
-	 * @param userId 用户ID
-	 * @param msg 消息
-	 */
-	public void send(String userId, String msg) {
-		Channel channel = USER_CACHE.getIfPresent(userId);
+	@Override
+	public void send(String clientId, Object obj) {
+		Channel channel = USER_CACHE.getIfPresent(clientId);
 		if (channel != null) {
-			channel.writeAndFlush(new TextWebSocketFrame(msg));
+			channel.writeAndFlush(obj);
 		}
 	}
 

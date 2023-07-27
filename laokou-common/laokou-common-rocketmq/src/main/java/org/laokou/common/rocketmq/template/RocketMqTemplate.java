@@ -102,7 +102,7 @@ public class RocketMqTemplate implements InitializingBean {
 	 * @param dto dto
 	 */
 	public void sendAsyncMessage(String topic, String tag, MqDTO dto) {
-		rocketMQTemplate.asyncSend(String.format(MqConstant.TOPIC_TAG,topic,tag), dto, new SendCallback() {
+		rocketMQTemplate.asyncSend(String.format(MqConstant.TOPIC_TAG, topic, tag), dto, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("发送成功");

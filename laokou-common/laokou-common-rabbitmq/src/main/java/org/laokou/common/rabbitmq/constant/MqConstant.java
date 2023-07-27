@@ -16,8 +16,8 @@
 package org.laokou.common.rabbitmq.constant;
 
 /**
- * <a href="https://spring.io/guides/gs/messaging-rabbitmq/">...</a>
- * 车牌号区分成36个队列
+ * <a href="https://spring.io/guides/gs/messaging-rabbitmq/">...</a> 车牌号区分成36个队列
+ *
  * @author laokou
  */
 public interface MqConstant {
@@ -63,7 +63,5 @@ public interface MqConstant {
 	String LAOKOU_GPS_INFO_0_QUEUE = "laokou.gps.info.0.queue";
 
 	String LAOKOU_ROUTER_0_KEY = "0.#";
-
-
 
 }
