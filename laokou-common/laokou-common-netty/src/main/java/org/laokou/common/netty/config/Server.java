@@ -33,7 +33,7 @@ public abstract class Server {
 	/**
 	 * 运行标记
 	 */
-	private final AtomicBoolean running = new AtomicBoolean(false);
+	private static final AtomicBoolean RUNNING = new AtomicBoolean(false);
 
 	protected EventLoopGroup boss;
 
@@ -56,7 +56,7 @@ public abstract class Server {
 	 */
 	public void start() {
 		int port = getPort();
-		if (this.running.get()) {
+		if (RUNNING.get()) {
 			log.error("已启动监听，端口：{}", port);
 			return;
 		}
@@ -68,7 +68,7 @@ public abstract class Server {
 			ChannelFuture channelFuture = bind(bootstrap, port);
 			// 监听端口关闭
 			channelFuture.channel().closeFuture().addListener(future -> {
-				if (this.running.get()) {
+				if (RUNNING.get()) {
 					stop();
 				}
 			});
@@ -82,7 +82,7 @@ public abstract class Server {
 	 * 关闭
 	 */
 	public void stop() {
-		if (this.running.compareAndSet(true, false)) {
+		if (RUNNING.compareAndSet(true, false)) {
 			// 释放资源
 			if (boss != null) {
 				boss.shutdownGracefully();
@@ -105,7 +105,7 @@ public abstract class Server {
 			}
 			else {
 				log.info("启动成功，端口{}已绑定", port);
-				this.running.compareAndSet(false, true);
+				RUNNING.compareAndSet(false, true);
 			}
 		});
 	}
