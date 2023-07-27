@@ -21,6 +21,7 @@ import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
+import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -49,7 +50,7 @@ public class WebSocketServer extends Server {
 	}
 
 	@Override
-	protected AbstractBootstrap<?, ?> init() {
+	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init() {
 		// 核心线程数
 		int coreSize = taskExecutionProperties.getPool().getCoreSize();
 		// boss负责监听端口
