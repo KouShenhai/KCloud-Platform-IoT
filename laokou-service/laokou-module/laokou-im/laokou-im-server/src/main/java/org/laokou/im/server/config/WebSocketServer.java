@@ -36,10 +36,10 @@ import static org.laokou.im.server.config.WebsocketHandler.USER_CACHE;
  * @author laokou
  */
 @Slf4j
-public class WebSocketAbstractServer extends AbstractServer {
+public class WebSocketServer extends AbstractServer {
 
-	public WebSocketAbstractServer(int port, String poolName, ChannelInitializer<?> channelInitializer,
-			TaskExecutionProperties taskExecutionProperties) {
+	public WebSocketServer(int port, String poolName, ChannelInitializer<?> channelInitializer,
+						   TaskExecutionProperties taskExecutionProperties) {
 		super(port, poolName, channelInitializer, taskExecutionProperties);
 	}
 
