@@ -27,6 +27,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import lombok.SneakyThrows;
 import org.laokou.common.mybatisplus.config.DataFilterInterceptor;
 import org.laokou.common.mybatisplus.config.DynamicTableNameHandler;
+import org.laokou.common.mybatisplus.config.MybatisPlusSqlInjector;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -96,6 +97,14 @@ public class MybatisPlusAutoConfig {
 		// 事务名称
 		transactionTemplate.setName("laokou-transaction-template");
 		return transactionTemplate;
+	}
+
+	/**
+	 * 自定义sql注入器
+	 */
+	@Bean
+	public MybatisPlusSqlInjector mybatisPlusSqlInjector() {
+		return new MybatisPlusSqlInjector();
 	}
 
 	/**
