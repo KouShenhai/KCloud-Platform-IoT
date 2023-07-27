@@ -38,13 +38,9 @@ import static org.laokou.im.server.config.WebsocketHandler.USER_CACHE;
 @Slf4j
 @RequiredArgsConstructor
 public class WebSocketServer extends Server {
-
-	private final WebsocketChannelInitializer websocketChannelInitializer;
-
 	public static final int PORT = 7777;
-
 	private static final String POOL_NAME = "laokou-websocket-pool";
-
+	private final WebsocketChannelInitializer websocketChannelInitializer;
 	private final TaskExecutionProperties taskExecutionProperties;
 
 	@Override
