@@ -35,9 +35,9 @@ public abstract class Server {
 	 */
 	private static final AtomicBoolean RUNNING = new AtomicBoolean(false);
 
-	protected EventLoopGroup boss;
+	protected volatile EventLoopGroup boss;
 
-	protected EventLoopGroup work;
+	protected volatile EventLoopGroup work;
 
 	/**
 	 * 端口
