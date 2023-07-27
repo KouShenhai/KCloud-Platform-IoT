@@ -30,14 +30,10 @@ import org.springframework.context.annotation.Configuration;
 @RefreshScope
 public class WebSocketConfig {
 
-	public static final int WEBSOCKET_PORT = 7777;
-
-	public static final String WEBSOCKET_POOL_NAME = "laokou-websocket-pool";
-
 	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server websocketServer(WebsocketChannelInitializer websocketChannelInitializer,
+	public Server websocketServer(WebsocketProperties websocketProperties,WebsocketChannelInitializer websocketChannelInitializer,
 			TaskExecutionProperties taskExecutionProperties) {
-		return new WebSocketAbstractServer(WEBSOCKET_PORT, WEBSOCKET_POOL_NAME, websocketChannelInitializer,
+		return new WebSocketAbstractServer(websocketProperties.getPort(), websocketProperties.getPoolName(), websocketChannelInitializer,
 				taskExecutionProperties);
 	}
 

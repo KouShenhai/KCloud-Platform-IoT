@@ -1,0 +1,20 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "spring.websocket.port",
+      "type": "java.lang.Integer",
+      "description": "websocket端口."
+    },
+    {
+      "name": "spring.websocket.app-name",
+      "type": "java.lang.String",
+      "description": "websocket应用名称."
+    },
+    {
+      "name": "spring.websocket.pool-name",
+      "type": "java.lang.String",
+      "description": "websocket连接池名称."
+    }
+  ]
+}
