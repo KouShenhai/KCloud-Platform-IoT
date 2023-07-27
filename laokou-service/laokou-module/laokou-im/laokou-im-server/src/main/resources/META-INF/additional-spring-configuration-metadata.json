@@ -14,7 +14,7 @@
     {
       "name": "spring.websocket.pool-name",
       "type": "java.lang.String",
-      "description": "websocket连接池名称."
+      "description": "websocket线程名称."
     }
   ]
 }
