@@ -18,7 +18,7 @@ spring:
   websocket:
     port: 7777
     app-name: @pom.parent.artifactId@
-    pool-name: laokou-websocket-pool
+    pool-name: 'laokou-websocket-pool'
   application:
     name: ${spring.websocket.app-name}-server
   profiles:
