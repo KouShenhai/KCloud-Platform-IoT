@@ -17,6 +17,7 @@
 
 package org.laokou.common.mybatisplus.mapper;
 
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -35,5 +36,11 @@ public interface BatchMapper<T> {
 	 * @param list
 	 */
 	void insertBatch(@Param("list") List<T> list);
+
+	int insertBatchSomeColumn(List<T> entityList);
+
+	int alwaysUpdateSomeColumnById(@Param(Constants.ENTITY) T entity);
+
+	int deleteByIdWithFill(T entity);
 
 }
