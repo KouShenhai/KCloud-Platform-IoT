@@ -54,7 +54,7 @@ public abstract class Server {
 	/**
 	 * 启动
 	 */
-	public void start() {
+	public synchronized void start() {
 		int port = getPort();
 		if (RUNNING.get()) {
 			log.error("已启动监听，端口：{}", port);
@@ -81,7 +81,7 @@ public abstract class Server {
 	/**
 	 * 关闭
 	 */
-	public void stop() {
+	public synchronized void stop() {
 		if (RUNNING.compareAndSet(true, false)) {
 			// 释放资源
 			if (boss != null) {
