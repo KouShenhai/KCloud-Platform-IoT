@@ -1,5 +1,4 @@
 server:
-  name: @pom.parent.artifactId@
   port: 10001
   ssl:
     # 开启证书
@@ -16,8 +15,12 @@ server:
     enabled: false
 #spring
 spring:
+  websocket:
+    port: 7777
+    app-name: @pom.parent.artifactId@
+    pool-name: 'laokou-websocket-pool'
   application:
-    name: @pom.parent.artifactId@-server
+    name: ${spring.websocket.app-name}-server
   profiles:
     # 环境 dev|test|prod
     active: @PROFILE-ACTIVE@
