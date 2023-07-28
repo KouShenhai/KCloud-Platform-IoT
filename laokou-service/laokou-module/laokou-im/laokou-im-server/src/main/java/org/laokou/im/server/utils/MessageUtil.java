@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.im.server.listener;
+package org.laokou.im.server.utils;
 
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,7 @@ public class MessageUtil {
 
 	private final ThreadPoolTaskExecutor taskExecutor;
 
-	public void pushMessage(String message) {
+	public void send(String message) {
 		if (StringUtil.isEmpty(message)) {
 			return;
 		}

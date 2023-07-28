@@ -25,6 +25,7 @@ import org.apache.rocketmq.spring.annotation.MessageModel;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.rocketmq.constant.MqConstant;
+import org.laokou.im.server.utils.MessageUtil;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -48,7 +49,7 @@ public class RemindMessageListener implements RocketMQListener<MessageExt> {
 	public void onMessage(MessageExt messageExt) {
 		String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
 		log.info("接收到提醒消息：{}", message);
-		messageUtil.pushMessage(message);
+		messageUtil.send(message);
 	}
 
 }
