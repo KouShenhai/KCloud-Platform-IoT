@@ -47,7 +47,7 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
 		// 心跳检测
-		pipeline.addLast(new IdleStateHandler(15, 0, 0, TimeUnit.SECONDS));
+		pipeline.addLast(new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
 		// HTTP解码器
 		pipeline.addLast(new HttpServerCodec());
 		// 块状方式写入
