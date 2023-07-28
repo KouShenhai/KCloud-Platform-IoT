@@ -35,7 +35,7 @@ public abstract class AbstractServer implements Server {
 	/**
 	 * 运行标记
 	 */
-	private static final AtomicBoolean RUNNING = new AtomicBoolean(false);
+	private final AtomicBoolean RUNNING = new AtomicBoolean(false);
 
 	protected volatile EventLoopGroup boss;
 
