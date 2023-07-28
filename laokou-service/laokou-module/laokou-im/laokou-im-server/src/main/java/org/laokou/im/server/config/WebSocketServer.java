@@ -24,6 +24,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -48,9 +49,9 @@ public class WebSocketServer extends AbstractServer {
 		// 核心线程数
 		int coreSize = taskExecutionProperties.getPool().getCoreSize();
 		// boss负责监听端口
-		boss = new NioEventLoopGroup(1, new DefaultThreadFactory(poolName, 10));
+		boss = new NioEventLoopGroup(1, new DefaultThreadFactory(poolName, Thread.MAX_PRIORITY));
 		// work负责线程读写
-		work = new NioEventLoopGroup(coreSize, new DefaultThreadFactory(poolName, 10));
+		work = new NioEventLoopGroup(coreSize, new DefaultThreadFactory(poolName, Thread.MAX_PRIORITY));
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组
@@ -61,8 +62,10 @@ public class WebSocketServer extends AbstractServer {
 				.childOption(ChannelOption.SO_KEEPALIVE, true)
 				// 请求队列最大长度
 				.option(ChannelOption.SO_BACKLOG, 4096)
-				// 实时发送
-				.option(ChannelOption.TCP_NODELAY, false)
+				// 重复使用端口
+				.option(NioChannelOption.SO_REUSEADDR,true)
+				// 延迟发送
+				.option(ChannelOption.TCP_NODELAY, true)
 				// websocket处理类
 				.childHandler(channelInitializer);
 	}
