@@ -66,7 +66,7 @@ public abstract class AbstractServer implements Server {
 	/**
 	 * 启动
 	 */
-	public synchronized void start() {
+	public void start() {
 		if (RUNNING.get()) {
 			log.error("已启动监听，端口：{}", port);
 			return;
@@ -92,7 +92,7 @@ public abstract class AbstractServer implements Server {
 	/**
 	 * 关闭
 	 */
-	public synchronized void stop() {
+	public void stop() {
 		if (RUNNING.compareAndSet(true, false)) {
 			// 释放资源
 			if (boss != null) {
@@ -102,6 +102,8 @@ public abstract class AbstractServer implements Server {
 				work.shutdownGracefully();
 			}
 			log.info("优雅关闭，释放资源");
+		} else {
+			log.info("关闭失败，请启动服务");
 		}
 	}
 
