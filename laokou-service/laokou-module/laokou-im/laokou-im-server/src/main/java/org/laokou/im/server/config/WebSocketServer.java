@@ -61,7 +61,7 @@ public class WebSocketServer extends AbstractServer {
 				// 开启TCP底层心跳，维持长连接
 				.childOption(ChannelOption.SO_KEEPALIVE, true)
 				// 请求队列最大长度
-				.option(ChannelOption.SO_BACKLOG, 4096)
+				.option(ChannelOption.SO_BACKLOG, 1024)
 				// 重复使用端口
 				.option(NioChannelOption.SO_REUSEADDR,true)
 				// 延迟发送
