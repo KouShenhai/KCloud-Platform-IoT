@@ -19,7 +19,7 @@ package org.laokou.im.server.config;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
-import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @RequiredArgsConstructor
-public class WebsocketChannelInitializer extends ChannelInitializer<SocketChannel> {
+public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
 	private final WebsocketHandler websocketHandler;
 
@@ -44,7 +44,7 @@ public class WebsocketChannelInitializer extends ChannelInitializer<SocketChanne
 	private static final int MAX_CONTENT_LENGTH = 65535;
 
 	@Override
-	protected void initChannel(SocketChannel channel) {
+	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
 		// 心跳检测
 		pipeline.addLast(new IdleStateHandler(15, 0, 0, TimeUnit.SECONDS));
@@ -59,5 +59,4 @@ public class WebsocketChannelInitializer extends ChannelInitializer<SocketChanne
 		// websocket协议
 		pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH));
 	}
-
 }
