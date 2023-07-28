@@ -38,8 +38,6 @@ spring:
   profiles:
     # 环境 dev|test|prod
     active: @PROFILE-ACTIVE@
-  # https://spring.io/blog/2023/06/07/securing-spring-boot-applications-with-ssl
-
   datasource:
     dynamic:
       datasource:
