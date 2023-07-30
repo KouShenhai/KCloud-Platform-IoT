@@ -142,7 +142,7 @@ public class HttpUtil {
 			}
 		}
 		catch (Exception e) {
-			log.error("接口调用失败:{}", e.getMessage());
+			log.error("调用失败，错误信息:{}", e.getMessage());
 		}
 		finally {
 			httpClient.close();
@@ -177,7 +177,7 @@ public class HttpUtil {
 					handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			log.error("调用失败，错误信息:{}", e.getMessage());
 		}
 		log.info("打印：{}", resultString);
 		return resultString;
