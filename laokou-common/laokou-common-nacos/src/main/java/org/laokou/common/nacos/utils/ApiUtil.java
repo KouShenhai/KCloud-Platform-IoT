@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.proxy.ProtocolProxy;
 import org.laokou.common.nacos.vo.ConfigVO;
 import org.springframework.stereotype.Component;
@@ -56,6 +57,9 @@ public class ApiUtil {
 		params.put(USERNAME, username);
 		params.put(PASSWORD, password);
 		String result = HttpUtil.doPost(tokenUri, params, new HashMap<>(0), protocolProxy.sslEnabled());
+		if (StringUtil.isEmpty(result)) {
+			return "";
+		}
 		return JacksonUtil.readTree(result).get(ACCESS_TOKEN).asText();
 	}
 
@@ -73,6 +77,9 @@ public class ApiUtil {
 		params.put(ACCESS_TOKEN, token);
 		params.put(USERNAME, username);
 		String configInfo = HttpUtil.doGet(configUri, params, new HashMap<>(0), protocolProxy.sslEnabled());
+		if (StringUtil.isEmpty(configInfo)) {
+			return null;
+		}
 		return JacksonUtil.toBean(configInfo, ConfigVO.class);
 	}
 
