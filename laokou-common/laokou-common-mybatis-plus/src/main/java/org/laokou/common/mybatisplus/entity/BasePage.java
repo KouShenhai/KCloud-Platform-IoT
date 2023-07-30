@@ -41,7 +41,7 @@ public abstract class BasePage implements Serializable {
 	private Integer pageNum;
 
 	/**
-	 *
+	 * 条数
 	 */
 	@NotNull(message = "显示条数不为空")
 	@Schema(name = "pageSize", description = "条数")
