@@ -31,6 +31,7 @@
     <modules>
         <module>laokou-auth-server</module>
         <module>laokou-auth-client</module>
+        <module>laokou-auth-start</module>
     </modules>
 
 </project>
