@@ -139,7 +139,7 @@ public class SysUserApiController {
 	}
 
 	@TraceLog
-	@DeleteMapping("v1/delete")
+	@DeleteMapping("v1")
 	@Operation(summary = "删除", description = "删除")
 	@OperateLog(module = "系统用户", name = "删除")
 	@PreAuthorize("hasAuthority('user:delete')")
