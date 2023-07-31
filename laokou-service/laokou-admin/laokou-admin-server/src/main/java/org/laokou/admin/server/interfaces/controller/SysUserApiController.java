@@ -38,123 +38,121 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 系统用户控制器
- *
  * @author laokou
  */
 @RestController
 @Tag(name = "Sys User Api", description = "系统用户API")
-@RequestMapping("/sys/user/api")
+@RequestMapping("user")
 @RequiredArgsConstructor
 public class SysUserApiController {
 
 	private final SysUserApplicationService sysUserApplicationService;
 
 	@TraceLog
-	@PutMapping("/update")
-	@Operation(summary = "系统用户>修改", description = "系统用户>修改")
-	@OperateLog(module = "系统用户", name = "用户修改")
-	@PreAuthorize("hasAuthority('sys:user:update')")
+	@PutMapping("v1")
+	@Operation(summary = "修改", description = "修改")
+	@OperateLog(module = "系统用户", name = "修改")
+	@PreAuthorize("hasAuthority('user:update')")
 	@DataCache(name = "user", key = "#dto.id", type = CacheEnum.DEL)
 	public HttpResult<Boolean> update(@RequestBody SysUserDTO dto) {
 		return new HttpResult<Boolean>().ok(sysUserApplicationService.updateUser(dto));
 	}
 
 	@TraceLog
-	@PostMapping("/online/query")
-	@PreAuthorize("hasAuthority('sys:user:online:query')")
-	@Operation(summary = "在线用户>查询", description = "系统用户>查询")
-	public HttpResult<IPage<SysUserOnlineVO>> query(@RequestBody SysUserOnlineQo qo) {
+	@PostMapping("v1/online_list")
+	@PreAuthorize("hasAuthority('user:online:list')")
+	@Operation(summary = "查询", description = "查询")
+	public HttpResult<IPage<SysUserOnlineVO>> onlineList(@RequestBody SysUserOnlineQo qo) {
 		return new HttpResult<IPage<SysUserOnlineVO>>().ok(sysUserApplicationService.onlineQueryPage(qo));
 	}
 
 	@TraceLog
-	@DeleteMapping("/online/kill")
-	@Operation(summary = "在线用户>强踢", description = "在线用户>强踢")
-	@OperateLog(module = "在线用户", name = "强制踢出")
-	@PreAuthorize("hasAuthority('sys:user:online:kill')")
-	public HttpResult<Boolean> kill(@RequestParam("token") String token) {
+	@DeleteMapping("v1/online_kill")
+	@Operation(summary = "强踢", description = "强踢")
+	@OperateLog(module = "在线用户", name = "强踢")
+	@PreAuthorize("hasAuthority('user:online:kill')")
+	public HttpResult<Boolean> onlineKill(@RequestParam("token") String token) {
 		return new HttpResult<Boolean>().ok(sysUserApplicationService.onlineKill(token));
 	}
 
 	@TraceLog
-	@GetMapping("/info")
-	@Operation(summary = "系统用户>用户信息", description = "系统用户>用户信息")
+	@GetMapping("v1/info")
+	@Operation(summary = "信息", description = "信息")
 	public HttpResult<UserInfoVO> info() {
 		return new HttpResult<UserInfoVO>().ok(sysUserApplicationService.getUserInfo());
 	}
 
 	@TraceLog
-	@GetMapping("/option/list")
-	@Operation(summary = "系统用户>下拉框列表", description = "系统用户>下拉框列表")
-	public HttpResult<List<OptionVO>> option() {
+	@GetMapping("v1/option_list")
+	@Operation(summary = "列表", description = "列表")
+	public HttpResult<List<OptionVO>> optionList() {
 		return new HttpResult<List<OptionVO>>().ok(sysUserApplicationService.getOptionList());
 	}
 
 	@TraceLog
-	@PutMapping("/info")
-	@Operation(summary = "系统用户>修改个人信息", description = "系统用户>修改个人信息")
+	@PutMapping("v1/info")
+	@Operation(summary = "信息", description = "信息")
 	public HttpResult<Boolean> info(@RequestBody SysUserDTO dto) {
 		return new HttpResult<Boolean>().ok(sysUserApplicationService.updateInfo(dto));
 	}
 
 	@TraceLog
-	@PutMapping("/status")
-	@Operation(summary = "系统用户>修改用户状态", description = "系统用户>修改用户状态")
-	@OperateLog(module = "系统用户", name = "用户状态")
-	@PreAuthorize("hasAuthority('sys:user:status')")
-	public HttpResult<Boolean> status(@RequestParam("id") Long id, @RequestParam("status") Integer status) {
+	@PutMapping("v1/status/{id}/{status}")
+	@Operation(summary = "状态", description = "状态")
+	@OperateLog(module = "系统用户", name = "状态")
+	@PreAuthorize("hasAuthority('user:status')")
+	public HttpResult<Boolean> status(@PathVariable("id") Long id, @PathVariable("status") Integer status) {
 		return new HttpResult<Boolean>().ok(sysUserApplicationService.updateStatus(id, status));
 	}
 
 	@TraceLog
-	@PutMapping("/password")
-	@Operation(summary = "系统用户>重置密码", description = "系统用户>重置密码")
-	@OperateLog(module = "系统用户", name = "重置密码")
-	@PreAuthorize("hasAuthority('sys:user:password')")
-	public HttpResult<Boolean> password(@RequestParam("id") Long id, @RequestParam("newPassword") String newPassword) {
-		return new HttpResult<Boolean>().ok(sysUserApplicationService.updatePassword(id, newPassword));
+	@PutMapping("v1/pwd/{id}/{pwd}")
+	@Operation(summary = "密码", description = "密码")
+	@OperateLog(module = "系统用户", name = "密码")
+	@PreAuthorize("hasAuthority('user:pwd')")
+	public HttpResult<Boolean> pwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
+		return new HttpResult<Boolean>().ok(sysUserApplicationService.updatePassword(id, pwd));
 	}
 
 	@TraceLog
-	@PutMapping("/pwd")
-	@Operation(summary = "系统用户>重置密码", description = "系统用户>重置密码")
-	public HttpResult<Boolean> pwd(@RequestParam("id") Long id, @RequestParam("newPassword") String newPassword) {
-		return new HttpResult<Boolean>().ok(sysUserApplicationService.updatePassword(id, newPassword));
+	@PutMapping("v1/info_pwd/{id}/{pwd}")
+	@Operation(summary = "密码", description = "密码")
+	public HttpResult<Boolean> infoPwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
+		return new HttpResult<Boolean>().ok(sysUserApplicationService.updatePassword(id, pwd));
 	}
 
 	@TraceLog
-	@PostMapping("/insert")
-	@Operation(summary = "系统用户>新增", description = "系统用户>新增")
-	@OperateLog(module = "系统用户", name = "用户新增")
-	@PreAuthorize("hasAuthority('sys:user:insert')")
+	@PostMapping("v1")
+	@Operation(summary = "新增", description = "新增")
+	@OperateLog(module = "系统用户", name = "新增")
+	@PreAuthorize("hasAuthority('user:insert')")
 	public HttpResult<Boolean> insert(@RequestBody SysUserDTO dto) {
 		return new HttpResult<Boolean>().ok(sysUserApplicationService.insertUser(dto));
 	}
 
 	@TraceLog
-	@GetMapping("/detail")
-	@Operation(summary = "系统用户>详情", description = "系统用户>详情")
+	@GetMapping("v1/{id}")
+	@Operation(summary = "查看", description = "查看")
 	@DataCache(name = "user", key = "#id")
-	public HttpResult<SysUserVO> detail(@RequestParam("id") Long id) {
+	public HttpResult<SysUserVO> get(@PathVariable("id") Long id) {
 		return new HttpResult<SysUserVO>().ok(sysUserApplicationService.getUserById(id));
 	}
 
 	@TraceLog
-	@DeleteMapping("/delete")
-	@Operation(summary = "系统用户>删除", description = "系统用户>删除")
-	@OperateLog(module = "系统用户", name = "用户删除")
-	@PreAuthorize("hasAuthority('sys:user:delete')")
+	@DeleteMapping("v1/delete")
+	@Operation(summary = "删除", description = "删除")
+	@OperateLog(module = "系统用户", name = "删除")
+	@PreAuthorize("hasAuthority('user:delete')")
 	@DataCache(name = "user", key = "#id", type = CacheEnum.DEL)
 	public HttpResult<Boolean> delete(@RequestParam("id") Long id) {
 		return new HttpResult<Boolean>().ok(sysUserApplicationService.deleteUser(id));
 	}
 
 	@TraceLog
-	@PostMapping("/query")
-	@Operation(summary = "系统用户>查询", description = "系统用户>查询")
-	@PreAuthorize("hasAuthority('sys:user:query')")
-	public HttpResult<IPage<SysUserVO>> query(@RequestBody SysUserQo qo) {
+	@PostMapping("v1/list")
+	@Operation(summary = "查询", description = "查询")
+	@PreAuthorize("hasAuthority('user:list')")
+	public HttpResult<IPage<SysUserVO>> list(@RequestBody SysUserQo qo) {
 		return new HttpResult<IPage<SysUserVO>>().ok(sysUserApplicationService.queryUserPage(qo));
 	}
 
