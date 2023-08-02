@@ -35,7 +35,6 @@
         <module>laokou-auth-infrastructure</module>
         <module>laokou-auth-domain</module>
         <module>laokou-auth-app</module>
-        <module>laokou-auth-adapter</module>
     </modules>
 
 </project>
