@@ -18,6 +18,7 @@ package org.laokou.common.security.config;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.core.utils.DateUtil;
@@ -43,6 +44,7 @@ import java.util.Objects;
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
@@ -114,15 +116,27 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 	private UserDetail decryptInfo(UserDetail userDetail) {
 		String username = userDetail.getUsername();
 		if (StringUtil.isNotEmpty(username)) {
-			userDetail.setUsername(AesUtil.decrypt(username));
+			try {
+				userDetail.setUsername(AesUtil.decrypt(username));
+			} catch (Exception e) {
+				log.error("用户名解密失败，请使用AES加密");
+			}
 		}
 		String mail = userDetail.getMail();
 		if (StringUtil.isNotEmpty(mail)) {
-			userDetail.setMail(AesUtil.decrypt(mail));
+			try {
+				userDetail.setMail(AesUtil.decrypt(mail));
+			} catch (Exception e) {
+				log.error("邮箱解密失败，请使用AES加密");
+			}
 		}
 		String mobile = userDetail.getMobile();
 		if (StringUtil.isNotEmpty(mail)) {
-			userDetail.setMobile(AesUtil.decrypt(mobile));
+			try {
+				userDetail.setMobile(AesUtil.decrypt(mobile));
+			} catch (Exception e) {
+				log.error("手机号解密失败，请使用AES加密");
+			}
 		}
 		// 写入当前线程
 		UserContextHolder.set(userDetail.getId());
