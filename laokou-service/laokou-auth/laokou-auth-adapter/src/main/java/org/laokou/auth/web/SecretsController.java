@@ -16,14 +16,27 @@
  */
 package org.laokou.auth.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.trace.annotation.TraceLog;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author laokou
  */
 @RestController
-@Tag(name = "验证码", description = "验证码")
+@Tag(name = "SecretsController", description = "密钥")
 @RequiredArgsConstructor
-public class CaptchaController {
+public class SecretsController {
+
+    @TraceLog
+	@GetMapping("v1/secrets")
+	@Operation(summary = "查看", description = "查看")
+    public HttpResult<String> get() {
+        return new HttpResult<>();
+    }
+
 }
