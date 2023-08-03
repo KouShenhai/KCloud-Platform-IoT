@@ -81,13 +81,13 @@ public class AuthFilter implements GlobalFilter, Ordered {
 			return oauth2Decode(exchange, chain);
 		}
 		// 获取token
-		String token = ResponseUtil.getParamValue(request, AUTHORIZATION_HEAD);
+		String token = ResponseUtil.getParamValue(request, AUTHORIZATION);
 		if (StringUtil.isEmpty(token)) {
 			return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.UNAUTHORIZED));
 		}
 		// 增加令牌
 		return chain
-				.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION_HEAD, token).build()).build());
+				.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());
 	}
 
 	@Override

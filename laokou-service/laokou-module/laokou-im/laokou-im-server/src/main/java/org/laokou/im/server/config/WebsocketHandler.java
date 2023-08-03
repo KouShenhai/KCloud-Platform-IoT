@@ -95,7 +95,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	}
 
 	private String getAuthorization(Map<String, String> paramMap) {
-		String Authorization = paramMap.getOrDefault(Constant.AUTHORIZATION_HEAD, "");
+		String Authorization = paramMap.getOrDefault(Constant.AUTHORIZATION, "");
 		if (StringUtil.isNotEmpty(Authorization)) {
 			return Authorization.substring(7);
 		}

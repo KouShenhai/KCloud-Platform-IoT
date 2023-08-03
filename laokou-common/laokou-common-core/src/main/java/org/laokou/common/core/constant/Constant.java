@@ -46,7 +46,7 @@ public interface Constant {
 	/**
 	 * 认证
 	 */
-	String AUTHORIZATION_HEAD = "Authorization";
+	String AUTHORIZATION = "Authorization";
 
 	/**
 	 * 用户名
