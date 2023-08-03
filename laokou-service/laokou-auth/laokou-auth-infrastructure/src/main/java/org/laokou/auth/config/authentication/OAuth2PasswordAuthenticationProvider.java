@@ -48,15 +48,6 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 
 	public static final String GRANT_TYPE = "password";
 
-	public OAuth2PasswordAuthenticationProvider(SysUserService sysUserService, SysMenuService sysMenuService,
-			SysDeptService sysDeptService, LoginLogUtil loginLogUtil, PasswordEncoder passwordEncoder,
-			SysCaptchaService sysCaptchaService, OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService,
-			RedisUtil redisUtil) {
-		super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder, sysCaptchaService,
-				authorizationService, tokenGenerator, sysSourceService, redisUtil);
-	}
-
 	@Override
 	public boolean supports(Class<?> authentication) {
 		return OAuth2PasswordAuthenticationToken.class.isAssignableFrom(authentication);

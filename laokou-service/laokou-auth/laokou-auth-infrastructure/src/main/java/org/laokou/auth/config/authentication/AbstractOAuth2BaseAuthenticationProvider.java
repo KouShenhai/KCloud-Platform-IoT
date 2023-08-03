@@ -26,10 +26,7 @@ import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
 import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
 import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
 import org.laokou.common.core.enums.ResultStatusEnum;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.DateUtil;
-import org.laokou.common.core.utils.IpUtil;
-import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.core.utils.*;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -37,6 +34,7 @@ import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.tenant.service.SysSourceService;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -70,44 +68,27 @@ import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
  * @author laokou
  */
 @Slf4j
-public abstract class AbstractOAuth2BaseAuthenticationProvider implements AuthenticationProvider {
+public abstract class AbstractOAuth2BaseAuthenticationProvider implements AuthenticationProvider, InitializingBean {
 
-	protected final SysUserService sysUserService;
+	protected SysUserService sysUserService;
 
-	protected final SysMenuService sysMenuService;
+	protected SysMenuService sysMenuService;
 
-	protected final SysDeptService sysDeptService;
+	protected SysDeptService sysDeptService;
 
-	protected final LoginLogUtil loginLogUtil;
+	protected LoginLogUtil loginLogUtil;
 
-	protected final PasswordEncoder passwordEncoder;
+	protected PasswordEncoder passwordEncoder;
 
-	protected final SysCaptchaService sysCaptchaService;
+	protected SysCaptchaService sysCaptchaService;
 
-	protected final OAuth2AuthorizationService authorizationService;
+	protected OAuth2AuthorizationService authorizationService;
 
-	protected final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
+	protected OAuth2TokenGenerator<?> tokenGenerator;
 
-	protected final SysSourceService sysSourceService;
+	protected SysSourceService sysSourceService;
 
-	protected final RedisUtil redisUtil;
-
-	public AbstractOAuth2BaseAuthenticationProvider(SysUserService sysUserService, SysMenuService sysMenuService,
-			SysDeptService sysDeptService, LoginLogUtil loginLogUtil, PasswordEncoder passwordEncoder,
-			SysCaptchaService sysCaptchaService, OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService,
-			RedisUtil redisUtil) {
-		this.sysDeptService = sysDeptService;
-		this.sysMenuService = sysMenuService;
-		this.loginLogUtil = loginLogUtil;
-		this.sysUserService = sysUserService;
-		this.passwordEncoder = passwordEncoder;
-		this.sysCaptchaService = sysCaptchaService;
-		this.tokenGenerator = tokenGenerator;
-		this.authorizationService = authorizationService;
-		this.sysSourceService = sysSourceService;
-		this.redisUtil = redisUtil;
-	}
+	protected RedisUtil redisUtil;
 
 	@SneakyThrows
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -309,6 +290,20 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		}
 		throw CustomAuthExceptionHandler.getError(StatusCode.INVALID_CLIENT,
 				MessageUtil.getMessage(StatusCode.INVALID_CLIENT));
+	}
+
+	@Override
+	public void afterPropertiesSet() {
+		sysUserService = SpringContextUtil.getBean(SysUserService.class);
+		sysMenuService = SpringContextUtil.getBean(SysMenuService.class);
+		sysDeptService = SpringContextUtil.getBean(SysDeptService.class);
+		loginLogUtil = SpringContextUtil.getBean(LoginLogUtil.class);
+		passwordEncoder = SpringContextUtil.getBean(PasswordEncoder.class);
+		sysCaptchaService = SpringContextUtil.getBean(SysCaptchaService.class);
+		authorizationService = SpringContextUtil.getBean(OAuth2AuthorizationService.class);
+		tokenGenerator = SpringContextUtil.getBean(OAuth2TokenGenerator.class);
+		sysSourceService = SpringContextUtil.getBean(SysSourceService.class);
+		redisUtil = SpringContextUtil.getBean(RedisUtil.class);
 	}
 
 }

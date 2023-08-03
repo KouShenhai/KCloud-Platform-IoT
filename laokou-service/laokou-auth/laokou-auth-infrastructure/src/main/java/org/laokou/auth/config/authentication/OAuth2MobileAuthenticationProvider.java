@@ -49,15 +49,6 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 
 	public static final String GRANT_TYPE = "mobile";
 
-	public OAuth2MobileAuthenticationProvider(SysUserService sysUserService, SysMenuService sysMenuService,
-			SysDeptService sysDeptService, LoginLogUtil loginLogUtil, PasswordEncoder passwordEncoder,
-			SysCaptchaService sysCaptchaService, OAuth2AuthorizationService oAuth2AuthorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService,
-			RedisUtil redisUtil) {
-		super(sysUserService, sysMenuService, sysDeptService, loginLogUtil, passwordEncoder, sysCaptchaService,
-				oAuth2AuthorizationService, tokenGenerator, sysSourceService, redisUtil);
-	}
-
 	@Override
 	public boolean supports(Class<?> authentication) {
 		return OAuth2MobileAuthenticationToken.class.isAssignableFrom(authentication);

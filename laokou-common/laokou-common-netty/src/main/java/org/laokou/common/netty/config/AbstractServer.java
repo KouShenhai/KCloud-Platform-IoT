@@ -37,9 +37,9 @@ public abstract class AbstractServer implements Server {
 	 */
 	private final AtomicBoolean RUNNING = new AtomicBoolean(false);
 
-	protected volatile EventLoopGroup boss;
+	protected EventLoopGroup boss;
 
-	protected volatile EventLoopGroup work;
+	protected EventLoopGroup work;
 
 	protected final int port;
 
