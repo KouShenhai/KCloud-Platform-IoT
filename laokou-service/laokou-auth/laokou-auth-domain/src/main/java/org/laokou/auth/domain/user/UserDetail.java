@@ -23,6 +23,7 @@ import org.laokou.common.i18n.dto.ClientObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -35,7 +36,7 @@ import java.util.stream.Collectors;
  */
 @Data
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
-public class UserDetail extends ClientObject implements UserDetails {
+public class UserDetail extends ClientObject implements UserDetails, OAuth2AuthenticatedPrincipal {
 
     @Serial
     private static final long serialVersionUID = 3319752558160144611L;
@@ -167,7 +168,7 @@ public class UserDetail extends ClientObject implements UserDetails {
     @Override
     @JsonIgnore
     public boolean isEnabled() {
-        return this.status != Status.DISABLE.ordinal();
+        return this.status == Status.ENABLED.ordinal();
     }
 
     /**

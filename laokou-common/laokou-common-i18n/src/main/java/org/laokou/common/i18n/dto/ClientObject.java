@@ -11,4 +11,5 @@ import java.io.Serializable;
 public abstract class ClientObject implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
 }
