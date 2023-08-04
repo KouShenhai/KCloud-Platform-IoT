@@ -21,7 +21,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.client.constant.AuthConstant;
 import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
-import org.laokou.auth.client.user.UserDetail;
+import org.laokou.auth.domain.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
 import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
 import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
@@ -123,7 +123,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	 * @param principal principal
 	 * @return Authentication
 	 */
-	protected Authentication getToken(Authentication authentication, Authentication principal) throws IOException {
+	protected Authentication getToken(Authentication authentication, Authentication principal) {
 		// 仿照授权码模式
 		// 生成token（access_token + refresh_token）
 		AbstractOAuth2BaseAuthenticationToken auth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;

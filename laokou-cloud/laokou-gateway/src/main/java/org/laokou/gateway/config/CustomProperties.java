@@ -15,23 +15,27 @@
  *
  */
 
-package org.laokou.gateway.enums;
+package org.laokou.gateway.config;
+
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 /**
  * @author laokou
  */
-public enum ExceptionEnum {
+@Component
+@RefreshScope
+@Data
+@ConfigurationProperties(prefix = "ignore")
+public class CustomProperties {
 
-	INVALID_CLIENT("invalid_client");
-
-	private final String code;
-
-	ExceptionEnum(String code) {
-		this.code = code;
-	}
-
-	public static ExceptionEnum getInstance(String code) {
-		return ExceptionEnum.valueOf(code);
-	}
+	/**
+	 * 不拦截的urls
+	 */
+	private Set<String> uris;
 
 }

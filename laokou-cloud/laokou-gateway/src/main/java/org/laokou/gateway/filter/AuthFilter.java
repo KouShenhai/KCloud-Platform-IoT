@@ -22,7 +22,7 @@ import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
-import org.laokou.gateway.properties.CustomProperties;
+import org.laokou.gateway.config.CustomProperties;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -50,7 +50,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static org.laokou.common.core.constant.Constant.*;
-import static org.laokou.gateway.constant.GatewayConstant.OAUTH2_AUTH_URI;
+import static org.laokou.gateway.constant.Constant.OAUTH2_AUTH_URI;
 
 /**
  * 认证Filter

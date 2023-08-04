@@ -12,30 +12,28 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ * 
  */
-
-package org.laokou.gateway.properties;
-
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.stereotype.Component;
-
-import java.util.Set;
+package org.laokou.gateway.constant;
 
 /**
  * @author laokou
  */
-@Component
-@RefreshScope
-@Data
-@ConfigurationProperties(prefix = "ignore")
-public class CustomProperties {
+public interface Constant {
 
 	/**
-	 * 不拦截的urls
+	 * 密码模式-请求地址
 	 */
-	private Set<String> uris;
+	String OAUTH2_AUTH_URI = "/auth/oauth2/token";
+
+	/**
+	 * OAuth2错误信息
+	 */
+	String ERROR_DESCRIPTION = "error_description";
+
+	/**
+	 * OAuth2错误码
+	 */
+	String ERROR = "error";
 
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.gateway.exception;
+package org.laokou.gateway.handler;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import io.micrometer.common.lang.NonNullApi;
