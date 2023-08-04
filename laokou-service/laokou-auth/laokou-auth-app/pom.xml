@@ -10,4 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-auth-app</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-auth-infrastructure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-auth-client</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

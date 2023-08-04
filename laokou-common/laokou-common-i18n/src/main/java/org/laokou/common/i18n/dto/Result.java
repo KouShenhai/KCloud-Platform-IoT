@@ -74,23 +74,23 @@ public class Result<T> extends DTO {
 
 	public static <T> Result<T> of(T data) {
 		Result<T> result = new Result<>();
+		result.setData(data);
 		result.setCode(StatusCode.OK);
 		result.setMsg(MessageUtil.getMessage(StatusCode.OK));
-		result.setData(data);
 		return result;
 	}
 
 	public static <T> Result<T> fail(int code, String msg) {
 		Result<T> result = new Result<>();
-		result.setMsg(msg);
 		result.setCode(code);
+		result.setMsg(msg);
 		return result;
 	}
 
 	public static <T> Result<T> fail(String msg) {
 		Result<T> result = new Result<>();
-		result.setMsg(msg);
 		result.setCode(StatusCode.INTERNAL_SERVER_ERROR);
+		result.setMsg(msg);
 		return result;
 	}
 

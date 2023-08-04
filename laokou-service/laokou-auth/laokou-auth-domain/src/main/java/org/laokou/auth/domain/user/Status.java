@@ -12,32 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
-
-package org.laokou.auth.client.vo;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.io.Serial;
-import java.io.Serializable;
+package org.laokou.auth.domain.user;
 
 /**
+ * 用户状态
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Schema(name = "SecretInfoVO", description = "密钥配置")
-public class SecretInfoVO implements Serializable {
+public enum Status {
 
-	@Serial
-	private static final long serialVersionUID = 5798768808595385129L;
-
-	@Schema(name = "publicKey", description = "公钥")
-	private String publicKey;
+	/**
+	 * 正常
+	 */
+	ENABLED,
+	/**
+	 * 禁用
+	 */
+	DISABLE
 
 }

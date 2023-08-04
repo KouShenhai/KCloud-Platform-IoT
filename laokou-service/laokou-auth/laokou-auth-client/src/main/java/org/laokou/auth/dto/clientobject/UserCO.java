@@ -14,21 +14,32 @@
  * limitations under the License.
  *
  */
-
-package org.laokou.auth.client.vo;
-
-import lombok.AllArgsConstructor;
+package org.laokou.auth.dto.clientobject;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import org.laokou.common.i18n.dto.ClientObject;
+import java.io.Serial;
 
 /**
+ * &#064;JsonTypeInfo(use = JsonTypeInfo.Id.NAME) => 多态子类与抽象类绑定
  * @author laokou
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class IdempotentToken {
+public class UserCO extends ClientObject {
 
-	private String token;
+    @Serial
+    private static final long serialVersionUID = 3319752558160144611L;
+
+    private Long id;
+    private String username;
+    private String avatar;
+    private Integer superAdmin;
+    private Integer status;
+    private String mail;
+    private String mobile;
+    private String password;
+    private Long deptId;
+    private Long tenantId;
 
 }
