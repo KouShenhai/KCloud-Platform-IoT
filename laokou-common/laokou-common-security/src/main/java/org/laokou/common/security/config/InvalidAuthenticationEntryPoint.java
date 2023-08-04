@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.auth.client.handler;
+package org.laokou.common.security.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,13 +42,13 @@ public class InvalidAuthenticationEntryPoint implements AuthenticationEntryPoint
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException {
 		if (authException instanceof InsufficientAuthenticationException) {
-			CustomAuthExceptionHandler.handleException(response, StatusCode.UNAUTHORIZED,
+			OAuth2ExceptionHandler.response(response, StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
 		if (authException instanceof OAuth2AuthenticationException oAuth2AuthenticationException) {
 			String message = oAuth2AuthenticationException.getError().getDescription();
 			int errorCode = Integer.parseInt(oAuth2AuthenticationException.getError().getErrorCode());
-			CustomAuthExceptionHandler.handleException(response, errorCode, message);
+			OAuth2ExceptionHandler.response(response, errorCode, message);
 		}
 	}
 

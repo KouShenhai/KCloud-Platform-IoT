@@ -1,6 +1,6 @@
 org.laokou.common.security.config.auto.OAuth2ResourceServerAutoConfig
 org.laokou.common.security.config.auto.OAuth2AuthorizationAutoConfig
 org.laokou.common.security.config.CustomOpaqueTokenIntrospector
-org.laokou.auth.client.handler.ForbiddenExceptionHandler
+org.laokou.common.security.config.ForbiddenExceptionHandler
 org.laokou.common.security.config.OAuth2ResourceServerProperties
-org.laokou.auth.client.handler.InvalidAuthenticationEntryPoint
+org.laokou.common.security.config.InvalidAuthenticationEntryPoint

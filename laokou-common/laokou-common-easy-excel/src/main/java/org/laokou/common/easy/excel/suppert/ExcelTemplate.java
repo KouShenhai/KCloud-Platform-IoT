@@ -25,6 +25,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
+import org.springframework.stereotype.Component;
+
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ import java.util.List;
 /**
  * @author laokou
  */
+@Component
 public class ExcelTemplate<Q, T> {
 
 	private static final String EXCEL_SUFFIX = ".xlsx";

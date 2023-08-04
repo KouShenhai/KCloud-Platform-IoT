@@ -19,7 +19,6 @@ package org.laokou.common.security.config;
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -60,7 +59,7 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
 		Object obj = redisUtil.get(userKillKey);
 		if (obj != null) {
-			throw CustomAuthExceptionHandler.getError(StatusCode.FORCE_KILL,
+			throw OAuth2ExceptionHandler.getException(StatusCode.FORCE_KILL,
 					MessageUtil.getMessage(StatusCode.FORCE_KILL));
 		}
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
@@ -71,7 +70,7 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			userDetail = (UserDetail) obj;
 			if (DateUtil.isAfter(DateUtil.now(), userDetail.getExpireDate())) {
 				caffeineCache.invalidate(userInfoKey);
-				throw CustomAuthExceptionHandler.getError(StatusCode.UNAUTHORIZED,
+				throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 						MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 			}
 			// 写入当前线程
@@ -88,11 +87,11 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token,
 				OAuth2TokenType.ACCESS_TOKEN);
 		if (oAuth2Authorization == null) {
-			throw CustomAuthExceptionHandler.getError(StatusCode.UNAUTHORIZED,
+			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
 		if (!Objects.requireNonNull(oAuth2Authorization.getAccessToken()).isActive()) {
-			throw CustomAuthExceptionHandler.getError(StatusCode.UNAUTHORIZED,
+			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
 		Instant expiresAt = oAuth2Authorization.getAccessToken().getToken().getExpiresAt();
