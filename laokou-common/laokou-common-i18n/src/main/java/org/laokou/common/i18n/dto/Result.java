@@ -14,14 +14,15 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.i18n.core;
+package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 /**
  * 统一返回结果实体类
@@ -29,8 +30,9 @@ import java.io.Serializable;
  * @author laokou
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Schema(name = "HttpResult", description = "统一返回结果实体类")
-public class HttpResult<T> implements Serializable {
+public class Result<T> extends DTO {
 
 	@Serial
 	private static final long serialVersionUID = -1286769110881865369L;
@@ -59,33 +61,37 @@ public class HttpResult<T> implements Serializable {
 	@Schema(name = "traceId", description = "链路ID")
 	private String traceId;
 
-	public boolean success() {
-		return this.code == StatusCode.OK;
+	public boolean fail() {
+		return this.code != StatusCode.OK;
 	}
 
-	public HttpResult<T> error(int code) {
-		this.code = code;
-		this.msg = MessageUtil.getMessage(code);
-		return this;
+	public static <T> Result<T> fail(int code) {
+		Result<T> result = new Result<>();
+		result.setCode(code);
+		result.setMsg(MessageUtil.getMessage(code));
+		return result;
 	}
 
-	public HttpResult<T> ok(T data) {
-		this.code = StatusCode.OK;
-		this.msg = MessageUtil.getMessage(StatusCode.OK);
-		this.data = data;
-		return this;
+	public static <T> Result<T> of(T data) {
+		Result<T> result = new Result<>();
+		result.setCode(StatusCode.OK);
+		result.setMsg(MessageUtil.getMessage(StatusCode.OK));
+		result.setData(data);
+		return result;
 	}
 
-	public HttpResult<T> error(int code, String msg) {
-		this.code = code;
-		this.msg = msg;
-		return this;
+	public static <T> Result<T> fail(int code, String msg) {
+		Result<T> result = new Result<>();
+		result.setMsg(msg);
+		result.setCode(code);
+		return result;
 	}
 
-	public HttpResult<T> error(String msg) {
-		this.code = StatusCode.INTERNAL_SERVER_ERROR;
-		this.msg = msg;
-		return this;
+	public static <T> Result<T> fail(String msg) {
+		Result<T> result = new Result<>();
+		result.setMsg(msg);
+		result.setCode(StatusCode.INTERNAL_SERVER_ERROR);
+		return result;
 	}
 
 }

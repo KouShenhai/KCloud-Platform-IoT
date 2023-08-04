@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.core.StatusCode;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -45,7 +45,7 @@ public class CustomBlockExceptionHandler implements BlockExceptionHandler {
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
 		PrintWriter writer = response.getWriter();
-		writer.write(JacksonUtil.toJsonStr(new HttpResult<Boolean>().error(StatusCode.API_BLOCK_REQUEST)));
+		writer.write(JacksonUtil.toJsonStr(new Result<Boolean>().error(StatusCode.API_BLOCK_REQUEST)));
 		writer.flush();
 		writer.close();
 	}

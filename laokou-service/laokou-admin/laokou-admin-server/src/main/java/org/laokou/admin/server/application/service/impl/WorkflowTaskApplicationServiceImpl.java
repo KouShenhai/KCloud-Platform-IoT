@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
 import org.laokou.admin.server.infrastructure.feign.workflow.WorkTaskApiFeignClient;
 import org.laokou.common.i18n.core.CustomException;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,8 +34,8 @@ public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicati
 
 	@Override
 	public String diagramProcess(String processInstanceId) {
-		HttpResult<String> result = workTaskApiFeignClient.diagram(processInstanceId);
-		if (!result.success()) {
+		Result<String> result = workTaskApiFeignClient.diagram(processInstanceId);
+		if (result.fail()) {
 			throw new CustomException(result.getCode(), result.getMsg());
 		}
 		return result.getData();

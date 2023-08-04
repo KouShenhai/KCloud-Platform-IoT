@@ -19,7 +19,7 @@ package org.laokou.admin.server.infrastructure.feign.workflow.fallback;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.infrastructure.feign.workflow.WorkDefinitionApiFeignClient;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.client.dto.DefinitionDTO;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;
@@ -37,39 +37,39 @@ public class WorkDefinitionApiFeignClientFallback implements WorkDefinitionApiFe
 	private final Throwable throwable;
 
 	@Override
-	public HttpResult<Boolean> insert(MultipartFile file) {
+	public Result<Boolean> insert(MultipartFile file) {
 		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<Boolean>().error("流程新增失败，请联系管理员");
+		return new Result<Boolean>().error("流程新增失败，请联系管理员");
 	}
 
 	@Override
-	public HttpResult<PageVO<DefinitionVO>> query(DefinitionDTO dto) {
+	public Result<PageVO<DefinitionVO>> query(DefinitionDTO dto) {
 		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<PageVO<DefinitionVO>>().ok(new PageVO<>());
+		return new Result<PageVO<DefinitionVO>>().ok(new PageVO<>());
 	}
 
 	@Override
-	public HttpResult<String> diagram(String definitionId) {
+	public Result<String> diagram(String definitionId) {
 		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<String>().error("流程图查看失败，请联系管理员");
+		return new Result<String>().error("流程图查看失败，请联系管理员");
 	}
 
 	@Override
-	public HttpResult<Boolean> delete(String deploymentId) {
+	public Result<Boolean> delete(String deploymentId) {
 		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<Boolean>().error("流程删除失败，请联系管理员");
+		return new Result<Boolean>().error("流程删除失败，请联系管理员");
 	}
 
 	@Override
-	public HttpResult<Boolean> suspend(String definitionId) {
+	public Result<Boolean> suspend(String definitionId) {
 		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<Boolean>().error("流程挂起失败，请联系管理员");
+		return new Result<Boolean>().error("流程挂起失败，请联系管理员");
 	}
 
 	@Override
-	public HttpResult<Boolean> activate(String definitionId) {
+	public Result<Boolean> activate(String definitionId) {
 		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<Boolean>().error("流程激活失败，请联系管理员");
+		return new Result<Boolean>().error("流程激活失败，请联系管理员");
 	}
 
 }

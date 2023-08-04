@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.security.config;
+package org.laokou.common.security.handler;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

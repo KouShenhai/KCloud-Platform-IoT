@@ -17,8 +17,8 @@
 package org.laokou.common.security.config.auto;
 
 import lombok.Data;
-import org.laokou.common.security.config.ForbiddenExceptionHandler;
-import org.laokou.common.security.config.InvalidAuthenticationEntryPoint;
+import org.laokou.common.security.handler.ForbiddenExceptionHandler;
+import org.laokou.common.security.handler.InvalidAuthenticationEntryPoint;
 import org.laokou.common.security.config.CustomOpaqueTokenIntrospector;
 import org.laokou.common.security.config.OAuth2ResourceServerProperties;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

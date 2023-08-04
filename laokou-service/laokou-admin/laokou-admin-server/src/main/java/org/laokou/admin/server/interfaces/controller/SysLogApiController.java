@@ -22,12 +22,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysLogApplicationService;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.qo.SysOperateLogQo;
 import org.laokou.common.log.vo.SysLoginLogVO;
 import org.laokou.common.log.vo.SysOperateLogVO;
-import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -50,8 +50,8 @@ public class SysLogApiController {
 	@PostMapping(value = "/operate/query")
 	@Operation(summary = "系统日志>操作日志>查询", description = "系统日志>操作日志>查询")
 	@PreAuthorize("hasAuthority('sys:log:operate:query')")
-	public HttpResult<IPage<SysOperateLogVO>> queryOperateLog(@RequestBody SysOperateLogQo qo) {
-		return new HttpResult<IPage<SysOperateLogVO>>().ok(sysLogApplicationService.queryOperateLogPage(qo));
+	public Result<IPage<SysOperateLogVO>> queryOperateLog(@RequestBody SysOperateLogQo qo) {
+		return new Result<IPage<SysOperateLogVO>>().ok(sysLogApplicationService.queryOperateLogPage(qo));
 	}
 
 	@TraceLog
@@ -67,8 +67,8 @@ public class SysLogApiController {
 	@PostMapping(value = "/login/query")
 	@Operation(summary = "系统日志>登录日志>查询", description = "系统日志>登录日志>查询")
 	@PreAuthorize("hasAuthority('sys:log:login:query')")
-	public HttpResult<IPage<SysLoginLogVO>> queryLoginLog(@RequestBody SysLoginLogQo qo) {
-		return new HttpResult<IPage<SysLoginLogVO>>().ok(sysLogApplicationService.queryLoginLogPage(qo));
+	public Result<IPage<SysLoginLogVO>> queryLoginLog(@RequestBody SysLoginLogQo qo) {
+		return new Result<IPage<SysLoginLogVO>>().ok(sysLogApplicationService.queryLoginLogPage(qo));
 	}
 
 	@TraceLog

@@ -25,7 +25,7 @@ import org.laokou.admin.server.interfaces.qo.SysMenuQo;
 import org.laokou.admin.client.vo.SysMenuVO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,24 +48,24 @@ public class SysMenuApiController {
 	@TraceLog
 	@GetMapping("/list")
 	@Operation(summary = "系统菜单>列表", description = "系统菜单>列表")
-	public HttpResult<SysMenuVO> list() {
-		return new HttpResult<SysMenuVO>().ok(sysMenuApplicationService.getMenuList());
+	public Result<SysMenuVO> list() {
+		return new Result<SysMenuVO>().ok(sysMenuApplicationService.getMenuList());
 	}
 
 	@TraceLog
 	@PostMapping("/query")
 	@Operation(summary = "系统菜单>查询", description = "系统菜单>查询")
 	@PreAuthorize("hasAuthority('sys:menu:query')")
-	public HttpResult<List<SysMenuVO>> query(@RequestBody SysMenuQo qo) {
-		return new HttpResult<List<SysMenuVO>>().ok(sysMenuApplicationService.queryMenuList(qo));
+	public Result<List<SysMenuVO>> query(@RequestBody SysMenuQo qo) {
+		return new Result<List<SysMenuVO>>().ok(sysMenuApplicationService.queryMenuList(qo));
 	}
 
 	@TraceLog
 	@GetMapping("/detail")
 	@Operation(summary = "系统菜单>详情", description = "系统菜单>详情")
 	@DataCache(name = "menu", key = "#id")
-	public HttpResult<SysMenuVO> detail(@RequestParam("id") Long id) {
-		return new HttpResult<SysMenuVO>().ok(sysMenuApplicationService.getMenuById(id));
+	public Result<SysMenuVO> detail(@RequestParam("id") Long id) {
+		return new Result<SysMenuVO>().ok(sysMenuApplicationService.getMenuById(id));
 	}
 
 	@TraceLog
@@ -74,8 +74,8 @@ public class SysMenuApiController {
 	@OperateLog(module = "系统菜单", name = "菜单修改")
 	@PreAuthorize("hasAuthority('sys:menu:update')")
 	@DataCache(name = "menu", key = "#dto.id", type = CacheEnum.DEL)
-	public HttpResult<Boolean> update(@RequestBody SysMenuDTO dto) {
-		return new HttpResult<Boolean>().ok(sysMenuApplicationService.updateMenu(dto));
+	public Result<Boolean> update(@RequestBody SysMenuDTO dto) {
+		return new Result<Boolean>().ok(sysMenuApplicationService.updateMenu(dto));
 	}
 
 	@TraceLog
@@ -83,8 +83,8 @@ public class SysMenuApiController {
 	@Operation(summary = "系统菜单>新增", description = "系统菜单>新增")
 	@OperateLog(module = "系统菜单", name = "菜单新增")
 	@PreAuthorize("hasAuthority('sys:menu:insert')")
-	public HttpResult<Boolean> insert(@RequestBody SysMenuDTO dto) {
-		return new HttpResult<Boolean>().ok(sysMenuApplicationService.insertMenu(dto));
+	public Result<Boolean> insert(@RequestBody SysMenuDTO dto) {
+		return new Result<Boolean>().ok(sysMenuApplicationService.insertMenu(dto));
 	}
 
 	@TraceLog
@@ -93,29 +93,29 @@ public class SysMenuApiController {
 	@OperateLog(module = "系统菜单", name = "菜单删除")
 	@PreAuthorize("hasAuthority('sys:menu:delete')")
 	@DataCache(name = "menu", key = "#id", type = CacheEnum.DEL)
-	public HttpResult<Boolean> delete(@RequestParam("id") Long id) {
-		return new HttpResult<Boolean>().ok(sysMenuApplicationService.deleteMenu(id));
+	public Result<Boolean> delete(@RequestParam("id") Long id) {
+		return new Result<Boolean>().ok(sysMenuApplicationService.deleteMenu(id));
 	}
 
 	@TraceLog
 	@GetMapping("/tree")
 	@Operation(summary = "系统菜单>树菜单", description = "系统菜单>树菜单")
-	public HttpResult<SysMenuVO> tree() {
-		return new HttpResult<SysMenuVO>().ok(sysMenuApplicationService.treeMenu());
+	public Result<SysMenuVO> tree() {
+		return new Result<SysMenuVO>().ok(sysMenuApplicationService.treeMenu());
 	}
 
 	@TraceLog
 	@GetMapping("/get")
 	@Operation(summary = "系统菜单>菜单树ids", description = "系统菜单>菜单树ids")
-	public HttpResult<List<Long>> get(@RequestParam(value = "roleId") Long roleId) {
-		return new HttpResult<List<Long>>().ok(sysMenuApplicationService.getMenuIdsByRoleId(roleId));
+	public Result<List<Long>> get(@RequestParam(value = "roleId") Long roleId) {
+		return new Result<List<Long>>().ok(sysMenuApplicationService.getMenuIdsByRoleId(roleId));
 	}
 
 	@TraceLog
 	@GetMapping("/tenant")
 	@Operation(summary = "系统菜单>租户树菜单", description = "系统菜单>租户树菜单")
-	public HttpResult<SysMenuVO> treeTenant() {
-		return new HttpResult<SysMenuVO>().ok(sysMenuApplicationService.treeTenantMenu());
+	public Result<SysMenuVO> treeTenant() {
+		return new Result<SysMenuVO>().ok(sysMenuApplicationService.treeTenantMenu());
 	}
 
 }

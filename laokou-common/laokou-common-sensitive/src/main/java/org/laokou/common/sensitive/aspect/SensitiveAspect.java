@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +36,7 @@ public class SensitiveAspect {
 	@Around("@annotation(org.laokou.common.sensitive.annotation.Sensitive)")
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {
 		Object proceed = point.proceed();
-		if (proceed instanceof HttpResult<?> result) {
+		if (proceed instanceof Result<?> result) {
 			Object data = result.getData();
 			SensitiveUtil.transform(data);
 		}

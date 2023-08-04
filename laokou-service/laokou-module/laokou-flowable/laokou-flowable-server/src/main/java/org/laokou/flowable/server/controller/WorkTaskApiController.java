@@ -20,7 +20,7 @@ package org.laokou.flowable.server.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
@@ -42,44 +42,44 @@ public class WorkTaskApiController {
 
 	@PostMapping(value = "/query")
 	@Operation(summary = "流程任务>任务查询", description = "流程任务>任务查询")
-	public HttpResult<PageVO<TaskVO>> query(@RequestBody TaskDTO dto) {
-		return new HttpResult<PageVO<TaskVO>>().ok(workTaskService.queryTaskPage(dto));
+	public Result<PageVO<TaskVO>> query(@RequestBody TaskDTO dto) {
+		return new Result<PageVO<TaskVO>>().ok(workTaskService.queryTaskPage(dto));
 	}
 
 	@PostMapping(value = "/audit")
 	@Operation(summary = "流程任务>任务审批", description = "流程任务>任务审批")
-	public HttpResult<AssigneeVO> audit(@RequestBody AuditDTO dto) {
-		return new HttpResult<AssigneeVO>().ok(workTaskService.auditTask(dto));
+	public Result<AssigneeVO> audit(@RequestBody AuditDTO dto) {
+		return new Result<AssigneeVO>().ok(workTaskService.auditTask(dto));
 	}
 
 	@PostMapping(value = "/resolve")
 	@Operation(summary = "流程任务>任务处理", description = "流程任务>任务处理")
-	public HttpResult<AssigneeVO> resolve(@RequestBody ResolveDTO dto) {
-		return new HttpResult<AssigneeVO>().ok(workTaskService.resolveTask(dto));
+	public Result<AssigneeVO> resolve(@RequestBody ResolveDTO dto) {
+		return new Result<AssigneeVO>().ok(workTaskService.resolveTask(dto));
 	}
 
 	@PostMapping(value = "/start")
 	@Operation(summary = "流程任务>任务开始", description = "流程任务>任务开始")
-	public HttpResult<AssigneeVO> start(@RequestBody ProcessDTO dto) {
-		return new HttpResult<AssigneeVO>().ok(workTaskService.startTask(dto));
+	public Result<AssigneeVO> start(@RequestBody ProcessDTO dto) {
+		return new Result<AssigneeVO>().ok(workTaskService.startTask(dto));
 	}
 
 	@GetMapping(value = "/diagram")
 	@Operation(summary = "流程任务>任务流程", description = "流程任务>任务流程")
-	public HttpResult<String> diagram(@RequestParam("processInstanceId") String processInstanceId) throws IOException {
-		return new HttpResult<String>().ok(workTaskService.diagramTask(processInstanceId));
+	public Result<String> diagram(@RequestParam("processInstanceId") String processInstanceId) throws IOException {
+		return new Result<String>().ok(workTaskService.diagramTask(processInstanceId));
 	}
 
 	@PostMapping("/transfer")
 	@Operation(summary = "流程任务>任务转办", description = "流程任务>任务转办")
-	public HttpResult<AssigneeVO> transfer(@RequestBody TransferDTO dto) {
-		return new HttpResult<AssigneeVO>().ok(workTaskService.transferTask(dto));
+	public Result<AssigneeVO> transfer(@RequestBody TransferDTO dto) {
+		return new Result<AssigneeVO>().ok(workTaskService.transferTask(dto));
 	}
 
 	@PostMapping("/delegate")
 	@Operation(summary = "流程任务>任务委派", description = "流程任务>任务委派")
-	public HttpResult<AssigneeVO> delegate(@RequestBody DelegateDTO dto) {
-		return new HttpResult<AssigneeVO>().ok(workTaskService.delegateTask(dto));
+	public Result<AssigneeVO> delegate(@RequestBody DelegateDTO dto) {
+		return new Result<AssigneeVO>().ok(workTaskService.delegateTask(dto));
 	}
 
 }

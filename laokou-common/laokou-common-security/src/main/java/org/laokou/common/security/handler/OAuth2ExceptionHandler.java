@@ -1,8 +1,8 @@
-package org.laokou.common.security.config;
+package org.laokou.common.security.handler;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
@@ -21,7 +21,7 @@ public class OAuth2ExceptionHandler {
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
         PrintWriter writer = response.getWriter();
-        writer.write(JacksonUtil.toJsonStr(new HttpResult<>().error(code, message)));
+        writer.write(JacksonUtil.toJsonStr(new Result<>().error(code, message)));
         writer.flush();
         writer.close();
     }

@@ -23,10 +23,10 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.tenant.dto.SysSourceDTO;
 import org.laokou.admin.server.application.service.SysSourceApplicationService;
 import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.tenant.qo.SysSourceQo;
 import org.laokou.common.tenant.vo.SysSourceVO;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -50,8 +50,8 @@ public class SysSourceApiController {
 	@PostMapping("/query")
 	@Operation(summary = "系统数据源>查询", description = "系统数据源>查询")
 	@PreAuthorize("hasAuthority('sys:source:query')")
-	public HttpResult<IPage<SysSourceVO>> query(@RequestBody SysSourceQo qo) {
-		return new HttpResult<IPage<SysSourceVO>>().ok(sysSourceApplicationService.querySourcePage(qo));
+	public Result<IPage<SysSourceVO>> query(@RequestBody SysSourceQo qo) {
+		return new Result<IPage<SysSourceVO>>().ok(sysSourceApplicationService.querySourcePage(qo));
 	}
 
 	@TraceLog
@@ -59,16 +59,16 @@ public class SysSourceApiController {
 	@Operation(summary = "系统数据源>新增", description = "系统数据源>新增")
 	@OperateLog(module = "系统数据源", name = "数据源新增")
 	@PreAuthorize("hasAuthority('sys:source:insert')")
-	public HttpResult<Boolean> insert(@RequestBody SysSourceDTO dto) {
-		return new HttpResult<Boolean>().ok(sysSourceApplicationService.insertSource(dto));
+	public Result<Boolean> insert(@RequestBody SysSourceDTO dto) {
+		return new Result<Boolean>().ok(sysSourceApplicationService.insertSource(dto));
 	}
 
 	@TraceLog
 	@GetMapping("/detail")
 	@Operation(summary = "系统数据源>查看", description = "系统数据源>查看")
 	@DataCache(name = "source", key = "#id")
-	public HttpResult<SysSourceVO> detail(@RequestParam("id") Long id) {
-		return new HttpResult<SysSourceVO>().ok(sysSourceApplicationService.getSourceById(id));
+	public Result<SysSourceVO> detail(@RequestParam("id") Long id) {
+		return new Result<SysSourceVO>().ok(sysSourceApplicationService.getSourceById(id));
 	}
 
 	@TraceLog
@@ -77,8 +77,8 @@ public class SysSourceApiController {
 	@OperateLog(module = "系统数据源", name = "数据源修改")
 	@PreAuthorize("hasAuthority('sys:source:update')")
 	@DataCache(name = "source", key = "#dto.id", type = CacheEnum.DEL)
-	public HttpResult<Boolean> update(@RequestBody SysSourceDTO dto) {
-		return new HttpResult<Boolean>().ok(sysSourceApplicationService.updateSource(dto));
+	public Result<Boolean> update(@RequestBody SysSourceDTO dto) {
+		return new Result<Boolean>().ok(sysSourceApplicationService.updateSource(dto));
 	}
 
 	@TraceLog
@@ -87,15 +87,15 @@ public class SysSourceApiController {
 	@OperateLog(module = "系统数据源", name = "数据源删除")
 	@PreAuthorize("hasAuthority('sys:source:delete')")
 	@DataCache(name = "source", key = "#id", type = CacheEnum.DEL)
-	public HttpResult<Boolean> delete(@RequestParam("id") Long id) {
-		return new HttpResult<Boolean>().ok(sysSourceApplicationService.deleteSource(id));
+	public Result<Boolean> delete(@RequestParam("id") Long id) {
+		return new Result<Boolean>().ok(sysSourceApplicationService.deleteSource(id));
 	}
 
 	@TraceLog
 	@GetMapping("/option/list")
 	@Operation(summary = "系统数据源>下拉框列表", description = "系统数据源>下拉框列表")
-	public HttpResult<List<OptionVO>> optionList() {
-		return new HttpResult<List<OptionVO>>().ok(sysSourceApplicationService.getOptionList());
+	public Result<List<OptionVO>> optionList() {
+		return new Result<List<OptionVO>>().ok(sysSourceApplicationService.getOptionList());
 	}
 
 }

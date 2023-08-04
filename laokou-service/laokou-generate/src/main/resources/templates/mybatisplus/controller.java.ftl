@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import ${package.Service}.*;
 import ${package.Entity}.*;
 import ${package.Entity?replace("entity","vo")}.*;

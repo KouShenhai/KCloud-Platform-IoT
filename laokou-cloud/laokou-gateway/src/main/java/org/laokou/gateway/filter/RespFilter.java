@@ -21,7 +21,7 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.core.CustomException;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.gateway.constant.GatewayConstant;
@@ -113,7 +113,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 							code = ex.getCode();
 							msg = ex.getMsg();
 						}
-						HttpResult<?> result = ResponseUtil.response(code, msg);
+						Result<?> result = ResponseUtil.response(code, msg);
 						byte[] uppedContent = JacksonUtil.toJsonStr(result).getBytes();
 						return dataBufferFactory.wrap(uppedContent);
 					}));

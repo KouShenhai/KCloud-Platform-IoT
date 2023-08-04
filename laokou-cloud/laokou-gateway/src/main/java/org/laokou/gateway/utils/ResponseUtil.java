@@ -17,7 +17,7 @@
 package org.laokou.gateway.utils;
 
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
@@ -63,16 +63,16 @@ public class ResponseUtil {
 	 * @param code 响应编码
 	 * @param msg 响应信息
 	 */
-	public static HttpResult<?> response(int code, String msg) {
-		return new HttpResult<>().error(code, msg);
+	public static Result<?> response(int code, String msg) {
+		return new Result<>().error(code, msg);
 	}
 
 	/**
 	 * 获取错误map集合
 	 * @param code 错误码
 	 */
-	public static HttpResult<?> error(int code) {
-		return new HttpResult<>().error(code);
+	public static Result<?> error(int code) {
+		return new Result<>().error(code);
 	}
 
 	public static String getParamValue(ServerHttpRequest request, String paramName) {

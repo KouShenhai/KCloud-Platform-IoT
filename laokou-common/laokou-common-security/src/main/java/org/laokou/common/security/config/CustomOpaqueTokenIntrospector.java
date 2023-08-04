@@ -28,6 +28,7 @@ import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;

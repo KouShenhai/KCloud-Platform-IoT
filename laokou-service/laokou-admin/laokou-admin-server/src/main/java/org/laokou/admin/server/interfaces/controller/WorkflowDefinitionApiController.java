@@ -22,9 +22,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.WorkflowDefinitionApplicationService;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.admin.server.interfaces.qo.DefinitionQo;
-import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,24 +48,24 @@ public class WorkflowDefinitionApiController {
 	@Operation(summary = "流程定义>新增", description = "流程定义>新增")
 	@OperateLog(module = "流程定义", name = "流程新增")
 	@PreAuthorize("hasAuthority('workflow:definition:insert')")
-	public HttpResult<Boolean> insert(@RequestPart("file") MultipartFile file) throws IOException {
-		return new HttpResult<Boolean>().ok(workflowDefinitionApplicationService.insertDefinition(file));
+	public Result<Boolean> insert(@RequestPart("file") MultipartFile file) throws IOException {
+		return new Result<Boolean>().ok(workflowDefinitionApplicationService.insertDefinition(file));
 	}
 
 	@TraceLog
 	@PostMapping("/query")
 	@Operation(summary = "流程定义>查询", description = "流程定义>查询")
 	@PreAuthorize("hasAuthority('workflow:definition:query')")
-	public HttpResult<IPage<DefinitionVO>> query(@RequestBody DefinitionQo qo) {
-		return new HttpResult<IPage<DefinitionVO>>().ok(workflowDefinitionApplicationService.queryDefinitionPage(qo));
+	public Result<IPage<DefinitionVO>> query(@RequestBody DefinitionQo qo) {
+		return new Result<IPage<DefinitionVO>>().ok(workflowDefinitionApplicationService.queryDefinitionPage(qo));
 	}
 
 	@TraceLog
 	@GetMapping("/image")
 	@Operation(summary = "流程定义>图片", description = "流程定义>图片")
 	@PreAuthorize("hasAuthority('workflow:definition:diagram')")
-	public HttpResult<String> image(@RequestParam("definitionId") String definitionId) {
-		return new HttpResult<String>().ok(workflowDefinitionApplicationService.diagramDefinition(definitionId));
+	public Result<String> image(@RequestParam("definitionId") String definitionId) {
+		return new Result<String>().ok(workflowDefinitionApplicationService.diagramDefinition(definitionId));
 	}
 
 	@TraceLog
@@ -73,8 +73,8 @@ public class WorkflowDefinitionApiController {
 	@Operation(summary = "流程定义>删除", description = "流程定义>删除")
 	@OperateLog(module = "流程定义", name = "流程删除")
 	@PreAuthorize("hasAuthority('workflow:definition:delete')")
-	public HttpResult<Boolean> delete(@RequestParam("deploymentId") String deploymentId) {
-		return new HttpResult<Boolean>().ok(workflowDefinitionApplicationService.deleteDefinition(deploymentId));
+	public Result<Boolean> delete(@RequestParam("deploymentId") String deploymentId) {
+		return new Result<Boolean>().ok(workflowDefinitionApplicationService.deleteDefinition(deploymentId));
 	}
 
 	@TraceLog
@@ -82,8 +82,8 @@ public class WorkflowDefinitionApiController {
 	@Operation(summary = "流程定义>挂起", description = "流程定义>挂起")
 	@OperateLog(module = "流程定义", name = "流程挂起")
 	@PreAuthorize("hasAuthority('workflow:definition:suspend')")
-	public HttpResult<Boolean> suspend(@RequestParam("definitionId") String definitionId) {
-		return new HttpResult<Boolean>().ok(workflowDefinitionApplicationService.suspendDefinition(definitionId));
+	public Result<Boolean> suspend(@RequestParam("definitionId") String definitionId) {
+		return new Result<Boolean>().ok(workflowDefinitionApplicationService.suspendDefinition(definitionId));
 	}
 
 	@TraceLog
@@ -91,8 +91,8 @@ public class WorkflowDefinitionApiController {
 	@Operation(summary = "流程定义>激活", description = "流程定义>激活")
 	@OperateLog(module = "流程定义", name = "流程激活")
 	@PreAuthorize("hasAuthority('workflow:definition:activate')")
-	public HttpResult<Boolean> activate(@RequestParam("definitionId") String definitionId) {
-		return new HttpResult<Boolean>().ok(workflowDefinitionApplicationService.activateDefinition(definitionId));
+	public Result<Boolean> activate(@RequestParam("definitionId") String definitionId) {
+		return new Result<Boolean>().ok(workflowDefinitionApplicationService.activateDefinition(definitionId));
 	}
 
 	@TraceLog

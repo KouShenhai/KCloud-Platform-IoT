@@ -19,7 +19,7 @@ package org.laokou.auth.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,8 +35,8 @@ public class SecretsController {
     @TraceLog
 	@GetMapping("v1/secrets")
 	@Operation(summary = "查看", description = "查看")
-    public HttpResult<String> get() {
-        return new HttpResult<>();
+    public Result<String> get() {
+        return new Result<>();
     }
 
 }

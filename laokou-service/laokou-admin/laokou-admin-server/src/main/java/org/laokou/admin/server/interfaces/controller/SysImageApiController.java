@@ -26,9 +26,9 @@ import org.laokou.admin.server.application.service.WorkflowTaskApplicationServic
 import org.laokou.admin.client.dto.SysResourceAuditDTO;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.log.vo.SysAuditLogVO;
-import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.oss.vo.UploadVO;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -56,9 +56,9 @@ public class SysImageApiController {
 	@TraceLog
 	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Operation(summary = "图片管理>上传", description = "图片管理>上传")
-	public HttpResult<UploadVO> upload(@RequestPart("file") MultipartFile file, @RequestParam("md5") String md5)
+	public Result<UploadVO> upload(@RequestPart("file") MultipartFile file, @RequestParam("md5") String md5)
 			throws Exception {
-		return new HttpResult<UploadVO>().ok(sysResourceApplicationService.uploadResource("image", file, md5));
+		return new Result<UploadVO>().ok(sysResourceApplicationService.uploadResource("image", file, md5));
 	}
 
 	@TraceLog
@@ -67,8 +67,8 @@ public class SysImageApiController {
 	@OperateLog(module = "图片管理", name = "同步索引")
 	@Lock4j(key = "image_sync_index_lock_")
 	@PreAuthorize("hasAuthority('sys:resource:image:syncIndex')")
-	public HttpResult<Boolean> syncIndex() throws InterruptedException {
-		return new HttpResult<Boolean>()
+	public Result<Boolean> syncIndex() throws InterruptedException {
+		return new Result<Boolean>()
 				.ok(sysResourceApplicationService.syncResource("image", RedisKeyUtil.getSyncIndexKey("image")));
 	}
 
@@ -76,16 +76,16 @@ public class SysImageApiController {
 	@PostMapping("/query")
 	@Operation(summary = "图片管理>查询", description = "图片管理>查询")
 	@PreAuthorize("hasAuthority('sys:resource:image:query')")
-	public HttpResult<IPage<SysResourceVO>> query(@RequestBody SysResourceQo qo) {
-		return new HttpResult<IPage<SysResourceVO>>().ok(sysResourceApplicationService.queryResourcePage(qo));
+	public Result<IPage<SysResourceVO>> query(@RequestBody SysResourceQo qo) {
+		return new Result<IPage<SysResourceVO>>().ok(sysResourceApplicationService.queryResourcePage(qo));
 	}
 
 	@TraceLog
 	@GetMapping(value = "/detail")
 	@Operation(summary = "图片管理>详情", description = "图片管理>详情")
 	@PreAuthorize("hasAuthority('sys:resource:image:detail')")
-	public HttpResult<SysResourceVO> detail(@RequestParam("id") Long id) {
-		return new HttpResult<SysResourceVO>().ok(sysResourceApplicationService.getResourceById(id));
+	public Result<SysResourceVO> detail(@RequestParam("id") Long id) {
+		return new Result<SysResourceVO>().ok(sysResourceApplicationService.getResourceById(id));
 	}
 
 	@TraceLog
@@ -101,8 +101,8 @@ public class SysImageApiController {
 	@Operation(summary = "图片管理>新增", description = "图片管理>新增")
 	@OperateLog(module = "图片管理", name = "图片新增")
 	@PreAuthorize("hasAuthority('sys:resource:image:insert')")
-	public HttpResult<Boolean> insert(@RequestBody SysResourceAuditDTO dto) throws IOException {
-		return new HttpResult<Boolean>().ok(sysResourceApplicationService.insertResource(dto));
+	public Result<Boolean> insert(@RequestBody SysResourceAuditDTO dto) throws IOException {
+		return new Result<Boolean>().ok(sysResourceApplicationService.insertResource(dto));
 	}
 
 	@TraceLog
@@ -110,8 +110,8 @@ public class SysImageApiController {
 	@Operation(summary = "图片管理>修改", description = "图片管理>修改")
 	@OperateLog(module = "图片管理", name = "图片修改")
 	@PreAuthorize("hasAuthority('sys:resource:image:update')")
-	public HttpResult<Boolean> update(@RequestBody SysResourceAuditDTO dto) throws IOException {
-		return new HttpResult<Boolean>().ok(sysResourceApplicationService.updateResource(dto));
+	public Result<Boolean> update(@RequestBody SysResourceAuditDTO dto) throws IOException {
+		return new Result<Boolean>().ok(sysResourceApplicationService.updateResource(dto));
 	}
 
 	@TraceLog
@@ -119,24 +119,24 @@ public class SysImageApiController {
 	@Operation(summary = "图片管理>删除", description = "图片管理>删除")
 	@OperateLog(module = "图片管理", name = "图片删除")
 	@PreAuthorize("hasAuthority('sys:resource:image:delete')")
-	public HttpResult<Boolean> delete(@RequestParam("id") Long id) {
-		return new HttpResult<Boolean>().ok(sysResourceApplicationService.deleteResource(id));
+	public Result<Boolean> delete(@RequestParam("id") Long id) {
+		return new Result<Boolean>().ok(sysResourceApplicationService.deleteResource(id));
 	}
 
 	@TraceLog
 	@GetMapping(value = "/diagram")
 	@Operation(summary = "图片管理>流程图", description = "图片管理>流程图")
 	@PreAuthorize("hasAuthority('sys:resource:image:diagram')")
-	public HttpResult<String> diagram(@RequestParam("processInstanceId") String processInstanceId) throws IOException {
-		return new HttpResult<String>().ok(workflowTaskApplicationService.diagramProcess(processInstanceId));
+	public Result<String> diagram(@RequestParam("processInstanceId") String processInstanceId) throws IOException {
+		return new Result<String>().ok(workflowTaskApplicationService.diagramProcess(processInstanceId));
 	}
 
 	@TraceLog
 	@GetMapping("/auditLog")
 	@Operation(summary = "图片管理>审批日志", description = "图片管理>审批日志")
 	@PreAuthorize("hasAuthority('sys:resource:image:auditLog')")
-	public HttpResult<List<SysAuditLogVO>> auditLog(@RequestParam("businessId") Long businessId) {
-		return new HttpResult<List<SysAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogList(businessId));
+	public Result<List<SysAuditLogVO>> auditLog(@RequestParam("businessId") Long businessId) {
+		return new Result<List<SysAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogList(businessId));
 	}
 
 }
