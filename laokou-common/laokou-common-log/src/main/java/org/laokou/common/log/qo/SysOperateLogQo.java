@@ -17,6 +17,7 @@
 package org.laokou.common.log.qo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.laokou.common.mybatisplus.entity.BasePage;
 
 import java.io.Serial;
@@ -24,6 +25,7 @@ import java.io.Serial;
 /**
  * @author laokou
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class SysOperateLogQo extends BasePage {
 
