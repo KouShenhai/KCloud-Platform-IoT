@@ -16,7 +16,7 @@ public class UserGatewayImpl implements UserGateway {
 
     @Override
     public User getUserByUsername(String username, Long tenantId, String type) {
-        UserDO userDO = userMapper.getUserByUsername(username, tenantId, type);
+        UserDO userDO = userMapper.getUserByUsernameAndTenantId(username, tenantId, type);
         if (userDO == null) {
             return null;
         }

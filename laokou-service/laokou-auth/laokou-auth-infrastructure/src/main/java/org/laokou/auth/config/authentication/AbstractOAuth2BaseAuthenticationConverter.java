@@ -18,8 +18,7 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.client.constant.AuthConstant;
-import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
+import org.laokou.auth.common.handler.OAuth2ExceptionHandler;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.StatusCode;
@@ -34,6 +33,7 @@ import org.springframework.util.MultiValueMap;
 
 import java.util.HashMap;
 import java.util.Map;
+import static org.laokou.common.core.constant.Constant.*;
 
 /**
  * 邮件/手机/密码
@@ -73,10 +73,10 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 			MDC.put(Constant.TRACE_ID, traceId);
 		}
 		// 判断租户编号是否为空
-		String tenantId = request.getParameter(AuthConstant.TENANT_ID);
+		String tenantId = request.getParameter(TENANT_ID);
 		log.info("租户编号：{}", tenantId);
 		if (StringUtil.isEmpty(tenantId)) {
-			throw CustomAuthExceptionHandler.getError(StatusCode.TENANT_ID_NOT_NULL,
+			throw OAuth2ExceptionHandler.getException(StatusCode.TENANT_ID_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.TENANT_ID_NOT_NULL));
 		}
 		// 构建请求参数集合
@@ -84,7 +84,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		// 判断scope
 		String scope = parameters.getFirst(OAuth2ParameterNames.SCOPE);
 		if (StringUtil.isNotEmpty(scope) && parameters.get(OAuth2ParameterNames.SCOPE).size() != 1) {
-			throw CustomAuthExceptionHandler.getError(StatusCode.INVALID_SCOPE,
+			throw OAuth2ExceptionHandler.getException(StatusCode.INVALID_SCOPE,
 					MessageUtil.getMessage(StatusCode.INVALID_SCOPE));
 		}
 		// 获取上下文认证信息

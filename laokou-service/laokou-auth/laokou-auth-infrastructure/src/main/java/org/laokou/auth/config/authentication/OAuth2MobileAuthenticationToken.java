@@ -22,6 +22,8 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Map;
 
+import static org.laokou.auth.common.Constant.AUTH_MOBILE;
+
 /**
  * @author laokou
  */
@@ -34,7 +36,7 @@ public class OAuth2MobileAuthenticationToken extends AbstractOAuth2BaseAuthentic
 	 */
 	protected OAuth2MobileAuthenticationToken(Authentication clientPrincipal,
 			Map<String, Object> additionalParameters) {
-		super(new AuthorizationGrantType(OAuth2MobileAuthenticationProvider.GRANT_TYPE), clientPrincipal,
+		super(new AuthorizationGrantType(AUTH_MOBILE), clientPrincipal,
 				additionalParameters);
 	}
 

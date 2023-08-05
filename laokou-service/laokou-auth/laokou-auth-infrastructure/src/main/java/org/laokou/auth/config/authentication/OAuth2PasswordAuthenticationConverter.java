@@ -21,6 +21,8 @@ import org.springframework.security.core.Authentication;
 
 import java.util.Map;
 
+import static org.laokou.auth.common.Constant.AUTH_PASSWORD;
+
 /**
  * @author laokou
  */
@@ -28,7 +30,7 @@ public class OAuth2PasswordAuthenticationConverter extends AbstractOAuth2BaseAut
 
 	@Override
 	String getGrantType() {
-		return OAuth2PasswordAuthenticationProvider.GRANT_TYPE;
+		return AUTH_PASSWORD;
 	}
 
 	@Override

@@ -18,36 +18,23 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.client.constant.AuthConstant;
-import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
-import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
-import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
-import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
+import org.laokou.auth.common.handler.OAuth2ExceptionHandler;
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.log.utils.LoginLogUtil;
-import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.sensitive.enums.TypeEnum;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
-import org.laokou.common.tenant.service.SysSourceService;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
-import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
+import static org.laokou.auth.common.Constant.*;
 
 /**
  * @author laokou
  */
 @Slf4j
 public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
-
-	public static final String GRANT_TYPE = "mobile";
 
 	@Override
 	public boolean supports(Class<?> authentication) {
@@ -59,18 +46,18 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
-			throw CustomAuthExceptionHandler.getError(StatusCode.CAPTCHA_NOT_NULL,
+			throw OAuth2ExceptionHandler.getException(StatusCode.CAPTCHA_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
 		}
-		String mobile = request.getParameter(AuthConstant.MOBILE);
+		String mobile = request.getParameter(MOBILE);
 		log.info("手机：{}", SensitiveUtil.format(TypeEnum.MOBILE, mobile));
 		if (StringUtil.isEmpty(mobile)) {
-			throw CustomAuthExceptionHandler.getError(StatusCode.MOBILE_NOT_NULL,
+			throw OAuth2ExceptionHandler.getException(StatusCode.MOBILE_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.MOBILE_NOT_NULL));
 		}
 		boolean isMobile = RegexUtil.mobileRegex(mobile);
 		if (!isMobile) {
-			throw CustomAuthExceptionHandler.getError(StatusCode.MOBILE_ERROR,
+			throw OAuth2ExceptionHandler.getException(StatusCode.MOBILE_ERROR,
 					MessageUtil.getMessage(StatusCode.MOBILE_ERROR));
 		}
 		// 获取用户信息,并认证信息
@@ -79,7 +66,7 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return new AuthorizationGrantType(GRANT_TYPE);
+		return new AuthorizationGrantType(AUTH_MOBILE);
 	}
 
 }

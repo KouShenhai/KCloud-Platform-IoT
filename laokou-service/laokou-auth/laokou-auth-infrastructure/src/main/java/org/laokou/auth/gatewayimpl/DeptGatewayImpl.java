@@ -17,8 +17,8 @@ public class DeptGatewayImpl implements DeptGateway {
     @Override
     public List<Long> getDeptIds(Long userId, Long tenantId, Integer superAdmin) {
         if (superAdmin == SuperAdmin.YES.ordinal()) {
-            return deptMapper.getDeptIds(tenantId);
+            return deptMapper.getDeptIdsByTenantId(tenantId);
         }
-        return deptMapper.getDeptIdsByUserId(userId, tenantId);
+        return deptMapper.getDeptIdsByUserIdAndTenantId(userId, tenantId);
     }
 }

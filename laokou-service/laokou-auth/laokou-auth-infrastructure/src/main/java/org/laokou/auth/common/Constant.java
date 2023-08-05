@@ -5,11 +5,38 @@ public interface Constant {
     /**
      * 默认
      */
-    int DEFAULT_TENANT = 0;
-
+    long DEFAULT_TENANT = 0L;
     /**
      * 默认数据库
      */
     String DEFAULT_SOURCE = "master";
+    /**
+     * 密码登录
+     */
+    String AUTH_PASSWORD = "password";
+    /**
+     * 邮箱登录
+     */
+    String AUTH_MAIL = "mail";
+    /**
+     * 手机号登录
+     */
+    String AUTH_MOBILE = "mobile";
+    /**
+     * 唯一标识
+     */
+    String UUID = "uuid";
+    /**
+     * 验证码
+     */
+    String CAPTCHA = "captcha";
+    /**
+     * 邮箱
+     */
+    String MAIL = "mail";
+    /**
+     * 手机
+     */
+    String MOBILE = "mobile";
 
 }

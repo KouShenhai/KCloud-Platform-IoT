@@ -18,10 +18,7 @@ package org.laokou.auth.config;
 
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.laokou.common.easy.captcha.service.SysCaptchaService;
-import org.laokou.common.log.utils.LoginLogUtil;
-import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.tenant.service.SysSourceService;
+import org.laokou.auth.config.authentication.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -90,11 +87,7 @@ class OAuth2AuthorizationServerConfig {
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
-			AuthorizationServerSettings authorizationServerSettings, OAuth2AuthorizationService authorizationService,
-			SysUserService sysUserService, SysMenuService sysMenuService, SysDeptService sysDeptService,
-			LoginLogUtil loginLogUtil, PasswordEncoder passwordEncoder, SysCaptchaService sysCaptchaService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService,
-			RedisUtil redisUtil) throws Exception {
+			AuthorizationServerSettings authorizationServerSettings, OAuth2AuthorizationService authorizationService) throws Exception {
 		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 		OAuth2AuthorizationServerConfigurer oAuth2AuthorizationServerConfigurer = http
 				.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
@@ -103,7 +96,8 @@ class OAuth2AuthorizationServerConfig {
 						.accessTokenRequestConverter(new DelegatingAuthenticationConverter(List.of(
 								new OAuth2PasswordAuthenticationConverter(),
 								new OAuth2DeviceCodeAuthenticationConverter(),
-								new OAuth2MobileAuthenticationConverter(), new OAuth2MailAuthenticationConverter(),
+								new OAuth2MobileAuthenticationConverter(),
+								new OAuth2MailAuthenticationConverter(),
 								new OAuth2AuthorizationCodeAuthenticationConverter(),
 								new OAuth2ClientCredentialsAuthenticationConverter(),
 								new OAuth2RefreshTokenAuthenticationConverter(),
@@ -118,15 +112,9 @@ class OAuth2AuthorizationServerConfig {
 								new OAuth2DeviceVerificationAuthenticationConverter(),
 								new JwtClientAssertionAuthenticationConverter(),
 								new OAuth2AuthorizationCodeRequestAuthenticationConverter())))
-						.authenticationProvider(new OAuth2PasswordAuthenticationProvider(sysUserService, sysMenuService,
-								sysDeptService, loginLogUtil, passwordEncoder, sysCaptchaService, authorizationService,
-								tokenGenerator, sysSourceService, redisUtil))
-						.authenticationProvider(new OAuth2MobileAuthenticationProvider(sysUserService, sysMenuService,
-								sysDeptService, loginLogUtil, passwordEncoder, sysCaptchaService, authorizationService,
-								tokenGenerator, sysSourceService, redisUtil))
-						.authenticationProvider(new OAuth2MailAuthenticationProvider(sysUserService, sysMenuService,
-								sysDeptService, loginLogUtil, passwordEncoder, sysCaptchaService, authorizationService,
-								tokenGenerator, sysSourceService, redisUtil)))
+						.authenticationProvider(new OAuth2PasswordAuthenticationProvider())
+						.authenticationProvider(new OAuth2MobileAuthenticationProvider())
+						.authenticationProvider(new OAuth2MailAuthenticationProvider()))
 				.oidc(Customizer.withDefaults()).authorizationService(authorizationService)
 				.authorizationServerSettings(authorizationServerSettings);
 		http.apply(oAuth2AuthorizationServerConfigurer);

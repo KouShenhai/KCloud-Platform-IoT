@@ -223,7 +223,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId);
 			throw OAuth2ExceptionHandler.getException(code, msg);
 		}
-		if (OAuth2PasswordAuthenticationProvider.GRANT_TYPE.equals(loginType)) {
+		if (AUTH_PASSWORD.equals(loginType)) {
 			// 验证密码
 			String clientPassword = user.getPassword();
 			if (!passwordEncoder.matches(password, clientPassword)) {

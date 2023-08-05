@@ -18,36 +18,23 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.client.constant.AuthConstant;
-import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
-import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
-import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
-import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
+import org.laokou.auth.common.handler.OAuth2ExceptionHandler;
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.log.utils.LoginLogUtil;
-import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.sensitive.enums.TypeEnum;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
-import org.laokou.common.tenant.service.SysSourceService;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
-import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
+import static org.laokou.auth.common.Constant.*;
 
 /**
  * @author laokou
  */
 @Slf4j
 public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
-
-	public static final String GRANT_TYPE = "mail";
 
 	@Override
 	public boolean supports(Class<?> authentication) {
@@ -60,18 +47,18 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
-			throw CustomAuthExceptionHandler.getError(StatusCode.CAPTCHA_NOT_NULL,
+			throw OAuth2ExceptionHandler.getException(StatusCode.CAPTCHA_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
 		}
-		String mail = request.getParameter(AuthConstant.MAIL);
+		String mail = request.getParameter(MAIL);
 		log.info("邮箱：{}", SensitiveUtil.format(TypeEnum.MAIL, mail));
 		if (StringUtil.isEmpty(mail)) {
-			throw CustomAuthExceptionHandler.getError(StatusCode.MAIL_NOT_NULL,
+			throw OAuth2ExceptionHandler.getException(StatusCode.MAIL_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.MAIL_NOT_NULL));
 		}
 		boolean isMail = RegexUtil.mailRegex(mail);
 		if (!isMail) {
-			throw CustomAuthExceptionHandler.getError(StatusCode.MAIL_ERROR,
+			throw OAuth2ExceptionHandler.getException(StatusCode.MAIL_ERROR,
 					MessageUtil.getMessage(StatusCode.MAIL_ERROR));
 		}
 		// 获取用户信息,并认证信息
@@ -80,7 +67,7 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return new AuthorizationGrantType(GRANT_TYPE);
+		return new AuthorizationGrantType(AUTH_MAIL);
 	}
 
 }
