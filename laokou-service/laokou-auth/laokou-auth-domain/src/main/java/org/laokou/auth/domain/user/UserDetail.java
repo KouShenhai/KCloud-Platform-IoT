@@ -19,7 +19,6 @@ package org.laokou.auth.domain.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
-import org.laokou.common.i18n.dto.ClientObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,7 +35,7 @@ import java.util.stream.Collectors;
  */
 @Data
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
-public class UserDetail extends ClientObject implements UserDetails, OAuth2AuthenticatedPrincipal {
+public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal {
 
     @Serial
     private static final long serialVersionUID = 3319752558160144611L;
