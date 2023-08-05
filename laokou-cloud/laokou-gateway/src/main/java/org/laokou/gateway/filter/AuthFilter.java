@@ -16,16 +16,17 @@
  */
 package org.laokou.gateway.filter;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
-import org.laokou.gateway.config.CustomProperties;
 import org.laokou.gateway.utils.RequestUtil;
 import org.laokou.gateway.utils.ResponseUtil;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutputMessage;
@@ -63,10 +64,16 @@ import static org.laokou.gateway.constant.Constant.OAUTH2_AUTH_URI;
  */
 @Component
 @Slf4j
-@RequiredArgsConstructor
+@RefreshScope
+@Data
+@ConfigurationProperties(prefix = "ignore")
 public class AuthFilter implements GlobalFilter, Ordered {
 
-	private final CustomProperties customProperties;
+	/**
+	 * 不拦截的urls
+	 */
+	private Set<String> uris;
+
 	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
 	@Override
@@ -76,7 +83,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		// 获取uri
 		String requestUri = request.getPath().pathWithinApplication().value();
 		// 请求放行，无需验证权限
-		if (pathMatcher(requestUri, customProperties.getUris())) {
+		if (pathMatcher(requestUri, uris)) {
 			return chain.filter(exchange);
 		}
 		// 表单提交
