@@ -172,7 +172,7 @@
 				<configuration>
 					<finalName>${project.artifactId}</finalName>
 					<!-- main方法的地址 只需要修改这个地址-->
-					<mainClass>org.laokou.admin.server.AdminApplication</mainClass>
+					<mainClass>org.laokou.admin.server.AdminApp</mainClass>
 				</configuration>
 				<executions>
 					<execution>

@@ -28,7 +28,7 @@ import org.springframework.test.context.TestConstructor;
  * @author laokou
  */
 @Slf4j
-@SpringBootTest(classes = AdminApplication.class)
+@SpringBootTest(classes = AdminApp.class)
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class RedisTest {

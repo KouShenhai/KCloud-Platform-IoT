@@ -12,21 +12,28 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
-package org.laokou.api.server;
+package org.laokou.logstash.rocketmq;
 
-import org.springframework.boot.SpringApplication;
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author laokou
  */
 @SpringBootApplication
-public class ApiApplication {
+@EnableEncryptableProperties
+@EnableScheduling
+@EnableDiscoveryClient
+public class RocketmqApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApiApplication.class, args);
+		new SpringApplicationBuilder(RocketmqApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }

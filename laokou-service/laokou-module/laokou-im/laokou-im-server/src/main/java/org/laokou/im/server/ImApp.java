@@ -18,6 +18,12 @@ package org.laokou.im.server;
 
 import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import org.laokou.common.security.config.CustomOpaqueTokenIntrospector;
+import org.laokou.common.security.config.OAuth2ResourceServerProperties;
+import org.laokou.common.security.config.auto.OAuth2AuthorizationAutoConfig;
+import org.laokou.common.security.config.auto.OAuth2ResourceServerAutoConfig;
+import org.laokou.common.security.handler.ForbiddenExceptionHandler;
+import org.laokou.common.security.handler.InvalidAuthenticationEntryPoint;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
@@ -30,10 +36,17 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class
+		, OAuth2ResourceServerAutoConfig.class
+		, CustomOpaqueTokenIntrospector.class
+		, ForbiddenExceptionHandler.class
+		, OAuth2ResourceServerProperties.class
+		, InvalidAuthenticationEntryPoint.class
+		, OAuth2AuthorizationAutoConfig.class
+		, ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableEncryptableProperties
 @EnableDiscoveryClient
-public class ImApplication {
+public class ImApp {
 
 	/**
 	 * 启动.
@@ -43,7 +56,7 @@ public class ImApplication {
 		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
-		new SpringApplicationBuilder(ImApplication.class).web(WebApplicationType.REACTIVE).run(args);
+		new SpringApplicationBuilder(ImApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 
 }

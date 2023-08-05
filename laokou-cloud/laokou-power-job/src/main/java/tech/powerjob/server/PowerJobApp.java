@@ -18,7 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @PropertySource("/application.yml")
 @EnableEncryptableProperties
-public class PowerJobApplication {
+public class PowerJobApp {
 
 	private static final String TIPS = "\n\n" + "******************* PowerJob Tips *******************\n"
 			+ "如果应用无法启动，我们建议您仔细阅读以下文档来解决:\n"
@@ -29,7 +29,7 @@ public class PowerJobApplication {
 	public static void main(String[] args) {
 		// Start SpringBoot application.
 		try {
-			SpringApplication.run(PowerJobApplication.class, args);
+			SpringApplication.run(PowerJobApp.class, args);
 		}
 		catch (Throwable t) {
 			log.error(TIPS);

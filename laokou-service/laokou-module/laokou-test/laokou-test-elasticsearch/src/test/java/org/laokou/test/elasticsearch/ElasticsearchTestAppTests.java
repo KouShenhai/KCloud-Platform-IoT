@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @Slf4j
-class ElasticsearchTestApplicationTests {
+class ElasticsearchTestAppTests {
 
 	private final NewElasticsearchTemplate newElasticsearchTemplate;
 

@@ -179,7 +179,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <fork>true</fork>
-                    <mainClass>com.alibaba.csp.sentinel.dashboard.SentinelApplication</mainClass>
+                    <mainClass>com.alibaba.csp.sentinel.dashboard.SentinelApp</mainClass>
                 </configuration>
                 <executions>
                     <execution>

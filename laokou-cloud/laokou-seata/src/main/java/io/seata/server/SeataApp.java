@@ -27,7 +27,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
  */
 @SpringBootApplication(scanBasePackages = { "io.seata" })
 @EnableEncryptableProperties
-public class SeataApplication {
+public class SeataApp {
 
 	public static void main(String[] args) throws InterruptedException {
 		try {
@@ -35,7 +35,7 @@ public class SeataApplication {
 			System.setProperty(TlsSystemConfig.TLS_ENABLE, "true");
 			System.setProperty(TlsSystemConfig.CLIENT_AUTH, "true");
 			System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
-			new SpringApplicationBuilder(SeataApplication.class).web(WebApplicationType.SERVLET).run(args);
+			new SpringApplicationBuilder(SeataApp.class).web(WebApplicationType.SERVLET).run(args);
 		}
 		catch (Throwable t) {
 			// This exception is used to end `spring-boot-maven-plugin:process-aot`, so

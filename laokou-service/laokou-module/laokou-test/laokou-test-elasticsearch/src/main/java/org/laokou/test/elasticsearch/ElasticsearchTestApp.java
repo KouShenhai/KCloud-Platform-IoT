@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @EnableEncryptableProperties
-public class ElasticsearchTestApplication {
+public class ElasticsearchTestApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ElasticsearchTestApplication.class, args);
+		SpringApplication.run(ElasticsearchTestApp.class, args);
 	}
 
 }

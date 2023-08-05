@@ -161,7 +161,7 @@
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
                     <!-- main方法的地址 只需要修改这个地址-->
-                    <mainClass>org.laokou.im.server.ImApplication</mainClass>
+                    <mainClass>org.laokou.im.server.ImApp</mainClass>
                 </configuration>
                 <executions>
                     <execution>

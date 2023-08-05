@@ -28,7 +28,7 @@ import java.util.List;
  * @author laokou
  */
 @Slf4j
-@SpringBootTest(classes = AdminApplication.class)
+@SpringBootTest(classes = AdminApp.class)
 public class CollectionTest {
 
 	public static void main(String[] args) {

@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.flowable.server;
+package org.laokou.gateway;
 
 import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
@@ -29,15 +29,15 @@ import static org.laokou.common.core.constant.Constant.TRUE;
  * @author laokou
  */
 @SpringBootApplication
-@EnableDiscoveryClient
 @EnableEncryptableProperties
-public class FlowableApplication {
+@EnableDiscoveryClient
+public class GatewayApp {
 
 	public static void main(String[] args) {
 		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
 		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
-		new SpringApplicationBuilder(FlowableApplication.class).web(WebApplicationType.SERVLET).run(args);
+		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 
 }

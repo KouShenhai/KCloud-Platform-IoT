@@ -33,13 +33,13 @@ import static java.lang.Boolean.TRUE;
 @EnableAdminServer
 @EnableEncryptableProperties
 @EnableDiscoveryClient
-public class MonitorApplication {
+public class MonitorApp {
 
 	public static void main(String[] args) {
 		System.setProperty(TlsSystemConfig.TLS_ENABLE, String.valueOf(TRUE));
 		System.setProperty(TlsSystemConfig.CLIENT_AUTH, String.valueOf(TRUE));
 		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
-		new SpringApplicationBuilder(MonitorApplication.class).web(WebApplicationType.REACTIVE).run(args);
+		new SpringApplicationBuilder(MonitorApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 
 }

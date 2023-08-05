@@ -33,7 +33,7 @@
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
                     <!-- main方法的地址 只需要修改这个地址-->
-                    <mainClass>org.laokou.api.server.ApiApplication</mainClass>
+                    <mainClass>org.laokou.api.server.ApiApp</mainClass>
                 </configuration>
                 <executions>
                     <execution>

@@ -27,7 +27,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @author laokou
  */
 @Slf4j
-@SpringBootTest(classes = AdminApplication.class)
+@SpringBootTest(classes = AdminApp.class)
 public class RegexTest {
 
 	@Test
