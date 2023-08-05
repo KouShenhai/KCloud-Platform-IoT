@@ -37,7 +37,7 @@ public class CaptchasController {
 	@GetMapping("v1/captchas/{uuid}")
 	@Operation(summary = "查看", description = "查看")
 	public Result<String> get(@PathVariable("uuid")String uuid) {
-		return new Result<String>().ok(uuid);
+		return Result.of(uuid);
 	}
 
 }

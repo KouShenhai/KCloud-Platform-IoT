@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  */
 @Data
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
-public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal {
+public class User implements UserDetails, OAuth2AuthenticatedPrincipal {
 
     @Serial
     private static final long serialVersionUID = 3319752558160144611L;
@@ -80,7 +80,7 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        UserDetail that = (UserDetail) o;
+        User that = (User) o;
         if (!id.equals(that.id)) {
             return false;
         }

@@ -37,7 +37,7 @@ public class CustomExceptionHandler {
 	 */
 	@ExceptionHandler({ CustomException.class })
 	public Result<?> handleRenException(CustomException ex) {
-		return new Result<>().error(ex.getCode(), ex.getMsg());
+		return Result.fail(ex.getCode(), ex.getMsg());
 	}
 
 }

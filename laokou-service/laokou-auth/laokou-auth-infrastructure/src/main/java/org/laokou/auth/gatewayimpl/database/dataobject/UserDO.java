@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
@@ -14,30 +15,30 @@
  * limitations under the License.
  *
  */
-package org.laokou.auth.server.domain.sys.repository.mapper;
+package org.laokou.auth.gatewayimpl.database.dataobject;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.auth.client.user.UserDetail;
-import org.springframework.stereotype.Repository;
+import lombok.Data;
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
- * 用户类
- *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface SysUserMapper {
+@Data
+public class UserDO implements Serializable {
 
-	/**
-	 * 获取用户信息
-	 * @param loginName
-	 * @param tenantId
-	 * @param loginType
-	 * @return
-	 */
-	UserDetail getUserDetail(@Param("loginName") String loginName, @Param("tenantId") Long tenantId,
-			@Param("loginType") String loginType);
+    @Serial
+    private static final long serialVersionUID = 3319752558160144611L;
+
+    private Long id;
+    private String username;
+    private String avatar;
+    private Integer superAdmin;
+    private Integer status;
+    private String mail;
+    private String mobile;
+    private String password;
+    private Long deptId;
+    private Long tenantId;
 
 }

@@ -18,7 +18,7 @@ package org.laokou.common.log.qo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.laokou.common.mybatisplus.entity.BasePage;
+import org.laokou.common.i18n.dto.BasePage;
 
 import java.io.Serial;
 

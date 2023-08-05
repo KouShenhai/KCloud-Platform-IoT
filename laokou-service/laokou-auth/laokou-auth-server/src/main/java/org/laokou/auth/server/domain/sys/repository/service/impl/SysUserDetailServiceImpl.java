@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.client.user.UserDetail;
 import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
 import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
-import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.RequestUtil;

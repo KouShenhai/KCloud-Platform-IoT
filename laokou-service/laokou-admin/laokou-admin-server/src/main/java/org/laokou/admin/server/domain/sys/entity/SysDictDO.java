@@ -18,7 +18,7 @@ package org.laokou.admin.server.domain.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.laokou.common.mybatisplus.entity.BaseDO;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 import lombok.Data;
 
 import java.io.Serial;

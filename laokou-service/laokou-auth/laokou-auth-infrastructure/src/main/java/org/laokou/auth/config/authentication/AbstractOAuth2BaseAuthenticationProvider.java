@@ -19,12 +19,8 @@ package org.laokou.auth.config.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.client.constant.AuthConstant;
-import org.laokou.auth.client.handler.CustomAuthExceptionHandler;
-import org.laokou.auth.domain.user.UserDetail;
-import org.laokou.auth.server.domain.sys.repository.service.SysDeptService;
-import org.laokou.auth.server.domain.sys.repository.service.SysMenuService;
-import org.laokou.auth.server.domain.sys.repository.service.SysUserService;
+import org.laokou.auth.domain.gateway.UserGateway;
+import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.easy.captcha.service.SysCaptchaService;
@@ -70,7 +66,7 @@ import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
 @Slf4j
 public abstract class AbstractOAuth2BaseAuthenticationProvider implements AuthenticationProvider, InitializingBean {
 
-	protected SysUserService sysUserService;
+	protected UserGateway userGateway;
 
 	protected SysMenuService sysMenuService;
 
@@ -217,8 +213,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 加密
 		String encryptName = AesUtil.encrypt(loginName);
 		// 多租户查询
-		UserDetail userDetail = sysUserService.getUserDetail(encryptName, tenantId, loginType);
-		if (userDetail == null) {
+		User user = sysUserService.getUserDetail(encryptName, tenantId, loginType);
+		if (user == null) {
 			code = StatusCode.USERNAME_PASSWORD_ERROR;
 			msg = MessageUtil.getMessage(code);
 			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
@@ -227,7 +223,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		}
 		if (OAuth2PasswordAuthenticationProvider.GRANT_TYPE.equals(loginType)) {
 			// 验证密码
-			String clientPassword = userDetail.getPassword();
+			String clientPassword = user.getPassword();
 			if (!passwordEncoder.matches(password, clientPassword)) {
 				code = StatusCode.USERNAME_PASSWORD_ERROR;
 				msg = MessageUtil.getMessage(code);
@@ -237,15 +233,15 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			}
 		}
 		// 是否锁定
-		if (!userDetail.isEnabled()) {
+		if (!user.isEnabled()) {
 			code = StatusCode.USERNAME_DISABLE;
 			msg = MessageUtil.getMessage(code);
 			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
 			loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId);
 			throw CustomAuthExceptionHandler.getError(code, msg);
 		}
-		Long userId = userDetail.getId();
-		Integer superAdmin = userDetail.getSuperAdmin();
+		Long userId = user.getId();
+		Integer superAdmin = user.getSuperAdmin();
 		// 权限标识列表
 		List<String> permissionsList = sysMenuService.getPermissionsList(tenantId, superAdmin, userId);
 		if (CollectionUtil.isEmpty(permissionsList)) {
@@ -257,26 +253,26 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		}
 		// 部门列表
 		List<Long> deptIds = sysDeptService.getDeptIds(superAdmin, userId, tenantId);
-		userDetail.setDeptIds(deptIds);
-		userDetail.setPermissionList(permissionsList);
+		user.setDeptIds(deptIds);
+		user.setPermissionList(permissionsList);
 		if (tenantId == DEFAULT) {
 			// 默认数据源
-			userDetail.setSourceName(DEFAULT_SOURCE);
+			user.setSourceName(DEFAULT_SOURCE);
 		}
 		else {
 			// 租户数据源
 			String sourceName = sysSourceService.querySourceName(tenantId);
-			userDetail.setSourceName(sourceName);
+			user.setSourceName(sourceName);
 		}
 		// 登录IP
-		userDetail.setLoginIp(IpUtil.getIpAddr(request));
+		user.setLoginIp(IpUtil.getIpAddr(request));
 		// 登录时间
-		userDetail.setLoginDate(DateUtil.now());
+		user.setLoginDate(DateUtil.now());
 		// 登录成功
 		loginLogUtil.recordLogin(loginName, loginType, ResultStatusEnum.SUCCESS.ordinal(),
 				AuthConstant.LOGIN_SUCCESS_MSG, request, tenantId);
 		log.info(AuthConstant.LOGIN_SUCCESS_MSG);
-		return new UsernamePasswordAuthenticationToken(userDetail, encryptName, userDetail.getAuthorities());
+		return new UsernamePasswordAuthenticationToken(user, encryptName, user.getAuthorities());
 	}
 
 	private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(
@@ -294,7 +290,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	@Override
 	public void afterPropertiesSet() {
-		sysUserService = SpringContextUtil.getBean(SysUserService.class);
+		userGateway = SpringContextUtil.getBean(UserGateway.class);
 		sysMenuService = SpringContextUtil.getBean(SysMenuService.class);
 		sysDeptService = SpringContextUtil.getBean(SysDeptService.class);
 		loginLogUtil = SpringContextUtil.getBean(LoginLogUtil.class);

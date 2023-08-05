@@ -36,7 +36,7 @@ public class SecretsController {
 	@GetMapping("v1/secrets")
 	@Operation(summary = "查看", description = "查看")
     public Result<String> get() {
-        return new Result<>();
+        return Result.of(null);
     }
 
 }

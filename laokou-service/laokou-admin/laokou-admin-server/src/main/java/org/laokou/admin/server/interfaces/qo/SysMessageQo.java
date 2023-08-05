@@ -16,7 +16,7 @@
  */
 package org.laokou.admin.server.interfaces.qo;
 
-import org.laokou.common.mybatisplus.entity.BasePage;
+import org.laokou.common.i18n.dto.BasePage;
 import lombok.Data;
 
 import java.io.Serial;

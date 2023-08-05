@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.mybatisplus.entity.BaseDO;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 import java.io.File;
 import java.util.ArrayList;

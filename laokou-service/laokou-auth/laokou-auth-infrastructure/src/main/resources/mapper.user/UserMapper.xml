@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /*
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.auth.gatewayimpl.database.UserMapper">
+
+    <select id="getUser" resultType="org.laokou.auth.gatewayimpl.database.dataobject.UserDO">
+        SELECT a.id as id
+        ,a.username as username
+        ,a.password as password
+        ,a.avatar as avatar
+        ,a.super_admin as superAdmin
+        ,a.status as status
+        ,a.mail as mail
+        ,a.mobile as mobile
+        ,a.dept_id as deptId
+        ,a.tenant_id as tenantId
+        FROM `boot_sys_user` a
+        where a.del_flag = 0
+        <if test="tenantId != null">
+            and a.tenant_id = #{tenantId}
+        </if>
+        <if test="loginType != null and loginType == 'password'">
+            and a.username = #{loginName}
+        </if>
+        <if test="loginType != null and loginType == 'mail'">
+            and a.mail = #{loginName}
+        </if>
+        <if test="loginType != null and loginType == 'mobile'">
+            and a.mobile = #{loginName}
+        </if>
+        limit 1
+    </select>
+
+</mapper>

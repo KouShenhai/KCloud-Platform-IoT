@@ -27,7 +27,7 @@ import org.laokou.common.core.enums.SuperAdminEnum;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.mybatisplus.entity.BasePage;
+import org.laokou.common.i18n.dto.BasePage;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 

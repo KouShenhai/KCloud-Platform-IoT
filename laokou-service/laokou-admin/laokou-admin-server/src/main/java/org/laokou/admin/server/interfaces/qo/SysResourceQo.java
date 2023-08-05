@@ -18,7 +18,7 @@ package org.laokou.admin.server.interfaces.qo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.mybatisplus.entity.BasePage;
+import org.laokou.common.i18n.dto.BasePage;
 
 import java.io.Serial;
 
