@@ -36,7 +36,7 @@ import java.time.temporal.ChronoUnit;
  * @author laokou
  */
 @Configuration
-public class GatewayConfig {
+public class HttpConfig {
 
 	/**
 	 * 消息转换器配置

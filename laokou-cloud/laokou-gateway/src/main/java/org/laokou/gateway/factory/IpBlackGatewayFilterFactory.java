@@ -22,6 +22,7 @@ import io.netty.handler.ipfilter.IpSubnetFilterRule;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.laokou.common.core.constant.Constant;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.gateway.utils.ResponseUtil;
@@ -52,7 +53,7 @@ public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<Ip
 			InetSocketAddress remoteAddress = config.remoteAddressResolver.resolve(exchange);
 			for (IpSubnetFilterRule source : sources) {
 				if (source.matches(remoteAddress)) {
-					return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.IP_BLACK));
+					return ResponseUtil.response(exchange, Result.fail(StatusCode.IP_BLACK));
 				}
 			}
 			return chain.filter(exchange);

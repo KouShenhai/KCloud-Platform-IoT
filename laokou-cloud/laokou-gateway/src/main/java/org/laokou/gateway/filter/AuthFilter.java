@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
 import org.laokou.gateway.config.CustomProperties;
@@ -38,6 +39,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.HandlerStrategies;
@@ -47,6 +49,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 import static org.laokou.common.core.constant.Constant.*;
@@ -63,6 +66,7 @@ import static org.laokou.gateway.constant.Constant.OAUTH2_AUTH_URI;
 public class AuthFilter implements GlobalFilter, Ordered {
 
 	private final CustomProperties customProperties;
+	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -71,7 +75,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		// 获取uri
 		String requestUri = request.getPath().pathWithinApplication().value();
 		// 请求放行，无需验证权限
-		if (ResponseUtil.pathMatcher(requestUri, customProperties.getUris())) {
+		if (pathMatcher(requestUri, customProperties.getUris())) {
 			return chain.filter(exchange);
 		}
 		// 表单提交
@@ -83,7 +87,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		// 获取token
 		String token = ResponseUtil.getParamValue(request, AUTHORIZATION);
 		if (StringUtil.isEmpty(token)) {
-			return ResponseUtil.response(exchange, ResponseUtil.error(StatusCode.UNAUTHORIZED));
+			return ResponseUtil.response(exchange, Result.fail(StatusCode.UNAUTHORIZED));
 		}
 		// 增加令牌
 		return chain
@@ -169,6 +173,15 @@ public class AuthFilter implements GlobalFilter, Ordered {
 				return outputMessage.getBody();
 			}
 		};
+	}
+
+	private static boolean pathMatcher(String requestUri, Set<String> uris) {
+		for (String url : uris) {
+			if (ANT_PATH_MATCHER.match(url, requestUri)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

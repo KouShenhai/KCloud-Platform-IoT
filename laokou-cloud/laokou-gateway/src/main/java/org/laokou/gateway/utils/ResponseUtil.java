@@ -17,20 +17,17 @@
 package org.laokou.gateway.utils;
 
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Set;
 
 /**
  * 响应工具
@@ -39,16 +36,6 @@ import java.util.Set;
  */
 public class ResponseUtil {
 
-	/**
-	 * 拥有uri匹配
-	 */
-	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
-
-	/**
-	 * 前端响应
-	 * @param exchange exchange对象
-	 * @param data 数据
-	 */
 	public static Mono<Void> response(ServerWebExchange exchange, Object data) {
 		DataBuffer buffer = exchange.getResponse().bufferFactory()
 				.wrap(JacksonUtil.toJsonStr(data).getBytes(StandardCharsets.UTF_8));
@@ -56,23 +43,6 @@ public class ResponseUtil {
 		response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 		response.setStatusCode(HttpStatus.OK);
 		return response.writeWith(Flux.just(buffer));
-	}
-
-	/**
-	 * map响应体
-	 * @param code 响应编码
-	 * @param msg 响应信息
-	 */
-	public static Result<?> response(int code, String msg) {
-		return new Result<>().error(code, msg);
-	}
-
-	/**
-	 * 获取错误map集合
-	 * @param code 错误码
-	 */
-	public static Result<?> error(int code) {
-		return new Result<>().error(code);
 	}
 
 	public static String getParamValue(ServerHttpRequest request, String paramName) {
@@ -83,20 +53,6 @@ public class ResponseUtil {
 			paramValue = request.getQueryParams().getFirst(paramName);
 		}
 		return StringUtil.isEmpty(paramValue) ? "" : paramValue.trim();
-	}
-
-	/**
-	 * uri匹配
-	 * @param requestUri 请求uri
-	 * @param uris 忽略uris
-	 */
-	public static boolean pathMatcher(String requestUri, Set<String> uris) {
-		for (String url : uris) {
-			if (ANT_PATH_MATCHER.match(url, requestUri)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 }
