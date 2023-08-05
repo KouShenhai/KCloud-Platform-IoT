@@ -33,7 +33,8 @@ import org.springframework.util.MultiValueMap;
 
 import java.util.HashMap;
 import java.util.Map;
-import static org.laokou.common.core.constant.Constant.*;
+
+import static org.laokou.auth.common.Constant.TENANT_ID;
 
 /**
  * 邮件/手机/密码

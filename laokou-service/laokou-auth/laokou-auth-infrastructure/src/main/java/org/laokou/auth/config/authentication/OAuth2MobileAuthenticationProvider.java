@@ -19,22 +19,39 @@ package org.laokou.auth.config.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.common.handler.OAuth2ExceptionHandler;
+import org.laokou.auth.domain.gateway.DeptGateway;
+import org.laokou.auth.domain.gateway.MenuGateway;
+import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.log.utils.LoginLogUtil;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.sensitive.enums.TypeEnum;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
+import org.laokou.common.tenant.service.SysSourceService;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
+import org.springframework.stereotype.Component;
+
 import static org.laokou.auth.common.Constant.*;
 
 /**
  * @author laokou
  */
 @Slf4j
+@Component
 public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
+
+	public OAuth2MobileAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, LoginLogUtil loginLogUtil, PasswordEncoder passwordEncoder, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService, RedisUtil redisUtil) {
+		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, authorizationService, tokenGenerator, sysSourceService, redisUtil);
+	}
 
 	@Override
 	public boolean supports(Class<?> authentication) {

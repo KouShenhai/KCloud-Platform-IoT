@@ -47,37 +47,37 @@ public class WorkDefinitionApiController {
 	@Operation(summary = "流程定义>新增流程", description = "流程定义>新增流程")
 	public Result<Boolean> insert(@Valid @NotNull(message = "请上传相关流程图") @RequestPart("file") MultipartFile file)
 			throws IOException {
-		return new Result<Boolean>().ok(workDefinitionService.insertDefinition(file.getInputStream()));
+		return Result.of(workDefinitionService.insertDefinition(file.getInputStream()));
 	}
 
 	@PostMapping(value = "/query")
 	@Operation(summary = "流程定义>查询流程", description = "流程定义>查询流程")
 	public Result<PageVO<DefinitionVO>> query(@RequestBody DefinitionDTO dto) {
-		return new Result<PageVO<DefinitionVO>>().ok(workDefinitionService.queryDefinitionPage(dto));
+		return Result.of(workDefinitionService.queryDefinitionPage(dto));
 	}
 
 	@GetMapping(value = "/diagram")
 	@Operation(summary = "流程定义>流程图", description = "流程定义>流程图")
 	public Result<String> diagram(@RequestParam("definitionId") String definitionId) {
-		return new Result<String>().ok(workDefinitionService.diagramDefinition(definitionId));
+		return Result.of(workDefinitionService.diagramDefinition(definitionId));
 	}
 
 	@DeleteMapping(value = "/delete")
 	@Operation(summary = "流程定义>删除流程", description = "流程定义>删除流程")
 	public Result<Boolean> delete(@RequestParam("deploymentId") String deploymentId) {
-		return new Result<Boolean>().ok(workDefinitionService.deleteDefinition(deploymentId));
+		return Result.of(workDefinitionService.deleteDefinition(deploymentId));
 	}
 
 	@PutMapping(value = "/suspend")
 	@Operation(summary = "流程定义>挂起流程", description = "流程定义>挂起流程")
 	public Result<Boolean> suspend(@RequestParam("definitionId") String definitionId) {
-		return new Result<Boolean>().ok(workDefinitionService.suspendDefinition(definitionId));
+		return Result.of(workDefinitionService.suspendDefinition(definitionId));
 	}
 
 	@PutMapping(value = "/activate")
 	@Operation(summary = "流程定义>激活流程", description = "流程定义>激活流程")
 	public Result<Boolean> activate(@RequestParam("definitionId") String definitionId) {
-		return new Result<Boolean>().ok(workDefinitionService.activateDefinition(definitionId));
+		return Result.of(workDefinitionService.activateDefinition(definitionId));
 	}
 
 }

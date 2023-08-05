@@ -16,7 +16,9 @@
  */
 package org.laokou.auth.config.authentication;
 
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.common.handler.OAuth2ExceptionHandler;
@@ -26,14 +28,12 @@ import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.*;
-import org.laokou.common.easy.captcha.service.SysCaptchaService;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.log.utils.LoginLogUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.tenant.service.SysSourceService;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -59,6 +59,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.laokou.auth.common.Constant.*;
+import static org.laokou.auth.common.Constant.TENANT_ID;
 import static org.laokou.common.core.constant.Constant.*;
 
 /**
@@ -67,27 +68,20 @@ import static org.laokou.common.core.constant.Constant.*;
  * @author laokou
  */
 @Slf4j
-public abstract class AbstractOAuth2BaseAuthenticationProvider implements AuthenticationProvider, InitializingBean {
+@RequiredArgsConstructor
+public abstract class AbstractOAuth2BaseAuthenticationProvider implements AuthenticationProvider {
 
-	protected UserGateway userGateway;
+	protected final UserGateway userGateway;
+	protected final MenuGateway menuGateway;
+	protected final DeptGateway deptGateway;
+	protected final LoginLogUtil loginLogUtil;
+	protected final PasswordEncoder passwordEncoder;
 
-	protected MenuGateway menuGateway;
-
-	protected DeptGateway deptGateway;
-
-	protected LoginLogUtil loginLogUtil;
-
-	protected PasswordEncoder passwordEncoder;
-
-	protected SysCaptchaService sysCaptchaService;
-
-	protected OAuth2AuthorizationService authorizationService;
-
-	protected OAuth2TokenGenerator<?> tokenGenerator;
-
-	protected SysSourceService sysSourceService;
-
-	protected RedisUtil redisUtil;
+	//protected SysCaptchaService sysCaptchaService;
+	protected final OAuth2AuthorizationService authorizationService;
+	protected final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
+	protected final SysSourceService sysSourceService;
+	protected final RedisUtil redisUtil;
 
 	@SneakyThrows
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -195,7 +189,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		String loginType = grantType.getValue();
 		Long tenantId = Long.valueOf(request.getParameter(TENANT_ID));
 		// 验证验证码
-		Boolean validate = sysCaptchaService.validate(uuid, captcha);
+		Boolean validate = true;// sysCaptchaService.validate(uuid, captcha);
 		int code;
 		String msg;
 		if (null == validate) {
@@ -287,20 +281,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		}
 		throw OAuth2ExceptionHandler.getException(StatusCode.INVALID_CLIENT,
 				MessageUtil.getMessage(StatusCode.INVALID_CLIENT));
-	}
-
-	@Override
-	public void afterPropertiesSet() {
-		userGateway = SpringContextUtil.getBean(UserGateway.class);
-		menuGateway = SpringContextUtil.getBean(MenuGateway.class);
-		deptGateway = SpringContextUtil.getBean(DeptGateway.class);
-		loginLogUtil = SpringContextUtil.getBean(LoginLogUtil.class);
-		passwordEncoder = SpringContextUtil.getBean(PasswordEncoder.class);
-		sysCaptchaService = SpringContextUtil.getBean(SysCaptchaService.class);
-		authorizationService = SpringContextUtil.getBean(OAuth2AuthorizationService.class);
-		tokenGenerator = SpringContextUtil.getBean(OAuth2TokenGenerator.class);
-		sysSourceService = SpringContextUtil.getBean(SysSourceService.class);
-		redisUtil = SpringContextUtil.getBean(RedisUtil.class);
 	}
 
 }

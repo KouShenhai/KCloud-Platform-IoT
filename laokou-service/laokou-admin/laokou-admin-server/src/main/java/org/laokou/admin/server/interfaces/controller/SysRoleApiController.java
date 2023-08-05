@@ -51,14 +51,14 @@ public class SysRoleApiController {
 	@Operation(summary = "系统角色>查询", description = "系统角色>查询")
 	@PreAuthorize("hasAuthority('sys:role:query')")
 	public Result<IPage<SysRoleVO>> query(@RequestBody SysRoleQo qo) {
-		return new Result<IPage<SysRoleVO>>().ok(sysRoleApplicationService.queryRolePage(qo));
+		return Result.of(sysRoleApplicationService.queryRolePage(qo));
 	}
 
 	@TraceLog
 	@PostMapping("/list")
 	@Operation(summary = "系统角色>列表", description = "系统角色>列表")
 	public Result<List<SysRoleVO>> list(@RequestBody SysRoleQo qo) {
-		return new Result<List<SysRoleVO>>().ok(sysRoleApplicationService.getRoleList(qo));
+		return Result.of(sysRoleApplicationService.getRoleList(qo));
 	}
 
 	@TraceLog
@@ -66,7 +66,7 @@ public class SysRoleApiController {
 	@Operation(summary = "系统角色>详情", description = "系统角色>详情")
 	@DataCache(name = "role", key = "#id")
 	public Result<SysRoleVO> detail(@RequestParam("id") Long id) {
-		return new Result<SysRoleVO>().ok(sysRoleApplicationService.getRoleById(id));
+		return Result.of(sysRoleApplicationService.getRoleById(id));
 	}
 
 	@TraceLog
@@ -75,7 +75,7 @@ public class SysRoleApiController {
 	@OperateLog(module = "系统角色", name = "角色新增")
 	@PreAuthorize("hasAuthority('sys:role:insert')")
 	public Result<Boolean> insert(@RequestBody SysRoleDTO dto) {
-		return new Result<Boolean>().ok(sysRoleApplicationService.insertRole(dto));
+		return Result.of(sysRoleApplicationService.insertRole(dto));
 	}
 
 	@TraceLog
@@ -85,7 +85,7 @@ public class SysRoleApiController {
 	@PreAuthorize("hasAuthority('sys:role:update')")
 	@DataCache(name = "role", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update(@RequestBody SysRoleDTO dto) {
-		return new Result<Boolean>().ok(sysRoleApplicationService.updateRole(dto));
+		return Result.of(sysRoleApplicationService.updateRole(dto));
 	}
 
 	@TraceLog
@@ -95,7 +95,7 @@ public class SysRoleApiController {
 	@PreAuthorize("hasAuthority('sys:role:delete')")
 	@DataCache(name = "role", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
-		return new Result<Boolean>().ok(sysRoleApplicationService.deleteRole(id));
+		return Result.of(sysRoleApplicationService.deleteRole(id));
 	}
 
 }

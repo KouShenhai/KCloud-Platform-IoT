@@ -58,7 +58,7 @@ public class SysVideoApiController {
 	@Operation(summary = "视频管理>上传", description = "视频管理>上传")
 	public Result<UploadVO> upload(@RequestPart("file") MultipartFile file, @RequestParam("md5") String md5)
 			throws Exception {
-		return new Result<UploadVO>().ok(sysResourceApplicationService.uploadResource("video", file, md5));
+		return Result.of(sysResourceApplicationService.uploadResource("video", file, md5));
 	}
 
 	@TraceLog
@@ -66,7 +66,7 @@ public class SysVideoApiController {
 	@Operation(summary = "视频管理>查询", description = "视频管理>查询")
 	@PreAuthorize("hasAuthority('sys:resource:video:query')")
 	public Result<IPage<SysResourceVO>> query(@RequestBody SysResourceQo qo) {
-		return new Result<IPage<SysResourceVO>>().ok(sysResourceApplicationService.queryResourcePage(qo));
+		return Result.of(sysResourceApplicationService.queryResourcePage(qo));
 	}
 
 	@TraceLog
@@ -76,8 +76,7 @@ public class SysVideoApiController {
 	@Lock4j(key = "video_sync_index_lock_")
 	@PreAuthorize("hasAuthority('sys:resource:video:syncIndex')")
 	public Result<Boolean> syncIndex() throws InterruptedException {
-		return new Result<Boolean>()
-				.ok(sysResourceApplicationService.syncResource("video", RedisKeyUtil.getSyncIndexKey("video")));
+		return Result.of(sysResourceApplicationService.syncResource("video", RedisKeyUtil.getSyncIndexKey("video")));
 	}
 
 	@TraceLog
@@ -85,7 +84,7 @@ public class SysVideoApiController {
 	@Operation(summary = "视频管理>详情", description = "视频管理>详情")
 	@PreAuthorize("hasAuthority('sys:resource:video:detail')")
 	public Result<SysResourceVO> detail(@RequestParam("id") Long id) {
-		return new Result<SysResourceVO>().ok(sysResourceApplicationService.getResourceById(id));
+		return Result.of(sysResourceApplicationService.getResourceById(id));
 	}
 
 	@TraceLog
@@ -102,7 +101,7 @@ public class SysVideoApiController {
 	@OperateLog(module = "视频管理", name = "视频新增")
 	@PreAuthorize("hasAuthority('sys:resource:video:insert')")
 	public Result<Boolean> insert(@RequestBody SysResourceAuditDTO dto) throws IOException {
-		return new Result<Boolean>().ok(sysResourceApplicationService.insertResource(dto));
+		return Result.of(sysResourceApplicationService.insertResource(dto));
 	}
 
 	@TraceLog
@@ -111,7 +110,7 @@ public class SysVideoApiController {
 	@OperateLog(module = "视频管理", name = "视频修改")
 	@PreAuthorize("hasAuthority('sys:resource:video:update')")
 	public Result<Boolean> update(@RequestBody SysResourceAuditDTO dto) throws IOException {
-		return new Result<Boolean>().ok(sysResourceApplicationService.updateResource(dto));
+		return Result.of(sysResourceApplicationService.updateResource(dto));
 	}
 
 	@TraceLog
@@ -120,7 +119,7 @@ public class SysVideoApiController {
 	@OperateLog(module = "视频管理", name = "视频删除")
 	@PreAuthorize("hasAuthority('sys:resource:video:delete')")
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
-		return new Result<Boolean>().ok(sysResourceApplicationService.deleteResource(id));
+		return Result.of(sysResourceApplicationService.deleteResource(id));
 	}
 
 	@TraceLog
@@ -128,7 +127,7 @@ public class SysVideoApiController {
 	@Operation(summary = "视频管理>流程图", description = "视频管理>流程图")
 	@PreAuthorize("hasAuthority('sys:resource:video:diagram')")
 	public Result<String> diagram(@RequestParam("processInstanceId") String processInstanceId) throws IOException {
-		return new Result<String>().ok(workflowTaskApplicationService.diagramProcess(processInstanceId));
+		return Result.of(workflowTaskApplicationService.diagramProcess(processInstanceId));
 	}
 
 	@TraceLog
@@ -136,7 +135,7 @@ public class SysVideoApiController {
 	@Operation(summary = "视频管理>审批日志", description = "视频管理>审批日志")
 	@PreAuthorize("hasAuthority('sys:resource:video:auditLog')")
 	public Result<List<SysAuditLogVO>> auditLog(@RequestParam("businessId") Long businessId) {
-		return new Result<List<SysAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogList(businessId));
+		return Result.of(sysResourceApplicationService.queryAuditLogList(businessId));
 	}
 
 }

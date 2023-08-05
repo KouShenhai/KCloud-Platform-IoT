@@ -1,4 +1,4 @@
-package org.laokou.auth.config.serviceimpl;
+package org.laokou.auth.config.authentication.serviceimpl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

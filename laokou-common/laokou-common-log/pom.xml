@@ -45,7 +45,7 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-auth-client</artifactId>
+            <artifactId>laokou-common-security</artifactId>
         </dependency>
         <!-- 解析客户端操作系统、浏览器等 -->
         <dependency>

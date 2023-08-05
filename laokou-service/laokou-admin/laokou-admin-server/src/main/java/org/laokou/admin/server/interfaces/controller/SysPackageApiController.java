@@ -50,7 +50,7 @@ public class SysPackageApiController {
 	@Operation(summary = "系统套餐>查询", description = "系统套餐>查询")
 	@PreAuthorize("hasAuthority('sys:package:query')")
 	public Result<IPage<SysPackageVO>> query(@RequestBody SysPackageQo qo) {
-		return new Result<IPage<SysPackageVO>>().ok(sysPackageApplicationService.queryPackagePage(qo));
+		return Result.of(sysPackageApplicationService.queryPackagePage(qo));
 	}
 
 	@TraceLog
@@ -59,7 +59,7 @@ public class SysPackageApiController {
 	@OperateLog(module = "系统套餐", name = "套餐新增")
 	@PreAuthorize("hasAuthority('sys:package:insert')")
 	public Result<Boolean> insert(@RequestBody SysPackageDTO dto) {
-		return new Result<Boolean>().ok(sysPackageApplicationService.insertPackage(dto));
+		return Result.of(sysPackageApplicationService.insertPackage(dto));
 	}
 
 	@TraceLog
@@ -67,7 +67,7 @@ public class SysPackageApiController {
 	@Operation(summary = "系统套餐>查看", description = "系统套餐>查看")
 	@DataCache(name = "package", key = "#id")
 	public Result<SysPackageVO> detail(@RequestParam("id") Long id) {
-		return new Result<SysPackageVO>().ok(sysPackageApplicationService.getPackageById(id));
+		return Result.of(sysPackageApplicationService.getPackageById(id));
 	}
 
 	@TraceLog
@@ -77,7 +77,7 @@ public class SysPackageApiController {
 	@PreAuthorize("hasAuthority('sys:package:update')")
 	@DataCache(name = "package", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update(@RequestBody SysPackageDTO dto) {
-		return new Result<Boolean>().ok(sysPackageApplicationService.updatePackage(dto));
+		return Result.of(sysPackageApplicationService.updatePackage(dto));
 	}
 
 	@TraceLog
@@ -87,14 +87,14 @@ public class SysPackageApiController {
 	@PreAuthorize("hasAuthority('sys:package:delete')")
 	@DataCache(name = "package", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
-		return new Result<Boolean>().ok(sysPackageApplicationService.deletePackage(id));
+		return Result.of(sysPackageApplicationService.deletePackage(id));
 	}
 
 	@TraceLog
 	@GetMapping("/option/list")
 	@Operation(summary = "系统套餐>下拉框列表", description = "系统套餐>下拉框列表")
 	public Result<List<OptionVO>> optionList() {
-		return new Result<List<OptionVO>>().ok(sysPackageApplicationService.getOptionList());
+		return Result.of(sysPackageApplicationService.getOptionList());
 	}
 
 }

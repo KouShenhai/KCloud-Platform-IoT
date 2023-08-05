@@ -50,7 +50,7 @@ public class WorkflowTaskApiController {
 	@Operation(summary = "流程任务>资源>查询任务", description = "流程任务>资源>查询任务")
 	@PreAuthorize("hasAuthority('workflow:task:resource:query')")
 	public Result<IPage<TaskVO>> queryResource(@RequestBody TaskQo qo) {
-		return new Result<IPage<TaskVO>>().ok(sysResourceApplicationService.queryResourceTask(qo));
+		return Result.of(sysResourceApplicationService.queryResourceTask(qo));
 	}
 
 	@TraceLog
@@ -59,14 +59,14 @@ public class WorkflowTaskApiController {
 	@OperateLog(module = "流程任务", name = "审批任务")
 	@PreAuthorize("hasAuthority('workflow:task:resource:audit')")
 	public Result<Boolean> auditResource(@RequestBody AuditDTO dto) {
-		return new Result<Boolean>().ok(sysResourceApplicationService.auditResourceTask(dto));
+		return Result.of(sysResourceApplicationService.auditResourceTask(dto));
 	}
 
 	@TraceLog
 	@GetMapping(value = "/resource/detail")
 	@Operation(summary = "流程任务>资源>任务详情", description = "流程任务>资源>任务详情")
 	public Result<SysResourceVO> detailResource(@RequestParam("id") Long id) {
-		return new Result<SysResourceVO>().ok(sysResourceApplicationService.getResourceAuditByResourceId(id));
+		return Result.of(sysResourceApplicationService.getResourceAuditByResourceId(id));
 	}
 
 	@TraceLog
@@ -75,7 +75,7 @@ public class WorkflowTaskApiController {
 	@OperateLog(module = "流程任务", name = "处理任务")
 	@PreAuthorize("hasAuthority('workflow:task:resource:resolve')")
 	public Result<Boolean> resolveResource(@RequestBody ResolveDTO dto) {
-		return new Result<Boolean>().ok(sysResourceApplicationService.resolveResourceTask(dto));
+		return Result.of(sysResourceApplicationService.resolveResourceTask(dto));
 	}
 
 	@TraceLog
@@ -84,7 +84,7 @@ public class WorkflowTaskApiController {
 	@OperateLog(module = "流程任务", name = "转办任务")
 	@PreAuthorize("hasAuthority('workflow:task:resource:transfer')")
 	public Result<Boolean> transferResource(@RequestBody TransferDTO dto) {
-		return new Result<Boolean>().ok(sysResourceApplicationService.transferResourceTask(dto));
+		return Result.of(sysResourceApplicationService.transferResourceTask(dto));
 	}
 
 	@TraceLog
@@ -93,7 +93,7 @@ public class WorkflowTaskApiController {
 	@OperateLog(module = "流程任务", name = "委派任务")
 	@PreAuthorize("hasAuthority('workflow:task:resource:delegate')")
 	public Result<Boolean> delegateResource(@RequestBody DelegateDTO dto) {
-		return new Result<Boolean>().ok(sysResourceApplicationService.delegateResourceTask(dto));
+		return Result.of(sysResourceApplicationService.delegateResourceTask(dto));
 	}
 
 }

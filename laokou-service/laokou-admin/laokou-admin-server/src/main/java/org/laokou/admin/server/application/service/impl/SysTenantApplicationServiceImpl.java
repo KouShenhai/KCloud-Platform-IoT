@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysTenantApplicationService;
 import org.laokou.admin.server.domain.sys.entity.SysUserDO;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
+import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.common.core.enums.SuperAdminEnum;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.core.CustomException;
@@ -124,7 +125,7 @@ public class SysTenantApplicationServiceImpl implements SysTenantApplicationServ
 		SysUserDO sysUserDO = new SysUserDO();
 		sysUserDO.setTenantId(tenantId);
 		sysUserDO.setUsername(tenantUsername);
-		sysUserDO.setSuperAdmin(SuperAdminEnum.YES.ordinal());
+		sysUserDO.setSuperAdmin(SuperAdmin.YES.ordinal());
 		sysUserDO.setPassword(passwordEncoder.encode(tenantPassword));
 		sysUserDO.setTenantId(tenantId);
 		sysUserService.save(sysUserDO);

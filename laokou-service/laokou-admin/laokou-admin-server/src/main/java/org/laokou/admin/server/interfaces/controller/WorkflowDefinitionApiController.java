@@ -49,7 +49,7 @@ public class WorkflowDefinitionApiController {
 	@OperateLog(module = "流程定义", name = "流程新增")
 	@PreAuthorize("hasAuthority('workflow:definition:insert')")
 	public Result<Boolean> insert(@RequestPart("file") MultipartFile file) throws IOException {
-		return new Result<Boolean>().ok(workflowDefinitionApplicationService.insertDefinition(file));
+		return Result.of(workflowDefinitionApplicationService.insertDefinition(file));
 	}
 
 	@TraceLog
@@ -57,7 +57,7 @@ public class WorkflowDefinitionApiController {
 	@Operation(summary = "流程定义>查询", description = "流程定义>查询")
 	@PreAuthorize("hasAuthority('workflow:definition:query')")
 	public Result<IPage<DefinitionVO>> query(@RequestBody DefinitionQo qo) {
-		return new Result<IPage<DefinitionVO>>().ok(workflowDefinitionApplicationService.queryDefinitionPage(qo));
+		return Result.of(workflowDefinitionApplicationService.queryDefinitionPage(qo));
 	}
 
 	@TraceLog
@@ -65,7 +65,7 @@ public class WorkflowDefinitionApiController {
 	@Operation(summary = "流程定义>图片", description = "流程定义>图片")
 	@PreAuthorize("hasAuthority('workflow:definition:diagram')")
 	public Result<String> image(@RequestParam("definitionId") String definitionId) {
-		return new Result<String>().ok(workflowDefinitionApplicationService.diagramDefinition(definitionId));
+		return Result.of(workflowDefinitionApplicationService.diagramDefinition(definitionId));
 	}
 
 	@TraceLog
@@ -74,7 +74,7 @@ public class WorkflowDefinitionApiController {
 	@OperateLog(module = "流程定义", name = "流程删除")
 	@PreAuthorize("hasAuthority('workflow:definition:delete')")
 	public Result<Boolean> delete(@RequestParam("deploymentId") String deploymentId) {
-		return new Result<Boolean>().ok(workflowDefinitionApplicationService.deleteDefinition(deploymentId));
+		return Result.of(workflowDefinitionApplicationService.deleteDefinition(deploymentId));
 	}
 
 	@TraceLog
@@ -83,7 +83,7 @@ public class WorkflowDefinitionApiController {
 	@OperateLog(module = "流程定义", name = "流程挂起")
 	@PreAuthorize("hasAuthority('workflow:definition:suspend')")
 	public Result<Boolean> suspend(@RequestParam("definitionId") String definitionId) {
-		return new Result<Boolean>().ok(workflowDefinitionApplicationService.suspendDefinition(definitionId));
+		return Result.of(workflowDefinitionApplicationService.suspendDefinition(definitionId));
 	}
 
 	@TraceLog
@@ -92,7 +92,7 @@ public class WorkflowDefinitionApiController {
 	@OperateLog(module = "流程定义", name = "流程激活")
 	@PreAuthorize("hasAuthority('workflow:definition:activate')")
 	public Result<Boolean> activate(@RequestParam("definitionId") String definitionId) {
-		return new Result<Boolean>().ok(workflowDefinitionApplicationService.activateDefinition(definitionId));
+		return Result.of(workflowDefinitionApplicationService.activateDefinition(definitionId));
 	}
 
 	@TraceLog

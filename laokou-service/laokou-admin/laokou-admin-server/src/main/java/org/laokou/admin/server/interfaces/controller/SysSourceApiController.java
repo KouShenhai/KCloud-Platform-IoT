@@ -51,7 +51,7 @@ public class SysSourceApiController {
 	@Operation(summary = "系统数据源>查询", description = "系统数据源>查询")
 	@PreAuthorize("hasAuthority('sys:source:query')")
 	public Result<IPage<SysSourceVO>> query(@RequestBody SysSourceQo qo) {
-		return new Result<IPage<SysSourceVO>>().ok(sysSourceApplicationService.querySourcePage(qo));
+		return Result.of(sysSourceApplicationService.querySourcePage(qo));
 	}
 
 	@TraceLog
@@ -60,7 +60,7 @@ public class SysSourceApiController {
 	@OperateLog(module = "系统数据源", name = "数据源新增")
 	@PreAuthorize("hasAuthority('sys:source:insert')")
 	public Result<Boolean> insert(@RequestBody SysSourceDTO dto) {
-		return new Result<Boolean>().ok(sysSourceApplicationService.insertSource(dto));
+		return Result.of(sysSourceApplicationService.insertSource(dto));
 	}
 
 	@TraceLog
@@ -68,7 +68,7 @@ public class SysSourceApiController {
 	@Operation(summary = "系统数据源>查看", description = "系统数据源>查看")
 	@DataCache(name = "source", key = "#id")
 	public Result<SysSourceVO> detail(@RequestParam("id") Long id) {
-		return new Result<SysSourceVO>().ok(sysSourceApplicationService.getSourceById(id));
+		return Result.of(sysSourceApplicationService.getSourceById(id));
 	}
 
 	@TraceLog
@@ -78,7 +78,7 @@ public class SysSourceApiController {
 	@PreAuthorize("hasAuthority('sys:source:update')")
 	@DataCache(name = "source", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update(@RequestBody SysSourceDTO dto) {
-		return new Result<Boolean>().ok(sysSourceApplicationService.updateSource(dto));
+		return Result.of(sysSourceApplicationService.updateSource(dto));
 	}
 
 	@TraceLog
@@ -88,14 +88,14 @@ public class SysSourceApiController {
 	@PreAuthorize("hasAuthority('sys:source:delete')")
 	@DataCache(name = "source", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
-		return new Result<Boolean>().ok(sysSourceApplicationService.deleteSource(id));
+		return Result.of(sysSourceApplicationService.deleteSource(id));
 	}
 
 	@TraceLog
 	@GetMapping("/option/list")
 	@Operation(summary = "系统数据源>下拉框列表", description = "系统数据源>下拉框列表")
 	public Result<List<OptionVO>> optionList() {
-		return new Result<List<OptionVO>>().ok(sysSourceApplicationService.getOptionList());
+		return Result.of(sysSourceApplicationService.getOptionList());
 	}
 
 }

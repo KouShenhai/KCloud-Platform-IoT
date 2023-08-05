@@ -51,7 +51,7 @@ public class SysLogApiController {
 	@Operation(summary = "系统日志>操作日志>查询", description = "系统日志>操作日志>查询")
 	@PreAuthorize("hasAuthority('sys:log:operate:query')")
 	public Result<IPage<SysOperateLogVO>> queryOperateLog(@RequestBody SysOperateLogQo qo) {
-		return new Result<IPage<SysOperateLogVO>>().ok(sysLogApplicationService.queryOperateLogPage(qo));
+		return Result.of(sysLogApplicationService.queryOperateLogPage(qo));
 	}
 
 	@TraceLog
@@ -68,7 +68,7 @@ public class SysLogApiController {
 	@Operation(summary = "系统日志>登录日志>查询", description = "系统日志>登录日志>查询")
 	@PreAuthorize("hasAuthority('sys:log:login:query')")
 	public Result<IPage<SysLoginLogVO>> queryLoginLog(@RequestBody SysLoginLogQo qo) {
-		return new Result<IPage<SysLoginLogVO>>().ok(sysLogApplicationService.queryLoginLogPage(qo));
+		return Result.of(sysLogApplicationService.queryLoginLogPage(qo));
 	}
 
 	@TraceLog

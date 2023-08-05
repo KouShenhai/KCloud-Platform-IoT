@@ -19,7 +19,7 @@ package org.laokou.auth.config;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.laokou.auth.config.authentication.*;
-import org.laokou.auth.config.serviceimpl.UserDetailServiceImpl;
+import org.laokou.auth.config.authentication.serviceimpl.UserDetailServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -63,6 +63,8 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 
 import java.util.List;
 
+import static org.laokou.auth.common.Constant.LOGIN_PATTERN;
+
 /**
  * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}
  *
@@ -75,11 +77,6 @@ import java.util.List;
 class OAuth2AuthorizationServerConfig {
 
 	/**
-	 * 登录
-	 */
-	private static final String LOGIN_PATTERN = "/login";
-
-	/**
 	 * <a href=
 	 * "https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html">...</a>
 	 * OAuth2AuthorizationServer核心配置
@@ -87,6 +84,9 @@ class OAuth2AuthorizationServerConfig {
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
+			OAuth2PasswordAuthenticationProvider passwordAuthenticationProvider,
+			OAuth2MailAuthenticationProvider mailAuthenticationProvider,
+			OAuth2MobileAuthenticationProvider mobileAuthenticationProvider,
 			AuthorizationServerSettings authorizationServerSettings, OAuth2AuthorizationService authorizationService) throws Exception {
 		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 		OAuth2AuthorizationServerConfigurer oAuth2AuthorizationServerConfigurer = http
@@ -112,9 +112,9 @@ class OAuth2AuthorizationServerConfig {
 								new OAuth2DeviceVerificationAuthenticationConverter(),
 								new JwtClientAssertionAuthenticationConverter(),
 								new OAuth2AuthorizationCodeRequestAuthenticationConverter())))
-						.authenticationProvider(new OAuth2PasswordAuthenticationProvider())
-						.authenticationProvider(new OAuth2MobileAuthenticationProvider())
-						.authenticationProvider(new OAuth2MailAuthenticationProvider()))
+						.authenticationProvider(passwordAuthenticationProvider)
+						.authenticationProvider(mobileAuthenticationProvider)
+						.authenticationProvider(mailAuthenticationProvider))
 				.oidc(Customizer.withDefaults()).authorizationService(authorizationService)
 				.authorizationServerSettings(authorizationServerSettings);
 		http.apply(oAuth2AuthorizationServerConfigurer);

@@ -21,7 +21,7 @@ public class OAuth2ExceptionHandler {
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
         PrintWriter writer = response.getWriter();
-        writer.write(JacksonUtil.toJsonStr(new Result<>().error(code, message)));
+        writer.write(JacksonUtil.toJsonStr(Result.fail(code, message)));
         writer.flush();
         writer.close();
     }

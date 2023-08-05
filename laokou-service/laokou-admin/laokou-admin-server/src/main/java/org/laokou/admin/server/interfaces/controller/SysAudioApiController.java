@@ -62,7 +62,7 @@ public class SysAudioApiController {
 	@Operation(summary = "日志", description = "日志")
 	@PreAuthorize("hasAuthority('audio:audit:log')")
 	public Result<List<SysAuditLogVO>> auditLog(@PathVariable("businessId") Long businessId) {
-		return new Result<List<SysAuditLogVO>>().ok(sysResourceApplicationService.queryAuditLogList(businessId));
+		return Result.of(sysResourceApplicationService.queryAuditLogList(businessId));
 	}
 
 	@PostMapping("v1/sync")
@@ -72,7 +72,7 @@ public class SysAudioApiController {
 	@Lock4j(key = "audio_sync_lock_")
 	@PreAuthorize("hasAuthority('audio:sync')")
 	public Result<Boolean> sync() throws InterruptedException {
-		return new Result<Boolean>().ok(sysResourceApplicationService.syncResource(AUDIO_CODE, RedisKeyUtil.getSyncIndexKey(AUDIO_CODE)));
+		return Result.of(sysResourceApplicationService.syncResource(AUDIO_CODE, RedisKeyUtil.getSyncIndexKey(AUDIO_CODE)));
 	}
 
 	@PostMapping(value = "v1/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -80,7 +80,7 @@ public class SysAudioApiController {
 	@Operation(summary = "上传", description = "上传")
 	public Result<UploadVO> upload(@RequestPart("file") MultipartFile file, @RequestParam("md5") String md5)
 			throws Exception {
-		return new Result<UploadVO>().ok(sysResourceApplicationService.uploadResource(AUDIO_CODE, file, md5));
+		return Result.of(sysResourceApplicationService.uploadResource(AUDIO_CODE, file, md5));
 	}
 
 	@PostMapping("/query")
@@ -88,7 +88,7 @@ public class SysAudioApiController {
 	@TraceLog
 	@PreAuthorize("hasAuthority('sys:resource:audio:query')")
 	public Result<IPage<SysResourceVO>> query(@RequestBody SysResourceQo qo) {
-		return new Result<IPage<SysResourceVO>>().ok(sysResourceApplicationService.queryResourcePage(qo));
+		return Result.of(sysResourceApplicationService.queryResourcePage(qo));
 	}
 
 	@GetMapping(value = "/detail")
@@ -96,7 +96,7 @@ public class SysAudioApiController {
 	@TraceLog
 	@PreAuthorize("hasAuthority('sys:resource:audio:detail')")
 	public Result<SysResourceVO> detail(@RequestParam("id") Long id) {
-		return new Result<SysResourceVO>().ok(sysResourceApplicationService.getResourceById(id));
+		return Result.of(sysResourceApplicationService.getResourceById(id));
 	}
 
 	@GetMapping(value = "/download")
@@ -113,7 +113,7 @@ public class SysAudioApiController {
 	@OperateLog(module = "音频管理", name = "音频新增")
 	@PreAuthorize("hasAuthority('sys:resource:audio:insert')")
 	public Result<Boolean> insert(@RequestBody SysResourceAuditDTO dto) throws IOException {
-		return new Result<Boolean>().ok(sysResourceApplicationService.insertResource(dto));
+		return Result.of(sysResourceApplicationService.insertResource(dto));
 	}
 
 	@PutMapping(value = "/update")
@@ -122,7 +122,7 @@ public class SysAudioApiController {
 	@OperateLog(module = "音频管理", name = "音频修改")
 	@PreAuthorize("hasAuthority('sys:resource:audio:update')")
 	public Result<Boolean> update(@RequestBody SysResourceAuditDTO dto) throws IOException {
-		return new Result<Boolean>().ok(sysResourceApplicationService.updateResource(dto));
+		return Result.of(sysResourceApplicationService.updateResource(dto));
 	}
 
 	@DeleteMapping(value = "/delete")
@@ -131,7 +131,7 @@ public class SysAudioApiController {
 	@OperateLog(module = "音频管理", name = "音频删除")
 	@PreAuthorize("hasAuthority('sys:resource:audio:delete')")
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
-		return new Result<Boolean>().ok(sysResourceApplicationService.deleteResource(id));
+		return Result.of(sysResourceApplicationService.deleteResource(id));
 	}
 
 	@GetMapping(value = "/diagram")
@@ -139,7 +139,7 @@ public class SysAudioApiController {
 	@Operation(summary = "音频管理>流程图", description = "音频管理>流程图")
 	@PreAuthorize("hasAuthority('sys:resource:audio:diagram')")
 	public Result<String> diagram(@RequestParam("processInstanceId") String processInstanceId) throws IOException {
-		return new Result<String>().ok(workflowTaskApplicationService.diagramProcess(processInstanceId));
+		return Result.of(workflowTaskApplicationService.diagramProcess(processInstanceId));
 	}
 
 }

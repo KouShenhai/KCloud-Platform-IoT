@@ -55,7 +55,7 @@ public class SysUserApiController {
 	@PreAuthorize("hasAuthority('user:update')")
 	@DataCache(name = "user", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update(@RequestBody SysUserDTO dto) {
-		return new Result<Boolean>().ok(sysUserApplicationService.updateUser(dto));
+		return Result.of(sysUserApplicationService.updateUser(dto));
 	}
 
 	@TraceLog
@@ -63,7 +63,7 @@ public class SysUserApiController {
 	@PreAuthorize("hasAuthority('user:online:list')")
 	@Operation(summary = "查询", description = "查询")
 	public Result<IPage<SysUserOnlineVO>> onlineList(@RequestBody SysUserOnlineQo qo) {
-		return new Result<IPage<SysUserOnlineVO>>().ok(sysUserApplicationService.onlineQueryPage(qo));
+		return Result.of(sysUserApplicationService.onlineQueryPage(qo));
 	}
 
 	@TraceLog
@@ -72,28 +72,28 @@ public class SysUserApiController {
 	@OperateLog(module = "在线用户", name = "强踢")
 	@PreAuthorize("hasAuthority('user:online:kill')")
 	public Result<Boolean> onlineKill(@RequestParam("token") String token) {
-		return new Result<Boolean>().ok(sysUserApplicationService.onlineKill(token));
+		return Result.of(sysUserApplicationService.onlineKill(token));
 	}
 
 	@TraceLog
 	@GetMapping("v1/info")
 	@Operation(summary = "信息", description = "信息")
 	public Result<UserInfoVO> info() {
-		return new Result<UserInfoVO>().ok(sysUserApplicationService.getUserInfo());
+		return Result.of(sysUserApplicationService.getUserInfo());
 	}
 
 	@TraceLog
 	@GetMapping("v1/option_list")
 	@Operation(summary = "列表", description = "列表")
 	public Result<List<OptionVO>> optionList() {
-		return new Result<List<OptionVO>>().ok(sysUserApplicationService.getOptionList());
+		return Result.of(sysUserApplicationService.getOptionList());
 	}
 
 	@TraceLog
 	@PutMapping("v1/info")
 	@Operation(summary = "信息", description = "信息")
 	public Result<Boolean> info(@RequestBody SysUserDTO dto) {
-		return new Result<Boolean>().ok(sysUserApplicationService.updateInfo(dto));
+		return Result.of(sysUserApplicationService.updateInfo(dto));
 	}
 
 	@TraceLog
@@ -102,7 +102,7 @@ public class SysUserApiController {
 	@OperateLog(module = "系统用户", name = "状态")
 	@PreAuthorize("hasAuthority('user:status')")
 	public Result<Boolean> status(@PathVariable("id") Long id, @PathVariable("status") Integer status) {
-		return new Result<Boolean>().ok(sysUserApplicationService.updateStatus(id, status));
+		return Result.of(sysUserApplicationService.updateStatus(id, status));
 	}
 
 	@TraceLog
@@ -111,14 +111,14 @@ public class SysUserApiController {
 	@OperateLog(module = "系统用户", name = "密码")
 	@PreAuthorize("hasAuthority('user:pwd')")
 	public Result<Boolean> pwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
-		return new Result<Boolean>().ok(sysUserApplicationService.updatePassword(id, pwd));
+		return Result.of(sysUserApplicationService.updatePassword(id, pwd));
 	}
 
 	@TraceLog
 	@PutMapping("v1/info_pwd/{id}/{pwd}")
 	@Operation(summary = "密码", description = "密码")
 	public Result<Boolean> infoPwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
-		return new Result<Boolean>().ok(sysUserApplicationService.updatePassword(id, pwd));
+		return Result.of(sysUserApplicationService.updatePassword(id, pwd));
 	}
 
 	@TraceLog
@@ -127,7 +127,7 @@ public class SysUserApiController {
 	@OperateLog(module = "系统用户", name = "新增")
 	@PreAuthorize("hasAuthority('user:insert')")
 	public Result<Boolean> insert(@RequestBody SysUserDTO dto) {
-		return new Result<Boolean>().ok(sysUserApplicationService.insertUser(dto));
+		return Result.of(sysUserApplicationService.insertUser(dto));
 	}
 
 	@TraceLog
@@ -135,7 +135,7 @@ public class SysUserApiController {
 	@Operation(summary = "查看", description = "查看")
 	@DataCache(name = "user", key = "#id")
 	public Result<SysUserVO> get(@PathVariable("id") Long id) {
-		return new Result<SysUserVO>().ok(sysUserApplicationService.getUserById(id));
+		return Result.of(sysUserApplicationService.getUserById(id));
 	}
 
 	@TraceLog
@@ -145,7 +145,7 @@ public class SysUserApiController {
 	@PreAuthorize("hasAuthority('user:delete')")
 	@DataCache(name = "user", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
-		return new Result<Boolean>().ok(sysUserApplicationService.deleteUser(id));
+		return Result.of(sysUserApplicationService.deleteUser(id));
 	}
 
 	@TraceLog
@@ -153,7 +153,7 @@ public class SysUserApiController {
 	@Operation(summary = "查询", description = "查询")
 	@PreAuthorize("hasAuthority('user:list')")
 	public Result<IPage<SysUserVO>> list(@RequestBody SysUserQo qo) {
-		return new Result<IPage<SysUserVO>>().ok(sysUserApplicationService.queryUserPage(qo));
+		return Result.of(sysUserApplicationService.queryUserPage(qo));
 	}
 
 }

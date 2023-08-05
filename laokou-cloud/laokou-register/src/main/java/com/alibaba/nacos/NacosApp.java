@@ -33,11 +33,11 @@ import static com.alibaba.nacos.sys.env.EnvUtil.NACOS_HOME_KEY;
 @ServletComponentScan
 @EnableScheduling
 @EnableEncryptableProperties
-public class NacosApplication {
+public class NacosApp {
 
 	public static void main(String[] args) {
 		System.setProperty(NACOS_HOME_KEY, "nacos");
-		new SpringApplicationBuilder(NacosApplication.class).web(WebApplicationType.SERVLET).run(args);
+		new SpringApplicationBuilder(NacosApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }

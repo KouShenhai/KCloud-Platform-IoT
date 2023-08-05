@@ -49,7 +49,7 @@ public class SysSearchApiController {
 	@Operation(summary = "系统搜索>资源", description = "系统搜索>资源")
 	@PreAuthorize("hasAuthority('sys:search:resource:query')")
 	public Result<SearchVO<Map<String, Object>>> searchResource(@RequestBody SearchQo form) {
-		return new Result<SearchVO<Map<String, Object>>>().ok(sysSearchApplicationService.searchResource(form));
+		return Result.of(sysSearchApplicationService.searchResource(form));
 	}
 
 }

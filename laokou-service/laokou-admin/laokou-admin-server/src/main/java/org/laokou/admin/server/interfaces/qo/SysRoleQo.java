@@ -16,16 +16,18 @@
  */
 package org.laokou.admin.server.interfaces.qo;
 
-import org.laokou.common.i18n.dto.BasePage;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.laokou.common.i18n.dto.Page;
 
 import java.io.Serial;
 
 /**
  * @author laokou
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class SysRoleQo extends BasePage {
+public class SysRoleQo extends Page {
 
 	@Serial
 	private static final long serialVersionUID = -8041350010255534707L;

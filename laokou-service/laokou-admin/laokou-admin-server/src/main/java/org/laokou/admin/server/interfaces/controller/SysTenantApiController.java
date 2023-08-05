@@ -48,7 +48,7 @@ public class SysTenantApiController {
 	@Operation(summary = "系统租户>查询", description = "系统租户>查询")
 	@PreAuthorize("hasAuthority('sys:tenant:query')")
 	public Result<IPage<SysTenantVO>> query(@RequestBody SysTenantQo qo) {
-		return new Result<IPage<SysTenantVO>>().ok(sysTenantApplicationService.queryTenantPage(qo));
+		return Result.of(sysTenantApplicationService.queryTenantPage(qo));
 	}
 
 	@TraceLog
@@ -57,7 +57,7 @@ public class SysTenantApiController {
 	@OperateLog(module = "系统租户", name = "租户新增")
 	@PreAuthorize("hasAuthority('sys:tenant:insert')")
 	public Result<Boolean> insert(@RequestBody SysTenantDTO dto) {
-		return new Result<Boolean>().ok(sysTenantApplicationService.insertTenant(dto));
+		return Result.of(sysTenantApplicationService.insertTenant(dto));
 	}
 
 	@TraceLog
@@ -65,7 +65,7 @@ public class SysTenantApiController {
 	@Operation(summary = "系统租户>查看", description = "系统租户>查看")
 	@DataCache(name = "tenant", key = "#id")
 	public Result<SysTenantVO> detail(@RequestParam("id") Long id) {
-		return new Result<SysTenantVO>().ok(sysTenantApplicationService.getTenantById(id));
+		return Result.of(sysTenantApplicationService.getTenantById(id));
 	}
 
 	@TraceLog
@@ -75,7 +75,7 @@ public class SysTenantApiController {
 	@PreAuthorize("hasAuthority('sys:tenant:update')")
 	@DataCache(name = "tenant", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update(@RequestBody SysTenantDTO dto) {
-		return new Result<Boolean>().ok(sysTenantApplicationService.updateTenant(dto));
+		return Result.of(sysTenantApplicationService.updateTenant(dto));
 	}
 
 	@TraceLog
@@ -85,7 +85,7 @@ public class SysTenantApiController {
 	@PreAuthorize("hasAuthority('sys:tenant:delete')")
 	@DataCache(name = "tenant", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
-		return new Result<Boolean>().ok(sysTenantApplicationService.deleteTenant(id));
+		return Result.of(sysTenantApplicationService.deleteTenant(id));
 	}
 
 }

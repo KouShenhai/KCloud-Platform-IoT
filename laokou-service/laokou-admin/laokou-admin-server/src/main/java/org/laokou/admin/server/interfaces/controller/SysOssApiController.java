@@ -51,14 +51,14 @@ public class SysOssApiController {
 	@Operation(summary = "系统存储>查询", description = "系统存储>查询")
 	@PreAuthorize("hasAuthority('sys:oss:query')")
 	public Result<IPage<SysOssVO>> query(@RequestBody SysOssQo qo) {
-		return new Result<IPage<SysOssVO>>().ok(sysOssApplicationService.queryOssPage(qo));
+		return Result.of(sysOssApplicationService.queryOssPage(qo));
 	}
 
 	@TraceLog
 	@PostMapping("upload")
 	@Operation(summary = "系统存储>上传", description = "系统存储>上传")
 	public Result<UploadVO> upload(@RequestPart("file") MultipartFile file, @RequestParam("md5") String md5) {
-		return new Result<UploadVO>().ok(sysOssApplicationService.upload(file, md5));
+		return Result.of(sysOssApplicationService.upload(file, md5));
 	}
 
 	@TraceLog
@@ -67,7 +67,7 @@ public class SysOssApiController {
 	@OperateLog(module = "系统存储", name = "存储新增")
 	@PreAuthorize("hasAuthority('sys:oss:insert')")
 	public Result<Boolean> insert(@RequestBody SysOssDTO dto) {
-		return new Result<Boolean>().ok(sysOssApplicationService.insertOss(dto));
+		return Result.of(sysOssApplicationService.insertOss(dto));
 	}
 
 	@TraceLog
@@ -76,7 +76,7 @@ public class SysOssApiController {
 	@OperateLog(module = "系统存储", name = "存储启用")
 	@PreAuthorize("hasAuthority('sys:oss:use')")
 	public Result<Boolean> use(@RequestParam("id") Long id) {
-		return new Result<Boolean>().ok(sysOssApplicationService.useOss(id));
+		return Result.of(sysOssApplicationService.useOss(id));
 	}
 
 	@TraceLog
@@ -84,7 +84,7 @@ public class SysOssApiController {
 	@Operation(summary = "系统存储>查看", description = "系统存储>查看")
 	@DataCache(name = "oss", key = "#id")
 	public Result<SysOssVO> detail(@RequestParam("id") Long id) {
-		return new Result<SysOssVO>().ok(sysOssApplicationService.getOssById(id));
+		return Result.of(sysOssApplicationService.getOssById(id));
 	}
 
 	@TraceLog
@@ -94,7 +94,7 @@ public class SysOssApiController {
 	@PreAuthorize("hasAuthority('sys:oss:update')")
 	@DataCache(name = "oss", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update(@RequestBody SysOssDTO dto) {
-		return new Result<Boolean>().ok(sysOssApplicationService.updateOss(dto));
+		return Result.of(sysOssApplicationService.updateOss(dto));
 	}
 
 	@TraceLog
@@ -104,7 +104,7 @@ public class SysOssApiController {
 	@PreAuthorize("hasAuthority('sys:oss:delete')")
 	@DataCache(name = "oss", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
-		return new Result<Boolean>().ok(sysOssApplicationService.deleteOss(id));
+		return Result.of(sysOssApplicationService.deleteOss(id));
 	}
 
 }

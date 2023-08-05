@@ -39,43 +39,43 @@ public class WorkTaskApiFeignClientFallback implements WorkTaskApiFeignClient {
 	@Override
 	public Result<PageVO<TaskVO>> query(TaskDTO dto) {
 		log.error("流程查询失败，报错原因：{}", throwable.getMessage());
-		return new Result<PageVO<TaskVO>>().ok(new PageVO<>());
+		return Result.of(new PageVO<>());
 	}
 
 	@Override
 	public Result<AssigneeVO> audit(AuditDTO dto) {
 		log.error("流程审批失败，报错原因：{}", throwable.getMessage());
-		return new Result<AssigneeVO>().error("流程审批失败，请联系管理员");
+		return Result.fail("流程审批失败，请联系管理员");
 	}
 
 	@Override
 	public Result<AssigneeVO> start(ProcessDTO dto) {
 		log.error("流程启动失败，报错原因：{}", throwable.getMessage());
-		return new Result<AssigneeVO>().error("流程启动失败，请联系管理员");
+		return Result.fail("流程启动失败，请联系管理员");
 	}
 
 	@Override
 	public Result<String> diagram(String processInstanceId) {
 		log.error("流程图查看失败，报错原因：{}", throwable.getMessage());
-		return new Result<String>().error("流程图查看失败，请联系管理员");
+		return Result.fail("流程图查看失败，请联系管理员");
 	}
 
 	@Override
 	public Result<AssigneeVO> delegate(DelegateDTO dto) {
 		log.error("流程委派失败，报错原因：{}", throwable.getMessage());
-		return new Result<AssigneeVO>().error("流程委派失败，请联系管理员");
+		return Result.fail("流程委派失败，请联系管理员");
 	}
 
 	@Override
 	public Result<AssigneeVO> transfer(TransferDTO dto) {
 		log.error("流程转办失败，报错原因：{}", throwable.getMessage());
-		return new Result<AssigneeVO>().error("流程转办失败，请联系管理员");
+		return Result.fail("流程转办失败，请联系管理员");
 	}
 
 	@Override
 	public Result<AssigneeVO> resolve(ResolveDTO dto) {
 		log.error("流程处理失败，报错原因：{}", throwable.getMessage());
-		return new Result<AssigneeVO>().error("流程处理失败，请联系管理员");
+		return Result.fail("流程处理失败，请联系管理员");
 	}
 
 }

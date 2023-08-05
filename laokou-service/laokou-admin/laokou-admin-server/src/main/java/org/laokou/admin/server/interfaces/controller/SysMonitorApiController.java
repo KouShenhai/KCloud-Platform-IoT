@@ -43,14 +43,14 @@ public class SysMonitorApiController {
 	@GetMapping("/cache")
 	@Operation(summary = "系统监控>缓存", description = "系统监控>缓存")
 	public Result<CacheVO> redis() {
-		return new Result<CacheVO>().ok(sysMonitorApplicationService.getCacheInfo());
+		return Result.of(sysMonitorApplicationService.getCacheInfo());
 	}
 
 	@TraceLog
 	@GetMapping("/server")
 	@Operation(summary = "系统监控>主机", description = "系统监控>主机")
 	public Result<Server> server() throws Exception {
-		return new Result<Server>().ok(sysMonitorApplicationService.getServerInfo());
+		return Result.of(sysMonitorApplicationService.getServerInfo());
 	}
 
 }

@@ -36,14 +36,14 @@
         <if test="tenantId != null">
             and a.tenant_id = #{tenantId}
         </if>
-        <if test="loginType != null and loginType == 'password'">
-            and a.username = #{loginName}
+        <if test="type != null and type == 'password' and username != null and username != ''">
+            and a.username = #{username}
         </if>
-        <if test="loginType != null and loginType == 'mail'">
-            and a.mail = #{loginName}
+        <if test="type != null and type == 'mail' and username != null and username != ''">
+            and a.mail = #{username}
         </if>
-        <if test="loginType != null and loginType == 'mobile'">
-            and a.mobile = #{loginName}
+        <if test="type != null and type == 'mobile' and username != null and username != ''">
+            and a.mobile = #{username}
         </if>
         limit 1
     </select>

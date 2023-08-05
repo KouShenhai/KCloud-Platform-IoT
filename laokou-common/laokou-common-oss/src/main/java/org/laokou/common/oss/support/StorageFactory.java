@@ -18,12 +18,12 @@ package org.laokou.common.oss.support;
 
 import com.amazonaws.services.s3.AmazonS3;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.i18n.core.CustomException;
 import org.laokou.common.oss.service.SysOssService;
 import org.laokou.common.oss.vo.SysOssVO;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**

@@ -22,11 +22,10 @@ import org.laokou.admin.server.domain.sys.repository.mapper.SysMenuMapper;
 import org.laokou.admin.server.interfaces.qo.SysMenuQo;
 import org.laokou.admin.client.vo.SysMenuVO;
 import org.laokou.admin.server.domain.sys.repository.service.SysMenuService;
-import org.laokou.auth.client.user.UserDetail;
 import static org.laokou.common.core.constant.Constant.DEFAULT;
-
-import org.laokou.auth.client.utils.UserUtil;
-import org.laokou.common.core.enums.SuperAdminEnum;
+import org.laokou.auth.domain.user.SuperAdmin;
+import org.laokou.auth.domain.user.User;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -37,9 +36,9 @@ import java.util.List;
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> implements SysMenuService {
 
 	@Override
-	public List<SysMenuVO> getMenuList(UserDetail userDetail, Integer type) {
+	public List<SysMenuVO> getMenuList(User user, Integer type) {
 		// region Description
-		return getMenuList(userDetail.getId(), userDetail.getSuperAdmin(), userDetail.getTenantId(), type);
+		return getMenuList(user.getId(), user.getSuperAdmin(), user.getTenantId(), type);
 		// endregion
 	}
 
@@ -79,7 +78,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuDO> im
 
 	private List<SysMenuVO> getMenuList(Long userId, Integer superAdmin, Long tenantId, Integer type) {
 		// region Description
-		if (SuperAdminEnum.YES.ordinal() == superAdmin) {
+		if (SuperAdmin.YES.ordinal() == superAdmin) {
 			if (tenantId != DEFAULT) {
 				return this.baseMapper.getTenantMenuListByTenantId(type, tenantId);
 			}

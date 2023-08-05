@@ -18,16 +18,18 @@ package org.laokou.admin.server.interfaces.qo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.i18n.dto.BasePage;
+import lombok.EqualsAndHashCode;
+import org.laokou.common.i18n.dto.Page;
 
 import java.io.Serial;
 
 /**
  * @author laokou
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Schema(name = "SysResourceQo", description = "资源实体类")
-public class SysResourceQo extends BasePage {
+public class SysResourceQo extends Page {
 
 	@Serial
 	private static final long serialVersionUID = -4054765772439493563L;

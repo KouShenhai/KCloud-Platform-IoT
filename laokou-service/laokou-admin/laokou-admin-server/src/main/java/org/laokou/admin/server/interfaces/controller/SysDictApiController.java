@@ -53,14 +53,14 @@ public class SysDictApiController {
 	@Operation(summary = "系统字典>查询", description = "系统字典>查询")
 	@PreAuthorize("hasAuthority('sys:dict:query')")
 	public Result<IPage<SysDictVO>> query(@RequestBody SysDictQo qo) {
-		return new Result<IPage<SysDictVO>>().ok(sysDictApplicationService.queryDictPage(qo));
+		return Result.of(sysDictApplicationService.queryDictPage(qo));
 	}
 
 	@TraceLog
 	@GetMapping("/option/list")
 	@Operation(summary = "系统字典>下拉框列表", description = "系统字典>下拉框列表")
 	public Result<List<OptionVO>> optionList(@RequestParam("type") String type) {
-		return new Result<List<OptionVO>>().ok(sysDictApplicationService.getOptionList(type));
+		return Result.of(sysDictApplicationService.getOptionList(type));
 	}
 
 	@TraceLog
@@ -68,7 +68,7 @@ public class SysDictApiController {
 	@Operation(summary = "系统字典>详情", description = "系统字典>详情")
 	@DataCache(name = "dict", key = "#id")
 	public Result<SysDictVO> detail(@RequestParam("id") Long id) {
-		return new Result<SysDictVO>().ok(sysDictApplicationService.getDictById(id));
+		return Result.of(sysDictApplicationService.getDictById(id));
 	}
 
 	@TraceLog
@@ -77,7 +77,7 @@ public class SysDictApiController {
 	@OperateLog(module = "系统字典", name = "字典新增")
 	@PreAuthorize("hasAuthority('sys:dict:insert')")
 	public Result<Boolean> insert(@RequestBody SysDictDTO dto) {
-		return new Result<Boolean>().ok(sysDictApplicationService.insertDict(dto));
+		return Result.of(sysDictApplicationService.insertDict(dto));
 	}
 
 	@TraceLog
@@ -87,7 +87,7 @@ public class SysDictApiController {
 	@PreAuthorize("hasAuthority('sys:dict:update')")
 	@DataCache(name = "dict", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update(@RequestBody SysDictDTO dto) {
-		return new Result<Boolean>().ok(sysDictApplicationService.updateDict(dto));
+		return Result.of(sysDictApplicationService.updateDict(dto));
 	}
 
 	@TraceLog
@@ -97,7 +97,7 @@ public class SysDictApiController {
 	@PreAuthorize("hasAuthority('sys:dict:delete')")
 	@DataCache(name = "dict", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
-		return new Result<Boolean>().ok(sysDictApplicationService.deleteDict(id));
+		return Result.of(sysDictApplicationService.deleteDict(id));
 	}
 
 }

@@ -37,7 +37,7 @@ public class SeataExceptionHandler {
 	 */
 	@ExceptionHandler({ RmTransactionException.class })
 	public Result<?> handleRenException() {
-		return new Result<>().error(500, "事务超时，请重新提交");
+		return Result.fail(500, "事务超时，请重新提交");
 	}
 
 }

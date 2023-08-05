@@ -52,7 +52,7 @@ public class SysMessageApiController {
 	@PreAuthorize("hasAuthority('sys:message:insert')")
 	@Idempotent
 	public Result<Boolean> insert(@RequestBody MessageDTO dto) throws IOException {
-		return new Result<Boolean>().ok(sysMessageApplicationService.insertMessage(dto));
+		return Result.of(sysMessageApplicationService.insertMessage(dto));
 	}
 
 	@TraceLog
@@ -60,7 +60,7 @@ public class SysMessageApiController {
 	@Operation(summary = "系统消息>查询", description = "系统消息>查询")
 	@PreAuthorize("hasAuthority('sys:message:query')")
 	public Result<IPage<SysMessageVO>> query(@RequestBody SysMessageQo qo) {
-		return new Result<IPage<SysMessageVO>>().ok(sysMessageApplicationService.queryMessagePage(qo));
+		return Result.of(sysMessageApplicationService.queryMessagePage(qo));
 	}
 
 	@TraceLog
@@ -69,7 +69,7 @@ public class SysMessageApiController {
 	@OperateLog(module = "系统消息", name = "消息查看")
 	@DataCache(name = "message", key = "#id")
 	public Result<MessageDetailVO> get(@RequestParam("id") Long id) {
-		return new Result<MessageDetailVO>().ok(sysMessageApplicationService.getMessageByDetailId(id));
+		return Result.of(sysMessageApplicationService.getMessageByDetailId(id));
 	}
 
 	@TraceLog
@@ -78,21 +78,21 @@ public class SysMessageApiController {
 	@PreAuthorize("hasAuthority('sys:message:detail')")
 	@DataCache(name = "message", key = "#id")
 	public Result<MessageDetailVO> detail(@RequestParam("id") Long id) {
-		return new Result<MessageDetailVO>().ok(sysMessageApplicationService.getMessageById(id));
+		return Result.of(sysMessageApplicationService.getMessageById(id));
 	}
 
 	@TraceLog
 	@PostMapping("/unread/list")
 	@Operation(summary = "系统消息>未读", description = "系统消息>未读")
 	public Result<IPage<SysMessageVO>> unread(@RequestBody SysMessageQo qo) {
-		return new Result<IPage<SysMessageVO>>().ok(sysMessageApplicationService.getUnReadList(qo));
+		return Result.of(sysMessageApplicationService.getUnReadList(qo));
 	}
 
 	@TraceLog
 	@GetMapping("/count")
 	@Operation(summary = "系统消息>统计", description = "系统消息>统计")
 	public Result<Long> count() {
-		return new Result<Long>().ok(sysMessageApplicationService.unReadCount());
+		return Result.of(sysMessageApplicationService.unReadCount());
 	}
 
 }

@@ -38,5 +38,13 @@ public interface Constant {
      * 手机
      */
     String MOBILE = "mobile";
+    /**
+     * 登录
+     */
+    String LOGIN_PATTERN = "/login";
+    /**
+     * 租户ID
+     */
+    String TENANT_ID = "tenantId";
 
 }

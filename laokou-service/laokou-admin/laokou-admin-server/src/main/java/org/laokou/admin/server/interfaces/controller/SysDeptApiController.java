@@ -49,7 +49,7 @@ public class SysDeptApiController {
 	@GetMapping("/tree")
 	@TraceLog
 	public Result<SysDeptVO> tree() {
-		return new Result<SysDeptVO>().ok(sysDeptApplicationService.treeDept());
+		return Result.of(sysDeptApplicationService.treeDept());
 	}
 
 	@PostMapping("/query")
@@ -57,7 +57,7 @@ public class SysDeptApiController {
 	@PreAuthorize("hasAuthority('sys:dept:query')")
 	@TraceLog
 	public Result<List<SysDeptVO>> query(@RequestBody SysDeptQo qo) {
-		return new Result<List<SysDeptVO>>().ok(sysDeptApplicationService.queryDeptList(qo));
+		return Result.of(sysDeptApplicationService.queryDeptList(qo));
 	}
 
 	@PostMapping("/insert")
@@ -66,7 +66,7 @@ public class SysDeptApiController {
 	@PreAuthorize("hasAuthority('sys:dept:insert')")
 	@TraceLog
 	public Result<Boolean> insert(@RequestBody SysDeptDTO dto) {
-		return new Result<Boolean>().ok(sysDeptApplicationService.insertDept(dto));
+		return Result.of(sysDeptApplicationService.insertDept(dto));
 	}
 
 	@PutMapping("/update")
@@ -76,7 +76,7 @@ public class SysDeptApiController {
 	@TraceLog
 	@DataCache(name = "dept", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update(@RequestBody SysDeptDTO dto) {
-		return new Result<Boolean>().ok(sysDeptApplicationService.updateDept(dto));
+		return Result.of(sysDeptApplicationService.updateDept(dto));
 	}
 
 	@GetMapping("/detail")
@@ -84,7 +84,7 @@ public class SysDeptApiController {
 	@Operation(summary = "系统部门>详情", description = "系统部门>详情")
 	@DataCache(name = "dept", key = "#id")
 	public Result<SysDeptVO> detail(@RequestParam("id") Long id) {
-		return new Result<SysDeptVO>().ok(sysDeptApplicationService.getDept(id));
+		return Result.of(sysDeptApplicationService.getDept(id));
 	}
 
 	@DeleteMapping("/delete")
@@ -94,14 +94,14 @@ public class SysDeptApiController {
 	@PreAuthorize("hasAuthority('sys:dept:delete')")
 	@DataCache(name = "dept", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
-		return new Result<Boolean>().ok(sysDeptApplicationService.deleteDept(id));
+		return Result.of(sysDeptApplicationService.deleteDept(id));
 	}
 
 	@GetMapping("/get")
 	@TraceLog
 	@Operation(summary = "系统部门>部门树ids", description = "系统部门>部门树ids")
 	public Result<List<Long>> get(@RequestParam(value = "roleId") Long roleId) {
-		return new Result<List<Long>>().ok(sysDeptApplicationService.getDeptIdsByRoleId(roleId));
+		return Result.of(sysDeptApplicationService.getDeptIdsByRoleId(roleId));
 	}
 
 }

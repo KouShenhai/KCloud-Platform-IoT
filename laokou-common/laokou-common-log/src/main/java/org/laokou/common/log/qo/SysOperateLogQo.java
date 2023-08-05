@@ -18,7 +18,7 @@ package org.laokou.common.log.qo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.laokou.common.i18n.dto.BasePage;
+import org.laokou.common.i18n.dto.Page;
 
 import java.io.Serial;
 
@@ -27,7 +27,7 @@ import java.io.Serial;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SysOperateLogQo extends BasePage {
+public class SysOperateLogQo extends Page {
 
 	@Serial
 	private static final long serialVersionUID = 7394014097434848168L;
