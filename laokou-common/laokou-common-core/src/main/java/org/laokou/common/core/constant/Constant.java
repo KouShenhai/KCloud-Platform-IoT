@@ -89,11 +89,6 @@ public interface Constant {
 	int USE_STATUS = 1;
 
 	/**
-	 * 默认
-	 */
-	int DEFAULT = 0;
-
-	/**
 	 * 并
 	 */
 	String AND = "&";
@@ -122,11 +117,6 @@ public interface Constant {
 	 * 请求参数
 	 */
 	String QUESTION_MARK = "?";
-
-	/**
-	 * 默认数据库
-	 */
-	String DEFAULT_SOURCE = "master";
 
 	/**
 	 * 国际化
