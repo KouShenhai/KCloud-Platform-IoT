@@ -16,7 +16,6 @@
  */
 package org.laokou.auth.config.authentication;
 
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -50,17 +49,14 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
-
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import static org.laokou.auth.common.Constant.*;
 import static org.laokou.auth.common.Constant.TENANT_ID;
-import static org.laokou.common.core.constant.Constant.*;
 
 /**
  * 邮件/手机/密码
@@ -76,7 +72,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	protected final DeptGateway deptGateway;
 	protected final LoginLogUtil loginLogUtil;
 	protected final PasswordEncoder passwordEncoder;
-
 	//protected SysCaptchaService sysCaptchaService;
 	protected final OAuth2AuthorizationService authorizationService;
 	protected final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
