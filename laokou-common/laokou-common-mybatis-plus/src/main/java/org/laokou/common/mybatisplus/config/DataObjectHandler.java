@@ -22,6 +22,7 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
+
 import static org.laokou.common.core.constant.Constant.DEFAULT;
 
 /**
@@ -29,7 +30,7 @@ import static org.laokou.common.core.constant.Constant.DEFAULT;
  */
 @Component
 @Slf4j
-public class BaseDetaObjectHander implements MetaObjectHandler {
+public class DataObjectHandler implements MetaObjectHandler {
 
 	private static final String CREATE_DATE = "createDate";
 

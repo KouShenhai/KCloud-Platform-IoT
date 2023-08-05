@@ -65,6 +65,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         user.setLoginIp(IpUtil.getIpAddr(request));
         // 登录时间
         user.setLoginDate(DateUtil.now());
+        // 默认数据库
         user.setSourceName(DEFAULT_SOURCE);
         return user;
     }

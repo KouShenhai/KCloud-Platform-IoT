@@ -13,6 +13,10 @@
     <dependencies>
         <dependency>
             <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-cors</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-swagger</artifactId>
             <exclusions>
                 <exclusion>

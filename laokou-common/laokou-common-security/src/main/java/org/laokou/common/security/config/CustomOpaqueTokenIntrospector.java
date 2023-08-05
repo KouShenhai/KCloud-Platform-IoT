@@ -19,7 +19,7 @@ package org.laokou.common.security.config;
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.client.user.UserDetail;
+import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.core.StatusCode;
@@ -65,25 +65,25 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		}
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		obj = caffeineCache.getIfPresent(userInfoKey);
-		UserDetail userDetail;
+		User user;
 		if (obj != null) {
 			// 防止redis宕机，内存数据不能被及时删除
-			userDetail = (UserDetail) obj;
-			if (DateUtil.isAfter(DateUtil.now(), userDetail.getExpireDate())) {
+			user = (User) obj;
+			if (DateUtil.isAfter(DateUtil.now(), user.getExpireDate())) {
 				caffeineCache.invalidate(userInfoKey);
 				throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 						MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 			}
 			// 写入当前线程
-			UserContextHolder.set(userDetail.getId());
-			return userDetail;
+			UserContextHolder.set(user.getId());
+			return user;
 		}
 		obj = redisUtil.get(userInfoKey);
 		if (obj != null) {
 			// 解密
-			userDetail = decryptInfo((UserDetail) obj);
-			caffeineCache.put(userInfoKey, userDetail);
-			return userDetail;
+			user = decryptInfo((User) obj);
+			caffeineCache.put(userInfoKey, user);
+			return user;
 		}
 		OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token,
 				OAuth2TokenType.ACCESS_TOKEN);
@@ -100,47 +100,47 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
 		Object principal = ((UsernamePasswordAuthenticationToken) Objects
 				.requireNonNull(oAuth2Authorization.getAttribute(Principal.class.getName()))).getPrincipal();
-		userDetail = (UserDetail) principal;
+		user = (User) principal;
 		// 过期时间
-		userDetail.setExpireDate(DateUtil.plusSeconds(DateUtil.now(), expireTime));
-		redisUtil.set(userInfoKey, userDetail, expireTime);
+		user.setExpireDate(DateUtil.plusSeconds(DateUtil.now(), expireTime));
+		redisUtil.set(userInfoKey, user, expireTime);
 		// 解密
-		return decryptInfo(userDetail);
+		return decryptInfo(user);
 	}
 
 	/**
 	 * 解密字段
-	 * @param userDetail 用户信息
+	 * @param user 用户信息
 	 * @return UserDetail
 	 */
-	private UserDetail decryptInfo(UserDetail userDetail) {
-		String username = userDetail.getUsername();
+	private User decryptInfo(User user) {
+		String username = user.getUsername();
 		if (StringUtil.isNotEmpty(username)) {
 			try {
-				userDetail.setUsername(AesUtil.decrypt(username));
+				user.setUsername(AesUtil.decrypt(username));
 			} catch (Exception e) {
 				log.error("用户名解密失败，请使用AES加密");
 			}
 		}
-		String mail = userDetail.getMail();
+		String mail = user.getMail();
 		if (StringUtil.isNotEmpty(mail)) {
 			try {
-				userDetail.setMail(AesUtil.decrypt(mail));
+				user.setMail(AesUtil.decrypt(mail));
 			} catch (Exception e) {
 				log.error("邮箱解密失败，请使用AES加密");
 			}
 		}
-		String mobile = userDetail.getMobile();
+		String mobile = user.getMobile();
 		if (StringUtil.isNotEmpty(mail)) {
 			try {
-				userDetail.setMobile(AesUtil.decrypt(mobile));
+				user.setMobile(AesUtil.decrypt(mobile));
 			} catch (Exception e) {
 				log.error("手机号解密失败，请使用AES加密");
 			}
 		}
 		// 写入当前线程
-		UserContextHolder.set(userDetail.getId());
-		return userDetail;
+		UserContextHolder.set(user.getId());
+		return user;
 	}
 
 }

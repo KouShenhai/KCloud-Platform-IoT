@@ -19,6 +19,7 @@ package org.laokou.auth.config;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.laokou.auth.config.authentication.*;
+import org.laokou.auth.config.serviceimpl.UserDetailServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -33,7 +34,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -210,11 +210,10 @@ class OAuth2AuthorizationServerConfig {
 	 * 配置
 	 */
 	@Bean
-	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder,
-			UserDetailsService userDetailsService) {
+	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, UserDetailServiceImpl userDetailsServiceImpl) {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-		daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+		daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
 		return daoAuthenticationProvider;
 	}
 

@@ -21,15 +21,7 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-easy-captcha</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-p6spy</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-shardingsphere</artifactId>
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
