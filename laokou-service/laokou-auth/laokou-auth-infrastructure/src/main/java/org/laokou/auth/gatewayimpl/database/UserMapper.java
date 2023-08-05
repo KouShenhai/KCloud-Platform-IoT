@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper {
 
-    UserDO getUser(@Param("username")String username,@Param("tenantId")Long tenantId,@Param("type")String type);
+    UserDO getUserByUsername(@Param("username")String username,@Param("tenantId")Long tenantId,@Param("type")String type);
 
 }

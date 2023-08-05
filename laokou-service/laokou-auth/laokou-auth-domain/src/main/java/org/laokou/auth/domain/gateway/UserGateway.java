@@ -11,6 +11,6 @@ public interface UserGateway {
      * @param type 类型（password、mail、mobile）
      * @return User
      */
-    User getUser(String username,Long tenantId,String type);
+    User getUserByUsername(String username,Long tenantId,String type);
 
 }

@@ -215,7 +215,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 加密
 		String encryptName = AesUtil.encrypt(loginName);
 		// 多租户查询
-		User user = userGateway.getUser(encryptName, tenantId, loginType);
+		User user = userGateway.getUserByUsername(encryptName, tenantId, loginType);
 		if (user == null) {
 			code = StatusCode.USERNAME_PASSWORD_ERROR;
 			msg = MessageUtil.getMessage(code);
