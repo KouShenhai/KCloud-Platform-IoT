@@ -18,7 +18,7 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.common.handler.OAuth2ExceptionHandler;
+import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.core.StatusCode;

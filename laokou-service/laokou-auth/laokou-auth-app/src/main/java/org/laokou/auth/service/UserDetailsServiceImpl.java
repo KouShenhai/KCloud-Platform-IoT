@@ -1,4 +1,4 @@
-package org.laokou.auth.config.authentication.serviceimpl;
+package org.laokou.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ import static org.laokou.auth.common.Constant.*;
 
 @Component
 @RequiredArgsConstructor
-public class UserDetailServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserGateway userGateway;

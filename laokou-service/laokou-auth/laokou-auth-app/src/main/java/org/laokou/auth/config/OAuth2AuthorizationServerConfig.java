@@ -19,7 +19,7 @@ package org.laokou.auth.config;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.laokou.auth.config.authentication.*;
-import org.laokou.auth.config.authentication.serviceimpl.UserDetailServiceImpl;
+import org.laokou.auth.service.UserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -210,7 +210,7 @@ class OAuth2AuthorizationServerConfig {
 	 * 配置
 	 */
 	@Bean
-	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, UserDetailServiceImpl userDetailsServiceImpl) {
+	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, UserDetailsServiceImpl userDetailsServiceImpl) {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
 		daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);

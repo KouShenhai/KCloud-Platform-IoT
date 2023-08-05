@@ -18,7 +18,7 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.common.handler.OAuth2ExceptionHandler;
+import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.gateway.CaptchaGateway;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
@@ -27,7 +27,7 @@ import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.log.utils.LoginLogUtil;
+import org.laokou.auth.common.event.DomainEventPublisher;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.sensitive.enums.TypeEnum;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
@@ -48,44 +48,43 @@ import static org.laokou.auth.common.Constant.*;
  */
 @Slf4j
 @Component
-public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
+public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-	public OAuth2MailAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, LoginLogUtil loginLogUtil, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService, RedisUtil redisUtil) {
-		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sysSourceService, redisUtil);
+	public OAuth2MobileAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, DomainEventPublisher loginLogUtil, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService, RedisUtil redisUtil, DomainEventPublisher domainEventPublisher) {
+		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sysSourceService, redisUtil, domainEventPublisher);
 	}
 
 	@Override
 	public boolean supports(Class<?> authentication) {
-		return OAuth2MailAuthenticationToken.class.isAssignableFrom(authentication);
+		return OAuth2MobileAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 
 	@Override
 	Authentication login(HttpServletRequest request) {
-		// 判断验证码
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.CAPTCHA_NOT_NULL,
 					MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
 		}
-		String mail = request.getParameter(MAIL);
-		log.info("邮箱：{}", SensitiveUtil.format(TypeEnum.MAIL, mail));
-		if (StringUtil.isEmpty(mail)) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.MAIL_NOT_NULL,
-					MessageUtil.getMessage(StatusCode.MAIL_NOT_NULL));
+		String mobile = request.getParameter(MOBILE);
+		log.info("手机：{}", SensitiveUtil.format(TypeEnum.MOBILE, mobile));
+		if (StringUtil.isEmpty(mobile)) {
+			throw OAuth2ExceptionHandler.getException(StatusCode.MOBILE_NOT_NULL,
+					MessageUtil.getMessage(StatusCode.MOBILE_NOT_NULL));
 		}
-		boolean isMail = RegexUtil.mailRegex(mail);
-		if (!isMail) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.MAIL_ERROR,
-					MessageUtil.getMessage(StatusCode.MAIL_ERROR));
+		boolean isMobile = RegexUtil.mobileRegex(mobile);
+		if (!isMobile) {
+			throw OAuth2ExceptionHandler.getException(StatusCode.MOBILE_ERROR,
+					MessageUtil.getMessage(StatusCode.MOBILE_ERROR));
 		}
 		// 获取用户信息,并认证信息
-		return super.getUserInfo(mail, "", request, code, mail);
+		return super.getUserInfo(mobile, "", request, code, mobile);
 	}
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return new AuthorizationGrantType(AUTH_MAIL);
+		return new AuthorizationGrantType(AUTH_MOBILE);
 	}
 
 }

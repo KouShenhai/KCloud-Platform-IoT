@@ -19,6 +19,7 @@ package org.laokou.auth.config;
 
 import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +28,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -41,6 +43,7 @@ import java.util.Set;
 @RefreshScope
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = OAuth2AuthorizationServerProperties.PREFIX,
 		name = "enabled")
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2ResourceServerConfig {
 
 	/**
@@ -60,10 +63,12 @@ public class OAuth2ResourceServerConfig {
 			throws Exception {
 		Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns())
 				.orElseGet(HashSet::new);
+		AntPathRequestMatcher[] uri1 = uris.stream().map(AntPathRequestMatcher::new).toArray(AntPathRequestMatcher[]::new);
+		AntPathRequestMatcher[] uri2 = patterns.stream().map(AntPathRequestMatcher::new).toArray(AntPathRequestMatcher[]::new);
 		return http
-				.authorizeHttpRequests(request -> request.requestMatchers(uris.toArray(String[]::new)).permitAll()
-						.requestMatchers(patterns.toArray(String[]::new)).permitAll().anyRequest().authenticated())
-				.cors(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests(request -> request.requestMatchers(uri1).permitAll()
+						.requestMatchers(uri2).permitAll().anyRequest().authenticated())
+				.cors(AbstractHttpConfigurer::disable)
 				// 自定义登录页面
 				// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
 				// 登录页面 -> DefaultLoginPageGeneratingFilter

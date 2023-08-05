@@ -112,8 +112,5 @@ spring:
             - http://127.0.0.1:8001
         request-matcher:
           patterns:
-            - /oauth2/captcha
-            - /oauth2/logout
-            - /oauth2/tenant
-            - /oauth2/secret_info
-            - /oauth2/idempotent_token
+            - /v1/captchas/{uuid}
+            - /v1/secrets

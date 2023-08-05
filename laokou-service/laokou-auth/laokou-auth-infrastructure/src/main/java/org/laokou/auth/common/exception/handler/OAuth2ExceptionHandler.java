@@ -1,4 +1,4 @@
-package org.laokou.auth.common.handler;
+package org.laokou.auth.common.exception.handler;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 
