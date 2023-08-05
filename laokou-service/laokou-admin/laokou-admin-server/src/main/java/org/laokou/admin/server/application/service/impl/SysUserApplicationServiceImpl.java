@@ -163,6 +163,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 			throw new CustomException("用户编号不为空");
 		}
 		String mobile = dto.getMobile();
+		// 验证手机号唯一
 		if (StringUtil.isNotEmpty(mobile)) {
 			long mobileCount = sysUserService
 					.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getTenantId, UserUtil.getTenantId())
@@ -170,6 +171,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 			if (mobileCount > 0) {
 				throw new CustomException("手机号已被注册，请重新填写");
 			}
+			dto.setMobile(AesUtil.encrypt(mobile));
 		}
 		// 验证邮箱唯一
 		String mail = dto.getMail();
@@ -180,6 +182,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 			if (mailCount > 0) {
 				throw new CustomException("邮箱已被注册，请重新填写");
 			}
+			dto.setMail(AesUtil.encrypt(mail));
 		}
 		dto.setEditor(UserUtil.getUserId());
 		Integer version = sysUserService.getVersion(id);
