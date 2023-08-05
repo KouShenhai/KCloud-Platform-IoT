@@ -37,7 +37,7 @@
         <if test="type != null">
             and a.`type` = #{type} and a.visible = 0
         </if>
-        order by a.sort desc
+        order by a.sort asc
     </select>
 
     <select id="queryMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
@@ -46,7 +46,7 @@
         <if test="qo.name != null and qo.name != ''">
             and `name` like concat('%',#{qo.name},'%')
         </if>
-        order by sort desc
+        order by sort asc
     </select>
 
     <select id="getMenuById" resultType="org.laokou.admin.client.vo.SysMenuVO">
