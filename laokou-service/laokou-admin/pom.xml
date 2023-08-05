@@ -31,6 +31,7 @@
     <modules>
         <module>laokou-admin-server</module>
         <module>laokou-admin-client</module>
+        <module>laokou-admin-app</module>
     </modules>
 
 </project>
