@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
 import org.laokou.gateway.config.CustomProperties;
+import org.laokou.gateway.utils.RequestUtil;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -85,7 +86,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 			return oauth2Decode(exchange, chain);
 		}
 		// 获取token
-		String token = ResponseUtil.getParamValue(request, AUTHORIZATION);
+		String token = RequestUtil.getParamValue(request, AUTHORIZATION);
 		if (StringUtil.isEmpty(token)) {
 			return ResponseUtil.response(exchange, Result.fail(StatusCode.UNAUTHORIZED));
 		}

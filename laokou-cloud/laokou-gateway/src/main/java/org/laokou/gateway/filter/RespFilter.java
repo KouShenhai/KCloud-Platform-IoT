@@ -25,7 +25,6 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.gateway.constant.Constant;
-import org.laokou.gateway.utils.ResponseUtil;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -88,8 +87,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 				assert contentType != null;
 				if (contentType.contains(MediaType.APPLICATION_JSON_VALUE)
 						&& Objects.requireNonNull(response.getStatusCode()).value() != StatusCode.OK
-						&& body instanceof Flux) {
-					Flux<? extends DataBuffer> fluxBody = (Flux<? extends DataBuffer>) body;
+						&& body instanceof Flux<? extends DataBuffer> fluxBody) {
 					return super.writeWith(fluxBody.map(dataBuffer -> {
 						// 修改状态码
 						response.setStatusCode(HttpStatus.OK);
@@ -112,8 +110,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 							code = ex.getCode();
 							msg = ex.getMsg();
 						}
-						Result<?> result = ResponseUtil.response(code, msg);
-						byte[] uppedContent = JacksonUtil.toJsonStr(result).getBytes();
+						byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(code, msg)).getBytes();
 						return dataBufferFactory.wrap(uppedContent);
 					}));
 				}

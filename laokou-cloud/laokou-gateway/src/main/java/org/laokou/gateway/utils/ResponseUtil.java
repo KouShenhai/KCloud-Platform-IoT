@@ -17,11 +17,9 @@
 package org.laokou.gateway.utils;
 
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
@@ -43,16 +41,6 @@ public class ResponseUtil {
 		response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 		response.setStatusCode(HttpStatus.OK);
 		return response.writeWith(Flux.just(buffer));
-	}
-
-	public static String getParamValue(ServerHttpRequest request, String paramName) {
-		// 从header中获取
-		String paramValue = request.getHeaders().getFirst(paramName);
-		// 从参数中获取
-		if (StringUtil.isEmpty(paramValue)) {
-			paramValue = request.getQueryParams().getFirst(paramName);
-		}
-		return StringUtil.isEmpty(paramValue) ? "" : paramValue.trim();
 	}
 
 }
