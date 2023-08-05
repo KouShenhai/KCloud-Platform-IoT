@@ -19,6 +19,7 @@ package org.laokou.auth.config.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.common.handler.OAuth2ExceptionHandler;
+import org.laokou.auth.domain.gateway.CaptchaGateway;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
@@ -45,8 +46,8 @@ import static org.laokou.auth.common.Constant.*;
 @Slf4j
 public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-	public OAuth2PasswordAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, LoginLogUtil loginLogUtil, PasswordEncoder passwordEncoder, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService, RedisUtil redisUtil) {
-		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, authorizationService, tokenGenerator, sysSourceService, redisUtil);
+	public OAuth2PasswordAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, LoginLogUtil loginLogUtil, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService, RedisUtil redisUtil) {
+		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sysSourceService, redisUtil);
 	}
 
 	@Override

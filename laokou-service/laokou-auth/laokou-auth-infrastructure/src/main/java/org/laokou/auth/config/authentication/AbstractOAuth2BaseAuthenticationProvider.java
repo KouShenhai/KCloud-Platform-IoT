@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.common.handler.OAuth2ExceptionHandler;
+import org.laokou.auth.domain.gateway.CaptchaGateway;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
@@ -72,7 +73,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	protected final DeptGateway deptGateway;
 	protected final LoginLogUtil loginLogUtil;
 	protected final PasswordEncoder passwordEncoder;
-	//protected SysCaptchaService sysCaptchaService;
+	protected final CaptchaGateway captchaGateway;
 	protected final OAuth2AuthorizationService authorizationService;
 	protected final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
 	protected final SysSourceService sysSourceService;
@@ -184,7 +185,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		String loginType = grantType.getValue();
 		Long tenantId = Long.valueOf(request.getParameter(TENANT_ID));
 		// 验证验证码
-		Boolean validate = true;// sysCaptchaService.validate(uuid, captcha);
+		Boolean validate = captchaGateway.validate(uuid, captcha);
 		int code;
 		String msg;
 		if (null == validate) {

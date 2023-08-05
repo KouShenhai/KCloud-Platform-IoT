@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.core.utils;
+package org.laokou.xss.utils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
