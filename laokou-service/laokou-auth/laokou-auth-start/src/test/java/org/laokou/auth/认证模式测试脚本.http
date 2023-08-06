@@ -137,7 +137,7 @@ client_credentials
 # 获取设备码(默认数据库)
 POST https://{{host}}/oauth2/device_authorization
 Authorization: {{Authorization}}
-Content-Type: multipart/form-data; boundary=WebAppBoundary
+Content-Type: application/x-www-form-urlencoded; boundary=WebAppBoundary
 
 ###
 

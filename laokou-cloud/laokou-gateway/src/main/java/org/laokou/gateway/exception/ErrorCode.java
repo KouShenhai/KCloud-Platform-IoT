@@ -17,4 +17,9 @@ public interface ErrorCode {
      */
     int IP_BLACK = 1003;
 
+    /**
+     * 无效客户端
+     */
+    int INVALID_CLIENT = 2016;
+
 }

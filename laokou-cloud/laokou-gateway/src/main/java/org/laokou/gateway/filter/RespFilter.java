@@ -48,6 +48,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 import static org.laokou.gateway.constant.Constant.OAUTH2_AUTH_URI;
+import static org.laokou.gateway.exception.ErrorCode.INVALID_CLIENT;
 
 /**
  * @author laokou
@@ -129,7 +130,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 		ExceptionEnum instance = ExceptionEnum.getInstance(code.toUpperCase());
 		return switch (instance) {
 			case INVALID_CLIENT ->
-				new CustomException(StatusCode.INVALID_CLIENT, MessageUtil.getMessage(StatusCode.INVALID_CLIENT));
+				new CustomException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
 		};
 	}
 
