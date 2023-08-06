@@ -25,7 +25,6 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>laokou-admin-server</artifactId>
-	<description>系统管理</description>
     <dependencies>
 		<dependency>
 			<groupId>org.laokou</groupId>

@@ -14,16 +14,40 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.server;
 
+package org.laokou.admin;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
 
 /**
  * @author laokou
  */
 @Slf4j
 @SpringBootTest(classes = AdminApp.class)
-public class LoginLogShardingTest {
+@RequiredArgsConstructor
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+public class RedisTest {
+
+//	private final RedisUtil redisUtil;
+
+	@Test
+	public void redisAtomicLongTest() {
+		String key = "laokou";
+//		long l4 = redisUtil.addAndGet(key, 10);
+//		long l = redisUtil.incrementAndGet(key);
+//		long l1 = redisUtil.incrementAndGet(key);
+//		long l2 = redisUtil.decrementAndGet(key);
+//		long l3 = redisUtil.getAtomicValue(key);
+//		Object o = redisUtil.get(key);
+//		log.info("{}", l);
+//		log.info("{}", l1);
+//		log.info("{}", l2);
+//		log.info("{}", l3);
+//		log.info("{}", o);
+	}
 
 }

@@ -15,7 +15,7 @@
  * 
  */
 
-package org.laokou.admin.server;
+package org.laokou.admin;
 
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;

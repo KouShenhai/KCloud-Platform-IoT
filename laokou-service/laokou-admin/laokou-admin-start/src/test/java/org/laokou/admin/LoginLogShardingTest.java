@@ -12,15 +12,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
-
-package org.laokou.admin.server;
+package org.laokou.admin;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.i18n.utils.ValidatorUtil;
-import org.laokou.common.tenant.dto.SysSourceDTO;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
@@ -28,17 +24,6 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @Slf4j
 @SpringBootTest(classes = AdminApp.class)
-public class RegexTest {
-
-	@Test
-	public void test() {
-		SysSourceDTO dto = new SysSourceDTO();
-		dto.setName("啊啊啊1");
-		dto.setDriverClassName("ee");
-		dto.setUrl("ww");
-		dto.setUsername("ddd");
-		dto.setPassword("33");
-		ValidatorUtil.validateEntity(dto);
-	}
+public class LoginLogShardingTest {
 
 }

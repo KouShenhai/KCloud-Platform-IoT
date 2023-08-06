@@ -15,40 +15,25 @@
  *
  */
 
-package org.laokou.admin.server;
+package org.laokou.admin;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author laokou
  */
 @Slf4j
 @SpringBootTest(classes = AdminApp.class)
-@RequiredArgsConstructor
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class RedisTest {
+public class CollectionTest {
 
-	private final RedisUtil redisUtil;
-
-	@Test
-	public void redisAtomicLongTest() {
-		String key = "laokou";
-		long l4 = redisUtil.addAndGet(key, 10);
-		long l = redisUtil.incrementAndGet(key);
-		long l1 = redisUtil.incrementAndGet(key);
-		long l2 = redisUtil.decrementAndGet(key);
-		long l3 = redisUtil.getAtomicValue(key);
-		Object o = redisUtil.get(key);
-		log.info("{}", l);
-		log.info("{}", l1);
-		log.info("{}", l2);
-		log.info("{}", l3);
-		log.info("{}", o);
+	public static void main(String[] args) {
+		List<String> list = new ArrayList<>();
+		System.out.println(CollectionUtil.isNotEmpty(list));
 	}
 
 }

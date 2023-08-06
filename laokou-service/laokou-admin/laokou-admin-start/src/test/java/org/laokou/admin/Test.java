@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.server;
+package org.laokou.admin;
 
 /**
  * @author laokou
