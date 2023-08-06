@@ -22,13 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.security.handler.OAuth2ExceptionHandler;
+import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
@@ -40,6 +40,8 @@ import java.security.Principal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+
+import static org.laokou.common.security.exception.ErrorCode.FORCE_KILL;
 
 /**
  * @author laokou
@@ -60,8 +62,8 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
 		Object obj = redisUtil.get(userKillKey);
 		if (obj != null) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.FORCE_KILL,
-					MessageUtil.getMessage(StatusCode.FORCE_KILL));
+			throw OAuth2ExceptionHandler.getException(FORCE_KILL,
+					MessageUtil.getMessage(FORCE_KILL));
 		}
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		obj = caffeineCache.getIfPresent(userInfoKey);

@@ -51,7 +51,7 @@ import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.common.log.event.AuditLogEvent;
 import org.laokou.common.log.service.SysAuditLogService;
 import org.laokou.common.log.vo.SysAuditLogVO;
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.oss.vo.UploadVO;
 import org.laokou.common.security.utils.UserUtil;

@@ -1,4 +1,4 @@
-package org.laokou.common.security.handler;
+package org.laokou.common.security.exception.handler;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.utils.JacksonUtil;

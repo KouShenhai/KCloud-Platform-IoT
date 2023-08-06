@@ -10,7 +10,6 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,10 +22,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static org.laokou.auth.common.Constant.*;
+import static org.laokou.auth.common.exception.ErrorCode.*;
 
 @Component
 @RequiredArgsConstructor
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserGateway userGateway;
@@ -40,23 +40,23 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userGateway.getUserByUsername(encryptName,DEFAULT_TENANT,AUTH_PASSWORD);
         HttpServletRequest request = RequestUtil.getHttpServletRequest();
         if (user == null) {
-            throw new UsernameNotFoundException(MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR));
+            throw new UsernameNotFoundException(MessageUtil.getMessage(USERNAME_PASSWORD_ERROR));
         }
         String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
         String clientPassword = user.getPassword();
         if (!passwordEncoder.matches(password, clientPassword)) {
-            throw new UsernameNotFoundException(MessageUtil.getMessage(StatusCode.USERNAME_PASSWORD_ERROR));
+            throw new UsernameNotFoundException(MessageUtil.getMessage(USERNAME_PASSWORD_ERROR));
         }
         // 是否锁定
         if (!user.isEnabled()) {
-            throw new UsernameNotFoundException(MessageUtil.getMessage(StatusCode.USERNAME_DISABLE));
+            throw new UsernameNotFoundException(MessageUtil.getMessage(USERNAME_DISABLE));
         }
         Long userId = user.getId();
         Integer superAdmin = user.getSuperAdmin();
         // 权限标识列表
         List<String> permissionsList = menuGateway.getPermissions(userId,DEFAULT_TENANT,superAdmin);
         if (CollectionUtil.isEmpty(permissionsList)) {
-            throw new UsernameNotFoundException(MessageUtil.getMessage(StatusCode.USERNAME_NOT_PERMISSION));
+            throw new UsernameNotFoundException(MessageUtil.getMessage(USERNAME_NOT_PERMISSION));
         }
         List<Long> deptIds = deptGateway.getDeptIds(userId,DEFAULT_TENANT,superAdmin);
         user.setDeptIds(deptIds);

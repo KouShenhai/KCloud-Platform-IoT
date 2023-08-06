@@ -15,16 +15,9 @@
  *
  */
 package org.laokou.auth.common.event;
-
-import eu.bitwalker.useragentutils.UserAgent;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.ip.region.utils.AddressUtil;
-import org.laokou.common.log.event.LoginLogEvent;
 import org.springframework.context.ApplicationEvent;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 /**

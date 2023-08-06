@@ -19,7 +19,7 @@ package org.laokou.gateway.filter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;

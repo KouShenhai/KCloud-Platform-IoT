@@ -18,7 +18,7 @@ package org.laokou.common.oss.support;
 
 import com.amazonaws.services.s3.AmazonS3;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.oss.service.SysOssService;
 import org.laokou.common.oss.vo.SysOssVO;
 import org.laokou.common.redis.utils.RedisKeyUtil;

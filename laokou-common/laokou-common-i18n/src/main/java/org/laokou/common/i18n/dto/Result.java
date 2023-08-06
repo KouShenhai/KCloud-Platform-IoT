@@ -19,7 +19,7 @@ package org.laokou.common.i18n.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 
 import java.io.Serial;

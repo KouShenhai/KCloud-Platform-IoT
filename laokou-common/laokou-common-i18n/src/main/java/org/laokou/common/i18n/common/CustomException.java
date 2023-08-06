@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.i18n.core;
+package org.laokou.common.i18n.common;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

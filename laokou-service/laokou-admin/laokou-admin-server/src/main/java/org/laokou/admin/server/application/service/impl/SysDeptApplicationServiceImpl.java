@@ -26,7 +26,7 @@ import org.laokou.admin.client.dto.SysDeptDTO;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
 import org.laokou.admin.server.interfaces.qo.SysDeptQo;
 import org.laokou.admin.client.vo.SysDeptVO;
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.core.utils.TreeUtil;

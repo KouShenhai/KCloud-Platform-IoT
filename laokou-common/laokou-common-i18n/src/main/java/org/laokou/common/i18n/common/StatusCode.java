@@ -14,28 +14,47 @@
  * limitations under the License.
  *
  */
-
-package org.laokou.auth.command.oauth2.config.authentication;
-
-import org.springframework.security.core.Authentication;
-
-import java.util.Map;
-
-import static org.laokou.auth.common.Constant.AUTH_PASSWORD;
+package org.laokou.common.i18n.common;
 
 /**
+ * 状态码
  * @author laokou
  */
-public class OAuth2PasswordAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {
+public interface StatusCode {
 
-	@Override
-	String getGrantType() {
-		return AUTH_PASSWORD;
-	}
+	/**
+	 * 请求成功
+	 */
+	int OK = 200;
 
-	@Override
-	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		return new OAuth2PasswordAuthenticationToken(clientPrincipal, additionalParameters);
-	}
+	/**
+	 * 错误请求
+	 */
+	int BAD_REQUEST = 400;
+
+	/**
+	 * 登录状态已过期，请重新登录
+	 */
+	int UNAUTHORIZED = 401;
+
+	/**
+	 * 访问拒绝，没有权限
+	 */
+	int FORBIDDEN = 403;
+
+	/**
+	 * 无法找到请求的资源
+	 */
+	int NOT_FOUND = 404;
+
+	/**
+	 * 服务器内部错误，无法完成请求
+	 */
+	int INTERNAL_SERVER_ERROR = 500;
+
+	/**
+	 * 服务正在维护，请联系管理员
+	 */
+	int SERVICE_UNAVAILABLE = 503;
 
 }

@@ -24,7 +24,6 @@ import lombok.Data;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -34,6 +33,8 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.laokou.gateway.exception.ErrorCode.IP_BLACK;
 
 /**
  * RemoteAddrRoutePredicateFactory IP黑名单
@@ -53,7 +54,7 @@ public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<Ip
 			InetSocketAddress remoteAddress = config.remoteAddressResolver.resolve(exchange);
 			for (IpSubnetFilterRule source : sources) {
 				if (source.matches(remoteAddress)) {
-					return ResponseUtil.response(exchange, Result.fail(StatusCode.IP_BLACK));
+					return ResponseUtil.response(exchange, Result.fail(IP_BLACK));
 				}
 			}
 			return chain.filter(exchange);

@@ -14,21 +14,20 @@
  * limitations under the License.
  *
  */
-package org.laokou.auth.config.authentication;
+package org.laokou.auth.command.oauth2.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.gateway.CaptchaGateway;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.auth.common.event.DomainEventPublisher;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.common.sensitive.enums.TypeEnum;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
 import org.laokou.common.tenant.service.SysSourceService;
@@ -41,7 +40,9 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.auth.common.BizCode.*;
 import static org.laokou.auth.common.Constant.*;
+import static org.laokou.auth.common.exception.ErrorCode.*;
 
 /**
  * @author laokou
@@ -66,19 +67,19 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.CAPTCHA_NOT_NULL,
-					MessageUtil.getMessage(StatusCode.CAPTCHA_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(CAPTCHA_NOT_NULL,
+					MessageUtil.getMessage(CAPTCHA_NOT_NULL));
 		}
 		String mail = request.getParameter(MAIL);
 		log.info("邮箱：{}", SensitiveUtil.format(TypeEnum.MAIL, mail));
 		if (StringUtil.isEmpty(mail)) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.MAIL_NOT_NULL,
-					MessageUtil.getMessage(StatusCode.MAIL_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(MAIL_NOT_NULL,
+					MessageUtil.getMessage(MAIL_NOT_NULL));
 		}
 		boolean isMail = RegexUtil.mailRegex(mail);
 		if (!isMail) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.MAIL_ERROR,
-					MessageUtil.getMessage(StatusCode.MAIL_ERROR));
+			throw OAuth2ExceptionHandler.getException(MAIL_ERROR,
+					MessageUtil.getMessage(MAIL_ERROR));
 		}
 		// 获取用户信息,并认证信息
 		return super.getUserInfo(mail, "", request, code, mail);

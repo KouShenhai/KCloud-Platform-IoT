@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.infrastructure.feign.workflow.WorkDefinitionApiFeignClient;
 import org.laokou.admin.server.interfaces.qo.DefinitionQo;
 import org.laokou.common.core.utils.ResourceUtil;
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.flowable.client.dto.DefinitionDTO;

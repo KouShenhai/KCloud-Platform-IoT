@@ -19,7 +19,7 @@ package org.laokou.admin.server.application.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.WorkflowTaskApplicationService;
 import org.laokou.admin.server.infrastructure.feign.workflow.WorkTaskApiFeignClient;
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 

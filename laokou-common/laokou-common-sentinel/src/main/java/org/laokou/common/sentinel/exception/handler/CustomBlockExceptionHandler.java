@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.sentinel.handler;
+package org.laokou.common.sentinel.exception.handler;
 
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
@@ -23,12 +23,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.core.StatusCode;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.MimeTypeUtils;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+
+import static org.laokou.common.sentinel.exception.ErrorCode.API_BLOCK_REQUEST;
 
 /**
  * @author laokou
@@ -45,7 +46,7 @@ public class CustomBlockExceptionHandler implements BlockExceptionHandler {
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
 		PrintWriter writer = response.getWriter();
-		writer.write(JacksonUtil.toJsonStr(Result.fail(StatusCode.API_BLOCK_REQUEST)));
+		writer.write(JacksonUtil.toJsonStr(Result.fail(API_BLOCK_REQUEST)));
 		writer.flush();
 		writer.close();
 	}

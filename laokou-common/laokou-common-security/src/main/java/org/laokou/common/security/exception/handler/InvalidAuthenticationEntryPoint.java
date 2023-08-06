@@ -14,12 +14,12 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.security.handler;
+package org.laokou.common.security.exception.handler;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.AuthenticationException;

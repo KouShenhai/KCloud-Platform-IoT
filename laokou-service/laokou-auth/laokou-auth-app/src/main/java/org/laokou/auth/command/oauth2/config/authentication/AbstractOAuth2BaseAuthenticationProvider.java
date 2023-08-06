@@ -14,14 +14,13 @@
  * limitations under the License.
  *
  */
-package org.laokou.auth.config.authentication;
+package org.laokou.auth.command.oauth2.config.authentication;
 
 import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.gateway.CaptchaGateway;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
@@ -29,13 +28,14 @@ import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.*;
-import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.ip.region.utils.AddressUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.auth.common.event.DomainEventPublisher;
 import org.laokou.common.log.event.LoginLogEvent;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.common.tenant.service.SysSourceService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -61,7 +61,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import static org.laokou.auth.common.Constant.*;
-import static org.laokou.auth.common.Constant.TENANT_ID;
+import static org.laokou.auth.common.exception.ErrorCode.*;
 
 /**
  * 邮件/手机/密码
@@ -191,62 +191,36 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		Long tenantId = Long.valueOf(request.getParameter(TENANT_ID));
 		// 验证验证码
 		Boolean validate = captchaGateway.validate(uuid, captcha);
-		int code;
-		String msg;
-		if (null == validate) {
-			code = StatusCode.CAPTCHA_EXPIRED;
-			msg = MessageUtil.getMessage(code);
-			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
-			domainEventPublisher.publish(getLoginLogEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId));
-			throw OAuth2ExceptionHandler.getException(code, msg);
+		if (validate == null) {
+			throw getException(CAPTCHA_EXPIRED,loginName,loginType,request,tenantId);
 		}
 		if (Boolean.FALSE.equals(validate)) {
-			code = StatusCode.CAPTCHA_ERROR;
-			msg = MessageUtil.getMessage(code);
-			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
-			domainEventPublisher.publish(getLoginLogEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId));
-			throw OAuth2ExceptionHandler.getException(code, msg);
+			throw getException(CAPTCHA_ERROR,loginName,loginType,request,tenantId);
 		}
 		// 加密
 		String encryptName = AesUtil.encrypt(loginName);
 		// 多租户查询
 		User user = userGateway.getUserByUsername(encryptName, tenantId, loginType);
 		if (user == null) {
-			code = StatusCode.USERNAME_PASSWORD_ERROR;
-			msg = MessageUtil.getMessage(code);
-			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
-			domainEventPublisher.publish(getLoginLogEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId));
-			throw OAuth2ExceptionHandler.getException(code, msg);
+			throw getException(USERNAME_PASSWORD_ERROR,loginName,loginType,request,tenantId);
 		}
 		if (AUTH_PASSWORD.equals(loginType)) {
 			// 验证密码
 			String clientPassword = user.getPassword();
 			if (!passwordEncoder.matches(password, clientPassword)) {
-				code = StatusCode.USERNAME_PASSWORD_ERROR;
-				msg = MessageUtil.getMessage(code);
-				log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
-				domainEventPublisher.publish(getLoginLogEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId));
-				throw OAuth2ExceptionHandler.getException(code, msg);
+				throw getException(USERNAME_PASSWORD_ERROR,loginName,loginType,request,tenantId);
 			}
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			code = StatusCode.USERNAME_DISABLE;
-			msg = MessageUtil.getMessage(code);
-			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
-			domainEventPublisher.publish(getLoginLogEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId));
-			throw OAuth2ExceptionHandler.getException(code, msg);
+			throw getException(USERNAME_DISABLE,loginName,loginType,request,tenantId);
 		}
 		Long userId = user.getId();
 		Integer superAdmin = user.getSuperAdmin();
 		// 权限标识列表
 		List<String> permissionsList = menuGateway.getPermissions(userId,tenantId,superAdmin);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			code = StatusCode.USERNAME_NOT_PERMISSION;
-			msg = MessageUtil.getMessage(code);
-			log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
-			domainEventPublisher.publish(getLoginLogEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId));
-			throw OAuth2ExceptionHandler.getException(code, msg);
+			throw getException(USERNAME_NOT_PERMISSION,loginName,loginType,request,tenantId);
 		}
 		// 部门列表
 		List<Long> deptIds = deptGateway.getDeptIds(userId,tenantId,superAdmin);
@@ -278,8 +252,15 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		if (clientPrincipal != null && clientPrincipal.isAuthenticated()) {
 			return clientPrincipal;
 		}
-		throw OAuth2ExceptionHandler.getException(StatusCode.INVALID_CLIENT,
-				MessageUtil.getMessage(StatusCode.INVALID_CLIENT));
+		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT,
+				MessageUtil.getMessage(INVALID_CLIENT));
+	}
+
+	private OAuth2AuthenticationException getException(int code,String loginName,String loginType,HttpServletRequest request,Long tenantId) {
+		String msg = MessageUtil.getMessage(code);
+		log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
+		domainEventPublisher.publish(getLoginLogEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId));
+		throw OAuth2ExceptionHandler.getException(code, msg);
 	}
 
 	private LoginLogEvent getLoginLogEvent(String username, String loginType, Integer status, String msg, HttpServletRequest request, Long tenantId) {

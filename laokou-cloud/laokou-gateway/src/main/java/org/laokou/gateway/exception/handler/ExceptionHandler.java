@@ -14,12 +14,11 @@
  * limitations under the License.
  *
  */
-package org.laokou.gateway.handler;
+package org.laokou.gateway.exception.handler;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
@@ -29,6 +28,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import static org.laokou.common.i18n.common.StatusCode.*;
+import static org.laokou.gateway.exception.ErrorCode.*;
 
 /**
  * 异常处理器
@@ -45,26 +47,26 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 		log.error("网关全局处理异常，异常信息:{}", e.getMessage());
 		if (e instanceof NotFoundException) {
 			log.error("服务正在维护，请联系管理员");
-			return ResponseUtil.response(exchange, Result.fail(StatusCode.SERVICE_UNAVAILABLE));
+			return ResponseUtil.response(exchange, Result.fail(SERVICE_UNAVAILABLE));
 		}
 		if (e instanceof ResponseStatusException) {
 			int statusCode = ((ResponseStatusException) e).getStatusCode().value();
 			log.info("状态码：{}", statusCode);
-			if (statusCode == StatusCode.NOT_FOUND) {
+			if (statusCode == NOT_FOUND) {
 				log.error("无法找到请求的资源");
-				return ResponseUtil.response(exchange, Result.fail(StatusCode.NOT_FOUND));
+				return ResponseUtil.response(exchange, Result.fail(NOT_FOUND));
 			} else {
 				log.error("服务器内部错误，无法完成请求");
-				return ResponseUtil.response(exchange, Result.fail(StatusCode.INTERNAL_SERVER_ERROR));
+				return ResponseUtil.response(exchange, Result.fail(INTERNAL_SERVER_ERROR));
 			}
 		}
 		if (BlockException.isBlockException(e)) {
 			// 思路来源于SentinelGatewayBlockExceptionHandler
 			log.error("请求过于频繁，请稍后再试");
-			return ResponseUtil.response(exchange, Result.fail(StatusCode.SERVICE_BLOCK_REQUEST));
+			return ResponseUtil.response(exchange, Result.fail(SERVICE_BLOCK_REQUEST));
 		} else {
 			log.error("请求已中断，请刷新页面");
-			return ResponseUtil.response(exchange, Result.fail(StatusCode.SERVICE_REQUEST_CLOSE));
+			return ResponseUtil.response(exchange, Result.fail(SERVICE_REQUEST_CLOSE));
 		}
 	}
 

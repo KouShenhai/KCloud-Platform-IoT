@@ -17,7 +17,7 @@
 
 package org.laokou.admin.client.enums;
 
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.common.CustomException;
 
 /**
  * @author laokou

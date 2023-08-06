@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.config;
+package org.laokou.auth.command.oauth2.config;
 
 import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

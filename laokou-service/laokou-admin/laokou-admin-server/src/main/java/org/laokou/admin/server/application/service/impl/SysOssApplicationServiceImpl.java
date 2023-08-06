@@ -30,7 +30,7 @@ import org.laokou.common.oss.entity.SysOssDO;
 import org.laokou.common.oss.qo.SysOssQo;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.oss.service.SysOssService;
 import org.laokou.common.oss.vo.SysOssVO;

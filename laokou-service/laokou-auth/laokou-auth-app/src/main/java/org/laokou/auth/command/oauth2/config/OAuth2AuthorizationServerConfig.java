@@ -14,12 +14,12 @@
  * limitations under the License.
  *
  */
-package org.laokou.auth.config;
+package org.laokou.auth.command.oauth2.config;
 
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.laokou.auth.config.authentication.*;
-import org.laokou.auth.service.UserDetailsServiceImpl;
+import org.laokou.auth.command.oauth2.config.authentication.*;
+import org.laokou.auth.service.UserServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -210,10 +210,10 @@ class OAuth2AuthorizationServerConfig {
 	 * 配置
 	 */
 	@Bean
-	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, UserDetailsServiceImpl userDetailsServiceImpl) {
+	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, UserServiceImpl userServiceImpl) {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-		daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
+		daoAuthenticationProvider.setUserDetailsService(userServiceImpl);
 		return daoAuthenticationProvider;
 	}
 
