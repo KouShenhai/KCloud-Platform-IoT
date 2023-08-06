@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.openfeign.constant.ServiceConstant;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.nacos.utils.ServiceUtil;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -48,8 +47,8 @@ public class ServiceInstanceTest {
 	@Test
 	@SneakyThrows
 	void test() {
-		ServiceInstance serviceInstance = serviceUtil.getServiceInstance(ServiceConstant.LAOKOU_FLOWABLE);
-		log.info("data -> ：{}", JacksonUtil.toJsonStr(serviceInstance));
+		//ServiceInstance serviceInstance = serviceUtil.getServiceInstance(ServiceConstant.LAOKOU_FLOWABLE);
+		//log.info("data -> ：{}", JacksonUtil.toJsonStr(serviceInstance));
 	}
 
 	@Test
