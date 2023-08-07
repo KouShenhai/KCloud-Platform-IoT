@@ -23,7 +23,6 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.auth.domain.user.User;
-import org.laokou.common.core.enums.SuperAdminEnum;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.i18n.dto.Page;

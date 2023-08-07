@@ -40,4 +40,9 @@ public interface BizCode {
      */
     int TENANT_ID_NOT_NULL = 2014;
 
+    /**
+     * 登录成功
+     */
+    int LOGIN_SUCCEEDED = 2018;
+
 }

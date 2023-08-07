@@ -18,6 +18,7 @@
 package org.laokou.common.log.listener;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.common.log.event.LoginLogEvent;
 import org.laokou.common.log.service.SysLoginLogService;
 import org.springframework.context.ApplicationListener;
@@ -35,7 +36,7 @@ public class LoginLogListener implements ApplicationListener<LoginLogEvent> {
 
 	@Override
 	@Async
-	public void onApplicationEvent(LoginLogEvent event) {
+	public void onApplicationEvent(@NotNull LoginLogEvent event) {
 		sysLoginLogService.insertLoginLog(event);
 	}
 

@@ -16,7 +16,6 @@
  */
 package org.laokou.auth.command.oauth2.config.authentication;
 
-import eu.bitwalker.useragentutils.UserAgent;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -26,18 +25,15 @@ import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.user.User;
+import org.laokou.auth.event.handler.LoginLogHandler;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.*;
-import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.ip.region.utils.AddressUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.auth.common.event.DomainEventPublisher;
-import org.laokou.common.log.event.LoginLogEvent;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.common.tenant.service.SysSourceService;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -62,6 +58,7 @@ import java.util.Optional;
 import java.util.Set;
 import static org.laokou.auth.common.Constant.*;
 import static org.laokou.auth.common.exception.ErrorCode.*;
+import static org.laokou.auth.common.BizCode.*;
 
 /**
  * 邮件/手机/密码
@@ -83,6 +80,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	protected final SysSourceService sysSourceService;
 	protected final RedisUtil redisUtil;
 	protected final DomainEventPublisher domainEventPublisher;
+	protected final LoginLogHandler loginLogHandler;
 
 	@SneakyThrows
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -125,7 +123,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				auth2BaseAuthenticationToken);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 		if (registeredClient == null) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.INTERNAL_SERVER_ERROR, "registeredClient不存在");
+			throw OAuth2ExceptionHandler.getException(REGISTERED_CLIENT_NOT_EXIST, MessageUtil.getMessage(REGISTERED_CLIENT_NOT_EXIST));
 		}
 		// 获取认证范围
 		Set<String> scopes = registeredClient.getScopes();
@@ -142,8 +140,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				.principalName(loginName).authorizedScopes(scopes).authorizationGrantType(grantType);
 		// 生成access_token
 		OAuth2Token generatedOauth2AccessToken = Optional.ofNullable(tokenGenerator.generate(context))
-				.orElseThrow(() -> OAuth2ExceptionHandler.getException(OAuth2ErrorCodes.SERVER_ERROR, "令牌生成器无法生成访问令牌",
-						OAuth2ExceptionHandler.ERROR_URI));
+				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ACCESS_TOKEN_FAIL, MessageUtil.getMessage(GENERATE_ACCESS_TOKEN_FAIL)));
 		OAuth2AccessToken oAuth2AccessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
 				generatedOauth2AccessToken.getTokenValue(), generatedOauth2AccessToken.getIssuedAt(),
 				generatedOauth2AccessToken.getExpiresAt(), context.getAuthorizedScopes());
@@ -163,8 +160,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		context = builder.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
 				.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
 		OAuth2Token generateOauth2RefreshToken = Optional.ofNullable(tokenGenerator.generate(context))
-				.orElseThrow(() -> OAuth2ExceptionHandler.getException(OAuth2ErrorCodes.SERVER_ERROR, "令牌生成器无法生成刷新令牌",
-						OAuth2ExceptionHandler.ERROR_URI));
+				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_REFRESH_TOKEN_FAIL, MessageUtil.getMessage(GENERATE_REFRESH_TOKEN_FAIL)));
 		OAuth2RefreshToken oAuth2RefreshToken = (OAuth2RefreshToken) generateOauth2RefreshToken;
 		authorizationBuilder.refreshToken(oAuth2RefreshToken);
 		OAuth2Authorization oAuth2Authorization = authorizationBuilder.build();
@@ -239,7 +235,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 登录时间
 		user.setLoginDate(DateUtil.now());
 		// 登录成功
-		domainEventPublisher.publish(getLoginLogEvent(loginName, loginType, ResultStatusEnum.SUCCESS.ordinal(), "登录成功", request, tenantId));
+		domainEventPublisher.publish(loginLogHandler.handleEvent(loginName, loginType, ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED), request, tenantId));
 		return new UsernamePasswordAuthenticationToken(user, encryptName, user.getAuthorities());
 	}
 
@@ -259,29 +255,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	private OAuth2AuthenticationException getException(int code,String loginName,String loginType,HttpServletRequest request,Long tenantId) {
 		String msg = MessageUtil.getMessage(code);
 		log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
-		domainEventPublisher.publish(getLoginLogEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId));
+		domainEventPublisher.publish(loginLogHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId));
 		throw OAuth2ExceptionHandler.getException(code, msg);
-	}
-
-	private LoginLogEvent getLoginLogEvent(String username, String loginType, Integer status, String msg, HttpServletRequest request, Long tenantId) {
-		UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
-		// IP地址
-		String ip = IpUtil.getIpAddr(request);
-		// 获取客户端操作系统
-		String os = userAgent.getOperatingSystem().getName();
-		// 获取客户端浏览器
-		String browser = userAgent.getBrowser().getName();
-		LoginLogEvent event = new LoginLogEvent(this);
-		event.setLoginName(username);
-		event.setRequestIp(ip);
-		event.setRequestAddress(AddressUtil.getRealAddress(ip));
-		event.setBrowser(browser);
-		event.setOs(os);
-		event.setMsg(msg);
-		event.setLoginType(loginType);
-		event.setRequestStatus(status);
-		event.setTenantId(tenantId);
-		return event;
 	}
 
 }

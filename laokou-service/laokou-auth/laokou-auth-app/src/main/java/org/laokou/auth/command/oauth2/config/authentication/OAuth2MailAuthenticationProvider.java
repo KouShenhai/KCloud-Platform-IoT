@@ -22,6 +22,7 @@ import org.laokou.auth.domain.gateway.CaptchaGateway;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
+import org.laokou.auth.event.handler.LoginLogHandler;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -51,9 +52,8 @@ import static org.laokou.auth.common.exception.ErrorCode.*;
 @Component
 public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-
-	public OAuth2MailAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, DomainEventPublisher loginLogUtil, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService, RedisUtil redisUtil, DomainEventPublisher domainEventPublisher) {
-		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sysSourceService, redisUtil, domainEventPublisher);
+	public OAuth2MailAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, DomainEventPublisher loginLogUtil, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService, RedisUtil redisUtil, DomainEventPublisher domainEventPublisher, LoginLogHandler loginLogHandler) {
+		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sysSourceService, redisUtil, domainEventPublisher, loginLogHandler);
 	}
 
 	@Override
