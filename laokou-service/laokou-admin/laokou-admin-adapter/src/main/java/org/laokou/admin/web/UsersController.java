@@ -28,7 +28,7 @@ import java.util.List;
  * @author laokou
  */
 @RestController
-@Tag(name = "UsersApiController", description = "用户")
+@Tag(name = "UsersController", description = "用户")
 @RequiredArgsConstructor
 public class UsersController {
 

@@ -23,8 +23,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-
 /**
  * @author laokou
  */

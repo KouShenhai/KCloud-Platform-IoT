@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.CaptchasServiceI;
+import org.laokou.auth.dto.CaptchaGetQry;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,7 @@ public class CaptchasController {
 	@GetMapping("v1/captchas/{uuid}")
 	@Operation(summary = "查看", description = "查看")
 	public Result<String> get(@PathVariable("uuid")String uuid) {
-		return captchasServiceI.get(uuid);
+		return captchasServiceI.get(new CaptchaGetQry(uuid));
 	}
 
 }

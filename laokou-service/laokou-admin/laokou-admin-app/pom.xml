@@ -10,4 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-admin-app</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-admin-client</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
