@@ -4,6 +4,7 @@ import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.base.Captcha;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.domain.gateway.CaptchaGateway;
+import org.laokou.auth.dto.CaptchaGetQry;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,8 @@ public class CaptchaGetQryExe {
 
     private final CaptchaGateway captchaGateway;
 
-    public Result<String> execute(String uuid) {
+    public Result<String> execute(CaptchaGetQry qry) {
+        String uuid = qry.getUuid();
         // 三个参数分别为宽、高、位数
         Captcha captcha = new GifCaptcha(130, 48, 4);
         // 设置字体，有默认字体，可以不用设置

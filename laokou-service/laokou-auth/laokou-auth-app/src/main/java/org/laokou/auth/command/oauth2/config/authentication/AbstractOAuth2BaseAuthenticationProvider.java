@@ -254,7 +254,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	private OAuth2AuthenticationException getException(int code,String loginName,String loginType,HttpServletRequest request,Long tenantId) {
 		String msg = MessageUtil.getMessage(code);
-		log.info("登录失败，状态码：{}，错误信息：{}", code, msg);
+		log.error("登录失败，状态码：{}，错误信息：{}", code, msg);
 		domainEventPublisher.publish(loginLogHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId));
 		throw OAuth2ExceptionHandler.getException(code, msg);
 	}

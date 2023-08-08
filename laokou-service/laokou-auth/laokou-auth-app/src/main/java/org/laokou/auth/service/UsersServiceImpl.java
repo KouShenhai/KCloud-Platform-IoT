@@ -2,10 +2,14 @@ package org.laokou.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.auth.common.event.DomainEventPublisher;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.user.User;
+import org.laokou.auth.event.handler.LoginLogHandler;
+import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.IpUtil;
@@ -16,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
 
@@ -24,39 +29,43 @@ import java.util.List;
 import static org.laokou.auth.common.Constant.*;
 import static org.laokou.auth.common.exception.ErrorCode.*;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserDetailsService {
+public class UsersServiceImpl implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserGateway userGateway;
     private final DeptGateway deptGateway;
     private final MenuGateway menuGateway;
+    private final LoginLogHandler loginLogHandler;
+    private final DomainEventPublisher domainEventPublisher;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
         // 默认租户查询
-        String encryptName = AesUtil.encrypt(username);
+        String encryptName = AesUtil.encrypt(loginName);
+        String loginType = AuthorizationGrantType.AUTHORIZATION_CODE.getValue();
         User user = userGateway.getUserByUsername(encryptName,DEFAULT_TENANT,AUTH_PASSWORD);
         HttpServletRequest request = RequestUtil.getHttpServletRequest();
         if (user == null) {
-            throw new UsernameNotFoundException(MessageUtil.getMessage(USERNAME_PASSWORD_ERROR));
+            throw getException(USERNAME_PASSWORD_ERROR,loginName,loginType,request);
         }
         String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
         String clientPassword = user.getPassword();
         if (!passwordEncoder.matches(password, clientPassword)) {
-            throw new UsernameNotFoundException(MessageUtil.getMessage(USERNAME_PASSWORD_ERROR));
+            throw getException(USERNAME_PASSWORD_ERROR,loginName,loginType,request);
         }
         // 是否锁定
         if (!user.isEnabled()) {
-            throw new UsernameNotFoundException(MessageUtil.getMessage(USERNAME_DISABLE));
+            throw getException(USERNAME_DISABLE,loginName,loginType,request);
         }
         Long userId = user.getId();
         Integer superAdmin = user.getSuperAdmin();
         // 权限标识列表
         List<String> permissionsList = menuGateway.getPermissions(userId,DEFAULT_TENANT,superAdmin);
         if (CollectionUtil.isEmpty(permissionsList)) {
-            throw new UsernameNotFoundException(MessageUtil.getMessage(USERNAME_NOT_PERMISSION));
+            throw getException(USERNAME_NOT_PERMISSION,loginName,loginType,request);
         }
         List<Long> deptIds = deptGateway.getDeptIds(userId,DEFAULT_TENANT,superAdmin);
         user.setDeptIds(deptIds);
@@ -69,4 +78,12 @@ public class UserServiceImpl implements UserDetailsService {
         user.setSourceName(DEFAULT_SOURCE);
         return user;
     }
+
+    private UsernameNotFoundException getException(int code, String loginName, String loginType, HttpServletRequest request) {
+        String msg = MessageUtil.getMessage(code);
+        log.error("登录失败，状态码：{}，错误信息：{}", code, msg);
+        domainEventPublisher.publish(loginLogHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, 0L));
+        throw new UsernameNotFoundException(msg);
+    }
+
 }
