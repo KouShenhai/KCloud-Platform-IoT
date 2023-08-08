@@ -29,7 +29,7 @@ import org.springframework.util.MimeTypeUtils;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-import static org.laokou.common.sentinel.exception.ErrorCode.API_BLOCK_REQUEST;
+import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
 
 /**
  * @author laokou
@@ -46,7 +46,7 @@ public class CustomBlockExceptionHandler implements BlockExceptionHandler {
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
 		PrintWriter writer = response.getWriter();
-		writer.write(JacksonUtil.toJsonStr(Result.fail(API_BLOCK_REQUEST)));
+		writer.write(JacksonUtil.toJsonStr(Result.fail(TOO_MANY_REQUESTS)));
 		writer.flush();
 		writer.close();
 	}

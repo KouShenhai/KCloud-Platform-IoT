@@ -48,6 +48,11 @@ public interface StatusCode {
 	int NOT_FOUND = 404;
 
 	/**
+	 * 请求太多，已被限流，请稍后再试
+	 */
+	int TOO_MANY_REQUESTS = 429;
+
+	/**
 	 * 服务器内部错误，无法完成请求
 	 */
 	int INTERNAL_SERVER_ERROR = 500;
