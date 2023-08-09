@@ -17,6 +17,8 @@
 
 package org.laokou.auth.domain.gateway;
 
+import org.laokou.auth.domain.user.User;
+
 import java.util.List;
 
 /**
@@ -26,11 +28,9 @@ public interface MenuGateway {
 
 	/**
 	 * 查询权限标识
-	 * @param userId 用户ID
-	 * @param tenantId 租户ID
-	 * @param superAdmin 是否是超级管理员
+	 * @param user
 	 * @return List<String>
 	 */
-	List<String> getPermissions(Long userId, Long tenantId, Integer superAdmin);
+	List<String> getPermissions(User user);
 
 }

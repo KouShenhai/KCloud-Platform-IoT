@@ -20,6 +20,7 @@ package org.laokou.auth.service;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
@@ -70,7 +71,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		Long tenantId = DEFAULT_TENANT;
 		String encryptName = AesUtil.encrypt(loginName);
 		String loginType = AuthorizationGrantType.AUTHORIZATION_CODE.getValue();
-		User user = userGateway.getUserByUsername(encryptName, tenantId, AUTH_PASSWORD);
+		User user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, loginType));
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		if (user == null) {
 			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, request, tenantId);
@@ -88,11 +89,12 @@ public class UsersServiceImpl implements UserDetailsService {
 		Long userId = user.getId();
 		Integer superAdmin = user.getSuperAdmin();
 		// 权限标识列表
-		List<String> permissionsList = menuGateway.getPermissions(userId, tenantId, superAdmin);
+		User u = new User(userId, superAdmin, tenantId);
+		List<String> permissionsList = menuGateway.getPermissions(u);
 		if (CollectionUtil.isEmpty(permissionsList)) {
 			throw getException(USERNAME_NOT_PERMISSION, loginName, loginType, request, tenantId);
 		}
-		List<Long> deptIds = deptGateway.getDeptIds(userId, tenantId, superAdmin);
+		List<Long> deptIds = deptGateway.getDeptIds(u);
 		user.setDeptIds(deptIds);
 		user.setPermissionList(permissionsList);
 		// 登录IP

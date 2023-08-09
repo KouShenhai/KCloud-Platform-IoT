@@ -20,11 +20,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.domain.gateway.*;
 import org.laokou.auth.domain.user.User;
 import org.laokou.auth.event.handler.LogHandler;
 import org.laokou.common.core.enums.ResultStatusEnum;
-import org.laokou.common.core.utils.*;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.core.utils.IpUtil;
+import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -45,15 +49,17 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import static org.laokou.auth.common.BizCode.LOGIN_SUCCEEDED;
 import static org.laokou.auth.common.Constant.*;
 import static org.laokou.auth.common.exception.ErrorCode.*;
-import static org.laokou.auth.common.BizCode.*;
 
 /**
  * 邮件/手机/密码
@@ -202,7 +208,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 加密
 		String encryptName = AesUtil.encrypt(loginName);
 		// 多租户查询
-		User user = userGateway.getUserByUsername(encryptName, tenantId, loginType);
+		User user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, loginType));
 		if (user == null) {
 			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, request, tenantId);
 		}
@@ -220,12 +226,13 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		Long userId = user.getId();
 		Integer superAdmin = user.getSuperAdmin();
 		// 权限标识列表
-		List<String> permissionsList = menuGateway.getPermissions(userId, tenantId, superAdmin);
+		User u = new User(userId, superAdmin, tenantId);
+		List<String> permissionsList = menuGateway.getPermissions(u);
 		if (CollectionUtil.isEmpty(permissionsList)) {
 			throw getException(USERNAME_NOT_PERMISSION, loginName, loginType, request, tenantId);
 		}
 		// 部门列表
-		List<Long> deptIds = deptGateway.getDeptIds(userId, tenantId, superAdmin);
+		List<Long> deptIds = deptGateway.getDeptIds(u);
 		user.setDeptIds(deptIds);
 		user.setPermissionList(permissionsList);
 		if (tenantId == DEFAULT_TENANT) {

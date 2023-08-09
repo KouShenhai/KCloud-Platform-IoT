@@ -187,4 +187,9 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal {
 		return this.username;
 	}
 
+	public User(Long id, Integer superAdmin, Long tenantId) {
+		this.id = id;
+		this.superAdmin = superAdmin;
+		this.tenantId = tenantId;
+	}
 }

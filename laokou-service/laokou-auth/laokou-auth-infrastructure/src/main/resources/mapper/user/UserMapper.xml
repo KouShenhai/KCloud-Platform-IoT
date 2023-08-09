@@ -39,6 +39,9 @@
         <if test="type != null and type == 'password' and username != null and username != ''">
             and a.username = #{username}
         </if>
+        <if test="type != null and type == 'authorization_code' and username != null and username != ''">
+            and a.username = #{username}
+        </if>
         <if test="type != null and type == 'mail' and username != null and username != ''">
             and a.mail = #{username}
         </if>

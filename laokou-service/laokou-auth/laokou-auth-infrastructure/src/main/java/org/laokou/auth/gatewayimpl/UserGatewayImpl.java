@@ -19,6 +19,7 @@ package org.laokou.auth.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.user.User;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
@@ -39,11 +40,8 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	@DS(SHARDING_SPHERE)
-	public User getUserByUsername(String username, Long tenantId, String type) {
-		UserDO userDO = userMapper.getUserByUsernameAndTenantId(username, tenantId, type);
-		if (userDO == null) {
-			return null;
-		}
+	public User getUserByUsername(Auth auth) {
+		UserDO userDO = userMapper.getUserByUsernameAndTenantId(auth.getUsername(), auth.getTenantId(), auth.getType());
 		return ConvertUtil.sourceToTarget(userDO, User.class);
 	}
 

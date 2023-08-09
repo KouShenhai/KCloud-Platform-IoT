@@ -15,22 +15,24 @@
  *
  */
 
-package org.laokou.auth.domain.gateway;
+package org.laokou.auth.domain.auth;
 
-import org.laokou.auth.domain.user.User;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-public interface DeptGateway {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Auth implements Serializable {
 
-	/**
-	 * 查询部门IDS
-	 * @param user
-	 * @return List<Long>
-	 */
-	List<Long> getDeptIds(User user);
+    private String username;
+    private Long tenantId;
+    private String type;
 
 }

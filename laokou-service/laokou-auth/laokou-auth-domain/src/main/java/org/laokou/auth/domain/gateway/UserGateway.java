@@ -17,6 +17,7 @@
 
 package org.laokou.auth.domain.gateway;
 
+import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.domain.user.User;
 
 /**
@@ -26,11 +27,9 @@ public interface UserGateway {
 
 	/**
 	 * 查询用户
-	 * @param username 用户名
-	 * @param tenantId 租户ID
-	 * @param type 类型（password、mail、mobile）
+	 * @param auth 认证
 	 * @return User
 	 */
-	User getUserByUsername(String username, Long tenantId, String type);
+	User getUserByUsername(Auth auth);
 
 }
