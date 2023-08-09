@@ -52,8 +52,14 @@ import static org.laokou.auth.common.exception.ErrorCode.*;
 @Component
 public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-	public OAuth2MobileAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, DomainEventPublisher loginLogUtil, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService, RedisUtil redisUtil, DomainEventPublisher domainEventPublisher, LoginLogHandler loginLogHandler) {
-		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sysSourceService, redisUtil, domainEventPublisher, loginLogHandler);
+	public OAuth2MobileAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway,
+			DomainEventPublisher loginLogUtil, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway,
+			OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
+			SysSourceService sysSourceService, RedisUtil redisUtil, DomainEventPublisher domainEventPublisher,
+			LoginLogHandler loginLogHandler) {
+		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, captchaGateway,
+				authorizationService, tokenGenerator, sysSourceService, redisUtil, domainEventPublisher,
+				loginLogHandler);
 	}
 
 	@Override
@@ -66,19 +72,16 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
-			throw OAuth2ExceptionHandler.getException(CAPTCHA_NOT_NULL,
-					MessageUtil.getMessage(CAPTCHA_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(CAPTCHA_NOT_NULL, MessageUtil.getMessage(CAPTCHA_NOT_NULL));
 		}
 		String mobile = request.getParameter(MOBILE);
 		log.info("手机：{}", SensitiveUtil.format(TypeEnum.MOBILE, mobile));
 		if (StringUtil.isEmpty(mobile)) {
-			throw OAuth2ExceptionHandler.getException(MOBILE_NOT_NULL,
-					MessageUtil.getMessage(MOBILE_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(MOBILE_NOT_NULL, MessageUtil.getMessage(MOBILE_NOT_NULL));
 		}
 		boolean isMobile = RegexUtil.mobileRegex(mobile);
 		if (!isMobile) {
-			throw OAuth2ExceptionHandler.getException(MOBILE_ERROR,
-					MessageUtil.getMessage(MOBILE_ERROR));
+			throw OAuth2ExceptionHandler.getException(MOBILE_ERROR, MessageUtil.getMessage(MOBILE_ERROR));
 		}
 		// 获取用户信息,并认证信息
 		return super.getUserInfo(mobile, "", request, code, mobile);

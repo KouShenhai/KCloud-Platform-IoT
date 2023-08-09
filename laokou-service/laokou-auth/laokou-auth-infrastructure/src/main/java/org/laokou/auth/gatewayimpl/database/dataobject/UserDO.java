@@ -27,18 +27,27 @@ import java.io.Serializable;
 @Data
 public class UserDO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 3319752558160144611L;
+	@Serial
+	private static final long serialVersionUID = 3319752558160144611L;
 
-    private Long id;
-    private String username;
-    private String avatar;
-    private Integer superAdmin;
-    private Integer status;
-    private String mail;
-    private String mobile;
-    private String password;
-    private Long deptId;
-    private Long tenantId;
+	private Long id;
+
+	private String username;
+
+	private String avatar;
+
+	private Integer superAdmin;
+
+	private Integer status;
+
+	private String mail;
+
+	private String mobile;
+
+	private String password;
+
+	private Long deptId;
+
+	private Long tenantId;
 
 }

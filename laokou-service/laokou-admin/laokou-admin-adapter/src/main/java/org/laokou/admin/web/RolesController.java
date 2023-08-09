@@ -36,7 +36,7 @@ public class RolesController {
 	@TraceLog
 	@PostMapping("v1/roles/list")
 	@Operation(summary = "查询", description = "查询")
-	//@PreAuthorize("hasAuthority('role:list')")
+	// @PreAuthorize("hasAuthority('role:list')")
 	public Result<?> list() {
 		return Result.of(null);
 	}
@@ -51,7 +51,7 @@ public class RolesController {
 	@TraceLog
 	@GetMapping("v1/roles/{id}")
 	@Operation(summary = "查看", description = "查看")
-	//@DataCache(name = "roles", key = "#id")
+	// @DataCache(name = "roles", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -59,8 +59,8 @@ public class RolesController {
 	@TraceLog
 	@PostMapping("v1/roles")
 	@Operation(summary = "新增", description = "新增")
-	//@OperateLog(module = "角色管理", name = "新增")
-	//@PreAuthorize("hasAuthority('roles:insert')")
+	// @OperateLog(module = "角色管理", name = "新增")
+	// @PreAuthorize("hasAuthority('roles:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
 	}
@@ -68,9 +68,9 @@ public class RolesController {
 	@TraceLog
 	@PutMapping("v1/roles")
 	@Operation(summary = "修改", description = "修改")
-	//@OperateLog(module = "角色管理", name = "修改")
-	//@PreAuthorize("hasAuthority('roles:update')")
-	//@DataCache(name = "roles", key = "#dto.id", type = CacheEnum.DEL)
+	// @OperateLog(module = "角色管理", name = "修改")
+	// @PreAuthorize("hasAuthority('roles:update')")
+	// @DataCache(name = "roles", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update() {
 		return Result.of(null);
 	}
@@ -78,9 +78,9 @@ public class RolesController {
 	@TraceLog
 	@DeleteMapping("v1/roles/{id}")
 	@Operation(summary = "删除", description = "删除")
-	//@OperateLog(module = "角色管理", name = "删除")
-	//@PreAuthorize("hasAuthority('roles:delete')")
-	//@DataCache(name = "roles", key = "#id", type = CacheEnum.DEL)
+	// @OperateLog(module = "角色管理", name = "删除")
+	// @PreAuthorize("hasAuthority('roles:delete')")
+	// @DataCache(name = "roles", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}

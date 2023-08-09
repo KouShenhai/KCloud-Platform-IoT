@@ -62,8 +62,7 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
 		Object obj = redisUtil.get(userKillKey);
 		if (obj != null) {
-			throw OAuth2ExceptionHandler.getException(FORCE_KILL,
-					MessageUtil.getMessage(FORCE_KILL));
+			throw OAuth2ExceptionHandler.getException(FORCE_KILL, MessageUtil.getMessage(FORCE_KILL));
 		}
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		obj = caffeineCache.getIfPresent(userInfoKey);
@@ -120,7 +119,8 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (StringUtil.isNotEmpty(username)) {
 			try {
 				user.setUsername(AesUtil.decrypt(username));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("用户名解密失败，请使用AES加密");
 			}
 		}
@@ -128,7 +128,8 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (StringUtil.isNotEmpty(mail)) {
 			try {
 				user.setMail(AesUtil.decrypt(mail));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("邮箱解密失败，请使用AES加密");
 			}
 		}
@@ -136,7 +137,8 @@ public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (StringUtil.isNotEmpty(mail)) {
 			try {
 				user.setMobile(AesUtil.decrypt(mobile));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("手机号解密失败，请使用AES加密");
 			}
 		}

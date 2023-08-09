@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package org.laokou.auth.command.oauth2.config.authentication;
 
@@ -73,16 +73,14 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		String tenantId = request.getParameter(TENANT_ID);
 		log.info("租户编号：{}", tenantId);
 		if (StringUtil.isEmpty(tenantId)) {
-			throw OAuth2ExceptionHandler.getException(TENANT_ID_NOT_NULL,
-					MessageUtil.getMessage(TENANT_ID_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(TENANT_ID_NOT_NULL, MessageUtil.getMessage(TENANT_ID_NOT_NULL));
 		}
 		// 构建请求参数集合
 		MultiValueMap<String, String> parameters = MapUtil.getParameters(request);
 		// 判断scope
 		String scope = parameters.getFirst(OAuth2ParameterNames.SCOPE);
 		if (StringUtil.isNotEmpty(scope) && parameters.get(OAuth2ParameterNames.SCOPE).size() != 1) {
-			throw OAuth2ExceptionHandler.getException(INVALID_SCOPE,
-					MessageUtil.getMessage(INVALID_SCOPE));
+			throw OAuth2ExceptionHandler.getException(INVALID_SCOPE, MessageUtil.getMessage(INVALID_SCOPE));
 		}
 		// 获取上下文认证信息
 		Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();

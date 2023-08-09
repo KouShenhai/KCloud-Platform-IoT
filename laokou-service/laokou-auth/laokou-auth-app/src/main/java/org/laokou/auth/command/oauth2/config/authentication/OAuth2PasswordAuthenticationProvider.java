@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package org.laokou.auth.command.oauth2.config.authentication;
 
@@ -48,8 +48,14 @@ import static org.laokou.auth.common.Constant.*;
 @Slf4j
 public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-	public OAuth2PasswordAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, DomainEventPublisher loginLogUtil, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService, RedisUtil redisUtil, DomainEventPublisher domainEventPublisher, LoginLogHandler loginLogHandler) {
-		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sysSourceService, redisUtil, domainEventPublisher, loginLogHandler);
+	public OAuth2PasswordAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway,
+			DeptGateway deptGateway, DomainEventPublisher loginLogUtil, PasswordEncoder passwordEncoder,
+			CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService,
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService,
+			RedisUtil redisUtil, DomainEventPublisher domainEventPublisher, LoginLogHandler loginLogHandler) {
+		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, captchaGateway,
+				authorizationService, tokenGenerator, sysSourceService, redisUtil, domainEventPublisher,
+				loginLogHandler);
 	}
 
 	@Override
@@ -63,29 +69,25 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 		String uuid = request.getParameter(UUID);
 		log.info("唯一标识：{}", uuid);
 		if (StringUtil.isEmpty(uuid)) {
-			throw OAuth2ExceptionHandler.getException(IDENTIFIER_NOT_NULL,
-					MessageUtil.getMessage(IDENTIFIER_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(IDENTIFIER_NOT_NULL, MessageUtil.getMessage(IDENTIFIER_NOT_NULL));
 		}
 		// 判断验证码是否为空
 		String captcha = request.getParameter(CAPTCHA);
 		log.info("验证码：{}", captcha);
 		if (StringUtil.isEmpty(captcha)) {
-			throw OAuth2ExceptionHandler.getException(CAPTCHA_NOT_NULL,
-					MessageUtil.getMessage(CAPTCHA_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(CAPTCHA_NOT_NULL, MessageUtil.getMessage(CAPTCHA_NOT_NULL));
 		}
 		// 验证账号是否为空
 		String username = request.getParameter(OAuth2ParameterNames.USERNAME);
 		log.info("账号：{}", username);
 		if (StringUtil.isEmpty(username)) {
-			throw OAuth2ExceptionHandler.getException(USERNAME_NOT_NULL,
-					MessageUtil.getMessage(USERNAME_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(USERNAME_NOT_NULL, MessageUtil.getMessage(USERNAME_NOT_NULL));
 		}
 		// 验证密码是否为空
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 		log.info("密码：{}", password);
 		if (StringUtil.isEmpty(password)) {
-			throw OAuth2ExceptionHandler.getException(PASSWORD_NOT_NULL,
-					MessageUtil.getMessage(PASSWORD_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(PASSWORD_NOT_NULL, MessageUtil.getMessage(PASSWORD_NOT_NULL));
 		}
 		// 获取用户信息,并认证信息
 		return super.getUserInfo(username, password, request, captcha, uuid);

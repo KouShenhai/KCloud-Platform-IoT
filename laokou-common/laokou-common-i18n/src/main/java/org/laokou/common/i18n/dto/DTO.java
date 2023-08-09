@@ -2,6 +2,7 @@ package org.laokou.common.i18n.dto;
 
 import java.io.Serial;
 import java.io.Serializable;
+
 /**
  * Data Transfer object, including Command, Query and Response,
  *
@@ -12,7 +13,7 @@ import java.io.Serializable;
  */
 public abstract class DTO implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
+	@Serial
+	private static final long serialVersionUID = 1L;
 
 }

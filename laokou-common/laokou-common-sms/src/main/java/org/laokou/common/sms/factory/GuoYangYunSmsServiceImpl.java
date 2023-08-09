@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.sms.factory;
@@ -53,11 +53,9 @@ public class GuoYangYunSmsServiceImpl implements SmsService {
 
 	private static final Map<String, String> ERROR_MAP = new HashMap<>(7);
 
-	private static final Map<String, Integer> SMS_STATUS_CODE_MAP = Map.of("1204",
-			SMS_SIGNATURE_NOT_REPORTED, "1205", SMS_SIGNATURE_NOT_AVAILABLE, "1302",
-			SMS_CONTENT_CONTAINS_SENSITIVE, "1304", SMS_CONTENT_TOO_LONG, "1320",
-			SMS_TEMPLATE_ID_NOT_EXIST, "1403", MOBILE_ERROR, "1905",
-			SMS_VERIFICATION_FAILED);
+	private static final Map<String, Integer> SMS_STATUS_CODE_MAP = Map.of("1204", SMS_SIGNATURE_NOT_REPORTED, "1205",
+			SMS_SIGNATURE_NOT_AVAILABLE, "1302", SMS_CONTENT_CONTAINS_SENSITIVE, "1304", SMS_CONTENT_TOO_LONG, "1320",
+			SMS_TEMPLATE_ID_NOT_EXIST, "1403", MOBILE_ERROR, "1905", SMS_VERIFICATION_FAILED);
 
 	private final RedisUtil redisUtil;
 
@@ -105,8 +103,7 @@ public class GuoYangYunSmsServiceImpl implements SmsService {
 		// 验证模块id
 		boolean exist = TEMPLATE_MAP.containsKey(templateId);
 		if (!exist) {
-			throw new CustomException(SMS_TEMPLATE_ID_NOT_EXIST,
-					MessageUtil.getMessage(SMS_TEMPLATE_ID_NOT_EXIST));
+			throw new CustomException(SMS_TEMPLATE_ID_NOT_EXIST, MessageUtil.getMessage(SMS_TEMPLATE_ID_NOT_EXIST));
 		}
 		int minute = 5;
 		String captcha = RandomStringUtils.randomNumeric(6);

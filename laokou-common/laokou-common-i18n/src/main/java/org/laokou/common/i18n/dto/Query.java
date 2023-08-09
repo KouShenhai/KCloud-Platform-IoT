@@ -10,7 +10,7 @@ import java.io.Serial;
  */
 public abstract class Query extends Command {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
+	@Serial
+	private static final long serialVersionUID = 1L;
 
 }

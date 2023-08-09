@@ -10,8 +10,8 @@ import java.util.List;
 @Mapper
 public interface MenuMapper {
 
-    List<String> getPermissions();
+	List<String> getPermissions();
 
-    List<String> getPermissionsByUserId(@Param("userId")Long userId);
+	List<String> getPermissionsByUserId(@Param("userId") Long userId);
 
 }

@@ -129,8 +129,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 	private CustomException getException(String code) {
 		ExceptionEnum instance = ExceptionEnum.getInstance(code.toUpperCase());
 		return switch (instance) {
-			case INVALID_CLIENT ->
-				new CustomException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
+			case INVALID_CLIENT -> new CustomException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
 		};
 	}
 

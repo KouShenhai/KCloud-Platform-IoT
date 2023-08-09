@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CaptchasServiceImpl implements CaptchasServiceI {
 
-    private final CaptchaGetQryExe captchaGetQryExe;
+	private final CaptchaGetQryExe captchaGetQryExe;
 
-    @Override
-    public Result<String> get(CaptchaGetQry qry) {
-        return captchaGetQryExe.execute(qry);
-    }
+	@Override
+	public Result<String> get(CaptchaGetQry qry) {
+		return captchaGetQryExe.execute(qry);
+	}
+
 }

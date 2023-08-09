@@ -52,8 +52,14 @@ import static org.laokou.auth.common.exception.ErrorCode.*;
 @Component
 public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-	public OAuth2MailAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, DomainEventPublisher loginLogUtil, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService, RedisUtil redisUtil, DomainEventPublisher domainEventPublisher, LoginLogHandler loginLogHandler) {
-		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sysSourceService, redisUtil, domainEventPublisher, loginLogHandler);
+	public OAuth2MailAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway,
+			DomainEventPublisher loginLogUtil, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway,
+			OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
+			SysSourceService sysSourceService, RedisUtil redisUtil, DomainEventPublisher domainEventPublisher,
+			LoginLogHandler loginLogHandler) {
+		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, captchaGateway,
+				authorizationService, tokenGenerator, sysSourceService, redisUtil, domainEventPublisher,
+				loginLogHandler);
 	}
 
 	@Override
@@ -67,19 +73,16 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
-			throw OAuth2ExceptionHandler.getException(CAPTCHA_NOT_NULL,
-					MessageUtil.getMessage(CAPTCHA_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(CAPTCHA_NOT_NULL, MessageUtil.getMessage(CAPTCHA_NOT_NULL));
 		}
 		String mail = request.getParameter(MAIL);
 		log.info("邮箱：{}", SensitiveUtil.format(TypeEnum.MAIL, mail));
 		if (StringUtil.isEmpty(mail)) {
-			throw OAuth2ExceptionHandler.getException(MAIL_NOT_NULL,
-					MessageUtil.getMessage(MAIL_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(MAIL_NOT_NULL, MessageUtil.getMessage(MAIL_NOT_NULL));
 		}
 		boolean isMail = RegexUtil.mailRegex(mail);
 		if (!isMail) {
-			throw OAuth2ExceptionHandler.getException(MAIL_ERROR,
-					MessageUtil.getMessage(MAIL_ERROR));
+			throw OAuth2ExceptionHandler.getException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
 		}
 		// 获取用户信息,并认证信息
 		return super.getUserInfo(mail, "", request, code, mail);

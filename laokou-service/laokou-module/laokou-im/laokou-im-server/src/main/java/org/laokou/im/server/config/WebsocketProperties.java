@@ -9,10 +9,12 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = WebsocketProperties.PREFIX)
 public class WebsocketProperties {
 
-    public static final String PREFIX = "spring.websocket";
+	public static final String PREFIX = "spring.websocket";
 
-    private int port;
-    private String appName;
-    private String poolName;
+	private int port;
+
+	private String appName;
+
+	private String poolName;
 
 }

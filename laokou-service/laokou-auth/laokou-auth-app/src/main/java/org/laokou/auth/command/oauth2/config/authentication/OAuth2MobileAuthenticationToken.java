@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.auth.command.oauth2.config.authentication;
@@ -36,8 +36,7 @@ public class OAuth2MobileAuthenticationToken extends AbstractOAuth2BaseAuthentic
 	 */
 	protected OAuth2MobileAuthenticationToken(Authentication clientPrincipal,
 			Map<String, Object> additionalParameters) {
-		super(new AuthorizationGrantType(AUTH_MOBILE), clientPrincipal,
-				additionalParameters);
+		super(new AuthorizationGrantType(AUTH_MOBILE), clientPrincipal, additionalParameters);
 	}
 
 }

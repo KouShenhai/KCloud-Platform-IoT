@@ -44,7 +44,7 @@ public class MenusController {
 	@TraceLog
 	@PostMapping("v1/menus/list")
 	@Operation(summary = "查询", description = "查询")
-	//@PreAuthorize("hasAuthority('menus:list')")
+	// @PreAuthorize("hasAuthority('menus:list')")
 	public Result<List<?>> list() {
 		return Result.of(null);
 	}
@@ -52,7 +52,7 @@ public class MenusController {
 	@TraceLog
 	@GetMapping("v1/menus/{id}")
 	@Operation(summary = "查看", description = "查看")
-	//@DataCache(name = "menus", key = "#id")
+	// @DataCache(name = "menus", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -60,9 +60,9 @@ public class MenusController {
 	@TraceLog
 	@PutMapping("v1/menus")
 	@Operation(summary = "修改", description = "修改")
-	//@OperateLog(module = "菜单管理", name = "修改")
-	//@PreAuthorize("hasAuthority('menus:update')")
-	//@DataCache(name = "menus", key = "#dto.id", type = CacheEnum.DEL)
+	// @OperateLog(module = "菜单管理", name = "修改")
+	// @PreAuthorize("hasAuthority('menus:update')")
+	// @DataCache(name = "menus", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update() {
 		return Result.of(null);
 	}
@@ -70,8 +70,8 @@ public class MenusController {
 	@TraceLog
 	@PostMapping("v1/menus")
 	@Operation(summary = "新增", description = "新增")
-	//@OperateLog(module = "菜单管理", name = "新增")
-	//@PreAuthorize("hasAuthority('menus:insert')")
+	// @OperateLog(module = "菜单管理", name = "新增")
+	// @PreAuthorize("hasAuthority('menus:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
 	}
@@ -79,9 +79,9 @@ public class MenusController {
 	@TraceLog
 	@DeleteMapping("v1/menus/{id}")
 	@Operation(summary = "删除", description = "删除")
-	//@OperateLog(module = "菜单管理", name = "删除")
-	//@PreAuthorize("hasAuthority('menus:delete')")
-	//@DataCache(name = "menus", key = "#id", type = CacheEnum.DEL)
+	// @OperateLog(module = "菜单管理", name = "删除")
+	// @PreAuthorize("hasAuthority('menus:delete')")
+	// @DataCache(name = "menus", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}

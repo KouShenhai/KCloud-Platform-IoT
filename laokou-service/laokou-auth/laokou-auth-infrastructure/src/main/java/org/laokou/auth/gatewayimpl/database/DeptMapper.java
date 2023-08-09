@@ -10,9 +10,8 @@ import java.util.List;
 @Mapper
 public interface DeptMapper {
 
+	List<Long> getDeptIdsByTenantId(@Param("tenantId") Long tenantId);
 
-    List<Long> getDeptIdsByTenantId(@Param("tenantId")Long tenantId);
-
-    List<Long> getDeptIdsByUserIdAndTenantId(@Param("userId")Long userId,@Param("tenantId")Long tenantId);
+	List<Long> getDeptIdsByUserIdAndTenantId(@Param("userId") Long userId, @Param("tenantId") Long tenantId);
 
 }

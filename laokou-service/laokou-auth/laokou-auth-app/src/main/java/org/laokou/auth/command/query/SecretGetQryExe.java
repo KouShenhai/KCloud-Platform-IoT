@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecretGetQryExe {
 
-    public Result<String> execute() {
-        return Result.of(RsaUtil.getPublicKey());
-    }
+	public Result<String> execute() {
+		return Result.of(RsaUtil.getPublicKey());
+	}
 
 }

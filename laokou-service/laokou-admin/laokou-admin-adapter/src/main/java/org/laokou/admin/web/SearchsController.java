@@ -37,7 +37,7 @@ public class SearchsController {
 	@TraceLog
 	@PostMapping("v1/searchs")
 	@Operation(summary = "高亮", description = "高亮")
-	//@PreAuthorize("hasAuthority('search:list')")
+	// @PreAuthorize("hasAuthority('search:list')")
 	public Result<?> searchResource() {
 		return Result.of(null);
 	}

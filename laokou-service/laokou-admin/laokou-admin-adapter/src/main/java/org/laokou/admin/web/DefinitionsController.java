@@ -37,8 +37,8 @@ public class DefinitionsController {
 	@TraceLog
 	@PostMapping("v1/definitions")
 	@Operation(summary = "新增", description = "新增")
-	//@OperateLog(module = "流程定义", name = "新增")
-	//@PreAuthorize("hasAuthority('definitions:insert')")
+	// @OperateLog(module = "流程定义", name = "新增")
+	// @PreAuthorize("hasAuthority('definitions:insert')")
 	public Result<Boolean> insert(@RequestPart("file") MultipartFile file) throws IOException {
 		return Result.of(null);
 	}
@@ -46,7 +46,7 @@ public class DefinitionsController {
 	@TraceLog
 	@PostMapping("v1/definitions/list")
 	@Operation(summary = "查询", description = "查询")
-	//@PreAuthorize("hasAuthority('definitions:list')")
+	// @PreAuthorize("hasAuthority('definitions:list')")
 	public Result<?> list() {
 		return Result.of(null);
 	}
@@ -54,7 +54,7 @@ public class DefinitionsController {
 	@TraceLog
 	@GetMapping("v1/definitions/diagram/{definitionId}")
 	@Operation(summary = "流程图", description = "流程图")
-	//@PreAuthorize("hasAuthority('definitions:diagram')")
+	// @PreAuthorize("hasAuthority('definitions:diagram')")
 	public Result<String> image(@PathVariable("definitionId") String definitionId) {
 		return Result.of(null);
 	}
@@ -62,8 +62,8 @@ public class DefinitionsController {
 	@TraceLog
 	@DeleteMapping("v1/definitions/{deploymentId}")
 	@Operation(summary = "删除", description = "删除")
-	//@OperateLog(module = "流程定义", name = "删除")
-	//@PreAuthorize("hasAuthority('definitions:delete')")
+	// @OperateLog(module = "流程定义", name = "删除")
+	// @PreAuthorize("hasAuthority('definitions:delete')")
 	public Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId) {
 		return Result.of(null);
 	}
@@ -71,8 +71,8 @@ public class DefinitionsController {
 	@TraceLog
 	@PutMapping("v1/definitions/suspend/{definitionId}")
 	@Operation(summary = "挂起", description = "挂起")
-	//@OperateLog(module = "流程定义", name = "挂起")
-	//@PreAuthorize("hasAuthority('definitions:suspend')")
+	// @OperateLog(module = "流程定义", name = "挂起")
+	// @PreAuthorize("hasAuthority('definitions:suspend')")
 	public Result<Boolean> suspend(@PathVariable("definitionId") String definitionId) {
 		return Result.of(null);
 	}
@@ -80,8 +80,8 @@ public class DefinitionsController {
 	@TraceLog
 	@PutMapping("v1/definitions/activate/{definitionId}")
 	@Operation(summary = "激活", description = "激活")
-	//@OperateLog(module = "流程定义", name = "激活")
-	//@PreAuthorize("hasAuthority('definitions:activate')")
+	// @OperateLog(module = "流程定义", name = "激活")
+	// @PreAuthorize("hasAuthority('definitions:activate')")
 	public Result<Boolean> activate(@PathVariable("definitionId") String definitionId) {
 		return Result.of(null);
 	}
@@ -89,7 +89,7 @@ public class DefinitionsController {
 	@TraceLog
 	@GetMapping("v1/definitions/template")
 	@Operation(summary = "模板", description = "模板")
-	//@PreAuthorize("hasAuthority('definitions:template')")
+	// @PreAuthorize("hasAuthority('definitions:template')")
 	public void template(HttpServletResponse response) {
 	}
 

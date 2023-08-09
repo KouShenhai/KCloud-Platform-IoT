@@ -10,6 +10,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @AllArgsConstructor
 public class CaptchaGetQry extends CommonCommand {
 
-    private String uuid;
+	private String uuid;
 
 }

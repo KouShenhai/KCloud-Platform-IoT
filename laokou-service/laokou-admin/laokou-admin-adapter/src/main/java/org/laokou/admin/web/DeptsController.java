@@ -41,7 +41,7 @@ public class DeptsController {
 
 	@PostMapping("v1/depts/list")
 	@Operation(summary = "查询", description = "查询")
-	//@PreAuthorize("hasAuthority('depts:list')")
+	// @PreAuthorize("hasAuthority('depts:list')")
 	@TraceLog
 	public Result<List<?>> list() {
 		return Result.of(null);
@@ -49,8 +49,8 @@ public class DeptsController {
 
 	@PostMapping("v1/depts")
 	@Operation(summary = "新增", description = "新增")
-	//@OperateLog(module = "部门管理", name = "新增")
-	//@PreAuthorize("hasAuthority('depts:insert')")
+	// @OperateLog(module = "部门管理", name = "新增")
+	// @PreAuthorize("hasAuthority('depts:insert')")
 	@TraceLog
 	public Result<Boolean> insert() {
 		return Result.of(null);
@@ -58,10 +58,10 @@ public class DeptsController {
 
 	@PutMapping("v1/depts")
 	@Operation(summary = "修改", description = "修改")
-	//@OperateLog(module = "部门管理", name = "修改")
-	//@PreAuthorize("hasAuthority('depts:update')")
+	// @OperateLog(module = "部门管理", name = "修改")
+	// @PreAuthorize("hasAuthority('depts:update')")
 	@TraceLog
-	//@DataCache(name = "depts", key = "#dto.id", type = CacheEnum.DEL)
+	// @DataCache(name = "depts", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update() {
 		return Result.of(null);
 	}
@@ -69,7 +69,7 @@ public class DeptsController {
 	@GetMapping("v1/depts/{id}")
 	@TraceLog
 	@Operation(summary = "查看", description = "查看")
-	//@DataCache(name = "depts", key = "#id")
+	// @DataCache(name = "depts", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -77,9 +77,9 @@ public class DeptsController {
 	@DeleteMapping("v1/depts/{id}")
 	@TraceLog
 	@Operation(summary = "删除", description = "删除")
-	//@OperateLog(module = "部门管理", name = "删除")
-	//@PreAuthorize("hasAuthority('depts:delete')")
-	//@DataCache(name = "depts", key = "#id", type = CacheEnum.DEL)
+	// @OperateLog(module = "部门管理", name = "删除")
+	// @PreAuthorize("hasAuthority('depts:delete')")
+	// @DataCache(name = "depts", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}

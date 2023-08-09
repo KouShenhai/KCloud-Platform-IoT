@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface DeptGateway {
 
-    List<Long> getDeptIds(Long userId, Long tenantId, Integer superAdmin);
+	List<Long> getDeptIds(Long userId, Long tenantId, Integer superAdmin);
 
 }

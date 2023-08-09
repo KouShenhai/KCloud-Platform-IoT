@@ -274,8 +274,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 	public Boolean deleteUser(Long id) {
 		SysUserDO sysUser = sysUserService.getById(id);
 		User user = UserUtil.user();
-		if (SuperAdmin.YES.ordinal() == sysUser.getSuperAdmin()
-				&& SuperAdmin.YES.ordinal() != user.getSuperAdmin()) {
+		if (SuperAdmin.YES.ordinal() == sysUser.getSuperAdmin() && SuperAdmin.YES.ordinal() != user.getSuperAdmin()) {
 			throw new CustomException("只有超级管理员才能删除");
 		}
 		sysUserService.deleteUser(id);

@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.admin;
@@ -47,8 +47,9 @@ public class ServiceInstanceTest {
 	@Test
 	@SneakyThrows
 	void test() {
-		//ServiceInstance serviceInstance = serviceUtil.getServiceInstance(ServiceConstant.LAOKOU_FLOWABLE);
-		//log.info("data -> ：{}", JacksonUtil.toJsonStr(serviceInstance));
+		// ServiceInstance serviceInstance =
+		// serviceUtil.getServiceInstance(ServiceConstant.LAOKOU_FLOWABLE);
+		// log.info("data -> ：{}", JacksonUtil.toJsonStr(serviceInstance));
 	}
 
 	@Test

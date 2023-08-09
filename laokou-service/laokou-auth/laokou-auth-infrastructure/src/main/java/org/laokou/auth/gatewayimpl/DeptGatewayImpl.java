@@ -12,13 +12,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeptGatewayImpl implements DeptGateway {
 
-    private final DeptMapper deptMapper;
+	private final DeptMapper deptMapper;
 
-    @Override
-    public List<Long> getDeptIds(Long userId, Long tenantId, Integer superAdmin) {
-        if (superAdmin == SuperAdmin.YES.ordinal()) {
-            return deptMapper.getDeptIdsByTenantId(tenantId);
-        }
-        return deptMapper.getDeptIdsByUserIdAndTenantId(userId, tenantId);
-    }
+	@Override
+	public List<Long> getDeptIds(Long userId, Long tenantId, Integer superAdmin) {
+		if (superAdmin == SuperAdmin.YES.ordinal()) {
+			return deptMapper.getDeptIdsByTenantId(tenantId);
+		}
+		return deptMapper.getDeptIdsByUserIdAndTenantId(userId, tenantId);
+	}
+
 }

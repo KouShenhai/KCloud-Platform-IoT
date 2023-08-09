@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface MenuGateway {
 
-    List<String> getPermissions(Long userId,Long tenantId,Integer superAdmin);
+	List<String> getPermissions(Long userId, Long tenantId, Integer superAdmin);
 
 }

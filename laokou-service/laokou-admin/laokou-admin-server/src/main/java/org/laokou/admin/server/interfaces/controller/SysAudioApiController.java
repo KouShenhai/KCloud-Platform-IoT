@@ -72,7 +72,8 @@ public class SysAudioApiController {
 	@Lock4j(key = "audio_sync_lock_")
 	@PreAuthorize("hasAuthority('audio:sync')")
 	public Result<Boolean> sync() throws InterruptedException {
-		return Result.of(sysResourceApplicationService.syncResource(AUDIO_CODE, RedisKeyUtil.getSyncIndexKey(AUDIO_CODE)));
+		return Result
+				.of(sysResourceApplicationService.syncResource(AUDIO_CODE, RedisKeyUtil.getSyncIndexKey(AUDIO_CODE)));
 	}
 
 	@PostMapping(value = "v1/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

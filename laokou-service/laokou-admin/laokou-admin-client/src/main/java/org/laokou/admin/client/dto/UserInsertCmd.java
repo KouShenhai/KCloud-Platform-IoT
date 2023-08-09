@@ -9,6 +9,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class UserInsertCmd extends CommonCommand {
 
-    private UserCO userCO;
+	private UserCO userCO;
 
 }

@@ -63,11 +63,13 @@ public class OAuth2ResourceServerConfig {
 			throws Exception {
 		Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns())
 				.orElseGet(HashSet::new);
-		AntPathRequestMatcher[] uri1 = uris.stream().map(AntPathRequestMatcher::new).toArray(AntPathRequestMatcher[]::new);
-		AntPathRequestMatcher[] uri2 = patterns.stream().map(AntPathRequestMatcher::new).toArray(AntPathRequestMatcher[]::new);
+		AntPathRequestMatcher[] uri1 = uris.stream().map(AntPathRequestMatcher::new)
+				.toArray(AntPathRequestMatcher[]::new);
+		AntPathRequestMatcher[] uri2 = patterns.stream().map(AntPathRequestMatcher::new)
+				.toArray(AntPathRequestMatcher[]::new);
 		return http
-				.authorizeHttpRequests(request -> request.requestMatchers(uri1).permitAll()
-						.requestMatchers(uri2).permitAll().anyRequest().authenticated())
+				.authorizeHttpRequests(request -> request.requestMatchers(uri1).permitAll().requestMatchers(uri2)
+						.permitAll().anyRequest().authenticated())
 				.cors(AbstractHttpConfigurer::disable)
 				// 自定义登录页面
 				// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html

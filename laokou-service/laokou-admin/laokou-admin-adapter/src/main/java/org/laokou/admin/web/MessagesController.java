@@ -15,6 +15,7 @@
  *
  */
 package org.laokou.admin.web;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +31,13 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Tag(name = "MessagesController", description = "消息")
 public class MessagesController {
+
 	@TraceLog
 	@PostMapping("v1/messages")
 	@Operation(summary = "新增", description = "新增")
-	//@OperateLog(module = "消息管理", name = "新增")
-	//@PreAuthorize("hasAuthority('messages:insert')")
-	//@Idempotent
+	// @OperateLog(module = "消息管理", name = "新增")
+	// @PreAuthorize("hasAuthority('messages:insert')")
+	// @Idempotent
 	public Result<Boolean> insert() throws IOException {
 		return Result.of(null);
 	}
@@ -43,7 +45,7 @@ public class MessagesController {
 	@TraceLog
 	@PostMapping("v1/messages/list")
 	@Operation(summary = "查询", description = "查询")
-	//@PreAuthorize("hasAuthority('messages:list')")
+	// @PreAuthorize("hasAuthority('messages:list')")
 	public Result<?> list() {
 		return Result.of(null);
 	}
@@ -51,8 +53,8 @@ public class MessagesController {
 	@TraceLog
 	@GetMapping("v1/messages/watch/{detailId}")
 	@Operation(summary = "查看", description = "查看")
-	//@OperateLog(module = "消息管理", name = "查看")
-	//@DataCache(name = "messages", key = "#id")
+	// @OperateLog(module = "消息管理", name = "查看")
+	// @DataCache(name = "messages", key = "#id")
 	public Result<?> watch(@PathVariable("detailId") Long detailId) {
 		return Result.of(null);
 	}
@@ -60,8 +62,8 @@ public class MessagesController {
 	@TraceLog
 	@GetMapping("v1/messages/{id}")
 	@Operation(summary = "查看", description = "查看")
-	//@PreAuthorize("hasAuthority('message:detail')")
-	//@DataCache(name = "messages", key = "#id")
+	// @PreAuthorize("hasAuthority('message:detail')")
+	// @DataCache(name = "messages", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
