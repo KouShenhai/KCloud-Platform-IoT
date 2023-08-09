@@ -19,24 +19,20 @@ package org.laokou.auth.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-@Mapper
 @Repository
-public interface UserMapper {
+@Mapper
+public interface SourceMapper {
 
-	/**
-	 * 根据用户名和租户ID查询用户
-	 * @param username 用户名
-	 * @param tenantId 租户ID
-	 * @param type 登录类型
-	 * @return UserDO
-	 */
-	UserDO getUserByUsernameAndTenantId(@Param("username") String username, @Param("tenantId") Long tenantId,
-			@Param("type") String type);
+    /**
+     * 根据租户ID查询数据源名称
+     * @param tenantId 租户ID
+     * @return String
+     */
+    String getSourceNameByTenantId(@Param("tenantId")Long tenantId);
 
 }

@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class LoginHandler {
+public class LogHandler {
 
 	private final DomainEventPublisher domainEventPublisher;
 

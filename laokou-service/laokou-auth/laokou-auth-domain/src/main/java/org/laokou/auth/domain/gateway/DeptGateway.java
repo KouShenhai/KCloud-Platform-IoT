@@ -24,6 +24,13 @@ import java.util.List;
  */
 public interface DeptGateway {
 
+	/**
+	 * 查询部门IDS
+	 * @param userId 用户ID
+	 * @param tenantId 租户ID
+	 * @param superAdmin 是否是超级管理员
+	 * @return List<Long>
+	 */
 	List<Long> getDeptIds(Long userId, Long tenantId, Integer superAdmin);
 
 }

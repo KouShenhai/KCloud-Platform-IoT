@@ -20,19 +20,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.gateway.CaptchaGateway;
-import org.laokou.auth.domain.gateway.DeptGateway;
-import org.laokou.auth.domain.gateway.MenuGateway;
-import org.laokou.auth.domain.gateway.UserGateway;
+import org.laokou.auth.domain.gateway.*;
 import org.laokou.auth.domain.user.User;
-import org.laokou.auth.event.handler.LoginHandler;
+import org.laokou.auth.event.handler.LogHandler;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
-import org.laokou.common.tenant.service.SysSourceService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -82,11 +78,11 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	protected final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
 
-	protected final SysSourceService sysSourceService;
+	protected final SourceGateway sourceGateway;
 
 	protected final RedisUtil redisUtil;
 
-	protected final LoginHandler loginHandler;
+	protected final LogHandler logHandler;
 
 	@SneakyThrows
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -238,7 +234,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		}
 		else {
 			// 租户数据源
-			String sourceName = sysSourceService.querySourceName(tenantId);
+			String sourceName = sourceGateway.getSourceName(tenantId);
 			user.setSourceName(sourceName);
 		}
 		// 登录IP
@@ -246,7 +242,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 登录时间
 		user.setLoginDate(DateUtil.now());
 		// 登录成功
-		loginHandler.handleEvent(loginName, loginType,
+		logHandler.handleEvent(loginName, loginType,
 				ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED), request, tenantId);
 		return new UsernamePasswordAuthenticationToken(user, encryptName, user.getAuthorities());
 	}
@@ -267,7 +263,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			HttpServletRequest request, Long tenantId) {
 		String msg = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, msg);
-		loginHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(),
+		logHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(),
 				msg, request, tenantId);
 		throw OAuth2ExceptionHandler.getException(code, msg);
 	}

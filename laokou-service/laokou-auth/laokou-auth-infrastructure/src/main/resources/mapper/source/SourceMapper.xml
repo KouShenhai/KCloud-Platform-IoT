@@ -1,4 +1,6 @@
-/*
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,29 +16,14 @@
  * limitations under the License.
  *
  */
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.auth.gatewayimpl.database.SourceMapper">
 
-package org.laokou.auth.gatewayimpl.database;
+    <select id="getSourceNameByTenantId" resultType="string">
+        select a.`name` from boot_sys_source a
+        JOIN boot_sys_tenant b on b.source_id = a.id
+        where b.id = #{tenantId}
+    </select>
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
-import org.springframework.stereotype.Repository;
-
-/**
- * @author laokou
- */
-@Mapper
-@Repository
-public interface UserMapper {
-
-	/**
-	 * 根据用户名和租户ID查询用户
-	 * @param username 用户名
-	 * @param tenantId 租户ID
-	 * @param type 登录类型
-	 * @return UserDO
-	 */
-	UserDO getUserByUsernameAndTenantId(@Param("username") String username, @Param("tenantId") Long tenantId,
-			@Param("type") String type);
-
-}
+</mapper>

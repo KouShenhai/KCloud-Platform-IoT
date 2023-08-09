@@ -24,7 +24,7 @@ import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.user.User;
-import org.laokou.auth.event.handler.LoginHandler;
+import org.laokou.auth.event.handler.LogHandler;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.DateUtil;
@@ -62,7 +62,7 @@ public class UsersServiceImpl implements UserDetailsService {
 
 	private final MenuGateway menuGateway;
 
-	private final LoginHandler loginHandler;
+	private final LogHandler logHandler;
 
 	@Override
 	public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
@@ -102,7 +102,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 默认数据库
 		user.setSourceName(DEFAULT_SOURCE);
 		// 登录成功
-		loginHandler.handleEvent(loginName, loginType,
+		logHandler.handleEvent(loginName, loginType,
 				ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED), request, tenantId);
 		return user;
 	}
@@ -111,7 +111,7 @@ public class UsersServiceImpl implements UserDetailsService {
 			HttpServletRequest request, Long tenantId) {
 		String msg = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, msg);
-		loginHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(),
+		logHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(),
 				msg, request, tenantId);
 		throw new UsernameNotFoundException(msg);
 	}

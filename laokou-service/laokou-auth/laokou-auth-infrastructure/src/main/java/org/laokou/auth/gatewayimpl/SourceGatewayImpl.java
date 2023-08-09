@@ -15,28 +15,25 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database;
+package org.laokou.auth.gatewayimpl;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
-import org.springframework.stereotype.Repository;
+import lombok.RequiredArgsConstructor;
+import org.laokou.auth.domain.gateway.SourceGateway;
+import org.laokou.auth.gatewayimpl.database.SourceMapper;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Mapper
-@Repository
-public interface UserMapper {
+@Component
+@RequiredArgsConstructor
+public class SourceGatewayImpl implements SourceGateway {
 
-	/**
-	 * 根据用户名和租户ID查询用户
-	 * @param username 用户名
-	 * @param tenantId 租户ID
-	 * @param type 登录类型
-	 * @return UserDO
-	 */
-	UserDO getUserByUsernameAndTenantId(@Param("username") String username, @Param("tenantId") Long tenantId,
-			@Param("type") String type);
+    private final SourceMapper sourceMapper;
+
+    @Override
+    public String getSourceName(Long tenantId) {
+        return sourceMapper.getSourceNameByTenantId(tenantId);
+    }
 
 }

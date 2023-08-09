@@ -18,11 +18,8 @@ package org.laokou.auth.command.oauth2.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.domain.gateway.CaptchaGateway;
-import org.laokou.auth.domain.gateway.DeptGateway;
-import org.laokou.auth.domain.gateway.MenuGateway;
-import org.laokou.auth.domain.gateway.UserGateway;
-import org.laokou.auth.event.handler.LoginHandler;
+import org.laokou.auth.domain.gateway.*;
+import org.laokou.auth.event.handler.LogHandler;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -30,7 +27,6 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.common.sensitive.enums.TypeEnum;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
-import org.laokou.common.tenant.service.SysSourceService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -53,8 +49,8 @@ import static org.laokou.auth.common.exception.ErrorCode.MAIL_ERROR;
 @Component
 public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-	public OAuth2MailAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService, RedisUtil redisUtil, LoginHandler loginHandler) {
-		super(userGateway, menuGateway, deptGateway, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sysSourceService, redisUtil, loginHandler);
+	public OAuth2MailAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SourceGateway sourceGateway, RedisUtil redisUtil, LogHandler logHandler) {
+		super(userGateway, menuGateway, deptGateway, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sourceGateway, redisUtil, logHandler);
 	}
 
 	@Override
