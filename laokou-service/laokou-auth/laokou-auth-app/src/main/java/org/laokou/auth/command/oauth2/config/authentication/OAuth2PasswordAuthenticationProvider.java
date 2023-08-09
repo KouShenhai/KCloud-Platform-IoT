@@ -22,10 +22,9 @@ import org.laokou.auth.domain.gateway.CaptchaGateway;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
-import org.laokou.auth.event.handler.LoginLogHandler;
+import org.laokou.auth.event.handler.LoginHandler;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.auth.common.event.DomainEventPublisher;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.common.tenant.service.SysSourceService;
@@ -48,14 +47,8 @@ import static org.laokou.auth.common.Constant.*;
 @Slf4j
 public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-	public OAuth2PasswordAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway,
-			DeptGateway deptGateway, DomainEventPublisher loginLogUtil, PasswordEncoder passwordEncoder,
-			CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService,
-			RedisUtil redisUtil, DomainEventPublisher domainEventPublisher, LoginLogHandler loginLogHandler) {
-		super(userGateway, menuGateway, deptGateway, loginLogUtil, passwordEncoder, captchaGateway,
-				authorizationService, tokenGenerator, sysSourceService, redisUtil, domainEventPublisher,
-				loginLogHandler);
+	public OAuth2PasswordAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SysSourceService sysSourceService, RedisUtil redisUtil, LoginHandler loginHandler) {
+		super(userGateway, menuGateway, deptGateway, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sysSourceService, redisUtil, loginHandler);
 	}
 
 	@Override

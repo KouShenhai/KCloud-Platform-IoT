@@ -1,14 +1,30 @@
+/*
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package org.laokou.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.common.event.DomainEventPublisher;
 import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.user.User;
-import org.laokou.auth.event.handler.LoginLogHandler;
+import org.laokou.auth.event.handler.LoginHandler;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.DateUtil;
@@ -30,6 +46,9 @@ import static org.laokou.auth.common.BizCode.LOGIN_SUCCEEDED;
 import static org.laokou.auth.common.Constant.*;
 import static org.laokou.auth.common.exception.ErrorCode.*;
 
+/**
+ * @author laokou
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -43,9 +62,7 @@ public class UsersServiceImpl implements UserDetailsService {
 
 	private final MenuGateway menuGateway;
 
-	private final LoginLogHandler loginLogHandler;
-
-	private final DomainEventPublisher domainEventPublisher;
+	private final LoginHandler loginHandler;
 
 	@Override
 	public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
@@ -67,6 +84,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		if (!user.isEnabled()) {
 			throw getException(USERNAME_DISABLE, loginName, loginType, request, tenantId);
 		}
+		// 用户ID
 		Long userId = user.getId();
 		Integer superAdmin = user.getSuperAdmin();
 		// 权限标识列表
@@ -84,8 +102,8 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 默认数据库
 		user.setSourceName(DEFAULT_SOURCE);
 		// 登录成功
-		domainEventPublisher.publish(loginLogHandler.handleEvent(loginName, loginType,
-				ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED), request, tenantId));
+		loginHandler.handleEvent(loginName, loginType,
+				ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED), request, tenantId);
 		return user;
 	}
 
@@ -93,8 +111,8 @@ public class UsersServiceImpl implements UserDetailsService {
 			HttpServletRequest request, Long tenantId) {
 		String msg = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, msg);
-		domainEventPublisher.publish(loginLogHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(),
-				msg, request, tenantId));
+		loginHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(),
+				msg, request, tenantId);
 		throw new UsernameNotFoundException(msg);
 	}
 
