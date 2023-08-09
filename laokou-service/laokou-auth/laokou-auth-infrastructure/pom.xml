@@ -17,10 +17,6 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-tenant</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-p6spy</artifactId>
         </dependency>
         <dependency>
