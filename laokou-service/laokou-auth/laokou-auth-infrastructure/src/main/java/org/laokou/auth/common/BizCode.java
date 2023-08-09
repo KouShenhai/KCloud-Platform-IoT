@@ -5,44 +5,44 @@ package org.laokou.auth.common;
  */
 public interface BizCode {
 
-    /**
-     * 唯一标识不能为空
-     */
-    int IDENTIFIER_NOT_NULL = 2001;
+	/**
+	 * 唯一标识不能为空
+	 */
+	int IDENTIFIER_NOT_NULL = 2001;
 
-    /**
-     * 验证码不能为空
-     */
-    int CAPTCHA_NOT_NULL = 2002;
+	/**
+	 * 验证码不能为空
+	 */
+	int CAPTCHA_NOT_NULL = 2002;
 
-    /**
-     * 账号不能为空
-     */
-    int USERNAME_NOT_NULL = 2005;
+	/**
+	 * 账号不能为空
+	 */
+	int USERNAME_NOT_NULL = 2005;
 
-    /**
-     * 密码不能为空
-     */
-    int PASSWORD_NOT_NULL = 2009;
+	/**
+	 * 密码不能为空
+	 */
+	int PASSWORD_NOT_NULL = 2009;
 
-    /**
-     * 手机号不能为空
-     */
-    int MOBILE_NOT_NULL = 2010;
+	/**
+	 * 手机号不能为空
+	 */
+	int MOBILE_NOT_NULL = 2010;
 
-    /**
-     * 邮箱不能为空
-     */
-    int MAIL_NOT_NULL = 2012;
+	/**
+	 * 邮箱不能为空
+	 */
+	int MAIL_NOT_NULL = 2012;
 
-    /**
-     * 租户编号不能为空，请选择租户
-     */
-    int TENANT_ID_NOT_NULL = 2014;
+	/**
+	 * 租户编号不能为空，请选择租户
+	 */
+	int TENANT_ID_NOT_NULL = 2014;
 
-    /**
-     * 登录成功
-     */
-    int LOGIN_SUCCEEDED = 2018;
+	/**
+	 * 登录成功
+	 */
+	int LOGIN_SUCCEEDED = 2018;
 
 }

@@ -102,7 +102,8 @@ public abstract class AbstractServer implements Server {
 				work.shutdownGracefully();
 			}
 			log.info("优雅关闭，释放资源");
-		} else {
+		}
+		else {
 			log.error("关闭失败，请启动服务");
 		}
 	}

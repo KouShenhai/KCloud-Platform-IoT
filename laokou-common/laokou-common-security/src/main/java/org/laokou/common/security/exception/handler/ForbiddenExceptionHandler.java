@@ -36,8 +36,7 @@ public class ForbiddenExceptionHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException {
-		OAuth2ExceptionHandler.response(response, StatusCode.FORBIDDEN,
-				MessageUtil.getMessage(StatusCode.FORBIDDEN));
+		OAuth2ExceptionHandler.response(response, StatusCode.FORBIDDEN, MessageUtil.getMessage(StatusCode.FORBIDDEN));
 	}
 
 }

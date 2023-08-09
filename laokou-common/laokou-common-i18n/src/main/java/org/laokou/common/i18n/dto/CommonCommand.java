@@ -9,10 +9,11 @@ import java.io.Serial;
 @Data
 public class CommonCommand extends Command {
 
-    @Serial
-    private static final long serialVersionUID = 2478790090537077799L;
+	@Serial
+	private static final long serialVersionUID = 2478790090537077799L;
 
-    private Long operator;
-    private Integer version;
+	private Long operator;
+
+	private Integer version;
 
 }

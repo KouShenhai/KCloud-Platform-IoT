@@ -18,6 +18,7 @@ package org.laokou.common.i18n.common;
 
 /**
  * 状态码
+ *
  * @author laokou
  */
 public interface StatusCode {

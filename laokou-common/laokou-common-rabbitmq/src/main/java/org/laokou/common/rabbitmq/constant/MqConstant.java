@@ -16,8 +16,8 @@
 package org.laokou.common.rabbitmq.constant;
 
 /**
- * <a href="https://spring.io/guides/gs/messaging-rabbitmq/">...</a>
- * 车牌号区分成36个队列
+ * <a href="https://spring.io/guides/gs/messaging-rabbitmq/">...</a> 车牌号区分成36个队列
+ *
  * @author laokou
  */
 public interface MqConstant {

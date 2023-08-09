@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsersServiceImpl implements UsersServiceI {
 
-    @Override
-    public Boolean update(UserUpdateCmd cmd) {
-        return null;
-    }
+	@Override
+	public Boolean update(UserUpdateCmd cmd) {
+		return null;
+	}
 
-    @Override
-    public Boolean insert(UserInsertCmd cmd) {
-        return null;
-    }
+	@Override
+	public Boolean insert(UserInsertCmd cmd) {
+		return null;
+	}
 
 }

@@ -55,7 +55,8 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 			if (statusCode == NOT_FOUND) {
 				log.error("无法找到请求的资源");
 				return ResponseUtil.response(exchange, Result.fail(NOT_FOUND));
-			} else {
+			}
+			else {
 				log.error("服务器内部错误，无法完成请求");
 				return ResponseUtil.response(exchange, Result.fail(INTERNAL_SERVER_ERROR));
 			}
@@ -64,7 +65,8 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 			// 思路来源于SentinelGatewayBlockExceptionHandler
 			log.error("请求过于频繁，请稍后再试");
 			return ResponseUtil.response(exchange, Result.fail(SERVICE_BLOCK_REQUEST));
-		} else {
+		}
+		else {
 			log.error("请求已中断，请刷新页面");
 			return ResponseUtil.response(exchange, Result.fail(SERVICE_REQUEST_CLOSE));
 		}

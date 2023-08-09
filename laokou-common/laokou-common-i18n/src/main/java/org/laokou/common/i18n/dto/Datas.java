@@ -13,7 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Datas<T> extends DTO {
 
-    private long total;
-    private List<T> records;
+	private long total;
+
+	private List<T> records;
 
 }

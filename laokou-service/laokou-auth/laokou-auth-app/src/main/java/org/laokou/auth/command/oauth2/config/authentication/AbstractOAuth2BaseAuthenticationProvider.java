@@ -25,12 +25,11 @@ import org.laokou.auth.domain.gateway.DeptGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.user.User;
-import org.laokou.auth.event.handler.LoginLogHandler;
+import org.laokou.auth.event.handler.LoginHandler;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
-import org.laokou.auth.common.event.DomainEventPublisher;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.common.tenant.service.SysSourceService;
@@ -70,17 +69,24 @@ import static org.laokou.auth.common.BizCode.*;
 public abstract class AbstractOAuth2BaseAuthenticationProvider implements AuthenticationProvider {
 
 	protected final UserGateway userGateway;
+
 	protected final MenuGateway menuGateway;
+
 	protected final DeptGateway deptGateway;
-	protected final DomainEventPublisher loginLogUtil;
+
 	protected final PasswordEncoder passwordEncoder;
+
 	protected final CaptchaGateway captchaGateway;
+
 	protected final OAuth2AuthorizationService authorizationService;
+
 	protected final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
+
 	protected final SysSourceService sysSourceService;
+
 	protected final RedisUtil redisUtil;
-	protected final DomainEventPublisher domainEventPublisher;
-	protected final LoginLogHandler loginLogHandler;
+
+	protected final LoginHandler loginHandler;
 
 	@SneakyThrows
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -123,7 +129,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				auth2BaseAuthenticationToken);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 		if (registeredClient == null) {
-			throw OAuth2ExceptionHandler.getException(REGISTERED_CLIENT_NOT_EXIST, MessageUtil.getMessage(REGISTERED_CLIENT_NOT_EXIST));
+			throw OAuth2ExceptionHandler.getException(REGISTERED_CLIENT_NOT_EXIST,
+					MessageUtil.getMessage(REGISTERED_CLIENT_NOT_EXIST));
 		}
 		// 获取认证范围
 		Set<String> scopes = registeredClient.getScopes();
@@ -140,7 +147,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				.principalName(loginName).authorizedScopes(scopes).authorizationGrantType(grantType);
 		// 生成access_token
 		OAuth2Token generatedOauth2AccessToken = Optional.ofNullable(tokenGenerator.generate(context))
-				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ACCESS_TOKEN_FAIL, MessageUtil.getMessage(GENERATE_ACCESS_TOKEN_FAIL)));
+				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ACCESS_TOKEN_FAIL,
+						MessageUtil.getMessage(GENERATE_ACCESS_TOKEN_FAIL)));
 		OAuth2AccessToken oAuth2AccessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
 				generatedOauth2AccessToken.getTokenValue(), generatedOauth2AccessToken.getIssuedAt(),
 				generatedOauth2AccessToken.getExpiresAt(), context.getAuthorizedScopes());
@@ -153,14 +161,16 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 					.authorizedScopes(scopes)
 					// admin后台管理需要token，解析token获取用户信息，因此将用户信息存在数据库，下次直接查询数据库就可以获取用户信息
 					.attribute(Principal.class.getName(), principal);
-		} else {
+		}
+		else {
 			authorizationBuilder.accessToken(oAuth2AccessToken);
 		}
 		// 生成refresh_token
 		context = builder.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
 				.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
 		OAuth2Token generateOauth2RefreshToken = Optional.ofNullable(tokenGenerator.generate(context))
-				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_REFRESH_TOKEN_FAIL, MessageUtil.getMessage(GENERATE_REFRESH_TOKEN_FAIL)));
+				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_REFRESH_TOKEN_FAIL,
+						MessageUtil.getMessage(GENERATE_REFRESH_TOKEN_FAIL)));
 		OAuth2RefreshToken oAuth2RefreshToken = (OAuth2RefreshToken) generateOauth2RefreshToken;
 		authorizationBuilder.refreshToken(oAuth2RefreshToken);
 		OAuth2Authorization oAuth2Authorization = authorizationBuilder.build();
@@ -181,51 +191,52 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	 * @return UsernamePasswordAuthenticationToken
 	 */
 	protected UsernamePasswordAuthenticationToken getUserInfo(String loginName, String password,
-															  HttpServletRequest request, String captcha, String uuid) {
+			HttpServletRequest request, String captcha, String uuid) {
 		AuthorizationGrantType grantType = getGrantType();
 		String loginType = grantType.getValue();
 		Long tenantId = Long.valueOf(request.getParameter(TENANT_ID));
 		// 验证验证码
 		Boolean validate = captchaGateway.validate(uuid, captcha);
 		if (validate == null) {
-			throw getException(CAPTCHA_EXPIRED,loginName,loginType,request,tenantId);
+			throw getException(CAPTCHA_EXPIRED, loginName, loginType, request, tenantId);
 		}
 		if (Boolean.FALSE.equals(validate)) {
-			throw getException(CAPTCHA_ERROR,loginName,loginType,request,tenantId);
+			throw getException(CAPTCHA_ERROR, loginName, loginType, request, tenantId);
 		}
 		// 加密
 		String encryptName = AesUtil.encrypt(loginName);
 		// 多租户查询
 		User user = userGateway.getUserByUsername(encryptName, tenantId, loginType);
 		if (user == null) {
-			throw getException(USERNAME_PASSWORD_ERROR,loginName,loginType,request,tenantId);
+			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, request, tenantId);
 		}
 		if (AUTH_PASSWORD.equals(loginType)) {
 			// 验证密码
 			String clientPassword = user.getPassword();
 			if (!passwordEncoder.matches(password, clientPassword)) {
-				throw getException(USERNAME_PASSWORD_ERROR,loginName,loginType,request,tenantId);
+				throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, request, tenantId);
 			}
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw getException(USERNAME_DISABLE,loginName,loginType,request,tenantId);
+			throw getException(USERNAME_DISABLE, loginName, loginType, request, tenantId);
 		}
 		Long userId = user.getId();
 		Integer superAdmin = user.getSuperAdmin();
 		// 权限标识列表
-		List<String> permissionsList = menuGateway.getPermissions(userId,tenantId,superAdmin);
+		List<String> permissionsList = menuGateway.getPermissions(userId, tenantId, superAdmin);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			throw getException(USERNAME_NOT_PERMISSION,loginName,loginType,request,tenantId);
+			throw getException(USERNAME_NOT_PERMISSION, loginName, loginType, request, tenantId);
 		}
 		// 部门列表
-		List<Long> deptIds = deptGateway.getDeptIds(userId,tenantId,superAdmin);
+		List<Long> deptIds = deptGateway.getDeptIds(userId, tenantId, superAdmin);
 		user.setDeptIds(deptIds);
 		user.setPermissionList(permissionsList);
 		if (tenantId == DEFAULT_TENANT) {
 			// 默认数据源
 			user.setSourceName(DEFAULT_SOURCE);
-		} else {
+		}
+		else {
 			// 租户数据源
 			String sourceName = sysSourceService.querySourceName(tenantId);
 			user.setSourceName(sourceName);
@@ -235,7 +246,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 登录时间
 		user.setLoginDate(DateUtil.now());
 		// 登录成功
-		domainEventPublisher.publish(loginLogHandler.handleEvent(loginName, loginType, ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED), request, tenantId));
+		loginHandler.handleEvent(loginName, loginType,
+				ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED), request, tenantId);
 		return new UsernamePasswordAuthenticationToken(user, encryptName, user.getAuthorities());
 	}
 
@@ -248,14 +260,15 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		if (clientPrincipal != null && clientPrincipal.isAuthenticated()) {
 			return clientPrincipal;
 		}
-		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT,
-				MessageUtil.getMessage(INVALID_CLIENT));
+		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
 	}
 
-	private OAuth2AuthenticationException getException(int code,String loginName,String loginType,HttpServletRequest request,Long tenantId) {
+	private OAuth2AuthenticationException getException(int code, String loginName, String loginType,
+			HttpServletRequest request, Long tenantId) {
 		String msg = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, msg);
-		domainEventPublisher.publish(loginLogHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(), msg, request, tenantId));
+		loginHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(),
+				msg, request, tenantId);
 		throw OAuth2ExceptionHandler.getException(code, msg);
 	}
 

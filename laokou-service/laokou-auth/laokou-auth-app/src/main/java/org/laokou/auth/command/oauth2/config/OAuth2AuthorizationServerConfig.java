@@ -87,7 +87,8 @@ class OAuth2AuthorizationServerConfig {
 			OAuth2PasswordAuthenticationProvider passwordAuthenticationProvider,
 			OAuth2MailAuthenticationProvider mailAuthenticationProvider,
 			OAuth2MobileAuthenticationProvider mobileAuthenticationProvider,
-			AuthorizationServerSettings authorizationServerSettings, OAuth2AuthorizationService authorizationService) throws Exception {
+			AuthorizationServerSettings authorizationServerSettings, OAuth2AuthorizationService authorizationService)
+			throws Exception {
 		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 		OAuth2AuthorizationServerConfigurer oAuth2AuthorizationServerConfigurer = http
 				.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
@@ -96,8 +97,7 @@ class OAuth2AuthorizationServerConfig {
 						.accessTokenRequestConverter(new DelegatingAuthenticationConverter(List.of(
 								new OAuth2PasswordAuthenticationConverter(),
 								new OAuth2DeviceCodeAuthenticationConverter(),
-								new OAuth2MobileAuthenticationConverter(),
-								new OAuth2MailAuthenticationConverter(),
+								new OAuth2MobileAuthenticationConverter(), new OAuth2MailAuthenticationConverter(),
 								new OAuth2AuthorizationCodeAuthenticationConverter(),
 								new OAuth2ClientCredentialsAuthenticationConverter(),
 								new OAuth2RefreshTokenAuthenticationConverter(),

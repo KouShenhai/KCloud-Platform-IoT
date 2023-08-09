@@ -1,6 +1,7 @@
 package org.laokou.common.i18n.dto;
 
 import java.io.Serial;
+
 /**
  * Command request from Client.
  *
@@ -9,7 +10,7 @@ import java.io.Serial;
  */
 public abstract class Command extends DTO {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
+	@Serial
+	private static final long serialVersionUID = 1L;
 
 }

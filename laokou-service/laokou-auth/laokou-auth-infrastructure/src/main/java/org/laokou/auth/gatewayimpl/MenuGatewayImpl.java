@@ -15,17 +15,19 @@ import static org.laokou.auth.common.Constant.*;
 @RequiredArgsConstructor
 public class MenuGatewayImpl implements MenuGateway {
 
-    private final MenuMapper menuMapper;
-    private final TenantMapper tenantMapper;
+	private final MenuMapper menuMapper;
 
-    @Override
-    public List<String> getPermissions(Long userId, Long tenantId, Integer superAdmin) {
-        if (superAdmin == SuperAdmin.YES.ordinal()) {
-            if (tenantId == DEFAULT_TENANT) {
-                return menuMapper.getPermissions();
-            }
-            return tenantMapper.getPermissionsByTenantId(tenantId);
-        }
-        return menuMapper.getPermissionsByUserId(userId);
-    }
+	private final TenantMapper tenantMapper;
+
+	@Override
+	public List<String> getPermissions(Long userId, Long tenantId, Integer superAdmin) {
+		if (superAdmin == SuperAdmin.YES.ordinal()) {
+			if (tenantId == DEFAULT_TENANT) {
+				return menuMapper.getPermissions();
+			}
+			return tenantMapper.getPermissionsByTenantId(tenantId);
+		}
+		return menuMapper.getPermissionsByUserId(userId);
+	}
+
 }

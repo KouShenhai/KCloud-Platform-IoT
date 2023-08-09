@@ -44,7 +44,7 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@PostMapping(value = "/query")
-    Result<PageVO<TaskVO>> query(@RequestBody TaskDTO dto);
+	Result<PageVO<TaskVO>> query(@RequestBody TaskDTO dto);
 
 	/**
 	 * 审批任务
@@ -52,7 +52,7 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@PostMapping(value = "/audit")
-    Result<AssigneeVO> audit(@RequestBody AuditDTO dto);
+	Result<AssigneeVO> audit(@RequestBody AuditDTO dto);
 
 	/**
 	 * 开始任务
@@ -60,7 +60,7 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@PostMapping(value = "/start")
-    Result<AssigneeVO> start(@RequestBody ProcessDTO dto);
+	Result<AssigneeVO> start(@RequestBody ProcessDTO dto);
 
 	/**
 	 * 流程图
@@ -68,7 +68,7 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@GetMapping(value = "/diagram")
-    Result<String> diagram(@RequestParam("processInstanceId") String processInstanceId);
+	Result<String> diagram(@RequestParam("processInstanceId") String processInstanceId);
 
 	/**
 	 * 任务委派
@@ -76,7 +76,7 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@PostMapping("/delegate")
-    Result<AssigneeVO> delegate(@RequestBody DelegateDTO dto);
+	Result<AssigneeVO> delegate(@RequestBody DelegateDTO dto);
 
 	/**
 	 * 任务转办
@@ -84,7 +84,7 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@PostMapping("/transfer")
-    Result<AssigneeVO> transfer(@RequestBody TransferDTO dto);
+	Result<AssigneeVO> transfer(@RequestBody TransferDTO dto);
 
 	/**
 	 * 任务处理
@@ -92,6 +92,6 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@PostMapping(value = "/resolve")
-    Result<AssigneeVO> resolve(@RequestBody ResolveDTO dto);
+	Result<AssigneeVO> resolve(@RequestBody ResolveDTO dto);
 
 }

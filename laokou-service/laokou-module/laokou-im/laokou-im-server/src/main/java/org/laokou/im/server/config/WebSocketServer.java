@@ -40,7 +40,7 @@ import static org.laokou.im.server.config.WebsocketHandler.USER_CACHE;
 public class WebSocketServer extends AbstractServer {
 
 	public WebSocketServer(int port, String poolName, ChannelInitializer<?> channelInitializer,
-						   TaskExecutionProperties taskExecutionProperties) {
+			TaskExecutionProperties taskExecutionProperties) {
 		super(port, poolName, channelInitializer, taskExecutionProperties);
 	}
 
@@ -63,7 +63,7 @@ public class WebSocketServer extends AbstractServer {
 				// 请求队列最大长度
 				.option(ChannelOption.SO_BACKLOG, 1024)
 				// 重复使用端口
-				.option(NioChannelOption.SO_REUSEADDR,true)
+				.option(NioChannelOption.SO_REUSEADDR, true)
 				// 延迟发送
 				.option(ChannelOption.TCP_NODELAY, true)
 				// websocket处理类

@@ -15,6 +15,7 @@
  *
  */
 package org.laokou.admin.web;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class TenantsController {
 	@TraceLog
 	@PostMapping("v1/tenants/list")
 	@Operation(summary = "查询", description = "查询")
-	//@PreAuthorize("hasAuthority('tenants:list')")
+	// @PreAuthorize("hasAuthority('tenants:list')")
 	public Result<?> list() {
 		return Result.of(null);
 	}
@@ -41,8 +42,8 @@ public class TenantsController {
 	@TraceLog
 	@PostMapping("v1/tenants")
 	@Operation(summary = "新增", description = "新增")
-	//@OperateLog(module = "租户管理", name = "新增")
-	//@PreAuthorize("hasAuthority('tenants:insert')")
+	// @OperateLog(module = "租户管理", name = "新增")
+	// @PreAuthorize("hasAuthority('tenants:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
 	}
@@ -50,7 +51,7 @@ public class TenantsController {
 	@TraceLog
 	@GetMapping("v1/tenants/{id}")
 	@Operation(summary = "查看", description = "查看")
-	//@DataCache(name = "tenants", key = "#id")
+	// @DataCache(name = "tenants", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -58,9 +59,9 @@ public class TenantsController {
 	@TraceLog
 	@PutMapping("v1/tenants")
 	@Operation(summary = "修改", description = "修改")
-	//@OperateLog(module = "租户管理", name = "修改")
-	//@PreAuthorize("hasAuthority('tenants:update')")
-	//@DataCache(name = "tenants", key = "#dto.id", type = CacheEnum.DEL)
+	// @OperateLog(module = "租户管理", name = "修改")
+	// @PreAuthorize("hasAuthority('tenants:update')")
+	// @DataCache(name = "tenants", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update() {
 		return Result.of(null);
 	}
@@ -68,9 +69,9 @@ public class TenantsController {
 	@TraceLog
 	@DeleteMapping("v1/tenants/{id}")
 	@Operation(summary = "删除", description = "删除")
-	//@OperateLog(module = "租户管理", name = "删除")
-	//@PreAuthorize("hasAuthority('tenants:delete')")
-	//@DataCache(name = "tenants", key = "#id", type = CacheEnum.DEL)
+	// @OperateLog(module = "租户管理", name = "删除")
+	// @PreAuthorize("hasAuthority('tenants:delete')")
+	// @DataCache(name = "tenants", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}

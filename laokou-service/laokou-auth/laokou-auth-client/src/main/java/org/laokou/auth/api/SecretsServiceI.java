@@ -4,6 +4,6 @@ import org.laokou.common.i18n.dto.Result;
 
 public interface SecretsServiceI {
 
-    Result<String> get();
+	Result<String> get();
 
 }

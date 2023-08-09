@@ -35,8 +35,7 @@ public class OAuth2MailAuthenticationToken extends AbstractOAuth2BaseAuthenticat
 	 * @param additionalParameters the additional parameters
 	 */
 	protected OAuth2MailAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		super(new AuthorizationGrantType(AUTH_MAIL), clientPrincipal,
-				additionalParameters);
+		super(new AuthorizationGrantType(AUTH_MAIL), clientPrincipal, additionalParameters);
 	}
 
 }

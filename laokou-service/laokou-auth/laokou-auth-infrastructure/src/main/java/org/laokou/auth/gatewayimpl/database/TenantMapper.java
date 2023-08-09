@@ -10,6 +10,6 @@ import java.util.List;
 @Mapper
 public interface TenantMapper {
 
-    List<String> getPermissionsByTenantId(@Param("tenantId")Long tenantId);
+	List<String> getPermissionsByTenantId(@Param("tenantId") Long tenantId);
 
 }

@@ -38,13 +38,10 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication(exclude = { OAuth2AuthorizationServerAutoConfiguration.class
-		, OAuth2ResourceServerAutoConfig.class
-		, CustomOpaqueTokenIntrospector.class
-		, ForbiddenExceptionHandler.class
-		, OAuth2ResourceServerProperties.class
-		, InvalidAuthenticationEntryPoint.class
-		, OAuth2AuthorizationAutoConfig.class })
+@SpringBootApplication(exclude = { OAuth2AuthorizationServerAutoConfiguration.class,
+		OAuth2ResourceServerAutoConfig.class, CustomOpaqueTokenIntrospector.class, ForbiddenExceptionHandler.class,
+		OAuth2ResourceServerProperties.class, InvalidAuthenticationEntryPoint.class,
+		OAuth2AuthorizationAutoConfig.class })
 @EnableConfigurationProperties
 @EnableEncryptableProperties
 @EnableAsync

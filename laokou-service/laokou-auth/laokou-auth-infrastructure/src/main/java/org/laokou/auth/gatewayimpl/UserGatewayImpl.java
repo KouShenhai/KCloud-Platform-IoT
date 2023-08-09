@@ -15,16 +15,16 @@ import static org.laokou.common.core.constant.Constant.SHARDING_SPHERE;
 @RequiredArgsConstructor
 public class UserGatewayImpl implements UserGateway {
 
-    private final UserMapper userMapper;
+	private final UserMapper userMapper;
 
-    @Override
-    @DS(SHARDING_SPHERE)
-    public User getUserByUsername(String username, Long tenantId, String type) {
-        UserDO userDO = userMapper.getUserByUsernameAndTenantId(username, tenantId, type);
-        if (userDO == null) {
-            return null;
-        }
-        return ConvertUtil.sourceToTarget(userDO, User.class);
-    }
+	@Override
+	@DS(SHARDING_SPHERE)
+	public User getUserByUsername(String username, Long tenantId, String type) {
+		UserDO userDO = userMapper.getUserByUsernameAndTenantId(username, tenantId, type);
+		if (userDO == null) {
+			return null;
+		}
+		return ConvertUtil.sourceToTarget(userDO, User.class);
+	}
 
 }

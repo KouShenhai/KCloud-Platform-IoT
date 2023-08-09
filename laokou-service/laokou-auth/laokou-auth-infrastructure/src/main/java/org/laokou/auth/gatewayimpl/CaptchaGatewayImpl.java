@@ -11,36 +11,36 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CaptchaGatewayImpl implements CaptchaGateway {
 
-    private final RedisUtil redisUtil;
+	private final RedisUtil redisUtil;
 
-    @Override
-    public void set(String uuid,String code) {
-        setValue(uuid,code);
-    }
+	@Override
+	public void set(String uuid, String code) {
+		setValue(uuid, code);
+	}
 
-    @Override
-    public Boolean validate(String uuid, String code) {
-        // 获取验证码
-        String captcha = getCaptcha(uuid);
-        if (StringUtil.isEmpty(captcha)) {
-            return null;
-        }
-        return code.equalsIgnoreCase(captcha);
-    }
+	@Override
+	public Boolean validate(String uuid, String code) {
+		// 获取验证码
+		String captcha = getCaptcha(uuid);
+		if (StringUtil.isEmpty(captcha)) {
+			return null;
+		}
+		return code.equalsIgnoreCase(captcha);
+	}
 
-    private String getCaptcha(String uuid) {
-        String key = RedisKeyUtil.getUserCaptchaKey(uuid);
-        Object captcha = redisUtil.get(key);
-        if (captcha != null) {
-            redisUtil.delete(key);
-        }
-        return captcha != null ? captcha.toString() : "";
-    }
+	private String getCaptcha(String uuid) {
+		String key = RedisKeyUtil.getUserCaptchaKey(uuid);
+		Object captcha = redisUtil.get(key);
+		if (captcha != null) {
+			redisUtil.delete(key);
+		}
+		return captcha != null ? captcha.toString() : "";
+	}
 
-    private void setValue(String uuid,String code) {
-        String key = RedisKeyUtil.getUserCaptchaKey(uuid);
-        // 保存五分钟
-        redisUtil.set(key, code, 60 * 5);
-    }
+	private void setValue(String uuid, String code) {
+		String key = RedisKeyUtil.getUserCaptchaKey(uuid);
+		// 保存五分钟
+		redisUtil.set(key, code, 60 * 5);
+	}
 
 }

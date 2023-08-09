@@ -15,6 +15,7 @@
  *
  */
 package org.laokou.admin.web;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,7 +38,7 @@ public class ResourceController {
 	@GetMapping("v1/resource/audit-log/{id}")
 	@TraceLog
 	@Operation(summary = "审批日志", description = "审批日志")
-	//@PreAuthorize("hasAuthority('resource:audit:log')")
+	// @PreAuthorize("hasAuthority('resource:audit:log')")
 	public Result<?> auditLog(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -45,9 +46,9 @@ public class ResourceController {
 	@PostMapping("v1/resource/sync")
 	@TraceLog
 	@Operation(summary = "同步", description = "同步")
-	//@OperateLog(module = "资源管理", name = "同步")
-	//@Lock4j(key = "resource_sync_lock_")
-	//@PreAuthorize("hasAuthority('resource:sync')")
+	// @OperateLog(module = "资源管理", name = "同步")
+	// @Lock4j(key = "resource_sync_lock_")
+	// @PreAuthorize("hasAuthority('resource:sync')")
 	public Result<Boolean> sync() {
 		return Result.of(null);
 	}
@@ -55,15 +56,14 @@ public class ResourceController {
 	@PostMapping(value = "v1/resource/upload/{md5}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@TraceLog
 	@Operation(summary = "上传", description = "上传")
-	public Result<?> upload(@RequestPart("file") MultipartFile file, @PathVariable("md5") String md5)
-			throws Exception {
+	public Result<?> upload(@RequestPart("file") MultipartFile file, @PathVariable("md5") String md5) throws Exception {
 		return Result.of(null);
 	}
 
 	@PostMapping("v1/resource/list")
 	@Operation(summary = "查询", description = "查询")
 	@TraceLog
-	//@PreAuthorize("hasAuthority('resource:list')")
+	// @PreAuthorize("hasAuthority('resource:list')")
 	public Result<?> list() {
 		return Result.of(null);
 	}
@@ -71,7 +71,7 @@ public class ResourceController {
 	@GetMapping(value = "v1/resource/{id}")
 	@Operation(summary = "查看", description = "查看")
 	@TraceLog
-	//@PreAuthorize("hasAuthority('resource:detail')")
+	// @PreAuthorize("hasAuthority('resource:detail')")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -79,7 +79,7 @@ public class ResourceController {
 	@GetMapping(value = "v1/resource/download/{id}")
 	@TraceLog
 	@Operation(summary = "下载", description = "下载")
-	//@PreAuthorize("hasAuthority('resource:download')")
+	// @PreAuthorize("hasAuthority('resource:download')")
 	public void download(@PathVariable("id") Long id, HttpServletResponse response) {
 
 	}
@@ -87,8 +87,8 @@ public class ResourceController {
 	@PostMapping(value = "v1/resource")
 	@TraceLog
 	@Operation(summary = "新增", description = "新增")
-	//@OperateLog(module = "资源管理", name = "新增")
-	//@PreAuthorize("hasAuthority('resource:insert')")
+	// @OperateLog(module = "资源管理", name = "新增")
+	// @PreAuthorize("hasAuthority('resource:insert')")
 	public Result<Boolean> insert() throws IOException {
 		return Result.of(null);
 	}
@@ -96,8 +96,8 @@ public class ResourceController {
 	@PutMapping(value = "v1/resource")
 	@TraceLog
 	@Operation(summary = "修改", description = "修改")
-	//@OperateLog(module = "资源管理", name = "修改")
-	//@PreAuthorize("hasAuthority('resource:update')")
+	// @OperateLog(module = "资源管理", name = "修改")
+	// @PreAuthorize("hasAuthority('resource:update')")
 	public Result<Boolean> update() throws IOException {
 		return Result.of(null);
 	}
@@ -105,8 +105,8 @@ public class ResourceController {
 	@DeleteMapping(value = "v1/resource/{id}")
 	@TraceLog
 	@Operation(summary = "删除", description = "删除")
-	//@OperateLog(module = "资源管理", name = "删除")
-	//@PreAuthorize("hasAuthority('resource:delete')")
+	// @OperateLog(module = "资源管理", name = "删除")
+	// @PreAuthorize("hasAuthority('resource:delete')")
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -114,7 +114,7 @@ public class ResourceController {
 	@GetMapping(value = "v1/resource/diagram/{instanceId}")
 	@TraceLog
 	@Operation(summary = "流程图", description = "流程图")
-	//@PreAuthorize("hasAuthority('resource:diagram')")
+	// @PreAuthorize("hasAuthority('resource:diagram')")
 	public Result<String> diagram(@PathVariable("instanceId") String instanceId) {
 		return Result.of(null);
 	}
@@ -122,7 +122,7 @@ public class ResourceController {
 	@TraceLog
 	@PostMapping(value = "v1/resource/task-list")
 	@Operation(summary = "查询任务", description = "查询任务")
-	//@PreAuthorize("hasAuthority('resource:task:list')")
+	// @PreAuthorize("hasAuthority('resource:task:list')")
 	public Result<?> taskList() {
 		return Result.of(null);
 	}
@@ -130,8 +130,8 @@ public class ResourceController {
 	@TraceLog
 	@PostMapping(value = "v1/resource/audit-task")
 	@Operation(summary = "审批任务", description = "审批任务")
-	//@OperateLog(module = "资源管理", name = "审批任务")
-	//@PreAuthorize("hasAuthority('resource:task:audit')")
+	// @OperateLog(module = "资源管理", name = "审批任务")
+	// @PreAuthorize("hasAuthority('resource:task:audit')")
 	public Result<Boolean> auditTask() {
 		return Result.of(null);
 	}
@@ -146,8 +146,8 @@ public class ResourceController {
 	@TraceLog
 	@PostMapping(value = "v1/resource/resolve-task")
 	@Operation(summary = "处理任务", description = "处理任务")
-	//@OperateLog(module = "资源管理", name = "处理任务")
-	//@PreAuthorize("hasAuthority('resource:task:resolve')")
+	// @OperateLog(module = "资源管理", name = "处理任务")
+	// @PreAuthorize("hasAuthority('resource:task:resolve')")
 	public Result<Boolean> resolveTask() {
 		return Result.of(null);
 	}
@@ -155,8 +155,8 @@ public class ResourceController {
 	@TraceLog
 	@PostMapping(value = "v1/resource/transfer-task")
 	@Operation(summary = "转办任务", description = "转办任务")
-	//@OperateLog(module = "资源管理", name = "转办任务")
-	//@PreAuthorize("hasAuthority('resource:task:transfer')")
+	// @OperateLog(module = "资源管理", name = "转办任务")
+	// @PreAuthorize("hasAuthority('resource:task:transfer')")
 	public Result<Boolean> transferTask() {
 		return Result.of(null);
 	}
@@ -164,8 +164,8 @@ public class ResourceController {
 	@TraceLog
 	@PostMapping(value = "v1/resource/delegate-task")
 	@Operation(summary = "委派任务", description = "委派任务")
-	//@OperateLog(module = "资源管理", name = "委派任务")
-	//@PreAuthorize("hasAuthority('resource:task:delegate')")
+	// @OperateLog(module = "资源管理", name = "委派任务")
+	// @PreAuthorize("hasAuthority('resource:task:delegate')")
 	public Result<Boolean> delegateTask() {
 		return Result.of(null);
 	}

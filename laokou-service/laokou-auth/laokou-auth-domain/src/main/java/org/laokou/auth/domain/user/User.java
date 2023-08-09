@@ -31,159 +31,160 @@ import java.util.stream.Collectors;
 
 /**
  * &#064;JsonTypeInfo(use = JsonTypeInfo.Id.NAME) => 多态子类与抽象类绑定
+ *
  * @author laokou
  */
 @Data
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class User implements UserDetails, OAuth2AuthenticatedPrincipal {
 
-    @Serial
-    private static final long serialVersionUID = 3319752558160144611L;
+	@Serial
+	private static final long serialVersionUID = 3319752558160144611L;
 
-    private Long id;
+	private Long id;
 
-    private String username;
+	private String username;
 
-    private String avatar;
+	private String avatar;
 
-    private Integer superAdmin;
+	private Integer superAdmin;
 
-    private Integer status;
+	private Integer status;
 
-    private transient String mail;
+	private transient String mail;
 
-    private transient String mobile;
+	private transient String mobile;
 
-    private transient String password;
+	private transient String password;
 
-    private Long deptId;
+	private Long deptId;
 
-    private List<Long> deptIds;
+	private List<Long> deptIds;
 
-    private List<String> permissionList;
+	private List<String> permissionList;
 
-    private Long tenantId;
+	private Long tenantId;
 
-    private String sourceName;
+	private String sourceName;
 
-    private String loginIp;
+	private String loginIp;
 
-    private LocalDateTime loginDate;
+	private LocalDateTime loginDate;
 
-    private LocalDateTime expireDate;
+	private LocalDateTime expireDate;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        User that = (User) o;
-        if (!id.equals(that.id)) {
-            return false;
-        }
-        if (!username.equals(that.username)) {
-            return false;
-        }
-        if (!avatar.equals(that.avatar)) {
-            return false;
-        }
-        if (!superAdmin.equals(that.superAdmin)) {
-            return false;
-        }
-        if (!status.equals(that.status)) {
-            return false;
-        }
-        if (!deptId.equals(that.deptId)) {
-            return false;
-        }
-        if (!deptIds.equals(that.deptIds)) {
-            return false;
-        }
-        if (!permissionList.equals(that.permissionList)) {
-            return false;
-        }
-        if (!tenantId.equals(that.tenantId)) {
-            return false;
-        }
-        if (!sourceName.equals(that.sourceName)) {
-            return false;
-        }
-        if (!loginIp.equals(that.loginIp)) {
-            return false;
-        }
-        if (!loginDate.equals(that.loginDate)) {
-            return false;
-        }
-        return expireDate.equals(that.expireDate);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		User that = (User) o;
+		if (!id.equals(that.id)) {
+			return false;
+		}
+		if (!username.equals(that.username)) {
+			return false;
+		}
+		if (!avatar.equals(that.avatar)) {
+			return false;
+		}
+		if (!superAdmin.equals(that.superAdmin)) {
+			return false;
+		}
+		if (!status.equals(that.status)) {
+			return false;
+		}
+		if (!deptId.equals(that.deptId)) {
+			return false;
+		}
+		if (!deptIds.equals(that.deptIds)) {
+			return false;
+		}
+		if (!permissionList.equals(that.permissionList)) {
+			return false;
+		}
+		if (!tenantId.equals(that.tenantId)) {
+			return false;
+		}
+		if (!sourceName.equals(that.sourceName)) {
+			return false;
+		}
+		if (!loginIp.equals(that.loginIp)) {
+			return false;
+		}
+		if (!loginDate.equals(that.loginDate)) {
+			return false;
+		}
+		return expireDate.equals(that.expireDate);
+	}
 
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + username.hashCode();
-        result = 31 * result + avatar.hashCode();
-        result = 31 * result + superAdmin.hashCode();
-        result = 31 * result + status.hashCode();
-        result = 31 * result + deptId.hashCode();
-        result = 31 * result + deptIds.hashCode();
-        result = 31 * result + permissionList.hashCode();
-        result = 31 * result + tenantId.hashCode();
-        result = 31 * result + sourceName.hashCode();
-        result = 31 * result + loginIp.hashCode();
-        result = 31 * result + loginDate.hashCode();
-        result = 31 * result + expireDate.hashCode();
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		int result = id.hashCode();
+		result = 31 * result + username.hashCode();
+		result = 31 * result + avatar.hashCode();
+		result = 31 * result + superAdmin.hashCode();
+		result = 31 * result + status.hashCode();
+		result = 31 * result + deptId.hashCode();
+		result = 31 * result + deptIds.hashCode();
+		result = 31 * result + permissionList.hashCode();
+		result = 31 * result + tenantId.hashCode();
+		result = 31 * result + sourceName.hashCode();
+		result = 31 * result + loginIp.hashCode();
+		result = 31 * result + loginDate.hashCode();
+		result = 31 * result + expireDate.hashCode();
+		return result;
+	}
 
-    @Override
-    @JsonIgnore
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> authorities = new HashSet<>(this.permissionList.size());
-        authorities.addAll(this.permissionList.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet()));
-        return authorities;
-    }
+	@Override
+	@JsonIgnore
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<GrantedAuthority> authorities = new HashSet<>(this.permissionList.size());
+		authorities.addAll(this.permissionList.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet()));
+		return authorities;
+	}
 
-    @Override
-    @JsonIgnore
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	@Override
+	@JsonIgnore
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    @Override
-    @JsonIgnore
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+	@Override
+	@JsonIgnore
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
-    @Override
-    @JsonIgnore
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+	@Override
+	@JsonIgnore
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
-    @Override
-    @JsonIgnore
-    public boolean isEnabled() {
-        return this.status == Status.ENABLED.ordinal();
-    }
+	@Override
+	@JsonIgnore
+	public boolean isEnabled() {
+		return this.status == Status.ENABLED.ordinal();
+	}
 
-    /**
-     * Get the OAuth 2.0 token attributes
-     * @return the OAuth 2.0 token attributes
-     */
-    @Override
-    @JsonIgnore
-    public Map<String, Object> getAttributes() {
-        return new HashMap<>(0);
-    }
+	/**
+	 * Get the OAuth 2.0 token attributes
+	 * @return the OAuth 2.0 token attributes
+	 */
+	@Override
+	@JsonIgnore
+	public Map<String, Object> getAttributes() {
+		return new HashMap<>(0);
+	}
 
-    @Override
-    @JsonIgnore
-    public String getName() {
-        return this.username;
-    }
+	@Override
+	@JsonIgnore
+	public String getName() {
+		return this.username;
+	}
 
 }

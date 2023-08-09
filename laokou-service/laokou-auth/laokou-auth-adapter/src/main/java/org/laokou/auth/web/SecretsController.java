@@ -33,13 +33,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SecretsController {
 
-    private final SecretsServiceI secretsServiceI;
+	private final SecretsServiceI secretsServiceI;
 
-    @TraceLog
+	@TraceLog
 	@GetMapping("v1/secrets")
 	@Operation(summary = "查看", description = "查看")
-    public Result<String> get() {
-        return secretsServiceI.get();
-    }
+	public Result<String> get() {
+		return secretsServiceI.get();
+	}
 
 }

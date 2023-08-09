@@ -15,6 +15,7 @@
  *
  */
 package org.laokou.admin.web;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -35,16 +36,16 @@ public class UsersController {
 	@TraceLog
 	@PutMapping("v1/users")
 	@Operation(summary = "修改", description = "修改")
-	//@OperateLog(module = "用户管理", name = "修改")
-	//@PreAuthorize("hasAuthority('users:update')")
-	//@DataCache(name = "users", key = "#dto.id", type = CacheEnum.DEL)
+	// @OperateLog(module = "用户管理", name = "修改")
+	// @PreAuthorize("hasAuthority('users:update')")
+	// @DataCache(name = "users", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update() {
 		return Result.of(null);
 	}
 
 	@TraceLog
 	@PostMapping("v1/users/online-list")
-	//@PreAuthorize("hasAuthority('users:online:list')")
+	// @PreAuthorize("hasAuthority('users:online:list')")
 	@Operation(summary = "在线用户查询", description = "在线用户查询")
 	public Result<?> onlineList() {
 		return Result.of(null);
@@ -53,8 +54,8 @@ public class UsersController {
 	@TraceLog
 	@DeleteMapping("v1/users/online-kill/{token}")
 	@Operation(summary = "在线用户强踢", description = "在线用户强踢")
-	//@OperateLog(module = "用户管理", name = "在线用户强踢")
-	//@PreAuthorize("hasAuthority('users:online:kill')")
+	// @OperateLog(module = "用户管理", name = "在线用户强踢")
+	// @PreAuthorize("hasAuthority('users:online:kill')")
 	public Result<Boolean> onlineKill(@PathVariable("token") String token) {
 		return Result.of(null);
 	}
@@ -83,8 +84,8 @@ public class UsersController {
 	@TraceLog
 	@PutMapping("v1/users/status/{id}/{status}")
 	@Operation(summary = "状态", description = "状态")
-	//@OperateLog(module = "用户管理", name = "状态")
-	//@PreAuthorize("hasAuthority('users:status')")
+	// @OperateLog(module = "用户管理", name = "状态")
+	// @PreAuthorize("hasAuthority('users:status')")
 	public Result<Boolean> status(@PathVariable("id") Long id, @PathVariable("status") Integer status) {
 		return Result.of(null);
 	}
@@ -92,8 +93,8 @@ public class UsersController {
 	@TraceLog
 	@PutMapping("v1/users/pwd/{id}/{pwd}")
 	@Operation(summary = "密码", description = "密码")
-	//@OperateLog(module = "用户管理", name = "密码")
-	//@PreAuthorize("hasAuthority('users:pwd')")
+	// @OperateLog(module = "用户管理", name = "密码")
+	// @PreAuthorize("hasAuthority('users:pwd')")
 	public Result<Boolean> pwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
 		return Result.of(null);
 	}
@@ -108,8 +109,8 @@ public class UsersController {
 	@TraceLog
 	@PostMapping("v1/users")
 	@Operation(summary = "新增", description = "新增")
-	//@OperateLog(module = "用户管理", name = "新增")
-	//@PreAuthorize("hasAuthority('users:insert')")
+	// @OperateLog(module = "用户管理", name = "新增")
+	// @PreAuthorize("hasAuthority('users:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
 	}
@@ -117,7 +118,7 @@ public class UsersController {
 	@TraceLog
 	@GetMapping("v1/users/{id}")
 	@Operation(summary = "查看", description = "查看")
-	//@DataCache(name = "users", key = "#id")
+	// @DataCache(name = "users", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -125,9 +126,9 @@ public class UsersController {
 	@TraceLog
 	@DeleteMapping("v1/users")
 	@Operation(summary = "删除", description = "删除")
-	//@OperateLog(module = "用户管理", name = "删除")
-	//@PreAuthorize("hasAuthority('users:delete')")
-	//@DataCache(name = "users", key = "#id", type = CacheEnum.DEL)
+	// @OperateLog(module = "用户管理", name = "删除")
+	// @PreAuthorize("hasAuthority('users:delete')")
+	// @DataCache(name = "users", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
 		return Result.of(null);
 	}
@@ -135,7 +136,7 @@ public class UsersController {
 	@TraceLog
 	@PostMapping("v1/users/list")
 	@Operation(summary = "查询", description = "查询")
-	//@PreAuthorize("hasAuthority('users:list')")
+	// @PreAuthorize("hasAuthority('users:list')")
 	public Result<?> list() {
 		return Result.of(null);
 	}

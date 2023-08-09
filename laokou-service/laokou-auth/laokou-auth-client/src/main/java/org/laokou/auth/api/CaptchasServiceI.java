@@ -5,6 +5,6 @@ import org.laokou.common.i18n.dto.Result;
 
 public interface CaptchasServiceI {
 
-    Result<String> get(CaptchaGetQry qry);
+	Result<String> get(CaptchaGetQry qry);
 
 }

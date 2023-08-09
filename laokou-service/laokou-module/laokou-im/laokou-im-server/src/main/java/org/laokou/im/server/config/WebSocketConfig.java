@@ -31,10 +31,10 @@ import org.springframework.context.annotation.Configuration;
 public class WebSocketConfig {
 
 	@Bean(name = "websocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server websocketServer(WebsocketProperties websocketProperties,WebsocketChannelInitializer websocketChannelInitializer,
-			TaskExecutionProperties taskExecutionProperties) {
-		return new WebSocketServer(websocketProperties.getPort(), websocketProperties.getPoolName(), websocketChannelInitializer,
-				taskExecutionProperties);
+	public Server websocketServer(WebsocketProperties websocketProperties,
+			WebsocketChannelInitializer websocketChannelInitializer, TaskExecutionProperties taskExecutionProperties) {
+		return new WebSocketServer(websocketProperties.getPort(), websocketProperties.getPoolName(),
+				websocketChannelInitializer, taskExecutionProperties);
 	}
 
 }

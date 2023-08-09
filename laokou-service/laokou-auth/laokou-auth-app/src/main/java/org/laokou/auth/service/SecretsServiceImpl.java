@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SecretsServiceImpl implements SecretsServiceI {
 
-    private final SecretGetQryExe secretGetQryExe;
+	private final SecretGetQryExe secretGetQryExe;
 
-    @Override
-    public Result<String> get() {
-        return secretGetQryExe.execute();
-    }
+	@Override
+	public Result<String> get() {
+		return secretGetQryExe.execute();
+	}
 
 }
