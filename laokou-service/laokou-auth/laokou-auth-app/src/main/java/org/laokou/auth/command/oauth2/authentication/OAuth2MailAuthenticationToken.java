@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.command.oauth2.config.authentication;
+package org.laokou.auth.command.oauth2.authentication;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;

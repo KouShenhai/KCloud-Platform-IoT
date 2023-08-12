@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.auth.command.oauth2.config.authentication;
+package org.laokou.auth.command.oauth2.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -197,31 +197,32 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		AuthorizationGrantType grantType = getGrantType();
 		String loginType = grantType.getValue();
 		Long tenantId = Long.valueOf(request.getParameter(TENANT_ID));
+		String ip = IpUtil.getIpAddr(request);
 		// 验证验证码
 		Boolean validate = captchaGateway.validate(uuid, captcha);
 		if (validate == null) {
-			throw getException(CAPTCHA_EXPIRED, loginName, loginType, request, tenantId);
+			throw getException(CAPTCHA_EXPIRED, loginName, loginType, tenantId,ip);
 		}
 		if (Boolean.FALSE.equals(validate)) {
-			throw getException(CAPTCHA_ERROR, loginName, loginType, request, tenantId);
+			throw getException(CAPTCHA_ERROR, loginName, loginType, tenantId,ip);
 		}
 		// 加密
 		String encryptName = AesUtil.encrypt(loginName);
 		// 多租户查询
 		User user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, loginType));
 		if (user == null) {
-			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, request, tenantId);
+			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, tenantId,ip);
 		}
 		if (AUTH_PASSWORD.equals(loginType)) {
 			// 验证密码
 			String clientPassword = user.getPassword();
 			if (!passwordEncoder.matches(password, clientPassword)) {
-				throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, request, tenantId);
+				throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, tenantId,ip);
 			}
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw getException(USERNAME_DISABLE, loginName, loginType, request, tenantId);
+			throw getException(USERNAME_DISABLE, loginName, loginType, tenantId,ip);
 		}
 		Long userId = user.getId();
 		Integer superAdmin = user.getSuperAdmin();
@@ -229,7 +230,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		User u = new User(userId, superAdmin, tenantId);
 		List<String> permissionsList = menuGateway.getPermissions(u);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			throw getException(USERNAME_NOT_PERMISSION, loginName, loginType, request, tenantId);
+			throw getException(USERNAME_NOT_PERMISSION, loginName, loginType, tenantId,ip);
 		}
 		// 部门列表
 		List<Long> deptIds = deptGateway.getDeptIds(u);
@@ -245,11 +246,11 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			user.setSourceName(sourceName);
 		}
 		// 登录IP
-		user.setLoginIp(IpUtil.getIpAddr(request));
+		user.setLoginIp(ip);
 		// 登录时间
 		user.setLoginDate(DateUtil.now());
 		// 登录成功
-		loginLogGateway.publish(new LoginLog(loginName,loginType,tenantId,ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED)));
+		loginLogGateway.publish(new LoginLog(loginName,loginType,tenantId,ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED),ip));
 		return new UsernamePasswordAuthenticationToken(user, encryptName, user.getAuthorities());
 	}
 
@@ -265,11 +266,10 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
 	}
 
-	private OAuth2AuthenticationException getException(int code, String loginName, String loginType,
-			HttpServletRequest request, Long tenantId) {
+	private OAuth2AuthenticationException getException(int code, String loginName, String loginType, Long tenantId,String ip) {
 		String msg = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, msg);
-		loginLogGateway.publish(new LoginLog(loginName,loginType,tenantId,ResultStatusEnum.FAIL.ordinal(), msg));
+		loginLogGateway.publish(new LoginLog(loginName,loginType,tenantId,ResultStatusEnum.FAIL.ordinal(), msg,ip));
 		throw OAuth2ExceptionHandler.getException(code, msg);
 	}
 

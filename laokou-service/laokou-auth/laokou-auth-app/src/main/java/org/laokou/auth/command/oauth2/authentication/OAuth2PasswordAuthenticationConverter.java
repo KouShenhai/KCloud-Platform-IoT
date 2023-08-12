@@ -12,30 +12,30 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
-package org.laokou.auth.command.oauth2.config.authentication;
+package org.laokou.auth.command.oauth2.authentication;
 
 import org.springframework.security.core.Authentication;
 
 import java.util.Map;
 
-import static org.laokou.auth.common.Constant.AUTH_MAIL;
+import static org.laokou.auth.common.Constant.AUTH_PASSWORD;
 
 /**
  * @author laokou
  */
-public class OAuth2MailAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {
+public class OAuth2PasswordAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {
 
 	@Override
 	String getGrantType() {
-		return AUTH_MAIL;
+		return AUTH_PASSWORD;
 	}
 
 	@Override
 	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		return new OAuth2MailAuthenticationToken(clientPrincipal, additionalParameters);
+		return new OAuth2PasswordAuthenticationToken(clientPrincipal, additionalParameters);
 	}
 
 }

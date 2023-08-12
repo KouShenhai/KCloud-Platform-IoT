@@ -34,5 +34,6 @@ public class LoginLog {
     private Long tenantId;
     private Integer status;
     private String message;
+    private String ip;
 
 }

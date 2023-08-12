@@ -22,10 +22,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.domain.gateway.DeptGateway;
+import org.laokou.auth.domain.gateway.LoginLogGateway;
 import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
+import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.domain.user.User;
-import org.laokou.auth.event.handler.LoginLogHandler;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.DateUtil;
@@ -63,7 +64,7 @@ public class UsersServiceImpl implements UserDetailsService {
 
 	private final MenuGateway menuGateway;
 
-	private final LoginLogHandler loginLogHandler;
+	private final LoginLogGateway loginLogGateway;
 
 	@Override
 	public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
@@ -73,17 +74,18 @@ public class UsersServiceImpl implements UserDetailsService {
 		String loginType = AuthorizationGrantType.AUTHORIZATION_CODE.getValue();
 		User user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, loginType));
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
+		String ip = IpUtil.getIpAddr(request);
 		if (user == null) {
-			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, request, tenantId);
+			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, tenantId,ip);
 		}
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 		String clientPassword = user.getPassword();
 		if (!passwordEncoder.matches(password, clientPassword)) {
-			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, request, tenantId);
+			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, tenantId,ip);
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw getException(USERNAME_DISABLE, loginName, loginType, request, tenantId);
+			throw getException(USERNAME_DISABLE, loginName, loginType, tenantId,ip);
 		}
 		// 用户ID
 		Long userId = user.getId();
@@ -92,7 +94,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		User u = new User(userId, superAdmin, tenantId);
 		List<String> permissionsList = menuGateway.getPermissions(u);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			throw getException(USERNAME_NOT_PERMISSION, loginName, loginType, request, tenantId);
+			throw getException(USERNAME_NOT_PERMISSION, loginName, loginType, tenantId,ip);
 		}
 		List<Long> deptIds = deptGateway.getDeptIds(u);
 		user.setDeptIds(deptIds);
@@ -104,17 +106,14 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 默认数据库
 		user.setSourceName(DEFAULT_SOURCE);
 		// 登录成功
-		loginLogHandler.handleEvent(loginName, loginType,
-				ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED), request, tenantId);
+		loginLogGateway.publish(new LoginLog(loginName,loginType,tenantId,ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED),ip));
 		return user;
 	}
 
-	private UsernameNotFoundException getException(int code, String loginName, String loginType,
-			HttpServletRequest request, Long tenantId) {
+	private UsernameNotFoundException getException(int code, String loginName, String loginType, Long tenantId,String ip) {
 		String msg = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, msg);
-		loginLogHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(),
-				msg, request, tenantId);
+		loginLogGateway.publish(new LoginLog(loginName,loginType,tenantId,ResultStatusEnum.FAIL.ordinal(), msg,ip));
 		throw new UsernameNotFoundException(msg);
 	}
 
