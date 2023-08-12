@@ -15,24 +15,17 @@
  *
  */
 
-package org.laokou.auth.domain.log;
+package org.laokou.auth.gatewayimpl.database;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class LoginLog {
-
-    private String loginName;
-    private String loginType;
-    private String tenantId;
-    private Integer status;
-    private String message;
-
+@Repository
+@Mapper
+public interface LoginLogMapper extends BaseMapper<LoginLogDO> {
 }

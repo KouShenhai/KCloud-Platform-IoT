@@ -1,38 +1,32 @@
 /*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
+package org.laokou.auth.domain.gateway;
 
-package org.laokou.auth.domain.log;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.laokou.auth.domain.log.LoginLog;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class LoginLog {
+public interface LoginLogGateway {
 
-    private String loginName;
-    private String loginType;
-    private Long tenantId;
-    private Integer status;
-    private String message;
+    /**
+     * 发布登录日志
+     * @param loginLog 登录日志领域
+     * @return Boolean
+     */
+    void publish(LoginLog loginLog);
 
 }

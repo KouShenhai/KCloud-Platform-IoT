@@ -18,10 +18,9 @@ package org.laokou.common.log.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.laokou.common.easy.excel.service.ResultService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.laokou.common.easy.excel.service.ResultService;
 import org.laokou.common.log.entity.SysLoginLogDO;
-import org.laokou.common.log.event.LoginLogEvent;
 import org.laokou.common.log.qo.SysLoginLogQo;
 import org.laokou.common.log.vo.SysLoginLogVO;
 
@@ -38,12 +37,12 @@ public interface SysLoginLogService extends IService<SysLoginLogDO>, ResultServi
 	 */
 	IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, SysLoginLogQo qo);
 
-	/**
-	 * 新增登录日志
-	 * @param event
-	 * @return
-	 */
-	Boolean insertLoginLog(LoginLogEvent event);
+//	/**
+//	 * 新增登录日志
+//	 * @param event
+//	 * @return
+//	 */
+//	Boolean insertLoginLog(LoginLogEvent event);
 
 	/**
 	 * 导出登录日志
