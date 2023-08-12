@@ -18,12 +18,12 @@ package org.laokou.auth.command.oauth2.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.gateway.*;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.common.sensitive.enums.TypeEnum;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
 import org.springframework.security.core.Authentication;

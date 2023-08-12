@@ -16,7 +16,6 @@
  */
 package org.laokou.admin.client.api;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.laokou.admin.client.dto.SysDictDTO;
 import org.laokou.admin.client.vo.SysDictVO;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;

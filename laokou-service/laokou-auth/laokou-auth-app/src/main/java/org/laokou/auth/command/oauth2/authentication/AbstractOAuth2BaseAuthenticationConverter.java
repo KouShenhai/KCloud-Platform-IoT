@@ -18,11 +18,11 @@ package org.laokou.auth.command.oauth2.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
 import org.slf4j.MDC;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,9 +33,9 @@ import org.springframework.util.MultiValueMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.laokou.auth.common.BizCode.*;
-import static org.laokou.auth.common.exception.ErrorCode.*;
-import static org.laokou.auth.common.Constant.*;
+import static org.laokou.auth.common.BizCode.TENANT_ID_NOT_NULL;
+import static org.laokou.auth.common.Constant.TENANT_ID;
+import static org.laokou.auth.common.exception.ErrorCode.INVALID_SCOPE;
 
 /**
  * 邮件/手机/密码
