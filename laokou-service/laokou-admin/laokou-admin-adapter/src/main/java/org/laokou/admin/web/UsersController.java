@@ -19,6 +19,7 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.api.UsersServiceI;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -32,6 +33,8 @@ import java.util.List;
 @Tag(name = "UsersController", description = "用户")
 @RequiredArgsConstructor
 public class UsersController {
+
+	private final UsersServiceI usersServiceI;
 
 	@TraceLog
 	@PutMapping("v1/users")
@@ -61,9 +64,9 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/users/info")
+	@GetMapping("v1/users/profile")
 	@Operation(summary = "信息", description = "信息")
-	public Result<?> info() {
+	public Result<?> profile() {
 		return Result.of(null);
 	}
 
@@ -75,9 +78,9 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/users/info")
+	@PutMapping("v1/users/profile")
 	@Operation(summary = "信息", description = "信息")
-	public Result<Boolean> info(@RequestBody Object obj) {
+	public Result<Boolean> profile(@RequestBody Object obj) {
 		return Result.of(null);
 	}
 

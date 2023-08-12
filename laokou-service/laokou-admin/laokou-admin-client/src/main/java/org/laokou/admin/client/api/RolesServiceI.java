@@ -16,58 +16,51 @@
  */
 package org.laokou.admin.client.api;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.client.dto.SysRoleDTO;
-import org.laokou.admin.client.vo.SysRoleVO;
-import org.laokou.admin.server.interfaces.qo.SysRoleQo;
-
-import java.util.List;
-
 /**
  * @author laokou
  */
 public interface RolesServiceI {
 
-	/**
-	 * 分页查询角色
-	 * @param qo
-	 * @return
-	 */
-	IPage<SysRoleVO> queryRolePage(SysRoleQo qo);
-
-	/**
-	 * 查询角色列表
-	 * @param qo
-	 * @return
-	 */
-	List<SysRoleVO> getRoleList(SysRoleQo qo);
-
-	/**
-	 * 根据id获取角色
-	 * @param id
-	 * @return
-	 */
-	SysRoleVO getRoleById(Long id);
-
-	/**
-	 * 新增角色
-	 * @param dto
-	 * @return
-	 */
-	Boolean insertRole(SysRoleDTO dto);
-
-	/**
-	 * 修改角色
-	 * @param dto
-	 * @return
-	 */
-	Boolean updateRole(SysRoleDTO dto);
-
-	/**
-	 * 根据id删除角色
-	 * @param id
-	 * @return
-	 */
-	Boolean deleteRole(Long id);
+	// /**
+	// * 分页查询角色
+	// * @param qo
+	// * @return
+	// */
+	// IPage<SysRoleVO> queryRolePage(SysRoleQo qo);
+	//
+	// /**
+	// * 查询角色列表
+	// * @param qo
+	// * @return
+	// */
+	// List<SysRoleVO> getRoleList(SysRoleQo qo);
+	//
+	// /**
+	// * 根据id获取角色
+	// * @param id
+	// * @return
+	// */
+	// SysRoleVO getRoleById(Long id);
+	//
+	// /**
+	// * 新增角色
+	// * @param dto
+	// * @return
+	// */
+	// Boolean insertRole(SysRoleDTO dto);
+	//
+	// /**
+	// * 修改角色
+	// * @param dto
+	// * @return
+	// */
+	// Boolean updateRole(SysRoleDTO dto);
+	//
+	// /**
+	// * 根据id删除角色
+	// * @param id
+	// * @return
+	// */
+	// Boolean deleteRole(Long id);
 
 }

@@ -19,7 +19,7 @@ package org.laokou.admin.server.application.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.server.application.service.SysMonitorApplicationService;
 import org.laokou.admin.client.vo.CacheVO;
-import org.laokou.admin.server.infrastructure.server.Server;
+import org.laokou.admin.client.dto.clientobject.Server;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
 

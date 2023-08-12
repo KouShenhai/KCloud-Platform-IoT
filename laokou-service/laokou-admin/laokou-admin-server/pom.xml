@@ -34,10 +34,7 @@
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-idempotent</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.laokou</groupId>
-			<artifactId>laokou-common-shardingsphere</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-p6spy</artifactId>
@@ -101,10 +98,6 @@
 		<dependency>
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-elasticsearch</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.github.oshi</groupId>
-			<artifactId>oshi-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.laokou</groupId>

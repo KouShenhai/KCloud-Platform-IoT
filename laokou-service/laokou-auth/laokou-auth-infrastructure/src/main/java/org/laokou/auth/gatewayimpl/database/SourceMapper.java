@@ -28,11 +28,11 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface SourceMapper {
 
-    /**
-     * 根据租户ID查询数据源名称
-     * @param tenantId 租户ID
-     * @return String
-     */
-    String getSourceNameByTenantId(@Param("tenantId")Long tenantId);
+	/**
+	 * 根据租户ID查询数据源名称
+	 * @param tenantId 租户ID
+	 * @return String
+	 */
+	String getSourceNameByTenantId(@Param("tenantId") Long tenantId);
 
 }

@@ -28,7 +28,7 @@ import java.io.Serial;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Schema(name = "Page", description = "基础分页实体类")
+@Schema(name = "Page", description = "分页")
 public abstract class Page extends Query {
 
 	@Serial
@@ -51,7 +51,7 @@ public abstract class Page extends Query {
 	/**
 	 * sql拼接
 	 */
-	@Schema(name = "sqlFilter", description = "sql拼接")
+	@Schema(name = "sqlFilter", description = "SQL拼接")
 	private String sqlFilter;
 
 }

@@ -18,7 +18,7 @@ package org.laokou.auth.command.oauth2.config;
 
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.laokou.auth.command.oauth2.config.authentication.*;
+import org.laokou.auth.command.oauth2.authentication.*;
 import org.laokou.auth.service.UsersServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

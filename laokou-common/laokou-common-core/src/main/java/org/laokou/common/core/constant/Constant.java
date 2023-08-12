@@ -148,6 +148,9 @@ public interface Constant {
 	 */
 	String APP_KEY = "app-key";
 
+	/**
+	 * 默认
+	 */
 	int DEFAULT = 0;
 
 	/**

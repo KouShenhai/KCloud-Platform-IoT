@@ -45,4 +45,5 @@ public class DeptGatewayImpl implements DeptGateway {
 		}
 		return deptMapper.getDeptIdsByUserIdAndTenantId(userId, tenantId);
 	}
+
 }

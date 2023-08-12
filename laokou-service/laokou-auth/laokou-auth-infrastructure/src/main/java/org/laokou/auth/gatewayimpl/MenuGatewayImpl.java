@@ -52,4 +52,5 @@ public class MenuGatewayImpl implements MenuGateway {
 		}
 		return menuMapper.getPermissionsByUserId(userId);
 	}
+
 }

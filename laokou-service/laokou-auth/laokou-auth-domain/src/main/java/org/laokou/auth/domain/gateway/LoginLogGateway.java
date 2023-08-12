@@ -22,11 +22,11 @@ import org.laokou.auth.domain.log.LoginLog;
  */
 public interface LoginLogGateway {
 
-    /**
-     * 发布登录日志
-     * @param loginLog 登录日志领域
-     * @return Boolean
-     */
-    void publish(LoginLog loginLog);
+	/**
+	 * 发布登录日志
+	 * @param loginLog 登录日志领域
+	 * @return Boolean
+	 */
+	void publish(LoginLog loginLog);
 
 }

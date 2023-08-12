@@ -48,13 +48,13 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLo
 		return this.baseMapper.getLoginLogList(page, qo);
 	}
 
-//	@Override
-//	@Transactional(rollbackFor = Exception.class)
-//	@DS(Constant.SHARDING_SPHERE_READWRITE)
-//	public Boolean insertLoginLog(LoginLogEvent event) {
-//		SysLoginLogDO logDO = ConvertUtil.sourceToTarget(event, SysLoginLogDO.class);
-//		return baseMapper.insert(logDO) > 0;
-//	}
+	// @Override
+	// @Transactional(rollbackFor = Exception.class)
+	// @DS(Constant.SHARDING_SPHERE_READWRITE)
+	// public Boolean insertLoginLog(LoginLogEvent event) {
+	// SysLoginLogDO logDO = ConvertUtil.sourceToTarget(event, SysLoginLogDO.class);
+	// return baseMapper.insert(logDO) > 0;
+	// }
 
 	@Override
 	public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {

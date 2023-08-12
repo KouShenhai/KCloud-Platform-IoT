@@ -18,12 +18,6 @@ package org.laokou.auth;
 
 import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.laokou.common.security.config.CustomOpaqueTokenIntrospector;
-import org.laokou.common.security.config.OAuth2ResourceServerProperties;
-import org.laokou.common.security.config.auto.OAuth2AuthorizationAutoConfig;
-import org.laokou.common.security.config.auto.OAuth2ResourceServerAutoConfig;
-import org.laokou.common.security.exception.handler.ForbiddenExceptionHandler;
-import org.laokou.common.security.exception.handler.InvalidAuthenticationEntryPoint;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
@@ -38,10 +32,7 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication(exclude = { OAuth2AuthorizationServerAutoConfiguration.class,
-		OAuth2ResourceServerAutoConfig.class, CustomOpaqueTokenIntrospector.class, ForbiddenExceptionHandler.class,
-		OAuth2ResourceServerProperties.class, InvalidAuthenticationEntryPoint.class,
-		OAuth2AuthorizationAutoConfig.class })
+@SpringBootApplication(exclude = { OAuth2AuthorizationServerAutoConfiguration.class })
 @EnableConfigurationProperties
 @EnableEncryptableProperties
 @EnableAsync

@@ -17,7 +17,15 @@
 package org.laokou.admin.client.api;
 
 import org.laokou.admin.client.dto.UserInsertCmd;
+import org.laokou.admin.client.dto.UserOnlineKillCmd;
+import org.laokou.admin.client.dto.UserOnlineListQry;
 import org.laokou.admin.client.dto.UserUpdateCmd;
+import org.laokou.admin.client.dto.clientobject.UserOnlineCO;
+import org.laokou.admin.client.dto.clientobject.UserProfileCO;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -26,13 +34,39 @@ public interface UsersServiceI {
 
 	/**
 	 * 修改
+	 * @param cmd 指定
+	 * @return Result<Boolean>
 	 */
-	Boolean update(UserUpdateCmd cmd);
+	Result<Boolean> update(UserUpdateCmd cmd);
 
 	/**
 	 * 新增
+	 * @param cmd 指令
+	 * @return Result<Boolean>
 	 */
-	Boolean insert(UserInsertCmd cmd);
+	Result<Boolean> insert(UserInsertCmd cmd);
+
+	/**
+	 * 在线用户强踢
+	 * @param cmd 指令
+	 * @return Result<Boolean>
+	 */
+	Result<Boolean> onlineKill(UserOnlineKillCmd cmd);
+
+	/**
+	 * 在线用户查询
+	 * @param qry 查询
+	 * @return Result<Datas<UserOnlineCO>>
+	 */
+	Result<Datas<UserOnlineCO>> onlineList(UserOnlineListQry qry);
+
+	/**
+	 * 用户基本信息
+	 * @return Result<UserProfileCO>
+	 */
+	Result<UserProfileCO> profile();
+
+	Result<List<>>
 
 	// /**
 	// * 修改密码

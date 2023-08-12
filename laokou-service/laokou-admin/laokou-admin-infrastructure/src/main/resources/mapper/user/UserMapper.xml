@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /*
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.admin.gatewayimpl.database.UserMapper">
+
+    <update id="updateUser">
+        update boot_sys_user
+        <set>
+            version = version + 1,
+            <if test="userDO.status != null">
+                `status` = #{userDO.status},
+            </if>
+            <if test="userDO.password != null and userDO.password != ''">
+                password = #{userDO.password},
+            </if>
+            <if test="userDO.avatar != null and userDO.avatar != ''">
+                avatar = #{userDO.avatar},
+            </if>
+            <if test="userDO.mail != null and userDO.mail != ''">
+                mail = #{userDO.mail},
+            </if>
+            <if test="userDO.mobile != null and userDO.mobile != ''">
+                mobile = #{userDO.mobile},
+            </if>
+            <if test="userDO.editor != null">
+                editor = #{userDO.editor},
+            </if>
+            <if test="userDO.deptId != null">
+                dept_id = #{userDO.deptId},
+            </if>
+        </set>
+        <where>
+            <if test="userDO.id != null">
+                and id = #{userDO.id}
+            </if>
+            <if test="userDO.version != null">
+                and version = #{userDO.version}
+            </if>
+        </where>
+    </update>
+
+</mapper>

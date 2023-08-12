@@ -16,63 +16,58 @@
  */
 package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.SysDeptDTO;
-import org.laokou.admin.client.vo.SysDeptVO;
-import org.laokou.admin.server.interfaces.qo.SysDeptQo;
-
-import java.util.List;
-
 /**
  * @author laokou
  */
 public interface DeptsServiceI {
 
-	/**
-	 * 获取部门列表
-	 * @return
-	 */
-	SysDeptVO treeDept();
-
-	/**
-	 * 查询部门列表
-	 * @param qo
-	 * @return
-	 */
-	List<SysDeptVO> queryDeptList(SysDeptQo qo);
-
-	/**
-	 * 新增部门
-	 * @param dto
-	 * @return
-	 */
-	Boolean insertDept(SysDeptDTO dto);
-
-	/**
-	 * 修改部门
-	 * @param dto
-	 * @return
-	 */
-	Boolean updateDept(SysDeptDTO dto);
-
-	/**
-	 * 根据id删除部门
-	 * @param id
-	 * @return
-	 */
-	Boolean deleteDept(Long id);
-
-	/**
-	 * 根据id查询部门
-	 * @param id
-	 * @return
-	 */
-	SysDeptVO getDept(Long id);
-
-	/**
-	 * 根据角色id获取部门ids
-	 * @param roleId
-	 * @return
-	 */
-	List<Long> getDeptIdsByRoleId(Long roleId);
+	//
+	// /**
+	// * 获取部门列表
+	// * @return
+	// */
+	// SysDeptVO treeDept();
+	//
+	// /**
+	// * 查询部门列表
+	// * @param qo
+	// * @return
+	// */
+	// List<SysDeptVO> queryDeptList(SysDeptQo qo);
+	//
+	// /**
+	// * 新增部门
+	// * @param dto
+	// * @return
+	// */
+	// Boolean insertDept(SysDeptDTO dto);
+	//
+	// /**
+	// * 修改部门
+	// * @param dto
+	// * @return
+	// */
+	// Boolean updateDept(SysDeptDTO dto);
+	//
+	// /**
+	// * 根据id删除部门
+	// * @param id
+	// * @return
+	// */
+	// Boolean deleteDept(Long id);
+	//
+	// /**
+	// * 根据id查询部门
+	// * @param id
+	// * @return
+	// */
+	// SysDeptVO getDept(Long id);
+	//
+	// /**
+	// * 根据角色id获取部门ids
+	// * @param roleId
+	// * @return
+	// */
+	// List<Long> getDeptIdsByRoleId(Long roleId);
 
 }

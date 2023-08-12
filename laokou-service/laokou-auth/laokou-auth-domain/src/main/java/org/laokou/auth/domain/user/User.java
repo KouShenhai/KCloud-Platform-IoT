@@ -25,6 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,7 +37,7 @@ import java.util.stream.Collectors;
  */
 @Data
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
-public class User implements UserDetails, OAuth2AuthenticatedPrincipal {
+public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
@@ -192,4 +193,5 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal {
 		this.superAdmin = superAdmin;
 		this.tenantId = tenantId;
 	}
+
 }
