@@ -5,6 +5,9 @@ import org.laokou.admin.client.dto.UserInsertCmd;
 import org.laokou.admin.client.dto.UserUpdateCmd;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author laokou
+ */
 @Service
 public class UsersServiceImpl implements UsersServiceI {
 

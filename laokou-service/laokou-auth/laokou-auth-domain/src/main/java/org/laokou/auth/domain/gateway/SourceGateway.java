@@ -20,11 +20,11 @@ package org.laokou.auth.domain.gateway;
  */
 public interface SourceGateway {
 
-    /**
-     * 查询数据源名称
-     * @param tenantId 租户ID
-     * @return String
-     */
-    String getSourceName(Long tenantId);
+	/**
+	 * 查询数据源名称
+	 * @param tenantId 租户ID
+	 * @return String
+	 */
+	String getSourceName(Long tenantId);
 
 }

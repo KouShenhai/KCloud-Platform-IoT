@@ -14,19 +14,39 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.mybatisplus.service;
+
+package org.laokou.admin.domain.user;
+
+import lombok.Data;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface BatchService<T> {
+@Data
+public class User {
 
-	/**
-	 * 批量新增
-	 * @param list
-	 */
-	void insertBatch(List<T> list);
+	private Long id;
+
+	private String username;
+
+	private Integer status;
+
+	private List<Long> roleIds;
+
+	private String password;
+
+	private String avatar;
+
+	private String mail;
+
+	private String mobile;
+
+	private Long editor;
+
+	private Long deptId;
+
+	private Integer version;
 
 }

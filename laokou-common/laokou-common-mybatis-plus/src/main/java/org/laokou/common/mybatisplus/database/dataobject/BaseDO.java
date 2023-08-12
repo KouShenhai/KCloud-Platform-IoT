@@ -28,58 +28,37 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
-@Schema(name = "BaseDO", description = "基础映射实体类")
+@Schema(name = "BaseDO", description = "基础")
 public abstract class BaseDO implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;
 
-	/**
-	 * id
-	 */
 	@TableId(type = IdType.AUTO)
-	@Schema(name = "id", description = "编号")
+	@Schema(name = "id", description = "ID")
 	private Long id;
 
-	/**
-	 * 创建人
-	 */
 	@Schema(name = "creator", description = "创建人")
 	@TableField(fill = FieldFill.INSERT)
 	private Long creator;
 
-	/**
-	 * 修改人
-	 */
 	@Schema(name = "editor", description = "修改人")
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Long editor;
 
-	/**
-	 * 创建时间
-	 */
 	@Schema(name = "createDate", description = "创建时间")
 	@TableField(fill = FieldFill.INSERT)
 	private LocalDateTime createDate;
 
-	/**
-	 * 修改时间
-	 */
 	@Schema(name = "updateDate", description = "修改时间")
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private LocalDateTime updateDate;
 
-	/**
-	 * 删除标识 0未删除 1已删除
-	 */
 	@Schema(name = "delFlag", description = "删除标识 0未删除 1已删除")
 	@TableField(fill = FieldFill.INSERT)
 	@TableLogic
 	private Integer delFlag;
 
-	/**
-	 * 版本号
-	 */
 	@Version
 	@Schema(name = "version", description = "版本号")
 	@TableField(fill = FieldFill.INSERT)

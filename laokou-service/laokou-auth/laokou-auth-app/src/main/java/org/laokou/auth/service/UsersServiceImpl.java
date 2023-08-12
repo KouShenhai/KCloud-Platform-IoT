@@ -76,16 +76,16 @@ public class UsersServiceImpl implements UserDetailsService {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String ip = IpUtil.getIpAddr(request);
 		if (user == null) {
-			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, tenantId,ip);
+			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, tenantId, ip);
 		}
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 		String clientPassword = user.getPassword();
 		if (!passwordEncoder.matches(password, clientPassword)) {
-			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, tenantId,ip);
+			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, tenantId, ip);
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw getException(USERNAME_DISABLE, loginName, loginType, tenantId,ip);
+			throw getException(USERNAME_DISABLE, loginName, loginType, tenantId, ip);
 		}
 		// 用户ID
 		Long userId = user.getId();
@@ -94,7 +94,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		User u = new User(userId, superAdmin, tenantId);
 		List<String> permissionsList = menuGateway.getPermissions(u);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			throw getException(USERNAME_NOT_PERMISSION, loginName, loginType, tenantId,ip);
+			throw getException(USERNAME_NOT_PERMISSION, loginName, loginType, tenantId, ip);
 		}
 		List<Long> deptIds = deptGateway.getDeptIds(u);
 		user.setDeptIds(deptIds);
@@ -106,14 +106,16 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 默认数据库
 		user.setSourceName(DEFAULT_SOURCE);
 		// 登录成功
-		loginLogGateway.publish(new LoginLog(loginName,loginType,tenantId,ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED),ip));
+		loginLogGateway.publish(new LoginLog(loginName, loginType, tenantId, ResultStatusEnum.SUCCESS.ordinal(),
+				MessageUtil.getMessage(LOGIN_SUCCEEDED), ip));
 		return user;
 	}
 
-	private UsernameNotFoundException getException(int code, String loginName, String loginType, Long tenantId,String ip) {
+	private UsernameNotFoundException getException(int code, String loginName, String loginType, Long tenantId,
+			String ip) {
 		String msg = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, msg);
-		loginLogGateway.publish(new LoginLog(loginName,loginType,tenantId,ResultStatusEnum.FAIL.ordinal(), msg,ip));
+		loginLogGateway.publish(new LoginLog(loginName, loginType, tenantId, ResultStatusEnum.FAIL.ordinal(), msg, ip));
 		throw new UsernameNotFoundException(msg);
 	}
 

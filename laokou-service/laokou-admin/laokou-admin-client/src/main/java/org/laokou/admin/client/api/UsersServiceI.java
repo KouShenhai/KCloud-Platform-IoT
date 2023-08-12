@@ -26,11 +26,15 @@ public interface UsersServiceI {
 
 	/**
 	 * 修改
+	 * @param cmd 指定
+	 * @return Boolean
 	 */
 	Boolean update(UserUpdateCmd cmd);
 
 	/**
 	 * 新增
+	 * @param cmd 指令
+	 * @return Boolean
 	 */
 	Boolean insert(UserInsertCmd cmd);
 

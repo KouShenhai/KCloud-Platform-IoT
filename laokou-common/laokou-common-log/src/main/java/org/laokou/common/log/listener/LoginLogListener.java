@@ -1,11 +1,11 @@
-///*
+/// *
 // * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
 // *
 // * Licensed under the Apache License, Version 2.0 (the "License");
 // * you may not use this file except in compliance with the License.
 // * You may obtain a copy of the License at
 // *
-// *   http://www.apache.org/licenses/LICENSE-2.0
+// * http://www.apache.org/licenses/LICENSE-2.0
 // *
 // * Unless required by applicable law or agreed to in writing, software
 // * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,29 +15,29 @@
 // *
 // */
 //
-//package org.laokou.common.log.listener;
+// package org.laokou.common.log.listener;
 //
-//import lombok.RequiredArgsConstructor;
-//import org.jetbrains.annotations.NotNull;
-//import org.laokou.common.log.event.LoginLogEvent;
-//import org.laokou.common.log.service.SysLoginLogService;
-//import org.springframework.context.ApplicationListener;
-//import org.springframework.scheduling.annotation.Async;
-//import org.springframework.stereotype.Component;
+// import lombok.RequiredArgsConstructor;
+// import org.jetbrains.annotations.NotNull;
+// import org.laokou.common.log.event.LoginLogEvent;
+// import org.laokou.common.log.service.SysLoginLogService;
+// import org.springframework.context.ApplicationListener;
+// import org.springframework.scheduling.annotation.Async;
+// import org.springframework.stereotype.Component;
 //
-///**
+/// **
 // * @author laokou
 // */
-//@Component
-//@RequiredArgsConstructor
-//public class LoginLogListener implements ApplicationListener<LoginLogEvent> {
+// @Component
+// @RequiredArgsConstructor
+// public class LoginLogListener implements ApplicationListener<LoginLogEvent> {
 //
-//	private final SysLoginLogService sysLoginLogService;
+// private final SysLoginLogService sysLoginLogService;
 //
-//	@Override
-//	@Async
-//	public void onApplicationEvent(@NotNull LoginLogEvent event) {
-//		sysLoginLogService.insertLoginLog(event);
-//	}
+// @Override
+// @Async
+// public void onApplicationEvent(@NotNull LoginLogEvent event) {
+// sysLoginLogService.insertLoginLog(event);
+// }
 //
-//}
+// }

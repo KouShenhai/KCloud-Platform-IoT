@@ -29,11 +29,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginLog {
 
-    private String loginName;
-    private String loginType;
-    private Long tenantId;
-    private Integer status;
-    private String message;
-    private String ip;
+	private String loginName;
+
+	private String loginType;
+
+	private Long tenantId;
+
+	private Integer status;
+
+	private String message;
+
+	private String ip;
 
 }

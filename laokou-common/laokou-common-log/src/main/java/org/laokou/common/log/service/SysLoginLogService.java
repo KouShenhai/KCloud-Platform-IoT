@@ -37,12 +37,12 @@ public interface SysLoginLogService extends IService<SysLoginLogDO>, ResultServi
 	 */
 	IPage<SysLoginLogVO> getLoginLogList(IPage<SysLoginLogVO> page, SysLoginLogQo qo);
 
-//	/**
-//	 * 新增登录日志
-//	 * @param event
-//	 * @return
-//	 */
-//	Boolean insertLoginLog(LoginLogEvent event);
+	// /**
+	// * 新增登录日志
+	// * @param event
+	// * @return
+	// */
+	// Boolean insertLoginLog(LoginLogEvent event);
 
 	/**
 	 * 导出登录日志

@@ -24,6 +24,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.extension.injector.methods.AlwaysUpdateSomeColumnById;
 import com.baomidou.mybatisplus.extension.injector.methods.InsertBatchSomeColumn;
 import com.baomidou.mybatisplus.extension.injector.methods.LogicDeleteBatchByIds;
+import org.laokou.common.mybatisplus.methods.GetVersion;
 
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class MybatisPlusSqlInjector extends DefaultSqlInjector {
 	@Override
 	public List<AbstractMethod> getMethodList(Class<?> mapperClass, TableInfo tableInfo) {
 		List<AbstractMethod> methodList = super.getMethodList(mapperClass, tableInfo);
+		methodList.add(new GetVersion("getVersion"));
 		// 去掉 update 填充的字段
 		methodList.add(new InsertBatchSomeColumn(insert -> insert.getFieldFill() != FieldFill.UPDATE));
 		methodList.add(new AlwaysUpdateSomeColumnById());

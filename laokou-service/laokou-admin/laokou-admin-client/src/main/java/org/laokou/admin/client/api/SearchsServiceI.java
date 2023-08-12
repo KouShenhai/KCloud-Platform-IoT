@@ -16,21 +16,16 @@
  */
 package org.laokou.admin.client.api;
 
-import org.laokou.common.elasticsearch.qo.SearchQo;
-import org.laokou.common.elasticsearch.vo.SearchVO;
-
-import java.util.Map;
-
 /**
  * @author laokou
  */
 public interface SearchsServiceI {
 
-	/**
-	 * 资源高亮搜索
-	 * @param form
-	 * @return
-	 */
-	SearchVO<Map<String, Object>> searchResource(SearchQo form);
+	// /**
+	// * 资源高亮搜索
+	// * @param form
+	// * @return
+	// */
+	// SearchVO<Map<String, Object>> searchResource(SearchQo form);
 
 }

@@ -16,25 +16,22 @@
  */
 package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.vo.CacheVO;
-import org.laokou.admin.server.infrastructure.server.Server;
-
 /**
  * @author laokou
  */
 public interface MonitorsServiceI {
 
-	/**
-	 * 获取缓存信息
-	 * @return
-	 */
-	CacheVO getCacheInfo();
-
-	/**
-	 * 获取服务器信息
-	 * @return
-	 * @throws Exception
-	 */
-	Server getServerInfo() throws Exception;
+	// /**
+	// * 获取缓存信息
+	// * @return
+	// */
+	// CacheVO getCacheInfo();
+	//
+	// /**
+	// * 获取服务器信息
+	// * @return
+	// * @throws Exception
+	// */
+	// Server getServerInfo() throws Exception;
 
 }

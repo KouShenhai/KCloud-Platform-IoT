@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.server.infrastructure.server;
+package org.laokou.admin.client.dto.clientobject;
 
 import lombok.SneakyThrows;
 import lombok.Data;
@@ -44,7 +44,7 @@ import java.util.Properties;
  * @author laokou
  */
 @Data
-public class Server implements Serializable {
+public class ServerCO implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 886551822597986662L;
@@ -307,12 +307,6 @@ class Jvm implements Serializable {
 		long timestamp = ManagementFactory.getRuntimeMXBean().getStartTime();
 		LocalDateTime localDateTime = DateUtil.getDateTimeOfTimestamp(timestamp);
 		return DateUtil.format(localDateTime, DateUtil.YYYY_MM_DD_HH_MM_SS);
-	}
-
-	public static void main(String[] args) {
-		Server server = new Server();
-		String startTime = server.getJvm().getStartTime();
-		System.out.println(startTime);
 	}
 
 	/**

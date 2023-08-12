@@ -16,56 +16,51 @@
  */
 package org.laokou.admin.client.api;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.client.dto.MessageDTO;
-import org.laokou.admin.client.vo.MessageDetailVO;
-import org.laokou.admin.client.vo.SysMessageVO;
-import org.laokou.admin.server.interfaces.qo.SysMessageQo;
-
 /**
  * @author laokou
  */
 public interface MessagesServiceI {
 
-	/**
-	 * 新增消息
-	 * @param dto
-	 * @return
-	 */
-	Boolean insertMessage(MessageDTO dto);
-
-	/**
-	 * 分页查询消息
-	 * @param qo
-	 * @return
-	 */
-	IPage<SysMessageVO> queryMessagePage(SysMessageQo qo);
-
-	/**
-	 * 根据详情id查询消息
-	 * @param id
-	 * @return
-	 */
-	MessageDetailVO getMessageByDetailId(Long id);
-
-	/**
-	 * 根据id查询消息
-	 * @param id
-	 * @return
-	 */
-	MessageDetailVO getMessageById(Long id);
-
-	/**
-	 * 分页查询未读消息
-	 * @param qo
-	 * @return
-	 */
-	IPage<SysMessageVO> getUnReadList(SysMessageQo qo);
-
-	/**
-	 * 未读消息条数
-	 * @return
-	 */
-	Long unReadCount();
+	//
+	// /**
+	// * 新增消息
+	// * @param dto
+	// * @return
+	// */
+	// Boolean insertMessage(MessageDTO dto);
+	//
+	// /**
+	// * 分页查询消息
+	// * @param qo
+	// * @return
+	// */
+	// IPage<SysMessageVO> queryMessagePage(SysMessageQo qo);
+	//
+	// /**
+	// * 根据详情id查询消息
+	// * @param id
+	// * @return
+	// */
+	// MessageDetailVO getMessageByDetailId(Long id);
+	//
+	// /**
+	// * 根据id查询消息
+	// * @param id
+	// * @return
+	// */
+	// MessageDetailVO getMessageById(Long id);
+	//
+	// /**
+	// * 分页查询未读消息
+	// * @param qo
+	// * @return
+	// */
+	// IPage<SysMessageVO> getUnReadList(SysMessageQo qo);
+	//
+	// /**
+	// * 未读消息条数
+	// * @return
+	// */
+	// Long unReadCount();
 
 }

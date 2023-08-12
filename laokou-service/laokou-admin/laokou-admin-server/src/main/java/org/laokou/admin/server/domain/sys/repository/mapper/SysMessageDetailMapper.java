@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
 import org.apache.ibatis.annotations.Mapper;
-import org.laokou.common.mybatisplus.mapper.BatchMapper;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 /**

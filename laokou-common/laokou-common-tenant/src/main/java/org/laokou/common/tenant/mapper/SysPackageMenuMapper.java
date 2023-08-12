@@ -18,7 +18,7 @@ package org.laokou.common.tenant.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.laokou.common.mybatisplus.mapper.BatchMapper;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.laokou.common.tenant.entity.SysPackageMenuDO;
 import org.springframework.stereotype.Repository;
 

@@ -51,4 +51,5 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 	public void onApplicationEvent(@NotNull LoginLogEvent event) {
 		execute(event);
 	}
+
 }

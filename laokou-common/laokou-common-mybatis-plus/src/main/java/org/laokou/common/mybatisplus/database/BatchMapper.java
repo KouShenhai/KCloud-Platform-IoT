@@ -14,26 +14,40 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.server.domain.sys.repository.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.laokou.admin.server.domain.sys.entity.SysRoleMenuDO;
-import org.laokou.admin.server.domain.sys.repository.mapper.SysRoleMenuMapper;
-import org.laokou.admin.server.domain.sys.repository.service.SysRoleMenuService;
-import org.springframework.stereotype.Service;
+package org.laokou.common.mybatisplus.database;
+
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-@Service
-public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenuDO>
-		implements SysRoleMenuService {
+@Repository
+@Mapper
+public interface BatchMapper<T> {
 
-	@Override
-	public void insertBatch(List<SysRoleMenuDO> list) {
-		this.baseMapper.insertBatch(list);
-	}
+	/**
+	 * 批量插入
+	 * @param list
+	 */
+	void insertBatch(@Param("list") List<T> list);
+
+	int insertBatchSomeColumn(List<T> entityList);
+
+	int alwaysUpdateSomeColumnById(@Param(Constants.ENTITY) T entity);
+
+	int deleteByIdWithFill(T entity);
+
+	/**
+	 * 获取版本号
+	 * @param id ID
+	 * @return int
+	 */
+	Integer getVersion(Long id);
 
 }

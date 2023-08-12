@@ -32,7 +32,7 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication(exclude = { OAuth2AuthorizationServerAutoConfiguration.class})
+@SpringBootApplication(exclude = { OAuth2AuthorizationServerAutoConfiguration.class })
 @EnableConfigurationProperties
 @EnableEncryptableProperties
 @EnableAsync

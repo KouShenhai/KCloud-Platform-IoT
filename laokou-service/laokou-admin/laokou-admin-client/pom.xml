@@ -39,5 +39,9 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-jasypt</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+        </dependency>
     </dependencies>
 </project>

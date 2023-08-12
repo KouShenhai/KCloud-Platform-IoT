@@ -193,4 +193,5 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 		this.superAdmin = superAdmin;
 		this.tenantId = tenantId;
 	}
+
 }

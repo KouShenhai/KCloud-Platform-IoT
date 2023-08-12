@@ -15,32 +15,26 @@
  *
  */
 
-package org.laokou.common.mybatisplus.mapper;
+package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * @author laokou
  */
 @Repository
 @Mapper
-public interface BatchMapper<T> {
+public interface UserMapper extends BaseMapper<UserDO> {
 
 	/**
-	 * 批量插入
-	 * @param list
+	 * 修改用户
+	 * @param userDO 用户
+	 * @return int
 	 */
-	void insertBatch(@Param("list") List<T> list);
-
-	int insertBatchSomeColumn(List<T> entityList);
-
-	int alwaysUpdateSomeColumnById(@Param(Constants.ENTITY) T entity);
-
-	int deleteByIdWithFill(T entity);
+	int updateUser(@Param("userDO") UserDO userDO);
 
 }

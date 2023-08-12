@@ -29,11 +29,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SourceGatewayImpl implements SourceGateway {
 
-    private final SourceMapper sourceMapper;
+	private final SourceMapper sourceMapper;
 
-    @Override
-    public String getSourceName(Long tenantId) {
-        return sourceMapper.getSourceNameByTenantId(tenantId);
-    }
+	@Override
+	public String getSourceName(Long tenantId) {
+		return sourceMapper.getSourceNameByTenantId(tenantId);
+	}
 
 }

@@ -31,8 +31,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Auth implements Serializable {
 
-    private String username;
-    private Long tenantId;
-    private String type;
+	private String username;
+
+	private Long tenantId;
+
+	private String type;
 
 }

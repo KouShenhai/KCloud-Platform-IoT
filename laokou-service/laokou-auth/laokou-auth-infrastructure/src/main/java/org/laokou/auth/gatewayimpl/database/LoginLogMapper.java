@@ -28,4 +28,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface LoginLogMapper extends BaseMapper<LoginLogDO> {
+
 }
