@@ -348,7 +348,6 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 				sysUserRoleDO.setId(IdGenerator.defaultSnowflakeId());
 				doList.add(sysUserRoleDO);
 			}
-			batchUtil.insertBatch(doList, sysUserRoleService::);
 		}
 	}
 
