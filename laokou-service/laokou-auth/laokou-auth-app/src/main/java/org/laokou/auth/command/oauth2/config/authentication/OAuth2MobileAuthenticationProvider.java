@@ -19,7 +19,6 @@ package org.laokou.auth.command.oauth2.config.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.*;
-import org.laokou.auth.event.handler.LogHandler;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -49,8 +48,8 @@ import static org.laokou.auth.common.exception.ErrorCode.MOBILE_ERROR;
 @Component
 public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-	public OAuth2MobileAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SourceGateway sourceGateway, RedisUtil redisUtil, LogHandler logHandler) {
-		super(userGateway, menuGateway, deptGateway, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sourceGateway, redisUtil, logHandler);
+	public OAuth2MobileAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, SourceGateway sourceGateway, RedisUtil redisUtil, LoginLogGateway loginLogGateway) {
+		super(userGateway, menuGateway, deptGateway, passwordEncoder, captchaGateway, authorizationService, tokenGenerator, sourceGateway, redisUtil, loginLogGateway);
 	}
 
 	@Override

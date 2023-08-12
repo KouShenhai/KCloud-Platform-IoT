@@ -31,7 +31,7 @@ public class LoginLog {
 
     private String loginName;
     private String loginType;
-    private String tenantId;
+    private Long tenantId;
     private Integer status;
     private String message;
 

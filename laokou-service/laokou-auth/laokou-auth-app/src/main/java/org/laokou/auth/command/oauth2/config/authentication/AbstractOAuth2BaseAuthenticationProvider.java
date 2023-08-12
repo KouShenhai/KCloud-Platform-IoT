@@ -22,8 +22,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.auth.Auth;
 import org.laokou.auth.domain.gateway.*;
+import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.domain.user.User;
-import org.laokou.auth.event.handler.LogHandler;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.DateUtil;
@@ -88,7 +88,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	protected final RedisUtil redisUtil;
 
-	protected final LogHandler logHandler;
+	protected final LoginLogGateway loginLogGateway;
 
 	@SneakyThrows
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -249,8 +249,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 登录时间
 		user.setLoginDate(DateUtil.now());
 		// 登录成功
-		logHandler.handleEvent(loginName, loginType,
-				ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED), request, tenantId);
+		loginLogGateway.publish(new LoginLog(loginName,loginType,tenantId,ResultStatusEnum.SUCCESS.ordinal(), MessageUtil.getMessage(LOGIN_SUCCEEDED)));
 		return new UsernamePasswordAuthenticationToken(user, encryptName, user.getAuthorities());
 	}
 
@@ -270,8 +269,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			HttpServletRequest request, Long tenantId) {
 		String msg = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, msg);
-		logHandler.handleEvent(loginName, loginType, ResultStatusEnum.FAIL.ordinal(),
-				msg, request, tenantId);
+		loginLogGateway.publish(new LoginLog(loginName,loginType,tenantId,ResultStatusEnum.FAIL.ordinal(), msg));
 		throw OAuth2ExceptionHandler.getException(code, msg);
 	}
 
