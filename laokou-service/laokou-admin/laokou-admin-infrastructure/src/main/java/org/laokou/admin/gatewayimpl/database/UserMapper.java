@@ -23,6 +23,8 @@ import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author laokou
  */
@@ -36,5 +38,12 @@ public interface UserMapper extends BaseMapper<UserDO> {
 	 * @return int
 	 */
 	int updateUser(@Param("userDO") UserDO userDO);
+
+	/**
+	 * 根据租户ID查询下拉列表
+	 * @param tenantId
+	 * @return
+	 */
+	List<UserDO> getOptionListByTenantId(@Param("tenantId")Long tenantId);
 
 }

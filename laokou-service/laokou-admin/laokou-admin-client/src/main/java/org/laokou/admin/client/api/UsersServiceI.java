@@ -20,6 +20,7 @@ import org.laokou.admin.client.dto.UserInsertCmd;
 import org.laokou.admin.client.dto.UserOnlineKillCmd;
 import org.laokou.admin.client.dto.UserOnlineListQry;
 import org.laokou.admin.client.dto.UserUpdateCmd;
+import org.laokou.admin.client.dto.clientobject.OptionCO;
 import org.laokou.admin.client.dto.clientobject.UserOnlineCO;
 import org.laokou.admin.client.dto.clientobject.UserProfileCO;
 import org.laokou.common.i18n.dto.Datas;
@@ -66,7 +67,11 @@ public interface UsersServiceI {
 	 */
 	Result<UserProfileCO> profile();
 
-	Result<List<>>
+	/**
+	 * 用户下拉列表
+	 * @return Result<List<OptionCO>>
+	 */
+	Result<List<OptionCO>> optionList();
 
 	// /**
 	// * 修改密码

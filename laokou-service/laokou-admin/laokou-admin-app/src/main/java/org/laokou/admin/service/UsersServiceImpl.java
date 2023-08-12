@@ -6,17 +6,20 @@ import org.laokou.admin.client.dto.UserInsertCmd;
 import org.laokou.admin.client.dto.UserOnlineKillCmd;
 import org.laokou.admin.client.dto.UserOnlineListQry;
 import org.laokou.admin.client.dto.UserUpdateCmd;
+import org.laokou.admin.client.dto.clientobject.OptionCO;
 import org.laokou.admin.client.dto.clientobject.UserOnlineCO;
 import org.laokou.admin.client.dto.clientobject.UserProfileCO;
 import org.laokou.admin.command.UserInsertCmdExe;
 import org.laokou.admin.command.UserOnlineKillCmdExe;
 import org.laokou.admin.command.UserUpdateCmdExe;
 import org.laokou.admin.command.query.UserOnlineListQryExe;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.command.query.UserOptionListQryExe;
+import org.laokou.admin.command.query.UserProfileGetQryExe;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -29,6 +32,8 @@ public class UsersServiceImpl implements UsersServiceI {
 	private final UserInsertCmdExe userInsertCmdExe;
 	private final UserOnlineKillCmdExe userOnlineKillCmdExe;
 	private final UserOnlineListQryExe userOnlineListQryExe;
+	private final UserProfileGetQryExe userProfileGetQryExe;
+	private final UserOptionListQryExe userOptionListQryExe;
 
 	@Override
 	public Result<Boolean> update(UserUpdateCmd cmd) {
@@ -52,7 +57,12 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	@Override
 	public Result<UserProfileCO> profile() {
-		return Result.of(ConvertUtil.sourceToTarget(UserUtil.user(), UserProfileCO.class));
+		return userProfileGetQryExe.execute();
+	}
+
+	@Override
+	public Result<List<OptionCO>> optionList() {
+		return userOptionListQryExe.execute();
 	}
 
 }
