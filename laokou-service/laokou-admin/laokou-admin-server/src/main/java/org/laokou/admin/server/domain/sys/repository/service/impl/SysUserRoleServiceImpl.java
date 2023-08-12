@@ -31,7 +31,6 @@ import java.util.List;
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRoleDO>
 		implements SysUserRoleService {
 
-	@Override
 	public void insertBatch(List<SysUserRoleDO> list) {
 		this.baseMapper.insertBatch(list);
 	}

@@ -36,7 +36,6 @@ public class SysMessageDetailServiceImpl extends ServiceImpl<SysMessageDetailMap
 		return this.baseMapper.getVersion(id);
 	}
 
-	@Override
 	public void insertBatch(List<SysMessageDetailDO> list) {
 		this.baseMapper.insertBatch(list);
 	}

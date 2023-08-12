@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.UsersServiceI;
+import org.laokou.admin.client.dto.UserInsertCmd;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -103,9 +104,9 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/users/info-pwd/{id}/{pwd}")
+	@PutMapping("v1/users/profile-pwd/{id}/{pwd}")
 	@Operation(summary = "密码", description = "密码")
-	public Result<Boolean> infoPwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
+	public Result<Boolean> profilePwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
 		return Result.of(null);
 	}
 
@@ -114,8 +115,8 @@ public class UsersController {
 	@Operation(summary = "新增", description = "新增")
 	// @OperateLog(module = "用户管理", name = "新增")
 	// @PreAuthorize("hasAuthority('users:insert')")
-	public Result<Boolean> insert() {
-		return Result.of(null);
+	public Result<Boolean> insert(@RequestBody UserInsertCmd cmd) {
+		return usersServiceI.insert(cmd);
 	}
 
 	@TraceLog

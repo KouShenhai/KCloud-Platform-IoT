@@ -22,6 +22,7 @@ import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import jodd.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.client.dto.clientobject.OptionCO;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
@@ -29,13 +30,16 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
+import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.DynamicTableContextHolder;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -105,8 +109,28 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
+	@DS(Constant.SHARDING_SPHERE)
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean deleteById(Long id) {
 		return userMapper.deleteById(id) > 0;
+	}
+
+	@Override
+	@DS(Constant.SHARDING_SPHERE)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
+	public List<OptionCO> getOptionList(Long tenantId) {
+		List<UserDO> list = userMapper.getOptionListByTenantId(tenantId);
+		if (CollectionUtil.isNotEmpty(list)) {
+			List<OptionCO> options = new ArrayList<>(list.size());
+			for (UserDO userDO : list) {
+				OptionCO co = new OptionCO();
+				co.setLabel(AesUtil.decrypt(userDO.getUsername()));
+				co.setValue(String.valueOf(userDO.getId()));
+				options.add(co);
+			}
+			return options;
+		}
+		return new ArrayList<>(0);
 	}
 
 	private Boolean deleteUserRole(UserDO userDO) {

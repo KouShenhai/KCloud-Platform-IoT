@@ -21,6 +21,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.io.Serial;
+
 /**
  * @author laokou
  */
@@ -28,6 +30,11 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 public class OptionCO extends ClientObject {
 
+    @Serial
+    private static final long serialVersionUID = -4146348495335527374L;
 
+    private String label;
+
+    private String value;
 
 }

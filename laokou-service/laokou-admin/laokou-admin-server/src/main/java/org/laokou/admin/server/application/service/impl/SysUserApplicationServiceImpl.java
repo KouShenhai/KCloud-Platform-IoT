@@ -282,8 +282,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 	}
 
 	@Override
-	@DS(Constant.SHARDING_SPHERE)
-	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
+
 	public List<OptionVO> getOptionList() {
 		Long tenantId = UserUtil.getTenantId();
 		List<OptionVO> optionList = sysUserService.getOptionList(tenantId);
@@ -349,7 +348,6 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 				sysUserRoleDO.setId(IdGenerator.defaultSnowflakeId());
 				doList.add(sysUserRoleDO);
 			}
-			batchUtil.insertBatch(doList, sysUserRoleService::);
 		}
 	}
 

@@ -18,11 +18,10 @@ package org.laokou.admin.server.domain.sys.repository.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysRoleDeptDO;
-import org.laokou.common.mybatisplus.service.BatchService;
 
 /**
  * @author laokou
  */
-public interface SysRoleDeptService extends BatchService<SysRoleDeptDO>, IService<SysRoleDeptDO> {
+public interface SysRoleDeptService extends IService<SysRoleDeptDO> {
 
 }
