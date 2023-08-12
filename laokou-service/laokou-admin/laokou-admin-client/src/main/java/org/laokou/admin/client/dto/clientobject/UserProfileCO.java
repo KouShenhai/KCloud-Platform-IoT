@@ -14,44 +14,38 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.i18n.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotNull;
+package org.laokou.admin.client.dto.clientobject;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.laokou.common.i18n.dto.ClientObject;
 
 import java.io.Serial;
+import java.util.List;
 
 /**
  * @author laokou
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Schema(name = "Page", description = "分页")
-public abstract class Page extends Query {
+public class UserProfileCO extends ClientObject {
 
-	@Serial
-	private static final long serialVersionUID = 6412915892334241813L;
+    @Serial
+    private static final long serialVersionUID = 5297753219988591611L;
 
-	/**
-	 * 页码
-	 */
-	@NotNull(message = "显示页码不为空")
-	@Schema(name = "pageNum", description = "页码")
-	private Integer pageNum;
+    private Long id;
 
-	/**
-	 * 条数
-	 */
-	@NotNull(message = "显示条数不为空")
-	@Schema(name = "pageSize", description = "条数")
-	private Integer pageSize;
+    private String avatar;
 
-	/**
-	 * sql拼接
-	 */
-	@Schema(name = "sqlFilter", description = "SQL拼接")
-	private String sqlFilter;
+    private String username;
+
+    private String mobile;
+
+    private String mail;
+
+    private List<String> permissionList;
+
+    private Long tenantId;
 
 }

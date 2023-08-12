@@ -26,4 +26,6 @@ public interface UserGateway {
 
 	Boolean update(User user);
 
+	Boolean deleteById(Long id);
+
 }

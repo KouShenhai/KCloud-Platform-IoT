@@ -15,29 +15,19 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.database;
+package org.laokou.admin.client.dto;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.laokou.common.i18n.dto.Page;
 
 /**
  * @author laokou
  */
-@Repository
-@Mapper
-public interface UserRoleMapper extends BatchMapper<UserRoleDO>, BaseMapper<UserRoleDO> {
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class UserOnlineListQry extends Page {
 
-    /**
-     * 根据用户ID查询IDS
-     * @param userId 用户ID
-     * @return List<Long>
-     */
-    List<Long> getIdsByUserId(@Param("userId")Long userId);
+    private String username;
 
 }

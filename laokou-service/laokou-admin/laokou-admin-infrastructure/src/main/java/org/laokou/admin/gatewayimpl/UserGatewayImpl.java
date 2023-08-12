@@ -19,7 +19,7 @@ package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import jodd.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
@@ -104,11 +104,15 @@ public class UserGatewayImpl implements UserGateway {
 		return updateFlag && updateBatchFlag;
 	}
 
+	@Override
+	public Boolean deleteById(Long id) {
+		return userMapper.deleteById(id) > 0;
+	}
+
 	private Boolean deleteUserRole(UserDO userDO) {
-		List<UserRoleDO> userRoles = userRoleMapper.selectList(Wrappers.lambdaQuery(UserRoleDO.class)
-				.eq(UserRoleDO::getUserId, userDO.getId()).select(UserRoleDO::getId));
-		if (CollectionUtil.isNotEmpty(userRoles)) {
-			return userRoleMapper.deleteBatchIds(userRoles.stream().map(UserRoleDO::getId).toList()) > 0;
+		List<Long> ids = userRoleMapper.getIdsByUserId(userDO.getId());
+		if (CollectionUtil.isNotEmpty(ids)) {
+			return userRoleMapper.deleteBatchIds(ids) > 0;
 		}
 		return false;
 	}
@@ -124,6 +128,10 @@ public class UserGatewayImpl implements UserGateway {
 		UserDO userDO = UserConvertor.toDataObject(user);
 		userDO.setEditor(UserUtil.getUserId());
 		userDO.setVersion(userRoleMapper.getVersion(userDO.getId()));
+		String password = userDO.getPassword();
+		if (StringUtil.isNotBlank(password)) {
+			userDO.setPassword(passwordEncoder.encode(password));
+		}
 		return userDO;
 	}
 

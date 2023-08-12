@@ -16,10 +16,12 @@
  */
 package org.laokou.admin.client.dto.clientobject;
 
+import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
 import lombok.Data;
 import org.laokou.common.core.utils.BigDecimalUtil;
 import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.i18n.dto.ClientObject;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.CentralProcessor.TickType;
@@ -43,8 +45,9 @@ import java.util.Properties;
  *
  * @author laokou
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class ServerCO implements Serializable {
+public class ServerCO extends ClientObject {
 
 	@Serial
 	private static final long serialVersionUID = 886551822597986662L;
