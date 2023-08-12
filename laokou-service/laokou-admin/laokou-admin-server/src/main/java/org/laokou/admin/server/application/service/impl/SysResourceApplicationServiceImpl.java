@@ -39,6 +39,7 @@ import org.laokou.admin.server.domain.sys.repository.service.*;
 import org.laokou.admin.server.infrastructure.feign.workflow.WorkTaskApiFeignClient;
 import org.laokou.admin.server.infrastructure.index.ResourceIndex;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.oss.support.OssTemplate;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
@@ -47,14 +48,13 @@ import org.laokou.admin.client.enums.MessageTypeEnum;
 import org.laokou.admin.client.dto.SysResourceAuditDTO;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
-import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.log.event.AuditLogEvent;
 import org.laokou.common.log.service.SysAuditLogService;
 import org.laokou.common.log.vo.SysAuditLogVO;
-import org.laokou.common.i18n.core.CustomException;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.oss.vo.UploadVO;
+import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
@@ -304,8 +304,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 	public Boolean auditResourceTask(AuditDTO dto) {
 		ValidatorUtil.validateEntity(dto);
 		log.info("分布式事务 XID:{}", RootContext.getXID());
-		HttpResult<AssigneeVO> result = workTaskApiFeignClient.audit(dto);
-		if (!result.success()) {
+		Result<AssigneeVO> result = workTaskApiFeignClient.audit(dto);
+		if (result.fail()) {
 			throw new CustomException(result.getCode(), result.getMsg());
 		}
 		AssigneeVO vo = result.getData();
@@ -412,8 +412,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 		dto.setUserId(UserUtil.getUserId());
 		dto.setProcessName(qo.getProcessName());
 		dto.setProcessKey(PROCESS_KEY);
-		HttpResult<PageVO<TaskVO>> result = workTaskApiFeignClient.query(dto);
-		if (!result.success()) {
+		Result<PageVO<TaskVO>> result = workTaskApiFeignClient.query(dto);
+		if (result.fail()) {
 			throw new CustomException(result.getCode(), result.getMsg());
 		}
 		PageVO<TaskVO> taskPageVO = Optional.ofNullable(result.getData()).orElseGet(PageVO::new);
@@ -428,8 +428,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 	@Transactional(rollbackFor = Exception.class)
 	@GlobalTransactional
 	public Boolean resolveResourceTask(ResolveDTO dto) {
-		HttpResult<AssigneeVO> result = workTaskApiFeignClient.resolve(dto);
-		if (!result.success()) {
+		Result<AssigneeVO> result = workTaskApiFeignClient.resolve(dto);
+		if (result.fail()) {
 			throw new CustomException(result.getCode(), result.getMsg());
 		}
 		// 发送通知
@@ -445,8 +445,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 	@Transactional(rollbackFor = Exception.class)
 	@GlobalTransactional
 	public Boolean transferResourceTask(TransferDTO dto) {
-		HttpResult<AssigneeVO> result = workTaskApiFeignClient.transfer(dto);
-		if (!result.success()) {
+		Result<AssigneeVO> result = workTaskApiFeignClient.transfer(dto);
+		if (result.fail()) {
 			throw new CustomException(result.getCode(), result.getMsg());
 		}
 		// 发送通知
@@ -462,8 +462,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 	@Transactional(rollbackFor = Exception.class)
 	@GlobalTransactional
 	public Boolean delegateResourceTask(DelegateDTO dto) {
-		HttpResult<AssigneeVO> result = workTaskApiFeignClient.delegate(dto);
-		if (!result.success()) {
+		Result<AssigneeVO> result = workTaskApiFeignClient.delegate(dto);
+		if (result.fail()) {
 			throw new CustomException(result.getCode(), result.getMsg());
 		}
 		// 发送通知
@@ -519,8 +519,8 @@ public class SysResourceApplicationServiceImpl implements SysResourceApplication
 		dto.setBusinessKey(businessKey.toString());
 		dto.setBusinessName(businessName);
 		dto.setProcessKey(PROCESS_KEY);
-		HttpResult<AssigneeVO> result = workTaskApiFeignClient.start(dto);
-		if (!result.success()) {
+		Result<AssigneeVO> result = workTaskApiFeignClient.start(dto);
+		if (result.fail()) {
 			throw new CustomException(result.getCode(), result.getMsg());
 		}
 		return result.getData();

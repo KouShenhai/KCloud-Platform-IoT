@@ -22,7 +22,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.jasypt.annotation.Jasypt;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -47,7 +47,7 @@ public class AesAspect {
 		Object proceed = point.proceed();
 		switch (Objects.requireNonNull(jasypt).type()) {
 			case AES -> {
-				if (proceed instanceof HttpResult<?> result) {
+				if (proceed instanceof Result<?> result) {
 					Object data = result.getData();
 					AesUtil.transform(data);
 				}

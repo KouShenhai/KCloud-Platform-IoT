@@ -23,11 +23,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.SysOssDTO;
 import org.laokou.admin.server.application.service.SysOssApplicationService;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.oss.qo.SysOssQo;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
 import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.oss.vo.SysOssVO;
 import org.laokou.common.oss.vo.UploadVO;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -50,15 +50,15 @@ public class SysOssApiController {
 	@PostMapping("/query")
 	@Operation(summary = "系统存储>查询", description = "系统存储>查询")
 	@PreAuthorize("hasAuthority('sys:oss:query')")
-	public HttpResult<IPage<SysOssVO>> query(@RequestBody SysOssQo qo) {
-		return new HttpResult<IPage<SysOssVO>>().ok(sysOssApplicationService.queryOssPage(qo));
+	public Result<IPage<SysOssVO>> query(@RequestBody SysOssQo qo) {
+		return Result.of(sysOssApplicationService.queryOssPage(qo));
 	}
 
 	@TraceLog
 	@PostMapping("upload")
 	@Operation(summary = "系统存储>上传", description = "系统存储>上传")
-	public HttpResult<UploadVO> upload(@RequestPart("file") MultipartFile file, @RequestParam("md5") String md5) {
-		return new HttpResult<UploadVO>().ok(sysOssApplicationService.upload(file, md5));
+	public Result<UploadVO> upload(@RequestPart("file") MultipartFile file, @RequestParam("md5") String md5) {
+		return Result.of(sysOssApplicationService.upload(file, md5));
 	}
 
 	@TraceLog
@@ -66,8 +66,8 @@ public class SysOssApiController {
 	@Operation(summary = "系统存储>新增", description = "系统存储>新增")
 	@OperateLog(module = "系统存储", name = "存储新增")
 	@PreAuthorize("hasAuthority('sys:oss:insert')")
-	public HttpResult<Boolean> insert(@RequestBody SysOssDTO dto) {
-		return new HttpResult<Boolean>().ok(sysOssApplicationService.insertOss(dto));
+	public Result<Boolean> insert(@RequestBody SysOssDTO dto) {
+		return Result.of(sysOssApplicationService.insertOss(dto));
 	}
 
 	@TraceLog
@@ -75,16 +75,16 @@ public class SysOssApiController {
 	@Operation(summary = "系统存储>启用", description = "系统存储>启用")
 	@OperateLog(module = "系统存储", name = "存储启用")
 	@PreAuthorize("hasAuthority('sys:oss:use')")
-	public HttpResult<Boolean> use(@RequestParam("id") Long id) {
-		return new HttpResult<Boolean>().ok(sysOssApplicationService.useOss(id));
+	public Result<Boolean> use(@RequestParam("id") Long id) {
+		return Result.of(sysOssApplicationService.useOss(id));
 	}
 
 	@TraceLog
 	@GetMapping("/detail")
 	@Operation(summary = "系统存储>查看", description = "系统存储>查看")
 	@DataCache(name = "oss", key = "#id")
-	public HttpResult<SysOssVO> detail(@RequestParam("id") Long id) {
-		return new HttpResult<SysOssVO>().ok(sysOssApplicationService.getOssById(id));
+	public Result<SysOssVO> detail(@RequestParam("id") Long id) {
+		return Result.of(sysOssApplicationService.getOssById(id));
 	}
 
 	@TraceLog
@@ -93,8 +93,8 @@ public class SysOssApiController {
 	@OperateLog(module = "系统存储", name = "存储修改")
 	@PreAuthorize("hasAuthority('sys:oss:update')")
 	@DataCache(name = "oss", key = "#dto.id", type = CacheEnum.DEL)
-	public HttpResult<Boolean> update(@RequestBody SysOssDTO dto) {
-		return new HttpResult<Boolean>().ok(sysOssApplicationService.updateOss(dto));
+	public Result<Boolean> update(@RequestBody SysOssDTO dto) {
+		return Result.of(sysOssApplicationService.updateOss(dto));
 	}
 
 	@TraceLog
@@ -103,8 +103,8 @@ public class SysOssApiController {
 	@OperateLog(module = "系统存储", name = "存储删除")
 	@PreAuthorize("hasAuthority('sys:oss:delete')")
 	@DataCache(name = "oss", key = "#id", type = CacheEnum.DEL)
-	public HttpResult<Boolean> delete(@RequestParam("id") Long id) {
-		return new HttpResult<Boolean>().ok(sysOssApplicationService.deleteOss(id));
+	public Result<Boolean> delete(@RequestParam("id") Long id) {
+		return Result.of(sysOssApplicationService.deleteOss(id));
 	}
 
 }

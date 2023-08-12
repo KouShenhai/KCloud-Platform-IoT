@@ -31,6 +31,11 @@
     <modules>
         <module>laokou-admin-server</module>
         <module>laokou-admin-client</module>
+        <module>laokou-admin-app</module>
+        <module>laokou-admin-adapter</module>
+        <module>laokou-admin-infrastructure</module>
+        <module>laokou-admin-domain</module>
+        <module>laokou-admin-start</module>
     </modules>
 
 </project>

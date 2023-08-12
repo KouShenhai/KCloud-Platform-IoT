@@ -22,9 +22,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.admin.server.application.service.SysResourceApplicationService;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.admin.server.interfaces.qo.TaskQo;
-import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.laokou.flowable.client.dto.AuditDTO;
 import org.laokou.flowable.client.dto.DelegateDTO;
@@ -49,8 +49,8 @@ public class WorkflowTaskApiController {
 	@PostMapping(value = "/resource/query")
 	@Operation(summary = "流程任务>资源>查询任务", description = "流程任务>资源>查询任务")
 	@PreAuthorize("hasAuthority('workflow:task:resource:query')")
-	public HttpResult<IPage<TaskVO>> queryResource(@RequestBody TaskQo qo) {
-		return new HttpResult<IPage<TaskVO>>().ok(sysResourceApplicationService.queryResourceTask(qo));
+	public Result<IPage<TaskVO>> queryResource(@RequestBody TaskQo qo) {
+		return Result.of(sysResourceApplicationService.queryResourceTask(qo));
 	}
 
 	@TraceLog
@@ -58,15 +58,15 @@ public class WorkflowTaskApiController {
 	@Operation(summary = "流程任务>资源>审批任务", description = "流程任务>资源>审批任务")
 	@OperateLog(module = "流程任务", name = "审批任务")
 	@PreAuthorize("hasAuthority('workflow:task:resource:audit')")
-	public HttpResult<Boolean> auditResource(@RequestBody AuditDTO dto) {
-		return new HttpResult<Boolean>().ok(sysResourceApplicationService.auditResourceTask(dto));
+	public Result<Boolean> auditResource(@RequestBody AuditDTO dto) {
+		return Result.of(sysResourceApplicationService.auditResourceTask(dto));
 	}
 
 	@TraceLog
 	@GetMapping(value = "/resource/detail")
 	@Operation(summary = "流程任务>资源>任务详情", description = "流程任务>资源>任务详情")
-	public HttpResult<SysResourceVO> detailResource(@RequestParam("id") Long id) {
-		return new HttpResult<SysResourceVO>().ok(sysResourceApplicationService.getResourceAuditByResourceId(id));
+	public Result<SysResourceVO> detailResource(@RequestParam("id") Long id) {
+		return Result.of(sysResourceApplicationService.getResourceAuditByResourceId(id));
 	}
 
 	@TraceLog
@@ -74,8 +74,8 @@ public class WorkflowTaskApiController {
 	@Operation(summary = "流程任务>资源>处理任务", description = "流程任务>资源>处理任务")
 	@OperateLog(module = "流程任务", name = "处理任务")
 	@PreAuthorize("hasAuthority('workflow:task:resource:resolve')")
-	public HttpResult<Boolean> resolveResource(@RequestBody ResolveDTO dto) {
-		return new HttpResult<Boolean>().ok(sysResourceApplicationService.resolveResourceTask(dto));
+	public Result<Boolean> resolveResource(@RequestBody ResolveDTO dto) {
+		return Result.of(sysResourceApplicationService.resolveResourceTask(dto));
 	}
 
 	@TraceLog
@@ -83,8 +83,8 @@ public class WorkflowTaskApiController {
 	@Operation(summary = "流程任务>资源>转办任务", description = "流程任务>资源>转办任务")
 	@OperateLog(module = "流程任务", name = "转办任务")
 	@PreAuthorize("hasAuthority('workflow:task:resource:transfer')")
-	public HttpResult<Boolean> transferResource(@RequestBody TransferDTO dto) {
-		return new HttpResult<Boolean>().ok(sysResourceApplicationService.transferResourceTask(dto));
+	public Result<Boolean> transferResource(@RequestBody TransferDTO dto) {
+		return Result.of(sysResourceApplicationService.transferResourceTask(dto));
 	}
 
 	@TraceLog
@@ -92,8 +92,8 @@ public class WorkflowTaskApiController {
 	@Operation(summary = "流程任务>资源>委派任务", description = "流程任务>资源>委派任务")
 	@OperateLog(module = "流程任务", name = "委派任务")
 	@PreAuthorize("hasAuthority('workflow:task:resource:delegate')")
-	public HttpResult<Boolean> delegateResource(@RequestBody DelegateDTO dto) {
-		return new HttpResult<Boolean>().ok(sysResourceApplicationService.delegateResourceTask(dto));
+	public Result<Boolean> delegateResource(@RequestBody DelegateDTO dto) {
+		return Result.of(sysResourceApplicationService.delegateResourceTask(dto));
 	}
 
 }

@@ -59,4 +59,5 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		// websocket协议
 		pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH));
 	}
+
 }

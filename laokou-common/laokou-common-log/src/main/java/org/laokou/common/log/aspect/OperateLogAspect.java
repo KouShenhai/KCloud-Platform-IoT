@@ -20,7 +20,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.hc.core5.http.HttpHeaders;
 import org.aspectj.lang.annotation.Before;
-import org.laokou.auth.client.utils.UserUtil;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.*;
@@ -34,6 +33,7 @@ import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.ip.region.utils.AddressUtil;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.event.OperateLogEvent;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.scheduling.annotation.Async;
@@ -42,7 +42,6 @@ import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author laokou
@@ -99,8 +98,7 @@ public class OperateLogAspect {
 			String className = joinPoint.getTarget().getClass().getName();
 			String methodName = joinPoint.getSignature().getName();
 			Object[] args = joinPoint.getArgs();
-			List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs)
-					.collect(Collectors.toList());
+			List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
 			OperateLogEvent event = new OperateLogEvent(this);
 			assert operateLog != null;
 			event.setModule(operateLog.module());

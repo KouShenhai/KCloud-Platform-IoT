@@ -36,22 +36,22 @@ import org.laokou.admin.server.domain.sys.repository.service.SysUserRoleService;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
 import org.laokou.admin.server.interfaces.qo.SysUserOnlineQo;
 import org.laokou.admin.server.interfaces.qo.SysUserQo;
-import org.laokou.auth.client.user.UserDetail;
-import org.laokou.auth.client.utils.UserUtil;
+import org.laokou.auth.domain.user.SuperAdmin;
+import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.constant.Constant;
-import org.laokou.common.core.enums.SuperAdminEnum;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.data.filter.annotation.DataFilter;
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -61,8 +61,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static org.laokou.admin.server.infrastructure.Constant.DEFAULT_SOURCE;
 import static org.laokou.common.core.constant.Constant.DEFAULT;
-import static org.laokou.common.core.constant.Constant.DEFAULT_SOURCE;
 
 /**
  * @author laokou
@@ -273,9 +273,8 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 	@DS(Constant.SHARDING_SPHERE)
 	public Boolean deleteUser(Long id) {
 		SysUserDO sysUser = sysUserService.getById(id);
-		UserDetail userDetail = UserUtil.userDetail();
-		if (SuperAdminEnum.YES.ordinal() == sysUser.getSuperAdmin()
-				&& SuperAdminEnum.YES.ordinal() != userDetail.getSuperAdmin()) {
+		User user = UserUtil.user();
+		if (SuperAdmin.YES.ordinal() == sysUser.getSuperAdmin() && SuperAdmin.YES.ordinal() != user.getSuperAdmin()) {
 			throw new CustomException("只有超级管理员才能删除");
 		}
 		sysUserService.deleteUser(id);
@@ -296,7 +295,7 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 
 	@Override
 	public UserInfoVO getUserInfo() {
-		return ConvertUtil.sourceToTarget(UserUtil.userDetail(), UserInfoVO.class);
+		return ConvertUtil.sourceToTarget(UserUtil.user(), UserInfoVO.class);
 	}
 
 	@Override
@@ -309,14 +308,14 @@ public class SysUserApplicationServiceImpl implements SysUserApplicationService 
 		Integer pageSize = qo.getPageSize();
 		String userInfoKeyPrefix = RedisKeyUtil.getUserInfoKey("");
 		for (String key : keys) {
-			UserDetail userDetail = (UserDetail) redisUtil.get(key);
-			String username = AesUtil.decrypt(userDetail.getUsername());
+			User user = (User) redisUtil.get(key);
+			String username = AesUtil.decrypt(user.getUsername());
 			if (StringUtil.isEmpty(keyword) || username.contains(keyword)) {
 				SysUserOnlineVO vo = new SysUserOnlineVO();
 				vo.setUsername(username);
 				vo.setToken(key.substring(userInfoKeyPrefix.length()));
-				vo.setLoginIp(userDetail.getLoginIp());
-				vo.setLoginDate(userDetail.getLoginDate());
+				vo.setLoginIp(user.getLoginIp());
+				vo.setLoginDate(user.getLoginDate());
 				list.add(vo);
 			}
 		}

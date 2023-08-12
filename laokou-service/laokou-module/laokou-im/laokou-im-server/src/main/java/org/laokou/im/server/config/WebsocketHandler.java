@@ -33,7 +33,7 @@ import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.client.user.UserDetail;
+import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -95,7 +95,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	}
 
 	private String getAuthorization(Map<String, String> paramMap) {
-		String Authorization = paramMap.getOrDefault(Constant.AUTHORIZATION_HEAD, "");
+		String Authorization = paramMap.getOrDefault(Constant.AUTHORIZATION, "");
 		if (StringUtil.isNotEmpty(Authorization)) {
 			return Authorization.substring(7);
 		}
@@ -124,9 +124,9 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 					handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
 					return;
 				}
-				UserDetail userDetail = (UserDetail) obj;
+				User user = (User) obj;
 				Channel channel = ctx.channel();
-				String userId = userDetail.getId().toString();
+				String userId = user.getId().toString();
 				USER_CACHE.put(userId, channel);
 			});
 		}

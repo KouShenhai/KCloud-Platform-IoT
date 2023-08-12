@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import org.laokou.common.mybatisplus.entity.BaseDO;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.laokou.common.mybatisplus.handler.JasyptTypeHandler;

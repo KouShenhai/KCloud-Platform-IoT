@@ -17,8 +17,8 @@
 package org.laokou.admin.server.infrastructure.feign.workflow;
 
 import org.laokou.admin.server.infrastructure.feign.workflow.factory.WorkTaskApiFeignClientFallbackFactory;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.openfeign.constant.ServiceConstant;
-import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
@@ -44,7 +44,7 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@PostMapping(value = "/query")
-	HttpResult<PageVO<TaskVO>> query(@RequestBody TaskDTO dto);
+	Result<PageVO<TaskVO>> query(@RequestBody TaskDTO dto);
 
 	/**
 	 * 审批任务
@@ -52,7 +52,7 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@PostMapping(value = "/audit")
-	HttpResult<AssigneeVO> audit(@RequestBody AuditDTO dto);
+	Result<AssigneeVO> audit(@RequestBody AuditDTO dto);
 
 	/**
 	 * 开始任务
@@ -60,7 +60,7 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@PostMapping(value = "/start")
-	HttpResult<AssigneeVO> start(@RequestBody ProcessDTO dto);
+	Result<AssigneeVO> start(@RequestBody ProcessDTO dto);
 
 	/**
 	 * 流程图
@@ -68,7 +68,7 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@GetMapping(value = "/diagram")
-	HttpResult<String> diagram(@RequestParam("processInstanceId") String processInstanceId);
+	Result<String> diagram(@RequestParam("processInstanceId") String processInstanceId);
 
 	/**
 	 * 任务委派
@@ -76,7 +76,7 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@PostMapping("/delegate")
-	HttpResult<AssigneeVO> delegate(@RequestBody DelegateDTO dto);
+	Result<AssigneeVO> delegate(@RequestBody DelegateDTO dto);
 
 	/**
 	 * 任务转办
@@ -84,7 +84,7 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@PostMapping("/transfer")
-	HttpResult<AssigneeVO> transfer(@RequestBody TransferDTO dto);
+	Result<AssigneeVO> transfer(@RequestBody TransferDTO dto);
 
 	/**
 	 * 任务处理
@@ -92,6 +92,6 @@ public interface WorkTaskApiFeignClient {
 	 * @return
 	 */
 	@PostMapping(value = "/resolve")
-	HttpResult<AssigneeVO> resolve(@RequestBody ResolveDTO dto);
+	Result<AssigneeVO> resolve(@RequestBody ResolveDTO dto);
 
 }

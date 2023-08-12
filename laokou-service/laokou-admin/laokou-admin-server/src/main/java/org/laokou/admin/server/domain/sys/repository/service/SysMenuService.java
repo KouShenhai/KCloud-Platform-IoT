@@ -20,7 +20,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysMenuDO;
 import org.laokou.admin.server.interfaces.qo.SysMenuQo;
 import org.laokou.admin.client.vo.SysMenuVO;
-import org.laokou.auth.client.user.UserDetail;
+import org.laokou.auth.domain.user.User;
+
 import java.util.List;
 
 /**
@@ -32,11 +33,11 @@ public interface SysMenuService extends IService<SysMenuDO> {
 
 	/**
 	 * 获取菜单列表
-	 * @param userDetail
+	 * @param user
 	 * @param type
 	 * @return
 	 */
-	List<SysMenuVO> getMenuList(UserDetail userDetail, Integer type);
+	List<SysMenuVO> getMenuList(User user, Integer type);
 
 	/**
 	 * 查询列表

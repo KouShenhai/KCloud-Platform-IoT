@@ -48,9 +48,9 @@ public class SwaggerAutoConfig {
 						.license(new License().name("Apache 2.0")
 								.url("https://www.apache.org/licenses/LICENSE-2.0.html")))
 				.externalDocs(new ExternalDocumentation().description("老寇云").url("https://github.com/KouShenhai"))
-				.addSecurityItem(new SecurityRequirement().addList(Constant.AUTHORIZATION_HEAD))
-				.components(new Components().addSecuritySchemes(Constant.AUTHORIZATION_HEAD,
-						new SecurityScheme().name(Constant.AUTHORIZATION_HEAD).type(SecurityScheme.Type.HTTP)
+				.addSecurityItem(new SecurityRequirement().addList(Constant.AUTHORIZATION))
+				.components(new Components().addSecuritySchemes(Constant.AUTHORIZATION,
+						new SecurityScheme().name(Constant.AUTHORIZATION).type(SecurityScheme.Type.HTTP)
 								.scheme("bearer").bearerFormat("JWT")));
 
 	}

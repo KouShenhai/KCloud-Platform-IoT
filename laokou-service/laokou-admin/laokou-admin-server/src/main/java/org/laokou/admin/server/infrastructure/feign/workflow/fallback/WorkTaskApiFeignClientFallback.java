@@ -19,7 +19,7 @@ package org.laokou.admin.server.infrastructure.feign.workflow.fallback;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.server.infrastructure.feign.workflow.WorkTaskApiFeignClient;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
 import org.laokou.flowable.client.vo.PageVO;
@@ -37,45 +37,45 @@ public class WorkTaskApiFeignClientFallback implements WorkTaskApiFeignClient {
 	private final Throwable throwable;
 
 	@Override
-	public HttpResult<PageVO<TaskVO>> query(TaskDTO dto) {
+	public Result<PageVO<TaskVO>> query(TaskDTO dto) {
 		log.error("流程查询失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<PageVO<TaskVO>>().ok(new PageVO<>());
+		return Result.of(new PageVO<>());
 	}
 
 	@Override
-	public HttpResult<AssigneeVO> audit(AuditDTO dto) {
+	public Result<AssigneeVO> audit(AuditDTO dto) {
 		log.error("流程审批失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<AssigneeVO>().error("流程审批失败，请联系管理员");
+		return Result.fail("流程审批失败，请联系管理员");
 	}
 
 	@Override
-	public HttpResult<AssigneeVO> start(ProcessDTO dto) {
+	public Result<AssigneeVO> start(ProcessDTO dto) {
 		log.error("流程启动失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<AssigneeVO>().error("流程启动失败，请联系管理员");
+		return Result.fail("流程启动失败，请联系管理员");
 	}
 
 	@Override
-	public HttpResult<String> diagram(String processInstanceId) {
+	public Result<String> diagram(String processInstanceId) {
 		log.error("流程图查看失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<String>().error("流程图查看失败，请联系管理员");
+		return Result.fail("流程图查看失败，请联系管理员");
 	}
 
 	@Override
-	public HttpResult<AssigneeVO> delegate(DelegateDTO dto) {
+	public Result<AssigneeVO> delegate(DelegateDTO dto) {
 		log.error("流程委派失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<AssigneeVO>().error("流程委派失败，请联系管理员");
+		return Result.fail("流程委派失败，请联系管理员");
 	}
 
 	@Override
-	public HttpResult<AssigneeVO> transfer(TransferDTO dto) {
+	public Result<AssigneeVO> transfer(TransferDTO dto) {
 		log.error("流程转办失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<AssigneeVO>().error("流程转办失败，请联系管理员");
+		return Result.fail("流程转办失败，请联系管理员");
 	}
 
 	@Override
-	public HttpResult<AssigneeVO> resolve(ResolveDTO dto) {
+	public Result<AssigneeVO> resolve(ResolveDTO dto) {
 		log.error("流程处理失败，报错原因：{}", throwable.getMessage());
-		return new HttpResult<AssigneeVO>().error("流程处理失败，请联系管理员");
+		return Result.fail("流程处理失败，请联系管理员");
 	}
 
 }

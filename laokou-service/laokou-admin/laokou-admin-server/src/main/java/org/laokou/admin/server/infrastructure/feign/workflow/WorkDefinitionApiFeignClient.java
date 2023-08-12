@@ -17,8 +17,8 @@
 package org.laokou.admin.server.infrastructure.feign.workflow;
 
 import org.laokou.admin.server.infrastructure.feign.workflow.factory.WorkDefinitionApiFeignClientFallbackFactory;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.openfeign.constant.ServiceConstant;
-import org.laokou.common.i18n.core.HttpResult;
 import org.laokou.flowable.client.dto.DefinitionDTO;
 import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;
@@ -45,7 +45,7 @@ public interface WorkDefinitionApiFeignClient {
 	 * @throws IOException
 	 */
 	@PostMapping(value = "/insert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	HttpResult<Boolean> insert(@RequestPart("file") MultipartFile file);
+	Result<Boolean> insert(@RequestPart("file") MultipartFile file);
 
 	/**
 	 * 查询流程
@@ -53,7 +53,7 @@ public interface WorkDefinitionApiFeignClient {
 	 * @return
 	 */
 	@PostMapping(value = "/query")
-	HttpResult<PageVO<DefinitionVO>> query(@RequestBody DefinitionDTO dto);
+	Result<PageVO<DefinitionVO>> query(@RequestBody DefinitionDTO dto);
 
 	/**
 	 * 流程图
@@ -62,7 +62,7 @@ public interface WorkDefinitionApiFeignClient {
 	 * @return
 	 */
 	@GetMapping(value = "/diagram")
-	HttpResult<String> diagram(@RequestParam("definitionId") String definitionId);
+	Result<String> diagram(@RequestParam("definitionId") String definitionId);
 
 	/**
 	 * 删除流程
@@ -70,7 +70,7 @@ public interface WorkDefinitionApiFeignClient {
 	 * @return
 	 */
 	@DeleteMapping(value = "/delete")
-	HttpResult<Boolean> delete(@RequestParam("deploymentId") String deploymentId);
+	Result<Boolean> delete(@RequestParam("deploymentId") String deploymentId);
 
 	/**
 	 * 挂起流程
@@ -78,7 +78,7 @@ public interface WorkDefinitionApiFeignClient {
 	 * @return
 	 */
 	@PutMapping(value = "/suspend")
-	HttpResult<Boolean> suspend(@RequestParam("definitionId") String definitionId);
+	Result<Boolean> suspend(@RequestParam("definitionId") String definitionId);
 
 	/**
 	 * 激活流程
@@ -86,6 +86,6 @@ public interface WorkDefinitionApiFeignClient {
 	 * @return
 	 */
 	@PutMapping(value = "/activate")
-	HttpResult<Boolean> activate(@RequestParam("definitionId") String definitionId);
+	Result<Boolean> activate(@RequestParam("definitionId") String definitionId);
 
 }

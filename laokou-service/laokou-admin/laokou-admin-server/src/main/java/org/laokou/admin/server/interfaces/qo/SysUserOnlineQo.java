@@ -18,13 +18,15 @@
 package org.laokou.admin.server.interfaces.qo;
 
 import lombok.Data;
-import org.laokou.common.mybatisplus.entity.BasePage;
+import lombok.EqualsAndHashCode;
+import org.laokou.common.i18n.dto.Page;
 
 /**
  * @author laokou
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class SysUserOnlineQo extends BasePage {
+public class SysUserOnlineQo extends Page {
 
 	private String username;
 

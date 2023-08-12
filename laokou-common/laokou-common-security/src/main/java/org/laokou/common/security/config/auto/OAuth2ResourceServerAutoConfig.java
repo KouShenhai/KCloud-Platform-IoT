@@ -17,14 +17,14 @@
 package org.laokou.common.security.config.auto;
 
 import lombok.Data;
-import org.laokou.auth.client.handler.ForbiddenExceptionHandler;
-import org.laokou.auth.client.handler.InvalidAuthenticationEntryPoint;
+import org.laokou.common.security.exception.handler.ForbiddenExceptionHandler;
+import org.laokou.common.security.exception.handler.InvalidAuthenticationEntryPoint;
 import org.laokou.common.security.config.CustomOpaqueTokenIntrospector;
 import org.laokou.common.security.config.OAuth2ResourceServerProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,7 +53,6 @@ import java.util.Set;
 @AutoConfigureAfter({ OAuth2AuthorizationAutoConfig.class })
 @RefreshScope
 @Data
-@ConfigurationProperties(prefix = "ignore")
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = OAuth2ResourceServerProperties.PREFIX,
 		name = "enabled")
 public class OAuth2ResourceServerAutoConfig {
@@ -61,6 +60,7 @@ public class OAuth2ResourceServerAutoConfig {
 	/**
 	 * 不拦截的urls
 	 */
+	@Value("${ignore.uri}")
 	private Set<String> uris;
 
 	@Bean

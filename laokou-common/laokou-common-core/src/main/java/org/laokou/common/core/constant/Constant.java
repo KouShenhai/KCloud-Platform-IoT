@@ -46,7 +46,7 @@ public interface Constant {
 	/**
 	 * 认证
 	 */
-	String AUTHORIZATION_HEAD = "Authorization";
+	String AUTHORIZATION = "Authorization";
 
 	/**
 	 * 用户名
@@ -89,11 +89,6 @@ public interface Constant {
 	int USE_STATUS = 1;
 
 	/**
-	 * 默认
-	 */
-	int DEFAULT = 0;
-
-	/**
 	 * 并
 	 */
 	String AND = "&";
@@ -124,11 +119,6 @@ public interface Constant {
 	String QUESTION_MARK = "?";
 
 	/**
-	 * 默认数据库
-	 */
-	String DEFAULT_SOURCE = "master";
-
-	/**
 	 * 国际化
 	 */
 	String ACCEPT_LANGUAGE = "Accept-Language";
@@ -157,6 +147,8 @@ public interface Constant {
 	 * 应用标识
 	 */
 	String APP_KEY = "app-key";
+
+	int DEFAULT = 0;
 
 	/**
 	 * 应用密钥

@@ -20,13 +20,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.core.CustomException;
-import org.laokou.common.i18n.core.HttpResult;
-import org.laokou.common.i18n.core.StatusCode;
+import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.gateway.constant.GatewayConstant;
-import org.laokou.gateway.enums.ExceptionEnum;
-import org.laokou.gateway.utils.ResponseUtil;
+import org.laokou.gateway.constant.Constant;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -49,7 +47,8 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-import static org.laokou.gateway.constant.GatewayConstant.OAUTH2_AUTH_URI;
+import static org.laokou.gateway.constant.Constant.OAUTH2_AUTH_URI;
+import static org.laokou.gateway.exception.ErrorCode.INVALID_CLIENT;
 
 /**
  * @author laokou
@@ -89,8 +88,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 				assert contentType != null;
 				if (contentType.contains(MediaType.APPLICATION_JSON_VALUE)
 						&& Objects.requireNonNull(response.getStatusCode()).value() != StatusCode.OK
-						&& body instanceof Flux) {
-					Flux<? extends DataBuffer> fluxBody = (Flux<? extends DataBuffer>) body;
+						&& body instanceof Flux<? extends DataBuffer> fluxBody) {
 					return super.writeWith(fluxBody.map(dataBuffer -> {
 						// 修改状态码
 						response.setStatusCode(HttpStatus.OK);
@@ -101,20 +99,19 @@ public class RespFilter implements GlobalFilter, Ordered {
 						String str = new String(content, StandardCharsets.UTF_8);
 						// str就是response的值
 						JsonNode node = JacksonUtil.readTree(str);
-						JsonNode msgNode = node.get(GatewayConstant.ERROR_DESCRIPTION);
-						JsonNode codeNode = node.get(GatewayConstant.ERROR);
+						JsonNode msgNode = node.get(Constant.ERROR_DESCRIPTION);
+						JsonNode codeNode = node.get(Constant.ERROR);
 						if (msgNode == null) {
 							return dataBufferFactory.wrap(new byte[0]);
 						}
 						String msg = msgNode.asText();
 						int code = codeNode.asInt();
 						if (code == 0) {
-							CustomException ex = getThrow(codeNode.asText());
+							CustomException ex = getException(codeNode.asText());
 							code = ex.getCode();
 							msg = ex.getMsg();
 						}
-						HttpResult<?> result = ResponseUtil.response(code, msg);
-						byte[] uppedContent = JacksonUtil.toJsonStr(result).getBytes();
+						byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(code, msg)).getBytes();
 						return dataBufferFactory.wrap(uppedContent);
 					}));
 				}
@@ -129,12 +126,21 @@ public class RespFilter implements GlobalFilter, Ordered {
 		return Ordered.HIGHEST_PRECEDENCE + 1500;
 	}
 
-	private CustomException getThrow(String code) {
+	private CustomException getException(String code) {
 		ExceptionEnum instance = ExceptionEnum.getInstance(code.toUpperCase());
 		return switch (instance) {
-			case INVALID_CLIENT ->
-				new CustomException(StatusCode.INVALID_CLIENT, MessageUtil.getMessage(StatusCode.INVALID_CLIENT));
+			case INVALID_CLIENT -> new CustomException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
 		};
+	}
+
+	enum ExceptionEnum {
+
+		INVALID_CLIENT;
+
+		public static ExceptionEnum getInstance(String code) {
+			return ExceptionEnum.valueOf(code);
+		}
+
 	}
 
 }

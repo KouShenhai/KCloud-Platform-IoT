@@ -18,7 +18,7 @@
 package org.laokou.common.sms.factory;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.sms.enums.SmsTypeEnum;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

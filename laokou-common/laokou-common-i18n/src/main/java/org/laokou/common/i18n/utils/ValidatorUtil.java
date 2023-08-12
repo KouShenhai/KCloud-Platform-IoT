@@ -19,7 +19,7 @@ package org.laokou.common.i18n.utils;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.common.CustomException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;

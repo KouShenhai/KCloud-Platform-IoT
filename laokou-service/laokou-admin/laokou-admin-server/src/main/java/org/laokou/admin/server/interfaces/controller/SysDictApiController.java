@@ -27,7 +27,7 @@ import org.laokou.admin.client.vo.SysDictVO;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.CacheEnum;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -52,23 +52,23 @@ public class SysDictApiController {
 	@TraceLog
 	@Operation(summary = "系统字典>查询", description = "系统字典>查询")
 	@PreAuthorize("hasAuthority('sys:dict:query')")
-	public HttpResult<IPage<SysDictVO>> query(@RequestBody SysDictQo qo) {
-		return new HttpResult<IPage<SysDictVO>>().ok(sysDictApplicationService.queryDictPage(qo));
+	public Result<IPage<SysDictVO>> query(@RequestBody SysDictQo qo) {
+		return Result.of(sysDictApplicationService.queryDictPage(qo));
 	}
 
 	@TraceLog
 	@GetMapping("/option/list")
 	@Operation(summary = "系统字典>下拉框列表", description = "系统字典>下拉框列表")
-	public HttpResult<List<OptionVO>> optionList(@RequestParam("type") String type) {
-		return new HttpResult<List<OptionVO>>().ok(sysDictApplicationService.getOptionList(type));
+	public Result<List<OptionVO>> optionList(@RequestParam("type") String type) {
+		return Result.of(sysDictApplicationService.getOptionList(type));
 	}
 
 	@TraceLog
 	@GetMapping(value = "/detail")
 	@Operation(summary = "系统字典>详情", description = "系统字典>详情")
 	@DataCache(name = "dict", key = "#id")
-	public HttpResult<SysDictVO> detail(@RequestParam("id") Long id) {
-		return new HttpResult<SysDictVO>().ok(sysDictApplicationService.getDictById(id));
+	public Result<SysDictVO> detail(@RequestParam("id") Long id) {
+		return Result.of(sysDictApplicationService.getDictById(id));
 	}
 
 	@TraceLog
@@ -76,8 +76,8 @@ public class SysDictApiController {
 	@Operation(summary = "系统字典>新增", description = "系统字典>新增")
 	@OperateLog(module = "系统字典", name = "字典新增")
 	@PreAuthorize("hasAuthority('sys:dict:insert')")
-	public HttpResult<Boolean> insert(@RequestBody SysDictDTO dto) {
-		return new HttpResult<Boolean>().ok(sysDictApplicationService.insertDict(dto));
+	public Result<Boolean> insert(@RequestBody SysDictDTO dto) {
+		return Result.of(sysDictApplicationService.insertDict(dto));
 	}
 
 	@TraceLog
@@ -86,8 +86,8 @@ public class SysDictApiController {
 	@OperateLog(module = "系统字典", name = "字典修改")
 	@PreAuthorize("hasAuthority('sys:dict:update')")
 	@DataCache(name = "dict", key = "#dto.id", type = CacheEnum.DEL)
-	public HttpResult<Boolean> update(@RequestBody SysDictDTO dto) {
-		return new HttpResult<Boolean>().ok(sysDictApplicationService.updateDict(dto));
+	public Result<Boolean> update(@RequestBody SysDictDTO dto) {
+		return Result.of(sysDictApplicationService.updateDict(dto));
 	}
 
 	@TraceLog
@@ -96,8 +96,8 @@ public class SysDictApiController {
 	@OperateLog(module = "系统字典", name = "字典删除")
 	@PreAuthorize("hasAuthority('sys:dict:delete')")
 	@DataCache(name = "dict", key = "#id", type = CacheEnum.DEL)
-	public HttpResult<Boolean> delete(@RequestParam("id") Long id) {
-		return new HttpResult<Boolean>().ok(sysDictApplicationService.deleteDict(id));
+	public Result<Boolean> delete(@RequestParam("id") Long id) {
+		return Result.of(sysDictApplicationService.deleteDict(id));
 	}
 
 }

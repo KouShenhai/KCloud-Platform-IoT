@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.laokou.common.i18n.core.HttpResult;
+import org.laokou.common.i18n.dto.Result;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +40,7 @@ public class TraceLogAspect {
 	@Around("@annotation(org.laokou.common.trace.annotation.TraceLog)")
 	public Object doAround(ProceedingJoinPoint point) {
 		Object proceed = point.proceed();
-		if (proceed instanceof HttpResult<?> result) {
+		if (proceed instanceof Result<?> result) {
 			result.setTraceId(MDC.get(TRACE_ID));
 			return result;
 		}

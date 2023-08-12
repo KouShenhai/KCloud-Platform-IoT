@@ -37,9 +37,9 @@ public abstract class AbstractServer implements Server {
 	 */
 	private final AtomicBoolean RUNNING = new AtomicBoolean(false);
 
-	protected volatile EventLoopGroup boss;
+	protected EventLoopGroup boss;
 
-	protected volatile EventLoopGroup work;
+	protected EventLoopGroup work;
 
 	protected final int port;
 
@@ -102,7 +102,8 @@ public abstract class AbstractServer implements Server {
 				work.shutdownGracefully();
 			}
 			log.info("优雅关闭，释放资源");
-		} else {
+		}
+		else {
 			log.error("关闭失败，请启动服务");
 		}
 	}

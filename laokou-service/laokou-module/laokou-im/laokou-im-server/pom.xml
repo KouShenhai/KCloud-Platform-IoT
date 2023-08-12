@@ -31,6 +31,10 @@
             <artifactId>laokou-common-netty</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-security</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
         </dependency>
@@ -157,7 +161,7 @@
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
                     <!-- main方法的地址 只需要修改这个地址-->
-                    <mainClass>org.laokou.im.server.ImApplication</mainClass>
+                    <mainClass>org.laokou.im.server.ImApp</mainClass>
                 </configuration>
                 <executions>
                     <execution>

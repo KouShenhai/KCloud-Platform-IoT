@@ -29,8 +29,12 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>laokou-auth-server</module>
         <module>laokou-auth-client</module>
+        <module>laokou-auth-start</module>
+        <module>laokou-auth-infrastructure</module>
+        <module>laokou-auth-domain</module>
+        <module>laokou-auth-app</module>
+        <module>laokou-auth-adapter</module>
     </modules>
 
 </project>

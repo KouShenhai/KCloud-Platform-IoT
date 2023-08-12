@@ -24,14 +24,14 @@ import org.laokou.admin.server.domain.sys.repository.service.SysMenuService;
 import org.laokou.admin.server.interfaces.qo.SysMenuQo;
 import org.laokou.admin.client.vo.SysMenuVO;
 import org.laokou.admin.client.dto.SysMenuDTO;
-import org.laokou.auth.client.user.UserDetail;
-import org.laokou.auth.client.utils.UserUtil;
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.auth.domain.user.User;
+import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,14 +52,14 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
 	@Override
 	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public SysMenuVO getMenuList() {
-		UserDetail userDetail = UserUtil.userDetail();
-		Long userId = userDetail.getId();
+		User user = UserUtil.user();
+		Long userId = user.getId();
 		String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
 		Object obj = redisUtil.get(resourceTreeKey);
 		if (obj != null) {
 			return (SysMenuVO) obj;
 		}
-		List<SysMenuVO> menuList = sysMenuService.getMenuList(userDetail, 0);
+		List<SysMenuVO> menuList = sysMenuService.getMenuList(user, 0);
 		SysMenuVO sysMenuVO = buildMenu(menuList);
 		redisUtil.set(resourceTreeKey, sysMenuVO, RedisUtil.HOUR_ONE_EXPIRE);
 		return sysMenuVO;

@@ -25,7 +25,7 @@ import org.laokou.admin.server.application.service.SysSourceApplicationService;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.vo.OptionVO;
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.tenant.dto.SysSourceDTO;
 import org.laokou.common.tenant.entity.SysSourceDO;

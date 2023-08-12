@@ -41,7 +41,9 @@ import java.net.InetAddress;
 public class DiscoveryListener implements ApplicationListener<ApplicationReadyEvent> {
 
 	private final ServiceUtil serviceUtil;
+
 	private final ConfigUtil configUtil;
+
 	private final WebsocketProperties websocketProperties;
 
 	@Override

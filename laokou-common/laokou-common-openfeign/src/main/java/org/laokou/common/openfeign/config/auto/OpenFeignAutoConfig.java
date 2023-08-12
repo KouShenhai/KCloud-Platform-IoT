@@ -26,7 +26,7 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import static org.laokou.common.core.constant.Constant.AUTHORIZATION_HEAD;
+import static org.laokou.common.core.constant.Constant.AUTHORIZATION;
 import static org.laokou.common.core.constant.Constant.TRACE_ID;
 
 /**
@@ -47,7 +47,7 @@ public class OpenFeignAutoConfig implements RequestInterceptor {
 	public void apply(RequestTemplate template) {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		template.header(TRACE_ID, request.getHeader(TRACE_ID));
-		template.header(AUTHORIZATION_HEAD, request.getHeader(AUTHORIZATION_HEAD));
+		template.header(AUTHORIZATION, request.getHeader(AUTHORIZATION));
 	}
 
 	@Bean

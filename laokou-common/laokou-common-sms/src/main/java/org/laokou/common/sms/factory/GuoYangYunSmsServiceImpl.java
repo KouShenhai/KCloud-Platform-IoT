@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.sms.factory;
@@ -23,11 +23,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.laokou.common.core.constant.Constant;
-import org.laokou.common.i18n.core.CustomException;
+import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.i18n.core.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.freemarker.utils.TemplateUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -37,6 +36,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.laokou.common.sms.exception.ErrorCode.*;
 
 /**
  * @author laokou
@@ -52,11 +53,9 @@ public class GuoYangYunSmsServiceImpl implements SmsService {
 
 	private static final Map<String, String> ERROR_MAP = new HashMap<>(7);
 
-	private static final Map<String, Integer> SMS_STATUS_CODE_MAP = Map.of("1204",
-			StatusCode.SMS_SIGNATURE_NOT_REPORTED, "1205", StatusCode.SMS_SIGNATURE_NOT_AVAILABLE, "1302",
-			StatusCode.SMS_CONTENT_CONTAINS_SENSITIVE, "1304", StatusCode.SMS_CONTENT_TOO_LONG, "1320",
-			StatusCode.SMS_TEMPLATE_ID_NOT_EXIST, "1403", StatusCode.MOBILE_ERROR, "1905",
-			StatusCode.SMS_VERIFICATION_FAILED);
+	private static final Map<String, Integer> SMS_STATUS_CODE_MAP = Map.of("1204", SMS_SIGNATURE_NOT_REPORTED, "1205",
+			SMS_SIGNATURE_NOT_AVAILABLE, "1302", SMS_CONTENT_CONTAINS_SENSITIVE, "1304", SMS_CONTENT_TOO_LONG, "1320",
+			SMS_TEMPLATE_ID_NOT_EXIST, "1403", MOBILE_ERROR, "1905", SMS_VERIFICATION_FAILED);
 
 	private final RedisUtil redisUtil;
 
@@ -96,23 +95,22 @@ public class GuoYangYunSmsServiceImpl implements SmsService {
 	public Boolean sendSms(String mobile) throws TemplateException, IOException {
 		boolean mobileRegex = RegexUtil.mobileRegex(mobile);
 		if (!mobileRegex) {
-			throw new CustomException(StatusCode.MOBILE_ERROR, MessageUtil.getMessage(StatusCode.MOBILE_ERROR));
+			throw new CustomException(MOBILE_ERROR, MessageUtil.getMessage(MOBILE_ERROR));
 		}
 		String templateId = guoYangYunProperties.getTemplateId();
 		String appcode = guoYangYunProperties.getAppcode();
 		String signId = guoYangYunProperties.getSignId();
 		// 验证模块id
-		boolean exist = TEMPLATE_MAP.keySet().contains(templateId);
+		boolean exist = TEMPLATE_MAP.containsKey(templateId);
 		if (!exist) {
-			throw new CustomException(StatusCode.SMS_TEMPLATE_ID_NOT_EXIST,
-					MessageUtil.getMessage(StatusCode.SMS_TEMPLATE_ID_NOT_EXIST));
+			throw new CustomException(SMS_TEMPLATE_ID_NOT_EXIST, MessageUtil.getMessage(SMS_TEMPLATE_ID_NOT_EXIST));
 		}
 		int minute = 5;
 		String captcha = RandomStringUtils.randomNumeric(6);
 		Map<String, Object> param = Map.of("captcha", captcha, "minute", minute);
 		String paramValue = TemplateUtil.getContent(PARAMS_TEMPLATE, param);
 		// 最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
-		Map<String, String> headers = Map.of(Constant.AUTHORIZATION_HEAD, "APPCODE " + appcode);
+		Map<String, String> headers = Map.of(Constant.AUTHORIZATION, "APPCODE " + appcode);
 		// smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
 		Map<String, String> params = Map.of("mobile", mobile, "param", paramValue, "smsSignId", signId, "templateId",
 				templateId);

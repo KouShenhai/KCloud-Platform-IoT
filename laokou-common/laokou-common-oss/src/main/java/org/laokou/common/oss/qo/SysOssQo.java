@@ -18,7 +18,7 @@
 package org.laokou.common.oss.qo;
 
 import lombok.Data;
-import org.laokou.common.mybatisplus.entity.BasePage;
+import org.laokou.common.i18n.dto.Page;
 
 import java.io.Serial;
 
@@ -26,7 +26,7 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-public class SysOssQo extends BasePage {
+public class SysOssQo extends Page {
 
 	@Serial
 	private static final long serialVersionUID = -304651989990602646L;

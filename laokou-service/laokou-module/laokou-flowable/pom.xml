@@ -30,6 +30,7 @@
     <modules>
         <module>laokou-flowable-client</module>
         <module>laokou-flowable-server</module>
+        <module>laokou-flowable-adapter</module>
     </modules>
 
 </project>

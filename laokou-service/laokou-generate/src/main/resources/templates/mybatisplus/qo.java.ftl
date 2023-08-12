@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
     </#if>
 </#if>
-import org.laokou.common.mybatisplus.entity.BasePage;
+import org.laokou.common.i18n.dto.BasePage;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serial;
 /**

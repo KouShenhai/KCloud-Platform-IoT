@@ -25,56 +25,49 @@ public final class RedisKeyUtil {
 	 * 验证码Key
 	 */
 	public static String getUserCaptchaKey(String uuid) {
-		return "sys:user:captcha:" + uuid;
+		return "user:captcha:" + uuid;
 	}
 
 	/**
 	 * 菜单树Key
 	 */
 	public static String getResourceTreeKey(Long userId) {
-		return "sys:resource:tree:" + userId;
+		return "resource:tree:" + userId;
 	}
 
 	/**
 	 * 用户信息Key
 	 */
 	public static String getUserInfoKey(String token) {
-		return "sys:user:info:" + token;
+		return "user:info:" + token;
 	}
 
 	/**
 	 * 二级缓存Key
 	 */
 	public static String getDataCacheKey(String name, Long id) {
-		return "sys:" + name + ":cache:" + id;
+		return name + ":cache:" + id;
 	}
 
 	/**
 	 * 布隆过滤器Key
 	 */
 	public static String getBloomFilterKey() {
-		return "sys:bloom:filter";
+		return "bloom:filter";
 	}
 
 	/**
 	 * OSS配置Key
 	 */
 	public static String getOssConfigKey(Long tenantId) {
-		return "sys:oss:config:" + tenantId;
+		return "oss:config:" + tenantId;
 	}
 
 	/**
 	 * 全量同步索引Key
 	 */
 	public static String getSyncIndexKey(String code) {
-		return "sys:resource:sync:" + code;
-	}
-
-	/**
-	 * 未读消息key
-	 */
-	public static String getMessageUnReadKey(Long userId) {
-		return "sys:message:unread:" + userId;
+		return "sync:index:" + code;
 	}
 
 	/**
@@ -95,14 +88,14 @@ public final class RedisKeyUtil {
 	 * 用户踢出Key
 	 */
 	public static String getUserKillKey(String token) {
-		return "sys:user:kill:" + token;
+		return "user:kill:" + token;
 	}
 
 	/**
 	 * 接口幂等性令牌Key
 	 */
 	public static String getIdempotentTokenKey(String token) {
-		return "sys:idempotent:token:" + token;
+		return "idempotent:token:" + token;
 	}
 
 }

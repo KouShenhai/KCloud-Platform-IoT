@@ -33,7 +33,7 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-auth-client</artifactId>
+            <artifactId>laokou-common-security</artifactId>
         </dependency>
     </dependencies>
 
