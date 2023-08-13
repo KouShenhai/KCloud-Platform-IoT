@@ -25,13 +25,11 @@ import org.laokou.common.i18n.utils.MessageUtil;
 import java.io.Serial;
 
 /**
- * 统一返回结果实体类
- *
  * @author laokou
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Schema(name = "HttpResult", description = "统一返回结果实体类")
+@Schema(name = "HttpResult", description = "响应")
 public class Result<T> extends DTO {
 
 	@Serial
