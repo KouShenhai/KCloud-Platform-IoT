@@ -31,7 +31,6 @@ import java.util.List;
 public class SysRoleDeptServiceImpl extends ServiceImpl<SysRoleDeptMapper, SysRoleDeptDO>
 		implements SysRoleDeptService {
 
-	@Override
 	public void insertBatch(List<SysRoleDeptDO> list) {
 		this.baseMapper.insertBatch(list);
 	}

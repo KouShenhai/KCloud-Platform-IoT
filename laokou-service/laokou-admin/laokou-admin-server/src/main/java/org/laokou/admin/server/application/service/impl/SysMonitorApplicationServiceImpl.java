@@ -16,10 +16,10 @@
  */
 package org.laokou.admin.server.application.service.impl;
 
+import com.alibaba.nacos.shaded.io.grpc.Server;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.server.application.service.SysMonitorApplicationService;
 import org.laokou.admin.client.vo.CacheVO;
-import org.laokou.admin.client.dto.clientobject.Server;
+import org.laokou.admin.server.application.service.SysMonitorApplicationService;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;
 
@@ -42,10 +42,15 @@ public class SysMonitorApplicationServiceImpl implements SysMonitorApplicationSe
 	}
 
 	@Override
-	public Server getServerInfo() {
-		Server server = new Server();
-		server.copyTo();
-		return server;
+	public Server getServerInfo() throws Exception {
+		return null;
 	}
+
+//	@Override
+//	public Server getServerInfo() {
+////		Server server = new Server();
+////		server.copyTo();
+////		return server;
+//	}
 
 }
