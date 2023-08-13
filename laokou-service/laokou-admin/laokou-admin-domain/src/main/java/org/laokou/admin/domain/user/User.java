@@ -19,6 +19,7 @@ package org.laokou.admin.domain.user;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -48,5 +49,9 @@ public class User {
 	private Long deptId;
 
 	private Integer version;
+
+	private LocalDateTime createDate;
+
+	private Integer superAdmin;
 
 }

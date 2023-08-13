@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -36,5 +37,9 @@ public class UserCO extends ClientObject {
 	private Long editor;
 
 	private Long deptId;
+
+	private LocalDateTime createDate;
+
+	private Integer superAdmin;
 
 }
