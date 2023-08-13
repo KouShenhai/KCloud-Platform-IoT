@@ -19,7 +19,6 @@ package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
-import jodd.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.client.dto.clientobject.OptionCO;
@@ -32,6 +31,8 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.data.filter.annotation.DataFilter;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.DynamicTableContextHolder;
@@ -133,6 +134,48 @@ public class UserGatewayImpl implements UserGateway {
 		return new ArrayList<>(0);
 	}
 
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	@DS(Constant.SHARDING_SPHERE)
+	public Boolean updatePwd(User user) {
+		UserDO updateUserPwdDO = getUpdateUserPwdDO(user);
+		return userMapper.updateUser(updateUserPwdDO) > 0;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	@DS(Constant.SHARDING_SPHERE)
+	public Boolean updateStatus(User user) {
+		UserDO updateUserDO = getUpdateUserDO(user);
+		return userMapper.updateUser(updateUserDO) > 0;
+	}
+
+	@Override
+	@DS(Constant.SHARDING_SPHERE)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
+	public User getById(Long id) {
+		try {
+			UserDO userDO = userMapper.selectById(id);
+			DynamicTableContextHolder.set(DEFAULT_SOURCE);
+		}
+		catch (Exception e) {
+			log.error("错误信息：{}", e.getMessage());
+			throw e;
+		}
+		finally {
+			DynamicTableContextHolder.clear();
+		}
+		return null;
+	}
+
+	@Override
+	@DataFilter(tableAlias = "boot_sys_user")
+	@DS(Constant.SHARDING_SPHERE)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
+	public Datas<User> list() {
+		return null;
+	}
+
 	private Boolean deleteUserRole(UserDO userDO) {
 		List<Long> ids = userRoleMapper.getIdsByUserId(userDO.getId());
 		if (CollectionUtil.isNotEmpty(ids)) {
@@ -152,11 +195,13 @@ public class UserGatewayImpl implements UserGateway {
 		UserDO userDO = UserConvertor.toDataObject(user);
 		userDO.setEditor(UserUtil.getUserId());
 		userDO.setVersion(userRoleMapper.getVersion(userDO.getId()));
-		String password = userDO.getPassword();
-		if (StringUtil.isNotBlank(password)) {
-			userDO.setPassword(passwordEncoder.encode(password));
-		}
 		return userDO;
+	}
+
+	private UserDO getUpdateUserPwdDO(User user) {
+		UserDO updateUserDO = getUpdateUserDO(user);
+		updateUserDO.setPassword(passwordEncoder.encode(updateUserDO.getPassword()));
+		return updateUserDO;
 	}
 
 	private void insertBatch(Long userId, List<Long> roleIds) {

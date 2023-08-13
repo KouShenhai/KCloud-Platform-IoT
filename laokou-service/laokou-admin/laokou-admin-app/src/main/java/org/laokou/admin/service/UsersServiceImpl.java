@@ -29,10 +29,15 @@ import java.util.List;
 public class UsersServiceImpl implements UsersServiceI {
 
 	private final UserUpdateCmdExe userUpdateCmdExe;
+
 	private final UserInsertCmdExe userInsertCmdExe;
+
 	private final UserOnlineKillCmdExe userOnlineKillCmdExe;
+
 	private final UserOnlineListQryExe userOnlineListQryExe;
+
 	private final UserProfileGetQryExe userProfileGetQryExe;
+
 	private final UserOptionListQryExe userOptionListQryExe;
 
 	@Override

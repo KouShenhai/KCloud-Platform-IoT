@@ -29,15 +29,13 @@ import org.laokou.common.mybatisplus.methods.GetVersion;
 import java.util.List;
 
 /**
- * <a href=
- * "https://baomidou.com/pages/49cc81/#mapper-%E5%B1%82-%E9%80%89%E8%A3%85%E4%BB%B6">...</a>
- *
  * @author laokou
  */
 public class MybatisPlusSqlInjector extends DefaultSqlInjector {
 
 	@Override
 	public List<AbstractMethod> getMethodList(Class<?> mapperClass, TableInfo tableInfo) {
+		// https://baomidou.com/pages/49cc81/#mapper-%E5%B1%82-%E9%80%89%E8%A3%85%E4%BB%B6
 		List<AbstractMethod> methodList = super.getMethodList(mapperClass, tableInfo);
 		methodList.add(new GetVersion("getVersion"));
 		// 去掉 update 填充的字段

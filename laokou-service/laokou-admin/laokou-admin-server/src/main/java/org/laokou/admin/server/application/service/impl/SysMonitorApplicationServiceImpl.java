@@ -46,11 +46,11 @@ public class SysMonitorApplicationServiceImpl implements SysMonitorApplicationSe
 		return null;
 	}
 
-//	@Override
-//	public Server getServerInfo() {
-////		Server server = new Server();
-////		server.copyTo();
-////		return server;
-//	}
+	// @Override
+	// public Server getServerInfo() {
+	//// Server server = new Server();
+	//// server.copyTo();
+	//// return server;
+	// }
 
 }

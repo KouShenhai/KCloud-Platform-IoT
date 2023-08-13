@@ -28,6 +28,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class UserOnlineKillCmd extends CommonCommand {
 
-    private String token;
+	private String token;
 
 }

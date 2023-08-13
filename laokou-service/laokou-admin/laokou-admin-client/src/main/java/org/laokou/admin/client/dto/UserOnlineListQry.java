@@ -28,6 +28,6 @@ import org.laokou.common.i18n.dto.Page;
 @EqualsAndHashCode(callSuper = true)
 public class UserOnlineListQry extends Page {
 
-    private String username;
+	private String username;
 
 }

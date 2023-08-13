@@ -16,6 +16,7 @@
  */
 
 package org.laokou.admin.command.query;
+
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.UserOnlineListQry;
 import org.laokou.admin.client.dto.clientobject.UserOnlineCO;
@@ -39,44 +40,44 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class UserOnlineListQryExe {
 
-    private final RedisUtil redisUtil;
+	private final RedisUtil redisUtil;
 
-    public Result<Datas<UserOnlineCO>> execute(UserOnlineListQry qry) {
-        return Result.of(getDatas(qry));
-    }
+	public Result<Datas<UserOnlineCO>> execute(UserOnlineListQry qry) {
+		return Result.of(getDatas(qry));
+	}
 
-    private String getUserInfoPatternKey() {
-        return RedisKeyUtil.getUserInfoKey("*");
-    }
+	private String getUserInfoPatternKey() {
+		return RedisKeyUtil.getUserInfoKey("*");
+	}
 
-    private Set<String> getKeys() {
-        return redisUtil.keys(getUserInfoPatternKey());
-    }
+	private Set<String> getKeys() {
+		return redisUtil.keys(getUserInfoPatternKey());
+	}
 
-    private String getUserKeyPrefix() {
-        return RedisKeyUtil.getUserInfoKey("");
-    }
+	private String getUserKeyPrefix() {
+		return RedisKeyUtil.getUserInfoKey("");
+	}
 
-    private Datas<UserOnlineCO> getDatas(UserOnlineListQry qry) {
-        Set<String> keys = getKeys();
-        String keyword = qry.getUsername();
-        Integer pageNum = qry.getPageNum();
-        Integer pageSize = qry.getPageSize();
-        List<UserOnlineCO> list = new ArrayList<>(keys.size());
-        String userInfoKeyPrefix = getUserKeyPrefix();
-        for (String key : keys) {
-            User user = (User) redisUtil.get(key);
-            String username = AesUtil.decrypt(user.getUsername());
-            if (StringUtil.isEmpty(keyword) || username.contains(keyword)) {
-                UserOnlineCO co = new UserOnlineCO();
-                co.setUsername(username);
-                co.setToken(key.substring(userInfoKeyPrefix.length()));
-                co.setLoginIp(user.getLoginIp());
-                co.setLoginDate(user.getLoginDate());
-                list.add(co);
-            }
-        }
-        return new Datas<>(list.size(),list.stream().limit(pageSize).skip((long) (pageNum - 1) * pageSize).toList());
-    }
+	private Datas<UserOnlineCO> getDatas(UserOnlineListQry qry) {
+		Set<String> keys = getKeys();
+		String keyword = qry.getUsername();
+		Integer pageNum = qry.getPageNum();
+		Integer pageSize = qry.getPageSize();
+		List<UserOnlineCO> list = new ArrayList<>(keys.size());
+		String userInfoKeyPrefix = getUserKeyPrefix();
+		for (String key : keys) {
+			User user = (User) redisUtil.get(key);
+			String username = AesUtil.decrypt(user.getUsername());
+			if (StringUtil.isEmpty(keyword) || username.contains(keyword)) {
+				UserOnlineCO co = new UserOnlineCO();
+				co.setUsername(username);
+				co.setToken(key.substring(userInfoKeyPrefix.length()));
+				co.setLoginIp(user.getLoginIp());
+				co.setLoginDate(user.getLoginDate());
+				list.add(co);
+			}
+		}
+		return new Datas<>(list.size(), list.stream().limit(pageSize).skip((long) (pageNum - 1) * pageSize).toList());
+	}
 
 }

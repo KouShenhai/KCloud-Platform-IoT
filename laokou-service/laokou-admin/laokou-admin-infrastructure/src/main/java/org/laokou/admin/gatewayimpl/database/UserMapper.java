@@ -44,6 +44,6 @@ public interface UserMapper extends BaseMapper<UserDO> {
 	 * @param tenantId
 	 * @return
 	 */
-	List<UserDO> getOptionListByTenantId(@Param("tenantId")Long tenantId);
+	List<UserDO> getOptionListByTenantId(@Param("tenantId") Long tenantId);
 
 }

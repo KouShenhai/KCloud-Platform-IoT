@@ -30,9 +30,12 @@ import java.time.LocalDateTime;
 @Data
 public class UserOnlineCO extends ClientObject {
 
-    private String token;
-    private String username;
-    private String loginIp;
-    private LocalDateTime loginDate;
+	private String token;
+
+	private String username;
+
+	private String loginIp;
+
+	private LocalDateTime loginDate;
 
 }

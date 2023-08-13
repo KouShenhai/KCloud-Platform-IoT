@@ -30,11 +30,11 @@ import java.io.Serial;
 @Data
 public class OptionCO extends ClientObject {
 
-    @Serial
-    private static final long serialVersionUID = -4146348495335527374L;
+	@Serial
+	private static final long serialVersionUID = -4146348495335527374L;
 
-    private String label;
+	private String label;
 
-    private String value;
+	private String value;
 
 }
