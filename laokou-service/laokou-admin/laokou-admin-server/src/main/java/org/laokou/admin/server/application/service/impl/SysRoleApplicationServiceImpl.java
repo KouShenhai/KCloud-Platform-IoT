@@ -110,7 +110,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 				roleMenuDO.setId(IdGenerator.defaultSnowflakeId());
 				roleMenuList.add(roleMenuDO);
 			}
-			//batchUtil.insertBatch(roleMenuList, sysRoleMenuService::insertBatch);
+			// batchUtil.insertBatch(roleMenuList, sysRoleMenuService::insertBatch);
 		}
 		if (CollectionUtil.isNotEmpty(deptIds)) {
 			List<SysRoleDeptDO> roleDeptList = new ArrayList<>(deptIds.size());
@@ -121,7 +121,7 @@ public class SysRoleApplicationServiceImpl implements SysRoleApplicationService 
 				roleDeptDO.setId(IdGenerator.defaultSnowflakeId());
 				roleDeptList.add(roleDeptDO);
 			}
-			//batchUtil.insertBatch(roleDeptList, sysRoleDeptService::insertBatch);
+			// batchUtil.insertBatch(roleDeptList, sysRoleDeptService::insertBatch);
 		}
 	}
 

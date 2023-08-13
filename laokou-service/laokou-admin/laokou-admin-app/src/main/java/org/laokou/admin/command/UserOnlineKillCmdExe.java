@@ -33,18 +33,18 @@ import static org.laokou.common.core.constant.Constant.DEFAULT;
 @RequiredArgsConstructor
 public class UserOnlineKillCmdExe {
 
-    private final RedisUtil redisUtil;
+	private final RedisUtil redisUtil;
 
-    public Result<Boolean> execute(UserOnlineKillCmd cmd) {
-        String token = cmd.getToken();
-        String userKillKey = RedisKeyUtil.getUserKillKey(token);
-        String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-        long expire = redisUtil.getExpire(userInfoKey);
-        if (expire > 0) {
-            redisUtil.set(userKillKey, DEFAULT, expire);
-            return Result.of(redisUtil.delete(userInfoKey));
-        }
-        return Result.of(false);
-    }
+	public Result<Boolean> execute(UserOnlineKillCmd cmd) {
+		String token = cmd.getToken();
+		String userKillKey = RedisKeyUtil.getUserKillKey(token);
+		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
+		long expire = redisUtil.getExpire(userInfoKey);
+		if (expire > 0) {
+			redisUtil.set(userKillKey, DEFAULT, expire);
+			return Result.of(redisUtil.delete(userInfoKey));
+		}
+		return Result.of(false);
+	}
 
 }

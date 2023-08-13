@@ -31,21 +31,21 @@ import java.util.List;
 @Data
 public class UserProfileCO extends ClientObject {
 
-    @Serial
-    private static final long serialVersionUID = 5297753219988591611L;
+	@Serial
+	private static final long serialVersionUID = 5297753219988591611L;
 
-    private Long id;
+	private Long id;
 
-    private String avatar;
+	private String avatar;
 
-    private String username;
+	private String username;
 
-    private String mobile;
+	private String mobile;
 
-    private String mail;
+	private String mail;
 
-    private List<String> permissionList;
+	private List<String> permissionList;
 
-    private Long tenantId;
+	private Long tenantId;
 
 }

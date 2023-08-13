@@ -15,11 +15,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserUpdateCmdExe {
 
-    private final UserGateway userGateway;
+	private final UserGateway userGateway;
 
-    public Result<Boolean> execute(UserUpdateCmd cmd) {
-        User user = ConvertUtil.sourceToTarget(cmd.getUserCO(), User.class);
-        return Result.of(userGateway.update(user));
-    }
+	public Result<Boolean> execute(UserUpdateCmd cmd) {
+		User user = ConvertUtil.sourceToTarget(cmd.getUserCO(), User.class);
+		return Result.of(userGateway.update(user));
+	}
 
 }

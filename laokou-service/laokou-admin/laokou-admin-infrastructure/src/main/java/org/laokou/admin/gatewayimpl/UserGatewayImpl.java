@@ -19,7 +19,6 @@ package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
-import jodd.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.client.dto.clientobject.OptionCO;
@@ -152,10 +151,6 @@ public class UserGatewayImpl implements UserGateway {
 		UserDO userDO = UserConvertor.toDataObject(user);
 		userDO.setEditor(UserUtil.getUserId());
 		userDO.setVersion(userRoleMapper.getVersion(userDO.getId()));
-		String password = userDO.getPassword();
-		if (StringUtil.isNotBlank(password)) {
-			userDO.setPassword(passwordEncoder.encode(password));
-		}
 		return userDO;
 	}
 

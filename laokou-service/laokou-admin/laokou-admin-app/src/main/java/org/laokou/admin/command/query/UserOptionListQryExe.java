@@ -33,10 +33,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserOptionListQryExe {
 
-    private final UserGateway userGateway;
+	private final UserGateway userGateway;
 
-    public Result<List<OptionCO>> execute() {
-        return Result.of(userGateway.getOptionList(UserUtil.getTenantId()));
-    }
+	public Result<List<OptionCO>> execute() {
+		return Result.of(userGateway.getOptionList(UserUtil.getTenantId()));
+	}
 
 }

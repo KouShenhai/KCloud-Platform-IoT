@@ -29,8 +29,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserProfileGetQryExe {
 
-    public Result<UserProfileCO> execute() {
-        return Result.of(ConvertUtil.sourceToTarget(UserUtil.user(),UserProfileCO.class));
-    }
+	public Result<UserProfileCO> execute() {
+		return Result.of(ConvertUtil.sourceToTarget(UserUtil.user(), UserProfileCO.class));
+	}
 
 }

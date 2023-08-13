@@ -33,11 +33,11 @@ import java.util.List;
 @Mapper
 public interface UserRoleMapper extends BatchMapper<UserRoleDO>, BaseMapper<UserRoleDO> {
 
-    /**
-     * 根据用户ID查询IDS
-     * @param userId 用户ID
-     * @return List<Long>
-     */
-    List<Long> getIdsByUserId(@Param("userId")Long userId);
+	/**
+	 * 根据用户ID查询IDS
+	 * @param userId 用户ID
+	 * @return List<Long>
+	 */
+	List<Long> getIdsByUserId(@Param("userId") Long userId);
 
 }
