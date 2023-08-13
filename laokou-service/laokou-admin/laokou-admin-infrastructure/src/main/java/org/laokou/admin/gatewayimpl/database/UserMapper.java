@@ -18,6 +18,7 @@
 package org.laokou.admin.gatewayimpl.database;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
@@ -45,5 +46,13 @@ public interface UserMapper extends BaseMapper<UserDO> {
 	 * @return
 	 */
 	List<UserDO> getOptionListByTenantId(@Param("tenantId") Long tenantId);
+
+	/**
+	 * 查询用户列表
+	 * @param page
+	 * @param userDO
+	 * @return
+	 */
+	List<UserDO> getUserList(IPage<UserDO> page,@Param("userDO")UserDO userDO);
 
 }
