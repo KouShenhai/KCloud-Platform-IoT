@@ -53,6 +53,6 @@ public interface UserMapper extends BaseMapper<UserDO> {
 	 * @param userDO
 	 * @return
 	 */
-	List<UserDO> getUserList(IPage<UserDO> page,@Param("userDO")UserDO userDO);
+	List<UserDO> getUserList(IPage<UserDO> page, @Param("userDO") UserDO userDO);
 
 }
