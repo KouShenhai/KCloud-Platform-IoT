@@ -30,7 +30,6 @@ import java.util.List;
 public class SysPackageMenuServiceImpl extends ServiceImpl<SysPackageMenuMapper, SysPackageMenuDO>
 		implements SysPackageMenuService {
 
-	@Override
 	public void insertBatch(List<SysPackageMenuDO> list) {
 		this.baseMapper.insertBatch(list);
 	}
