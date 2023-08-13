@@ -21,7 +21,8 @@
 <mapper namespace="org.laokou.auth.gatewayimpl.database.SourceMapper">
 
     <select id="getSourceNameByTenantId" resultType="string">
-        select a.`name` from boot_sys_source a
+        select a.`name`
+        from boot_sys_source a
         JOIN boot_sys_tenant b on b.source_id = a.id
         where b.id = #{tenantId}
     </select>
