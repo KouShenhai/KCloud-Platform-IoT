@@ -77,9 +77,15 @@ import static org.laokou.auth.common.Constant.LOGIN_PATTERN;
 class OAuth2AuthorizationServerConfig {
 
 	/**
-	 * <a href=
-	 * "https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html">...</a>
 	 * OAuth2AuthorizationServer核心配置
+	 * @param http http
+	 * @param passwordAuthenticationProvider 密码认证Provider
+	 * @param mailAuthenticationProvider 邮箱认证Provider
+	 * @param mobileAuthenticationProvider 手机号认证Provider
+	 * @param authorizationServerSettings OAuth2配置
+	 * @param authorizationService 认证配置
+	 * @return SecurityFilterChain
+	 * @throws Exception Exception
 	 */
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
@@ -89,15 +95,16 @@ class OAuth2AuthorizationServerConfig {
 			OAuth2MobileAuthenticationProvider mobileAuthenticationProvider,
 			AuthorizationServerSettings authorizationServerSettings, OAuth2AuthorizationService authorizationService)
 			throws Exception {
+		// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html
 		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 		OAuth2AuthorizationServerConfigurer oAuth2AuthorizationServerConfigurer = http
 				.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
 				// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
 				.tokenEndpoint((tokenEndpoint) -> tokenEndpoint
 						.accessTokenRequestConverter(new DelegatingAuthenticationConverter(List.of(
-								new OAuth2PasswordAuthenticationConverter(),
+								new OAuth2MailAuthenticationConverter(), new OAuth2PasswordAuthenticationConverter(),
 								new OAuth2DeviceCodeAuthenticationConverter(),
-								new OAuth2MobileAuthenticationConverter(), new OAuth2MailAuthenticationConverter(),
+								new OAuth2MobileAuthenticationConverter(),
 								new OAuth2AuthorizationCodeAuthenticationConverter(),
 								new OAuth2ClientCredentialsAuthenticationConverter(),
 								new OAuth2RefreshTokenAuthenticationConverter(),
@@ -125,6 +132,9 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 注册信息
+	 * @param properties 配置
+	 * @param jdbcTemplate JDBC模板
+	 * @return RegisteredClientRepository
 	 */
 	@Bean
 	@ConditionalOnMissingBean(RegisteredClientRepository.class)
@@ -168,6 +178,8 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 配置
+	 * @param jwtEncoder 加密编码
+	 * @return OAuth2TokenGenerator<OAuth2Token>
 	 */
 	@Bean
 	OAuth2TokenGenerator<OAuth2Token> oAuth2TokenGenerator(JwtEncoder jwtEncoder) {
@@ -177,6 +189,7 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 配置
+	 * @return AuthorizationServerSettings
 	 */
 	@Bean
 	@ConditionalOnMissingBean(AuthorizationServerSettings.class)
@@ -185,7 +198,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * 密码编码器
+	 * 密码编码
 	 * @return PasswordEncoder
 	 */
 	@Bean
@@ -195,7 +208,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	/**
-	 * @param jdbcTemplate jdbc模板
+	 * @param jdbcTemplate JDBC模板
 	 * @param registeredClientRepository 注册信息
 	 * @return OAuth2AuthorizationService
 	 */
@@ -208,6 +221,9 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 配置
+	 * @param passwordEncoder 密码编码
+	 * @param usersServiceImpl 用户认证
+	 * @return AuthenticationProvider
 	 */
 	@Bean
 	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder, UsersServiceImpl usersServiceImpl) {
@@ -219,6 +235,8 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 配置
+	 * @param jwkSource 加密源
+	 * @return JwtEncoder
 	 */
 	@Bean
 	JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
@@ -227,7 +245,7 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 配置
-	 * @param jdbcTemplate jdbc模板
+	 * @param jdbcTemplate JDBC模板
 	 * @param registeredClientRepository 注册信息
 	 * @return OAuth2AuthorizationConsentService
 	 */
