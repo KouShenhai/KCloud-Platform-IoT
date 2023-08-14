@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.freemarker.utils;
+package org.laokou.common.core.utils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -37,7 +37,7 @@ public class TemplateUtil extends FreeMarkerTemplateUtils {
 
 	public static String getContent(String template, Map<String, Object> params) throws IOException, TemplateException {
 		Template temp = getTemplate(template);
-		return processTemplateIntoString(temp, params);
+		return FreeMarkerTemplateUtils.processTemplateIntoString(temp, params);
 	}
 
 	private static Template getTemplate(String template) throws IOException {

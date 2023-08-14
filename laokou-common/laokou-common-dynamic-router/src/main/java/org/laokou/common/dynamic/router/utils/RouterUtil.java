@@ -28,7 +28,7 @@ import org.laokou.common.dynamic.router.RouteDefinition;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.utils.ApiUtil;
 import org.laokou.common.nacos.vo.ConfigVO;
-import org.laokou.freemarker.utils.TemplateUtil;
+import org.laokou.common.core.utils.TemplateUtil;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 

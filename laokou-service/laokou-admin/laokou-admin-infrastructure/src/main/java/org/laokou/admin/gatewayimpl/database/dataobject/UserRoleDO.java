@@ -22,9 +22,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 /**
  * @author laokou
@@ -32,14 +32,10 @@ import java.io.Serializable;
 @Data
 @TableName(value = "boot_sys_user_role")
 @Schema(name = "UserRoleDO", description = "用户角色")
-public class UserRoleDO implements Serializable {
+public class UserRoleDO extends BaseDO {
 
 	@Serial
 	private static final long serialVersionUID = -3464670573494984526L;
-
-	@TableId(type = IdType.INPUT)
-	@Schema(name = "id", description = "ID")
-	private Long id;
 
 	@Schema(name = "roleId", description = "角色ID")
 	private Long roleId;

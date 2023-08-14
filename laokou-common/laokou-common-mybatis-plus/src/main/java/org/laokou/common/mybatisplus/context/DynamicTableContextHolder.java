@@ -12,19 +12,28 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ * 
  */
 
-package org.laokou.common.p6spy.config.auto;
-
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+package org.laokou.common.mybatisplus.context;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
-@ComponentScan("org.laokou.common.p6spy")
-public class P6spyAutoConfig {
+public class DynamicTableContextHolder {
+
+	private static final ThreadLocal<String> CONTEXT_HOLDER = new InheritableThreadLocal<>();
+
+	public static void set(String tableName) {
+		CONTEXT_HOLDER.set(tableName);
+	}
+
+	public static void clear() {
+		CONTEXT_HOLDER.remove();
+	}
+
+	public static String get() {
+		return CONTEXT_HOLDER.get();
+	}
 
 }

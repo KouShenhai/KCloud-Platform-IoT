@@ -21,29 +21,24 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 /**
  * 系统角色部门
  *
  * @author laokou
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("boot_sys_role_dept")
 @Schema(name = "SysRoleDeptDO", description = "系统角色部门实体类")
-public class SysRoleDeptDO implements Serializable {
+public class SysRoleDeptDO extends BaseDO {
 
 	@Serial
 	private static final long serialVersionUID = 8958375447263625932L;
-
-	/**
-	 * id
-	 */
-	@TableId(type = IdType.INPUT)
-	@Schema(name = "id", description = "id")
-	private Long id;
 
 	/**
 	 * 角色id
