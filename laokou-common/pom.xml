@@ -53,7 +53,6 @@
         <module>laokou-common-oss</module>
         <module>laokou-common-power-job</module>
         <module>laokou-common-rocketmq</module>
-        <module>laokou-common-freemarker</module>
         <module>laokou-common-hbase</module>
         <module>laokou-common-mongodb</module>
         <module>laokou-common-sentinel</module>
@@ -73,7 +72,6 @@
         <module>laokou-common-seata</module>
         <module>laokou-common-xxl-job</module>
         <module>laokou-common-shardingsphere</module>
-        <module>laokou-common-p6spy</module>
         <module>laokou-common-log4j2</module>
         <module>laokou-common-trace</module>
         <module>laokou-common-logback</module>

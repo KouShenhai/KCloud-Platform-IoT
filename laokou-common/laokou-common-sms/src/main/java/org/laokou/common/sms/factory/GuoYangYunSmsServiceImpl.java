@@ -28,7 +28,7 @@ import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.freemarker.utils.TemplateUtil;
+import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;

@@ -24,7 +24,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.mail.service.MailService;
-import org.laokou.freemarker.utils.TemplateUtil;
+import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Value;

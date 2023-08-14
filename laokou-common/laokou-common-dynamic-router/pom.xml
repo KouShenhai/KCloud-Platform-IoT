@@ -37,10 +37,6 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-freemarker</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-nacos</artifactId>
             <exclusions>
                 <exclusion>
