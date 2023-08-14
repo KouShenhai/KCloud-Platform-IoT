@@ -21,9 +21,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 /**
  * 系统角色菜单
@@ -33,17 +33,10 @@ import java.io.Serializable;
 @Data
 @TableName("boot_sys_role_menu")
 @Schema(name = "SysRoleMenuDO", description = "系统角色菜单实体类")
-public class SysRoleMenuDO implements Serializable {
+public class SysRoleMenuDO extends BaseDO {
 
 	@Serial
 	private static final long serialVersionUID = -4300621783981688988L;
-
-	/**
-	 * id
-	 */
-	@TableId(type = IdType.INPUT)
-	@Schema(name = "id", description = "id")
-	private Long id;
 
 	/**
 	 * 菜单id

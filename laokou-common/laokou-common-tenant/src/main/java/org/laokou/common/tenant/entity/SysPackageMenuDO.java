@@ -22,27 +22,22 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 /**
  * @author laokou
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("boot_sys_package_menu")
 @Schema(name = "SysPackageMenuDO", description = "系统套餐菜单实体类")
-public class SysPackageMenuDO implements Serializable {
+public class SysPackageMenuDO extends BaseDO {
 
 	@Serial
 	private static final long serialVersionUID = 683935513335526615L;
-
-	/**
-	 * id
-	 */
-	@TableId(type = IdType.INPUT)
-	@Schema(name = "id", description = "id")
-	private Long id;
 
 	/**
 	 * 套餐id
