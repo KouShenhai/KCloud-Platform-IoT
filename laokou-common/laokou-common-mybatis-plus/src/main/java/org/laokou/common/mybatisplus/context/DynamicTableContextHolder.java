@@ -15,7 +15,7 @@
  * 
  */
 
-package org.laokou.common.mybatisplus.utils;
+package org.laokou.common.mybatisplus.context;
 
 /**
  * @author laokou

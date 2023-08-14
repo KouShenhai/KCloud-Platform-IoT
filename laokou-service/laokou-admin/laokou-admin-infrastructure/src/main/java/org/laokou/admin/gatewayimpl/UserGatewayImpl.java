@@ -35,7 +35,7 @@ import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
-import org.laokou.common.mybatisplus.utils.DynamicTableContextHolder;
+import org.laokou.common.mybatisplus.context.DynamicTableContextHolder;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
