@@ -1,4 +1,5 @@
 module laokou.common.data.filter {
+    exports org.laokou.common.data.filter.annotation;
     requires spring.context;
     requires org.aspectj.weaver;
     requires lombok;

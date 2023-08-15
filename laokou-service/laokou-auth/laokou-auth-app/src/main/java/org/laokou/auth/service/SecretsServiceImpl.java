@@ -6,6 +6,9 @@ import org.laokou.auth.command.query.SecretGetQryExe;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author laokou
+ */
 @Service
 @RequiredArgsConstructor
 public class SecretsServiceImpl implements SecretsServiceI {

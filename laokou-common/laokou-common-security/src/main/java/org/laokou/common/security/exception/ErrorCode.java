@@ -1,5 +1,8 @@
 package org.laokou.common.security.exception;
 
+/**
+ * @author laokou
+ */
 public interface ErrorCode {
 
 	/**

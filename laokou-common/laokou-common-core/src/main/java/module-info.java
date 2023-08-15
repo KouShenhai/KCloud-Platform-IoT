@@ -23,4 +23,6 @@ module laokou.common.core {
     exports org.laokou.common.core.constant;
     exports org.laokou.common.core.utils;
     exports org.laokou.common.core.enums;
+    exports org.laokou.common.core.holder;
+    exports org.laokou.common.core.vo;
 }

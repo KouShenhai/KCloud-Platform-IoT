@@ -1,4 +1,6 @@
 module laokou.common.data.cache {
+    exports org.laokou.common.data.cache.enums;
+    exports org.laokou.common.data.cache.annotation;
     requires lombok;
     requires org.aspectj.weaver;
     requires spring.context;

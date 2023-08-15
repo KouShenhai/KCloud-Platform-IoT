@@ -1,4 +1,5 @@
 module laokou.common.idempotent {
+    exports org.laokou.common.idempotent.annotation;
     requires lombok;
     requires laokou.common.redis;
     requires spring.data.redis;

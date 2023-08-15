@@ -2,6 +2,9 @@ module laokou.common.elasticsearch {
     exports org.laokou.common.elasticsearch.annotation;
     exports org.laokou.common.elasticsearch.enums;
     exports org.laokou.common.elasticsearch.constant;
+    exports org.laokou.common.elasticsearch.template;
+    exports org.laokou.common.elasticsearch.vo;
+    exports org.laokou.common.elasticsearch.qo;
     requires spring.context;
     requires spring.boot.autoconfigure;
     requires spring.boot;

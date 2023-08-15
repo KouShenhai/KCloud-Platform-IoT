@@ -1,5 +1,8 @@
 package org.laokou.auth.common;
 
+/**
+ * @author laokou
+ */
 public interface Constant {
 
 	/**

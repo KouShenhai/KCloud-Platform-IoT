@@ -1,4 +1,10 @@
 module laokou.common.log {
+    exports org.laokou.common.log.entity;
+    exports org.laokou.common.log.service;
+    exports org.laokou.common.log.event;
+    exports org.laokou.common.log.vo;
+    exports org.laokou.common.log.qo;
+    exports org.laokou.common.log.annotation;
     requires org.aspectj.weaver;
     requires lombok;
     requires spring.core;

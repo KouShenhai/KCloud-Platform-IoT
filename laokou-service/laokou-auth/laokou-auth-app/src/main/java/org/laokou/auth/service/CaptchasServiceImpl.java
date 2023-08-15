@@ -7,6 +7,9 @@ import org.laokou.auth.dto.CaptchaGetQry;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author laokou
+ */
 @Service
 @RequiredArgsConstructor
 public class CaptchasServiceImpl implements CaptchasServiceI {
