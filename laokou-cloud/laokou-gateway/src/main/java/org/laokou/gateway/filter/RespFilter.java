@@ -88,7 +88,8 @@ public class RespFilter implements GlobalFilter, Ordered {
 				assert contentType != null;
 				if (contentType.contains(MediaType.APPLICATION_JSON_VALUE)
 						&& Objects.requireNonNull(response.getStatusCode()).value() != StatusCode.OK
-						&& body instanceof Flux<? extends DataBuffer> fluxBody) {
+						&& body instanceof Flux) {
+					Flux<? extends DataBuffer> fluxBody = (Flux<? extends DataBuffer>) body;
 					return super.writeWith(fluxBody.map(dataBuffer -> {
 						// 修改状态码
 						response.setStatusCode(HttpStatus.OK);
@@ -135,6 +136,9 @@ public class RespFilter implements GlobalFilter, Ordered {
 
 	enum ExceptionEnum {
 
+		/**
+		 * 无效客户端
+		 */
 		INVALID_CLIENT;
 
 		public static ExceptionEnum getInstance(String code) {

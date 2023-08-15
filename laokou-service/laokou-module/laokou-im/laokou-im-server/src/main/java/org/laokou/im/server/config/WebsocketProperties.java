@@ -4,6 +4,9 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author laokou
+ */
 @Data
 @Component
 @ConfigurationProperties(prefix = WebsocketProperties.PREFIX)

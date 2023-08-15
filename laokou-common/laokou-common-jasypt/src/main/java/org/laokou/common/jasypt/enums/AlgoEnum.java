@@ -22,6 +22,13 @@ package org.laokou.common.jasypt.enums;
 
 public enum AlgoEnum {
 
-	AES, MD5
+	/**
+	 * AES
+	 */
+	AES,
+	/**
+	 * MD5
+	 */
+	MD5
 
 }

@@ -28,16 +28,16 @@ import java.nio.charset.StandardCharsets;
  */
 public class MessageUtil {
 
-	private static final ReloadableResourceBundleMessageSource resourceBundleMessageSource;
+	private static final ReloadableResourceBundleMessageSource RESOURCE_BUNDLE_MESSAGE_SOURCE;
 
 	static {
-		resourceBundleMessageSource = new ReloadableResourceBundleMessageSource();
-		resourceBundleMessageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
-		resourceBundleMessageSource.setBasename("classpath:i18n/message");
+		RESOURCE_BUNDLE_MESSAGE_SOURCE = new ReloadableResourceBundleMessageSource();
+		RESOURCE_BUNDLE_MESSAGE_SOURCE.setDefaultEncoding(StandardCharsets.UTF_8.name());
+		RESOURCE_BUNDLE_MESSAGE_SOURCE.setBasename("classpath:i18n/message");
 	}
 
 	public static String getMessage(int code) {
-		return resourceBundleMessageSource.getMessage(String.valueOf(code), null, LocaleContextHolder.getLocale());
+		return RESOURCE_BUNDLE_MESSAGE_SOURCE.getMessage(String.valueOf(code), null, LocaleContextHolder.getLocale());
 	}
 
 }

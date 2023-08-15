@@ -29,7 +29,7 @@ import java.io.Serial;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Schema(name = "HttpResult", description = "响应")
+@Schema(name = "Result", description = "响应")
 public class Result<T> extends DTO {
 
 	@Serial

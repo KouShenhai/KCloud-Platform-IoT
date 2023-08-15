@@ -1,8 +1,6 @@
 package tech.powerjob.server.web.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import tech.powerjob.server.common.module.ServerInfo;
 
 /**

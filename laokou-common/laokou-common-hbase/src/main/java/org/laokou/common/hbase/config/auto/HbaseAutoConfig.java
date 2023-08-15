@@ -16,6 +16,7 @@
  */
 package org.laokou.common.hbase.config.auto;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.HConstants;
 import org.apache.hadoop.hbase.client.Connection;
@@ -24,8 +25,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+
 import java.io.IOException;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -49,8 +50,8 @@ public class HbaseAutoConfig {
 	 * 配置HBase连接参数
 	 */
 	@Bean
-	public org.apache.hadoop.conf.Configuration hbaseConfiguration() {
-		org.apache.hadoop.conf.Configuration configuration = HBaseConfiguration.create();
+	public Configuration hbaseConfiguration() {
+		Configuration configuration = HBaseConfiguration.create();
 		configuration.set(HConstants.ZOOKEEPER_QUORUM, quorum);
 		return configuration;
 	}

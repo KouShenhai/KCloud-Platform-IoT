@@ -24,6 +24,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.jasypt.annotation.Jasypt;
+import org.laokou.common.jasypt.enums.AlgoEnum;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
@@ -45,16 +46,10 @@ public class AesAspect {
 		Method method = signature.getMethod();
 		Jasypt jasypt = AnnotationUtils.findAnnotation(method, Jasypt.class);
 		Object proceed = point.proceed();
-		switch (Objects.requireNonNull(jasypt).type()) {
-			case AES -> {
-				if (proceed instanceof Result<?> result) {
-					Object data = result.getData();
-					AesUtil.transform(data);
-				}
-			}
-			case MD5 -> {
-			}
-			default -> {
+		if (Objects.requireNonNull(jasypt).type() == AlgoEnum.AES) {
+			if (proceed instanceof Result<?> result) {
+				Object data = result.getData();
+				AesUtil.transform(data);
 			}
 		}
 		return proceed;
