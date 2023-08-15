@@ -28,8 +28,6 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 响应工具
- *
  * @author laokou
  */
 public class ResponseUtil {

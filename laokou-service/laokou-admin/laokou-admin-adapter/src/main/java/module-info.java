@@ -1,0 +1,2 @@
+module laokou.admin.adapter {
+}

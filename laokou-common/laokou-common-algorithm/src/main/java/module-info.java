@@ -1,0 +1,2 @@
+module laokou.common.algorithm {
+}
