@@ -19,14 +19,14 @@ package org.laokou.common.easy.excel.suppert;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
-import org.laokou.common.easy.excel.service.ResultService;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.easy.excel.service.ResultService;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -70,29 +70,32 @@ public class ExcelTemplate<Q, T> {
 	 * @param resultService
 	 * @param clazz
 	 */
-	@SneakyThrows
 	public void export(int chunkSize, HttpServletResponse response, Q qo, ResultService<Q, T> resultService,
 			Class<?> clazz) {
-		// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
-		// 设置请求头
-		header(response);
-		List<T> list = Collections.synchronizedList(new ArrayList<>(chunkSize));
-		ServletOutputStream out = response.getOutputStream();
-		ExcelWriter excelWriter = EasyExcel.write(out, clazz).build();
-		resultService.resultList(qo, resultContext -> {
-			T t = resultContext.getResultObject();
-			list.add(t);
-			if (list.size() % chunkSize == 0) {
+		try {
+			// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
+			// 设置请求头
+			header(response);
+			List<T> list = Collections.synchronizedList(new ArrayList<>(chunkSize));
+			ServletOutputStream out = response.getOutputStream();
+			ExcelWriter excelWriter = EasyExcel.write(out, clazz).build();
+			resultService.resultList(qo, resultContext -> {
+				T t = resultContext.getResultObject();
+				list.add(t);
+				if (list.size() % chunkSize == 0) {
+					writeSheet(list, clazz, excelWriter);
+				}
+			});
+			if (list.size() % chunkSize != 0) {
 				writeSheet(list, clazz, excelWriter);
 			}
-		});
-		if (list.size() % chunkSize != 0) {
-			writeSheet(list, clazz, excelWriter);
+			// 刷新数据
+			excelWriter.finish();
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-		// 刷新数据
-		excelWriter.finish();
-		out.flush();
-		out.close();
 	}
 
 	private void writeSheet(List<T> list, Class<?> clazz, ExcelWriter excelWriter) {
