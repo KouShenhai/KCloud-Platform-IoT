@@ -26,4 +26,6 @@ public interface CaptchaGateway {
 
 	Boolean validate(String uuid, String code);
 
+	String key(String uuid);
+
 }
