@@ -2,6 +2,7 @@ package org.laokou.auth.common;
 
 /**
  * 编码由5位数字构成 前2位为应用编号 后3位为业务编号
+ *
  * @author laokou
  */
 public interface BizCode {

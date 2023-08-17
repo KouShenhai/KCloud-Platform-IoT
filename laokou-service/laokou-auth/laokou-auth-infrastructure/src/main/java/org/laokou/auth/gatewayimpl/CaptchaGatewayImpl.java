@@ -77,11 +77,11 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	}
 
 	private void before(String key) {
-		log.info("MD5加密前：{}",key);
+		log.info("MD5加密前：{}", key);
 	}
 
 	private void after(String key) {
-		log.info("MD5加密后：{}",key);
+		log.info("MD5加密后：{}", key);
 	}
 
 }

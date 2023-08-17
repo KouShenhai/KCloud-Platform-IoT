@@ -41,7 +41,7 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 
 	private static final String WEBSOCKET_PATH = "/ws";
 
-	private static final int MAX_CONTENT_LENGTH = 65535;
+	private static final int MAX_CONTENT_LENGTH = 655350;
 
 	@Override
 	protected void initChannel(NioSocketChannel channel) {

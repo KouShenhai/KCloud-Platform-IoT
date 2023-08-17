@@ -52,7 +52,7 @@ public class DataFilterAspect {
 				return;
 			}
 			try {
-				// 否则数据过滤
+				// 数据过滤
 				String sqlFilter = getSqlFilter(user, point);
 				page.setSqlFilter(sqlFilter);
 			}
@@ -75,19 +75,20 @@ public class DataFilterAspect {
 		// 获取表的别名
 		assert dataFilter != null;
 		String tableAlias = dataFilter.tableAlias();
+		String deptIdColumn = dataFilter.deptId();
+		String userIdColumn = dataFilter.userId();
+		List<Long> deptIds = user.getDeptIds();
+		StringBuilder sqlFilter = new StringBuilder();
 		if (StringUtil.isNotEmpty(tableAlias)) {
 			tableAlias += ".";
 		}
-		StringBuilder sqlFilter = new StringBuilder();
-		// 用户列表
-		List<Long> deptIds = user.getDeptIds();
 		sqlFilter.append("(");
 		if (CollectionUtil.isNotEmpty(deptIds)) {
-			sqlFilter.append(tableAlias).append(dataFilter.deptId()).append(" in (");
+			sqlFilter.append(tableAlias).append(deptIdColumn).append(" in (");
 			sqlFilter.append(String.join(",", deptIds.stream().map(String::valueOf).toArray(String[]::new)));
 			sqlFilter.append(") or ");
 		}
-		sqlFilter.append(tableAlias).append(dataFilter.userId()).append(" = ").append(user.getId());
+		sqlFilter.append(tableAlias).append(userIdColumn).append(" = ").append(user.getId());
 		sqlFilter.append(")");
 		return sqlFilter.toString();
 	}
