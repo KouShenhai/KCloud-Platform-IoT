@@ -17,15 +17,20 @@
 package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.gateway.CaptchaGateway;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CaptchaGatewayImpl implements CaptchaGateway {
@@ -47,8 +52,17 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 		return code.equalsIgnoreCase(captcha);
 	}
 
-	private String getCaptcha(String uuid) {
+	@Override
+	public String key(String uuid) {
 		String key = RedisKeyUtil.getUserCaptchaKey(uuid);
+		before(key);
+		key = DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
+		after(key);
+		return key;
+	}
+
+	private String getCaptcha(String uuid) {
+		String key = key(uuid);
 		Object captcha = redisUtil.get(key);
 		if (captcha != null) {
 			redisUtil.delete(key);
@@ -57,9 +71,17 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	}
 
 	private void setValue(String uuid, String code) {
-		String key = RedisKeyUtil.getUserCaptchaKey(uuid);
+		String key = key(uuid);
 		// 保存五分钟
 		redisUtil.set(key, code, 60 * 5);
+	}
+
+	private void before(String key) {
+		log.info("MD5加密前：{}",key);
+	}
+
+	private void after(String key) {
+		log.info("MD5加密后：{}",key);
 	}
 
 }
