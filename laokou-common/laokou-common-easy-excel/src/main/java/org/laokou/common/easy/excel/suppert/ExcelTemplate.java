@@ -93,7 +93,8 @@ public class ExcelTemplate<Q, T> {
 			excelWriter.finish();
 			out.flush();
 			out.close();
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

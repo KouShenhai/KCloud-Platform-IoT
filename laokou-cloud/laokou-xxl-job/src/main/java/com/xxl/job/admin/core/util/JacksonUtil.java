@@ -35,9 +35,11 @@ public class JacksonUtil {
 	public static String writeValueAsString(Object obj) {
 		try {
 			return getInstance().writeValueAsString(obj);
-		} catch (JsonMappingException e) {
+		}
+		catch (JsonMappingException e) {
 			logger.error(e.getMessage(), e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			logger.error(e.getMessage(), e);
 		}
 		return null;
