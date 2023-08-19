@@ -33,7 +33,7 @@
         <module>laokou-common-core</module>
         <module>laokou-common-mybatis-plus</module>
         <module>laokou-common-bom</module>
-        <module>laokou-common-swagger</module>
+        <module>laokou-common-openapi-doc</module>
         <module>laokou-common-security</module>
         <module>laokou-common-log</module>
         <module>laokou-common-data-cache</module>

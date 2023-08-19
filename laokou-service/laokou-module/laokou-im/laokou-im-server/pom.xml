@@ -100,7 +100,7 @@
                 </exclusion>
                 <exclusion>
                     <groupId>org.laokou</groupId>
-                    <artifactId>laokou-common-swagger</artifactId>
+                    <artifactId>laokou-common-openapi-doc</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>

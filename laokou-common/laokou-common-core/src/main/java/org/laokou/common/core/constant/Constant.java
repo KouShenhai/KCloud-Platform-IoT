@@ -109,11 +109,6 @@ public interface Constant {
 	String SHARDING_SPHERE_READWRITE = "shardingSphereReadWrite";
 
 	/**
-	 * 多租户
-	 */
-	String TENANT = "#tenant";
-
-	/**
 	 * 请求参数
 	 */
 	String QUESTION_MARK = "?";

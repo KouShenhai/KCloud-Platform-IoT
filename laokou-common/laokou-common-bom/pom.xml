@@ -670,7 +670,7 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-swagger</artifactId>
+                <artifactId>laokou-common-openapi-doc</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

@@ -52,7 +52,7 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-swagger</artifactId>
+            <artifactId>laokou-common-openapi-doc</artifactId>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>

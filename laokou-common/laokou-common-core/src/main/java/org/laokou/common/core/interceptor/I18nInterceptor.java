@@ -32,16 +32,14 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class I18nInterceptor implements HandlerInterceptor {
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 		String language = request.getHeader(Constant.ACCEPT_LANGUAGE);
 		LocaleContextHolder.setDefaultLocale(LocaleUtil.toLocale(language));
 		return true;
 	}
 
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 		LocaleContextHolder.resetLocaleContext();
 	}
 
