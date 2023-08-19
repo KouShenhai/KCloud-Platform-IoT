@@ -19,7 +19,6 @@ package org.laokou.admin.domain.annotation;
 import java.lang.annotation.*;
 
 /**
- * 自定义操作日志注解
  * @author laokou
  */
 @Target({ ElementType.METHOD })
@@ -29,6 +28,6 @@ public @interface OperateLog {
 
 	String module();
 
-	String name();
+	String operation();
 
 }

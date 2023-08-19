@@ -105,7 +105,7 @@ public class OperateLogAspect {
 			OperateLogEvent event = new OperateLogEvent(this);
 			assert operateLog != null;
 			event.setModuleName(operateLog.module());
-			event.setOperationName(operateLog.name());
+			event.setOperationName(operateLog.operation());
 			event.setRequestUri(request.getRequestURI());
 			event.setRequestIp(ip);
 			event.setRequestAddress(AddressUtil.getRealAddress(ip));
