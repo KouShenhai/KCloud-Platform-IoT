@@ -18,13 +18,11 @@
 package org.laokou.admin.server.interfaces.qo;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.laokou.common.i18n.dto.Page;
 
 /**
  * @author laokou
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 public class SysUserOnlineQo extends Page {
 

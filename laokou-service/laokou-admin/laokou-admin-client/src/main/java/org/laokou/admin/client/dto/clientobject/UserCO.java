@@ -1,7 +1,6 @@
 package org.laokou.admin.client.dto.clientobject;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.io.Serial;
@@ -11,7 +10,6 @@ import java.util.List;
 /**
  * @author laokou
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 public class UserCO extends ClientObject {
 

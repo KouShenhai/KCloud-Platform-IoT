@@ -17,12 +17,9 @@
 
 package org.laokou.common.tenant.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 import java.io.Serial;
@@ -30,7 +27,6 @@ import java.io.Serial;
 /**
  * @author laokou
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("boot_sys_package_menu")
 @Schema(name = "SysPackageMenuDO", description = "系统套餐菜单实体类")

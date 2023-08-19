@@ -19,14 +19,12 @@ package org.laokou.common.i18n.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
 
 /**
  * @author laokou
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Schema(name = "Page", description = "分页")
 public abstract class Page extends Query {

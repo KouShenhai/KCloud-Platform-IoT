@@ -17,7 +17,6 @@
 package org.laokou.admin.server.interfaces.qo;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.laokou.common.i18n.dto.Page;
 
 import java.io.Serial;
@@ -25,7 +24,6 @@ import java.io.Serial;
 /**
  * @author laokou
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 public class SysMessageQo extends Page {
 

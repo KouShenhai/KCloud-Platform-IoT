@@ -18,13 +18,11 @@
 package org.laokou.admin.client.dto;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 public class UserOnlineKillCmd extends CommonCommand {
 

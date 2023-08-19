@@ -18,7 +18,6 @@ package org.laokou.admin.gatewayimpl.database.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 import java.io.Serial;
@@ -28,7 +27,6 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("boot_sys_audit_log")
 public class AuditLogDO extends BaseDO {
 

@@ -18,7 +18,6 @@
 package org.laokou.admin.client.dto.clientobject;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.time.LocalDateTime;
@@ -26,7 +25,6 @@ import java.time.LocalDateTime;
 /**
  * @author laokou
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 public class UserOnlineCO extends ClientObject {
 

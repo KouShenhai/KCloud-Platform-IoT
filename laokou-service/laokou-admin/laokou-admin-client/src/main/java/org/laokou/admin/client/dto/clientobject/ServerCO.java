@@ -16,9 +16,8 @@
  */
 package org.laokou.admin.client.dto.clientobject;
 
-import lombok.EqualsAndHashCode;
-import lombok.SneakyThrows;
 import lombok.Data;
+import lombok.SneakyThrows;
 import org.laokou.common.core.utils.BigDecimalUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.i18n.dto.ClientObject;
@@ -31,21 +30,19 @@ import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
 import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
+
 import java.io.Serial;
-import java.net.InetAddress;
-import java.time.LocalDateTime;
-import java.util.*;
 import java.io.Serializable;
 import java.lang.management.ManagementFactory;
+import java.net.InetAddress;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 
 /**
- * 服务器相关信息
- *
  * @author laokou
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 public class ServerCO extends ClientObject {
 
