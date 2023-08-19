@@ -29,7 +29,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.admin.client.dto.domainevent.OperateLogEvent;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.core.constant.Constant;
-import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.ip.region.utils.AddressUtil;
 import org.laokou.common.security.utils.UserUtil;
@@ -45,6 +44,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static org.laokou.common.core.constant.Constant.FAIL_STATUS;
+import static org.laokou.common.core.constant.Constant.SUCCESS_STATUS;
 
 /**
  * @author laokou
@@ -112,11 +114,11 @@ public class OperateLogAspect {
 			event.setOperator(UserUtil.getUserName());
 			event.setDeptId(UserUtil.getDeptId());
 			if (null != e) {
-				event.setRequestStatus(ResultStatusEnum.FAIL.ordinal());
+				event.setRequestStatus(FAIL_STATUS);
 				event.setErrorMsg(e.getMessage());
 			}
 			else {
-				event.setRequestStatus(ResultStatusEnum.SUCCESS.ordinal());
+				event.setRequestStatus(SUCCESS_STATUS);
 			}
 			event.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
 			event.setMethodName(className + "." + methodName + "()");

@@ -42,9 +42,34 @@ public interface Constant {
 	String COMMA = ",";
 
 	/**
+	 * 左括号
+	 */
+	String LEFT = "(";
+
+	/**
+	 * 右括号
+	 */
+	String RIGHT = ")";
+
+	/**
+	 * 空格
+	 */
+	String SPACE = " ";
+
+	/**
+	 * 等于
+	 */
+	String EQUAL = "=";
+
+	/**
 	 * 并
 	 */
 	String AND = "&";
+
+	/**
+	 * 或
+	 */
+	String OR = "or";
 
 	/**
 	 * 分割参数
@@ -65,5 +90,15 @@ public interface Constant {
 	 * 默认
 	 */
 	int DEFAULT = 0;
+
+	/**
+	 * 成功
+	 */
+	int SUCCESS_STATUS = 0;
+
+	/**
+	 * 失败
+	 */
+	int FAIL_STATUS = 1;
 
 }

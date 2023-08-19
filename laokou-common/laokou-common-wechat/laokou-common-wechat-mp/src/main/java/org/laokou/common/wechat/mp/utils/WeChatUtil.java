@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.core.utils;
+package org.laokou.common.wechat.mp.utils;
 
 import java.security.MessageDigest;
 import java.util.Arrays;

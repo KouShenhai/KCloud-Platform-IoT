@@ -19,7 +19,7 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-import org.laokou.common.core.holder.UserContextHolder;
+import org.laokou.common.core.context.UserContextHolder;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 

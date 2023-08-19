@@ -25,7 +25,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
-import org.laokou.common.core.holder.UserContextHolder;
+import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
