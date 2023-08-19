@@ -14,17 +14,17 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.data.filter.aspect;
+package org.laokou.admin.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.data.filter.annotation.DataFilter;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserUtil;
@@ -42,7 +42,7 @@ import java.util.List;
 @Component
 public class DataFilterAspect {
 
-	@Before("@annotation(org.laokou.common.data.filter.annotation.DataFilter)")
+	@Before("@annotation(org.laokou.admin.domain.annotation.DataFilter)")
 	public void doBefore(JoinPoint point) {
 		Object params = point.getArgs()[0];
 		if (params instanceof Page page) {
@@ -74,21 +74,21 @@ public class DataFilterAspect {
 		}
 		// 获取表的别名
 		assert dataFilter != null;
-		String tableAlias = dataFilter.tableAlias();
+		String alias = dataFilter.alias();
 		String deptIdColumn = dataFilter.deptId();
 		String userIdColumn = dataFilter.userId();
 		List<Long> deptIds = user.getDeptIds();
 		StringBuilder sqlFilter = new StringBuilder();
-		if (StringUtil.isNotEmpty(tableAlias)) {
-			tableAlias += ".";
+		if (StringUtil.isNotEmpty(alias)) {
+			alias += ".";
 		}
 		sqlFilter.append("(");
 		if (CollectionUtil.isNotEmpty(deptIds)) {
-			sqlFilter.append(tableAlias).append(deptIdColumn).append(" in (");
+			sqlFilter.append(alias).append(deptIdColumn).append(" in (");
 			sqlFilter.append(String.join(",", deptIds.stream().map(String::valueOf).toArray(String[]::new)));
 			sqlFilter.append(") or ");
 		}
-		sqlFilter.append(tableAlias).append(userIdColumn).append(" = ").append(user.getId());
+		sqlFilter.append(alias).append(userIdColumn).append(" = ").append(user.getId());
 		sqlFilter.append(")");
 		return sqlFilter.toString();
 	}

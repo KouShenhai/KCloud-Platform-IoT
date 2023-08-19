@@ -14,17 +14,23 @@
  * limitations under the License.
  *
  */
-
-package org.laokou.common.data.filter.config.auto;
-
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-
-/**
- * @author laokou
- */
-@AutoConfiguration
-@ComponentScan("org.laokou.common.data.filter")
-public class DataFilterAutoConfig {
-
-}
+//
+//package org.laokou.admin.event.handler;
+//
+//import com.baomidou.dynamic.datasource.annotation.DS;
+//import lombok.RequiredArgsConstructor;
+//import org.jetbrains.annotations.NotNull;
+//import org.laokou.common.core.constant.Constant;
+//import org.laokou.common.core.utils.ConvertUtil;
+//import org.springframework.scheduling.annotation.Async;
+//import org.springframework.stereotype.Component;
+//import org.springframework.transaction.annotation.Transactional;
+//
+///**
+// * @author laokou
+// */
+//@Component
+//@RequiredArgsConstructor
+//public class AuditLogHandler implements ApplicationListener {
+//
+//}

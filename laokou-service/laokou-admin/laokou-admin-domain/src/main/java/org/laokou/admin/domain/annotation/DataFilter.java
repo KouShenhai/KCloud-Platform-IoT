@@ -12,21 +12,33 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
+package org.laokou.admin.domain.annotation;
 
-package org.laokou.common.oss.config.auto;
-
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import java.lang.annotation.*;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
-@ComponentScan("org.laokou.common.oss")
-@MapperScan("org.laokou.common.oss.mapper")
-public class OssAutoConfig {
+@Target({ ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface DataFilter {
+
+	/**
+	 * 别名
+	 */
+	String alias();
+
+	/**
+	 * 用户ID
+	 */
+	String userId() default "creator";
+
+	/**
+	 * 部门ID
+	 */
+	String deptId() default "dept_id";
 
 }

@@ -21,7 +21,7 @@
 //import org.laokou.common.core.utils.SpringContextUtil;
 //import org.laokou.common.i18n.common.CustomException;
 //import org.laokou.common.log.entity.SysOssLogDO;
-//import org.laokou.common.log.event.OssLogEvent;
+//import org.laokou.admin.client.dto.domainevent.OssLogEvent;
 //import org.laokou.common.log.service.SysOssLogService;
 //import org.laokou.common.oss.vo.UploadVO;
 //import org.springframework.stereotype.Component;

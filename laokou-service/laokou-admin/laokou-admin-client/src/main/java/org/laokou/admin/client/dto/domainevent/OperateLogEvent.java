@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.log.event;
+package org.laokou.admin.client.dto.domainevent;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -37,14 +37,14 @@ public class OperateLogEvent extends ApplicationEvent implements Serializable {
 	private static final long serialVersionUID = -6523521638764501311L;
 
 	/**
-	 * 模块名称，如：系统菜单
+	 * 模块名称
 	 */
-	private String module;
+	private String moduleName;
 
 	/**
 	 * 操作名称
 	 */
-	private String operation;
+	private String operationName;
 
 	/**
 	 * 请求URI

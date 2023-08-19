@@ -37,7 +37,6 @@
         <module>laokou-common-security</module>
         <module>laokou-common-log</module>
         <module>laokou-common-data-cache</module>
-        <module>laokou-common-data-filter</module>
         <module>laokou-common-secret</module>
         <module>laokou-common-i18n</module>
         <module>laokou-common-banner</module>

@@ -14,17 +14,21 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.oss.enums;
+package org.laokou.admin.domain.annotation;
+
+import java.lang.annotation.*;
 
 /**
+ * 自定义操作日志注解
  * @author laokou
  */
+@Target({ ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface OperateLog {
 
-public enum OssTypeEnum {
+	String module();
 
-	/**
-	 * s3协议
-	 */
-	S3
+	String name();
 
 }

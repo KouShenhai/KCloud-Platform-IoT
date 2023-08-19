@@ -23,7 +23,7 @@
 //import org.laokou.common.core.constant.Constant;
 //import org.laokou.common.core.utils.ConvertUtil;
 //import org.laokou.common.log.entity.SysOssLogDO;
-//import org.laokou.common.log.event.OssLogEvent;
+//import org.laokou.admin.client.dto.domainevent.OssLogEvent;
 //import org.laokou.common.log.mapper.SysOssLogMapper;
 //import org.laokou.common.log.service.SysOssLogService;
 //import org.springframework.stereotype.Service;

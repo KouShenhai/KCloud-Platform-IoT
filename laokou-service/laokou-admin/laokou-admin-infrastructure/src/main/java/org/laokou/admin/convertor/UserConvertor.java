@@ -32,8 +32,7 @@ public class UserConvertor {
 	}
 
 	public static UserDO toDataObject(User user) {
-		UserDO userDO = ConvertUtil.sourceToTarget(user, UserDO.class);
-		return userDO;
+		return ConvertUtil.sourceToTarget(user, UserDO.class);
 	}
 
 }

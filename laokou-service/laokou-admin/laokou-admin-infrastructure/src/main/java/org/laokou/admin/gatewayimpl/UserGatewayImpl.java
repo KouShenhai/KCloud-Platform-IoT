@@ -31,7 +31,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.data.filter.annotation.DataFilter;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
@@ -169,7 +169,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	@DataFilter(tableAlias = "boot_sys_user")
+	@DataFilter(alias = "boot_sys_user")
 	@DS(Constant.SHARDING_SPHERE)
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public Datas<User> list() {

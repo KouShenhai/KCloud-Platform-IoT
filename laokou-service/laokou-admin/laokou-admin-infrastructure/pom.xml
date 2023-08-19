@@ -24,10 +24,6 @@
             <artifactId>laokou-common-shardingsphere</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-data-filter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
         </dependency>

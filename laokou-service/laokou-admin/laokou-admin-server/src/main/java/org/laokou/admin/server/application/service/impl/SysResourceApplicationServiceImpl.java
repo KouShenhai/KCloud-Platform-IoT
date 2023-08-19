@@ -47,7 +47,7 @@
 //import org.laokou.admin.client.dto.SysResourceAuditDTO;
 //import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 //import org.laokou.admin.client.vo.SysResourceVO;
-//import org.laokou.common.log.event.AuditLogEvent;
+//import org.laokou.admin.client.dto.domainevent.AuditLogEvent;
 //import org.laokou.common.log.service.SysAuditLogService;
 //import org.laokou.common.log.vo.SysAuditLogVO;
 //import org.laokou.common.i18n.common.CustomException;

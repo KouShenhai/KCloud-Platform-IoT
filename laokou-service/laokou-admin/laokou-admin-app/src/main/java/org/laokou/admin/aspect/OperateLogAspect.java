@@ -14,25 +14,24 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.log.aspect;
+package org.laokou.admin.aspect;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.hc.core5.http.HttpHeaders;
-import org.aspectj.lang.annotation.Before;
-import org.laokou.common.core.constant.Constant;
-import org.laokou.common.core.enums.ResultStatusEnum;
-import org.laokou.common.core.utils.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.core5.http.HttpHeaders;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.admin.client.dto.domainevent.OperateLogEvent;
+import org.laokou.admin.domain.annotation.OperateLog;
+import org.laokou.common.core.constant.Constant;
+import org.laokou.common.core.enums.ResultStatusEnum;
+import org.laokou.common.core.utils.*;
 import org.laokou.common.ip.region.utils.AddressUtil;
-import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.log.event.OperateLogEvent;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -40,8 +39,12 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author laokou
@@ -55,7 +58,7 @@ public class OperateLogAspect {
 
 	private static final ThreadLocal<StopWatch> TASK_TIME_LOCAL = new NamedThreadLocal<>("耗时");
 
-	@Before(value = "@annotation(org.laokou.common.log.annotation.OperateLog)")
+	@Before(value = "@annotation(org.laokou.admin.domain.annotation.OperateLog)")
 	public void doBefore() {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
@@ -65,12 +68,12 @@ public class OperateLogAspect {
 	/**
 	 * 处理完请求后执行
 	 */
-	@AfterReturning(pointcut = "@annotation(org.laokou.common.log.annotation.OperateLog)")
+	@AfterReturning(pointcut = "@annotation(org.laokou.admin.domain.annotation.OperateLog)")
 	public void doAfterReturning(JoinPoint joinPoint) {
 		handleLog(joinPoint, null);
 	}
 
-	@AfterThrowing(pointcut = "@annotation(org.laokou.common.log.annotation.OperateLog)", throwing = "e")
+	@AfterThrowing(pointcut = "@annotation(org.laokou.admin.domain.annotation.OperateLog)", throwing = "e")
 	public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
 		handleLog(joinPoint, e);
 	}
@@ -92,7 +95,7 @@ public class OperateLogAspect {
 	}
 
 	private OperateLogEvent buildEvent(OperateLog operateLog, HttpServletRequest request, JoinPoint joinPoint,
-			Exception e) {
+									   Exception e) {
 		try {
 			String ip = IpUtil.getIpAddr(request);
 			String className = joinPoint.getTarget().getClass().getName();
@@ -101,8 +104,8 @@ public class OperateLogAspect {
 			List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
 			OperateLogEvent event = new OperateLogEvent(this);
 			assert operateLog != null;
-			event.setModule(operateLog.module());
-			event.setOperation(operateLog.name());
+			event.setModuleName(operateLog.module());
+			event.setOperationName(operateLog.name());
 			event.setRequestUri(request.getRequestURI());
 			event.setRequestIp(ip);
 			event.setRequestAddress(AddressUtil.getRealAddress(ip));

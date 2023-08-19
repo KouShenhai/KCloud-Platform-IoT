@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.log.event;
+package org.laokou.admin.client.dto.domainevent;
 
 import lombok.Getter;
 import lombok.Setter;
