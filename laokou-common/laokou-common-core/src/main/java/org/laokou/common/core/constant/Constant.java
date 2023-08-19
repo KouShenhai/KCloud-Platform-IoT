@@ -17,76 +17,49 @@
 package org.laokou.common.core.constant;
 
 /**
- * 常量
- *
  * @author laokou
  */
 public interface Constant {
 
 	/**
-	 * 分割
+	 * 分割参数
 	 */
-	String FORWARD_SLASH = "/";
+	String SLASH = "/";
 
 	/**
-	 * 分割
+	 * 分割参数
 	 */
 	String DOT = ".";
 
 	/**
-	 * 分割
+	 * 分割参数
 	 */
 	String RISK = ":";
 
 	/**
-	 * 分割
+	 * 分割参数
 	 */
 	String COMMA = ",";
 
 	/**
-	 * 认证
+	 * 左括号
 	 */
-	String AUTHORIZATION = "Authorization";
+	String LEFT = "(";
 
 	/**
-	 * 用户名
+	 * 右括号
 	 */
-	String USER_NAME = "user-name";
+	String RIGHT = ")";
 
 	/**
-	 * 链路ID
+	 * 空格
 	 */
-	String TRACE_ID = "trace-id";
+	String SPACE = " ";
 
 	/**
-	 * 用户ID
+	 * 等于
 	 */
-	String USER_ID = "user-id";
-
-	/**
-	 * 租户
-	 */
-	String TENANT_ID = "tenant-id";
-
-	/**
-	 * 签名
-	 */
-	String SIGN = "sign";
-
-	/**
-	 * 时间戳
-	 */
-	String TIMESTAMP = "timestamp";
-
-	/**
-	 * 随机标识
-	 */
-	String NONCE = "nonce";
-
-	/**
-	 * 使用状态
-	 */
-	int USE_STATUS = 1;
+	String EQUAL = "=";
 
 	/**
 	 * 并
@@ -94,34 +67,14 @@ public interface Constant {
 	String AND = "&";
 
 	/**
-	 * 表切换
+	 * 或
 	 */
-	String PLACE_HOLDER = "$$";
+	String OR = "or";
 
 	/**
-	 * 分库分表
+	 * 分割参数
 	 */
-	String SHARDING_SPHERE = "shardingSphere";
-
-	/**
-	 * 读写分离
-	 */
-	String SHARDING_SPHERE_READWRITE = "shardingSphereReadWrite";
-
-	/**
-	 * 请求参数
-	 */
-	String QUESTION_MARK = "?";
-
-	/**
-	 * 国际化
-	 */
-	String ACCEPT_LANGUAGE = "Accept-Language";
-
-	/**
-	 * 接口幂等性
-	 */
-	String REQUEST_ID = "request-id";
+	String MARK = "?";
 
 	/**
 	 * true
@@ -129,19 +82,9 @@ public interface Constant {
 	String TRUE = "true";
 
 	/**
-	 * 用户名
+	 * false
 	 */
-	String USERNAME = "username";
-
-	/**
-	 * 密码
-	 */
-	String PASSWORD = "password";
-
-	/**
-	 * 应用标识
-	 */
-	String APP_KEY = "app-key";
+	String FALSE = "false";
 
 	/**
 	 * 默认
@@ -149,13 +92,13 @@ public interface Constant {
 	int DEFAULT = 0;
 
 	/**
-	 * 应用密钥
+	 * 成功
 	 */
-	String APP_SECRET = "app-secret";
+	int SUCCESS_STATUS = 0;
 
 	/**
-	 * 加密协议版本
+	 * 失败
 	 */
-	String TLS_PROTOCOL_VERSION = "TLSv1.3";
+	int FAIL_STATUS = 1;
 
 }

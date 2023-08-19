@@ -23,19 +23,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.client.dto.clientobject.OptionCO;
 import org.laokou.admin.convertor.UserConvertor;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.jasypt.utils.AesUtil;
-import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.context.DynamicTableContextHolder;
+import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,7 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.admin.common.Constant.DEFAULT_SOURCE;
-import static org.laokou.common.core.constant.Constant.SHARDING_SPHERE;
+import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
 
 /**
  * @author laokou
@@ -110,14 +109,14 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	@DS(Constant.SHARDING_SPHERE)
+	@DS(SHARDING_SPHERE)
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean deleteById(Long id) {
 		return userMapper.deleteById(id) > 0;
 	}
 
 	@Override
-	@DS(Constant.SHARDING_SPHERE)
+	@DS(SHARDING_SPHERE)
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public List<OptionCO> getOptionList(Long tenantId) {
 		List<UserDO> list = userMapper.getOptionListByTenantId(tenantId);
@@ -136,7 +135,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	@DS(Constant.SHARDING_SPHERE)
+	@DS(SHARDING_SPHERE)
 	public Boolean updatePwd(User user) {
 		UserDO updateUserPwdDO = getUpdateUserPwdDO(user);
 		return userMapper.updateUser(updateUserPwdDO) > 0;
@@ -144,14 +143,14 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	@DS(Constant.SHARDING_SPHERE)
+	@DS(SHARDING_SPHERE)
 	public Boolean updateStatus(User user) {
 		UserDO updateUserDO = getUpdateUserDO(user);
 		return userMapper.updateUser(updateUserDO) > 0;
 	}
 
 	@Override
-	@DS(Constant.SHARDING_SPHERE)
+	@DS(SHARDING_SPHERE)
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public User getById(Long id) {
 		try {
@@ -170,7 +169,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	@DataFilter(alias = "boot_sys_user")
-	@DS(Constant.SHARDING_SPHERE)
+	@DS(SHARDING_SPHERE)
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public Datas<User> list() {
 		return null;

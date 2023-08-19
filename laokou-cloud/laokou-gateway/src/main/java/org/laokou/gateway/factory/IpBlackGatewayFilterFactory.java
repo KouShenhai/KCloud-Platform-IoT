@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.laokou.common.core.constant.Constant.SLASH;
 import static org.laokou.gateway.exception.ErrorCode.IP_BLACK;
 
 /**
@@ -80,10 +81,10 @@ public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<Ip
 	}
 
 	private void addSource(List<IpSubnetFilterRule> sources, String source) {
-		if (!source.contains(Constant.FORWARD_SLASH)) {
+		if (!source.contains(SLASH)) {
 			source = source + "/32";
 		}
-		String[] ipAddressCidrPrefix = source.split(Constant.FORWARD_SLASH, 2);
+		String[] ipAddressCidrPrefix = source.split(SLASH, 2);
 		String ipAddress = ipAddressCidrPrefix[0];
 		int cidrPrefix = Integer.parseInt(ipAddressCidrPrefix[1]);
 		sources.add(new IpSubnetFilterRule(ipAddress, cidrPrefix, IpFilterRuleType.ACCEPT));

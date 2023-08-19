@@ -27,7 +27,6 @@ import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.domain.user.User;
-import org.laokou.common.core.enums.ResultStatusEnum;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.IpUtil;
@@ -45,8 +44,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static org.laokou.auth.common.BizCode.LOGIN_SUCCEEDED;
-import static org.laokou.auth.common.Constant.*;
+import static org.laokou.auth.common.Constant.DEFAULT_SOURCE;
+import static org.laokou.auth.common.Constant.DEFAULT_TENANT;
 import static org.laokou.auth.common.exception.ErrorCode.*;
+import static org.laokou.common.core.constant.Constant.FAIL_STATUS;
+import static org.laokou.common.core.constant.Constant.SUCCESS_STATUS;
 
 /**
  * @author laokou
@@ -106,7 +108,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 默认数据库
 		user.setSourceName(DEFAULT_SOURCE);
 		// 登录成功
-		loginLogGateway.publish(new LoginLog(loginName, loginType, tenantId, ResultStatusEnum.SUCCESS.ordinal(),
+		loginLogGateway.publish(new LoginLog(loginName, loginType, tenantId, SUCCESS_STATUS,
 				MessageUtil.getMessage(LOGIN_SUCCEEDED), ip));
 		return user;
 	}
@@ -115,7 +117,7 @@ public class UsersServiceImpl implements UserDetailsService {
 			String ip) {
 		String msg = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, msg);
-		loginLogGateway.publish(new LoginLog(loginName, loginType, tenantId, ResultStatusEnum.FAIL.ordinal(), msg, ip));
+		loginLogGateway.publish(new LoginLog(loginName, loginType, tenantId, FAIL_STATUS, msg, ip));
 		throw new UsernameNotFoundException(msg);
 	}
 

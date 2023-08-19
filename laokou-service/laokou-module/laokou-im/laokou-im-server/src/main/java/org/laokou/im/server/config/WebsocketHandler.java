@@ -34,7 +34,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.user.User;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
@@ -45,6 +44,9 @@ import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
+import static org.laokou.common.core.constant.Constant.MARK;
 
 /**
  * @author laokou
@@ -95,7 +97,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	}
 
 	private String getAuthorization(Map<String, String> paramMap) {
-		String Authorization = paramMap.getOrDefault(Constant.AUTHORIZATION, "");
+		String Authorization = paramMap.getOrDefault(AUTHORIZATION, "");
 		if (StringUtil.isNotEmpty(Authorization)) {
 			return Authorization.substring(7);
 		}
@@ -109,7 +111,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 				return;
 			}
 			String uri = request.uri();
-			int index = uri.indexOf(Constant.QUESTION_MARK);
+			int index = uri.indexOf(MARK);
 			String param = uri.substring(index + 1);
 			Map<String, String> paramMap = MapUtil.parseParamMap(param);
 			String Authorization = getAuthorization(paramMap);

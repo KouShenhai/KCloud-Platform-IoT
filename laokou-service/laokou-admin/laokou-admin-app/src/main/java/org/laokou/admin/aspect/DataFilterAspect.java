@@ -34,6 +34,9 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import static org.laokou.common.core.constant.Constant.*;
+import static org.laokou.common.mybatisplus.constant.Constant.IN;
+
 /**
  * @author laokou
  */
@@ -72,7 +75,6 @@ public class DataFilterAspect {
 		if (dataFilter == null) {
 			dataFilter = AnnotationUtils.findAnnotation(method, DataFilter.class);
 		}
-		// 获取表的别名
 		assert dataFilter != null;
 		String alias = dataFilter.alias();
 		String deptIdColumn = dataFilter.deptId();
@@ -80,17 +82,25 @@ public class DataFilterAspect {
 		List<Long> deptIds = user.getDeptIds();
 		StringBuilder sqlFilter = new StringBuilder();
 		if (StringUtil.isNotEmpty(alias)) {
-			alias += ".";
+			alias += DOT;
 		}
-		sqlFilter.append("(");
+		sqlFilter.append(LEFT);
 		if (CollectionUtil.isNotEmpty(deptIds)) {
-			sqlFilter.append(alias).append(deptIdColumn).append(" in (");
-			sqlFilter.append(String.join(",", deptIds.stream().map(String::valueOf).toArray(String[]::new)));
-			sqlFilter.append(") or ");
+			sqlFilter.append(alias).append(deptIdColumn).append(SPACE).append(IN).append(SPACE).append(RIGHT);
+			sqlFilter.append(String.join(COMMA, deptIds.stream().map(String::valueOf).toArray(String[]::new)));
+			sqlFilter.append(RIGHT).append(SPACE).append(OR).append(SPACE);
 		}
-		sqlFilter.append(alias).append(userIdColumn).append(" = ").append(user.getId());
-		sqlFilter.append(")");
-		return sqlFilter.toString();
+		sqlFilter.append(alias).append(userIdColumn)
+				.append(SPACE).append(EQUAL).append(SPACE)
+				.append(user.getId());
+		sqlFilter.append(RIGHT);
+		String sql = sqlFilter.toString();
+		after(sql);
+		return sql;
+	}
+
+	private void after(String sql) {
+		log.info("获取拼接后的SQL:{}",sql);
 	}
 
 }

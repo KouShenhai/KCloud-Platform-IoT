@@ -27,7 +27,7 @@ import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.core.constant.Constant.SHARDING_SPHERE;
+import static org.laokou.auth.common.Constant.*;
 
 /**
  * @author laokou

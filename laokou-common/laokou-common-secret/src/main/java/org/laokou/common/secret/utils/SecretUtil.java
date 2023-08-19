@@ -30,24 +30,34 @@ import java.util.Map;
 @Component
 public class SecretUtil {
 
-	private static final String APP_KEY = "laokou2023";
+	private static final String APP_KEY_VALUE = "laokou2023";
 
-	private static final String APP_SECRET = "vb05f6c45d67340zaz95v7fa6d49v99zx";
+	private static final String APP_SECRET_VALUE = "vb05f6c45d67340zaz95v7fa6d49v99zx";
 
 	private static final long TIMEOUT_MILLIS = 60 * 1000L;
+
+	public static final String NONCE = "nonce";
+
+	public static final String SIGN = "sign";
+
+	public static final String TIMESTAMP = "timestamp";
+
+	public static final String APP_KEY = "app-key";
+
+	public static final String APP_SECRET = "app-secret";
 
 	public static void verification(String appKey, String appSecret, String sign, String nonce, String timestamp,
 			Map<String, String> map) {
 		if (StringUtil.isEmpty(appKey)) {
 			throw new CustomException("appKey不为空");
 		}
-		if (!APP_KEY.equals(appKey)) {
+		if (!APP_KEY_VALUE.equals(appKey)) {
 			throw new CustomException("appKey不存在");
 		}
 		if (StringUtil.isEmpty(appSecret)) {
 			throw new CustomException("appSecret不为空");
 		}
-		if (!APP_SECRET.equals(appSecret)) {
+		if (!APP_SECRET_VALUE.equals(appSecret)) {
 			throw new CustomException("appSecret不存在");
 		}
 		if (StringUtil.isEmpty(nonce)) {

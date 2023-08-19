@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.MDC;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import static org.laokou.common.core.constant.Constant.*;
+import static org.laokou.common.core.constant.BizConstant.*;
 
 /**
  * @author laokou

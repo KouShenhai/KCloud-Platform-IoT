@@ -19,11 +19,9 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 /**
  * @author laokou

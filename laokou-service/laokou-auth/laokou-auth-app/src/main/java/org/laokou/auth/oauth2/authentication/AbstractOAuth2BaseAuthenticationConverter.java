@@ -19,7 +19,6 @@ package org.laokou.auth.oauth2.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -36,6 +35,7 @@ import java.util.Map;
 import static org.laokou.auth.common.BizCode.TENANT_ID_NOT_NULL;
 import static org.laokou.auth.common.Constant.TENANT_ID;
 import static org.laokou.auth.common.exception.ErrorCode.INVALID_SCOPE;
+import static org.laokou.common.core.constant.BizConstant.TRACE_ID;
 
 /**
  * 邮件/手机/密码
@@ -65,9 +65,9 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		if (!getGrantType().equals(grantType)) {
 			return null;
 		}
-		String traceId = request.getHeader(Constant.TRACE_ID);
+		String traceId = request.getHeader(TRACE_ID);
 		if (StringUtil.isNotEmpty(traceId)) {
-			MDC.put(Constant.TRACE_ID, traceId);
+			MDC.put(TRACE_ID, traceId);
 		}
 		// 判断租户编号是否为空
 		String tenantId = request.getParameter(TENANT_ID);

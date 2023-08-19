@@ -26,8 +26,8 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-import static org.laokou.common.core.constant.Constant.AUTHORIZATION;
-import static org.laokou.common.core.constant.Constant.TRACE_ID;
+import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
+import static org.laokou.common.core.constant.BizConstant.TRACE_ID;
 
 /**
  * openfeign关闭ssl {@link FeignAutoConfiguration}

@@ -14,22 +14,22 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.core.enums;
+package org.laokou.common.core.context;
 
 /**
  * @author laokou
  */
+public class UserContextHolder {
 
-public enum ResultStatusEnum {
+	private static final ThreadLocal<Long> USER_CONTEXT_HOLDER = new InheritableThreadLocal<>();
 
-	/**
-	 * 成功
-	 */
-	SUCCESS,
+	public static void set(Long userId) {
+		USER_CONTEXT_HOLDER.remove();
+		USER_CONTEXT_HOLDER.set(userId);
+	}
 
-	/**
-	 * 失败
-	 */
-	FAIL
+	public static Long get() {
+		return USER_CONTEXT_HOLDER.get();
+	}
 
 }
