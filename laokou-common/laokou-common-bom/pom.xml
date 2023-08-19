@@ -55,7 +55,7 @@
         <!--captcha版本-->
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <!--guava版本-->
-        <guava.version>32.0.0-jre</guava.version>
+        <guava.version>32.1.2-jre</guava.version>
         <!--freemarker模板引擎依赖-->
         <freemarker.version>2.3.32</freemarker.version>
         <!--oshi版本-->
@@ -480,11 +480,6 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-data-filter</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-log</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -670,7 +665,7 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-swagger</artifactId>
+                <artifactId>laokou-common-openapi-doc</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

@@ -21,7 +21,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 import org.laokou.common.mybatisplus.handler.JasyptTypeHandler;
 
@@ -31,7 +30,6 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @TableName(value = "boot_sys_user", autoResultMap = true)
 @Schema(name = "UserDO", description = "用户")
 public class UserDO extends BaseDO {

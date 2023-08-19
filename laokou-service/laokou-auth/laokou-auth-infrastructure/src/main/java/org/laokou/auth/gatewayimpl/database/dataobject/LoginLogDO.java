@@ -18,7 +18,6 @@ package org.laokou.auth.gatewayimpl.database.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 import java.io.Serial;
@@ -27,7 +26,6 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @TableName("boot_sys_login_log")
 public class LoginLogDO extends BaseDO {
 

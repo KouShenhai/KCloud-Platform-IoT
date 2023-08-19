@@ -22,4 +22,6 @@ public interface Constant {
 
 	String DEFAULT_SOURCE = "master";
 
+	String TENANT = "#tenant";
+
 }

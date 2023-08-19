@@ -19,17 +19,17 @@ package org.laokou.common.mybatisplus.database.dataobject;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.laokou.common.i18n.dto.DTO;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * @author laokou
  */
 @Data
-@Schema(name = "BaseDO", description = "基础")
-public abstract class BaseDO implements Serializable {
+@Schema(name = "BaseDO", description = "数据映射基类")
+public abstract class BaseDO extends DTO {
 
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;

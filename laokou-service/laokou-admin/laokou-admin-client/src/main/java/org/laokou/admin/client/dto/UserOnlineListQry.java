@@ -18,14 +18,12 @@
 package org.laokou.admin.client.dto;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.laokou.common.i18n.dto.Page;
 
 /**
  * @author laokou
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 public class UserOnlineListQry extends Page {
 
 	private String username;
