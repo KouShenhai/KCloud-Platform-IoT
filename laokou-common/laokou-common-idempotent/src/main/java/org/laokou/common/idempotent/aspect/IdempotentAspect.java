@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.i18n.common.CustomException;
@@ -49,6 +48,7 @@ public class IdempotentAspect {
 	private final RedisUtil redisUtil;
 
 	private static final DefaultRedisScript<Boolean> REDIS_SCRIPT;
+	private static final String REQUEST_ID = "request-id";
 
 	static {
 		try {
@@ -64,7 +64,7 @@ public class IdempotentAspect {
 	@Before("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
 	public void doBefore() {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		String requestId = request.getHeader(Constant.REQUEST_ID);
+		String requestId = request.getHeader(REQUEST_ID);
 		if (StringUtil.isEmpty(requestId)) {
 			throw new CustomException("提交失败，令牌不为空");
 		}

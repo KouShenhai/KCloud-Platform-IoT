@@ -46,14 +46,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static org.laokou.common.core.constant.Constant.TLS_PROTOCOL_VERSION;
-
 /**
  * @author laokou
  */
 @Slf4j
 public class HttpUtil {
+
+	private static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
 
 	private static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 

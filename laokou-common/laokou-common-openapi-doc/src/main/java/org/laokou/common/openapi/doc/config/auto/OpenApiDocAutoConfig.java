@@ -25,11 +25,12 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
-import org.laokou.common.core.constant.Constant;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+
+import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
 
 /**
  * @author laokou
@@ -50,9 +51,9 @@ public class OpenApiDocAutoConfig {
 						.license(new License().name("Apache 2.0")
 								.url("https://www.apache.org/licenses/LICENSE-2.0.html")))
 				.externalDocs(new ExternalDocumentation().description("老寇云平台").url("https://github.com/KouShenhai"))
-				.addSecurityItem(new SecurityRequirement().addList(Constant.AUTHORIZATION))
-				.components(new Components().addSecuritySchemes(Constant.AUTHORIZATION,
-						new SecurityScheme().name(Constant.AUTHORIZATION).type(SecurityScheme.Type.HTTP)
+				.addSecurityItem(new SecurityRequirement().addList(AUTHORIZATION))
+				.components(new Components().addSecuritySchemes(AUTHORIZATION,
+						new SecurityScheme().name(AUTHORIZATION).type(SecurityScheme.Type.HTTP)
 								.scheme("bearer").bearerFormat("JWT")));
 
 	}

@@ -54,7 +54,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-import static org.laokou.common.core.constant.Constant.*;
+import static org.laokou.common.core.constant.BizConstant.*;
 import static org.laokou.gateway.constant.Constant.OAUTH2_AUTH_URI;
 
 /**

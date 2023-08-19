@@ -60,4 +60,14 @@ public interface Constant {
 	 */
 	String TENANT_ID = "tenantId";
 
+	/**
+	 * 分库分表
+	 */
+	String SHARDING_SPHERE = "shardingSphere";
+
+	/**
+	 * 读写分离
+	 */
+	String SHARDING_SPHERE_READWRITE = "shardingSphereReadWrite";
+
 }
