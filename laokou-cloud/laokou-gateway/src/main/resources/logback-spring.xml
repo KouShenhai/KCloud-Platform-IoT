@@ -57,7 +57,7 @@
         <tag>logback</tag>
         <topic>laokou_trace_topic</topic>
         <producerGroup>laokou_producer_group</producerGroup>
-        <nameServerAddress>192.168.30.128:9876</nameServerAddress>
+        <nameServerAddress>192.168.30.131:9876</nameServerAddress>
         <layout>
             <pattern>
                 {

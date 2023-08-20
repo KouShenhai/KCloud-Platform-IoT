@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /*
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+-->
+<configuration monitorInterval="5">
+    <properties>
+        <property name="LOG_PATH" value="./logs"/>
+        <property name="MAX_FILE_SIZE" value="10MB"/>
+        <property name="MAX_HISTORY" value="7"/>
+        <property name="APP_NAME" value="${spring:spring.application.name}"/>
+        <!--
+            %d         => 日期
+            %-5level   => 日志等级
+            %thread    => 日志类名
+            %logger    => 类名缩写
+            %msg       => 消息内容
+            %red       => 颜色（红色）
+            %n         => 换行
+        -->
+        <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %red(%-5level)] - [%thread,${PID}] - %logger : %msg%n"/>
+    </properties>
+    <appenders>
+        <console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </console>
+        <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${APP_NAME}.log"
+                                 filePattern="${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}-%d{yyyy-MM-dd}.%i.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %-5level] - [%thread,${PID}] - %logger : %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${MAX_FILE_SIZE}"/>
+            </Policies>
+        </RollingRandomAccessFile>
+    </appenders>
+    <loggers>
+        <logger name="org.laokou.auth" level="info" additivity="false">
+            <AppenderRef ref="console"/>
+        </logger>
+        <Logger name="org.springframework" level="info" additivity="false">
+            <AppenderRef ref="console"/>
+        </Logger>
+        <root level="info">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </root>
+    </loggers>
+</configuration>
