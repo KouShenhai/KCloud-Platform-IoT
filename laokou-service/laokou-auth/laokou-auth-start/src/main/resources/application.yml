@@ -69,7 +69,7 @@ spring:
         enabled: true
     # network
     inetutils:
-      ignoredInterfaces:
+      ignored-interfaces:
         - docker0
         - veth.*
   # OAuth2
@@ -114,3 +114,6 @@ spring:
           patterns:
             - /v1/captchas/{uuid}
             - /v1/secrets
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

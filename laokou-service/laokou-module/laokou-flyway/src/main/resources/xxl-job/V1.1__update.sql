@@ -1,10 +1,10 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 192.168.30.128（老寇）
+ Source Server         : 192.168.30.131（老寇）
  Source Server Type    : MySQL
  Source Server Version : 80033 (8.0.33)
- Source Host           : 192.168.30.128:3306
+ Source Host           : 192.168.30.131:3306
  Source Schema         : kcloud_platform_alibaba_xxl_job
 
  Target Server Type    : MySQL
