@@ -44,6 +44,6 @@ spring:
         enabled: true
     # network
     inetutils:
-      ignoredInterfaces:
+      ignored-interfaces:
         - docker0
         - veth.*

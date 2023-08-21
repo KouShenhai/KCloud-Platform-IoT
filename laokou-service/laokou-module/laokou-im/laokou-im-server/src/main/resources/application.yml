@@ -32,6 +32,6 @@ spring:
       max-headers-size: 20
   cloud:
     inetutils:
-      ignoredInterfaces:
+      ignored-interfaces:
         - docker0
         - veth.*

@@ -14,6 +14,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- slf4j的核心包 -->
         <dependency>
@@ -38,12 +44,6 @@
             <artifactId>log4j-api</artifactId>
             <version>3.0.0-alpha1</version>
         </dependency>
-        <!-- slf4j与log4j2保持桥接 -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>3.0.0-alpha1</version>
-        </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-web</artifactId>
@@ -53,7 +53,7 @@
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
-            <version>4.0.0.RC1</version>
+            <version>3.4.4</version>
         </dependency>
     </dependencies>
 

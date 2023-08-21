@@ -42,7 +42,7 @@ spring:
       nacos:
         enabled: true
     inetutils:
-      ignoredInterfaces:
+      ignored-interfaces:
         - docker0
         - veth.*
   datasource:
