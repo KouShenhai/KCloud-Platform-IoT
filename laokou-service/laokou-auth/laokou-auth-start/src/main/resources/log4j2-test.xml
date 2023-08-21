@@ -32,8 +32,8 @@
             %d 日期
             %t 线程
         -->
-        <property name="LOG_CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %style{%-5level}{red}] - [%t] - %l : %msg%n"/>
-        <property name="LOG_FILE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %-5level] - [%t] - %l : %msg%n"/>
+        <property name="LOG_CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
+        <property name="LOG_FILE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [%X{trace-id}] - [ %-5level] - [%t] - %logger : %msg%n"/>
         <!-- 日志保留7天 -->
         <property name="LOG_DAYS" value="7"/>
         <!-- 1天滚动一次 -->
