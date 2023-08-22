@@ -26,8 +26,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * 无权限访问，异常处理器
- *
+ * 无权限访问
  * @author laokou
  */
 @Component

@@ -17,16 +17,20 @@
 
 package org.laokou.auth.gatewayimpl.database;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.springframework.stereotype.Repository;
+
+import static org.laokou.auth.common.Constant.SHARDING_SPHERE_READWRITE;
 
 /**
  * @author laokou
  */
 @Repository
 @Mapper
+@DS(SHARDING_SPHERE_READWRITE)
 public interface LoginLogMapper extends BaseMapper<LoginLogDO> {
 
 }
