@@ -17,7 +17,6 @@
 
 package org.laokou.auth.event.handler;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.laokou.auth.dto.domainevent.LoginLogEvent;
@@ -29,8 +28,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.laokou.auth.common.Constant.SHARDING_SPHERE_READWRITE;
-
 /**
  * @author laokou
  */
@@ -41,7 +38,6 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 	private final LoginLogMapper loginLogMapper;
 
 	@Transactional(rollbackFor = Exception.class)
-	@DS(SHARDING_SPHERE_READWRITE)
 	public void execute(LoginLogEvent event) {
 		LoginLogDO logDO = ConvertUtil.sourceToTarget(event, LoginLogDO.class);
 		loginLogMapper.insert(logDO);

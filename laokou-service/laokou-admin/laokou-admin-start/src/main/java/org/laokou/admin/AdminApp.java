@@ -41,7 +41,7 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 @EnableEncryptableProperties
 @EnableAsync
 @RequiredArgsConstructor
-// @EnableFeignClients
+//@EnableFeignClients
 public class AdminApp {
 
 	public static void main(String[] args) {

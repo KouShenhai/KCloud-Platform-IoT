@@ -31,7 +31,6 @@ import java.io.IOException;
 
 /**
  * 无效认证
- *
  * @author laokou
  */
 @Slf4j
