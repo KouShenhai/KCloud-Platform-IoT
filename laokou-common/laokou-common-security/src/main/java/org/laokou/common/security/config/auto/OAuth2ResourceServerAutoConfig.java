@@ -17,14 +17,14 @@
 package org.laokou.common.security.config.auto;
 
 import lombok.Data;
-import org.laokou.common.security.exception.handler.ForbiddenExceptionHandler;
-import org.laokou.common.security.exception.handler.InvalidAuthenticationEntryPoint;
 import org.laokou.common.security.config.CustomOpaqueTokenIntrospector;
 import org.laokou.common.security.config.OAuth2ResourceServerProperties;
+import org.laokou.common.security.exception.handler.ForbiddenExceptionHandler;
+import org.laokou.common.security.exception.handler.InvalidAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,14 +47,15 @@ import java.util.Set;
  *
  * @author laokou
  */
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity
 @EnableMethodSecurity
 @AutoConfigureAfter({ OAuth2AuthorizationAutoConfig.class })
 @RefreshScope
 @Data
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = OAuth2ResourceServerProperties.PREFIX,
 		name = "enabled")
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2ResourceServerAutoConfig {
 
 	/**
@@ -65,11 +66,9 @@ public class OAuth2ResourceServerAutoConfig {
 
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
-	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityFilterChain resourceFilterChain(CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector,
 			InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint,
-			ForbiddenExceptionHandler forbiddenExceptionHandler, OAuth2ResourceServerProperties properties,
-			HttpSecurity http) throws Exception {
+			ForbiddenExceptionHandler forbiddenExceptionHandler, OAuth2ResourceServerProperties properties, HttpSecurity http) throws Exception {
 		OAuth2ResourceServerProperties.RequestMatcher requestMatcher = Optional
 				.ofNullable(properties.getRequestMatcher())
 				.orElseGet(OAuth2ResourceServerProperties.RequestMatcher::new);
