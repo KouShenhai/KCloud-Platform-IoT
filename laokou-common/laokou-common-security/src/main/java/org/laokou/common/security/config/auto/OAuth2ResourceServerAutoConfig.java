@@ -23,6 +23,7 @@ import org.laokou.common.security.exception.handler.ForbiddenExceptionHandler;
 import org.laokou.common.security.exception.handler.InvalidAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -47,8 +48,8 @@ import java.util.Set;
  *
  * @author laokou
  */
-@Configuration
 @EnableWebSecurity
+@Configuration
 @EnableMethodSecurity
 @AutoConfigureAfter({ OAuth2AuthorizationAutoConfig.class })
 @RefreshScope
@@ -66,9 +67,11 @@ public class OAuth2ResourceServerAutoConfig {
 
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
+	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityFilterChain resourceFilterChain(CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector,
 			InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint,
-			ForbiddenExceptionHandler forbiddenExceptionHandler, OAuth2ResourceServerProperties properties, HttpSecurity http) throws Exception {
+			ForbiddenExceptionHandler forbiddenExceptionHandler, OAuth2ResourceServerProperties properties,
+			HttpSecurity http) throws Exception {
 		OAuth2ResourceServerProperties.RequestMatcher requestMatcher = Optional
 				.ofNullable(properties.getRequestMatcher())
 				.orElseGet(OAuth2ResourceServerProperties.RequestMatcher::new);

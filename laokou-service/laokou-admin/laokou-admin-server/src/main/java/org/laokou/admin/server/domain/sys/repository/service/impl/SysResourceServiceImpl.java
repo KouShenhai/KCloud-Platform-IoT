@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */
+ *//*
+
 package org.laokou.admin.server.domain.sys.repository.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -27,9 +28,11 @@ import org.laokou.admin.server.interfaces.qo.SysResourceQo;
 import org.laokou.admin.client.vo.SysResourceVO;
 import org.springframework.stereotype.Service;
 
+*/
 /**
  * @author laokou
- */
+ *//*
+
 @Service
 public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysResourceDO>
 		implements SysResourceService {
@@ -70,3 +73,4 @@ public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysRe
 	}
 
 }
+*/

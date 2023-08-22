@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */
+ *//*
+
 package org.laokou.admin.server.application.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -23,59 +24,76 @@ import org.laokou.common.oss.vo.SysOssVO;
 import org.laokou.common.oss.vo.UploadVO;
 import org.springframework.web.multipart.MultipartFile;
 
+*/
 /**
  * @author laokou
- */
+ *//*
+
 public interface SysOssApplicationService {
 
-	/**
+	*/
+/**
 	 * 新增oss
 	 * @param dto
 	 * @return
-	 */
+	 *//*
+
 	Boolean insertOss(SysOssDTO dto);
 
-	/**
+	*/
+/**
 	 * 修改oss
 	 * @param dto
 	 * @return
-	 */
+	 *//*
+
 	Boolean updateOss(SysOssDTO dto);
 
-	/**
+	*/
+/**
 	 * 删除oss
 	 * @param id
 	 * @return
-	 */
+	 *//*
+
 	Boolean deleteOss(Long id);
 
-	/**
+	*/
+/**
 	 * 查询oss
 	 * @param qo
 	 * @return
-	 */
+	 *//*
+
 	IPage<SysOssVO> queryOssPage(SysOssQo qo);
 
-	/**
+	*/
+/**
 	 * 查询详情
 	 * @param id
 	 * @return
-	 */
+	 *//*
+
 	SysOssVO getOssById(Long id);
 
-	/**
+	*/
+/**
 	 * 启用oss
 	 * @param id
 	 * @return
-	 */
+	 *//*
+
 	Boolean useOss(Long id);
 
-	/**
+	*/
+/**
 	 * 上传文件
 	 * @param file
 	 * @param md5
 	 * @return
-	 */
+	 *//*
+
 	UploadVO upload(MultipartFile file, String md5);
 
 }
+*/

@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */
+ *//*
+
 package org.laokou.admin.server.application.service.impl;
 
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,11 @@ import org.laokou.common.i18n.common.CustomException;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
+*/
 /**
  * @author laokou
- */
+ *//*
+
 @Service
 @RequiredArgsConstructor
 public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicationService {
@@ -42,3 +45,4 @@ public class WorkflowTaskApplicationServiceImpl implements WorkflowTaskApplicati
 	}
 
 }
+*/

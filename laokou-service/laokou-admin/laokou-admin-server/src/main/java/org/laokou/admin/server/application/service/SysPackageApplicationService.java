@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */
+ *//*
+
 package org.laokou.admin.server.application.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -24,50 +25,65 @@ import org.laokou.common.tenant.vo.SysPackageVO;
 
 import java.util.List;
 
+*/
 /**
  * @author laokou
- */
+ *//*
+
 public interface SysPackageApplicationService {
 
-	/**
+	*/
+/**
 	 * 新增套餐
 	 * @param dto
 	 * @return
-	 */
+	 *//*
+
 	Boolean insertPackage(SysPackageDTO dto);
 
-	/**
+	*/
+/**
 	 * 修改套餐
 	 * @param dto
 	 * @return
-	 */
+	 *//*
+
 	Boolean updatePackage(SysPackageDTO dto);
 
-	/**
+	*/
+/**
 	 * 删除套餐
 	 * @param id
 	 * @return
-	 */
+	 *//*
+
 	Boolean deletePackage(Long id);
 
-	/**
+	*/
+/**
 	 * 分页查询
 	 * @param qo
 	 * @return
-	 */
+	 *//*
+
 	IPage<SysPackageVO> queryPackagePage(SysPackageQo qo);
 
-	/**
+	*/
+/**
 	 * 查询详情
 	 * @param id
 	 * @return
-	 */
+	 *//*
+
 	SysPackageVO getPackageById(Long id);
 
-	/**
+	*/
+/**
 	 * 下拉选择框
 	 * @return
-	 */
+	 *//*
+
 	List<OptionVO> getOptionList();
 
 }
+*/
