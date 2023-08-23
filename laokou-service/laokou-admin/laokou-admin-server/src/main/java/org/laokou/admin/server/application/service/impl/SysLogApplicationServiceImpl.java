@@ -1,11 +1,11 @@
-///*
+/// *
 // * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
 // *
 // * Licensed under the Apache License, Version 2.0 (the "License");
 // * you may not use this file except in compliance with the License.
 // * You may obtain a copy of the License at
 // *
-// *   http://www.apache.org/licenses/LICENSE-2.0
+// * http://www.apache.org/licenses/LICENSE-2.0
 // *
 // * Unless required by applicable law or agreed to in writing, software
 // * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,70 +14,73 @@
 // * limitations under the License.
 // *
 // */
-//package org.laokou.admin.server.application.service.impl;
+// package org.laokou.admin.server.application.service.impl;
 //
-//import com.baomidou.dynamic.datasource.annotation.DS;
-//import com.baomidou.dynamic.datasource.annotation.DSTransactional;
-//import com.baomidou.mybatisplus.core.metadata.IPage;
-//import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-//import jakarta.servlet.http.HttpServletResponse;
-//import lombok.RequiredArgsConstructor;
-//import org.laokou.admin.server.application.service.SysLogApplicationService;
-//import org.laokou.common.core.constant.Constant;
-//import org.laokou.common.data.filter.annotation.DataFilter;
-//import org.laokou.common.log.qo.SysLoginLogQo;
-//import org.laokou.common.log.qo.SysOperateLogQo;
-//import org.laokou.common.log.service.SysLoginLogService;
-//import org.laokou.common.log.service.SysOperateLogService;
-//import org.laokou.common.log.vo.SysLoginLogVO;
-//import org.laokou.common.log.vo.SysOperateLogVO;
-//import org.laokou.common.i18n.utils.ValidatorUtil;
-//import org.laokou.common.security.utils.UserUtil;
-//import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Propagation;
-//import org.springframework.transaction.annotation.Transactional;
+// import com.baomidou.dynamic.datasource.annotation.DS;
+// import com.baomidou.dynamic.datasource.annotation.DSTransactional;
+// import com.baomidou.mybatisplus.core.metadata.IPage;
+// import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+// import jakarta.servlet.http.HttpServletResponse;
+// import lombok.RequiredArgsConstructor;
+// import org.laokou.admin.server.application.service.SysLogApplicationService;
+// import org.laokou.common.core.constant.Constant;
+// import org.laokou.common.data.filter.annotation.DataFilter;
+// import org.laokou.common.log.qo.SysLoginLogQo;
+// import org.laokou.common.log.qo.SysOperateLogQo;
+// import org.laokou.common.log.service.SysLoginLogService;
+// import org.laokou.common.log.service.SysOperateLogService;
+// import org.laokou.common.log.vo.SysLoginLogVO;
+// import org.laokou.common.log.vo.SysOperateLogVO;
+// import org.laokou.common.i18n.utils.ValidatorUtil;
+// import org.laokou.common.security.utils.UserUtil;
+// import org.springframework.stereotype.Service;
+// import org.springframework.transaction.annotation.Propagation;
+// import org.springframework.transaction.annotation.Transactional;
 //
-///**
+/// **
 // * @author laokou
 // */
-//@Service
-//@RequiredArgsConstructor
-//public class SysLogApplicationServiceImpl implements SysLogApplicationService {
+// @Service
+// @RequiredArgsConstructor
+// public class SysLogApplicationServiceImpl implements SysLogApplicationService {
 //
-//	private final SysOperateLogService sysOperateLogService;
+// private final SysOperateLogService sysOperateLogService;
 //
-//	private final SysLoginLogService sysLoginLogService;
+// private final SysLoginLogService sysLoginLogService;
 //
-//	@Override
-//	@DataFilter(tableAlias = "boot_sys_operate_log")
-//	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
-//	public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQo qo) {
-//		ValidatorUtil.validateEntity(qo);
-//		qo.setTenantId(UserUtil.getTenantId());
-//		IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
-//		return sysOperateLogService.getOperateLogList(page, qo);
-//	}
+// @Override
+// @DataFilter(tableAlias = "boot_sys_operate_log")
+// @Transactional(rollbackFor = Exception.class, readOnly = true, propagation =
+/// Propagation.REQUIRES_NEW)
+// public IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQo qo) {
+// ValidatorUtil.validateEntity(qo);
+// qo.setTenantId(UserUtil.getTenantId());
+// IPage<SysOperateLogVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+// return sysOperateLogService.getOperateLogList(page, qo);
+// }
 //
-//	@Override
-//	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
-//	public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) {
-//		sysOperateLogService.exportOperateLog(qo, response);
-//	}
+// @Override
+// @Transactional(rollbackFor = Exception.class, readOnly = true, propagation =
+/// Propagation.REQUIRES_NEW)
+// public void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) {
+// sysOperateLogService.exportOperateLog(qo, response);
+// }
 //
-//	@Override
-//	@DS(Constant.SHARDING_SPHERE_READWRITE)
-//	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
-//	public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {
-//		sysLoginLogService.exportLoginLog(qo, response);
-//	}
+// @Override
+// @DS(Constant.SHARDING_SPHERE_READWRITE)
+// @Transactional(rollbackFor = Exception.class, readOnly = true, propagation =
+/// Propagation.REQUIRES_NEW)
+// public void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) {
+// sysLoginLogService.exportLoginLog(qo, response);
+// }
 //
-//	@Override
-//	@DSTransactional(rollbackFor = Exception.class)
-//	public IPage<SysLoginLogVO> queryLoginLogPage(SysLoginLogQo qo) {
-//		ValidatorUtil.validateEntity(qo);
-//		qo.setTenantId(UserUtil.getTenantId());
-//		IPage<SysLoginLogVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
-//		return sysLoginLogService.getLoginLogList(page, qo);
-//	}
+// @Override
+// @DSTransactional(rollbackFor = Exception.class)
+// public IPage<SysLoginLogVO> queryLoginLogPage(SysLoginLogQo qo) {
+// ValidatorUtil.validateEntity(qo);
+// qo.setTenantId(UserUtil.getTenantId());
+// IPage<SysLoginLogVO> page = new Page<>(qo.getPageNum(), qo.getPageSize());
+// return sysLoginLogService.getLoginLogList(page, qo);
+// }
 //
-//}
+// }

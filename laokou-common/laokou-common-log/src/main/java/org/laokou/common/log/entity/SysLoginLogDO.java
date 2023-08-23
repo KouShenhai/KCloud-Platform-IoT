@@ -1,11 +1,11 @@
-///*
+/// *
 // * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
 // *
 // * Licensed under the Apache License, Version 2.0 (the "License");
 // * you may not use this file except in compliance with the License.
 // * You may obtain a copy of the License at
 // *
-// *   http://www.apache.org/licenses/LICENSE-2.0
+// * http://www.apache.org/licenses/LICENSE-2.0
 // *
 // * Unless required by applicable law or agreed to in writing, software
 // * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,67 +14,67 @@
 // * limitations under the License.
 // *
 // */
-//package org.laokou.common.log.entity;
+// package org.laokou.common.log.entity;
 //
-//import com.baomidou.mybatisplus.annotation.TableName;
-//import lombok.Data;
-//import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
+// import com.baomidou.mybatisplus.annotation.TableName;
+// import lombok.Data;
+// import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 //
-//import java.io.Serial;
+// import java.io.Serial;
 //
-///**
+/// **
 // * @author laokou
 // */
-//@Data
-//@TableName("boot_sys_login_log")
-//public class SysLoginLogDO extends BaseDO {
+// @Data
+// @TableName("boot_sys_login_log")
+// public class SysLoginLogDO extends BaseDO {
 //
-//	@Serial
-//	private static final long serialVersionUID = 4289483981365827983L;
+// @Serial
+// private static final long serialVersionUID = 4289483981365827983L;
 //
-//	/**
-//	 * 登录用户
-//	 */
-//	private String loginName;
+// /**
+// * 登录用户
+// */
+// private String loginName;
 //
-//	/**
-//	 * ip地址
-//	 */
-//	private String requestIp;
+// /**
+// * ip地址
+// */
+// private String requestIp;
 //
-//	/**
-//	 * 操作地点
-//	 */
-//	private String requestAddress;
+// /**
+// * 操作地点
+// */
+// private String requestAddress;
 //
-//	/**
-//	 * 浏览器
-//	 */
-//	private String browser;
+// /**
+// * 浏览器
+// */
+// private String browser;
 //
-//	/**
-//	 * 操作系统
-//	 */
-//	private String os;
+// /**
+// * 操作系统
+// */
+// private String os;
 //
-//	/**
-//	 * 状态 0：成功 1：失败
-//	 */
-//	private Integer requestStatus;
+// /**
+// * 状态 0：成功 1：失败
+// */
+// private Integer requestStatus;
 //
-//	/**
-//	 * 提示信息
-//	 */
-//	private String msg;
+// /**
+// * 提示信息
+// */
+// private String msg;
 //
-//	/**
-//	 * 登录类型
-//	 */
-//	private String loginType;
+// /**
+// * 登录类型
+// */
+// private String loginType;
 //
-//	/**
-//	 * 租户id
-//	 */
-//	private Long tenantId;
+// /**
+// * 租户id
+// */
+// private Long tenantId;
 //
-//}
+// }

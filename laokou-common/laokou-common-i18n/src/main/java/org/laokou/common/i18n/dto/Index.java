@@ -23,4 +23,5 @@ import java.io.Serializable;
  * @author laokou
  */
 public abstract class Index implements Serializable {
+
 }

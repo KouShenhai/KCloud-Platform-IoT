@@ -57,6 +57,14 @@ spring:
     oauth2:
       resource-server:
         enabled: true
+        request-matcher:
+          patterns:
+            - /v1/secrets
+            - /v3/api-docs/**
+            - /swagger-ui.html
+            - /swagger-ui/**
+            - /actuator/**
+            - /error
   cloud:
     # sentinel
     sentinel:

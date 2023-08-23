@@ -90,9 +90,7 @@ public class DataFilterAspect {
 			sqlFilter.append(String.join(COMMA, deptIds.stream().map(String::valueOf).toArray(String[]::new)));
 			sqlFilter.append(RIGHT).append(SPACE).append(OR).append(SPACE);
 		}
-		sqlFilter.append(alias).append(userIdColumn)
-				.append(SPACE).append(EQUAL).append(SPACE)
-				.append(user.getId());
+		sqlFilter.append(alias).append(userIdColumn).append(SPACE).append(EQUAL).append(SPACE).append(user.getId());
 		sqlFilter.append(RIGHT);
 		String sql = sqlFilter.toString();
 		after(sql);
@@ -100,7 +98,7 @@ public class DataFilterAspect {
 	}
 
 	private void after(String sql) {
-		log.info("获取拼接后的SQL:{}",sql);
+		log.info("获取拼接后的SQL:{}", sql);
 	}
 
 }

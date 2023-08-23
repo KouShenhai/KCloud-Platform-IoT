@@ -28,32 +28,32 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface OssMapper extends BaseMapper<OssDO> {
 
-//	/**
-//	 * 查询OSS配置
-//	 * @return
-//	 */
-//	SysOssVO queryOssConfig();
-//
-//	/**
-//	 * 获取版本号
-//	 * @param id
-//	 * @return
-//	 */
-//	Integer getVersion(@Param("id") Long id);
-//
-//	/**
-//	 * 分页查询
-//	 * @param page
-//	 * @param qo
-//	 * @return
-//	 */
-//	IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page, @Param("qo") SysOssQo qo);
-//
-//	/**
-//	 * 查询详情
-//	 * @param id
-//	 * @return
-//	 */
-//	SysOssVO getOssById(@Param("id") Long id);
+	// /**
+	// * 查询OSS配置
+	// * @return
+	// */
+	// SysOssVO queryOssConfig();
+	//
+	// /**
+	// * 获取版本号
+	// * @param id
+	// * @return
+	// */
+	// Integer getVersion(@Param("id") Long id);
+	//
+	// /**
+	// * 分页查询
+	// * @param page
+	// * @param qo
+	// * @return
+	// */
+	// IPage<SysOssVO> queryOssPage(IPage<SysOssVO> page, @Param("qo") SysOssQo qo);
+	//
+	// /**
+	// * 查询详情
+	// * @param id
+	// * @return
+	// */
+	// SysOssVO getOssById(@Param("id") Long id);
 
 }

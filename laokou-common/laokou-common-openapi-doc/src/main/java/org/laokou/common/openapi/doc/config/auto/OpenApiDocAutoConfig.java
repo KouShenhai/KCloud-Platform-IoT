@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.openapi.doc.config.auto;
@@ -36,7 +36,8 @@ import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnProperty(prefix = OpenApiDocAutoConfig.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = OpenApiDocAutoConfig.PREFIX, name = "enabled", havingValue = "true",
+		matchIfMissing = true)
 public class OpenApiDocAutoConfig {
 
 	public static final String PREFIX = "openapi-doc";
@@ -52,9 +53,8 @@ public class OpenApiDocAutoConfig {
 								.url("https://www.apache.org/licenses/LICENSE-2.0.html")))
 				.externalDocs(new ExternalDocumentation().description("老寇云平台").url("https://github.com/KouShenhai"))
 				.addSecurityItem(new SecurityRequirement().addList(AUTHORIZATION))
-				.components(new Components().addSecuritySchemes(AUTHORIZATION,
-						new SecurityScheme().name(AUTHORIZATION).type(SecurityScheme.Type.HTTP)
-								.scheme("bearer").bearerFormat("JWT")));
+				.components(new Components().addSecuritySchemes(AUTHORIZATION, new SecurityScheme().name(AUTHORIZATION)
+						.type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
 
 	}
 

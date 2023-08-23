@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package org.laokou.admin.gatewayimpl.database;
 
@@ -21,6 +21,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.springframework.stereotype.Repository;
+
 /**
  * @author laokou
  */
@@ -28,14 +29,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SourceMapper extends BaseMapper<SourceDO> {
 
-//	/**
-//	 * 分页查询多租户数据源
-//	 * @param qo
-//	 * @param page
-//	 * @return
-//	 */
-//	IPage<SysSourceVO> querySourcePage(IPage<SysSourceVO> page, @Param("qo") SysSourceQo qo);
-//
+	// /**
+	// * 分页查询多租户数据源
+	// * @param qo
+	// * @param page
+	// * @return
+	// */
+	// IPage<SysSourceVO> querySourcePage(IPage<SysSourceVO> page, @Param("qo")
+	// SysSourceQo qo);
+	//
 	/**
 	 * 根据名词查询数据源
 	 * @param name
@@ -43,24 +45,24 @@ public interface SourceMapper extends BaseMapper<SourceDO> {
 	 */
 	SourceDO getSourceByName(@Param("name") String name);
 
-//	/**
-//	 * 查询数据库源信息
-//	 * @param sourceName
-//	 * @return
-//	 */
-//	SysSourceVO querySource(@Param("sourceName") String sourceName);
-//
-//	/**
-//	 * 数据源详情
-//	 * @param id
-//	 * @return
-//	 */
-//	SysSourceVO getSourceById(@Param("id") Long id);
-//
-//	/**
-//	 * 获取下拉框
-//	 * @return
-//	 */
-//	List<OptionVO> getOptionList();
+	// /**
+	// * 查询数据库源信息
+	// * @param sourceName
+	// * @return
+	// */
+	// SysSourceVO querySource(@Param("sourceName") String sourceName);
+	//
+	// /**
+	// * 数据源详情
+	// * @param id
+	// * @return
+	// */
+	// SysSourceVO getSourceById(@Param("id") Long id);
+	//
+	// /**
+	// * 获取下拉框
+	// * @return
+	// */
+	// List<OptionVO> getOptionList();
 
 }

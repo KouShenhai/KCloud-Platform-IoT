@@ -18,7 +18,9 @@ package org.laokou.auth.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,6 +38,8 @@ import java.util.stream.Collectors;
  * @author laokou
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
 

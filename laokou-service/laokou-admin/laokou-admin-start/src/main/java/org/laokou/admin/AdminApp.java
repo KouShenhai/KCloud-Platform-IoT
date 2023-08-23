@@ -36,14 +36,14 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication(exclude = {SecurityFilterAutoConfiguration.class})
+@SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class })
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
 @EnableEncryptableProperties
 @EnableAsync
 @RequiredArgsConstructor
-//@EnableFeignClients
+// @EnableFeignClients
 public class AdminApp {
 
 	public static void main(String[] args) {

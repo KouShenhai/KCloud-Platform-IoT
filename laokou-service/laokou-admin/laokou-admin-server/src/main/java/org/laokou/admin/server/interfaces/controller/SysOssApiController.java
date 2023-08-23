@@ -1,11 +1,11 @@
-///*
+/// *
 // * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
 // *
 // * Licensed under the Apache License, Version 2.0 (the "License");
 // * you may not use this file except in compliance with the License.
 // * You may obtain a copy of the License at
 // *
-// *   http://www.apache.org/licenses/LICENSE-2.0
+// * http://www.apache.org/licenses/LICENSE-2.0
 // *
 // * Unless required by applicable law or agreed to in writing, software
 // * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,96 +15,97 @@
 // *
 // */
 //
-//package org.laokou.admin.server.interfaces.controller;
+// package org.laokou.admin.server.interfaces.controller;
 //
-//import com.baomidou.mybatisplus.core.metadata.IPage;
-//import io.swagger.v3.oas.annotations.Operation;
-//import io.swagger.v3.oas.annotations.tags.Tag;
-//import lombok.RequiredArgsConstructor;
-//import org.laokou.admin.client.dto.SysOssDTO;
-//import org.laokou.admin.server.application.service.SysOssApplicationService;
-//import org.laokou.common.i18n.dto.Result;
-//import org.laokou.common.oss.qo.SysOssQo;
-//import org.laokou.common.data.cache.annotation.DataCache;
-//import org.laokou.common.data.cache.enums.CacheEnum;
-//import org.laokou.common.log.annotation.OperateLog;
-//import org.laokou.common.oss.vo.SysOssVO;
-//import org.laokou.common.oss.vo.UploadVO;
-//import org.laokou.common.trace.annotation.TraceLog;
-//import org.springframework.security.access.prepost.PreAuthorize;
-//import org.springframework.web.bind.annotation.*;
-//import org.springframework.web.multipart.MultipartFile;
+// import com.baomidou.mybatisplus.core.metadata.IPage;
+// import io.swagger.v3.oas.annotations.Operation;
+// import io.swagger.v3.oas.annotations.tags.Tag;
+// import lombok.RequiredArgsConstructor;
+// import org.laokou.admin.client.dto.SysOssDTO;
+// import org.laokou.admin.server.application.service.SysOssApplicationService;
+// import org.laokou.common.i18n.dto.Result;
+// import org.laokou.common.oss.qo.SysOssQo;
+// import org.laokou.common.data.cache.annotation.DataCache;
+// import org.laokou.common.data.cache.enums.CacheEnum;
+// import org.laokou.common.log.annotation.OperateLog;
+// import org.laokou.common.oss.vo.SysOssVO;
+// import org.laokou.common.oss.vo.UploadVO;
+// import org.laokou.common.trace.annotation.TraceLog;
+// import org.springframework.security.access.prepost.PreAuthorize;
+// import org.springframework.web.bind.annotation.*;
+// import org.springframework.web.multipart.MultipartFile;
 //
-///**
+/// **
 // * @author laokou
 // */
-//@RestController
-//@RequestMapping("/sys/oss/api")
-//@Tag(name = "Sys Oss Api", description = "系统存储API")
-//@RequiredArgsConstructor
-//public class SysOssApiController {
+// @RestController
+// @RequestMapping("/sys/oss/api")
+// @Tag(name = "Sys Oss Api", description = "系统存储API")
+// @RequiredArgsConstructor
+// public class SysOssApiController {
 //
-//	private final SysOssApplicationService sysOssApplicationService;
+// private final SysOssApplicationService sysOssApplicationService;
 //
-//	@TraceLog
-//	@PostMapping("/query")
-//	@Operation(summary = "系统存储>查询", description = "系统存储>查询")
-//	@PreAuthorize("hasAuthority('sys:oss:query')")
-//	public Result<IPage<SysOssVO>> query(@RequestBody SysOssQo qo) {
-//		return Result.of(sysOssApplicationService.queryOssPage(qo));
-//	}
+// @TraceLog
+// @PostMapping("/query")
+// @Operation(summary = "系统存储>查询", description = "系统存储>查询")
+// @PreAuthorize("hasAuthority('sys:oss:query')")
+// public Result<IPage<SysOssVO>> query(@RequestBody SysOssQo qo) {
+// return Result.of(sysOssApplicationService.queryOssPage(qo));
+// }
 //
-//	@TraceLog
-//	@PostMapping("upload")
-//	@Operation(summary = "系统存储>上传", description = "系统存储>上传")
-//	public Result<UploadVO> upload(@RequestPart("file") MultipartFile file, @RequestParam("md5") String md5) {
-//		return Result.of(sysOssApplicationService.upload(file, md5));
-//	}
+// @TraceLog
+// @PostMapping("upload")
+// @Operation(summary = "系统存储>上传", description = "系统存储>上传")
+// public Result<UploadVO> upload(@RequestPart("file") MultipartFile file,
+/// @RequestParam("md5") String md5) {
+// return Result.of(sysOssApplicationService.upload(file, md5));
+// }
 //
-//	@TraceLog
-//	@PostMapping("/insert")
-//	@Operation(summary = "系统存储>新增", description = "系统存储>新增")
-//	@OperateLog(module = "系统存储", name = "存储新增")
-//	@PreAuthorize("hasAuthority('sys:oss:insert')")
-//	public Result<Boolean> insert(@RequestBody SysOssDTO dto) {
-//		return Result.of(sysOssApplicationService.insertOss(dto));
-//	}
+// @TraceLog
+// @PostMapping("/insert")
+// @Operation(summary = "系统存储>新增", description = "系统存储>新增")
+// @OperateLog(module = "系统存储", name = "存储新增")
+// @PreAuthorize("hasAuthority('sys:oss:insert')")
+// public Result<Boolean> insert(@RequestBody SysOssDTO dto) {
+// return Result.of(sysOssApplicationService.insertOss(dto));
+// }
 //
-//	@TraceLog
-//	@GetMapping("/use")
-//	@Operation(summary = "系统存储>启用", description = "系统存储>启用")
-//	@OperateLog(module = "系统存储", name = "存储启用")
-//	@PreAuthorize("hasAuthority('sys:oss:use')")
-//	public Result<Boolean> use(@RequestParam("id") Long id) {
-//		return Result.of(sysOssApplicationService.useOss(id));
-//	}
+// @TraceLog
+// @GetMapping("/use")
+// @Operation(summary = "系统存储>启用", description = "系统存储>启用")
+// @OperateLog(module = "系统存储", name = "存储启用")
+// @PreAuthorize("hasAuthority('sys:oss:use')")
+// public Result<Boolean> use(@RequestParam("id") Long id) {
+// return Result.of(sysOssApplicationService.useOss(id));
+// }
 //
-//	@TraceLog
-//	@GetMapping("/detail")
-//	@Operation(summary = "系统存储>查看", description = "系统存储>查看")
-//	@DataCache(name = "oss", key = "#id")
-//	public Result<SysOssVO> detail(@RequestParam("id") Long id) {
-//		return Result.of(sysOssApplicationService.getOssById(id));
-//	}
+// @TraceLog
+// @GetMapping("/detail")
+// @Operation(summary = "系统存储>查看", description = "系统存储>查看")
+// @DataCache(name = "oss", key = "#id")
+// public Result<SysOssVO> detail(@RequestParam("id") Long id) {
+// return Result.of(sysOssApplicationService.getOssById(id));
+// }
 //
-//	@TraceLog
-//	@PutMapping("/update")
-//	@Operation(summary = "系统存储>修改", description = "系统存储>修改")
-//	@OperateLog(module = "系统存储", name = "存储修改")
-//	@PreAuthorize("hasAuthority('sys:oss:update')")
-//	@DataCache(name = "oss", key = "#dto.id", type = CacheEnum.DEL)
-//	public Result<Boolean> update(@RequestBody SysOssDTO dto) {
-//		return Result.of(sysOssApplicationService.updateOss(dto));
-//	}
+// @TraceLog
+// @PutMapping("/update")
+// @Operation(summary = "系统存储>修改", description = "系统存储>修改")
+// @OperateLog(module = "系统存储", name = "存储修改")
+// @PreAuthorize("hasAuthority('sys:oss:update')")
+// @DataCache(name = "oss", key = "#dto.id", type = CacheEnum.DEL)
+// public Result<Boolean> update(@RequestBody SysOssDTO dto) {
+// return Result.of(sysOssApplicationService.updateOss(dto));
+// }
 //
-//	@TraceLog
-//	@DeleteMapping("/delete")
-//	@Operation(summary = "系统存储>删除", description = "系统存储>删除")
-//	@OperateLog(module = "系统存储", name = "存储删除")
-//	@PreAuthorize("hasAuthority('sys:oss:delete')")
-//	@DataCache(name = "oss", key = "#id", type = CacheEnum.DEL)
-//	public Result<Boolean> delete(@RequestParam("id") Long id) {
-//		return Result.of(sysOssApplicationService.deleteOss(id));
-//	}
+// @TraceLog
+// @DeleteMapping("/delete")
+// @Operation(summary = "系统存储>删除", description = "系统存储>删除")
+// @OperateLog(module = "系统存储", name = "存储删除")
+// @PreAuthorize("hasAuthority('sys:oss:delete')")
+// @DataCache(name = "oss", key = "#id", type = CacheEnum.DEL)
+// public Result<Boolean> delete(@RequestParam("id") Long id) {
+// return Result.of(sysOssApplicationService.deleteOss(id));
+// }
 //
-//}
+// }
