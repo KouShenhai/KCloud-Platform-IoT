@@ -61,8 +61,7 @@ public class OAuth2ResourceServerAutoConfig {
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
-	SecurityFilterChain resourceFilterChain(
-			CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector,
+	SecurityFilterChain resourceFilterChain(CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector,
 			InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint,
 			ForbiddenExceptionHandler forbiddenExceptionHandler, OAuth2ResourceServerProperties properties,
 			HttpSecurity http) throws Exception {
@@ -73,9 +72,10 @@ public class OAuth2ResourceServerAutoConfig {
 		return http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable)
 				// 基于token，关闭session
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(request -> request.requestMatchers(patterns.toArray(String[]::new)).permitAll().anyRequest().authenticated())
+				.authorizeHttpRequests(request -> request.requestMatchers(patterns.toArray(String[]::new)).permitAll()
+						.anyRequest().authenticated())
 				// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
-				// 除非提供自定义的 OpaqueTokenIntrospector，否则资源服务器将回退到NimbusOpaqueTokenIntrospector
+				// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 				.oauth2ResourceServer(
 						oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
 								.accessDeniedHandler(forbiddenExceptionHandler)

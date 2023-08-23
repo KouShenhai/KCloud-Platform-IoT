@@ -1,11 +1,11 @@
-///*
+/// *
 // * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
 // *
 // * Licensed under the Apache License, Version 2.0 (the "License");
 // * you may not use this file except in compliance with the License.
 // * You may obtain a copy of the License at
 // *
-// *   http://www.apache.org/licenses/LICENSE-2.0
+// * http://www.apache.org/licenses/LICENSE-2.0
 // *
 // * Unless required by applicable law or agreed to in writing, software
 // * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,33 +14,33 @@
 // * limitations under the License.
 // *
 // */
-//package org.laokou.common.log.entity;
+// package org.laokou.common.log.entity;
 //
-//import com.baomidou.mybatisplus.annotation.TableName;
-//import lombok.Data;
-//import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
+// import com.baomidou.mybatisplus.annotation.TableName;
+// import lombok.Data;
+// import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 //
-//import java.io.Serial;
-//import java.time.LocalDateTime;
+// import java.io.Serial;
+// import java.time.LocalDateTime;
 //
-///**
+/// **
 // * @author laokou
 // */
-//@Data
-//@TableName("boot_sys_audit_log")
-//public class SysAuditLogDO extends BaseDO {
+// @Data
+// @TableName("boot_sys_audit_log")
+// public class SysAuditLogDO extends BaseDO {
 //
-//	@Serial
-//	private static final long serialVersionUID = 6137554824134778292L;
+// @Serial
+// private static final long serialVersionUID = 6137554824134778292L;
 //
-//	private Long businessId;
+// private Long businessId;
 //
-//	private String auditName;
+// private String auditName;
 //
-//	private LocalDateTime auditDate;
+// private LocalDateTime auditDate;
 //
-//	private Integer auditStatus;
+// private Integer auditStatus;
 //
-//	private String comment;
+// private String comment;
 //
-//}
+// }

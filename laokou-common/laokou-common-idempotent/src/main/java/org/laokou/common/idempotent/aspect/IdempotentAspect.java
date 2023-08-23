@@ -48,6 +48,7 @@ public class IdempotentAspect {
 	private final RedisUtil redisUtil;
 
 	private static final DefaultRedisScript<Boolean> REDIS_SCRIPT;
+
 	private static final String REQUEST_ID = "request-id";
 
 	static {

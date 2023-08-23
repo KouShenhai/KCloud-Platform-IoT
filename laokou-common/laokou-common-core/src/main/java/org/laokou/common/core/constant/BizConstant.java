@@ -22,39 +22,39 @@ package org.laokou.common.core.constant;
  */
 public interface BizConstant {
 
-    /**
-     * 认证
-     */
-    String AUTHORIZATION = "Authorization";
+	/**
+	 * 认证
+	 */
+	String AUTHORIZATION = "Authorization";
 
-    /**
-     * 用户名
-     */
-    String USERNAME = "username";
+	/**
+	 * 用户名
+	 */
+	String USERNAME = "username";
 
-    /**
-     * 密码
-     */
-    String PASSWORD = "password";
+	/**
+	 * 密码
+	 */
+	String PASSWORD = "password";
 
-    /**
-     * 用户名
-     */
-    String USER_NAME = "user-name";
+	/**
+	 * 用户名
+	 */
+	String USER_NAME = "user-name";
 
-    /**
-     * 链路ID
-     */
-    String TRACE_ID = "trace-id";
+	/**
+	 * 链路ID
+	 */
+	String TRACE_ID = "trace-id";
 
-    /**
-     * 用户ID
-     */
-    String USER_ID = "user-id";
+	/**
+	 * 用户ID
+	 */
+	String USER_ID = "user-id";
 
-    /**
-     * 租户ID
-     */
-    String TENANT_ID = "tenant-id";
+	/**
+	 * 租户ID
+	 */
+	String TENANT_ID = "tenant-id";
 
 }

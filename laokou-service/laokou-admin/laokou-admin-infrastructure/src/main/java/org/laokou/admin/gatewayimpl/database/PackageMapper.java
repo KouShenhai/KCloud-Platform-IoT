@@ -29,25 +29,26 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PackageMapper extends BaseMapper<PackageDO>, BatchMapper<PackageDO> {
 
-//	/**
-//	 * 获取详情
-//	 * @param id
-//	 * @return
-//	 */
-//	SysPackageVO getPackageById(Long id);
-//
-//	/**
-//	 * 查询套餐
-//	 * @param page
-//	 * @param qo
-//	 * @return
-//	 */
-//	IPage<SysPackageVO> queryPackagePage(IPage<SysPackageVO> page, @Param("qo") SysPackageQo qo);
-//
-//	/**
-//	 * 获取下拉框
-//	 * @return
-//	 */
-//	List<OptionVO> getOptionList();
+	// /**
+	// * 获取详情
+	// * @param id
+	// * @return
+	// */
+	// SysPackageVO getPackageById(Long id);
+	//
+	// /**
+	// * 查询套餐
+	// * @param page
+	// * @param qo
+	// * @return
+	// */
+	// IPage<SysPackageVO> queryPackagePage(IPage<SysPackageVO> page, @Param("qo")
+	// SysPackageQo qo);
+	//
+	// /**
+	// * 获取下拉框
+	// * @return
+	// */
+	// List<OptionVO> getOptionList();
 
 }

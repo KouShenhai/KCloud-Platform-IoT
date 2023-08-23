@@ -57,7 +57,10 @@ public class OAuth2ResourceServerConfig {
 		Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns())
 				.orElseGet(HashSet::new);
 		return http
-				.authorizeHttpRequests(request -> request.requestMatchers(patterns.stream().map(AntPathRequestMatcher::new).toArray(AntPathRequestMatcher[]::new)).permitAll().anyRequest().authenticated())
+				.authorizeHttpRequests(request -> request
+						.requestMatchers(
+								patterns.stream().map(AntPathRequestMatcher::new).toArray(AntPathRequestMatcher[]::new))
+						.permitAll().anyRequest().authenticated())
 				.cors(AbstractHttpConfigurer::disable)
 				// 自定义登录页面
 				// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html

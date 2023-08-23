@@ -97,7 +97,7 @@ public class OperateLogAspect {
 	}
 
 	private OperateLogEvent buildEvent(OperateLog operateLog, HttpServletRequest request, JoinPoint joinPoint,
-									   Exception e) {
+			Exception e) {
 		try {
 			String ip = IpUtil.getIpAddr(request);
 			String className = joinPoint.getTarget().getClass().getName();

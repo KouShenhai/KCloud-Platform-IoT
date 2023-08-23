@@ -48,8 +48,8 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 @EnableAsync
 @RequiredArgsConstructor
 /*
-@EnableFeignClients
-*/
+ * @EnableFeignClients
+ */
 public class AdminApp {
 
 	public static void main(String[] args) {

@@ -21,8 +21,10 @@ package org.laokou.admin.domain.oss;
  * @author laokou
  */
 public enum Type {
-    /**
-     * Amazon S3
-     */
-    S3
+
+	/**
+	 * Amazon S3
+	 */
+	S3
+
 }

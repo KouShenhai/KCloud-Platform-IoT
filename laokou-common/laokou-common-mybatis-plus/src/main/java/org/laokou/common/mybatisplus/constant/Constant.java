@@ -20,6 +20,6 @@ package org.laokou.common.mybatisplus.constant;
  */
 public interface Constant {
 
-    String IN = "in";
+	String IN = "in";
 
 }

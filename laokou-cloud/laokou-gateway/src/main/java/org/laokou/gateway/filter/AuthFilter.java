@@ -69,7 +69,9 @@ import static org.laokou.gateway.filter.AuthFilter.PREFIX;
 @Data
 @ConfigurationProperties(prefix = PREFIX)
 public class AuthFilter implements GlobalFilter, Ordered {
+
 	public static final String PREFIX = "spring.cloud.gateway.ignore";
+
 	private Set<String> uris;
 
 	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
