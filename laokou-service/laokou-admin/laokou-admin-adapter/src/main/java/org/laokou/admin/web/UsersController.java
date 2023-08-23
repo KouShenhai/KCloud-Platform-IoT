@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.UsersServiceI;
 import org.laokou.admin.client.dto.UserInsertCmd;
+import org.laokou.admin.client.dto.clientobject.UserProfileCO;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -67,8 +68,8 @@ public class UsersController {
 	@TraceLog
 	@GetMapping("v1/users/profile")
 	@Operation(summary = "信息", description = "信息")
-	public Result<?> profile() {
-		return Result.of(null);
+	public Result<UserProfileCO> profile() {
+		return usersServiceI.profile();
 	}
 
 	@TraceLog

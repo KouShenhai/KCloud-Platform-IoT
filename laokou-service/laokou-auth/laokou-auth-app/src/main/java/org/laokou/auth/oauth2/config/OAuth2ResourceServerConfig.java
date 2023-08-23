@@ -20,7 +20,6 @@ package org.laokou.auth.oauth2.config;
 import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,18 +37,12 @@ import java.util.Set;
  * @author laokou
  */
 @Data
-@ConfigurationProperties(prefix = "ignore")
 @Configuration
 @RefreshScope
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = OAuth2AuthorizationServerProperties.PREFIX,
 		name = "enabled")
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2ResourceServerConfig {
-
-	/**
-	 * 不拦截的urls
-	 */
-	private Set<String> uris;
 
 	/**
 	 * 不拦截拦截静态资源 如果您不想要警告消息并且需要性能优化，则可以为静态资源引入第二个过滤器链
@@ -63,13 +56,8 @@ public class OAuth2ResourceServerConfig {
 			throws Exception {
 		Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns())
 				.orElseGet(HashSet::new);
-		AntPathRequestMatcher[] uri1 = uris.stream().map(AntPathRequestMatcher::new)
-				.toArray(AntPathRequestMatcher[]::new);
-		AntPathRequestMatcher[] uri2 = patterns.stream().map(AntPathRequestMatcher::new)
-				.toArray(AntPathRequestMatcher[]::new);
 		return http
-				.authorizeHttpRequests(request -> request.requestMatchers(uri1).permitAll().requestMatchers(uri2)
-						.permitAll().anyRequest().authenticated())
+				.authorizeHttpRequests(request -> request.requestMatchers(patterns.stream().map(AntPathRequestMatcher::new).toArray(AntPathRequestMatcher[]::new)).permitAll().anyRequest().authenticated())
 				.cors(AbstractHttpConfigurer::disable)
 				// 自定义登录页面
 				// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html

@@ -56,6 +56,7 @@ import java.util.function.Function;
 
 import static org.laokou.common.core.constant.BizConstant.*;
 import static org.laokou.gateway.constant.Constant.OAUTH2_AUTH_URI;
+import static org.laokou.gateway.filter.AuthFilter.PREFIX;
 
 /**
  * 认证Filter
@@ -66,12 +67,9 @@ import static org.laokou.gateway.constant.Constant.OAUTH2_AUTH_URI;
 @Slf4j
 @RefreshScope
 @Data
-@ConfigurationProperties(prefix = "ignore")
+@ConfigurationProperties(prefix = PREFIX)
 public class AuthFilter implements GlobalFilter, Ordered {
-
-	/**
-	 * 不拦截的urls
-	 */
+	public static final String PREFIX = "spring.cloud.gateway.ignore";
 	private Set<String> uris;
 
 	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
