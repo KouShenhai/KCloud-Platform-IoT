@@ -20,7 +20,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.PackageMapper">
 
-    <resultMap id="package" type="org.laokou.common.tenant.vo.SysPackageVO">
+<!--    <resultMap id="package" type="org.laokou.common.tenant.vo.SysPackageVO">
         <id column="id" property="id"/>
         <result property="name" column="name"/>
         <collection property="menuIds" ofType="java.lang.String">
@@ -28,9 +28,9 @@
                 <arg column="menuIds"/>
             </constructor>
         </collection>
-    </resultMap>
+    </resultMap>-->
 
-    <select id="getVersion" resultType="integer">
+<!--    <select id="getVersion" resultType="integer">
         select `version` from boot_sys_package where id = #{id}
     </select>
 
@@ -53,6 +53,6 @@
         select id as `value`, `name` as label FROM boot_sys_package
         where del_flag = 0
         order by create_date desc
-    </select>
+    </select>-->
 
 </mapper>

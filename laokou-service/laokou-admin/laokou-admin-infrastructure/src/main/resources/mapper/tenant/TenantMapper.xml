@@ -20,7 +20,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.TenantMapper">
 
-    <select id="getVersion" resultType="integer">
+<!--    <select id="getVersion" resultType="integer">
         select `version` from boot_sys_tenant where id = #{id}
     </select>
 
@@ -43,6 +43,6 @@
 
     <select id="getTenantById" resultType="org.laokou.common.tenant.vo.SysTenantVO">
         select `name`,id,source_id,package_id from boot_sys_tenant where id = #{id}
-    </select>
+    </select>-->
 
 </mapper>

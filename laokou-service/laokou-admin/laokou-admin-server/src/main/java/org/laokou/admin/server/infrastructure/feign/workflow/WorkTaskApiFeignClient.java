@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */
+ *//*
+
 package org.laokou.admin.server.infrastructure.feign.workflow;
 
 import org.laokou.admin.server.infrastructure.feign.workflow.factory.WorkTaskApiFeignClientFallbackFactory;
@@ -30,68 +31,85 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+*/
 /**
  * @author laokou
- */
+ *//*
+
 @FeignClient(contextId = "workTask", value = ServiceConstant.LAOKOU_FLOWABLE, path = "/work/task/api",
 		fallbackFactory = WorkTaskApiFeignClientFallbackFactory.class)
 @Service
 public interface WorkTaskApiFeignClient {
 
-	/**
+	*/
+/**
 	 * 查询任务
 	 * @param dto
 	 * @return
-	 */
+	 *//*
+
 	@PostMapping(value = "/query")
 	Result<PageVO<TaskVO>> query(@RequestBody TaskDTO dto);
 
-	/**
+	*/
+/**
 	 * 审批任务
 	 * @param dto
 	 * @return
-	 */
+	 *//*
+
 	@PostMapping(value = "/audit")
 	Result<AssigneeVO> audit(@RequestBody AuditDTO dto);
 
-	/**
+	*/
+/**
 	 * 开始任务
 	 * @param dto
 	 * @return
-	 */
+	 *//*
+
 	@PostMapping(value = "/start")
 	Result<AssigneeVO> start(@RequestBody ProcessDTO dto);
 
-	/**
+	*/
+/**
 	 * 流程图
 	 * @param processInstanceId
 	 * @return
-	 */
+	 *//*
+
 	@GetMapping(value = "/diagram")
 	Result<String> diagram(@RequestParam("processInstanceId") String processInstanceId);
 
-	/**
+	*/
+/**
 	 * 任务委派
 	 * @param dto
 	 * @return
-	 */
+	 *//*
+
 	@PostMapping("/delegate")
 	Result<AssigneeVO> delegate(@RequestBody DelegateDTO dto);
 
-	/**
+	*/
+/**
 	 * 任务转办
 	 * @param dto
 	 * @return
-	 */
+	 *//*
+
 	@PostMapping("/transfer")
 	Result<AssigneeVO> transfer(@RequestBody TransferDTO dto);
 
-	/**
+	*/
+/**
 	 * 任务处理
 	 * @param dto
 	 * @return
-	 */
+	 *//*
+
 	@PostMapping(value = "/resolve")
 	Result<AssigneeVO> resolve(@RequestBody ResolveDTO dto);
 
 }
+*/

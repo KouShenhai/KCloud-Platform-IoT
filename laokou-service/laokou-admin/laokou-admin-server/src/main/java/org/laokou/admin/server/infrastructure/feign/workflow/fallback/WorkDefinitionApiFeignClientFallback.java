@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */
+ *//*
+
 package org.laokou.admin.server.infrastructure.feign.workflow.fallback;
 
 import lombok.AllArgsConstructor;
@@ -25,11 +26,13 @@ import org.laokou.flowable.client.vo.DefinitionVO;
 import org.laokou.flowable.client.vo.PageVO;
 import org.springframework.web.multipart.MultipartFile;
 
+*/
 /**
  * 服务降级
  *
  * @author laokou
- */
+ *//*
+
 @Slf4j
 @AllArgsConstructor
 public class WorkDefinitionApiFeignClientFallback implements WorkDefinitionApiFeignClient {
@@ -73,3 +76,4 @@ public class WorkDefinitionApiFeignClientFallback implements WorkDefinitionApiFe
 	}
 
 }
+*/
