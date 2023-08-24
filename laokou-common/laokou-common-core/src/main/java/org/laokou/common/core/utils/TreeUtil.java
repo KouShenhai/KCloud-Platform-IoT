@@ -37,6 +37,10 @@ public class TreeUtil {
 		return rootRootNode("根节点");
 	}
 
+	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, Class<T> clazz) {
+		return buildTreeNode(treeNodes, ConvertUtil.sourceToTarget(rootRootNode(), clazz));
+	}
+
 	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode) {
 		if (null == rootNode) {
 			throw new CustomException("请构造根节点");
