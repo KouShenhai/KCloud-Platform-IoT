@@ -103,7 +103,7 @@
         <!--rocketmq-logappender版本-->
         <rocketmq-logappender.version>5.0.0-PREVIEW</rocketmq-logappender.version>
         <!--kafka版本-->
-        <kafka.version>3.0.4</kafka.version>
+        <kafka.version>3.0.10</kafka.version>
         <!--netty版本-->
         <netty.version>4.1.96.Final</netty.version>
         <!--gson版本-->
