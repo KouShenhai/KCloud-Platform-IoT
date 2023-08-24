@@ -59,12 +59,12 @@ spring:
         enabled: true
         request-matcher:
           patterns:
-            - /v1/secrets
             - /v3/api-docs/**
             - /swagger-ui.html
             - /swagger-ui/**
             - /actuator/**
             - /error
+            - /v1/logouts
   cloud:
     # sentinel
     sentinel:
