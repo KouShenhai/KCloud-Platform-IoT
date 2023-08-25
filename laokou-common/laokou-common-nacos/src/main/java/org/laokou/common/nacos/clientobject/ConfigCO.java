@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.nacos.vo;
+package org.laokou.common.nacos.clientobject;
 
 import lombok.Data;
 
@@ -25,7 +25,7 @@ import java.io.Serializable;
  * @author laokou
  */
 @Data
-public class ConfigVO implements Serializable {
+public class ConfigCO implements Serializable {
 
 	private String appName;
 

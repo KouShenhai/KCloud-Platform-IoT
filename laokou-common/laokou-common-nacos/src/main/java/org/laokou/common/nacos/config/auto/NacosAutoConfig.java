@@ -18,18 +18,22 @@
 package org.laokou.common.nacos.config.auto;
 
 import com.alibaba.nacos.client.naming.remote.NamingClientProxy;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.nacos.proxy.ProtocolProxy;
 import org.laokou.common.nacos.proxy.ProtocolProxyDelegate;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.event.EventListener;
 
 /**
  * @author laokou
  */
 @AutoConfiguration
 @ComponentScan("org.laokou.common.nacos")
+@Slf4j
 public class NacosAutoConfig {
 
 	/**
@@ -40,6 +44,12 @@ public class NacosAutoConfig {
 	@Bean
 	public ProtocolProxy protocolProxy(ServerProperties serverProperties) {
 		return new ProtocolProxyDelegate(serverProperties.getSsl().isEnabled());
+	}
+
+	@EventListener(EnvironmentChangeEvent.class)
+	public void environmentChangeEventListener() {
+		// 请查看 ConfigDataContextRefresher
+		log.info("配置文件更新通知");
 	}
 
 }

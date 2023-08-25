@@ -24,7 +24,7 @@ import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.proxy.ProtocolProxy;
-import org.laokou.common.nacos.vo.ConfigVO;
+import org.laokou.common.nacos.clientobject.ConfigCO;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
@@ -62,7 +62,7 @@ public class ApiUtil {
 		return JacksonUtil.readTree(result).get(ACCESS_TOKEN).asText();
 	}
 
-	public ConfigVO getConfigInfo(String token) {
+	public ConfigCO getConfigInfo(String token) {
 		String configUri = protocolProxy.getConfigUri(nacosConfigProperties.getServerAddr());
 		String username = nacosConfigProperties.getUsername();
 		String group = configUtil.getGroup();
@@ -79,24 +79,24 @@ public class ApiUtil {
 		if (StringUtil.isEmpty(configInfo)) {
 			return null;
 		}
-		return JacksonUtil.toBean(configInfo, ConfigVO.class);
+		return JacksonUtil.toBean(configInfo, ConfigCO.class);
 	}
 
-	public void doConfigInfo(ConfigVO vo, String token) {
+	public void doConfigInfo(ConfigCO co, String token) {
 		String configUri = protocolProxy.getConfigUri(nacosConfigProperties.getServerAddr());
-		HttpUtil.doPost(configUri, getMap(vo, token), new HashMap<>(0), protocolProxy.sslEnabled());
+		HttpUtil.doPost(configUri, getMap(co, token), new HashMap<>(0), protocolProxy.sslEnabled());
 	}
 
 	@SneakyThrows
-	private Map<String, String> getMap(ConfigVO vo, String token) {
+	private Map<String, String> getMap(ConfigCO co, String token) {
 		String username = nacosConfigProperties.getUsername();
 		Map<String, String> params = new HashMap<>(20);
 		params.put(ACCESS_TOKEN, token);
 		params.put(USERNAME, username);
-		Field[] fields = vo.getClass().getDeclaredFields();
+		Field[] fields = co.getClass().getDeclaredFields();
 		for (Field field : fields) {
 			field.setAccessible(true);
-			Object o = field.get(vo);
+			Object o = field.get(co);
 			params.put(field.getName(), o == null ? "" : o.toString());
 		}
 		return params;

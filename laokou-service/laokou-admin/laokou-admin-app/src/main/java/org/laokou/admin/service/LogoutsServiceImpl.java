@@ -31,11 +31,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LogoutsServiceImpl implements LogoutsServiceI {
 
-    private final LogoutCmdExe logoutCmdExe;
+	private final LogoutCmdExe logoutCmdExe;
 
-    @Override
-    public Result<Boolean> logout(LogoutCmd cmd) {
-        return logoutCmdExe.execute(cmd);
-    }
+	@Override
+	public Result<Boolean> logout(LogoutCmd cmd) {
+		return logoutCmdExe.execute(cmd);
+	}
 
 }
