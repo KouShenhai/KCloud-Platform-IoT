@@ -23,11 +23,11 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface LogoutsServiceI {
 
-    /**
-     * 注销
-     * @param cmd 指令
-     * @return Result<Boolean>
-     */
-    Result<Boolean> logout(LogoutCmd cmd);
+	/**
+	 * 注销
+	 * @param cmd 指令
+	 * @return Result<Boolean>
+	 */
+	Result<Boolean> logout(LogoutCmd cmd);
 
 }

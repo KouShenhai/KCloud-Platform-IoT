@@ -43,61 +43,62 @@ import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
 @RequiredArgsConstructor
 public class LogoutCmdExe {
 
-    private final RedisUtil redisUtil;
-    private final OAuth2AuthorizationService oAuth2AuthorizationService;
+	private final RedisUtil redisUtil;
 
-    public Result<Boolean> execute(LogoutCmd cmd) {
-        HttpServletRequest request = cmd.getRequest();
-        String token = getToken(request);
-        if (StringUtil.isEmpty(token)) {
-            return Result.of(true);
-        }
-        OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
-        if (authorization == null) {
-            return Result.of(true);
-        }
-        User user = (User) ((UsernamePasswordAuthenticationToken) Objects
-                .requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
-        if (user == null) {
-            return Result.of(true);
-        }
-        Long userId = user.getId();
-        // 删除token
-        removeToken(authorization);
-        // 删除菜单key
-        deleteResourceTreeKey(userId);
-        // 删除用户key
-        deleteUserInfoKey(token);
-        // 删除强踢Key
-        deleteUserKillKey(token);
-        return Result.of(true);
-    }
+	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
-    private void removeToken(OAuth2Authorization authorization) {
-        oAuth2AuthorizationService.remove(authorization);
-    }
+	public Result<Boolean> execute(LogoutCmd cmd) {
+		HttpServletRequest request = cmd.getRequest();
+		String token = getToken(request);
+		if (StringUtil.isEmpty(token)) {
+			return Result.of(true);
+		}
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+		if (authorization == null) {
+			return Result.of(true);
+		}
+		User user = (User) ((UsernamePasswordAuthenticationToken) Objects
+				.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
+		if (user == null) {
+			return Result.of(true);
+		}
+		Long userId = user.getId();
+		// 删除token
+		removeToken(authorization);
+		// 删除菜单key
+		deleteResourceTreeKey(userId);
+		// 删除用户key
+		deleteUserInfoKey(token);
+		// 删除强踢Key
+		deleteUserKillKey(token);
+		return Result.of(true);
+	}
 
-    private void deleteUserInfoKey(String token) {
-        String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-        redisUtil.delete(userInfoKey);
-    }
+	private void removeToken(OAuth2Authorization authorization) {
+		oAuth2AuthorizationService.remove(authorization);
+	}
 
-    private void deleteUserKillKey(String token) {
-        String userKillKey = RedisKeyUtil.getUserKillKey(token);
-        redisUtil.delete(userKillKey);
-    }
+	private void deleteUserInfoKey(String token) {
+		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
+		redisUtil.delete(userInfoKey);
+	}
 
-    private void deleteResourceTreeKey(Long userId) {
-        String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
-        redisUtil.delete(resourceTreeKey);
-    }
+	private void deleteUserKillKey(String token) {
+		String userKillKey = RedisKeyUtil.getUserKillKey(token);
+		redisUtil.delete(userKillKey);
+	}
 
-    private String getToken(HttpServletRequest request) {
-        String token = request.getHeader(AUTHORIZATION);
-        if (StringUtil.isNotEmpty(token)) {
-            return token.substring(7);
-        }
-        return "";
-    }
+	private void deleteResourceTreeKey(Long userId) {
+		String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
+		redisUtil.delete(resourceTreeKey);
+	}
+
+	private String getToken(HttpServletRequest request) {
+		String token = request.getHeader(AUTHORIZATION);
+		if (StringUtil.isNotEmpty(token)) {
+			return token.substring(7);
+		}
+		return "";
+	}
 
 }

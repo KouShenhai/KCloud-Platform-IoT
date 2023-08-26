@@ -27,6 +27,6 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 public class LogoutCmd extends ClientObject {
 
-    private HttpServletRequest request;
+	private HttpServletRequest request;
 
 }

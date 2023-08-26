@@ -36,15 +36,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LogoutsController {
 
-    private final LogoutsServiceI logoutsServiceI;
+	private final LogoutsServiceI logoutsServiceI;
 
-    @TraceLog
-    @GetMapping("v1/logouts")
-    @Operation(summary = "注销", description = "注销")
-    public Result<Boolean> logout(HttpServletRequest request) {
-        LogoutCmd cmd = new LogoutCmd();
-        cmd.setRequest(request);
-        return logoutsServiceI.logout(cmd);
-    }
+	@TraceLog
+	@GetMapping("v1/logouts")
+	@Operation(summary = "注销", description = "注销")
+	public Result<Boolean> logout(HttpServletRequest request) {
+		LogoutCmd cmd = new LogoutCmd();
+		cmd.setRequest(request);
+		return logoutsServiceI.logout(cmd);
+	}
 
 }

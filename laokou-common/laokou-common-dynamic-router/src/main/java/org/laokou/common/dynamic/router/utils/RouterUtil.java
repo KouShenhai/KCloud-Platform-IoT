@@ -27,7 +27,7 @@ import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.dynamic.router.RouteDefinition;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.utils.ApiUtil;
-import org.laokou.common.nacos.vo.ConfigVO;
+import org.laokou.common.nacos.clientobject.ConfigCO;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -67,11 +67,11 @@ public class RouterUtil {
 			return;
 		}
 		// 拉取所有的路由配置
-		ConfigVO configInfo = apiUtil.getConfigInfo(token);
-		if (configInfo == null) {
+		ConfigCO configCO = apiUtil.getConfigInfo(token);
+		if (configCO == null) {
 			return;
 		}
-		List<RouteDefinition> routeDefinitions = JacksonUtil.toList(configInfo.getContent(), RouteDefinition.class);
+		List<RouteDefinition> routeDefinitions = JacksonUtil.toList(configCO.getContent(), RouteDefinition.class);
 		// 判断是否已经配置
 		if (CollectionUtil.isEmpty(routeDefinitions)) {
 			log.error("请配置动态路由");
@@ -82,8 +82,8 @@ public class RouterUtil {
 		if (!isExist) {
 			routeDefinitions.add(routeDefinition);
 			String toPrettyFormat = GsonUtil.toPrettyFormat(routeDefinitions);
-			configInfo.setContent(toPrettyFormat);
-			apiUtil.doConfigInfo(configInfo, token);
+			configCO.setContent(toPrettyFormat);
+			apiUtil.doConfigInfo(configCO, token);
 			log.info("服务路由已添加并发布");
 		}
 		else {
