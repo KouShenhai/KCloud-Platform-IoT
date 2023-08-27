@@ -65,6 +65,7 @@ spring:
             - /actuator/**
             - /error
             - /v1/logouts
+            - /v1/tenants/option-list
   cloud:
     # sentinel
     sentinel:
