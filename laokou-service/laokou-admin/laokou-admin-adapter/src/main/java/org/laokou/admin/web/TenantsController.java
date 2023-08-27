@@ -19,9 +19,13 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.api.TenantsServiceI;
+import org.laokou.admin.client.dto.clientobject.OptionCO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -30,6 +34,8 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "TenantsController", description = "租户")
 @RequiredArgsConstructor
 public class TenantsController {
+
+	private final TenantsServiceI tenantsServiceI;
 
 	@TraceLog
 	@PostMapping("v1/tenants/list")
@@ -75,5 +81,13 @@ public class TenantsController {
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
+
+	@TraceLog
+	@GetMapping("v1/tenants/option-list")
+	@Operation(summary = "下拉列表", description = "下拉列表")
+	public Result<List<OptionCO>> optionList() {
+		return tenantsServiceI.optionList();
+	}
+
 
 }

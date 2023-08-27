@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class CreateTable {
 
-	private static final String URL = "jdbc:mysql://192.168.30.131:3306/?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false";
+	private static final String URL = "jdbc:mysql://192.168.30.132:3306/?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false";
 
 	private static final String USERNAME = "root";
 

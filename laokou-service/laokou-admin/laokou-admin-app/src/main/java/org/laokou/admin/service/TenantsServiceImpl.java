@@ -14,57 +14,30 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
+package org.laokou.admin.service;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.api.TenantsServiceI;
 import org.laokou.admin.client.dto.clientobject.OptionCO;
+import org.laokou.admin.command.query.TenantOptionListQryExe;
 import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface TenantsServiceI {
+@Service
+@RequiredArgsConstructor
+public class TenantsServiceImpl implements TenantsServiceI {
 
-    /**
-     * 租户下拉列表
-     * @return Result<List<OptionCO>>
-     */
-    Result<List<OptionCO>> optionList();
+    private final TenantOptionListQryExe tenantOptionListQryExe;
 
-	// /**
-	// * 分页查询租户
-	// * @param qo
-	// * @return
-	// */
-	// IPage<SysTenantVO> queryTenantPage(SysTenantQo qo);
-	//
-	// /**
-	// * 新增租户
-	// * @param dto
-	// * @return
-	// */
-	// Boolean insertTenant(SysTenantDTO dto);
-	//
-	// /**
-	// * 查询租户
-	// * @param id
-	// * @return
-	// */
-	// SysTenantVO getTenantById(Long id);
-	//
-	// /**
-	// * 修改租户
-	// * @param dto
-	// * @return
-	// */
-	// Boolean updateTenant(SysTenantDTO dto);
-	//
-	// /**
-	// * 删除租户
-	// * @param id
-	// * @return
-	// */
-	// Boolean deleteTenant(Long id);
+    @Override
+    public Result<List<OptionCO>> optionList() {
+        return tenantOptionListQryExe.execute();
+    }
 
 }
