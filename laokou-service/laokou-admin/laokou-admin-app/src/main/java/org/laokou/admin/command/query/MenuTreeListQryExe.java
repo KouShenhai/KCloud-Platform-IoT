@@ -14,15 +14,16 @@
  * limitations under the License.
  *
  */
-
 package org.laokou.admin.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.clientobject.OptionCO;
-import org.laokou.admin.domain.gateway.TenantGateway;
-import org.laokou.admin.domain.option.Option;
+import org.laokou.admin.client.dto.clientobject.MenuCO;
+import org.laokou.admin.domain.gateway.MenuGateway;
+import org.laokou.admin.domain.menu.Menu;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,13 +33,14 @@ import java.util.List;
  */
 @Component
 @RequiredArgsConstructor
-public class TenantOptionListQryExe {
+public class MenuTreeListQryExe {
 
-	private final TenantGateway tenantGateway;
+    private final MenuGateway menuGateway;
 
-	public Result<List<OptionCO>> execute() {
-		List<Option> optionList = tenantGateway.getOptionList();
-		return Result.of(ConvertUtil.sourceToTarget(optionList, OptionCO.class));
-	}
+    public Result<MenuCO> execute() {
+        List<Menu> menuList = menuGateway.list(0, UserUtil.user());
+        List<MenuCO> menus = ConvertUtil.sourceToTarget(menuList, MenuCO.class);
+        return Result.of(TreeUtil.buildTreeNode(menus,MenuCO.class));
+    }
 
 }

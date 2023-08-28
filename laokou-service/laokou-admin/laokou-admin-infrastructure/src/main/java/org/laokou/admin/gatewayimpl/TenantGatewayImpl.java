@@ -18,8 +18,8 @@
 package org.laokou.admin.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.clientobject.OptionCO;
 import org.laokou.admin.domain.gateway.TenantGateway;
+import org.laokou.admin.domain.option.Option;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.core.utils.CollectionUtil;
@@ -35,21 +35,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TenantGatewayImpl implements TenantGateway {
 
-    private final TenantMapper tenantMapper;
+	private final TenantMapper tenantMapper;
 
-    @Override
-    public List<OptionCO> getOptionList() {
-        List<TenantDO> list = tenantMapper.getOptionList();
-        if (CollectionUtil.isNotEmpty(list)) {
-            List<OptionCO> options = new ArrayList<>(list.size());
-            for (TenantDO tenantDO : list) {
-                OptionCO co = new OptionCO();
-                co.setLabel(tenantDO.getName());
-                co.setValue(String.valueOf(tenantDO.getId()));
-                options.add(co);
-            }
-            return options;
-        }
-        return new ArrayList<>(0);
-    }
+	@Override
+	public List<Option> getOptionList() {
+		List<TenantDO> list = tenantMapper.getOptionList();
+		if (CollectionUtil.isNotEmpty(list)) {
+			List<Option> options = new ArrayList<>(list.size());
+			for (TenantDO tenantDO : list) {
+				Option op = new Option();
+				op.setLabel(tenantDO.getName());
+				op.setValue(String.valueOf(tenantDO.getId()));
+				options.add(op);
+			}
+			return options;
+		}
+		return new ArrayList<>(0);
+	}
+
 }

@@ -14,31 +14,26 @@
  * limitations under the License.
  *
  */
-
-package org.laokou.admin.command.query;
+package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.clientobject.OptionCO;
-import org.laokou.admin.domain.gateway.TenantGateway;
-import org.laokou.admin.domain.option.Option;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.client.api.MenusServiceI;
+import org.laokou.admin.client.dto.clientobject.MenuCO;
+import org.laokou.admin.command.query.MenuTreeListQryExe;
 import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-@Component
+@Service
 @RequiredArgsConstructor
-public class TenantOptionListQryExe {
+public class MenusServiceImpl implements MenusServiceI {
 
-	private final TenantGateway tenantGateway;
+    private final MenuTreeListQryExe menuTreeListQryExe;
 
-	public Result<List<OptionCO>> execute() {
-		List<Option> optionList = tenantGateway.getOptionList();
-		return Result.of(ConvertUtil.sourceToTarget(optionList, OptionCO.class));
-	}
-
+    @Override
+    public Result<MenuCO> treeList() {
+        return menuTreeListQryExe.execute();
+    }
 }

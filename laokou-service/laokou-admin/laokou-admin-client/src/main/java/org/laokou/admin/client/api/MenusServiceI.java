@@ -16,10 +16,15 @@
  */
 package org.laokou.admin.client.api;
 
+import org.laokou.admin.client.dto.clientobject.MenuCO;
+import org.laokou.common.i18n.dto.Result;
+
 /**
  * @author laokou
  */
 public interface MenusServiceI {
+
+	Result<MenuCO> treeList();
 
 	//
 	// /**

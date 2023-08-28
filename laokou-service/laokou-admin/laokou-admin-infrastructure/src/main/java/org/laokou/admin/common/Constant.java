@@ -34,4 +34,9 @@ public interface Constant {
 	 */
 	String SHARDING_SPHERE_READWRITE = "shardingSphereReadWrite";
 
+	/**
+	 * 默认
+	 */
+	long DEFAULT_TENANT = 0L;
+
 }
