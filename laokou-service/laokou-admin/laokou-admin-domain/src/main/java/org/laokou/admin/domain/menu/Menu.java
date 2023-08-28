@@ -1,45 +1,73 @@
 /*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
-package org.laokou.admin.domain.gateway;
 
-import org.laokou.admin.domain.option.Option;
-import org.laokou.admin.domain.user.User;
-import org.laokou.common.i18n.dto.Datas;
+package org.laokou.admin.domain.menu;
 
-import java.util.List;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-public interface UserGateway {
+@Data
+public class Menu {
 
-	Boolean insert(User user);
+	/**
+	 * ID
+	 */
+	private Long id;
 
-	Boolean update(User user);
+	/**
+	 * 名称
+	 */
+	private String name;
 
-	Boolean deleteById(Long id);
+	/**
+	 * 父级ID
+	 */
+	private Long pid;
 
-	List<Option> getOptionList(Long tenantId);
+	/**
+	 * 图标
+	 */
+	private String icon;
 
-	Boolean updatePwd(User user);
+	/**
+	 * 类型 0菜单 1按钮
+	 */
+	private Integer type;
 
-	Boolean updateStatus(User user);
+	/**
+	 * 排序
+	 */
+	private Integer sort;
 
-	User getById(Long id);
+	/**
+	 * 路径
+	 */
+	private String url;
 
-	Datas<User> list();
+	/**
+	 * 权限标识
+	 */
+	private String permission;
+
+	/**
+	 * 状态 0显示 1隐藏
+	 */
+	private Integer visible;
 
 }

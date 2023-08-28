@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.dto.ClientObject;
 
 import java.util.*;
 
@@ -63,7 +64,7 @@ public class TreeUtil {
 	@Data
 	@AllArgsConstructor
 	@NoArgsConstructor
-	public static class TreeNode<T> {
+	public static class TreeNode<T> extends ClientObject {
 
 		private Long id;
 

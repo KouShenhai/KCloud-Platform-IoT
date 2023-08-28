@@ -21,10 +21,10 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.client.dto.clientobject.OptionCO;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.UserGateway;
+import org.laokou.admin.domain.option.Option;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
@@ -118,15 +118,15 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	@DS(SHARDING_SPHERE)
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
-	public List<OptionCO> getOptionList(Long tenantId) {
+	public List<Option> getOptionList(Long tenantId) {
 		List<UserDO> list = userMapper.getOptionListByTenantId(tenantId);
 		if (CollectionUtil.isNotEmpty(list)) {
-			List<OptionCO> options = new ArrayList<>(list.size());
+			List<Option> options = new ArrayList<>(list.size());
 			for (UserDO userDO : list) {
-				OptionCO co = new OptionCO();
-				co.setLabel(AesUtil.decrypt(userDO.getUsername()));
-				co.setValue(String.valueOf(userDO.getId()));
-				options.add(co);
+				Option op = new Option();
+				op.setLabel(AesUtil.decrypt(userDO.getUsername()));
+				op.setValue(String.valueOf(userDO.getId()));
+				options.add(op);
 			}
 			return options;
 		}

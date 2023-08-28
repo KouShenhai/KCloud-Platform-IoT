@@ -26,11 +26,11 @@ import java.util.List;
  */
 public interface TenantsServiceI {
 
-    /**
-     * 租户下拉列表
-     * @return Result<List<OptionCO>>
-     */
-    Result<List<OptionCO>> optionList();
+	/**
+	 * 租户下拉列表
+	 * @return Result<List<OptionCO>>
+	 */
+	Result<List<OptionCO>> optionList();
 
 	// /**
 	// * 分页查询租户

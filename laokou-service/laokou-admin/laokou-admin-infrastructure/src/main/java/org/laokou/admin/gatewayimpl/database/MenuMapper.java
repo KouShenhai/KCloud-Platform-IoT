@@ -13,33 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.domain.gateway;
+package org.laokou.admin.gatewayimpl.database;
 
-import org.laokou.admin.domain.option.Option;
-import org.laokou.admin.domain.user.User;
-import org.laokou.common.i18n.dto.Datas;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface UserGateway {
+@Repository
+@Mapper
+public interface MenuMapper {
 
-	Boolean insert(User user);
+	List<MenuDO> getMenuListByUserId(@Param("type") Integer type, @Param("userId") Long userId);
 
-	Boolean update(User user);
+	List<MenuDO> getMenuList(@Param("type") Integer type);
 
-	Boolean deleteById(Long id);
-
-	List<Option> getOptionList(Long tenantId);
-
-	Boolean updatePwd(User user);
-
-	Boolean updateStatus(User user);
-
-	User getById(Long id);
-
-	Datas<User> list();
+	List<MenuDO> getMenuListByTenantId(@Param("type") Integer type, @Param("tenantId") Long tenantId);
 
 }

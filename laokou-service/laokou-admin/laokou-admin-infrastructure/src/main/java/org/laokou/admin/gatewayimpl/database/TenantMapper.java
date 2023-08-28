@@ -30,11 +30,11 @@ import java.util.List;
 @Repository
 public interface TenantMapper extends BaseMapper<TenantDO> {
 
-    /**
-     * 根据租户ID查询下拉列表
-     * @return List<UserDO>
-     */
-    List<TenantDO> getOptionList();
+	/**
+	 * 根据租户ID查询下拉列表
+	 * @return List<UserDO>
+	 */
+	List<TenantDO> getOptionList();
 
 	// /**
 	// * 查询版本号

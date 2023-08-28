@@ -15,7 +15,7 @@
  */
 package org.laokou.admin.domain.gateway;
 
-import org.laokou.admin.client.dto.clientobject.OptionCO;
+import org.laokou.admin.domain.option.Option;
 
 import java.util.List;
 
@@ -24,6 +24,6 @@ import java.util.List;
  */
 public interface TenantGateway {
 
-    List<OptionCO> getOptionList();
+	List<Option> getOptionList();
 
 }

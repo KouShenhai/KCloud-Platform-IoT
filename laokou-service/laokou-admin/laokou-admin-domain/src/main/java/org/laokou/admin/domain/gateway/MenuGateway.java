@@ -15,31 +15,16 @@
  */
 package org.laokou.admin.domain.gateway;
 
-import org.laokou.admin.domain.option.Option;
-import org.laokou.admin.domain.user.User;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.admin.domain.menu.Menu;
+import org.laokou.auth.domain.user.User;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface UserGateway {
+public interface MenuGateway {
 
-	Boolean insert(User user);
-
-	Boolean update(User user);
-
-	Boolean deleteById(Long id);
-
-	List<Option> getOptionList(Long tenantId);
-
-	Boolean updatePwd(User user);
-
-	Boolean updateStatus(User user);
-
-	User getById(Long id);
-
-	Datas<User> list();
+	List<Menu> list(Integer type, User user);
 
 }

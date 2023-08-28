@@ -15,29 +15,50 @@
  *
  */
 
-package org.laokou.admin.service;
+package org.laokou.admin.client.dto.clientobject;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.TenantsServiceI;
-import org.laokou.admin.client.dto.clientobject.OptionCO;
-import org.laokou.admin.command.query.TenantOptionListQryExe;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Service;
+import lombok.Data;
+import org.laokou.common.core.utils.TreeUtil;
 
-import java.util.List;
+import java.io.Serial;
 
 /**
  * @author laokou
  */
-@Service
-@RequiredArgsConstructor
-public class TenantsServiceImpl implements TenantsServiceI {
+@Data
+public class MenuCO extends TreeUtil.TreeNode<MenuCO> {
 
-	private final TenantOptionListQryExe tenantOptionListQryExe;
+	@Serial
+	private static final long serialVersionUID = 9057183259302756376L;
 
-	@Override
-	public Result<List<OptionCO>> optionList() {
-		return tenantOptionListQryExe.execute();
-	}
+	/**
+	 * 图标
+	 */
+	private String icon;
+
+	/**
+	 * 类型 0菜单 1按钮
+	 */
+	private Integer type;
+
+	/**
+	 * 排序
+	 */
+	private Integer sort;
+
+	/**
+	 * 路径
+	 */
+	private String url;
+
+	/**
+	 * 权限标识
+	 */
+	private String permission;
+
+	/**
+	 * 状态 0显示 1隐藏
+	 */
+	private Integer visible;
 
 }
