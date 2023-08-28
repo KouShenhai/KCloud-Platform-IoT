@@ -19,6 +19,7 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.api.MenusServiceI;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.*;
@@ -34,11 +35,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MenusController {
 
+	private final MenusServiceI menusServiceI;
+
 	@TraceLog
 	@GetMapping("v1/menus/tree-list")
 	@Operation(summary = "树菜单列表", description = "树菜单列表")
 	public Result<?> treeList() {
-		return Result.of(null);
+		return menusServiceI.treeList();
 	}
 
 	@TraceLog

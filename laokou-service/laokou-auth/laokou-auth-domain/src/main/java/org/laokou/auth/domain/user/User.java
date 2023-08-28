@@ -78,6 +78,12 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 
 	private LocalDateTime expireDate;
 
+	public User(Long id, Integer superAdmin, Long tenantId) {
+		this.id = id;
+		this.superAdmin = superAdmin;
+		this.tenantId = tenantId;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -190,12 +196,6 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 	@JsonIgnore
 	public String getName() {
 		return this.username;
-	}
-
-	public User(Long id, Integer superAdmin, Long tenantId) {
-		this.id = id;
-		this.superAdmin = superAdmin;
-		this.tenantId = tenantId;
 	}
 
 }
