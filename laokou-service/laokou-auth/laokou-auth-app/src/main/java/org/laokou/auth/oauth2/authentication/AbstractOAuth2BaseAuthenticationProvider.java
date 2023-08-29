@@ -200,13 +200,13 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		Long tenantId = Long.valueOf(request.getParameter(TENANT_ID));
 		String ip = IpUtil.getIpAddr(request);
 		// 验证验证码
-		Boolean validate = captchaGateway.validate(uuid, captcha);
-		if (validate == null) {
-			throw getException(CAPTCHA_EXPIRED, loginName, loginType, tenantId, ip);
-		}
-		if (Boolean.FALSE.equals(validate)) {
-			throw getException(CAPTCHA_ERROR, loginName, loginType, tenantId, ip);
-		}
+//		Boolean validate = captchaGateway.validate(uuid, captcha);
+//		if (validate == null) {
+//			throw getException(CAPTCHA_EXPIRED, loginName, loginType, tenantId, ip);
+//		}
+//		if (Boolean.FALSE.equals(validate)) {
+//			throw getException(CAPTCHA_ERROR, loginName, loginType, tenantId, ip);
+//		}
 		// 加密
 		String encryptName = AesUtil.encrypt(loginName);
 		// 多租户查询

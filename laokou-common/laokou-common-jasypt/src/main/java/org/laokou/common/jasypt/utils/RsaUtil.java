@@ -26,13 +26,13 @@ import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Objects;
 
+import static org.laokou.common.core.constant.Constant.ALGORITHM_RSA;
+
 /**
  * @author laokou
  */
 @Slf4j
 public class RsaUtil {
-
-	private static final String ALGORITHM = "RSA";
 
 	/**
 	 * base64解密
@@ -49,7 +49,7 @@ public class RsaUtil {
 	 */
 	public static byte[] decryptByPrivateKey(byte[] bytes, byte[] keyBytes) throws Exception {
 		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
-		KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
+		KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM_RSA);
 		Key privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
 		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
 		cipher.init(2, privateKey);

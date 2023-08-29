@@ -16,6 +16,8 @@
  */
 package org.laokou.auth.oauth2.config;
 
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.laokou.auth.oauth2.authentication.*;
@@ -38,7 +40,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-import org.springframework.security.oauth2.core.OAuth2Token;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
@@ -50,6 +52,8 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.oidc.web.authentication.OidcClientRegistrationAuthenticationConverter;
+import org.springframework.security.oauth2.server.authorization.oidc.web.authentication.OidcLogoutAuthenticationConverter;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
@@ -58,9 +62,15 @@ import org.springframework.security.oauth2.server.authorization.web.authenticati
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.List;
+import java.util.UUID;
 
 import static org.laokou.auth.common.Constant.LOGIN_PATTERN;
+import static org.laokou.common.core.constant.Constant.ALGORITHM_RSA;
 
 /**
  * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}
@@ -108,6 +118,8 @@ class OAuth2AuthorizationServerConfig {
 								new OAuth2TokenIntrospectionAuthenticationConverter(),
 								new OAuth2TokenRevocationAuthenticationConverter(),
 								new PublicClientAuthenticationConverter(),
+								new OidcLogoutAuthenticationConverter(),
+								new OidcClientRegistrationAuthenticationConverter(),
 								new ClientSecretBasicAuthenticationConverter(),
 								new ClientSecretPostAuthenticationConverter(),
 								new OAuth2AuthorizationConsentAuthenticationConverter(),
@@ -175,11 +187,33 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 配置
+	 * @param jwkSource 加密源
+	 * @return JwtEncoder
+	 */
+	@Bean
+	JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
+		return new NimbusJwtEncoder(jwkSource);
+	}
+
+	@Bean
+	JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
+		return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+	}
+
+	@Bean
+	JWKSource<SecurityContext> jwkSource() {
+		RSAKey rsaKey = getRsaKey();
+		JWKSet jwkSet = new JWKSet(rsaKey);
+		return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
+	}
+
+	/**
+	 * 配置
 	 * @param jwtEncoder 加密编码
 	 * @return OAuth2TokenGenerator<OAuth2Token>
 	 */
 	@Bean
-	OAuth2TokenGenerator<OAuth2Token> oAuth2TokenGenerator(JwtEncoder jwtEncoder) {
+	OAuth2TokenGenerator<?> tokenGenerator(JwtEncoder jwtEncoder) {
 		JwtGenerator generator = new JwtGenerator(jwtEncoder);
 		return new DelegatingOAuth2TokenGenerator(generator, new OAuth2AccessTokenGenerator(), new OAuth2RefreshTokenGenerator());
 	}
@@ -232,16 +266,6 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 配置
-	 * @param jwkSource 加密源
-	 * @return JwtEncoder
-	 */
-	@Bean
-	JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
-		return new NimbusJwtEncoder(jwkSource);
-	}
-
-	/**
-	 * 配置
 	 * @param jdbcTemplate JDBC模板
 	 * @param registeredClientRepository 注册信息
 	 * @return OAuth2AuthorizationConsentService
@@ -251,6 +275,23 @@ class OAuth2AuthorizationServerConfig {
 	OAuth2AuthorizationConsentService authorizationConsentService(JdbcTemplate jdbcTemplate,
 			RegisteredClientRepository registeredClientRepository) {
 		return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
+	}
+
+	private static RSAKey getRsaKey() {
+		KeyPair keyPair = generateRsaKey();
+		RSAPublicKey publicKey = (RSAPublicKey)keyPair.getPublic();
+		RSAPrivateKey privateKey = (RSAPrivateKey)keyPair.getPrivate();
+		return (new RSAKey.Builder(publicKey)).privateKey(privateKey).keyID(UUID.randomUUID().toString()).build();
+	}
+
+	private static KeyPair generateRsaKey() {
+		try {
+			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM_RSA);
+			keyPairGenerator.initialize(2048);
+			return keyPairGenerator.generateKeyPair();
+		} catch (Exception var2) {
+			throw new IllegalStateException(var2);
+		}
 	}
 
 }

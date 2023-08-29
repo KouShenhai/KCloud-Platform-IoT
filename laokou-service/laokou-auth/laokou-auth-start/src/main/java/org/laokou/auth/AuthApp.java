@@ -21,6 +21,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerJwtAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -32,7 +33,7 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication(exclude = { OAuth2AuthorizationServerAutoConfiguration.class })
+@SpringBootApplication(exclude = { OAuth2AuthorizationServerAutoConfiguration.class, OAuth2AuthorizationServerJwtAutoConfiguration.class })
 @EnableConfigurationProperties
 @EnableEncryptableProperties
 @EnableAsync

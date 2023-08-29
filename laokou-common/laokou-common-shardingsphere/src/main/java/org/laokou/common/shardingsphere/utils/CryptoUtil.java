@@ -32,6 +32,8 @@ import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+import static org.laokou.common.core.constant.Constant.ALGORITHM_RSA;
+
 /**
  * Copyright 1999-2018 Alibaba Group Holding Ltd.
  * <p>
@@ -104,7 +106,7 @@ public class CryptoUtil {
 			byte[] publicKeyBytes = Base64Util.base64ToByteArray(publicKeyText);
 			X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(publicKeyBytes);
 
-			KeyFactory keyFactory = KeyFactory.getInstance("RSA", "SunRsaSign");
+			KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM_RSA, "SunRsaSign");
 			return keyFactory.generatePublic(x509KeySpec);
 		}
 		catch (Exception e) {
@@ -129,7 +131,7 @@ public class CryptoUtil {
 
 			byte[] publicKeyBytes = out.toByteArray();
 			X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKeyBytes);
-			KeyFactory factory = KeyFactory.getInstance("RSA", "SunRsaSign");
+			KeyFactory factory = KeyFactory.getInstance(ALGORITHM_RSA, "SunRsaSign");
 			return factory.generatePublic(spec);
 		}
 		catch (Exception e) {
@@ -157,9 +159,9 @@ public class CryptoUtil {
 			// 也就是说对于解密, 可以通过公钥的参数伪造一个私钥对象欺骗 IBM JDK
 			RSAPublicKey rsaPublicKey = (RSAPublicKey) publicKey;
 			RSAPrivateKeySpec spec = new RSAPrivateKeySpec(rsaPublicKey.getModulus(), rsaPublicKey.getPublicExponent());
-			Key fakePrivateKey = KeyFactory.getInstance("RSA").generatePrivate(spec);
+			Key fakePrivateKey = KeyFactory.getInstance(ALGORITHM_RSA).generatePrivate(spec);
 			// It is a stateful object. so we need to get new one.
-			cipher = Cipher.getInstance("RSA");
+			cipher = Cipher.getInstance(ALGORITHM_RSA);
 			cipher.init(Cipher.DECRYPT_MODE, fakePrivateKey);
 		}
 
@@ -188,7 +190,7 @@ public class CryptoUtil {
 
 	public static String encrypt(byte[] keyBytes, String plainText) throws Exception {
 		PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
-		KeyFactory factory = KeyFactory.getInstance("RSA", "SunRsaSign");
+		KeyFactory factory = KeyFactory.getInstance(ALGORITHM_RSA, "SunRsaSign");
 		PrivateKey privateKey = factory.generatePrivate(spec);
 		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		try {
@@ -199,8 +201,8 @@ public class CryptoUtil {
 			RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) privateKey;
 			RSAPublicKeySpec publicKeySpec = new RSAPublicKeySpec(rsaPrivateKey.getModulus(),
 					rsaPrivateKey.getPrivateExponent());
-			Key fakePublicKey = KeyFactory.getInstance("RSA").generatePublic(publicKeySpec);
-			cipher = Cipher.getInstance("RSA");
+			Key fakePublicKey = KeyFactory.getInstance(ALGORITHM_RSA).generatePublic(publicKeySpec);
+			cipher = Cipher.getInstance(ALGORITHM_RSA);
 			cipher.init(Cipher.ENCRYPT_MODE, fakePublicKey);
 		}
 		return Base64Util.byteArrayToBase64(cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8)));
@@ -209,7 +211,7 @@ public class CryptoUtil {
 	public static byte[][] genKeyPairBytes(int keySize) {
 		byte[][] keyPairBytes = new byte[2][];
 		try {
-			KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA", "SunRsaSign");
+			KeyPairGenerator gen = KeyPairGenerator.getInstance(ALGORITHM_RSA, "SunRsaSign");
 			gen.initialize(keySize, new SecureRandom());
 			KeyPair pair = gen.generateKeyPair();
 
