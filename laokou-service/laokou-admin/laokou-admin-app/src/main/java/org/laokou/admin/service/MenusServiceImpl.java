@@ -30,10 +30,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MenusServiceImpl implements MenusServiceI {
 
-    private final MenuTreeListQryExe menuTreeListQryExe;
+	private final MenuTreeListQryExe menuTreeListQryExe;
 
-    @Override
-    public Result<MenuCO> treeList() {
-        return menuTreeListQryExe.execute();
-    }
+	@Override
+	public Result<MenuCO> treeList() {
+		return menuTreeListQryExe.execute();
+	}
+
 }
