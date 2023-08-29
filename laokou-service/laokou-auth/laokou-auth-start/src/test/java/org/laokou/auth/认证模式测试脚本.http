@@ -155,3 +155,20 @@ Content-Disposition: form-data; name="grant_type"
 
 urn:ietf:params:oauth:grant-type:device_code
 --WebAppBoundary
+
+###
+
+# 刷新令牌
+POST https://{{host}}/oauth2/token
+Authorization: {{Authorization}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="grant_type"
+
+refresh_token
+--WebAppBoundary
+Content-Disposition: form-data; name="refresh_token"
+
+{{refresh_token}}
+--WebAppBoundary

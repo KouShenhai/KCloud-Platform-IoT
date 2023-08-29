@@ -101,4 +101,9 @@ public interface Constant {
 	 */
 	int FAIL_STATUS = 1;
 
+	/**
+	 * RSA
+	 */
+	String ALGORITHM_RSA = "RSA";
+
 }
