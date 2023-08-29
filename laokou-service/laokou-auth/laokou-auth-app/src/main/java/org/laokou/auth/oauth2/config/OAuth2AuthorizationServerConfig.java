@@ -40,6 +40,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
@@ -117,8 +118,7 @@ class OAuth2AuthorizationServerConfig {
 								new OAuth2RefreshTokenAuthenticationConverter(),
 								new OAuth2TokenIntrospectionAuthenticationConverter(),
 								new OAuth2TokenRevocationAuthenticationConverter(),
-								new PublicClientAuthenticationConverter(),
-								new OidcLogoutAuthenticationConverter(),
+								new PublicClientAuthenticationConverter(), new OidcLogoutAuthenticationConverter(),
 								new OidcClientRegistrationAuthenticationConverter(),
 								new ClientSecretBasicAuthenticationConverter(),
 								new ClientSecretPostAuthenticationConverter(),
@@ -213,9 +213,10 @@ class OAuth2AuthorizationServerConfig {
 	 * @return OAuth2TokenGenerator<OAuth2Token>
 	 */
 	@Bean
-	OAuth2TokenGenerator<?> tokenGenerator(JwtEncoder jwtEncoder) {
+	OAuth2TokenGenerator<OAuth2Token> tokenGenerator(JwtEncoder jwtEncoder) {
 		JwtGenerator generator = new JwtGenerator(jwtEncoder);
-		return new DelegatingOAuth2TokenGenerator(generator, new OAuth2AccessTokenGenerator(), new OAuth2RefreshTokenGenerator());
+		return new DelegatingOAuth2TokenGenerator(generator, new OAuth2AccessTokenGenerator(),
+				new OAuth2RefreshTokenGenerator());
 	}
 
 	/**
@@ -279,8 +280,8 @@ class OAuth2AuthorizationServerConfig {
 
 	private static RSAKey getRsaKey() {
 		KeyPair keyPair = generateRsaKey();
-		RSAPublicKey publicKey = (RSAPublicKey)keyPair.getPublic();
-		RSAPrivateKey privateKey = (RSAPrivateKey)keyPair.getPrivate();
+		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
 		return (new RSAKey.Builder(publicKey)).privateKey(privateKey).keyID(UUID.randomUUID().toString()).build();
 	}
 
@@ -289,7 +290,8 @@ class OAuth2AuthorizationServerConfig {
 			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM_RSA);
 			keyPairGenerator.initialize(2048);
 			return keyPairGenerator.generateKeyPair();
-		} catch (Exception var2) {
+		}
+		catch (Exception var2) {
 			throw new IllegalStateException(var2);
 		}
 	}

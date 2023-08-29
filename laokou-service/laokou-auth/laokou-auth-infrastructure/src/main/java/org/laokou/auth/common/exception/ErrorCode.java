@@ -67,4 +67,9 @@ public interface ErrorCode {
 	 */
 	int GENERATE_REFRESH_TOKEN_FAIL = 2021;
 
+	/**
+	 * 令牌生成器无法生成标识令牌
+	 */
+	int GENERATE_ID_TOKEN_FAIL = 2022;
+
 }

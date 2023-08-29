@@ -35,12 +35,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MenuTreeListQryExe {
 
-    private final MenuGateway menuGateway;
+	private final MenuGateway menuGateway;
 
-    public Result<MenuCO> execute() {
-        List<Menu> menuList = menuGateway.list(0, UserUtil.user());
-        List<MenuCO> menus = ConvertUtil.sourceToTarget(menuList, MenuCO.class);
-        return Result.of(TreeUtil.buildTreeNode(menus,MenuCO.class));
-    }
+	public Result<MenuCO> execute() {
+		List<Menu> menuList = menuGateway.list(0, UserUtil.user());
+		List<MenuCO> menus = ConvertUtil.sourceToTarget(menuList, MenuCO.class);
+		return Result.of(TreeUtil.buildTreeNode(menus, MenuCO.class));
+	}
 
 }

@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class FlywaySync {
 
-	private static final String URL = "jdbc:mysql://192.168.30.132:3306/%s?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false";
+	private static final String URL = "jdbc:mysql://192.168.30.133:3306/%s?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false";
 
 	private static final String USERNAME = "root";
 

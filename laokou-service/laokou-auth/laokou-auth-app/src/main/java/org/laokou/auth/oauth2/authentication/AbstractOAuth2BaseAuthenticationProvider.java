@@ -39,6 +39,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.*;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
+import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
@@ -91,6 +95,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	protected final LoginLogGateway loginLogGateway;
 
+	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(OidcParameterNames.ID_TOKEN);
+
 	@SneakyThrows
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
@@ -141,47 +147,67 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 认证类型
 		AuthorizationGrantType grantType = getGrantType();
 		// 获取上下文
-		DefaultOAuth2TokenContext.Builder builder = DefaultOAuth2TokenContext.builder()
+		DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
 				.registeredClient(registeredClient).principal(principal).tokenType(OAuth2TokenType.ACCESS_TOKEN)
 				.authorizedScopes(scopes).authorizationServerContext(AuthorizationServerContextHolder.getContext())
-				.authorizationGrantType(grantType);
-		DefaultOAuth2TokenContext context = builder.build();
-		OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization.withRegisteredClient(registeredClient)
-				.principalName(loginName).authorizedScopes(scopes).authorizationGrantType(grantType);
+				.authorizationGrantType(grantType).authorizationGrant(auth2BaseAuthenticationToken);
+		DefaultOAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
 		// 生成access_token
-		OAuth2Token generatedOauth2AccessToken = Optional.ofNullable(tokenGenerator.generate(context))
+		OAuth2Token generatedAccessToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
 				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ACCESS_TOKEN_FAIL,
 						MessageUtil.getMessage(GENERATE_ACCESS_TOKEN_FAIL)));
-		OAuth2AccessToken oAuth2AccessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
-				generatedOauth2AccessToken.getTokenValue(), generatedOauth2AccessToken.getIssuedAt(),
-				generatedOauth2AccessToken.getExpiresAt(), context.getAuthorizedScopes());
+		OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
+				generatedAccessToken.getTokenValue(), generatedAccessToken.getIssuedAt(),
+				generatedAccessToken.getExpiresAt(), tokenContext.getAuthorizedScopes());
 		// jwt
-		if (generatedOauth2AccessToken instanceof ClaimAccessor) {
+		OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization.withRegisteredClient(registeredClient)
+				.principalName(loginName).authorizedScopes(scopes).authorizationGrantType(grantType);
+		if (generatedAccessToken instanceof ClaimAccessor) {
 			authorizationBuilder
-					.token(oAuth2AccessToken,
-							meta -> meta.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME,
-									((ClaimAccessor) generatedOauth2AccessToken).getClaims()))
+					.token(accessToken,
+							(metadata) -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME,
+									((ClaimAccessor) generatedAccessToken).getClaims()))
 					.authorizedScopes(scopes)
 					// admin后台管理需要token，解析token获取用户信息，因此将用户信息存在数据库，下次直接查询数据库就可以获取用户信息
 					.attribute(Principal.class.getName(), principal);
 		}
 		else {
-			authorizationBuilder.accessToken(oAuth2AccessToken);
+			authorizationBuilder.accessToken(accessToken);
 		}
 		// 生成refresh_token
-		context = builder.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-				.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
-		OAuth2Token generateOauth2RefreshToken = Optional.ofNullable(tokenGenerator.generate(context))
-				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_REFRESH_TOKEN_FAIL,
-						MessageUtil.getMessage(GENERATE_REFRESH_TOKEN_FAIL)));
-		OAuth2RefreshToken oAuth2RefreshToken = (OAuth2RefreshToken) generateOauth2RefreshToken;
-		authorizationBuilder.refreshToken(oAuth2RefreshToken);
-		OAuth2Authorization oAuth2Authorization = authorizationBuilder.build();
-		authorizationService.save(oAuth2Authorization);
+		OAuth2RefreshToken refreshToken = null;
+		if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN)
+				&& !clientPrincipal.getClientAuthenticationMethod().equals(ClientAuthenticationMethod.NONE)) {
+			tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
+			OAuth2Token generatedRefreshToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
+					.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_REFRESH_TOKEN_FAIL,
+							MessageUtil.getMessage(GENERATE_REFRESH_TOKEN_FAIL)));
+			refreshToken = (OAuth2RefreshToken) generatedRefreshToken;
+			authorizationBuilder.refreshToken(refreshToken);
+		}
+		// 生成id_token
+		OidcIdToken idToken;
+		if (scopes.contains(OidcScopes.OPENID)) {
+			tokenContext = tokenContextBuilder.tokenType(ID_TOKEN_TOKEN_TYPE)
+					// ID令牌定制器可能需要访问访问令牌、刷新令牌
+					.authorization(authorizationBuilder.build()).build();
+			OAuth2Token generatedIdToken = Optional.ofNullable(this.tokenGenerator.generate(tokenContext))
+					.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ID_TOKEN_FAIL,
+							MessageUtil.getMessage(GENERATE_ID_TOKEN_FAIL)));
+			idToken = new OidcIdToken(generatedIdToken.getTokenValue(), generatedIdToken.getIssuedAt(),
+					generatedIdToken.getExpiresAt(), ((Jwt) generatedIdToken).getClaims());
+			authorizationBuilder.token(idToken,
+					(metadata) -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, idToken.getClaims()));
+		}
+		else {
+			idToken = null;
+		}
+		OAuth2Authorization authorization = authorizationBuilder.build();
+		authorizationService.save(authorization);
 		// 清空上下文
 		SecurityContextHolder.clearContext();
-		return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, oAuth2AccessToken,
-				oAuth2RefreshToken, Collections.emptyMap());
+		return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken, refreshToken,
+				Collections.emptyMap());
 	}
 
 	/**

@@ -41,7 +41,7 @@ public class GeneratorMain {
 	 */
 	private static final List<String> TABLES = List.of("boot_sys_dict", "boot_sys_dept");
 
-	private static final String URL = "jdbc:mysql://192.168.30.132:3306/kcloud_platform_alibaba?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false";
+	private static final String URL = "jdbc:mysql://192.168.30.133:3306/kcloud_platform_alibaba?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false";
 
 	private static final String USERNAME = "root";
 
