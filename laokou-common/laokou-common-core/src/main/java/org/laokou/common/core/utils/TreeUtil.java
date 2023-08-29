@@ -46,13 +46,14 @@ public class TreeUtil {
 		if (null == rootNode) {
 			throw new CustomException("请构造根节点");
 		}
-		treeNodes.add(rootNode);
+		List<T> nodes = new ArrayList<>(treeNodes);
+		nodes.add(rootNode);
 		// list转map
-		Map<Long, T> nodeMap = new LinkedHashMap<>(treeNodes.size());
-		for (T treeNode : treeNodes) {
-			nodeMap.put(treeNode.getId(), treeNode);
+		Map<Long, T> nodeMap = new LinkedHashMap<>(nodes.size());
+		for (T node : nodes) {
+			nodeMap.put(node.getId(), node);
 		}
-		for (T treeNo : treeNodes) {
+		for (T treeNo : nodes) {
 			T parent = nodeMap.get(treeNo.getPid());
 			if (parent != null && treeNo.getPid().equals(parent.getId())) {
 				parent.getChildren().add(treeNo);
