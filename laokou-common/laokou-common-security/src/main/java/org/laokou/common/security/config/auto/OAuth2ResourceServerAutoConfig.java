@@ -25,7 +25,6 @@ import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -51,7 +50,6 @@ import java.util.Set;
 @Configuration
 @EnableMethodSecurity
 @AutoConfigureAfter({ OAuth2AuthorizationAutoConfig.class })
-@RefreshScope
 @Data
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = OAuth2ResourceServerProperties.PREFIX,
 		name = "enabled")

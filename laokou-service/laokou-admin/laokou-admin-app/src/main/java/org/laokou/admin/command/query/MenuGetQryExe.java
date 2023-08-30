@@ -15,30 +15,29 @@
  *
  */
 
-package org.laokou.admin.service;
+package org.laokou.admin.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.TenantsServiceI;
-import org.laokou.admin.client.dto.TenantOptionListQry;
-import org.laokou.admin.client.dto.clientobject.OptionCO;
-import org.laokou.admin.command.query.TenantOptionListQryExe;
+import org.laokou.admin.client.dto.MenuGetQry;
+import org.laokou.admin.client.dto.clientobject.MenuCO;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Service
+@Component
 @RequiredArgsConstructor
-public class TenantsServiceImpl implements TenantsServiceI {
+public class MenuGetQryExe {
 
-	private final TenantOptionListQryExe tenantOptionListQryExe;
+	private final MenuMapper menuMapper;
 
-	@Override
-	public Result<List<OptionCO>> optionList(TenantOptionListQry qry) {
-		return tenantOptionListQryExe.execute(qry);
+	public Result<MenuCO> execute(MenuGetQry qry) {
+		MenuDO menuDO = menuMapper.getById(qry.getId());
+		return Result.of(ConvertUtil.sourceToTarget(menuDO, MenuCO.class));
 	}
 
 }

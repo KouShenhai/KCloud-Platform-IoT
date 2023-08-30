@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author laokou
  */
 @RestController
-@Tag(name = "OssController", description = "系统存储")
+@Tag(name = "OssController", description = "存储")
 @RequiredArgsConstructor
 public class OssController {
 

@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.TenantsServiceI;
+import org.laokou.admin.client.dto.TenantOptionListQry;
 import org.laokou.admin.client.dto.clientobject.OptionCO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -86,7 +87,7 @@ public class TenantsController {
 	@GetMapping("v1/tenants/option-list")
 	@Operation(summary = "下拉列表", description = "下拉列表")
 	public Result<List<OptionCO>> optionList() {
-		return tenantsServiceI.optionList();
+		return tenantsServiceI.optionList(new TenantOptionListQry());
 	}
 
 }

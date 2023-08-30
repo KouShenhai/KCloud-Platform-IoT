@@ -15,21 +15,15 @@
  *
  */
 
-package org.laokou.auth.command.query;
+package org.laokou.admin.client.dto;
 
-import org.laokou.auth.dto.SecretGetQry;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.jasypt.utils.RsaUtil;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@Component
-public class SecretGetQryExe {
-
-	public Result<String> execute(SecretGetQry qry) {
-		return Result.of(RsaUtil.getPublicKey());
-	}
+@Data
+public class UserOptionListQry extends CommonCommand {
 
 }

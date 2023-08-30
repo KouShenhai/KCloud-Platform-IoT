@@ -20,8 +20,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * BigDecimal计算工具类
- *
  * @author laokou
  */
 public class BigDecimalUtil {

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.query;
 
+import org.laokou.admin.client.dto.UserProfileGetQry;
 import org.laokou.admin.client.dto.clientobject.UserProfileCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
@@ -29,7 +30,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserProfileGetQryExe {
 
-	public Result<UserProfileCO> execute() {
+	public Result<UserProfileCO> execute(UserProfileGetQry qry) {
 		return Result.of(ConvertUtil.sourceToTarget(UserUtil.user(), UserProfileCO.class));
 	}
 

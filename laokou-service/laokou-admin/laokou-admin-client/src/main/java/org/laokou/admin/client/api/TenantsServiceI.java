@@ -16,6 +16,7 @@
  */
 package org.laokou.admin.client.api;
 
+import org.laokou.admin.client.dto.TenantOptionListQry;
 import org.laokou.admin.client.dto.clientobject.OptionCO;
 import org.laokou.common.i18n.dto.Result;
 
@@ -30,7 +31,7 @@ public interface TenantsServiceI {
 	 * 租户下拉列表
 	 * @return Result<List<OptionCO>>
 	 */
-	Result<List<OptionCO>> optionList();
+	Result<List<OptionCO>> optionList(TenantOptionListQry qry);
 
 	// /**
 	// * 分页查询租户

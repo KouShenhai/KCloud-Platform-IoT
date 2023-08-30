@@ -31,8 +31,11 @@ public interface MenuMapper {
 
 	List<MenuDO> getMenuListByUserId(@Param("type") Integer type, @Param("userId") Long userId);
 
-	List<MenuDO> getMenuList(@Param("type") Integer type);
+	List<MenuDO> getMenuListLikeName(@Param("type") Integer type, @Param("name") String name);
 
-	List<MenuDO> getMenuListByTenantId(@Param("type") Integer type, @Param("tenantId") Long tenantId);
+	List<MenuDO> getMenuListByTenantIdAndLikeName(@Param("type") Integer type, @Param("tenantId") Long tenantId,
+			@Param("name") String name);
+
+	MenuDO getById(@Param("id") Long id);
 
 }

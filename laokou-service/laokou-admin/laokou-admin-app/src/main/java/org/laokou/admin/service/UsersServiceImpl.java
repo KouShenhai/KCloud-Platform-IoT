@@ -2,10 +2,7 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.UsersServiceI;
-import org.laokou.admin.client.dto.UserInsertCmd;
-import org.laokou.admin.client.dto.UserOnlineKillCmd;
-import org.laokou.admin.client.dto.UserOnlineListQry;
-import org.laokou.admin.client.dto.UserUpdateCmd;
+import org.laokou.admin.client.dto.*;
 import org.laokou.admin.client.dto.clientobject.OptionCO;
 import org.laokou.admin.client.dto.clientobject.UserOnlineCO;
 import org.laokou.admin.client.dto.clientobject.UserProfileCO;
@@ -61,13 +58,13 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Result<UserProfileCO> profile() {
-		return userProfileGetQryExe.execute();
+	public Result<UserProfileCO> profile(UserProfileGetQry qry) {
+		return userProfileGetQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<List<OptionCO>> optionList() {
-		return userOptionListQryExe.execute();
+	public Result<List<OptionCO>> optionList(UserOptionListQry qry) {
+		return userOptionListQryExe.execute(qry);
 	}
 
 }
