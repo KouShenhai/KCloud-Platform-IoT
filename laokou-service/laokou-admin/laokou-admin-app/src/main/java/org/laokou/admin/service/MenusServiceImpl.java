@@ -36,6 +36,7 @@ import java.util.List;
 public class MenusServiceImpl implements MenusServiceI {
 
 	private final MenuTreeListQryExe menuTreeListQryExe;
+
 	private final MenuListQryExe menuListQryExe;
 
 	@Override

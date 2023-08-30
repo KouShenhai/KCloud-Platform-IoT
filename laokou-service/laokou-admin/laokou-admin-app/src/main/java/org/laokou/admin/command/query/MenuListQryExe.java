@@ -38,16 +38,16 @@ import static org.laokou.admin.common.Constant.DEFAULT_TENANT;
 @RequiredArgsConstructor
 public class MenuListQryExe {
 
-    private final MenuMapper menuMapper;
+	private final MenuMapper menuMapper;
 
-    public Result<List<MenuCO>> execute(MenuListQry qry) {
-        Long tenantId = UserUtil.getTenantId();
-        if (tenantId == DEFAULT_TENANT) {
-            List<MenuDO> list = menuMapper.getMenuListLikeName(null, qry.getName());
-            return Result.of(ConvertUtil.sourceToTarget(list,MenuCO.class));
-        }
-        List<MenuDO> list = menuMapper.getMenuListByTenantIdAndLikeName(null, tenantId, qry.getName());
-        return Result.of(ConvertUtil.sourceToTarget(list,MenuCO.class));
-    }
+	public Result<List<MenuCO>> execute(MenuListQry qry) {
+		Long tenantId = UserUtil.getTenantId();
+		if (tenantId == DEFAULT_TENANT) {
+			List<MenuDO> list = menuMapper.getMenuListLikeName(null, qry.getName());
+			return Result.of(ConvertUtil.sourceToTarget(list, MenuCO.class));
+		}
+		List<MenuDO> list = menuMapper.getMenuListByTenantIdAndLikeName(null, tenantId, qry.getName());
+		return Result.of(ConvertUtil.sourceToTarget(list, MenuCO.class));
+	}
 
 }

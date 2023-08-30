@@ -51,7 +51,8 @@ public class FileUtil {
 		return extList.contains(fileExt);
 	}
 
-	public static void download(String directory, String fileName, InputStream in, long fileSize, long chunkSize) {}
+	public static void download(String directory, String fileName, InputStream in, long fileSize, long chunkSize) {
+	}
 
 	@SneakyThrows
 	private static File createFile(String directory, String fileName) {
@@ -59,7 +60,7 @@ public class FileUtil {
 		if (!directoryFile.exists()) {
 			directoryFile.mkdirs();
 		}
-		File newFile = new File(directoryFile,fileName);
+		File newFile = new File(directoryFile, fileName);
 		if (!newFile.exists()) {
 			newFile.createNewFile();
 		}

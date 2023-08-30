@@ -21,4 +21,5 @@ package org.laokou.admin.command.query;
  * @author laokou
  */
 public class MenuGetQryExe {
+
 }

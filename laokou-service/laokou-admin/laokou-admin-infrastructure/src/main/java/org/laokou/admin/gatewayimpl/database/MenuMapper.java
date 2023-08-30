@@ -33,7 +33,8 @@ public interface MenuMapper {
 
 	List<MenuDO> getMenuListLikeName(@Param("type") Integer type, @Param("name") String name);
 
-	List<MenuDO> getMenuListByTenantIdAndLikeName(@Param("type") Integer type, @Param("tenantId") Long tenantId, @Param("name") String name);
+	List<MenuDO> getMenuListByTenantIdAndLikeName(@Param("type") Integer type, @Param("tenantId") Long tenantId,
+			@Param("name") String name);
 
 	MenuDO getById(@Param("id") Long id);
 

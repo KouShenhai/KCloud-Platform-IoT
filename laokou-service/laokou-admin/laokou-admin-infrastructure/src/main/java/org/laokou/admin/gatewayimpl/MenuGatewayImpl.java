@@ -55,12 +55,12 @@ public class MenuGatewayImpl implements MenuGateway {
 		Integer superAdmin = user.getSuperAdmin();
 		if (tenantId == DEFAULT_TENANT) {
 			if (superAdmin == SuperAdmin.YES.ordinal()) {
-				return menuMapper.getMenuListLikeName(type,null);
+				return menuMapper.getMenuListLikeName(type, null);
 			}
 			return menuMapper.getMenuListByUserId(type, userId);
 		}
 		else {
-			return menuMapper.getMenuListByTenantIdAndLikeName(type, tenantId,null);
+			return menuMapper.getMenuListByTenantIdAndLikeName(type, tenantId, null);
 		}
 	}
 
