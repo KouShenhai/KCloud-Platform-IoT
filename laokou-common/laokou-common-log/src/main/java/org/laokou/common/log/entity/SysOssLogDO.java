@@ -29,7 +29,7 @@
 // */
 // @Data
 // @TableName("boot_sys_oss_log")
-// @Schema(name = "SysOssLogDO", description = "系统存储日志实体类")
+// @Schema(name = "SysOssLogDO", description = "存储")
 // public class SysOssLogDO extends BaseDO {
 //
 // @Serial
