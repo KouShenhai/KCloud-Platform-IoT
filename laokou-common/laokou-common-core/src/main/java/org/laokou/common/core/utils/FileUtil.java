@@ -16,8 +16,12 @@
  */
 package org.laokou.common.core.utils;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.constant.Constant;
+
+import java.io.File;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -47,10 +51,24 @@ public class FileUtil {
 		return extList.contains(fileExt);
 	}
 
+	public static void download(String directory, String fileName, InputStream in, long fileSize, long chunkSize) {}
+
+	@SneakyThrows
+	private static File createFile(String directory, String fileName) {
+		File directoryFile = new File(directory);
+		if (!directoryFile.exists()) {
+			directoryFile.mkdirs();
+		}
+		File newFile = new File(directoryFile,fileName);
+		if (!newFile.exists()) {
+			newFile.createNewFile();
+		}
+		return newFile;
+	}
+
 	/**
 	 * 获取文件后缀
 	 * @param fileName
-	 * @return
 	 */
 	public static String getFileExt(String fileName) {
 		return fileName.substring(fileName.lastIndexOf(Constant.DOT));
