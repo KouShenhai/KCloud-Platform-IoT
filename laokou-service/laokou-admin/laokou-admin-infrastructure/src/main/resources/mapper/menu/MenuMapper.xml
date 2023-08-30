@@ -29,6 +29,7 @@
             ,a.name
             ,a.icon
             ,a.permission
+            ,a.visible
         FROM boot_sys_menu a
             ,boot_sys_role b
             ,boot_sys_role_menu c
@@ -50,10 +51,11 @@
             ,a.name
             ,a.icon
             ,a.permission
+            ,a.visible
         order by a.sort desc
     </select>
 
-    <select id="getMenuList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+    <select id="getMenuListLikeName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
         select id
              ,pid
              ,`name`
@@ -61,15 +63,20 @@
              ,url
              ,`type`
              ,permission
+             ,visible
+             ,sort
         from boot_sys_menu
         where del_flag = 0
         <if test="type != null">
             and `type` = #{type}
             and visible = 0
         </if>
+        <if test="name != null and name != ''">
+            and `name` like concat('%',#{name},'%')
+        </if>
         order by sort desc
     </select>
-    <select id="getMenuListByTenantId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+    <select id="getMenuListByTenantIdAndLikeName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
         select a.id
              ,a.pid
              ,a.`name`
@@ -88,6 +95,22 @@
              and a.`type` = #{type}
              and a.visible = 0
         </if>
-        order by a.sort asc
+        <if test="name != null and name != ''">
+            and a.`name` like concat('%',#{name},'%')
+        </if>
+        order by a.sort desc
+    </select>
+    <select id="getById" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+        select id
+             ,pid
+             ,`name`
+             ,sort
+             ,`type`
+             ,icon
+             ,url
+             ,permission
+             ,visible
+        from boot_sys_menu
+        where id = #{id}
     </select>
 </mapper>

@@ -20,10 +20,15 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.MenusServiceI;
+import org.laokou.admin.client.dto.MenuListQry;
+import org.laokou.admin.client.dto.MenuTreeListQry;
 import org.laokou.admin.client.dto.clientobject.MenuCO;
+import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -42,21 +47,21 @@ public class MenusController {
 	@GetMapping("v1/menus/tree-list")
 	@Operation(summary = "树菜单列表", description = "树菜单列表")
 	public Result<MenuCO> treeList() {
-		return menusServiceI.treeList();
+		return menusServiceI.treeList(new MenuTreeListQry());
 	}
 
 	@TraceLog
 	@PostMapping("v1/menus/list")
 	@Operation(summary = "查询", description = "查询")
-	// @PreAuthorize("hasAuthority('menus:list')")
-	public Result<List<?>> list() {
-		return Result.of(null);
+	@PreAuthorize("hasAuthority('menus:list')")
+	public Result<List<MenuCO>> list(@RequestBody MenuListQry qry) {
+		return menusServiceI.list(qry);
 	}
 
 	@TraceLog
 	@GetMapping("v1/menus/{id}")
 	@Operation(summary = "查看", description = "查看")
-	// @DataCache(name = "menus", key = "#id")
+	@DataCache(name = "menus", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}

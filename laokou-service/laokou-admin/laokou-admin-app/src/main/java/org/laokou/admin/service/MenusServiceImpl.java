@@ -18,10 +18,15 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.MenusServiceI;
+import org.laokou.admin.client.dto.MenuListQry;
+import org.laokou.admin.client.dto.MenuTreeListQry;
 import org.laokou.admin.client.dto.clientobject.MenuCO;
+import org.laokou.admin.command.query.MenuListQryExe;
 import org.laokou.admin.command.query.MenuTreeListQryExe;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -31,10 +36,21 @@ import org.springframework.stereotype.Service;
 public class MenusServiceImpl implements MenusServiceI {
 
 	private final MenuTreeListQryExe menuTreeListQryExe;
+	private final MenuListQryExe menuListQryExe;
 
 	@Override
-	public Result<MenuCO> treeList() {
-		return menuTreeListQryExe.execute();
+	public Result<MenuCO> treeList(MenuTreeListQry qry) {
+		return menuTreeListQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<List<MenuCO>> list(MenuListQry qry) {
+		return menuListQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<MenuCO> get(Long id) {
+		return null;
 	}
 
 }

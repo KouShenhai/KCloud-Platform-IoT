@@ -15,21 +15,10 @@
  *
  */
 
-package org.laokou.auth.command.query;
-
-import org.laokou.auth.dto.SecretGetQry;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.jasypt.utils.RsaUtil;
-import org.springframework.stereotype.Component;
+package org.laokou.admin.command.query;
 
 /**
  * @author laokou
  */
-@Component
-public class SecretGetQryExe {
-
-	public Result<String> execute(SecretGetQry qry) {
-		return Result.of(RsaUtil.getPublicKey());
-	}
-
+public class MenuGetQryExe {
 }

@@ -3,6 +3,7 @@ package org.laokou.auth.service;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.SecretsServiceI;
 import org.laokou.auth.command.query.SecretGetQryExe;
+import org.laokou.auth.dto.SecretGetQry;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,8 @@ public class SecretsServiceImpl implements SecretsServiceI {
 	private final SecretGetQryExe secretGetQryExe;
 
 	@Override
-	public Result<String> get() {
-		return secretGetQryExe.execute();
+	public Result<String> get(SecretGetQry qry) {
+		return secretGetQryExe.execute(qry);
 	}
 
 }

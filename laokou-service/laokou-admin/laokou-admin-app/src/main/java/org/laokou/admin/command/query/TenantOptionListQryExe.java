@@ -18,6 +18,7 @@
 package org.laokou.admin.command.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.TenantOptionListQry;
 import org.laokou.admin.client.dto.clientobject.OptionCO;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.option.Option;
@@ -36,7 +37,7 @@ public class TenantOptionListQryExe {
 
 	private final TenantGateway tenantGateway;
 
-	public Result<List<OptionCO>> execute() {
+	public Result<List<OptionCO>> execute(TenantOptionListQry qry) {
 		List<Option> optionList = tenantGateway.getOptionList();
 		return Result.of(ConvertUtil.sourceToTarget(optionList, OptionCO.class));
 	}

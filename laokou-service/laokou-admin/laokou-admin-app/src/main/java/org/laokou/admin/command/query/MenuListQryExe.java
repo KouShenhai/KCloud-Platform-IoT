@@ -14,34 +14,40 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.MenuTreeListQry;
+import org.laokou.admin.client.dto.MenuListQry;
 import org.laokou.admin.client.dto.clientobject.MenuCO;
-import org.laokou.admin.domain.gateway.MenuGateway;
-import org.laokou.admin.domain.menu.Menu;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static org.laokou.admin.common.Constant.DEFAULT_TENANT;
+
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class MenuTreeListQryExe {
+public class MenuListQryExe {
 
-	private final MenuGateway menuGateway;
+    private final MenuMapper menuMapper;
 
-	public Result<MenuCO> execute(MenuTreeListQry qry) {
-		List<Menu> menuList = menuGateway.list(0, UserUtil.user());
-		List<MenuCO> menus = ConvertUtil.sourceToTarget(menuList, MenuCO.class);
-		return Result.of(TreeUtil.buildTreeNode(menus, MenuCO.class));
-	}
+    public Result<List<MenuCO>> execute(MenuListQry qry) {
+        Long tenantId = UserUtil.getTenantId();
+        if (tenantId == DEFAULT_TENANT) {
+            List<MenuDO> list = menuMapper.getMenuListLikeName(null, qry.getName());
+            return Result.of(ConvertUtil.sourceToTarget(list,MenuCO.class));
+        }
+        List<MenuDO> list = menuMapper.getMenuListByTenantIdAndLikeName(null, tenantId, qry.getName());
+        return Result.of(ConvertUtil.sourceToTarget(list,MenuCO.class));
+    }
 
 }

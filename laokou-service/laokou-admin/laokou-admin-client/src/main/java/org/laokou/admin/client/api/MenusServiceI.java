@@ -16,15 +16,23 @@
  */
 package org.laokou.admin.client.api;
 
+import org.laokou.admin.client.dto.MenuListQry;
+import org.laokou.admin.client.dto.MenuTreeListQry;
 import org.laokou.admin.client.dto.clientobject.MenuCO;
 import org.laokou.common.i18n.dto.Result;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
 public interface MenusServiceI {
 
-	Result<MenuCO> treeList();
+	Result<MenuCO> treeList(MenuTreeListQry qry);
+
+	Result<List<MenuCO>> list(MenuListQry qry);
+
+	Result<MenuCO> get(Long id);
 
 	//
 	// /**

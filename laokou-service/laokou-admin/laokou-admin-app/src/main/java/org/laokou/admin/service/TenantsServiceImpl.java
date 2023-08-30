@@ -19,6 +19,7 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.TenantsServiceI;
+import org.laokou.admin.client.dto.TenantOptionListQry;
 import org.laokou.admin.client.dto.clientobject.OptionCO;
 import org.laokou.admin.command.query.TenantOptionListQryExe;
 import org.laokou.common.i18n.dto.Result;
@@ -36,8 +37,8 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	private final TenantOptionListQryExe tenantOptionListQryExe;
 
 	@Override
-	public Result<List<OptionCO>> optionList() {
-		return tenantOptionListQryExe.execute();
+	public Result<List<OptionCO>> optionList(TenantOptionListQry qry) {
+		return tenantOptionListQryExe.execute(qry);
 	}
 
 }
