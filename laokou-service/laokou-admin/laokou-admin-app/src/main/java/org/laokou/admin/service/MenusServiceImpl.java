@@ -18,9 +18,11 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.MenusServiceI;
+import org.laokou.admin.client.dto.MenuGetQry;
 import org.laokou.admin.client.dto.MenuListQry;
 import org.laokou.admin.client.dto.MenuTreeListQry;
 import org.laokou.admin.client.dto.clientobject.MenuCO;
+import org.laokou.admin.command.query.MenuGetQryExe;
 import org.laokou.admin.command.query.MenuListQryExe;
 import org.laokou.admin.command.query.MenuTreeListQryExe;
 import org.laokou.common.i18n.dto.Result;
@@ -37,6 +39,8 @@ public class MenusServiceImpl implements MenusServiceI {
 
 	private final MenuTreeListQryExe menuTreeListQryExe;
 
+	private final MenuGetQryExe menuGetQryExe;
+
 	private final MenuListQryExe menuListQryExe;
 
 	@Override
@@ -50,8 +54,8 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	@Override
-	public Result<MenuCO> get(Long id) {
-		return null;
+	public Result<MenuCO> get(MenuGetQry qry) {
+		return menuGetQryExe.execute(qry);
 	}
 
 }

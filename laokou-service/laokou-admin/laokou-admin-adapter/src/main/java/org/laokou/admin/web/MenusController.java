@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.MenusServiceI;
+import org.laokou.admin.client.dto.MenuGetQry;
 import org.laokou.admin.client.dto.MenuListQry;
 import org.laokou.admin.client.dto.MenuTreeListQry;
 import org.laokou.admin.client.dto.clientobject.MenuCO;
@@ -63,7 +64,7 @@ public class MenusController {
 	@Operation(summary = "查看", description = "查看")
 	@DataCache(name = "menus", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return menusServiceI.get(new MenuGetQry(id));
 	}
 
 	@TraceLog
