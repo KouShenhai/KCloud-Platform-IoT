@@ -19,7 +19,7 @@ package org.laokou.admin.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.TenantGateway;
-import org.laokou.admin.domain.option.Option;
+import org.laokou.admin.domain.common.Option;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.core.utils.CollectionUtil;

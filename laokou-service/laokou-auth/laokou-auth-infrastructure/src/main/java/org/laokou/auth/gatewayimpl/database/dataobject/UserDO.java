@@ -16,6 +16,7 @@
  */
 package org.laokou.auth.gatewayimpl.database.dataobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
@@ -29,6 +30,7 @@ public class UserDO implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
 
+	@Schema
 	private Long id;
 
 	private String username;

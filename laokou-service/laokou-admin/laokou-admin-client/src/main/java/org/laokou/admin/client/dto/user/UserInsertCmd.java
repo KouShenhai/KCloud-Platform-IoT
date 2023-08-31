@@ -1,5 +1,6 @@
 package org.laokou.admin.client.dto.user;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.admin.client.dto.user.clientobject.UserCO;
 import org.laokou.common.i18n.dto.CommonCommand;
@@ -10,6 +11,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class UserInsertCmd extends CommonCommand {
 
+	@Schema
 	private UserCO userCO;
 
 }

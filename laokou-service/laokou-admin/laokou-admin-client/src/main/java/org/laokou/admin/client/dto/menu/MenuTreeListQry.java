@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.client.dto;
+package org.laokou.admin.client.dto.menu;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;

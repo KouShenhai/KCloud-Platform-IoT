@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.admin.domain.option.Option;
+import org.laokou.admin.domain.common.Option;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
@@ -117,7 +117,6 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	@DS(SHARDING_SPHERE)
-	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public List<Option> getOptionList(Long tenantId) {
 		List<UserDO> list = userMapper.getOptionListByTenantId(tenantId);
 		if (CollectionUtil.isNotEmpty(list)) {
@@ -151,7 +150,6 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	@DS(SHARDING_SPHERE)
-	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public User getById(Long id) {
 		try {
 			UserDO userDO = userMapper.selectById(id);
@@ -170,7 +168,6 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	@DataFilter(alias = "boot_sys_user")
 	@DS(SHARDING_SPHERE)
-	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public Datas<User> list() {
 		return null;
 	}

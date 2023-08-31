@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.tenant.clientobject.TenantOptionListQry;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.domain.gateway.TenantGateway;
-import org.laokou.admin.domain.option.Option;
+import org.laokou.admin.domain.common.Option;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;

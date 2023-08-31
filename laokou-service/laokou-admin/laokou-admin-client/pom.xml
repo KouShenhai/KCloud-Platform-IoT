@@ -29,7 +29,7 @@
     <dependencies>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-core</artifactId>
+            <artifactId>laokou-common-openapi-doc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>

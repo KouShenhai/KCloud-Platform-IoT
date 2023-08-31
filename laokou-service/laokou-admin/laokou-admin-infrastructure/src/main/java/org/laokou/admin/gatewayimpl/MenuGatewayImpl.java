@@ -26,13 +26,8 @@ import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-
 import static org.laokou.admin.common.Constant.DEFAULT_TENANT;
-
 /**
  * @author laokou
  */
@@ -43,7 +38,6 @@ public class MenuGatewayImpl implements MenuGateway {
 	private final MenuMapper menuMapper;
 
 	@Override
-	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, readOnly = true)
 	public List<Menu> list(Integer type, User user) {
 		List<MenuDO> menuList = getMenuList(type, user);
 		return ConvertUtil.sourceToTarget(menuList, Menu.class);

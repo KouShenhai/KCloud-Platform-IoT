@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.domain.option;
+package org.laokou.admin.domain.common;
 
 import lombok.Data;
 
