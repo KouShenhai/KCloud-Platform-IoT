@@ -19,7 +19,7 @@ package org.laokou.auth.event.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.laokou.auth.dto.domainevent.LoginLogEvent;
+import org.laokou.auth.dto.log.domainevent.LoginLogEvent;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.core.utils.ConvertUtil;

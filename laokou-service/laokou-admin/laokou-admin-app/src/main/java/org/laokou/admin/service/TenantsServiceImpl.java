@@ -19,9 +19,9 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.TenantsServiceI;
-import org.laokou.admin.client.dto.TenantOptionListQry;
-import org.laokou.admin.client.dto.clientobject.OptionCO;
-import org.laokou.admin.command.query.TenantOptionListQryExe;
+import org.laokou.admin.client.dto.tenant.clientobject.TenantOptionListQry;
+import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.command.tenant.query.TenantOptionListQryExe;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 

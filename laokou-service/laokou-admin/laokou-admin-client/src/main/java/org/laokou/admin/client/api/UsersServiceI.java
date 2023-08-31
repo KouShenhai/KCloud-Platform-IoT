@@ -16,10 +16,10 @@
  */
 package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.*;
-import org.laokou.admin.client.dto.clientobject.OptionCO;
-import org.laokou.admin.client.dto.clientobject.UserOnlineCO;
-import org.laokou.admin.client.dto.clientobject.UserProfileCO;
+import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.client.dto.user.clientobject.UserOnlineCO;
+import org.laokou.admin.client.dto.user.clientobject.UserProfileCO;
+import org.laokou.admin.client.dto.user.*;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 

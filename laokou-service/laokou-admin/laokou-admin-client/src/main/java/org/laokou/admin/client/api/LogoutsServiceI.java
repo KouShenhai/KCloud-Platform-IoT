@@ -15,7 +15,7 @@
  */
 package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.LogoutCmd;
+import org.laokou.admin.client.dto.logout.clientobject.LogoutCmd;
 import org.laokou.common.i18n.dto.Result;
 
 /**

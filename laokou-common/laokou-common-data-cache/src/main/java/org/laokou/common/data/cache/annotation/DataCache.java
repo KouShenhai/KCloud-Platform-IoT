@@ -16,7 +16,7 @@
  */
 package org.laokou.common.data.cache.annotation;
 
-import org.laokou.common.data.cache.enums.CacheEnum;
+import org.laokou.common.data.cache.enums.Cache;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -50,6 +50,6 @@ public @interface DataCache {
 	/**
 	 * 操作类型
 	 */
-	CacheEnum type() default CacheEnum.GET;
+	Cache type() default Cache.GET;
 
 }

@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.common.event.DomainEventPublisher;
 import org.laokou.auth.domain.gateway.LoginLogGateway;
 import org.laokou.auth.domain.log.LoginLog;
-import org.laokou.auth.dto.domainevent.LoginLogEvent;
+import org.laokou.auth.dto.log.domainevent.LoginLogEvent;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.ip.region.utils.AddressUtil;
 import org.springframework.http.HttpHeaders;
