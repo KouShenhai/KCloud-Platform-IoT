@@ -28,7 +28,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import static org.laokou.common.core.constant.Constant.TRUE;
@@ -41,7 +40,6 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
 @EnableEncryptableProperties
-@EnableAsync
 @RequiredArgsConstructor
 // @EnableFeignClients
 public class AdminApp {

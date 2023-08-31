@@ -26,18 +26,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-/*
-import org.springframework.cloud.openfeign.EnableFeignClients;
-*/
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import static org.laokou.common.core.constant.Constant.TRUE;
 
 /**
- * 架构演变 单机架构（两层架构） 三层架构（集中式架构） DDD分层架构(分布式微服务架构) > 表现层 应用层 领域层 基础层
- *
  * @author laokou
  */
 @SpringBootApplication
@@ -45,7 +39,6 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)
 @EnableEncryptableProperties
-@EnableAsync
 @RequiredArgsConstructor
 /*
  * @EnableFeignClients
