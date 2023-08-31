@@ -33,27 +33,15 @@ public class Result<T> extends DTO {
 	@Serial
 	private static final long serialVersionUID = -1286769110881865369L;
 
-	/**
-	 * 状态编码
-	 */
 	@Schema(name = "code", description = "状态编码", example = "200")
 	private int code;
 
-	/**
-	 * 响应描述
-	 */
 	@Schema(name = "msg", description = "响应描述", example = "请求成功")
 	private String msg;
 
-	/**
-	 * 响应结果
-	 */
 	@Schema(name = "data", description = "响应结果")
 	private T data;
 
-	/**
-	 * 链路ID
-	 */
 	@Schema(name = "traceId", description = "链路ID")
 	private String traceId;
 
