@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.admin.domain.option.Option;
+import org.laokou.admin.domain.common.Option;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.UserRoleMapper;

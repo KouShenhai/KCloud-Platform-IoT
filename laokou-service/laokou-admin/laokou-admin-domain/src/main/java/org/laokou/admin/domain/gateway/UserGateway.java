@@ -15,7 +15,7 @@
  */
 package org.laokou.admin.domain.gateway;
 
-import org.laokou.admin.domain.option.Option;
+import org.laokou.admin.domain.common.Option;
 import org.laokou.admin.domain.user.User;
 import org.laokou.common.i18n.dto.Datas;
 

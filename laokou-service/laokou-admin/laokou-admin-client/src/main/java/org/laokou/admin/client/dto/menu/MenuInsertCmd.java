@@ -14,9 +14,10 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.dto;
+package org.laokou.admin.client.dto.menu;
 
 import lombok.Data;
+import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
@@ -25,6 +26,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class MenuInsertCmd extends CommonCommand {
 
-
+    private MenuCO menuCO;
 
 }
