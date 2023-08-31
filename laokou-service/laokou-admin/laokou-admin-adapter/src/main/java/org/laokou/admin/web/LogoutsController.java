@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.LogoutsServiceI;
-import org.laokou.admin.client.dto.LogoutCmd;
+import org.laokou.admin.client.dto.logout.clientobject.LogoutCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;

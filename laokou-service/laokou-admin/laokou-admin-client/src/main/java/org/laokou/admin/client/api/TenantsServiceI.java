@@ -16,8 +16,8 @@
  */
 package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.TenantOptionListQry;
-import org.laokou.admin.client.dto.clientobject.OptionCO;
+import org.laokou.admin.client.dto.tenant.clientobject.TenantOptionListQry;
+import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.common.i18n.dto.Result;
 
 import java.util.List;

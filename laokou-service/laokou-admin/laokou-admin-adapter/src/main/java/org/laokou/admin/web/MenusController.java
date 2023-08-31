@@ -23,8 +23,10 @@ import org.laokou.admin.client.api.MenusServiceI;
 import org.laokou.admin.client.dto.MenuGetQry;
 import org.laokou.admin.client.dto.MenuListQry;
 import org.laokou.admin.client.dto.MenuTreeListQry;
-import org.laokou.admin.client.dto.clientobject.MenuCO;
+import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.enums.Cache;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -70,9 +72,9 @@ public class MenusController {
 	@TraceLog
 	@PutMapping("v1/menus")
 	@Operation(summary = "修改", description = "修改")
-	// @OperateLog(module = "菜单管理", name = "修改")
-	// @PreAuthorize("hasAuthority('menus:update')")
-	// @DataCache(name = "menus", key = "#dto.id", type = CacheEnum.DEL)
+	@OperateLog(module = "菜单管理", operation = "修改")
+	@PreAuthorize("hasAuthority('menus:update')")
+	@DataCache(name = "menus", key = "#dto.id", type = Cache.DEL)
 	public Result<Boolean> update() {
 		return Result.of(null);
 	}
@@ -80,8 +82,8 @@ public class MenusController {
 	@TraceLog
 	@PostMapping("v1/menus")
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "菜单管理", name = "新增")
-	// @PreAuthorize("hasAuthority('menus:insert')")
+	@OperateLog(module = "菜单管理", operation = "新增")
+	@PreAuthorize("hasAuthority('menus:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
 	}

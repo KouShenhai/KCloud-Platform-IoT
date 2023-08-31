@@ -19,7 +19,7 @@ package org.laokou.admin.client.api;
 import org.laokou.admin.client.dto.MenuGetQry;
 import org.laokou.admin.client.dto.MenuListQry;
 import org.laokou.admin.client.dto.MenuTreeListQry;
-import org.laokou.admin.client.dto.clientobject.MenuCO;
+import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
 import org.laokou.common.i18n.dto.Result;
 
 import java.util.List;

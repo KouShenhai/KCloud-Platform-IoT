@@ -25,7 +25,6 @@ import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAu
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import static org.laokou.common.core.constant.Constant.TRUE;
@@ -37,7 +36,6 @@ import static org.laokou.common.core.constant.Constant.TRUE;
 		OAuth2AuthorizationServerJwtAutoConfiguration.class })
 @EnableConfigurationProperties
 @EnableEncryptableProperties
-@EnableAsync
 @EnableDiscoveryClient
 public class AuthApp {
 

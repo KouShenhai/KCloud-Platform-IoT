@@ -18,6 +18,7 @@ package org.laokou.admin.aspect;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.core5.http.HttpHeaders;
 import org.aspectj.lang.JoinPoint;
@@ -26,7 +27,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.admin.client.dto.domainevent.OperateLogEvent;
+import org.laokou.admin.client.dto.log.domainevent.OperateLogEvent;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.*;
@@ -34,7 +35,7 @@ import org.laokou.common.ip.region.utils.AddressUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,9 +45,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
-import static org.laokou.common.core.constant.Constant.FAIL_STATUS;
-import static org.laokou.common.core.constant.Constant.SUCCESS_STATUS;
+import static org.laokou.common.core.constant.Constant.*;
 
 /**
  * @author laokou
@@ -54,8 +55,10 @@ import static org.laokou.common.core.constant.Constant.SUCCESS_STATUS;
 @Component
 @Aspect
 @Slf4j
+@RequiredArgsConstructor
 public class OperateLogAspect {
 
+	private final ThreadPoolTaskExecutor taskExecutor;
 	private static final String[] REMOVE_PARAMS = { "username", "password", "mobile", "mail" };
 
 	private static final ThreadLocal<StopWatch> TASK_TIME_LOCAL = new NamedThreadLocal<>("耗时");
@@ -72,16 +75,15 @@ public class OperateLogAspect {
 	 */
 	@AfterReturning(pointcut = "@annotation(org.laokou.admin.domain.annotation.OperateLog)")
 	public void doAfterReturning(JoinPoint joinPoint) {
-		handleLog(joinPoint, null);
+		CompletableFuture.runAsync(() -> handleLog(joinPoint, null), taskExecutor);
 	}
 
 	@AfterThrowing(pointcut = "@annotation(org.laokou.admin.domain.annotation.OperateLog)", throwing = "e")
 	public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
-		handleLog(joinPoint, e);
+		CompletableFuture.runAsync(() -> handleLog(joinPoint, e), taskExecutor);
 	}
 
-	@Async
-	protected void handleLog(final JoinPoint joinPoint, final Exception e) {
+	private void handleLog(final JoinPoint joinPoint, final Exception e) {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		// 获取注解
 		MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -121,7 +123,7 @@ public class OperateLogAspect {
 				event.setRequestStatus(SUCCESS_STATUS);
 			}
 			event.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
-			event.setMethodName(className + "." + methodName + "()");
+			event.setMethodName(className + DOT + methodName + LEFT + RIGHT);
 			event.setRequestMethod(request.getMethod());
 			Object obj;
 			if (CollectionUtil.isEmpty(params)) {
