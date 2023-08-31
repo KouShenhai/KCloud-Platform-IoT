@@ -23,10 +23,15 @@ import org.laokou.admin.client.api.UsersServiceI;
 import org.laokou.admin.client.dto.user.UserInsertCmd;
 import org.laokou.admin.client.dto.user.UserProfileGetQry;
 import org.laokou.admin.client.dto.user.clientobject.UserProfileCO;
+import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.core.vo.OptionVO;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.enums.Cache;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -42,9 +47,9 @@ public class UsersController {
 	@TraceLog
 	@PutMapping("v1/users")
 	@Operation(summary = "修改", description = "修改")
-	// @OperateLog(module = "用户管理", name = "修改")
-	// @PreAuthorize("hasAuthority('users:update')")
-	// @DataCache(name = "users", key = "#dto.id", type = CacheEnum.DEL)
+	@OperateLog(module = "用户管理", operation = "修改")
+	@PreAuthorize("hasAuthority('users:update')")
+	@DataCache(name = "users", key = "#dto.id", type = Cache.DEL)
 	public Result<Boolean> update() {
 		return Result.of(null);
 	}

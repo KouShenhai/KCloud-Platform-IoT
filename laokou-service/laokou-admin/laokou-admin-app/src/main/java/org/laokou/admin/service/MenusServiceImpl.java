@@ -18,9 +18,9 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.MenusServiceI;
-import org.laokou.admin.client.dto.MenuGetQry;
-import org.laokou.admin.client.dto.MenuListQry;
-import org.laokou.admin.client.dto.MenuTreeListQry;
+import org.laokou.admin.client.dto.menu.MenuGetQry;
+import org.laokou.admin.client.dto.menu.MenuListQry;
+import org.laokou.admin.client.dto.menu.MenuTreeListQry;
 import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.command.menu.query.MenuGetQryExe;
 import org.laokou.admin.command.menu.query.MenuListQryExe;
