@@ -16,10 +16,10 @@
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.server.domain.sys.entity.SysResourceAuditDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface SysResourceAuditMapper extends BaseMapper<SysResourceAuditDO> {
+public interface SysResourceAuditMapper extends BatchMapper<SysResourceAuditDO> {
 
 	/**
 	 * 获取版本号

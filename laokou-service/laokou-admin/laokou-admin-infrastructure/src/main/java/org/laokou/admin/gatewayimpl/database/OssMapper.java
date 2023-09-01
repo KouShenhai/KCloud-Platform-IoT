@@ -16,9 +16,9 @@
  */
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface OssMapper extends BaseMapper<OssDO> {
+public interface OssMapper extends BatchMapper<OssDO> {
 
 	// /**
 	// * 查询OSS配置

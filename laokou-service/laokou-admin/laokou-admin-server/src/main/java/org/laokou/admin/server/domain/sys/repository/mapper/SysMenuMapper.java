@@ -16,13 +16,14 @@
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.laokou.admin.server.interfaces.qo.SysMenuQo;
-import org.laokou.admin.client.vo.SysMenuVO;
-import org.laokou.admin.server.domain.sys.entity.SysMenuDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.admin.client.vo.SysMenuVO;
+import org.laokou.admin.server.domain.sys.entity.SysMenuDO;
+import org.laokou.admin.server.interfaces.qo.SysMenuQo;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface SysMenuMapper extends BaseMapper<SysMenuDO> {
+public interface SysMenuMapper extends BatchMapper<SysMenuDO> {
 
 	/**
 	 * 获取所有的资源列表

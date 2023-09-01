@@ -16,21 +16,22 @@
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.laokou.admin.server.domain.sys.entity.SysDeptDO;
-import org.laokou.admin.server.interfaces.qo.SysDeptQo;
-import org.laokou.admin.client.vo.SysDeptVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.admin.client.vo.SysDeptVO;
+import org.laokou.admin.server.domain.sys.entity.SysDeptDO;
+import org.laokou.admin.server.interfaces.qo.SysDeptQo;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
-import java.util.*;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
 @Mapper
 @Repository
-public interface SysDeptMapper extends BaseMapper<SysDeptDO> {
+public interface SysDeptMapper extends BatchMapper<SysDeptDO> {
 
 	/**
 	 * 查询部门列表

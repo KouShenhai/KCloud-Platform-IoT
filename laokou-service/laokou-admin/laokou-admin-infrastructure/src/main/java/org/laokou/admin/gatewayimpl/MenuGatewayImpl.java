@@ -58,9 +58,8 @@ public class MenuGatewayImpl implements MenuGateway {
 		if (count > 0) {
 			throw new GlobalException("菜单已存在，请重新填写");
 		}
-		Integer version = menuMapper.getVersion(id);
 		MenuDO menuDO = MenuConvertor.toDataObject(menu);
-		menuDO.setVersion(version);
+		menuDO.setVersion(menuMapper.getVersion(menuDO));
 		return updateMenu(menuDO);
 	}
 

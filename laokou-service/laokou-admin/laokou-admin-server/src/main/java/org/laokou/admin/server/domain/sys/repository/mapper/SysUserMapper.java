@@ -16,15 +16,15 @@
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.client.dto.SysUserDTO;
-import org.laokou.admin.server.interfaces.qo.SysUserQo;
-import org.laokou.common.core.vo.OptionVO;
-import org.laokou.admin.client.vo.SysUserVO;
-import org.laokou.admin.server.domain.sys.entity.SysUserDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.admin.client.dto.SysUserDTO;
+import org.laokou.admin.client.vo.SysUserVO;
+import org.laokou.admin.server.domain.sys.entity.SysUserDO;
+import org.laokou.admin.server.interfaces.qo.SysUserQo;
+import org.laokou.common.core.vo.OptionVO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,7 +36,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface SysUserMapper extends BaseMapper<SysUserDO> {
+public interface SysUserMapper extends BatchMapper<SysUserDO> {
 
 	/**
 	 * 分页查询用户

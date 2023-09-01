@@ -27,6 +27,7 @@ import org.laokou.admin.client.dto.menu.MenuUpdateCmd;
 import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.enums.Cache;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -74,7 +75,7 @@ public class MenusController {
 	@Operation(summary = "修改", description = "修改")
 	@OperateLog(module = "菜单管理", operation = "修改")
 	@PreAuthorize("hasAuthority('menus:update')")
-	//@DataCache(name = "menus", key = "#cmd.menuCO.id", type = Cache.DEL)
+	@DataCache(name = "menus", key = "#cmd.menuCO.id", type = Cache.DEL)
 	public Result<Boolean> update(@RequestBody MenuUpdateCmd cmd) {
 		return menusServiceI.update(cmd);
 	}

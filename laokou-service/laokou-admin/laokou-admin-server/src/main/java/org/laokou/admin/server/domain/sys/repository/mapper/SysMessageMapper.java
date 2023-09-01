@@ -16,14 +16,14 @@
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.server.domain.sys.entity.SysMessageDO;
-import org.laokou.admin.server.interfaces.qo.SysMessageQo;
-import org.laokou.admin.client.vo.MessageDetailVO;
-import org.laokou.admin.client.vo.SysMessageVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.admin.client.vo.MessageDetailVO;
+import org.laokou.admin.client.vo.SysMessageVO;
+import org.laokou.admin.server.domain.sys.entity.SysMessageDO;
+import org.laokou.admin.server.interfaces.qo.SysMessageQo;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface SysMessageMapper extends BaseMapper<SysMessageDO> {
+public interface SysMessageMapper extends BatchMapper<SysMessageDO> {
 
 	/**
 	 * 分页查询消息

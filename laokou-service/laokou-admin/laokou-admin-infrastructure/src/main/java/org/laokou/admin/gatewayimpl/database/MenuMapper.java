@@ -15,7 +15,6 @@
  */
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
@@ -29,7 +28,7 @@ import java.util.List;
  */
 @Repository
 @Mapper
-public interface MenuMapper extends BaseMapper<MenuDO>, BatchMapper<MenuDO> {
+public interface MenuMapper extends BatchMapper<MenuDO> {
 
 	List<MenuDO> getMenuListByUserId(@Param("type") Integer type, @Param("userId") Long userId);
 
