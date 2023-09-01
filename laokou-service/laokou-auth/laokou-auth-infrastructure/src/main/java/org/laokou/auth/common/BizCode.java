@@ -1,50 +1,35 @@
 package org.laokou.auth.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 编码由5位数字构成 前2位为应用编号 后3位为业务编号
- *
  * @author laokou
  */
+@Schema(name = "BizCode",description = "业务码")
 public interface BizCode {
 
-	/**
-	 * 唯一标识不能为空
-	 */
-	int IDENTIFIER_NOT_NULL = 2001;
+	@Schema(name = "UUID_NOT_NULL",description = "UUID不能为空")
+	int UUID_NOT_NULL = 2001;
 
-	/**
-	 * 验证码不能为空
-	 */
+	@Schema(name = "CAPTCHA_NOT_NULL",description = "验证码不能为空")
 	int CAPTCHA_NOT_NULL = 2002;
 
-	/**
-	 * 账号不能为空
-	 */
+	@Schema(name = "USERNAME_NOT_NULL",description = "账号不能为空")
 	int USERNAME_NOT_NULL = 2005;
 
-	/**
-	 * 密码不能为空
-	 */
+	@Schema(name = "PASSWORD_NOT_NULL",description = "密码不能为空")
 	int PASSWORD_NOT_NULL = 2009;
 
-	/**
-	 * 手机号不能为空
-	 */
+	@Schema(name = "MOBILE_NOT_NULL",description = "手机号不能为空")
 	int MOBILE_NOT_NULL = 2010;
 
-	/**
-	 * 邮箱不能为空
-	 */
+	@Schema(name = "MAIL_NOT_NULL",description = "邮箱不能为空")
 	int MAIL_NOT_NULL = 2012;
 
-	/**
-	 * 租户编号不能为空，请选择租户
-	 */
+	@Schema(name = "TENANT_ID_NOT_NULL",description = "租户ID不能为空")
 	int TENANT_ID_NOT_NULL = 2014;
 
-	/**
-	 * 登录成功
-	 */
+	@Schema(name = "LOGIN_SUCCEEDED",description = "登录成功")
 	int LOGIN_SUCCEEDED = 2018;
 
 }

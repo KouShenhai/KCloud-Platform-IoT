@@ -17,9 +17,9 @@
 
 package org.laokou.auth.event.handler;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.laokou.auth.dto.log.domainevent.LoginLogEvent;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
@@ -28,6 +28,7 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
+
 import java.util.concurrent.CompletableFuture;
 
 /**

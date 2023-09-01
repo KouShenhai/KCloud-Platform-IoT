@@ -103,5 +103,9 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-banner</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations-jakarta</artifactId>
+    </dependency>
   </dependencies>
 </project>

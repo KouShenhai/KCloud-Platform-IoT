@@ -17,6 +17,8 @@
 
 package org.laokou.admin.client.dto.menu.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.laokou.common.core.utils.TreeUtil;
 
@@ -31,34 +33,23 @@ public class MenuCO extends TreeUtil.TreeNode<MenuCO> {
 	@Serial
 	private static final long serialVersionUID = 9057183259302756376L;
 
-	/**
-	 * 图标
-	 */
+	@Schema(name = "permission", description = "图标")
 	private String icon;
 
-	/**
-	 * 类型 0菜单 1按钮
-	 */
+	@Schema(name = "permission", description = "类型 0菜单 1按钮")
+	@NotNull(message = "菜单类型不为空")
 	private Integer type;
 
-	/**
-	 * 排序
-	 */
+	@Schema(name = "permission", description = "排序")
 	private Integer sort;
 
-	/**
-	 * 路径
-	 */
+	@Schema(name = "permission", description = "路径")
 	private String url;
 
-	/**
-	 * 权限标识
-	 */
+	@Schema(name = "permission", description = "权限标识")
 	private String permission;
 
-	/**
-	 * 状态 0显示 1隐藏
-	 */
+	@Schema(name = "visible", description = "状态 0显示 1隐藏")
 	private Integer visible;
 
 }

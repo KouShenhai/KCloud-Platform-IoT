@@ -19,6 +19,7 @@ package org.laokou.admin.client.api;
 import org.laokou.admin.client.dto.menu.MenuGetQry;
 import org.laokou.admin.client.dto.menu.MenuListQry;
 import org.laokou.admin.client.dto.menu.MenuTreeListQry;
+import org.laokou.admin.client.dto.menu.MenuUpdateCmd;
 import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
 import org.laokou.common.i18n.dto.Result;
 
@@ -34,6 +35,8 @@ public interface MenusServiceI {
 	Result<List<MenuCO>> list(MenuListQry qry);
 
 	Result<MenuCO> get(MenuGetQry qry);
+
+	Result<Boolean> update(MenuUpdateCmd cmd);
 
 	//
 	// /**
