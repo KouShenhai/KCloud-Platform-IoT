@@ -65,7 +65,7 @@ public class MenusController {
 	@GetMapping("v1/menus/{id}")
 	@Operation(summary = "查看", description = "查看")
 	@DataCache(name = "menus", key = "#id")
-	public Result<?> get(@PathVariable("id") Long id) {
+	public Result<MenuCO> get(@PathVariable("id") Long id) {
 		return menusServiceI.get(new MenuGetQry(id));
 	}
 
