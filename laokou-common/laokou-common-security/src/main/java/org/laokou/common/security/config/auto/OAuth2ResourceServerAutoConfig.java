@@ -60,9 +60,9 @@ public class OAuth2ResourceServerAutoConfig {
 	@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityFilterChain resourceFilterChain(GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector,
-											InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint,
-											ForbiddenExceptionHandler forbiddenExceptionHandler, OAuth2ResourceServerProperties properties,
-											HttpSecurity http) throws Exception {
+			InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint,
+			ForbiddenExceptionHandler forbiddenExceptionHandler, OAuth2ResourceServerProperties properties,
+			HttpSecurity http) throws Exception {
 		OAuth2ResourceServerProperties.RequestMatcher requestMatcher = Optional
 				.ofNullable(properties.getRequestMatcher())
 				.orElseGet(OAuth2ResourceServerProperties.RequestMatcher::new);

@@ -27,6 +27,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class MenuUpdateCmd extends CommonCommand {
 
-    private MenuCO menuCO;
+	private MenuCO menuCO;
 
 }

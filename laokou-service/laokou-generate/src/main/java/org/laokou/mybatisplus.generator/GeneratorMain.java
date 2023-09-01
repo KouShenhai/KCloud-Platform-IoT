@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package org.laokou.mybatisplus.generator;
 
@@ -122,9 +122,7 @@ public class GeneratorMain {
 					.formatFileName("%sController").enableRestStyle() // 开启RestController注解
 					.enableFileOverride().mapperBuilder()// mapper策略配置
 					.formatMapperFileName("%sMapper").enableMapperAnnotation()// @mapper注解开启
-					.formatXmlFileName("%sMapper")
-					.superClass(BatchMapper.class)
-					.enableFileOverride();
+					.formatXmlFileName("%sMapper").superClass(BatchMapper.class).enableFileOverride();
 		}).templateConfig(builder -> {
 			builder.entity("/templates/mybatisplus/entity.java").mapper("/templates/mybatisplus/mapper.java")
 					.xml("/templates/mybatisplus/mapper.xml").service("/templates/mybatisplus/service.java")

@@ -28,6 +28,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface SysMessageDetailMapper extends BatchMapper<SysMessageDetailDO> {
+
 	/**
 	 * 未读消息数
 	 * @param userId
