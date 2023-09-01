@@ -27,12 +27,12 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class MenuConvertor {
 
-    public static Menu toEntity(MenuCO menuCO) {
-        return ConvertUtil.sourceToTarget(menuCO, Menu.class);
-    }
+	public static Menu toEntity(MenuCO menuCO) {
+		return ConvertUtil.sourceToTarget(menuCO, Menu.class);
+	}
 
-    public static MenuDO toDataObject(Menu menu) {
-        return ConvertUtil.sourceToTarget(menu, MenuDO.class);
-    }
+	public static MenuDO toDataObject(Menu menu) {
+		return ConvertUtil.sourceToTarget(menu, MenuDO.class);
+	}
 
 }

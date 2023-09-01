@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "BizCode", description = "业务码")
 public interface BizCode {
 
-    @Schema(name = "ID_NOT_NULL",description = "ID不能为空")
-    int ID_NOT_NULL = 3001;
+	@Schema(name = "ID_NOT_NULL", description = "ID不能为空")
+	int ID_NOT_NULL = 3001;
 
 }

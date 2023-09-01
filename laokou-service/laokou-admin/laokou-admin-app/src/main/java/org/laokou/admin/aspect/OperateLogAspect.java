@@ -59,6 +59,7 @@ import static org.laokou.common.core.constant.Constant.*;
 public class OperateLogAspect {
 
 	private final ThreadPoolTaskExecutor taskExecutor;
+
 	private static final String[] REMOVE_PARAMS = { "username", "password", "mobile", "mail" };
 
 	private static final ThreadLocal<StopWatch> TASK_TIME_LOCAL = new NamedThreadLocal<>("耗时");

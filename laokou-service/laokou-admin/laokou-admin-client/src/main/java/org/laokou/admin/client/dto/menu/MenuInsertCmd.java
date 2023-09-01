@@ -26,6 +26,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class MenuInsertCmd extends CommonCommand {
 
-    private MenuCO menuCO;
+	private MenuCO menuCO;
 
 }

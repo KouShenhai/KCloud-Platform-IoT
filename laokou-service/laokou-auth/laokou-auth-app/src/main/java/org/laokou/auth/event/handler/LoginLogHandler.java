@@ -40,6 +40,7 @@ import java.util.concurrent.CompletableFuture;
 public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 
 	private final LoginLogMapper loginLogMapper;
+
 	private final ThreadPoolTaskExecutor taskExecutor;
 
 	@Override

@@ -52,7 +52,7 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 	 * @return int
 	 */
 	default int getVersion(T obj) {
-		return this.selectOne(Wrappers.query(obj).eq("id",obj.getId()).select("version")).getVersion();
+		return this.selectOne(Wrappers.query(obj).eq("id", obj.getId()).select("version")).getVersion();
 	}
 
 }

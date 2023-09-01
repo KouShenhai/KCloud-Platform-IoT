@@ -33,6 +33,7 @@ import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import static org.laokou.admin.common.Constant.DEFAULT_TENANT;
+
 /**
  * @author laokou
  */
@@ -54,7 +55,8 @@ public class MenuGatewayImpl implements MenuGateway {
 		if (id == null) {
 			throw new GlobalException(BizCode.ID_NOT_NULL, MessageUtil.getMessage(BizCode.ID_NOT_NULL));
 		}
-		Long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, id));
+		Long count = menuMapper.selectCount(
+				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, id));
 		if (count > 0) {
 			throw new GlobalException("菜单已存在，请重新填写");
 		}

@@ -31,10 +31,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MenuUpdateCmdExe {
 
-    private final MenuGateway menuGateway;
+	private final MenuGateway menuGateway;
 
-    public Result<Boolean> execute(MenuUpdateCmd cmd) {
-        return Result.of(menuGateway.update(MenuConvertor.toEntity(cmd.getMenuCO())));
-    }
+	public Result<Boolean> execute(MenuUpdateCmd cmd) {
+		return Result.of(menuGateway.update(MenuConvertor.toEntity(cmd.getMenuCO())));
+	}
 
 }
