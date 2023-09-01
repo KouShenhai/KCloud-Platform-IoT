@@ -25,7 +25,7 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-public class CustomException extends RuntimeException {
+public class GlobalException extends RuntimeException {
 
 	@Serial
 	private static final long serialVersionUID = 4102669900127613541L;
@@ -34,17 +34,17 @@ public class CustomException extends RuntimeException {
 
 	private String msg;
 
-	public CustomException(int code) {
+	public GlobalException(int code) {
 		this.code = code;
 		this.msg = MessageUtil.getMessage(code);
 	}
 
-	public CustomException(int code, String msg) {
+	public GlobalException(int code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}
 
-	public CustomException(String msg) {
+	public GlobalException(String msg) {
 		super(msg);
 		this.code = StatusCode.INTERNAL_SERVER_ERROR;
 		this.msg = msg;

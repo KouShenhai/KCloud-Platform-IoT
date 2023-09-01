@@ -25,7 +25,7 @@ import org.laokou.admin.server.interfaces.qo.SysMenuQo;
 import org.laokou.admin.client.vo.SysMenuVO;
 import org.laokou.admin.client.dto.SysMenuDTO;
 import org.laokou.auth.domain.user.User;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -83,12 +83,12 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
 		ValidatorUtil.validateEntity(dto);
 		Long id = dto.getId();
 		if (id == null) {
-			throw new CustomException("菜单编号不为空");
+			throw new GlobalException("菜单编号不为空");
 		}
 		long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, dto.getName())
 				.ne(SysMenuDO::getId, dto.getId()));
 		if (count > 0) {
-			throw new CustomException("菜单已存在，请重新填写");
+			throw new GlobalException("菜单已存在，请重新填写");
 		}
 		Integer version = sysMenuService.getVersion(id);
 		SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
@@ -102,7 +102,7 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
 		ValidatorUtil.validateEntity(dto);
 		long count = sysMenuService.count(Wrappers.lambdaQuery(SysMenuDO.class).eq(SysMenuDO::getName, dto.getName()));
 		if (count > 0) {
-			throw new CustomException("菜单已存在，请重新填写");
+			throw new GlobalException("菜单已存在，请重新填写");
 		}
 		SysMenuDO menuDO = ConvertUtil.sourceToTarget(dto, SysMenuDO.class);
 		return sysMenuService.save(menuDO);

@@ -26,7 +26,7 @@ import org.laokou.admin.client.dto.SysDeptDTO;
 import org.laokou.admin.server.domain.sys.repository.service.SysUserService;
 import org.laokou.admin.server.interfaces.qo.SysDeptQo;
 import org.laokou.admin.client.vo.SysDeptVO;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.core.utils.TreeUtil;
@@ -68,7 +68,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
 		long count = sysDeptService.count(Wrappers.lambdaQuery(SysDeptDO.class)
 				.eq(SysDeptDO::getTenantId, UserUtil.getTenantId()).eq(SysDeptDO::getName, dto.getName()));
 		if (count > 0) {
-			throw new CustomException("部门已存在，请重新填写");
+			throw new GlobalException("部门已存在，请重新填写");
 		}
 		Long tenantId = UserUtil.getTenantId();
 		SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
@@ -83,16 +83,16 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
 		ValidatorUtil.validateEntity(dto);
 		Long id = dto.getId();
 		if (id == null) {
-			throw new CustomException("部门编号不为空");
+			throw new GlobalException("部门编号不为空");
 		}
 		long count = sysDeptService
 				.count(Wrappers.lambdaQuery(SysDeptDO.class).eq(SysDeptDO::getTenantId, UserUtil.getTenantId())
 						.eq(SysDeptDO::getName, dto.getName()).ne(SysDeptDO::getId, dto.getId()));
 		if (count > 0) {
-			throw new CustomException("部门已存在，请重新填写");
+			throw new GlobalException("部门已存在，请重新填写");
 		}
 		if (dto.getPid().equals(dto.getId())) {
-			throw new CustomException("父节点不能为自身，请重新选择");
+			throw new GlobalException("父节点不能为自身，请重新选择");
 		}
 		Integer version = sysDeptService.getVersion(id);
 		SysDeptDO sysDeptDO = ConvertUtil.sourceToTarget(dto, SysDeptDO.class);
@@ -106,7 +106,7 @@ public class SysDeptApplicationServiceImpl implements SysDeptApplicationService 
 	public Boolean deleteDept(Long id) {
 		long count = sysUserService.count(Wrappers.lambdaQuery(SysUserDO.class).eq(SysUserDO::getDeptId, id));
 		if (count > 0) {
-			throw new CustomException("不可删除，该部门下存在用户");
+			throw new GlobalException("不可删除，该部门下存在用户");
 		}
 		sysDeptService.deleteDept(id);
 		return true;

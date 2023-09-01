@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
@@ -58,7 +58,7 @@ public class DsUtil {
 
 	public String loadDs(String sourceName) {
 		if (StringUtil.isEmpty(sourceName)) {
-			throw new CustomException("数据源名称不能为空");
+			throw new GlobalException("数据源名称不能为空");
 		}
 		if (!checkDs(sourceName)) {
 			addDs(sourceName);
@@ -97,7 +97,7 @@ public class DsUtil {
 		}
 		catch (Exception e) {
 			log.error("数据源驱动加载失败，错误信息：{}", e.getMessage());
-			throw new CustomException("数据源驱动加载失败，请检查相关配置");
+			throw new GlobalException("数据源驱动加载失败，请检查相关配置");
 		}
 		try {
 			connection = DriverManager.getConnection(properties.getUrl(), properties.getUsername(),
@@ -105,7 +105,7 @@ public class DsUtil {
 		}
 		catch (Exception e) {
 			log.error("数据源连接失败，错误信息：{}", e.getMessage());
-			throw new CustomException("数据源连接失败，请检查相关配置");
+			throw new GlobalException("数据源连接失败，请检查相关配置");
 		}
 		try {
 			ResultSet resultSet = connection.prepareStatement(SELECT_TABLES_SQL_TEMPLATE).executeQuery();
@@ -116,7 +116,7 @@ public class DsUtil {
 			}
 			List<String> list = TABLES.stream().filter(item -> !tables.contains(item)).collect(Collectors.toList());
 			if (CollectionUtil.isNotEmpty(list)) {
-				throw new CustomException(String.format("%s不存在，请检查数据库表", String.join("、", list)));
+				throw new GlobalException(String.format("%s不存在，请检查数据库表", String.join("、", list)));
 			}
 		}
 		finally {

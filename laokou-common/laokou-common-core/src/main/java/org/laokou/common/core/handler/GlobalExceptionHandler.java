@@ -16,7 +16,7 @@
  */
 package org.laokou.common.core.handler;
 
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,14 +29,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @ResponseBody
 @Component
-public class CustomExceptionHandler {
+public class GlobalExceptionHandler {
 
-	/**
-	 *
-	 * 处理自定义异常
-	 */
-	@ExceptionHandler({ CustomException.class })
-	public Result<?> handleRenException(CustomException ex) {
+	@ExceptionHandler({ GlobalException.class })
+	public Result<?> handle(GlobalException ex) {
 		return Result.fail(ex.getCode(), ex.getMsg());
 	}
 

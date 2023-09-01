@@ -32,7 +32,7 @@ import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.flowable.client.dto.*;
 import org.laokou.flowable.client.vo.AssigneeVO;
@@ -89,10 +89,10 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 		Map<String, Object> values = dto.getValues();
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		if (null == task) {
-			throw new CustomException("任务不存在");
+			throw new GlobalException("任务不存在");
 		}
 		if (DelegationState.PENDING.equals(task.getDelegationState())) {
-			throw new CustomException("非审批任务，请处理任务");
+			throw new GlobalException("非审批任务，请处理任务");
 		}
 		// 审批处理
 		if (MapUtil.isNotEmpty(values)) {
@@ -114,13 +114,13 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 		String instanceId = dto.getInstanceId();
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		if (null == task) {
-			throw new CustomException("任务不存在");
+			throw new GlobalException("任务不存在");
 		}
 		if (DelegationState.PENDING.equals(task.getDelegationState())) {
 			taskService.resolveTask(taskId);
 		}
 		else {
-			throw new CustomException("非处理任务，请审批任务");
+			throw new GlobalException("非处理任务，请审批任务");
 		}
 		String assignee = taskUtil.getAssignee(instanceId);
 		log.info("当前审核人：{}", assignee == null ? "无" : assignee);
@@ -138,14 +138,14 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
 				.processDefinitionKey(processKey).latestVersion().singleResult();
 		if (processDefinition == null) {
-			throw new CustomException("流程未定义");
+			throw new GlobalException("流程未定义");
 		}
 		if (processDefinition.isSuspended()) {
-			throw new CustomException("流程已被挂起，请先激活流程");
+			throw new GlobalException("流程已被挂起，请先激活流程");
 		}
 		final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processKey, businessKey);
 		if (processInstance == null) {
-			throw new CustomException("流程不存在");
+			throw new GlobalException("流程不存在");
 		}
 		String instanceId = processInstance.getId();
 		runtimeService.setProcessInstanceName(instanceId, businessName);
@@ -206,10 +206,10 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 	private void checkTask(String taskId, String owner) {
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		if (task == null) {
-			throw new CustomException("任务不存在");
+			throw new GlobalException("任务不存在");
 		}
 		if (!owner.equals(task.getAssignee())) {
-			throw new CustomException("该用户无法操作任务");
+			throw new GlobalException("该用户无法操作任务");
 		}
 	}
 

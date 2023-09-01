@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -108,7 +108,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 						String msg = msgNode.asText();
 						int code = codeNode.asInt();
 						if (code == 0) {
-							CustomException ex = getException(codeNode.asText());
+							GlobalException ex = getException(codeNode.asText());
 							code = ex.getCode();
 							msg = ex.getMsg();
 						}
@@ -127,10 +127,10 @@ public class RespFilter implements GlobalFilter, Ordered {
 		return Ordered.HIGHEST_PRECEDENCE + 1500;
 	}
 
-	private CustomException getException(String code) {
+	private GlobalException getException(String code) {
 		ExceptionEnum instance = ExceptionEnum.getInstance(code.toUpperCase());
 		return switch (instance) {
-			case INVALID_CLIENT -> new CustomException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
+			case INVALID_CLIENT -> new GlobalException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
 		};
 	}
 

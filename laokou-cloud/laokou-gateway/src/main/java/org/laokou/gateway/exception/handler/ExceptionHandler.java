@@ -33,8 +33,6 @@ import static org.laokou.common.i18n.common.StatusCode.*;
 import static org.laokou.gateway.exception.ErrorCode.*;
 
 /**
- * 异常处理器
- *
  * @author laokou
  */
 @Component

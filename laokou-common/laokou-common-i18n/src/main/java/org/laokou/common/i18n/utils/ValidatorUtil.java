@@ -19,7 +19,7 @@ package org.laokou.common.i18n.utils;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
@@ -49,7 +49,7 @@ public class ValidatorUtil {
 		Set<ConstraintViolation<Object>> violationSet = validator.validate(obj);
 		if (!violationSet.isEmpty()) {
 			String message = violationSet.iterator().next().getMessage();
-			throw new CustomException(message);
+			throw new GlobalException(message);
 		}
 	}
 

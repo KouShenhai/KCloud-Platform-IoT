@@ -17,7 +17,7 @@
 package org.laokou.common.lock.aspect;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.lock.annotation.Lock4j;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -69,7 +69,7 @@ public class LockAspect {
 				obj = joinPoint.proceed();
 			}
 			else {
-				throw new CustomException("请求太频繁，请稍后再试");
+				throw new GlobalException("请求太频繁，请稍后再试");
 			}
 		}
 		catch (Throwable throwable) {

@@ -67,7 +67,7 @@ import org.laokou.common.elasticsearch.qo.SearchQo;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
 import org.laokou.common.elasticsearch.vo.SearchVO;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
@@ -831,7 +831,7 @@ public class ElasticsearchTemplate {
 			return vo;
 		}
 		catch (Exception e) {
-			throw new CustomException("搜索失败");
+			throw new GlobalException("搜索失败");
 		}
 	}
 
