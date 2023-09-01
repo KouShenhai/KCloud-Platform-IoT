@@ -62,6 +62,24 @@ public class TreeUtil {
 		return rootNode;
 	}
 
+	public static <T extends TreeNode<T>> List<T> buildTreeNode(List<T> treeNodes) {
+		List<T> nodes = new ArrayList<>(treeNodes.size());
+		// list转map
+		Map<Long, T> nodeMap = new LinkedHashMap<>(treeNodes.size());
+		for (T node : treeNodes) {
+			nodeMap.put(node.getId(), node);
+		}
+		for (T treeNo : treeNodes) {
+			T parent = nodeMap.get(treeNo.getPid());
+			if (parent != null && treeNo.getPid().equals(parent.getId())) {
+				parent.getChildren().add(treeNo);
+				continue;
+			}
+			nodes.add(treeNo);
+		}
+		return nodes;
+	}
+
 	@Data
 	@AllArgsConstructor
 	@NoArgsConstructor
