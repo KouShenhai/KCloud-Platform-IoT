@@ -36,7 +36,7 @@ public class Menu {
 	private String name;
 
 	/**
-	 * 父级ID
+	 * 父ID
 	 */
 	private Long pid;
 

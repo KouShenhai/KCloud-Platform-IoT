@@ -20,7 +20,7 @@ import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -79,7 +79,7 @@ public class BatchUtil {
 		// 阻塞主线程
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
-			throw new CustomException("批量数据插入失败，数据已回滚");
+			throw new GlobalException("批量数据插入失败，数据已回滚");
 		}
 	}
 

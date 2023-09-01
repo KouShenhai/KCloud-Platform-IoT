@@ -15,22 +15,26 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database;
+package org.laokou.admin.command.menu;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
-import org.springframework.stereotype.Repository;
-
-import static org.laokou.auth.common.Constant.SHARDING_SPHERE_READWRITE;
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.menu.MenuUpdateCmd;
+import org.laokou.admin.convertor.MenuConvertor;
+import org.laokou.admin.domain.gateway.MenuGateway;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Repository
-@Mapper
-@DS(SHARDING_SPHERE_READWRITE)
-public interface LoginLogMapper extends BatchMapper<LoginLogDO> {
+@Component
+@RequiredArgsConstructor
+public class MenuUpdateCmdExe {
+
+    private final MenuGateway menuGateway;
+
+    public Result<Boolean> execute(MenuUpdateCmd cmd) {
+        return Result.of(menuGateway.update(MenuConvertor.toEntity(cmd.getMenuCO())));
+    }
 
 }

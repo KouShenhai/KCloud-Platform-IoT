@@ -28,7 +28,7 @@ import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.repository.ProcessDefinitionQuery;
 import org.flowable.image.impl.DefaultProcessDiagramGenerator;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.flowable.client.dto.DefinitionDTO;
@@ -70,7 +70,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 		String processName = process.getName() + BPMN_FILE_SUFFIX;
 		long count = repositoryService.createDeploymentQuery().deploymentKey(processId).count();
 		if (count > 0) {
-			throw new CustomException("流程已存在，请重新上传");
+			throw new GlobalException("流程已存在，请重新上传");
 		}
 		repositoryService.createDeployment().name(processName).key(processId).addBpmnModel(processName, bpmnModel)
 				.deploy();
@@ -141,7 +141,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 		final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
 				.processDefinitionId(definitionId).singleResult();
 		if (processDefinition.isSuspended()) {
-			throw new CustomException("挂起失败，流程已挂起");
+			throw new GlobalException("挂起失败，流程已挂起");
 		}
 		else {
 			// 挂起
@@ -160,7 +160,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 			repositoryService.activateProcessDefinitionById(definitionId, true, null);
 		}
 		else {
-			throw new CustomException("激活失败，流程已激活");
+			throw new GlobalException("激活失败，流程已激活");
 		}
 		return true;
 	}

@@ -26,7 +26,7 @@ import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.TemplateUtil;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -95,7 +95,7 @@ public class GuoYangYunSmsServiceImpl implements SmsService {
 	public Boolean sendSms(String mobile) throws TemplateException, IOException {
 		boolean mobileRegex = RegexUtil.mobileRegex(mobile);
 		if (!mobileRegex) {
-			throw new CustomException(MOBILE_ERROR, MessageUtil.getMessage(MOBILE_ERROR));
+			throw new GlobalException(MOBILE_ERROR, MessageUtil.getMessage(MOBILE_ERROR));
 		}
 		String templateId = guoYangYunProperties.getTemplateId();
 		String appcode = guoYangYunProperties.getAppcode();
@@ -103,7 +103,7 @@ public class GuoYangYunSmsServiceImpl implements SmsService {
 		// 验证模块id
 		boolean exist = TEMPLATE_MAP.containsKey(templateId);
 		if (!exist) {
-			throw new CustomException(SMS_TEMPLATE_ID_NOT_EXIST, MessageUtil.getMessage(SMS_TEMPLATE_ID_NOT_EXIST));
+			throw new GlobalException(SMS_TEMPLATE_ID_NOT_EXIST, MessageUtil.getMessage(SMS_TEMPLATE_ID_NOT_EXIST));
 		}
 		int minute = 5;
 		String captcha = RandomStringUtils.randomNumeric(6);
@@ -135,10 +135,10 @@ public class GuoYangYunSmsServiceImpl implements SmsService {
 			else {
 				log.error("错误信息：{}", ERROR_MAP.get(code));
 				statusCode = SMS_STATUS_CODE_MAP.get(code);
-				throw new CustomException(statusCode, MessageUtil.getMessage(statusCode));
+				throw new GlobalException(statusCode, MessageUtil.getMessage(statusCode));
 			}
 		}
-		catch (CustomException ex) {
+		catch (GlobalException ex) {
 			throw ex;
 		}
 		catch (Exception e) {

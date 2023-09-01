@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
  * @author laokou
  */
 @Data
-@Schema(name = "BaseDO", description = "数据映射基类")
+@Schema(name = "BaseDO", description = "映射基类")
 public abstract class BaseDO extends DTO {
 
 	@Serial

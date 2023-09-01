@@ -14,23 +14,26 @@
  * limitations under the License.
  *
  */
+package org.laokou.common.core.handler;
 
-package org.laokou.auth.gatewayimpl.database;
-
-import com.baomidou.dynamic.datasource.annotation.DS;
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
-import org.springframework.stereotype.Repository;
-
-import static org.laokou.auth.common.Constant.SHARDING_SPHERE_READWRITE;
+import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * @author laokou
  */
-@Repository
-@Mapper
-@DS(SHARDING_SPHERE_READWRITE)
-public interface LoginLogMapper extends BatchMapper<LoginLogDO> {
+@RestControllerAdvice
+@ResponseBody
+@Component
+public class GlobalExceptionHandler {
+
+	@ExceptionHandler({ GlobalException.class })
+	public Result<?> handle(GlobalException ex) {
+		return Result.fail(ex.getCode(), ex.getMsg());
+	}
 
 }

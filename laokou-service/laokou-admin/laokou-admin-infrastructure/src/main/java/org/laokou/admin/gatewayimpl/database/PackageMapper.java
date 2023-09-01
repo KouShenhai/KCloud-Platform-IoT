@@ -16,7 +16,6 @@
  */
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
@@ -27,7 +26,7 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface PackageMapper extends BaseMapper<PackageDO>, BatchMapper<PackageDO> {
+public interface PackageMapper extends BatchMapper<PackageDO> {
 
 	// /**
 	// * 获取详情

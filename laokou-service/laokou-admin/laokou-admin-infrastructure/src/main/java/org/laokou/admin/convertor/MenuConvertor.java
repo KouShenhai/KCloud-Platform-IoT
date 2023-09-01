@@ -14,30 +14,25 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.core.handler;
 
-import org.laokou.common.i18n.common.CustomException;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+package org.laokou.admin.convertor;
+
+import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.domain.menu.Menu;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.common.core.utils.ConvertUtil;
 
 /**
  * @author laokou
  */
-@RestControllerAdvice
-@ResponseBody
-@Component
-public class CustomExceptionHandler {
+public class MenuConvertor {
 
-	/**
-	 *
-	 * 处理自定义异常
-	 */
-	@ExceptionHandler({ CustomException.class })
-	public Result<?> handleRenException(CustomException ex) {
-		return Result.fail(ex.getCode(), ex.getMsg());
-	}
+    public static Menu toEntity(MenuCO menuCO) {
+        return ConvertUtil.sourceToTarget(menuCO, Menu.class);
+    }
+
+    public static MenuDO toDataObject(Menu menu) {
+        return ConvertUtil.sourceToTarget(menu, MenuDO.class);
+    }
 
 }

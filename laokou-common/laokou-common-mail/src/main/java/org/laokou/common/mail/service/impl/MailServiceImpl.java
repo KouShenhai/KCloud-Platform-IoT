@@ -21,7 +21,7 @@ import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.mail.service.MailService;
 import org.laokou.common.core.utils.TemplateUtil;
@@ -61,7 +61,7 @@ public class MailServiceImpl implements MailService {
 		// 验证邮箱
 		boolean mailRegex = RegexUtil.mailRegex(toMail);
 		if (!mailRegex) {
-			throw new CustomException("邮箱格式不正确，请重新输入");
+			throw new GlobalException("邮箱格式不正确，请重新输入");
 		}
 		// 生成验证码
 		String subject = "验证码";

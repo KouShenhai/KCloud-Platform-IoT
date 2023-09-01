@@ -17,11 +17,11 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Repository
 @Mapper
-public interface UserMapper extends BaseMapper<UserDO> {
+public interface UserMapper extends BatchMapper<UserDO> {
 
 	/**
 	 * 修改用户

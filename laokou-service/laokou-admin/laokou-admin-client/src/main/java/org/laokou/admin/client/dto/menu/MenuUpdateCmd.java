@@ -15,22 +15,18 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database;
+package org.laokou.admin.client.dto.menu;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
-import org.springframework.stereotype.Repository;
-
-import static org.laokou.auth.common.Constant.SHARDING_SPHERE_READWRITE;
+import lombok.Data;
+import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@Repository
-@Mapper
-@DS(SHARDING_SPHERE_READWRITE)
-public interface LoginLogMapper extends BatchMapper<LoginLogDO> {
+@Data
+public class MenuUpdateCmd extends CommonCommand {
+
+    private MenuCO menuCO;
 
 }

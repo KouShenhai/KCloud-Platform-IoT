@@ -27,4 +27,6 @@ public interface MenuGateway {
 
 	List<Menu> list(Integer type, User user);
 
+	Boolean update(Menu menu);
+
 }

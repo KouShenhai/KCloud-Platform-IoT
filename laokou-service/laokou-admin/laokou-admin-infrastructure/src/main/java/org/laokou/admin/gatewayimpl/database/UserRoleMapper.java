@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
@@ -31,7 +30,7 @@ import java.util.List;
  */
 @Repository
 @Mapper
-public interface UserRoleMapper extends BatchMapper<UserRoleDO>, BaseMapper<UserRoleDO> {
+public interface UserRoleMapper extends BatchMapper<UserRoleDO> {
 
 	/**
 	 * 根据用户ID查询IDS

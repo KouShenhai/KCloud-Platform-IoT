@@ -17,7 +17,10 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.common.BizCode;
+import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
@@ -25,6 +28,8 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import static org.laokou.admin.common.Constant.DEFAULT_TENANT;
@@ -43,6 +48,21 @@ public class MenuGatewayImpl implements MenuGateway {
 		return ConvertUtil.sourceToTarget(menuList, Menu.class);
 	}
 
+	@Override
+	public Boolean update(Menu menu) {
+		Long id = menu.getId();
+		if (id == null) {
+			throw new GlobalException(BizCode.ID_NOT_NULL, MessageUtil.getMessage(BizCode.ID_NOT_NULL));
+		}
+		Long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, id));
+		if (count > 0) {
+			throw new GlobalException("菜单已存在，请重新填写");
+		}
+		MenuDO menuDO = MenuConvertor.toDataObject(menu);
+		menuDO.setVersion(menuMapper.getVersion(menuDO));
+		return updateMenu(menuDO);
+	}
+
 	private List<MenuDO> getMenuList(Integer type, User user) {
 		Long userId = user.getId();
 		Long tenantId = user.getTenantId();
@@ -56,6 +76,10 @@ public class MenuGatewayImpl implements MenuGateway {
 		else {
 			return menuMapper.getMenuListByTenantIdAndLikeName(type, tenantId, null);
 		}
+	}
+
+	private Boolean updateMenu(MenuDO menuDO) {
+		return menuMapper.updateById(menuDO) > 0;
 	}
 
 }

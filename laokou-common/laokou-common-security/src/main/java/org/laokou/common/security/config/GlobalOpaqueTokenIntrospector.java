@@ -49,7 +49,7 @@ import static org.laokou.common.security.exception.ErrorCode.FORCE_KILL;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CustomOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
+public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 

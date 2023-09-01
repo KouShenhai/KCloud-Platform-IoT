@@ -16,10 +16,10 @@
  */
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface SourceMapper extends BaseMapper<SourceDO> {
+public interface SourceMapper extends BatchMapper<SourceDO> {
 
 	// /**
 	// * 分页查询多租户数据源

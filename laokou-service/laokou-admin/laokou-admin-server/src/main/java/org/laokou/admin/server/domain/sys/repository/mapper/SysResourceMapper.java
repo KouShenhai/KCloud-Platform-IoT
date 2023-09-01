@@ -16,15 +16,15 @@
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.ResultHandler;
+import org.laokou.admin.client.vo.SysResourceVO;
 import org.laokou.admin.server.domain.sys.entity.SysResourceDO;
 import org.laokou.admin.server.infrastructure.index.ResourceIndex;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;
-import org.laokou.admin.client.vo.SysResourceVO;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -32,7 +32,7 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface SysResourceMapper extends BaseMapper<SysResourceDO> {
+public interface SysResourceMapper extends BatchMapper<SysResourceDO> {
 
 	/**
 	 * 分页查询资源

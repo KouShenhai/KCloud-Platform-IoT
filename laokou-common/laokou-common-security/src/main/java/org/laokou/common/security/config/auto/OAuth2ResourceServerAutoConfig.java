@@ -17,7 +17,7 @@
 package org.laokou.common.security.config.auto;
 
 import lombok.Data;
-import org.laokou.common.security.config.CustomOpaqueTokenIntrospector;
+import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.laokou.common.security.config.OAuth2ResourceServerProperties;
 import org.laokou.common.security.exception.handler.ForbiddenExceptionHandler;
 import org.laokou.common.security.exception.handler.InvalidAuthenticationEntryPoint;
@@ -59,10 +59,10 @@ public class OAuth2ResourceServerAutoConfig {
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
-	SecurityFilterChain resourceFilterChain(CustomOpaqueTokenIntrospector customOpaqueTokenIntrospector,
-			InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint,
-			ForbiddenExceptionHandler forbiddenExceptionHandler, OAuth2ResourceServerProperties properties,
-			HttpSecurity http) throws Exception {
+	SecurityFilterChain resourceFilterChain(GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector,
+											InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint,
+											ForbiddenExceptionHandler forbiddenExceptionHandler, OAuth2ResourceServerProperties properties,
+											HttpSecurity http) throws Exception {
 		OAuth2ResourceServerProperties.RequestMatcher requestMatcher = Optional
 				.ofNullable(properties.getRequestMatcher())
 				.orElseGet(OAuth2ResourceServerProperties.RequestMatcher::new);
@@ -75,7 +75,7 @@ public class OAuth2ResourceServerAutoConfig {
 				// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
 				// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 				.oauth2ResourceServer(
-						oauth2 -> oauth2.opaqueToken(token -> token.introspector(customOpaqueTokenIntrospector))
+						oauth2 -> oauth2.opaqueToken(token -> token.introspector(globalOpaqueTokenIntrospector))
 								.accessDeniedHandler(forbiddenExceptionHandler)
 								.authenticationEntryPoint(invalidAuthenticationEntryPoint))
 				.build();

@@ -29,10 +29,6 @@
     <dependencies>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-openapi-doc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-sensitive</artifactId>
         </dependency>
         <dependency>

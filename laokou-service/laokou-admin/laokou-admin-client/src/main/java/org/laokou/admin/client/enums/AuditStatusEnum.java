@@ -17,7 +17,7 @@
 
 package org.laokou.admin.client.enums;
 
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 
 /**
  * @author laokou
@@ -47,7 +47,7 @@ public enum AuditStatusEnum {
 				return en;
 			}
 		}
-		throw new CustomException("审批状态不存在");
+		throw new GlobalException("审批状态不存在");
 	}
 
 }

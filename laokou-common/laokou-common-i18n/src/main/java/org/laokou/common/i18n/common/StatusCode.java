@@ -16,51 +16,36 @@
  */
 package org.laokou.common.i18n.common;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
- * 状态码
- *
  * @author laokou
  */
+@Schema(name = "StatusCode", description = "状态码")
 public interface StatusCode {
 
-	/**
-	 * 请求成功
-	 */
+	@Schema(name = "OK", description = "请求成功")
 	int OK = 200;
 
-	/**
-	 * 错误请求
-	 */
+	@Schema(name = "BAD_REQUEST", description = "错误请求")
 	int BAD_REQUEST = 400;
 
-	/**
-	 * 登录状态已过期，请重新登录
-	 */
+	@Schema(name = "UNAUTHORIZED", description = "登录状态已过期，请重新登录")
 	int UNAUTHORIZED = 401;
 
-	/**
-	 * 访问拒绝，没有权限
-	 */
+	@Schema(name = "FORBIDDEN", description = "访问拒绝，没有权限")
 	int FORBIDDEN = 403;
 
-	/**
-	 * 无法找到请求的资源
-	 */
+	@Schema(name = "NOT_FOUND", description = "无法找到请求的资源")
 	int NOT_FOUND = 404;
 
-	/**
-	 * 请求太多，已被限流，请稍后再试
-	 */
+	@Schema(name = "TOO_MANY_REQUESTS", description = "请求太多，已被限流，请稍后再试")
 	int TOO_MANY_REQUESTS = 429;
 
-	/**
-	 * 服务器内部错误，无法完成请求
-	 */
+	@Schema(name = "INTERNAL_SERVER_ERROR", description = "服务器内部错误，无法完成请求")
 	int INTERNAL_SERVER_ERROR = 500;
 
-	/**
-	 * 服务正在维护，请联系管理员
-	 */
+	@Schema(name = "SERVICE_UNAVAILABLE", description = "服务正在维护，请联系管理员")
 	int SERVICE_UNAVAILABLE = 503;
 
 }

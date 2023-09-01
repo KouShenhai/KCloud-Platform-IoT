@@ -23,8 +23,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
-import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.common.Option;
+import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
@@ -39,7 +39,6 @@ import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -190,7 +189,7 @@ public class UserGatewayImpl implements UserGateway {
 	private UserDO getUpdateUserDO(User user) {
 		UserDO userDO = UserConvertor.toDataObject(user);
 		userDO.setEditor(UserUtil.getUserId());
-		userDO.setVersion(userRoleMapper.getVersion(userDO.getId()));
+		userDO.setVersion(userMapper.getVersion(userDO));
 		return userDO;
 	}
 

@@ -23,6 +23,7 @@ import org.laokou.admin.client.api.MenusServiceI;
 import org.laokou.admin.client.dto.menu.MenuGetQry;
 import org.laokou.admin.client.dto.menu.MenuListQry;
 import org.laokou.admin.client.dto.menu.MenuTreeListQry;
+import org.laokou.admin.client.dto.menu.MenuUpdateCmd;
 import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
@@ -65,7 +66,7 @@ public class MenusController {
 	@GetMapping("v1/menus/{id}")
 	@Operation(summary = "查看", description = "查看")
 	@DataCache(name = "menus", key = "#id")
-	public Result<?> get(@PathVariable("id") Long id) {
+	public Result<MenuCO> get(@PathVariable("id") Long id) {
 		return menusServiceI.get(new MenuGetQry(id));
 	}
 
@@ -74,9 +75,9 @@ public class MenusController {
 	@Operation(summary = "修改", description = "修改")
 	@OperateLog(module = "菜单管理", operation = "修改")
 	@PreAuthorize("hasAuthority('menus:update')")
-	@DataCache(name = "menus", key = "#dto.id", type = Cache.DEL)
-	public Result<Boolean> update() {
-		return Result.of(null);
+	@DataCache(name = "menus", key = "#cmd.menuCO.id", type = Cache.DEL)
+	public Result<Boolean> update(@RequestBody MenuUpdateCmd cmd) {
+		return menusServiceI.update(cmd);
 	}
 
 	@TraceLog

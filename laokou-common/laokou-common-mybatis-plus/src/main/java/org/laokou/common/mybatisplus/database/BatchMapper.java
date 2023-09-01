@@ -17,9 +17,12 @@
 
 package org.laokou.common.mybatisplus.database;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,7 +32,7 @@ import java.util.List;
  */
 @Repository
 @Mapper
-public interface BatchMapper<T> {
+public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 
 	/**
 	 * 批量插入
@@ -45,9 +48,11 @@ public interface BatchMapper<T> {
 
 	/**
 	 * 获取版本号
-	 * @param id ID
+	 * @param obj
 	 * @return int
 	 */
-	Integer getVersion(Long id);
+	default int getVersion(T obj) {
+		return this.selectOne(Wrappers.query(obj).eq("id",obj.getId()).select("version")).getVersion();
+	}
 
 }

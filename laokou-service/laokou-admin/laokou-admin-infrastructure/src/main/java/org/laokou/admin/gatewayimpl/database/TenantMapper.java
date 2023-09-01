@@ -16,9 +16,9 @@
  */
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface TenantMapper extends BaseMapper<TenantDO> {
+public interface TenantMapper extends BatchMapper<TenantDO> {
 
 	/**
 	 * 根据租户ID查询下拉列表

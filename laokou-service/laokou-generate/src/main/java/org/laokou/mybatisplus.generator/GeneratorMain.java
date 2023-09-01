@@ -21,6 +21,7 @@ import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 import java.io.File;
@@ -122,7 +123,7 @@ public class GeneratorMain {
 					.enableFileOverride().mapperBuilder()// mapper策略配置
 					.formatMapperFileName("%sMapper").enableMapperAnnotation()// @mapper注解开启
 					.formatXmlFileName("%sMapper")
-					// .superClass(BaseMapper<SysDictTypeDO>.class)
+					.superClass(BatchMapper.class)
 					.enableFileOverride();
 		}).templateConfig(builder -> {
 			builder.entity("/templates/mybatisplus/entity.java").mapper("/templates/mybatisplus/mapper.java")

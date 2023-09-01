@@ -61,7 +61,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 		String uuid = request.getParameter(UUID);
 		log.info("唯一标识：{}", uuid);
 		if (StringUtil.isEmpty(uuid)) {
-			throw OAuth2ExceptionHandler.getException(IDENTIFIER_NOT_NULL, MessageUtil.getMessage(IDENTIFIER_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(UUID_NOT_NULL, MessageUtil.getMessage(UUID_NOT_NULL));
 		}
 		// 判断验证码是否为空
 		String captcha = request.getParameter(CAPTCHA);

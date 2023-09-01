@@ -17,7 +17,7 @@
 package org.laokou.common.secret.utils;
 
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
@@ -49,22 +49,22 @@ public class SecretUtil {
 	public static void verification(String appKey, String appSecret, String sign, String nonce, String timestamp,
 			Map<String, String> map) {
 		if (StringUtil.isEmpty(appKey)) {
-			throw new CustomException("appKey不为空");
+			throw new GlobalException("appKey不为空");
 		}
 		if (!APP_KEY_VALUE.equals(appKey)) {
-			throw new CustomException("appKey不存在");
+			throw new GlobalException("appKey不存在");
 		}
 		if (StringUtil.isEmpty(appSecret)) {
-			throw new CustomException("appSecret不为空");
+			throw new GlobalException("appSecret不为空");
 		}
 		if (!APP_SECRET_VALUE.equals(appSecret)) {
-			throw new CustomException("appSecret不存在");
+			throw new GlobalException("appSecret不存在");
 		}
 		if (StringUtil.isEmpty(nonce)) {
-			throw new CustomException("nonce不为空");
+			throw new GlobalException("nonce不为空");
 		}
 		if (StringUtil.isEmpty(timestamp)) {
-			throw new CustomException("timestamp不为空");
+			throw new GlobalException("timestamp不为空");
 		}
 		long ts = Long.parseLong(timestamp);
 		// 判断时间戳
@@ -72,15 +72,15 @@ public class SecretUtil {
 		long maxTimestamp = ts + TIMEOUT_MILLIS;
 		long minTimestamp = ts - TIMEOUT_MILLIS;
 		if (nowTimestamp > maxTimestamp || nowTimestamp < minTimestamp) {
-			throw new CustomException("timestamp已过期");
+			throw new GlobalException("timestamp已过期");
 		}
 		if (StringUtil.isEmpty(sign)) {
-			throw new CustomException("sign不能为空");
+			throw new GlobalException("sign不能为空");
 		}
 		String params = MapUtil.parseParams(map, false);
 		String newSing = sign(appKey, appSecret, nonce, ts, params);
 		if (!sign.equals(newSing)) {
-			throw new CustomException("Api验签失败，请检查配置");
+			throw new GlobalException("Api验签失败，请检查配置");
 		}
 	}
 

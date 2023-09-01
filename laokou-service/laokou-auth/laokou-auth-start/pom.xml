@@ -31,6 +31,10 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-openapi-doc</artifactId>
+        </dependency>
+        <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
             <exclusions>

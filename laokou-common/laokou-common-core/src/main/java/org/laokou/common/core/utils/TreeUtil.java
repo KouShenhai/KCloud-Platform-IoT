@@ -16,13 +16,17 @@
  */
 package org.laokou.common.core.utils;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.CustomException;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.ClientObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author laokou
@@ -44,7 +48,7 @@ public class TreeUtil {
 
 	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode) {
 		if (null == rootNode) {
-			throw new CustomException("请构造根节点");
+			throw new GlobalException("请构造根节点");
 		}
 		List<T> nodes = new ArrayList<>(treeNodes);
 		nodes.add(rootNode);
@@ -83,15 +87,20 @@ public class TreeUtil {
 	@Data
 	@AllArgsConstructor
 	@NoArgsConstructor
+	@Schema(name = "TreeNode", description = "树节点")
 	public static class TreeNode<T> extends ClientObject {
 
+		@Schema(name = "id", description = "ID")
 		private Long id;
 
+		@Schema(name = "name", description = "名称")
 		private String name;
 
+		@Schema(name = "pid", description = "父ID")
 		private Long pid;
 
-		private List<T> children = new ArrayList<>(10);
+		@Schema(name = "children", description = "子节点")
+		private List<T> children = new ArrayList<>(0);
 
 	}
 

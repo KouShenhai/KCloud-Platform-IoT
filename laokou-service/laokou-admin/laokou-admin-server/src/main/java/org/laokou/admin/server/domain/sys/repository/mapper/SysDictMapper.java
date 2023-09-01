@@ -16,14 +16,14 @@
  */
 package org.laokou.admin.server.domain.sys.repository.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.server.domain.sys.entity.SysDictDO;
-import org.laokou.admin.server.interfaces.qo.SysDictQo;
-import org.laokou.admin.client.vo.SysDictVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.admin.client.vo.SysDictVO;
+import org.laokou.admin.server.domain.sys.entity.SysDictDO;
+import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.common.core.vo.OptionVO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,7 +33,7 @@ import java.util.List;
  */
 @Repository
 @Mapper
-public interface SysDictMapper extends BaseMapper<SysDictDO> {
+public interface SysDictMapper extends BatchMapper<SysDictDO> {
 
 	/**
 	 * 分页查询字典
