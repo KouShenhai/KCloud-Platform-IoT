@@ -17,7 +17,6 @@
 
 package org.laokou.admin.client.dto.logout.clientobject;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
@@ -27,6 +26,6 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 public class LogoutCmd extends ClientObject {
 
-	private HttpServletRequest request;
+	private String token;
 
 }

@@ -17,7 +17,6 @@
 
 package org.laokou.admin.command.logout;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.logout.clientobject.LogoutCmd;
 import org.laokou.auth.domain.user.User;
@@ -34,8 +33,6 @@ import org.springframework.stereotype.Component;
 import java.security.Principal;
 import java.util.Objects;
 
-import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
-
 /**
  * @author laokou
  */
@@ -48,8 +45,7 @@ public class LogoutCmdExe {
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
 	public Result<Boolean> execute(LogoutCmd cmd) {
-		HttpServletRequest request = cmd.getRequest();
-		String token = getToken(request);
+		String token = cmd.getToken();
 		if (StringUtil.isEmpty(token)) {
 			return Result.of(true);
 		}
@@ -91,14 +87,6 @@ public class LogoutCmdExe {
 	private void deleteResourceTreeKey(Long userId) {
 		String resourceTreeKey = RedisKeyUtil.getResourceTreeKey(userId);
 		redisUtil.delete(resourceTreeKey);
-	}
-
-	private String getToken(HttpServletRequest request) {
-		String token = request.getHeader(AUTHORIZATION);
-		if (StringUtil.isNotEmpty(token)) {
-			return token.substring(7);
-		}
-		return "";
 	}
 
 }
