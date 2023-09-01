@@ -19,7 +19,8 @@ package org.laokou.admin.command.menu;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.menu.MenuUpdateCmd;
-import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.convertor.MenuConvertor;
+import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -30,10 +31,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MenuUpdateCmdExe {
 
-    private final MenuMapper menuMapper;
+    private final MenuGateway menuGateway;
 
     public Result<Boolean> execute(MenuUpdateCmd cmd) {
-        return null;
+        return Result.of(menuGateway.update(MenuConvertor.toEntity(cmd.getMenuCO())));
     }
 
 }

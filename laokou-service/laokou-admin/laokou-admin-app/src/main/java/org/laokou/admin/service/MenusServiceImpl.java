@@ -23,6 +23,7 @@ import org.laokou.admin.client.dto.menu.MenuListQry;
 import org.laokou.admin.client.dto.menu.MenuTreeListQry;
 import org.laokou.admin.client.dto.menu.MenuUpdateCmd;
 import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.command.menu.MenuUpdateCmdExe;
 import org.laokou.admin.command.menu.query.MenuGetQryExe;
 import org.laokou.admin.command.menu.query.MenuListQryExe;
 import org.laokou.admin.command.menu.query.MenuTreeListQryExe;
@@ -44,6 +45,8 @@ public class MenusServiceImpl implements MenusServiceI {
 
 	private final MenuListQryExe menuListQryExe;
 
+	private final MenuUpdateCmdExe menuUpdateCmdExe;
+
 	@Override
 	public Result<MenuCO> treeList(MenuTreeListQry qry) {
 		return menuTreeListQryExe.execute(qry);
@@ -61,7 +64,7 @@ public class MenusServiceImpl implements MenusServiceI {
 
 	@Override
 	public Result<Boolean> update(MenuUpdateCmd cmd) {
-		return null;
+		return menuUpdateCmdExe.execute(cmd);
 	}
 
 }

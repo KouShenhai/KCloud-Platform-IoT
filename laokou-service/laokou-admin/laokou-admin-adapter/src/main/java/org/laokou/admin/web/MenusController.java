@@ -77,7 +77,7 @@ public class MenusController {
 	@PreAuthorize("hasAuthority('menus:update')")
 	@DataCache(name = "menus", key = "#dto.id", type = Cache.DEL)
 	public Result<Boolean> update(@RequestBody MenuUpdateCmd cmd) {
-		return null;
+		return menusServiceI.update(cmd);
 	}
 
 	@TraceLog

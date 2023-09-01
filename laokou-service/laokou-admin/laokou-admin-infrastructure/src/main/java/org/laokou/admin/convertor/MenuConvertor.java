@@ -15,59 +15,24 @@
  *
  */
 
-package org.laokou.admin.domain.menu;
+package org.laokou.admin.convertor;
 
-import lombok.Data;
+import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.domain.menu.Menu;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.common.core.utils.ConvertUtil;
 
 /**
  * @author laokou
  */
-@Data
-public class Menu {
+public class MenuConvertor {
 
-	/**
-	 * ID
-	 */
-	private Long id;
+    public static Menu toEntity(MenuCO menuCO) {
+        return ConvertUtil.sourceToTarget(menuCO, Menu.class);
+    }
 
-	/**
-	 * 名称
-	 */
-	private String name;
-
-	/**
-	 * 父ID
-	 */
-	private Long pid;
-
-	/**
-	 * 图标
-	 */
-	private String icon;
-
-	/**
-	 * 类型 0菜单 1按钮
-	 */
-	private Integer type;
-
-	/**
-	 * 排序
-	 */
-	private Integer sort;
-
-	/**
-	 * 路径
-	 */
-	private String url;
-
-	/**
-	 * 权限标识
-	 */
-	private String permission;
-
-	/**
-	 * 状态 0显示 1隐藏
-	 */
-	private Integer visible;
+    public static MenuDO toDataObject(Menu menu) {
+        return ConvertUtil.sourceToTarget(menu, MenuDO.class);
+    }
 
 }
