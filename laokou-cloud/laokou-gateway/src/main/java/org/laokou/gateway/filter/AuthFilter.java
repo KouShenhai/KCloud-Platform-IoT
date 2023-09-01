@@ -84,7 +84,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		String requestUri = request.getPath().pathWithinApplication().value();
 		// 请求放行，无需验证权限
 		if (pathMatcher(requestUri, uris)) {
-			return chain.filter(exchange);
+			return chain.filter(exchange.mutate().build());
 		}
 		// 表单提交
 		MediaType mediaType = request.getHeaders().getContentType();
