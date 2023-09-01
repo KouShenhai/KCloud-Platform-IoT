@@ -12,33 +12,29 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
-package org.laokou.common.mybatisplus.utils;
+
+package org.laokou.admin.command.menu;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.menu.MenuInsertCmd;
+import org.laokou.admin.convertor.MenuConvertor;
+import org.laokou.admin.domain.gateway.MenuGateway;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallback;
-import org.springframework.transaction.support.TransactionTemplate;
-
-import java.util.function.Consumer;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class TransactionalUtil {
+public class MenuInsertCmdExe {
 
-	private final TransactionTemplate transactionTemplate;
+    private final MenuGateway menuGateway;
 
-	public <T> T execute(TransactionCallback<T> action) {
-		return transactionTemplate.execute(action);
-	}
-
-	public void executeWithoutResult(Consumer<TransactionStatus> action) {
-		transactionTemplate.executeWithoutResult(action);
-	}
+    public Result<Boolean> execute(MenuInsertCmd cmd) {
+        return Result.of(menuGateway.insert(MenuConvertor.toEntity(cmd.getMenuCO())));
+    }
 
 }

@@ -18,11 +18,10 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.MenusServiceI;
-import org.laokou.admin.client.dto.menu.MenuGetQry;
-import org.laokou.admin.client.dto.menu.MenuListQry;
-import org.laokou.admin.client.dto.menu.MenuTreeListQry;
-import org.laokou.admin.client.dto.menu.MenuUpdateCmd;
+import org.laokou.admin.client.dto.menu.*;
 import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.command.menu.MenuDeleteCmdExe;
+import org.laokou.admin.command.menu.MenuInsertCmdExe;
 import org.laokou.admin.command.menu.MenuUpdateCmdExe;
 import org.laokou.admin.command.menu.query.MenuGetQryExe;
 import org.laokou.admin.command.menu.query.MenuListQryExe;
@@ -47,6 +46,10 @@ public class MenusServiceImpl implements MenusServiceI {
 
 	private final MenuUpdateCmdExe menuUpdateCmdExe;
 
+	private final MenuInsertCmdExe menuInsertCmdExe;
+
+	private final MenuDeleteCmdExe menuDeleteCmdExe;
+
 	@Override
 	public Result<MenuCO> treeList(MenuTreeListQry qry) {
 		return menuTreeListQryExe.execute(qry);
@@ -65,6 +68,16 @@ public class MenusServiceImpl implements MenusServiceI {
 	@Override
 	public Result<Boolean> update(MenuUpdateCmd cmd) {
 		return menuUpdateCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<Boolean> insert(MenuInsertCmd cmd) {
+		return menuInsertCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<Boolean> delete(MenuDeleteCmd cmd) {
+		return menuDeleteCmdExe.execute(cmd);
 	}
 
 }

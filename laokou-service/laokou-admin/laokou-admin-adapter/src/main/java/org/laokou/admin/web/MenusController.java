@@ -20,10 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.MenusServiceI;
-import org.laokou.admin.client.dto.menu.MenuGetQry;
-import org.laokou.admin.client.dto.menu.MenuListQry;
-import org.laokou.admin.client.dto.menu.MenuTreeListQry;
-import org.laokou.admin.client.dto.menu.MenuUpdateCmd;
+import org.laokou.admin.client.dto.menu.*;
 import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
@@ -85,8 +82,8 @@ public class MenusController {
 	@Operation(summary = "新增", description = "新增")
 	@OperateLog(module = "菜单管理", operation = "新增")
 	@PreAuthorize("hasAuthority('menus:insert')")
-	public Result<Boolean> insert() {
-		return Result.of(null);
+	public Result<Boolean> insert(@RequestBody MenuInsertCmd cmd) {
+		return menusServiceI.insert(cmd);
 	}
 
 	@TraceLog
@@ -96,7 +93,7 @@ public class MenusController {
 	// @PreAuthorize("hasAuthority('menus:delete')")
 	// @DataCache(name = "menus", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return menusServiceI.delete(new MenuDeleteCmd(id));
 	}
 
 	@TraceLog

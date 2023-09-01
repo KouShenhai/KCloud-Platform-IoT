@@ -105,7 +105,7 @@ public class UsersController {
 	@PutMapping("v1/users/pwd/{id}/{pwd}")
 	@Operation(summary = "密码", description = "密码")
 	// @OperateLog(module = "用户管理", name = "密码")
-	// @PreAuthorize("hasAuthority('users:pwd')")
+	@PreAuthorize("hasAuthority('users:pwd')")
 	public Result<Boolean> pwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
 		return Result.of(null);
 	}
