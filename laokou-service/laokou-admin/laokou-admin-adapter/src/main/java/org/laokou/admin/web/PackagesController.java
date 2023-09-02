@@ -42,7 +42,7 @@ public class PackagesController {
 	@TraceLog
 	@PostMapping("v1/packages")
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "套餐管理", name = "新增")
+	// @OperateLog(module = "套餐管理", operation = "新增")
 	// @PreAuthorize("hasAuthority('packages:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
@@ -59,7 +59,7 @@ public class PackagesController {
 	@TraceLog
 	@PutMapping("v1/packages")
 	@Operation(summary = "修改", description = "修改")
-	// @OperateLog(module = "套餐管理", name = "修改")
+	// @OperateLog(module = "套餐管理", operation = "修改")
 	// @PreAuthorize("hasAuthority('packages:update')")
 	// @DataCache(name = "packages", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update() {
@@ -69,7 +69,7 @@ public class PackagesController {
 	@TraceLog
 	@DeleteMapping("v1/packages/{id}")
 	@Operation(summary = "删除", description = "删除")
-	// @OperateLog(module = "套餐管理", name = "删除")
+	// @OperateLog(module = "套餐管理", operation = "删除")
 	// @PreAuthorize("hasAuthority('packages:delete')")
 	// @DataCache(name = "packages", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {

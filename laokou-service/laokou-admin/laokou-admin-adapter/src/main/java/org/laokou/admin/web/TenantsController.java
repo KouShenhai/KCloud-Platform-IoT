@@ -49,7 +49,7 @@ public class TenantsController {
 	@TraceLog
 	@PostMapping("v1/tenants")
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "租户管理", name = "新增")
+	// @OperateLog(module = "租户管理", operation = "新增")
 	// @PreAuthorize("hasAuthority('tenants:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
@@ -66,7 +66,7 @@ public class TenantsController {
 	@TraceLog
 	@PutMapping("v1/tenants")
 	@Operation(summary = "修改", description = "修改")
-	// @OperateLog(module = "租户管理", name = "修改")
+	// @OperateLog(module = "租户管理", operation = "修改")
 	// @PreAuthorize("hasAuthority('tenants:update')")
 	// @DataCache(name = "tenants", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update() {
@@ -76,7 +76,7 @@ public class TenantsController {
 	@TraceLog
 	@DeleteMapping("v1/tenants/{id}")
 	@Operation(summary = "删除", description = "删除")
-	// @OperateLog(module = "租户管理", name = "删除")
+	// @OperateLog(module = "租户管理", operation = "删除")
 	// @PreAuthorize("hasAuthority('tenants:delete')")
 	// @DataCache(name = "tenants", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {

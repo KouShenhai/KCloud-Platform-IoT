@@ -35,7 +35,7 @@ public class MessagesController {
 	@TraceLog
 	@PostMapping("v1/messages")
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "消息管理", name = "新增")
+	// @OperateLog(module = "消息管理", operation = "新增")
 	// @PreAuthorize("hasAuthority('messages:insert')")
 	// @Idempotent
 	public Result<Boolean> insert() throws IOException {
@@ -53,7 +53,7 @@ public class MessagesController {
 	@TraceLog
 	@GetMapping("v1/messages/watch/{detailId}")
 	@Operation(summary = "查看", description = "查看")
-	// @OperateLog(module = "消息管理", name = "查看")
+	// @OperateLog(module = "消息管理", operation = "查看")
 	// @DataCache(name = "messages", key = "#id")
 	public Result<?> watch(@PathVariable("detailId") Long detailId) {
 		return Result.of(null);

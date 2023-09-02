@@ -87,7 +87,7 @@ public class ResourceController {
 	@PostMapping(value = "v1/resource")
 	@TraceLog
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "资源管理", name = "新增")
+	// @OperateLog(module = "资源管理", operation = "新增")
 	// @PreAuthorize("hasAuthority('resource:insert')")
 	public Result<Boolean> insert() throws IOException {
 		return Result.of(null);
@@ -96,7 +96,7 @@ public class ResourceController {
 	@PutMapping(value = "v1/resource")
 	@TraceLog
 	@Operation(summary = "修改", description = "修改")
-	// @OperateLog(module = "资源管理", name = "修改")
+	// @OperateLog(module = "资源管理", operation = "修改")
 	// @PreAuthorize("hasAuthority('resource:update')")
 	public Result<Boolean> update() throws IOException {
 		return Result.of(null);
@@ -105,7 +105,7 @@ public class ResourceController {
 	@DeleteMapping(value = "v1/resource/{id}")
 	@TraceLog
 	@Operation(summary = "删除", description = "删除")
-	// @OperateLog(module = "资源管理", name = "删除")
+	// @OperateLog(module = "资源管理", operation = "删除")
 	// @PreAuthorize("hasAuthority('resource:delete')")
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return Result.of(null);
@@ -130,7 +130,7 @@ public class ResourceController {
 	@TraceLog
 	@PostMapping(value = "v1/resource/audit-task")
 	@Operation(summary = "审批任务", description = "审批任务")
-	// @OperateLog(module = "资源管理", name = "审批任务")
+	// @OperateLog(module = "资源管理", operation = "审批任务")
 	// @PreAuthorize("hasAuthority('resource:task:audit')")
 	public Result<Boolean> auditTask() {
 		return Result.of(null);
@@ -146,7 +146,7 @@ public class ResourceController {
 	@TraceLog
 	@PostMapping(value = "v1/resource/resolve-task")
 	@Operation(summary = "处理任务", description = "处理任务")
-	// @OperateLog(module = "资源管理", name = "处理任务")
+	// @OperateLog(module = "资源管理", operation = "处理任务")
 	// @PreAuthorize("hasAuthority('resource:task:resolve')")
 	public Result<Boolean> resolveTask() {
 		return Result.of(null);
@@ -155,7 +155,7 @@ public class ResourceController {
 	@TraceLog
 	@PostMapping(value = "v1/resource/transfer-task")
 	@Operation(summary = "转办任务", description = "转办任务")
-	// @OperateLog(module = "资源管理", name = "转办任务")
+	// @OperateLog(module = "资源管理", operation = "转办任务")
 	// @PreAuthorize("hasAuthority('resource:task:transfer')")
 	public Result<Boolean> transferTask() {
 		return Result.of(null);
@@ -164,7 +164,7 @@ public class ResourceController {
 	@TraceLog
 	@PostMapping(value = "v1/resource/delegate-task")
 	@Operation(summary = "委派任务", description = "委派任务")
-	// @OperateLog(module = "资源管理", name = "委派任务")
+	// @OperateLog(module = "资源管理", operation = "委派任务")
 	// @PreAuthorize("hasAuthority('resource:task:delegate')")
 	public Result<Boolean> delegateTask() {
 		return Result.of(null);

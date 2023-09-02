@@ -51,7 +51,7 @@ public class OssController {
 	@TraceLog
 	@PostMapping("v1/oss")
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "对象存储", name = "新增")
+	// @OperateLog(module = "对象存储", operation = "新增")
 	// @PreAuthorize("hasAuthority('oss:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
@@ -60,7 +60,7 @@ public class OssController {
 	@TraceLog
 	@GetMapping("v1/oss/use/{id}")
 	@Operation(summary = "启用", description = "启用")
-	// @OperateLog(module = "对象存储", name = "启用")
+	// @OperateLog(module = "对象存储", operation = "启用")
 	// @PreAuthorize("hasAuthority('oss:use')")
 	public Result<Boolean> use(@PathVariable("id") Long id) {
 		return Result.of(null);
@@ -77,7 +77,7 @@ public class OssController {
 	@TraceLog
 	@PutMapping("v1/oss")
 	@Operation(summary = "修改", description = "修改")
-	// @OperateLog(module = "对象存储", name = "修改")
+	// @OperateLog(module = "对象存储", operation = "修改")
 	// @PreAuthorize("hasAuthority('oss:update')")
 	// @DataCache(name = "oss", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update() {
@@ -87,7 +87,7 @@ public class OssController {
 	@TraceLog
 	@DeleteMapping("v1/oss/{id}")
 	@Operation(summary = "删除", description = "删除")
-	// @OperateLog(module = "对象存储", name = "删除")
+	// @OperateLog(module = "对象存储", operation = "删除")
 	// @PreAuthorize("hasAuthority('oss:delete')")
 	// @DataCache(name = "oss", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {

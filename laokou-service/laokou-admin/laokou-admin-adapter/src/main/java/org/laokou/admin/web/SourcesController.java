@@ -44,7 +44,7 @@ public class SourcesController {
 	@TraceLog
 	@PostMapping("v1/sources")
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "数据源管理", name = "数据源新增")
+	// @OperateLog(module = "数据源管理", operation = "数据源新增")
 	// @PreAuthorize("hasAuthority('sources:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
@@ -61,7 +61,7 @@ public class SourcesController {
 	@TraceLog
 	@PutMapping("v1/sources")
 	@Operation(summary = "修改", description = "修改")
-	// @OperateLog(module = "数据源管理", name = "修改")
+	// @OperateLog(module = "数据源管理", operation = "修改")
 	// @PreAuthorize("hasAuthority('sources:update')")
 	// @DataCache(name = "sources", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update() {
@@ -71,7 +71,7 @@ public class SourcesController {
 	@TraceLog
 	@DeleteMapping("v1/sources/{id}")
 	@Operation(summary = "删除", description = "删除")
-	// @OperateLog(module = "数据源管理", name = "删除")
+	// @OperateLog(module = "数据源管理", operation = "删除")
 	// @PreAuthorize("hasAuthority('sources:delete')")
 	// @DataCache(name = "sources", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {

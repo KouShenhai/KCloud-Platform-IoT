@@ -45,7 +45,7 @@ public class LogsController {
 	@TraceLog
 	@PostMapping(value = "v1/logs/operate-export")
 	@Operation(summary = "导出", description = "导出")
-	// @OperateLog(module = "操作日志", name = "导出")
+	// @OperateLog(module = "操作日志", operation = "导出")
 	// @PreAuthorize("hasAuthority('logs:operate:export')")
 	public void OperateExport() throws IOException {
 
@@ -62,7 +62,7 @@ public class LogsController {
 	@TraceLog
 	@PostMapping(value = "v1/logs/login-export")
 	@Operation(summary = "导出", description = "导出")
-	// @OperateLog(module = "登录日志", name = "导出")
+	// @OperateLog(module = "登录日志", operation = "导出")
 	// @PreAuthorize("hasAuthority('logs:login:export')")
 	public void loginExport() throws IOException {
 	}
