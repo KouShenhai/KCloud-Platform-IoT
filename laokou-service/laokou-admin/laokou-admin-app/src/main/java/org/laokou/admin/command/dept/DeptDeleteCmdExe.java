@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DeptDeleteCmdExe {
 
-    private final DeptMapper deptMapper;
+	private final DeptMapper deptMapper;
 
-    public Result<Boolean> execute(DeptDeleteCmd cmd) {
-        return Result.of(deptMapper.deleteById(cmd.getId()) > 0);
-    }
+	public Result<Boolean> execute(DeptDeleteCmd cmd) {
+		return Result.of(deptMapper.deleteById(cmd.getId()) > 0);
+	}
 
 }

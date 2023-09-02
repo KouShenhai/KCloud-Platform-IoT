@@ -60,7 +60,7 @@ public class DictsController {
 	@TraceLog
 	@PostMapping(value = "v1/dicts")
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "字典管理", name = "新增")
+	// @OperateLog(module = "字典管理", operation = "新增")
 	// @PreAuthorize("hasAuthority('dicts:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
@@ -69,7 +69,7 @@ public class DictsController {
 	@TraceLog
 	@PutMapping(value = "v1/dicts")
 	@Operation(summary = "修改", description = "修改")
-	// @OperateLog(module = "字典管理", name = "修改")
+	// @OperateLog(module = "字典管理", operation = "修改")
 	// @PreAuthorize("hasAuthority('dicts:update')")
 	// @DataCache(name = "dicts", key = "#dto.id", type = CacheEnum.DEL)
 	public Result<Boolean> update() {
@@ -79,7 +79,7 @@ public class DictsController {
 	@TraceLog
 	@DeleteMapping(value = "v1/dicts/{id}")
 	@Operation(summary = "删除", description = "删除")
-	// @OperateLog(module = "字典管理", name = "删除")
+	// @OperateLog(module = "字典管理", operation = "删除")
 	// @PreAuthorize("hasAuthority('dicts:delete')")
 	// @DataCache(name = "dicts", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {

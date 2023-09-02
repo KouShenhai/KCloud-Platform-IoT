@@ -189,7 +189,7 @@ public class UserGatewayImpl implements UserGateway {
 	private UserDO getUpdateUserDO(User user) {
 		UserDO userDO = UserConvertor.toDataObject(user);
 		userDO.setEditor(UserUtil.getUserId());
-		userDO.setVersion(userMapper.getVersion(userDO.getId(),UserDO.class));
+		userDO.setVersion(userMapper.getVersion(userDO.getId(), UserDO.class));
 		return userDO;
 	}
 

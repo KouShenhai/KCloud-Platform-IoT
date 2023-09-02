@@ -36,11 +36,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeptListQryExe {
 
-    private final DeptGateway deptGateway;
+	private final DeptGateway deptGateway;
 
-    public Result<List<DeptCO>> execute(DeptListQry qry) {
-        List<Menu> list = deptGateway.list(UserUtil.getTenantId(), qry.getName());
-        return Result.of(ConvertUtil.sourceToTarget(list,DeptCO.class));
-    }
+	public Result<List<DeptCO>> execute(DeptListQry qry) {
+		List<Menu> list = deptGateway.list(UserUtil.getTenantId(), qry.getName());
+		return Result.of(ConvertUtil.sourceToTarget(list, DeptCO.class));
+	}
 
 }

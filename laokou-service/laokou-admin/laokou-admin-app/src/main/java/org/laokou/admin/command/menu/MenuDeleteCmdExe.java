@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MenuDeleteCmdExe {
 
-    private final MenuMapper menuMapper;
+	private final MenuMapper menuMapper;
 
-    public Result<Boolean> execute(MenuDeleteCmd cmd) {
-        return Result.of(menuMapper.deleteById(cmd.getId()) > 0);
-    }
+	public Result<Boolean> execute(MenuDeleteCmd cmd) {
+		return Result.of(menuMapper.deleteById(cmd.getId()) > 0);
+	}
 
 }

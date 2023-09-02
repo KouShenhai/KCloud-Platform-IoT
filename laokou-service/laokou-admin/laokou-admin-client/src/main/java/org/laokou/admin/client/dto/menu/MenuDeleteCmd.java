@@ -30,6 +30,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class MenuDeleteCmd extends CommonCommand {
 
-    private Long id;
+	private Long id;
 
 }

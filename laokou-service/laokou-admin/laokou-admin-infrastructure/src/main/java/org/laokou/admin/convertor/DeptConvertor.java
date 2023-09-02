@@ -27,13 +27,12 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class DeptConvertor {
 
-    public static Dept toEntity(DeptCO deptCO) {
-        return ConvertUtil.sourceToTarget(deptCO, Dept.class);
-    }
+	public static Dept toEntity(DeptCO deptCO) {
+		return ConvertUtil.sourceToTarget(deptCO, Dept.class);
+	}
 
-    public static DeptDO toDataObject(Dept dept) {
-        return ConvertUtil.sourceToTarget(dept, DeptDO.class);
-    }
-
+	public static DeptDO toDataObject(Dept dept) {
+		return ConvertUtil.sourceToTarget(dept, DeptDO.class);
+	}
 
 }

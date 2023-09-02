@@ -40,53 +40,53 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeptsServiceImpl implements DeptsServiceI {
 
-    private final DeptTreeGetQryExe deptTreeGetQryExe;
+	private final DeptTreeGetQryExe deptTreeGetQryExe;
 
-    private final DeptListQryExe deptListQryExe;
+	private final DeptListQryExe deptListQryExe;
 
-    private final DeptInsertCmdExe deptInsertCmdExe;
+	private final DeptInsertCmdExe deptInsertCmdExe;
 
-    private final DeptUpdateCmdExe deptUpdateCmdExe;
+	private final DeptUpdateCmdExe deptUpdateCmdExe;
 
-    private final DeptDeleteCmdExe deptDeleteCmdExe;
+	private final DeptDeleteCmdExe deptDeleteCmdExe;
 
-    private final DeptGetQryExe deptGetQryExe;
+	private final DeptGetQryExe deptGetQryExe;
 
-    private final DeptIDSQryExe deptIDSQryExe;
+	private final DeptIDSQryExe deptIDSQryExe;
 
-    @Override
-    public Result<DeptCO> tree(DeptTreeGetQry qry) {
-        return deptTreeGetQryExe.execute(qry);
-    }
+	@Override
+	public Result<DeptCO> tree(DeptTreeGetQry qry) {
+		return deptTreeGetQryExe.execute(qry);
+	}
 
-    @Override
-    public Result<List<DeptCO>> list(DeptListQry qry) {
-        return deptListQryExe.execute(qry);
-    }
+	@Override
+	public Result<List<DeptCO>> list(DeptListQry qry) {
+		return deptListQryExe.execute(qry);
+	}
 
-    @Override
-    public Result<Boolean> insert(DeptInsertCmd cmd) {
-        return deptInsertCmdExe.execute(cmd);
-    }
+	@Override
+	public Result<Boolean> insert(DeptInsertCmd cmd) {
+		return deptInsertCmdExe.execute(cmd);
+	}
 
-    @Override
-    public Result<Boolean> update(DeptUpdateCmd cmd) {
-        return deptUpdateCmdExe.execute(cmd);
-    }
+	@Override
+	public Result<Boolean> update(DeptUpdateCmd cmd) {
+		return deptUpdateCmdExe.execute(cmd);
+	}
 
-    @Override
-    public Result<Boolean> delete(DeptDeleteCmd cmd) {
-        return deptDeleteCmdExe.execute(cmd);
-    }
+	@Override
+	public Result<Boolean> delete(DeptDeleteCmd cmd) {
+		return deptDeleteCmdExe.execute(cmd);
+	}
 
-    @Override
-    public Result<DeptCO> get(DeptGetQry qry) {
-        return deptGetQryExe.execute(qry);
-    }
+	@Override
+	public Result<DeptCO> get(DeptGetQry qry) {
+		return deptGetQryExe.execute(qry);
+	}
 
-    @Override
-    public Result<List<Long>> ids(DeptIDSQry qry) {
-        return deptIDSQryExe.execute(qry);
-    }
+	@Override
+	public Result<List<Long>> ids(DeptIDSQry qry) {
+		return deptIDSQryExe.execute(qry);
+	}
 
 }

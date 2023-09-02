@@ -65,7 +65,7 @@ public class UsersController {
 	@TraceLog
 	@DeleteMapping("v1/users/online-kill/{token}")
 	@Operation(summary = "在线用户强踢", description = "在线用户强踢")
-	// @OperateLog(module = "用户管理", name = "在线用户强踢")
+	// @OperateLog(module = "用户管理", operation = "在线用户强踢")
 	// @PreAuthorize("hasAuthority('users:online:kill')")
 	public Result<Boolean> onlineKill(@PathVariable("token") String token) {
 		return Result.of(null);
@@ -95,7 +95,7 @@ public class UsersController {
 	@TraceLog
 	@PutMapping("v1/users/status/{id}/{status}")
 	@Operation(summary = "状态", description = "状态")
-	// @OperateLog(module = "用户管理", name = "状态")
+	// @OperateLog(module = "用户管理", operation = "状态")
 	// @PreAuthorize("hasAuthority('users:status')")
 	public Result<Boolean> status(@PathVariable("id") Long id, @PathVariable("status") Integer status) {
 		return Result.of(null);
@@ -120,7 +120,7 @@ public class UsersController {
 	@TraceLog
 	@PostMapping("v1/users")
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "用户管理", name = "新增")
+	// @OperateLog(module = "用户管理", operation = "新增")
 	// @PreAuthorize("hasAuthority('users:insert')")
 	public Result<Boolean> insert(@RequestBody UserInsertCmd cmd) {
 		return usersServiceI.insert(cmd);
@@ -137,7 +137,7 @@ public class UsersController {
 	@TraceLog
 	@DeleteMapping("v1/users")
 	@Operation(summary = "删除", description = "删除")
-	// @OperateLog(module = "用户管理", name = "删除")
+	// @OperateLog(module = "用户管理", operation = "删除")
 	// @PreAuthorize("hasAuthority('users:delete')")
 	// @DataCache(name = "users", key = "#id", type = CacheEnum.DEL)
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
