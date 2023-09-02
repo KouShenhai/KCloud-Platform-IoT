@@ -18,29 +18,28 @@
  */
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.admin.server.domain.sys.repository.mapper.SysRoleMapper">
+<mapper namespace="org.laokou.admin.gatewayimpl.database.RoleMapper">
 
     <select id="getRoleIdsByUserId" resultType="long">
-        SELECT a.id FROM boot_sys_role a
-        ,boot_sys_user_role c
-        <where> a.id = c.role_id
-            <if test="userId != null">
-                AND c.user_id = #{userId}
-            </if>
+        SELECT a.id
+        FROM boot_sys_role a
+           ,boot_sys_user_role c
+        where a.id = c.role_id
             and a.del_flag = 0
-        </where>
+            and c.user_id = #{userId}
         group by a.id
         order by a.create_date desc
     </select>
 
-    <select id="getRoleList" resultType="org.laokou.admin.client.vo.SysRoleVO">
-        select id,`name`,sort from boot_sys_role
+    <select id="getRoleListByTenantIdAndLikeName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.RoleDO">
+        select id
+             ,`name`
+             ,sort
+        from boot_sys_role
         where del_flag = 0
-         <if test="qo.name != '' and qo.name != null">
-             and `name` like concat('%',#{qo.name},'%')
-         </if>
-        <if test="qo.tenantId != null">
             and tenant_id = #{qo.tenantId}
+        <if test="name != '' and name != null">
+            and `name` like concat('%',#{name},'%')
         </if>
         order by sort desc
     </select>

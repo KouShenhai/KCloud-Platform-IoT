@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.client.dto.tenant.clientobject;
+package org.laokou.admin.client.dto.packages;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
@@ -24,6 +24,5 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-public class TenantOptionListQry extends CommonCommand {
-
+public class PackageUpdateCmd extends CommonCommand {
 }

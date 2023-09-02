@@ -14,18 +14,16 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
+
+package org.laokou.admin.command.resource;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface SearchsServiceI {
-
-	// /**
-	// * 资源高亮搜索
-	// * @param form
-	// * @return
-	// */
-	// SearchVO<Map<String, Object>> searchResource(SearchQo form);
-
+@Component
+@RequiredArgsConstructor
+public class ResourceTransferTaskCmdExe {
 }

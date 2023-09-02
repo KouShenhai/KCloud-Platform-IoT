@@ -139,7 +139,7 @@ public class ResourceController {
 	@TraceLog
 	@GetMapping(value = "v1/resource/task-detail/{id}")
 	@Operation(summary = "查看任务", description = "查看任务")
-	public Result<?> detailResource(@PathVariable("id") Long id) {
+	public Result<?> detailTask(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
 
@@ -167,6 +167,14 @@ public class ResourceController {
 	// @OperateLog(module = "资源管理", operation = "委派任务")
 	// @PreAuthorize("hasAuthority('resource:task:delegate')")
 	public Result<Boolean> delegateTask() {
+		return Result.of(null);
+	}
+
+	@TraceLog
+	@PostMapping("v1/resource/search")
+	@Operation(summary = "高亮", description = "高亮")
+	// @PreAuthorize("hasAuthority('search:list')")
+	public Result<?> search() {
 		return Result.of(null);
 	}
 

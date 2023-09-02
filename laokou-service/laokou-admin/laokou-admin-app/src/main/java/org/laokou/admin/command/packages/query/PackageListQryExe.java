@@ -15,31 +15,15 @@
  *
  */
 
-package org.laokou.admin.command.tenant.query;
+package org.laokou.admin.command.packages.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.tenant.TenantOptionListQry;
-import org.laokou.admin.domain.common.Option;
-import org.laokou.admin.domain.gateway.TenantGateway;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class TenantOptionListQryExe {
-
-	private final TenantGateway tenantGateway;
-
-	public Result<List<OptionCO>> execute(TenantOptionListQry qry) {
-		List<Option> optionList = tenantGateway.getOptionList();
-		return Result.of(ConvertUtil.sourceToTarget(optionList, OptionCO.class));
-	}
-
+public class PackageListQryExe {
 }

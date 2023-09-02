@@ -15,21 +15,14 @@
  *
  */
 
-package org.laokou.admin.client.dto.logout.clientobject;
+package org.laokou.admin.client.dto.tenant;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.ClientObject;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class LogoutCmd extends ClientObject {
-
-	private String token;
-
+public class TenantListQry extends CommonCommand {
 }
