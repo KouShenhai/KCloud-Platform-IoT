@@ -98,7 +98,7 @@ public class DeptsController {
 	@TraceLog
 	@Operation(summary = "部门IDS", description = "部门IDS")
 	public Result<List<Long>> ids(@PathVariable(value = "roleId") Long roleId) {
-		return Result.of(null);
+		return deptsServiceI.ids(new DeptIDSQry(roleId));
 	}
 
 }

@@ -21,7 +21,11 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.DeptsServiceI;
 import org.laokou.admin.client.dto.dept.*;
 import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
+import org.laokou.admin.command.dept.DeptDeleteCmdExe;
 import org.laokou.admin.command.dept.DeptInsertCmdExe;
+import org.laokou.admin.command.dept.DeptUpdateCmdExe;
+import org.laokou.admin.command.dept.query.DeptGetQryExe;
+import org.laokou.admin.command.dept.query.DeptIDSQryExe;
 import org.laokou.admin.command.dept.query.DeptListQryExe;
 import org.laokou.admin.command.dept.query.DeptTreeGetQryExe;
 import org.laokou.common.i18n.dto.Result;
@@ -42,6 +46,14 @@ public class DeptsServiceImpl implements DeptsServiceI {
 
     private final DeptInsertCmdExe deptInsertCmdExe;
 
+    private final DeptUpdateCmdExe deptUpdateCmdExe;
+
+    private final DeptDeleteCmdExe deptDeleteCmdExe;
+
+    private final DeptGetQryExe deptGetQryExe;
+
+    private final DeptIDSQryExe deptIDSQryExe;
+
     @Override
     public Result<DeptCO> tree(DeptTreeGetQry qry) {
         return deptTreeGetQryExe.execute(qry);
@@ -59,17 +71,22 @@ public class DeptsServiceImpl implements DeptsServiceI {
 
     @Override
     public Result<Boolean> update(DeptUpdateCmd cmd) {
-        return null;
+        return deptUpdateCmdExe.execute(cmd);
     }
 
     @Override
     public Result<Boolean> delete(DeptDeleteCmd cmd) {
-        return null;
+        return deptDeleteCmdExe.execute(cmd);
     }
 
     @Override
     public Result<DeptCO> get(DeptGetQry qry) {
-        return null;
+        return deptGetQryExe.execute(qry);
+    }
+
+    @Override
+    public Result<List<Long>> ids(DeptIDSQry qry) {
+        return deptIDSQryExe.execute(qry);
     }
 
 }
