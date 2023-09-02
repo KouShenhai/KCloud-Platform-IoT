@@ -21,4 +21,5 @@ package org.laokou.admin.client.dto.dict.clientobject;
  * @author laokou
  */
 public class DictCO {
+
 }
