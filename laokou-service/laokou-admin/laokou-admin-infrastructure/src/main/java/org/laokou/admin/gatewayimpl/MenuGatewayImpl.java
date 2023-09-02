@@ -30,10 +30,11 @@ import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.GlobalException;
-import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
+
 import static org.laokou.admin.common.Constant.DEFAULT_TENANT;
 
 /**
@@ -57,7 +58,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	public Boolean update(Menu menu) {
 		Long id = menu.getId();
 		if (id == null) {
-			throw new GlobalException(BizCode.ID_NOT_NULL, MessageUtil.getMessage(BizCode.ID_NOT_NULL));
+			throw new GlobalException(BizCode.ID_NOT_NULL);
 		}
 		Long count = menuMapper.selectCount(
 				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, id));

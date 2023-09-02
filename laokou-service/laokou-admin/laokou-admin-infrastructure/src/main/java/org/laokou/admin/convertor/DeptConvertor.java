@@ -15,26 +15,25 @@
  *
  */
 
-package org.laokou.admin.command.dept;
+package org.laokou.admin.convertor;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.dept.DeptInsertCmd;
-import org.laokou.admin.convertor.DeptConvertor;
-import org.laokou.admin.domain.gateway.DeptGateway;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
+import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
+import org.laokou.admin.domain.dept.Dept;
+import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
+import org.laokou.common.core.utils.ConvertUtil;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class DeptInsertCmdExe {
+public class DeptConvertor {
 
-    private final DeptGateway deptGateway;
-
-    public Result<Boolean> execute(DeptInsertCmd cmd) {
-        return Result.of(deptGateway.insert(DeptConvertor.toEntity(cmd.getDeptCO())));
+    public static Dept toEntity(DeptCO deptCO) {
+        return ConvertUtil.sourceToTarget(deptCO, Dept.class);
     }
+
+    public static DeptDO toDataObject(Dept dept) {
+        return ConvertUtil.sourceToTarget(dept, DeptDO.class);
+    }
+
 
 }

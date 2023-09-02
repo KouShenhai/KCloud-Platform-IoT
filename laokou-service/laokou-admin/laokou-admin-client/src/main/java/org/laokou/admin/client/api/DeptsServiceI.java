@@ -16,9 +16,11 @@
  */
 package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.dept.DeptTreeGetQry;
+import org.laokou.admin.client.dto.dept.*;
 import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
 import org.laokou.common.i18n.dto.Result;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -26,5 +28,15 @@ import org.laokou.common.i18n.dto.Result;
 public interface DeptsServiceI {
 
     Result<DeptCO> tree(DeptTreeGetQry qry);
+
+    Result<List<DeptCO>> list(DeptListQry qry);
+
+    Result<Boolean> insert(DeptInsertCmd cmd);
+
+    Result<Boolean> update(DeptUpdateCmd cmd);
+
+    Result<Boolean> delete(DeptDeleteCmd cmd);
+
+    Result<DeptCO> get(DeptGetQry qry);
 
 }

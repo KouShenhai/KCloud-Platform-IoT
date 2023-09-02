@@ -17,9 +17,22 @@
 
 package org.laokou.admin.domain.gateway;
 
+import org.laokou.admin.domain.dept.Dept;
+import org.laokou.admin.domain.menu.Menu;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
 public interface DeptGateway {
+
+    List<Menu> list(Long tenantId,String name);
+
+    Boolean insert(Dept dept);
+
+    Boolean update(Dept dept);
+
+    List<Long> getDeptIds(Long roleId);
 
 }

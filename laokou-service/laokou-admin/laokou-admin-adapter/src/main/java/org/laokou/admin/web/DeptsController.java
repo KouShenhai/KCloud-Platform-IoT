@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.DeptsServiceI;
-import org.laokou.admin.client.dto.dept.DeptTreeGetQry;
+import org.laokou.admin.client.dto.dept.*;
 import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
@@ -53,8 +53,8 @@ public class DeptsController {
 	@Operation(summary = "查询", description = "查询")
 	@PreAuthorize("hasAuthority('depts:list')")
 	@TraceLog
-	public Result<List<?>> list() {
-		return Result.of(null);
+	public Result<List<DeptCO>> list(@RequestBody DeptListQry qry) {
+		return deptsServiceI.list(qry);
 	}
 
 	@PostMapping("v1/depts")
@@ -62,8 +62,8 @@ public class DeptsController {
 	@OperateLog(module = "部门管理", operation = "新增")
 	@PreAuthorize("hasAuthority('depts:insert')")
 	@TraceLog
-	public Result<Boolean> insert() {
-		return Result.of(null);
+	public Result<Boolean> insert(@RequestBody DeptInsertCmd cmd) {
+		return deptsServiceI.insert(cmd);
 	}
 
 	@PutMapping("v1/depts")
@@ -72,8 +72,8 @@ public class DeptsController {
 	@PreAuthorize("hasAuthority('depts:update')")
 	@TraceLog
 	@DataCache(name = "depts", key = "#dto.id", type = Cache.DEL)
-	public Result<Boolean> update() {
-		return Result.of(null);
+	public Result<Boolean> update(@RequestBody DeptUpdateCmd cmd) {
+		return deptsServiceI.update(cmd);
 	}
 
 	@GetMapping("v1/depts/{id}")
@@ -81,7 +81,7 @@ public class DeptsController {
 	@Operation(summary = "查看", description = "查看")
 	@DataCache(name = "depts", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return deptsServiceI.get(new DeptGetQry(id));
 	}
 
 	@DeleteMapping("v1/depts/{id}")
@@ -91,7 +91,7 @@ public class DeptsController {
 	@PreAuthorize("hasAuthority('depts:delete')")
 	@DataCache(name = "depts", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return deptsServiceI.delete(new DeptDeleteCmd(id));
 	}
 
 	@GetMapping("v1/depts/ids/{roleId}")

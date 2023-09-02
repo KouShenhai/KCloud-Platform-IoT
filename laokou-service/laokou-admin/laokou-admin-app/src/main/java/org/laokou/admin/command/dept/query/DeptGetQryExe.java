@@ -18,31 +18,26 @@
 package org.laokou.admin.command.dept.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.dept.DeptTreeGetQry;
+import org.laokou.admin.client.dto.dept.DeptGetQry;
 import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
-import org.laokou.admin.domain.gateway.DeptGateway;
-import org.laokou.admin.domain.menu.Menu;
+import org.laokou.admin.gatewayimpl.database.DeptMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class DeptTreeGetQryExe {
+public class DeptGetQryExe {
 
-    private final DeptGateway deptGateway;
+    private final DeptMapper deptMapper;
 
-    public Result<DeptCO> execute(DeptTreeGetQry qry) {
-        List<Menu> list = deptGateway.list(UserUtil.getTenantId(), null);
-        List<DeptCO> deptList = ConvertUtil.sourceToTarget(list, DeptCO.class);
-        return Result.of(TreeUtil.buildTreeNode(deptList, DeptCO.class));
+    public Result<DeptCO> execute(DeptGetQry qry) {
+        DeptDO deptDO = deptMapper.selectById(qry.getId());
+        return Result.of(ConvertUtil.sourceToTarget(deptDO, DeptCO.class));
     }
 
 }

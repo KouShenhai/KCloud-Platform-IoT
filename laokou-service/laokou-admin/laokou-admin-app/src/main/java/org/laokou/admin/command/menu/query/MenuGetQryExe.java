@@ -36,7 +36,7 @@ public class MenuGetQryExe {
 	private final MenuMapper menuMapper;
 
 	public Result<MenuCO> execute(MenuGetQry qry) {
-		MenuDO menuDO = menuMapper.getById(qry.getId());
+		MenuDO menuDO = menuMapper.selectById(qry.getId());
 		return Result.of(ConvertUtil.sourceToTarget(menuDO, MenuCO.class));
 	}
 

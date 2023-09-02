@@ -21,10 +21,21 @@
 <mapper namespace="org.laokou.admin.gatewayimpl.database.DeptMapper">
     <select id="getDeptListByTenantIdAndLikeName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.DeptDO">
         select id,pid,`name`,sort from boot_sys_dept
-        where del_flag = 0 and tenant_id = #{qo.tenantId}
+        where del_flag = 0 and tenant_id = #{tenantId}
         <if test="name != null and name != ''">
             and `name` like concat('%',#{name},'%')
         </if>
         order by sort desc
+    </select>
+    <select id="getDeptIdsByRoleId" resultType="long">
+        SELECT a.id
+        FROM boot_sys_dept a
+           ,boot_sys_role b
+           ,boot_sys_role_dept c
+        WHERE a.id = c.dept_id
+          AND c.role_id = b.id
+          AND b.id = #{roleId}
+          and a.del_flag = 0
+        group by a.id
     </select>
 </mapper>

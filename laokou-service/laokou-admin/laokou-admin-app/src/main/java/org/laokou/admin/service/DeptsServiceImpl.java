@@ -19,11 +19,15 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.DeptsServiceI;
-import org.laokou.admin.client.dto.dept.DeptTreeGetQry;
+import org.laokou.admin.client.dto.dept.*;
 import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
+import org.laokou.admin.command.dept.DeptInsertCmdExe;
+import org.laokou.admin.command.dept.query.DeptListQryExe;
 import org.laokou.admin.command.dept.query.DeptTreeGetQryExe;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -34,9 +38,38 @@ public class DeptsServiceImpl implements DeptsServiceI {
 
     private final DeptTreeGetQryExe deptTreeGetQryExe;
 
+    private final DeptListQryExe deptListQryExe;
+
+    private final DeptInsertCmdExe deptInsertCmdExe;
+
     @Override
     public Result<DeptCO> tree(DeptTreeGetQry qry) {
         return deptTreeGetQryExe.execute(qry);
+    }
+
+    @Override
+    public Result<List<DeptCO>> list(DeptListQry qry) {
+        return deptListQryExe.execute(qry);
+    }
+
+    @Override
+    public Result<Boolean> insert(DeptInsertCmd cmd) {
+        return deptInsertCmdExe.execute(cmd);
+    }
+
+    @Override
+    public Result<Boolean> update(DeptUpdateCmd cmd) {
+        return null;
+    }
+
+    @Override
+    public Result<Boolean> delete(DeptDeleteCmd cmd) {
+        return null;
+    }
+
+    @Override
+    public Result<DeptCO> get(DeptGetQry qry) {
+        return null;
     }
 
 }

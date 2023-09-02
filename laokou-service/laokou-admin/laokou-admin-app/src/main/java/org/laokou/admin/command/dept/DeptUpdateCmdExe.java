@@ -15,34 +15,26 @@
  *
  */
 
-package org.laokou.admin.command.dept.query;
+package org.laokou.admin.command.dept;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.dept.DeptTreeGetQry;
-import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
+import org.laokou.admin.client.dto.dept.DeptUpdateCmd;
+import org.laokou.admin.convertor.DeptConvertor;
 import org.laokou.admin.domain.gateway.DeptGateway;
-import org.laokou.admin.domain.menu.Menu;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class DeptTreeGetQryExe {
+public class DeptUpdateCmdExe {
 
     private final DeptGateway deptGateway;
 
-    public Result<DeptCO> execute(DeptTreeGetQry qry) {
-        List<Menu> list = deptGateway.list(UserUtil.getTenantId(), null);
-        List<DeptCO> deptList = ConvertUtil.sourceToTarget(list, DeptCO.class);
-        return Result.of(TreeUtil.buildTreeNode(deptList, DeptCO.class));
+    public Result<Boolean> execute(DeptUpdateCmd cmd) {
+        return Result.of(deptGateway.update(DeptConvertor.toEntity(cmd.getDeptCO())));
     }
 
 }

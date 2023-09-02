@@ -15,26 +15,17 @@
  *
  */
 
-package org.laokou.admin.command.dept;
+package org.laokou.admin.client.dto.dept;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.dept.DeptInsertCmd;
-import org.laokou.admin.convertor.DeptConvertor;
-import org.laokou.admin.domain.gateway.DeptGateway;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class DeptInsertCmdExe {
+@Data
+public class DeptListQry extends CommonCommand {
 
-    private final DeptGateway deptGateway;
-
-    public Result<Boolean> execute(DeptInsertCmd cmd) {
-        return Result.of(deptGateway.insert(DeptConvertor.toEntity(cmd.getDeptCO())));
-    }
+    private String name;
 
 }
