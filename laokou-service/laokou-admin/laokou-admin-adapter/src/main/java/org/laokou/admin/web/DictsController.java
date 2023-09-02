@@ -19,9 +19,13 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.core.vo.OptionVO;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.enums.Cache;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +41,7 @@ public class DictsController {
 	@PostMapping(value = "v1/dicts/list")
 	@TraceLog
 	@Operation(summary = "查询", description = "查询")
-	// @PreAuthorize("hasAuthority('dict:list')")
+	@PreAuthorize("hasAuthority('dicts:list')")
 	public Result<?> list() {
 		return Result.of(null);
 	}
@@ -52,7 +56,7 @@ public class DictsController {
 	@TraceLog
 	@GetMapping(value = "v1/dicts/{id}")
 	@Operation(summary = "查看", description = "查看")
-	// @DataCache(name = "dicts", key = "#id")
+	@DataCache(name = "dicts", key = "#id")
 	public Result<?> detail(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -60,8 +64,8 @@ public class DictsController {
 	@TraceLog
 	@PostMapping(value = "v1/dicts")
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "字典管理", operation = "新增")
-	// @PreAuthorize("hasAuthority('dicts:insert')")
+	@OperateLog(module = "字典管理", operation = "新增")
+	@PreAuthorize("hasAuthority('dicts:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
 	}
@@ -69,9 +73,9 @@ public class DictsController {
 	@TraceLog
 	@PutMapping(value = "v1/dicts")
 	@Operation(summary = "修改", description = "修改")
-	// @OperateLog(module = "字典管理", operation = "修改")
-	// @PreAuthorize("hasAuthority('dicts:update')")
-	// @DataCache(name = "dicts", key = "#dto.id", type = CacheEnum.DEL)
+	@OperateLog(module = "字典管理", operation = "修改")
+	@PreAuthorize("hasAuthority('dicts:update')")
+	@DataCache(name = "dicts", key = "#dto.id", type = Cache.DEL)
 	public Result<Boolean> update() {
 		return Result.of(null);
 	}
@@ -79,9 +83,9 @@ public class DictsController {
 	@TraceLog
 	@DeleteMapping(value = "v1/dicts/{id}")
 	@Operation(summary = "删除", description = "删除")
-	// @OperateLog(module = "字典管理", operation = "删除")
-	// @PreAuthorize("hasAuthority('dicts:delete')")
-	// @DataCache(name = "dicts", key = "#id", type = CacheEnum.DEL)
+	@OperateLog(module = "字典管理", operation = "删除")
+	@PreAuthorize("hasAuthority('dicts:delete')")
+	@DataCache(name = "dicts", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
