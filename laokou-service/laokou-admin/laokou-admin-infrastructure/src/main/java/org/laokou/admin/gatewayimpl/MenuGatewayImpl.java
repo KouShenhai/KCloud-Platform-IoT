@@ -19,6 +19,7 @@ package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.BizCode;
 import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
@@ -29,19 +30,23 @@ import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.GlobalException;
-import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
+
 import static org.laokou.admin.common.Constant.DEFAULT_TENANT;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class MenuGatewayImpl implements MenuGateway {
 
 	private final MenuMapper menuMapper;
+	private final TransactionalUtil transactionalUtil;
 
 	@Override
 	public List<Menu> list(Integer type, User user) {
@@ -53,7 +58,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	public Boolean update(Menu menu) {
 		Long id = menu.getId();
 		if (id == null) {
-			throw new GlobalException(BizCode.ID_NOT_NULL, MessageUtil.getMessage(BizCode.ID_NOT_NULL));
+			throw new GlobalException(BizCode.ID_NOT_NULL);
 		}
 		Long count = menuMapper.selectCount(
 				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, id));
@@ -61,8 +66,19 @@ public class MenuGatewayImpl implements MenuGateway {
 			throw new GlobalException("菜单已存在，请重新填写");
 		}
 		MenuDO menuDO = MenuConvertor.toDataObject(menu);
-		menuDO.setVersion(menuMapper.getVersion(menuDO));
+		menuDO.setVersion(menuMapper.getVersion(id,MenuDO.class));
 		return updateMenu(menuDO);
+	}
+
+	@Override
+	public Boolean insert(Menu menu) {
+		Long count = menuMapper.selectCount(
+				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()));
+		if (count > 0) {
+			throw new GlobalException("菜单已存在，请重新填写");
+		}
+		MenuDO menuDO = MenuConvertor.toDataObject(menu);
+		return insertMenu(menuDO);
 	}
 
 	private List<MenuDO> getMenuList(Integer type, User user) {
@@ -81,7 +97,27 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	private Boolean updateMenu(MenuDO menuDO) {
-		return menuMapper.updateById(menuDO) > 0;
+		return transactionalUtil.execute(r -> {
+			try {
+				return menuMapper.updateById(menuDO) > 0;
+			} catch (Exception e) {
+				log.error("错误信息：{}",e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	private Boolean insertMenu(MenuDO menuDO) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return menuMapper.insert(menuDO) > 0;
+			} catch (Exception e) {
+				log.error("错误信息：{}",e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
 	}
 
 }

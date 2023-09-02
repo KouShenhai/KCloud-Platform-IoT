@@ -14,31 +14,25 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.dept.*;
-import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
-import org.laokou.common.i18n.dto.Result;
+package org.laokou.admin.domain.gateway;
+
+import org.laokou.admin.domain.dept.Dept;
+import org.laokou.admin.domain.menu.Menu;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface DeptsServiceI {
+public interface DeptGateway {
 
-    Result<DeptCO> tree(DeptTreeGetQry qry);
+    List<Menu> list(Long tenantId,String name);
 
-    Result<List<DeptCO>> list(DeptListQry qry);
+    Boolean insert(Dept dept);
 
-    Result<Boolean> insert(DeptInsertCmd cmd);
+    Boolean update(Dept dept);
 
-    Result<Boolean> update(DeptUpdateCmd cmd);
-
-    Result<Boolean> delete(DeptDeleteCmd cmd);
-
-    Result<DeptCO> get(DeptGetQry qry);
-
-    Result<List<Long>> ids(DeptIDSQry qry);
+    List<Long> getDeptIds(Long roleId);
 
 }

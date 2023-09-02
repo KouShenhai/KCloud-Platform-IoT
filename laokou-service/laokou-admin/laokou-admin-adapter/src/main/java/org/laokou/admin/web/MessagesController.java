@@ -62,7 +62,7 @@ public class MessagesController {
 	@TraceLog
 	@GetMapping("v1/messages/{id}")
 	@Operation(summary = "查看", description = "查看")
-	// @PreAuthorize("hasAuthority('message:detail')")
+	// @PreAuthorize("hasAuthority('messages:detail')")
 	// @DataCache(name = "messages", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);

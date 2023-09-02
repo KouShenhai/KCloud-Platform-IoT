@@ -37,6 +37,4 @@ public interface MenuMapper extends BatchMapper<MenuDO> {
 	List<MenuDO> getMenuListByTenantIdAndLikeName(@Param("type") Integer type, @Param("tenantId") Long tenantId,
 			@Param("name") String name);
 
-	MenuDO getById(@Param("id") Long id);
-
 }

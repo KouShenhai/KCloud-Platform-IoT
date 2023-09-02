@@ -14,31 +14,28 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.dept.*;
-import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
+package org.laokou.admin.command.dept.query;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.dept.DeptIDSQry;
+import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface DeptsServiceI {
+@Component
+@RequiredArgsConstructor
+public class DeptIDSQryExe {
 
-    Result<DeptCO> tree(DeptTreeGetQry qry);
+    private final DeptGateway deptGateway;
 
-    Result<List<DeptCO>> list(DeptListQry qry);
-
-    Result<Boolean> insert(DeptInsertCmd cmd);
-
-    Result<Boolean> update(DeptUpdateCmd cmd);
-
-    Result<Boolean> delete(DeptDeleteCmd cmd);
-
-    Result<DeptCO> get(DeptGetQry qry);
-
-    Result<List<Long>> ids(DeptIDSQry qry);
+    public Result<List<Long>> execute(DeptIDSQry qry) {
+        return Result.of(deptGateway.getDeptIds(qry.getRoleId()));
+    }
 
 }

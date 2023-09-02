@@ -33,8 +33,8 @@ public class TransactionalUtil {
 
 	private final TransactionTemplate transactionTemplate;
 
-	public <T> void execute(TransactionCallback<T> action) {
-		transactionTemplate.execute(action);
+	public <T> T execute(TransactionCallback<T> action) {
+		return transactionTemplate.execute(action);
 	}
 
 	public void executeWithoutResult(Consumer<TransactionStatus> action) {

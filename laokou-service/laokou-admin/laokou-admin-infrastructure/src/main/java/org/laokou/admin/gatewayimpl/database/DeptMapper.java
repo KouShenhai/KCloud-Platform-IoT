@@ -13,22 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.domain.gateway;
+package org.laokou.admin.gatewayimpl.database;
 
-import org.laokou.admin.domain.menu.Menu;
-import org.laokou.auth.domain.user.User;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface MenuGateway {
+@Repository
+@Mapper
+public interface DeptMapper extends BatchMapper<DeptDO> {
 
-	List<Menu> list(Integer type, User user);
+    List<DeptDO> getDeptListByTenantIdAndLikeName(@Param("tenantId") Long tenantId,
+                                                  @Param("name") String name);
 
-	Boolean update(Menu menu);
-
-	Boolean insert(Menu menu);
+    List<Long> getDeptIdsByRoleId(@Param("roleId")Long roleId);
 
 }

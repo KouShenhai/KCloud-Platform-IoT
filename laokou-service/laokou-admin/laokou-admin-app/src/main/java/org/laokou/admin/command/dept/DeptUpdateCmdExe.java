@@ -14,31 +14,27 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.dept.*;
-import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
+package org.laokou.admin.command.dept;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.dept.DeptUpdateCmd;
+import org.laokou.admin.convertor.DeptConvertor;
+import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.common.i18n.dto.Result;
-
-import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface DeptsServiceI {
+@Component
+@RequiredArgsConstructor
+public class DeptUpdateCmdExe {
 
-    Result<DeptCO> tree(DeptTreeGetQry qry);
+    private final DeptGateway deptGateway;
 
-    Result<List<DeptCO>> list(DeptListQry qry);
-
-    Result<Boolean> insert(DeptInsertCmd cmd);
-
-    Result<Boolean> update(DeptUpdateCmd cmd);
-
-    Result<Boolean> delete(DeptDeleteCmd cmd);
-
-    Result<DeptCO> get(DeptGetQry qry);
-
-    Result<List<Long>> ids(DeptIDSQry qry);
+    public Result<Boolean> execute(DeptUpdateCmd cmd) {
+        return Result.of(deptGateway.update(DeptConvertor.toEntity(cmd.getDeptCO())));
+    }
 
 }

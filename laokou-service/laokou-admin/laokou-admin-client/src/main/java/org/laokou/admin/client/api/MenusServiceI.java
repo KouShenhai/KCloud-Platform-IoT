@@ -16,10 +16,7 @@
  */
 package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.menu.MenuGetQry;
-import org.laokou.admin.client.dto.menu.MenuListQry;
-import org.laokou.admin.client.dto.menu.MenuTreeListQry;
-import org.laokou.admin.client.dto.menu.MenuUpdateCmd;
+import org.laokou.admin.client.dto.menu.*;
 import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
 import org.laokou.common.i18n.dto.Result;
 
@@ -38,65 +35,8 @@ public interface MenusServiceI {
 
 	Result<Boolean> update(MenuUpdateCmd cmd);
 
-	//
-	// /**
-	// * 获取菜单列表（树形）
-	// * @return
-	// */
-	// SysMenuVO getMenuList();
-	//
-	// /**
-	// * 获取菜单列表
-	// * @param dto
-	// * @return
-	// */
-	// List<SysMenuVO> queryMenuList(SysMenuQo dto);
-	//
-	// /**
-	// * 根据id查询菜单
-	// * @param id
-	// * @return
-	// */
-	// SysMenuVO getMenuById(Long id);
-	//
-	// /**
-	// * 修改菜单
-	// * @param dto
-	// * @return
-	// */
-	// Boolean updateMenu(SysMenuDTO dto);
-	//
-	// /**
-	// * 新增菜单
-	// * @param dto
-	// * @return
-	// */
-	// Boolean insertMenu(SysMenuDTO dto);
-	//
-	// /**
-	// * 根据id删除菜单
-	// * @param id
-	// * @return
-	// */
-	// Boolean deleteMenu(Long id);
-	//
-	// /**
-	// * 根据角色id构建菜单列表（树形）
-	// * @return
-	// */
-	// SysMenuVO treeMenu();
-	//
-	// /**
-	// * 根据角色id查询菜单ids
-	// * @param roleId
-	// * @return
-	// */
-	// List<Long> getMenuIdsByRoleId(Long roleId);
-	//
-	// /**
-	// * 租户树菜单
-	// * @return
-	// */
-	// SysMenuVO treeTenantMenu();
+	Result<Boolean> insert(MenuInsertCmd cmd);
+
+	Result<Boolean> delete(MenuDeleteCmd cmd);
 
 }

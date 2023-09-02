@@ -100,17 +100,4 @@
         </if>
         order by a.sort desc
     </select>
-    <select id="getById" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
-        select id
-             ,pid
-             ,`name`
-             ,sort
-             ,`type`
-             ,icon
-             ,url
-             ,permission
-             ,visible
-        from boot_sys_menu
-        where id = #{id}
-    </select>
 </mapper>

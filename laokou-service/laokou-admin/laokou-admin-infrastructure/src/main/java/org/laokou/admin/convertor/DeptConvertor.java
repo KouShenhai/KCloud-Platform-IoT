@@ -14,31 +14,26 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.dept.*;
+package org.laokou.admin.convertor;
+
 import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
-import org.laokou.common.i18n.dto.Result;
-
-import java.util.List;
+import org.laokou.admin.domain.dept.Dept;
+import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
+import org.laokou.common.core.utils.ConvertUtil;
 
 /**
  * @author laokou
  */
-public interface DeptsServiceI {
+public class DeptConvertor {
 
-    Result<DeptCO> tree(DeptTreeGetQry qry);
+    public static Dept toEntity(DeptCO deptCO) {
+        return ConvertUtil.sourceToTarget(deptCO, Dept.class);
+    }
 
-    Result<List<DeptCO>> list(DeptListQry qry);
+    public static DeptDO toDataObject(Dept dept) {
+        return ConvertUtil.sourceToTarget(dept, DeptDO.class);
+    }
 
-    Result<Boolean> insert(DeptInsertCmd cmd);
-
-    Result<Boolean> update(DeptUpdateCmd cmd);
-
-    Result<Boolean> delete(DeptDeleteCmd cmd);
-
-    Result<DeptCO> get(DeptGetQry qry);
-
-    Result<List<Long>> ids(DeptIDSQry qry);
 
 }

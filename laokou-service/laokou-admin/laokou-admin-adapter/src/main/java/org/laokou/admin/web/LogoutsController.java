@@ -42,9 +42,7 @@ public class LogoutsController {
 	@GetMapping("v1/logouts/{token}")
 	@Operation(summary = "注销", description = "注销")
 	public Result<Boolean> logout(@PathVariable("token") String token) {
-		LogoutCmd cmd = new LogoutCmd();
-		cmd.setToken(token);
-		return logoutsServiceI.logout(cmd);
+		return logoutsServiceI.logout(new LogoutCmd(token));
 	}
 
 }

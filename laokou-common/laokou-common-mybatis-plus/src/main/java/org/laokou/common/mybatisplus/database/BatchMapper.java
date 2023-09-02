@@ -17,11 +17,12 @@
 
 package org.laokou.common.mybatisplus.database;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 import org.springframework.stereotype.Repository;
 
@@ -36,10 +37,15 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 
 	/**
 	 * 批量插入
-	 * @param list
+	 * @param list 数据集
 	 */
 	void insertBatch(@Param("list") List<T> list);
 
+	/**
+	 * 批量插入
+	 * @param entityList 数据集
+	 * @return int
+	 */
 	int insertBatchSomeColumn(List<T> entityList);
 
 	int alwaysUpdateSomeColumnById(@Param(Constants.ENTITY) T entity);
@@ -48,11 +54,16 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 
 	/**
 	 * 获取版本号
-	 * @param obj
+	 * @param id ID
+	 * @param clazz 类型
 	 * @return int
 	 */
-	default int getVersion(T obj) {
-		return this.selectOne(Wrappers.query(obj).eq("id", obj.getId()).select("version")).getVersion();
+	default int getVersion(Long id,Class<T> clazz) {
+		T value = this.selectOne(new QueryWrapper<>(clazz).eq("id", id).select("version"));
+		if (value == null) {
+			throw new GlobalException("数据不存在");
+		}
+		return value.getVersion();
 	}
 
 }

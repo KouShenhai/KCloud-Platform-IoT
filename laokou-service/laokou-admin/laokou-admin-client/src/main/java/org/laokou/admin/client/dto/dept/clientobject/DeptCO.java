@@ -14,31 +14,23 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.dept.*;
-import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
-import org.laokou.common.i18n.dto.Result;
+package org.laokou.admin.client.dto.dept.clientobject;
 
-import java.util.List;
+import lombok.Data;
+import org.laokou.common.core.utils.TreeUtil;
+
+import java.io.Serial;
 
 /**
  * @author laokou
  */
-public interface DeptsServiceI {
+@Data
+public class DeptCO extends TreeUtil.TreeNode<DeptCO> {
 
-    Result<DeptCO> tree(DeptTreeGetQry qry);
+    @Serial
+    private static final long serialVersionUID = 4116703987840123059L;
 
-    Result<List<DeptCO>> list(DeptListQry qry);
-
-    Result<Boolean> insert(DeptInsertCmd cmd);
-
-    Result<Boolean> update(DeptUpdateCmd cmd);
-
-    Result<Boolean> delete(DeptDeleteCmd cmd);
-
-    Result<DeptCO> get(DeptGetQry qry);
-
-    Result<List<Long>> ids(DeptIDSQry qry);
+    private Integer sort;
 
 }

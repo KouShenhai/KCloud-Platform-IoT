@@ -14,31 +14,33 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.dept.*;
+package org.laokou.admin.command.dept.query;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.dept.DeptListQry;
 import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
+import org.laokou.admin.domain.gateway.DeptGateway;
+import org.laokou.admin.domain.menu.Menu;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface DeptsServiceI {
+@Component
+@RequiredArgsConstructor
+public class DeptListQryExe {
 
-    Result<DeptCO> tree(DeptTreeGetQry qry);
+    private final DeptGateway deptGateway;
 
-    Result<List<DeptCO>> list(DeptListQry qry);
-
-    Result<Boolean> insert(DeptInsertCmd cmd);
-
-    Result<Boolean> update(DeptUpdateCmd cmd);
-
-    Result<Boolean> delete(DeptDeleteCmd cmd);
-
-    Result<DeptCO> get(DeptGetQry qry);
-
-    Result<List<Long>> ids(DeptIDSQry qry);
+    public Result<List<DeptCO>> execute(DeptListQry qry) {
+        List<Menu> list = deptGateway.list(UserUtil.getTenantId(), qry.getName());
+        return Result.of(ConvertUtil.sourceToTarget(list,DeptCO.class));
+    }
 
 }

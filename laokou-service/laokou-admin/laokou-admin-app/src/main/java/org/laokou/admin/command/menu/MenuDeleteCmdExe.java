@@ -14,31 +14,26 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.dept.*;
-import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
+package org.laokou.admin.command.menu;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.menu.MenuDeleteCmd;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.common.i18n.dto.Result;
-
-import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface DeptsServiceI {
+@Component
+@RequiredArgsConstructor
+public class MenuDeleteCmdExe {
 
-    Result<DeptCO> tree(DeptTreeGetQry qry);
+    private final MenuMapper menuMapper;
 
-    Result<List<DeptCO>> list(DeptListQry qry);
-
-    Result<Boolean> insert(DeptInsertCmd cmd);
-
-    Result<Boolean> update(DeptUpdateCmd cmd);
-
-    Result<Boolean> delete(DeptDeleteCmd cmd);
-
-    Result<DeptCO> get(DeptGetQry qry);
-
-    Result<List<Long>> ids(DeptIDSQry qry);
+    public Result<Boolean> execute(MenuDeleteCmd cmd) {
+        return Result.of(menuMapper.deleteById(cmd.getId()) > 0);
+    }
 
 }
