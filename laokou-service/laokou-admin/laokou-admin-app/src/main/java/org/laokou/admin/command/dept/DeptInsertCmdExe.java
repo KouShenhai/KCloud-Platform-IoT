@@ -14,17 +14,16 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.dept.DeptTreeGetQry;
-import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
-import org.laokou.common.i18n.dto.Result;
+package org.laokou.admin.command.dept;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface DeptsServiceI {
-
-    Result<DeptCO> tree(DeptTreeGetQry qry);
-
+@Component
+@RequiredArgsConstructor
+public class DeptInsertCmdExe {
 }

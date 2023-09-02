@@ -1,42 +1,36 @@
 /*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
-package org.laokou.admin.client.api;
+package org.laokou.admin.gatewayimpl.database;
 
-import org.laokou.admin.client.dto.menu.*;
-import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
-import org.laokou.common.i18n.dto.Result;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface MenusServiceI {
+@Repository
+@Mapper
+public interface DeptMapper extends BatchMapper<DeptDO> {
 
-	Result<MenuCO> treeList(MenuTreeListQry qry);
-
-	Result<List<MenuCO>> list(MenuListQry qry);
-
-	Result<MenuCO> get(MenuGetQry qry);
-
-	Result<Boolean> update(MenuUpdateCmd cmd);
-
-	Result<Boolean> insert(MenuInsertCmd cmd);
-
-	Result<Boolean> delete(MenuDeleteCmd cmd);
+    List<DeptDO> getDeptListByTenantIdAndLikeName(@Param("tenantId") Long tenantId,
+                                                  @Param("name") String name);
 
 }

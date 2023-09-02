@@ -89,9 +89,9 @@ public class MenusController {
 	@TraceLog
 	@DeleteMapping("v1/menus/{id}")
 	@Operation(summary = "删除", description = "删除")
-	// @OperateLog(module = "菜单管理", name = "删除")
-	// @PreAuthorize("hasAuthority('menus:delete')")
-	// @DataCache(name = "menus", key = "#id", type = CacheEnum.DEL)
+	@OperateLog(module = "菜单管理", operation = "删除")
+	@PreAuthorize("hasAuthority('menus:delete')")
+	@DataCache(name = "menus", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return menusServiceI.delete(new MenuDeleteCmd(id));
 	}

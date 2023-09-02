@@ -14,17 +14,29 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
+package org.laokou.admin.service;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.api.DeptsServiceI;
 import org.laokou.admin.client.dto.dept.DeptTreeGetQry;
 import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
+import org.laokou.admin.command.dept.query.DeptTreeGetQryExe;
 import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-public interface DeptsServiceI {
+@Service
+@RequiredArgsConstructor
+public class DeptsServiceImpl implements DeptsServiceI {
 
-    Result<DeptCO> tree(DeptTreeGetQry qry);
+    private final DeptTreeGetQryExe deptTreeGetQryExe;
+
+    @Override
+    public Result<DeptCO> tree(DeptTreeGetQry qry) {
+        return deptTreeGetQryExe.execute(qry);
+    }
 
 }

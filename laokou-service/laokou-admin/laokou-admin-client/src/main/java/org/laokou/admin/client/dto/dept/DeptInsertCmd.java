@@ -14,17 +14,19 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.dept.DeptTreeGetQry;
+package org.laokou.admin.client.dto.dept;
+
+import lombok.Data;
 import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-public interface DeptsServiceI {
+@Data
+public class DeptInsertCmd extends CommonCommand {
 
-    Result<DeptCO> tree(DeptTreeGetQry qry);
+    private DeptCO deptCO;
 
 }
