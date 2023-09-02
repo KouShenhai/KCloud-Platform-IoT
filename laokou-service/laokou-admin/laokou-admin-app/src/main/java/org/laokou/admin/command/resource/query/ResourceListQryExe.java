@@ -21,4 +21,5 @@ package org.laokou.admin.command.resource.query;
  * @author laokou
  */
 public class ResourceListQryExe {
+
 }

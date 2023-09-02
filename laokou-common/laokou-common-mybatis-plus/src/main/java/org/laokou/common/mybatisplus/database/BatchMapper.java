@@ -58,7 +58,7 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 	 * @param clazz 类型
 	 * @return int
 	 */
-	default int getVersion(Long id,Class<T> clazz) {
+	default int getVersion(Long id, Class<T> clazz) {
 		T value = this.selectOne(new QueryWrapper<>(clazz).eq("id", id).select("version"));
 		if (value == null) {
 			throw new GlobalException("数据不存在");

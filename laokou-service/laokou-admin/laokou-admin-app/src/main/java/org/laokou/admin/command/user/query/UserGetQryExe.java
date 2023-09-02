@@ -21,4 +21,5 @@ package org.laokou.admin.command.user.query;
  * @author laokou
  */
 public class UserGetQryExe {
+
 }

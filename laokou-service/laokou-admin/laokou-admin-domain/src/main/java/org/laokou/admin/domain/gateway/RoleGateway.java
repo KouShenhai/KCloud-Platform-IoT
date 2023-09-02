@@ -20,8 +20,8 @@ package org.laokou.admin.domain.gateway;
  */
 public interface RoleGateway {
 
-    Boolean insert();
+	Boolean insert();
 
-    Boolean update();
+	Boolean update();
 
 }

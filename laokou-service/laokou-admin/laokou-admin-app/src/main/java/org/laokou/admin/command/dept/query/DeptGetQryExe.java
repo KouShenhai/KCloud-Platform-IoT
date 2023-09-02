@@ -33,11 +33,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DeptGetQryExe {
 
-    private final DeptMapper deptMapper;
+	private final DeptMapper deptMapper;
 
-    public Result<DeptCO> execute(DeptGetQry qry) {
-        DeptDO deptDO = deptMapper.selectById(qry.getId());
-        return Result.of(ConvertUtil.sourceToTarget(deptDO, DeptCO.class));
-    }
+	public Result<DeptCO> execute(DeptGetQry qry) {
+		DeptDO deptDO = deptMapper.selectById(qry.getId());
+		return Result.of(ConvertUtil.sourceToTarget(deptDO, DeptCO.class));
+	}
 
 }

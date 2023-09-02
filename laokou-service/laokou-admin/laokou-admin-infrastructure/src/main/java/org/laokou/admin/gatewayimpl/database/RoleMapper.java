@@ -30,8 +30,8 @@ import java.util.List;
 @Mapper
 public interface RoleMapper extends BatchMapper<RoleDO> {
 
-    List<Long> getRoleIdsByUserId(@Param("userId") Long userId);
+	List<Long> getRoleIdsByUserId(@Param("userId") Long userId);
 
-    List<RoleDO> getRoleListByTenantIdAndLikeName(@Param("tenantId")Long tenantId,@Param("name")String name);
+	List<RoleDO> getRoleListByTenantIdAndLikeName(@Param("tenantId") Long tenantId, @Param("name") String name);
 
 }

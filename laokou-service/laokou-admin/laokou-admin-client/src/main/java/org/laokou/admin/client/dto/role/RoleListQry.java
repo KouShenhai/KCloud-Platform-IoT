@@ -25,4 +25,5 @@ import org.laokou.common.i18n.dto.Page;
  */
 @Data
 public class RoleListQry extends Page {
+
 }

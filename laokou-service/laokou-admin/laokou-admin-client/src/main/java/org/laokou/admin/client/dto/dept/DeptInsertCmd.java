@@ -27,6 +27,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class DeptInsertCmd extends CommonCommand {
 
-    private DeptCO deptCO;
+	private DeptCO deptCO;
 
 }

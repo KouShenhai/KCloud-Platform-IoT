@@ -46,6 +46,7 @@ import static org.laokou.admin.common.Constant.DEFAULT_TENANT;
 public class MenuGatewayImpl implements MenuGateway {
 
 	private final MenuMapper menuMapper;
+
 	private final TransactionalUtil transactionalUtil;
 
 	@Override
@@ -66,14 +67,13 @@ public class MenuGatewayImpl implements MenuGateway {
 			throw new GlobalException("菜单已存在，请重新填写");
 		}
 		MenuDO menuDO = MenuConvertor.toDataObject(menu);
-		menuDO.setVersion(menuMapper.getVersion(id,MenuDO.class));
+		menuDO.setVersion(menuMapper.getVersion(id, MenuDO.class));
 		return updateMenu(menuDO);
 	}
 
 	@Override
 	public Boolean insert(Menu menu) {
-		Long count = menuMapper.selectCount(
-				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()));
+		Long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()));
 		if (count > 0) {
 			throw new GlobalException("菜单已存在，请重新填写");
 		}
@@ -100,8 +100,9 @@ public class MenuGatewayImpl implements MenuGateway {
 		return transactionalUtil.execute(r -> {
 			try {
 				return menuMapper.updateById(menuDO) > 0;
-			} catch (Exception e) {
-				log.error("错误信息：{}",e.getMessage());
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
 				return false;
 			}
@@ -112,8 +113,9 @@ public class MenuGatewayImpl implements MenuGateway {
 		return transactionalUtil.execute(r -> {
 			try {
 				return menuMapper.insert(menuDO) > 0;
-			} catch (Exception e) {
-				log.error("错误信息：{}",e.getMessage());
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
 				return false;
 			}

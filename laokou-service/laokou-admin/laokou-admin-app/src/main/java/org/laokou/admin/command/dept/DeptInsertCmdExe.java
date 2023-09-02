@@ -31,10 +31,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DeptInsertCmdExe {
 
-    private final DeptGateway deptGateway;
+	private final DeptGateway deptGateway;
 
-    public Result<Boolean> execute(DeptInsertCmd cmd) {
-        return Result.of(deptGateway.insert(DeptConvertor.toEntity(cmd.getDeptCO())));
-    }
+	public Result<Boolean> execute(DeptInsertCmd cmd) {
+		return Result.of(deptGateway.insert(DeptConvertor.toEntity(cmd.getDeptCO())));
+	}
 
 }

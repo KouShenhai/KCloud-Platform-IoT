@@ -27,18 +27,18 @@ import java.util.List;
  */
 public interface DeptsServiceI {
 
-    Result<DeptCO> tree(DeptTreeGetQry qry);
+	Result<DeptCO> tree(DeptTreeGetQry qry);
 
-    Result<List<DeptCO>> list(DeptListQry qry);
+	Result<List<DeptCO>> list(DeptListQry qry);
 
-    Result<Boolean> insert(DeptInsertCmd cmd);
+	Result<Boolean> insert(DeptInsertCmd cmd);
 
-    Result<Boolean> update(DeptUpdateCmd cmd);
+	Result<Boolean> update(DeptUpdateCmd cmd);
 
-    Result<Boolean> delete(DeptDeleteCmd cmd);
+	Result<Boolean> delete(DeptDeleteCmd cmd);
 
-    Result<DeptCO> get(DeptGetQry qry);
+	Result<DeptCO> get(DeptGetQry qry);
 
-    Result<List<Long>> ids(DeptIDSQry qry);
+	Result<List<Long>> ids(DeptIDSQry qry);
 
 }

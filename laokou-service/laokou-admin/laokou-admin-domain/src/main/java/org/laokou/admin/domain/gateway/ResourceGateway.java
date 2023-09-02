@@ -19,4 +19,5 @@ package org.laokou.admin.domain.gateway;
  * @author laokou
  */
 public interface ResourceGateway {
+
 }

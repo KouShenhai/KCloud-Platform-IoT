@@ -28,9 +28,9 @@ import java.io.Serial;
 @Data
 public class DeptCO extends TreeUtil.TreeNode<DeptCO> {
 
-    @Serial
-    private static final long serialVersionUID = 4116703987840123059L;
+	@Serial
+	private static final long serialVersionUID = 4116703987840123059L;
 
-    private Integer sort;
+	private Integer sort;
 
 }

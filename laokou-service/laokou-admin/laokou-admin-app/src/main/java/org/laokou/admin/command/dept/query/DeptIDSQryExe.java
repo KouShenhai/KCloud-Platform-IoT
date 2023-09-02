@@ -32,10 +32,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeptIDSQryExe {
 
-    private final DeptGateway deptGateway;
+	private final DeptGateway deptGateway;
 
-    public Result<List<Long>> execute(DeptIDSQry qry) {
-        return Result.of(deptGateway.getDeptIds(qry.getRoleId()));
-    }
+	public Result<List<Long>> execute(DeptIDSQry qry) {
+		return Result.of(deptGateway.getDeptIds(qry.getRoleId()));
+	}
 
 }

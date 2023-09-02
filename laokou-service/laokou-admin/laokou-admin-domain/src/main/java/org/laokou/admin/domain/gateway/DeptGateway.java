@@ -27,12 +27,12 @@ import java.util.List;
  */
 public interface DeptGateway {
 
-    List<Menu> list(Long tenantId,String name);
+	List<Menu> list(Long tenantId, String name);
 
-    Boolean insert(Dept dept);
+	Boolean insert(Dept dept);
 
-    Boolean update(Dept dept);
+	Boolean update(Dept dept);
 
-    List<Long> getDeptIds(Long roleId);
+	List<Long> getDeptIds(Long roleId);
 
 }

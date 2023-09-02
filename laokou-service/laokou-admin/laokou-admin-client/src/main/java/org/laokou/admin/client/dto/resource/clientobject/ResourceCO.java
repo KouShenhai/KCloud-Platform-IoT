@@ -25,4 +25,5 @@ import org.laokou.common.i18n.dto.ClientObject;
  */
 @Data
 public class ResourceCO extends ClientObject {
+
 }

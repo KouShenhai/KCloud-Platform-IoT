@@ -31,6 +31,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class DeptUpdateCmd extends CommonCommand {
 
-    private DeptCO deptCO;
+	private DeptCO deptCO;
 
 }

@@ -21,4 +21,5 @@ package org.laokou.admin.client.dto.packages;
  * @author laokou
  */
 public class PackageInsertCmd {
+
 }

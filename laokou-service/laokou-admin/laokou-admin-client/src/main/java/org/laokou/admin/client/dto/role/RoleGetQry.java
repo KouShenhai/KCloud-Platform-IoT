@@ -26,6 +26,4 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class RoleGetQry extends CommonCommand {
 
-
-
 }

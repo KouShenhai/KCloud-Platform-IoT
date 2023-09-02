@@ -37,12 +37,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeptTreeGetQryExe {
 
-    private final DeptGateway deptGateway;
+	private final DeptGateway deptGateway;
 
-    public Result<DeptCO> execute(DeptTreeGetQry qry) {
-        List<Menu> list = deptGateway.list(UserUtil.getTenantId(), null);
-        List<DeptCO> deptList = ConvertUtil.sourceToTarget(list, DeptCO.class);
-        return Result.of(TreeUtil.buildTreeNode(deptList, DeptCO.class));
-    }
+	public Result<DeptCO> execute(DeptTreeGetQry qry) {
+		List<Menu> list = deptGateway.list(UserUtil.getTenantId(), null);
+		List<DeptCO> deptList = ConvertUtil.sourceToTarget(list, DeptCO.class);
+		return Result.of(TreeUtil.buildTreeNode(deptList, DeptCO.class));
+	}
 
 }

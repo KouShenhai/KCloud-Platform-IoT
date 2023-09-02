@@ -21,4 +21,5 @@ package org.laokou.admin.command.user;
  * @author laokou
  */
 public class UserDeleteCmdExe {
+
 }

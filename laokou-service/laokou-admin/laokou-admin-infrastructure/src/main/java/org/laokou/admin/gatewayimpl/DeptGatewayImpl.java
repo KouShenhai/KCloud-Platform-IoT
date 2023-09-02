@@ -44,70 +44,74 @@ import static org.laokou.admin.common.BizCode.ID_NOT_NULL;
 @RequiredArgsConstructor
 public class DeptGatewayImpl implements DeptGateway {
 
-    private final DeptMapper deptMapper;
-    private final TransactionalUtil transactionalUtil;
+	private final DeptMapper deptMapper;
 
-    @Override
-    public List<Menu> list(Long tenantId, String name) {
-        List<DeptDO> list = deptMapper.getDeptListByTenantIdAndLikeName(tenantId, name);
-        return ConvertUtil.sourceToTarget(list,Menu.class);
-    }
+	private final TransactionalUtil transactionalUtil;
 
-    @Override
-    public Boolean insert(Dept dept) {
-        long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class)
-                .eq(DeptDO::getTenantId, UserUtil.getTenantId()).eq(DeptDO::getName, dept.getName()));
-        if (count > 0) {
-            throw new GlobalException("部门已存在，请重新填写");
-        }
-        DeptDO deptDO = DeptConvertor.toDataObject(dept);
-        deptDO.setTenantId(UserUtil.getTenantId());
-        return insertDept(deptDO);
-    }
+	@Override
+	public List<Menu> list(Long tenantId, String name) {
+		List<DeptDO> list = deptMapper.getDeptListByTenantIdAndLikeName(tenantId, name);
+		return ConvertUtil.sourceToTarget(list, Menu.class);
+	}
 
-    @Override
-    public Boolean update(Dept dept) {
-        Long id = dept.getId();
-        if (id == null) {
-            throw new GlobalException(ID_NOT_NULL);
-        }
-        long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getTenantId, UserUtil.getTenantId())
-                        .eq(DeptDO::getName, dept.getName()).ne(DeptDO::getId, id));
-        if (count > 0) {
-            throw new GlobalException("部门已存在，请重新填写");
-        }
-        DeptDO deptDO = DeptConvertor.toDataObject(dept);
-        deptDO.setVersion(deptMapper.getVersion(id,DeptDO.class));
-        return updateDept(deptDO);
-    }
+	@Override
+	public Boolean insert(Dept dept) {
+		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class)
+				.eq(DeptDO::getTenantId, UserUtil.getTenantId()).eq(DeptDO::getName, dept.getName()));
+		if (count > 0) {
+			throw new GlobalException("部门已存在，请重新填写");
+		}
+		DeptDO deptDO = DeptConvertor.toDataObject(dept);
+		deptDO.setTenantId(UserUtil.getTenantId());
+		return insertDept(deptDO);
+	}
 
-    @Override
-    public List<Long> getDeptIds(Long roleId) {
-        return deptMapper.getDeptIdsByRoleId(roleId);
-    }
+	@Override
+	public Boolean update(Dept dept) {
+		Long id = dept.getId();
+		if (id == null) {
+			throw new GlobalException(ID_NOT_NULL);
+		}
+		long count = deptMapper
+				.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getTenantId, UserUtil.getTenantId())
+						.eq(DeptDO::getName, dept.getName()).ne(DeptDO::getId, id));
+		if (count > 0) {
+			throw new GlobalException("部门已存在，请重新填写");
+		}
+		DeptDO deptDO = DeptConvertor.toDataObject(dept);
+		deptDO.setVersion(deptMapper.getVersion(id, DeptDO.class));
+		return updateDept(deptDO);
+	}
 
-    private Boolean updateDept(DeptDO deptDO) {
-        return transactionalUtil.execute(r -> {
-            try {
-                return deptMapper.updateById(deptDO) > 0;
-            } catch (Exception e) {
-                log.error("错误信息：{}",e.getMessage());
-                r.setRollbackOnly();
-                return false;
-            }
-        });
-    }
+	@Override
+	public List<Long> getDeptIds(Long roleId) {
+		return deptMapper.getDeptIdsByRoleId(roleId);
+	}
 
-    private Boolean insertDept(DeptDO deptDO) {
-        return transactionalUtil.execute(r -> {
-            try {
-                return deptMapper.insert(deptDO) > 0;
-            } catch (Exception e) {
-                log.error("错误信息：{}",e.getMessage());
-                r.setRollbackOnly();
-                return false;
-            }
-        });
-    }
+	private Boolean updateDept(DeptDO deptDO) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return deptMapper.updateById(deptDO) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	private Boolean insertDept(DeptDO deptDO) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return deptMapper.insert(deptDO) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
 
 }
