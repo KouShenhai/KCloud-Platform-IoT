@@ -20,8 +20,12 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.annotation.OperateLog;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.enums.Cache;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,7 +40,7 @@ public class OssController {
 	@TraceLog
 	@PostMapping("v1/oss/list")
 	@Operation(summary = "查询", description = "查询")
-	// @PreAuthorize("hasAuthority('oss:list')")
+	@PreAuthorize("hasAuthority('oss:list')")
 	public Result<?> list() {
 		return Result.of(null);
 	}
@@ -51,8 +55,8 @@ public class OssController {
 	@TraceLog
 	@PostMapping("v1/oss")
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "对象存储", operation = "新增")
-	// @PreAuthorize("hasAuthority('oss:insert')")
+	@OperateLog(module = "对象存储", operation = "新增")
+	@PreAuthorize("hasAuthority('oss:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
 	}
@@ -60,8 +64,8 @@ public class OssController {
 	@TraceLog
 	@GetMapping("v1/oss/use/{id}")
 	@Operation(summary = "启用", description = "启用")
-	// @OperateLog(module = "对象存储", operation = "启用")
-	// @PreAuthorize("hasAuthority('oss:use')")
+	@OperateLog(module = "对象存储", operation = "启用")
+	@PreAuthorize("hasAuthority('oss:use')")
 	public Result<Boolean> use(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -69,7 +73,7 @@ public class OssController {
 	@TraceLog
 	@GetMapping("v1/oss/{id}")
 	@Operation(summary = "查看", description = "查看")
-	// @DataCache(name = "oss", key = "#id")
+	@DataCache(name = "oss", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -77,9 +81,9 @@ public class OssController {
 	@TraceLog
 	@PutMapping("v1/oss")
 	@Operation(summary = "修改", description = "修改")
-	// @OperateLog(module = "对象存储", operation = "修改")
-	// @PreAuthorize("hasAuthority('oss:update')")
-	// @DataCache(name = "oss", key = "#dto.id", type = CacheEnum.DEL)
+	@OperateLog(module = "对象存储", operation = "修改")
+	@PreAuthorize("hasAuthority('oss:update')")
+	@DataCache(name = "oss", key = "#dto.id", type = Cache.DEL)
 	public Result<Boolean> update() {
 		return Result.of(null);
 	}
@@ -87,9 +91,9 @@ public class OssController {
 	@TraceLog
 	@DeleteMapping("v1/oss/{id}")
 	@Operation(summary = "删除", description = "删除")
-	// @OperateLog(module = "对象存储", operation = "删除")
-	// @PreAuthorize("hasAuthority('oss:delete')")
-	// @DataCache(name = "oss", key = "#id", type = CacheEnum.DEL)
+	@OperateLog(module = "对象存储", operation = "删除")
+	@PreAuthorize("hasAuthority('oss:delete')")
+	@DataCache(name = "oss", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}

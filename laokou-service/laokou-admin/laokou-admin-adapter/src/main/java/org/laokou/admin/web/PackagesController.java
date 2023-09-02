@@ -19,8 +19,12 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.annotation.OperateLog;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.enums.Cache;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -34,7 +38,7 @@ public class PackagesController {
 	@TraceLog
 	@PostMapping("v1/packages/list")
 	@Operation(summary = "查询", description = "查询")
-	// @PreAuthorize("hasAuthority('packages:list')")
+	@PreAuthorize("hasAuthority('packages:list')")
 	public Result<?> list() {
 		return Result.of(null);
 	}
@@ -42,8 +46,8 @@ public class PackagesController {
 	@TraceLog
 	@PostMapping("v1/packages")
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "套餐管理", operation = "新增")
-	// @PreAuthorize("hasAuthority('packages:insert')")
+	@OperateLog(module = "套餐管理", operation = "新增")
+	@PreAuthorize("hasAuthority('packages:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
 	}
@@ -51,7 +55,7 @@ public class PackagesController {
 	@TraceLog
 	@GetMapping("v1/packages/{id}")
 	@Operation(summary = "查看", description = "查看")
-	// @DataCache(name = "packages", key = "#id")
+	@DataCache(name = "packages", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -59,9 +63,9 @@ public class PackagesController {
 	@TraceLog
 	@PutMapping("v1/packages")
 	@Operation(summary = "修改", description = "修改")
-	// @OperateLog(module = "套餐管理", operation = "修改")
-	// @PreAuthorize("hasAuthority('packages:update')")
-	// @DataCache(name = "packages", key = "#dto.id", type = CacheEnum.DEL)
+	@OperateLog(module = "套餐管理", operation = "修改")
+	@PreAuthorize("hasAuthority('packages:update')")
+	@DataCache(name = "packages", key = "#dto.id", type = Cache.DEL)
 	public Result<Boolean> update() {
 		return Result.of(null);
 	}
@@ -69,9 +73,9 @@ public class PackagesController {
 	@TraceLog
 	@DeleteMapping("v1/packages/{id}")
 	@Operation(summary = "删除", description = "删除")
-	// @OperateLog(module = "套餐管理", operation = "删除")
-	// @PreAuthorize("hasAuthority('packages:delete')")
-	// @DataCache(name = "packages", key = "#id", type = CacheEnum.DEL)
+	@OperateLog(module = "套餐管理", operation = "删除")
+	@PreAuthorize("hasAuthority('packages:delete')")
+	@DataCache(name = "packages", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}

@@ -19,12 +19,12 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
 
 /**
  * @author laokou
@@ -37,7 +37,7 @@ public class LogsController {
 	@TraceLog
 	@PostMapping(value = "v1/logs/operate-list")
 	@Operation(summary = "查询", description = "查询")
-	// @PreAuthorize("hasAuthority('log:operate:list')")
+	@PreAuthorize("hasAuthority('logs:operate:list')")
 	public Result<?> operateList() {
 		return Result.of(null);
 	}
@@ -45,16 +45,16 @@ public class LogsController {
 	@TraceLog
 	@PostMapping(value = "v1/logs/operate-export")
 	@Operation(summary = "导出", description = "导出")
-	// @OperateLog(module = "操作日志", operation = "导出")
-	// @PreAuthorize("hasAuthority('logs:operate:export')")
-	public void OperateExport() throws IOException {
+	@OperateLog(module = "操作日志", operation = "导出")
+	@PreAuthorize("hasAuthority('logs:operate:export')")
+	public void OperateExport() {
 
 	}
 
 	@TraceLog
 	@PostMapping(value = "v1/logs/login-list")
 	@Operation(summary = "查询", description = "查询")
-	// @PreAuthorize("hasAuthority('logs:login:list')")
+	@PreAuthorize("hasAuthority('logs:login:list')")
 	public Result<?> loginList() {
 		return Result.of(null);
 	}
@@ -62,9 +62,9 @@ public class LogsController {
 	@TraceLog
 	@PostMapping(value = "v1/logs/login-export")
 	@Operation(summary = "导出", description = "导出")
-	// @OperateLog(module = "登录日志", operation = "导出")
-	// @PreAuthorize("hasAuthority('logs:login:export')")
-	public void loginExport() throws IOException {
+	@OperateLog(module = "登录日志", operation = "导出")
+	@PreAuthorize("hasAuthority('logs:login:export')")
+	public void loginExport() {
 	}
 
 }

@@ -42,7 +42,7 @@ public class MonitorsController {
 	@TraceLog
 	@GetMapping("v1/monitors/server")
 	@Operation(summary = "主机", description = "主机")
-	public Result<?> server() throws Exception {
+	public Result<?> server() {
 		return Result.of(null);
 	}
 

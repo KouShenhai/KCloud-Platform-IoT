@@ -22,8 +22,12 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.TenantsServiceI;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.client.dto.tenant.TenantOptionListQry;
+import org.laokou.admin.domain.annotation.OperateLog;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.enums.Cache;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,7 +45,7 @@ public class TenantsController {
 	@TraceLog
 	@PostMapping("v1/tenants/list")
 	@Operation(summary = "查询", description = "查询")
-	// @PreAuthorize("hasAuthority('tenants:list')")
+	@PreAuthorize("hasAuthority('tenants:list')")
 	public Result<?> list() {
 		return Result.of(null);
 	}
@@ -49,8 +53,8 @@ public class TenantsController {
 	@TraceLog
 	@PostMapping("v1/tenants")
 	@Operation(summary = "新增", description = "新增")
-	// @OperateLog(module = "租户管理", operation = "新增")
-	// @PreAuthorize("hasAuthority('tenants:insert')")
+	@OperateLog(module = "租户管理", operation = "新增")
+	@PreAuthorize("hasAuthority('tenants:insert')")
 	public Result<Boolean> insert() {
 		return Result.of(null);
 	}
@@ -58,7 +62,7 @@ public class TenantsController {
 	@TraceLog
 	@GetMapping("v1/tenants/{id}")
 	@Operation(summary = "查看", description = "查看")
-	// @DataCache(name = "tenants", key = "#id")
+	@DataCache(name = "tenants", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -66,9 +70,9 @@ public class TenantsController {
 	@TraceLog
 	@PutMapping("v1/tenants")
 	@Operation(summary = "修改", description = "修改")
-	// @OperateLog(module = "租户管理", operation = "修改")
-	// @PreAuthorize("hasAuthority('tenants:update')")
-	// @DataCache(name = "tenants", key = "#dto.id", type = CacheEnum.DEL)
+	@OperateLog(module = "租户管理", operation = "修改")
+	@PreAuthorize("hasAuthority('tenants:update')")
+	@DataCache(name = "tenants", key = "#dto.id", type = Cache.DEL)
 	public Result<Boolean> update() {
 		return Result.of(null);
 	}
@@ -76,9 +80,9 @@ public class TenantsController {
 	@TraceLog
 	@DeleteMapping("v1/tenants/{id}")
 	@Operation(summary = "删除", description = "删除")
-	// @OperateLog(module = "租户管理", operation = "删除")
-	// @PreAuthorize("hasAuthority('tenants:delete')")
-	// @DataCache(name = "tenants", key = "#id", type = CacheEnum.DEL)
+	@OperateLog(module = "租户管理", operation = "删除")
+	@PreAuthorize("hasAuthority('tenants:delete')")
+	@DataCache(name = "tenants", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
