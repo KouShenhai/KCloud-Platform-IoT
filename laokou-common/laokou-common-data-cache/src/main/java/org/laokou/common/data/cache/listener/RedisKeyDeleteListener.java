@@ -52,9 +52,4 @@ public class RedisKeyDeleteListener extends KeyDeleteEventMessageListener {
 		}
 	}
 
-	public static void main(String[] args) {
-		String key = "laokou:2";
-		System.out.println(key.matches("laokou:" + ".*"));
-	}
-
 }

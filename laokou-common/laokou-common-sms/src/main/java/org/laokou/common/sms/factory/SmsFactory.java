@@ -19,7 +19,7 @@ package org.laokou.common.sms.factory;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.common.GlobalException;
-import org.laokou.common.sms.enums.SmsTypeEnum;
+import org.laokou.common.sms.enums.SmsType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +36,7 @@ public class SmsFactory {
 	private final GuoYangYunSmsServiceImpl guoYangYunServiceImpl;
 
 	public SmsService build() {
-		if (SmsTypeEnum.GUO_YANG_YUN.ordinal() == type) {
+		if (SmsType.GUO_YANG_YUN.ordinal() == type) {
 			return guoYangYunServiceImpl;
 		}
 		throw new GlobalException("请检查SMS配置");

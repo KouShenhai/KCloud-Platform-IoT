@@ -1,0 +1,1 @@
+package org.laokou.common.mybatisplus.database.dataobject;

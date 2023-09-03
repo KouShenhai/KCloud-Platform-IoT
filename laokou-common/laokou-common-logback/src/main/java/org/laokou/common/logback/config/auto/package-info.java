@@ -1,0 +1,1 @@
+package org.laokou.common.logback.config.auto;

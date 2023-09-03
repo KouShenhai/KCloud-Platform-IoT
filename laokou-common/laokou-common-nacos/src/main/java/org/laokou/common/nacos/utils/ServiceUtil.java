@@ -20,11 +20,10 @@ import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.PropertyKeyConst;
 import com.alibaba.nacos.api.naming.NamingService;
-import com.alibaba.nacos.api.naming.pojo.Instance;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.nacos.enums.InstanceEnum;
+import org.laokou.common.nacos.enums.Instance;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Component;
@@ -50,19 +49,19 @@ public class ServiceUtil {
 	}
 
 	public void registerInstance() {
-		instance(InstanceEnum.REGISTER);
+		instance(Instance.REGISTER);
 	}
 
 	public void deregisterInstance() {
-		instance(InstanceEnum.DEREGISTER);
+		instance(Instance.DEREGISTER);
 	}
 
 	@SneakyThrows
-	private void instance(InstanceEnum instanceEnum) {
+	private void instance(Instance instanceEnum) {
 		String serviceName = nacosDiscoveryProperties.getService();
 		NamingService namingService = getNamingService();
-		List<Instance> allInstances = namingService.getAllInstances(serviceName);
-		for (Instance instance : allInstances) {
+		List<com.alibaba.nacos.api.naming.pojo.Instance> allInstances = namingService.getAllInstances(serviceName);
+		for (com.alibaba.nacos.api.naming.pojo.Instance instance : allInstances) {
 			String ip = nacosDiscoveryProperties.getIp();
 			if (ip.equals(instance.getIp())) {
 				switch (instanceEnum) {

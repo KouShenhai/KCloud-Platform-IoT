@@ -1,0 +1,1 @@
+package org.laokou.auth.command.secret.query;
