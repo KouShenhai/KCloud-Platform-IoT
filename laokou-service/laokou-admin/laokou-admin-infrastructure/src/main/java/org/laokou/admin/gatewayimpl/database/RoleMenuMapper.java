@@ -18,9 +18,12 @@
 package org.laokou.admin.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -28,5 +31,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface RoleMenuMapper extends BatchMapper<RoleMenuDO> {
+
+    List<Long> getIdsByRoleId(@Param("roleId")Long roleId);
 
 }

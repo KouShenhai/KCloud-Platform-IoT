@@ -20,6 +20,8 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.common.BizCode;
+import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.common.Option;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.domain.role.Role;
@@ -30,7 +32,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
@@ -65,15 +66,26 @@ public class RoleGatewayImpl implements RoleGateway {
 		if (count > 0) {
 			throw new GlobalException("角色已存在，请重新填写");
 		}
-		RoleDO roleDO = ConvertUtil.sourceToTarget(role, RoleDO.class);
+		RoleDO roleDO = RoleConvertor.toDataObject(role);
 		roleDO.setDeptId(UserUtil.getDeptId());
 		roleDO.setTenantId(UserUtil.getTenantId());
 		return insertRole(roleDO, role);
 	}
 
 	@Override
-	public Boolean update() {
-		return null;
+	public Boolean update(Role role) {
+        Long id = role.getId();
+        if (id == null) {
+            throw new GlobalException(BizCode.ID_NOT_NULL);
+        }
+        Long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()).ne(RoleDO::getId,id));
+        if (count > 0) {
+            throw new GlobalException("角色已存在，请重新填写");
+        }
+		RoleDO roleDO = RoleConvertor.toDataObject(role);
+		List<Long> ids1 = roleMenuMapper.getIdsByRoleId(id);
+		List<Long> ids2 = roleDeptMapper.getIdsByRoleId(id);
+		return updateRole(roleDO,role,ids1,ids2);
 	}
 
 	@Override
@@ -92,10 +104,42 @@ public class RoleGatewayImpl implements RoleGateway {
 		return options;
 	}
 
+	private Boolean updateRole(RoleDO roleDO,Role role,List<Long> ids1,List<Long> ids2) {
+		return transactionalUtil.execute(rollback -> {
+			try {
+				return roleMapper.updateById(roleDO) > 0
+						&& updateRoleMenu(roleDO.getId(), role.getMenuIds(), ids1)
+						&& updateRoleDept(roleDO.getId(), role.getDeptIds(), ids2);
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				rollback.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	private Boolean updateRoleMenu(Long roleId, List<Long> menuIds, List<Long> ids) {
+		boolean flag = true;
+		if (CollectionUtil.isNotEmpty(ids)) {
+			flag = roleMenuMapper.deleteBatchIds(ids) > 0;
+		}
+		return flag && insertRoleMenu(roleId,menuIds);
+	}
+
+	private Boolean updateRoleDept(Long roleId, List<Long> deptIds, List<Long> ids) {
+		boolean flag = true;
+		if (CollectionUtil.isNotEmpty(ids)) {
+			flag = roleDeptMapper.deleteBatchIds(ids) > 0;
+		}
+		return flag && insertRoleDept(roleId,deptIds);
+	}
+
 	private Boolean insertRole(RoleDO roleDO, Role role) {
 		return transactionalUtil.execute(rollback -> {
 			try {
-				return roleMapper.insert(roleDO) > 0 && insertRoleMenu(roleDO.getId(), role.getMenuIds())
+				return roleMapper.insert(roleDO) > 0
+						&& insertRoleMenu(roleDO.getId(), role.getMenuIds())
 						&& insertRoleDept(roleDO.getId(), role.getDeptIds());
 			}
 			catch (Exception e) {

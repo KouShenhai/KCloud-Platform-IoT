@@ -26,4 +26,9 @@
                (#{item.id}, #{item.roleId}, #{item.menuId})
           </foreach>
     </insert>
+    <select id="getIdsByRoleId" resultType="java.lang.Long">
+        select id
+        from boot_sys_role_menu
+        where role_id = #{roleId}
+    </select>
 </mapper>

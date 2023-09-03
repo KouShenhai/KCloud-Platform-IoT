@@ -42,7 +42,7 @@ public class BatchUtil {
 
 	private final ThreadPoolTaskExecutor taskExecutor;
 
-	private static final int DEFAULT_BATCH_NUM = 5000;
+	private static final int DEFAULT_BATCH_NUM = 1000;
 
 	public <T> void insertBatch(List<T> dataList, Consumer<List<T>> batchOps) {
 		insertBatch(dataList, DEFAULT_BATCH_NUM, batchOps);
