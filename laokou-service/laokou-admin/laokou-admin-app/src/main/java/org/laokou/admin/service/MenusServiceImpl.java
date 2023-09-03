@@ -23,9 +23,7 @@ import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.command.menu.MenuDeleteCmdExe;
 import org.laokou.admin.command.menu.MenuInsertCmdExe;
 import org.laokou.admin.command.menu.MenuUpdateCmdExe;
-import org.laokou.admin.command.menu.query.MenuGetQryExe;
-import org.laokou.admin.command.menu.query.MenuListQryExe;
-import org.laokou.admin.command.menu.query.MenuTreeListQryExe;
+import org.laokou.admin.command.menu.query.*;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +47,12 @@ public class MenusServiceImpl implements MenusServiceI {
 	private final MenuInsertCmdExe menuInsertCmdExe;
 
 	private final MenuDeleteCmdExe menuDeleteCmdExe;
+
+	private final MenuTreeGetQryExe menuTreeGetQryExe;
+
+	private final MenuIDSGetQryExe menuIDSGetQryExe;
+
+	private final MenuTenantTreeGetQryExe menuTenantTreeGetQryExe;
 
 	@Override
 	public Result<MenuCO> treeList(MenuTreeListQry qry) {
@@ -78,6 +82,21 @@ public class MenusServiceImpl implements MenusServiceI {
 	@Override
 	public Result<Boolean> delete(MenuDeleteCmd cmd) {
 		return menuDeleteCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<MenuCO> tree(MenuTreeGetQry qry) {
+		return menuTreeGetQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<List<Long>> ids(MenuIDSGetQry qry) {
+		return menuIDSGetQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<MenuCO> tenantTree(MenuTenantTreeGetQry qry) {
+		return menuTenantTreeGetQryExe.execute(qry);
 	}
 
 }

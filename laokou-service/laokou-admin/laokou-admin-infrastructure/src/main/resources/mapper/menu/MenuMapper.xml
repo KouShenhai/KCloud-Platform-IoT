@@ -100,4 +100,38 @@
         </if>
         order by a.sort desc
     </select>
+    <select id="getMenuIdsByRoleId" resultType="java.lang.Long">
+        SELECT a.id
+        FROM boot_sys_menu a
+           ,boot_sys_role b
+           ,boot_sys_role_menu c
+        WHERE a.id = c.menu_id
+            AND c.role_id = b.id
+            AND b.id = #{roleId}
+            and a.del_flag = 0
+        group by a.id
+    </select>
+    <select id="getTenantMenuList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
+        select id
+             ,pid
+             ,`name`
+        from boot_sys_menu
+        where del_flag = 0
+          AND `name` NOT LIKE '菜单修改'
+          AND `name` NOT LIKE '菜单新增'
+          AND `name` NOT LIKE '菜单删除'
+          AND `name` not LIKE '租户%'
+          AND `name` not LIKE '套餐%'
+          AND `name` not LIKE '数据源%'
+          AND `name` not LIKE '%同步'
+          AND `name` not like '%搜索%'
+          AND `name` not like '%音频%'
+          AND `name` not like '%视频%'
+          AND `name` not like '%图片%'
+          AND `name` not like '%资源%'
+          AND `name` not like '%流程%'
+          AND `name` not like '%任务%'
+          AND `name` <![CDATA[ <> ]]> '接口文档'
+        order by sort desc
+    </select>
 </mapper>

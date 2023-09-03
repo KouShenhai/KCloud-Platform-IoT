@@ -15,30 +15,27 @@
  *
  */
 
-package org.laokou.admin.service;
+package org.laokou.admin.command.menu.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.TenantsServiceI;
-import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.tenant.TenantOptionListQry;
-import org.laokou.admin.command.tenant.query.TenantOptionListQryExe;
+import org.laokou.admin.client.dto.menu.MenuIDSGetQry;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-@Service
+@Component
 @RequiredArgsConstructor
-public class TenantsServiceImpl implements TenantsServiceI {
+public class MenuIDSGetQryExe {
 
-	private final TenantOptionListQryExe tenantOptionListQryExe;
+    private final MenuMapper menuMapper;
 
-	@Override
-	public Result<List<OptionCO>> optionList(TenantOptionListQry qry) {
-		return tenantOptionListQryExe.execute(qry);
-	}
+    public Result<List<Long>> execute(MenuIDSGetQry qry) {
+        return Result.of(menuMapper.getMenuIdsByRoleId(qry.getRoleId()));
+    }
 
 }

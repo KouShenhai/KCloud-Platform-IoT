@@ -99,22 +99,22 @@ public class MenusController {
 	@TraceLog
 	@GetMapping("v1/menus/tree")
 	@Operation(summary = "树菜单", description = "树菜单")
-	public Result<?> tree() {
-		return Result.of(null);
+	public Result<MenuCO> tree() {
+		return menusServiceI.tree(new MenuTreeGetQry());
 	}
 
 	@TraceLog
 	@GetMapping("v1/menus/ids/{roleId}")
 	@Operation(summary = "菜单树IDS", description = "菜单树IDS")
 	public Result<List<Long>> ids(@PathVariable(value = "roleId") Long roleId) {
-		return Result.of(null);
+		return menusServiceI.ids(new MenuIDSGetQry(roleId));
 	}
 
 	@TraceLog
 	@GetMapping("v1/menus/tenant-tree")
 	@Operation(summary = "租户树菜单", description = "租户树菜单")
 	public Result<?> tenantTree() {
-		return Result.of(null);
+		return menusServiceI.tenantTree(new MenuTenantTreeGetQry());
 	}
 
 }

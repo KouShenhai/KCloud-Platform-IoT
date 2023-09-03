@@ -15,16 +15,21 @@
  *
  */
 
-package org.laokou.admin.command.resource.query;
+package org.laokou.admin.client.dto.menu;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class ResourceSearchQryExe {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class MenuIDSGetQry extends CommonCommand {
+
+    private Long roleId;
 
 }
