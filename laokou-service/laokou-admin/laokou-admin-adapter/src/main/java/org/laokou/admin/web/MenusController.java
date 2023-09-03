@@ -33,8 +33,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 系统菜单控制器
- *
  * @author laokou
  */
 @RestController

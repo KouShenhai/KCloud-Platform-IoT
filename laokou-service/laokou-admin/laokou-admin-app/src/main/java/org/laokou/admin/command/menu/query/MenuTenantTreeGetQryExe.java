@@ -36,12 +36,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MenuTenantTreeGetQryExe {
 
-    private final MenuMapper menuMapper;
+	private final MenuMapper menuMapper;
 
-    public Result<MenuCO> execute(MenuTenantTreeGetQry qry) {
-        List<MenuDO> list = menuMapper.getTenantMenuList();
-        List<MenuCO> menuList = ConvertUtil.sourceToTarget(list, MenuCO.class);
-        return Result.of(TreeUtil.buildTreeNode(menuList,MenuCO.class));
-    }
+	public Result<MenuCO> execute(MenuTenantTreeGetQry qry) {
+		List<MenuDO> list = menuMapper.getTenantMenuList();
+		List<MenuCO> menuList = ConvertUtil.sourceToTarget(list, MenuCO.class);
+		return Result.of(TreeUtil.buildTreeNode(menuList, MenuCO.class));
+	}
 
 }

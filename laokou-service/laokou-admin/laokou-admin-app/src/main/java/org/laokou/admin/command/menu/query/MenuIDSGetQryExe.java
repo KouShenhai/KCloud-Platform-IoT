@@ -32,10 +32,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MenuIDSGetQryExe {
 
-    private final MenuMapper menuMapper;
+	private final MenuMapper menuMapper;
 
-    public Result<List<Long>> execute(MenuIDSGetQry qry) {
-        return Result.of(menuMapper.getMenuIdsByRoleId(qry.getRoleId()));
-    }
+	public Result<List<Long>> execute(MenuIDSGetQry qry) {
+		return Result.of(menuMapper.getMenuIdsByRoleId(qry.getRoleId()));
+	}
 
 }

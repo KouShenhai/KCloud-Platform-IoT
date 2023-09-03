@@ -30,6 +30,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class MenuIDSGetQry extends CommonCommand {
 
-    private Long roleId;
+	private Long roleId;
 
 }
