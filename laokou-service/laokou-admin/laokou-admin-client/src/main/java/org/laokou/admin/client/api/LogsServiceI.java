@@ -21,36 +21,4 @@ package org.laokou.admin.client.api;
  */
 public interface LogsServiceI {
 
-	// /**
-	// * 分页查询操作日志
-	// * @param qo
-	// * @return
-	// */
-	// IPage<SysOperateLogVO> queryOperateLogPage(SysOperateLogQo qo);
-	//
-	// /**
-	// * 导出全部
-	// * @param qo
-	// * @param response
-	// * @throws IOException
-	// */
-	// void exportOperateLog(SysOperateLogQo qo, HttpServletResponse response) throws
-	// IOException;
-	//
-	// /**
-	// * 导出全部
-	// * @param qo
-	// * @param response
-	// * @throws IOException
-	// */
-	// void exportLoginLog(SysLoginLogQo qo, HttpServletResponse response) throws
-	// IOException;
-	//
-	// /**
-	// * 分页查询登录日志
-	// * @param qo
-	// * @return
-	// */
-	// IPage<SysLoginLogVO> queryLoginLogPage(SysLoginLogQo qo);
-
 }

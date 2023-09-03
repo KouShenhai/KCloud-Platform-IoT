@@ -15,45 +15,39 @@
  *
  */
 
-package org.laokou.admin.command.user.query;
+package org.laokou.admin.command.role.query;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.user.UserOptionListQry;
-import org.laokou.admin.gatewayimpl.database.UserMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.admin.client.dto.role.RoleOptionListQry;
+import org.laokou.admin.gatewayimpl.database.RoleMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.jasypt.utils.AesUtil;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class UserOptionListQryExe {
+public class RoleOptionListQryExe {
 
-	private final UserMapper userMapper;
+	private final RoleMapper roleMapper;
 
-	@DS(SHARDING_SPHERE)
-	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
-		List<UserDO> list = userMapper.getOptionListByTenantId(UserUtil.getTenantId());
+	public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
+		List<RoleDO> list = roleMapper.getValueListOrderByDesc(RoleDO.class, "create_date", "id", "name");
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}
 		List<OptionCO> options = new ArrayList<>(list.size());
-		for (UserDO userDO : list) {
+		for (RoleDO roleDO : list) {
 			OptionCO oc = new OptionCO();
-			oc.setLabel(AesUtil.decrypt(userDO.getUsername()));
-			oc.setValue(String.valueOf(userDO.getId()));
+			oc.setLabel(roleDO.getName());
+			oc.setValue(String.valueOf(roleDO.getId()));
 			options.add(oc);
 		}
 		return Result.of(options);

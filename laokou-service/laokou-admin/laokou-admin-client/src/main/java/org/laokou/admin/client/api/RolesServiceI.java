@@ -16,51 +16,28 @@
  */
 package org.laokou.admin.client.api;
 
+import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.client.dto.role.RoleGetQry;
+import org.laokou.admin.client.dto.role.RoleInsertCmd;
+import org.laokou.admin.client.dto.role.RoleListQry;
+import org.laokou.admin.client.dto.role.RoleOptionListQry;
+import org.laokou.admin.client.dto.role.clientobject.RoleCO;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
 public interface RolesServiceI {
 
-	// /**
-	// * 分页查询角色
-	// * @param qo
-	// * @return
-	// */
-	// IPage<SysRoleVO> queryRolePage(SysRoleQo qo);
-	//
-	// /**
-	// * 查询角色列表
-	// * @param qo
-	// * @return
-	// */
-	// List<SysRoleVO> getRoleList(SysRoleQo qo);
-	//
-	// /**
-	// * 根据id获取角色
-	// * @param id
-	// * @return
-	// */
-	// SysRoleVO getRoleById(Long id);
-	//
-	// /**
-	// * 新增角色
-	// * @param dto
-	// * @return
-	// */
-	// Boolean insertRole(SysRoleDTO dto);
-	//
-	// /**
-	// * 修改角色
-	// * @param dto
-	// * @return
-	// */
-	// Boolean updateRole(SysRoleDTO dto);
-	//
-	// /**
-	// * 根据id删除角色
-	// * @param id
-	// * @return
-	// */
-	// Boolean deleteRole(Long id);
+	Result<Datas<RoleCO>> list(RoleListQry qry);
+
+	Result<List<OptionCO>> optionList(RoleOptionListQry qry);
+
+	Result<RoleCO> get(RoleGetQry qry);
+
+	Result<Boolean> insert(RoleInsertCmd cmd);
 
 }

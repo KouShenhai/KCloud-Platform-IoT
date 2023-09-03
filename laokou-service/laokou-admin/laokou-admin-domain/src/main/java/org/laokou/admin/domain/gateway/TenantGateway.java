@@ -15,15 +15,9 @@
  */
 package org.laokou.admin.domain.gateway;
 
-import org.laokou.admin.domain.common.Option;
-
-import java.util.List;
-
 /**
  * @author laokou
  */
 public interface TenantGateway {
-
-	List<Option> getOptionList();
 
 }

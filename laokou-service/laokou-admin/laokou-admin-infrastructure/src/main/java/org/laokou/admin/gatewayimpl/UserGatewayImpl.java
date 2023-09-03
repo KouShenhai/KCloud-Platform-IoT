@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
-import org.laokou.admin.domain.common.Option;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
@@ -32,7 +31,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.mybatisplus.context.DynamicTableContextHolder;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
@@ -112,23 +110,6 @@ public class UserGatewayImpl implements UserGateway {
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean deleteById(Long id) {
 		return userMapper.deleteById(id) > 0;
-	}
-
-	@Override
-	@DS(SHARDING_SPHERE)
-	public List<Option> getOptionList(Long tenantId) {
-		List<UserDO> list = userMapper.getOptionListByTenantId(tenantId);
-		if (CollectionUtil.isNotEmpty(list)) {
-			List<Option> options = new ArrayList<>(list.size());
-			for (UserDO userDO : list) {
-				Option op = new Option();
-				op.setLabel(AesUtil.decrypt(userDO.getUsername()));
-				op.setValue(String.valueOf(userDO.getId()));
-				options.add(op);
-			}
-			return options;
-		}
-		return new ArrayList<>(0);
 	}
 
 	@Override

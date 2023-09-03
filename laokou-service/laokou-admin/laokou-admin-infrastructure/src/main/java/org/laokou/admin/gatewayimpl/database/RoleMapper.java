@@ -15,6 +15,7 @@
  */
 package org.laokou.admin.gatewayimpl.database;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
@@ -32,6 +33,7 @@ public interface RoleMapper extends BatchMapper<RoleDO> {
 
 	List<Long> getRoleIdsByUserId(@Param("userId") Long userId);
 
-	List<RoleDO> getRoleListByTenantIdAndLikeName(@Param("tenantId") Long tenantId, @Param("name") String name);
+	IPage<RoleDO> getRoleListByTenantIdAndLikeName(IPage<RoleDO> page, @Param("tenantId") Long tenantId,
+			@Param("name") String name);
 
 }

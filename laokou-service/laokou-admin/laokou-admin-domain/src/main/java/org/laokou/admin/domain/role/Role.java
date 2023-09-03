@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /*
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,17 +14,27 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.admin.gatewayimpl.database.SourceMapper">
 
-    <select id="getSourceByName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.SourceDO">
-        select driver_class_name
-             ,url
-             ,username
-             ,password
-        from boot_sys_source
-        where del_flag = 0
-            and name = #{name}
-    </select>
-</mapper>
+package org.laokou.admin.domain.role;
+
+import lombok.Data;
+
+import java.util.List;
+
+/**
+ * @author laokou
+ */
+@Data
+public class Role {
+
+	private Long id;
+
+	private String name;
+
+	private Integer sort;
+
+	private List<Long> menuIds;
+
+	private List<Long> deptIds;
+
+}

@@ -15,13 +15,15 @@
  */
 package org.laokou.admin.domain.gateway;
 
+import org.laokou.admin.domain.role.Role;
+
 /**
  * @author laokou
  */
 public interface RoleGateway {
 
-	Boolean insert();
+	Boolean insert(Role role);
 
-	Boolean update();
+	Boolean update(Role role);
 
 }

@@ -20,12 +20,13 @@ package org.laokou.admin.command.tenant.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.client.dto.tenant.TenantOptionListQry;
-import org.laokou.admin.domain.common.Option;
-import org.laokou.admin.domain.gateway.TenantGateway;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.gatewayimpl.database.TenantMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,11 +36,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TenantOptionListQryExe {
 
-	private final TenantGateway tenantGateway;
+	private final TenantMapper tenantMapper;
 
 	public Result<List<OptionCO>> execute(TenantOptionListQry qry) {
-		List<Option> optionList = tenantGateway.getOptionList();
-		return Result.of(ConvertUtil.sourceToTarget(optionList, OptionCO.class));
+		List<TenantDO> list = tenantMapper.getValueListOrderByDesc(TenantDO.class, "create_date", "id", "name");
+		if (CollectionUtil.isEmpty(list)) {
+			return Result.of(new ArrayList<>(0));
+		}
+		List<OptionCO> options = new ArrayList<>(list.size());
+		for (TenantDO tenantDO : list) {
+			OptionCO oc = new OptionCO();
+			oc.setLabel(tenantDO.getName());
+			oc.setValue(String.valueOf(tenantDO.getId()));
+			options.add(oc);
+		}
+		return Result.of(options);
 	}
 
 }

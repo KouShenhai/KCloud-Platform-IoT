@@ -17,7 +17,17 @@
 
 package org.laokou.admin.command.role;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.role.RoleUpdateCmd;
+import org.laokou.admin.client.dto.role.clientobject.RoleCO;
+import org.laokou.admin.common.BizCode;
+import org.laokou.admin.convertor.RoleConvertor;
+import org.laokou.admin.domain.gateway.RoleGateway;
+import org.laokou.admin.gatewayimpl.database.RoleMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
+import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +36,23 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class RoleUpdateCmdExe {
+
+	private final RoleGateway roleGateway;
+
+	private final RoleMapper roleMapper;
+
+	public Result<Boolean> execute(RoleUpdateCmd cmd) {
+		RoleCO roleCO = cmd.getRoleCO();
+		Long id = roleCO.getId();
+		if (id == null) {
+			throw new GlobalException(BizCode.ID_NOT_NULL);
+		}
+		Long count = roleMapper.selectCount(
+				Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, roleCO.getName()).ne(RoleDO::getId, id));
+		if (count > 0) {
+			throw new GlobalException("角色已存在，请重新填写");
+		}
+		return Result.of(roleGateway.update(RoleConvertor.toEntity(roleCO)));
+	}
 
 }

@@ -21,46 +21,4 @@ package org.laokou.admin.client.api;
  */
 public interface DictsServiceI {
 
-	// /**
-	// * 分页查询字典
-	// * @param qo
-	// * @return
-	// */
-	// IPage<SysDictVO> queryDictPage(SysDictQo qo);
-	//
-	// /**
-	// * 根据id查询字典
-	// * @param id
-	// * @return
-	// */
-	// SysDictVO getDictById(Long id);
-	//
-	// /**
-	// * 新增字典
-	// * @param dto
-	// * @return
-	// */
-	// Boolean insertDict(SysDictDTO dto);
-	//
-	// /**
-	// * 修改字典
-	// * @param dto
-	// * @return
-	// */
-	// Boolean updateDict(SysDictDTO dto);
-	//
-	// /**
-	// * 根据id删除字典
-	// * @param id
-	// * @return
-	// */
-	// Boolean deleteDict(Long id);
-	//
-	// /**
-	// * 下拉框选项
-	// * @param type
-	// * @return
-	// */
-	// List<OptionVO> getOptionList(String type);
-
 }

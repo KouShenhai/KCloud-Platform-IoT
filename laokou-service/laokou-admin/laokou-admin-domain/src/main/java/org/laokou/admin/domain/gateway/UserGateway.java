@@ -15,11 +15,8 @@
  */
 package org.laokou.admin.domain.gateway;
 
-import org.laokou.admin.domain.common.Option;
 import org.laokou.admin.domain.user.User;
 import org.laokou.common.i18n.dto.Datas;
-
-import java.util.List;
 
 /**
  * @author laokou
@@ -31,8 +28,6 @@ public interface UserGateway {
 	Boolean update(User user);
 
 	Boolean deleteById(Long id);
-
-	List<Option> getOptionList(Long tenantId);
 
 	Boolean updatePwd(User user);
 

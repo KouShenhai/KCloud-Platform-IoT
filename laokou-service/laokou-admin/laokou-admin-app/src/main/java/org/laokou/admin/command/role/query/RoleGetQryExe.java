@@ -18,6 +18,12 @@
 package org.laokou.admin.command.role.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.role.RoleGetQry;
+import org.laokou.admin.client.dto.role.clientobject.RoleCO;
+import org.laokou.admin.gatewayimpl.database.RoleMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +32,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class RoleGetQryExe {
+
+	private final RoleMapper roleMapper;
+
+	public Result<RoleCO> execute(RoleGetQry qry) {
+		RoleDO roleDO = roleMapper.selectById(qry.getId());
+		return Result.of(ConvertUtil.sourceToTarget(roleDO, RoleCO.class));
+	}
 
 }

@@ -18,6 +18,7 @@
 package org.laokou.admin.client.dto.role;
 
 import lombok.Data;
+import org.laokou.admin.client.dto.role.clientobject.RoleCO;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
@@ -25,5 +26,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  */
 @Data
 public class RoleUpdateCmd extends CommonCommand {
+
+	private final RoleCO roleCO;
 
 }

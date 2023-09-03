@@ -14,18 +14,30 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.gatewayimpl.database;
+package org.laokou.admin.gatewayimpl.database.dataobject;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
-import org.springframework.stereotype.Repository;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
+
+import java.io.Serial;
 
 /**
  * @author laokou
  */
-@Mapper
-@Repository
-public interface TenantMapper extends BatchMapper<TenantDO> {
+@Data
+@TableName("boot_sys_role_menu")
+@Schema(name = "RoleMenuDO", description = "角色菜单")
+public class RoleMenuDO extends BaseDO {
+
+	@Serial
+	private static final long serialVersionUID = -4300621783981688988L;
+
+	@Schema(name = "menuId", description = "菜单ID")
+	private Long menuId;
+
+	@Schema(name = "roleId", description = "角色ID")
+	private Long roleId;
 
 }

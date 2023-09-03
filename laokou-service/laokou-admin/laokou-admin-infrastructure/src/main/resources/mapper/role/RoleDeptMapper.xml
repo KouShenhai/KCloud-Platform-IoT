@@ -18,15 +18,17 @@
  */
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.admin.gatewayimpl.database.SourceMapper">
-
-    <select id="getSourceByName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.SourceDO">
-        select driver_class_name
-             ,url
-             ,username
-             ,password
-        from boot_sys_source
-        where del_flag = 0
-            and name = #{name}
+<mapper namespace="org.laokou.admin.gatewayimpl.database.RoleDeptMapper">
+    <insert id="insertBatch" useGeneratedKeys="false">
+      insert into boot_sys_role_dept(id,role_id,dept_id)
+      values
+          <foreach collection="list" item="item" separator=",">
+               (#{item.id}, #{item.roleId}, #{item.deptId})
+          </foreach>
+    </insert>
+    <select id="getIdsByRoleId" resultType="java.lang.Long">
+        select id
+        from boot_sys_role_dept
+        where role_id = #{roleId}
     </select>
 </mapper>
