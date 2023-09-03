@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.monitor.component;
+package org.laokou.monitor.config;
 
 import de.codecentric.boot.admin.server.domain.entities.Instance;
 import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
