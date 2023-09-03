@@ -20,9 +20,13 @@ package org.laokou.admin.service;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.RolesServiceI;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.client.dto.role.RoleGetQry;
+import org.laokou.admin.client.dto.role.RoleInsertCmd;
 import org.laokou.admin.client.dto.role.RoleListQry;
 import org.laokou.admin.client.dto.role.RoleOptionListQry;
 import org.laokou.admin.client.dto.role.clientobject.RoleCO;
+import org.laokou.admin.command.role.RoleInsertCmdExe;
+import org.laokou.admin.command.role.query.RoleGetQryExe;
 import org.laokou.admin.command.role.query.RoleListQryExe;
 import org.laokou.admin.command.role.query.RoleOptionListQryExe;
 import org.laokou.common.i18n.dto.Datas;
@@ -42,6 +46,10 @@ public class RolesServiceImpl implements RolesServiceI {
 
     private final RoleOptionListQryExe roleOptionListQryExe;
 
+    private final RoleGetQryExe roleGetQryExe;
+
+    private final RoleInsertCmdExe roleInsertCmdExe;
+
     @Override
     public Result<Datas<RoleCO>> list(RoleListQry qry) {
         return roleListQryExe.execute(qry);
@@ -50,5 +58,15 @@ public class RolesServiceImpl implements RolesServiceI {
     @Override
     public Result<List<OptionCO>> optionList(RoleOptionListQry qry) {
         return roleOptionListQryExe.execute(qry);
+    }
+
+    @Override
+    public Result<RoleCO> get(RoleGetQry qry) {
+        return roleGetQryExe.execute(qry);
+    }
+
+    @Override
+    public Result<Boolean> insert(RoleInsertCmd cmd) {
+        return roleInsertCmdExe.execute(cmd);
     }
 }

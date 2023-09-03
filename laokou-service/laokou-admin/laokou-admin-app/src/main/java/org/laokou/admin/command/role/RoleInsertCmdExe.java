@@ -18,6 +18,9 @@
 package org.laokou.admin.command.role;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.role.RoleInsertCmd;
+import org.laokou.admin.domain.gateway.RoleGateway;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +29,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class RoleInsertCmdExe {
+
+    private final RoleGateway roleGateway;
+
+    public Result<Boolean> execute(RoleInsertCmd cmd) {
+        return Result.of(roleGateway.insert());
+    }
 
 }

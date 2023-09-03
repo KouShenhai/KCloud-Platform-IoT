@@ -37,7 +37,7 @@ public class RoleOptionListQryExe {
     private final RoleGateway roleGateway;
 
     public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
-        return Result.of(ConvertUtil.sourceToTarget(roleGateway.optionList(),OptionCO.class));
+        return Result.of(ConvertUtil.sourceToTarget(roleGateway.getOptionList(),OptionCO.class));
     }
 
 }

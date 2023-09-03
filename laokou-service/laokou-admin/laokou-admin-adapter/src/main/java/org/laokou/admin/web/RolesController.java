@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.RolesServiceI;
+import org.laokou.admin.client.dto.role.RoleGetQry;
 import org.laokou.admin.client.dto.role.RoleListQry;
 import org.laokou.admin.client.dto.role.RoleOptionListQry;
 import org.laokou.admin.client.dto.role.clientobject.RoleCO;
@@ -62,7 +63,7 @@ public class RolesController {
 	@Operation(summary = "查看", description = "查看")
 	@DataCache(name = "roles", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return rolesServiceI.get(new RoleGetQry(id));
 	}
 
 	@TraceLog

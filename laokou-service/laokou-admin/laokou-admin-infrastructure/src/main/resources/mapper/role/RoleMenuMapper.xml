@@ -1,4 +1,6 @@
-/*
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,22 +16,14 @@
  * limitations under the License.
  *
  */
-
-package org.laokou.admin.client.dto.role;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
-
-/**
- * @author laokou
- */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class RoleGetQry extends CommonCommand {
-
-    private Long id;
-
-}
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.admin.gatewayimpl.database.RoleMenuMapper">
+    <insert id="insertBatch" useGeneratedKeys="false">
+      insert into boot_sys_role_menu(id,role_id,menu_id)
+      values
+          <foreach collection="list" item="item" separator=",">
+               (#{item.id}, #{item.roleId}, #{item.menuId})
+          </foreach>
+    </insert>
+</mapper>

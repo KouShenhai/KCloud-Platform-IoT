@@ -15,21 +15,17 @@
  *
  */
 
-package org.laokou.admin.client.dto.role;
+package org.laokou.admin.gatewayimpl.database;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.RoleMenuDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class RoleGetQry extends CommonCommand {
-
-    private Long id;
-
+@Repository
+@Mapper
+public interface RoleMenuMapper extends BatchMapper<RoleMenuDO> {
 }

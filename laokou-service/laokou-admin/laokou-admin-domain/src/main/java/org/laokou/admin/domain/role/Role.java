@@ -14,30 +14,27 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.role.RoleGetQry;
-import org.laokou.admin.client.dto.role.RoleInsertCmd;
-import org.laokou.admin.client.dto.role.RoleListQry;
-import org.laokou.admin.client.dto.role.RoleOptionListQry;
-import org.laokou.admin.client.dto.role.clientobject.RoleCO;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
+package org.laokou.admin.domain.role;
+
+import lombok.Data;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface RolesServiceI {
+@Data
+public class Role {
 
-    Result<Datas<RoleCO>> list(RoleListQry qry);
+    private Long id;
 
-    Result<List<OptionCO>> optionList(RoleOptionListQry qry);
+    private String name;
 
-    Result<RoleCO> get(RoleGetQry qry);
+    private Integer sort;
 
-    Result<Boolean> insert(RoleInsertCmd cmd);
+    private List<Long> menuIds;
+
+    private List<Long> deptIds;
 
 }

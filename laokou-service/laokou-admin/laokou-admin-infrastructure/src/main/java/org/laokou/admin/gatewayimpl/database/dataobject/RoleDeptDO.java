@@ -14,22 +14,30 @@
  * limitations under the License.
  *
  */
+package org.laokou.admin.gatewayimpl.database.dataobject;
 
-package org.laokou.admin.client.dto.role;
-
-import lombok.AllArgsConstructor;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
+
+import java.io.Serial;
 
 /**
  * @author laokou
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class RoleGetQry extends CommonCommand {
+@TableName("boot_sys_role_dept")
+@Schema(name = "RoleDeptDO", description = "角色部门")
+public class RoleDeptDO extends BaseDO {
 
-    private Long id;
+	@Serial
+	private static final long serialVersionUID = 8958375447263625932L;
+
+	@Schema(name = "roleId", description = "角色ID")
+	private Long roleId;
+
+	@Schema(name = "deptId", description = "部门ID")
+	private Long deptId;
 
 }
