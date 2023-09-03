@@ -17,10 +17,8 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.common.BizCode;
 import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.common.Option;
 import org.laokou.admin.domain.gateway.RoleGateway;
@@ -32,7 +30,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -62,10 +59,6 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	@Override
 	public Boolean insert(Role role) {
-		Long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()));
-		if (count > 0) {
-			throw new GlobalException("角色已存在，请重新填写");
-		}
 		RoleDO roleDO = RoleConvertor.toDataObject(role);
 		roleDO.setDeptId(UserUtil.getDeptId());
 		roleDO.setTenantId(UserUtil.getTenantId());
@@ -75,14 +68,6 @@ public class RoleGatewayImpl implements RoleGateway {
 	@Override
 	public Boolean update(Role role) {
 		Long id = role.getId();
-		if (id == null) {
-			throw new GlobalException(BizCode.ID_NOT_NULL);
-		}
-		Long count = roleMapper.selectCount(
-				Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()).ne(RoleDO::getId, id));
-		if (count > 0) {
-			throw new GlobalException("角色已存在，请重新填写");
-		}
 		RoleDO roleDO = RoleConvertor.toDataObject(role);
 		List<Long> ids1 = roleMenuMapper.getIdsByRoleId(id);
 		List<Long> ids2 = roleDeptMapper.getIdsByRoleId(id);
