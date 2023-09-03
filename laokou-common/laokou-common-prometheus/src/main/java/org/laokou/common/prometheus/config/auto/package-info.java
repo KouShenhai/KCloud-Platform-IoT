@@ -1,0 +1,1 @@
+package org.laokou.common.prometheus.config.auto;

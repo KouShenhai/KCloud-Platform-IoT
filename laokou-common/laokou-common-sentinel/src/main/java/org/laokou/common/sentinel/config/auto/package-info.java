@@ -1,0 +1,1 @@
+package org.laokou.common.sentinel.config.auto;

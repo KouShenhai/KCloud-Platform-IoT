@@ -20,7 +20,7 @@ package org.laokou.common.sms.enums;
 /**
  * @author laokou
  */
-public enum SmsTypeEnum {
+public enum SmsType {
 
 	/**
 	 * 国阳云
