@@ -15,30 +15,16 @@
  *
  */
 
-package org.laokou.admin.service;
+package org.laokou.admin.command.resource.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.TenantsServiceI;
-import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.tenant.TenantOptionListQry;
-import org.laokou.admin.command.tenant.query.TenantOptionListQryExe;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Service
+@Component
 @RequiredArgsConstructor
-public class TenantsServiceImpl implements TenantsServiceI {
-
-	private final TenantOptionListQryExe tenantOptionListQryExe;
-
-	@Override
-	public Result<List<OptionCO>> optionList(TenantOptionListQry qry) {
-		return tenantOptionListQryExe.execute(qry);
-	}
+public class ResourceSearchGetQryExe {
 
 }

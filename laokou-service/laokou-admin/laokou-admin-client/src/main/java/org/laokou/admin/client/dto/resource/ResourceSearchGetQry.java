@@ -24,6 +24,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-public class ResourceSearchQry extends CommonCommand {
+public class ResourceSearchGetQry extends CommonCommand {
 
 }

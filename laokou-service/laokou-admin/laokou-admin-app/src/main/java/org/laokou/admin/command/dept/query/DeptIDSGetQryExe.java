@@ -15,16 +15,27 @@
  *
  */
 
-package org.laokou.admin.command.resource.query;
+package org.laokou.admin.command.dept.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.dept.DeptIDSGetQry;
+import org.laokou.admin.domain.gateway.DeptGateway;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class ResourceSearchQryExe {
+public class DeptIDSGetQryExe {
+
+	private final DeptGateway deptGateway;
+
+	public Result<List<Long>> execute(DeptIDSGetQry qry) {
+		return Result.of(deptGateway.getDeptIds(qry.getRoleId()));
+	}
 
 }

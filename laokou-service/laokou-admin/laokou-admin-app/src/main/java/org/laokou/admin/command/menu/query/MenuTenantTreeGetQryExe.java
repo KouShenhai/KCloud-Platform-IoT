@@ -15,11 +15,15 @@
  *
  */
 
-package org.laokou.admin.command.dept.query;
+package org.laokou.admin.command.menu.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.dept.DeptIDSQry;
-import org.laokou.admin.domain.gateway.DeptGateway;
+import org.laokou.admin.client.dto.menu.MenuTenantTreeGetQry;
+import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -30,12 +34,14 @@ import java.util.List;
  */
 @Component
 @RequiredArgsConstructor
-public class DeptIDSQryExe {
+public class MenuTenantTreeGetQryExe {
 
-	private final DeptGateway deptGateway;
+	private final MenuMapper menuMapper;
 
-	public Result<List<Long>> execute(DeptIDSQry qry) {
-		return Result.of(deptGateway.getDeptIds(qry.getRoleId()));
+	public Result<MenuCO> execute(MenuTenantTreeGetQry qry) {
+		List<MenuDO> list = menuMapper.getTenantMenuList();
+		List<MenuCO> menuList = ConvertUtil.sourceToTarget(list, MenuCO.class);
+		return Result.of(TreeUtil.buildTreeNode(menuList, MenuCO.class));
 	}
 
 }

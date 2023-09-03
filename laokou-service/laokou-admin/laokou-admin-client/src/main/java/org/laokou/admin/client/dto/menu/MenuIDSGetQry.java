@@ -14,35 +14,22 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.menu.*;
-import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
-import org.laokou.common.i18n.dto.Result;
+package org.laokou.admin.client.dto.menu;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-public interface MenusServiceI {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class MenuIDSGetQry extends CommonCommand {
 
-	Result<MenuCO> treeList(MenuTreeListQry qry);
-
-	Result<List<MenuCO>> list(MenuListQry qry);
-
-	Result<MenuCO> get(MenuGetQry qry);
-
-	Result<Boolean> update(MenuUpdateCmd cmd);
-
-	Result<Boolean> insert(MenuInsertCmd cmd);
-
-	Result<Boolean> delete(MenuDeleteCmd cmd);
-
-	Result<MenuCO> tree(MenuTreeGetQry qry);
-
-	Result<List<Long>> ids(MenuIDSGetQry qry);
-
-	Result<MenuCO> tenantTree(MenuTenantTreeGetQry qry);
+	private Long roleId;
 
 }

@@ -15,21 +15,27 @@
  *
  */
 
-package org.laokou.admin.client.dto.dept;
+package org.laokou.admin.command.menu.query;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.menu.MenuIDSGetQry;
+import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class DeptIDSQry extends CommonCommand {
+@Component
+@RequiredArgsConstructor
+public class MenuIDSGetQryExe {
 
-	private Long roleId;
+	private final MenuMapper menuMapper;
+
+	public Result<List<Long>> execute(MenuIDSGetQry qry) {
+		return Result.of(menuMapper.getMenuIdsByRoleId(qry.getRoleId()));
+	}
 
 }

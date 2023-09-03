@@ -39,6 +39,6 @@ public interface DeptsServiceI {
 
 	Result<DeptCO> get(DeptGetQry qry);
 
-	Result<List<Long>> ids(DeptIDSQry qry);
+	Result<List<Long>> ids(DeptIDSGetQry qry);
 
 }
