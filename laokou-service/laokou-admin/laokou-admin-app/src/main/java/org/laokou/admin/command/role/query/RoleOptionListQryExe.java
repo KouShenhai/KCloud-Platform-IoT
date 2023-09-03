@@ -34,10 +34,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoleOptionListQryExe {
 
-    private final RoleGateway roleGateway;
+	private final RoleGateway roleGateway;
 
-    public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
-        return Result.of(ConvertUtil.sourceToTarget(roleGateway.getOptionList(),OptionCO.class));
-    }
+	public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
+		return Result.of(ConvertUtil.sourceToTarget(roleGateway.getOptionList(), OptionCO.class));
+	}
 
 }

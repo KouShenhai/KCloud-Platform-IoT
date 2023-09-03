@@ -49,89 +49,93 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoleGatewayImpl implements RoleGateway {
 
-    private final RoleMapper roleMapper;
-    private final RoleMenuMapper roleMenuMapper;
-    private final RoleDeptMapper roleDeptMapper;
-    private final BatchUtil batchUtil;
-    private final TransactionalUtil transactionalUtil;
+	private final RoleMapper roleMapper;
 
-    @Override
-    public Boolean insert(Role role) {
-        Long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()));
-        if (count > 0) {
-            throw new GlobalException("角色已存在，请重新填写");
-        }
-        RoleDO roleDO = ConvertUtil.sourceToTarget(role, RoleDO.class);
-        roleDO.setDeptId(UserUtil.getDeptId());
-        roleDO.setTenantId(UserUtil.getTenantId());
-        return insertRole(roleDO,role);
-    }
+	private final RoleMenuMapper roleMenuMapper;
 
-    @Override
-    public Boolean update() {
-        return null;
-    }
+	private final RoleDeptMapper roleDeptMapper;
 
-    @Override
-    public List<Option> getOptionList() {
-        List<RoleDO> list = roleMapper.getValueListOrderByDesc(RoleDO.class, "create_date", "id", "name");
-        if (CollectionUtil.isEmpty(list)) {
-            return new ArrayList<>(0);
-        }
-        List<Option> options = new ArrayList<>(list.size());
-        for (RoleDO roleDO : list) {
-            Option o = new Option();
-            o.setLabel(roleDO.getName());
-            o.setValue(String.valueOf(roleDO.getId()));
-            options.add(o);
-        }
-        return options;
-    }
+	private final BatchUtil batchUtil;
 
-    private Boolean insertRole(RoleDO roleDO,Role role) {
-        return transactionalUtil.execute(rollback -> {
-            try {
-                return roleMapper.insert(roleDO) > 0
-                        && insertRoleMenu(roleDO.getId(), role.getMenuIds())
-                        && insertRoleDept(roleDO.getId(), role.getDeptIds());
-            } catch (Exception e) {
-                log.error("错误信息：{}", e.getMessage());
-                rollback.setRollbackOnly();
-                return false;
-            }
-        });
-    }
+	private final TransactionalUtil transactionalUtil;
 
-    private Boolean insertRoleMenu(Long roleId, List<Long> menuIds) {
-        if (CollectionUtil.isNotEmpty(menuIds)) {
-            List<RoleMenuDO> list = new ArrayList<>(menuIds.size());
-            for (Long menuId : menuIds) {
-                RoleMenuDO roleMenuDO = new RoleMenuDO();
-                roleMenuDO.setRoleId(roleId);
-                roleMenuDO.setMenuId(menuId);
-                roleMenuDO.setId(IdUtil.defaultId());
-                list.add(roleMenuDO);
-            }
-            batchUtil.insertBatch(list, roleMenuMapper::insertBatch);
-            return true;
-        }
-        return false;
-    }
+	@Override
+	public Boolean insert(Role role) {
+		Long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()));
+		if (count > 0) {
+			throw new GlobalException("角色已存在，请重新填写");
+		}
+		RoleDO roleDO = ConvertUtil.sourceToTarget(role, RoleDO.class);
+		roleDO.setDeptId(UserUtil.getDeptId());
+		roleDO.setTenantId(UserUtil.getTenantId());
+		return insertRole(roleDO, role);
+	}
 
-    private Boolean insertRoleDept(Long roleId,List<Long> deptIds) {
-        if (CollectionUtil.isNotEmpty(deptIds)) {
-            List<RoleDeptDO> list = new ArrayList<>(deptIds.size());
-            for (Long deptId : deptIds) {
-                RoleDeptDO roleDeptDO = new RoleDeptDO();
-                roleDeptDO.setRoleId(roleId);
-                roleDeptDO.setDeptId(deptId);
-                roleDeptDO.setId(IdUtil.defaultId());
-                list.add(roleDeptDO);
-            }
-            batchUtil.insertBatch(list, roleDeptMapper::insertBatch);
-            return true;
-        }
-        return false;
-    }
+	@Override
+	public Boolean update() {
+		return null;
+	}
+
+	@Override
+	public List<Option> getOptionList() {
+		List<RoleDO> list = roleMapper.getValueListOrderByDesc(RoleDO.class, "create_date", "id", "name");
+		if (CollectionUtil.isEmpty(list)) {
+			return new ArrayList<>(0);
+		}
+		List<Option> options = new ArrayList<>(list.size());
+		for (RoleDO roleDO : list) {
+			Option o = new Option();
+			o.setLabel(roleDO.getName());
+			o.setValue(String.valueOf(roleDO.getId()));
+			options.add(o);
+		}
+		return options;
+	}
+
+	private Boolean insertRole(RoleDO roleDO, Role role) {
+		return transactionalUtil.execute(rollback -> {
+			try {
+				return roleMapper.insert(roleDO) > 0 && insertRoleMenu(roleDO.getId(), role.getMenuIds())
+						&& insertRoleDept(roleDO.getId(), role.getDeptIds());
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				rollback.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	private Boolean insertRoleMenu(Long roleId, List<Long> menuIds) {
+		if (CollectionUtil.isNotEmpty(menuIds)) {
+			List<RoleMenuDO> list = new ArrayList<>(menuIds.size());
+			for (Long menuId : menuIds) {
+				RoleMenuDO roleMenuDO = new RoleMenuDO();
+				roleMenuDO.setRoleId(roleId);
+				roleMenuDO.setMenuId(menuId);
+				roleMenuDO.setId(IdUtil.defaultId());
+				list.add(roleMenuDO);
+			}
+			batchUtil.insertBatch(list, roleMenuMapper::insertBatch);
+			return true;
+		}
+		return false;
+	}
+
+	private Boolean insertRoleDept(Long roleId, List<Long> deptIds) {
+		if (CollectionUtil.isNotEmpty(deptIds)) {
+			List<RoleDeptDO> list = new ArrayList<>(deptIds.size());
+			for (Long deptId : deptIds) {
+				RoleDeptDO roleDeptDO = new RoleDeptDO();
+				roleDeptDO.setRoleId(roleId);
+				roleDeptDO.setDeptId(deptId);
+				roleDeptDO.setId(IdUtil.defaultId());
+				list.add(roleDeptDO);
+			}
+			batchUtil.insertBatch(list, roleDeptMapper::insertBatch);
+			return true;
+		}
+		return false;
+	}
 
 }

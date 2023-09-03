@@ -42,31 +42,32 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RolesServiceImpl implements RolesServiceI {
 
-    private final RoleListQryExe roleListQryExe;
+	private final RoleListQryExe roleListQryExe;
 
-    private final RoleOptionListQryExe roleOptionListQryExe;
+	private final RoleOptionListQryExe roleOptionListQryExe;
 
-    private final RoleGetQryExe roleGetQryExe;
+	private final RoleGetQryExe roleGetQryExe;
 
-    private final RoleInsertCmdExe roleInsertCmdExe;
+	private final RoleInsertCmdExe roleInsertCmdExe;
 
-    @Override
-    public Result<Datas<RoleCO>> list(RoleListQry qry) {
-        return roleListQryExe.execute(qry);
-    }
+	@Override
+	public Result<Datas<RoleCO>> list(RoleListQry qry) {
+		return roleListQryExe.execute(qry);
+	}
 
-    @Override
-    public Result<List<OptionCO>> optionList(RoleOptionListQry qry) {
-        return roleOptionListQryExe.execute(qry);
-    }
+	@Override
+	public Result<List<OptionCO>> optionList(RoleOptionListQry qry) {
+		return roleOptionListQryExe.execute(qry);
+	}
 
-    @Override
-    public Result<RoleCO> get(RoleGetQry qry) {
-        return roleGetQryExe.execute(qry);
-    }
+	@Override
+	public Result<RoleCO> get(RoleGetQry qry) {
+		return roleGetQryExe.execute(qry);
+	}
 
-    @Override
-    public Result<Boolean> insert(RoleInsertCmd cmd) {
-        return roleInsertCmdExe.execute(cmd);
-    }
+	@Override
+	public Result<Boolean> insert(RoleInsertCmd cmd) {
+		return roleInsertCmdExe.execute(cmd);
+	}
+
 }

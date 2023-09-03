@@ -28,4 +28,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface RoleMenuMapper extends BatchMapper<RoleMenuDO> {
+
 }

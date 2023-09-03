@@ -39,7 +39,7 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	@Override
 	public List<Option> getOptionList() {
-		List<TenantDO> list = tenantMapper.getValueListOrderByDesc(TenantDO.class,"create_date","id","name");
+		List<TenantDO> list = tenantMapper.getValueListOrderByDesc(TenantDO.class, "create_date", "id", "name");
 		if (CollectionUtil.isEmpty(list)) {
 			return new ArrayList<>(0);
 		}

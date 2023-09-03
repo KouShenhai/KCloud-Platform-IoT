@@ -33,11 +33,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RoleGetQryExe {
 
-    private final RoleMapper roleMapper;
+	private final RoleMapper roleMapper;
 
-    public Result<RoleCO> execute(RoleGetQry qry) {
-        RoleDO roleDO = roleMapper.selectById(qry.getId());
-        return Result.of(ConvertUtil.sourceToTarget(roleDO,RoleCO.class));
-    }
+	public Result<RoleCO> execute(RoleGetQry qry) {
+		RoleDO roleDO = roleMapper.selectById(qry.getId());
+		return Result.of(ConvertUtil.sourceToTarget(roleDO, RoleCO.class));
+	}
 
 }

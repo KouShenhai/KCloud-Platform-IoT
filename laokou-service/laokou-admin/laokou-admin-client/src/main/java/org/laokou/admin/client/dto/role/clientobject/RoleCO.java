@@ -28,13 +28,13 @@ import java.io.Serial;
 @Data
 public class RoleCO extends ClientObject {
 
-    @Serial
-    private static final long serialVersionUID = -3805903746359810600L;
+	@Serial
+	private static final long serialVersionUID = -3805903746359810600L;
 
-    private Long id;
+	private Long id;
 
-    private String name;
+	private String name;
 
-    private Integer sort;
+	private Integer sort;
 
 }

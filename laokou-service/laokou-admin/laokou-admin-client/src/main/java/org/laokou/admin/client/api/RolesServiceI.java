@@ -32,12 +32,12 @@ import java.util.List;
  */
 public interface RolesServiceI {
 
-    Result<Datas<RoleCO>> list(RoleListQry qry);
+	Result<Datas<RoleCO>> list(RoleListQry qry);
 
-    Result<List<OptionCO>> optionList(RoleOptionListQry qry);
+	Result<List<OptionCO>> optionList(RoleOptionListQry qry);
 
-    Result<RoleCO> get(RoleGetQry qry);
+	Result<RoleCO> get(RoleGetQry qry);
 
-    Result<Boolean> insert(RoleInsertCmd cmd);
+	Result<Boolean> insert(RoleInsertCmd cmd);
 
 }

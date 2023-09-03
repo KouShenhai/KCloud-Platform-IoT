@@ -37,15 +37,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RoleListQryExe {
 
-    private final RoleMapper roleMapper;
+	private final RoleMapper roleMapper;
 
-    public Result<Datas<RoleCO>> execute(RoleListQry qry) {
-        IPage<RoleDO> page = new Page<>(qry.getPageNum(),qry.getPageSize());
-        IPage<RoleDO> newPage = roleMapper.getRoleListByTenantIdAndLikeName(page, UserUtil.getTenantId(), qry.getName());
-        Datas<RoleCO> datas = new Datas<>();
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), RoleCO.class));
-        datas.setTotal(newPage.getTotal());
-        return Result.of(datas);
-    }
+	public Result<Datas<RoleCO>> execute(RoleListQry qry) {
+		IPage<RoleDO> page = new Page<>(qry.getPageNum(), qry.getPageSize());
+		IPage<RoleDO> newPage = roleMapper.getRoleListByTenantIdAndLikeName(page, UserUtil.getTenantId(),
+				qry.getName());
+		Datas<RoleCO> datas = new Datas<>();
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), RoleCO.class));
+		datas.setTotal(newPage.getTotal());
+		return Result.of(datas);
+	}
 
 }

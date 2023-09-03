@@ -26,4 +26,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface RoleDeptMapper extends BatchMapper<RoleDeptDO> {
+
 }

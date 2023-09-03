@@ -33,6 +33,7 @@ public interface RoleMapper extends BatchMapper<RoleDO> {
 
 	List<Long> getRoleIdsByUserId(@Param("userId") Long userId);
 
-	IPage<RoleDO> getRoleListByTenantIdAndLikeName(IPage<RoleDO> page,@Param("tenantId") Long tenantId, @Param("name") String name);
+	IPage<RoleDO> getRoleListByTenantIdAndLikeName(IPage<RoleDO> page, @Param("tenantId") Long tenantId,
+			@Param("name") String name);
 
 }

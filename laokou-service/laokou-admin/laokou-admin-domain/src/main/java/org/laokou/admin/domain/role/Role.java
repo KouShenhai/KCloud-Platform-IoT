@@ -27,14 +27,14 @@ import java.util.List;
 @Data
 public class Role {
 
-    private Long id;
+	private Long id;
 
-    private String name;
+	private String name;
 
-    private Integer sort;
+	private Integer sort;
 
-    private List<Long> menuIds;
+	private List<Long> menuIds;
 
-    private List<Long> deptIds;
+	private List<Long> deptIds;
 
 }

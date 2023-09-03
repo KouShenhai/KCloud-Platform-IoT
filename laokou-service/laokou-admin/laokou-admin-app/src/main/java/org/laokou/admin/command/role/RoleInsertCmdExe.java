@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RoleInsertCmdExe {
 
-    private final RoleGateway roleGateway;
+	private final RoleGateway roleGateway;
 
-    public Result<Boolean> execute(RoleInsertCmd cmd) {
-        return Result.of(roleGateway.insert());
-    }
+	public Result<Boolean> execute(RoleInsertCmd cmd) {
+		return Result.of(roleGateway.insert());
+	}
 
 }
