@@ -19,8 +19,8 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.domain.annotation.OperateLog;
-import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.Cache;
 import org.laokou.common.i18n.dto.Result;
@@ -49,7 +49,7 @@ public class DictsController {
 	@TraceLog
 	@GetMapping("v1/dicts/option-list/{type}")
 	@Operation(summary = "下拉列表", description = "下拉列表")
-	public Result<List<OptionVO>> optionList(@PathVariable("type") String type) {
+	public Result<List<OptionCO>> optionList(@PathVariable("type") String type) {
 		return Result.of(null);
 	}
 

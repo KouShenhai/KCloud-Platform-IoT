@@ -20,7 +20,7 @@ package org.laokou.common.nacos.enums;
 /**
  * @author laokou
  */
-public enum InstanceEnum {
+public enum Instance {
 
 	/**
 	 * 注册
