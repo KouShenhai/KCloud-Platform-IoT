@@ -30,6 +30,6 @@ import java.util.List;
 @Mapper
 public interface RoleDeptMapper extends BatchMapper<RoleDeptDO> {
 
-    List<Long> getIdsByRoleId(@Param("roleId")Long roleId);
+	List<Long> getIdsByRoleId(@Param("roleId") Long roleId);
 
 }

@@ -74,18 +74,19 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	@Override
 	public Boolean update(Role role) {
-        Long id = role.getId();
-        if (id == null) {
-            throw new GlobalException(BizCode.ID_NOT_NULL);
-        }
-        Long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()).ne(RoleDO::getId,id));
-        if (count > 0) {
-            throw new GlobalException("角色已存在，请重新填写");
-        }
+		Long id = role.getId();
+		if (id == null) {
+			throw new GlobalException(BizCode.ID_NOT_NULL);
+		}
+		Long count = roleMapper.selectCount(
+				Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, role.getName()).ne(RoleDO::getId, id));
+		if (count > 0) {
+			throw new GlobalException("角色已存在，请重新填写");
+		}
 		RoleDO roleDO = RoleConvertor.toDataObject(role);
 		List<Long> ids1 = roleMenuMapper.getIdsByRoleId(id);
 		List<Long> ids2 = roleDeptMapper.getIdsByRoleId(id);
-		return updateRole(roleDO,role,ids1,ids2);
+		return updateRole(roleDO, role, ids1, ids2);
 	}
 
 	@Override
@@ -104,11 +105,10 @@ public class RoleGatewayImpl implements RoleGateway {
 		return options;
 	}
 
-	private Boolean updateRole(RoleDO roleDO,Role role,List<Long> ids1,List<Long> ids2) {
+	private Boolean updateRole(RoleDO roleDO, Role role, List<Long> ids1, List<Long> ids2) {
 		return transactionalUtil.execute(rollback -> {
 			try {
-				return roleMapper.updateById(roleDO) > 0
-						&& updateRoleMenu(roleDO.getId(), role.getMenuIds(), ids1)
+				return roleMapper.updateById(roleDO) > 0 && updateRoleMenu(roleDO.getId(), role.getMenuIds(), ids1)
 						&& updateRoleDept(roleDO.getId(), role.getDeptIds(), ids2);
 			}
 			catch (Exception e) {
@@ -124,7 +124,7 @@ public class RoleGatewayImpl implements RoleGateway {
 		if (CollectionUtil.isNotEmpty(ids)) {
 			flag = roleMenuMapper.deleteBatchIds(ids) > 0;
 		}
-		return flag && insertRoleMenu(roleId,menuIds);
+		return flag && insertRoleMenu(roleId, menuIds);
 	}
 
 	private Boolean updateRoleDept(Long roleId, List<Long> deptIds, List<Long> ids) {
@@ -132,14 +132,13 @@ public class RoleGatewayImpl implements RoleGateway {
 		if (CollectionUtil.isNotEmpty(ids)) {
 			flag = roleDeptMapper.deleteBatchIds(ids) > 0;
 		}
-		return flag && insertRoleDept(roleId,deptIds);
+		return flag && insertRoleDept(roleId, deptIds);
 	}
 
 	private Boolean insertRole(RoleDO roleDO, Role role) {
 		return transactionalUtil.execute(rollback -> {
 			try {
-				return roleMapper.insert(roleDO) > 0
-						&& insertRoleMenu(roleDO.getId(), role.getMenuIds())
+				return roleMapper.insert(roleDO) > 0 && insertRoleMenu(roleDO.getId(), role.getMenuIds())
 						&& insertRoleDept(roleDO.getId(), role.getDeptIds());
 			}
 			catch (Exception e) {
