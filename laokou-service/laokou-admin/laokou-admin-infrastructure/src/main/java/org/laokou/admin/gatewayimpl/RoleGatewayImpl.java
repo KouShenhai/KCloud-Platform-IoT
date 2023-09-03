@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.RoleConvertor;
-import org.laokou.admin.domain.common.Option;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.domain.role.Role;
 import org.laokou.admin.gatewayimpl.database.RoleDeptMapper;
@@ -72,22 +71,6 @@ public class RoleGatewayImpl implements RoleGateway {
 		List<Long> ids1 = roleMenuMapper.getIdsByRoleId(id);
 		List<Long> ids2 = roleDeptMapper.getIdsByRoleId(id);
 		return updateRole(roleDO, role, ids1, ids2);
-	}
-
-	@Override
-	public List<Option> getOptionList() {
-		List<RoleDO> list = roleMapper.getValueListOrderByDesc(RoleDO.class, "create_date", "id", "name");
-		if (CollectionUtil.isEmpty(list)) {
-			return new ArrayList<>(0);
-		}
-		List<Option> options = new ArrayList<>(list.size());
-		for (RoleDO roleDO : list) {
-			Option o = new Option();
-			o.setLabel(roleDO.getName());
-			o.setValue(String.valueOf(roleDO.getId()));
-			options.add(o);
-		}
-		return options;
 	}
 
 	private Boolean updateRole(RoleDO roleDO, Role role, List<Long> ids1, List<Long> ids2) {

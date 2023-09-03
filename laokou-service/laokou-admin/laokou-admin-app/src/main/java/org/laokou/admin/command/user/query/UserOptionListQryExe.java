@@ -17,17 +17,22 @@
 
 package org.laokou.admin.command.user.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.user.UserOptionListQry;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.domain.gateway.UserGateway;
-import org.laokou.admin.domain.common.Option;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.client.dto.user.UserOptionListQry;
+import org.laokou.admin.gatewayimpl.database.UserMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
 
 /**
  * @author laokou
@@ -36,11 +41,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserOptionListQryExe {
 
-	private final UserGateway userGateway;
+	private final UserMapper userMapper;
 
+	@DS(SHARDING_SPHERE)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
-		List<Option> optionList = userGateway.getOptionList(UserUtil.getTenantId());
-		return Result.of(ConvertUtil.sourceToTarget(optionList, OptionCO.class));
+		List<UserDO> list = userMapper.getOptionListByTenantId(UserUtil.getTenantId());
+		if (CollectionUtil.isEmpty(list)) {
+			return Result.of(new ArrayList<>(0));
+		}
+		List<OptionCO> options = new ArrayList<>(list.size());
+		for (UserDO userDO : list) {
+			OptionCO oc = new OptionCO();
+			oc.setLabel(AesUtil.decrypt(userDO.getUsername()));
+			oc.setValue(String.valueOf(userDO.getId()));
+			options.add(oc);
+		}
+		return Result.of(options);
 	}
 
 }

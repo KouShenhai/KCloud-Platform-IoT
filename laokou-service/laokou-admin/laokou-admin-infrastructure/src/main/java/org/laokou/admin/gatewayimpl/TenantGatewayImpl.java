@@ -18,15 +18,9 @@
 package org.laokou.admin.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.common.Option;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
-import org.laokou.common.core.utils.CollectionUtil;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author laokou
@@ -36,21 +30,5 @@ import java.util.List;
 public class TenantGatewayImpl implements TenantGateway {
 
 	private final TenantMapper tenantMapper;
-
-	@Override
-	public List<Option> getOptionList() {
-		List<TenantDO> list = tenantMapper.getValueListOrderByDesc(TenantDO.class, "create_date", "id", "name");
-		if (CollectionUtil.isEmpty(list)) {
-			return new ArrayList<>(0);
-		}
-		List<Option> options = new ArrayList<>(list.size());
-		for (TenantDO tenantDO : list) {
-			Option op = new Option();
-			op.setLabel(tenantDO.getName());
-			op.setValue(String.valueOf(tenantDO.getId()));
-			options.add(op);
-		}
-		return options;
-	}
 
 }

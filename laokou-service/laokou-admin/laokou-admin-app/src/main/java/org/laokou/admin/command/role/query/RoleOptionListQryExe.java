@@ -20,11 +20,13 @@ package org.laokou.admin.command.role.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.client.dto.role.RoleOptionListQry;
-import org.laokou.admin.domain.gateway.RoleGateway;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.gatewayimpl.database.RoleMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,10 +36,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoleOptionListQryExe {
 
-	private final RoleGateway roleGateway;
+	private final RoleMapper roleMapper;
 
 	public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
-		return Result.of(ConvertUtil.sourceToTarget(roleGateway.getOptionList(), OptionCO.class));
+		List<RoleDO> list = roleMapper.getValueListOrderByDesc(RoleDO.class, "create_date", "id", "name");
+		if (CollectionUtil.isEmpty(list)) {
+			return Result.of(new ArrayList<>(0));
+		}
+		List<OptionCO> options = new ArrayList<>(list.size());
+		for (RoleDO roleDO : list) {
+			OptionCO oc = new OptionCO();
+			oc.setLabel(roleDO.getName());
+			oc.setValue(String.valueOf(roleDO.getId()));
+			options.add(oc);
+		}
+		return Result.of(options);
 	}
 
 }

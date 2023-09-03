@@ -15,10 +15,7 @@
  */
 package org.laokou.admin.domain.gateway;
 
-import org.laokou.admin.domain.common.Option;
 import org.laokou.admin.domain.role.Role;
-
-import java.util.List;
 
 /**
  * @author laokou
@@ -28,7 +25,5 @@ public interface RoleGateway {
 	Boolean insert(Role role);
 
 	Boolean update(Role role);
-
-	List<Option> getOptionList();
 
 }

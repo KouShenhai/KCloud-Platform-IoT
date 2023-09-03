@@ -25,13 +25,6 @@ import org.laokou.admin.server.domain.sys.entity.SysMessageDetailDO;
 public interface SysMessageDetailService extends IService<SysMessageDetailDO> {
 
 	/**
-	 * 获取版本号
-	 * @param id 主键
-	 * @return 返回版本号
-	 */
-	Integer getVersion(Long id);
-
-	/**
 	 * 未读消息数
 	 * @param userId
 	 * @return
