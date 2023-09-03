@@ -14,11 +14,15 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
+
+package org.laokou.admin.client.dto.role;
+
+import lombok.Data;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-public interface LogsServiceI {
-
+@Data
+public class RoleOptionListQry extends CommonCommand {
 }

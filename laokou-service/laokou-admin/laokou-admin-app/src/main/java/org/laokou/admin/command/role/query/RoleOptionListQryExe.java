@@ -14,11 +14,26 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
+
+package org.laokou.admin.command.role.query;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.client.dto.role.RoleOptionListQry;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-public interface LogsServiceI {
+@Component
+@RequiredArgsConstructor
+public class RoleOptionListQryExe {
+
+    public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
+
+    }
 
 }

@@ -20,10 +20,21 @@ package org.laokou.admin.client.dto.role.clientobject;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.io.Serial;
+
 /**
  * @author laokou
  */
 @Data
 public class RoleCO extends ClientObject {
+
+    @Serial
+    private static final long serialVersionUID = -3805903746359810600L;
+
+    private Long id;
+
+    private String name;
+
+    private Integer sort;
 
 }

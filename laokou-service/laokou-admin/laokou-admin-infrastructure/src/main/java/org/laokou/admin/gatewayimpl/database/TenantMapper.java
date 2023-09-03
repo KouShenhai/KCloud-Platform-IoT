@@ -36,33 +36,4 @@ public interface TenantMapper extends BatchMapper<TenantDO> {
 	 */
 	List<TenantDO> getOptionList();
 
-	// /**
-	// * 查询版本号
-	// * @param id
-	// * @return
-	// */
-	// Integer getVersion(@Param("id") Long id);
-	//
-	// /**
-	// * 下拉选择框
-	// * @return
-	// */
-	// List<OptionVO> getOptionList();
-	//
-	// /**
-	// * 分页查询
-	// * @param page
-	// * @param qo
-	// * @return
-	// */
-	// IPage<SysTenantVO> queryTenantPage(IPage<SysTenantVO> page, @Param("qo")
-	// SysTenantQo qo);
-	//
-	// /**
-	// * 获取租户
-	// * @param id
-	// * @return
-	// */
-	// SysTenantVO getTenantById(@Param("id") Long id);
-
 }

@@ -19,6 +19,8 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.api.RolesServiceI;
+import org.laokou.admin.client.dto.role.RoleListQry;
 import org.laokou.admin.client.dto.role.clientobject.RoleCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
@@ -37,19 +39,21 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class RolesController {
 
+	private final RolesServiceI rolesServiceI;
+
 	@TraceLog
 	@PostMapping("v1/roles/list")
 	@Operation(summary = "查询", description = "查询")
 	@PreAuthorize("hasAuthority('roles:list')")
-	public Result<Datas<RoleCO>> list() {
-		return Result.of(null);
+	public Result<Datas<RoleCO>> list(@RequestBody RoleListQry qry) {
+		return rolesServiceI.list(qry);
 	}
 
 	@TraceLog
 	@PostMapping("v1/roles/option-list")
 	@Operation(summary = "下拉列表", description = "下拉列表")
 	public Result<?> optionList() {
-		return Result.of(null);
+		return ;
 	}
 
 	@TraceLog

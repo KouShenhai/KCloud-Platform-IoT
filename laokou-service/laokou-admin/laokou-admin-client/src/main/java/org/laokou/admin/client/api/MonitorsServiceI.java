@@ -21,17 +21,4 @@ package org.laokou.admin.client.api;
  */
 public interface MonitorsServiceI {
 
-	// /**
-	// * 获取缓存信息
-	// * @return
-	// */
-	// CacheVO getCacheInfo();
-	//
-	// /**
-	// * 获取服务器信息
-	// * @return
-	// * @throws Exception
-	// */
-	// Server getServerInfo() throws Exception;
-
 }

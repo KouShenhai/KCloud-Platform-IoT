@@ -14,24 +14,41 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
+package org.laokou.admin.service;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.api.RolesServiceI;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.client.dto.role.RoleListQry;
 import org.laokou.admin.client.dto.role.RoleOptionListQry;
 import org.laokou.admin.client.dto.role.clientobject.RoleCO;
+import org.laokou.admin.command.role.query.RoleListQryExe;
+import org.laokou.admin.command.role.query.RoleOptionListQryExe;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface RolesServiceI {
+@Service
+@RequiredArgsConstructor
+public class RolesServiceImpl implements RolesServiceI {
 
-    Result<Datas<RoleCO>> list(RoleListQry qry);
+    private final RoleListQryExe roleListQryExe;
 
-    Result<List<OptionCO>> optionList(RoleOptionListQry qry);
+    private final RoleOptionListQryExe roleOptionListQryExe;
 
+    @Override
+    public Result<Datas<RoleCO>> list(RoleListQry qry) {
+        return roleListQryExe.execute(qry);
+    }
+
+    @Override
+    public Result<List<OptionCO>> optionList(RoleOptionListQry qry) {
+        return roleOptionListQryExe.execute(qry);
+    }
 }
