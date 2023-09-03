@@ -20,6 +20,8 @@ package org.laokou.admin.command.role.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.client.dto.role.RoleOptionListQry;
+import org.laokou.admin.domain.gateway.RoleGateway;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -32,8 +34,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoleOptionListQryExe {
 
-    public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
+    private final RoleGateway roleGateway;
 
+    public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
+        return Result.of(ConvertUtil.sourceToTarget(roleGateway.optionList(),OptionCO.class));
     }
 
 }

@@ -21,7 +21,12 @@
 <mapper namespace="org.laokou.admin.gatewayimpl.database.SourceMapper">
 
     <select id="getSourceByName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.SourceDO">
-        select a.driver_class_name,a.url,a.username,a.password from boot_sys_source a
-        where a.del_flag = 0 and a.name = #{name}
+        select driver_class_name
+             ,url
+             ,username
+             ,password
+        from boot_sys_source
+        where del_flag = 0
+            and name = #{name}
     </select>
 </mapper>

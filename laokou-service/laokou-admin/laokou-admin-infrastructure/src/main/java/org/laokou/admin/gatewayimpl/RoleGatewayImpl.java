@@ -19,9 +19,9 @@ package org.laokou.admin.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.common.Option;
-import org.laokou.admin.domain.gateway.TenantGateway;
-import org.laokou.admin.gatewayimpl.database.TenantMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.admin.domain.gateway.RoleGateway;
+import org.laokou.admin.gatewayimpl.database.RoleMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.springframework.stereotype.Component;
 
@@ -33,24 +33,33 @@ import java.util.List;
  */
 @Component
 @RequiredArgsConstructor
-public class TenantGatewayImpl implements TenantGateway {
+public class RoleGatewayImpl implements RoleGateway {
 
-	private final TenantMapper tenantMapper;
+    private final RoleMapper roleMapper;
 
-	@Override
-	public List<Option> getOptionList() {
-		List<TenantDO> list = tenantMapper.getValueListOrderByDesc(TenantDO.class,"create_date","id","name");
-		if (CollectionUtil.isEmpty(list)) {
-			return new ArrayList<>(0);
-		}
-		List<Option> options = new ArrayList<>(list.size());
-		for (TenantDO tenantDO : list) {
-			Option op = new Option();
-			op.setLabel(tenantDO.getName());
-			op.setValue(String.valueOf(tenantDO.getId()));
-			options.add(op);
-		}
-		return options;
-	}
+    @Override
+    public Boolean insert() {
+        return null;
+    }
 
+    @Override
+    public Boolean update() {
+        return null;
+    }
+
+    @Override
+    public List<Option> optionList() {
+        List<RoleDO> list = roleMapper.getValueListOrderByDesc(RoleDO.class, "create_date", "id", "name");
+        if (CollectionUtil.isEmpty(list)) {
+            return new ArrayList<>(0);
+        }
+        List<Option> options = new ArrayList<>(list.size());
+        for (RoleDO roleDO : list) {
+            Option o = new Option();
+            o.setLabel(roleDO.getName());
+            o.setValue(String.valueOf(roleDO.getId()));
+            options.add(o);
+        }
+        return options;
+    }
 }

@@ -33,9 +33,7 @@
         ,a.tenant_id as tenantId
         FROM `boot_sys_user` a
         where a.del_flag = 0
-        <if test="tenantId != null">
             and a.tenant_id = #{tenantId}
-        </if>
         <if test="type != null and type == 'password' and username != null and username != ''">
             and a.username = #{username}
         </if>
@@ -48,7 +46,6 @@
         <if test="type != null and type == 'mobile' and username != null and username != ''">
             and a.mobile = #{username}
         </if>
-        limit 1
     </select>
 
 </mapper>

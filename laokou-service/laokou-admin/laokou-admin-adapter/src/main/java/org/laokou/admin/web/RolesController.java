@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.RolesServiceI;
 import org.laokou.admin.client.dto.role.RoleListQry;
+import org.laokou.admin.client.dto.role.RoleOptionListQry;
 import org.laokou.admin.client.dto.role.clientobject.RoleCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
@@ -53,7 +54,7 @@ public class RolesController {
 	@PostMapping("v1/roles/option-list")
 	@Operation(summary = "下拉列表", description = "下拉列表")
 	public Result<?> optionList() {
-		return ;
+		return rolesServiceI.optionList(new RoleOptionListQry());
 	}
 
 	@TraceLog

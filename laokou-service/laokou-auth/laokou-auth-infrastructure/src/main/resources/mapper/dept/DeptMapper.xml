@@ -21,7 +21,8 @@
 <mapper namespace="org.laokou.auth.gatewayimpl.database.DeptMapper">
 
     <select id="getDeptIdsByTenantId" resultType="long">
-        select id from boot_sys_dept
+        select id
+        from boot_sys_dept
         where del_flag = 0
           and tenant_id = #{tenantId}
     </select>
