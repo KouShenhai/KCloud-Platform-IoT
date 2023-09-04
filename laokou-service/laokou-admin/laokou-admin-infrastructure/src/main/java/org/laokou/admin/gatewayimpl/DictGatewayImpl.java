@@ -15,10 +15,12 @@
  *
  */
 
-package org.laokou.admin.command.dict;
+package org.laokou.admin.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
+import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,8 +28,18 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class DictInsertCmdExe {
+public class DictGatewayImpl implements DictGateway {
 
-    private final DictGateway dictGateway;
+    private final DictMapper dictMapper;
+
+    @Override
+    public Boolean insert(Dict dict) {
+        return null;
+    }
+
+    @Override
+    public Boolean update(Dict dict) {
+        return null;
+    }
 
 }

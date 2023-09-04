@@ -15,19 +15,48 @@
  *
  */
 
-package org.laokou.admin.command.dict;
+package org.laokou.admin.domain.dict;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.gateway.DictGateway;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class DictInsertCmdExe {
+@Data
+public class Dict {
 
-    private final DictGateway dictGateway;
+    private Long id;
+
+    /**
+     * 标签
+     */
+    private String dictLabel;
+
+    /**
+     * 类型
+     */
+    private String type;
+
+    /**
+     * 值
+     */
+    private String dictValue;
+
+    /**
+     * 备注
+     */
+    private String remark;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createDate;
+
+    /**
+     * 排序
+     */
+    private Integer sort;
 
 }

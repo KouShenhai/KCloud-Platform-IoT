@@ -14,20 +14,18 @@
  * limitations under the License.
  *
  */
+package org.laokou.admin.gatewayimpl.database;
 
-package org.laokou.admin.command.dict;
-
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.gateway.DictGateway;
-import org.springframework.stereotype.Component;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class DictInsertCmdExe {
-
-    private final DictGateway dictGateway;
+@Repository
+@Mapper
+public interface DictMapper extends BatchMapper<DictDO> {
 
 }
