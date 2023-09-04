@@ -18,6 +18,7 @@
 package org.laokou.admin.client.dto.dict;
 
 import lombok.Data;
+import org.laokou.admin.client.dto.dict.clientobject.DictCO;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
@@ -25,5 +26,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  */
 @Data
 public class DictUpdateCmd extends CommonCommand {
+
+    private final DictCO dictCO;
 
 }

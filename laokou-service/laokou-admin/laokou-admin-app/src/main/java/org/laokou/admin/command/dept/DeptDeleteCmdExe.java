@@ -19,7 +19,7 @@ package org.laokou.admin.command.dept;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.dept.DeptDeleteCmd;
-import org.laokou.admin.gatewayimpl.database.DeptMapper;
+import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DeptDeleteCmdExe {
 
-	private final DeptMapper deptMapper;
+	private final DeptGateway deptGateway;
 
 	public Result<Boolean> execute(DeptDeleteCmd cmd) {
-		return Result.of(deptMapper.deleteById(cmd.getId()) > 0);
+		return Result.of(deptGateway.deleteById(cmd.getId()));
 	}
 
 }

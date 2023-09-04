@@ -88,6 +88,26 @@ public class DeptGatewayImpl implements DeptGateway {
 		return deptMapper.getDeptIdsByRoleId(roleId);
 	}
 
+	@Override
+	public Boolean deleteById(Long id) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return deptMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	@Override
+	public Dept getById(Long id) {
+		DeptDO deptDO = deptMapper.selectById(id);
+		return ConvertUtil.sourceToTarget(deptDO,Dept.class);
+	}
+
 	private Boolean updateDept(DeptDO deptDO) {
 		return transactionalUtil.execute(r -> {
 			try {

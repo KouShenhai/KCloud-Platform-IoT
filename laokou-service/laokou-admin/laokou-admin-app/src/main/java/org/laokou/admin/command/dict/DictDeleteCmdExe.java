@@ -18,30 +18,24 @@
 package org.laokou.admin.command.dict;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.client.dto.dict.DictDeleteCmd;
-import org.laokou.admin.gatewayimpl.database.DictMapper;
+import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DictDeleteCmdExe {
 
-    private final DictMapper dictMapper;
-    private final TransactionalUtil transactionalUtil;
+    private final DictGateway dictGateway;
 
     public Result<Boolean> execute(DictDeleteCmd cmd) {
-        transactionalUtil.execute(r -> {
-            try {
-
-            } catch (Exception e) {
-
-            }
-        });
+        return Result.of(dictGateway.deleteById(cmd.getId()));
     }
 
 }

@@ -35,4 +35,8 @@ public interface DeptGateway {
 
 	List<Long> getDeptIds(Long roleId);
 
+	Boolean deleteById(Long id);
+
+	Dept getById(Long id);
+
 }

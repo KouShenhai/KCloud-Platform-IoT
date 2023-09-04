@@ -26,4 +26,8 @@ public interface DictGateway {
 
     Boolean update(Dict dict);
 
+    Dict getById(Long id);
+
+    Boolean deleteById(Long id);
+
 }

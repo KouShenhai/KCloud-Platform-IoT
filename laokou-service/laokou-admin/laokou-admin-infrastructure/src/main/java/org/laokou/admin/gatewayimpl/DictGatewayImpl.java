@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.DictConvertor;
@@ -24,8 +25,11 @@ import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.admin.common.Constant.TENANT;
 
 /**
  * @author laokou
@@ -39,15 +43,36 @@ public class DictGatewayImpl implements DictGateway {
     private final TransactionalUtil transactionalUtil;
 
     @Override
+    @DS(TENANT)
     public Boolean insert(Dict dict) {
         DictDO dictDO = DictConvertor.toDataObject(dict);
         return insertDict(dictDO);
     }
 
     @Override
+    @DS(TENANT)
     public Boolean update(Dict dict) {
         DictDO dictDO = DictConvertor.toDataObject(dict);
         return updateDict(dictDO);
+    }
+
+    @Override
+    public Dict getById(Long id) {
+        DictDO dictDO = dictMapper.selectById(id);
+        return ConvertUtil.sourceToTarget(dictDO,Dict.class);
+    }
+
+    @Override
+    public Boolean deleteById(Long id) {
+        return transactionalUtil.execute(r -> {
+            try {
+                return dictMapper.deleteById(id) > 0;
+            } catch (Exception e) {
+                log.error("错误信息：{}", e.getMessage());
+                r.setRollbackOnly();
+                return false;
+            }
+        });
     }
 
     private Boolean insertDict(DictDO dictDO) {

@@ -20,7 +20,6 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.common.BizCode;
 import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
@@ -57,17 +56,8 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	@Override
 	public Boolean update(Menu menu) {
-		Long id = menu.getId();
-		if (id == null) {
-			throw new GlobalException(BizCode.ID_NOT_NULL);
-		}
-		Long count = menuMapper.selectCount(
-				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, id));
-		if (count > 0) {
-			throw new GlobalException("菜单已存在，请重新填写");
-		}
 		MenuDO menuDO = MenuConvertor.toDataObject(menu);
-		menuDO.setVersion(menuMapper.getVersion(id, MenuDO.class));
+		menuDO.setVersion(menuMapper.getVersion(menuDO.getId(), MenuDO.class));
 		return updateMenu(menuDO);
 	}
 

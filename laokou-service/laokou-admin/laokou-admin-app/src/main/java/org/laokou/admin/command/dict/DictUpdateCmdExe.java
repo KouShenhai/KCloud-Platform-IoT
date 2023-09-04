@@ -17,7 +17,17 @@
 
 package org.laokou.admin.command.dict;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.dict.DictUpdateCmd;
+import org.laokou.admin.client.dto.dict.clientobject.DictCO;
+import org.laokou.admin.common.BizCode;
+import org.laokou.admin.convertor.DictConvertor;
+import org.laokou.admin.domain.gateway.DictGateway;
+import org.laokou.admin.gatewayimpl.database.DictMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
+import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +36,23 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class DictUpdateCmdExe {
+
+    private final DictGateway dictGateway;
+    private final DictMapper dictMapper;
+
+    public Result<Boolean> execute(DictUpdateCmd cmd) {
+        DictCO dictCO = cmd.getDictCO();
+        Long id = dictCO.getId();
+        if (id == null) {
+            throw new GlobalException(BizCode.ID_NOT_NULL);
+        }
+        String type = dictCO.getType();
+        String value = dictCO.getValue();
+        Long count = dictMapper.selectCount(Wrappers.lambdaQuery(DictDO.class).eq(DictDO::getValue, value).eq(DictDO::getType, type).ne(DictDO::getId,dictCO.getId()));
+        if (count > 0) {
+            throw new GlobalException(String.format("类型为%s，值为%s的字典已存在，请重新填写",type,value));
+        }
+        return Result.of(dictGateway.update(DictConvertor.toEntity(dictCO)));
+    }
 
 }
