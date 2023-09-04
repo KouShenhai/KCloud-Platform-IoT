@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Component;
 public class DictGatewayImpl implements DictGateway {
 
     private final DictMapper dictMapper;
+    private final TransactionalUtil transactionalUtil;
 
     @Override
     public Boolean insert(Dict dict) {
@@ -39,6 +41,10 @@ public class DictGatewayImpl implements DictGateway {
 
     @Override
     public Boolean update(Dict dict) {
+        return null;
+    }
+
+    private Boolean insertDict() {
         return null;
     }
 
