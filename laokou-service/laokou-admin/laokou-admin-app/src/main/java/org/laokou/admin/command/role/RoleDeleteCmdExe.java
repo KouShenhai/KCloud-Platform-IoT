@@ -18,13 +18,35 @@
 package org.laokou.admin.command.role;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.client.dto.role.RoleDeleteCmd;
+import org.laokou.admin.gatewayimpl.database.RoleMapper;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class RoleDeleteCmdExe {
+
+    private final RoleMapper roleMapper;
+    private final TransactionalUtil transactionalUtil;
+
+    public Result<Boolean> execute(RoleDeleteCmd cmd) {
+        boolean result = transactionalUtil.execute(rollback -> {
+            try {
+                return roleMapper.deleteById(cmd.getId()) > 0;
+            } catch (Exception e) {
+                log.error("错误信息：{}", e.getMessage());
+                rollback.setRollbackOnly();
+                return false;
+            }
+        });
+        return Result.of(result);
+    }
 
 }

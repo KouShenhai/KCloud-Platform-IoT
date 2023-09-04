@@ -20,9 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.RolesServiceI;
-import org.laokou.admin.client.dto.role.RoleGetQry;
-import org.laokou.admin.client.dto.role.RoleListQry;
-import org.laokou.admin.client.dto.role.RoleOptionListQry;
+import org.laokou.admin.client.dto.role.*;
 import org.laokou.admin.client.dto.role.clientobject.RoleCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
@@ -71,8 +69,8 @@ public class RolesController {
 	@Operation(summary = "新增", description = "新增")
 	@OperateLog(module = "角色管理", operation = "新增")
 	@PreAuthorize("hasAuthority('roles:insert')")
-	public Result<Boolean> insert() {
-		return Result.of(null);
+	public Result<Boolean> insert(@RequestBody RoleInsertCmd cmd) {
+		return rolesServiceI.insert(cmd);
 	}
 
 	@TraceLog
@@ -81,8 +79,8 @@ public class RolesController {
 	@OperateLog(module = "角色管理", operation = "修改")
 	@PreAuthorize("hasAuthority('roles:update')")
 	@DataCache(name = "roles", key = "#dto.id", type = Cache.DEL)
-	public Result<Boolean> update() {
-		return Result.of(null);
+	public Result<Boolean> update(@RequestBody RoleUpdateCmd cmd) {
+		return rolesServiceI.update(cmd);
 	}
 
 	@TraceLog
@@ -92,7 +90,7 @@ public class RolesController {
 	@PreAuthorize("hasAuthority('roles:delete')")
 	@DataCache(name = "roles", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return rolesServiceI.delete(new RoleDeleteCmd(id));
 	}
 
 }
