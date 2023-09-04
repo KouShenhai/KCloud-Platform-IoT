@@ -65,10 +65,10 @@ public class UserGatewayImpl implements UserGateway {
 	@DSTransactional(rollbackFor = Exception.class)
 	@DS(SHARDING_SPHERE)
 	public Boolean insert(User user) {
-		boolean insertFlag;
+		boolean flag;
 		try {
 			UserDO userDO = getInsertUserDO(user);
-			insertFlag = userMapper.insert(userDO) > 0;
+			flag = userMapper.insert(userDO) > 0;
 			DynamicTableContextHolder.set(DEFAULT_SOURCE);
 			insertBatch(userDO.getId(), user.getRoleIds());
 		}
@@ -79,7 +79,7 @@ public class UserGatewayImpl implements UserGateway {
 		finally {
 			DynamicTableContextHolder.clear();
 		}
-		return insertFlag;
+		return flag;
 	}
 
 	@Override

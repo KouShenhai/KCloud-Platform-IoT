@@ -17,9 +17,47 @@
 
 package org.laokou.admin.client.dto.dict.clientobject;
 
+import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
+
+import java.time.LocalDateTime;
+
 /**
  * @author laokou
  */
-public class DictCO {
+@Data
+public class DictCO extends ClientObject {
+
+    private Long id;
+
+    /**
+     * 标签
+     */
+    private String dictLabel;
+
+    /**
+     * 类型
+     */
+    private String type;
+
+    /**
+     * 值
+     */
+    private String dictValue;
+
+    /**
+     * 备注
+     */
+    private String remark;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createDate;
+
+    /**
+     * 排序
+     */
+    private Integer sort;
 
 }
