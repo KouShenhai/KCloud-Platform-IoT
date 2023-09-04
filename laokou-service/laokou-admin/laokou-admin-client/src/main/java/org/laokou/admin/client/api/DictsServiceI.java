@@ -16,9 +16,26 @@
  */
 package org.laokou.admin.client.api;
 
+import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.client.dto.dict.*;
+import org.laokou.admin.client.dto.dict.clientobject.DictCO;
+import org.laokou.common.i18n.dto.Result;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
 public interface DictsServiceI {
+
+    Result<Boolean> insert(DictInsertCmd cmd);
+
+    Result<Boolean> update(DictUpdateCmd cmd);
+
+    Result<Boolean> delete(DictDeleteCmd cmd);
+
+    Result<DictCO> get(DictGetQry qry);
+
+    Result<List<OptionCO>> optionList(DictOptionListQry qry);
 
 }

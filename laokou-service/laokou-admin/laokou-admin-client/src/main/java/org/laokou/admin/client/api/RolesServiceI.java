@@ -17,10 +17,7 @@
 package org.laokou.admin.client.api;
 
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.role.RoleGetQry;
-import org.laokou.admin.client.dto.role.RoleInsertCmd;
-import org.laokou.admin.client.dto.role.RoleListQry;
-import org.laokou.admin.client.dto.role.RoleOptionListQry;
+import org.laokou.admin.client.dto.role.*;
 import org.laokou.admin.client.dto.role.clientobject.RoleCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -39,5 +36,9 @@ public interface RolesServiceI {
 	Result<RoleCO> get(RoleGetQry qry);
 
 	Result<Boolean> insert(RoleInsertCmd cmd);
+
+	Result<Boolean> update(RoleUpdateCmd cmd);
+
+	Result<Boolean> delete(RoleDeleteCmd cmd);
 
 }
