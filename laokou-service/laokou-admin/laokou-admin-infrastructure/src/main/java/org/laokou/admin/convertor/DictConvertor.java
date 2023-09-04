@@ -15,18 +15,24 @@
  *
  */
 
-package org.laokou.admin.client.dto.dict;
+package org.laokou.admin.convertor;
 
-import lombok.Data;
 import org.laokou.admin.client.dto.dict.clientobject.DictCO;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.admin.domain.dict.Dict;
+import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
+import org.laokou.common.core.utils.ConvertUtil;
 
 /**
  * @author laokou
  */
-@Data
-public class DictInsertCmd extends CommonCommand {
+public class DictConvertor {
 
-    private DictCO dictCO;
+    public static Dict toEntity(DictCO dictCO) {
+        return ConvertUtil.sourceToTarget(dictCO, Dict.class);
+    }
+
+    public static DictDO toDataObject(Dict dict) {
+        return ConvertUtil.sourceToTarget(dict, DictDO.class);
+    }
 
 }

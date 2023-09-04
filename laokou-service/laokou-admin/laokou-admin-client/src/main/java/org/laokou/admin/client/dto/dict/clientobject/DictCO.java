@@ -33,7 +33,7 @@ public class DictCO extends ClientObject {
     /**
      * 标签
      */
-    private String dictLabel;
+    private String label;
 
     /**
      * 类型
@@ -43,7 +43,7 @@ public class DictCO extends ClientObject {
     /**
      * 值
      */
-    private String dictValue;
+    private String value;
 
     /**
      * 备注

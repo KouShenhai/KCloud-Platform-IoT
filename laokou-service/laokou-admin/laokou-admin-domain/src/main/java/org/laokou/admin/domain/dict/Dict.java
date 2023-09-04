@@ -32,7 +32,7 @@ public class Dict {
     /**
      * 标签
      */
-    private String dictLabel;
+    private String label;
 
     /**
      * 类型
@@ -42,7 +42,7 @@ public class Dict {
     /**
      * 值
      */
-    private String dictValue;
+    private String value;
 
     /**
      * 备注
