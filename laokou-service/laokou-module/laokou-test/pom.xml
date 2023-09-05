@@ -12,5 +12,6 @@
     <modules>
         <module>laokou-test-elasticsearch</module>
         <module>laokou-test-rabbitmq</module>
+        <module>laokou-test-mybatis-plus</module>
     </modules>
 </project>
