@@ -21,7 +21,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.DictsServiceI;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.role.clientobject.RoleCO;
+import org.laokou.admin.client.dto.dict.*;
+import org.laokou.admin.client.dto.dict.clientobject.DictCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.Cache;
@@ -47,23 +48,23 @@ public class DictsController {
 	@TraceLog
 	@Operation(summary = "查询", description = "查询")
 	@PreAuthorize("hasAuthority('dicts:list')")
-	public Result<Datas<RoleCO>> list() {
-		return null;
+	public Result<Datas<DictCO>> list(@RequestBody DictListQry qry) {
+		return dictsServiceI.list(qry);
 	}
 
 	@TraceLog
 	@GetMapping("v1/dicts/option-list/{type}")
 	@Operation(summary = "下拉列表", description = "下拉列表")
 	public Result<List<OptionCO>> optionList(@PathVariable("type") String type) {
-		return Result.of(null);
+		return dictsServiceI.optionList(new DictOptionListQry());
 	}
 
 	@TraceLog
 	@GetMapping(value = "v1/dicts/{id}")
 	@Operation(summary = "查看", description = "查看")
 	@DataCache(name = "dicts", key = "#id")
-	public Result<?> detail(@PathVariable("id") Long id) {
-		return Result.of(null);
+	public Result<DictCO> detail(@PathVariable("id") Long id) {
+		return dictsServiceI.get(new DictGetQry(id));
 	}
 
 	@TraceLog
@@ -71,8 +72,8 @@ public class DictsController {
 	@Operation(summary = "新增", description = "新增")
 	@OperateLog(module = "字典管理", operation = "新增")
 	@PreAuthorize("hasAuthority('dicts:insert')")
-	public Result<Boolean> insert() {
-		return Result.of(null);
+	public Result<Boolean> insert(@RequestBody DictInsertCmd cmd) {
+		return dictsServiceI.insert(cmd);
 	}
 
 	@TraceLog
@@ -81,8 +82,8 @@ public class DictsController {
 	@OperateLog(module = "字典管理", operation = "修改")
 	@PreAuthorize("hasAuthority('dicts:update')")
 	@DataCache(name = "dicts", key = "#dto.id", type = Cache.DEL)
-	public Result<Boolean> update() {
-		return Result.of(null);
+	public Result<Boolean> update(@RequestBody DictUpdateCmd cmd) {
+		return dictsServiceI.update(cmd);
 	}
 
 	@TraceLog
@@ -92,7 +93,7 @@ public class DictsController {
 	@PreAuthorize("hasAuthority('dicts:delete')")
 	@DataCache(name = "dicts", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return dictsServiceI.delete(new DictDeleteCmd(id));
 	}
 
 }

@@ -18,9 +18,12 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.DictConvertor;
+import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
@@ -79,8 +82,13 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	@Override
-	public Datas<Dict> list(Dict dict) {
-
+	public Datas<Dict> list(Dict dict, DataPage dataPage) {
+		IPage<DictDO> page = new Page<>(dataPage.getPageNum(), dataPage.getPageSize());
+		DictDO dictDO = DictConvertor.toDataObject(dict);
+		IPage<DictDO> newPage = dictMapper.getDictList(page, dictDO);
+		Datas<Dict> datas = new Datas<>();
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Dict.class));
+		datas.setTotal(newPage.getTotal());
 		return null;
 	}
 

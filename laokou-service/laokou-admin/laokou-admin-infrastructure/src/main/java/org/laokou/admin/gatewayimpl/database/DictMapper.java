@@ -16,7 +16,9 @@
  */
 package org.laokou.admin.gatewayimpl.database;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
@@ -27,5 +29,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface DictMapper extends BatchMapper<DictDO> {
+
+    IPage<DictDO> getDictList(IPage<DictDO> page,@Param("dictDO")DictDO dictDO);
 
 }
