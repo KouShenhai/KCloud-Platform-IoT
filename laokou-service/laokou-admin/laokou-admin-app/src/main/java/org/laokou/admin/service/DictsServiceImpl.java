@@ -51,27 +51,27 @@ public class DictsServiceImpl implements DictsServiceI {
 
 	@Override
 	public Result<Boolean> insert(DictInsertCmd cmd) {
-		return null;
+		return dictInsertCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> update(DictUpdateCmd cmd) {
-		return null;
+		return dictUpdateCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> delete(DictDeleteCmd cmd) {
-		return null;
+		return dictDeleteCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<DictCO> get(DictGetQry qry) {
-		return null;
+		return dictGetQryExe.execute(qry);
 	}
 
 	@Override
 	public Result<List<OptionCO>> optionList(DictOptionListQry qry) {
-		return null;
+		return dictOptionListQryExe.execute(qry);
 	}
 
 }

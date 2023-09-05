@@ -46,7 +46,7 @@ public class DictsController {
 	@Operation(summary = "查询", description = "查询")
 	@PreAuthorize("hasAuthority('dicts:list')")
 	public Result<?> list() {
-		return Result.of(null);
+		return null;
 	}
 
 	@TraceLog
