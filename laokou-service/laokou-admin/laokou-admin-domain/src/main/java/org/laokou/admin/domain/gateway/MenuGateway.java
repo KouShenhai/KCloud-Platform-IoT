@@ -25,10 +25,20 @@ import java.util.List;
  */
 public interface MenuGateway {
 
-	List<Menu> list(Integer type, User user);
+	List<Menu> list(User user, Integer type);
 
 	Boolean update(Menu menu);
 
 	Boolean insert(Menu menu);
+
+	Boolean deleteById(Long id);
+
+	Menu getById(Long id);
+
+	List<Long> getIdsByRoleId(Long roleId);
+
+	List<Menu> list(Menu menu, Long tenantId);
+
+	List<Menu> getTenantMenuList();
 
 }

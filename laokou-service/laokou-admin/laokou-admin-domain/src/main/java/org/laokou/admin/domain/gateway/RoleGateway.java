@@ -15,7 +15,9 @@
  */
 package org.laokou.admin.domain.gateway;
 
+import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.role.Role;
+import org.laokou.common.i18n.dto.Datas;
 
 /**
  * @author laokou
@@ -25,5 +27,11 @@ public interface RoleGateway {
 	Boolean insert(Role role);
 
 	Boolean update(Role role);
+
+	Role getById(Long id);
+
+	Boolean deleteById(Long id);
+
+	Datas<Role> list(Long tenantId, Role role, DataPage dataPage);
 
 }

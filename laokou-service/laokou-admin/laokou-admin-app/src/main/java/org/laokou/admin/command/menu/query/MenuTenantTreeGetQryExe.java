@@ -20,8 +20,8 @@ package org.laokou.admin.command.menu.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.menu.MenuTenantTreeGetQry;
 import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
-import org.laokou.admin.gatewayimpl.database.MenuMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.admin.domain.gateway.MenuGateway;
+import org.laokou.admin.domain.menu.Menu;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
@@ -36,10 +36,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MenuTenantTreeGetQryExe {
 
-	private final MenuMapper menuMapper;
+	private final MenuGateway menuGateway;
 
 	public Result<MenuCO> execute(MenuTenantTreeGetQry qry) {
-		List<MenuDO> list = menuMapper.getTenantMenuList();
+		List<Menu> list = menuGateway.getTenantMenuList();
 		List<MenuCO> menuList = ConvertUtil.sourceToTarget(list, MenuCO.class);
 		return Result.of(TreeUtil.buildTreeNode(menuList, MenuCO.class));
 	}

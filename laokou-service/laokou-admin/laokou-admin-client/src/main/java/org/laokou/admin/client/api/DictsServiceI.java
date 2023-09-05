@@ -28,14 +28,14 @@ import java.util.List;
  */
 public interface DictsServiceI {
 
-    Result<Boolean> insert(DictInsertCmd cmd);
+	Result<Boolean> insert(DictInsertCmd cmd);
 
-    Result<Boolean> update(DictUpdateCmd cmd);
+	Result<Boolean> update(DictUpdateCmd cmd);
 
-    Result<Boolean> delete(DictDeleteCmd cmd);
+	Result<Boolean> delete(DictDeleteCmd cmd);
 
-    Result<DictCO> get(DictGetQry qry);
+	Result<DictCO> get(DictGetQry qry);
 
-    Result<List<OptionCO>> optionList(DictOptionListQry qry);
+	Result<List<OptionCO>> optionList(DictOptionListQry qry);
 
 }

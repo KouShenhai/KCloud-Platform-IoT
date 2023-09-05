@@ -20,8 +20,8 @@ package org.laokou.admin.command.dept.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.dept.DeptGetQry;
 import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
-import org.laokou.admin.gatewayimpl.database.DeptMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
+import org.laokou.admin.domain.dept.Dept;
+import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -33,11 +33,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DeptGetQryExe {
 
-	private final DeptMapper deptMapper;
+	private final DeptGateway deptGateway;
 
 	public Result<DeptCO> execute(DeptGetQry qry) {
-		DeptDO deptDO = deptMapper.selectById(qry.getId());
-		return Result.of(ConvertUtil.sourceToTarget(deptDO, DeptCO.class));
+		Dept dept = deptGateway.getById(qry.getId());
+		return Result.of(ConvertUtil.sourceToTarget(dept, DeptCO.class));
 	}
 
 }

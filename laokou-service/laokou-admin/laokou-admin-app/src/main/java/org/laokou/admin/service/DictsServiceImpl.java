@@ -39,35 +39,39 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DictsServiceImpl implements DictsServiceI {
 
-    private final DictInsertCmdExe dictInsertCmdExe;
-    private final DictUpdateCmdExe dictUpdateCmdExe;
-    private final DictDeleteCmdExe dictDeleteCmdExe;
-    private final DictOptionListQryExe dictOptionListQryExe;
-    private final DictGetQryExe dictGetQryExe;
+	private final DictInsertCmdExe dictInsertCmdExe;
 
-    @Override
-    public Result<Boolean> insert(DictInsertCmd cmd) {
-        return null;
-    }
+	private final DictUpdateCmdExe dictUpdateCmdExe;
 
-    @Override
-    public Result<Boolean> update(DictUpdateCmd cmd) {
-        return null;
-    }
+	private final DictDeleteCmdExe dictDeleteCmdExe;
 
-    @Override
-    public Result<Boolean> delete(DictDeleteCmd cmd) {
-        return null;
-    }
+	private final DictOptionListQryExe dictOptionListQryExe;
 
-    @Override
-    public Result<DictCO> get(DictGetQry qry) {
-        return null;
-    }
+	private final DictGetQryExe dictGetQryExe;
 
-    @Override
-    public Result<List<OptionCO>> optionList(DictOptionListQry qry) {
-        return null;
-    }
+	@Override
+	public Result<Boolean> insert(DictInsertCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> update(DictUpdateCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> delete(DictDeleteCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<DictCO> get(DictGetQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<List<OptionCO>> optionList(DictOptionListQry qry) {
+		return null;
+	}
 
 }

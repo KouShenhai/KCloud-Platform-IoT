@@ -17,9 +17,12 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.RoleConvertor;
+import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.domain.role.Role;
 import org.laokou.admin.gatewayimpl.database.RoleDeptMapper;
@@ -29,6 +32,8 @@ import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -71,6 +76,36 @@ public class RoleGatewayImpl implements RoleGateway {
 		List<Long> ids1 = roleMenuMapper.getIdsByRoleId(id);
 		List<Long> ids2 = roleDeptMapper.getIdsByRoleId(id);
 		return updateRole(roleDO, role, ids1, ids2);
+	}
+
+	@Override
+	public Role getById(Long id) {
+		RoleDO roleDO = roleMapper.selectById(id);
+		return ConvertUtil.sourceToTarget(roleDO, Role.class);
+	}
+
+	@Override
+	public Boolean deleteById(Long id) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return roleMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	@Override
+	public Datas<Role> list(Long tenantId, Role role, DataPage dataPage) {
+		IPage<RoleDO> page = new Page<>(dataPage.getPageNum(), dataPage.getPageSize());
+		IPage<RoleDO> newPage = roleMapper.getRoleListByTenantIdAndLikeName(page, tenantId, role.getName());
+		Datas<Role> datas = new Datas<>();
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Role.class));
+		datas.setTotal(newPage.getTotal());
+		return datas;
 	}
 
 	private Boolean updateRole(RoleDO roleDO, Role role, List<Long> ids1, List<Long> ids2) {

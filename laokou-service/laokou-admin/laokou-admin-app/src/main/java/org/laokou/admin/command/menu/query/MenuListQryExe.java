@@ -20,16 +20,14 @@ package org.laokou.admin.command.menu.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.menu.MenuListQry;
 import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
-import org.laokou.admin.gatewayimpl.database.MenuMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.admin.domain.gateway.MenuGateway;
+import org.laokou.admin.domain.menu.Menu;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.laokou.admin.common.Constant.DEFAULT_TENANT;
 
 /**
  * @author laokou
@@ -38,15 +36,12 @@ import static org.laokou.admin.common.Constant.DEFAULT_TENANT;
 @RequiredArgsConstructor
 public class MenuListQryExe {
 
-	private final MenuMapper menuMapper;
+	private final MenuGateway menuGateway;
 
 	public Result<List<MenuCO>> execute(MenuListQry qry) {
-		Long tenantId = UserUtil.getTenantId();
-		if (tenantId == DEFAULT_TENANT) {
-			List<MenuDO> list = menuMapper.getMenuListLikeName(null, qry.getName());
-			return Result.of(ConvertUtil.sourceToTarget(list, MenuCO.class));
-		}
-		List<MenuDO> list = menuMapper.getMenuListByTenantIdAndLikeName(null, tenantId, qry.getName());
+		Menu menu = new Menu();
+		menu.setName(qry.getName());
+		List<Menu> list = menuGateway.list(menu, UserUtil.getTenantId());
 		return Result.of(ConvertUtil.sourceToTarget(list, MenuCO.class));
 	}
 

@@ -17,10 +17,8 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.common.BizCode;
 import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
@@ -29,7 +27,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -50,35 +47,65 @@ public class MenuGatewayImpl implements MenuGateway {
 	private final TransactionalUtil transactionalUtil;
 
 	@Override
-	public List<Menu> list(Integer type, User user) {
+	public List<Menu> list(User user, Integer type) {
 		List<MenuDO> menuList = getMenuList(type, user);
 		return ConvertUtil.sourceToTarget(menuList, Menu.class);
 	}
 
 	@Override
 	public Boolean update(Menu menu) {
-		Long id = menu.getId();
-		if (id == null) {
-			throw new GlobalException(BizCode.ID_NOT_NULL);
-		}
-		Long count = menuMapper.selectCount(
-				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()).ne(MenuDO::getId, id));
-		if (count > 0) {
-			throw new GlobalException("菜单已存在，请重新填写");
-		}
 		MenuDO menuDO = MenuConvertor.toDataObject(menu);
-		menuDO.setVersion(menuMapper.getVersion(id, MenuDO.class));
+		menuDO.setVersion(menuMapper.getVersion(menuDO.getId(), MenuDO.class));
 		return updateMenu(menuDO);
 	}
 
 	@Override
 	public Boolean insert(Menu menu) {
-		Long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menu.getName()));
-		if (count > 0) {
-			throw new GlobalException("菜单已存在，请重新填写");
-		}
 		MenuDO menuDO = MenuConvertor.toDataObject(menu);
 		return insertMenu(menuDO);
+	}
+
+	@Override
+	public Boolean deleteById(Long id) {
+		return transactionalUtil.execute(rollback -> {
+			try {
+				return menuMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				rollback.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	@Override
+	public Menu getById(Long id) {
+		MenuDO menuDO = menuMapper.selectById(id);
+		return ConvertUtil.sourceToTarget(menuDO, Menu.class);
+	}
+
+	@Override
+	public List<Long> getIdsByRoleId(Long roleId) {
+		return menuMapper.getMenuIdsByRoleId(roleId);
+	}
+
+	@Override
+	public List<Menu> list(Menu menu, Long tenantId) {
+		List<MenuDO> list;
+		if (tenantId == DEFAULT_TENANT) {
+			list = menuMapper.getMenuListLikeName(null, menu.getName());
+		}
+		else {
+			list = menuMapper.getMenuListByTenantIdAndLikeName(null, tenantId, menu.getName());
+		}
+		return ConvertUtil.sourceToTarget(list, Menu.class);
+	}
+
+	@Override
+	public List<Menu> getTenantMenuList() {
+		List<MenuDO> list = menuMapper.getTenantMenuList();
+		return ConvertUtil.sourceToTarget(list, Menu.class);
 	}
 
 	private List<MenuDO> getMenuList(Integer type, User user) {

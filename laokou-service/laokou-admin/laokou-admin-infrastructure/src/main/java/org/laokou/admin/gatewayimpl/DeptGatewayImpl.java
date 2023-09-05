@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.DeptConvertor;
 import org.laokou.admin.domain.dept.Dept;
 import org.laokou.admin.domain.gateway.DeptGateway;
-import org.laokou.admin.domain.menu.Menu;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.ConvertUtil;
@@ -49,9 +48,9 @@ public class DeptGatewayImpl implements DeptGateway {
 	private final TransactionalUtil transactionalUtil;
 
 	@Override
-	public List<Menu> list(Long tenantId, String name) {
-		List<DeptDO> list = deptMapper.getDeptListByTenantIdAndLikeName(tenantId, name);
-		return ConvertUtil.sourceToTarget(list, Menu.class);
+	public List<Dept> list(Dept dept, Long tenantId) {
+		List<DeptDO> list = deptMapper.getDeptListByTenantIdAndLikeName(tenantId, dept.getName());
+		return ConvertUtil.sourceToTarget(list, Dept.class);
 	}
 
 	@Override
@@ -86,6 +85,26 @@ public class DeptGatewayImpl implements DeptGateway {
 	@Override
 	public List<Long> getDeptIds(Long roleId) {
 		return deptMapper.getDeptIdsByRoleId(roleId);
+	}
+
+	@Override
+	public Boolean deleteById(Long id) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return deptMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	@Override
+	public Dept getById(Long id) {
+		DeptDO deptDO = deptMapper.selectById(id);
+		return ConvertUtil.sourceToTarget(deptDO, Dept.class);
 	}
 
 	private Boolean updateDept(DeptDO deptDO) {

@@ -14,26 +14,23 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.log.qo;
 
+package org.laokou.admin.domain.common;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
-
-import java.io.Serial;
+import lombok.NoArgsConstructor;
 
 /**
  * @author laokou
  */
 @Data
-public class SysOperateLogQo extends PageQuery {
+@AllArgsConstructor
+@NoArgsConstructor
+public class DataPage {
 
-	@Serial
-	private static final long serialVersionUID = 7394014097434848168L;
+	private Integer pageNum;
 
-	private String module;
-
-	private Integer requestStatus;
-
-	private Long tenantId;
+	private Integer pageSize;
 
 }

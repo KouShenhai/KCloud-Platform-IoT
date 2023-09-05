@@ -18,7 +18,6 @@
 package org.laokou.admin.domain.gateway;
 
 import org.laokou.admin.domain.dept.Dept;
-import org.laokou.admin.domain.menu.Menu;
 
 import java.util.List;
 
@@ -27,12 +26,16 @@ import java.util.List;
  */
 public interface DeptGateway {
 
-	List<Menu> list(Long tenantId, String name);
+	List<Dept> list(Dept dept, Long tenantId);
 
 	Boolean insert(Dept dept);
 
 	Boolean update(Dept dept);
 
 	List<Long> getDeptIds(Long roleId);
+
+	Boolean deleteById(Long id);
+
+	Dept getById(Long id);
 
 }

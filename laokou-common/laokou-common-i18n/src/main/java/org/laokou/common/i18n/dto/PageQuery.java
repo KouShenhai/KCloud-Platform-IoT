@@ -26,8 +26,8 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-@Schema(name = "Page", description = "分页")
-public abstract class Page extends Query {
+@Schema(name = "PageQuery", description = "分页")
+public abstract class PageQuery extends Query {
 
 	@Serial
 	private static final long serialVersionUID = 6412915892334241813L;

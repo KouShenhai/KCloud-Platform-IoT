@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.role.query;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.client.dto.role.RoleOptionListQry;
@@ -39,7 +40,8 @@ public class RoleOptionListQryExe {
 	private final RoleMapper roleMapper;
 
 	public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
-		List<RoleDO> list = roleMapper.getValueListOrderByDesc(RoleDO.class, "create_date", "id", "name");
+		List<RoleDO> list = roleMapper
+				.selectList(new QueryWrapper<>(RoleDO.class).select("id", "name").orderByDesc("create_date"));
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}

@@ -14,26 +14,25 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.log.qo;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
+package org.laokou.admin.convertor;
 
-import java.io.Serial;
+import org.laokou.admin.client.dto.dict.clientobject.DictCO;
+import org.laokou.admin.domain.dict.Dict;
+import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
+import org.laokou.common.core.utils.ConvertUtil;
 
 /**
  * @author laokou
  */
-@Data
-public class SysOperateLogQo extends PageQuery {
+public class DictConvertor {
 
-	@Serial
-	private static final long serialVersionUID = 7394014097434848168L;
+	public static Dict toEntity(DictCO dictCO) {
+		return ConvertUtil.sourceToTarget(dictCO, Dict.class);
+	}
 
-	private String module;
-
-	private Integer requestStatus;
-
-	private Long tenantId;
+	public static DictDO toDataObject(Dict dict) {
+		return ConvertUtil.sourceToTarget(dict, DictDO.class);
+	}
 
 }

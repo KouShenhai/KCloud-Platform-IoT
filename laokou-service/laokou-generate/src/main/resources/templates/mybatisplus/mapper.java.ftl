@@ -29,11 +29,11 @@ interface ${table.mapperName} : ${superMapperClass}<${entity}>
 public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
      /**
      * 分页查询${table.comment!}
-     * @param page
+     * @param pageQuery
      * @param qo
      * @return
      */
-     IPage<${entity?substring(0,entity?length-2)}VO> queryPageList(IPage<${entity?substring(0,entity?length-2)}VO> page, @Param("qo") ${entity?substring(0,entity?length-2)}Qo qo);
+     IPage<${entity?substring(0,entity?length-2)}VO> queryPageList(IPage<${entity?substring(0,entity?length-2)}VO> pageQuery, @Param("qo") ${entity?substring(0,entity?length-2)}Qo qo);
 
      /**
      * 查询导出${table.comment!}

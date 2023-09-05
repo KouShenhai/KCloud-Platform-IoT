@@ -18,13 +18,13 @@
 package org.laokou.admin.server.interfaces.qo;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
 @Data
-public class SysUserOnlineQo extends Page {
+public class SysUserOnlineQo extends PageQuery {
 
 	private String username;
 
