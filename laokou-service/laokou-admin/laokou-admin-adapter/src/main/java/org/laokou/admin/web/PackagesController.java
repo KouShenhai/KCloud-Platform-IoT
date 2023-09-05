@@ -19,6 +19,7 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.api.PackagesServiceI;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.Cache;
@@ -34,6 +35,8 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "PackagesController", description = "套餐")
 @RequiredArgsConstructor
 public class PackagesController {
+
+	private final PackagesServiceI packagesServiceI;
 
 	@TraceLog
 	@PostMapping("v1/packages/list")

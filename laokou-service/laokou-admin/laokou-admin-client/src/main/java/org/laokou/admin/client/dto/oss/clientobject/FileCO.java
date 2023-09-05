@@ -15,21 +15,18 @@
  *
  */
 
-package org.laokou.admin.client.dto.dict;
+package org.laokou.admin.client.dto.oss.clientobject;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class DictOptionListQry extends CommonCommand {
+public class FileCO extends ClientObject {
 
-    private String type;
+    private String url;
+    private String md5;
 
 }

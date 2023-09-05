@@ -15,21 +15,19 @@
  *
  */
 
-package org.laokou.admin.client.dto.dict;
+package org.laokou.test.mybatisplus;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class DictOptionListQry extends CommonCommand {
+@SpringBootApplication
+public class MybatisPlusTestApp {
 
-    private String type;
+    public static void main(String[] args) {
+        SpringApplication.run(MybatisPlusTestApp.class, args);
+    }
 
 }

@@ -19,6 +19,7 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.api.SourcesServiceI;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.core.vo.OptionVO;
 import org.laokou.common.data.cache.annotation.DataCache;
@@ -37,6 +38,8 @@ import java.util.List;
 @Tag(name = "SourcesController", description = "数据源")
 @RequiredArgsConstructor
 public class SourcesController {
+
+	private final SourcesServiceI sourcesServiceI;
 
 	@TraceLog
 	@PostMapping("v1/sources/list")

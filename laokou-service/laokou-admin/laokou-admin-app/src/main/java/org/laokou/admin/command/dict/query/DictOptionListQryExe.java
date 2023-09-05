@@ -42,7 +42,9 @@ public class DictOptionListQryExe {
 
     public Result<List<OptionCO>> execute(DictOptionListQry qry) {
         List<DictDO> list = dictMapper
-                .selectList(new QueryWrapper<>(DictDO.class).select("label", "value").orderByDesc("create_date"));
+                .selectList(new QueryWrapper<>(DictDO.class)
+                        .eq("type",qry.getType())
+                        .select("label", "value").orderByDesc("create_date"));
         if (CollectionUtil.isEmpty(list)) {
             return Result.of(new ArrayList<>(0));
         }

@@ -22,7 +22,6 @@ import org.laokou.admin.client.api.DictsServiceI;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.client.dto.dict.*;
 import org.laokou.admin.client.dto.dict.clientobject.DictCO;
-import org.laokou.admin.client.dto.role.clientobject.RoleCO;
 import org.laokou.admin.command.dict.DictDeleteCmdExe;
 import org.laokou.admin.command.dict.DictInsertCmdExe;
 import org.laokou.admin.command.dict.DictUpdateCmdExe;
@@ -79,8 +78,8 @@ public class DictsServiceImpl implements DictsServiceI {
 	}
 
 	@Override
-	public Result<Datas<RoleCO>> list(DictListQry qry) {
-		return null;
+	public Result<Datas<DictCO>> list(DictListQry qry) {
+		return dictListQryExe.execute(qry);
 	}
 
 }

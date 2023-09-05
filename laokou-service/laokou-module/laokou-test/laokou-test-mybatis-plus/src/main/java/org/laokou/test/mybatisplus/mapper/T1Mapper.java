@@ -15,21 +15,22 @@
  *
  */
 
-package org.laokou.admin.client.dto.dict;
+package org.laokou.test.mybatisplus.mapper;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.test.mybatisplus.entity.T1;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class DictOptionListQry extends CommonCommand {
-
-    private String type;
+@Repository
+@Mapper
+public interface T1Mapper extends BaseMapper<T1> {
+    void insertBatch(@Param("list") List<T1> list);
 
 }

@@ -20,8 +20,10 @@ package org.laokou.admin.service;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.TenantsServiceI;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.tenant.TenantOptionListQry;
+import org.laokou.admin.client.dto.tenant.*;
+import org.laokou.admin.client.dto.tenant.clientobject.TenantCO;
 import org.laokou.admin.command.tenant.query.TenantOptionListQryExe;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,31 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	@Override
 	public Result<List<OptionCO>> optionList(TenantOptionListQry qry) {
 		return tenantOptionListQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<Boolean> insert(TenantInsertCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> update(TenantUpdateCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> delete(TenantDeleteCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Datas<TenantCO>> list(TenantListQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<TenantCO> get(TenantGetQry qry) {
+		return null;
 	}
 
 }
