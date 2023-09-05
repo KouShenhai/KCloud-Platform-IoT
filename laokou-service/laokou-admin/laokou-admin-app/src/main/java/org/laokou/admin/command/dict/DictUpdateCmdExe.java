@@ -37,22 +37,24 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DictUpdateCmdExe {
 
-    private final DictGateway dictGateway;
-    private final DictMapper dictMapper;
+	private final DictGateway dictGateway;
 
-    public Result<Boolean> execute(DictUpdateCmd cmd) {
-        DictCO dictCO = cmd.getDictCO();
-        Long id = dictCO.getId();
-        if (id == null) {
-            throw new GlobalException(BizCode.ID_NOT_NULL);
-        }
-        String type = dictCO.getType();
-        String value = dictCO.getValue();
-        Long count = dictMapper.selectCount(Wrappers.lambdaQuery(DictDO.class).eq(DictDO::getValue, value).eq(DictDO::getType, type).ne(DictDO::getId,dictCO.getId()));
-        if (count > 0) {
-            throw new GlobalException(String.format("类型为%s，值为%s的字典已存在，请重新填写",type,value));
-        }
-        return Result.of(dictGateway.update(DictConvertor.toEntity(dictCO)));
-    }
+	private final DictMapper dictMapper;
+
+	public Result<Boolean> execute(DictUpdateCmd cmd) {
+		DictCO dictCO = cmd.getDictCO();
+		Long id = dictCO.getId();
+		if (id == null) {
+			throw new GlobalException(BizCode.ID_NOT_NULL);
+		}
+		String type = dictCO.getType();
+		String value = dictCO.getValue();
+		Long count = dictMapper.selectCount(Wrappers.lambdaQuery(DictDO.class).eq(DictDO::getValue, value)
+				.eq(DictDO::getType, type).ne(DictDO::getId, dictCO.getId()));
+		if (count > 0) {
+			throw new GlobalException(String.format("类型为%s，值为%s的字典已存在，请重新填写", type, value));
+		}
+		return Result.of(dictGateway.update(DictConvertor.toEntity(dictCO)));
+	}
 
 }

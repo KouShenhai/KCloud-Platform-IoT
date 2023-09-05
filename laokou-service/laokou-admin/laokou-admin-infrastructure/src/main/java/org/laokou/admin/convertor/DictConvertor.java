@@ -27,12 +27,12 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class DictConvertor {
 
-    public static Dict toEntity(DictCO dictCO) {
-        return ConvertUtil.sourceToTarget(dictCO, Dict.class);
-    }
+	public static Dict toEntity(DictCO dictCO) {
+		return ConvertUtil.sourceToTarget(dictCO, Dict.class);
+	}
 
-    public static DictDO toDataObject(Dict dict) {
-        return ConvertUtil.sourceToTarget(dict, DictDO.class);
-    }
+	public static DictDO toDataObject(Dict dict) {
+		return ConvertUtil.sourceToTarget(dict, DictDO.class);
+	}
 
 }

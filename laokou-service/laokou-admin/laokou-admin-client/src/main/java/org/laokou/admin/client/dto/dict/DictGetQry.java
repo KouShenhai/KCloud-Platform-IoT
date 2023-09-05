@@ -26,6 +26,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class DictGetQry extends CommonCommand {
 
-    private Long id;
+	private Long id;
 
 }

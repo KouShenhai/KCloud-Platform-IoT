@@ -22,12 +22,12 @@ import org.laokou.admin.domain.dict.Dict;
  */
 public interface DictGateway {
 
-    Boolean insert(Dict dict);
+	Boolean insert(Dict dict);
 
-    Boolean update(Dict dict);
+	Boolean update(Dict dict);
 
-    Dict getById(Long id);
+	Dict getById(Long id);
 
-    Boolean deleteById(Long id);
+	Boolean deleteById(Long id);
 
 }

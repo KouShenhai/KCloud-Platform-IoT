@@ -33,11 +33,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DictGetQryExe {
 
-    private final DictGateway dictGateway;
+	private final DictGateway dictGateway;
 
-    public Result<DictCO> execute(DictGetQry qry) {
-        Dict dict = dictGateway.getById(qry.getId());
-        return Result.of(ConvertUtil.sourceToTarget(dict,DictCO.class));
-    }
+	public Result<DictCO> execute(DictGetQry qry) {
+		Dict dict = dictGateway.getById(qry.getId());
+		return Result.of(ConvertUtil.sourceToTarget(dict, DictCO.class));
+	}
 
 }

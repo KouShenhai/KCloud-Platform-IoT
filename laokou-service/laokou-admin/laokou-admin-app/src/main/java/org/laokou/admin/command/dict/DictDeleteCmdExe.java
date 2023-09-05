@@ -32,10 +32,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DictDeleteCmdExe {
 
-    private final DictGateway dictGateway;
+	private final DictGateway dictGateway;
 
-    public Result<Boolean> execute(DictDeleteCmd cmd) {
-        return Result.of(dictGateway.deleteById(cmd.getId()));
-    }
+	public Result<Boolean> execute(DictDeleteCmd cmd) {
+		return Result.of(dictGateway.deleteById(cmd.getId()));
+	}
 
 }

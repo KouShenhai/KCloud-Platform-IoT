@@ -39,7 +39,7 @@ public class MenuTreeListQryExe {
 	private final MenuGateway menuGateway;
 
 	public Result<MenuCO> execute(MenuTreeListQry qry) {
-		List<Menu> menuList = menuGateway.list(0, UserUtil.user());
+		List<Menu> menuList = menuGateway.list(UserUtil.user(), 0);
 		List<MenuCO> menus = ConvertUtil.sourceToTarget(menuList, MenuCO.class);
 		return Result.of(TreeUtil.buildTreeNode(menus, MenuCO.class));
 	}

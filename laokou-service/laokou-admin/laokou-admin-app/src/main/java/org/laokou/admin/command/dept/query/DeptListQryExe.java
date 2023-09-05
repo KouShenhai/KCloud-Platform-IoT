@@ -20,8 +20,8 @@ package org.laokou.admin.command.dept.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.dept.DeptListQry;
 import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
+import org.laokou.admin.domain.dept.Dept;
 import org.laokou.admin.domain.gateway.DeptGateway;
-import org.laokou.admin.domain.menu.Menu;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
@@ -39,7 +39,9 @@ public class DeptListQryExe {
 	private final DeptGateway deptGateway;
 
 	public Result<List<DeptCO>> execute(DeptListQry qry) {
-		List<Menu> list = deptGateway.list(UserUtil.getTenantId(), qry.getName());
+		Dept dept = new Dept();
+		dept.setName(qry.getName());
+		List<Dept> list = deptGateway.list(dept, UserUtil.getTenantId());
 		return Result.of(ConvertUtil.sourceToTarget(list, DeptCO.class));
 	}
 

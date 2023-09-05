@@ -17,13 +17,12 @@
 
 package org.laokou.admin.command.role.query;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.role.RoleListQry;
 import org.laokou.admin.client.dto.role.clientobject.RoleCO;
-import org.laokou.admin.gatewayimpl.database.RoleMapper;
-import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
+import org.laokou.admin.domain.common.DataPage;
+import org.laokou.admin.domain.gateway.RoleGateway;
+import org.laokou.admin.domain.role.Role;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -37,16 +36,17 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RoleListQryExe {
 
-	private final RoleMapper roleMapper;
+	private final RoleGateway roleGateway;
 
 	public Result<Datas<RoleCO>> execute(RoleListQry qry) {
-		IPage<RoleDO> page = new Page<>(qry.getPageNum(), qry.getPageSize());
-		IPage<RoleDO> newPage = roleMapper.getRoleListByTenantIdAndLikeName(page, UserUtil.getTenantId(),
-				qry.getName());
-		Datas<RoleCO> datas = new Datas<>();
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), RoleCO.class));
-		datas.setTotal(newPage.getTotal());
-		return Result.of(datas);
+		Role role = new Role();
+		role.setName(qry.getName());
+		DataPage dataPage = new DataPage(qry.getPageNum(), qry.getPageSize());
+		Datas<Role> datas = roleGateway.list(UserUtil.getTenantId(), role, dataPage);
+		Datas<RoleCO> newDatas = new Datas<>();
+		newDatas.setTotal(datas.getTotal());
+		newDatas.setRecords(ConvertUtil.sourceToTarget(datas.getRecords(), RoleCO.class));
+		return Result.of(newDatas);
 	}
 
 }

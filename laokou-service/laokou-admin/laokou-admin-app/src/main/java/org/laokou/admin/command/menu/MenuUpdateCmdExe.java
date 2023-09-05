@@ -38,6 +38,7 @@ import org.springframework.stereotype.Component;
 public class MenuUpdateCmdExe {
 
 	private final MenuGateway menuGateway;
+
 	private final MenuMapper menuMapper;
 
 	public Result<Boolean> execute(MenuUpdateCmd cmd) {

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.tenant.query;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.client.dto.tenant.TenantOptionListQry;
@@ -39,7 +40,8 @@ public class TenantOptionListQryExe {
 	private final TenantMapper tenantMapper;
 
 	public Result<List<OptionCO>> execute(TenantOptionListQry qry) {
-		List<TenantDO> list = tenantMapper.getValueListOrderByDesc(TenantDO.class, "create_date", "id", "name");
+		List<TenantDO> list = tenantMapper
+				.selectList(new QueryWrapper<>(TenantDO.class).eq("id", "name").orderByDesc("create_date"));
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}

@@ -20,9 +20,8 @@ package org.laokou.admin.command.menu;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.client.dto.menu.MenuDeleteCmd;
-import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,20 +32,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MenuDeleteCmdExe {
 
-	private final MenuMapper menuMapper;
-	private final TransactionalUtil transactionalUtil;
+	private final MenuGateway menuGateway;
 
 	public Result<Boolean> execute(MenuDeleteCmd cmd) {
-		boolean result = transactionalUtil.execute(rollback -> {
-			try {
-				return menuMapper.deleteById(cmd.getId()) > 0;
-			} catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
-				rollback.setRollbackOnly();
-				return false;
-			}
-		});
-		return Result.of(result);
+		return Result.of(menuGateway.deleteById(cmd.getId()));
 	}
 
 }

@@ -39,66 +39,68 @@ import static org.laokou.admin.common.Constant.TENANT;
 @RequiredArgsConstructor
 public class DictGatewayImpl implements DictGateway {
 
-    private final DictMapper dictMapper;
-    private final TransactionalUtil transactionalUtil;
+	private final DictMapper dictMapper;
 
-    @Override
-    @DS(TENANT)
-    public Boolean insert(Dict dict) {
-        DictDO dictDO = DictConvertor.toDataObject(dict);
-        return insertDict(dictDO);
-    }
+	private final TransactionalUtil transactionalUtil;
 
-    @Override
-    @DS(TENANT)
-    public Boolean update(Dict dict) {
-        DictDO dictDO = DictConvertor.toDataObject(dict);
-        return updateDict(dictDO);
-    }
+	@Override
+	@DS(TENANT)
+	public Boolean insert(Dict dict) {
+		DictDO dictDO = DictConvertor.toDataObject(dict);
+		return insertDict(dictDO);
+	}
 
-    @Override
-    public Dict getById(Long id) {
-        DictDO dictDO = dictMapper.selectById(id);
-        return ConvertUtil.sourceToTarget(dictDO,Dict.class);
-    }
+	@Override
+	@DS(TENANT)
+	public Boolean update(Dict dict) {
+		DictDO dictDO = DictConvertor.toDataObject(dict);
+		return updateDict(dictDO);
+	}
 
-    @Override
-    public Boolean deleteById(Long id) {
-        return transactionalUtil.execute(r -> {
-            try {
-                return dictMapper.deleteById(id) > 0;
-            } catch (Exception e) {
-                log.error("错误信息：{}", e.getMessage());
-                r.setRollbackOnly();
-                return false;
-            }
-        });
-    }
+	@Override
+	public Dict getById(Long id) {
+		DictDO dictDO = dictMapper.selectById(id);
+		return ConvertUtil.sourceToTarget(dictDO, Dict.class);
+	}
 
-    private Boolean insertDict(DictDO dictDO) {
-        return transactionalUtil.execute(r -> {
-            try {
-                return dictMapper.insert(dictDO) > 0;
-            }
-            catch (Exception e) {
-                log.error("错误信息：{}", e.getMessage());
-                r.setRollbackOnly();
-                return false;
-            }
-        });
-    }
+	@Override
+	public Boolean deleteById(Long id) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return dictMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
 
-    private Boolean updateDict(DictDO dictDO) {
-        return transactionalUtil.execute(r -> {
-            try {
-                return dictMapper.updateById(dictDO) > 0;
-            }
-            catch (Exception e) {
-                log.error("错误信息：{}", e.getMessage());
-                r.setRollbackOnly();
-                return false;
-            }
-        });
-    }
+	private Boolean insertDict(DictDO dictDO) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return dictMapper.insert(dictDO) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	private Boolean updateDict(DictDO dictDO) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return dictMapper.updateById(dictDO) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
 
 }

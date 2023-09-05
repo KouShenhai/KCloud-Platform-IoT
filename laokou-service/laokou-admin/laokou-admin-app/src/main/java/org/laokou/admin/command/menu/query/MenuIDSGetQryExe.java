@@ -19,7 +19,7 @@ package org.laokou.admin.command.menu.query;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.dto.menu.MenuIDSGetQry;
-import org.laokou.admin.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -32,10 +32,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MenuIDSGetQryExe {
 
-	private final MenuMapper menuMapper;
+	private final MenuGateway menuGateway;
 
 	public Result<List<Long>> execute(MenuIDSGetQry qry) {
-		return Result.of(menuMapper.getMenuIdsByRoleId(qry.getRoleId()));
+		return Result.of(menuGateway.getIdsByRoleId(qry.getRoleId()));
 	}
 
 }

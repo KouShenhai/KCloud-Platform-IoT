@@ -66,12 +66,4 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 		return value.getVersion();
 	}
 
-	default List<T> getValueListOrderByAsc(Class<T> clazz, String column, String... columns) {
-		return this.selectList(new QueryWrapper<>(clazz).select(columns).orderByAsc(column));
-	}
-
-	default List<T> getValueListOrderByDesc(Class<T> clazz, String column, String... columns) {
-		return this.selectList(new QueryWrapper<>(clazz).select(columns).orderByDesc(column));
-	}
-
 }

@@ -27,36 +27,36 @@ import java.time.LocalDateTime;
 @Data
 public class Dict {
 
-    private Long id;
+	private Long id;
 
-    /**
-     * 标签
-     */
-    private String label;
+	/**
+	 * 标签
+	 */
+	private String label;
 
-    /**
-     * 类型
-     */
-    private String type;
+	/**
+	 * 类型
+	 */
+	private String type;
 
-    /**
-     * 值
-     */
-    private String value;
+	/**
+	 * 值
+	 */
+	private String value;
 
-    /**
-     * 备注
-     */
-    private String remark;
+	/**
+	 * 备注
+	 */
+	private String remark;
 
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createDate;
+	/**
+	 * 创建时间
+	 */
+	private LocalDateTime createDate;
 
-    /**
-     * 排序
-     */
-    private Integer sort;
+	/**
+	 * 排序
+	 */
+	private Integer sort;
 
 }

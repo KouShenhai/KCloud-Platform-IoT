@@ -27,6 +27,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class DictInsertCmd extends CommonCommand {
 
-    private DictCO dictCO;
+	private DictCO dictCO;
 
 }
