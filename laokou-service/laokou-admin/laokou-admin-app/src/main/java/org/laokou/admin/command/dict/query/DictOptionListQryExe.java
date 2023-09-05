@@ -17,8 +17,19 @@
 
 package org.laokou.admin.command.dict.query;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.client.dto.dict.DictOptionListQry;
+import org.laokou.admin.gatewayimpl.database.DictMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author laokou
@@ -26,5 +37,16 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class DictOptionListQryExe {
+
+    private final DictMapper dictMapper;
+
+    public Result<List<OptionCO>> execute(DictOptionListQry qry) {
+        List<DictDO> list = dictMapper
+                .selectList(new QueryWrapper<>(DictDO.class).select("label", "value").orderByDesc("create_date"));
+        if (CollectionUtil.isEmpty(list)) {
+            return Result.of(new ArrayList<>(0));
+        }
+        return Result.of(ConvertUtil.sourceToTarget(list,OptionCO.class));
+    }
 
 }

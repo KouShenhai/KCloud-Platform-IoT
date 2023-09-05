@@ -19,6 +19,8 @@ package org.laokou.admin.client.api;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.client.dto.dict.*;
 import org.laokou.admin.client.dto.dict.clientobject.DictCO;
+import org.laokou.admin.client.dto.role.clientobject.RoleCO;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 
 import java.util.List;
@@ -37,5 +39,7 @@ public interface DictsServiceI {
 	Result<DictCO> get(DictGetQry qry);
 
 	Result<List<OptionCO>> optionList(DictOptionListQry qry);
+
+	Result<Datas<RoleCO>> list(DictListQry qry);
 
 }

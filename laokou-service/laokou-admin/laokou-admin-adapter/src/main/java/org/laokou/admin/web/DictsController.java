@@ -21,9 +21,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.DictsServiceI;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.client.dto.role.clientobject.RoleCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.Cache;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,8 +47,8 @@ public class DictsController {
 	@TraceLog
 	@Operation(summary = "查询", description = "查询")
 	@PreAuthorize("hasAuthority('dicts:list')")
-	public Result<?> list() {
-		return Result.of(null);
+	public Result<Datas<RoleCO>> list() {
+		return null;
 	}
 
 	@TraceLog

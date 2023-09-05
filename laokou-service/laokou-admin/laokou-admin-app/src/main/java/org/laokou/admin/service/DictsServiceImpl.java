@@ -22,11 +22,14 @@ import org.laokou.admin.client.api.DictsServiceI;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.client.dto.dict.*;
 import org.laokou.admin.client.dto.dict.clientobject.DictCO;
+import org.laokou.admin.client.dto.role.clientobject.RoleCO;
 import org.laokou.admin.command.dict.DictDeleteCmdExe;
 import org.laokou.admin.command.dict.DictInsertCmdExe;
 import org.laokou.admin.command.dict.DictUpdateCmdExe;
 import org.laokou.admin.command.dict.query.DictGetQryExe;
+import org.laokou.admin.command.dict.query.DictListQryExe;
 import org.laokou.admin.command.dict.query.DictOptionListQryExe;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -48,29 +51,35 @@ public class DictsServiceImpl implements DictsServiceI {
 	private final DictOptionListQryExe dictOptionListQryExe;
 
 	private final DictGetQryExe dictGetQryExe;
+	private final DictListQryExe dictListQryExe;
 
 	@Override
 	public Result<Boolean> insert(DictInsertCmd cmd) {
-		return null;
+		return dictInsertCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> update(DictUpdateCmd cmd) {
-		return null;
+		return dictUpdateCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> delete(DictDeleteCmd cmd) {
-		return null;
+		return dictDeleteCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<DictCO> get(DictGetQry qry) {
-		return null;
+		return dictGetQryExe.execute(qry);
 	}
 
 	@Override
 	public Result<List<OptionCO>> optionList(DictOptionListQry qry) {
+		return dictOptionListQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<Datas<RoleCO>> list(DictListQry qry) {
 		return null;
 	}
 
