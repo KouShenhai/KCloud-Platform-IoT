@@ -15,27 +15,22 @@
  *
  */
 
-package org.laokou.test.mybatisplus.entity;
+package org.laokou.test.mybatisplus.mapper;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.test.mybatisplus.entity.T1;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-@TableName("t1")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class T1 {
-
-    @TableField("mobile")
-    @TableId(type = IdType.INPUT)
-    private String mobile;
+@Repository
+@Mapper
+public interface T1Mapper extends BaseMapper<T1> {
+    void insertBatch(@Param("list") List<T1> list);
 
 }

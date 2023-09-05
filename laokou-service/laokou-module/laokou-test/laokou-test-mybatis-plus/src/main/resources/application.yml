@@ -1,8 +1,15 @@
 server:
   port: 8077
 
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+
 spring:
   datasource:
-    url: jdbc:mysql://192.168.30.133:3306/big_data_compare?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
-    password: root
-    username: root
+    dynamic:
+      primary: master
+      datasource:
+        master:
+          url: jdbc:mysql://192.168.1.113:3306/big_data_compare?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+          password: root
+          username: root
