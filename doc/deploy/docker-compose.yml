@@ -26,7 +26,7 @@ services:
       - "5555:5555"
   laokou-admin-service:
     tty: true
-    image: registry.cn-hangzhou.aliyuncs.com/koushenhai/laokou-admin-server:3.1.3
+    image: registry.cn-hangzhou.aliyuncs.com/koushenhai/laokou-admin:3.1.3
     container_name: laokou-admin
     environment:
       - TZ="Asia/Shanghai"
@@ -35,7 +35,7 @@ services:
     restart: on-failure
   laokou-auth-service:
     tty: true
-    image: registry.cn-hangzhou.aliyuncs.com/koushenhai/laokou-auth-server:3.1.3
+    image: registry.cn-hangzhou.aliyuncs.com/koushenhai/laokou-auth:3.1.3
     container_name: laokou-auth
     environment:
       - TZ="Asia/Shanghai"

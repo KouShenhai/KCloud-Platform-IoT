@@ -16,6 +16,7 @@
 package org.laokou.admin.domain.gateway;
 
 import org.laokou.admin.domain.dict.Dict;
+import org.laokou.common.i18n.dto.Datas;
 
 /**
  * @author laokou
@@ -29,5 +30,7 @@ public interface DictGateway {
 	Dict getById(Long id);
 
 	Boolean deleteById(Long id);
+
+	Datas<Dict> list(Dict dict);
 
 }

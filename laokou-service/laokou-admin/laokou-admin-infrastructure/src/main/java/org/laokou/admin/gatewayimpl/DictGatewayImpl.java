@@ -26,6 +26,7 @@ import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -75,6 +76,12 @@ public class DictGatewayImpl implements DictGateway {
 				return false;
 			}
 		});
+	}
+
+	@Override
+	public Datas<Dict> list(Dict dict) {
+
+		return null;
 	}
 
 	private Boolean insertDict(DictDO dictDO) {
