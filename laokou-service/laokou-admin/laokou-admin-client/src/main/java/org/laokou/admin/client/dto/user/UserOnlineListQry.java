@@ -18,13 +18,13 @@
 package org.laokou.admin.client.dto.user;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
 @Data
-public class UserOnlineListQry extends Page {
+public class UserOnlineListQry extends PageQuery {
 
 	private String username;
 

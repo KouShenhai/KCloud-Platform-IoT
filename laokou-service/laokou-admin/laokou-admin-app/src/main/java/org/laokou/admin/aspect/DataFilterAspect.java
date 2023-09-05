@@ -25,7 +25,7 @@ import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -48,7 +48,7 @@ public class DataFilterAspect {
 	@Before("@annotation(org.laokou.admin.domain.annotation.DataFilter)")
 	public void doBefore(JoinPoint point) {
 		Object params = point.getArgs()[0];
-		if (params instanceof Page page) {
+		if (params instanceof PageQuery pageQuery) {
 			User user = UserUtil.user();
 			// 超级管理员不过滤数据
 			if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
@@ -57,7 +57,7 @@ public class DataFilterAspect {
 			try {
 				// 数据过滤
 				String sqlFilter = getSqlFilter(user, point);
-				page.setSqlFilter(sqlFilter);
+				pageQuery.setSqlFilter(sqlFilter);
 			}
 			catch (Exception ex) {
 				log.error("错误信息:{}", ex.getMessage());

@@ -30,7 +30,7 @@ import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.PageQuery;
 
 import java.util.Map;
 
@@ -46,9 +46,9 @@ public class DataFilterInterceptor implements InnerInterceptor {
 		if (parameter instanceof Map map) {
 			try {
 				Object qo = map.get("qo");
-				if (qo instanceof Page page) {
+				if (qo instanceof PageQuery pageQuery) {
 					// 获取aop拼接的sql
-					String sqlFilter = page.getSqlFilter();
+					String sqlFilter = pageQuery.getSqlFilter();
 					// 获取select查询语句
 					Select select = (Select) CCJSqlParserUtil.parse(boundSql.getSql());
 					PlainSelect plainSelect = (PlainSelect) select.getSelectBody();

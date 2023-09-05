@@ -16,7 +16,7 @@
 	<!-- left -->
 	<@netCommon.commonLeft "joblog" />
 	
-	<!-- Content Wrapper. Contains page content -->
+	<!-- Content Wrapper. Contains pageQuery content -->
 	<div class="content-wrapper">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">

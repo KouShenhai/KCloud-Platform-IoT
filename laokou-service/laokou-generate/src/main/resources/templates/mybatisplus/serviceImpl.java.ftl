@@ -39,9 +39,9 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
    private final ExcelTemplate<${entity?substring(0,entity?length-2)}Qo,${entity?substring(0,entity?length-2)}VO> excelTemplate;
 
    public IPage<${entity?substring(0,entity?length-2)}VO> queryPageList(${entity?substring(0,entity?length-2)}Qo qo) {
-       IPage<${entity?substring(0,entity?length-2)}VO> page = new Page<>(qo.getPageNum(),qo.getPageSize());
+       IPage<${entity?substring(0,entity?length-2)}VO> pageQuery = new Page<>(qo.getPageNum(),qo.getPageSize());
 
-       return this.baseMapper.queryPageList(page,qo);
+       return this.baseMapper.queryPageList(pageQuery,qo);
    }
 
    @Transactional(rollbackFor = Exception.class)

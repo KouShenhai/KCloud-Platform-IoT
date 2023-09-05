@@ -18,7 +18,7 @@
 package org.laokou.common.tenant.qo;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.PageQuery;
 
 import java.io.Serial;
 
@@ -26,7 +26,7 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-public class SysTenantQo extends Page {
+public class SysTenantQo extends PageQuery {
 
 	@Serial
 	private static final long serialVersionUID = 2770834071699510685L;

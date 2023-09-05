@@ -27,7 +27,7 @@ import java.io.Serial;
  */
 @Data
 @Schema(name = "Page", description = "分页")
-public abstract class Page extends Query {
+public abstract class PageQuery extends Query {
 
 	@Serial
 	private static final long serialVersionUID = 6412915892334241813L;

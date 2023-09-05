@@ -17,7 +17,7 @@
 package org.laokou.common.log.qo;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.PageQuery;
 
 import java.io.Serial;
 
@@ -25,7 +25,7 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-public class SysLoginLogQo extends Page {
+public class SysLoginLogQo extends PageQuery {
 
 	@Serial
 	private static final long serialVersionUID = -3186936106036144210L;

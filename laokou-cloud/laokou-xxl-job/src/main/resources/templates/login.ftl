@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="${request.contextPath}/static/adminlte/plugins/iCheck/square/blue.css">
 	<title>${I18n.admin_name}</title>
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-pageQuery">
 	<div class="login-box">
 		<div class="login-logo">
 			<a><b>XXL</b>JOB</a>

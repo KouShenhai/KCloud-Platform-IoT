@@ -18,7 +18,7 @@ package org.laokou.admin.server.interfaces.qo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.PageQuery;
 
 import java.io.Serial;
 
@@ -27,7 +27,7 @@ import java.io.Serial;
  */
 @Data
 @Schema(name = "SysResourceQo", description = "资源实体类")
-public class SysResourceQo extends Page {
+public class SysResourceQo extends PageQuery {
 
 	@Serial
 	private static final long serialVersionUID = -4054765772439493563L;

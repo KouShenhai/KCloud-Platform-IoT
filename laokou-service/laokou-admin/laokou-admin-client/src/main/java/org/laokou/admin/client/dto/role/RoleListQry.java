@@ -18,13 +18,13 @@
 package org.laokou.admin.client.dto.role;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
 @Data
-public class RoleListQry extends Page {
+public class RoleListQry extends PageQuery {
 
 	private String name;
 
