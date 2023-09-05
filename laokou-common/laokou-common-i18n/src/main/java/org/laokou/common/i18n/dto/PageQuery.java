@@ -26,7 +26,7 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-@Schema(name = "Page", description = "分页")
+@Schema(name = "PageQuery", description = "分页")
 public abstract class PageQuery extends Query {
 
 	@Serial
