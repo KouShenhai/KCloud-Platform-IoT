@@ -16,9 +16,27 @@
  */
 package org.laokou.admin.client.api;
 
+import org.laokou.admin.client.dto.oss.*;
+import org.laokou.admin.client.dto.oss.clientobject.FileCO;
+import org.laokou.admin.client.dto.oss.clientobject.OssCO;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
+
 /**
  * @author laokou
  */
 public interface OssServiceI {
+
+    Result<Boolean> insert(OssInsertCmd cmd);
+
+    Result<Boolean> update(OssUpdateCmd cmd);
+
+    Result<Boolean> delete(OssDeleteCmd cmd);
+
+    Result<Boolean> use(OssUseCmd cmd);
+
+    Result<Datas<OssCO>> list(OssListQry qry);
+
+    Result<FileCO> upload(OssUploadCmd cmd);
 
 }

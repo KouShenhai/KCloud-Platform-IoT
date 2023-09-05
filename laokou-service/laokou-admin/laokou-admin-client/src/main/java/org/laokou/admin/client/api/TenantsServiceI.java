@@ -17,7 +17,9 @@
 package org.laokou.admin.client.api;
 
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.tenant.TenantOptionListQry;
+import org.laokou.admin.client.dto.tenant.*;
+import org.laokou.admin.client.dto.tenant.clientobject.TenantCO;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 
 import java.util.List;
@@ -33,5 +35,15 @@ public interface TenantsServiceI {
 	 * @return Result<List<OptionCO>>
 	 */
 	Result<List<OptionCO>> optionList(TenantOptionListQry qry);
+
+	Result<Boolean> insert(TenantInsertCmd cmd);
+
+	Result<Boolean> update(TenantUpdateCmd cmd);
+
+	Result<Boolean> delete(TenantDeleteCmd cmd);
+
+	Result<Datas<TenantCO>> list(TenantListQry qry);
+
+	Result<TenantCO> get(TenantGetQry qry);
 
 }

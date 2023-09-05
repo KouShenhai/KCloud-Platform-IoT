@@ -16,9 +16,29 @@
  */
 package org.laokou.admin.client.api;
 
+import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.client.dto.packages.*;
+import org.laokou.admin.client.dto.packages.clientobject.PackageCO;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
 public interface PackagesServiceI {
+
+    Result<Boolean> insert(PackageInsertCmd cmd);
+
+    Result<Boolean> update(PackageUpdateCmd cmd);
+
+    Result<Boolean> delete(PackageDeleteCmd cmd);
+
+    Result<Datas<PackageCO>> list(PackageListQry qry);
+
+    Result<PackageCO> get(PackageGetQry qry);
+
+    Result<List<OptionCO>> optionList(PackageOptionListQry qry);
 
 }

@@ -14,21 +14,28 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
+package org.laokou.admin.client.dto.monitor.clientobject;
 
-import org.laokou.admin.client.dto.monitor.MonitorCacheGetQry;
-import org.laokou.admin.client.dto.monitor.MonitorServerGetQry;
-import org.laokou.admin.client.dto.monitor.clientobject.CacheCO;
-import org.laokou.admin.client.dto.monitor.clientobject.ServerCO;
-import org.laokou.common.i18n.dto.Result;
+import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
+
+import java.io.Serial;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author laokou
  */
-public interface MonitorsServiceI {
+@Data
+public class CacheCO extends ClientObject {
 
-    Result<CacheCO> cache(MonitorCacheGetQry qry);
+	@Serial
+	private static final long serialVersionUID = 9153324620769020304L;
 
-    Result<ServerCO> server(MonitorServerGetQry qry);
+	private Long keysSize;
+
+	private Map<String, String> info;
+
+	private List<Map<String, String>> commandStats;
 
 }

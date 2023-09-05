@@ -56,7 +56,7 @@ public class DictsController {
 	@GetMapping("v1/dicts/option-list/{type}")
 	@Operation(summary = "下拉列表", description = "下拉列表")
 	public Result<List<OptionCO>> optionList(@PathVariable("type") String type) {
-		return dictsServiceI.optionList(new DictOptionListQry());
+		return dictsServiceI.optionList(new DictOptionListQry(type));
 	}
 
 	@TraceLog

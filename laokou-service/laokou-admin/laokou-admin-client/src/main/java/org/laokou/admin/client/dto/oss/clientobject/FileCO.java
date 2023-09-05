@@ -14,21 +14,19 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.monitor.MonitorCacheGetQry;
-import org.laokou.admin.client.dto.monitor.MonitorServerGetQry;
-import org.laokou.admin.client.dto.monitor.clientobject.CacheCO;
-import org.laokou.admin.client.dto.monitor.clientobject.ServerCO;
-import org.laokou.common.i18n.dto.Result;
+package org.laokou.admin.client.dto.oss.clientobject;
+
+import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
-public interface MonitorsServiceI {
+@Data
+public class FileCO extends ClientObject {
 
-    Result<CacheCO> cache(MonitorCacheGetQry qry);
-
-    Result<ServerCO> server(MonitorServerGetQry qry);
+    private String url;
+    private String md5;
 
 }

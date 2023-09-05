@@ -16,9 +16,29 @@
  */
 package org.laokou.admin.client.api;
 
+import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.client.dto.source.*;
+import org.laokou.admin.client.dto.source.clientobject.SourceCO;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
+
+import java.util.List;
+
 /**
  * @author laokou
  */
 public interface SourcesServiceI {
+
+    Result<Boolean> insert(SourceInsertCmd cmd);
+
+    Result<Boolean> update(SourceUpdateCmd cmd);
+
+    Result<Boolean> delete(SourceDeleteCmd cmd);
+
+    Result<SourceCO> get(SourceGetQry qry);
+
+    Result<Datas<SourceCO>> list(SourceListQry qry);
+
+    Result<List<OptionCO>> optionList(SourceOptionListQry qry);
 
 }
