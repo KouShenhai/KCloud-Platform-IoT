@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author laokou
  */
 @RestController
-@Tag(name = "MonitorsController", description = "监控")
+@Tag(name = "MonitorsController", description = "监控管理")
 @RequiredArgsConstructor
 public class MonitorsController {
 
@@ -37,14 +37,14 @@ public class MonitorsController {
 
 	@TraceLog
 	@GetMapping("v1/monitors/cache")
-	@Operation(summary = "缓存", description = "缓存")
+	@Operation(summary = "监控管理", description = "缓存监控")
 	public Result<?> cache() {
 		return Result.of(null);
 	}
 
 	@TraceLog
 	@GetMapping("v1/monitors/server")
-	@Operation(summary = "主机", description = "主机")
+	@Operation(summary = "监控管理", description = "主机监控")
 	public Result<?> server() {
 		return Result.of(null);
 	}

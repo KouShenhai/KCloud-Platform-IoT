@@ -56,15 +56,15 @@ public class UsersController {
 	@TraceLog
 	@PostMapping("v1/users/online-list")
 	@PreAuthorize("hasAuthority('users:online-list')")
-	@Operation(summary = "在线用户", description = "在线用户查询")
+	@Operation(summary = "在线用户", description = "查询在线用户列表")
 	public Result<?> onlineList() {
 		return Result.of(null);
 	}
 
 	@TraceLog
 	@DeleteMapping("v1/users/online-kill")
-	@Operation(summary = "在线用户", description = "在线用户强踢")
-	@OperateLog(module = "用户管理", operation = "在线用户强踢")
+	@Operation(summary = "在线用户", description = "强踢在线用户")
+	@OperateLog(module = "用户管理", operation = "强踢在线用户")
 	@PreAuthorize("hasAuthority('users:online-kill')")
 	public Result<Boolean> onlineKill(@RequestBody UserOnlineKillCmd cmd) {
 		return Result.of(null);
@@ -72,7 +72,7 @@ public class UsersController {
 
 	@TraceLog
 	@GetMapping("v1/users/profile")
-	@Operation(summary = "个人中心", description = "用户信息")
+	@Operation(summary = "个人中心", description = "查看个人信息")
 	public Result<UserProfileCO> profile() {
 		return usersServiceI.profile(new UserProfileGetQry());
 	}
@@ -86,15 +86,15 @@ public class UsersController {
 
 	@TraceLog
 	@PutMapping("v1/users/profile")
-	@Operation(summary = "个人中心", description = "修改信息")
+	@Operation(summary = "个人中心", description = "修改个人信息")
 	public Result<Boolean> profile(@RequestBody Object obj) {
 		return Result.of(null);
 	}
 
 	@TraceLog
 	@PutMapping("v1/users/status")
-	@Operation(summary = "用户管理", description = "修改状态")
-	@OperateLog(module = "用户管理", operation = "修改状态")
+	@Operation(summary = "用户管理", description = "修改用户状态")
+	@OperateLog(module = "用户管理", operation = "修改用户状态")
 	@PreAuthorize("hasAuthority('users:status')")
 	public Result<Boolean> status(@RequestBody UserStatusUpdateCmd cmd) {
 		return Result.of(null);
@@ -145,7 +145,7 @@ public class UsersController {
 
 	@TraceLog
 	@PostMapping("v1/users/list")
-	@Operation(summary = "用户管理", description = "查询用户")
+	@Operation(summary = "用户管理", description = "查询用户列表")
 	@PreAuthorize("hasAuthority('users:list')")
 	public Result<?> list() {
 		return Result.of(null);

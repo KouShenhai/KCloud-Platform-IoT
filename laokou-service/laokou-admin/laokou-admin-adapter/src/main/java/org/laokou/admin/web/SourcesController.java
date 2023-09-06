@@ -35,7 +35,7 @@ import java.util.List;
  * @author laokou
  */
 @RestController
-@Tag(name = "SourcesController", description = "数据源")
+@Tag(name = "SourcesController", description = "数据源管理")
 @RequiredArgsConstructor
 public class SourcesController {
 
@@ -43,7 +43,7 @@ public class SourcesController {
 
 	@TraceLog
 	@PostMapping("v1/sources/list")
-	@Operation(summary = "查询", description = "查询")
+	@Operation(summary = "数据源管理", description = "查询数据源列表")
 	@PreAuthorize("hasAuthority('sources:list')")
 	public Result<?> list() {
 		return Result.of(null);
@@ -51,7 +51,7 @@ public class SourcesController {
 
 	@TraceLog
 	@PostMapping("v1/sources")
-	@Operation(summary = "新增", description = "新增")
+	@Operation(summary = "数据源管理", description = "新增数据源")
 	@OperateLog(module = "数据源管理", operation = "数据源新增")
 	@PreAuthorize("hasAuthority('sources:insert')")
 	public Result<Boolean> insert() {
@@ -60,7 +60,7 @@ public class SourcesController {
 
 	@TraceLog
 	@GetMapping("v1/sources/{id}")
-	@Operation(summary = "查看", description = "查看")
+	@Operation(summary = "数据源管理", description = "查看数据源")
 	@DataCache(name = "sources", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
@@ -68,8 +68,8 @@ public class SourcesController {
 
 	@TraceLog
 	@PutMapping("v1/sources")
-	@Operation(summary = "修改", description = "修改")
-	@OperateLog(module = "数据源管理", operation = "修改")
+	@Operation(summary = "数据源管理", description = "修改数据源")
+	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@PreAuthorize("hasAuthority('sources:update')")
 	@DataCache(name = "sources", key = "#dto.id", type = Cache.DEL)
 	public Result<Boolean> update() {
@@ -78,8 +78,8 @@ public class SourcesController {
 
 	@TraceLog
 	@DeleteMapping("v1/sources/{id}")
-	@Operation(summary = "删除", description = "删除")
-	@OperateLog(module = "数据源管理", operation = "删除")
+	@Operation(summary = "数据源管理", description = "删除数据源")
+	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@PreAuthorize("hasAuthority('sources:delete')")
 	@DataCache(name = "sources", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
@@ -88,7 +88,7 @@ public class SourcesController {
 
 	@TraceLog
 	@GetMapping("v1/sources/option-list")
-	@Operation(summary = "下拉列表", description = "下拉列表")
+	@Operation(summary = "数据源管理", description = "下拉列表")
 	public Result<List<OptionVO>> optionList() {
 		return Result.of(null);
 	}

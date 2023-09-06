@@ -38,7 +38,7 @@ import java.util.List;
  * @author laokou
  */
 @RestController
-@Tag(name = "DictsController", description = "字典")
+@Tag(name = "DictsController", description = "字典管理")
 @RequiredArgsConstructor
 public class DictsController {
 
@@ -46,7 +46,7 @@ public class DictsController {
 
 	@PostMapping(value = "v1/dicts/list")
 	@TraceLog
-	@Operation(summary = "查询", description = "查询")
+	@Operation(summary = "字典管理", description = "查询字典列表")
 	@PreAuthorize("hasAuthority('dicts:list')")
 	public Result<Datas<DictCO>> list(@RequestBody DictListQry qry) {
 		return dictsServiceI.list(qry);
@@ -54,14 +54,14 @@ public class DictsController {
 
 	@TraceLog
 	@GetMapping("v1/dicts/option-list/{type}")
-	@Operation(summary = "下拉列表", description = "下拉列表")
+	@Operation(summary = "字典管理", description = "下拉列表")
 	public Result<List<OptionCO>> optionList(@PathVariable("type") String type) {
 		return dictsServiceI.optionList(new DictOptionListQry(type));
 	}
 
 	@TraceLog
 	@GetMapping(value = "v1/dicts/{id}")
-	@Operation(summary = "查看", description = "查看")
+	@Operation(summary = "字典管理", description = "查看字典")
 	@DataCache(name = "dicts", key = "#id")
 	public Result<DictCO> detail(@PathVariable("id") Long id) {
 		return dictsServiceI.get(new DictGetQry(id));
@@ -69,8 +69,8 @@ public class DictsController {
 
 	@TraceLog
 	@PostMapping(value = "v1/dicts")
-	@Operation(summary = "新增", description = "新增")
-	@OperateLog(module = "字典管理", operation = "新增")
+	@Operation(summary = "字典管理", description = "新增字典")
+	@OperateLog(module = "字典管理", operation = "新增字典")
 	@PreAuthorize("hasAuthority('dicts:insert')")
 	public Result<Boolean> insert(@RequestBody DictInsertCmd cmd) {
 		return dictsServiceI.insert(cmd);
@@ -78,8 +78,8 @@ public class DictsController {
 
 	@TraceLog
 	@PutMapping(value = "v1/dicts")
-	@Operation(summary = "修改", description = "修改")
-	@OperateLog(module = "字典管理", operation = "修改")
+	@Operation(summary = "字典管理", description = "修改字典")
+	@OperateLog(module = "字典管理", operation = "修改字典")
 	@PreAuthorize("hasAuthority('dicts:update')")
 	@DataCache(name = "dicts", key = "#dto.id", type = Cache.DEL)
 	public Result<Boolean> update(@RequestBody DictUpdateCmd cmd) {
@@ -88,8 +88,8 @@ public class DictsController {
 
 	@TraceLog
 	@DeleteMapping(value = "v1/dicts/{id}")
-	@Operation(summary = "删除", description = "删除")
-	@OperateLog(module = "字典管理", operation = "删除")
+	@Operation(summary = "字典管理", description = "删除字典")
+	@OperateLog(module = "字典管理", operation = "删除字典")
 	@PreAuthorize("hasAuthority('dicts:delete')")
 	@DataCache(name = "dicts", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
