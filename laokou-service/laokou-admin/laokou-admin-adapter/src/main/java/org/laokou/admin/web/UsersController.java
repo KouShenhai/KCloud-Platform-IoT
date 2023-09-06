@@ -55,7 +55,7 @@ public class UsersController {
 
 	@TraceLog
 	@PostMapping("v1/users/online-list")
-	@PreAuthorize("hasAuthority('users:online:list')")
+	@PreAuthorize("hasAuthority('users:online-list')")
 	@Operation(summary = "在线用户", description = "在线用户查询")
 	public Result<?> onlineList() {
 		return Result.of(null);
@@ -65,7 +65,7 @@ public class UsersController {
 	@DeleteMapping("v1/users/online-kill")
 	@Operation(summary = "在线用户", description = "在线用户强踢")
 	@OperateLog(module = "用户管理", operation = "在线用户强踢")
-	@PreAuthorize("hasAuthority('users:online:kill')")
+	@PreAuthorize("hasAuthority('users:online-kill')")
 	public Result<Boolean> onlineKill(@RequestBody UserOnlineKillCmd cmd) {
 		return Result.of(null);
 	}
@@ -134,12 +134,12 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@DeleteMapping("v1/users")
+	@DeleteMapping("v1/users/{id}")
 	@Operation(summary = "用户管理", description = "删除用户")
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@PreAuthorize("hasAuthority('users:delete')")
 	@DataCache(name = "users", key = "#id", type = Cache.DEL)
-	public Result<Boolean> delete(@RequestParam("id") Long id) {
+	public Result<Boolean> delete(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
 

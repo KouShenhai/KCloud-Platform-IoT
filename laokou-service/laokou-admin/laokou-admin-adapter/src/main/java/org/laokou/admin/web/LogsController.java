@@ -40,7 +40,7 @@ public class LogsController {
 	@TraceLog
 	@PostMapping(value = "v1/logs/operate-list")
 	@Operation(summary = "查询", description = "查询")
-	@PreAuthorize("hasAuthority('logs:operate:list')")
+	@PreAuthorize("hasAuthority('logs:operate-list')")
 	public Result<?> operateList() {
 		return Result.of(null);
 	}
@@ -49,7 +49,7 @@ public class LogsController {
 	@PostMapping(value = "v1/logs/operate-export")
 	@Operation(summary = "导出", description = "导出")
 	@OperateLog(module = "操作日志", operation = "导出")
-	@PreAuthorize("hasAuthority('logs:operate:export')")
+	@PreAuthorize("hasAuthority('logs:operate-export')")
 	public void operateExport() {
 
 	}
@@ -57,7 +57,7 @@ public class LogsController {
 	@TraceLog
 	@PostMapping(value = "v1/logs/login-list")
 	@Operation(summary = "查询", description = "查询")
-	@PreAuthorize("hasAuthority('logs:login:list')")
+	@PreAuthorize("hasAuthority('logs:login-list')")
 	public Result<?> loginList() {
 		return Result.of(null);
 	}
@@ -66,7 +66,7 @@ public class LogsController {
 	@PostMapping(value = "v1/logs/login-export")
 	@Operation(summary = "导出", description = "导出")
 	@OperateLog(module = "登录日志", operation = "导出")
-	@PreAuthorize("hasAuthority('logs:login:export')")
+	@PreAuthorize("hasAuthority('logs:login-export')")
 	public void loginExport() {
 	}
 

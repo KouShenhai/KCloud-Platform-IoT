@@ -45,7 +45,7 @@ public class ResourceController {
 	@GetMapping("v1/resource/audit-log/{id}")
 	@TraceLog
 	@Operation(summary = "审批日志", description = "审批日志")
-	@PreAuthorize("hasAuthority('resource:audit:log')")
+	@PreAuthorize("hasAuthority('resource:audit-log')")
 	public Result<?> auditLog(@PathVariable("id") Long id) {
 		return Result.of(null);
 	}
@@ -129,7 +129,7 @@ public class ResourceController {
 	@TraceLog
 	@PostMapping(value = "v1/resource/task-list")
 	@Operation(summary = "查询任务", description = "查询任务")
-	@PreAuthorize("hasAuthority('resource:task:list')")
+	@PreAuthorize("hasAuthority('resource:task-list')")
 	public Result<?> taskList() {
 		return Result.of(null);
 	}
@@ -138,7 +138,7 @@ public class ResourceController {
 	@PostMapping(value = "v1/resource/audit-task")
 	@Operation(summary = "审批任务", description = "审批任务")
 	@OperateLog(module = "资源管理", operation = "审批任务")
-	@PreAuthorize("hasAuthority('resource:task:audit')")
+	@PreAuthorize("hasAuthority('resource:audit-task')")
 	public Result<Boolean> auditTask() {
 		return Result.of(null);
 	}
@@ -154,7 +154,7 @@ public class ResourceController {
 	@PostMapping(value = "v1/resource/resolve-task")
 	@Operation(summary = "处理任务", description = "处理任务")
 	@OperateLog(module = "资源管理", operation = "处理任务")
-	@PreAuthorize("hasAuthority('resource:task:resolve')")
+	@PreAuthorize("hasAuthority('resource:resolve-task')")
 	public Result<Boolean> resolveTask() {
 		return Result.of(null);
 	}
@@ -163,7 +163,7 @@ public class ResourceController {
 	@PostMapping(value = "v1/resource/transfer-task")
 	@Operation(summary = "转办任务", description = "转办任务")
 	@OperateLog(module = "资源管理", operation = "转办任务")
-	@PreAuthorize("hasAuthority('resource:task:transfer')")
+	@PreAuthorize("hasAuthority('resource:transfer-task')")
 	public Result<Boolean> transferTask() {
 		return Result.of(null);
 	}
@@ -172,7 +172,7 @@ public class ResourceController {
 	@PostMapping(value = "v1/resource/delegate-task")
 	@Operation(summary = "委派任务", description = "委派任务")
 	@OperateLog(module = "资源管理", operation = "委派任务")
-	@PreAuthorize("hasAuthority('resource:task:delegate')")
+	@PreAuthorize("hasAuthority('resource:delegate-task')")
 	public Result<Boolean> delegateTask() {
 		return Result.of(null);
 	}
