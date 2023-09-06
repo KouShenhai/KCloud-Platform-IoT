@@ -39,7 +39,7 @@ public class CaptchasController {
 
 	@TraceLog
 	@GetMapping("v1/captchas/{uuid}")
-	@Operation(summary = "查看", description = "查看")
+	@Operation(summary = "验证码", description = "获取验证码")
 	public Result<String> get(@PathVariable("uuid") String uuid) {
 		return captchasServiceI.get(new CaptchaGetQry(uuid));
 	}
