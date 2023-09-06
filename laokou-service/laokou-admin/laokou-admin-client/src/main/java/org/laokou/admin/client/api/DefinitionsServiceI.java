@@ -16,9 +16,26 @@
  */
 package org.laokou.admin.client.api;
 
+import org.laokou.admin.client.dto.definition.*;
+import org.laokou.common.i18n.dto.Result;
+
 /**
  * @author laokou
  */
 public interface DefinitionsServiceI {
+
+    Result<Boolean> insert(DefinitionInsertCmd cmd);
+
+    Result<Boolean> list(DefinitionListQry qry);
+
+    Result<String> diagram(DefinitionDiagramGetQry qry);
+
+    Result<Boolean> delete(DefinitionDeleteCmd cmd);
+
+    Result<Boolean> suspend(DefinitionSuspendCmd cmd);
+
+    Result<Boolean> activate(DefinitionActiveCmd cmd);
+
+    Result<Boolean> template(DefinitionTemplateCmd qry);
 
 }

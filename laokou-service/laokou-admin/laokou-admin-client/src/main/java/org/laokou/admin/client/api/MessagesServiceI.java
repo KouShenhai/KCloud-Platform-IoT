@@ -16,9 +16,13 @@
  */
 package org.laokou.admin.client.api;
 
+import org.laokou.common.i18n.dto.Result;
+
 /**
  * @author laokou
  */
 public interface MessagesServiceI {
+
+    Result<Boolean> insert();
 
 }
