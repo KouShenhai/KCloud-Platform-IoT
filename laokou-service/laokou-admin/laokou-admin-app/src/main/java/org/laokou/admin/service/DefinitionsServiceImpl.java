@@ -35,46 +35,53 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
-    private final DefinitionInsertCmdExe definitionInsertCmdExe;
-    private final DefinitionListQryExe definitionListQryExe;
-    private final DefinitionDiagramGetQryExe definitionDiagramGetQryExe;
-    private final DefinitionDeleteCmdExe definitionDeleteCmdExe;
-    private final DefinitionSuspendCmdExe definitionSuspendCmdExe;
-    private final DefinitionActiveCmdExe definitionActiveCmdExe;
-    private final DefinitionTemplateCmdExe definitionTemplateCmdExe;
+	private final DefinitionInsertCmdExe definitionInsertCmdExe;
 
-    @Override
-    public Result<Boolean> insert(DefinitionInsertCmd cmd) {
-        return null;
-    }
+	private final DefinitionListQryExe definitionListQryExe;
 
-    @Override
-    public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) {
-        return null;
-    }
+	private final DefinitionDiagramGetQryExe definitionDiagramGetQryExe;
 
-    @Override
-    public Result<String> diagram(DefinitionDiagramGetQry qry) {
-        return null;
-    }
+	private final DefinitionDeleteCmdExe definitionDeleteCmdExe;
 
-    @Override
-    public Result<Boolean> delete(DefinitionDeleteCmd cmd) {
-        return null;
-    }
+	private final DefinitionSuspendCmdExe definitionSuspendCmdExe;
 
-    @Override
-    public Result<Boolean> suspend(DefinitionSuspendCmd cmd) {
-        return null;
-    }
+	private final DefinitionActiveCmdExe definitionActiveCmdExe;
 
-    @Override
-    public Result<Boolean> activate(DefinitionActiveCmd cmd) {
-        return null;
-    }
+	private final DefinitionTemplateCmdExe definitionTemplateCmdExe;
 
-    @Override
-    public Result<Boolean> template(DefinitionTemplateCmd qry) {
-        return null;
-    }
+	@Override
+	public Result<Boolean> insert(DefinitionInsertCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<String> diagram(DefinitionDiagramGetQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> delete(DefinitionDeleteCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> suspend(DefinitionSuspendCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> activate(DefinitionActiveCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> template(DefinitionTemplateCmd qry) {
+		return null;
+	}
+
 }

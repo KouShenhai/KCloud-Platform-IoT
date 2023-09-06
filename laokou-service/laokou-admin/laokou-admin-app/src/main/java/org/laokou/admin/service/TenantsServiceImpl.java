@@ -42,12 +42,16 @@ import java.util.List;
 public class TenantsServiceImpl implements TenantsServiceI {
 
 	private final TenantInsertCmdExe tenantInsertCmdExe;
-	private final TenantOptionListQryExe tenantOptionListQryExe;
-	private final TenantUpdateCmdExe tenantUpdateCmdExe;
-	private final TenantDeleteCmdExe tenantDeleteCmdExe;
-	private final TenantListQryExe tenantListQryExe;
-	private final TenantGetQryExe tenantGetQryExe;
 
+	private final TenantOptionListQryExe tenantOptionListQryExe;
+
+	private final TenantUpdateCmdExe tenantUpdateCmdExe;
+
+	private final TenantDeleteCmdExe tenantDeleteCmdExe;
+
+	private final TenantListQryExe tenantListQryExe;
+
+	private final TenantGetQryExe tenantGetQryExe;
 
 	@Override
 	public Result<List<OptionCO>> optionList(TenantOptionListQry qry) {

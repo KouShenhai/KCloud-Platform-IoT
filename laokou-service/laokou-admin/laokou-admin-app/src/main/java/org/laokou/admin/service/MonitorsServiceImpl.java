@@ -35,16 +35,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MonitorsServiceImpl implements MonitorsServiceI {
 
-    private final MonitorCacheGetQryExe monitorCacheGetQryExe;
-    private final MonitorServerGetQryExe monitorServerGetQryExe;
+	private final MonitorCacheGetQryExe monitorCacheGetQryExe;
 
-    @Override
-    public Result<CacheCO> cache(MonitorCacheGetQry qry) {
-        return null;
-    }
+	private final MonitorServerGetQryExe monitorServerGetQryExe;
 
-    @Override
-    public Result<ServerCO> server(MonitorServerGetQry qry) {
-        return null;
-    }
+	@Override
+	public Result<CacheCO> cache(MonitorCacheGetQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<ServerCO> server(MonitorServerGetQry qry) {
+		return null;
+	}
+
 }

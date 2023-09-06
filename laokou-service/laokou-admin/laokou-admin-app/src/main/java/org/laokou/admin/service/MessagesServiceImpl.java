@@ -38,40 +38,46 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MessagesServiceImpl implements MessagesServiceI {
 
-    private final MessageInsertCmdExe messageInsertCmdExe;
-    private final MessageListQryExe messageListQryExe;
-    private final MessageReadCmdExe messageReadCmdExe;
-    private final MessageGetQryExe messageGetQryExe;
-    private final MessageUnreadListQryExe messageUnreadListQryExe;
-    private final MessageUnreadCountGetQryExe messageUnreadCountGetQryExe;
+	private final MessageInsertCmdExe messageInsertCmdExe;
 
-    @Override
-    public Result<Boolean> insert(MessageInsertCmd cmd) {
-        return null;
-    }
+	private final MessageListQryExe messageListQryExe;
 
-    @Override
-    public Result<Datas<MessageCO>> list(MessageListQry qry) {
-        return null;
-    }
+	private final MessageReadCmdExe messageReadCmdExe;
 
-    @Override
-    public Result<MessageCO> read(MessageReadCmd cmd) {
-        return null;
-    }
+	private final MessageGetQryExe messageGetQryExe;
 
-    @Override
-    public Result<MessageCO> get(MessageGetQry qry) {
-        return null;
-    }
+	private final MessageUnreadListQryExe messageUnreadListQryExe;
 
-    @Override
-    public Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry) {
-        return null;
-    }
+	private final MessageUnreadCountGetQryExe messageUnreadCountGetQryExe;
 
-    @Override
-    public Result<Long> unreadCount(MessageUnreadCountGetQry qry) {
-        return null;
-    }
+	@Override
+	public Result<Boolean> insert(MessageInsertCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Datas<MessageCO>> list(MessageListQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<MessageCO> read(MessageReadCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<MessageCO> get(MessageGetQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Long> unreadCount(MessageUnreadCountGetQry qry) {
+		return null;
+	}
+
 }

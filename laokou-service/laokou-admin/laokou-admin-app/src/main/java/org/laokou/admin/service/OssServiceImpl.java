@@ -36,46 +36,53 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OssServiceImpl implements OssServiceI {
 
-    private final OssInsertCmdExe ossInsertCmdExe;
-    private final OssUpdateCmdExe ossUpdateCmdExe;
-    private final OssDeleteCmdExe ossDeleteCmdExe;
-    private final OssUseCmdExe ossUseCmdExe;
-    private final OssListQryExe ossListQryExe;
-    private final OssUploadCmdExe ossUploadCmdExe;
-    private final OssGetQryExe ossGetQryExe;
+	private final OssInsertCmdExe ossInsertCmdExe;
 
-    @Override
-    public Result<Boolean> insert(OssInsertCmd cmd) {
-        return null;
-    }
+	private final OssUpdateCmdExe ossUpdateCmdExe;
 
-    @Override
-    public Result<Boolean> update(OssUpdateCmd cmd) {
-        return null;
-    }
+	private final OssDeleteCmdExe ossDeleteCmdExe;
 
-    @Override
-    public Result<Boolean> delete(OssDeleteCmd cmd) {
-        return null;
-    }
+	private final OssUseCmdExe ossUseCmdExe;
 
-    @Override
-    public Result<Boolean> use(OssUseCmd cmd) {
-        return null;
-    }
+	private final OssListQryExe ossListQryExe;
 
-    @Override
-    public Result<OssCO> get(OssGetQry qry) {
-        return null;
-    }
+	private final OssUploadCmdExe ossUploadCmdExe;
 
-    @Override
-    public Result<Datas<OssCO>> list(OssListQry qry) {
-        return null;
-    }
+	private final OssGetQryExe ossGetQryExe;
 
-    @Override
-    public Result<FileCO> upload(OssUploadCmd cmd) {
-        return null;
-    }
+	@Override
+	public Result<Boolean> insert(OssInsertCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> update(OssUpdateCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> delete(OssDeleteCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> use(OssUseCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<OssCO> get(OssGetQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Datas<OssCO>> list(OssListQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<FileCO> upload(OssUploadCmd cmd) {
+		return null;
+	}
+
 }

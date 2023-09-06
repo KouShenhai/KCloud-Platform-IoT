@@ -30,6 +30,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class MessageReadCmd extends CommonCommand {
 
-    private Long detailId;
+	private Long detailId;
 
 }

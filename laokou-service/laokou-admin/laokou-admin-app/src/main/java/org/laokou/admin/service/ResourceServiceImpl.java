@@ -38,106 +38,123 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ResourceServiceImpl implements ResourceServiceI {
 
-    private final ResourceAuditLogListQryExe resourceAuditLogListQryExe;
-    private final ResourceSyncCmdExe resourceSyncCmdExe;
-    private final ResourceUploadCmdExe resourceUploadCmdExe;
-    private final ResourceListQryExe resourceListQryExe;
-    private final ResourceGetQryExe resourceGetQryExe;
-    private final ResourceDownloadCmdExe resourceDownloadCmdExe;
-    private final ResourceInsertCmdExe resourceInsertCmdExe;
-    private final ResourceUpdateCmdExe resourceUpdateCmdExe;
-    private final ResourceDeleteCmdExe resourceDeleteCmdExe;
-    private final ResourceDiagramGetQryExe resourceDiagramGetQryExe;
-    private final ResourceTaskListQryExe resourceTaskListQryExe;
-    private final ResourceAuditTaskCmdExe resourceAuditTaskCmdExe;
-    private final ResourceDetailTaskGetQry resourceDetailTaskGetQry;
-    private final ResourceResolveTaskCmdExe resourceResolveTaskCmdExe;
-    private final ResourceTransferTaskCmdExe resourceTransferTaskCmdExe;
-    private final ResourceDelegateTaskCmdExe resourceDelegateTaskCmdExe;
-    private final ResourceSearchGetQryExe resourceSearchGetQryExe;
+	private final ResourceAuditLogListQryExe resourceAuditLogListQryExe;
 
-    @Override
-    public Result<Datas<?>> auditLog(ResourceAuditLogListQry qry) {
-        return null;
-    }
+	private final ResourceSyncCmdExe resourceSyncCmdExe;
 
-    @Override
-    public Result<Boolean> sync(ResourceSyncCmd cmd) {
-        return null;
-    }
+	private final ResourceUploadCmdExe resourceUploadCmdExe;
 
-    @Override
-    public Result<FileCO> upload(ResourceUploadCmd cmd) {
-        return null;
-    }
+	private final ResourceListQryExe resourceListQryExe;
 
-    @Override
-    public Result<Datas<ResourceCO>> list(ResourceListQry qry) {
-        return null;
-    }
+	private final ResourceGetQryExe resourceGetQryExe;
 
-    @Override
-    public Result<ResourceCO> get(ResourceGetQry qry) {
-        return null;
-    }
+	private final ResourceDownloadCmdExe resourceDownloadCmdExe;
 
-    @Override
-    public Result<Boolean> download(ResourceDownloadCmd cmd) {
-        return null;
-    }
+	private final ResourceInsertCmdExe resourceInsertCmdExe;
 
-    @Override
-    public Result<Boolean> insert(ResourceInsertCmd cmd) {
-        return null;
-    }
+	private final ResourceUpdateCmdExe resourceUpdateCmdExe;
 
-    @Override
-    public Result<Boolean> update(ResourceUpdateCmd cmd) {
-        return null;
-    }
+	private final ResourceDeleteCmdExe resourceDeleteCmdExe;
 
-    @Override
-    public Result<Boolean> delete(ResourceDeleteCmd cmd) {
-        return null;
-    }
+	private final ResourceDiagramGetQryExe resourceDiagramGetQryExe;
 
-    @Override
-    public Result<String> diagram(ResourceDiagramGetQry qry) {
-        return null;
-    }
+	private final ResourceTaskListQryExe resourceTaskListQryExe;
 
-    @Override
-    public Result<Datas<TaskCO>> taskList(ResourceTaskListQry qry) {
-        return null;
-    }
+	private final ResourceAuditTaskCmdExe resourceAuditTaskCmdExe;
 
-    @Override
-    public Result<Boolean> auditTask(ResourceAuditTaskCmd cmd) {
-        return null;
-    }
+	private final ResourceDetailTaskGetQry resourceDetailTaskGetQry;
 
-    @Override
-    public Result<Boolean> detailTask(ResourceDetailTaskGetQry qry) {
-        return null;
-    }
+	private final ResourceResolveTaskCmdExe resourceResolveTaskCmdExe;
 
-    @Override
-    public Result<Boolean> resolveTask(ResourceResolveTaskCmd cmd) {
-        return null;
-    }
+	private final ResourceTransferTaskCmdExe resourceTransferTaskCmdExe;
 
-    @Override
-    public Result<Boolean> transferTask(ResourceTransferTaskCmd cmd) {
-        return null;
-    }
+	private final ResourceDelegateTaskCmdExe resourceDelegateTaskCmdExe;
 
-    @Override
-    public Result<Boolean> delegateTask(ResourceDelegateTaskCmd cmd) {
-        return null;
-    }
+	private final ResourceSearchGetQryExe resourceSearchGetQryExe;
 
-    @Override
-    public Result<Datas<Map<String, Object>>> search(ResourceSearchGetQry qry) {
-        return null;
-    }
+	@Override
+	public Result<Datas<?>> auditLog(ResourceAuditLogListQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> sync(ResourceSyncCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<FileCO> upload(ResourceUploadCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Datas<ResourceCO>> list(ResourceListQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<ResourceCO> get(ResourceGetQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> download(ResourceDownloadCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> insert(ResourceInsertCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> update(ResourceUpdateCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> delete(ResourceDeleteCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<String> diagram(ResourceDiagramGetQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Datas<TaskCO>> taskList(ResourceTaskListQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> auditTask(ResourceAuditTaskCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> detailTask(ResourceDetailTaskGetQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> resolveTask(ResourceResolveTaskCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> transferTask(ResourceTransferTaskCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> delegateTask(ResourceDelegateTaskCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Datas<Map<String, Object>>> search(ResourceSearchGetQry qry) {
+		return null;
+	}
+
 }

@@ -40,28 +40,32 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LogsServiceImpl implements LogsServiceI {
 
-    private final LogOperateListQryExe logOperateListQryExe;
-    private final LogOperateExportCmdExe logOperateExportCmdExe;
-    private final LogLoginListQryExe logLoginListQryExe;
-    private final LogLoginExportCmdExe logLoginExportCmdExe;
+	private final LogOperateListQryExe logOperateListQryExe;
 
-    @Override
-    public Result<Datas<OperateLogCO>> operateList(LogOperateListQry qry) {
-        return null;
-    }
+	private final LogOperateExportCmdExe logOperateExportCmdExe;
 
-    @Override
-    public Result<Boolean> operateExport(LogOperateExportCmd cmd) {
-        return null;
-    }
+	private final LogLoginListQryExe logLoginListQryExe;
 
-    @Override
-    public Result<Datas<LoginLogCO>> loginList(LogLoginListQry qry) {
-        return null;
-    }
+	private final LogLoginExportCmdExe logLoginExportCmdExe;
 
-    @Override
-    public Result<Boolean> loginExport(LogLoginExportCmd cmd) {
-        return null;
-    }
+	@Override
+	public Result<Datas<OperateLogCO>> operateList(LogOperateListQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> operateExport(LogOperateExportCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Datas<LoginLogCO>> loginList(LogLoginListQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> loginExport(LogLoginExportCmd cmd) {
+		return null;
+	}
+
 }

@@ -30,6 +30,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class OssDeleteCmd extends CommonCommand {
 
-    private Long id;
+	private Long id;
 
 }

@@ -24,8 +24,8 @@ import org.laokou.admin.client.api.LogoutsServiceI;
 import org.laokou.admin.client.dto.logout.LogoutCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -39,10 +39,10 @@ public class LogoutsController {
 	private final LogoutsServiceI logoutsServiceI;
 
 	@TraceLog
-	@GetMapping("v1/logouts/{token}")
+	@PostMapping("v1/logouts")
 	@Operation(summary = "认证授权", description = "退出登录")
-	public Result<Boolean> logout(@PathVariable("token") String token) {
-		return logoutsServiceI.logout(new LogoutCmd(token));
+	public Result<Boolean> logout(@RequestBody LogoutCmd cmd) {
+		return logoutsServiceI.logout(cmd);
 	}
 
 }

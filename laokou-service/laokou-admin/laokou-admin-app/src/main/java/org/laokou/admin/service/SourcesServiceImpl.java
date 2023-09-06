@@ -41,40 +41,46 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SourcesServiceImpl implements SourcesServiceI {
 
-    private final SourceInsertCmdExe sourceInsertCmdExe;
-    private final SourceUpdateCmdExe sourceUpdateCmdExe;
-    private final SourceDeleteCmdExe sourceDeleteCmdExe;
-    private final SourceListQryExe sourceListQryExe;
-    private final SourceGetQryExe sourceGetQryExe;
-    private final SourceOptionListQryExe sourceOptionListQryExe;
+	private final SourceInsertCmdExe sourceInsertCmdExe;
 
-    @Override
-    public Result<Boolean> insert(SourceInsertCmd cmd) {
-        return null;
-    }
+	private final SourceUpdateCmdExe sourceUpdateCmdExe;
 
-    @Override
-    public Result<Boolean> update(SourceUpdateCmd cmd) {
-        return null;
-    }
+	private final SourceDeleteCmdExe sourceDeleteCmdExe;
 
-    @Override
-    public Result<Boolean> delete(SourceDeleteCmd cmd) {
-        return null;
-    }
+	private final SourceListQryExe sourceListQryExe;
 
-    @Override
-    public Result<SourceCO> get(SourceGetQry qry) {
-        return null;
-    }
+	private final SourceGetQryExe sourceGetQryExe;
 
-    @Override
-    public Result<Datas<SourceCO>> list(SourceListQry qry) {
-        return null;
-    }
+	private final SourceOptionListQryExe sourceOptionListQryExe;
 
-    @Override
-    public Result<List<OptionCO>> optionList(SourceOptionListQry qry) {
-        return null;
-    }
+	@Override
+	public Result<Boolean> insert(SourceInsertCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> update(SourceUpdateCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> delete(SourceDeleteCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<SourceCO> get(SourceGetQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Datas<SourceCO>> list(SourceListQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<List<OptionCO>> optionList(SourceOptionListQry qry) {
+		return null;
+	}
+
 }

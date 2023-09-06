@@ -61,7 +61,7 @@ public class DefinitionsController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/definitions/diagram/{definitionId}")
+	@GetMapping("v1/definitions/{definitionId}/diagram")
 	@Operation(summary = "流程定义", description = "流程图")
 	@PreAuthorize("hasAuthority('definitions:diagram')")
 	public Result<String> diagram(@PathVariable("definitionId") String definitionId) {
@@ -78,7 +78,7 @@ public class DefinitionsController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/definitions/suspend/{definitionId}")
+	@PutMapping("v1/definitions/{definitionId}/suspend")
 	@Operation(summary = "流程定义", description = "流程挂起")
 	@OperateLog(module = "流程定义", operation = "流程挂起")
 	@PreAuthorize("hasAuthority('definitions:suspend')")
@@ -87,7 +87,7 @@ public class DefinitionsController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/definitions/activate/{definitionId}")
+	@PutMapping("v1/definitions/{definitionId}/activate")
 	@Operation(summary = "流程定义", description = "流程激活")
 	@OperateLog(module = "流程定义", operation = "流程激活")
 	@PreAuthorize("hasAuthority('definitions:activate')")
