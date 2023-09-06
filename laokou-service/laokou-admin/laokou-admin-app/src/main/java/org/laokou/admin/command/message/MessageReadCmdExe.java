@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.command.message.query;
+package org.laokou.admin.command.message;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -25,6 +25,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class MessageWatchGetQry {
+public class MessageReadCmdExe {
 
 }

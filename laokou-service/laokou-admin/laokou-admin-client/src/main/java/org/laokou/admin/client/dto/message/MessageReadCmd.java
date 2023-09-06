@@ -14,28 +14,16 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.client.api;
 
-import org.laokou.admin.client.dto.message.*;
-import org.laokou.admin.client.dto.message.clientobject.MessageCO;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
+package org.laokou.admin.client.dto.message;
+
+import lombok.Data;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-public interface MessagesServiceI {
-
-    Result<Boolean> insert(MessageInsertCmd cmd);
-
-    Result<Datas<MessageCO>> list(MessageListQry qry);
-
-    Result<MessageCO> read(MessageReadCmd cmd);
-
-    Result<MessageCO> get(MessageGetQry qry);
-
-    Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry);
-
-    Result<Long> unreadCount(MessageUnreadCountGetQry qry);
+@Data
+public class MessageReadCmd extends CommonCommand {
 
 }

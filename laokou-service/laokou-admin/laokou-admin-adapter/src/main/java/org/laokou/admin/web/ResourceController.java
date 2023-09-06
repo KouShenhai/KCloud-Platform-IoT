@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.api.ResourceServiceI;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.lock.annotation.Lock4j;
@@ -38,6 +39,8 @@ import java.io.IOException;
 @Tag(name = "ResourceController", description = "资源")
 @RequiredArgsConstructor
 public class ResourceController {
+
+	private final ResourceServiceI resourceServiceI;
 
 	@GetMapping("v1/resource/audit-log/{id}")
 	@TraceLog

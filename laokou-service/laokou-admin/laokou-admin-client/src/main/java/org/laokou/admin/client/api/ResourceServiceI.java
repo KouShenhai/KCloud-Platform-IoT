@@ -16,9 +16,51 @@
  */
 package org.laokou.admin.client.api;
 
+import org.laokou.admin.client.dto.resource.*;
+import org.laokou.admin.client.dto.resource.clientobject.ResourceCO;
+import org.laokou.admin.client.dto.resource.clientobject.TaskCO;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
+
+import java.util.Map;
+
 /**
  * @author laokou
  */
 public interface ResourceServiceI {
+
+    Result<?> auditLog(ResourceAuditLogListQry qry);
+
+    Result<Boolean> sync(ResourceSyncCmd cmd);
+
+    Result<Boolean> upload(ResourceUploadCmd cmd);
+
+    Result<Datas<ResourceCO>> list(ResourceListQry qry);
+
+    Result<ResourceCO> get(ResourceGetQry qry);
+
+    Result<Boolean> download(ResourceDownloadCmd cmd);
+
+    Result<Boolean> insert(ResourceInsertCmd cmd);
+
+    Result<Boolean> update(ResourceUploadCmd cmd);
+
+    Result<Boolean> delete(ResourceDeleteCmd cmd);
+
+    Result<String> diagram(ResourceDiagramGetQry qry);
+
+    Result<Datas<TaskCO>> taskList(ResourceTaskListQry qry);
+
+    Result<Boolean> auditTask(ResourceAuditTaskCmd cmd);
+
+    Result<Boolean> detailTask(ResourceDetailTaskGetQry qry);
+
+    Result<Boolean> resolveTask(ResourceResolveTaskCmd cmd);
+
+    Result<Boolean> transferTask(ResourceTransferTaskCmd cmd);
+
+    Result<Boolean> delegateTask(ResourceDelegateTaskCmd cmd);
+
+    Result<Datas<Map<String,Object>>> search(ResourceSearchGetQry qry);
 
 }
