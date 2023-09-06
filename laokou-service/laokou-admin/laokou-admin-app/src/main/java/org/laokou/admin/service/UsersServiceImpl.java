@@ -7,12 +7,8 @@ import org.laokou.admin.client.dto.user.clientobject.UserCO;
 import org.laokou.admin.client.dto.user.clientobject.UserOnlineCO;
 import org.laokou.admin.client.dto.user.clientobject.UserProfileCO;
 import org.laokou.admin.client.dto.user.*;
-import org.laokou.admin.command.user.UserInsertCmdExe;
-import org.laokou.admin.command.user.UserOnlineKillCmdExe;
-import org.laokou.admin.command.user.UserUpdateCmdExe;
-import org.laokou.admin.command.user.query.UserOnlineListQryExe;
-import org.laokou.admin.command.user.query.UserOptionListQryExe;
-import org.laokou.admin.command.user.query.UserProfileGetQryExe;
+import org.laokou.admin.command.user.*;
+import org.laokou.admin.command.user.query.*;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
@@ -27,16 +23,17 @@ import java.util.List;
 public class UsersServiceImpl implements UsersServiceI {
 
 	private final UserUpdateCmdExe userUpdateCmdExe;
-
 	private final UserInsertCmdExe userInsertCmdExe;
-
 	private final UserOnlineKillCmdExe userOnlineKillCmdExe;
-
 	private final UserOnlineListQryExe userOnlineListQryExe;
-
 	private final UserProfileGetQryExe userProfileGetQryExe;
-
 	private final UserOptionListQryExe userOptionListQryExe;
+	private final UserProfileUpdateCmdExe userProfileUpdateCmdExe;
+	private final UserStatusUpdateCmdExe userStatusUpdateCmdExe;
+	private final UserPasswordResetCmdExe userPasswordResetCmdExe;
+	private final UserGetQryExe userGetQryExe;
+	private final UserDeleteCmdExe userDeleteCmdExe;
+	private final UserListQryExe userListQryExe;
 
 	@Override
 	public Result<Boolean> update(UserUpdateCmd cmd) {
@@ -79,7 +76,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Result<Boolean> resetPassword(UserPasswordRestCmd cmd) {
+	public Result<Boolean> resetPassword(UserPasswordResetCmd cmd) {
 		return null;
 	}
 

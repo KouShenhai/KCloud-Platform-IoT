@@ -75,7 +75,7 @@ public interface UsersServiceI {
 
 	Result<Boolean> status(UserStatusUpdateCmd cmd);
 
-	Result<Boolean> resetPassword(UserPasswordRestCmd cmd);
+	Result<Boolean> resetPassword(UserPasswordResetCmd cmd);
 
 	Result<Boolean> profilePassword(UserProfileUpdateCmd cmd);
 

@@ -22,6 +22,11 @@ import org.laokou.admin.client.api.TenantsServiceI;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
 import org.laokou.admin.client.dto.tenant.*;
 import org.laokou.admin.client.dto.tenant.clientobject.TenantCO;
+import org.laokou.admin.command.tenant.TenantDeleteCmdExe;
+import org.laokou.admin.command.tenant.TenantInsertCmdExe;
+import org.laokou.admin.command.tenant.TenantUpdateCmdExe;
+import org.laokou.admin.command.tenant.query.TenantGetQryExe;
+import org.laokou.admin.command.tenant.query.TenantListQryExe;
 import org.laokou.admin.command.tenant.query.TenantOptionListQryExe;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -36,7 +41,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TenantsServiceImpl implements TenantsServiceI {
 
+	private final TenantInsertCmdExe tenantInsertCmdExe;
 	private final TenantOptionListQryExe tenantOptionListQryExe;
+	private final TenantUpdateCmdExe tenantUpdateCmdExe;
+	private final TenantDeleteCmdExe tenantDeleteCmdExe;
+	private final TenantListQryExe tenantListQryExe;
+	private final TenantGetQryExe tenantGetQryExe;
+
 
 	@Override
 	public Result<List<OptionCO>> optionList(TenantOptionListQry qry) {

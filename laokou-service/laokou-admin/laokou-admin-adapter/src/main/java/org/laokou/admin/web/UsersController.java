@@ -105,14 +105,14 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "重置密码")
 	@OperateLog(module = "用户管理", operation = "重置密码")
 	@PreAuthorize("hasAuthority('users:reset-password')")
-	public Result<Boolean> resetPassword(@RequestBody UserPasswordRestCmd cmd) {
+	public Result<Boolean> resetPassword(@RequestBody UserPasswordResetCmd cmd) {
 		return Result.of(null);
 	}
 
 	@TraceLog
 	@PutMapping("v1/users/profile-password")
 	@Operation(summary = "个人中心", description = "修改密码")
-	public Result<Boolean> profilePassword(@RequestBody UserPasswordRestCmd cmd) {
+	public Result<Boolean> profilePassword(@RequestBody UserPasswordResetCmd cmd) {
 		return Result.of(null);
 	}
 
