@@ -53,7 +53,7 @@ public class DictsController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/dicts/option-list/{type}")
+	@GetMapping("v1/dicts/{type}/option-list")
 	@Operation(summary = "字典管理", description = "下拉列表")
 	public Result<List<OptionCO>> optionList(@PathVariable("type") String type) {
 		return dictsServiceI.optionList(new DictOptionListQry(type));

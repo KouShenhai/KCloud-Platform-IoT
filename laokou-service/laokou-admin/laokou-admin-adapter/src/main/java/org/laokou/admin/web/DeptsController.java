@@ -94,7 +94,7 @@ public class DeptsController {
 		return deptsServiceI.delete(new DeptDeleteCmd(id));
 	}
 
-	@GetMapping("v1/depts/ids/{roleId}")
+	@GetMapping("v1/depts/{roleId}/ids")
 	@TraceLog
 	@Operation(summary = "部门管理", description = "部门IDS")
 	public Result<List<Long>> ids(@PathVariable(value = "roleId") Long roleId) {

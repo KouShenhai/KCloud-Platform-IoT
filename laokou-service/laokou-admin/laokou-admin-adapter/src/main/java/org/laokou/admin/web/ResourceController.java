@@ -48,7 +48,7 @@ public class ResourceController {
 
 	private final ResourceServiceI resourceServiceI;
 
-	@GetMapping("v1/resource/audit-log/{id}")
+	@GetMapping("v1/resource/{id}/audit-log")
 	@TraceLog
 	@Operation(summary = "资源管理", description = "查询审批日志列表")
 	@PreAuthorize("hasAuthority('resource:audit-log')")
@@ -89,7 +89,7 @@ public class ResourceController {
 		return resourceServiceI.get(new ResourceGetQry(id));
 	}
 
-	@GetMapping(value = "v1/resource/download/{id}")
+	@GetMapping(value = "v1/resource/{id}/download")
 	@TraceLog
 	@Operation(summary = "资源管理", description = "下载资源")
 	@PreAuthorize("hasAuthority('resource:download')")
@@ -124,7 +124,7 @@ public class ResourceController {
 		return resourceServiceI.delete(new ResourceDeleteCmd(id));
 	}
 
-	@GetMapping(value = "v1/resource/diagram/{instanceId}")
+	@GetMapping(value = "v1/resource/{instanceId}/diagram")
 	@TraceLog
 	@Operation(summary = "资源管理", description = "流程图")
 	@PreAuthorize("hasAuthority('resource:diagram')")
@@ -150,10 +150,10 @@ public class ResourceController {
 	}
 
 	@TraceLog
-	@GetMapping(value = "v1/resource/task-detail/{id}")
+	@GetMapping(value = "v1/resource/{id}/detail-task")
 	@Operation(summary = "资源管理", description = "查看任务")
 	public Result<?> detailTask(@PathVariable("id") Long id) {
-		return resourceServiceI.detailTask(new ResourceDetailTaskGetQry());
+		return resourceServiceI.detailTask(new ResourceDetailTaskGetQry(id));
 	}
 
 	@TraceLog
