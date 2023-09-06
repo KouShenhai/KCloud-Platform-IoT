@@ -15,21 +15,15 @@
  *
  */
 
-package org.laokou.admin.client.dto.definition;
+package org.laokou.admin.command.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class DefinitionDiagramGetQry extends CommonCommand {
-
-    private String definitionId;
-
+@Component
+@RequiredArgsConstructor
+public class UserProfileUpdateCmdExe {
 }

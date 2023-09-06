@@ -75,9 +75,7 @@ public interface UsersServiceI {
 
 	Result<Boolean> status(UserStatusUpdateCmd cmd);
 
-	Result<Boolean> resetPassword(UserPasswordRestCmd cmd);
-
-	Result<Boolean> profilePassword(UserProfileUpdateCmd cmd);
+	Result<Boolean> resetPassword(UserPasswordResetCmd cmd);
 
 	Result<UserCO> get(UserGetQry qry);
 

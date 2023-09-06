@@ -17,13 +17,19 @@
 
 package org.laokou.admin.client.dto.oss;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class OssDeleteCmd extends CommonCommand {
+
+    private Long id;
 
 }

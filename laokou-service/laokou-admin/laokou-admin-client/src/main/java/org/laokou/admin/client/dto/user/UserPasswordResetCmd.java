@@ -24,7 +24,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-public class UserPasswordRestCmd extends CommonCommand {
+public class UserPasswordResetCmd extends CommonCommand {
 
 	private Long id;
 

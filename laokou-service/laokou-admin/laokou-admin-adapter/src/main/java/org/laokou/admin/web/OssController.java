@@ -21,9 +21,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.OssServiceI;
+import org.laokou.admin.client.dto.oss.*;
+import org.laokou.admin.client.dto.oss.clientobject.FileCO;
+import org.laokou.admin.client.dto.oss.clientobject.OssCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.Cache;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,15 +48,15 @@ public class OssController {
 	@PostMapping("v1/oss/list")
 	@Operation(summary = "存储管理", description = "查询存储列表")
 	@PreAuthorize("hasAuthority('oss:list')")
-	public Result<?> list() {
-		return Result.of(null);
+	public Result<Datas<OssCO>> list(@RequestBody OssListQry qry) {
+		return ossServiceI.list(qry);
 	}
 
 	@TraceLog
 	@PostMapping("v1/oss/upload")
 	@Operation(summary = "存储管理", description = "上传文件")
-	public Result<?> upload(@RequestPart("file") MultipartFile file) {
-		return Result.of(null);
+	public Result<FileCO> upload(@RequestPart("file") MultipartFile file) {
+		return ossServiceI.upload(new OssUploadCmd(file));
 	}
 
 	@TraceLog
@@ -60,8 +64,8 @@ public class OssController {
 	@Operation(summary = "存储管理", description = "新增存储")
 	@OperateLog(module = "存储管理", operation = "新增存储")
 	@PreAuthorize("hasAuthority('oss:insert')")
-	public Result<Boolean> insert() {
-		return Result.of(null);
+	public Result<Boolean> insert(@RequestBody OssInsertCmd cmd) {
+		return ossServiceI.insert(cmd);
 	}
 
 	@TraceLog
@@ -70,7 +74,7 @@ public class OssController {
 	@OperateLog(module = "存储管理", operation = "启用存储")
 	@PreAuthorize("hasAuthority('oss:use')")
 	public Result<Boolean> use(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return ossServiceI.use(new OssUseCmd(id));
 	}
 
 	@TraceLog
@@ -78,7 +82,7 @@ public class OssController {
 	@Operation(summary = "存储管理", description = "查看存储")
 	@DataCache(name = "oss", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return ossServiceI.get(new OssGetQry(id));
 	}
 
 	@TraceLog
@@ -87,8 +91,8 @@ public class OssController {
 	@OperateLog(module = "存储管理", operation = "修改存储")
 	@PreAuthorize("hasAuthority('oss:update')")
 	@DataCache(name = "oss", key = "#dto.id", type = Cache.DEL)
-	public Result<Boolean> update() {
-		return Result.of(null);
+	public Result<Boolean> update(@RequestBody OssUpdateCmd cmd) {
+		return ossServiceI.update(cmd);
 	}
 
 	@TraceLog
@@ -98,7 +102,7 @@ public class OssController {
 	@PreAuthorize("hasAuthority('oss:delete')")
 	@DataCache(name = "oss", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return ossServiceI.delete(new OssDeleteCmd(id));
 	}
 
 }

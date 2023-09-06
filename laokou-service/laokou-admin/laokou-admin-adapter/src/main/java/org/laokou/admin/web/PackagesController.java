@@ -20,13 +20,19 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.PackagesServiceI;
+import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.client.dto.packages.*;
+import org.laokou.admin.client.dto.packages.clientobject.PackageCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.Cache;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -42,8 +48,8 @@ public class PackagesController {
 	@PostMapping("v1/packages/list")
 	@Operation(summary = "套餐管理", description = "查询套餐列表")
 	@PreAuthorize("hasAuthority('packages:list')")
-	public Result<?> list() {
-		return Result.of(null);
+	public Result<Datas<PackageCO>> list(@RequestBody PackageListQry qry) {
+		return packagesServiceI.list(qry);
 	}
 
 	@TraceLog
@@ -51,8 +57,8 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "新增套餐")
 	@OperateLog(module = "套餐管理", operation = "新增套餐")
 	@PreAuthorize("hasAuthority('packages:insert')")
-	public Result<Boolean> insert() {
-		return Result.of(null);
+	public Result<Boolean> insert(@RequestBody PackageInsertCmd cmd) {
+		return packagesServiceI.insert(cmd);
 	}
 
 	@TraceLog
@@ -60,7 +66,7 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "查看套餐")
 	@DataCache(name = "packages", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return packagesServiceI.get(new PackageGetQry(id));
 	}
 
 	@TraceLog
@@ -69,8 +75,8 @@ public class PackagesController {
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
 	@PreAuthorize("hasAuthority('packages:update')")
 	@DataCache(name = "packages", key = "#dto.id", type = Cache.DEL)
-	public Result<Boolean> update() {
-		return Result.of(null);
+	public Result<Boolean> update(@RequestBody PackageUpdateCmd cmd) {
+		return packagesServiceI.update(cmd);
 	}
 
 	@TraceLog
@@ -80,14 +86,14 @@ public class PackagesController {
 	@PreAuthorize("hasAuthority('packages:delete')")
 	@DataCache(name = "packages", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return packagesServiceI.delete(new PackageDeleteCmd(id));
 	}
 
 	@TraceLog
 	@GetMapping("v1/packages/option-list")
 	@Operation(summary = "套餐管理", description = "下拉列表")
-	public Result<?> optionList() {
-		return Result.of(null);
+	public Result<List<OptionCO>> optionList() {
+		return packagesServiceI.optionList(new PackageOptionListQry());
 	}
 
 }

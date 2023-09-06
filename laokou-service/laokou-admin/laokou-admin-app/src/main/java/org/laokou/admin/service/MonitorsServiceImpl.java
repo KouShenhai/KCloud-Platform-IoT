@@ -14,43 +14,37 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.web;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
+package org.laokou.admin.service;
+
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.MonitorsServiceI;
 import org.laokou.admin.client.dto.monitor.MonitorCacheGetQry;
 import org.laokou.admin.client.dto.monitor.MonitorServerGetQry;
 import org.laokou.admin.client.dto.monitor.clientobject.CacheCO;
 import org.laokou.admin.client.dto.monitor.clientobject.ServerCO;
+import org.laokou.admin.command.monitor.query.MonitorCacheGetQryExe;
+import org.laokou.admin.command.monitor.query.MonitorServerGetQryExe;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.trace.annotation.TraceLog;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-@RestController
-@Tag(name = "MonitorsController", description = "监控管理")
+@Service
 @RequiredArgsConstructor
-public class MonitorsController {
+public class MonitorsServiceImpl implements MonitorsServiceI {
 
-	private final MonitorsServiceI monitorsServiceI;
+    private final MonitorCacheGetQryExe monitorCacheGetQryExe;
+    private final MonitorServerGetQryExe monitorServerGetQryExe;
 
-	@TraceLog
-	@GetMapping("v1/monitors/cache")
-	@Operation(summary = "监控管理", description = "缓存监控")
-	public Result<CacheCO> cache() {
-		return monitorsServiceI.cache(new MonitorCacheGetQry());
-	}
+    @Override
+    public Result<CacheCO> cache(MonitorCacheGetQry qry) {
+        return null;
+    }
 
-	@TraceLog
-	@GetMapping("v1/monitors/server")
-	@Operation(summary = "监控管理", description = "主机监控")
-	public Result<ServerCO> server() {
-		return monitorsServiceI.server(new MonitorServerGetQry());
-	}
-
+    @Override
+    public Result<ServerCO> server(MonitorServerGetQry qry) {
+        return null;
+    }
 }

@@ -17,6 +17,8 @@
 package org.laokou.admin.client.api;
 
 import org.laokou.admin.client.dto.definition.*;
+import org.laokou.admin.client.dto.definition.clientobject.DefinitionCO;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -26,7 +28,7 @@ public interface DefinitionsServiceI {
 
 	Result<Boolean> insert(DefinitionInsertCmd cmd);
 
-	Result<Boolean> list(DefinitionListQry qry);
+	Result<Datas<DefinitionCO>> list(DefinitionListQry qry);
 
 	Result<String> diagram(DefinitionDiagramGetQry qry);
 

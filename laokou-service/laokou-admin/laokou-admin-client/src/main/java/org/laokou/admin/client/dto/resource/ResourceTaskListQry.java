@@ -26,4 +26,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class ResourceTaskListQry extends CommonCommand {
 
+    private String name;
+
 }
