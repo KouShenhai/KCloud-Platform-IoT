@@ -26,7 +26,8 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class DictListQry extends PageQuery {
 
-    private String type;
-    private String label;
+	private String type;
+
+	private String label;
 
 }

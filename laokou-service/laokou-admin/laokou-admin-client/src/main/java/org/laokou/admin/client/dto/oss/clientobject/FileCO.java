@@ -26,7 +26,8 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 public class FileCO extends ClientObject {
 
-    private String url;
-    private String md5;
+	private String url;
+
+	private String md5;
 
 }

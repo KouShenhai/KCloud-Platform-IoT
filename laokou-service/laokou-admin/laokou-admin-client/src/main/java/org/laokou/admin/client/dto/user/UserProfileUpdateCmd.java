@@ -15,15 +15,18 @@
  *
  */
 
-package org.laokou.admin.client.dto.message;
+package org.laokou.admin.client.dto.user;
 
 import lombok.Data;
+import org.laokou.admin.client.dto.user.clientobject.UserProfileCO;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-public class MessageWatchGetQry extends CommonCommand {
+public class UserProfileUpdateCmd extends CommonCommand {
+
+	private UserProfileCO userProfileCO;
 
 }

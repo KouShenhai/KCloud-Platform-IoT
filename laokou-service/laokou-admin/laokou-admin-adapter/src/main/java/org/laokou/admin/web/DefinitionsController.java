@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.api.DefinitionsServiceI;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -36,6 +37,8 @@ import java.io.IOException;
 @Tag(name = "DefinitionsController", description = "流程定义")
 @RequiredArgsConstructor
 public class DefinitionsController {
+
+	private final DefinitionsServiceI definitionsServiceI;
 
 	@TraceLog
 	@PostMapping("v1/definitions")
@@ -58,7 +61,7 @@ public class DefinitionsController {
 	@GetMapping("v1/definitions/diagram/{definitionId}")
 	@Operation(summary = "流程图", description = "流程图")
 	@PreAuthorize("hasAuthority('definitions:diagram')")
-	public Result<String> image(@PathVariable("definitionId") String definitionId) {
+	public Result<String> diagram(@PathVariable("definitionId") String definitionId) {
 		return Result.of(null);
 	}
 

@@ -20,8 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.UsersServiceI;
-import org.laokou.admin.client.dto.user.UserInsertCmd;
-import org.laokou.admin.client.dto.user.UserProfileGetQry;
+import org.laokou.admin.client.dto.user.*;
 import org.laokou.admin.client.dto.user.clientobject.UserProfileCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.core.vo.OptionVO;
@@ -63,11 +62,11 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@DeleteMapping("v1/users/online-kill/{token}")
+	@DeleteMapping("v1/users/online-kill")
 	@Operation(summary = "在线用户", description = "在线用户强踢")
 	@OperateLog(module = "用户管理", operation = "在线用户强踢")
 	@PreAuthorize("hasAuthority('users:online:kill')")
-	public Result<Boolean> onlineKill(@PathVariable("token") String token) {
+	public Result<Boolean> onlineKill(@RequestBody UserOnlineKillCmd cmd) {
 		return Result.of(null);
 	}
 
@@ -93,27 +92,27 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/users/status/{id}/{status}")
+	@PutMapping("v1/users/status")
 	@Operation(summary = "用户管理", description = "修改状态")
 	@OperateLog(module = "用户管理", operation = "修改状态")
 	@PreAuthorize("hasAuthority('users:status')")
-	public Result<Boolean> status(@PathVariable("id") Long id, @PathVariable("status") Integer status) {
+	public Result<Boolean> status(@RequestBody UserStatusUpdateCmd cmd) {
 		return Result.of(null);
 	}
 
 	@TraceLog
-	@PutMapping("v1/users/reset-pwd/{id}/{pwd}")
+	@PutMapping("v1/users/reset-password")
 	@Operation(summary = "用户管理", description = "重置密码")
 	@OperateLog(module = "用户管理", operation = "重置密码")
-	@PreAuthorize("hasAuthority('users:pwd')")
-	public Result<Boolean> resetPwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
+	@PreAuthorize("hasAuthority('users:reset-password')")
+	public Result<Boolean> resetPassword(@RequestBody UserPasswordRestCmd cmd) {
 		return Result.of(null);
 	}
 
 	@TraceLog
-	@PutMapping("v1/users/profile-pwd/{id}/{pwd}")
+	@PutMapping("v1/users/profile-password")
 	@Operation(summary = "个人中心", description = "修改密码")
-	public Result<Boolean> profilePwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
+	public Result<Boolean> profilePassword(@RequestBody UserPasswordRestCmd cmd) {
 		return Result.of(null);
 	}
 

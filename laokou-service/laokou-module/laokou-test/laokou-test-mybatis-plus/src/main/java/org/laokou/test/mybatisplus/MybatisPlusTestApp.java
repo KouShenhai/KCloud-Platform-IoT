@@ -26,8 +26,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MybatisPlusTestApp {
 
-    public static void main(String[] args) {
-        SpringApplication.run(MybatisPlusTestApp.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(MybatisPlusTestApp.class, args);
+	}
 
 }

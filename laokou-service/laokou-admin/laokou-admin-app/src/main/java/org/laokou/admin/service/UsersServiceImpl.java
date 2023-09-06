@@ -3,6 +3,7 @@ package org.laokou.admin.service;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.UsersServiceI;
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.client.dto.user.clientobject.UserCO;
 import org.laokou.admin.client.dto.user.clientobject.UserOnlineCO;
 import org.laokou.admin.client.dto.user.clientobject.UserProfileCO;
 import org.laokou.admin.client.dto.user.*;
@@ -39,32 +40,67 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	@Override
 	public Result<Boolean> update(UserUpdateCmd cmd) {
-		return userUpdateCmdExe.execute(cmd);
+		return null;
 	}
 
 	@Override
 	public Result<Boolean> insert(UserInsertCmd cmd) {
-		return userInsertCmdExe.execute(cmd);
+		return null;
 	}
 
 	@Override
 	public Result<Boolean> onlineKill(UserOnlineKillCmd cmd) {
-		return userOnlineKillCmdExe.execute(cmd);
+		return null;
 	}
 
 	@Override
 	public Result<Datas<UserOnlineCO>> onlineList(UserOnlineListQry qry) {
-		return userOnlineListQryExe.execute(qry);
+		return null;
 	}
 
 	@Override
 	public Result<UserProfileCO> profile(UserProfileGetQry qry) {
-		return userProfileGetQryExe.execute(qry);
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> profile(UserProfileUpdateCmd cmd) {
+		return null;
 	}
 
 	@Override
 	public Result<List<OptionCO>> optionList(UserOptionListQry qry) {
-		return userOptionListQryExe.execute(qry);
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> status(UserStatusUpdateCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> resetPassword(UserPasswordRestCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> profilePassword(UserProfileUpdateCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<UserCO> get(UserGetQry qry) {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> delete(UserDeleteCmd cmd) {
+		return null;
+	}
+
+	@Override
+	public Result<Datas<UserCO>> list(UserListQry qry) {
+		return null;
 	}
 
 }

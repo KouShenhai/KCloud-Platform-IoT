@@ -40,65 +40,66 @@ import java.util.List;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class MybatisPlusTest {
 
-    private final T1Mapper t1Mapper;
-    private final T2Mapper t2Mapper;
+	private final T1Mapper t1Mapper;
 
-    //@Test
-    public void test() throws IOException {
-        String path = "xxx\\1_sql.txt";
-        File file = new File(path);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-        String line = bufferedReader.readLine();
-        List<T1> list = new ArrayList<>(5000);
-        while ((line = bufferedReader.readLine()) != null) {
-            String[] split = line.split("\t");
-            if (split.length > 1) {
-                String str = split[1];
-                if ("NULL".equals(str)) {
-                    continue;
-                }
-                if (!RegexUtil.mobileRegex(str)) {
-                    continue;
-                }
-                list.add(new T1(str));
-                if (list.size() % 5000 == 0) {
-                    t1Mapper.insertBatch(list);
-                    list.clear();
-                }
-            }
-        }
-        if (list.size() > 0) {
-            t1Mapper.insertBatch(list);
-        }
-    }
+	private final T2Mapper t2Mapper;
 
-    //@Test
-    public void test1() throws IOException {
-        String path = "xxx\\2_sql.txt";
-        File file = new File(path);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-        List<T2> list = new ArrayList<>(5000);
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            String[] split = line.split(",");
-            if (split.length > 67) {
-                String str = split[67].replace("C-","");
-                if (!RegexUtil.mobileRegex(str)) {
-                    continue;
-                }
-                if ("NULL".equals(str)) {
-                    continue;
-                }
-                list.add(new T2(str));
-                if (list.size() % 5000 == 0) {
-                    t2Mapper.insertBatch(list);
-                    list.clear();
-                }
-            }
-        }
-        if (list.size() > 0) {
-            t2Mapper.insertBatch(list);
-        }
-    }
+	// @Test
+	public void test() throws IOException {
+		String path = "xxx\\1_sql.txt";
+		File file = new File(path);
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+		String line = bufferedReader.readLine();
+		List<T1> list = new ArrayList<>(5000);
+		while ((line = bufferedReader.readLine()) != null) {
+			String[] split = line.split("\t");
+			if (split.length > 1) {
+				String str = split[1];
+				if ("NULL".equals(str)) {
+					continue;
+				}
+				if (!RegexUtil.mobileRegex(str)) {
+					continue;
+				}
+				list.add(new T1(str));
+				if (list.size() % 5000 == 0) {
+					t1Mapper.insertBatch(list);
+					list.clear();
+				}
+			}
+		}
+		if (list.size() > 0) {
+			t1Mapper.insertBatch(list);
+		}
+	}
+
+	// @Test
+	public void test1() throws IOException {
+		String path = "xxx\\2_sql.txt";
+		File file = new File(path);
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+		List<T2> list = new ArrayList<>(5000);
+		String line;
+		while ((line = bufferedReader.readLine()) != null) {
+			String[] split = line.split(",");
+			if (split.length > 67) {
+				String str = split[67].replace("C-", "");
+				if (!RegexUtil.mobileRegex(str)) {
+					continue;
+				}
+				if ("NULL".equals(str)) {
+					continue;
+				}
+				list.add(new T2(str));
+				if (list.size() % 5000 == 0) {
+					t2Mapper.insertBatch(list);
+					list.clear();
+				}
+			}
+		}
+		if (list.size() > 0) {
+			t2Mapper.insertBatch(list);
+		}
+	}
 
 }

@@ -15,27 +15,15 @@
  *
  */
 
-package org.laokou.test.mybatisplus.entity;
+package org.laokou.admin.client.dto.user;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@TableName("t2")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class T2 {
-
-	@TableField("mobile")
-	@TableId(type = IdType.INPUT)
-	private String mobile;
+public class UserStatusUpdateCmd extends CommonCommand {
 
 }

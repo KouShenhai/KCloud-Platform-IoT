@@ -17,6 +17,7 @@
 package org.laokou.admin.client.api;
 
 import org.laokou.admin.client.dto.common.clientobject.OptionCO;
+import org.laokou.admin.client.dto.user.clientobject.UserCO;
 import org.laokou.admin.client.dto.user.clientobject.UserOnlineCO;
 import org.laokou.admin.client.dto.user.clientobject.UserProfileCO;
 import org.laokou.admin.client.dto.user.*;
@@ -64,10 +65,24 @@ public interface UsersServiceI {
 	 */
 	Result<UserProfileCO> profile(UserProfileGetQry qry);
 
+	Result<Boolean> profile(UserProfileUpdateCmd cmd);
+
 	/**
 	 * 用户下拉列表
 	 * @return Result<List<OptionCO>>
 	 */
 	Result<List<OptionCO>> optionList(UserOptionListQry qry);
+
+	Result<Boolean> status(UserStatusUpdateCmd cmd);
+
+	Result<Boolean> resetPassword(UserPasswordRestCmd cmd);
+
+	Result<Boolean> profilePassword(UserProfileUpdateCmd cmd);
+
+	Result<UserCO> get(UserGetQry qry);
+
+	Result<Boolean> delete(UserDeleteCmd cmd);
+
+	Result<Datas<UserCO>> list(UserListQry qry);
 
 }

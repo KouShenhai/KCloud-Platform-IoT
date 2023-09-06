@@ -19,6 +19,7 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.client.api.LogsServiceI;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -34,6 +35,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LogsController {
 
+	private final LogsServiceI logsServiceI;
+
 	@TraceLog
 	@PostMapping(value = "v1/logs/operate-list")
 	@Operation(summary = "查询", description = "查询")
@@ -47,7 +50,7 @@ public class LogsController {
 	@Operation(summary = "导出", description = "导出")
 	@OperateLog(module = "操作日志", operation = "导出")
 	@PreAuthorize("hasAuthority('logs:operate:export')")
-	public void OperateExport() {
+	public void operateExport() {
 
 	}
 

@@ -30,6 +30,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface DictMapper extends BatchMapper<DictDO> {
 
-    IPage<DictDO> getDictList(IPage<DictDO> page,@Param("dictDO")DictDO dictDO);
+	IPage<DictDO> getDictList(IPage<DictDO> page, @Param("dictDO") DictDO dictDO);
 
 }

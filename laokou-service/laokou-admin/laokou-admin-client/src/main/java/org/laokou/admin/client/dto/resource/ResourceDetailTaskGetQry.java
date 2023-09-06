@@ -15,16 +15,15 @@
  *
  */
 
-package org.laokou.admin.command.definition.query;
+package org.laokou.admin.client.dto.resource;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class DefinitionTemplateGetQryExe {
+@Data
+public class ResourceDetailTaskGetQry extends CommonCommand {
 
 }

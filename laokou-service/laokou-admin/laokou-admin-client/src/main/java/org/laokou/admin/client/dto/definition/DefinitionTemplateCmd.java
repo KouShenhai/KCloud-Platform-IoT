@@ -24,6 +24,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-public class DefinitionTemplateGetQry extends CommonCommand {
+public class DefinitionTemplateCmd extends CommonCommand {
 
 }

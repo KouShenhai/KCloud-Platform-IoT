@@ -27,8 +27,8 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface MonitorsServiceI {
 
-    Result<CacheCO> cache(MonitorCacheGetQry qry);
+	Result<CacheCO> cache(MonitorCacheGetQry qry);
 
-    Result<ServerCO> server(MonitorServerGetQry qry);
+	Result<ServerCO> server(MonitorServerGetQry qry);
 
 }

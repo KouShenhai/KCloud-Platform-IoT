@@ -60,11 +60,11 @@ public class MessagesController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/messages/watch/{detailId}")
+	@PostMapping("v1/messages/{detailId}")
 	@Operation(summary = "消息管理", description = "查看消息")
 	@OperateLog(module = "消息管理", operation = "查看消息")
 	@DataCache(name = "messages", key = "#id")
-	public Result<?> watch(@PathVariable("detailId") Long detailId) {
+	public Result<?> read(@PathVariable("detailId") Long detailId) {
 		return Result.of(null);
 	}
 

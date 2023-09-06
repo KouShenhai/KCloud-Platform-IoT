@@ -29,16 +29,16 @@ import java.util.List;
  */
 public interface PackagesServiceI {
 
-    Result<Boolean> insert(PackageInsertCmd cmd);
+	Result<Boolean> insert(PackageInsertCmd cmd);
 
-    Result<Boolean> update(PackageUpdateCmd cmd);
+	Result<Boolean> update(PackageUpdateCmd cmd);
 
-    Result<Boolean> delete(PackageDeleteCmd cmd);
+	Result<Boolean> delete(PackageDeleteCmd cmd);
 
-    Result<Datas<PackageCO>> list(PackageListQry qry);
+	Result<Datas<PackageCO>> list(PackageListQry qry);
 
-    Result<PackageCO> get(PackageGetQry qry);
+	Result<PackageCO> get(PackageGetQry qry);
 
-    Result<List<OptionCO>> optionList(PackageOptionListQry qry);
+	Result<List<OptionCO>> optionList(PackageOptionListQry qry);
 
 }

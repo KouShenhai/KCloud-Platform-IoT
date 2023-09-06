@@ -16,9 +16,26 @@
  */
 package org.laokou.admin.client.api;
 
+import org.laokou.admin.client.dto.log.LogLoginExportCmd;
+import org.laokou.admin.client.dto.log.LogLoginListQry;
+import org.laokou.admin.client.dto.log.LogOperateExportCmd;
+import org.laokou.admin.client.dto.log.LogOperateListQry;
+import org.laokou.admin.client.dto.log.clientobject.LoginLogCO;
+import org.laokou.admin.client.dto.log.clientobject.OperateLogCO;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
+
 /**
  * @author laokou
  */
 public interface LogsServiceI {
+
+	Result<Datas<OperateLogCO>> operateList(LogOperateListQry qry);
+
+	Result<Boolean> operateExport(LogOperateExportCmd cmd);
+
+	Result<Datas<LoginLogCO>> loginList(LogLoginListQry qry);
+
+	Result<Boolean> loginExport(LogLoginExportCmd cmd);
 
 }

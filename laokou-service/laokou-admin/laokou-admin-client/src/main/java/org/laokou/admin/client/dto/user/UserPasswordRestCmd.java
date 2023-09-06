@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.client.dto.definition;
+package org.laokou.admin.client.dto.user;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
@@ -24,6 +24,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-public class DefinitionImageGetQry extends CommonCommand {
+public class UserPasswordRestCmd extends CommonCommand {
+
+	private Long id;
+
+	private String password;
 
 }

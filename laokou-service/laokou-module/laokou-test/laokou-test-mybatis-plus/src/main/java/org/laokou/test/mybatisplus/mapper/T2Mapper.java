@@ -29,5 +29,7 @@ import java.util.List;
 @Repository
 @Mapper
 public interface T2Mapper extends BaseMapper<T2> {
-    void insertBatch(@Param("list") List<T2> list);
+
+	void insertBatch(@Param("list") List<T2> list);
+
 }
