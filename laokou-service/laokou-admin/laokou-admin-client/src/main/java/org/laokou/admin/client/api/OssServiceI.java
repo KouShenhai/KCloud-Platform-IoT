@@ -35,6 +35,8 @@ public interface OssServiceI {
 
 	Result<Boolean> use(OssUseCmd cmd);
 
+	Result<OssCO> get(OssGetQry qry);
+
 	Result<Datas<OssCO>> list(OssListQry qry);
 
 	Result<FileCO> upload(OssUploadCmd cmd);

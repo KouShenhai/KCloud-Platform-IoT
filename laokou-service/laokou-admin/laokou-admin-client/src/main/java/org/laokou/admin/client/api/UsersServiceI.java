@@ -77,8 +77,6 @@ public interface UsersServiceI {
 
 	Result<Boolean> resetPassword(UserPasswordResetCmd cmd);
 
-	Result<Boolean> profilePassword(UserProfileUpdateCmd cmd);
-
 	Result<UserCO> get(UserGetQry qry);
 
 	Result<Boolean> delete(UserDeleteCmd cmd);

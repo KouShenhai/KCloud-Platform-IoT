@@ -19,6 +19,7 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.ResourceServiceI;
+import org.laokou.admin.client.dto.oss.clientobject.FileCO;
 import org.laokou.admin.client.dto.resource.*;
 import org.laokou.admin.client.dto.resource.clientobject.ResourceCO;
 import org.laokou.admin.client.dto.resource.clientobject.TaskCO;
@@ -56,7 +57,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
     private final ResourceSearchGetQryExe resourceSearchGetQryExe;
 
     @Override
-    public Result<?> auditLog(ResourceAuditLogListQry qry) {
+    public Result<Datas<?>> auditLog(ResourceAuditLogListQry qry) {
         return null;
     }
 
@@ -66,7 +67,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
     }
 
     @Override
-    public Result<Boolean> upload(ResourceUploadCmd cmd) {
+    public Result<FileCO> upload(ResourceUploadCmd cmd) {
         return null;
     }
 
@@ -91,7 +92,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
     }
 
     @Override
-    public Result<Boolean> update(ResourceUploadCmd cmd) {
+    public Result<Boolean> update(ResourceUpdateCmd cmd) {
         return null;
     }
 

@@ -17,13 +17,21 @@
 
 package org.laokou.admin.client.dto.resource;
 
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ResourceDownloadCmd extends CommonCommand {
+
+    private Long id;
+    private HttpServletResponse response;
 
 }

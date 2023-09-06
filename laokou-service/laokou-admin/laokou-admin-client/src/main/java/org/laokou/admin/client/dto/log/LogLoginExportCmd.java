@@ -26,4 +26,8 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class LogLoginExportCmd extends CommonCommand {
 
+    private String name;
+
+    private Integer status;
+
 }

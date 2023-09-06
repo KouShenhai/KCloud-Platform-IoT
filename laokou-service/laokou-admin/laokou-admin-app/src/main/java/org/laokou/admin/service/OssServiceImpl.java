@@ -23,6 +23,7 @@ import org.laokou.admin.client.dto.oss.*;
 import org.laokou.admin.client.dto.oss.clientobject.FileCO;
 import org.laokou.admin.client.dto.oss.clientobject.OssCO;
 import org.laokou.admin.command.oss.*;
+import org.laokou.admin.command.oss.query.OssGetQryExe;
 import org.laokou.admin.command.oss.query.OssListQryExe;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -41,6 +42,7 @@ public class OssServiceImpl implements OssServiceI {
     private final OssUseCmdExe ossUseCmdExe;
     private final OssListQryExe ossListQryExe;
     private final OssUploadCmdExe ossUploadCmdExe;
+    private final OssGetQryExe ossGetQryExe;
 
     @Override
     public Result<Boolean> insert(OssInsertCmd cmd) {
@@ -59,6 +61,11 @@ public class OssServiceImpl implements OssServiceI {
 
     @Override
     public Result<Boolean> use(OssUseCmd cmd) {
+        return null;
+    }
+
+    @Override
+    public Result<OssCO> get(OssGetQry qry) {
         return null;
     }
 

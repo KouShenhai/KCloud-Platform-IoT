@@ -20,6 +20,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.MonitorsServiceI;
+import org.laokou.admin.client.dto.monitor.MonitorCacheGetQry;
+import org.laokou.admin.client.dto.monitor.MonitorServerGetQry;
+import org.laokou.admin.client.dto.monitor.clientobject.CacheCO;
+import org.laokou.admin.client.dto.monitor.clientobject.ServerCO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,15 +42,15 @@ public class MonitorsController {
 	@TraceLog
 	@GetMapping("v1/monitors/cache")
 	@Operation(summary = "监控管理", description = "缓存监控")
-	public Result<?> cache() {
-		return Result.of(null);
+	public Result<CacheCO> cache() {
+		return monitorsServiceI.cache(new MonitorCacheGetQry());
 	}
 
 	@TraceLog
 	@GetMapping("v1/monitors/server")
 	@Operation(summary = "监控管理", description = "主机监控")
-	public Result<?> server() {
-		return Result.of(null);
+	public Result<ServerCO> server() {
+		return monitorsServiceI.server(new MonitorServerGetQry());
 	}
 
 }

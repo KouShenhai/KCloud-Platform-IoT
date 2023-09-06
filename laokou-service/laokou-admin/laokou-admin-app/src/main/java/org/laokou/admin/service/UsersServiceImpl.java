@@ -81,11 +81,6 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Result<Boolean> profilePassword(UserProfileUpdateCmd cmd) {
-		return null;
-	}
-
-	@Override
 	public Result<UserCO> get(UserGetQry qry) {
 		return null;
 	}

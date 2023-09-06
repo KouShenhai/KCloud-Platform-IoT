@@ -21,7 +21,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.DefinitionsServiceI;
+import org.laokou.admin.client.dto.definition.*;
+import org.laokou.admin.client.dto.definition.clientobject.DefinitionCO;
 import org.laokou.admin.domain.annotation.OperateLog;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,15 +49,15 @@ public class DefinitionsController {
 	@OperateLog(module = "流程定义", operation = "流程新增")
 	@PreAuthorize("hasAuthority('definitions:insert')")
 	public Result<Boolean> insert(@RequestPart("file") MultipartFile file) throws IOException {
-		return Result.of(null);
+		return definitionsServiceI.insert(new DefinitionInsertCmd(file));
 	}
 
 	@TraceLog
 	@PostMapping("v1/definitions/list")
 	@Operation(summary = "流程定义", description = "流程查询列表")
 	@PreAuthorize("hasAuthority('definitions:list')")
-	public Result<?> list() {
-		return Result.of(null);
+	public Result<Datas<DefinitionCO>> list(@RequestBody DefinitionListQry qry) {
+		return definitionsServiceI.list(qry);
 	}
 
 	@TraceLog
@@ -62,7 +65,7 @@ public class DefinitionsController {
 	@Operation(summary = "流程定义", description = "流程图")
 	@PreAuthorize("hasAuthority('definitions:diagram')")
 	public Result<String> diagram(@PathVariable("definitionId") String definitionId) {
-		return Result.of(null);
+		return definitionsServiceI.diagram(new DefinitionDiagramGetQry(definitionId));
 	}
 
 	@TraceLog
@@ -71,7 +74,7 @@ public class DefinitionsController {
 	@OperateLog(module = "流程定义", operation = "流程删除")
 	@PreAuthorize("hasAuthority('definitions:delete')")
 	public Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId) {
-		return Result.of(null);
+		return definitionsServiceI.delete(new DefinitionDeleteCmd(deploymentId));
 	}
 
 	@TraceLog
@@ -80,7 +83,7 @@ public class DefinitionsController {
 	@OperateLog(module = "流程定义", operation = "流程挂起")
 	@PreAuthorize("hasAuthority('definitions:suspend')")
 	public Result<Boolean> suspend(@PathVariable("definitionId") String definitionId) {
-		return Result.of(null);
+		return definitionsServiceI.suspend(new DefinitionSuspendCmd(definitionId));
 	}
 
 	@TraceLog
@@ -89,15 +92,15 @@ public class DefinitionsController {
 	@OperateLog(module = "流程定义", operation = "流程激活")
 	@PreAuthorize("hasAuthority('definitions:activate')")
 	public Result<Boolean> activate(@PathVariable("definitionId") String definitionId) {
-		return Result.of(null);
+		return definitionsServiceI.activate(new DefinitionActiveCmd(definitionId));
 	}
 
 	@TraceLog
 	@GetMapping("v1/definitions/template")
 	@Operation(summary = "流程定义", description = "流程模板")
 	@PreAuthorize("hasAuthority('definitions:template')")
-	public void template(HttpServletResponse response) {
-
+	public Result<Boolean> template(HttpServletResponse response) {
+		return definitionsServiceI.template(new DefinitionTemplateCmd(response));
 	}
 
 }

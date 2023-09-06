@@ -17,13 +17,19 @@
 
 package org.laokou.admin.client.dto.source;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class SourceDeleteCmd extends CommonCommand {
+
+    private Long id;
 
 }

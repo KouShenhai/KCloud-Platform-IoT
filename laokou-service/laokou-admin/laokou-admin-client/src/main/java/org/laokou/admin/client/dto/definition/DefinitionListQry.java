@@ -18,12 +18,14 @@
 package org.laokou.admin.client.dto.definition;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.admin.client.dto.packages.PackageGetQry;
 
 /**
  * @author laokou
  */
 @Data
-public class DefinitionListQry extends CommonCommand {
+public class DefinitionListQry extends PackageGetQry {
+
+    private String name;
 
 }

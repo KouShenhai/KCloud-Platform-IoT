@@ -21,7 +21,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.ResourceServiceI;
+import org.laokou.admin.client.dto.oss.clientobject.FileCO;
+import org.laokou.admin.client.dto.resource.*;
+import org.laokou.admin.client.dto.resource.clientobject.ResourceCO;
+import org.laokou.admin.client.dto.resource.clientobject.TaskCO;
 import org.laokou.admin.domain.annotation.OperateLog;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -31,6 +36,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author laokou
@@ -46,8 +52,8 @@ public class ResourceController {
 	@TraceLog
 	@Operation(summary = "资源管理", description = "查询审批日志列表")
 	@PreAuthorize("hasAuthority('resource:audit-log')")
-	public Result<?> auditLog(@PathVariable("id") Long id) {
-		return Result.of(null);
+	public Result<Datas<?>> auditLog(@PathVariable("id") Long id) {
+		return resourceServiceI.auditLog(new ResourceAuditLogListQry(id));
 	}
 
 	@PostMapping("v1/resource/sync")
@@ -57,22 +63,22 @@ public class ResourceController {
 	@Lock4j(key = "resource_sync_lock_")
 	@PreAuthorize("hasAuthority('resource:sync')")
 	public Result<Boolean> sync() {
-		return Result.of(null);
+		return resourceServiceI.sync(new ResourceSyncCmd());
 	}
 
 	@PostMapping(value = "v1/resource/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@TraceLog
 	@Operation(summary = "资源管理", description = "上传资源")
-	public Result<?> upload(@RequestPart("file") MultipartFile file) throws Exception {
-		return Result.of(null);
+	public Result<FileCO> upload(@RequestPart("file") MultipartFile file) {
+		return resourceServiceI.upload(new ResourceUploadCmd(file));
 	}
 
 	@PostMapping("v1/resource/list")
 	@Operation(summary = "资源管理", description = "查询资源列表")
 	@TraceLog
 	@PreAuthorize("hasAuthority('resource:list')")
-	public Result<?> list() {
-		return Result.of(null);
+	public Result<Datas<ResourceCO>> list(@RequestBody ResourceListQry qry) {
+		return resourceServiceI.list(qry);
 	}
 
 	@GetMapping(value = "v1/resource/{id}")
@@ -80,15 +86,15 @@ public class ResourceController {
 	@TraceLog
 	@PreAuthorize("hasAuthority('resource:detail')")
 	public Result<?> get(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return resourceServiceI.get(new ResourceGetQry(id));
 	}
 
 	@GetMapping(value = "v1/resource/download/{id}")
 	@TraceLog
 	@Operation(summary = "资源管理", description = "下载资源")
 	@PreAuthorize("hasAuthority('resource:download')")
-	public void download(@PathVariable("id") Long id, HttpServletResponse response) {
-
+	public Result<Boolean> download(@PathVariable("id") Long id, HttpServletResponse response) {
+		return resourceServiceI.download(new ResourceDownloadCmd(id,response));
 	}
 
 	@PostMapping(value = "v1/resource")
@@ -96,8 +102,8 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "新增资源")
 	@OperateLog(module = "资源管理", operation = "新增资源")
 	@PreAuthorize("hasAuthority('resource:insert')")
-	public Result<Boolean> insert() throws IOException {
-		return Result.of(null);
+	public Result<Boolean> insert(@RequestBody ResourceInsertCmd cmd) throws IOException {
+		return resourceServiceI.insert(cmd);
 	}
 
 	@PutMapping(value = "v1/resource")
@@ -105,8 +111,8 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "修改资源")
 	@OperateLog(module = "资源管理", operation = "修改资源")
 	@PreAuthorize("hasAuthority('resource:update')")
-	public Result<Boolean> update() throws IOException {
-		return Result.of(null);
+	public Result<Boolean> update(@RequestBody ResourceUpdateCmd cmd) throws IOException {
+		return resourceServiceI.update(cmd);
 	}
 
 	@DeleteMapping(value = "v1/resource/{id}")
@@ -115,7 +121,7 @@ public class ResourceController {
 	@OperateLog(module = "资源管理", operation = "删除资源")
 	@PreAuthorize("hasAuthority('resource:delete')")
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return resourceServiceI.delete(new ResourceDeleteCmd(id));
 	}
 
 	@GetMapping(value = "v1/resource/diagram/{instanceId}")
@@ -123,15 +129,15 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "流程图")
 	@PreAuthorize("hasAuthority('resource:diagram')")
 	public Result<String> diagram(@PathVariable("instanceId") String instanceId) {
-		return Result.of(null);
+		return resourceServiceI.diagram(new ResourceDiagramGetQry(instanceId));
 	}
 
 	@TraceLog
 	@PostMapping(value = "v1/resource/task-list")
 	@Operation(summary = "资源管理", description = "查询任务列表")
 	@PreAuthorize("hasAuthority('resource:task-list')")
-	public Result<?> taskList() {
-		return Result.of(null);
+	public Result<Datas<TaskCO>> taskList(@RequestBody ResourceTaskListQry qry) {
+		return resourceServiceI.taskList(qry);
 	}
 
 	@TraceLog
@@ -139,15 +145,15 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "审批任务")
 	@OperateLog(module = "资源管理", operation = "审批任务")
 	@PreAuthorize("hasAuthority('resource:audit-task')")
-	public Result<Boolean> auditTask() {
-		return Result.of(null);
+	public Result<Boolean> auditTask(@RequestBody ResourceAuditTaskCmd cmd) {
+		return resourceServiceI.auditTask(cmd);
 	}
 
 	@TraceLog
 	@GetMapping(value = "v1/resource/task-detail/{id}")
 	@Operation(summary = "资源管理", description = "查看任务")
 	public Result<?> detailTask(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return resourceServiceI.detailTask(new ResourceDetailTaskGetQry());
 	}
 
 	@TraceLog
@@ -155,8 +161,8 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "处理任务")
 	@OperateLog(module = "资源管理", operation = "处理任务")
 	@PreAuthorize("hasAuthority('resource:resolve-task')")
-	public Result<Boolean> resolveTask() {
-		return Result.of(null);
+	public Result<Boolean> resolveTask(@RequestBody ResourceResolveTaskCmd cmd) {
+		return resourceServiceI.resolveTask(cmd);
 	}
 
 	@TraceLog
@@ -164,8 +170,8 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "转办任务")
 	@OperateLog(module = "资源管理", operation = "转办任务")
 	@PreAuthorize("hasAuthority('resource:transfer-task')")
-	public Result<Boolean> transferTask() {
-		return Result.of(null);
+	public Result<Boolean> transferTask(@RequestBody ResourceTransferTaskCmd cmd) {
+		return resourceServiceI.transferTask(cmd);
 	}
 
 	@TraceLog
@@ -173,16 +179,16 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "委派任务")
 	@OperateLog(module = "资源管理", operation = "委派任务")
 	@PreAuthorize("hasAuthority('resource:delegate-task')")
-	public Result<Boolean> delegateTask() {
-		return Result.of(null);
+	public Result<Boolean> delegateTask(@RequestBody ResourceDelegateTaskCmd cmd) {
+		return resourceServiceI.delegateTask(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("v1/resource/search")
 	@Operation(summary = "资源管理", description = "搜索资源")
 	@PreAuthorize("hasAuthority('resource:search')")
-	public Result<?> search() {
-		return Result.of(null);
+	public Result<Datas<Map<String, Object>>> search(@RequestBody ResourceSearchGetQry qry) {
+		return resourceServiceI.search(qry);
 	}
 
 }

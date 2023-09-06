@@ -17,13 +17,19 @@
 
 package org.laokou.admin.client.dto.definition;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class DefinitionActiveCmd extends CommonCommand {
+
+    private String definitionId;
 
 }

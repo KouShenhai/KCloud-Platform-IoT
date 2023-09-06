@@ -20,17 +20,15 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.MessagesServiceI;
+import org.laokou.admin.client.dto.message.*;
+import org.laokou.admin.client.dto.message.clientobject.MessageCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author laokou
@@ -47,16 +45,16 @@ public class MessagesController {
 	@Operation(summary = "消息管理", description = "新增消息")
 	@OperateLog(module = "消息管理", operation = "新增消息")
 	@PreAuthorize("hasAuthority('messages:insert')")
-	public Result<Boolean> insert() throws IOException {
-		return Result.of(null);
+	public Result<Boolean> insert(@RequestBody MessageInsertCmd cmd) {
+		return messagesServiceI.insert(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("v1/messages/list")
 	@Operation(summary = "消息管理", description = "查询消息列表")
 	@PreAuthorize("hasAuthority('messages:list')")
-	public Result<?> list() {
-		return Result.of(null);
+	public Result<Datas<MessageCO>> list(@RequestBody MessageListQry qry) {
+		return messagesServiceI.list(qry);
 	}
 
 	@TraceLog
@@ -65,7 +63,7 @@ public class MessagesController {
 	@OperateLog(module = "消息管理", operation = "查看消息")
 	@DataCache(name = "messages", key = "#id")
 	public Result<?> read(@PathVariable("detailId") Long detailId) {
-		return Result.of(null);
+		return messagesServiceI.read(new MessageReadCmd(detailId));
 	}
 
 	@TraceLog
@@ -74,21 +72,21 @@ public class MessagesController {
 	@PreAuthorize("hasAuthority('messages:detail')")
 	@DataCache(name = "messages", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
-		return Result.of(null);
+		return messagesServiceI.get(new MessageGetQry(id));
 	}
 
 	@TraceLog
 	@PostMapping("v1/messages/unread-list")
 	@Operation(summary = "消息管理", description = "未读消息列表")
-	public Result<?> unreadList() {
-		return Result.of(null);
+	public Result<Datas<MessageCO>> unreadList(@RequestBody MessageUnreadListQry qry) {
+		return messagesServiceI.unreadList(qry);
 	}
 
 	@TraceLog
 	@GetMapping("v1/message/unread-count")
 	@Operation(summary = "消息管理", description = "未读消息数量")
 	public Result<Long> unreadCount() {
-		return Result.of(null);
+		return messagesServiceI.unreadCount(new MessageUnreadCountGetQry());
 	}
 
 }
