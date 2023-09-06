@@ -38,7 +38,7 @@ import java.util.List;
  * @author laokou
  */
 @RestController
-@Tag(name = "UsersController", description = "用户")
+@Tag(name = "UsersController", description = "用户管理")
 @RequiredArgsConstructor
 public class UsersController {
 
@@ -46,8 +46,8 @@ public class UsersController {
 
 	@TraceLog
 	@PutMapping("v1/users")
-	@Operation(summary = "修改", description = "修改")
-	@OperateLog(module = "用户管理", operation = "修改")
+	@Operation(summary = "用户管理", description = "修改用户")
+	@OperateLog(module = "用户管理", operation = "修改用户")
 	@PreAuthorize("hasAuthority('users:update')")
 	@DataCache(name = "users", key = "#dto.id", type = Cache.DEL)
 	public Result<Boolean> update() {
@@ -57,14 +57,14 @@ public class UsersController {
 	@TraceLog
 	@PostMapping("v1/users/online-list")
 	@PreAuthorize("hasAuthority('users:online:list')")
-	@Operation(summary = "在线用户查询", description = "在线用户查询")
+	@Operation(summary = "在线用户", description = "在线用户查询")
 	public Result<?> onlineList() {
 		return Result.of(null);
 	}
 
 	@TraceLog
 	@DeleteMapping("v1/users/online-kill/{token}")
-	@Operation(summary = "在线用户强踢", description = "在线用户强踢")
+	@Operation(summary = "在线用户", description = "在线用户强踢")
 	@OperateLog(module = "用户管理", operation = "在线用户强踢")
 	@PreAuthorize("hasAuthority('users:online:kill')")
 	public Result<Boolean> onlineKill(@PathVariable("token") String token) {
@@ -73,54 +73,54 @@ public class UsersController {
 
 	@TraceLog
 	@GetMapping("v1/users/profile")
-	@Operation(summary = "信息", description = "信息")
+	@Operation(summary = "个人中心", description = "用户信息")
 	public Result<UserProfileCO> profile() {
 		return usersServiceI.profile(new UserProfileGetQry());
 	}
 
 	@TraceLog
 	@GetMapping("v1/users/option-list")
-	@Operation(summary = "下拉列表", description = "下拉列表")
+	@Operation(summary = "用户管理", description = "下拉列表")
 	public Result<List<OptionVO>> optionList() {
 		return Result.of(null);
 	}
 
 	@TraceLog
 	@PutMapping("v1/users/profile")
-	@Operation(summary = "信息", description = "信息")
+	@Operation(summary = "个人中心", description = "修改信息")
 	public Result<Boolean> profile(@RequestBody Object obj) {
 		return Result.of(null);
 	}
 
 	@TraceLog
 	@PutMapping("v1/users/status/{id}/{status}")
-	@Operation(summary = "状态", description = "状态")
-	@OperateLog(module = "用户管理", operation = "状态")
+	@Operation(summary = "用户管理", description = "修改状态")
+	@OperateLog(module = "用户管理", operation = "修改状态")
 	@PreAuthorize("hasAuthority('users:status')")
 	public Result<Boolean> status(@PathVariable("id") Long id, @PathVariable("status") Integer status) {
 		return Result.of(null);
 	}
 
 	@TraceLog
-	@PutMapping("v1/users/pwd/{id}/{pwd}")
-	@Operation(summary = "密码", description = "密码")
-	@OperateLog(module = "用户管理", operation = "密码")
+	@PutMapping("v1/users/reset-pwd/{id}/{pwd}")
+	@Operation(summary = "用户管理", description = "重置密码")
+	@OperateLog(module = "用户管理", operation = "重置密码")
 	@PreAuthorize("hasAuthority('users:pwd')")
-	public Result<Boolean> pwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
+	public Result<Boolean> resetPwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
 		return Result.of(null);
 	}
 
 	@TraceLog
 	@PutMapping("v1/users/profile-pwd/{id}/{pwd}")
-	@Operation(summary = "密码", description = "密码")
+	@Operation(summary = "个人中心", description = "修改密码")
 	public Result<Boolean> profilePwd(@PathVariable("id") Long id, @PathVariable("pwd") String pwd) {
 		return Result.of(null);
 	}
 
 	@TraceLog
 	@PostMapping("v1/users")
-	@Operation(summary = "新增", description = "新增")
-	@OperateLog(module = "用户管理", operation = "新增")
+	@Operation(summary = "用户管理", description = "新增用户")
+	@OperateLog(module = "用户管理", operation = "新增用户")
 	@PreAuthorize("hasAuthority('users:insert')")
 	public Result<Boolean> insert(@RequestBody UserInsertCmd cmd) {
 		return usersServiceI.insert(cmd);
@@ -128,7 +128,7 @@ public class UsersController {
 
 	@TraceLog
 	@GetMapping("v1/users/{id}")
-	@Operation(summary = "查看", description = "查看")
+	@Operation(summary = "用户管理", description = "查看用户")
 	@DataCache(name = "users", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return Result.of(null);
@@ -136,8 +136,8 @@ public class UsersController {
 
 	@TraceLog
 	@DeleteMapping("v1/users")
-	@Operation(summary = "删除", description = "删除")
-	@OperateLog(module = "用户管理", operation = "删除")
+	@Operation(summary = "用户管理", description = "删除用户")
+	@OperateLog(module = "用户管理", operation = "删除用户")
 	@PreAuthorize("hasAuthority('users:delete')")
 	@DataCache(name = "users", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@RequestParam("id") Long id) {
@@ -146,7 +146,7 @@ public class UsersController {
 
 	@TraceLog
 	@PostMapping("v1/users/list")
-	@Operation(summary = "查询", description = "查询")
+	@Operation(summary = "用户管理", description = "查询用户")
 	@PreAuthorize("hasAuthority('users:list')")
 	public Result<?> list() {
 		return Result.of(null);
