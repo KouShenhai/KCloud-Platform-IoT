@@ -20,9 +20,11 @@ package org.laokou.admin.service;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.client.api.DefinitionsServiceI;
 import org.laokou.admin.client.dto.definition.*;
+import org.laokou.admin.client.dto.definition.clientobject.DefinitionCO;
 import org.laokou.admin.command.definition.*;
 import org.laokou.admin.command.definition.query.DefinitionDiagramGetQryExe;
 import org.laokou.admin.command.definition.query.DefinitionListQryExe;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +49,7 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
     }
 
     @Override
-    public Result<Boolean> list(DefinitionListQry qry) {
+    public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) {
         return null;
     }
 
