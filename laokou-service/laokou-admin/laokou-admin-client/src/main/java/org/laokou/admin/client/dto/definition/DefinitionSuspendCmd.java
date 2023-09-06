@@ -30,6 +30,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class DefinitionSuspendCmd extends CommonCommand {
 
-    private String definitionId;
+	private String definitionId;
 
 }

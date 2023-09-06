@@ -31,6 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class ResourceUploadCmd extends CommonCommand {
 
-    private MultipartFile file;
+	private MultipartFile file;
 
 }

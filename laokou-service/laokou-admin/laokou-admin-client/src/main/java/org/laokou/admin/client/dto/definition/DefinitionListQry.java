@@ -26,6 +26,6 @@ import org.laokou.admin.client.dto.packages.PackageGetQry;
 @Data
 public class DefinitionListQry extends PackageGetQry {
 
-    private String name;
+	private String name;
 
 }

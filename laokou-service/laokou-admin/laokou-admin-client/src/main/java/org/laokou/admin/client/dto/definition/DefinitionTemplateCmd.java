@@ -31,6 +31,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class DefinitionTemplateCmd extends CommonCommand {
 
-    private HttpServletResponse response;
+	private HttpServletResponse response;
 
 }

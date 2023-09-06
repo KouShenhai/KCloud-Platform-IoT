@@ -30,6 +30,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class ResourceDiagramGetQry extends CommonCommand {
 
-    private String instanceId;
+	private String instanceId;
 
 }

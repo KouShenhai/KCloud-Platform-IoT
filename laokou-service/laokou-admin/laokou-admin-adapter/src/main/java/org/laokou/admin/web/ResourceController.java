@@ -94,7 +94,7 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "下载资源")
 	@PreAuthorize("hasAuthority('resource:download')")
 	public Result<Boolean> download(@PathVariable("id") Long id, HttpServletResponse response) {
-		return resourceServiceI.download(new ResourceDownloadCmd(id,response));
+		return resourceServiceI.download(new ResourceDownloadCmd(id, response));
 	}
 
 	@PostMapping(value = "v1/resource")
