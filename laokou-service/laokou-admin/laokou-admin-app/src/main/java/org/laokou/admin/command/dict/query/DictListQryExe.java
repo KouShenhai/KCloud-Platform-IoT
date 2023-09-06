@@ -35,17 +35,17 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DictListQryExe {
 
-    private final DictGateway dictGateway;
+	private final DictGateway dictGateway;
 
-    public Result<Datas<DictCO>> execute(DictListQry qry) {
-        Dict dict = new Dict();
-        dict.setType(qry.getType());
-        dict.setLabel(qry.getLabel());
-        Datas<Dict> datas = dictGateway.list(dict, new DataPage(qry.getPageNum(), qry.getPageSize()));
-        Datas<DictCO> da = new Datas<>();
-        da.setRecords(ConvertUtil.sourceToTarget(datas.getRecords(),DictCO.class));
-        da.setTotal(datas.getTotal());
-        return Result.of(da);
-    }
+	public Result<Datas<DictCO>> execute(DictListQry qry) {
+		Dict dict = new Dict();
+		dict.setType(qry.getType());
+		dict.setLabel(qry.getLabel());
+		Datas<Dict> datas = dictGateway.list(dict, new DataPage(qry.getPageNum(), qry.getPageSize()));
+		Datas<DictCO> da = new Datas<>();
+		da.setRecords(ConvertUtil.sourceToTarget(datas.getRecords(), DictCO.class));
+		da.setTotal(datas.getTotal());
+		return Result.of(da);
+	}
 
 }

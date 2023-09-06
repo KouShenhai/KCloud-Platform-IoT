@@ -21,4 +21,5 @@ package org.laokou.admin.domain.oss;
  * @author laokou
  */
 public class Oss {
+
 }

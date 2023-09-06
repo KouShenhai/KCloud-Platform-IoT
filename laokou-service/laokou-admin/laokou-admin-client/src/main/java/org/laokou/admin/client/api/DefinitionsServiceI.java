@@ -24,18 +24,18 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface DefinitionsServiceI {
 
-    Result<Boolean> insert(DefinitionInsertCmd cmd);
+	Result<Boolean> insert(DefinitionInsertCmd cmd);
 
-    Result<Boolean> list(DefinitionListQry qry);
+	Result<Boolean> list(DefinitionListQry qry);
 
-    Result<String> diagram(DefinitionDiagramGetQry qry);
+	Result<String> diagram(DefinitionDiagramGetQry qry);
 
-    Result<Boolean> delete(DefinitionDeleteCmd cmd);
+	Result<Boolean> delete(DefinitionDeleteCmd cmd);
 
-    Result<Boolean> suspend(DefinitionSuspendCmd cmd);
+	Result<Boolean> suspend(DefinitionSuspendCmd cmd);
 
-    Result<Boolean> activate(DefinitionActiveCmd cmd);
+	Result<Boolean> activate(DefinitionActiveCmd cmd);
 
-    Result<Boolean> template(DefinitionTemplateCmd qry);
+	Result<Boolean> template(DefinitionTemplateCmd qry);
 
 }

@@ -50,6 +50,7 @@ public class DictsServiceImpl implements DictsServiceI {
 	private final DictOptionListQryExe dictOptionListQryExe;
 
 	private final DictGetQryExe dictGetQryExe;
+
 	private final DictListQryExe dictListQryExe;
 
 	@Override

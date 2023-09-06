@@ -34,8 +34,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class T2 {
 
-    @TableField("mobile")
-    @TableId(type = IdType.INPUT)
-    private String mobile;
+	@TableField("mobile")
+	@TableId(type = IdType.INPUT)
+	private String mobile;
 
 }

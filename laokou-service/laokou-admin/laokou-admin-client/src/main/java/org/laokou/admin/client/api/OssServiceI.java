@@ -27,16 +27,16 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface OssServiceI {
 
-    Result<Boolean> insert(OssInsertCmd cmd);
+	Result<Boolean> insert(OssInsertCmd cmd);
 
-    Result<Boolean> update(OssUpdateCmd cmd);
+	Result<Boolean> update(OssUpdateCmd cmd);
 
-    Result<Boolean> delete(OssDeleteCmd cmd);
+	Result<Boolean> delete(OssDeleteCmd cmd);
 
-    Result<Boolean> use(OssUseCmd cmd);
+	Result<Boolean> use(OssUseCmd cmd);
 
-    Result<Datas<OssCO>> list(OssListQry qry);
+	Result<Datas<OssCO>> list(OssListQry qry);
 
-    Result<FileCO> upload(OssUploadCmd cmd);
+	Result<FileCO> upload(OssUploadCmd cmd);
 
 }

@@ -26,7 +26,8 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class UserPasswordRestCmd extends CommonCommand {
 
-    private Long id;
-    private String password;
+	private Long id;
+
+	private String password;
 
 }

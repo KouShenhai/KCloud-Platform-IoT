@@ -38,17 +38,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DictOptionListQryExe {
 
-    private final DictMapper dictMapper;
+	private final DictMapper dictMapper;
 
-    public Result<List<OptionCO>> execute(DictOptionListQry qry) {
-        List<DictDO> list = dictMapper
-                .selectList(new QueryWrapper<>(DictDO.class)
-                        .eq("type",qry.getType())
-                        .select("label", "value").orderByDesc("create_date"));
-        if (CollectionUtil.isEmpty(list)) {
-            return Result.of(new ArrayList<>(0));
-        }
-        return Result.of(ConvertUtil.sourceToTarget(list,OptionCO.class));
-    }
+	public Result<List<OptionCO>> execute(DictOptionListQry qry) {
+		List<DictDO> list = dictMapper.selectList(new QueryWrapper<>(DictDO.class).eq("type", qry.getType())
+				.select("label", "value").orderByDesc("create_date"));
+		if (CollectionUtil.isEmpty(list)) {
+			return Result.of(new ArrayList<>(0));
+		}
+		return Result.of(ConvertUtil.sourceToTarget(list, OptionCO.class));
+	}
 
 }

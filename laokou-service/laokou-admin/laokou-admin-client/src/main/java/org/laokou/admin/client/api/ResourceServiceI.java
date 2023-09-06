@@ -29,38 +29,38 @@ import java.util.Map;
  */
 public interface ResourceServiceI {
 
-    Result<?> auditLog(ResourceAuditLogListQry qry);
+	Result<?> auditLog(ResourceAuditLogListQry qry);
 
-    Result<Boolean> sync(ResourceSyncCmd cmd);
+	Result<Boolean> sync(ResourceSyncCmd cmd);
 
-    Result<Boolean> upload(ResourceUploadCmd cmd);
+	Result<Boolean> upload(ResourceUploadCmd cmd);
 
-    Result<Datas<ResourceCO>> list(ResourceListQry qry);
+	Result<Datas<ResourceCO>> list(ResourceListQry qry);
 
-    Result<ResourceCO> get(ResourceGetQry qry);
+	Result<ResourceCO> get(ResourceGetQry qry);
 
-    Result<Boolean> download(ResourceDownloadCmd cmd);
+	Result<Boolean> download(ResourceDownloadCmd cmd);
 
-    Result<Boolean> insert(ResourceInsertCmd cmd);
+	Result<Boolean> insert(ResourceInsertCmd cmd);
 
-    Result<Boolean> update(ResourceUploadCmd cmd);
+	Result<Boolean> update(ResourceUploadCmd cmd);
 
-    Result<Boolean> delete(ResourceDeleteCmd cmd);
+	Result<Boolean> delete(ResourceDeleteCmd cmd);
 
-    Result<String> diagram(ResourceDiagramGetQry qry);
+	Result<String> diagram(ResourceDiagramGetQry qry);
 
-    Result<Datas<TaskCO>> taskList(ResourceTaskListQry qry);
+	Result<Datas<TaskCO>> taskList(ResourceTaskListQry qry);
 
-    Result<Boolean> auditTask(ResourceAuditTaskCmd cmd);
+	Result<Boolean> auditTask(ResourceAuditTaskCmd cmd);
 
-    Result<Boolean> detailTask(ResourceDetailTaskGetQry qry);
+	Result<Boolean> detailTask(ResourceDetailTaskGetQry qry);
 
-    Result<Boolean> resolveTask(ResourceResolveTaskCmd cmd);
+	Result<Boolean> resolveTask(ResourceResolveTaskCmd cmd);
 
-    Result<Boolean> transferTask(ResourceTransferTaskCmd cmd);
+	Result<Boolean> transferTask(ResourceTransferTaskCmd cmd);
 
-    Result<Boolean> delegateTask(ResourceDelegateTaskCmd cmd);
+	Result<Boolean> delegateTask(ResourceDelegateTaskCmd cmd);
 
-    Result<Datas<Map<String,Object>>> search(ResourceSearchGetQry qry);
+	Result<Datas<Map<String, Object>>> search(ResourceSearchGetQry qry);
 
 }

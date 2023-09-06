@@ -30,12 +30,12 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface LogsServiceI {
 
-    Result<Datas<OperateLogCO>> operateList(LogOperateListQry qry);
+	Result<Datas<OperateLogCO>> operateList(LogOperateListQry qry);
 
-    Result<Boolean> operateExport(LogOperateExportCmd cmd);
+	Result<Boolean> operateExport(LogOperateExportCmd cmd);
 
-    Result<Datas<LoginLogCO>> loginList(LogLoginListQry qry);
+	Result<Datas<LoginLogCO>> loginList(LogLoginListQry qry);
 
-    Result<Boolean> loginExport(LogLoginExportCmd cmd);
+	Result<Boolean> loginExport(LogLoginExportCmd cmd);
 
 }

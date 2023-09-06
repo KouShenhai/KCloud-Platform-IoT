@@ -26,6 +26,4 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class DefinitionTemplateCmd extends CommonCommand {
 
-
-
 }

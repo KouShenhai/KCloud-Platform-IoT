@@ -29,57 +29,57 @@ import java.time.LocalDateTime;
 @Data
 public class TaskCO extends ClientObject {
 
-    @Serial
-    private static final long serialVersionUID = -8942395421885937298L;
+	@Serial
+	private static final long serialVersionUID = -8942395421885937298L;
 
-    /**
-     * 任务id
-     */
-    private String taskId;
+	/**
+	 * 任务id
+	 */
+	private String taskId;
 
-    /**
-     * 任务名称
-     */
-    private String taskName;
+	/**
+	 * 任务名称
+	 */
+	private String taskName;
 
-    /**
-     * 任务key
-     */
-    private String taskDefinitionKey;
+	/**
+	 * 任务key
+	 */
+	private String taskDefinitionKey;
 
-    /**
-     * 任务执行人名称
-     */
-    private String assigneeName;
+	/**
+	 * 任务执行人名称
+	 */
+	private String assigneeName;
 
-    /**
-     * 流程实例id
-     */
-    private String processInstanceId;
+	/**
+	 * 流程实例id
+	 */
+	private String processInstanceId;
 
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
+	/**
+	 * 创建时间
+	 */
+	private LocalDateTime createTime;
 
-    /**
-     * 流程定义id
-     */
-    private String definitionId;
+	/**
+	 * 流程定义id
+	 */
+	private String definitionId;
 
-    /**
-     * 流程名称
-     */
-    private String processName;
+	/**
+	 * 流程名称
+	 */
+	private String processName;
 
-    /**
-     * 实例名称
-     */
-    private String processInstanceName;
+	/**
+	 * 实例名称
+	 */
+	private String processInstanceName;
 
-    /**
-     * 业务主键
-     */
-    private String businessKey;
+	/**
+	 * 业务主键
+	 */
+	private String businessKey;
 
 }

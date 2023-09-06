@@ -26,16 +26,16 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface MessagesServiceI {
 
-    Result<Boolean> insert(MessageInsertCmd cmd);
+	Result<Boolean> insert(MessageInsertCmd cmd);
 
-    Result<Datas<MessageCO>> list(MessageListQry qry);
+	Result<Datas<MessageCO>> list(MessageListQry qry);
 
-    Result<MessageCO> read(MessageReadCmd cmd);
+	Result<MessageCO> read(MessageReadCmd cmd);
 
-    Result<MessageCO> get(MessageGetQry qry);
+	Result<MessageCO> get(MessageGetQry qry);
 
-    Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry);
+	Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry);
 
-    Result<Long> unreadCount(MessageUnreadCountGetQry qry);
+	Result<Long> unreadCount(MessageUnreadCountGetQry qry);
 
 }

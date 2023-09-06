@@ -29,16 +29,16 @@ import java.util.List;
  */
 public interface SourcesServiceI {
 
-    Result<Boolean> insert(SourceInsertCmd cmd);
+	Result<Boolean> insert(SourceInsertCmd cmd);
 
-    Result<Boolean> update(SourceUpdateCmd cmd);
+	Result<Boolean> update(SourceUpdateCmd cmd);
 
-    Result<Boolean> delete(SourceDeleteCmd cmd);
+	Result<Boolean> delete(SourceDeleteCmd cmd);
 
-    Result<SourceCO> get(SourceGetQry qry);
+	Result<SourceCO> get(SourceGetQry qry);
 
-    Result<Datas<SourceCO>> list(SourceListQry qry);
+	Result<Datas<SourceCO>> list(SourceListQry qry);
 
-    Result<List<OptionCO>> optionList(SourceOptionListQry qry);
+	Result<List<OptionCO>> optionList(SourceOptionListQry qry);
 
 }

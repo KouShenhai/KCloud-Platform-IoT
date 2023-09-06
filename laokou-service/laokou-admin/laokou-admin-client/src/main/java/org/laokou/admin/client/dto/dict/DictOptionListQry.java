@@ -30,6 +30,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class DictOptionListQry extends CommonCommand {
 
-    private String type;
+	private String type;
 
 }
