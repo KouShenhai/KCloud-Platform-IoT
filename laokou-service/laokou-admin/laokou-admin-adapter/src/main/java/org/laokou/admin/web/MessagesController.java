@@ -53,7 +53,7 @@ public class MessagesController {
 
 	@TraceLog
 	@PostMapping("v1/messages/list")
-	@Operation(summary = "消息管理", description = "查询消息")
+	@Operation(summary = "消息管理", description = "查询消息列表")
 	@PreAuthorize("hasAuthority('messages:list')")
 	public Result<?> list() {
 		return Result.of(null);

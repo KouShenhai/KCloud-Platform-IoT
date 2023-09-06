@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author laokou
  */
 @RestController
-@Tag(name = "LogoutsController", description = "退出")
+@Tag(name = "LogoutsController", description = "认证授权")
 @RequiredArgsConstructor
 public class LogoutsController {
 
@@ -40,7 +40,7 @@ public class LogoutsController {
 
 	@TraceLog
 	@GetMapping("v1/logouts/{token}")
-	@Operation(summary = "注销", description = "注销")
+	@Operation(summary = "认证授权", description = "退出登录")
 	public Result<Boolean> logout(@PathVariable("token") String token) {
 		return logoutsServiceI.logout(new LogoutCmd(token));
 	}

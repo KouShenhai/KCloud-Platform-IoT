@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author laokou
  */
 @RestController
-@Tag(name = "LogsController", description = "日志")
+@Tag(name = "LogsController", description = "日志管理")
 @RequiredArgsConstructor
 public class LogsController {
 
@@ -39,34 +39,34 @@ public class LogsController {
 
 	@TraceLog
 	@PostMapping(value = "v1/logs/operate-list")
-	@Operation(summary = "查询", description = "查询")
-	@PreAuthorize("hasAuthority('logs:operate:list')")
+	@Operation(summary = "日志管理", description = "查询操作日志列表")
+	@PreAuthorize("hasAuthority('logs:operate-list')")
 	public Result<?> operateList() {
 		return Result.of(null);
 	}
 
 	@TraceLog
 	@PostMapping(value = "v1/logs/operate-export")
-	@Operation(summary = "导出", description = "导出")
-	@OperateLog(module = "操作日志", operation = "导出")
-	@PreAuthorize("hasAuthority('logs:operate:export')")
+	@Operation(summary = "日志管理", description = "导出操作日志")
+	@OperateLog(module = "日志管理", operation = "导出操作日志")
+	@PreAuthorize("hasAuthority('logs:operate-export')")
 	public void operateExport() {
 
 	}
 
 	@TraceLog
 	@PostMapping(value = "v1/logs/login-list")
-	@Operation(summary = "查询", description = "查询")
-	@PreAuthorize("hasAuthority('logs:login:list')")
+	@Operation(summary = "日志管理", description = "查询登录日志列表")
+	@PreAuthorize("hasAuthority('logs:login-list')")
 	public Result<?> loginList() {
 		return Result.of(null);
 	}
 
 	@TraceLog
 	@PostMapping(value = "v1/logs/login-export")
-	@Operation(summary = "导出", description = "导出")
-	@OperateLog(module = "登录日志", operation = "导出")
-	@PreAuthorize("hasAuthority('logs:login:export')")
+	@Operation(summary = "日志管理", description = "导出登录日志")
+	@OperateLog(module = "日志管理", operation = "导出登录日志")
+	@PreAuthorize("hasAuthority('logs:login-export')")
 	public void loginExport() {
 	}
 

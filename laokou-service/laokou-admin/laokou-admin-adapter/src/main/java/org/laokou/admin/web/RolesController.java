@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.*;
  * @author laokou
  */
 @RestController
-@Tag(name = "RolesController", description = "角色")
+@Tag(name = "RolesController", description = "角色管理")
 @RequiredArgsConstructor
 public class RolesController {
 
@@ -43,7 +43,7 @@ public class RolesController {
 
 	@TraceLog
 	@PostMapping("v1/roles/list")
-	@Operation(summary = "查询", description = "查询")
+	@Operation(summary = "角色管理", description = "查询角色列表")
 	@PreAuthorize("hasAuthority('roles:list')")
 	public Result<Datas<RoleCO>> list(@RequestBody RoleListQry qry) {
 		return rolesServiceI.list(qry);
@@ -51,14 +51,14 @@ public class RolesController {
 
 	@TraceLog
 	@PostMapping("v1/roles/option-list")
-	@Operation(summary = "下拉列表", description = "下拉列表")
+	@Operation(summary = "角色管理", description = "下拉列表")
 	public Result<?> optionList() {
 		return rolesServiceI.optionList(new RoleOptionListQry());
 	}
 
 	@TraceLog
 	@GetMapping("v1/roles/{id}")
-	@Operation(summary = "查看", description = "查看")
+	@Operation(summary = "角色管理", description = "查看角色")
 	@DataCache(name = "roles", key = "#id")
 	public Result<?> get(@PathVariable("id") Long id) {
 		return rolesServiceI.get(new RoleGetQry(id));
@@ -66,8 +66,8 @@ public class RolesController {
 
 	@TraceLog
 	@PostMapping("v1/roles")
-	@Operation(summary = "新增", description = "新增")
-	@OperateLog(module = "角色管理", operation = "新增")
+	@Operation(summary = "角色管理", description = "新增角色")
+	@OperateLog(module = "角色管理", operation = "新增角色")
 	@PreAuthorize("hasAuthority('roles:insert')")
 	public Result<Boolean> insert(@RequestBody RoleInsertCmd cmd) {
 		return rolesServiceI.insert(cmd);
@@ -75,8 +75,8 @@ public class RolesController {
 
 	@TraceLog
 	@PutMapping("v1/roles")
-	@Operation(summary = "修改", description = "修改")
-	@OperateLog(module = "角色管理", operation = "修改")
+	@Operation(summary = "角色管理", description = "修改角色")
+	@OperateLog(module = "角色管理", operation = "修改角色")
 	@PreAuthorize("hasAuthority('roles:update')")
 	@DataCache(name = "roles", key = "#dto.id", type = Cache.DEL)
 	public Result<Boolean> update(@RequestBody RoleUpdateCmd cmd) {
@@ -85,8 +85,8 @@ public class RolesController {
 
 	@TraceLog
 	@DeleteMapping("v1/roles/{id}")
-	@Operation(summary = "删除", description = "删除")
-	@OperateLog(module = "角色管理", operation = "删除")
+	@Operation(summary = "角色管理", description = "删除角色")
+	@OperateLog(module = "角色管理", operation = "删除角色")
 	@PreAuthorize("hasAuthority('roles:delete')")
 	@DataCache(name = "roles", key = "#id", type = Cache.DEL)
 	public Result<Boolean> delete(@PathVariable("id") Long id) {
