@@ -33,37 +33,37 @@ import org.springframework.web.multipart.MultipartFile;
 public class DefinitionsController {
 
 	@PostMapping(value = "v1/definitions")
-	@Operation(summary = "新增", description = "新增")
+	@Operation(summary = "流程定义", description = "新增流程")
 	public Result<Boolean> insert(@RequestPart("file") MultipartFile file) {
 		return Result.of(null);
 	}
 
 	@PostMapping(value = "v1/definitions/list")
-	@Operation(summary = "查询", description = "查询")
+	@Operation(summary = "流程定义", description = "查询流程列表")
 	public Result<?> list() {
 		return Result.of(null);
 	}
 
-	@GetMapping(value = "v1/definitions/diagram/{definitionId}")
-	@Operation(summary = "流程图", description = "流程图")
+	@GetMapping(value = "v1/definitions/{definitionId}/diagram")
+	@Operation(summary = "流程定义", description = "流程图")
 	public Result<String> diagram(@PathVariable("definitionId") String definitionId) {
 		return Result.of(null);
 	}
 
 	@DeleteMapping(value = "v1/definitions/{deploymentId}")
-	@Operation(summary = "删除", description = "删除")
+	@Operation(summary = "流程定义", description = "删除流程")
 	public Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId) {
 		return Result.of(null);
 	}
 
-	@PutMapping(value = "v1/definitions/suspend/{definitionId}")
-	@Operation(summary = "挂起", description = "挂起")
+	@PutMapping(value = "v1/definitions/{definitionId}/suspend")
+	@Operation(summary = "流程定义", description = "挂起流程")
 	public Result<Boolean> suspend(@PathVariable("definitionId") String definitionId) {
 		return Result.of(null);
 	}
 
-	@PutMapping(value = "v1/definitions/activate/{definitionId}")
-	@Operation(summary = "激活", description = "激活")
+	@PutMapping(value = "v1/definitions/{definitionId}/activate")
+	@Operation(summary = "流程定义", description = "激活流程")
 	public Result<Boolean> activate(@PathVariable("definitionId") String definitionId) {
 		return Result.of(null);
 	}

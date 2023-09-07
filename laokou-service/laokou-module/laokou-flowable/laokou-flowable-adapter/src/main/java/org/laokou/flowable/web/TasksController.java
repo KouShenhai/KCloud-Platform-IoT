@@ -32,43 +32,43 @@ import org.springframework.web.bind.annotation.*;
 public class TasksController {
 
 	@PostMapping(value = "v1/task/list")
-	@Operation(summary = "查询", description = "查询")
+	@Operation(summary = "流程任务", description = "查询任务列表")
 	public Result<?> list() {
 		return Result.of(null);
 	}
 
 	@PostMapping(value = "v1/task/audit")
-	@Operation(summary = "审批", description = "审批")
+	@Operation(summary = "流程任务", description = "审批任务")
 	public Result<?> audit() {
 		return Result.of(null);
 	}
 
 	@PostMapping(value = "v1/task/resolve")
-	@Operation(summary = "处理", description = "处理")
+	@Operation(summary = "流程任务", description = "处理任务")
 	public Result<?> resolve() {
 		return Result.of(null);
 	}
 
 	@PostMapping(value = "v1/task/start")
-	@Operation(summary = "开始", description = "开始")
+	@Operation(summary = "流程任务", description = "开始任务")
 	public Result<?> start() {
 		return Result.of(null);
 	}
 
-	@GetMapping(value = "v1/task/diagram/{instanceId}")
-	@Operation(summary = "流程图", description = "流程图")
+	@GetMapping(value = "v1/task/{instanceId}/diagram")
+	@Operation(summary = "流程任务", description = "流程图")
 	public Result<String> diagram(@PathVariable("instanceId") String instanceId) {
 		return Result.of(null);
 	}
 
 	@PostMapping("v1/task/transfer")
-	@Operation(summary = "转办", description = "转办")
+	@Operation(summary = "流程任务", description = "转办任务")
 	public Result<?> transfer() {
 		return Result.of(null);
 	}
 
 	@PostMapping("v1/task/delegate")
-	@Operation(summary = "委派", description = "委派")
+	@Operation(summary = "流程任务", description = "委派任务")
 	public Result<?> delegate() {
 		return Result.of(null);
 	}
