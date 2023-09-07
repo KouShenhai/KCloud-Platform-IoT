@@ -14,71 +14,31 @@
  * limitations under the License.
  *
  */
-package org.laokou.flowable.client.vo;
 
+package org.laokou.flowable.dto;
+
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @author laokou
  */
 @Data
-public class TaskVO implements Serializable {
+public class ProcessDTO implements Serializable {
 
 	@Serial
-	private static final long serialVersionUID = -8942395421885937298L;
+	private static final long serialVersionUID = -3073170522496527593L;
 
-	/**
-	 * 任务id
-	 */
-	private String taskId;
+	@NotBlank(message = "流程编号不为空")
+	private String processKey;
 
-	/**
-	 * 任务名称
-	 */
-	private String taskName;
-
-	/**
-	 * 任务key
-	 */
-	private String taskDefinitionKey;
-
-	/**
-	 * 任务执行人名称
-	 */
-	private String assigneeName;
-
-	/**
-	 * 流程实例id
-	 */
-	private String processInstanceId;
-
-	/**
-	 * 创建时间
-	 */
-	private LocalDateTime createTime;
-
-	/**
-	 * 流程定义id
-	 */
-	private String definitionId;
-
-	/**
-	 * 流程名称
-	 */
-	private String processName;
-
-	/**
-	 * 实例名称
-	 */
-	private String processInstanceName;
-
-	/**
-	 * 业务主键
-	 */
+	@NotBlank(message = "业务编号不为空")
 	private String businessKey;
+
+	@NotBlank(message = "业务名称不为空")
+	private String businessName;
 
 }

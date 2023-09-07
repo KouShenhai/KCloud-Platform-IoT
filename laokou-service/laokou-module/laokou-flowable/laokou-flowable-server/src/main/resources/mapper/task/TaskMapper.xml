@@ -26,7 +26,7 @@
             WHERE act_type_ = 'userTask' AND b.proc_inst_id_ = #{instanceId}
     </select>
 
-    <select id="getTakePage" resultType="org.laokou.flowable.client.vo.TaskVO">
+    <select id="getTakePage" resultType="org.laokou.flowable.vo.TaskVO">
         SELECT
         a.task_id_ AS taskId,
         a.act_name_ AS taskName,

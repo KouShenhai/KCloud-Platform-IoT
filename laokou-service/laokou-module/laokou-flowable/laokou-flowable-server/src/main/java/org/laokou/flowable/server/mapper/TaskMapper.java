@@ -3,8 +3,8 @@ package org.laokou.flowable.server.mapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.laokou.flowable.client.dto.TaskDTO;
-import org.laokou.flowable.client.vo.TaskVO;
+import org.laokou.flowable.dto.TaskDTO;
+import org.laokou.flowable.vo.TaskVO;
 import org.springframework.stereotype.Repository;
 
 /**

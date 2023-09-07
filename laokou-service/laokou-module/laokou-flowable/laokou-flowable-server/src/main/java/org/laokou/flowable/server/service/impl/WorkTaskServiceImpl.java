@@ -28,20 +28,18 @@ import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
-import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.utils.ValidatorUtil;
-import org.laokou.flowable.client.dto.*;
-import org.laokou.flowable.client.vo.AssigneeVO;
-import org.laokou.flowable.client.vo.PageVO;
-import org.laokou.flowable.client.vo.TaskVO;
-import org.laokou.flowable.server.config.CustomProcessDiagramGenerator;
+import org.laokou.flowable.dto.*;
 import org.laokou.flowable.server.mapper.TaskMapper;
 import org.laokou.flowable.server.service.WorkTaskService;
 import org.laokou.flowable.server.utils.TaskUtil;
+import org.laokou.flowable.vo.AssigneeVO;
+import org.laokou.flowable.vo.PageVO;
+import org.laokou.flowable.vo.TaskVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -251,10 +249,11 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 		final BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
 		final ProcessEngineConfiguration configuration = processEngine.getProcessEngineConfiguration();
 		// 获取自定义图片生成器
-		ProcessDiagramGenerator diagramGenerator = new CustomProcessDiagramGenerator();
-		return diagramGenerator.generateDiagram(bpmnModel, "png", highLightedNodes, highLightedFlows,
-				configuration.getActivityFontName(), configuration.getLabelFontName(),
-				configuration.getAnnotationFontName(), configuration.getClassLoader(), 1.0, true);
+//		ProcessDiagramGenerator diagramGenerator = new ProcessDiagramGeneratorConfig();
+//		return diagramGenerator.generateDiagram(bpmnModel, "png", highLightedNodes, highLightedFlows,
+//				configuration.getActivityFontName(), configuration.getLabelFontName(),
+//				configuration.getAnnotationFontName(), configuration.getClassLoader(), 1.0, true);
+		return null;
 	}
 
 }

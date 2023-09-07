@@ -12,22 +12,34 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ * 
  */
 
-package org.laokou.flowable.client.dto;
+package org.laokou.flowable.vo;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author laokou
  */
 @Data
-public class DelegateDTO extends TransferDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class PageVO<T> implements Serializable {
 
 	@Serial
-	private static final long serialVersionUID = -4922465039180029063L;
+	private static final long serialVersionUID = 483921799089968341L;
+
+	private List<T> records;
+
+	private Long total;
 
 }

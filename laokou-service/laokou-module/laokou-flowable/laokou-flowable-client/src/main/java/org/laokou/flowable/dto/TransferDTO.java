@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.flowable.client.dto;
+package org.laokou.flowable.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

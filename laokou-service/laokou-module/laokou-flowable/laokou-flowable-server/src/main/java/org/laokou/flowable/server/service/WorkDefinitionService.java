@@ -16,11 +16,10 @@
  */
 package org.laokou.flowable.server.service;
 
-import org.laokou.flowable.client.dto.DefinitionDTO;
-import org.laokou.flowable.client.vo.DefinitionVO;
-import org.laokou.flowable.client.vo.PageVO;
+import org.laokou.flowable.dto.DefinitionDTO;
+import org.laokou.flowable.vo.DefinitionVO;
+import org.laokou.flowable.vo.PageVO;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**

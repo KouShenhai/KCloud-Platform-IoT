@@ -12,13 +12,14 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ * 
  */
-package org.laokou.flowable.client.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+package org.laokou.flowable.vo;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -27,25 +28,15 @@ import java.io.Serializable;
  * @author laokou
  */
 @Data
-public class TaskDTO implements Serializable {
+@AllArgsConstructor
+@NoArgsConstructor
+public class AssigneeVO implements Serializable {
 
 	@Serial
-	private static final long serialVersionUID = -3817507884449344739L;
+	private static final long serialVersionUID = -2567274615004770287L;
 
-	@NotNull(message = "显示页码不为空")
-	private Integer pageNum;
+	private String assignee;
 
-	@NotNull(message = "显示条数不为空")
-	private Integer pageSize;
-
-	private String processName;
-
-	@NotNull(message = "用户编号不为空")
-	private Long userId;
-
-	@NotBlank(message = "用户名不为空")
-	private String username;
-
-	private String processKey;
+	private String instanceId;
 
 }

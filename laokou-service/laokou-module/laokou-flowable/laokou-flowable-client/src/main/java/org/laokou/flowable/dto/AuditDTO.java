@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.flowable.client.dto;
+package org.laokou.flowable.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
