@@ -19,8 +19,8 @@ package org.laokou.admin.command.dict.query;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.dict.DictOptionListQry;
+import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.admin.dto.dict.DictOptionListQry;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.core.utils.CollectionUtil;

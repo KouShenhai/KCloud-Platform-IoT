@@ -18,11 +18,11 @@
 package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.ResourceServiceI;
-import org.laokou.admin.client.dto.oss.clientobject.FileCO;
-import org.laokou.admin.client.dto.resource.*;
-import org.laokou.admin.client.dto.resource.clientobject.ResourceCO;
-import org.laokou.admin.client.dto.resource.clientobject.TaskCO;
+import org.laokou.admin.api.ResourceServiceI;
+import org.laokou.admin.dto.oss.clientobject.FileCO;
+import org.laokou.admin.dto.resource.*;
+import org.laokou.admin.dto.resource.clientobject.ResourceCO;
+import org.laokou.admin.dto.resource.clientobject.TaskCO;
 import org.laokou.admin.command.resource.*;
 import org.laokou.admin.command.resource.query.*;
 import org.laokou.common.i18n.dto.Datas;

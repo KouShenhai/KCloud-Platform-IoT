@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.ResultHandler;
-import org.laokou.admin.client.vo.SysResourceVO;
+import org.laokou.admin.vo.SysResourceVO;
 import org.laokou.admin.server.domain.sys.entity.SysResourceDO;
 import org.laokou.admin.server.infrastructure.index.ResourceIndex;
 import org.laokou.admin.server.interfaces.qo.SysResourceQo;

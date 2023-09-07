@@ -18,10 +18,10 @@
 package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.RolesServiceI;
-import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.role.*;
-import org.laokou.admin.client.dto.role.clientobject.RoleCO;
+import org.laokou.admin.api.RolesServiceI;
+import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.admin.dto.role.*;
+import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.command.role.RoleDeleteCmdExe;
 import org.laokou.admin.command.role.RoleInsertCmdExe;
 import org.laokou.admin.command.role.RoleUpdateCmdExe;

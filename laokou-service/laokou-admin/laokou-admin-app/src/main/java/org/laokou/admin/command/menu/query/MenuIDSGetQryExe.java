@@ -18,7 +18,7 @@
 package org.laokou.admin.command.menu.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.menu.MenuIDSGetQry;
+import org.laokou.admin.dto.menu.MenuIDSGetQry;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;

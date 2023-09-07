@@ -19,7 +19,7 @@ package org.laokou.admin.server.domain.sys.repository.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysMenuDO;
 import org.laokou.admin.server.interfaces.qo.SysMenuQo;
-import org.laokou.admin.client.vo.SysMenuVO;
+import org.laokou.admin.vo.SysMenuVO;
 import org.laokou.auth.domain.user.User;
 
 import java.util.List;

@@ -19,8 +19,8 @@ package org.laokou.admin.command.dict;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.dict.DictInsertCmd;
-import org.laokou.admin.client.dto.dict.clientobject.DictCO;
+import org.laokou.admin.dto.dict.DictInsertCmd;
+import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.convertor.DictConvertor;
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;

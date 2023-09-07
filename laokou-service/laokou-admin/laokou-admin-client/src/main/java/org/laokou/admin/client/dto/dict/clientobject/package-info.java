@@ -1,1 +1,0 @@
-package org.laokou.admin.client.dto.dict.clientobject;

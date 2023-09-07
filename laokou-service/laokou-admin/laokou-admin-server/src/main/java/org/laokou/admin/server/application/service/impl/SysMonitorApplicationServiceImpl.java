@@ -18,7 +18,7 @@ package org.laokou.admin.server.application.service.impl;
 
 import com.alibaba.nacos.shaded.io.grpc.Server;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.vo.CacheVO;
+import org.laokou.admin.vo.CacheVO;
 import org.laokou.admin.server.application.service.SysMonitorApplicationService;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Service;

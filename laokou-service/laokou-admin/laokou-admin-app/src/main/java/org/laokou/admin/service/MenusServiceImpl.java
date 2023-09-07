@@ -17,9 +17,9 @@
 package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.MenusServiceI;
-import org.laokou.admin.client.dto.menu.*;
-import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.api.MenusServiceI;
+import org.laokou.admin.dto.menu.*;
+import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.command.menu.MenuDeleteCmdExe;
 import org.laokou.admin.command.menu.MenuInsertCmdExe;
 import org.laokou.admin.command.menu.MenuUpdateCmdExe;

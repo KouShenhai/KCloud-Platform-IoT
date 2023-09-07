@@ -19,8 +19,8 @@ package org.laokou.admin.command.user.query;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.user.UserOptionListQry;
+import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.admin.dto.user.UserOptionListQry;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.CollectionUtil;

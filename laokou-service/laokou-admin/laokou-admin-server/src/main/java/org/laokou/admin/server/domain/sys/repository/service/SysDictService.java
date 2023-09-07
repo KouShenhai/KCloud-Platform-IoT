@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysDictDO;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
-import org.laokou.admin.client.vo.SysDictVO;
+import org.laokou.admin.vo.SysDictVO;
 import org.laokou.common.core.vo.OptionVO;
 import java.util.List;
 

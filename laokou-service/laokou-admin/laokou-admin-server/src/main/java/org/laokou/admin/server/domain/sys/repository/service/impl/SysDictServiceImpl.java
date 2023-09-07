@@ -22,7 +22,7 @@ import org.laokou.admin.server.domain.sys.entity.SysDictDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysDictMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysDictService;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
-import org.laokou.admin.client.vo.SysDictVO;
+import org.laokou.admin.vo.SysDictVO;
 import org.laokou.common.core.vo.OptionVO;
 import org.springframework.stereotype.Service;
 

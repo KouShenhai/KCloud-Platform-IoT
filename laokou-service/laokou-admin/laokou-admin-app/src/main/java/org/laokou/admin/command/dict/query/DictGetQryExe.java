@@ -18,8 +18,8 @@
 package org.laokou.admin.command.dict.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.dict.DictGetQry;
-import org.laokou.admin.client.dto.dict.clientobject.DictCO;
+import org.laokou.admin.dto.dict.DictGetQry;
+import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.common.core.utils.ConvertUtil;

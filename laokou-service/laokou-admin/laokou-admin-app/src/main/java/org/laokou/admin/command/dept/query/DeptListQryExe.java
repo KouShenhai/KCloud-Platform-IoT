@@ -18,8 +18,8 @@
 package org.laokou.admin.command.dept.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.dept.DeptListQry;
-import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
+import org.laokou.admin.dto.dept.DeptListQry;
+import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.domain.dept.Dept;
 import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.common.core.utils.ConvertUtil;

@@ -17,7 +17,7 @@
 
 package org.laokou.admin.convertor;
 
-import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.domain.menu.Menu;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.core.utils.ConvertUtil;

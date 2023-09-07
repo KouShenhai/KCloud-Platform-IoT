@@ -19,8 +19,8 @@ package org.laokou.admin.command.tenant.query;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.tenant.TenantOptionListQry;
+import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.admin.dto.tenant.TenantOptionListQry;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.core.utils.CollectionUtil;

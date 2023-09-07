@@ -27,7 +27,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.admin.client.dto.log.domainevent.OperateLogEvent;
+import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.*;

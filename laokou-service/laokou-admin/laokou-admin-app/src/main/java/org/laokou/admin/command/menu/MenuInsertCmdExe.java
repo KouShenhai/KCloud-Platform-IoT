@@ -19,8 +19,8 @@ package org.laokou.admin.command.menu;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.menu.MenuInsertCmd;
-import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.dto.menu.MenuInsertCmd;
+import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;

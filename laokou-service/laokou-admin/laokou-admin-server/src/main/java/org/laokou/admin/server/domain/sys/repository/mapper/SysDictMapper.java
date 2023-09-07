@@ -19,7 +19,7 @@ package org.laokou.admin.server.domain.sys.repository.mapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.laokou.admin.client.vo.SysDictVO;
+import org.laokou.admin.vo.SysDictVO;
 import org.laokou.admin.server.domain.sys.entity.SysDictDO;
 import org.laokou.admin.server.interfaces.qo.SysDictQo;
 import org.laokou.common.core.vo.OptionVO;

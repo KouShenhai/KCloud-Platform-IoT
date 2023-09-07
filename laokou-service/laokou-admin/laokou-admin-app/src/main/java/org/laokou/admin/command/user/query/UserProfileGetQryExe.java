@@ -17,8 +17,8 @@
 
 package org.laokou.admin.command.user.query;
 
-import org.laokou.admin.client.dto.user.UserProfileGetQry;
-import org.laokou.admin.client.dto.user.clientobject.UserProfileCO;
+import org.laokou.admin.dto.user.UserProfileGetQry;
+import org.laokou.admin.dto.user.clientobject.UserProfileCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;

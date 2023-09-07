@@ -1,7 +1,7 @@
 package org.laokou.admin.command.user;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.user.UserUpdateCmd;
+import org.laokou.admin.dto.user.UserUpdateCmd;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.common.i18n.dto.Result;

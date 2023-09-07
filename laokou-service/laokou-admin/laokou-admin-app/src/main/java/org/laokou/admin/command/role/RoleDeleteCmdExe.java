@@ -19,7 +19,7 @@ package org.laokou.admin.command.role;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.client.dto.role.RoleDeleteCmd;
+import org.laokou.admin.dto.role.RoleDeleteCmd;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;

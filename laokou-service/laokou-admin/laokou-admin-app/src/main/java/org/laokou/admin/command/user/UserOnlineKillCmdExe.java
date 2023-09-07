@@ -18,7 +18,7 @@
 package org.laokou.admin.command.user;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.user.UserOnlineKillCmd;
+import org.laokou.admin.dto.user.UserOnlineKillCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;

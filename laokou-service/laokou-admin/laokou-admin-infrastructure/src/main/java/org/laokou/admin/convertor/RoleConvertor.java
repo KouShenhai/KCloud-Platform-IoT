@@ -17,7 +17,7 @@
 
 package org.laokou.admin.convertor;
 
-import org.laokou.admin.client.dto.role.clientobject.RoleCO;
+import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.domain.role.Role;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.core.utils.ConvertUtil;

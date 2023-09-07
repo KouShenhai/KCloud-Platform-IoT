@@ -18,10 +18,10 @@ package org.laokou.admin.server.domain.sys.repository.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.laokou.admin.client.dto.SysUserDTO;
+import org.laokou.admin.dto.SysUserDTO;
 import org.laokou.admin.server.interfaces.qo.SysUserQo;
 import org.laokou.common.core.vo.OptionVO;
-import org.laokou.admin.client.vo.SysUserVO;
+import org.laokou.admin.vo.SysUserVO;
 import org.laokou.admin.server.domain.sys.entity.SysUserDO;
 import java.util.List;
 

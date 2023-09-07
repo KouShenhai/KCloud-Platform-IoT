@@ -17,13 +17,13 @@
 package org.laokou.admin.server.application.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.client.dto.SysUserDTO;
-import org.laokou.admin.client.vo.SysUserOnlineVO;
-import org.laokou.admin.client.vo.UserInfoVO;
+import org.laokou.admin.dto.SysUserDTO;
+import org.laokou.admin.vo.SysUserOnlineVO;
+import org.laokou.admin.vo.UserInfoVO;
 import org.laokou.admin.server.interfaces.qo.SysUserOnlineQo;
 import org.laokou.admin.server.interfaces.qo.SysUserQo;
 import org.laokou.common.core.vo.OptionVO;
-import org.laokou.admin.client.vo.SysUserVO;
+import org.laokou.admin.vo.SysUserVO;
 import java.util.List;
 
 /**

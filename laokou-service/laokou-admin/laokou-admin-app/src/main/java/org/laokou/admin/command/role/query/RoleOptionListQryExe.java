@@ -19,8 +19,8 @@ package org.laokou.admin.command.role.query;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.role.RoleOptionListQry;
+import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.admin.dto.role.RoleOptionListQry;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
