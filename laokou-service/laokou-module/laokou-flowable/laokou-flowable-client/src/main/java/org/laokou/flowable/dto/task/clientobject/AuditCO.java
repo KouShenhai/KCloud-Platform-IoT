@@ -15,30 +15,56 @@
  *
  */
 
-package org.laokou.flowable.dto;
+package org.laokou.flowable.dto.task.clientobject;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
 
 import java.io.Serial;
-import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author laokou
  */
 @Data
-public class ProcessDTO implements Serializable {
+public class AuditCO extends ClientObject {
 
-	@Serial
-	private static final long serialVersionUID = -3073170522496527593L;
+    @Serial
+    private static final long serialVersionUID = -945627686622034109L;
 
-	@NotBlank(message = "流程标识不为空")
-	private String definitionKey;
+    /**
+     * 任务id
+     */
+    private String taskId;
 
-	@NotBlank(message = "业务标识不为空")
-	private String businessKey;
+    /**
+     * 任务名称
+     */
+    private String taskName;
 
-	@NotBlank(message = "业务名称不为空")
-	private String businessName;
+    /**
+     * 审批意见
+     */
+    private String comment;
+
+    /**
+     * 实例ID
+     */
+    private String instanceId;
+
+    /**
+     * 业务标识
+     */
+    private String businessKey;
+
+    /**
+     * 实例名称
+     */
+    private String instanceName;
+
+    /**
+     * 流程变量
+     */
+    private Map<String, Object> values;
 
 }

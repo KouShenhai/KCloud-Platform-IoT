@@ -15,30 +15,22 @@
  *
  */
 
-package org.laokou.flowable.dto;
+package org.laokou.flowable.dto.definition;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import org.laokou.common.i18n.dto.PageQuery;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 /**
  * @author laokou
  */
 @Data
-public class ProcessDTO implements Serializable {
+public class DefinitionListQry extends PageQuery {
 
-	@Serial
-	private static final long serialVersionUID = -3073170522496527593L;
+    @Serial
+    private static final long serialVersionUID = -818653141079850719L;
 
-	@NotBlank(message = "流程标识不为空")
-	private String definitionKey;
-
-	@NotBlank(message = "业务标识不为空")
-	private String businessKey;
-
-	@NotBlank(message = "业务名称不为空")
-	private String businessName;
+    private String name;
 
 }

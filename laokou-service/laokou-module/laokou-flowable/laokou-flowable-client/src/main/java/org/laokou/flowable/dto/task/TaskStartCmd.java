@@ -15,30 +15,14 @@
  *
  */
 
-package org.laokou.flowable.dto;
+package org.laokou.flowable.dto.task;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-
-import java.io.Serial;
-import java.io.Serializable;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-public class ProcessDTO implements Serializable {
-
-	@Serial
-	private static final long serialVersionUID = -3073170522496527593L;
-
-	@NotBlank(message = "流程标识不为空")
-	private String definitionKey;
-
-	@NotBlank(message = "业务标识不为空")
-	private String businessKey;
-
-	@NotBlank(message = "业务名称不为空")
-	private String businessName;
-
+public class TaskStartCmd extends CommonCommand {
 }

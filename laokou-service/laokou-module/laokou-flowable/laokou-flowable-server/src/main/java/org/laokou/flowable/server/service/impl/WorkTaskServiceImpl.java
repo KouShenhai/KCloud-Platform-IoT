@@ -130,7 +130,7 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 	public AssigneeVO startTask(ProcessDTO dto) {
 		ValidatorUtil.validateEntity(dto);
 		log.info("分布式事务 XID:{}", RootContext.getXID());
-		String processKey = dto.getProcessKey();
+		String processKey = dto.getDefinitionKey();
 		String businessKey = dto.getBusinessKey();
 		String businessName = dto.getBusinessName();
 		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
