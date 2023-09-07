@@ -132,6 +132,11 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
+                <artifactId>laokou-flowable-start</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-flowable-app</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
