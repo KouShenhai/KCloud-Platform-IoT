@@ -20,6 +20,7 @@ package org.laokou.flowable.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,25 +34,25 @@ public class TasksController {
 
 	@PostMapping(value = "v1/task/list")
 	@Operation(summary = "流程任务", description = "查询任务列表")
-	public Result<?> list() {
+	public Result<Datas<?>> list() {
 		return Result.of(null);
 	}
 
 	@PostMapping(value = "v1/task/audit")
 	@Operation(summary = "流程任务", description = "审批任务")
-	public Result<?> audit() {
+	public Result<Boolean> audit() {
 		return Result.of(null);
 	}
 
 	@PostMapping(value = "v1/task/resolve")
 	@Operation(summary = "流程任务", description = "处理任务")
-	public Result<?> resolve() {
+	public Result<Boolean> resolve() {
 		return Result.of(null);
 	}
 
 	@PostMapping(value = "v1/task/start")
 	@Operation(summary = "流程任务", description = "开始任务")
-	public Result<?> start() {
+	public Result<Boolean> start() {
 		return Result.of(null);
 	}
 
@@ -63,13 +64,13 @@ public class TasksController {
 
 	@PostMapping("v1/task/transfer")
 	@Operation(summary = "流程任务", description = "转办任务")
-	public Result<?> transfer() {
+	public Result<Boolean> transfer() {
 		return Result.of(null);
 	}
 
 	@PostMapping("v1/task/delegate")
 	@Operation(summary = "流程任务", description = "委派任务")
-	public Result<?> delegate() {
+	public Result<Boolean> delegate() {
 		return Result.of(null);
 	}
 
