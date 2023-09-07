@@ -45,8 +45,8 @@ public class DefinitionsController {
 
 	@TraceLog
 	@PostMapping("v1/definitions")
-	@Operation(summary = "流程定义", description = "流程新增")
-	@OperateLog(module = "流程定义", operation = "流程新增")
+	@Operation(summary = "流程定义", description = "新增流程")
+	@OperateLog(module = "流程定义", operation = "新增流程")
 	@PreAuthorize("hasAuthority('definitions:insert')")
 	public Result<Boolean> insert(@RequestPart("file") MultipartFile file) throws IOException {
 		return definitionsServiceI.insert(new DefinitionInsertCmd(file));
@@ -54,7 +54,7 @@ public class DefinitionsController {
 
 	@TraceLog
 	@PostMapping("v1/definitions/list")
-	@Operation(summary = "流程定义", description = "流程查询列表")
+	@Operation(summary = "流程定义", description = "查询流程列表")
 	@PreAuthorize("hasAuthority('definitions:list')")
 	public Result<Datas<DefinitionCO>> list(@RequestBody DefinitionListQry qry) {
 		return definitionsServiceI.list(qry);
@@ -70,8 +70,8 @@ public class DefinitionsController {
 
 	@TraceLog
 	@DeleteMapping("v1/definitions/{deploymentId}")
-	@Operation(summary = "流程定义", description = "流程删除")
-	@OperateLog(module = "流程定义", operation = "流程删除")
+	@Operation(summary = "流程定义", description = "删除流程")
+	@OperateLog(module = "流程定义", operation = "删除流程")
 	@PreAuthorize("hasAuthority('definitions:delete')")
 	public Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId) {
 		return definitionsServiceI.delete(new DefinitionDeleteCmd(deploymentId));
@@ -79,8 +79,8 @@ public class DefinitionsController {
 
 	@TraceLog
 	@PutMapping("v1/definitions/{definitionId}/suspend")
-	@Operation(summary = "流程定义", description = "流程挂起")
-	@OperateLog(module = "流程定义", operation = "流程挂起")
+	@Operation(summary = "流程定义", description = "挂起流程")
+	@OperateLog(module = "流程定义", operation = "挂起流程")
 	@PreAuthorize("hasAuthority('definitions:suspend')")
 	public Result<Boolean> suspend(@PathVariable("definitionId") String definitionId) {
 		return definitionsServiceI.suspend(new DefinitionSuspendCmd(definitionId));
@@ -88,8 +88,8 @@ public class DefinitionsController {
 
 	@TraceLog
 	@PutMapping("v1/definitions/{definitionId}/activate")
-	@Operation(summary = "流程定义", description = "流程激活")
-	@OperateLog(module = "流程定义", operation = "流程激活")
+	@Operation(summary = "流程定义", description = "激活流程")
+	@OperateLog(module = "流程定义", operation = "激活流程")
 	@PreAuthorize("hasAuthority('definitions:activate')")
 	public Result<Boolean> activate(@PathVariable("definitionId") String definitionId) {
 		return definitionsServiceI.activate(new DefinitionActiveCmd(definitionId));
