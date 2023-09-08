@@ -76,8 +76,8 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	@Override
-	public Result<Long> unreadCount(MessageUnreadCountGetQry qry) {
-		return null;
+	public Result<Integer> unreadCount(MessageUnreadCountGetQry qry) {
+		return messageUnreadCountGetQryExe.execute(qry);
 	}
 
 }

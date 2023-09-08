@@ -68,7 +68,7 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	@Override
 	public Result<UserProfileCO> profile(UserProfileGetQry qry) {
-		return null;
+		return userProfileGetQryExe.execute(qry);
 	}
 
 	@Override

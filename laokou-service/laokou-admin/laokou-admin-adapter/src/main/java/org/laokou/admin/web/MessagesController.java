@@ -85,7 +85,7 @@ public class MessagesController {
 	@TraceLog
 	@GetMapping("v1/message/unread-count")
 	@Operation(summary = "消息管理", description = "未读消息数量")
-	public Result<Long> unreadCount() {
+	public Result<Integer> unreadCount() {
 		return messagesServiceI.unreadCount(new MessageUnreadCountGetQry());
 	}
 

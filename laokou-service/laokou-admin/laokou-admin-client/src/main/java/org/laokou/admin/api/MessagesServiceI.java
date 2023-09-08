@@ -36,6 +36,6 @@ public interface MessagesServiceI {
 
 	Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry);
 
-	Result<Long> unreadCount(MessageUnreadCountGetQry qry);
+	Result<Integer> unreadCount(MessageUnreadCountGetQry qry);
 
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.command.user;
+package org.laokou.admin.command.resource.query;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -25,6 +25,5 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class UserDeleteCmdExe {
-
+public class ResourceDetailTaskGetQryExe {
 }

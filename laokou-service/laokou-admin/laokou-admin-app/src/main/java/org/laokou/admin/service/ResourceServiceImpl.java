@@ -62,7 +62,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	private final ResourceAuditTaskCmdExe resourceAuditTaskCmdExe;
 
-	private final ResourceDetailTaskGetQry resourceDetailTaskGetQry;
+	private final ResourceDetailTaskGetQryExe resourceDetailTaskGetQryExe;
 
 	private final ResourceResolveTaskCmdExe resourceResolveTaskCmdExe;
 

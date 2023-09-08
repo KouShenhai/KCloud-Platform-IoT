@@ -18,6 +18,10 @@
 package org.laokou.admin.command.message.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dto.message.MessageUnreadCountGetQry;
+import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +30,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MessageUnreadCountGetQryExe {
+
+    private final MessageDetailMapper messageDetailMapper;
+
+    public Result<Integer> execute(MessageUnreadCountGetQry qry) {
+        return Result.of(messageDetailMapper.getUnreadMessageCountByUserId(UserUtil.getUserId()));
+    }
 
 }

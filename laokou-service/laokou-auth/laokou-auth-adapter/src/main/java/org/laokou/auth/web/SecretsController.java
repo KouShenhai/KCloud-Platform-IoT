@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author laokou
  */
 @RestController
-@Tag(name = "SecretsController", description = "密钥信息")
+@Tag(name = "SecretsController", description = "安全配置")
 @RequiredArgsConstructor
 public class SecretsController {
 
@@ -38,7 +38,7 @@ public class SecretsController {
 
 	@TraceLog
 	@GetMapping("v1/secrets")
-	@Operation(summary = "密钥信息", description = "获取密钥")
+	@Operation(summary = "安全配置", description = "获取密钥")
 	public Result<String> get() {
 		return secretsServiceI.get(new SecretGetQry());
 	}

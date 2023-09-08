@@ -41,7 +41,7 @@ public class TenantOptionListQryExe {
 
 	public Result<List<OptionCO>> execute(TenantOptionListQry qry) {
 		List<TenantDO> list = tenantMapper
-				.selectList(new QueryWrapper<>(TenantDO.class).eq("id", "name").orderByDesc("create_date"));
+				.selectList(new QueryWrapper<>(TenantDO.class).select("id", "name").orderByDesc("create_date"));
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}
