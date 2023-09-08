@@ -68,7 +68,7 @@
 // }
 // boolean sourceRegex = RegexUtil.sourceRegex(dto.getName());
 // if (!sourceRegex) {
-// throw new CustomException("数据源名称必须包含字母、下划线和数字，例如：tenant_000001");
+// throw new CustomException("数据源名称必须包含字母、下划线和数字。例如：tenant_000001");
 // }
 // SysSourceDO tenantSourceDO = ConvertUtil.sourceToTarget(dto, SysSourceDO.class);
 // return sysSourceService.save(tenantSourceDO);
