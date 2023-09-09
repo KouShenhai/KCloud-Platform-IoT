@@ -18,7 +18,7 @@
 package org.laokou.admin.command.dept;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.dept.DeptDeleteCmd;
+import org.laokou.admin.dto.dept.DeptDeleteCmd;
 import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;

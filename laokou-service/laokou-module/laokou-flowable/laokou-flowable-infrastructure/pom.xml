@@ -9,4 +9,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-flowable-infrastructure</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter-process</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-flowable-domain</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

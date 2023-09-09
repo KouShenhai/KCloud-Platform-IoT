@@ -19,7 +19,7 @@
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.server.domain.sys.repository.mapper.SysDictMapper">
-    <select id="getDictList" resultType="org.laokou.admin.client.vo.SysDictVO">
+    <select id="getDictList" resultType="org.laokou.admin.vo.SysDictVO">
         SELECT
 id
 ,create_date
@@ -43,7 +43,7 @@ order by sort desc
         select `version` from boot_sys_dict where id = #{id}
     </select>
 
-    <select id="getDictById" resultType="org.laokou.admin.client.vo.SysDictVO">
+    <select id="getDictById" resultType="org.laokou.admin.vo.SysDictVO">
 SELECT
 id
 ,create_date

@@ -18,7 +18,7 @@ package org.laokou.admin.server.domain.sys.repository.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.laokou.admin.client.vo.SysDeptVO;
+import org.laokou.admin.vo.SysDeptVO;
 import org.laokou.admin.server.domain.sys.entity.SysDeptDO;
 import org.laokou.admin.server.interfaces.qo.SysDeptQo;
 import org.laokou.common.mybatisplus.database.BatchMapper;

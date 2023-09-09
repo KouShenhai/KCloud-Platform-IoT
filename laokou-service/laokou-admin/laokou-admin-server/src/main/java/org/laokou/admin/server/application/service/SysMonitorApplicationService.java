@@ -17,7 +17,7 @@
 package org.laokou.admin.server.application.service;
 
 import com.alibaba.nacos.shaded.io.grpc.Server;
-import org.laokou.admin.client.vo.CacheVO;
+import org.laokou.admin.vo.CacheVO;
 
 /**
  * @author laokou

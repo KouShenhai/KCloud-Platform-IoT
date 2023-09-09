@@ -18,9 +18,9 @@
 package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.DeptsServiceI;
-import org.laokou.admin.client.dto.dept.*;
-import org.laokou.admin.client.dto.dept.clientobject.DeptCO;
+import org.laokou.admin.api.DeptsServiceI;
+import org.laokou.admin.dto.dept.*;
+import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.command.dept.DeptDeleteCmdExe;
 import org.laokou.admin.command.dept.DeptInsertCmdExe;
 import org.laokou.admin.command.dept.DeptUpdateCmdExe;

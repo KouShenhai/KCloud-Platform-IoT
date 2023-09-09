@@ -18,8 +18,8 @@
 package org.laokou.admin.command.role.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.role.RoleListQry;
-import org.laokou.admin.client.dto.role.clientobject.RoleCO;
+import org.laokou.admin.dto.role.RoleListQry;
+import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.domain.role.Role;

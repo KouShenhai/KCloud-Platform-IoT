@@ -19,8 +19,8 @@ package org.laokou.admin.command.role;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.role.RoleInsertCmd;
-import org.laokou.admin.client.dto.role.clientobject.RoleCO;
+import org.laokou.admin.dto.role.RoleInsertCmd;
+import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;

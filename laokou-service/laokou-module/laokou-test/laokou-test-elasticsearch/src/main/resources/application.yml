@@ -1,9 +1,0 @@
-server:
-  port: 8087
-
-spring:
-  elasticsearch:
-    uris:
-      - http://xxx:9200
-    username: xx
-    password: xx

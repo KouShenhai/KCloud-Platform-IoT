@@ -18,9 +18,9 @@
 package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.DefinitionsServiceI;
-import org.laokou.admin.client.dto.definition.*;
-import org.laokou.admin.client.dto.definition.clientobject.DefinitionCO;
+import org.laokou.admin.api.DefinitionsServiceI;
+import org.laokou.admin.dto.definition.*;
+import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
 import org.laokou.admin.command.definition.*;
 import org.laokou.admin.command.definition.query.DefinitionDiagramGetQryExe;
 import org.laokou.admin.command.definition.query.DefinitionListQryExe;

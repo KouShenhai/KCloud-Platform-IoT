@@ -18,7 +18,7 @@
 package org.laokou.admin.command.dept.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.dept.DeptIDSGetQry;
+import org.laokou.admin.dto.dept.DeptIDSGetQry;
 import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;

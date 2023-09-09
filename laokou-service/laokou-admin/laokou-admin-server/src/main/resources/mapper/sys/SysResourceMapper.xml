@@ -19,7 +19,7 @@
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.server.domain.sys.repository.mapper.SysResourceMapper">
-    <select id="getResourceList" resultType="org.laokou.admin.client.vo.SysResourceVO">
+    <select id="getResourceList" resultType="org.laokou.admin.vo.SysResourceVO">
         select
         a.id,
         a.title,
@@ -41,7 +41,7 @@
         order by a.create_date desc
     </select>
 
-    <select id="getResourceById" resultType="org.laokou.admin.client.vo.SysResourceVO">
+    <select id="getResourceById" resultType="org.laokou.admin.vo.SysResourceVO">
         select
         a.id,
         a.title,
@@ -52,7 +52,7 @@
         where a.id = #{id}
     </select>
 
-    <select id="getResourceAuditByResourceId" resultType="org.laokou.admin.client.vo.SysResourceVO">
+    <select id="getResourceAuditByResourceId" resultType="org.laokou.admin.vo.SysResourceVO">
         select
             a.resource_id as id,
             a.title,

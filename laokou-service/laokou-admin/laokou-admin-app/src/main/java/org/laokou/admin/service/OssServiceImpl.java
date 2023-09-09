@@ -18,10 +18,10 @@
 package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.OssServiceI;
-import org.laokou.admin.client.dto.oss.*;
-import org.laokou.admin.client.dto.oss.clientobject.FileCO;
-import org.laokou.admin.client.dto.oss.clientobject.OssCO;
+import org.laokou.admin.api.OssServiceI;
+import org.laokou.admin.dto.oss.*;
+import org.laokou.admin.dto.oss.clientobject.FileCO;
+import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.admin.command.oss.*;
 import org.laokou.admin.command.oss.query.OssGetQryExe;
 import org.laokou.admin.command.oss.query.OssListQryExe;

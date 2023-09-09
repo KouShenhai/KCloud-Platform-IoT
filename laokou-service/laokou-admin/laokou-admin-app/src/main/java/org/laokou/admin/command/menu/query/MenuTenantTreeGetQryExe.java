@@ -18,8 +18,8 @@
 package org.laokou.admin.command.menu.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.dto.menu.MenuTenantTreeGetQry;
-import org.laokou.admin.client.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.dto.menu.MenuTenantTreeGetQry;
+import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
 import org.laokou.common.core.utils.ConvertUtil;

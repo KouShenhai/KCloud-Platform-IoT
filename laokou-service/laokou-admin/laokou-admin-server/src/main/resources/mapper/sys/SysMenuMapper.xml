@@ -20,7 +20,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.server.domain.sys.repository.mapper.SysMenuMapper">
 
-    <select id="getMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
+    <select id="getMenuList" resultType="org.laokou.admin.vo.SysMenuVO">
         select id,pid,`name`,icon,url,`type`,permission from boot_sys_menu
         where del_flag = 0
         <if test="type != null">
@@ -29,7 +29,7 @@
         order by sort desc
     </select>
 
-    <select id="getTenantMenuListByTenantId" resultType="org.laokou.admin.client.vo.SysMenuVO">
+    <select id="getTenantMenuListByTenantId" resultType="org.laokou.admin.vo.SysMenuVO">
         select a.id,a.pid,a.`name`,a.icon,a.url,a.`type`,a.permission,a.visible,a.sort from boot_sys_menu a
         join boot_sys_package_menu b on b.menu_id = a.id
         join boot_sys_tenant c on c.package_id = b.package_id
@@ -40,7 +40,7 @@
         order by a.sort asc
     </select>
 
-    <select id="queryMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
+    <select id="queryMenuList" resultType="org.laokou.admin.vo.SysMenuVO">
         select id,pid,`name`,sort,`type`,icon,url,permission,visible from boot_sys_menu
         where del_flag = 0
         <if test="qo.name != null and qo.name != ''">
@@ -49,12 +49,12 @@
         order by sort asc
     </select>
 
-    <select id="getMenuById" resultType="org.laokou.admin.client.vo.SysMenuVO">
+    <select id="getMenuById" resultType="org.laokou.admin.vo.SysMenuVO">
         select id,pid,`name`,sort,`type`,icon,url,permission,visible from boot_sys_menu
         where id = #{id}
     </select>
 
-    <select id="getMenuListByUserId" resultType="org.laokou.admin.client.vo.SysMenuVO">
+    <select id="getMenuListByUserId" resultType="org.laokou.admin.vo.SysMenuVO">
         SELECT a.url,
         a.type,
         a.sort,
@@ -102,7 +102,7 @@
         select `version` from boot_sys_menu where id = #{id}
     </select>
 
-    <select id="getTenantMenuList" resultType="org.laokou.admin.client.vo.SysMenuVO">
+    <select id="getTenantMenuList" resultType="org.laokou.admin.vo.SysMenuVO">
         select id,pid,`name` from boot_sys_menu
         where del_flag = 0
           AND `name` NOT LIKE '菜单修改'

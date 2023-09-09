@@ -19,9 +19,9 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.MessagesServiceI;
-import org.laokou.admin.client.dto.message.*;
-import org.laokou.admin.client.dto.message.clientobject.MessageCO;
+import org.laokou.admin.api.MessagesServiceI;
+import org.laokou.admin.dto.message.*;
+import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.dto.Datas;
@@ -85,7 +85,7 @@ public class MessagesController {
 	@TraceLog
 	@GetMapping("v1/message/unread-count")
 	@Operation(summary = "消息管理", description = "未读消息数量")
-	public Result<Long> unreadCount() {
+	public Result<Integer> unreadCount() {
 		return messagesServiceI.unreadCount(new MessageUnreadCountGetQry());
 	}
 

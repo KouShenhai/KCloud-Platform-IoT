@@ -18,10 +18,10 @@
 package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.DictsServiceI;
-import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.dict.*;
-import org.laokou.admin.client.dto.dict.clientobject.DictCO;
+import org.laokou.admin.api.DictsServiceI;
+import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.admin.dto.dict.*;
+import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.command.dict.DictDeleteCmdExe;
 import org.laokou.admin.command.dict.DictInsertCmdExe;
 import org.laokou.admin.command.dict.DictUpdateCmdExe;

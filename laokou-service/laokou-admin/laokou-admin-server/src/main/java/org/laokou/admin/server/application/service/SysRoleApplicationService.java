@@ -17,9 +17,9 @@
 package org.laokou.admin.server.application.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.client.dto.SysRoleDTO;
+import org.laokou.admin.dto.SysRoleDTO;
 import org.laokou.admin.server.interfaces.qo.SysRoleQo;
-import org.laokou.admin.client.vo.SysRoleVO;
+import org.laokou.admin.vo.SysRoleVO;
 import java.util.List;
 
 /**

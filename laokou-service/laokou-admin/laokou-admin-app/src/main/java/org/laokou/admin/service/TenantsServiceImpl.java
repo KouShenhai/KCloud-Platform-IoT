@@ -18,10 +18,10 @@
 package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.TenantsServiceI;
-import org.laokou.admin.client.dto.common.clientobject.OptionCO;
-import org.laokou.admin.client.dto.tenant.*;
-import org.laokou.admin.client.dto.tenant.clientobject.TenantCO;
+import org.laokou.admin.api.TenantsServiceI;
+import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.admin.dto.tenant.*;
+import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.admin.command.tenant.TenantDeleteCmdExe;
 import org.laokou.admin.command.tenant.TenantInsertCmdExe;
 import org.laokou.admin.command.tenant.TenantUpdateCmdExe;

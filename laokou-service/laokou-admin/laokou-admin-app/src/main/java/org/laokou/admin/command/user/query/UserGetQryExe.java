@@ -17,9 +17,14 @@
 
 package org.laokou.admin.command.user.query;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
 /**
  * @author laokou
  */
+@Component
+@RequiredArgsConstructor
 public class UserGetQryExe {
 
 }

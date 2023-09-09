@@ -19,7 +19,7 @@ package org.laokou.admin.server.domain.sys.repository.mapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.laokou.admin.client.vo.SysRoleVO;
+import org.laokou.admin.vo.SysRoleVO;
 import org.laokou.admin.server.domain.sys.entity.SysRoleDO;
 import org.laokou.admin.server.interfaces.qo.SysRoleQo;
 import org.laokou.common.mybatisplus.database.BatchMapper;

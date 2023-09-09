@@ -30,8 +30,6 @@
     <modules>
         <module>laokou-im</module>
         <module>laokou-flowable</module>
-        <module>laokou-test</module>
-        <module>laokou-logstash</module>
         <module>laokou-api</module>
         <module>laokou-flyway</module>
     </modules>

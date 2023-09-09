@@ -17,10 +17,10 @@
 package org.laokou.admin.server.application.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.laokou.admin.client.dto.MessageDTO;
+import org.laokou.admin.dto.MessageDTO;
 import org.laokou.admin.server.interfaces.qo.SysMessageQo;
-import org.laokou.admin.client.vo.MessageDetailVO;
-import org.laokou.admin.client.vo.SysMessageVO;
+import org.laokou.admin.vo.MessageDetailVO;
+import org.laokou.admin.vo.SysMessageVO;
 
 /**
  * @author laokou

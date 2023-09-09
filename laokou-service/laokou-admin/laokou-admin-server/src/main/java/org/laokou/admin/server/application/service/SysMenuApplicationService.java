@@ -16,9 +16,9 @@
  */
 package org.laokou.admin.server.application.service;
 
-import org.laokou.admin.client.dto.SysMenuDTO;
+import org.laokou.admin.dto.SysMenuDTO;
 import org.laokou.admin.server.interfaces.qo.SysMenuQo;
-import org.laokou.admin.client.vo.SysMenuVO;
+import org.laokou.admin.vo.SysMenuVO;
 import java.util.List;
 
 /**

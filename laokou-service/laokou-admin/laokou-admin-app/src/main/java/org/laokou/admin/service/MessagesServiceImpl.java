@@ -18,9 +18,9 @@
 package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.client.api.MessagesServiceI;
-import org.laokou.admin.client.dto.message.*;
-import org.laokou.admin.client.dto.message.clientobject.MessageCO;
+import org.laokou.admin.api.MessagesServiceI;
+import org.laokou.admin.dto.message.*;
+import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.command.message.MessageInsertCmdExe;
 import org.laokou.admin.command.message.MessageReadCmdExe;
 import org.laokou.admin.command.message.query.MessageGetQryExe;
@@ -76,8 +76,8 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	@Override
-	public Result<Long> unreadCount(MessageUnreadCountGetQry qry) {
-		return null;
+	public Result<Integer> unreadCount(MessageUnreadCountGetQry qry) {
+		return messageUnreadCountGetQryExe.execute(qry);
 	}
 
 }

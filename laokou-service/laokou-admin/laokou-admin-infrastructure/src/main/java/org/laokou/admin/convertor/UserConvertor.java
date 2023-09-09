@@ -17,7 +17,7 @@
 
 package org.laokou.admin.convertor;
 
-import org.laokou.admin.client.dto.user.clientobject.UserCO;
+import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.ConvertUtil;

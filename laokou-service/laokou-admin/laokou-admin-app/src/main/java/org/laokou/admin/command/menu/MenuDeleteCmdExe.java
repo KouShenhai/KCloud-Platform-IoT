@@ -19,7 +19,7 @@ package org.laokou.admin.command.menu;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.admin.client.dto.menu.MenuDeleteCmd;
+import org.laokou.admin.dto.menu.MenuDeleteCmd;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;

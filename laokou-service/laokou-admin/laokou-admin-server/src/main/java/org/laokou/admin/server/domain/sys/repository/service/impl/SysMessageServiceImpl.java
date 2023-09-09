@@ -22,8 +22,8 @@ import org.laokou.admin.server.domain.sys.entity.SysMessageDO;
 import org.laokou.admin.server.domain.sys.repository.mapper.SysMessageMapper;
 import org.laokou.admin.server.domain.sys.repository.service.SysMessageService;
 import org.laokou.admin.server.interfaces.qo.SysMessageQo;
-import org.laokou.admin.client.vo.MessageDetailVO;
-import org.laokou.admin.client.vo.SysMessageVO;
+import org.laokou.admin.vo.MessageDetailVO;
+import org.laokou.admin.vo.SysMessageVO;
 import org.springframework.stereotype.Service;
 
 /**

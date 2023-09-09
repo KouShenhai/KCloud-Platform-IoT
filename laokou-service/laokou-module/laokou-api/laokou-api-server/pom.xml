@@ -17,11 +17,6 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-secret</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-test</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>

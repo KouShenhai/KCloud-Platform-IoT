@@ -34,10 +34,6 @@
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-idempotent</artifactId>
 		</dependency>-->
-<!--		<dependency>
-			<groupId>org.laokou</groupId>
-			<artifactId>laokou-common-easy-excel</artifactId>
-		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -45,10 +41,6 @@
 <!--		<dependency>
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-trace</artifactId>
-		</dependency>-->
-<!--		<dependency>
-			<groupId>org.laokou</groupId>
-			<artifactId>laokou-common-oss</artifactId>
 		</dependency>-->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -90,10 +82,6 @@
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-elasticsearch</artifactId>
 		</dependency>
-<!--		<dependency>
-			<groupId>org.laokou</groupId>
-			<artifactId>laokou-common-log</artifactId>
-		</dependency>-->
 		<dependency>
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-admin-client</artifactId>
@@ -140,11 +128,7 @@
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-dynamic-router</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.laokou</groupId>
-			<artifactId>laokou-common-test</artifactId>
-			<scope>test</scope>
-		</dependency>-->
+		-->
 		<dependency>
 			<groupId>org.laokou</groupId>
 			<artifactId>laokou-common-shardingsphere</artifactId>

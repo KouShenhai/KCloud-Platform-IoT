@@ -20,8 +20,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.laokou.admin.server.domain.sys.entity.SysMessageDO;
 import org.laokou.admin.server.interfaces.qo.SysMessageQo;
-import org.laokou.admin.client.vo.MessageDetailVO;
-import org.laokou.admin.client.vo.SysMessageVO;
+import org.laokou.admin.vo.MessageDetailVO;
+import org.laokou.admin.vo.SysMessageVO;
 
 /**
  * @author laokou
