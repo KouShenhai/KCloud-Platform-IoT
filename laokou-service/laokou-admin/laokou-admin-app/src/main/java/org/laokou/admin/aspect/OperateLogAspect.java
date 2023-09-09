@@ -31,7 +31,7 @@ import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.core.constant.Constant;
 import org.laokou.common.core.utils.*;
-import org.laokou.common.ip.region.utils.AddressUtil;
+import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;

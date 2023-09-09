@@ -167,11 +167,6 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-test</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
                 <artifactId>laokou-admin-adapter</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -362,11 +357,6 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-ip-region</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-pulsar</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -402,11 +392,6 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-banner</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-reptile</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -418,11 +403,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-r2dbc</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-easy-excel</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -491,11 +471,6 @@
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-tenant</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
                 <version>${dynamic-datasource.version}</version>
@@ -503,11 +478,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-data-cache</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-log</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
@@ -698,16 +668,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-seata</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-oss</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-sms</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

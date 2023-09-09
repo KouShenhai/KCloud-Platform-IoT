@@ -35,6 +35,5 @@
         <module>laokou-seata</module>
         <module>laokou-sentinel</module>
         <module>laokou-xxl-job</module>
-        <module>laokou-power-job</module>
     </modules>
 </project>

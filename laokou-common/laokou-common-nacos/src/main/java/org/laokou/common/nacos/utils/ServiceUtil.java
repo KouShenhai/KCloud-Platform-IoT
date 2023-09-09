@@ -23,11 +23,10 @@ import com.alibaba.nacos.api.naming.NamingService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.nacos.enums.Instance;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Component;
-import java.util.List;
+
 import java.util.Properties;
 
 /**
@@ -46,32 +45,6 @@ public class ServiceUtil {
 
 	public ServiceInstance getServiceInstance(String serviceId) {
 		return loadBalancerClient.choose(serviceId);
-	}
-
-	public void registerInstance() {
-		instance(Instance.REGISTER);
-	}
-
-	public void deregisterInstance() {
-		instance(Instance.DEREGISTER);
-	}
-
-	@SneakyThrows
-	private void instance(Instance instanceEnum) {
-		String serviceName = nacosDiscoveryProperties.getService();
-		NamingService namingService = getNamingService();
-		List<com.alibaba.nacos.api.naming.pojo.Instance> allInstances = namingService.getAllInstances(serviceName);
-		for (com.alibaba.nacos.api.naming.pojo.Instance instance : allInstances) {
-			String ip = nacosDiscoveryProperties.getIp();
-			if (ip.equals(instance.getIp())) {
-				switch (instanceEnum) {
-					case REGISTER -> namingService.registerInstance(serviceName, instance);
-					case DEREGISTER -> namingService.deregisterInstance(serviceName, instance);
-					default -> {
-					}
-				}
-			}
-		}
 	}
 
 	@SneakyThrows

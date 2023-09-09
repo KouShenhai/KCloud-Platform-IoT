@@ -77,7 +77,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | ShardingSphere              | 5.3.2        |
 | OpenResty                   | 1.21.4.1     |
 | Netty                       | 4.1.96.Final |
-| HBase                       | 2.5.3        |
 
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
@@ -89,7 +88,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 - 分库分表&读写分离：ShardingSphere
 - 分布式事务：Seata & RocketMQ
 - 消息队列：RabbitMQ & RocketMQ
-- 分布式数据库：HBase
 - 服务监控：Spring Boot Admin & Prometheus
 - 链路跟踪：SkyWalking
 - 任务调度：XXL Job
@@ -109,35 +107,23 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 #### 🌴 项目结构
 ~~~
 ├── laokou-common  
-        └── laokou-common-log                      --- 日志组件  
-        └── laokou-common-sms                      --- 短信组件  
-        └── laokou-common-mail                     --- 邮箱组件  
         └── laokou-common-core                     --- 核心组件  
         └── laokou-common-cors                     --- 跨域组件  
         └── laokou-common-redis                    --- 缓存组件  
         └── laokou-common-kafka                    --- 消息组件  
         └── laokou-common-wechat                   --- 微信组件  
-        └── laokou-common-pulsar                   --- 消息组件  
-        └── laokou-common-reptile                  --- 爬虫组件  
         └── laokou-common-mongodb                  --- 报表组件  
-        └── laokou-common-graphql                  --- 查询组件  
         └── laokou-common-rocketmq                 --- 消息组件  
         └── laokou-common-algorithm                --- 算法组件  
-        └── laokou-common-power-job                --- 工作组件  
         └── laokou-common-prometheus               --- 监控组件  
         └── laokou-common-openapi-doc              --- 文档组件  
         └── laokou-common-elasticsearch            --- 搜索组件  
         └── laokou-common-bom                      --- 依赖版本库  
         └── laokou-common-i18n                     --- 国际化组件  
-        └── laokou-common-tenant                   --- 多租户组件  
         └── laokou-common-sensitive                --- 敏感词组件  
-        └── laokou-common-banner                   --- Banner组件  
-        └── laokou-common-oss                      --- 对象存储组件  
         └── laokou-common-lock                     --- 分布式锁组件  
         └── laokou-common-trace                    --- 链路跟踪组件  
         └── laokou-common-nacos                    --- 注册发现组件  
-        └── laokou-common-hbase                    --- 海量存储组件  
-        └── laokou-common-dubbo                    --- 远程调用组件  
         └── laokou-common-netty                    --- 网络通讯组件  
         └── laokou-common-jasypt                   --- 加密解密组件  
         └── laokou-common-secret                   --- 接口验签组件  
@@ -146,17 +132,11 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
         └── laokou-common-xxl-job                  --- 任务调度组件  
         └── laokou-common-security                 --- 认证授权组件  
         └── laokou-common-openfeign                --- 远程调用组件   
-        └── laokou-common-easy-excel               --- 导入导出组件   
-        └── laokou-common-clickhouse               --- 列式存储组件  
         └── laokou-common-data-cache               --- 数据缓存组件  
-        └── laokou-common-redis-search             --- 高效搜索组件  
         └── laokou-common-mybatis-plus             --- 对象映射组件  
         └── laokou-common-dynamic-router           --- 动态路由组件  
         └── laokou-common-shardingsphere           --- 分库分表组件  
-        └── laokou-common-ip-region                --- IP归属地组件  
-        └── laokou-common-neo4j                    --- 图形数据库组件  
         └── laokou-common-seata                    --- 分布式事务组件  
-        └── laokou-common-r2dbc                    --- 响应式数据库组件  
         └── laokou-common-sentinel                 --- 服务限流&熔断降级组件  
 ├── laokou-cloud  
         └── laokou-gateway                         --- API网关  
@@ -164,7 +144,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
         └── laokou-xxl-job                         --- 任务调度  
         └── laokou-register                        --- 服务治理  
         └── laokou-sentinel                        --- 流量治理  
-        └── laokou-power-job                       --- 任务调度  
         └── laokou-seata                           --- 分布式事务  
 ├── laokou-service         
         └── laokou-auth                            --- 认证授权模块  
@@ -172,7 +151,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
         └── laokou-generate                        --- 模板生成模块  
         └── laokou-modlule  
                 └── laokou-api                     --- API模块  
-                └── laokou-test                    --- 测试模块  
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-flowable                --- 工作流程模块  
                 └── laokou-logstash                --- 日志收集模块  
