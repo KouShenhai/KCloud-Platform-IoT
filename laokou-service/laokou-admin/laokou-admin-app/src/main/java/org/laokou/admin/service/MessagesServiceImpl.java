@@ -52,27 +52,27 @@ public class MessagesServiceImpl implements MessagesServiceI {
 
 	@Override
 	public Result<Boolean> insert(MessageInsertCmd cmd) {
-		return null;
+		return messageInsertCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Datas<MessageCO>> list(MessageListQry qry) {
-		return null;
+		return messageListQryExe.execute(qry);
 	}
 
 	@Override
 	public Result<MessageCO> read(MessageReadCmd cmd) {
-		return null;
+		return messageReadCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<MessageCO> get(MessageGetQry qry) {
-		return null;
+		return messageGetQryExe.execute(qry);
 	}
 
 	@Override
 	public Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry) {
-		return null;
+		return messageUnreadListQryExe.execute(qry);
 	}
 
 	@Override

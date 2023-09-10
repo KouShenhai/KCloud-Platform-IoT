@@ -18,6 +18,10 @@
 package org.laokou.admin.command.message;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.MessageConvertor;
+import org.laokou.admin.domain.gateway.MessageGateway;
+import org.laokou.admin.dto.message.MessageInsertCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +30,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MessageInsertCmdExe {
+
+    private final MessageGateway messageGateway;
+
+    public Result<Boolean> execute(MessageInsertCmd cmd) {
+        return Result.of(messageGateway.insert(MessageConvertor.toEntity(cmd.getMessageCO())));
+    }
 
 }

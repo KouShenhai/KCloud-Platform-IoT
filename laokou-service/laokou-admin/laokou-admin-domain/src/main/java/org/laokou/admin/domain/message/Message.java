@@ -12,31 +12,37 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
-package org.laokou.im.client;
+package org.laokou.admin.domain.message;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.Serial;
-import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
  * @author laokou
  */
 @Data
-public class WsMsgDTO implements Serializable {
+@NoArgsConstructor
+public class Message {
 
-	@Serial
-	private static final long serialVersionUID = -4930262464816447000L;
+    private Long id;
 
-	/**
-	 * 接收者
-	 */
-	private Set<String> receiver;
+    private String title;
 
-	private String msg;
+    private String content;
 
+    private LocalDateTime createDate;
+
+    private Integer type;
+
+    private Set<String> receiver;
+
+    public Message(String title) {
+        this.title = title;
+    }
 }

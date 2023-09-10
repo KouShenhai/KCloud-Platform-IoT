@@ -61,7 +61,6 @@
         <module>laokou-common-idempotent</module>
         <module>laokou-common-lock</module>
         <module>laokou-common-monitor</module>
-        <module>laokou-common-rabbitmq</module>
         <module>laokou-common-sensitive</module>
     </modules>
 

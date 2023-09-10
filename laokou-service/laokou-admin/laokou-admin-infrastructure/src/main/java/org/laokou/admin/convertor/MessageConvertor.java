@@ -15,17 +15,25 @@
  *
  */
 
-package org.laokou.admin.dto.message;
+package org.laokou.admin.convertor;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.admin.domain.message.Message;
+import org.laokou.admin.dto.message.clientobject.MessageCO;
+import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
+import org.laokou.common.core.utils.ConvertUtil;
 
 /**
  * @author laokou
  */
-@Data
-public class MessageListQry extends PageQuery {
+public class MessageConvertor {
 
-    private String title;
+    public static Message toEntity(MessageCO messageCO) {
+        return ConvertUtil.sourceToTarget(messageCO, Message.class);
+    }
+
+    public static MessageDO toDataObject(Message message) {
+        return ConvertUtil.sourceToTarget(message, MessageDO.class);
+    }
+
 
 }

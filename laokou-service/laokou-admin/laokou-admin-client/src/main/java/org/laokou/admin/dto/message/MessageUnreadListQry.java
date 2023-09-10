@@ -18,12 +18,14 @@
 package org.laokou.admin.dto.message;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
 @Data
-public class MessageUnreadListQry extends CommonCommand {
+public class MessageUnreadListQry extends PageQuery {
+
+    private Integer type;
 
 }

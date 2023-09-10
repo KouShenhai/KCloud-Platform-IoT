@@ -23,7 +23,7 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.netty.config.Server;
 import org.laokou.common.rocketmq.dto.MqDTO;
-import org.laokou.im.client.WsMsgDTO;
+import org.laokou.im.client.WsMsgCO;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -47,7 +47,7 @@ public class MessageUtil {
 		}
 		MqDTO dto = JacksonUtil.toBean(message, MqDTO.class);
 		String body = dto.getBody();
-		WsMsgDTO msgDTO = JacksonUtil.toBean(body, WsMsgDTO.class);
+		WsMsgCO msgDTO = JacksonUtil.toBean(body, WsMsgCO.class);
 		String msg = msgDTO.getMsg();
 		Set<String> receiver = msgDTO.getReceiver();
 		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(msg);

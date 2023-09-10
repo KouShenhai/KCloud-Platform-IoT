@@ -153,9 +153,6 @@
 // return (long) sysMessageDetailService.unReadCount(userId);
 // }
 //
-// private String getMessageTag(Integer type) {
-// return type == MessageTypeEnum.NOTICE.ordinal() ? MqConstant.LAOKOU_NOTICE_MESSAGE_TAG
-// : MqConstant.LAOKOU_REMIND_MESSAGE_TAG;
-// }
+
 //
 // }

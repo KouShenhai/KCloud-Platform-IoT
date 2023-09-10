@@ -78,7 +78,7 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	@Override
 	public Result<List<OptionCO>> optionList(UserOptionListQry qry) {
-		return null;
+		return userOptionListQryExe.execute(qry);
 	}
 
 	@Override
