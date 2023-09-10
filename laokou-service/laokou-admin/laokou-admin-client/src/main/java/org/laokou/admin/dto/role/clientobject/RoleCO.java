@@ -21,6 +21,7 @@ import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.io.Serial;
+import java.util.List;
 
 /**
  * @author laokou
@@ -36,5 +37,9 @@ public class RoleCO extends ClientObject {
 	private String name;
 
 	private Integer sort;
+
+	private List<Long> menuIds;
+
+	private List<Long> deptIds;
 
 }
