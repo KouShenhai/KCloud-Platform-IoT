@@ -21,14 +21,11 @@
 <mapper namespace="org.laokou.admin.gatewayimpl.database.RoleMapper">
 
     <select id="getRoleIdsByUserId" resultType="long">
-        SELECT a.id
-        FROM boot_sys_role a
-           ,boot_sys_user_role c
-        where a.id = c.role_id
-            and a.del_flag = 0
-            and c.user_id = #{userId}
-        group by a.id
-        order by a.create_date desc
+        select id
+        from boot_sys_role
+        where del_flag = 0
+            and id in (select role_id from boot_sys_user_role where user_id = #{userId})
+        group by id
     </select>
 
     <select id="getRoleListByTenantIdAndLikeName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.RoleDO">
@@ -37,7 +34,7 @@
              ,sort
         from boot_sys_role
         where del_flag = 0
-            and tenant_id = #{qo.tenantId}
+            and tenant_id = #{tenantId}
         <if test="name != '' and name != null">
             and `name` like concat('%',#{name},'%')
         </if>

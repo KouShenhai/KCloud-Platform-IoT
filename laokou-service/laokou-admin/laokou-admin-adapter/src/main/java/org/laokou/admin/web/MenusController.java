@@ -111,7 +111,7 @@ public class MenusController {
 	@TraceLog
 	@GetMapping("v1/menus/tenant-tree")
 	@Operation(summary = "菜单管理", description = "树形租户菜单列表")
-	public Result<?> tenantTree() {
+	public Result<MenuCO> tenantTree() {
 		return menusServiceI.tenantTree(new MenuTenantTreeGetQry());
 	}
 

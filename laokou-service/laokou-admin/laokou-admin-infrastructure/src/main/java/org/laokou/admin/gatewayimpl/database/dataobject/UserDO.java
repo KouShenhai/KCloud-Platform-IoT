@@ -61,10 +61,4 @@ public class UserDO extends BaseDO {
 	@TableField(value = "mobile", typeHandler = JasyptTypeHandler.class)
 	private String mobile;
 
-	@Schema(name = "deptId", description = "部门ID", example = "0")
-	private Long deptId;
-
-	@Schema(name = "tenantId", description = "租户ID", example = "0")
-	private Long tenantId;
-
 }

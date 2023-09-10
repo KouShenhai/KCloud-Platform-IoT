@@ -27,6 +27,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class RoleUpdateCmd extends CommonCommand {
 
-	private final RoleCO roleCO;
+	private RoleCO roleCO;
 
 }

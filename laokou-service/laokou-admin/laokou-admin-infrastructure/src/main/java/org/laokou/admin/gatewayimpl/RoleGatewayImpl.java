@@ -37,7 +37,6 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -64,8 +63,6 @@ public class RoleGatewayImpl implements RoleGateway {
 	@Override
 	public Boolean insert(Role role) {
 		RoleDO roleDO = RoleConvertor.toDataObject(role);
-		roleDO.setDeptId(UserUtil.getDeptId());
-		roleDO.setTenantId(UserUtil.getTenantId());
 		return insertRole(roleDO, role);
 	}
 

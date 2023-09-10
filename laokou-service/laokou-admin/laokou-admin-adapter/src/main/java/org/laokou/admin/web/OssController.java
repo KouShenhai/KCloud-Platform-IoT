@@ -69,19 +69,10 @@ public class OssController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/oss/use/{id}")
-	@Operation(summary = "存储管理", description = "启用存储")
-	@OperateLog(module = "存储管理", operation = "启用存储")
-	@PreAuthorize("hasAuthority('oss:use')")
-	public Result<Boolean> use(@PathVariable("id") Long id) {
-		return ossServiceI.use(new OssUseCmd(id));
-	}
-
-	@TraceLog
 	@GetMapping("v1/oss/{id}")
 	@Operation(summary = "存储管理", description = "查看存储")
 	@DataCache(name = "oss", key = "#id")
-	public Result<?> get(@PathVariable("id") Long id) {
+	public Result<OssCO> get(@PathVariable("id") Long id) {
 		return ossServiceI.get(new OssGetQry(id));
 	}
 

@@ -58,10 +58,4 @@ public class SysDeptDO extends BaseDO {
 	@Schema(name = "sort", description = "部门排序", example = "1")
 	private Integer sort;
 
-	/**
-	 * 租户id
-	 */
-	@Schema(name = "tenantId", description = "租户id")
-	private Long tenantId;
-
 }

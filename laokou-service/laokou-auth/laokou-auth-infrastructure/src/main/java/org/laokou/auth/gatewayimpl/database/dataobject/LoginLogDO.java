@@ -72,9 +72,4 @@ public class LoginLogDO extends BaseDO {
 	 */
 	private String loginType;
 
-	/**
-	 * 租户id
-	 */
-	private Long tenantId;
-
 }

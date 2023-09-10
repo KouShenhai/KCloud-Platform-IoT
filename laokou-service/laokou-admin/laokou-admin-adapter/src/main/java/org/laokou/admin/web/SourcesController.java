@@ -65,7 +65,7 @@ public class SourcesController {
 	@GetMapping("v1/sources/{id}")
 	@Operation(summary = "数据源管理", description = "查看数据源")
 	@DataCache(name = "sources", key = "#id")
-	public Result<?> get(@PathVariable("id") Long id) {
+	public Result<SourceCO> get(@PathVariable("id") Long id) {
 		return sourcesServiceI.get(new SourceGetQry(id));
 	}
 

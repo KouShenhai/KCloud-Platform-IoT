@@ -40,10 +40,4 @@ public class RoleDO extends BaseDO {
 	@Schema(name = "sort", description = "排序", example = "1")
 	private Integer sort;
 
-	@Schema(name = "deptId", description = "部门ID", example = "0")
-	private Long deptId;
-
-	@Schema(name = "tenantId", description = "租户ID")
-	private Long tenantId;
-
 }

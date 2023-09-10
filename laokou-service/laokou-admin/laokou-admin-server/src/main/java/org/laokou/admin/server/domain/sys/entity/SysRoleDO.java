@@ -50,16 +50,4 @@ public class SysRoleDO extends BaseDO {
 	@Schema(name = "sort", description = "角色排序", example = "1")
 	private Integer sort;
 
-	/**
-	 * 部门id
-	 */
-	@Schema(name = "deptId", description = "部门id", example = "0")
-	private Long deptId;
-
-	/**
-	 * 租户id
-	 */
-	@Schema(name = "tenantId", description = "租户id")
-	private Long tenantId;
-
 }
