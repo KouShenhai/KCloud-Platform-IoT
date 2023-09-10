@@ -18,6 +18,7 @@
 package org.laokou.admin.command.user.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +27,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class UserListQryExe {
+
+    private final UserMapper userMapper;
 
 }

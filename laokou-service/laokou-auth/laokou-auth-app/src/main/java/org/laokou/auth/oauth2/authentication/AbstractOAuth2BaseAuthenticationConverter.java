@@ -38,8 +38,6 @@ import static org.laokou.auth.common.exception.ErrorCode.INVALID_SCOPE;
 import static org.laokou.common.core.constant.BizConstant.TRACE_ID;
 
 /**
- * 邮件/手机/密码
- *
  * @author laokou
  */
 @Slf4j
