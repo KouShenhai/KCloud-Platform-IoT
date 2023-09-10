@@ -71,7 +71,7 @@ public class DeptsController {
 	@OperateLog(module = "部门管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('depts:update')")
 	@TraceLog
-	@DataCache(name = "depts", key = "#dto.id", type = Cache.DEL)
+	@DataCache(name = "depts", key = "#cmd.deptCO.id", type = Cache.DEL)
 	public Result<Boolean> update(@RequestBody DeptUpdateCmd cmd) {
 		return deptsServiceI.update(cmd);
 	}
