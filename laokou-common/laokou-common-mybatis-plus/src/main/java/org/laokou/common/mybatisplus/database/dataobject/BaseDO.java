@@ -38,7 +38,7 @@ public abstract class BaseDO extends DTO {
 	public static final String DEL_FLAG = "delFlag";
 	public static final String VERSION = "version";
 	public static final String TENANT_ID = "tenantId";
-	public static final String DEPT_ID = "dept_id";
+	public static final String DEPT_ID = "deptId";
 
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;

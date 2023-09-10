@@ -37,7 +37,9 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,24 +107,26 @@ public class RoleGatewayImpl implements RoleGateway {
 		return datas;
 	}
 
-	private Boolean updateRole(RoleDO roleDO, Role role, List<Long> ids1, List<Long> ids2) {
-		return transactionalUtil.execute(rollback -> {
-			try {
-				return roleMapper.updateById(roleDO) > 0 && updateRoleMenu(roleDO.getId(), role.getMenuIds(), ids1)
-						&& updateRoleDept(roleDO.getId(), role.getDeptIds(), ids2);
-			}
-			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
-				rollback.setRollbackOnly();
-				return false;
-			}
-		});
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean insertRole(RoleDO roleDO, Role role) {
+		boolean flag = roleMapper.insert(roleDO) > 0;
+		flag = flag && insertRoleMenu(roleDO.getId(), role.getMenuIds());
+		flag = flag && insertRoleDept(roleDO.getId(), role.getDeptIds());
+		return flag;
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean updateRole(RoleDO roleDO, Role role, List<Long> ids1, List<Long> ids2) {
+		boolean flag = roleMapper.updateById(roleDO) > 0;
+		flag = flag && updateRoleMenu(roleDO.getId(), role.getMenuIds(), ids1);
+		flag = flag && updateRoleDept(roleDO.getId(), role.getDeptIds(), ids2);
+		return flag;
 	}
 
 	private Boolean updateRoleMenu(Long roleId, List<Long> menuIds, List<Long> ids) {
 		boolean flag = true;
 		if (CollectionUtil.isNotEmpty(ids)) {
-			flag = roleMenuMapper.deleteBatchIds(ids) > 0;
+			flag = roleMenuMapper.deleteRoleMenuByIds(ids) > 0;
 		}
 		return flag && insertRoleMenu(roleId, menuIds);
 	}
@@ -130,23 +134,9 @@ public class RoleGatewayImpl implements RoleGateway {
 	private Boolean updateRoleDept(Long roleId, List<Long> deptIds, List<Long> ids) {
 		boolean flag = true;
 		if (CollectionUtil.isNotEmpty(ids)) {
-			flag = roleDeptMapper.deleteBatchIds(ids) > 0;
+			flag = roleDeptMapper.deleteRoleDeptByIds(ids) > 0;
 		}
 		return flag && insertRoleDept(roleId, deptIds);
-	}
-
-	private Boolean insertRole(RoleDO roleDO, Role role) {
-		return transactionalUtil.execute(rollback -> {
-			try {
-				return roleMapper.insert(roleDO) > 0 && insertRoleMenu(roleDO.getId(), role.getMenuIds())
-						&& insertRoleDept(roleDO.getId(), role.getDeptIds());
-			}
-			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
-				rollback.setRollbackOnly();
-				return false;
-			}
-		});
 	}
 
 	private Boolean insertRoleMenu(Long roleId, List<Long> menuIds) {
@@ -157,6 +147,9 @@ public class RoleGatewayImpl implements RoleGateway {
 				roleMenuDO.setRoleId(roleId);
 				roleMenuDO.setMenuId(menuId);
 				roleMenuDO.setId(IdUtil.defaultId());
+				roleMenuDO.setDeptId(UserUtil.getDeptId());
+				roleMenuDO.setTenantId(UserUtil.getTenantId());
+				roleMenuDO.setCreator(UserUtil.getUserId());
 				list.add(roleMenuDO);
 			}
 			batchUtil.insertBatch(list, roleMenuMapper::insertBatch);
@@ -173,6 +166,8 @@ public class RoleGatewayImpl implements RoleGateway {
 				roleDeptDO.setRoleId(roleId);
 				roleDeptDO.setDeptId(deptId);
 				roleDeptDO.setId(IdUtil.defaultId());
+				roleDeptDO.setTenantId(UserUtil.getTenantId());
+				roleDeptDO.setCreator(UserUtil.getUserId());
 				list.add(roleDeptDO);
 			}
 			batchUtil.insertBatch(list, roleDeptMapper::insertBatch);
