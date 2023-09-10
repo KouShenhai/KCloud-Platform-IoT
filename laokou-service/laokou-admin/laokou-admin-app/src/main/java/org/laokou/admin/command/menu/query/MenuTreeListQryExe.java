@@ -17,13 +17,15 @@
 package org.laokou.admin.command.menu.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.menu.MenuTreeListQry;
-import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
+import org.laokou.admin.dto.menu.MenuTreeListQry;
+import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
@@ -37,11 +39,19 @@ import java.util.List;
 public class MenuTreeListQryExe {
 
 	private final MenuGateway menuGateway;
+	private final RedisUtil redisUtil;
 
 	public Result<MenuCO> execute(MenuTreeListQry qry) {
+		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserUtil.getUserId());
+		Object obj = redisUtil.get(menuTreeKey);
+		if (obj != null) {
+			return Result.of((MenuCO) obj);
+		}
 		List<Menu> menuList = menuGateway.list(UserUtil.user(), 0);
 		List<MenuCO> menus = ConvertUtil.sourceToTarget(menuList, MenuCO.class);
-		return Result.of(TreeUtil.buildTreeNode(menus, MenuCO.class));
+		MenuCO menuCO = TreeUtil.buildTreeNode(menus, MenuCO.class);
+		redisUtil.set(menuTreeKey,menuCO,RedisUtil.HOUR_ONE_EXPIRE);
+		return Result.of(menuCO);
 	}
 
 }

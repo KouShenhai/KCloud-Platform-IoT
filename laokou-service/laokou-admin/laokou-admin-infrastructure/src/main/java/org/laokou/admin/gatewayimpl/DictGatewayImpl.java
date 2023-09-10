@@ -89,7 +89,7 @@ public class DictGatewayImpl implements DictGateway {
 		Datas<Dict> datas = new Datas<>();
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Dict.class));
 		datas.setTotal(newPage.getTotal());
-		return null;
+		return datas;
 	}
 
 	private Boolean insertDict(DictDO dictDO) {
