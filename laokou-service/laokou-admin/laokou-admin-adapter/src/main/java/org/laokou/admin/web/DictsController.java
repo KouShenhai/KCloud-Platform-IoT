@@ -81,7 +81,7 @@ public class DictsController {
 	@Operation(summary = "字典管理", description = "修改字典")
 	@OperateLog(module = "字典管理", operation = "修改字典")
 	@PreAuthorize("hasAuthority('dicts:update')")
-	@DataCache(name = "dicts", key = "#dto.id", type = Cache.DEL)
+	@DataCache(name = "dicts", key = "#cmd.dictCO.id", type = Cache.DEL)
 	public Result<Boolean> update(@RequestBody DictUpdateCmd cmd) {
 		return dictsServiceI.update(cmd);
 	}

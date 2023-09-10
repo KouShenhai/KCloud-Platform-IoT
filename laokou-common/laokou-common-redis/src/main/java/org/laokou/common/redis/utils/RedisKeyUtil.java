@@ -31,8 +31,8 @@ public final class RedisKeyUtil {
 	/**
 	 * 菜单树Key
 	 */
-	public static String getResourceTreeKey(Long userId) {
-		return "resource:tree:" + userId;
+	public static String getMenuTreeKey(Long userId) {
+		return "menu:tree:" + userId;
 	}
 
 	/**
