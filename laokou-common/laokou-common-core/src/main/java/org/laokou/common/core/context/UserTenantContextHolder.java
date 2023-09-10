@@ -40,7 +40,7 @@ public class UserTenantContextHolder {
 	}
 
 	public static UserTenant get() {
-		return Optional.of(USER_CONTEXT_HOLDER.get()).orElse(new UserTenant());
+		return Optional.ofNullable(USER_CONTEXT_HOLDER.get()).orElse(new UserTenant());
 	}
 
 }

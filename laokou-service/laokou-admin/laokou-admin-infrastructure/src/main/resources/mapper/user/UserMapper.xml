@@ -28,7 +28,7 @@
                 `status` = #{userDO.status},
             </if>
             <if test="userDO.password != null and userDO.password != ''">
-                password = #{userDO.password},
+                `password` = #{userDO.password},
             </if>
             <if test="userDO.avatar != null and userDO.avatar != ''">
                 avatar = #{userDO.avatar},

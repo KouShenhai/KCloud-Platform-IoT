@@ -67,8 +67,6 @@ import static org.laokou.common.core.constant.Constant.FAIL_STATUS;
 import static org.laokou.common.core.constant.Constant.SUCCESS_STATUS;
 
 /**
- * 邮件/手机/密码
- *
  * @author laokou
  */
 @Slf4j
