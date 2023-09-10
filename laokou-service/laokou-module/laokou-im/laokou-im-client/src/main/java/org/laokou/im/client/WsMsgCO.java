@@ -12,20 +12,31 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ * 
  */
 
-package org.laokou.admin.dto.message;
+package org.laokou.im.client;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @author laokou
  */
 @Data
-public class MessageListQry extends PageQuery {
+public class WsMsgCO implements Serializable {
 
-    private String title;
+	@Serial
+	private static final long serialVersionUID = -4930262464816447000L;
+
+	/**
+	 * 接收者
+	 */
+	private Set<String> receiver;
+
+	private String msg;
 
 }

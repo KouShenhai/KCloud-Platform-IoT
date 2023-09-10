@@ -61,8 +61,7 @@ public class MessagesController {
 	@PostMapping("v1/messages/{detailId}")
 	@Operation(summary = "消息管理", description = "查看消息")
 	@OperateLog(module = "消息管理", operation = "查看消息")
-	@DataCache(name = "messages", key = "#id")
-	public Result<?> read(@PathVariable("detailId") Long detailId) {
+	public Result<MessageCO> read(@PathVariable("detailId") Long detailId) {
 		return messagesServiceI.read(new MessageReadCmd(detailId));
 	}
 
@@ -71,7 +70,7 @@ public class MessagesController {
 	@Operation(summary = "消息管理", description = "查看消息")
 	@PreAuthorize("hasAuthority('messages:detail')")
 	@DataCache(name = "messages", key = "#id")
-	public Result<?> get(@PathVariable("id") Long id) {
+	public Result<MessageCO> get(@PathVariable("id") Long id) {
 		return messagesServiceI.get(new MessageGetQry(id));
 	}
 

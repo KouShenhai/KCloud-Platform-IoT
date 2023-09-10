@@ -17,8 +17,24 @@
 
 package org.laokou.admin.command.message.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dto.message.MessageUnreadListQry;
+import org.laokou.admin.dto.message.clientobject.MessageCO;
+import org.laokou.admin.gatewayimpl.database.MessageMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import static org.laokou.admin.common.Constant.TENANT;
 
 /**
  * @author laokou
@@ -27,6 +43,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MessageUnreadListQryExe {
 
+    private final MessageMapper messageMapper;
 
+    @DS(TENANT)
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED, readOnly = true)
+    public Result<Datas<MessageCO>> execute(MessageUnreadListQry qry) {
+        IPage<MessageDO> page = new Page<>(qry.getPageNum(),qry.getPageSize());
+        IPage<MessageDO> newPage = messageMapper.getUnreadMessageListByUserIdAndType(page, UserUtil.getUserId(), qry.getType());
+        long total = newPage.getTotal();
+        Datas<MessageCO> datas = new Datas<>();
+        datas.setTotal(total);
+        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),MessageCO.class));
+        return Result.of(datas);
+    }
 
 }

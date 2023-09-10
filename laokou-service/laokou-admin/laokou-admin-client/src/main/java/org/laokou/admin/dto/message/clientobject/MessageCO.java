@@ -20,10 +20,25 @@ package org.laokou.admin.dto.message.clientobject;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.time.LocalDateTime;
+import java.util.Set;
+
 /**
  * @author laokou
  */
 @Data
 public class MessageCO extends ClientObject {
+
+    private Long id;
+
+    private String title;
+
+    private String content;
+
+    private LocalDateTime createDate;
+
+    private Integer type;
+
+    private Set<String> receiver;
 
 }

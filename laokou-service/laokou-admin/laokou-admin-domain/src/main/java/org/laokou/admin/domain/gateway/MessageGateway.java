@@ -15,17 +15,21 @@
  *
  */
 
-package org.laokou.admin.dto.message;
+package org.laokou.admin.domain.gateway;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.admin.domain.common.DataPage;
+import org.laokou.admin.domain.message.Message;
+import org.laokou.common.i18n.dto.Datas;
 
 /**
  * @author laokou
  */
-@Data
-public class MessageListQry extends PageQuery {
+public interface MessageGateway {
 
-    private String title;
+    Datas<Message> list(Message message, DataPage dataPage);
+
+    Boolean insert(Message message);
+
+    Message get(Long id);
 
 }
