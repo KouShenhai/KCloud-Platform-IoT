@@ -18,11 +18,13 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.dynamic.datasource.annotation.DSTransactional;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
+import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
@@ -30,6 +32,7 @@ import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.mybatisplus.context.DynamicTableContextHolder;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
@@ -62,7 +65,7 @@ public class UserGatewayImpl implements UserGateway {
 	private final UserRoleMapper userRoleMapper;
 
 	@Override
-	@DSTransactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	@DS(SHARDING_SPHERE)
 	public Boolean insert(User user) {
 		boolean flag;
@@ -148,8 +151,14 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	@DataFilter(alias = "boot_sys_user")
 	@DS(SHARDING_SPHERE)
-	public Datas<User> list() {
-		return null;
+	public Datas<User> list(User user, DataPage dataPage) {
+		UserDO userDO = UserConvertor.toDataObject(user);
+		Page<UserDO> page = new Page<>(dataPage.getPageNum(), dataPage.getPageSize());
+		IPage<UserDO> newPage = userMapper.getUserList(page, userDO);
+		Datas<User> datas = new Datas<>();
+		datas.setTotal(newPage.getTotal());
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),User.class));
+		return datas;
 	}
 
 	private Boolean deleteUserRole(UserDO userDO) {
