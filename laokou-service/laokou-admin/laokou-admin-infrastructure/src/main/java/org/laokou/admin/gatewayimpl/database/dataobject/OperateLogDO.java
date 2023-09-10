@@ -73,12 +73,6 @@ public class OperateLogDO extends BaseDO {
 	@Schema(name = "methodName", description = "方法名称")
 	private String methodName;
 
-	@Schema(name = "deptId", description = "部门ID")
-	private Long deptId;
-
-	@Schema(name = "tenantId", description = "租户ID")
-	private Long tenantId;
-
 	@Schema(name = "takeTime", description = "耗时")
 	private Long takeTime;
 

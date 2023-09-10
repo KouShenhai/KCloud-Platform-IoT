@@ -14,17 +14,33 @@
  * limitations under the License.
  *
  */
+package org.laokou.common.core.context;
 
-package org.laokou.admin.command.oss;
+import lombok.Data;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import java.util.Optional;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class OssUseCmdExe {
+public class UserTenantContextHolder {
+
+	@Data
+	public static class UserTenant {
+		private Long id;
+		private Long tenantId;
+		private Long deptId;
+	}
+
+	private static final ThreadLocal<UserTenant> USER_CONTEXT_HOLDER = new InheritableThreadLocal<>();
+
+	public static void set(UserTenant userTenant) {
+		USER_CONTEXT_HOLDER.remove();
+		USER_CONTEXT_HOLDER.set(userTenant);
+	}
+
+	public static UserTenant get() {
+		return Optional.of(USER_CONTEXT_HOLDER.get()).orElse(new UserTenant());
+	}
 
 }

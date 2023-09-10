@@ -65,7 +65,7 @@ public class PackagesController {
 	@GetMapping("v1/packages/{id}")
 	@Operation(summary = "套餐管理", description = "查看套餐")
 	@DataCache(name = "packages", key = "#id")
-	public Result<?> get(@PathVariable("id") Long id) {
+	public Result<PackageCO> get(@PathVariable("id") Long id) {
 		return packagesServiceI.get(new PackageGetQry(id));
 	}
 

@@ -42,7 +42,6 @@ public class OssServiceImpl implements OssServiceI {
 
 	private final OssDeleteCmdExe ossDeleteCmdExe;
 
-	private final OssUseCmdExe ossUseCmdExe;
 
 	private final OssListQryExe ossListQryExe;
 
@@ -62,11 +61,6 @@ public class OssServiceImpl implements OssServiceI {
 
 	@Override
 	public Result<Boolean> delete(OssDeleteCmd cmd) {
-		return null;
-	}
-
-	@Override
-	public Result<Boolean> use(OssUseCmd cmd) {
 		return null;
 	}
 

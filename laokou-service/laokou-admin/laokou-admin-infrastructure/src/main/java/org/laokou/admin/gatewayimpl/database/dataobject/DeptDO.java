@@ -43,7 +43,4 @@ public class DeptDO extends BaseDO {
 	@Schema(name = "sort", description = "排序", example = "1")
 	private Integer sort;
 
-	@Schema(name = "tenantId", description = "租户ID")
-	private Long tenantId;
-
 }

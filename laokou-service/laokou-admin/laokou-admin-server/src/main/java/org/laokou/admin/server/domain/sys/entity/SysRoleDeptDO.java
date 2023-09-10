@@ -42,10 +42,4 @@ public class SysRoleDeptDO extends BaseDO {
 	@Schema(name = "roleId", description = "角色id", example = "666")
 	private Long roleId;
 
-	/**
-	 * 部门id
-	 */
-	@Schema(name = "deptId", description = "部门id", example = "999")
-	private Long deptId;
-
 }

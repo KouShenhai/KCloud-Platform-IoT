@@ -65,7 +65,7 @@ public class TenantsController {
 	@GetMapping("v1/tenants/{id}")
 	@Operation(summary = "租户管理", description = "查看租户")
 	@DataCache(name = "tenants", key = "#id")
-	public Result<?> get(@PathVariable("id") Long id) {
+	public Result<TenantCO> get(@PathVariable("id") Long id) {
 		return tenantsServiceI.get(new TenantGetQry());
 	}
 

@@ -33,8 +33,6 @@ public interface OssServiceI {
 
 	Result<Boolean> delete(OssDeleteCmd cmd);
 
-	Result<Boolean> use(OssUseCmd cmd);
-
 	Result<OssCO> get(OssGetQry qry);
 
 	Result<Datas<OssCO>> list(OssListQry qry);

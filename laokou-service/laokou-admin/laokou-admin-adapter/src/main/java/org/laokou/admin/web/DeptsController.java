@@ -80,7 +80,7 @@ public class DeptsController {
 	@TraceLog
 	@Operation(summary = "部门管理", description = "查看菜单")
 	@DataCache(name = "depts", key = "#id")
-	public Result<?> get(@PathVariable("id") Long id) {
+	public Result<DeptCO> get(@PathVariable("id") Long id) {
 		return deptsServiceI.get(new DeptGetQry(id));
 	}
 

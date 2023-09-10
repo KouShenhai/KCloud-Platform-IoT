@@ -31,12 +31,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Component
 public class SeataExceptionHandler {
 
-	/**
-	 *
-	 * 处理自定义异常
-	 */
 	@ExceptionHandler({ RmTransactionException.class })
-	public Result<?> handleRenException() {
+	public Result<Boolean> handle() {
 		return Result.fail(500, "事务超时，请重新提交");
 	}
 

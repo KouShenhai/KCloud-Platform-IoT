@@ -85,7 +85,7 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "查看资源")
 	@TraceLog
 	@PreAuthorize("hasAuthority('resource:detail')")
-	public Result<?> get(@PathVariable("id") Long id) {
+	public Result<ResourceCO> get(@PathVariable("id") Long id) {
 		return resourceServiceI.get(new ResourceGetQry(id));
 	}
 
@@ -152,7 +152,7 @@ public class ResourceController {
 	@TraceLog
 	@GetMapping(value = "v1/resource/{id}/detail-task")
 	@Operation(summary = "资源管理", description = "查看任务")
-	public Result<?> detailTask(@PathVariable("id") Long id) {
+	public Result<TaskCO> detailTask(@PathVariable("id") Long id) {
 		return resourceServiceI.detailTask(new ResourceDetailTaskGetQry(id));
 	}
 

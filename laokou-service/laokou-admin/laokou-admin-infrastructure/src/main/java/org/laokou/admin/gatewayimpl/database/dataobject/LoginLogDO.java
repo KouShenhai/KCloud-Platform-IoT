@@ -58,7 +58,4 @@ public class LoginLogDO extends BaseDO {
 	@Schema(name = "loginType", description = "登录类型")
 	private String loginType;
 
-	@Schema(name = "tenantId", description = "租户ID")
-	private Long tenantId;
-
 }

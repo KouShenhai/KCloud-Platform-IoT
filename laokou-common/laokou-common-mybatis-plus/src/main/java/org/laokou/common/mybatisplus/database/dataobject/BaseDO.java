@@ -31,6 +31,15 @@ import java.time.LocalDateTime;
 @Schema(name = "BaseDO", description = "映射基类")
 public abstract class BaseDO extends DTO {
 
+	public static final String CREATOR = "creator";
+	public static final String EDITOR = "editor";
+	public static final String CREATE_DATE = "createDate";
+	public static final String UPDATE_DATE = "updateDate";
+	public static final String DEL_FLAG = "delFlag";
+	public static final String VERSION = "version";
+	public static final String TENANT_ID = "tenantId";
+	public static final String DEPT_ID = "dept_id";
+
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;
 
@@ -63,5 +72,13 @@ public abstract class BaseDO extends DTO {
 	@Schema(name = "version", description = "版本号")
 	@TableField(fill = FieldFill.INSERT)
 	private Integer version;
+
+	@Schema(name = "deptId", description = "部门ID")
+	@TableField(fill = FieldFill.INSERT)
+	private Long deptId;
+
+	@Schema(name = "tenantId", description = "租户ID")
+	@TableField(fill = FieldFill.INSERT)
+	private Long tenantId;
 
 }

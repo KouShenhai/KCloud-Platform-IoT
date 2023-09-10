@@ -37,7 +37,4 @@ public class RoleDeptDO extends BaseDO {
 	@Schema(name = "roleId", description = "角色ID")
 	private Long roleId;
 
-	@Schema(name = "deptId", description = "部门ID")
-	private Long deptId;
-
 }

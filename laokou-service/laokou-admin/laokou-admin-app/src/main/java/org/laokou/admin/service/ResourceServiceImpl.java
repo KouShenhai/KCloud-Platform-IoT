@@ -133,7 +133,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	@Override
-	public Result<Boolean> detailTask(ResourceDetailTaskGetQry qry) {
+	public Result<TaskCO> detailTask(ResourceDetailTaskGetQry qry) {
 		return null;
 	}
 

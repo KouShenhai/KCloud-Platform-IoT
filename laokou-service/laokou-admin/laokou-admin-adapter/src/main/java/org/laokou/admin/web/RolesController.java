@@ -20,9 +20,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.RolesServiceI;
+import org.laokou.admin.domain.annotation.OperateLog;
+import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.role.*;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
-import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.Cache;
 import org.laokou.common.i18n.dto.Datas;
@@ -30,6 +31,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -52,7 +55,7 @@ public class RolesController {
 	@TraceLog
 	@PostMapping("v1/roles/option-list")
 	@Operation(summary = "角色管理", description = "下拉列表")
-	public Result<?> optionList() {
+	public Result<List<OptionCO>> optionList() {
 		return rolesServiceI.optionList(new RoleOptionListQry());
 	}
 
@@ -60,7 +63,7 @@ public class RolesController {
 	@GetMapping("v1/roles/{id}")
 	@Operation(summary = "角色管理", description = "查看角色")
 	@DataCache(name = "roles", key = "#id")
-	public Result<?> get(@PathVariable("id") Long id) {
+	public Result<RoleCO> get(@PathVariable("id") Long id) {
 		return rolesServiceI.get(new RoleGetQry(id));
 	}
 
@@ -78,7 +81,7 @@ public class RolesController {
 	@Operation(summary = "角色管理", description = "修改角色")
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@PreAuthorize("hasAuthority('roles:update')")
-	@DataCache(name = "roles", key = "#dto.id", type = Cache.DEL)
+	@DataCache(name = "roles", key = "#cmd.roleCO.id", type = Cache.DEL)
 	public Result<Boolean> update(@RequestBody RoleUpdateCmd cmd) {
 		return rolesServiceI.update(cmd);
 	}
