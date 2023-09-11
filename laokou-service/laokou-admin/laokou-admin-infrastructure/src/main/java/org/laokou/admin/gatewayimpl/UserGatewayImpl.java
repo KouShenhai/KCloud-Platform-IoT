@@ -24,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
-import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
@@ -34,6 +33,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.context.DynamicTableContextHolder;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
@@ -149,12 +149,12 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	@DataFilter(alias = "boot_sys_user")
 	@DS(SHARDING_SPHERE)
-	public Datas<User> list(User user, DataPage dataPage) {
+	@DataFilter(alias = "boot_sys_user")
+	public Datas<User> list(User user, PageQuery pageQuery) {
 		UserDO userDO = UserConvertor.toDataObject(user);
-		Page<UserDO> page = new Page<>(dataPage.getPageNum(), dataPage.getPageSize());
-		IPage<UserDO> newPage = userMapper.getUserList(page, userDO);
+		Page<UserDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+		IPage<UserDO> newPage = userMapper.getUserListFilter(page, userDO,pageQuery.getSqlFilter());
 		Datas<User> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),User.class));

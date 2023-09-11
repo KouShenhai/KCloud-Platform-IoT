@@ -19,11 +19,19 @@ package org.laokou.admin.command.user.query;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
+import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -35,8 +43,17 @@ public class UserListQryExe {
     private final UserGateway userGateway;
 
     public Result<Datas<UserCO>> execute(UserListQry qry) {
-        //userGateway.list(new User(),)
-        return null;
+        User user = new User(qry.getUsername(), UserUtil.getTenantId());
+        Datas<User> newPage = userGateway.list(user, new PageQuery(qry.getPageNum(), qry.getPageSize()));
+        Datas<UserCO> datas = new Datas<>();
+        List<User> records = newPage.getRecords();
+        if (CollectionUtil.isNotEmpty(records)) {
+            List<UserCO> userCOS = ConvertUtil.sourceToTarget(records, UserCO.class);
+            userCOS.forEach(item -> item.setUsername(AesUtil.decrypt(item.getUsername())));
+            datas.setRecords(userCOS);
+        }
+        datas.setTotal(newPage.getTotal());
+        return Result.of(datas);
     }
 
 }

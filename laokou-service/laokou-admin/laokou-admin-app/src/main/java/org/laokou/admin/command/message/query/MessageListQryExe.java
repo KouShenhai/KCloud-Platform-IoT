@@ -18,13 +18,13 @@
 package org.laokou.admin.command.message.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.dto.message.MessageListQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -38,9 +38,9 @@ public class MessageListQryExe {
     private final MessageGateway messageGateway;
 
     public Result<Datas<MessageCO>> execute(MessageListQry qry) {
-        DataPage dataPage = new DataPage(qry.getPageNum(),qry.getPageSize());
+        PageQuery pageQuery = new PageQuery(qry.getPageNum(),qry.getPageSize());
         Message message = new Message(qry.getTitle());
-        Datas<Message> list = messageGateway.list(message, dataPage);
+        Datas<Message> list = messageGateway.list(message, pageQuery);
         Datas<MessageCO> datas = new Datas<>();
         datas.setRecords(ConvertUtil.sourceToTarget(list.getRecords(),MessageCO.class));
         datas.setTotal(list.getTotal());

@@ -54,4 +54,13 @@ public class User {
 
 	private Integer superAdmin;
 
+	private Long tenantId;
+
+	public User(String username, Long tenantId) {
+		this.username = username;
+		this.tenantId = tenantId;
+	}
+
+	public User() {
+	}
 }

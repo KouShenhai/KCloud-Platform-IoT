@@ -66,9 +66,9 @@
         </if>
         order by create_date desc
     </select>
-    <select id="getUserList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
+    <select id="getUserListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
         select id
-            ,username
+            ,`username`
             ,super_admin
             ,create_date
             ,avatar
@@ -78,10 +78,7 @@
         where del_flag = 0
             and super_admin = 0
         <if test="userDO.username != null and userDO.username != ''">
-            and username like concat('%',#{userDO.username},'%')
-        </if>
-        <if test="userDO.status != null">
-            and `status` = #{userDO.status}
+            and `username` = #{userDO.username}
         </if>
         <if test="userDO.tenantId != null">
             and tenant_id = #{userDO.tenantId}

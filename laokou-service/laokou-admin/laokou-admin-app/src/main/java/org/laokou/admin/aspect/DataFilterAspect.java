@@ -32,6 +32,7 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.laokou.common.core.constant.Constant.*;
@@ -47,8 +48,8 @@ public class DataFilterAspect {
 
 	@Before("@annotation(org.laokou.admin.domain.annotation.DataFilter)")
 	public void doBefore(JoinPoint point) {
-		Object params = point.getArgs()[0];
-		if (params instanceof PageQuery pageQuery) {
+		Object param = Arrays.stream(point.getArgs()).filter(arg -> arg instanceof PageQuery).findFirst().orElse(new PageQuery());
+		if (param instanceof PageQuery pageQuery) {
 			User user = UserUtil.user();
 			// 超级管理员不过滤数据
 			if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
@@ -86,7 +87,7 @@ public class DataFilterAspect {
 		}
 		sqlFilter.append(LEFT);
 		if (CollectionUtil.isNotEmpty(deptIds)) {
-			sqlFilter.append(alias).append(deptIdColumn).append(SPACE).append(IN).append(SPACE).append(RIGHT);
+			sqlFilter.append(alias).append(deptIdColumn).append(SPACE).append(IN).append(SPACE).append(LEFT);
 			sqlFilter.append(String.join(COMMA, deptIds.stream().map(String::valueOf).toArray(String[]::new)));
 			sqlFilter.append(RIGHT).append(SPACE).append(OR).append(SPACE);
 		}

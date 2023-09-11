@@ -18,13 +18,13 @@
 package org.laokou.admin.command.dict.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.dict.DictListQry;
-import org.laokou.admin.dto.dict.clientobject.DictCO;
-import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
+import org.laokou.admin.dto.dict.DictListQry;
+import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +41,7 @@ public class DictListQryExe {
 		Dict dict = new Dict();
 		dict.setType(qry.getType());
 		dict.setLabel(qry.getLabel());
-		Datas<Dict> datas = dictGateway.list(dict, new DataPage(qry.getPageNum(), qry.getPageSize()));
+		Datas<Dict> datas = dictGateway.list(dict, new PageQuery(qry.getPageNum(), qry.getPageSize()));
 		Datas<DictCO> da = new Datas<>();
 		da.setRecords(ConvertUtil.sourceToTarget(datas.getRecords(), DictCO.class));
 		da.setTotal(datas.getTotal());

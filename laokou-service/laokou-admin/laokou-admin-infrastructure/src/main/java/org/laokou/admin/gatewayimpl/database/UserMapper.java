@@ -53,6 +53,6 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 * @param userDO
 	 * @return
 	 */
-	IPage<UserDO> getUserList(IPage<UserDO> page, @Param("userDO") UserDO userDO);
+	IPage<UserDO> getUserListFilter(IPage<UserDO> page, @Param("userDO") UserDO userDO,@Param("sqlFilter")String sqlFilter);
 
 }
