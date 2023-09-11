@@ -62,6 +62,11 @@ public interface Constant {
 	String EQUAL = "=";
 
 	/**
+	 * 模糊
+	 */
+	String LIKE = "%";
+
+	/**
 	 * 并
 	 */
 	String AND = "&";

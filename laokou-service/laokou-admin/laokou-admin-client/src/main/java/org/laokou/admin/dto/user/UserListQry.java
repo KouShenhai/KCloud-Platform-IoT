@@ -19,6 +19,8 @@ package org.laokou.admin.dto.user;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.jasypt.utils.AesUtil;
 
 /**
  * @author laokou
@@ -28,4 +30,11 @@ public class UserListQry extends PageQuery {
 
     private String username;
 
+    public void setUsername(String username) {
+        String encryptName = "";
+        if (StringUtil.isNotEmpty(username)) {
+            encryptName = AesUtil.encrypt(username);
+        }
+        this.username = encryptName;
+    }
 }
