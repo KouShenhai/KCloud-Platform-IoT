@@ -48,12 +48,12 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	@Override
 	public Result<Boolean> update(UserUpdateCmd cmd) {
-		return null;
+		return userUpdateCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> insert(UserInsertCmd cmd) {
-		return null;
+		return userInsertCmdExe.execute(cmd);
 	}
 
 	@Override
@@ -93,12 +93,12 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	@Override
 	public Result<UserCO> get(UserGetQry qry) {
-		return null;
+		return userGetQryExe.execute(qry);
 	}
 
 	@Override
 	public Result<Boolean> delete(UserDeleteCmd cmd) {
-		return null;
+		return userDeleteCmdExe.execute(cmd);
 	}
 
 	@Override

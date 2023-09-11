@@ -18,6 +18,9 @@
 package org.laokou.admin.command.user;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.UserGateway;
+import org.laokou.admin.dto.user.UserProfileUpdateCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +29,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class UserProfileUpdateCmdExe {
+
+    private final UserGateway userGateway;
+
+    public Result<Boolean> execute(UserProfileUpdateCmd cmd) {
+        return null;
+    }
 
 }

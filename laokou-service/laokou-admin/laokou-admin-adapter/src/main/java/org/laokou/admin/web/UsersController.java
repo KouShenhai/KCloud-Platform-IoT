@@ -51,7 +51,7 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "修改用户")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@PreAuthorize("hasAuthority('users:update')")
-	@DataCache(name = "users", key = "#dto.id", type = Cache.DEL)
+	@DataCache(name = "users", key = "#cmd.userCO.id", type = Cache.DEL)
 	public Result<Boolean> update(@RequestBody UserUpdateCmd cmd) {
 		return usersServiceI.update(cmd);
 	}

@@ -17,7 +17,7 @@
 
 package org.laokou.admin.command.dict.query;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.dict.DictOptionListQry;
@@ -41,7 +41,7 @@ public class DictOptionListQryExe {
 	private final DictMapper dictMapper;
 
 	public Result<List<OptionCO>> execute(DictOptionListQry qry) {
-		List<DictDO> list = dictMapper.selectList(new QueryWrapper<>(DictDO.class).eq("type", qry.getType())
+		List<DictDO> list = dictMapper.selectList(Wrappers.query(DictDO.class).eq("type", qry.getType())
 				.select("label", "value").orderByDesc("create_date"));
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
