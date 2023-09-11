@@ -18,13 +18,13 @@
 package org.laokou.admin.command.role.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.role.RoleListQry;
-import org.laokou.admin.dto.role.clientobject.RoleCO;
-import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.domain.role.Role;
+import org.laokou.admin.dto.role.RoleListQry;
+import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -41,8 +41,8 @@ public class RoleListQryExe {
 	public Result<Datas<RoleCO>> execute(RoleListQry qry) {
 		Role role = new Role();
 		role.setName(qry.getName());
-		DataPage dataPage = new DataPage(qry.getPageNum(), qry.getPageSize());
-		Datas<Role> datas = roleGateway.list(UserUtil.getTenantId(), role, dataPage);
+		Datas<Role> datas = roleGateway.list(UserUtil.getTenantId(), role, new PageQuery() {
+		});
 		Datas<RoleCO> newDatas = new Datas<>();
 		newDatas.setTotal(datas.getTotal());
 		newDatas.setRecords(ConvertUtil.sourceToTarget(datas.getRecords(), RoleCO.class));

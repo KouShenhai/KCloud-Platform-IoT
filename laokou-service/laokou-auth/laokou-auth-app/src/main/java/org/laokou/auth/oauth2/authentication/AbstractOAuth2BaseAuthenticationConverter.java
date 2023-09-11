@@ -67,9 +67,9 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		if (StringUtil.isNotEmpty(traceId)) {
 			MDC.put(TRACE_ID, traceId);
 		}
-		// 判断租户编号是否为空
+		// 判断租户ID是否为空
 		String tenantId = request.getParameter(TENANT_ID);
-		log.info("租户编号：{}", tenantId);
+		log.info("租户ID：{}", tenantId);
 		if (StringUtil.isEmpty(tenantId)) {
 			throw OAuth2ExceptionHandler.getException(TENANT_ID_NOT_NULL, MessageUtil.getMessage(TENANT_ID_NOT_NULL));
 		}

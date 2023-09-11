@@ -103,7 +103,7 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	@Override
 	public Result<Datas<UserCO>> list(UserListQry qry) {
-		return null;
+		return userListQryExe.execute(qry);
 	}
 
 }

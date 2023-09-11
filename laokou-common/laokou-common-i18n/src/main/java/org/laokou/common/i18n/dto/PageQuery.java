@@ -19,6 +19,7 @@ package org.laokou.common.i18n.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 
@@ -26,30 +27,29 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
+@NoArgsConstructor
 @Schema(name = "PageQuery", description = "分页")
-public abstract class PageQuery extends Query {
+public class PageQuery extends Query {
+
+	public static final String SQL_FILTER = "sqlFilter";
 
 	@Serial
 	private static final long serialVersionUID = 6412915892334241813L;
 
-	/**
-	 * 页码
-	 */
 	@NotNull(message = "显示页码不为空")
 	@Schema(name = "pageNum", description = "页码")
 	private Integer pageNum;
 
-	/**
-	 * 条数
-	 */
 	@NotNull(message = "显示条数不为空")
 	@Schema(name = "pageSize", description = "条数")
 	private Integer pageSize;
 
-	/**
-	 * sql拼接
-	 */
 	@Schema(name = "sqlFilter", description = "SQL拼接")
 	private String sqlFilter;
+
+	public PageQuery(Integer pageNum, Integer pageSize) {
+		this.pageNum = pageNum;
+		this.pageSize = pageSize;
+	}
 
 }

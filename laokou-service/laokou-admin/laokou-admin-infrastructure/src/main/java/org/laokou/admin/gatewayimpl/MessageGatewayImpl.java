@@ -23,7 +23,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.MessageConvertor;
-import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.domain.message.Type;
@@ -36,6 +35,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -69,8 +69,8 @@ public class MessageGatewayImpl implements MessageGateway {
 
     @Override
     @DS(TENANT)
-    public Datas<Message> list(Message message, DataPage dataPage) {
-        IPage<MessageDO> page = new Page<>(dataPage.getPageNum(),dataPage.getPageSize());
+    public Datas<Message> list(Message message, PageQuery pageQuery) {
+        IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(),pageQuery.getPageSize());
         IPage<MessageDO> newPage = messageMapper.getMessageListLikeTitle(page, message.getTitle());
         Datas<Message> datas = new Datas<>();
         datas.setTotal(newPage.getTotal());

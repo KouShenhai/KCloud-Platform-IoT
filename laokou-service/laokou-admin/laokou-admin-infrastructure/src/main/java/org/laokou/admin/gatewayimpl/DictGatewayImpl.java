@@ -23,13 +23,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.DictConvertor;
-import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -82,8 +82,8 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	@Override
-	public Datas<Dict> list(Dict dict, DataPage dataPage) {
-		IPage<DictDO> page = new Page<>(dataPage.getPageNum(), dataPage.getPageSize());
+	public Datas<Dict> list(Dict dict, PageQuery pageQuery) {
+		IPage<DictDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		DictDO dictDO = DictConvertor.toDataObject(dict);
 		IPage<DictDO> newPage = dictMapper.getDictList(page, dictDO);
 		Datas<Dict> datas = new Datas<>();

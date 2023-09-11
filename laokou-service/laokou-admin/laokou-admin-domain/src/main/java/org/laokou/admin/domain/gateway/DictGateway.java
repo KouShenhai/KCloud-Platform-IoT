@@ -15,9 +15,9 @@
  */
 package org.laokou.admin.domain.gateway;
 
-import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
@@ -32,6 +32,6 @@ public interface DictGateway {
 
 	Boolean deleteById(Long id);
 
-	Datas<Dict> list(Dict dict, DataPage dataPage);
+	Datas<Dict> list(Dict dict,  PageQuery pageQuery);
 
 }

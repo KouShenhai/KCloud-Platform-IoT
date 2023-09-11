@@ -17,16 +17,16 @@
 
 package org.laokou.admin.domain.gateway;
 
-import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.message.Message;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
 public interface MessageGateway {
 
-    Datas<Message> list(Message message, DataPage dataPage);
+    Datas<Message> list(Message message, PageQuery pageQuery);
 
     Boolean insert(Message message);
 

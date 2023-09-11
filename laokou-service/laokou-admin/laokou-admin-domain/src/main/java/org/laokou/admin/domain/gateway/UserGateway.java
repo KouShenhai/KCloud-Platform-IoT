@@ -15,9 +15,9 @@
  */
 package org.laokou.admin.domain.gateway;
 
-import org.laokou.admin.domain.common.DataPage;
 import org.laokou.admin.domain.user.User;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
@@ -36,6 +36,6 @@ public interface UserGateway {
 
 	User getById(Long id);
 
-	Datas<User> list(User user, DataPage dataPage);
+	Datas<User> list(User user, PageQuery pageQuery);
 
 }
