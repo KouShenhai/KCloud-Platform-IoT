@@ -28,9 +28,9 @@ import java.io.Serial;
 @Data
 public class DefinitionListQry extends PageQuery {
 
-    @Serial
-    private static final long serialVersionUID = -818653141079850719L;
+	@Serial
+	private static final long serialVersionUID = -818653141079850719L;
 
-    private String name;
+	private String name;
 
 }

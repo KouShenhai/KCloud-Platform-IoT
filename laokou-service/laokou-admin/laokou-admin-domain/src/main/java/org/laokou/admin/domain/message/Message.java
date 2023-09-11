@@ -30,19 +30,20 @@ import java.util.Set;
 @NoArgsConstructor
 public class Message {
 
-    private Long id;
+	private Long id;
 
-    private String title;
+	private String title;
 
-    private String content;
+	private String content;
 
-    private LocalDateTime createDate;
+	private LocalDateTime createDate;
 
-    private Integer type;
+	private Integer type;
 
-    private Set<String> receiver;
+	private Set<String> receiver;
 
-    public Message(String title) {
-        this.title = title;
-    }
+	public Message(String title) {
+		this.title = title;
+	}
+
 }

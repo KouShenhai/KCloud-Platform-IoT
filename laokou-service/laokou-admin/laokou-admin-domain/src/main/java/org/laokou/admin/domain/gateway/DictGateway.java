@@ -32,6 +32,6 @@ public interface DictGateway {
 
 	Boolean deleteById(Long id);
 
-	Datas<Dict> list(Dict dict,  PageQuery pageQuery);
+	Datas<Dict> list(Dict dict, PageQuery pageQuery);
 
 }

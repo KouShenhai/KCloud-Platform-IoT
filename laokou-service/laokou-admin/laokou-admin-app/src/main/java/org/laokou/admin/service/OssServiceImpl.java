@@ -42,7 +42,6 @@ public class OssServiceImpl implements OssServiceI {
 
 	private final OssDeleteCmdExe ossDeleteCmdExe;
 
-
 	private final OssListQryExe ossListQryExe;
 
 	private final OssUploadCmdExe ossUploadCmdExe;

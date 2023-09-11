@@ -26,6 +26,6 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class MessageUnreadListQry extends PageQuery {
 
-    private Integer type;
+	private Integer type;
 
 }

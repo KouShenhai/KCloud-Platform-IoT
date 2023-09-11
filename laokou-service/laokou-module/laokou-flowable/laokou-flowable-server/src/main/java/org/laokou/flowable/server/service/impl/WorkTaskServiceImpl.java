@@ -249,10 +249,12 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 		final BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
 		final ProcessEngineConfiguration configuration = processEngine.getProcessEngineConfiguration();
 		// 获取自定义图片生成器
-//		ProcessDiagramGenerator diagramGenerator = new ProcessDiagramGeneratorConfig();
-//		return diagramGenerator.generateDiagram(bpmnModel, "png", highLightedNodes, highLightedFlows,
-//				configuration.getActivityFontName(), configuration.getLabelFontName(),
-//				configuration.getAnnotationFontName(), configuration.getClassLoader(), 1.0, true);
+		// ProcessDiagramGenerator diagramGenerator = new ProcessDiagramGeneratorConfig();
+		// return diagramGenerator.generateDiagram(bpmnModel, "png", highLightedNodes,
+		// highLightedFlows,
+		// configuration.getActivityFontName(), configuration.getLabelFontName(),
+		// configuration.getAnnotationFontName(), configuration.getClassLoader(), 1.0,
+		// true);
 		return null;
 	}
 

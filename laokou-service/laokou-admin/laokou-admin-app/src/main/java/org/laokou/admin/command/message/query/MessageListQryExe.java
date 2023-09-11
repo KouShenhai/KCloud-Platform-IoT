@@ -35,16 +35,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MessageListQryExe {
 
-    private final MessageGateway messageGateway;
+	private final MessageGateway messageGateway;
 
-    public Result<Datas<MessageCO>> execute(MessageListQry qry) {
-        PageQuery pageQuery = new PageQuery(qry.getPageNum(),qry.getPageSize());
-        Message message = new Message(qry.getTitle());
-        Datas<Message> list = messageGateway.list(message, pageQuery);
-        Datas<MessageCO> datas = new Datas<>();
-        datas.setRecords(ConvertUtil.sourceToTarget(list.getRecords(),MessageCO.class));
-        datas.setTotal(list.getTotal());
-        return Result.of(datas);
-    }
+	public Result<Datas<MessageCO>> execute(MessageListQry qry) {
+		PageQuery pageQuery = new PageQuery(qry.getPageNum(), qry.getPageSize());
+		Message message = new Message(qry.getTitle());
+		Datas<Message> list = messageGateway.list(message, pageQuery);
+		Datas<MessageCO> datas = new Datas<>();
+		datas.setRecords(ConvertUtil.sourceToTarget(list.getRecords(), MessageCO.class));
+		datas.setTotal(list.getTotal());
+		return Result.of(datas);
+	}
 
 }

@@ -34,6 +34,6 @@ public interface RoleMenuMapper extends BatchMapper<RoleMenuDO> {
 
 	List<Long> getIdsByRoleId(@Param("roleId") Long roleId);
 
-	Integer deleteRoleMenuByIds(@Param("list")List<Long> list);
+	Integer deleteRoleMenuByIds(@Param("list") List<Long> list);
 
 }

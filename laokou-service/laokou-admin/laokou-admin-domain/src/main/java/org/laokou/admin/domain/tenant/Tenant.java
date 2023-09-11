@@ -15,15 +15,22 @@
  *
  */
 
-package org.laokou.flowable.dto.definition;
+package org.laokou.admin.domain.tenant;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-public class DefinitionActivateCmd extends CommonCommand {
+public class Tenant {
+
+	private Long id;
+
+	private String name;
+
+	private Long sourceId;
+
+	private Long packageId;
 
 }

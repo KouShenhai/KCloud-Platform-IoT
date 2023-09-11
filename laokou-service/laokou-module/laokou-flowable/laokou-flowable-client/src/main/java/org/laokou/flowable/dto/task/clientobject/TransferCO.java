@@ -25,7 +25,8 @@ import lombok.Data;
 @Data
 public class TransferCO extends ResolveCO {
 
-    private Long userId;
-    private Long transferId;
+	private Long userId;
+
+	private Long transferId;
 
 }

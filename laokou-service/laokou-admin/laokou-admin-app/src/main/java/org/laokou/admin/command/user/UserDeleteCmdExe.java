@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserDeleteCmdExe {
 
-    private final UserGateway userGateway;
+	private final UserGateway userGateway;
 
-    public Result<Boolean> execute(UserDeleteCmd cmd) {
-        return Result.of(userGateway.deleteById(cmd.getId()));
-    }
+	public Result<Boolean> execute(UserDeleteCmd cmd) {
+		return Result.of(userGateway.deleteById(cmd.getId()));
+	}
 
 }

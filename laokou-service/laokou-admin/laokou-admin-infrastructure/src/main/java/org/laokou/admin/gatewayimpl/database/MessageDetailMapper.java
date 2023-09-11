@@ -28,6 +28,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface MessageDetailMapper extends BatchMapper<MessageDetailDO> {
 
-    Integer getUnreadMessageCountByUserId(@Param("userId") Long userId);
+	Integer getUnreadMessageCountByUserId(@Param("userId") Long userId);
 
 }

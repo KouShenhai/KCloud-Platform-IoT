@@ -23,16 +23,16 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface DefinitionsServiceI {
 
-    Result<Boolean> insert();
+	Result<Boolean> insert();
 
-    Result<Datas<?>> list();
+	Result<Datas<?>> list();
 
-    Result<String> diagram();
+	Result<String> diagram();
 
-    Result<Boolean> delete();
+	Result<Boolean> delete();
 
-    Result<Boolean> suspend();
+	Result<Boolean> suspend();
 
-    Result<Boolean> activate();
+	Result<Boolean> activate();
 
 }

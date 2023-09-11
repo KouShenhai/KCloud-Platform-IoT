@@ -31,10 +31,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserStatusUpdateCmdExe {
 
-    private final UserGateway userGateway;
+	private final UserGateway userGateway;
 
-    public Result<Boolean> execute(UserStatusUpdateCmd cmd) {
-        return Result.of(userGateway.updateInfo(new User(cmd.getId(),cmd.getStatus())));
-    }
+	public Result<Boolean> execute(UserStatusUpdateCmd cmd) {
+		return Result.of(userGateway.updateInfo(new User(cmd.getId(), cmd.getStatus())));
+	}
 
 }

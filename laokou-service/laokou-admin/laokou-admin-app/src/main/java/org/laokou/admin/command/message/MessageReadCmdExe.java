@@ -41,32 +41,35 @@ import static org.laokou.admin.common.Constant.TENANT;
 @RequiredArgsConstructor
 public class MessageReadCmdExe {
 
-    private final MessageDetailMapper messageDetailMapper;
-    private final MessageMapper messageMapper;
-    private final TransactionalUtil transactionalUtil;
+	private final MessageDetailMapper messageDetailMapper;
 
-    @DS(TENANT)
-    public Result<MessageCO> execute(MessageReadCmd cmd) {
-        Long detailId = cmd.getDetailId();
-        updateFlag(detailId);
-        MessageDO list = messageMapper.getMessageByDetailId(detailId);
-        return Result.of(ConvertUtil.sourceToTarget(list, MessageCO.class));
-    }
+	private final MessageMapper messageMapper;
 
-    private void updateFlag(Long id) {
-        MessageDetailDO messageDetailDO = new MessageDetailDO();
-        messageDetailDO.setId(id);
-        // 0未读 1已读
-        messageDetailDO.setReadFlag(1);
-        messageDetailDO.setVersion(messageDetailMapper.getVersion(id,MessageDetailDO.class));
-        transactionalUtil.executeWithoutResult(rollback -> {
-            try {
-                messageDetailMapper.updateById(messageDetailDO);
-            } catch (Exception e) {
-                log.error("错误信息：{}", e.getMessage());
-                rollback.setRollbackOnly();
-            }
-        });
-    }
+	private final TransactionalUtil transactionalUtil;
+
+	@DS(TENANT)
+	public Result<MessageCO> execute(MessageReadCmd cmd) {
+		Long detailId = cmd.getDetailId();
+		updateFlag(detailId);
+		MessageDO list = messageMapper.getMessageByDetailId(detailId);
+		return Result.of(ConvertUtil.sourceToTarget(list, MessageCO.class));
+	}
+
+	private void updateFlag(Long id) {
+		MessageDetailDO messageDetailDO = new MessageDetailDO();
+		messageDetailDO.setId(id);
+		// 0未读 1已读
+		messageDetailDO.setReadFlag(1);
+		messageDetailDO.setVersion(messageDetailMapper.getVersion(id, MessageDetailDO.class));
+		transactionalUtil.executeWithoutResult(rollback -> {
+			try {
+				messageDetailMapper.updateById(messageDetailDO);
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				rollback.setRollbackOnly();
+			}
+		});
+	}
 
 }

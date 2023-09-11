@@ -27,13 +27,12 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class MessageConvertor {
 
-    public static Message toEntity(MessageCO messageCO) {
-        return ConvertUtil.sourceToTarget(messageCO, Message.class);
-    }
+	public static Message toEntity(MessageCO messageCO) {
+		return ConvertUtil.sourceToTarget(messageCO, Message.class);
+	}
 
-    public static MessageDO toDataObject(Message message) {
-        return ConvertUtil.sourceToTarget(message, MessageDO.class);
-    }
-
+	public static MessageDO toDataObject(Message message) {
+		return ConvertUtil.sourceToTarget(message, MessageDO.class);
+	}
 
 }

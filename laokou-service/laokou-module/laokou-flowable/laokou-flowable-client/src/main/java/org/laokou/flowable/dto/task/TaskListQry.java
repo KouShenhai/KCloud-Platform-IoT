@@ -26,11 +26,12 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class TaskListQry extends PageQuery {
 
-    private String name;
+	private String name;
 
-    private Long userId;
+	private Long userId;
 
-    private String username;
+	private String username;
 
-    private String processKey;
+	private String processKey;
+
 }

@@ -60,81 +60,89 @@ import static org.laokou.common.rocketmq.constant.MqConstant.*;
 @RequiredArgsConstructor
 public class MessageGatewayImpl implements MessageGateway {
 
-    private final MessageMapper messageMapper;
-    private final TransactionalUtil transactionalUtil;
-    private final MessageDetailMapper messageDetailMapper;
-    private final BatchUtil batchUtil;
-    private static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
-    private final RocketMqTemplate rocketMqTemplate;
+	private final MessageMapper messageMapper;
 
-    @Override
-    @DS(TENANT)
-    public Datas<Message> list(Message message, PageQuery pageQuery) {
-        IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(),pageQuery.getPageSize());
-        IPage<MessageDO> newPage = messageMapper.getMessageListLikeTitle(page, message.getTitle());
-        Datas<Message> datas = new Datas<>();
-        datas.setTotal(newPage.getTotal());
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),Message.class));
-        return datas;
-    }
+	private final TransactionalUtil transactionalUtil;
 
-    @Override
-    @DS(TENANT)
-    public Boolean insert(Message message) {
-        pushMessage(message.getReceiver(),message.getType());
-        MessageDO messageDO = MessageConvertor.toDataObject(message);
-        return insertMessage(messageDO,message);
-    }
+	private final MessageDetailMapper messageDetailMapper;
 
-    @Override
-    @DS(TENANT)
-    public Message get(Long id) {
-        MessageDO messageDO = messageMapper.selectById(id);
-        return ConvertUtil.sourceToTarget(messageDO,Message.class);
-    }
+	private final BatchUtil batchUtil;
 
-    private void pushMessage(Set<String> receiver,Integer type) {
-        if (CollectionUtil.isEmpty(receiver)) {
-            return;
-        }
-        WsMsgCO wsMsgCO = new WsMsgCO();
-        wsMsgCO.setMsg(DEFAULT_MESSAGE);
-        wsMsgCO.setReceiver(receiver);
-        rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC,getMessageTag(type),new MqDTO(JacksonUtil.toJsonStr(wsMsgCO)));
-    }
+	private static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
 
-    private Boolean insertMessage(MessageDO messageDO,Message message) {
-        return transactionalUtil.execute(rollback -> {
-            try {
-                return messageMapper.insert(messageDO) > 0 && insertMessageDetail(messageDO.getId(),message.getReceiver());
-            }
-            catch (Exception e) {
-                log.error("错误信息：{}", e.getMessage());
-                rollback.setRollbackOnly();
-                return false;
-            }
-        });
-    }
+	private final RocketMqTemplate rocketMqTemplate;
 
-    private Boolean insertMessageDetail(Long id, Set<String> receiver) {
-        if (CollectionUtil.isEmpty(receiver)) {
-            return false;
-        }
-        List<MessageDetailDO> list = new ArrayList<>(receiver.size());
-        for (String str : receiver) {
-            MessageDetailDO messageDetailDO = new MessageDetailDO();
-            messageDetailDO.setUserId(Long.parseLong(str));
-            messageDetailDO.setId(IdUtil.defaultId());
-            messageDetailDO.setCreateDate(DateUtil.now());
-            messageDetailDO.setCreator(UserUtil.getUserId());
-            messageDetailDO.setMessageId(id);
-            list.add(messageDetailDO);
-        }
-        batchUtil.insertBatch(list,messageDetailMapper::insertBatch);
-        return true;
-    }
+	@Override
+	@DS(TENANT)
+	public Datas<Message> list(Message message, PageQuery pageQuery) {
+		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+		IPage<MessageDO> newPage = messageMapper.getMessageListLikeTitle(page, message.getTitle());
+		Datas<Message> datas = new Datas<>();
+		datas.setTotal(newPage.getTotal());
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Message.class));
+		return datas;
+	}
 
-    private String getMessageTag(Integer type) {
-        return type == Type.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
-    }
+	@Override
+	@DS(TENANT)
+	public Boolean insert(Message message) {
+		pushMessage(message.getReceiver(), message.getType());
+		MessageDO messageDO = MessageConvertor.toDataObject(message);
+		return insertMessage(messageDO, message);
+	}
+
+	@Override
+	@DS(TENANT)
+	public Message get(Long id) {
+		MessageDO messageDO = messageMapper.selectById(id);
+		return ConvertUtil.sourceToTarget(messageDO, Message.class);
+	}
+
+	private void pushMessage(Set<String> receiver, Integer type) {
+		if (CollectionUtil.isEmpty(receiver)) {
+			return;
+		}
+		WsMsgCO wsMsgCO = new WsMsgCO();
+		wsMsgCO.setMsg(DEFAULT_MESSAGE);
+		wsMsgCO.setReceiver(receiver);
+		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(type),
+				new MqDTO(JacksonUtil.toJsonStr(wsMsgCO)));
+	}
+
+	private Boolean insertMessage(MessageDO messageDO, Message message) {
+		return transactionalUtil.execute(rollback -> {
+			try {
+				return messageMapper.insert(messageDO) > 0
+						&& insertMessageDetail(messageDO.getId(), message.getReceiver());
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				rollback.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	private Boolean insertMessageDetail(Long id, Set<String> receiver) {
+		if (CollectionUtil.isEmpty(receiver)) {
+			return false;
+		}
+		List<MessageDetailDO> list = new ArrayList<>(receiver.size());
+		for (String str : receiver) {
+			MessageDetailDO messageDetailDO = new MessageDetailDO();
+			messageDetailDO.setUserId(Long.parseLong(str));
+			messageDetailDO.setId(IdUtil.defaultId());
+			messageDetailDO.setCreateDate(DateUtil.now());
+			messageDetailDO.setCreator(UserUtil.getUserId());
+			messageDetailDO.setMessageId(id);
+			list.add(messageDetailDO);
+		}
+		batchUtil.insertBatch(list, messageDetailMapper::insertBatch);
+		return true;
+	}
+
+	private String getMessageTag(Integer type) {
+		return type == Type.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
+	}
+
 }

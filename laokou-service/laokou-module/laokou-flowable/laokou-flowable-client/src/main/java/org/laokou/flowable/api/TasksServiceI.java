@@ -23,18 +23,18 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface TasksServiceI {
 
-    Result<Datas<?>> list();
+	Result<Datas<?>> list();
 
-    Result<Boolean> audit();
+	Result<Boolean> audit();
 
-    Result<Boolean> resolve();
+	Result<Boolean> resolve();
 
-    Result<Boolean> start();
+	Result<Boolean> start();
 
-    Result<String> diagram();
+	Result<String> diagram();
 
-    Result<Boolean> transfer();
+	Result<Boolean> transfer();
 
-    Result<Boolean> delegate();
+	Result<Boolean> delegate();
 
 }
