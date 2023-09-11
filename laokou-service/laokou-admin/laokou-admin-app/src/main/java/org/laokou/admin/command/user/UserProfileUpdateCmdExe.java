@@ -17,11 +17,22 @@
 
 package org.laokou.admin.command.user;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
+import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserProfileUpdateCmd;
+import org.laokou.admin.dto.user.clientobject.UserProfileCO;
+import org.laokou.admin.gatewayimpl.database.UserMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.admin.common.BizCode.ID_NOT_NULL;
 
 /**
  * @author laokou
@@ -31,9 +42,38 @@ import org.springframework.stereotype.Component;
 public class UserProfileUpdateCmdExe {
 
     private final UserGateway userGateway;
+    private final UserMapper userMapper;
 
     public Result<Boolean> execute(UserProfileUpdateCmd cmd) {
-        return null;
+        UserProfileCO userProfileCO = cmd.getUserProfileCO();
+        validate(userProfileCO);
+        return Result.of(userGateway.updateInfo(ConvertUtil.sourceToTarget(userProfileCO,User.class)));
+    }
+
+    private void validate(UserProfileCO userProfileCO) {
+        if (userProfileCO.getId() == null) {
+            throw new GlobalException(ID_NOT_NULL);
+        }
+        if (StringUtil.isNotEmpty(userProfileCO.getMobile())) {
+            Long count = userMapper.selectCount(Wrappers.query(UserDO.class)
+                    .eq("tenant_id", UserUtil.getTenantId())
+                    .eq("mobile", userProfileCO.getMobile())
+                    .ne("id", userProfileCO.getId())
+            );
+            if (count > 0) {
+                throw new GlobalException("手机号已被注册，请重新填写");
+            }
+        }
+        if (StringUtil.isNotEmpty(userProfileCO.getMail())) {
+            Long count = userMapper.selectCount(Wrappers.query(UserDO.class)
+                    .eq("tenant_id", UserUtil.getTenantId())
+                    .eq("mail", userProfileCO.getMail())
+                    .ne("id", userProfileCO.getId())
+            );
+            if (count > 0) {
+                throw new GlobalException("邮箱地址已被注册，请重新填写");
+            }
+        }
     }
 
 }

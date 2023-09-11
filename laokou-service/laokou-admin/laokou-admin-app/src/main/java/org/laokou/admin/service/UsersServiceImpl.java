@@ -58,12 +58,12 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	@Override
 	public Result<Boolean> onlineKill(UserOnlineKillCmd cmd) {
-		return null;
+		return userOnlineKillCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Datas<UserOnlineCO>> onlineList(UserOnlineListQry qry) {
-		return null;
+		return userOnlineListQryExe.execute(qry);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	@Override
 	public Result<Boolean> profile(UserProfileUpdateCmd cmd) {
-		return null;
+		return userProfileUpdateCmdExe.execute(cmd);
 	}
 
 	@Override
