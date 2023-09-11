@@ -16,7 +16,7 @@
 package org.laokou.admin.domain.gateway;
 
 import org.laokou.admin.domain.menu.Menu;
-import org.laokou.auth.domain.user.User;
+import org.laokou.admin.domain.user.User;
 
 import java.util.List;
 

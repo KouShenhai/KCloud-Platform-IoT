@@ -61,6 +61,21 @@ public class User {
 		this.tenantId = tenantId;
 	}
 
+	public User(Long id, Integer status) {
+		this.id = id;
+		this.status = status;
+	}
+
+	public User(Long id, String password) {
+		this.id = id;
+		this.password = password;
+	}
+
+	public User(Integer superAdmin, Long tenantId) {
+		this.superAdmin = superAdmin;
+		this.tenantId = tenantId;
+	}
+
 	public User() {
 	}
 }
