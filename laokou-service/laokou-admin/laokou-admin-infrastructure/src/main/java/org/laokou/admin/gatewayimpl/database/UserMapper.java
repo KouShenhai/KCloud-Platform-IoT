@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,11 +27,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
+
 /**
  * @author laokou
  */
 @Repository
 @Mapper
+@DS(SHARDING_SPHERE)
 public interface UserMapper extends BatchMapper<UserDO> {
 
 	/**
@@ -38,7 +42,7 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 * @param userDO 用户
 	 * @return int
 	 */
-	int updateUser(@Param("userDO") UserDO userDO);
+	Integer updateUser(@Param("userDO") UserDO userDO);
 
 	/**
 	 * 根据租户ID查询下拉列表

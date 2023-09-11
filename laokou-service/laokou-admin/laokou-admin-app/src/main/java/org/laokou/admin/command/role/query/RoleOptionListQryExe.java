@@ -17,7 +17,7 @@
 
 package org.laokou.admin.command.role.query;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.role.RoleOptionListQry;
@@ -25,6 +25,7 @@ import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class RoleOptionListQryExe {
 
 	public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
 		List<RoleDO> list = roleMapper
-				.selectList(new QueryWrapper<>(RoleDO.class).select("id", "name").orderByDesc("create_date"));
+				.selectList(Wrappers.query(RoleDO.class).eq("tenant_id", UserUtil.getTenantId()).select("id", "name").orderByDesc("create_date"));
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}

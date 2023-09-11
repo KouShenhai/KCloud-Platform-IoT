@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
+import com.baomidou.dynamic.datasource.annotation.Master;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 @Repository
 @Mapper
+@Master
 public interface UserRoleMapper extends BatchMapper<UserRoleDO> {
 
 	/**
@@ -38,5 +40,9 @@ public interface UserRoleMapper extends BatchMapper<UserRoleDO> {
 	 * @return List<Long>
 	 */
 	List<Long> getIdsByUserId(@Param("userId") Long userId);
+
+	List<Long> getRoleIdsByUserId(@Param("userId")Long userId);
+
+	Integer deleteUserRoleByIds(@Param("list")List<Long> list);
 
 }

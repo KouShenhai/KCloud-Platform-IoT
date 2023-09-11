@@ -17,9 +17,9 @@
 
 package org.laokou.common.mybatisplus.database;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.common.i18n.common.GlobalException;
@@ -59,7 +59,7 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 	 * @return int
 	 */
 	default int getVersion(Long id, Class<T> clazz) {
-		T value = this.selectOne(new QueryWrapper<>(clazz).eq("id", id).select("version"));
+		T value = this.selectOne(Wrappers.query(clazz).eq("id", id).select("version"));
 		if (value == null) {
 			throw new GlobalException("数据不存在");
 		}

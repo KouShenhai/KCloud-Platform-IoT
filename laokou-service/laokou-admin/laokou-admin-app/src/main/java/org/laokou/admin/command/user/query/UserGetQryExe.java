@@ -18,6 +18,12 @@
 package org.laokou.admin.command.user.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.UserGateway;
+import org.laokou.admin.domain.user.User;
+import org.laokou.admin.dto.user.UserGetQry;
+import org.laokou.admin.dto.user.clientobject.UserCO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +32,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class UserGetQryExe {
+
+    private final UserGateway userGateway;
+
+    public Result<UserCO> execute(UserGetQry qry) {
+        User user = userGateway.getById(qry.getId());
+        return Result.of(ConvertUtil.sourceToTarget(user,UserCO.class));
+    }
 
 }

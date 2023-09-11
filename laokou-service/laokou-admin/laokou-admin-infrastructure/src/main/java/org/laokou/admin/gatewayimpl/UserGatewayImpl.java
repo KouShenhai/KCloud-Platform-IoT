@@ -17,8 +17,8 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,6 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.context.DynamicTableContextHolder;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -45,9 +44,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.laokou.admin.common.Constant.DEFAULT_SOURCE;
-import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
 
 /**
  * @author laokou
@@ -68,14 +64,12 @@ public class UserGatewayImpl implements UserGateway {
 	private final TransactionalUtil transactionalUtil;
 
 	@Override
-	@DS(SHARDING_SPHERE)
 	public Boolean insert(User user) {
 		UserDO userDO = getInsertUserDO(user);
 		return insertUser(userDO,user);
 	}
 
 	@Override
-	@DS(SHARDING_SPHERE)
 	public Boolean update(User user) {
 		UserDO userDO = getUpdateUserDO(user);
 		List<Long> ids = userRoleMapper.getIdsByUserId(userDO.getId());
@@ -83,32 +77,38 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	@DS(SHARDING_SPHERE)
-	@Transactional(rollbackFor = Exception.class)
 	public Boolean deleteById(Long id) {
-		return userMapper.deleteById(id) > 0;
+		return transactionalUtil.execute(r -> {
+			try {
+				return userMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
 	}
 
 	@Override
-	@DS(SHARDING_SPHERE)
 	public Boolean resetPassword(User user) {
 		return updateUser(getResetPasswordDO(user));
 	}
 
 	@Override
-	@DS(SHARDING_SPHERE)
 	public Boolean updateStatus(User user) {
 		return updateUser(getUpdateUserDO(user));
 	}
 
 	@Override
-	@DS(SHARDING_SPHERE)
 	public User getById(Long id) {
-		return null;
+		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class).eq("id",id).select("id","username","status","dept_id"));
+		User user = ConvertUtil.sourceToTarget(userDO, User.class);
+		user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
+		return user;
 	}
 
 	@Override
-	@DS(SHARDING_SPHERE)
 	@DataFilter(alias = "boot_sys_user")
 	public Datas<User> list(User user, PageQuery pageQuery) {
 		UserDO userDO = UserConvertor.toDataObject(user);
@@ -123,21 +123,21 @@ public class UserGatewayImpl implements UserGateway {
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertUser(UserDO userDO,User user) {
 		boolean flag = userMapper.insert(userDO) > 0;
-		return flag && insertBatch(userDO.getId(),user.getRoleIds());
+		return flag && insertUserRole(userDO.getId(),user.getRoleIds());
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateUser(UserDO userDO,User user,List<Long> ids) {
 		boolean flag = userMapper.updateUser(userDO) > 0;
 		flag = flag && deleteUserRole(ids);
-		return flag && insertBatch(userDO.getId(),user.getRoleIds());
+		return flag && insertUserRole(userDO.getId(),user.getRoleIds());
 	}
 
 	private Boolean deleteUserRole(List<Long> ids) {
-		if (CollectionUtil.isNotEmpty(ids)) {
+		if (CollectionUtil.isEmpty(ids)) {
 			return false;
 		}
-		return userRoleMapper.deleteBatchIds(ids) > 0;
+		return userRoleMapper.deleteUserRoleByIds(ids) > 0;
 	}
 
 	private UserDO getInsertUserDO(User user) {
@@ -159,27 +159,22 @@ public class UserGatewayImpl implements UserGateway {
 		return updateUserDO;
 	}
 
-	private Boolean insertBatch(Long userId, List<Long> roleIds) {
-		try {
-			DynamicTableContextHolder.set(DEFAULT_SOURCE);
-			if (CollectionUtil.isEmpty(roleIds)) {
-				return false;
-			}
-			List<UserRoleDO> list = new ArrayList<>(roleIds.size());
-			for (Long roleId : roleIds) {
-				UserRoleDO userRoleDO = new UserRoleDO();
-				userRoleDO.setId(IdUtil.defaultId());
-				userRoleDO.setDeptId(UserUtil.getDeptId());
-				userRoleDO.setTenantId(UserUtil.getTenantId());
-				userRoleDO.setCreator(UserUtil.getUserId());
-				userRoleDO.setUserId(userId);
-				userRoleDO.setRoleId(roleId);
-				list.add(userRoleDO);
-			}
-			batchUtil.insertBatch(list, userRoleMapper::insertBatch);
-		} finally {
-			DynamicTableContextHolder.clear();
+	private Boolean insertUserRole(Long userId, List<Long> roleIds) {
+		if (CollectionUtil.isEmpty(roleIds)) {
+			return false;
 		}
+		List<UserRoleDO> list = new ArrayList<>(roleIds.size());
+		for (Long roleId : roleIds) {
+			UserRoleDO userRoleDO = new UserRoleDO();
+			userRoleDO.setId(IdUtil.defaultId());
+			userRoleDO.setDeptId(UserUtil.getDeptId());
+			userRoleDO.setTenantId(UserUtil.getTenantId());
+			userRoleDO.setCreator(UserUtil.getUserId());
+			userRoleDO.setUserId(userId);
+			userRoleDO.setRoleId(roleId);
+			list.add(userRoleDO);
+		}
+		batchUtil.insertBatch(list, userRoleMapper::insertBatch);
 		return true;
 	}
 
