@@ -37,6 +37,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.context.DynamicTableContextHolder;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -64,48 +65,21 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final UserRoleMapper userRoleMapper;
 
+	private final TransactionalUtil transactionalUtil;
+
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	@DS(SHARDING_SPHERE)
 	public Boolean insert(User user) {
-		boolean flag;
-		try {
-			UserDO userDO = getInsertUserDO(user);
-			flag = userMapper.insert(userDO) > 0;
-			DynamicTableContextHolder.set(DEFAULT_SOURCE);
-			insertBatch(userDO.getId(), user.getRoleIds());
-		}
-		catch (Exception e) {
-			log.error("错误信息：{}", e.getMessage());
-			throw e;
-		}
-		finally {
-			DynamicTableContextHolder.clear();
-		}
-		return flag;
+		UserDO userDO = getInsertUserDO(user);
+		return insertUser(userDO,user);
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	@DS(SHARDING_SPHERE)
 	public Boolean update(User user) {
-		boolean updateFlag, updateBatchFlag;
-		try {
-			UserDO userDO = getUpdateUserDO(user);
-			updateFlag = userMapper.updateUser(userDO) > 0;
-			DynamicTableContextHolder.set(DEFAULT_SOURCE);
-			// 删除中间表
-			updateBatchFlag = deleteUserRole(userDO);
-			insertBatch(userDO.getId(), user.getRoleIds());
-		}
-		catch (Exception e) {
-			log.error("错误信息：{}", e.getMessage());
-			throw e;
-		}
-		finally {
-			DynamicTableContextHolder.clear();
-		}
-		return updateFlag && updateBatchFlag;
+		UserDO userDO = getUpdateUserDO(user);
+		List<Long> ids = userRoleMapper.getIdsByUserId(userDO.getId());
+		return updateUser(userDO,user,ids);
 	}
 
 	@Override
@@ -116,35 +90,20 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	@DS(SHARDING_SPHERE)
-	public Boolean updatePwd(User user) {
-		UserDO updateUserPwdDO = getUpdateUserPwdDO(user);
-		return userMapper.updateUser(updateUserPwdDO) > 0;
+	public Boolean resetPassword(User user) {
+		return updateUser(getResetPasswordDO(user));
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	@DS(SHARDING_SPHERE)
 	public Boolean updateStatus(User user) {
-		UserDO updateUserDO = getUpdateUserDO(user);
-		return userMapper.updateUser(updateUserDO) > 0;
+		return updateUser(getUpdateUserDO(user));
 	}
 
 	@Override
 	@DS(SHARDING_SPHERE)
 	public User getById(Long id) {
-		try {
-			UserDO userDO = userMapper.selectById(id);
-			DynamicTableContextHolder.set(DEFAULT_SOURCE);
-		}
-		catch (Exception e) {
-			log.error("错误信息：{}", e.getMessage());
-			throw e;
-		}
-		finally {
-			DynamicTableContextHolder.clear();
-		}
 		return null;
 	}
 
@@ -161,18 +120,29 @@ public class UserGatewayImpl implements UserGateway {
 		return datas;
 	}
 
-	private Boolean deleteUserRole(UserDO userDO) {
-		List<Long> ids = userRoleMapper.getIdsByUserId(userDO.getId());
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean insertUser(UserDO userDO,User user) {
+		boolean flag = userMapper.insert(userDO) > 0;
+		return flag && insertBatch(userDO.getId(),user.getRoleIds());
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean updateUser(UserDO userDO,User user,List<Long> ids) {
+		boolean flag = userMapper.updateUser(userDO) > 0;
+		flag = flag && deleteUserRole(ids);
+		return flag && insertBatch(userDO.getId(),user.getRoleIds());
+	}
+
+	private Boolean deleteUserRole(List<Long> ids) {
 		if (CollectionUtil.isNotEmpty(ids)) {
-			return userRoleMapper.deleteBatchIds(ids) > 0;
+			return false;
 		}
-		return false;
+		return userRoleMapper.deleteBatchIds(ids) > 0;
 	}
 
 	private UserDO getInsertUserDO(User user) {
 		UserDO userDO = UserConvertor.toDataObject(user);
 		userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
-		userDO.setTenantId(UserUtil.getTenantId());
 		return userDO;
 	}
 
@@ -183,25 +153,47 @@ public class UserGatewayImpl implements UserGateway {
 		return userDO;
 	}
 
-	private UserDO getUpdateUserPwdDO(User user) {
+	private UserDO getResetPasswordDO(User user) {
 		UserDO updateUserDO = getUpdateUserDO(user);
 		updateUserDO.setPassword(passwordEncoder.encode(updateUserDO.getPassword()));
 		return updateUserDO;
 	}
 
-	private void insertBatch(Long userId, List<Long> roleIds) {
-		if (CollectionUtil.isEmpty(roleIds)) {
-			return;
+	private Boolean insertBatch(Long userId, List<Long> roleIds) {
+		try {
+			DynamicTableContextHolder.set(DEFAULT_SOURCE);
+			if (CollectionUtil.isEmpty(roleIds)) {
+				return false;
+			}
+			List<UserRoleDO> list = new ArrayList<>(roleIds.size());
+			for (Long roleId : roleIds) {
+				UserRoleDO userRoleDO = new UserRoleDO();
+				userRoleDO.setId(IdUtil.defaultId());
+				userRoleDO.setDeptId(UserUtil.getDeptId());
+				userRoleDO.setTenantId(UserUtil.getTenantId());
+				userRoleDO.setCreator(UserUtil.getUserId());
+				userRoleDO.setUserId(userId);
+				userRoleDO.setRoleId(roleId);
+				list.add(userRoleDO);
+			}
+			batchUtil.insertBatch(list, userRoleMapper::insertBatch);
+		} finally {
+			DynamicTableContextHolder.clear();
 		}
-		List<UserRoleDO> list = new ArrayList<>(roleIds.size());
-		for (Long roleId : roleIds) {
-			UserRoleDO userRoleDO = new UserRoleDO();
-			userRoleDO.setId(IdUtil.defaultId());
-			userRoleDO.setUserId(userId);
-			userRoleDO.setRoleId(roleId);
-			list.add(userRoleDO);
-		}
-		batchUtil.insertBatch(list, userRoleMapper::insertBatch);
+		return true;
+	}
+
+	private Boolean updateUser(UserDO userDO) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return userMapper.updateUser(userDO) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
 	}
 
 }

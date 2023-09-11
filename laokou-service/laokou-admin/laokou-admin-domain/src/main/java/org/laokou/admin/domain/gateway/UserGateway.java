@@ -30,7 +30,7 @@ public interface UserGateway {
 
 	Boolean deleteById(Long id);
 
-	Boolean updatePwd(User user);
+	Boolean resetPassword(User user);
 
 	Boolean updateStatus(User user);
 

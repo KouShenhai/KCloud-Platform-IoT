@@ -53,7 +53,7 @@ public class RolesController {
 	}
 
 	@TraceLog
-	@PostMapping("v1/roles/option-list")
+	@GetMapping("v1/roles/option-list")
 	@Operation(summary = "角色管理", description = "下拉列表")
 	public Result<List<OptionCO>> optionList() {
 		return rolesServiceI.optionList(new RoleOptionListQry());
