@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -44,6 +45,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.laokou.admin.common.Constant.TENANT;
 
 /**
  * @author laokou
@@ -77,17 +80,14 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean deleteById(Long id) {
-		return transactionalUtil.execute(r -> {
-			try {
-				return userMapper.deleteById(id) > 0;
-			}
-			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
-				r.setRollbackOnly();
-				return false;
-			}
-		});
+		try {
+			DynamicDataSourceContextHolder.push(TENANT);
+			return userMapper.deleteById(id) > 0;
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 	@Override
