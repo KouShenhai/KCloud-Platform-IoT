@@ -19,6 +19,7 @@ package org.laokou.admin.command.menu.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
+import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.menu.MenuTreeListQry;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.common.core.utils.ConvertUtil;
@@ -47,7 +48,8 @@ public class MenuTreeListQryExe {
 		if (obj != null) {
 			return Result.of((MenuCO) obj);
 		}
-		List<Menu> menuList = menuGateway.list(UserUtil.user(), 0);
+		User user = ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
+		List<Menu> menuList = menuGateway.list(user, 0);
 		List<MenuCO> menus = ConvertUtil.sourceToTarget(menuList, MenuCO.class);
 		MenuCO menuCO = TreeUtil.buildTreeNode(menus, MenuCO.class);
 		redisUtil.set(menuTreeKey,menuCO,RedisUtil.HOUR_ONE_EXPIRE);

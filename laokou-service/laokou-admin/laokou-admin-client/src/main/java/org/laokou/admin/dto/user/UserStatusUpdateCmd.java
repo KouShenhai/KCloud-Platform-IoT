@@ -26,4 +26,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class UserStatusUpdateCmd extends CommonCommand {
 
+    private Long id;
+    private Integer status;
+
 }

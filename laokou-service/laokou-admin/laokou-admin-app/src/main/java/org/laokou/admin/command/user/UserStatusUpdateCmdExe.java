@@ -19,6 +19,7 @@ package org.laokou.admin.command.user;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
+import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserStatusUpdateCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,7 @@ public class UserStatusUpdateCmdExe {
     private final UserGateway userGateway;
 
     public Result<Boolean> execute(UserStatusUpdateCmd cmd) {
-        return null;
+        return Result.of(userGateway.updateInfo(new User(cmd.getId(),cmd.getStatus())));
     }
 
 }

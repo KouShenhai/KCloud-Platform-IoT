@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -37,7 +36,6 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -45,8 +43,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.laokou.admin.common.Constant.TENANT;
 
 /**
  * @author laokou
@@ -64,8 +60,6 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final UserRoleMapper userRoleMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public Boolean insert(User user) {
 		UserDO userDO = getInsertUserDO(user);
@@ -80,14 +74,13 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public Boolean deleteById(Long id) {
-		try {
-			DynamicDataSourceContextHolder.push(TENANT);
-			return userMapper.deleteById(id) > 0;
-		} finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		return deleteUserById(id);
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean deleteUserById(Long id) {
+		return userMapper.deleteById(id) > 0;
 	}
 
 	@Override
@@ -96,7 +89,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	public Boolean updateStatus(User user) {
+	public Boolean updateInfo(User user) {
 		return updateUser(getUpdateUserDO(user));
 	}
 
@@ -178,17 +171,9 @@ public class UserGatewayImpl implements UserGateway {
 		return true;
 	}
 
-	private Boolean updateUser(UserDO userDO) {
-		return transactionalUtil.execute(r -> {
-			try {
-				return userMapper.updateUser(userDO) > 0;
-			}
-			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
-				r.setRollbackOnly();
-				return false;
-			}
-		});
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean updateUser(UserDO userDO) {
+		return userMapper.updateUser(userDO) > 0;
 	}
 
 }

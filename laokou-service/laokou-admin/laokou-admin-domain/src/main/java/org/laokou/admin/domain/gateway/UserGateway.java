@@ -32,7 +32,7 @@ public interface UserGateway {
 
 	Boolean resetPassword(User user);
 
-	Boolean updateStatus(User user);
+	Boolean updateInfo(User user);
 
 	User getById(Long id);
 

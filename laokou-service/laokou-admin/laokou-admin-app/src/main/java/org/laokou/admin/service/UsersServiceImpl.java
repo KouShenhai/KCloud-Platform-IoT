@@ -83,12 +83,12 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	@Override
 	public Result<Boolean> status(UserStatusUpdateCmd cmd) {
-		return null;
+		return userStatusUpdateCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> resetPassword(UserPasswordResetCmd cmd) {
-		return null;
+		return userPasswordResetCmdExe.execute(cmd);
 	}
 
 	@Override

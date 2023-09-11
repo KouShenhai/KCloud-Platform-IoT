@@ -18,6 +18,10 @@
 package org.laokou.admin.command.user;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.UserGateway;
+import org.laokou.admin.domain.user.User;
+import org.laokou.admin.dto.user.UserPasswordResetCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +30,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class UserPasswordResetCmdExe {
+
+    private final UserGateway userGateway;
+
+    public Result<Boolean> execute(UserPasswordResetCmd cmd) {
+        return Result.of(userGateway.resetPassword(new User(cmd.getId(),cmd.getPassword())));
+    }
 
 }
