@@ -21,11 +21,13 @@ import org.springframework.stereotype.Component;
 public class UserInsertCmdExe {
 
 	private final UserGateway userGateway;
+
 	private final UserMapper userMapper;
 
 	public Result<Boolean> execute(UserInsertCmd cmd) {
 		UserCO userCO = cmd.getUserCO();
-		Long count = userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getUsername, AesUtil.encrypt(userCO.getUsername())));
+		Long count = userMapper.selectCount(
+				Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getUsername, AesUtil.encrypt(userCO.getUsername())));
 		if (count > 0) {
 			throw new GlobalException("用户名已存在，请重新输入");
 		}

@@ -15,15 +15,24 @@
  *
  */
 
-package org.laokou.flowable.dto.definition;
+package org.laokou.admin.convertor;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.admin.domain.tenant.Tenant;
+import org.laokou.admin.dto.tenant.clientobject.TenantCO;
+import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.common.core.utils.ConvertUtil;
 
 /**
  * @author laokou
  */
-@Data
-public class DefinitionActivateCmd extends CommonCommand {
+public class TenantConvertor {
+
+	public static Tenant toEntity(TenantCO tenantCO) {
+		return ConvertUtil.sourceToTarget(tenantCO, Tenant.class);
+	}
+
+	public static TenantDO toDataObject(Tenant tenant) {
+		return ConvertUtil.sourceToTarget(tenant, TenantDO.class);
+	}
 
 }

@@ -27,6 +27,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class MessageInsertCmd extends CommonCommand {
 
-    private MessageCO messageCO;
+	private MessageCO messageCO;
 
 }

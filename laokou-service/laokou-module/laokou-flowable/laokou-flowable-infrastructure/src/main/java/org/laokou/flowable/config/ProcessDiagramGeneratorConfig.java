@@ -258,8 +258,8 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 	}
 
 	private static ProcessDiagramCanvasConfig initProcessDiagramCanvas(double minX, double maxX, double minY,
-																	   double maxY, BpmnModel bpmnModel, String imageType, String activityFontName, String labelFontName,
-																	   String annotationFontName, ClassLoader customClassLoader) {
+			double maxY, BpmnModel bpmnModel, String imageType, String activityFontName, String labelFontName,
+			String annotationFontName, ClassLoader customClassLoader) {
 		List var23 = gatherAllFlowNodes(bpmnModel);
 
 		ProcessNum processNum1 = getProcessNum1(minX, maxX, minY, maxY, bpmnModel, var23);

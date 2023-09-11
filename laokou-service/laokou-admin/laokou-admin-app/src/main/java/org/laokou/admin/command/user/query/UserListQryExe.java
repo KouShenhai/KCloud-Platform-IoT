@@ -40,20 +40,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserListQryExe {
 
-    private final UserGateway userGateway;
+	private final UserGateway userGateway;
 
-    public Result<Datas<UserCO>> execute(UserListQry qry) {
-        User user = new User(qry.getUsername(), UserUtil.getTenantId());
-        Datas<User> newPage = userGateway.list(user, new PageQuery(qry.getPageNum(), qry.getPageSize()));
-        Datas<UserCO> datas = new Datas<>();
-        List<User> records = newPage.getRecords();
-        if (CollectionUtil.isNotEmpty(records)) {
-            List<UserCO> userCOS = ConvertUtil.sourceToTarget(records, UserCO.class);
-            userCOS.forEach(item -> item.setUsername(AesUtil.decrypt(item.getUsername())));
-            datas.setRecords(userCOS);
-        }
-        datas.setTotal(newPage.getTotal());
-        return Result.of(datas);
-    }
+	public Result<Datas<UserCO>> execute(UserListQry qry) {
+		User user = new User(qry.getUsername(), UserUtil.getTenantId());
+		Datas<User> newPage = userGateway.list(user, new PageQuery(qry.getPageNum(), qry.getPageSize()));
+		Datas<UserCO> datas = new Datas<>();
+		List<User> records = newPage.getRecords();
+		if (CollectionUtil.isNotEmpty(records)) {
+			List<UserCO> userCOS = ConvertUtil.sourceToTarget(records, UserCO.class);
+			userCOS.forEach(item -> item.setUsername(AesUtil.decrypt(item.getUsername())));
+			datas.setRecords(userCOS);
+		}
+		datas.setTotal(newPage.getTotal());
+		return Result.of(datas);
+	}
 
 }

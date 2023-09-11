@@ -29,42 +29,42 @@ import java.util.Map;
 @Data
 public class AuditCO extends ClientObject {
 
-    @Serial
-    private static final long serialVersionUID = -945627686622034109L;
+	@Serial
+	private static final long serialVersionUID = -945627686622034109L;
 
-    /**
-     * 任务id
-     */
-    private String taskId;
+	/**
+	 * 任务id
+	 */
+	private String taskId;
 
-    /**
-     * 任务名称
-     */
-    private String taskName;
+	/**
+	 * 任务名称
+	 */
+	private String taskName;
 
-    /**
-     * 审批意见
-     */
-    private String comment;
+	/**
+	 * 审批意见
+	 */
+	private String comment;
 
-    /**
-     * 实例ID
-     */
-    private String instanceId;
+	/**
+	 * 实例ID
+	 */
+	private String instanceId;
 
-    /**
-     * 业务标识
-     */
-    private String businessKey;
+	/**
+	 * 业务标识
+	 */
+	private String businessKey;
 
-    /**
-     * 实例名称
-     */
-    private String instanceName;
+	/**
+	 * 实例名称
+	 */
+	private String instanceName;
 
-    /**
-     * 流程变量
-     */
-    private Map<String, Object> values;
+	/**
+	 * 流程变量
+	 */
+	private Map<String, Object> values;
 
 }

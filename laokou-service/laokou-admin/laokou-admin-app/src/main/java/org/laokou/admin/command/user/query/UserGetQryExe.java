@@ -33,11 +33,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserGetQryExe {
 
-    private final UserGateway userGateway;
+	private final UserGateway userGateway;
 
-    public Result<UserCO> execute(UserGetQry qry) {
-        User user = userGateway.getById(qry.getId());
-        return Result.of(ConvertUtil.sourceToTarget(user,UserCO.class));
-    }
+	public Result<UserCO> execute(UserGetQry qry) {
+		User user = userGateway.getById(qry.getId());
+		return Result.of(ConvertUtil.sourceToTarget(user, UserCO.class));
+	}
 
 }

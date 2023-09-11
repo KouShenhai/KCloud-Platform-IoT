@@ -32,6 +32,6 @@ public interface RoleDeptMapper extends BatchMapper<RoleDeptDO> {
 
 	List<Long> getIdsByRoleId(@Param("roleId") Long roleId);
 
-	Integer deleteRoleDeptByIds(@Param("list")List<Long> list);
+	Integer deleteRoleDeptByIds(@Param("list") List<Long> list);
 
 }

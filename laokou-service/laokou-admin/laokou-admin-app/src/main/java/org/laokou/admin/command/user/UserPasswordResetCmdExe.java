@@ -31,10 +31,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserPasswordResetCmdExe {
 
-    private final UserGateway userGateway;
+	private final UserGateway userGateway;
 
-    public Result<Boolean> execute(UserPasswordResetCmd cmd) {
-        return Result.of(userGateway.resetPassword(new User(cmd.getId(),cmd.getPassword())));
-    }
+	public Result<Boolean> execute(UserPasswordResetCmd cmd) {
+		return Result.of(userGateway.resetPassword(new User(cmd.getId(), cmd.getPassword())));
+	}
 
 }

@@ -34,11 +34,11 @@ import static org.laokou.admin.common.Constant.TENANT;
 @RequiredArgsConstructor
 public class MessageUnreadCountGetQryExe {
 
-    private final MessageDetailMapper messageDetailMapper;
+	private final MessageDetailMapper messageDetailMapper;
 
-    @DS(TENANT)
-    public Result<Integer> execute(MessageUnreadCountGetQry qry) {
-        return Result.of(messageDetailMapper.getUnreadMessageCountByUserId(UserUtil.getUserId()));
-    }
+	@DS(TENANT)
+	public Result<Integer> execute(MessageUnreadCountGetQry qry) {
+		return Result.of(messageDetailMapper.getUnreadMessageCountByUserId(UserUtil.getUserId()));
+	}
 
 }

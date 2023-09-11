@@ -29,6 +29,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
@@ -41,39 +42,40 @@ import static org.laokou.admin.common.BizCode.ID_NOT_NULL;
 @RequiredArgsConstructor
 public class UserProfileUpdateCmdExe {
 
-    private final UserGateway userGateway;
-    private final UserMapper userMapper;
+	private final UserGateway userGateway;
 
-    public Result<Boolean> execute(UserProfileUpdateCmd cmd) {
-        UserProfileCO userProfileCO = cmd.getUserProfileCO();
-        validate(userProfileCO);
-        return Result.of(userGateway.updateInfo(ConvertUtil.sourceToTarget(userProfileCO,User.class)));
-    }
+	private final UserMapper userMapper;
 
-    private void validate(UserProfileCO userProfileCO) {
-        if (userProfileCO.getId() == null) {
-            throw new GlobalException(ID_NOT_NULL);
-        }
-        if (StringUtil.isNotEmpty(userProfileCO.getMobile())) {
-            Long count = userMapper.selectCount(Wrappers.query(UserDO.class)
-                    .eq("tenant_id", UserUtil.getTenantId())
-                    .eq("mobile", userProfileCO.getMobile())
-                    .ne("id", userProfileCO.getId())
-            );
-            if (count > 0) {
-                throw new GlobalException("手机号已被注册，请重新填写");
-            }
-        }
-        if (StringUtil.isNotEmpty(userProfileCO.getMail())) {
-            Long count = userMapper.selectCount(Wrappers.query(UserDO.class)
-                    .eq("tenant_id", UserUtil.getTenantId())
-                    .eq("mail", userProfileCO.getMail())
-                    .ne("id", userProfileCO.getId())
-            );
-            if (count > 0) {
-                throw new GlobalException("邮箱地址已被注册，请重新填写");
-            }
-        }
-    }
+	public Result<Boolean> execute(UserProfileUpdateCmd cmd) {
+		UserProfileCO userProfileCO = cmd.getUserProfileCO();
+		validate(userProfileCO);
+		encrypt(userProfileCO);
+		return Result.of(userGateway.updateInfo(ConvertUtil.sourceToTarget(userProfileCO, User.class)));
+	}
+
+	private void encrypt(UserProfileCO userProfileCO) {
+		userProfileCO.setMobile(AesUtil.encrypt(userProfileCO.getMobile()));
+		userProfileCO.setMail(AesUtil.encrypt(userProfileCO.getMail()));
+	}
+
+	private void validate(UserProfileCO userProfileCO) {
+		if (userProfileCO.getId() == null) {
+			throw new GlobalException(ID_NOT_NULL);
+		}
+		if (StringUtil.isNotEmpty(userProfileCO.getMobile())) {
+			Long count = userMapper.selectCount(Wrappers.query(UserDO.class).eq("tenant_id", UserUtil.getTenantId())
+					.eq("mobile", userProfileCO.getMobile()).ne("id", userProfileCO.getId()));
+			if (count > 0) {
+				throw new GlobalException("手机号已被注册，请重新填写");
+			}
+		}
+		if (StringUtil.isNotEmpty(userProfileCO.getMail())) {
+			Long count = userMapper.selectCount(Wrappers.query(UserDO.class).eq("tenant_id", UserUtil.getTenantId())
+					.eq("mail", userProfileCO.getMail()).ne("id", userProfileCO.getId()));
+			if (count > 0) {
+				throw new GlobalException("邮箱地址已被注册，请重新填写");
+			}
+		}
+	}
 
 }

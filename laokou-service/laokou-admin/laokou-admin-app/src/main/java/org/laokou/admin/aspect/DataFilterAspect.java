@@ -48,7 +48,8 @@ public class DataFilterAspect {
 
 	@Before("@annotation(org.laokou.admin.domain.annotation.DataFilter)")
 	public void doBefore(JoinPoint point) {
-		Object param = Arrays.stream(point.getArgs()).filter(arg -> arg instanceof PageQuery).findFirst().orElse(new PageQuery());
+		Object param = Arrays.stream(point.getArgs()).filter(arg -> arg instanceof PageQuery).findFirst()
+				.orElse(new PageQuery());
 		if (param instanceof PageQuery pageQuery) {
 			User user = UserUtil.user();
 			// 超级管理员不过滤数据

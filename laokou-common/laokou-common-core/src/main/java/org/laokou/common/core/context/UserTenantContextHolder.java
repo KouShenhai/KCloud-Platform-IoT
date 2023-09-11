@@ -27,9 +27,13 @@ public class UserTenantContextHolder {
 
 	@Data
 	public static class UserTenant {
+
 		private Long id;
+
 		private Long tenantId;
+
 		private Long deptId;
+
 	}
 
 	private static final ThreadLocal<UserTenant> USER_CONTEXT_HOLDER = new InheritableThreadLocal<>();

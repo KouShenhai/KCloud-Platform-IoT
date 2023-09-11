@@ -55,13 +55,13 @@ public class SysMenuApplicationServiceImpl implements SysMenuApplicationService 
 		User user = UserUtil.user();
 		Long userId = user.getId();
 		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(userId);
-//		Object obj = redisUtil.get(menuTreeKey);
-//		if (obj != null) {
-//			return (SysMenuVO) obj;
-//		}
-//		List<SysMenuVO> menuList = sysMenuService.getMenuList(user, 0);
-//		SysMenuVO sysMenuVO = buildMenu(menuList);
-//		redisUtil.set(menuTreeKey, sysMenuVO, RedisUtil.HOUR_ONE_EXPIRE);
+		// Object obj = redisUtil.get(menuTreeKey);
+		// if (obj != null) {
+		// return (SysMenuVO) obj;
+		// }
+		// List<SysMenuVO> menuList = sysMenuService.getMenuList(user, 0);
+		// SysMenuVO sysMenuVO = buildMenu(menuList);
+		// redisUtil.set(menuTreeKey, sysMenuVO, RedisUtil.HOUR_ONE_EXPIRE);
 		return null;
 	}
 

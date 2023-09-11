@@ -43,18 +43,20 @@ import static org.laokou.admin.common.Constant.TENANT;
 @RequiredArgsConstructor
 public class MessageUnreadListQryExe {
 
-    private final MessageMapper messageMapper;
+	private final MessageMapper messageMapper;
 
-    @DS(TENANT)
-    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED, readOnly = true)
-    public Result<Datas<MessageCO>> execute(MessageUnreadListQry qry) {
-        IPage<MessageDO> page = new Page<>(qry.getPageNum(),qry.getPageSize());
-        IPage<MessageDO> newPage = messageMapper.getUnreadMessageListByUserIdAndType(page, UserUtil.getUserId(), qry.getType());
-        long total = newPage.getTotal();
-        Datas<MessageCO> datas = new Datas<>();
-        datas.setTotal(total);
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),MessageCO.class));
-        return Result.of(datas);
-    }
+	@DS(TENANT)
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW,
+			isolation = Isolation.READ_UNCOMMITTED, readOnly = true)
+	public Result<Datas<MessageCO>> execute(MessageUnreadListQry qry) {
+		IPage<MessageDO> page = new Page<>(qry.getPageNum(), qry.getPageSize());
+		IPage<MessageDO> newPage = messageMapper.getUnreadMessageListByUserIdAndType(page, UserUtil.getUserId(),
+				qry.getType());
+		long total = newPage.getTotal();
+		Datas<MessageCO> datas = new Datas<>();
+		datas.setTotal(total);
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), MessageCO.class));
+		return Result.of(datas);
+	}
 
 }

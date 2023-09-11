@@ -29,10 +29,11 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface MessageMapper extends BatchMapper<MessageDO> {
 
-    IPage<MessageDO> getUnreadMessageListByUserIdAndType(IPage<MessageDO> page, @Param("userId")Long userId,@Param("type")Integer type);
+	IPage<MessageDO> getUnreadMessageListByUserIdAndType(IPage<MessageDO> page, @Param("userId") Long userId,
+			@Param("type") Integer type);
 
-    IPage<MessageDO> getMessageListLikeTitle(IPage<MessageDO> page,@Param("title")String title);
+	IPage<MessageDO> getMessageListLikeTitle(IPage<MessageDO> page, @Param("title") String title);
 
-    MessageDO getMessageByDetailId(@Param("detailId")Long detailId);
+	MessageDO getMessageByDetailId(@Param("detailId") Long detailId);
 
 }

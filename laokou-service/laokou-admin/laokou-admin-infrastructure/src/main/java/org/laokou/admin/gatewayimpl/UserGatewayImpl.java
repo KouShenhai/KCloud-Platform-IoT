@@ -63,14 +63,14 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	public Boolean insert(User user) {
 		UserDO userDO = getInsertUserDO(user);
-		return insertUser(userDO,user);
+		return insertUser(userDO, user);
 	}
 
 	@Override
 	public Boolean update(User user) {
 		UserDO userDO = getUpdateUserDO(user);
 		List<Long> ids = userRoleMapper.getIdsByUserId(userDO.getId());
-		return updateUser(userDO,user,ids);
+		return updateUser(userDO, user, ids);
 	}
 
 	@Override
@@ -95,7 +95,8 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	public User getById(Long id) {
-		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class).eq("id",id).select("id","username","status","dept_id"));
+		UserDO userDO = userMapper
+				.selectOne(Wrappers.query(UserDO.class).eq("id", id).select("id", "username", "status", "dept_id"));
 		User user = ConvertUtil.sourceToTarget(userDO, User.class);
 		user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
 		return user;
@@ -106,24 +107,24 @@ public class UserGatewayImpl implements UserGateway {
 	public Datas<User> list(User user, PageQuery pageQuery) {
 		UserDO userDO = UserConvertor.toDataObject(user);
 		Page<UserDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<UserDO> newPage = userMapper.getUserListFilter(page, userDO,pageQuery.getSqlFilter());
+		IPage<UserDO> newPage = userMapper.getUserListFilter(page, userDO, pageQuery.getSqlFilter());
 		Datas<User> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),User.class));
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), User.class));
 		return datas;
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean insertUser(UserDO userDO,User user) {
+	public Boolean insertUser(UserDO userDO, User user) {
 		boolean flag = userMapper.insert(userDO) > 0;
-		return flag && insertUserRole(userDO.getId(),user.getRoleIds());
+		return flag && insertUserRole(userDO.getId(), user.getRoleIds());
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean updateUser(UserDO userDO,User user,List<Long> ids) {
+	public Boolean updateUser(UserDO userDO, User user, List<Long> ids) {
 		boolean flag = userMapper.updateUser(userDO) > 0;
 		flag = flag && deleteUserRole(ids);
-		return flag && insertUserRole(userDO.getId(),user.getRoleIds());
+		return flag && insertUserRole(userDO.getId(), user.getRoleIds());
 	}
 
 	private Boolean deleteUserRole(List<Long> ids) {

@@ -15,9 +15,13 @@
  */
 package org.laokou.admin.domain.gateway;
 
+import org.laokou.admin.domain.tenant.Tenant;
+
 /**
  * @author laokou
  */
 public interface TenantGateway {
+
+	Boolean insert(Tenant tenant);
 
 }

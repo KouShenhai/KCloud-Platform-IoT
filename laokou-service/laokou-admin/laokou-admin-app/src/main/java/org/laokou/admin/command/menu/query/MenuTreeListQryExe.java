@@ -40,6 +40,7 @@ import java.util.List;
 public class MenuTreeListQryExe {
 
 	private final MenuGateway menuGateway;
+
 	private final RedisUtil redisUtil;
 
 	public Result<MenuCO> execute(MenuTreeListQry qry) {
@@ -52,7 +53,7 @@ public class MenuTreeListQryExe {
 		List<Menu> menuList = menuGateway.list(user, 0);
 		List<MenuCO> menus = ConvertUtil.sourceToTarget(menuList, MenuCO.class);
 		MenuCO menuCO = TreeUtil.buildTreeNode(menus, MenuCO.class);
-		redisUtil.set(menuTreeKey,menuCO,RedisUtil.HOUR_ONE_EXPIRE);
+		redisUtil.set(menuTreeKey, menuCO, RedisUtil.HOUR_ONE_EXPIRE);
 		return Result.of(menuCO);
 	}
 

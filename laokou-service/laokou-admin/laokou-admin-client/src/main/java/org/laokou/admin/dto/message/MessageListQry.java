@@ -26,6 +26,6 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class MessageListQry extends PageQuery {
 
-    private String title;
+	private String title;
 
 }

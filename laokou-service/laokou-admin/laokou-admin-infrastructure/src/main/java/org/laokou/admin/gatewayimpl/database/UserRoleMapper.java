@@ -41,8 +41,8 @@ public interface UserRoleMapper extends BatchMapper<UserRoleDO> {
 	 */
 	List<Long> getIdsByUserId(@Param("userId") Long userId);
 
-	List<Long> getRoleIdsByUserId(@Param("userId")Long userId);
+	List<Long> getRoleIdsByUserId(@Param("userId") Long userId);
 
-	Integer deleteUserRoleByIds(@Param("list")List<Long> list);
+	Integer deleteUserRoleByIds(@Param("list") List<Long> list);
 
 }

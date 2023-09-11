@@ -31,10 +31,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MessageInsertCmdExe {
 
-    private final MessageGateway messageGateway;
+	private final MessageGateway messageGateway;
 
-    public Result<Boolean> execute(MessageInsertCmd cmd) {
-        return Result.of(messageGateway.insert(MessageConvertor.toEntity(cmd.getMessageCO())));
-    }
+	public Result<Boolean> execute(MessageInsertCmd cmd) {
+		return Result.of(messageGateway.insert(MessageConvertor.toEntity(cmd.getMessageCO())));
+	}
 
 }

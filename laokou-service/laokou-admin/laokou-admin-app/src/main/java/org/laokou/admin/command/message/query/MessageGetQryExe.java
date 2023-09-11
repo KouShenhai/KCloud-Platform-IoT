@@ -33,11 +33,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MessageGetQryExe {
 
-    private final MessageGateway messageGateway;
+	private final MessageGateway messageGateway;
 
-    public Result<MessageCO> execute(MessageGetQry qry) {
-        Message message = messageGateway.get(qry.getId());
-        return Result.of(ConvertUtil.sourceToTarget(message,MessageCO.class));
-    }
+	public Result<MessageCO> execute(MessageGetQry qry) {
+		Message message = messageGateway.get(qry.getId());
+		return Result.of(ConvertUtil.sourceToTarget(message, MessageCO.class));
+	}
 
 }

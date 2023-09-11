@@ -29,16 +29,16 @@ import java.util.Set;
 @Data
 public class MessageCO extends ClientObject {
 
-    private Long id;
+	private Long id;
 
-    private String title;
+	private String title;
 
-    private String content;
+	private String content;
 
-    private LocalDateTime createDate;
+	private LocalDateTime createDate;
 
-    private Integer type;
+	private Integer type;
 
-    private Set<String> receiver;
+	private Set<String> receiver;
 
 }

@@ -28,13 +28,14 @@ import org.laokou.common.jasypt.utils.AesUtil;
 @Data
 public class UserListQry extends PageQuery {
 
-    private String username;
+	private String username;
 
-    public void setUsername(String username) {
-        String encryptName = "";
-        if (StringUtil.isNotEmpty(username)) {
-            encryptName = AesUtil.encrypt(username);
-        }
-        this.username = encryptName;
-    }
+	public void setUsername(String username) {
+		String encryptName = "";
+		if (StringUtil.isNotEmpty(username)) {
+			encryptName = AesUtil.encrypt(username);
+		}
+		this.username = encryptName;
+	}
+
 }

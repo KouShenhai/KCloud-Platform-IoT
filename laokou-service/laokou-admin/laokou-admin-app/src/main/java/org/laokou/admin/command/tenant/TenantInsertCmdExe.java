@@ -18,6 +18,7 @@
 package org.laokou.admin.command.tenant;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.TenantGateway;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +27,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TenantInsertCmdExe {
+
+	private final TenantGateway tenantGateway;
 
 }
