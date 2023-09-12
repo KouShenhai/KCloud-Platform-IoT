@@ -15,25 +15,14 @@
  *
  */
 
-package org.laokou.admin.command.source;
-
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.gateway.SourceGateway;
-import org.laokou.admin.dto.source.SourceDeleteCmd;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
+package org.laokou.admin.domain.message;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class SourceDeleteCmdExe {
+public enum Read {
 
-	private final SourceGateway sourceGateway;
-
-	public Result<Boolean> execute(SourceDeleteCmd cmd) {
-		return Result.of(sourceGateway.deleteById(cmd.getId()));
-	}
+    NO,
+    YES
 
 }

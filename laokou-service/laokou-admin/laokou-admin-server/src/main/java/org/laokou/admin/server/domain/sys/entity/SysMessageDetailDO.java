@@ -45,13 +45,10 @@ public class SysMessageDetailDO extends BaseDO {
 	/**
 	 * 用户id
 	 */
-	@Schema(name = "userId", description = "用户id")
+	@Schema(name = "userId", description = "用户ID")
 	private Long userId;
 
-	/**
-	 * 查看标志 0 未查看 1 已查看
-	 */
-	@Schema(name = "readFlag", description = "查看标志 0 未查看 1 已查看")
+	@Schema(name = "readFlag", description = "已读标识 0未读 1已读")
 	private Integer readFlag;
 
 }

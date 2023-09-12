@@ -74,7 +74,7 @@ public abstract class BaseDO extends DTO {
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private LocalDateTime updateDate;
 
-	@Schema(name = DEL_FLAG, description = "删除标识 0未删除 1已删除")
+	@Schema(name = DEL_FLAG, description = "删除标识 1已删除 0未删除")
 	@TableField(fill = FieldFill.INSERT)
 	@TableLogic
 	private Integer delFlag;

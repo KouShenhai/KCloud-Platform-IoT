@@ -20,6 +20,7 @@ package org.laokou.admin.command.message;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.domain.message.Read;
 import org.laokou.admin.dto.message.MessageReadCmd;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
@@ -59,7 +60,7 @@ public class MessageReadCmdExe {
 		MessageDetailDO messageDetailDO = new MessageDetailDO();
 		messageDetailDO.setId(id);
 		// 0未读 1已读
-		messageDetailDO.setReadFlag(1);
+		messageDetailDO.setReadFlag(Read.YES.ordinal());
 		messageDetailDO.setVersion(messageDetailMapper.getVersion(id, MessageDetailDO.class));
 		transactionalUtil.executeWithoutResult(rollback -> {
 			try {

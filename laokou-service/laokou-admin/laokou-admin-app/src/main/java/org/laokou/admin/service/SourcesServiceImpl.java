@@ -65,7 +65,7 @@ public class SourcesServiceImpl implements SourcesServiceI {
 
 	@Override
 	public Result<Boolean> deleteById(SourceDeleteCmd cmd) {
-		return null;
+		return sourceDeleteCmdExe.execute(cmd);
 	}
 
 	@Override
