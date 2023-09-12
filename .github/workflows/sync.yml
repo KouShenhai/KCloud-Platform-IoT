@@ -7,16 +7,16 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
 
       - name: Sync Github Repository To Gitee  # 名称
-        uses: Yikun/hub-mirror-action@v1.2  # 使用Yikun/hub-mirror-action
+        uses: Yikun/hub-mirror-action@master  # 使用Yikun/hub-mirror-action
         with:
           src: github/KouShenhai  # 源端账户名(github)
           dst: gitee/laokouyun  # 目的端账户名(gitee)
-          dst_key: secrets.GITEE_PRIVATE_KEY  # SSH密钥对中的私钥
-          dst_token:  secrets.GITEE_TOKEN  # Gitee账户的私人令牌
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}  # SSH密钥对中的私钥
+          dst_token: ${{ secrets.GITEE_TOKEN }} # Gitee账户的私人令牌
           account_type: user  # 账户类型
           clone_style: "https"  # 使用https方式进行clone，也可以使用ssh
           debug: true  # 启用后会显示所有执行命令
