@@ -36,4 +36,6 @@ public interface SourceMapper extends BatchMapper<SourceDO> {
 	 */
 	SourceDO getSourceByName(@Param("name") String name);
 
+//	IPage<SourceDO> getSourceListBy
+
 }

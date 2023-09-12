@@ -15,6 +15,7 @@
  */
 package org.laokou.admin.domain.gateway;
 
+import org.laokou.admin.domain.source.Source;
 import org.laokou.common.i18n.dto.Datas;
 
 /**
@@ -22,6 +23,6 @@ import org.laokou.common.i18n.dto.Datas;
  */
 public interface SourceGateway {
 
-    Datas<Source>
+    Datas<Source> list(Source source);
 
 }

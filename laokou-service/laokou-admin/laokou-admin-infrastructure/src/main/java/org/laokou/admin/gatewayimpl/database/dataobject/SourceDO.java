@@ -34,6 +34,9 @@ public class SourceDO extends BaseDO {
 	@Serial
 	private static final long serialVersionUID = 7616743906900137371L;
 
+	@Schema(name = "name", description = "数据源名称")
+	private String name;
+
 	@Schema(name = "driverClassName", description = "数据源驱动")
 	private String driverClassName;
 
@@ -45,8 +48,5 @@ public class SourceDO extends BaseDO {
 
 	@Schema(name = "password", description = "数据源密码")
 	private String password;
-
-	@Schema(name = "name", description = "数据源名称")
-	private String name;
 
 }
