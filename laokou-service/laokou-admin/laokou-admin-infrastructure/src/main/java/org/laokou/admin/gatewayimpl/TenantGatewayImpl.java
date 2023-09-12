@@ -17,9 +17,12 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.TenantConvertor;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
@@ -27,6 +30,7 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.domain.user.SuperAdmin;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.jasypt.utils.AesUtil;
@@ -59,8 +63,15 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	@Override
+	@DataFilter(alias = "boot_sys_tenant")
 	public Datas<Tenant> list(Tenant tenant, PageQuery pageQuery) {
-		return null;
+		IPage<TenantDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+		IPage<TenantDO> newPage = tenantMapper.getTenantListByLikeNameFilter(page, tenant.getName(),
+				pageQuery.getSqlFilter());
+		Datas<Tenant> datas = new Datas<>();
+		datas.setTotal(newPage.getTotal());
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Tenant.class));
+		return datas;
 	}
 
 	@Transactional(rollbackFor = Exception.class)
