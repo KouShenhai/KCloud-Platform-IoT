@@ -44,6 +44,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.laokou.admin.common.DbConstant.BOOT_SYS_USER;
+
 /**
  * @author laokou
  */
@@ -103,7 +105,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	@DataFilter(alias = "boot_sys_user")
+	@DataFilter(alias = BOOT_SYS_USER)
 	public Datas<User> list(User user, PageQuery pageQuery) {
 		Page<UserDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<UserDO> newPage = userMapper.getUserListByTenantIdAndUsernameFilter(page, user.getTenantId(),

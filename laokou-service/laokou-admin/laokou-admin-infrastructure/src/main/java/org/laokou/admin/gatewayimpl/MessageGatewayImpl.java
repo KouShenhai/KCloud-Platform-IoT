@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.MessageConvertor;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.domain.message.Type;
@@ -50,6 +51,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.laokou.admin.common.Constant.TENANT;
+import static org.laokou.admin.common.DbConstant.BOOT_SYS_MESSAGE;
 import static org.laokou.common.rocketmq.constant.MqConstant.*;
 
 /**
@@ -74,9 +76,10 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	@Override
 	@DS(TENANT)
+	@DataFilter(alias = BOOT_SYS_MESSAGE)
 	public Datas<Message> list(Message message, PageQuery pageQuery) {
 		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<MessageDO> newPage = messageMapper.getMessageListLikeTitle(page, message.getTitle());
+		IPage<MessageDO> newPage = messageMapper.getMessageListByLikeTitleFilter(page, message.getTitle(),pageQuery.getSqlFilter());
 		Datas<Message> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Message.class));

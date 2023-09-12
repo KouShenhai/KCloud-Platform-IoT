@@ -38,6 +38,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.laokou.admin.common.DbConstant.BOOT_SYS_TENANT;
+
 /**
  * @author laokou
  */
@@ -63,7 +65,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	@Override
-	@DataFilter(alias = "boot_sys_tenant")
+	@DataFilter(alias = BOOT_SYS_TENANT)
 	public Datas<Tenant> list(Tenant tenant, PageQuery pageQuery) {
 		IPage<TenantDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<TenantDO> newPage = tenantMapper.getTenantListByLikeNameFilter(page, tenant.getName(),

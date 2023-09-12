@@ -39,7 +39,7 @@ public class MessageListQryExe {
 
 	public Result<Datas<MessageCO>> execute(MessageListQry qry) {
 		PageQuery pageQuery = new PageQuery(qry.getPageNum(), qry.getPageSize());
-		Message message = new Message(qry.getTitle());
+		Message message = ConvertUtil.sourceToTarget(qry, Message.class);
 		Datas<Message> list = messageGateway.list(message, pageQuery);
 		Datas<MessageCO> datas = new Datas<>();
 		datas.setRecords(ConvertUtil.sourceToTarget(list.getRecords(), MessageCO.class));

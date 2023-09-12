@@ -35,6 +35,7 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.admin.common.Constant.TENANT;
+import static org.laokou.admin.common.DbConstant.BOOT_SYS_DICT;
 
 /**
  * @author laokou
@@ -83,7 +84,7 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	@Override
-	@DataFilter(alias = "boot_sys_dict")
+	@DataFilter(alias = BOOT_SYS_DICT)
 	public Datas<Dict> list(Dict dict, PageQuery pageQuery) {
 		IPage<DictDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<DictDO> newPage = dictMapper.getDictListByLikeTypeAndLikeLabelFilter(page, dict.getType(),

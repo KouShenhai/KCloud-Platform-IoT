@@ -20,8 +20,6 @@ package org.laokou.admin.common;
  */
 public interface Constant {
 
-	String DEFAULT_SOURCE = "master";
-
 	String TENANT = "#tenant";
 
 	/**
@@ -37,6 +35,6 @@ public interface Constant {
 	/**
 	 * 默认
 	 */
-	long DEFAULT_TENANT = 0L;
+	long DEFAULT_TENANT = 0;
 
 }
