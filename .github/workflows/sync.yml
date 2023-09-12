@@ -11,7 +11,7 @@ jobs:
     steps:
 
       - name: Sync Github Repository To Gitee  # 名称
-        uses: Yikun/hub-mirror-action@v1.3  # 使用Yikun/hub-mirror-action
+        uses: Yikun/hub-mirror-action@v1.1  # 使用Yikun/hub-mirror-action
         with:
           src: github/KouShenhai  # 源端账户名(github)
           dst: gitee/laokouyun  # 目的端账户名(gitee)
