@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +33,6 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.admin.common.Constant.TENANT;
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_DICT;
 
 /**
@@ -50,16 +48,15 @@ public class DictGatewayImpl implements DictGateway {
 	private final TransactionalUtil transactionalUtil;
 
 	@Override
-	@DS(TENANT)
 	public Boolean insert(Dict dict) {
 		DictDO dictDO = DictConvertor.toDataObject(dict);
 		return insertDict(dictDO);
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean update(Dict dict) {
 		DictDO dictDO = DictConvertor.toDataObject(dict);
+		dictDO.setVersion(dictMapper.getVersion(dictDO.getId(),DictDO.class));
 		return updateDict(dictDO);
 	}
 

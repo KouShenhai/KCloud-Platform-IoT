@@ -18,6 +18,10 @@
 package org.laokou.admin.command.source;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.SourceConvertor;
+import org.laokou.admin.domain.gateway.SourceGateway;
+import org.laokou.admin.dto.source.SourceInsertCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +30,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class SourceInsertCmdExe {
+
+    private final SourceGateway sourceGateway;
+
+    public Result<Boolean> execute(SourceInsertCmd cmd) {
+        return Result.of(sourceGateway.insert(SourceConvertor.toEntity(cmd.getSourceCO())));
+    }
 
 }

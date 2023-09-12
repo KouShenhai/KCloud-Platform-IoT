@@ -20,6 +20,8 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.SourceGateway;
 import org.laokou.admin.domain.source.Source;
@@ -28,6 +30,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_SOURCE;
@@ -35,11 +38,13 @@ import static org.laokou.admin.common.DsConstant.BOOT_SYS_SOURCE;
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SourceGatewayImpl implements SourceGateway {
 
     private final SourceMapper sourceMapper;
+    private final TransactionalUtil transactionalUtil;
 
     @Override
     @DataFilter(alias = BOOT_SYS_SOURCE)
@@ -51,4 +56,30 @@ public class SourceGatewayImpl implements SourceGateway {
         datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),Source.class));
         return datas;
     }
+
+    @Override
+    public Source get(Long id) {
+        SourceDO sourceDO = sourceMapper.selectById(id);
+        return ConvertUtil.sourceToTarget(sourceDO,Source.class);
+    }
+
+    @Override
+    public Boolean insert(Source source) {
+        SourceDO sourceDO = SourceConvertor.toDataObject(source);
+        return insertSource(sourceDO);
+    }
+
+    private Boolean insertSource(SourceDO sourceDO) {
+        return transactionalUtil.execute(r -> {
+            try {
+                return sourceMapper.insert(sourceDO) > 0;
+            }
+            catch (Exception e) {
+                log.error("错误信息：{}", e.getMessage());
+                r.setRollbackOnly();
+                return false;
+            }
+        });
+    }
+
 }
