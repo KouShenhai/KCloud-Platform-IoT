@@ -26,4 +26,15 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 public class SourceCO extends ClientObject {
 
+    private Long id;
+
+    private String name;
+
+    private String driverClassName;
+
+    private String username;
+
+    private String password;
+
+    private String url;
 }

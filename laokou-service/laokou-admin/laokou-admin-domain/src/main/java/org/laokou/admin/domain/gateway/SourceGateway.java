@@ -17,12 +17,13 @@ package org.laokou.admin.domain.gateway;
 
 import org.laokou.admin.domain.source.Source;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
 public interface SourceGateway {
 
-    Datas<Source> list(Source source);
+    Datas<Source> list(Source source, PageQuery pageQuery);
 
 }

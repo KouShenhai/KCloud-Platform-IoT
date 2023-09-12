@@ -29,4 +29,17 @@
         where del_flag = 0
             and name = #{name}
     </select>
+    <select id="getSourceListByLikeNameFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.SourceDO">
+        select id
+              ,`name`
+              ,driver_class_name
+              ,url
+              ,username
+        from boot_sys_source
+        where del_flag = 0
+        <if test="name != null and name != ''">
+            and `name` like #{name}
+        </if>
+        order by create_date desc
+    </select>
 </mapper>
