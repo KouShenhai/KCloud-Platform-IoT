@@ -76,6 +76,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	public Boolean update(Role role) {
 		Long id = role.getId();
 		RoleDO roleDO = RoleConvertor.toDataObject(role);
+		roleDO.setVersion(roleMapper.getVersion(id, RoleDO.class));
 		List<Long> ids1 = roleMenuMapper.getIdsByRoleId(id);
 		List<Long> ids2 = roleDeptMapper.getIdsByRoleId(id);
 		return updateRole(roleDO, role, ids1, ids2);

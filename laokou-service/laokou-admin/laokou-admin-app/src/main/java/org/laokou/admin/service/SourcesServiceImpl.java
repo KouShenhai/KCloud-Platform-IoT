@@ -70,7 +70,7 @@ public class SourcesServiceImpl implements SourcesServiceI {
 
 	@Override
 	public Result<SourceCO> get(SourceGetQry qry) {
-		return null;
+		return sourceGetQryExe.execute(qry);
 	}
 
 	@Override

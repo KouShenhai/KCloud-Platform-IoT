@@ -18,6 +18,12 @@
 package org.laokou.admin.command.source.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.SourceGateway;
+import org.laokou.admin.domain.source.Source;
+import org.laokou.admin.dto.source.SourceGetQry;
+import org.laokou.admin.dto.source.clientobject.SourceCO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +32,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class SourceGetQryExe {
+
+    private final SourceGateway sourceGateway;
+
+    public Result<SourceCO> execute(SourceGetQry qry) {
+        Source source = sourceGateway.get(qry.getId());
+        return Result.of(ConvertUtil.sourceToTarget(source,SourceCO.class));
+    }
 
 }

@@ -62,7 +62,7 @@ public class DsUtil {
 		if (StringUtil.isEmpty(sourceName)) {
 			throw new GlobalException("数据源名称不能为空");
 		}
-		if (!checkDs(sourceName)) {
+		if (!validateDs(sourceName)) {
 			addDs(sourceName);
 		}
 		return sourceName;
@@ -76,14 +76,14 @@ public class DsUtil {
 		properties.setUrl(source.getUrl());
 		properties.setDriverClassName(source.getDriverClassName());
 		// 连接数据源
-		connDs(properties);
+		connectDs(properties);
 		DynamicRoutingDataSource dynamicRoutingDataSource = dynamicUtil.getDataSource();
 		DefaultDataSourceCreator dataSourceCreator = dynamicUtil.getDefaultDataSourceCreator();
 		DataSource dataSource = dataSourceCreator.createDataSource(properties);
 		dynamicRoutingDataSource.addDataSource(sourceName, dataSource);
 	}
 
-	private boolean checkDs(String sourceName) {
+	private boolean validateDs(String sourceName) {
 		Map<String, DataSource> dataSources = dynamicUtil.getDataSources();
 		return dataSources.containsKey(sourceName);
 	}
@@ -92,7 +92,7 @@ public class DsUtil {
 	 * 连接数据库
 	 */
 	@SneakyThrows
-	private void connDs(DataSourceProperty properties) {
+	private void connectDs(DataSourceProperty properties) {
 		Connection connection;
 		try {
 			Class.forName(properties.getDriverClassName());

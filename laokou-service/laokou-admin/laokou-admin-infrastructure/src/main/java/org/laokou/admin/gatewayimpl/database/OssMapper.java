@@ -16,16 +16,20 @@
  */
 package org.laokou.admin.gatewayimpl.database;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import org.apache.ibatis.annotations.Mapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
+
+import static org.laokou.admin.common.Constant.TENANT;
 
 /**
  * @author laokou
  */
 @Repository
 @Mapper
+@DS(TENANT)
 public interface OssMapper extends BatchMapper<OssDO> {
 
 }
