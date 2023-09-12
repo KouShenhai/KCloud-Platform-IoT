@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
 
-      - name: Sync Github Repos To Gitee  # 名称
+      - name: Sync Github Repository To Gitee  # 名称
         uses: Yikun/hub-mirror-action@v1.3  # 使用Yikun/hub-mirror-action
         with:
           src: github/KouShenhai  # 源端账户名(github)
