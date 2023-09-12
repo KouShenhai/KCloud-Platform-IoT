@@ -74,7 +74,7 @@ public class SourcesController {
 	@Operation(summary = "数据源管理", description = "修改数据源")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@PreAuthorize("hasAuthority('sources:update')")
-	@DataCache(name = "sources", key = "#dto.id", type = Cache.DEL)
+	@DataCache(name = "sources", key = "#cmd.sourceCO.id", type = Cache.DEL)
 	public Result<Boolean> update(@RequestBody SourceUpdateCmd cmd) {
 		return sourcesServiceI.update(cmd);
 	}
