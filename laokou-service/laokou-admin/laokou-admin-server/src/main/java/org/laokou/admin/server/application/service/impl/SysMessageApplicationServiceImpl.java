@@ -31,7 +31,7 @@
 // import org.laokou.admin.server.domain.sys.repository.service.SysMessageDetailService;
 // import org.laokou.admin.server.domain.sys.repository.service.SysMessageService;
 // import org.laokou.admin.server.interfaces.qo.SysMessageQo;
-// import org.laokou.common.core.constant.Constant;
+// import org.laokou.common.i18n.common.Constant;
 // import org.laokou.common.core.utils.*;
 // import org.laokou.common.i18n.utils.ValidatorUtil;
 // import org.laokou.common.mybatisplus.utils.BatchUtil;

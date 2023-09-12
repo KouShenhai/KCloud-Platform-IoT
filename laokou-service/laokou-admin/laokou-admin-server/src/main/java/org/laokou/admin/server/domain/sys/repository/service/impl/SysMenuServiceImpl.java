@@ -22,7 +22,7 @@ import org.laokou.admin.server.domain.sys.repository.mapper.SysMenuMapper;
 import org.laokou.admin.server.interfaces.qo.SysMenuQo;
 import org.laokou.admin.vo.SysMenuVO;
 import org.laokou.admin.server.domain.sys.repository.service.SysMenuService;
-import static org.laokou.common.core.constant.Constant.DEFAULT;
+import static org.laokou.common.i18n.common.Constant.DEFAULT;
 import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.security.utils.UserUtil;

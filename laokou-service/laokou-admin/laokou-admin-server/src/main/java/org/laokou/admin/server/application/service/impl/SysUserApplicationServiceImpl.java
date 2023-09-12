@@ -38,7 +38,7 @@
 // import org.laokou.admin.server.interfaces.qo.SysUserQo;
 // import org.laokou.auth.domain.user.SuperAdmin;
 // import org.laokou.auth.domain.user.User;
-// import org.laokou.common.core.constant.Constant;
+// import org.laokou.common.i18n.common.Constant;
 // import org.laokou.common.core.utils.CollectionUtil;
 // import org.laokou.common.core.utils.ConvertUtil;
 // import org.laokou.common.core.utils.IdGenerator;
@@ -62,7 +62,7 @@
 // import java.util.Set;
 //
 // import static org.laokou.admin.server.infrastructure.Constant.DEFAULT_SOURCE;
-// import static org.laokou.common.core.constant.Constant.DEFAULT;
+// import static org.laokou.common.i18n.common.Constant.DEFAULT;
 //
 /// **
 // * @author laokou

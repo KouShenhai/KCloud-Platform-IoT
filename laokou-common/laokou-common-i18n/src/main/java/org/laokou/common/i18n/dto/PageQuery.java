@@ -44,7 +44,7 @@ public class PageQuery extends Query {
 	@Schema(name = "pageSize", description = "条数")
 	private Integer pageSize;
 
-	@Schema(name = "sqlFilter", description = "SQL拼接")
+	@Schema(name = SQL_FILTER, description = "SQL拼接")
 	private String sqlFilter;
 
 	public PageQuery(Integer pageNum, Integer pageSize) {

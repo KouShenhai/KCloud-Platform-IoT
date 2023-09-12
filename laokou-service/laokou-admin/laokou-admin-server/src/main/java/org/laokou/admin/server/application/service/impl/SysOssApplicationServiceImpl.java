@@ -28,7 +28,7 @@
 // import org.laokou.admin.server.application.service.SysResourceApplicationService;
 // import org.laokou.common.oss.entity.SysOssDO;
 // import org.laokou.common.oss.qo.SysOssQo;
-// import org.laokou.common.core.constant.Constant;
+// import org.laokou.common.i18n.common.Constant;
 // import org.laokou.common.core.utils.ConvertUtil;
 // import org.laokou.common.i18n.common.CustomException;
 // import org.laokou.common.i18n.utils.ValidatorUtil;

@@ -27,6 +27,8 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.domain.user.SuperAdmin;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -54,6 +56,11 @@ public class TenantGatewayImpl implements TenantGateway {
 	public Boolean insert(Tenant tenant) {
 		TenantDO tenantDO = TenantConvertor.toDataObject(tenant);
 		return insertTenant(tenantDO, 1L);
+	}
+
+	@Override
+	public Datas<Tenant> list(Tenant tenant, PageQuery pageQuery) {
+		return null;
 	}
 
 	@Transactional(rollbackFor = Exception.class)

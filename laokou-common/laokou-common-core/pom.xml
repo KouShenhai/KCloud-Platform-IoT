@@ -96,16 +96,6 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springdoc</groupId>
-          <artifactId>springdoc-openapi-starter-common</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>io.swagger.core.v3</groupId>
-      <artifactId>swagger-annotations-jakarta</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

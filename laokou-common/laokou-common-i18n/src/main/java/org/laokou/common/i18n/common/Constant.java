@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.core.constant;
+package org.laokou.common.i18n.common;
 
 /**
  * @author laokou

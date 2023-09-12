@@ -16,6 +16,7 @@
 package org.laokou.admin.domain.gateway;
 
 import org.laokou.admin.domain.role.Role;
+import org.laokou.admin.domain.user.User;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 
@@ -32,6 +33,6 @@ public interface RoleGateway {
 
 	Boolean deleteById(Long id);
 
-	Datas<Role> list(Long tenantId, Role role, PageQuery pageQuery);
+	Datas<Role> list(User user, Role role, PageQuery pageQuery);
 
 }

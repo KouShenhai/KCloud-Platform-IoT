@@ -18,7 +18,7 @@ package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.constant.Constant;
+import org.laokou.common.i18n.common.Constant;
 
 import java.io.File;
 import java.io.InputStream;

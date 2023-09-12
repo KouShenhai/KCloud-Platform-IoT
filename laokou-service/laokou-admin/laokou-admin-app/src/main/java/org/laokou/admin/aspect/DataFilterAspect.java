@@ -35,7 +35,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.laokou.common.core.constant.Constant.*;
+import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.mybatisplus.constant.Constant.IN;
 
 /**

@@ -22,8 +22,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.RoleConvertor;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.domain.role.Role;
+import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.RoleDeptMapper;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.RoleMenuMapper;
@@ -98,9 +100,11 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	@Override
-	public Datas<Role> list(Long tenantId, Role role, PageQuery pageQuery) {
+	@DataFilter(alias = "boot_sys_role")
+	public Datas<Role> list(User user, Role role, PageQuery pageQuery) {
 		IPage<RoleDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<RoleDO> newPage = roleMapper.getRoleListByTenantIdAndLikeName(page, tenantId, role.getName());
+		IPage<RoleDO> newPage = roleMapper.getRoleListByTenantIdAndLikeNameFilter(page, user.getTenantId(),
+				role.getName(), pageQuery.getSqlFilter());
 		Datas<Role> datas = new Datas<>();
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Role.class));
 		datas.setTotal(newPage.getTotal());

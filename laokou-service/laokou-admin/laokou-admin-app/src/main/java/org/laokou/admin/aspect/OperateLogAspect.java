@@ -29,7 +29,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
 import org.laokou.admin.domain.annotation.OperateLog;
-import org.laokou.common.core.constant.Constant;
+import org.laokou.common.i18n.common.Constant;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.security.utils.UserUtil;
@@ -47,7 +47,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import static org.laokou.common.core.constant.Constant.*;
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * @author laokou

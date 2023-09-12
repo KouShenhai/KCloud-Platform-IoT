@@ -31,6 +31,8 @@ import java.time.LocalDateTime;
 @Schema(name = "BaseDO", description = "映射基类")
 public abstract class BaseDO extends DTO {
 
+	public static final String ID = "id";
+
 	public static final String CREATOR = "creator";
 
 	public static final String EDITOR = "editor";
@@ -43,48 +45,50 @@ public abstract class BaseDO extends DTO {
 
 	public static final String VERSION = "version";
 
+	public static final String DEPT_ID = "deptId";
+
 	public static final String TENANT_ID = "tenantId";
 
-	public static final String DEPT_ID = "deptId";
+	public static final String FIELD_DEPT_ID = "dept_id";
 
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;
 
 	@TableId(type = IdType.AUTO)
-	@Schema(name = "id", description = "ID")
+	@Schema(name = ID, description = "ID")
 	private Long id;
 
-	@Schema(name = "creator", description = "创建人")
+	@Schema(name = CREATOR, description = "创建人")
 	@TableField(fill = FieldFill.INSERT)
 	private Long creator;
 
-	@Schema(name = "editor", description = "修改人")
+	@Schema(name = EDITOR, description = "修改人")
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private Long editor;
 
-	@Schema(name = "createDate", description = "创建时间")
+	@Schema(name = CREATE_DATE, description = "创建时间")
 	@TableField(fill = FieldFill.INSERT)
 	private LocalDateTime createDate;
 
-	@Schema(name = "updateDate", description = "修改时间")
+	@Schema(name = UPDATE_DATE, description = "修改时间")
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private LocalDateTime updateDate;
 
-	@Schema(name = "delFlag", description = "删除标识 0未删除 1已删除")
+	@Schema(name = DEL_FLAG, description = "删除标识 0未删除 1已删除")
 	@TableField(fill = FieldFill.INSERT)
 	@TableLogic
 	private Integer delFlag;
 
 	@Version
-	@Schema(name = "version", description = "版本号")
+	@Schema(name = VERSION, description = "版本号")
 	@TableField(fill = FieldFill.INSERT)
 	private Integer version;
 
-	@Schema(name = "deptId", description = "部门ID")
+	@Schema(name = DEPT_ID, description = "部门ID")
 	@TableField(fill = FieldFill.INSERT)
 	private Long deptId;
 
-	@Schema(name = "tenantId", description = "租户ID")
+	@Schema(name = TENANT_ID, description = "租户ID")
 	@TableField(fill = FieldFill.INSERT)
 	private Long tenantId;
 

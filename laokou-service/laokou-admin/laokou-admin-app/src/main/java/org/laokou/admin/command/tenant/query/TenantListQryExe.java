@@ -18,6 +18,7 @@
 package org.laokou.admin.command.tenant.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.TenantGateway;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +27,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TenantListQryExe {
+
+	private final TenantGateway tenantGateway;
 
 }
