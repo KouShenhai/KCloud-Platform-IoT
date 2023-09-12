@@ -76,8 +76,8 @@ public class UsersController {
 	@TraceLog
 	@GetMapping("v1/users/profile")
 	@Operation(summary = "个人中心", description = "查看个人信息")
-	public Result<UserProfileCO> profile() {
-		return usersServiceI.profile(new UserProfileGetQry());
+	public Result<UserProfileCO> getProfile() {
+		return usersServiceI.getProfile(new UserProfileGetQry());
 	}
 
 	@TraceLog
@@ -90,8 +90,8 @@ public class UsersController {
 	@TraceLog
 	@PutMapping("v1/users/profile")
 	@Operation(summary = "个人中心", description = "修改个人信息")
-	public Result<Boolean> profile(@RequestBody UserProfileUpdateCmd cmd) {
-		return usersServiceI.profile(cmd);
+	public Result<Boolean> updateProfile(@RequestBody UserProfileUpdateCmd cmd) {
+		return usersServiceI.updateProfile(cmd);
 	}
 
 	@TraceLog

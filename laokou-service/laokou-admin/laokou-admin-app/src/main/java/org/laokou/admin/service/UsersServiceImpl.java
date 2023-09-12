@@ -67,12 +67,12 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Result<UserProfileCO> profile(UserProfileGetQry qry) {
+	public Result<UserProfileCO> getProfile(UserProfileGetQry qry) {
 		return userProfileGetQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<Boolean> profile(UserProfileUpdateCmd cmd) {
+	public Result<Boolean> updateProfile(UserProfileUpdateCmd cmd) {
 		return userProfileUpdateCmdExe.execute(cmd);
 	}
 

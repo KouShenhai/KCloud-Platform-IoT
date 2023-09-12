@@ -63,9 +63,9 @@ public interface UsersServiceI {
 	 * 用户基本信息
 	 * @return Result<UserProfileCO>
 	 */
-	Result<UserProfileCO> profile(UserProfileGetQry qry);
+	Result<UserProfileCO> getProfile(UserProfileGetQry qry);
 
-	Result<Boolean> profile(UserProfileUpdateCmd cmd);
+	Result<Boolean> updateProfile(UserProfileUpdateCmd cmd);
 
 	/**
 	 * 用户下拉列表
