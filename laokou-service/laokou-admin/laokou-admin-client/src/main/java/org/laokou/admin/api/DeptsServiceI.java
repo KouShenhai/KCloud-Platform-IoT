@@ -35,9 +35,9 @@ public interface DeptsServiceI {
 
 	Result<Boolean> update(DeptUpdateCmd cmd);
 
-	Result<Boolean> delete(DeptDeleteCmd cmd);
+	Result<Boolean> deleteById(DeptDeleteCmd cmd);
 
-	Result<DeptCO> get(DeptGetQry qry);
+	Result<DeptCO> getById(DeptGetQry qry);
 
 	Result<List<Long>> ids(DeptIDSGetQry qry);
 

@@ -24,8 +24,8 @@ import org.laokou.common.jasypt.utils.AesUtil;
  */
 public class Test {
 
-    public static void main(String[] args) {
-        System.out.println(AesUtil.decrypt("cmV6CFYc1NUWgni0E8xpdg=="));
-    }
+	public static void main(String[] args) {
+		System.out.println(AesUtil.decrypt("cmV6CFYc1NUWgni0E8xpdg=="));
+	}
 
 }

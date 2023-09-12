@@ -33,11 +33,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SourceGetQryExe {
 
-    private final SourceGateway sourceGateway;
+	private final SourceGateway sourceGateway;
 
-    public Result<SourceCO> execute(SourceGetQry qry) {
-        Source source = sourceGateway.get(qry.getId());
-        return Result.of(ConvertUtil.sourceToTarget(source,SourceCO.class));
-    }
+	public Result<SourceCO> execute(SourceGetQry qry) {
+		Source source = sourceGateway.getById(qry.getId());
+		return Result.of(ConvertUtil.sourceToTarget(source, SourceCO.class));
+	}
 
 }

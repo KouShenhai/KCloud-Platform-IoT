@@ -18,6 +18,8 @@
 package org.laokou.admin.command.source;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.SourceGateway;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +28,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class SourceDeleteCmdExe {
+
+	private final SourceGateway sourceGateway;
+
+	public Result<Boolean> execute() {
+		return null;
+	}
 
 }

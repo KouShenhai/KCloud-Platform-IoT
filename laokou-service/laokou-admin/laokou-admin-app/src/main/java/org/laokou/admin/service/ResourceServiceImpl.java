@@ -93,7 +93,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	@Override
-	public Result<ResourceCO> get(ResourceGetQry qry) {
+	public Result<ResourceCO> getById(ResourceGetQry qry) {
 		return null;
 	}
 
@@ -113,7 +113,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	@Override
-	public Result<Boolean> delete(ResourceDeleteCmd cmd) {
+	public Result<Boolean> deleteById(ResourceDeleteCmd cmd) {
 		return null;
 	}
 

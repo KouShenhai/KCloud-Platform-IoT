@@ -20,14 +20,22 @@ package org.laokou.admin.common;
  */
 public interface DsConstant {
 
-    String BOOT_SYS_DICT = "boot_sys_dict";
-    String BOOT_SYS_MESSAGE= "boot_sys_message";
-    String BOOT_SYS_MESSAGE_DETAIL = "boot_sys_message_detail";
-    String BOOT_SYS_OSS = "boot_sys_oss";
-    String BOOT_SYS_OSS_LOG = "boot_sys_oss_log";
-    String BOOT_SYS_USER = "boot_sys_user";
-    String BOOT_SYS_TENANT = "boot_sys_tenant";
-    String BOOT_SYS_ROLE = "boot_sys_role";
-    String BOOT_SYS_SOURCE = "boot_sys_source";
+	String BOOT_SYS_DICT = "boot_sys_dict";
+
+	String BOOT_SYS_MESSAGE = "boot_sys_message";
+
+	String BOOT_SYS_MESSAGE_DETAIL = "boot_sys_message_detail";
+
+	String BOOT_SYS_OSS = "boot_sys_oss";
+
+	String BOOT_SYS_OSS_LOG = "boot_sys_oss_log";
+
+	String BOOT_SYS_USER = "boot_sys_user";
+
+	String BOOT_SYS_TENANT = "boot_sys_tenant";
+
+	String BOOT_SYS_ROLE = "boot_sys_role";
+
+	String BOOT_SYS_SOURCE = "boot_sys_source";
 
 }

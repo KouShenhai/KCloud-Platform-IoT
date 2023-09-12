@@ -69,7 +69,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	}
 
 	@Override
-	public Result<Boolean> delete(TenantDeleteCmd cmd) {
+	public Result<Boolean> deleteById(TenantDeleteCmd cmd) {
 		return null;
 	}
 
@@ -79,7 +79,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	}
 
 	@Override
-	public Result<TenantCO> get(TenantGetQry qry) {
+	public Result<TenantCO> getById(TenantGetQry qry) {
 		return null;
 	}
 

@@ -80,8 +80,8 @@ public class DeptsController {
 	@TraceLog
 	@Operation(summary = "部门管理", description = "查看菜单")
 	@DataCache(name = "depts", key = "#id")
-	public Result<DeptCO> get(@PathVariable("id") Long id) {
-		return deptsServiceI.get(new DeptGetQry(id));
+	public Result<DeptCO> getById(@PathVariable("id") Long id) {
+		return deptsServiceI.getById(new DeptGetQry(id));
 	}
 
 	@DeleteMapping("v1/depts/{id}")
@@ -90,8 +90,8 @@ public class DeptsController {
 	@OperateLog(module = "部门管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('depts:delete')")
 	@DataCache(name = "depts", key = "#id", type = Cache.DEL)
-	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return deptsServiceI.delete(new DeptDeleteCmd(id));
+	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+		return deptsServiceI.deleteById(new DeptDeleteCmd(id));
 	}
 
 	@GetMapping("v1/depts/{roleId}/ids")

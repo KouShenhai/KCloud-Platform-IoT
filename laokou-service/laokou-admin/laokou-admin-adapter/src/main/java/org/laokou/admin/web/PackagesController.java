@@ -65,8 +65,8 @@ public class PackagesController {
 	@GetMapping("v1/packages/{id}")
 	@Operation(summary = "套餐管理", description = "查看套餐")
 	@DataCache(name = "packages", key = "#id")
-	public Result<PackageCO> get(@PathVariable("id") Long id) {
-		return packagesServiceI.get(new PackageGetQry(id));
+	public Result<PackageCO> getById(@PathVariable("id") Long id) {
+		return packagesServiceI.getById(new PackageGetQry(id));
 	}
 
 	@TraceLog
@@ -85,8 +85,8 @@ public class PackagesController {
 	@OperateLog(module = "套餐管理", operation = "删除套餐")
 	@PreAuthorize("hasAuthority('packages:delete')")
 	@DataCache(name = "packages", key = "#id", type = Cache.DEL)
-	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return packagesServiceI.delete(new PackageDeleteCmd(id));
+	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+		return packagesServiceI.deleteById(new PackageDeleteCmd(id));
 	}
 
 	@TraceLog

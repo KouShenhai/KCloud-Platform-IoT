@@ -76,8 +76,8 @@ public class UsersController {
 	@TraceLog
 	@GetMapping("v1/users/profile")
 	@Operation(summary = "个人中心", description = "查看个人信息")
-	public Result<UserProfileCO> profile() {
-		return usersServiceI.profile(new UserProfileGetQry());
+	public Result<UserProfileCO> getProfile() {
+		return usersServiceI.getProfile(new UserProfileGetQry());
 	}
 
 	@TraceLog
@@ -90,8 +90,8 @@ public class UsersController {
 	@TraceLog
 	@PutMapping("v1/users/profile")
 	@Operation(summary = "个人中心", description = "修改个人信息")
-	public Result<Boolean> profile(@RequestBody UserProfileUpdateCmd cmd) {
-		return usersServiceI.profile(cmd);
+	public Result<Boolean> updateProfile(@RequestBody UserProfileUpdateCmd cmd) {
+		return usersServiceI.updateProfile(cmd);
 	}
 
 	@TraceLog
@@ -99,8 +99,8 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "修改用户状态")
 	@OperateLog(module = "用户管理", operation = "修改用户状态")
 	@PreAuthorize("hasAuthority('users:status')")
-	public Result<Boolean> status(@RequestBody UserStatusUpdateCmd cmd) {
-		return usersServiceI.status(cmd);
+	public Result<Boolean> updateStatus(@RequestBody UserStatusUpdateCmd cmd) {
+		return usersServiceI.updateStatus(cmd);
 	}
 
 	@TraceLog
@@ -113,9 +113,9 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/users/profile-password")
+	@PutMapping("v1/users/password")
 	@Operation(summary = "个人中心", description = "修改密码")
-	public Result<Boolean> profilePassword(@RequestBody UserPasswordResetCmd cmd) {
+	public Result<Boolean> updatePassword(@RequestBody UserPasswordResetCmd cmd) {
 		return usersServiceI.resetPassword(cmd);
 	}
 
@@ -132,8 +132,8 @@ public class UsersController {
 	@GetMapping("v1/users/{id}")
 	@Operation(summary = "用户管理", description = "查看用户")
 	@DataCache(name = "users", key = "#id")
-	public Result<UserCO> get(@PathVariable("id") Long id) {
-		return usersServiceI.get(new UserGetQry(id));
+	public Result<UserCO> getById(@PathVariable("id") Long id) {
+		return usersServiceI.getById(new UserGetQry(id));
 	}
 
 	@TraceLog
@@ -142,8 +142,8 @@ public class UsersController {
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@PreAuthorize("hasAuthority('users:delete')")
 	@DataCache(name = "users", key = "#id", type = Cache.DEL)
-	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return usersServiceI.delete(new UserDeleteCmd(id));
+	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+		return usersServiceI.deleteById(new UserDeleteCmd(id));
 	}
 
 	@TraceLog

@@ -72,8 +72,8 @@ public class OssController {
 	@GetMapping("v1/oss/{id}")
 	@Operation(summary = "存储管理", description = "查看存储")
 	@DataCache(name = "oss", key = "#id")
-	public Result<OssCO> get(@PathVariable("id") Long id) {
-		return ossServiceI.get(new OssGetQry(id));
+	public Result<OssCO> getById(@PathVariable("id") Long id) {
+		return ossServiceI.getById(new OssGetQry(id));
 	}
 
 	@TraceLog
@@ -92,8 +92,8 @@ public class OssController {
 	@OperateLog(module = "存储管理", operation = "删除存储")
 	@PreAuthorize("hasAuthority('oss:delete')")
 	@DataCache(name = "oss", key = "#id", type = Cache.DEL)
-	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return ossServiceI.delete(new OssDeleteCmd(id));
+	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+		return ossServiceI.deleteById(new OssDeleteCmd(id));
 	}
 
 }

@@ -32,4 +32,5 @@ public class MessageListQry extends PageQuery {
 	public void setTitle(String title) {
 		this.title = StringUtil.like(title);
 	}
+
 }

@@ -33,9 +33,9 @@ public interface SourcesServiceI {
 
 	Result<Boolean> update(SourceUpdateCmd cmd);
 
-	Result<Boolean> delete(SourceDeleteCmd cmd);
+	Result<Boolean> deleteById(SourceDeleteCmd cmd);
 
-	Result<SourceCO> get(SourceGetQry qry);
+	Result<SourceCO> getById(SourceGetQry qry);
 
 	Result<Datas<SourceCO>> list(SourceListQry qry);
 

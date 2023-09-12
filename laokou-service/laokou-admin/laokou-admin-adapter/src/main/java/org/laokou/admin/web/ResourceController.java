@@ -85,8 +85,8 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "查看资源")
 	@TraceLog
 	@PreAuthorize("hasAuthority('resource:detail')")
-	public Result<ResourceCO> get(@PathVariable("id") Long id) {
-		return resourceServiceI.get(new ResourceGetQry(id));
+	public Result<ResourceCO> getById(@PathVariable("id") Long id) {
+		return resourceServiceI.getById(new ResourceGetQry(id));
 	}
 
 	@GetMapping(value = "v1/resource/{id}/download")
@@ -120,8 +120,8 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "删除资源")
 	@OperateLog(module = "资源管理", operation = "删除资源")
 	@PreAuthorize("hasAuthority('resource:delete')")
-	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return resourceServiceI.delete(new ResourceDeleteCmd(id));
+	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+		return resourceServiceI.deleteById(new ResourceDeleteCmd(id));
 	}
 
 	@GetMapping(value = "v1/resource/{instanceId}/diagram")

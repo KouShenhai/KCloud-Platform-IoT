@@ -67,12 +67,12 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Result<UserProfileCO> profile(UserProfileGetQry qry) {
+	public Result<UserProfileCO> getProfile(UserProfileGetQry qry) {
 		return userProfileGetQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<Boolean> profile(UserProfileUpdateCmd cmd) {
+	public Result<Boolean> updateProfile(UserProfileUpdateCmd cmd) {
 		return userProfileUpdateCmdExe.execute(cmd);
 	}
 
@@ -82,7 +82,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Result<Boolean> status(UserStatusUpdateCmd cmd) {
+	public Result<Boolean> updateStatus(UserStatusUpdateCmd cmd) {
 		return userStatusUpdateCmdExe.execute(cmd);
 	}
 
@@ -92,12 +92,12 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Result<UserCO> get(UserGetQry qry) {
+	public Result<UserCO> getById(UserGetQry qry) {
 		return userGetQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<Boolean> delete(UserDeleteCmd cmd) {
+	public Result<Boolean> deleteById(UserDeleteCmd cmd) {
 		return userDeleteCmdExe.execute(cmd);
 	}
 

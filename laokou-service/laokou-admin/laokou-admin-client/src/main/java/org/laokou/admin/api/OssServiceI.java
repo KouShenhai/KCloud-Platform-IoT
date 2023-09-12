@@ -31,9 +31,9 @@ public interface OssServiceI {
 
 	Result<Boolean> update(OssUpdateCmd cmd);
 
-	Result<Boolean> delete(OssDeleteCmd cmd);
+	Result<Boolean> deleteById(OssDeleteCmd cmd);
 
-	Result<OssCO> get(OssGetQry qry);
+	Result<OssCO> getById(OssGetQry qry);
 
 	Result<Datas<OssCO>> list(OssListQry qry);
 

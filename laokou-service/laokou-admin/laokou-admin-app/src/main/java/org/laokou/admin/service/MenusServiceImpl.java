@@ -65,7 +65,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	@Override
-	public Result<MenuCO> get(MenuGetQry qry) {
+	public Result<MenuCO> getById(MenuGetQry qry) {
 		return menuGetQryExe.execute(qry);
 	}
 
@@ -80,7 +80,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	@Override
-	public Result<Boolean> delete(MenuDeleteCmd cmd) {
+	public Result<Boolean> deleteById(MenuDeleteCmd cmd) {
 		return menuDeleteCmdExe.execute(cmd);
 	}
 

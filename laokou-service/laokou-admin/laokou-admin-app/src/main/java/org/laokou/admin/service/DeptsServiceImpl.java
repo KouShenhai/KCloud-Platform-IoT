@@ -75,12 +75,12 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	@Override
-	public Result<Boolean> delete(DeptDeleteCmd cmd) {
+	public Result<Boolean> deleteById(DeptDeleteCmd cmd) {
 		return deptDeleteCmdExe.execute(cmd);
 	}
 
 	@Override
-	public Result<DeptCO> get(DeptGetQry qry) {
+	public Result<DeptCO> getById(DeptGetQry qry) {
 		return deptGetQryExe.execute(qry);
 	}
 

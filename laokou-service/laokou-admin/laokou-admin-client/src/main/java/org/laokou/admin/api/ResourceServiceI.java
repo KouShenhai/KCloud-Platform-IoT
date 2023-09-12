@@ -38,7 +38,7 @@ public interface ResourceServiceI {
 
 	Result<Datas<ResourceCO>> list(ResourceListQry qry);
 
-	Result<ResourceCO> get(ResourceGetQry qry);
+	Result<ResourceCO> getById(ResourceGetQry qry);
 
 	Result<Boolean> download(ResourceDownloadCmd cmd);
 
@@ -46,7 +46,7 @@ public interface ResourceServiceI {
 
 	Result<Boolean> update(ResourceUpdateCmd cmd);
 
-	Result<Boolean> delete(ResourceDeleteCmd cmd);
+	Result<Boolean> deleteById(ResourceDeleteCmd cmd);
 
 	Result<String> diagram(ResourceDiagramGetQry qry);
 

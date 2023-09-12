@@ -64,7 +64,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	}
 
 	@Override
-	public Result<Boolean> delete(PackageDeleteCmd cmd) {
+	public Result<Boolean> deleteById(PackageDeleteCmd cmd) {
 		return null;
 	}
 
@@ -74,7 +74,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 	}
 
 	@Override
-	public Result<PackageCO> get(PackageGetQry qry) {
+	public Result<PackageCO> getById(PackageGetQry qry) {
 		return null;
 	}
 

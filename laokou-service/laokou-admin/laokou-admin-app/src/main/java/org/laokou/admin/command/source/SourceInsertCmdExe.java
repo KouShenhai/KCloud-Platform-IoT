@@ -17,10 +17,16 @@
 
 package org.laokou.admin.command.source;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.domain.gateway.SourceGateway;
+import org.laokou.admin.domain.source.Source;
 import org.laokou.admin.dto.source.SourceInsertCmd;
+import org.laokou.admin.gatewayimpl.database.SourceMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.common.core.utils.RegexUtil;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -31,10 +37,26 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SourceInsertCmdExe {
 
-    private final SourceGateway sourceGateway;
+	private final SourceGateway sourceGateway;
 
-    public Result<Boolean> execute(SourceInsertCmd cmd) {
-        return Result.of(sourceGateway.insert(SourceConvertor.toEntity(cmd.getSourceCO())));
-    }
+	private final SourceMapper sourceMapper;
+
+	public Result<Boolean> execute(SourceInsertCmd cmd) {
+		Source source = SourceConvertor.toEntity(cmd.getSourceCO());
+		validate(source);
+		return Result.of(sourceGateway.insert(source));
+	}
+
+	private void validate(Source source) {
+		String name = source.getName();
+		boolean sourceRegex = RegexUtil.sourceRegex(name);
+		if (!sourceRegex) {
+			throw new GlobalException("数据源名称必须包含字母、下划线和数字");
+		}
+		Long count = sourceMapper.selectCount(Wrappers.query(SourceDO.class).eq("name", name));
+		if (count > 0) {
+			throw new GlobalException("数据源名称已存在，请重新填写");
+		}
+	}
 
 }

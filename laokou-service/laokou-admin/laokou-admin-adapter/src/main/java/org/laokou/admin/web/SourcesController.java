@@ -65,8 +65,8 @@ public class SourcesController {
 	@GetMapping("v1/sources/{id}")
 	@Operation(summary = "数据源管理", description = "查看数据源")
 	@DataCache(name = "sources", key = "#id")
-	public Result<SourceCO> get(@PathVariable("id") Long id) {
-		return sourcesServiceI.get(new SourceGetQry(id));
+	public Result<SourceCO> getById(@PathVariable("id") Long id) {
+		return sourcesServiceI.getById(new SourceGetQry(id));
 	}
 
 	@TraceLog
@@ -85,8 +85,8 @@ public class SourcesController {
 	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@PreAuthorize("hasAuthority('sources:delete')")
 	@DataCache(name = "sources", key = "#id", type = Cache.DEL)
-	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return sourcesServiceI.delete(new SourceDeleteCmd(id));
+	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+		return sourcesServiceI.deleteById(new SourceDeleteCmd(id));
 	}
 
 	@TraceLog

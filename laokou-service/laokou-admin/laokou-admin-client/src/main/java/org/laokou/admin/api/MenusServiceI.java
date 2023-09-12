@@ -31,13 +31,13 @@ public interface MenusServiceI {
 
 	Result<List<MenuCO>> list(MenuListQry qry);
 
-	Result<MenuCO> get(MenuGetQry qry);
+	Result<MenuCO> getById(MenuGetQry qry);
 
 	Result<Boolean> update(MenuUpdateCmd cmd);
 
 	Result<Boolean> insert(MenuInsertCmd cmd);
 
-	Result<Boolean> delete(MenuDeleteCmd cmd);
+	Result<Boolean> deleteById(MenuDeleteCmd cmd);
 
 	Result<MenuCO> tree(MenuTreeGetQry qry);
 
