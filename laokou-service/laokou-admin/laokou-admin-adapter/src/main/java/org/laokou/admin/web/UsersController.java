@@ -113,9 +113,9 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/users/profile-password")
+	@PutMapping("v1/users/password")
 	@Operation(summary = "个人中心", description = "修改密码")
-	public Result<Boolean> profilePassword(@RequestBody UserPasswordResetCmd cmd) {
+	public Result<Boolean> updatePassword(@RequestBody UserPasswordResetCmd cmd) {
 		return usersServiceI.resetPassword(cmd);
 	}
 
