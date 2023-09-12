@@ -28,5 +28,6 @@ public interface DsConstant {
     String BOOT_SYS_USER = "boot_sys_user";
     String BOOT_SYS_TENANT = "boot_sys_tenant";
     String BOOT_SYS_ROLE = "boot_sys_role";
+    String BOOT_SYS_SOURCE = "boot_sys_source";
 
 }

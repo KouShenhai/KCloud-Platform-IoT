@@ -19,6 +19,13 @@ package org.laokou.admin.command.source.query;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.SourceGateway;
+import org.laokou.admin.domain.source.Source;
+import org.laokou.admin.dto.source.SourceListQry;
+import org.laokou.admin.dto.source.clientobject.SourceCO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,5 +36,14 @@ import org.springframework.stereotype.Component;
 public class SourceListQryExe {
 
     private final SourceGateway sourceGateway;
+
+    public Result<Datas<SourceCO>> execute(SourceListQry qry) {
+        Source source = ConvertUtil.sourceToTarget(qry, Source.class);
+        Datas<Source> newPage = sourceGateway.list(source, new PageQuery(qry.getPageNum(), qry.getPageSize()));
+        Datas<SourceCO> datas = new Datas<>();
+        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),SourceCO.class));
+        datas.setTotal(newPage.getTotal());
+        return Result.of(datas);
+    }
 
 }

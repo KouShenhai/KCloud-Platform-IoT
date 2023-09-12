@@ -75,7 +75,7 @@ public class SourcesServiceImpl implements SourcesServiceI {
 
 	@Override
 	public Result<Datas<SourceCO>> list(SourceListQry qry) {
-		return null;
+		return sourceListQryExe.execute(qry);
 	}
 
 	@Override

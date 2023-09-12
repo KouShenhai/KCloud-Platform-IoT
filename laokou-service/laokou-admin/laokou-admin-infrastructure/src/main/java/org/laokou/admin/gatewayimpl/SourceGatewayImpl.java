@@ -17,12 +17,20 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.SourceGateway;
 import org.laokou.admin.domain.source.Source;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.admin.common.DsConstant.BOOT_SYS_SOURCE;
 
 /**
  * @author laokou
@@ -34,7 +42,13 @@ public class SourceGatewayImpl implements SourceGateway {
     private final SourceMapper sourceMapper;
 
     @Override
-    public Datas<Source> list(Source source) {
-        return null;
+    @DataFilter(alias = BOOT_SYS_SOURCE)
+    public Datas<Source> list(Source source, PageQuery pageQuery) {
+        IPage<SourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+        IPage<SourceDO> newPage = sourceMapper.getSourceListByLikeNameFilter(page, source.getName(), pageQuery.getSqlFilter());
+        Datas<Source> datas = new Datas<>();
+        datas.setTotal(newPage.getTotal());
+        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),Source.class));
+        return datas;
     }
 }
