@@ -33,9 +33,9 @@ public interface DictsServiceI {
 
 	Result<Boolean> update(DictUpdateCmd cmd);
 
-	Result<Boolean> delete(DictDeleteCmd cmd);
+	Result<Boolean> deleteById(DictDeleteCmd cmd);
 
-	Result<DictCO> get(DictGetQry qry);
+	Result<DictCO> getById(DictGetQry qry);
 
 	Result<List<OptionCO>> optionList(DictOptionListQry qry);
 

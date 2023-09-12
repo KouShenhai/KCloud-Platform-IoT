@@ -33,12 +33,12 @@ public interface RolesServiceI {
 
 	Result<List<OptionCO>> optionList(RoleOptionListQry qry);
 
-	Result<RoleCO> get(RoleGetQry qry);
+	Result<RoleCO> getById(RoleGetQry qry);
 
 	Result<Boolean> insert(RoleInsertCmd cmd);
 
 	Result<Boolean> update(RoleUpdateCmd cmd);
 
-	Result<Boolean> delete(RoleDeleteCmd cmd);
+	Result<Boolean> deleteById(RoleDeleteCmd cmd);
 
 }

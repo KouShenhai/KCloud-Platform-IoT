@@ -24,10 +24,14 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 public interface SourceGateway {
 
-    Datas<Source> list(Source source, PageQuery pageQuery);
+	Datas<Source> list(Source source, PageQuery pageQuery);
 
-    Source get(Long id);
+	Source getById(Long id);
 
-    Boolean insert(Source source);
+	Boolean insert(Source source);
+
+	Boolean update(Source source);
+
+	Boolean deleteById(Long id);
 
 }

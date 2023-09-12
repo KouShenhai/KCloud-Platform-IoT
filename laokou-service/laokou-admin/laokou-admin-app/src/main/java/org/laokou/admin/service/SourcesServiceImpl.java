@@ -55,21 +55,21 @@ public class SourcesServiceImpl implements SourcesServiceI {
 
 	@Override
 	public Result<Boolean> insert(SourceInsertCmd cmd) {
-		return null;
+		return sourceInsertCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> update(SourceUpdateCmd cmd) {
+		return sourceUpdateCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<Boolean> deleteById(SourceDeleteCmd cmd) {
 		return null;
 	}
 
 	@Override
-	public Result<Boolean> delete(SourceDeleteCmd cmd) {
-		return null;
-	}
-
-	@Override
-	public Result<SourceCO> get(SourceGetQry qry) {
+	public Result<SourceCO> getById(SourceGetQry qry) {
 		return sourceGetQryExe.execute(qry);
 	}
 
@@ -80,7 +80,7 @@ public class SourcesServiceImpl implements SourcesServiceI {
 
 	@Override
 	public Result<List<OptionCO>> optionList(SourceOptionListQry qry) {
-		return null;
+		return sourceOptionListQryExe.execute(qry);
 	}
 
 }

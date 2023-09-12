@@ -43,43 +43,83 @@ import static org.laokou.admin.common.DsConstant.BOOT_SYS_SOURCE;
 @RequiredArgsConstructor
 public class SourceGatewayImpl implements SourceGateway {
 
-    private final SourceMapper sourceMapper;
-    private final TransactionalUtil transactionalUtil;
+	private final SourceMapper sourceMapper;
 
-    @Override
-    @DataFilter(alias = BOOT_SYS_SOURCE)
-    public Datas<Source> list(Source source, PageQuery pageQuery) {
-        IPage<SourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-        IPage<SourceDO> newPage = sourceMapper.getSourceListByLikeNameFilter(page, source.getName(), pageQuery.getSqlFilter());
-        Datas<Source> datas = new Datas<>();
-        datas.setTotal(newPage.getTotal());
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),Source.class));
-        return datas;
-    }
+	private final TransactionalUtil transactionalUtil;
 
-    @Override
-    public Source get(Long id) {
-        SourceDO sourceDO = sourceMapper.selectById(id);
-        return ConvertUtil.sourceToTarget(sourceDO,Source.class);
-    }
+	@Override
+	@DataFilter(alias = BOOT_SYS_SOURCE)
+	public Datas<Source> list(Source source, PageQuery pageQuery) {
+		IPage<SourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+		IPage<SourceDO> newPage = sourceMapper.getSourceListByLikeNameFilter(page, source.getName(),
+				pageQuery.getSqlFilter());
+		Datas<Source> datas = new Datas<>();
+		datas.setTotal(newPage.getTotal());
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Source.class));
+		return datas;
+	}
 
-    @Override
-    public Boolean insert(Source source) {
-        SourceDO sourceDO = SourceConvertor.toDataObject(source);
-        return insertSource(sourceDO);
-    }
+	@Override
+	public Source getById(Long id) {
+		SourceDO sourceDO = sourceMapper.selectById(id);
+		return ConvertUtil.sourceToTarget(sourceDO, Source.class);
+	}
 
-    private Boolean insertSource(SourceDO sourceDO) {
-        return transactionalUtil.execute(r -> {
-            try {
-                return sourceMapper.insert(sourceDO) > 0;
-            }
-            catch (Exception e) {
-                log.error("错误信息：{}", e.getMessage());
-                r.setRollbackOnly();
-                return false;
-            }
-        });
-    }
+	@Override
+	public Boolean insert(Source source) {
+		SourceDO sourceDO = SourceConvertor.toDataObject(source);
+		return insertSource(sourceDO);
+	}
+
+	@Override
+	public Boolean update(Source source) {
+		SourceDO sourceDO = SourceConvertor.toDataObject(source);
+		sourceDO.setVersion(sourceMapper.getVersion(sourceDO.getId(), SourceDO.class));
+		return updateSource(sourceDO);
+	}
+
+	@Override
+	public Boolean deleteById(Long id) {
+		return deleteSource(id);
+	}
+
+	private Boolean deleteSource(Long id) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return sourceMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	private Boolean updateSource(SourceDO sourceDO) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return sourceMapper.updateById(sourceDO) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	private Boolean insertSource(SourceDO sourceDO) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return sourceMapper.insert(sourceDO) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
 
 }

@@ -25,16 +25,16 @@ import lombok.Data;
 @Data
 public class Source {
 
-    private Long id;
+	private Long id;
 
-    private String name;
+	private String name;
 
-    private String driverClassName;
+	private String driverClassName;
 
-    private String username;
+	private String username;
 
-    private String password;
+	private String password;
 
-    private String url;
+	private String url;
 
 }

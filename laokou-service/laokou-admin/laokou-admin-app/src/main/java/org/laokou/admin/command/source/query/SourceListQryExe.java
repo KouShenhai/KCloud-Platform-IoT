@@ -35,15 +35,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SourceListQryExe {
 
-    private final SourceGateway sourceGateway;
+	private final SourceGateway sourceGateway;
 
-    public Result<Datas<SourceCO>> execute(SourceListQry qry) {
-        Source source = ConvertUtil.sourceToTarget(qry, Source.class);
-        Datas<Source> newPage = sourceGateway.list(source, new PageQuery(qry.getPageNum(), qry.getPageSize()));
-        Datas<SourceCO> datas = new Datas<>();
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),SourceCO.class));
-        datas.setTotal(newPage.getTotal());
-        return Result.of(datas);
-    }
+	public Result<Datas<SourceCO>> execute(SourceListQry qry) {
+		Source source = ConvertUtil.sourceToTarget(qry, Source.class);
+		Datas<Source> newPage = sourceGateway.list(source, new PageQuery(qry.getPageNum(), qry.getPageSize()));
+		Datas<SourceCO> datas = new Datas<>();
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), SourceCO.class));
+		datas.setTotal(newPage.getTotal());
+		return Result.of(datas);
+	}
 
 }

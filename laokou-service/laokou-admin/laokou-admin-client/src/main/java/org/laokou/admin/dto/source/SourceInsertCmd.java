@@ -27,6 +27,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class SourceInsertCmd extends CommonCommand {
 
-    private SourceCO sourceCO;
+	private SourceCO sourceCO;
 
 }

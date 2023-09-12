@@ -33,11 +33,11 @@ public interface PackagesServiceI {
 
 	Result<Boolean> update(PackageUpdateCmd cmd);
 
-	Result<Boolean> delete(PackageDeleteCmd cmd);
+	Result<Boolean> deleteById(PackageDeleteCmd cmd);
 
 	Result<Datas<PackageCO>> list(PackageListQry qry);
 
-	Result<PackageCO> get(PackageGetQry qry);
+	Result<PackageCO> getById(PackageGetQry qry);
 
 	Result<List<OptionCO>> optionList(PackageOptionListQry qry);
 

@@ -63,8 +63,8 @@ public class RolesController {
 	@GetMapping("v1/roles/{id}")
 	@Operation(summary = "角色管理", description = "查看角色")
 	@DataCache(name = "roles", key = "#id")
-	public Result<RoleCO> get(@PathVariable("id") Long id) {
-		return rolesServiceI.get(new RoleGetQry(id));
+	public Result<RoleCO> getById(@PathVariable("id") Long id) {
+		return rolesServiceI.getById(new RoleGetQry(id));
 	}
 
 	@TraceLog
@@ -92,8 +92,8 @@ public class RolesController {
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@PreAuthorize("hasAuthority('roles:delete')")
 	@DataCache(name = "roles", key = "#id", type = Cache.DEL)
-	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return rolesServiceI.delete(new RoleDeleteCmd(id));
+	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+		return rolesServiceI.deleteById(new RoleDeleteCmd(id));
 	}
 
 }

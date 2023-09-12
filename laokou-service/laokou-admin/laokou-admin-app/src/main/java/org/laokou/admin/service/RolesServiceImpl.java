@@ -64,7 +64,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	@Override
-	public Result<RoleCO> get(RoleGetQry qry) {
+	public Result<RoleCO> getById(RoleGetQry qry) {
 		return roleGetQryExe.execute(qry);
 	}
 
@@ -79,7 +79,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	@Override
-	public Result<Boolean> delete(RoleDeleteCmd cmd) {
+	public Result<Boolean> deleteById(RoleDeleteCmd cmd) {
 		return roleDeleteCmdExe.execute(cmd);
 	}
 

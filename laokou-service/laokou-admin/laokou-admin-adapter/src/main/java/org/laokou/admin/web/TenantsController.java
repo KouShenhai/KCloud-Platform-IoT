@@ -65,8 +65,8 @@ public class TenantsController {
 	@GetMapping("v1/tenants/{id}")
 	@Operation(summary = "租户管理", description = "查看租户")
 	@DataCache(name = "tenants", key = "#id")
-	public Result<TenantCO> get(@PathVariable("id") Long id) {
-		return tenantsServiceI.get(new TenantGetQry());
+	public Result<TenantCO> getById(@PathVariable("id") Long id) {
+		return tenantsServiceI.getById(new TenantGetQry());
 	}
 
 	@TraceLog
@@ -85,8 +85,8 @@ public class TenantsController {
 	@OperateLog(module = "租户管理", operation = "删除租户")
 	@PreAuthorize("hasAuthority('tenants:delete')")
 	@DataCache(name = "tenants", key = "#id", type = Cache.DEL)
-	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return tenantsServiceI.delete(new TenantDeleteCmd(id));
+	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+		return tenantsServiceI.deleteById(new TenantDeleteCmd(id));
 	}
 
 	@TraceLog

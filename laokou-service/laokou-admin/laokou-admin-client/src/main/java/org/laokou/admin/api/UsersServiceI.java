@@ -73,13 +73,13 @@ public interface UsersServiceI {
 	 */
 	Result<List<OptionCO>> optionList(UserOptionListQry qry);
 
-	Result<Boolean> status(UserStatusUpdateCmd cmd);
+	Result<Boolean> updateStatus(UserStatusUpdateCmd cmd);
 
 	Result<Boolean> resetPassword(UserPasswordResetCmd cmd);
 
-	Result<UserCO> get(UserGetQry qry);
+	Result<UserCO> getById(UserGetQry qry);
 
-	Result<Boolean> delete(UserDeleteCmd cmd);
+	Result<Boolean> deleteById(UserDeleteCmd cmd);
 
 	Result<Datas<UserCO>> list(UserListQry qry);
 

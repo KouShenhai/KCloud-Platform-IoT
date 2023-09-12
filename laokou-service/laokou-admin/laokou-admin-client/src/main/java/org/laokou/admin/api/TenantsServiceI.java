@@ -40,10 +40,10 @@ public interface TenantsServiceI {
 
 	Result<Boolean> update(TenantUpdateCmd cmd);
 
-	Result<Boolean> delete(TenantDeleteCmd cmd);
+	Result<Boolean> deleteById(TenantDeleteCmd cmd);
 
 	Result<Datas<TenantCO>> list(TenantListQry qry);
 
-	Result<TenantCO> get(TenantGetQry qry);
+	Result<TenantCO> getById(TenantGetQry qry);
 
 }

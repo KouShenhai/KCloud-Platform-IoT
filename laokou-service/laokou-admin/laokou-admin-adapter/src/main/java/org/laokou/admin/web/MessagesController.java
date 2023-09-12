@@ -70,8 +70,8 @@ public class MessagesController {
 	@Operation(summary = "消息管理", description = "查看消息")
 	@PreAuthorize("hasAuthority('messages:detail')")
 	@DataCache(name = "messages", key = "#id")
-	public Result<MessageCO> get(@PathVariable("id") Long id) {
-		return messagesServiceI.get(new MessageGetQry(id));
+	public Result<MessageCO> getById(@PathVariable("id") Long id) {
+		return messagesServiceI.getById(new MessageGetQry(id));
 	}
 
 	@TraceLog

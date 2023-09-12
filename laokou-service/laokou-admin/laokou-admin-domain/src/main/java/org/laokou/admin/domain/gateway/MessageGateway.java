@@ -30,6 +30,6 @@ public interface MessageGateway {
 
 	Boolean insert(Message message);
 
-	Message get(Long id);
+	Message getById(Long id);
 
 }

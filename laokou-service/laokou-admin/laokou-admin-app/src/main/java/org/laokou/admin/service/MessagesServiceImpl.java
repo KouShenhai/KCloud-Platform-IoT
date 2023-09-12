@@ -66,7 +66,7 @@ public class MessagesServiceImpl implements MessagesServiceI {
 	}
 
 	@Override
-	public Result<MessageCO> get(MessageGetQry qry) {
+	public Result<MessageCO> getById(MessageGetQry qry) {
 		return messageGetQryExe.execute(qry);
 	}
 

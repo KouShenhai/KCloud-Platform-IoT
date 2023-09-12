@@ -63,8 +63,8 @@ public class DictsController {
 	@GetMapping(value = "v1/dicts/{id}")
 	@Operation(summary = "字典管理", description = "查看字典")
 	@DataCache(name = "dicts", key = "#id")
-	public Result<DictCO> detail(@PathVariable("id") Long id) {
-		return dictsServiceI.get(new DictGetQry(id));
+	public Result<DictCO> getById(@PathVariable("id") Long id) {
+		return dictsServiceI.getById(new DictGetQry(id));
 	}
 
 	@TraceLog
@@ -92,8 +92,8 @@ public class DictsController {
 	@OperateLog(module = "字典管理", operation = "删除字典")
 	@PreAuthorize("hasAuthority('dicts:delete')")
 	@DataCache(name = "dicts", key = "#id", type = Cache.DEL)
-	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return dictsServiceI.delete(new DictDeleteCmd(id));
+	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+		return dictsServiceI.deleteById(new DictDeleteCmd(id));
 	}
 
 }

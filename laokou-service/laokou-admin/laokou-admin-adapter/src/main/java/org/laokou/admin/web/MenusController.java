@@ -61,8 +61,8 @@ public class MenusController {
 	@GetMapping("v1/menus/{id}")
 	@Operation(summary = "菜单管理", description = "查看菜单")
 	@DataCache(name = "menus", key = "#id")
-	public Result<MenuCO> get(@PathVariable("id") Long id) {
-		return menusServiceI.get(new MenuGetQry(id));
+	public Result<MenuCO> getById(@PathVariable("id") Long id) {
+		return menusServiceI.getById(new MenuGetQry(id));
 	}
 
 	@TraceLog
@@ -90,8 +90,8 @@ public class MenusController {
 	@OperateLog(module = "菜单管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('menus:delete')")
 	@DataCache(name = "menus", key = "#id", type = Cache.DEL)
-	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return menusServiceI.delete(new MenuDeleteCmd(id));
+	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+		return menusServiceI.deleteById(new MenuDeleteCmd(id));
 	}
 
 	@TraceLog

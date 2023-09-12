@@ -99,8 +99,8 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "修改用户状态")
 	@OperateLog(module = "用户管理", operation = "修改用户状态")
 	@PreAuthorize("hasAuthority('users:status')")
-	public Result<Boolean> status(@RequestBody UserStatusUpdateCmd cmd) {
-		return usersServiceI.status(cmd);
+	public Result<Boolean> updateStatus(@RequestBody UserStatusUpdateCmd cmd) {
+		return usersServiceI.updateStatus(cmd);
 	}
 
 	@TraceLog
@@ -132,8 +132,8 @@ public class UsersController {
 	@GetMapping("v1/users/{id}")
 	@Operation(summary = "用户管理", description = "查看用户")
 	@DataCache(name = "users", key = "#id")
-	public Result<UserCO> get(@PathVariable("id") Long id) {
-		return usersServiceI.get(new UserGetQry(id));
+	public Result<UserCO> getById(@PathVariable("id") Long id) {
+		return usersServiceI.getById(new UserGetQry(id));
 	}
 
 	@TraceLog
@@ -142,8 +142,8 @@ public class UsersController {
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@PreAuthorize("hasAuthority('users:delete')")
 	@DataCache(name = "users", key = "#id", type = Cache.DEL)
-	public Result<Boolean> delete(@PathVariable("id") Long id) {
-		return usersServiceI.delete(new UserDeleteCmd(id));
+	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+		return usersServiceI.deleteById(new UserDeleteCmd(id));
 	}
 
 	@TraceLog

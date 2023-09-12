@@ -36,7 +36,7 @@ public class MessageGetQryExe {
 	private final MessageGateway messageGateway;
 
 	public Result<MessageCO> execute(MessageGetQry qry) {
-		Message message = messageGateway.get(qry.getId());
+		Message message = messageGateway.getById(qry.getId());
 		return Result.of(ConvertUtil.sourceToTarget(message, MessageCO.class));
 	}
 

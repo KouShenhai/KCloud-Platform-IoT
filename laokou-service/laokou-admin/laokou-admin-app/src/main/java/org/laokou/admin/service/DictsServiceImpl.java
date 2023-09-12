@@ -64,12 +64,12 @@ public class DictsServiceImpl implements DictsServiceI {
 	}
 
 	@Override
-	public Result<Boolean> delete(DictDeleteCmd cmd) {
+	public Result<Boolean> deleteById(DictDeleteCmd cmd) {
 		return dictDeleteCmdExe.execute(cmd);
 	}
 
 	@Override
-	public Result<DictCO> get(DictGetQry qry) {
+	public Result<DictCO> getById(DictGetQry qry) {
 		return dictGetQryExe.execute(qry);
 	}
 

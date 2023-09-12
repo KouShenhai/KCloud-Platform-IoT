@@ -56,7 +56,7 @@ public class DictGatewayImpl implements DictGateway {
 	@Override
 	public Boolean update(Dict dict) {
 		DictDO dictDO = DictConvertor.toDataObject(dict);
-		dictDO.setVersion(dictMapper.getVersion(dictDO.getId(),DictDO.class));
+		dictDO.setVersion(dictMapper.getVersion(dictDO.getId(), DictDO.class));
 		return updateDict(dictDO);
 	}
 

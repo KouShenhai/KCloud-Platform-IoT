@@ -59,12 +59,12 @@ public class OssServiceImpl implements OssServiceI {
 	}
 
 	@Override
-	public Result<Boolean> delete(OssDeleteCmd cmd) {
+	public Result<Boolean> deleteById(OssDeleteCmd cmd) {
 		return null;
 	}
 
 	@Override
-	public Result<OssCO> get(OssGetQry qry) {
+	public Result<OssCO> getById(OssGetQry qry) {
 		return null;
 	}
 

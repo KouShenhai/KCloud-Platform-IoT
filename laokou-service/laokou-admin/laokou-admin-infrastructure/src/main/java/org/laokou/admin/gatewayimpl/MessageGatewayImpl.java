@@ -79,7 +79,8 @@ public class MessageGatewayImpl implements MessageGateway {
 	@DataFilter(alias = BOOT_SYS_MESSAGE)
 	public Datas<Message> list(Message message, PageQuery pageQuery) {
 		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<MessageDO> newPage = messageMapper.getMessageListByLikeTitleFilter(page, message.getTitle(),pageQuery.getSqlFilter());
+		IPage<MessageDO> newPage = messageMapper.getMessageListByLikeTitleFilter(page, message.getTitle(),
+				pageQuery.getSqlFilter());
 		Datas<Message> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Message.class));
@@ -100,7 +101,7 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	@Override
 	@DS(TENANT)
-	public Message get(Long id) {
+	public Message getById(Long id) {
 		MessageDO messageDO = messageMapper.selectById(id);
 		return ConvertUtil.sourceToTarget(messageDO, Message.class);
 	}

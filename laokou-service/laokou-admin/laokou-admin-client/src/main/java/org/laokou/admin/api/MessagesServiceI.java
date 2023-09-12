@@ -32,7 +32,7 @@ public interface MessagesServiceI {
 
 	Result<MessageCO> read(MessageReadCmd cmd);
 
-	Result<MessageCO> get(MessageGetQry qry);
+	Result<MessageCO> getById(MessageGetQry qry);
 
 	Result<Datas<MessageCO>> unreadList(MessageUnreadListQry qry);
 
