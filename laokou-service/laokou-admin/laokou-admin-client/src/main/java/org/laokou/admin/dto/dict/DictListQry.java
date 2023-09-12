@@ -19,6 +19,7 @@ package org.laokou.admin.dto.dict;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * @author laokou
@@ -29,5 +30,13 @@ public class DictListQry extends PageQuery {
 	private String type;
 
 	private String label;
+
+	public void setType(String type) {
+		this.type = StringUtil.like(type);
+	}
+
+	public void setLabel(String label) {
+		this.label = StringUtil.like(label);
+	}
 
 }

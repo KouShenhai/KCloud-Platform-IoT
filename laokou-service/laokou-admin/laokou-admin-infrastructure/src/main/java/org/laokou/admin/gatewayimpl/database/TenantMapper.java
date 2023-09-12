@@ -28,4 +28,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TenantMapper extends BatchMapper<TenantDO> {
 
+	// IPage<TenantDO> getTenantListBy
+
 }

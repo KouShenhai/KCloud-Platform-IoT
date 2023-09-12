@@ -38,9 +38,7 @@ public class DictListQryExe {
 	private final DictGateway dictGateway;
 
 	public Result<Datas<DictCO>> execute(DictListQry qry) {
-		Dict dict = new Dict();
-		dict.setType(qry.getType());
-		dict.setLabel(qry.getLabel());
+		Dict dict = ConvertUtil.sourceToTarget(qry, Dict.class);
 		Datas<Dict> datas = dictGateway.list(dict, new PageQuery(qry.getPageNum(), qry.getPageSize()));
 		Datas<DictCO> da = new Datas<>();
 		da.setRecords(ConvertUtil.sourceToTarget(datas.getRecords(), DictCO.class));
