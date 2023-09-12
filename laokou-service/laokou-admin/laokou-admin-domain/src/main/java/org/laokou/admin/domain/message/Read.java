@@ -22,7 +22,13 @@ package org.laokou.admin.domain.message;
  */
 public enum Read {
 
-    NO,
-    YES
+	/**
+	 * 未读
+	 */
+	NO,
+	/**
+	 * 已读
+	 */
+	YES
 
 }
