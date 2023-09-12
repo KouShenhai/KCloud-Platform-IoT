@@ -21,7 +21,7 @@ import io.netty.handler.ipfilter.IpFilterRuleType;
 import io.netty.handler.ipfilter.IpSubnetFilterRule;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.laokou.common.core.constant.Constant;
+import org.laokou.common.i18n.common.Constant;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.gateway.utils.ResponseUtil;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.laokou.common.core.constant.Constant.SLASH;
+import static org.laokou.common.i18n.common.Constant.SLASH;
 import static org.laokou.gateway.exception.ErrorCode.IP_BLACK;
 
 /**

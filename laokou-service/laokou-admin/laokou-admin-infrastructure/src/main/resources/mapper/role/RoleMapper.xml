@@ -20,15 +20,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.RoleMapper">
 
-    <select id="getRoleIdsByUserId" resultType="long">
-        select id
-        from boot_sys_role
-        where del_flag = 0
-            and id in (select role_id from boot_sys_user_role where user_id = #{userId})
-        group by id
-    </select>
-
-    <select id="getRoleListByTenantIdAndLikeName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.RoleDO">
+    <select id="getRoleListByTenantIdAndLikeNameFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.RoleDO">
         select id
              ,`name`
              ,sort
@@ -36,7 +28,7 @@
         where del_flag = 0
             and tenant_id = #{tenantId}
         <if test="name != '' and name != null">
-            and `name` like concat('%',#{name},'%')
+            and `name` like #{name}
         </if>
         order by sort desc
     </select>

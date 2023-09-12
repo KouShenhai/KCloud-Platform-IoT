@@ -28,6 +28,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
+import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
 
 /**
  * @author laokou
@@ -58,6 +59,6 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 * @return
 	 */
 	IPage<UserDO> getUserListFilter(IPage<UserDO> page, @Param("userDO") UserDO userDO,
-			@Param("sqlFilter") String sqlFilter);
+			@Param(SQL_FILTER) String sqlFilter);
 
 }

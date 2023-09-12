@@ -20,6 +20,7 @@ package org.laokou.admin.command.role.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.domain.role.Role;
+import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.role.RoleListQry;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.common.core.utils.ConvertUtil;
@@ -39,9 +40,8 @@ public class RoleListQryExe {
 	private final RoleGateway roleGateway;
 
 	public Result<Datas<RoleCO>> execute(RoleListQry qry) {
-		Role role = new Role();
-		role.setName(qry.getName());
-		Datas<Role> datas = roleGateway.list(UserUtil.getTenantId(), role,
+		Role role = ConvertUtil.sourceToTarget(qry, Role.class);
+		Datas<Role> datas = roleGateway.list(new User(UserUtil.getTenantId()), role,
 				new PageQuery(qry.getPageNum(), qry.getPageSize()));
 		Datas<RoleCO> newDatas = new Datas<>();
 		newDatas.setTotal(datas.getTotal());

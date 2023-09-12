@@ -18,7 +18,7 @@
 // import com.baomidou.dynamic.datasource.annotation.DS;
 // import lombok.RequiredArgsConstructor;
 // import org.jetbrains.annotations.NotNull;
-// import org.laokou.common.core.constant.Constant;
+// import org.laokou.common.i18n.common.Constant;
 // import org.laokou.common.core.utils.ConvertUtil;
 // import org.springframework.scheduling.annotation.Async;
 // import org.springframework.stereotype.Component;

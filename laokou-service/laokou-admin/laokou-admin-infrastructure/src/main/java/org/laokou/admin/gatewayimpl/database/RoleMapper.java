@@ -22,7 +22,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
 
 /**
  * @author laokou
@@ -31,9 +31,7 @@ import java.util.List;
 @Mapper
 public interface RoleMapper extends BatchMapper<RoleDO> {
 
-	List<Long> getRoleIdsByUserId(@Param("userId") Long userId);
-
-	IPage<RoleDO> getRoleListByTenantIdAndLikeName(IPage<RoleDO> page, @Param("tenantId") Long tenantId,
-			@Param("name") String name);
+	IPage<RoleDO> getRoleListByTenantIdAndLikeNameFilter(IPage<RoleDO> page, @Param("tenantId") Long tenantId,
+			@Param("name") String name, @Param(SQL_FILTER) String sqlFilter);
 
 }

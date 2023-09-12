@@ -71,7 +71,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.laokou.auth.common.Constant.LOGIN_PATTERN;
-import static org.laokou.common.core.constant.Constant.ALGORITHM_RSA;
+import static org.laokou.common.i18n.common.Constant.ALGORITHM_RSA;
 
 /**
  * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}

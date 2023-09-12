@@ -16,6 +16,8 @@
 package org.laokou.admin.domain.gateway;
 
 import org.laokou.admin.domain.tenant.Tenant;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
@@ -23,5 +25,7 @@ import org.laokou.admin.domain.tenant.Tenant;
 public interface TenantGateway {
 
 	Boolean insert(Tenant tenant);
+
+	Datas<Tenant> list(Tenant tenant, PageQuery pageQuery);
 
 }

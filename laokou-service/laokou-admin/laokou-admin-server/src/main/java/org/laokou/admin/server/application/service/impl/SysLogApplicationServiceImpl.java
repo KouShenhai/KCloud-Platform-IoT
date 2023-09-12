@@ -23,7 +23,7 @@
 // import jakarta.servlet.http.HttpServletResponse;
 // import lombok.RequiredArgsConstructor;
 // import org.laokou.admin.server.application.service.SysLogApplicationService;
-// import org.laokou.common.core.constant.Constant;
+// import org.laokou.common.i18n.common.Constant;
 // import org.laokou.common.data.filter.annotation.DataFilter;
 // import org.laokou.common.log.qo.SysLoginLogQo;
 // import org.laokou.common.log.qo.SysOperateLogQo;

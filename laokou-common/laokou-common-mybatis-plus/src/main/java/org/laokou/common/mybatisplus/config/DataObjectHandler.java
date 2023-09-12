@@ -23,7 +23,7 @@ import org.laokou.common.core.context.UserTenantContextHolder;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
-import static org.laokou.common.core.constant.Constant.DEFAULT;
+import static org.laokou.common.i18n.common.Constant.DEFAULT;
 import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.*;
 
 /**

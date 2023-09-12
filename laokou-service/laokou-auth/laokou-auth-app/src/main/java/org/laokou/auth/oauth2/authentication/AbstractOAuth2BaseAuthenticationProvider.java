@@ -63,8 +63,8 @@ import java.util.Set;
 import static org.laokou.auth.common.BizCode.LOGIN_SUCCEEDED;
 import static org.laokou.auth.common.Constant.*;
 import static org.laokou.auth.common.exception.ErrorCode.*;
-import static org.laokou.common.core.constant.Constant.FAIL_STATUS;
-import static org.laokou.common.core.constant.Constant.SUCCESS_STATUS;
+import static org.laokou.common.i18n.common.Constant.FAIL_STATUS;
+import static org.laokou.common.i18n.common.Constant.SUCCESS_STATUS;
 
 /**
  * @author laokou

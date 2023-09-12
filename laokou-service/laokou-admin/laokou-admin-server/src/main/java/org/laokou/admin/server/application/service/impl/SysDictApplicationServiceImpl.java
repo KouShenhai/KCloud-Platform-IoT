@@ -24,7 +24,7 @@
 // import org.laokou.admin.server.application.service.SysDictApplicationService;
 // import org.laokou.admin.server.domain.sys.entity.SysDictDO;
 // import org.laokou.admin.server.domain.sys.repository.service.SysDictService;
-// import org.laokou.common.core.constant.Constant;
+// import org.laokou.common.i18n.common.Constant;
 // import org.laokou.admin.server.interfaces.qo.SysDictQo;
 // import org.laokou.admin.client.vo.SysDictVO;
 // import org.laokou.admin.client.dto.SysDictDTO;

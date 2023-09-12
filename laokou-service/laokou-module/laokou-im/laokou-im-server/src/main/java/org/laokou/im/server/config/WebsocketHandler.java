@@ -46,7 +46,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
-import static org.laokou.common.core.constant.Constant.MARK;
+import static org.laokou.common.i18n.common.Constant.MARK;
 
 /**
  * @author laokou

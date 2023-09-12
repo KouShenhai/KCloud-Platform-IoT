@@ -86,9 +86,13 @@ public class MessageGatewayImpl implements MessageGateway {
 	@Override
 	@DS(TENANT)
 	public Boolean insert(Message message) {
-		pushMessage(message.getReceiver(), message.getType());
 		MessageDO messageDO = MessageConvertor.toDataObject(message);
-		return insertMessage(messageDO, message);
+		Boolean flag = insertMessage(messageDO, message);
+		// 插入成功发送消息
+		if (flag) {
+			pushMessage(message.getReceiver(), message.getType());
+		}
+		return flag;
 	}
 
 	@Override
@@ -134,6 +138,8 @@ public class MessageGatewayImpl implements MessageGateway {
 			messageDetailDO.setId(IdUtil.defaultId());
 			messageDetailDO.setCreateDate(DateUtil.now());
 			messageDetailDO.setCreator(UserUtil.getUserId());
+			messageDetailDO.setDeptId(UserUtil.getDeptId());
+			messageDetailDO.setTenantId(UserUtil.getTenantId());
 			messageDetailDO.setMessageId(id);
 			list.add(messageDetailDO);
 		}

@@ -56,6 +56,10 @@ public class User {
 
 	private Long tenantId;
 
+	public User(Long tenantId) {
+		this.tenantId = tenantId;
+	}
+
 	public User(String username, Long tenantId) {
 		this.username = username;
 		this.tenantId = tenantId;

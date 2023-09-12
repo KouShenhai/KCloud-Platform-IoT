@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import static org.laokou.common.core.constant.Constant.AND;
+import static org.laokou.common.i18n.common.Constant.AND;
 
 /**
  * @author laokou

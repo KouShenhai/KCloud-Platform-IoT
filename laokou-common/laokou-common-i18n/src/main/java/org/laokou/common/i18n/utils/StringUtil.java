@@ -19,6 +19,8 @@ package org.laokou.common.i18n.utils;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
+import static org.laokou.common.i18n.common.Constant.LIKE;
+
 /**
  * @author laokou
  */
@@ -26,6 +28,13 @@ public class StringUtil {
 
 	public static boolean isNotEmpty(String str) {
 		return hasText(str);
+	}
+
+	public static String like(String str) {
+		if (isNotEmpty(str)) {
+			return LIKE.concat(str.concat(LIKE));
+		}
+		return str;
 	}
 
 	public static boolean isEmpty(String str) {

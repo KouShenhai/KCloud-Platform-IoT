@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.laokou.common.core.constant.Constant.RISK;
+import static org.laokou.common.i18n.common.Constant.RISK;
 import static org.laokou.common.shardingsphere.utils.CryptoUtil.*;
 
 /**

@@ -23,7 +23,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-import static org.laokou.common.core.constant.Constant.TRUE;
+import static org.laokou.common.i18n.common.Constant.TRUE;
 
 /**
  * @author laokou

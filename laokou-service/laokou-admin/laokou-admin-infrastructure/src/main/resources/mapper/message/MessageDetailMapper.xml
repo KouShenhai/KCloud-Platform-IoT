@@ -21,10 +21,10 @@
 <mapper namespace="org.laokou.admin.gatewayimpl.database.MessageDetailMapper">
 
     <insert id="insertBatch" useGeneratedKeys="false">
-        insert into boot_sys_message_detail(id,message_id,user_id,creator)
+        insert into boot_sys_message_detail(id,message_id,user_id,creator,dept_id,tenant_id,del_flag,version)
         values
             <foreach collection="list" item="item" separator=",">
-                (#{item.id},#{item.messageId},#{item.userId},#{item.creator})
+                (#{item.id},#{item.messageId},#{item.userId},#{item.creator},#{item.deptId},#{item.tenantId},'0','0')
             </foreach>
     </insert>
 
