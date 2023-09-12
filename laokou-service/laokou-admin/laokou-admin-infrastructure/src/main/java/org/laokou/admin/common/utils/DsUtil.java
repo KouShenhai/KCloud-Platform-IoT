@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.laokou.admin.common.DbConstant.*;
+import static org.laokou.admin.common.DsConstant.*;
 
 /**
  * @author laokou

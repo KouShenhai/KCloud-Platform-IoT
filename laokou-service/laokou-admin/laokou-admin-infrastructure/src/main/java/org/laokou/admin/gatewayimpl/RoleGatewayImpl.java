@@ -46,7 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.admin.common.DbConstant.BOOT_SYS_ROLE;
+import static org.laokou.admin.common.DsConstant.BOOT_SYS_ROLE;
 
 /**
  * @author laokou

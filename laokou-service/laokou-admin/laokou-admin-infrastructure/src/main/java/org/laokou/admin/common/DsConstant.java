@@ -13,15 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.domain.gateway;
-
-import org.laokou.common.i18n.dto.Datas;
+package org.laokou.admin.common;
 
 /**
  * @author laokou
  */
-public interface SourceGateway {
+public interface DsConstant {
 
-    Datas<Source>
+    String BOOT_SYS_DICT = "boot_sys_dict";
+    String BOOT_SYS_MESSAGE= "boot_sys_message";
+    String BOOT_SYS_MESSAGE_DETAIL = "boot_sys_message_detail";
+    String BOOT_SYS_OSS = "boot_sys_oss";
+    String BOOT_SYS_OSS_LOG = "boot_sys_oss_log";
+    String BOOT_SYS_USER = "boot_sys_user";
+    String BOOT_SYS_TENANT = "boot_sys_tenant";
+    String BOOT_SYS_ROLE = "boot_sys_role";
 
 }
