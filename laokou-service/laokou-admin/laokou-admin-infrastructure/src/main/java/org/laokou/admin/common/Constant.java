@@ -20,6 +20,9 @@ package org.laokou.admin.common;
  */
 public interface Constant {
 
+	/**
+	 * 租户
+	 */
 	String TENANT = "#tenant";
 
 	/**
@@ -33,7 +36,7 @@ public interface Constant {
 	String SHARDING_SPHERE_READWRITE = "shardingSphereReadWrite";
 
 	/**
-	 * 默认
+	 * 默认数据源
 	 */
 	long DEFAULT_TENANT = 0;
 

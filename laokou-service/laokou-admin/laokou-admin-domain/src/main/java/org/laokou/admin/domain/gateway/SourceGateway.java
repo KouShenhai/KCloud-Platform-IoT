@@ -15,9 +15,14 @@
  */
 package org.laokou.admin.domain.gateway;
 
+import org.laokou.admin.domain.source.Source;
+import org.laokou.common.i18n.dto.Datas;
+
 /**
  * @author laokou
  */
 public interface SourceGateway {
+
+    Datas<Source> list(Source source);
 
 }
