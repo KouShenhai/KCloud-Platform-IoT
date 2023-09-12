@@ -22,6 +22,8 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
+import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
+
 /**
  * @author laokou
  */
@@ -32,7 +34,7 @@ public interface MessageMapper extends BatchMapper<MessageDO> {
 	IPage<MessageDO> getUnreadMessageListByUserIdAndType(IPage<MessageDO> page, @Param("userId") Long userId,
 			@Param("type") Integer type);
 
-	IPage<MessageDO> getMessageListLikeTitle(IPage<MessageDO> page, @Param("title") String title);
+	IPage<MessageDO> getMessageListByLikeTitleFilter(IPage<MessageDO> page, @Param("title") String title, @Param(SQL_FILTER) String sqlFilter);
 
 	MessageDO getMessageByDetailId(@Param("detailId") Long detailId);
 

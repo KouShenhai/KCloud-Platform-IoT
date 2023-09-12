@@ -39,6 +39,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.laokou.admin.common.DbConstant.*;
+
 /**
  * @author laokou
  */
@@ -53,8 +55,8 @@ public class DsUtil {
 
 	private final DynamicUtil dynamicUtil;
 
-	private static final List<String> TABLES = List.of("boot_sys_dict", "boot_sys_message", "boot_sys_message_detail",
-			"boot_sys_oss", "boot_sys_oss_log");
+	private static final List<String> TABLES = List.of(BOOT_SYS_DICT, BOOT_SYS_MESSAGE, BOOT_SYS_MESSAGE_DETAIL,
+			BOOT_SYS_OSS, BOOT_SYS_OSS_LOG);
 
 	public String loadDs(String sourceName) {
 		if (StringUtil.isEmpty(sourceName)) {

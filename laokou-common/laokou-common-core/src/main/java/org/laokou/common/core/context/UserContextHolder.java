@@ -23,10 +23,10 @@ import java.util.Optional;
 /**
  * @author laokou
  */
-public class UserTenantContextHolder {
+public class UserContextHolder {
 
 	@Data
-	public static class UserTenant {
+	public static class User {
 
 		private Long id;
 
@@ -36,15 +36,15 @@ public class UserTenantContextHolder {
 
 	}
 
-	private static final ThreadLocal<UserTenant> USER_CONTEXT_HOLDER = new InheritableThreadLocal<>();
+	private static final ThreadLocal<User> USER_CONTEXT_HOLDER = new InheritableThreadLocal<>();
 
-	public static void set(UserTenant userTenant) {
+	public static void set(User user) {
 		USER_CONTEXT_HOLDER.remove();
-		USER_CONTEXT_HOLDER.set(userTenant);
+		USER_CONTEXT_HOLDER.set(user);
 	}
 
-	public static UserTenant get() {
-		return Optional.ofNullable(USER_CONTEXT_HOLDER.get()).orElse(new UserTenant());
+	public static User get() {
+		return Optional.ofNullable(USER_CONTEXT_HOLDER.get()).orElse(new User());
 	}
 
 }

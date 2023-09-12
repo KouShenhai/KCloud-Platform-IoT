@@ -30,7 +30,7 @@ import org.springframework.stereotype.Repository;
 public interface SourceMapper extends BatchMapper<SourceDO> {
 
 	/**
-	 * 根据名词查询数据源
+	 * 根据名称查询数据源
 	 * @param name
 	 * @return SourceDO
 	 */

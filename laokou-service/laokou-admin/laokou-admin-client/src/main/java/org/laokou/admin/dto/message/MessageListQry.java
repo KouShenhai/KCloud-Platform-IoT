@@ -19,6 +19,7 @@ package org.laokou.admin.dto.message;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * @author laokou
@@ -28,4 +29,7 @@ public class MessageListQry extends PageQuery {
 
 	private String title;
 
+	public void setTitle(String title) {
+		this.title = StringUtil.like(title);
+	}
 }

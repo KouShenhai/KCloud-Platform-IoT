@@ -17,7 +17,6 @@
 
 package org.laokou.admin.command.user.query;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.user.UserOptionListQry;
@@ -32,8 +31,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
-
 /**
  * @author laokou
  */
@@ -43,7 +40,6 @@ public class UserOptionListQryExe {
 
 	private final UserMapper userMapper;
 
-	@DS(SHARDING_SPHERE)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
 		List<UserDO> list = userMapper.getOptionListByTenantId(UserUtil.getTenantId());
 		if (CollectionUtil.isEmpty(list)) {

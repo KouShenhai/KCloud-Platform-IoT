@@ -19,7 +19,7 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-import org.laokou.common.core.context.UserTenantContextHolder;
+import org.laokou.common.core.context.UserContextHolder;
 import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
@@ -36,22 +36,22 @@ public class DataObjectHandler implements MetaObjectHandler {
 	@Override
 	public void insertFill(MetaObject metaObject) {
 		log.info("insert fill .........");
-		UserTenantContextHolder.UserTenant userTenant = UserTenantContextHolder.get();
-		this.strictInsertFill(metaObject, CREATOR, userTenant::getId, Long.class);
-		this.strictInsertFill(metaObject, EDITOR, userTenant::getId, Long.class);
+		UserContextHolder.User user = UserContextHolder.get();
+		this.strictInsertFill(metaObject, CREATOR, user::getId, Long.class);
+		this.strictInsertFill(metaObject, EDITOR, user::getId, Long.class);
 		this.strictInsertFill(metaObject, CREATE_DATE, LocalDateTime::now, LocalDateTime.class);
 		this.strictInsertFill(metaObject, UPDATE_DATE, LocalDateTime::now, LocalDateTime.class);
 		this.strictInsertFill(metaObject, DEL_FLAG, () -> DEFAULT, Integer.class);
 		this.strictInsertFill(metaObject, VERSION, () -> DEFAULT, Integer.class);
-		this.strictInsertFill(metaObject, TENANT_ID, userTenant::getTenantId, Long.class);
-		this.strictInsertFill(metaObject, DEPT_ID, userTenant::getDeptId, Long.class);
+		this.strictInsertFill(metaObject, TENANT_ID, user::getTenantId, Long.class);
+		this.strictInsertFill(metaObject, DEPT_ID, user::getDeptId, Long.class);
 	}
 
 	@Override
 	public void updateFill(MetaObject metaObject) {
 		log.info("update fill .......");
-		UserTenantContextHolder.UserTenant userTenant = UserTenantContextHolder.get();
-		this.strictUpdateFill(metaObject, EDITOR, userTenant::getId, Long.class);
+		UserContextHolder.User user = UserContextHolder.get();
+		this.strictUpdateFill(metaObject, EDITOR, user::getId, Long.class);
 		this.strictUpdateFill(metaObject, UPDATE_DATE, LocalDateTime::now, LocalDateTime.class);
 	}
 

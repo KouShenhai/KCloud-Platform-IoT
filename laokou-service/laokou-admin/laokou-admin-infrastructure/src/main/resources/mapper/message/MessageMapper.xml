@@ -31,7 +31,7 @@
 			  and p.type = #{type}
     </select>
 
-	<select id="getMessageListLikeTitle" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MessageDO">
+	<select id="getMessageListByLikeTitleFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MessageDO">
 		select id
 		     ,create_date
 		     ,title
@@ -39,7 +39,7 @@
 		from boot_sys_message
 		where del_flag = 0
 		<if test="title != null and title != ''">
-			and title like concat('%',#{title},'%')
+			and title like #{title}
 		</if>
 		order by create_date desc
 	</select>

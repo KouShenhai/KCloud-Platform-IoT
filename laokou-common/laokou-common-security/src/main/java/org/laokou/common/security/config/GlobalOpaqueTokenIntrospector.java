@@ -26,7 +26,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
-import org.laokou.common.core.context.UserTenantContextHolder;
+import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
@@ -77,7 +77,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 						MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 			}
 			// 写入当前线程
-			UserTenantContextHolder.set(ConvertUtil.sourceToTarget(user, UserTenantContextHolder.UserTenant.class));
+			UserContextHolder.set(ConvertUtil.sourceToTarget(user, UserContextHolder.User.class));
 			return user;
 		}
 		obj = redisUtil.get(userInfoKey);
@@ -145,7 +145,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		}
 		// 写入当前线程
 		// 写入当前线程
-		UserTenantContextHolder.set(ConvertUtil.sourceToTarget(user, UserTenantContextHolder.UserTenant.class));
+		UserContextHolder.set(ConvertUtil.sourceToTarget(user, UserContextHolder.User.class));
 		return user;
 	}
 

@@ -75,7 +75,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 
 	@Override
 	public Result<Datas<TenantCO>> list(TenantListQry qry) {
-		return null;
+		return tenantListQryExe.execute(qry);
 	}
 
 	@Override

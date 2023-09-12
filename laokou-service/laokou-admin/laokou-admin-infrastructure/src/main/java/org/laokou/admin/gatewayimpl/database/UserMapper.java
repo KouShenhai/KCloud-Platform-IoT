@@ -29,6 +29,7 @@ import java.util.List;
 
 import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
 import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
+import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
 
 /**
  * @author laokou
@@ -55,10 +56,12 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	/**
 	 * 查询用户列表
 	 * @param page
-	 * @param userDO
+	 * @param tenantId
+	 * @param username
+	 * @param sqlFilter
 	 * @return
 	 */
-	IPage<UserDO> getUserListFilter(IPage<UserDO> page, @Param("userDO") UserDO userDO,
-			@Param(SQL_FILTER) String sqlFilter);
+	IPage<UserDO> getUserListByTenantIdAndUsernameFilter(IPage<UserDO> page, @Param(TENANT_ID) Long tenantId,
+			@Param("username") String username, @Param(SQL_FILTER) String sqlFilter);
 
 }

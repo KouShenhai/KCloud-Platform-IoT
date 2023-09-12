@@ -42,8 +42,4 @@ public class Message {
 
 	private Set<String> receiver;
 
-	public Message(String title) {
-		this.title = title;
-	}
-
 }

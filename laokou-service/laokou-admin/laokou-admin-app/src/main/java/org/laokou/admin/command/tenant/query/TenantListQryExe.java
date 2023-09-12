@@ -19,6 +19,13 @@ package org.laokou.admin.command.tenant.query;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.TenantGateway;
+import org.laokou.admin.domain.tenant.Tenant;
+import org.laokou.admin.dto.tenant.TenantListQry;
+import org.laokou.admin.dto.tenant.clientobject.TenantCO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,5 +36,14 @@ import org.springframework.stereotype.Component;
 public class TenantListQryExe {
 
 	private final TenantGateway tenantGateway;
+
+	public Result<Datas<TenantCO>> execute(TenantListQry qry) {
+		Tenant tenant = ConvertUtil.sourceToTarget(qry, Tenant.class);
+		Datas<Tenant> newPage = tenantGateway.list(tenant, new PageQuery(qry.getPageNum(), qry.getPageSize()));
+		Datas<TenantCO> datas = new Datas<>();
+		datas.setTotal(newPage.getTotal());
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), TenantCO.class));
+		return Result.of(datas);
+	}
 
 }

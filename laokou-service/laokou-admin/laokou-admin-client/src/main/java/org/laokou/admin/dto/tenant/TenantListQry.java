@@ -18,12 +18,19 @@
 package org.laokou.admin.dto.tenant;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * @author laokou
  */
 @Data
-public class TenantListQry extends CommonCommand {
+public class TenantListQry extends PageQuery {
+
+	private String name;
+
+	public void setName(String name) {
+		this.name = StringUtil.like(name);
+	}
 
 }

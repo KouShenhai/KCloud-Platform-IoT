@@ -23,6 +23,8 @@ import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
+import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
+
 /**
  * @author laokou
  */
@@ -30,6 +32,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface DictMapper extends BatchMapper<DictDO> {
 
-	IPage<DictDO> getDictList(IPage<DictDO> page, @Param("dictDO") DictDO dictDO);
+	IPage<DictDO> getDictListByLikeTypeAndLikeLabelFilter(IPage<DictDO> page, @Param("type") String type,
+			@Param("label") String label, @Param(SQL_FILTER) String sqlFilter);
 
 }

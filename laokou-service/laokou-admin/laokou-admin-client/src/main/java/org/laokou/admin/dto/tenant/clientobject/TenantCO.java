@@ -20,10 +20,23 @@ package org.laokou.admin.dto.tenant.clientobject;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.io.Serial;
+
 /**
  * @author laokou
  */
 @Data
 public class TenantCO extends ClientObject {
+
+	@Serial
+	private static final long serialVersionUID = -5244147777398551087L;
+
+	private Long id;
+
+	private String name;
+
+	private Long sourceId;
+
+	private Long packageId;
 
 }

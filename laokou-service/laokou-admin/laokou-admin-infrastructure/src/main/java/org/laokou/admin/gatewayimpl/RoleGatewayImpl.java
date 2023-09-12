@@ -46,6 +46,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.laokou.admin.common.DbConstant.BOOT_SYS_ROLE;
+
 /**
  * @author laokou
  */
@@ -100,7 +102,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	@Override
-	@DataFilter(alias = "boot_sys_role")
+	@DataFilter(alias = BOOT_SYS_ROLE)
 	public Datas<Role> list(User user, Role role, PageQuery pageQuery) {
 		IPage<RoleDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<RoleDO> newPage = roleMapper.getRoleListByTenantIdAndLikeNameFilter(page, user.getTenantId(),
