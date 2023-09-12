@@ -19,6 +19,8 @@ package org.laokou.admin.command.tenant;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.TenantGateway;
+import org.laokou.admin.dto.tenant.TenantInsertCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,5 +31,9 @@ import org.springframework.stereotype.Component;
 public class TenantInsertCmdExe {
 
 	private final TenantGateway tenantGateway;
+
+	public Result<Boolean> execute(TenantInsertCmd cmd) {
+		return null;
+	}
 
 }
