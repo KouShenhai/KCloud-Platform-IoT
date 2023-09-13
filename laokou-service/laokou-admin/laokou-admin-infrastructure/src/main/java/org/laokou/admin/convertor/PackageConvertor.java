@@ -15,22 +15,25 @@
  *
  */
 
-package org.laokou.admin.domain.packages;
+package org.laokou.admin.convertor;
 
-import lombok.Data;
-
-import java.util.List;
+import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.dto.packages.clientobject.PackageCO;
+import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
+import org.laokou.common.core.utils.ConvertUtil;
 
 /**
  * @author laokou
  */
-@Data
-public class Package {
+public class PackageConvertor {
 
-	private Long id;
+    public static Package toEntity(PackageCO packageCO) {
+        return ConvertUtil.sourceToTarget(packageCO, Package.class);
+    }
 
-	private String name;
+    public static PackageDO toDataObject(Package pack) {
+        return ConvertUtil.sourceToTarget(pack, PackageDO.class);
+    }
 
-	private List<Long> menuIds;
 
 }

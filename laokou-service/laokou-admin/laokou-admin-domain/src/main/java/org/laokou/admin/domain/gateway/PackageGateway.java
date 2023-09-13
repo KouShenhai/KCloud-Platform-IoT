@@ -24,10 +24,14 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 public interface PackageGateway {
 
-    Boolean insert(Package pack);
+	Boolean insert(Package pack);
 
-    Boolean update(Package pack);
+	Boolean update(Package pack);
 
-    Datas<Package> list(Package pack, PageQuery pageQuery);
+	Datas<Package> list(Package pack, PageQuery pageQuery);
+
+	Package getById(Long id);
+
+	Boolean deleteById(Long id);
 
 }

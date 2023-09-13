@@ -18,12 +18,19 @@
 package org.laokou.admin.dto.packages;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * @author laokou
  */
 @Data
-public class PackageListQry extends CommonCommand {
+public class PackageListQry extends PageQuery {
+
+	private String name;
+
+	public void setName(String name) {
+		this.name = StringUtil.like(name);
+	}
 
 }

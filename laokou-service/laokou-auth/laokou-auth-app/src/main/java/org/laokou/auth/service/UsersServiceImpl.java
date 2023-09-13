@@ -108,13 +108,12 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 默认数据库
 		user.setSourceName(DEFAULT_SOURCE);
 		// 登录成功
-		loginLogGateway.publish(new LoginLog(username, type, tenantId, SUCCESS_STATUS,
-				MessageUtil.getMessage(LOGIN_SUCCEEDED), ip));
+		loginLogGateway.publish(
+				new LoginLog(username, type, tenantId, SUCCESS_STATUS, MessageUtil.getMessage(LOGIN_SUCCEEDED), ip));
 		return user;
 	}
 
-	private UsernameNotFoundException getException(int code, String username, String type, Long tenantId,
-			String ip) {
+	private UsernameNotFoundException getException(int code, String username, String type, Long tenantId, String ip) {
 		String message = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
 		loginLogGateway.publish(new LoginLog(username, type, tenantId, FAIL_STATUS, message, ip));

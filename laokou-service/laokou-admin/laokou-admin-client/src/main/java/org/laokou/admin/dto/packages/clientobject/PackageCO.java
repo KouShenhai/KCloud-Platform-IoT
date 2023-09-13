@@ -28,10 +28,10 @@ import java.util.List;
 @Data
 public class PackageCO extends ClientObject {
 
-    private Long id;
+	private Long id;
 
-    private String name;
+	private String name;
 
-    private List<Long> menuIds;
+	private List<Long> menuIds;
 
 }

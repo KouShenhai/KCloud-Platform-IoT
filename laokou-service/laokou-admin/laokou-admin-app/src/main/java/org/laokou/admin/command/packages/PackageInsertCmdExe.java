@@ -18,6 +18,7 @@
 package org.laokou.admin.command.packages;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.PackageGateway;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +27,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PackageInsertCmdExe {
+
+    private final PackageGateway packageGateway;
 
 }
