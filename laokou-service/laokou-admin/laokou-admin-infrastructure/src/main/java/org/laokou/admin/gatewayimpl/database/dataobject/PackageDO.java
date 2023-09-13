@@ -35,9 +35,6 @@ public class PackageDO extends BaseDO {
 	@Serial
 	private static final long serialVersionUID = -8966416332004844411L;
 
-	/**
-	 * 套餐名称
-	 */
 	@Schema(name = "name", description = "套餐名称")
 	private String name;
 

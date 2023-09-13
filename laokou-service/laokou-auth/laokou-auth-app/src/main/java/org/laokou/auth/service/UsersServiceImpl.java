@@ -69,25 +69,25 @@ public class UsersServiceImpl implements UserDetailsService {
 	private final LoginLogGateway loginLogGateway;
 
 	@Override
-	public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// 默认租户查询
 		Long tenantId = DEFAULT_TENANT;
-		String encryptName = AesUtil.encrypt(loginName);
-		String loginType = AuthorizationGrantType.AUTHORIZATION_CODE.getValue();
-		User user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, loginType));
+		String encryptName = AesUtil.encrypt(username);
+		String type = AuthorizationGrantType.AUTHORIZATION_CODE.getValue();
+		User user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, type));
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String ip = IpUtil.getIpAddr(request);
 		if (user == null) {
-			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, tenantId, ip);
+			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip);
 		}
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 		String clientPassword = user.getPassword();
 		if (!passwordEncoder.matches(password, clientPassword)) {
-			throw getException(USERNAME_PASSWORD_ERROR, loginName, loginType, tenantId, ip);
+			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip);
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw getException(USERNAME_DISABLE, loginName, loginType, tenantId, ip);
+			throw getException(USERNAME_DISABLE, username, type, tenantId, ip);
 		}
 		// 用户ID
 		Long userId = user.getId();
@@ -96,7 +96,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		User u = new User(userId, superAdmin, tenantId);
 		List<String> permissionsList = menuGateway.getPermissions(u);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			throw getException(USERNAME_NOT_PERMISSION, loginName, loginType, tenantId, ip);
+			throw getException(USERNAME_NOT_PERMISSION, username, type, tenantId, ip);
 		}
 		List<Long> deptIds = deptGateway.getDeptIds(u);
 		user.setDeptIds(deptIds);
@@ -108,17 +108,17 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 默认数据库
 		user.setSourceName(DEFAULT_SOURCE);
 		// 登录成功
-		loginLogGateway.publish(new LoginLog(loginName, loginType, tenantId, SUCCESS_STATUS,
+		loginLogGateway.publish(new LoginLog(username, type, tenantId, SUCCESS_STATUS,
 				MessageUtil.getMessage(LOGIN_SUCCEEDED), ip));
 		return user;
 	}
 
-	private UsernameNotFoundException getException(int code, String loginName, String loginType, Long tenantId,
+	private UsernameNotFoundException getException(int code, String username, String type, Long tenantId,
 			String ip) {
-		String msg = MessageUtil.getMessage(code);
-		log.error("登录失败，状态码：{}，错误信息：{}", code, msg);
-		loginLogGateway.publish(new LoginLog(loginName, loginType, tenantId, FAIL_STATUS, msg, ip));
-		throw new UsernameNotFoundException(msg);
+		String message = MessageUtil.getMessage(code);
+		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
+		loginLogGateway.publish(new LoginLog(username, type, tenantId, FAIL_STATUS, message, ip));
+		throw new UsernameNotFoundException(message);
 	}
 
 }

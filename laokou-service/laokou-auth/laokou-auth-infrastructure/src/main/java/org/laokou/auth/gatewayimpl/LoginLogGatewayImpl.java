@@ -55,14 +55,14 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 		// 获取客户端浏览器
 		String browser = userAgent.getBrowser().getName();
 		LoginLogEvent event = new LoginLogEvent(this);
-		event.setLoginName(loginLog.getLoginName());
-		event.setRequestIp(loginLog.getIp());
-		event.setRequestAddress(AddressUtil.getRealAddress(loginLog.getIp()));
+		event.setUsername(loginLog.getUsername());
+		event.setIp(loginLog.getIp());
+		event.setAddress(AddressUtil.getRealAddress(loginLog.getIp()));
 		event.setBrowser(browser);
 		event.setOs(os);
-		event.setMsg(loginLog.getMessage());
-		event.setLoginType(loginLog.getLoginType());
-		event.setRequestStatus(loginLog.getStatus());
+		event.setMessage(loginLog.getMessage());
+		event.setType(loginLog.getType());
+		event.setStatus(loginLog.getStatus());
 		event.setTenantId(loginLog.getTenantId());
 		return event;
 	}

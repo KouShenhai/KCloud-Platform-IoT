@@ -28,4 +28,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PackageMapper extends BatchMapper<PackageDO> {
 
+//    IPage<PackageDO>
+
 }
