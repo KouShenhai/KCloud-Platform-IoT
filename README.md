@@ -282,7 +282,7 @@ GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KClou
         <img src="https://avatars.githubusercontent.com/u/43296325?v=4" alt="@suhengli" height="32" width="32" data-view-component="true" class="avatar circle">
 </a>
 
-### 🐸 联系
+### 🐸 联系作者
 博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)    
 
 邮箱：[2413176044@qq.com](https://mail.qq.com)  
