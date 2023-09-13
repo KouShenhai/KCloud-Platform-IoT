@@ -282,6 +282,9 @@ GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KClou
         <img src="https://avatars.githubusercontent.com/u/43296325?v=4" alt="@suhengli" height="32" width="32" data-view-component="true" class="avatar circle">
 </a>
 
+### ⭐ GitHub Star 趋势
+![GitHub Star 趋势](https://starchart.cc/KouShenhai/KCloud-Platform-Alibaba.svg)
+
 ### 🐸 联系
 博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)    
 
@@ -290,6 +293,3 @@ GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KClou
 QQ：[2413176044]( http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes)  
 
 [![加入QQ群](https://img.shields.io/badge/Q群-465450496-blue.svg)](https://jq.qq.com/?_wv=1027&k=Ec8T76dR)
-
-### ⭐ GitHub Star 趋势
-![GitHub Star 趋势](https://starchart.cc/KouShenhai/KCloud-Platform-Alibaba.svg)
