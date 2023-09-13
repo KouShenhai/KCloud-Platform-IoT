@@ -17,8 +17,18 @@
 
 package org.laokou.admin.command.packages.query;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dto.common.clientobject.OptionCO;
+import org.laokou.admin.gatewayimpl.database.PackageMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.jasypt.utils.AesUtil;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author laokou
@@ -26,5 +36,23 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PackageOptionListQryExe {
+
+	private final PackageMapper packageMapper;
+
+	public Result<List<OptionCO>> execute() {
+		List<PackageDO> list = packageMapper
+				.selectList(Wrappers.query(PackageDO.class).select("id", "name").orderByDesc("create_date"));
+		if (CollectionUtil.isEmpty(list)) {
+			return Result.of(new ArrayList<>(0));
+		}
+		List<OptionCO> options = new ArrayList<>(list.size());
+		for (PackageDO packageDO : list) {
+			OptionCO oc = new OptionCO();
+			oc.setLabel(AesUtil.decrypt(packageDO.getName()));
+			oc.setValue(String.valueOf(packageDO.getId()));
+			options.add(oc);
+		}
+		return Result.of(options);
+	}
 
 }

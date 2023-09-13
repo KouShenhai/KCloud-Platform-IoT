@@ -18,6 +18,7 @@
 package org.laokou.admin.dto.packages;
 
 import lombok.Data;
+import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
@@ -25,5 +26,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  */
 @Data
 public class PackageUpdateCmd extends CommonCommand {
+
+	private PackageCO packageCO;
 
 }

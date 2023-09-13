@@ -19,6 +19,10 @@ package org.laokou.admin.command.packages;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.PackageGateway;
+import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.dto.packages.PackageInsertCmd;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,6 +32,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PackageInsertCmdExe {
 
-    private final PackageGateway packageGateway;
+	private final PackageGateway packageGateway;
+
+	public Result<Boolean> execute(PackageInsertCmd cmd) {
+		Package pack = ConvertUtil.sourceToTarget(cmd.getPackageCO(), Package.class);
+		return Result.of(packageGateway.insert(pack));
+	}
 
 }

@@ -31,8 +31,10 @@ import java.util.List;
 @Repository
 public interface PackageMenuMapper extends BatchMapper<PackageMenuDO> {
 
-    List<Long> getIdsByPackageId(@Param("packageId") Long packageId);
+	List<Long> getIdsByPackageId(@Param("packageId") Long packageId);
 
-    Integer deletePackageMenuByIds(@Param("list") List<Long> list);
+	List<Long> getMenuIdsByPackageId(@Param("packageId") Long packageId);
+
+	Integer deletePackageMenuByIds(@Param("list") List<Long> list);
 
 }
