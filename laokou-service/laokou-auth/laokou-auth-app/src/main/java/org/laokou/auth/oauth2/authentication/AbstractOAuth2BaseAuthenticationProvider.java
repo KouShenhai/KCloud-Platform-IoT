@@ -275,8 +275,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 登录时间
 		user.setLoginDate(DateUtil.now());
 		// 登录成功
-		loginLogGateway.publish(new LoginLog(username, type, tenantId, SUCCESS_STATUS,
-				MessageUtil.getMessage(LOGIN_SUCCEEDED), ip));
+		loginLogGateway.publish(
+				new LoginLog(username, type, tenantId, SUCCESS_STATUS, MessageUtil.getMessage(LOGIN_SUCCEEDED), ip));
 		return new UsernamePasswordAuthenticationToken(user, encryptName, user.getAuthorities());
 	}
 

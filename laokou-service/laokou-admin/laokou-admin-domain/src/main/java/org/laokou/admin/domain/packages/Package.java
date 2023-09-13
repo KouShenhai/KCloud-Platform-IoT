@@ -27,10 +27,10 @@ import java.util.List;
 @Data
 public class Package {
 
-    private Long id;
+	private Long id;
 
-    private String name;
+	private String name;
 
-    private List<Long> menuIds;
+	private List<Long> menuIds;
 
 }

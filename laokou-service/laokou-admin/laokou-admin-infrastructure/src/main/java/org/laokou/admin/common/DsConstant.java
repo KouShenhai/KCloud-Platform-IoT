@@ -38,4 +38,6 @@ public interface DsConstant {
 
 	String BOOT_SYS_SOURCE = "boot_sys_source";
 
+	String BOOT_SYS_PACKAGE = "boot_sys_package";
+
 }

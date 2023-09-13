@@ -17,13 +17,20 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.PackageGateway;
 import org.laokou.admin.domain.packages.Package;
 import org.laokou.admin.gatewayimpl.database.PackageMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.admin.common.DsConstant.BOOT_SYS_PACKAGE;
 
 /**
  * @author laokou
@@ -32,20 +39,28 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PackageGatewayImpl implements PackageGateway {
 
-    private final PackageMapper packageMapper;
+	private final PackageMapper packageMapper;
 
-    @Override
-    public Boolean insert(Package pack) {
-        return null;
-    }
+	@Override
+	public Boolean insert(Package pack) {
+		return null;
+	}
 
-    @Override
-    public Boolean update(Package pack) {
-        return null;
-    }
+	@Override
+	public Boolean update(Package pack) {
+		return null;
+	}
 
-    @Override
-    public Datas<Package> list(Package pack, PageQuery pageQuery) {
-        return null;
-    }
+	@Override
+	@DataFilter(alias = BOOT_SYS_PACKAGE)
+	public Datas<Package> list(Package pack, PageQuery pageQuery) {
+		IPage<PackageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+		IPage<PackageDO> newPage = packageMapper.getPackageListByLikeName(page, pack.getName(),
+				pageQuery.getSqlFilter());
+		Datas<Package> datas = new Datas<>();
+		datas.setTotal(newPage.getTotal());
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Package.class));
+		return datas;
+	}
+
 }

@@ -70,7 +70,7 @@ public class PackagesServiceImpl implements PackagesServiceI {
 
 	@Override
 	public Result<Datas<PackageCO>> list(PackageListQry qry) {
-		return null;
+		return packageListQryExe.execute(qry);
 	}
 
 	@Override
