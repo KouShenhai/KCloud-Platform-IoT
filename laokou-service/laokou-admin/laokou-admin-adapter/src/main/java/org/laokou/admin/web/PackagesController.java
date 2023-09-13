@@ -74,7 +74,7 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "修改套餐")
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
 	@PreAuthorize("hasAuthority('packages:update')")
-	@DataCache(name = "packages", key = "#dto.id", type = Cache.DEL)
+	@DataCache(name = "packages", key = "#cmd.packageCO.id", type = Cache.DEL)
 	public Result<Boolean> update(@RequestBody PackageUpdateCmd cmd) {
 		return packagesServiceI.update(cmd);
 	}

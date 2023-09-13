@@ -17,9 +17,16 @@
 
 package org.laokou.admin.dto.packages;
 
+import lombok.Data;
+import org.laokou.admin.dto.packages.clientobject.PackageCO;
+import org.laokou.common.i18n.dto.CommonCommand;
+
 /**
  * @author laokou
  */
-public class PackageInsertCmd {
+@Data
+public class PackageInsertCmd extends CommonCommand {
+
+	private PackageCO packageCO;
 
 }

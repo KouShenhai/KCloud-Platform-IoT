@@ -38,4 +38,9 @@
         from boot_sys_package_menu
         where package_id = #{packageId}
     </select>
+    <select id="getMenuIdsByPackageId" resultType="java.lang.Long">
+        select menu_id
+        from boot_sys_package_menu
+        where package_id = #{packageId}
+    </select>
 </mapper>

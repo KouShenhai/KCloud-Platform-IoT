@@ -18,6 +18,9 @@
 package org.laokou.admin.command.packages;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.PackageGateway;
+import org.laokou.admin.dto.packages.PackageDeleteCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +29,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PackageDeleteCmdExe {
+
+	private final PackageGateway packageGateway;
+
+	public Result<Boolean> execute(PackageDeleteCmd cmd) {
+		return Result.of(packageGateway.deleteById(cmd.getId()));
+	}
 
 }

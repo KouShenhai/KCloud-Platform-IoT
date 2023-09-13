@@ -18,6 +18,11 @@
 package org.laokou.admin.command.packages;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.PackageGateway;
+import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.dto.packages.PackageUpdateCmd;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +31,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PackageUpdateCmdExe {
+
+	private final PackageGateway packageGateway;
+
+	public Result<Boolean> execute(PackageUpdateCmd cmd) {
+		Package pack = ConvertUtil.sourceToTarget(cmd.getPackageCO(), Package.class);
+		return Result.of(packageGateway.update(pack));
+	}
 
 }

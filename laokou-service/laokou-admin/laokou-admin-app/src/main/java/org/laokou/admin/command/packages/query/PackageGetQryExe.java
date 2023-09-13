@@ -18,6 +18,12 @@
 package org.laokou.admin.command.packages.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.PackageGateway;
+import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.dto.packages.PackageGetQry;
+import org.laokou.admin.dto.packages.clientobject.PackageCO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +32,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PackageGetQryExe {
+
+	private final PackageGateway packageGateway;
+
+	public Result<PackageCO> execute(PackageGetQry qry) {
+		Package pack = packageGateway.getById(qry.getId());
+		return Result.of(ConvertUtil.sourceToTarget(pack, PackageCO.class));
+	}
 
 }

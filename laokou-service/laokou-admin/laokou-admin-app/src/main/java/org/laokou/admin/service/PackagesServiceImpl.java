@@ -55,17 +55,17 @@ public class PackagesServiceImpl implements PackagesServiceI {
 
 	@Override
 	public Result<Boolean> insert(PackageInsertCmd cmd) {
-		return null;
+		return packageInsertCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> update(PackageUpdateCmd cmd) {
-		return null;
+		return packageUpdateCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> deleteById(PackageDeleteCmd cmd) {
-		return null;
+		return packageDeleteCmdExe.execute(cmd);
 	}
 
 	@Override
@@ -75,12 +75,12 @@ public class PackagesServiceImpl implements PackagesServiceI {
 
 	@Override
 	public Result<PackageCO> getById(PackageGetQry qry) {
-		return null;
+		return packageGetQryExe.execute(qry);
 	}
 
 	@Override
 	public Result<List<OptionCO>> optionList(PackageOptionListQry qry) {
-		return null;
+		return packageOptionListQryExe.execute();
 	}
 
 }
