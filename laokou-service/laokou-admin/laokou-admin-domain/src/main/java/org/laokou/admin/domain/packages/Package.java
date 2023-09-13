@@ -15,10 +15,9 @@
  *
  */
 
-package org.laokou.admin.dto.packages.clientobject;
+package org.laokou.admin.domain.packages;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.ClientObject;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ import java.util.List;
  * @author laokou
  */
 @Data
-public class PackageCO extends ClientObject {
+public class Package {
 
     private Long id;
 

@@ -29,9 +29,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginLog {
 
-	private String loginName;
+	private String username;
 
-	private String loginType;
+	private String type;
 
 	private Long tenantId;
 

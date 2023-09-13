@@ -11,7 +11,7 @@
  Target Server Version : 80033 (8.0.33)
  File Encoding         : 65001
 
- Date: 12/09/2023 15:51:01
+ Date: 13/09/2023 10:27:08
 */
 
 SET NAMES utf8mb4;
@@ -27,7 +27,7 @@ CREATE TABLE `boot_sys_user_0`  (
   `editor` bigint NULL DEFAULT NULL COMMENT '编辑人',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 1已删除 0未删除',
+  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 0未删除 1已删除',
   `version` int NOT NULL DEFAULT 0 COMMENT '版本号',
   `dept_id` bigint NOT NULL DEFAULT 0 COMMENT '部门ID',
   `tenant_id` bigint NOT NULL DEFAULT 0 COMMENT '租户ID',
@@ -60,7 +60,7 @@ CREATE TABLE `boot_sys_user_1`  (
   `editor` bigint NULL DEFAULT NULL COMMENT '编辑人',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 1已删除 0未删除',
+  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 0未删除 1已删除',
   `version` int NOT NULL DEFAULT 0 COMMENT '版本号',
   `dept_id` bigint NOT NULL DEFAULT 0 COMMENT '部门ID',
   `tenant_id` bigint NOT NULL DEFAULT 0 COMMENT '租户ID',

@@ -37,17 +37,17 @@ public class LoginLogEvent extends ApplicationEvent implements Serializable {
 	/**
 	 * 登录用户
 	 */
-	private String loginName;
+	private String username;
 
 	/**
 	 * ip地址
 	 */
-	private String requestIp;
+	private String ip;
 
 	/**
 	 * 操作地点
 	 */
-	private String requestAddress;
+	private String address;
 
 	/**
 	 * 浏览器
@@ -62,17 +62,17 @@ public class LoginLogEvent extends ApplicationEvent implements Serializable {
 	/**
 	 * 状态 0：成功 1：失败
 	 */
-	private Integer requestStatus;
+	private Integer status;
 
 	/**
 	 * 提示信息
 	 */
-	private String msg;
+	private String message;
 
 	/**
 	 * 类型
 	 */
-	private String loginType;
+	private String type;
 
 	/**
 	 * 租户id

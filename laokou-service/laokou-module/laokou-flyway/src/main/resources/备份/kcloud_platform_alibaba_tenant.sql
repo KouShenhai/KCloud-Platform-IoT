@@ -11,7 +11,7 @@
  Target Server Version : 80033 (8.0.33)
  File Encoding         : 65001
 
- Date: 12/09/2023 15:50:56
+ Date: 13/09/2023 10:27:25
 */
 
 SET NAMES utf8mb4;
@@ -27,15 +27,15 @@ CREATE TABLE `boot_sys_dict`  (
   `editor` bigint NULL DEFAULT NULL COMMENT '编辑人',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 1已删除 0未删除',
+  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 0未删除 1已删除',
   `version` int NOT NULL DEFAULT 0 COMMENT '版本号',
   `dept_id` bigint NOT NULL COMMENT '部门ID',
   `tenant_id` bigint NOT NULL COMMENT '租户ID',
-  `label` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标签',
-  `value` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '值',
-  `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类型',
-  `sort` int NOT NULL DEFAULT 1 COMMENT '排序',
-  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `label` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '字典标签',
+  `value` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '字典值',
+  `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '字典类型',
+  `sort` int NOT NULL DEFAULT 1 COMMENT '字典排序',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字典备注',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1578676566256455695 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '字典' ROW_FORMAT = DYNAMIC;
 
@@ -54,13 +54,13 @@ CREATE TABLE `boot_sys_message`  (
   `editor` bigint NULL DEFAULT NULL COMMENT '编辑人',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 1已删除 0未删除',
+  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 0未删除 1已删除',
   `version` int NOT NULL DEFAULT 0 COMMENT '版本号',
   `dept_id` bigint NOT NULL COMMENT '部门ID',
   `tenant_id` bigint NOT NULL COMMENT '租户ID',
-  `title` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
-  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '内容',
-  `type` tinyint NOT NULL DEFAULT 0 COMMENT '类型 0通知 1提醒',
+  `title` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息标题',
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '消息内容',
+  `type` tinyint NOT NULL DEFAULT 0 COMMENT '消息类型 0通知 1提醒',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1587737320788005183 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消息' ROW_FORMAT = DYNAMIC;
 
@@ -80,13 +80,13 @@ CREATE TABLE `boot_sys_message_detail`  (
   `editor` bigint NULL DEFAULT NULL COMMENT '编辑人',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 1已删除 0未删除',
+  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 0未删除 1已删除',
   `version` int NOT NULL DEFAULT 0 COMMENT '版本号',
   `dept_id` bigint NOT NULL COMMENT '部门ID',
   `tenant_id` bigint NOT NULL COMMENT '租户ID',
   `message_id` bigint NOT NULL COMMENT '消息ID',
   `user_id` bigint NOT NULL COMMENT '用户ID',
-  `read_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '已读标识 0未读 1已读',
+  `read_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '消息已读标识 0未读 1已读',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_read_flag_user_id`(`read_flag` ASC, `user_id` ASC) USING BTREE COMMENT '已读_用户编号_索引'
 ) ENGINE = InnoDB AUTO_INCREMENT = 1587737321048052083 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消息详情' ROW_FORMAT = DYNAMIC;
@@ -107,16 +107,16 @@ CREATE TABLE `boot_sys_oss`  (
   `editor` bigint NULL DEFAULT NULL COMMENT '编辑人',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 1已删除 0未删除',
+  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 0未删除 1已删除',
   `version` int NOT NULL DEFAULT 0 COMMENT '版本号',
   `dept_id` bigint NOT NULL COMMENT '部门ID',
   `tenant_id` bigint NOT NULL COMMENT '租户ID',
-  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
-  `endpoint` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '终端地址',
-  `region` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '区域',
-  `access_key` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '访问密钥',
-  `secret_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户密钥',
-  `bucket_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '桶名',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '存储名称',
+  `endpoint` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '存储的终端地址',
+  `region` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '存储的区域',
+  `access_key` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '存储的访问密钥',
+  `secret_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '存储的用户密钥',
+  `bucket_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '存储的桶名',
   `path_style_access_enabled` tinyint(1) NOT NULL COMMENT '路径样式访问 1已开启 0未启用',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1537444981390794757 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '存储' ROW_FORMAT = DYNAMIC;
@@ -136,14 +136,14 @@ CREATE TABLE `boot_sys_oss_log`  (
   `editor` bigint NULL DEFAULT NULL COMMENT '编辑人',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
-  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 1已删除 0未删除',
+  `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 0未删除 1已删除',
   `version` int NOT NULL DEFAULT 0 COMMENT '版本号',
   `dept_id` bigint NOT NULL COMMENT '部门ID',
   `tenant_id` bigint NOT NULL COMMENT '租户ID',
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名称',
-  `md5` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'md5标识',
-  `size` bigint NOT NULL COMMENT '大小',
-  `url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '路径',
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文件名称',
+  `md5` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文件的MD5标识',
+  `url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '文件的URL',
+  `size` bigint NOT NULL COMMENT '文件大小',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '存储日志' ROW_FORMAT = DYNAMIC;
 

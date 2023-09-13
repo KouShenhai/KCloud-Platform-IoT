@@ -15,9 +15,14 @@
  *
  */
 
-package org.laokou.admin.command.packages.query;
+package org.laokou.admin.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.PackageGateway;
+import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.gatewayimpl.database.PackageMapper;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,8 +30,22 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class PackageListQryExe {
+public class PackageGatewayImpl implements PackageGateway {
 
-//    private final PackageGatewa
+    private final PackageMapper packageMapper;
 
+    @Override
+    public Boolean insert(Package pack) {
+        return null;
+    }
+
+    @Override
+    public Boolean update(Package pack) {
+        return null;
+    }
+
+    @Override
+    public Datas<Package> list(Package pack, PageQuery pageQuery) {
+        return null;
+    }
 }
