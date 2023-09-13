@@ -20,10 +20,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.PackageMenuMapper">
     <insert id="insertBatch">
-      insert into boot_sys_package_menu(id,package_id,menu_id)
+      insert into boot_sys_package_menu(id,package_id,menu_id,dept_id,tenant_id,creator,del_flag,version)
       values
           <foreach collection="list" item="item" separator=",">
-               (#{item.id},#{item.packageId},#{item.menuId})
+               (#{item.id},#{item.packageId},#{item.menuId},#{item.deptId},#{item.tenantId},#{item.creator},'0','0')
           </foreach>
     </insert>
+    <delete id="deletePackageMenuByIds">
+        delete from boot_sys_package_menu
+        where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="getIdsByPackageId" resultType="java.lang.Long">
+        select id
+        from boot_sys_package_menu
+        where package_id = #{packageId}
+    </select>
 </mapper>

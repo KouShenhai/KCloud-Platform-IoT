@@ -15,19 +15,25 @@
  *
  */
 
-package org.laokou.admin.command.packages;
+package org.laokou.admin.convertor;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.gateway.PackageGateway;
-import org.springframework.stereotype.Component;
+import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.dto.packages.clientobject.PackageCO;
+import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
+import org.laokou.common.core.utils.ConvertUtil;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class PackageInsertCmdExe {
+public class PackageConvertor {
 
-    private final PackageGateway packageGateway;
+    public static Package toEntity(PackageCO packageCO) {
+        return ConvertUtil.sourceToTarget(packageCO, Package.class);
+    }
+
+    public static PackageDO toDataObject(Package pack) {
+        return ConvertUtil.sourceToTarget(pack, PackageDO.class);
+    }
+
 
 }

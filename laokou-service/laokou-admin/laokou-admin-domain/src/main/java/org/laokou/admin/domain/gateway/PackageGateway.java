@@ -30,4 +30,8 @@ public interface PackageGateway {
 
 	Datas<Package> list(Package pack, PageQuery pageQuery);
 
+	Package getById(Long id);
+
+	Boolean deleteById(Long id);
+
 }

@@ -17,9 +17,12 @@
 package org.laokou.admin.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageMenuDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -27,5 +30,9 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface PackageMenuMapper extends BatchMapper<PackageMenuDO> {
+
+    List<Long> getIdsByPackageId(@Param("packageId") Long packageId);
+
+    Integer deletePackageMenuByIds(@Param("list") List<Long> list);
 
 }
