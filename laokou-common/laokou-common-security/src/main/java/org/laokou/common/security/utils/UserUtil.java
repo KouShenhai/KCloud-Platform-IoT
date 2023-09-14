@@ -58,6 +58,14 @@ public class UserUtil {
 	}
 
 	/**
+	 * 部门PATH
+	 * @return Long
+	 */
+	public static String getDeptPath() {
+		return user().getDeptPath();
+	}
+
+	/**
 	 * 租户ID
 	 * @return Long
 	 */
@@ -66,7 +74,7 @@ public class UserUtil {
 	}
 
 	/**
-	 * 资源名称
+	 * 数据源名称
 	 * @return String
 	 */
 	public static String getSourceName() {

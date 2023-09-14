@@ -47,9 +47,11 @@ public abstract class BaseDO extends DTO {
 
 	public static final String DEPT_ID = "deptId";
 
+	public static final String DEPT_PATH = "deptPath";
+
 	public static final String TENANT_ID = "tenantId";
 
-	public static final String FIELD_DEPT_ID = "dept_id";
+	public static final String FIELD_DEPT_PATH = "dept_path";
 
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;
@@ -87,6 +89,10 @@ public abstract class BaseDO extends DTO {
 	@Schema(name = DEPT_ID, description = "部门ID")
 	@TableField(fill = FieldFill.INSERT)
 	private Long deptId;
+
+	@Schema(name = DEPT_PATH, description = "部门PATH")
+	@TableField(fill = FieldFill.INSERT)
+	private Long deptPath;
 
 	@Schema(name = TENANT_ID, description = "租户ID")
 	@TableField(fill = FieldFill.INSERT)
