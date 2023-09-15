@@ -40,6 +40,9 @@ public class DeptDO extends BaseDO {
 	@Schema(name = "name", description = "名称", example = "老寇云集团")
 	private String name;
 
+	@Schema(name = "path", description = "部门节点")
+	private String path;
+
 	@Schema(name = "sort", description = "排序", example = "1")
 	private Integer sort;
 

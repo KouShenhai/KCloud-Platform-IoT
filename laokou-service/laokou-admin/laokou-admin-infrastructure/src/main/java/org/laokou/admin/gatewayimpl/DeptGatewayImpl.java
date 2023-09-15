@@ -60,9 +60,7 @@ public class DeptGatewayImpl implements DeptGateway {
 		if (count > 0) {
 			throw new GlobalException("部门已存在，请重新填写");
 		}
-		DeptDO deptDO = DeptConvertor.toDataObject(dept);
-		deptDO.setTenantId(UserUtil.getTenantId());
-		return insertDept(deptDO);
+		return insertDept(DeptConvertor.toDataObject(dept));
 	}
 
 	@Override
