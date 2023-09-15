@@ -28,6 +28,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.laokou.common.i18n.common.Constant.COMMA;
+
 /**
  * @author laokou
  */
@@ -35,7 +37,7 @@ import java.util.Map;
 public class TreeUtil {
 
 	public static <T> TreeNode<T> rootRootNode(String name) {
-		return new TreeNode<>(0L, name, null, new ArrayList<>(0));
+		return new TreeNode<>(0L, name, null,"0", new ArrayList<>(0));
 	}
 
 	public static <T> TreeNode<T> rootRootNode() {
@@ -60,6 +62,7 @@ public class TreeUtil {
 		for (T treeNo : nodes) {
 			T parent = nodeMap.get(treeNo.getPid());
 			if (parent != null && treeNo.getPid().equals(parent.getId())) {
+				treeNo.setPath(parent.getPath() + COMMA + treeNo.getId());
 				parent.getChildren().add(treeNo);
 			}
 		}
@@ -76,6 +79,7 @@ public class TreeUtil {
 		for (T treeNo : treeNodes) {
 			T parent = nodeMap.get(treeNo.getPid());
 			if (parent != null && treeNo.getPid().equals(parent.getId())) {
+				treeNo.setPath(parent.getPath() + COMMA + treeNo.getId());
 				parent.getChildren().add(treeNo);
 				continue;
 			}
@@ -98,6 +102,9 @@ public class TreeUtil {
 
 		@Schema(name = "pid", description = "父ID")
 		private Long pid;
+
+		@Schema(name = "path", description = "节点")
+		private String path;
 
 		@Schema(name = "children", description = "子节点")
 		private List<T> children = new ArrayList<>(0);

@@ -51,20 +51,20 @@ public class SecretUtil {
 		if (StringUtil.isEmpty(appKey)) {
 			throw new GlobalException("appKey不为空");
 		}
-		if (!APP_KEY_VALUE.equals(appKey)) {
-			throw new GlobalException("appKey不存在");
-		}
 		if (StringUtil.isEmpty(appSecret)) {
 			throw new GlobalException("appSecret不为空");
-		}
-		if (!APP_SECRET_VALUE.equals(appSecret)) {
-			throw new GlobalException("appSecret不存在");
 		}
 		if (StringUtil.isEmpty(nonce)) {
 			throw new GlobalException("nonce不为空");
 		}
 		if (StringUtil.isEmpty(timestamp)) {
 			throw new GlobalException("timestamp不为空");
+		}
+		if (!APP_KEY_VALUE.equals(appKey)) {
+			throw new GlobalException("appKey不存在");
+		}
+		if (!APP_SECRET_VALUE.equals(appSecret)) {
+			throw new GlobalException("appSecret不存在");
 		}
 		long ts = Long.parseLong(timestamp);
 		// 判断时间戳

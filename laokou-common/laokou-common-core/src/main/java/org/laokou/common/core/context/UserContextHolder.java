@@ -32,6 +32,8 @@ public class UserContextHolder {
 
 		private Long tenantId;
 
+		private String deptPath;
+
 		private Long deptId;
 
 	}

@@ -25,8 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 网关swagger 3配置
- *
  * @author laokou
  */
 @Configuration
