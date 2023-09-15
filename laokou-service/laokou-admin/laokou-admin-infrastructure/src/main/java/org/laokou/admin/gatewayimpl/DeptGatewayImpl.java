@@ -34,6 +34,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static org.laokou.admin.common.BizCode.ID_NOT_NULL;
+import static org.laokou.common.i18n.common.Constant.COMMA;
 
 /**
  * @author laokou
@@ -60,7 +61,9 @@ public class DeptGatewayImpl implements DeptGateway {
 		if (count > 0) {
 			throw new GlobalException("部门已存在，请重新填写");
 		}
-		return insertDept(DeptConvertor.toDataObject(dept));
+		DeptDO deptDO = DeptConvertor.toDataObject(dept);
+		deptDO.setPath(deptDO.getPath() + COMMA + deptDO.getId());
+		return insertDept(deptDO);
 	}
 
 	@Override
@@ -77,6 +80,7 @@ public class DeptGatewayImpl implements DeptGateway {
 		}
 		DeptDO deptDO = DeptConvertor.toDataObject(dept);
 		deptDO.setVersion(deptMapper.getVersion(id, DeptDO.class));
+		deptDO.setPath(deptDO.getPath() + COMMA + deptDO.getId());
 		return updateDept(deptDO);
 	}
 
