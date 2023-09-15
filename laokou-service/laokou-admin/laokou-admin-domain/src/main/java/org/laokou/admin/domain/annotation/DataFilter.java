@@ -19,7 +19,6 @@ package org.laokou.admin.domain.annotation;
 import java.lang.annotation.*;
 
 import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.CREATOR;
-import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.FIELD_DEPT_ID;
 
 /**
  * @author laokou
@@ -40,8 +39,8 @@ public @interface DataFilter {
 	String userId() default CREATOR;
 
 	/**
-	 * 部门ID
+	 * 部门PATH
 	 */
-	String deptId() default FIELD_DEPT_ID;
+	String deptId() default "dept_id";
 
 }
