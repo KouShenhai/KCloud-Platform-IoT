@@ -56,6 +56,8 @@ public class User {
 
 	private Long tenantId;
 
+	private String deptPath;
+
 	public User(Long tenantId) {
 		this.tenantId = tenantId;
 	}

@@ -24,6 +24,7 @@
         update boot_sys_user
         <set>
             version = version + 1,
+            update_date = now(),
             <if test="userDO.status != null">
                 `status` = #{userDO.status},
             </if>
@@ -44,6 +45,9 @@
             </if>
             <if test="userDO.deptId != null">
                 dept_id = #{userDO.deptId},
+            </if>
+            <if test="userDO.deptPath != null">
+                dept_path = #{userDO.deptPath}
             </if>
         </set>
         <where>

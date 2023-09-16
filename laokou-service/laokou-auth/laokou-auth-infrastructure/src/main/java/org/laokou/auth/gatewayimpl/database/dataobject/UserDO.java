@@ -49,6 +49,8 @@ public class UserDO implements Serializable {
 
 	private Long deptId;
 
+	private String deptPath;
+
 	private Long tenantId;
 
 }
