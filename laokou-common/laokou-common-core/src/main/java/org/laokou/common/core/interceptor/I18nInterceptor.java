@@ -26,7 +26,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
  * @author laokou
+ * @see org.laokou.common.core.i18n.I18nLocalResolve
  */
+@Deprecated
 @NonNullApi
 public class I18nInterceptor implements HandlerInterceptor {
 

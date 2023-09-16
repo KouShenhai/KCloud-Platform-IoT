@@ -17,10 +17,12 @@
 
 package org.laokou.common.core.config.auto;
 
-import org.laokou.common.core.interceptor.I18nInterceptor;
+import org.laokou.common.core.i18n.I18nLocalResolve;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -30,9 +32,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class I18nAutoConfig implements WebMvcConfigurer {
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new I18nInterceptor()).addPathPatterns("/**");
-	}
-
+    @Bean(DispatcherServlet.LOCALE_RESOLVER_BEAN_NAME)
+    public LocaleResolver i18nLocaleResolver() {
+        return new I18nLocalResolve();
+    }
 }
