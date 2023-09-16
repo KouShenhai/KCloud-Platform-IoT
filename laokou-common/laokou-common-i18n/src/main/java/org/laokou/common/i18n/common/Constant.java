@@ -27,6 +27,11 @@ public interface Constant {
 	String SLASH = "/";
 
 	/**
+	 * 百分号
+	 */
+	String PERCENT = "%";
+
+	/**
 	 * 分割参数
 	 */
 	String DOT = ".";
@@ -64,7 +69,12 @@ public interface Constant {
 	/**
 	 * 模糊
 	 */
-	String LIKE = "%";
+	String LIKE = "like";
+
+	/**
+	 * 引号
+	 */
+	String QUOT = "\"";
 
 	/**
 	 * 并

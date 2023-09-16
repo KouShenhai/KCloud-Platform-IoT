@@ -36,7 +36,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.mybatisplus.constant.Constant.IN;
 
 /**
  * @author laokou
@@ -79,20 +78,20 @@ public class DataFilterAspect {
 		}
 		assert dataFilter != null;
 		String alias = dataFilter.alias();
-		String deptIdColumn = dataFilter.deptId();
+		String deptPathColumn = dataFilter.deptPath();
 		String userIdColumn = dataFilter.userId();
-		List<Long> deptIds = user.getDeptIds();
+		List<String> deptPaths = user.getDeptPaths();
 		StringBuilder sqlFilter = new StringBuilder();
 		if (StringUtil.isNotEmpty(alias)) {
 			alias += DOT;
 		}
 		sqlFilter.append(LEFT);
-		if (CollectionUtil.isNotEmpty(deptIds)) {
-			sqlFilter.append(alias).append(deptIdColumn).append(SPACE).append(IN).append(SPACE).append(LEFT);
-			sqlFilter.append(String.join(COMMA, deptIds.stream().map(String::valueOf).toArray(String[]::new)));
-			sqlFilter.append(RIGHT).append(SPACE).append(OR).append(SPACE);
+		if (CollectionUtil.isNotEmpty(deptPaths)) {
+			for (String deptPath : deptPaths) {
+				sqlFilter.append(alias).append(deptPathColumn).append(SPACE).append(LIKE).append(SPACE).append(QUOT).append(deptPath.trim()).append(PERCENT).append(QUOT).append(SPACE).append(OR).append(SPACE);
+			}
 		}
-		sqlFilter.append(alias).append(userIdColumn).append(SPACE).append(EQUAL).append(SPACE).append(user.getId());
+		sqlFilter.append(alias).append(userIdColumn).append(SPACE).append(EQUAL).append(SPACE).append(QUOT).append(user.getId()).append(QUOT);
 		sqlFilter.append(RIGHT);
 		String sql = sqlFilter.toString();
 		after(sql);

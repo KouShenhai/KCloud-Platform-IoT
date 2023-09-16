@@ -62,7 +62,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 						AndExpression andExpression = new AndExpression(expression, new StringValue(sqlFilter));
 						plainSelect.setWhere(andExpression);
 					}
-					String newSql = select.toString().replaceAll("'", "").replaceAll("\"", "'");
+					String newSql = select.toString().replaceAll("'", "");
 					// 新sql写入
 					PluginUtils.mpBoundSql(boundSql).sql(newSql);
 				}

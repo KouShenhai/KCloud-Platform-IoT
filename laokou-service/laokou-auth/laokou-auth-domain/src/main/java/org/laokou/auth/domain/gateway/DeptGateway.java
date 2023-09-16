@@ -27,10 +27,10 @@ import java.util.List;
 public interface DeptGateway {
 
 	/**
-	 * 查询部门IDS
+	 * 查询部门PATHS
 	 * @param user
 	 * @return List<Long>
 	 */
-	List<Long> getDeptIds(User user);
+	List<String> getDeptPaths(User user);
 
 }

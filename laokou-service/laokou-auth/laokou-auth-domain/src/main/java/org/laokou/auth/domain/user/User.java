@@ -66,7 +66,7 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 
 	private String deptPath;
 
-	private List<Long> deptIds;
+	private List<String> deptPaths;
 
 	private List<String> permissionList;
 
@@ -116,7 +116,7 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 		if (!deptPath.equals(that.deptPath)) {
 			return false;
 		}
-		if (!deptIds.equals(that.deptIds)) {
+		if (!deptPaths.equals(that.deptPaths)) {
 			return false;
 		}
 		if (!permissionList.equals(that.permissionList)) {
@@ -146,7 +146,7 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 		result = 31 * result + status.hashCode();
 		result = 31 * result + deptId.hashCode();
 		result = 31 * result + deptPath.hashCode();
-		result = 31 * result + deptIds.hashCode();
+		result = 31 * result + deptPaths.hashCode();
 		result = 31 * result + permissionList.hashCode();
 		result = 31 * result + tenantId.hashCode();
 		result = 31 * result + sourceName.hashCode();

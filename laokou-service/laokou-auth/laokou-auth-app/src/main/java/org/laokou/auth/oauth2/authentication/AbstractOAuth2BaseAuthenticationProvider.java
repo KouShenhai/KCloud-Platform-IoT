@@ -210,7 +210,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	/**
 	 * 获取用户信息
-	 * @param loginName 登录名
+	 * @param username 登录名
 	 * @param password 密码
 	 * @param request 请求参数
 	 * @param captcha 验证码
@@ -258,8 +258,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			throw getException(USERNAME_NOT_PERMISSION, username, type, tenantId, ip);
 		}
 		// 部门列表
-		List<Long> deptIds = deptGateway.getDeptIds(u);
-		user.setDeptIds(deptIds);
+		List<String> deptPaths = deptGateway.getDeptPaths(u);
+		user.setDeptPaths(deptPaths);
 		user.setPermissionList(permissionsList);
 		if (tenantId == DEFAULT_TENANT) {
 			// 默认数据源
