@@ -27,11 +27,9 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
 import org.laokou.admin.domain.annotation.OperateLog;
-import org.laokou.common.i18n.common.Constant;
+import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
 import org.laokou.common.core.utils.*;
-import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -138,7 +136,7 @@ public class OperateLogAspect {
 			}
 			else {
 				String str = JacksonUtil.toJsonStr(obj);
-				if (Constant.RISK.contains(str)) {
+				if (RISK.contains(str)) {
 					Map<String, String> map = removeAny(JacksonUtil.toMap(str, String.class, String.class),
 							REMOVE_PARAMS);
 					event.setRequestParams(JacksonUtil.toJsonStr(map, true));

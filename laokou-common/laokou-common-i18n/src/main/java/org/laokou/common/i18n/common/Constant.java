@@ -82,6 +82,11 @@ public interface Constant {
 	String MARK = "?";
 
 	/**
+	 * 分割参数
+	 */
+	String ROD = "-";
+
+	/**
 	 * true
 	 */
 	String TRUE = "true";
