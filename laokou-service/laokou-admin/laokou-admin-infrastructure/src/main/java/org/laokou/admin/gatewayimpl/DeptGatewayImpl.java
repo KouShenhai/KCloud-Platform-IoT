@@ -27,6 +27,7 @@ import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -62,6 +63,7 @@ public class DeptGatewayImpl implements DeptGateway {
 			throw new GlobalException("部门已存在，请重新填写");
 		}
 		DeptDO deptDO = DeptConvertor.toDataObject(dept);
+		deptDO.setId(IdUtil.defaultId());
 		deptDO.setPath(deptDO.getPath() + COMMA + deptDO.getId());
 		return insertDept(deptDO);
 	}
