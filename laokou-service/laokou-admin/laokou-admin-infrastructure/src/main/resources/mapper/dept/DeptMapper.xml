@@ -43,4 +43,12 @@
         from boot_sys_dept
         where id = #{pid}
     </select>
+    <select id="selectDeptChildrenByLikePath"
+            resultType="org.laokou.admin.gatewayimpl.database.dataobject.DeptDO">
+        select id
+             ,path
+        from boot_sys_dept
+        where path like concat(#{path},'%')
+            and path <![CDATA[ <> ]]> #{path}
+    </select>
 </mapper>
