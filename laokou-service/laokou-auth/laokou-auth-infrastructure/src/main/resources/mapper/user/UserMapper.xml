@@ -30,6 +30,7 @@
         ,a.mail as mail
         ,a.mobile as mobile
         ,a.dept_id as deptId
+        ,a.dept_path as deptPath
         ,a.tenant_id as tenantId
         FROM `boot_sys_user` a
         where a.del_flag = 0

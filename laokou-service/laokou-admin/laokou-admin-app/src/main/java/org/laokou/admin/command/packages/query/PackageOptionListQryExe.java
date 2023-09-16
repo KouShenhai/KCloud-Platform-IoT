@@ -24,7 +24,6 @@ import org.laokou.admin.gatewayimpl.database.PackageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.jasypt.utils.AesUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class PackageOptionListQryExe {
 		List<OptionCO> options = new ArrayList<>(list.size());
 		for (PackageDO packageDO : list) {
 			OptionCO oc = new OptionCO();
-			oc.setLabel(AesUtil.decrypt(packageDO.getName()));
+			oc.setLabel(packageDO.getName());
 			oc.setValue(String.valueOf(packageDO.getId()));
 			options.add(oc);
 		}

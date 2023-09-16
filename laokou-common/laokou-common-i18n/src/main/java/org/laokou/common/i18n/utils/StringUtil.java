@@ -19,7 +19,7 @@ package org.laokou.common.i18n.utils;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
-import static org.laokou.common.i18n.common.Constant.LIKE;
+import static org.laokou.common.i18n.common.Constant.PERCENT;
 
 /**
  * @author laokou
@@ -32,7 +32,7 @@ public class StringUtil {
 
 	public static String like(String str) {
 		if (isNotEmpty(str)) {
-			return LIKE.concat(str.concat(LIKE));
+			return PERCENT.concat(str.concat(PERCENT));
 		}
 		return str;
 	}

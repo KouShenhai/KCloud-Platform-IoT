@@ -32,6 +32,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
@@ -98,7 +99,7 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	public User getById(Long id) {
 		UserDO userDO = userMapper
-				.selectOne(Wrappers.query(UserDO.class).eq("id", id).select("id", "username", "status", "dept_id"));
+				.selectOne(Wrappers.query(UserDO.class).eq("id", id).select("id", "username", "status", "dept_id","dept_path"));
 		User user = ConvertUtil.sourceToTarget(userDO, User.class);
 		user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
 		return user;
@@ -145,6 +146,7 @@ public class UserGatewayImpl implements UserGateway {
 	private UserDO getUpdateUserDO(User user) {
 		UserDO userDO = UserConvertor.toDataObject(user);
 		userDO.setEditor(UserUtil.getUserId());
+		userDO.setUpdateDate(DateUtil.now());
 		userDO.setVersion(userMapper.getVersion(userDO.getId(), UserDO.class));
 		return userDO;
 	}

@@ -36,6 +36,8 @@ public class UserCO extends ClientObject {
 
 	private Long deptId;
 
+	private String deptPath;
+
 	private LocalDateTime createDate;
 
 	private Integer superAdmin;

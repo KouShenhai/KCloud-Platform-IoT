@@ -98,8 +98,8 @@ public class UsersServiceImpl implements UserDetailsService {
 		if (CollectionUtil.isEmpty(permissionsList)) {
 			throw getException(USERNAME_NOT_PERMISSION, username, type, tenantId, ip);
 		}
-		List<Long> deptIds = deptGateway.getDeptIds(u);
-		user.setDeptIds(deptIds);
+		List<String> deptPaths = deptGateway.getDeptPaths(u);
+		user.setDeptPaths(deptPaths);
 		user.setPermissionList(permissionsList);
 		// 登录IP
 		user.setLoginIp(IpUtil.getIpAddr(request));

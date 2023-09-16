@@ -91,7 +91,7 @@ public abstract class BaseDO extends DTO {
 
 	@Schema(name = DEPT_PATH, description = "部门PATH")
 	@TableField(fill = FieldFill.INSERT)
-	private Long deptPath;
+	private String deptPath;
 
 	@Schema(name = TENANT_ID, description = "租户ID")
 	@TableField(fill = FieldFill.INSERT)

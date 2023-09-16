@@ -36,14 +36,14 @@ public class DeptGatewayImpl implements DeptGateway {
 	private final DeptMapper deptMapper;
 
 	@Override
-	public List<Long> getDeptIds(User user) {
+	public List<String> getDeptPaths(User user) {
 		Long userId = user.getId();
 		Long tenantId = user.getTenantId();
 		Integer superAdmin = user.getSuperAdmin();
 		if (superAdmin == SuperAdmin.YES.ordinal()) {
-			return deptMapper.getDeptIdsByTenantId(tenantId);
+			return deptMapper.getDeptPathsByTenantId(tenantId);
 		}
-		return deptMapper.getDeptIdsByUserIdAndTenantId(userId, tenantId);
+		return deptMapper.getDeptPathsByUserIdAndTenantId(userId, tenantId);
 	}
 
 }
