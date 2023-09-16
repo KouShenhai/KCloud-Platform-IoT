@@ -38,4 +38,9 @@
           and a.del_flag = 0
         group by a.id
     </select>
+    <select id="getDeptPathByPid" resultType="java.lang.String">
+        select path
+        from boot_sys_dept
+        where id = #{pid}
+    </select>
 </mapper>

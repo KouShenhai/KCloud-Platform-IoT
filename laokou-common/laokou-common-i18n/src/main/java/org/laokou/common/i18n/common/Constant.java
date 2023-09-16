@@ -112,6 +112,11 @@ public interface Constant {
 	int DEFAULT = 0;
 
 	/**
+	 * 默认值
+	 */
+	String DEFAULT_STRING = "0";
+
+	/**
 	 * 成功
 	 */
 	int SUCCESS_STATUS = 0;

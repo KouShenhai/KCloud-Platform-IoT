@@ -27,6 +27,7 @@ import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.security.utils.UserUtil;
@@ -36,6 +37,7 @@ import java.util.List;
 
 import static org.laokou.admin.common.BizCode.ID_NOT_NULL;
 import static org.laokou.common.i18n.common.Constant.COMMA;
+import static org.laokou.common.i18n.common.Constant.DEFAULT_STRING;
 
 /**
  * @author laokou
@@ -64,7 +66,7 @@ public class DeptGatewayImpl implements DeptGateway {
 		}
 		DeptDO deptDO = DeptConvertor.toDataObject(dept);
 		deptDO.setId(IdUtil.defaultId());
-		deptDO.setPath(deptDO.getPath() + COMMA + deptDO.getId());
+		deptDO.setPath(getPath(deptDO.getPid(),deptDO.getId()));
 		return insertDept(deptDO);
 	}
 
@@ -82,7 +84,7 @@ public class DeptGatewayImpl implements DeptGateway {
 		}
 		DeptDO deptDO = DeptConvertor.toDataObject(dept);
 		deptDO.setVersion(deptMapper.getVersion(id, DeptDO.class));
-		deptDO.setPath(deptDO.getPath() + COMMA + deptDO.getId());
+		deptDO.setPath(getPath(deptDO.getPid(),deptDO.getId()));
 		return updateDept(deptDO);
 	}
 
@@ -135,6 +137,11 @@ public class DeptGatewayImpl implements DeptGateway {
 				return false;
 			}
 		});
+	}
+
+	private String getPath(Long pid,Long id) {
+		String path = deptMapper.getDeptPathByPid(pid);
+		return StringUtil.isNotEmpty(path) ? path + COMMA + id : DEFAULT_STRING + COMMA + id;
 	}
 
 }

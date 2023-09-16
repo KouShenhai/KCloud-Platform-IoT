@@ -21,7 +21,11 @@
 <mapper namespace="org.laokou.auth.gatewayimpl.database.DeptMapper">
 
     <select id="getDeptPathsByTenantId" resultType="string">
-        select '0'
+        select path
+        from boot_sys_dept
+        where del_flag = 0
+        and pid = 0
+        and tenant_id = #{tenantId}
     </select>
 
     <select id="getDeptPathsByUserIdAndTenantId" resultType="string">
