@@ -39,7 +39,7 @@
         <!--mybatis-plus版本 -->
         <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
         <!--redisson版本-->
-        <redisson.version>3.23.3</redisson.version>
+        <redisson.version>3.23.4</redisson.version>
         <!--UserAgentUtils版本-->
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
         <!--jsoup版本-->

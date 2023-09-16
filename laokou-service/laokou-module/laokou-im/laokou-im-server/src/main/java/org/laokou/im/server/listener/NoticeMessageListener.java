@@ -24,7 +24,6 @@ import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.MessageModel;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
-import org.laokou.common.rocketmq.constant.MqConstant;
 import org.laokou.im.server.utils.MessageUtil;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +38,7 @@ import static org.laokou.common.rocketmq.constant.MqConstant.*;
 @Component
 @RequiredArgsConstructor
 @RocketMQMessageListener(consumerGroup = LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
-		selectorExpression = MqConstant.LAOKOU_NOTICE_MESSAGE_TAG, messageModel = MessageModel.BROADCASTING,
+		selectorExpression = LAOKOU_NOTICE_MESSAGE_TAG, messageModel = MessageModel.BROADCASTING,
 		consumeMode = ConsumeMode.CONCURRENTLY)
 public class NoticeMessageListener implements RocketMQListener<MessageExt> {
 

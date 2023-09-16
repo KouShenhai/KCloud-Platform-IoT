@@ -24,6 +24,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.*;
 
+import static org.laokou.common.i18n.common.Constant.COMMA;
+
 /**
  * @author laokou
  */
@@ -47,7 +49,7 @@ public class FileUtil {
 
 	public static Boolean checkFileExt(String code, String fileExt) {
 		String extValue = EXT_MAP.get(code);
-		List<String> extList = Arrays.asList(extValue.split(Constant.COMMA));
+		List<String> extList = Arrays.asList(extValue.split(COMMA));
 		return extList.contains(fileExt);
 	}
 

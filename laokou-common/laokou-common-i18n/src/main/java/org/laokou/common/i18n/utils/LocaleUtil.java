@@ -20,18 +20,19 @@ package org.laokou.common.i18n.utils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import java.util.Locale;
 
+import static org.laokou.common.i18n.common.Constant.ROD;
+
 /**
  * @author laokou
  */
 public class LocaleUtil {
 
-	private static final String SPLIT = "-";
 
 	public static Locale toLocale(String language) {
 		if (StringUtil.isEmpty(language)) {
 			return LocaleContextHolder.getLocale();
 		}
-		String[] str = language.split(SPLIT);
+		String[] str = language.split(ROD);
 		// 国家 地区
 		return new Locale(str[0], str[1]);
 	}
