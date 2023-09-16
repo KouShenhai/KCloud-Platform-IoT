@@ -75,7 +75,7 @@ public class LoginLogEvent extends ApplicationEvent implements Serializable {
 	private String type;
 
 	/**
-	 * 租户id
+	 * 租户ID
 	 */
 	private Long tenantId;
 
