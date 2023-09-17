@@ -67,7 +67,7 @@ spring:
       static-locations: classpath:/static/
 xxl:
   job:
-    accessToken: default_token
+    access-token: default_token
     i18n: zh_CN
     intentionalities: 30
     trigger-pool:

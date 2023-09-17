@@ -52,8 +52,8 @@ public class PermissionInterceptor implements AsyncHandlerInterceptor {
 			}
 			request.setAttribute(LoginService.LOGIN_IDENTITY_KEY, loginUser);
 		}
-
-		return true; // proceed with the next interceptor
+		// proceed with the next interceptor
+		return true;
 	}
 
 }
