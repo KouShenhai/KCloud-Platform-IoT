@@ -157,6 +157,7 @@ public class RoleGatewayImpl implements RoleGateway {
 				roleMenuDO.setDeptId(UserUtil.getDeptId());
 				roleMenuDO.setTenantId(UserUtil.getTenantId());
 				roleMenuDO.setCreator(UserUtil.getUserId());
+				roleMenuDO.setDeptPath(UserUtil.getDeptPath());
 				list.add(roleMenuDO);
 			}
 			batchUtil.insertBatch(list, roleMenuMapper::insertBatch);
@@ -175,6 +176,7 @@ public class RoleGatewayImpl implements RoleGateway {
 				roleDeptDO.setId(IdUtil.defaultId());
 				roleDeptDO.setTenantId(UserUtil.getTenantId());
 				roleDeptDO.setCreator(UserUtil.getUserId());
+				roleDeptDO.setDeptPath(UserUtil.getDeptPath());
 				list.add(roleDeptDO);
 			}
 			batchUtil.insertBatch(list, roleDeptMapper::insertBatch);

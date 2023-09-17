@@ -145,6 +145,7 @@ public class MessageGatewayImpl implements MessageGateway {
 			messageDetailDO.setDeptId(UserUtil.getDeptId());
 			messageDetailDO.setTenantId(UserUtil.getTenantId());
 			messageDetailDO.setMessageId(id);
+			messageDetailDO.setDeptPath(UserUtil.getDeptPath());
 			list.add(messageDetailDO);
 		}
 		batchUtil.insertBatch(list, messageDetailMapper::insertBatch);
