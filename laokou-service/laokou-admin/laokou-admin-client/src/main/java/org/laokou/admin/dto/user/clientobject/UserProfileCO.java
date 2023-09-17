@@ -46,4 +46,6 @@ public class UserProfileCO extends ClientObject {
 
 	private Long tenantId;
 
+	private Integer superAdmin;
+
 }

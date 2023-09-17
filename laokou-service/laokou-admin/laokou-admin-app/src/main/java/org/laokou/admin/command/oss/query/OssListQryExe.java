@@ -18,7 +18,6 @@
 package org.laokou.admin.command.oss.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.domain.oss.Oss;
 import org.laokou.admin.dto.oss.OssListQry;
@@ -39,7 +38,7 @@ public class OssListQryExe {
     private final OssGateway ossGateway;
 
     public Result<Datas<OssCO>> execute(OssListQry qry) {
-        Oss oss = OssConvertor.toEntity(new OssCO(qry.getName()));
+        Oss oss = ConvertUtil.sourceToTarget(qry,Oss.class);
         Datas<Oss> newPage = ossGateway.list(oss, new PageQuery(qry.getPageNum(), qry.getPageSize()));
         Datas<OssCO> datas = new Datas<>();
         datas.setTotal(newPage.getTotal());

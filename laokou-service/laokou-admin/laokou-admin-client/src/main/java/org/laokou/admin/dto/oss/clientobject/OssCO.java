@@ -42,7 +42,4 @@ public class OssCO extends ClientObject {
 
     private Integer pathStyleAccessEnabled;
 
-    public OssCO(String name) {
-        this.name = name;
-    }
 }
