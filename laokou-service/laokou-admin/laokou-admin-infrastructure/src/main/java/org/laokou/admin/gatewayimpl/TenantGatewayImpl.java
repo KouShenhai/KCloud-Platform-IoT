@@ -18,6 +18,7 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,12 +27,18 @@ import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
+import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_TENANT;
 
@@ -47,10 +54,20 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final PasswordEncoder passwordEncoder;
+
+	private final UserMapper userMapper;
+
+	private static final String TENANT_USERNAME = "tenant";
+
+	private static final String TENANT_PASSWORD = "tenant123";
+
 	@Override
 	public Boolean insert(Tenant tenant) {
 		TenantDO tenantDO = TenantConvertor.toDataObject(tenant);
-		return insertTenant(tenantDO);
+		tenantDO.setId(IdUtil.defaultId());
+		Long tenantCount = userMapper.selectCount(Wrappers.query(UserDO.class).eq("tenant_id", tenantDO.getId()));
+		return insertTenant(tenantDO,tenantCount);
 	}
 
 	@Override
@@ -81,17 +98,10 @@ public class TenantGatewayImpl implements TenantGateway {
 		return deleteTenant(id);
 	}
 
-	public Boolean insertTenant(TenantDO tenantDO) {
-		return transactionalUtil.execute(r -> {
-			try {
-				return tenantMapper.insert(tenantDO) > 0;
-			}
-			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
-				r.setRollbackOnly();
-				return false;
-			}
-		});
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean insertTenant(TenantDO tenantDO,Long tenantCount) {
+		boolean flag = tenantMapper.insert(tenantDO) > 0;
+		return flag && insertUser(tenantCount,tenantDO.getId());
 	}
 
 	public Boolean updateTenant(TenantDO tenantDO) {
@@ -118,6 +128,19 @@ public class TenantGatewayImpl implements TenantGateway {
 				return false;
 			}
 		});
+	}
+
+	private Boolean insertUser(Long tenantCount,Long tenantId) {
+		if (tenantCount > 0) {
+			return false;
+		}
+		// 初始化超级管理员
+		UserDO userDO = new UserDO();
+		userDO.setUsername(TENANT_USERNAME);
+		userDO.setTenantId(tenantId);
+		userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
+		userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
+		return userMapper.insert(userDO) > 0;
 	}
 
 }
