@@ -18,6 +18,9 @@
 package org.laokou.admin.command.tenant;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.TenantGateway;
+import org.laokou.admin.dto.tenant.TenantDeleteCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +29,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TenantDeleteCmdExe {
+
+    private final TenantGateway tenantGateway;
+
+    public Result<Boolean> execute(TenantDeleteCmd cmd) {
+        return Result.of(tenantGateway.deleteById(cmd.getId()));
+    }
 
 }

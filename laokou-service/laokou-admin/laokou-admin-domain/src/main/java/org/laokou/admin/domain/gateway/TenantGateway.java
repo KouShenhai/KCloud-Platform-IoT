@@ -28,4 +28,10 @@ public interface TenantGateway {
 
 	Datas<Tenant> list(Tenant tenant, PageQuery pageQuery);
 
+	Tenant getById(Long id);
+
+	Boolean update(Tenant tenant);
+
+	Boolean deleteById(Long id);
+
 }

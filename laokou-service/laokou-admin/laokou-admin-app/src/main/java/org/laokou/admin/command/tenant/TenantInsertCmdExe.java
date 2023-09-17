@@ -18,6 +18,7 @@
 package org.laokou.admin.command.tenant;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.dto.tenant.TenantInsertCmd;
 import org.laokou.common.i18n.dto.Result;
@@ -33,7 +34,7 @@ public class TenantInsertCmdExe {
 	private final TenantGateway tenantGateway;
 
 	public Result<Boolean> execute(TenantInsertCmd cmd) {
-		return null;
+		return Result.of(tenantGateway.insert(TenantConvertor.toEntity(cmd.getTenantCO())));
 	}
 
 }

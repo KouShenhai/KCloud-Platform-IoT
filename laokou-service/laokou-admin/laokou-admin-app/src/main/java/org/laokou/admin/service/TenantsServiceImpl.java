@@ -60,17 +60,17 @@ public class TenantsServiceImpl implements TenantsServiceI {
 
 	@Override
 	public Result<Boolean> insert(TenantInsertCmd cmd) {
-		return null;
+		return tenantInsertCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> update(TenantUpdateCmd cmd) {
-		return null;
+		return tenantUpdateCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> deleteById(TenantDeleteCmd cmd) {
-		return null;
+		return tenantDeleteCmdExe.execute(cmd);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 
 	@Override
 	public Result<TenantCO> getById(TenantGetQry qry) {
-		return null;
+		return tenantGetQryExe.execute(qry);
 	}
 
 }

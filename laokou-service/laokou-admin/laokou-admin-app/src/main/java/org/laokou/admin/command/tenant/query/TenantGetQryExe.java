@@ -18,6 +18,11 @@
 package org.laokou.admin.command.tenant.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.TenantGateway;
+import org.laokou.admin.dto.tenant.TenantGetQry;
+import org.laokou.admin.dto.tenant.clientobject.TenantCO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +31,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TenantGetQryExe {
+
+    private final TenantGateway tenantGateway;
+
+    public Result<TenantCO> execute(TenantGetQry qry) {
+        return Result.of(ConvertUtil.sourceToTarget(tenantGateway.getById(qry.getId()),TenantCO.class));
+    }
 
 }
