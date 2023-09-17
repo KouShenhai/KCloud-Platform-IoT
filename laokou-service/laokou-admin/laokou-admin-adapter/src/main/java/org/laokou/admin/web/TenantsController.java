@@ -66,7 +66,7 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "查看租户")
 	@DataCache(name = "tenants", key = "#id")
 	public Result<TenantCO> getById(@PathVariable("id") Long id) {
-		return tenantsServiceI.getById(new TenantGetQry());
+		return tenantsServiceI.getById(new TenantGetQry(id));
 	}
 
 	@TraceLog
@@ -74,7 +74,7 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "修改租户")
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@PreAuthorize("hasAuthority('tenants:update')")
-	@DataCache(name = "tenants", key = "#dto.id", type = Cache.DEL)
+	@DataCache(name = "tenants", key = "#cmd.tenantCO.id", type = Cache.DEL)
 	public Result<Boolean> update(@RequestBody TenantUpdateCmd cmd) {
 		return tenantsServiceI.update(cmd);
 	}

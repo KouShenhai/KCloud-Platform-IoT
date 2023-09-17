@@ -26,17 +26,12 @@ import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
-import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
-import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.jasypt.utils.AesUtil;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_TENANT;
 
@@ -50,18 +45,12 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final TenantMapper tenantMapper;
 
-	private final PasswordEncoder passwordEncoder;
-
-	private final UserMapper userMapper;
-
-	private static final String TENANT_USERNAME = AesUtil.encrypt("tenant");
-
-	private static final String TENANT_PASSWORD = "tenant123";
+	private final TransactionalUtil transactionalUtil;
 
 	@Override
 	public Boolean insert(Tenant tenant) {
 		TenantDO tenantDO = TenantConvertor.toDataObject(tenant);
-		return insertTenant(tenantDO, 1L);
+		return insertTenant(tenantDO);
 	}
 
 	@Override
@@ -76,22 +65,59 @@ public class TenantGatewayImpl implements TenantGateway {
 		return datas;
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean insertTenant(TenantDO tenantDO, Long tenantCount) {
-		boolean flag = tenantMapper.insert(tenantDO) > 0;
-		return flag && insertUser(tenantCount);
+	@Override
+	public Tenant getById(Long id) {
+		return ConvertUtil.sourceToTarget(tenantMapper.selectById(id),Tenant.class);
 	}
 
-	private Boolean insertUser(Long tenantCount) {
-		if (tenantCount > 0) {
-			return false;
-		}
-		// 初始化超级管理员
-		UserDO userDO = new UserDO();
-		userDO.setUsername(TENANT_USERNAME);
-		userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
-		userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
-		return userMapper.insert(userDO) > 0;
+	@Override
+	public Boolean update(Tenant tenant) {
+		TenantDO tenantDO = TenantConvertor.toDataObject(tenant);
+		return updateTenant(tenantDO);
+	}
+
+	@Override
+	public Boolean deleteById(Long id) {
+		return deleteTenant(id);
+	}
+
+	public Boolean insertTenant(TenantDO tenantDO) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return tenantMapper.insert(tenantDO) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	public Boolean updateTenant(TenantDO tenantDO) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return tenantMapper.updateById(tenantDO) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	public Boolean deleteTenant(Long id) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return tenantMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
 	}
 
 }

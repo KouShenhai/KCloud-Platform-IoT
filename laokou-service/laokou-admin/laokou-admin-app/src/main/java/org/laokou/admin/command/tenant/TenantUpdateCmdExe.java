@@ -18,6 +18,11 @@
 package org.laokou.admin.command.tenant;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.TenantConvertor;
+import org.laokou.admin.domain.gateway.TenantGateway;
+import org.laokou.admin.domain.tenant.Tenant;
+import org.laokou.admin.dto.tenant.TenantUpdateCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +31,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TenantUpdateCmdExe {
+
+    private final TenantGateway tenantGateway;
+
+    public Result<Boolean> execute(TenantUpdateCmd cmd) {
+        Tenant tenant = TenantConvertor.toEntity(cmd.getTenantCO());
+        return Result.of(tenantGateway.update(tenant));
+    }
 
 }
