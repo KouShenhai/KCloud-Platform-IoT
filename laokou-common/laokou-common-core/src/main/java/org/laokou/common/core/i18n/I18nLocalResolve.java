@@ -17,15 +17,19 @@ import java.util.Locale;
  */
 @NonNullApi
 public class I18nLocalResolve extends AbstractLocaleContextResolver {
-    @Override
-    public LocaleContext resolveLocaleContext(HttpServletRequest request) {
-        String language = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
-        Locale locale = LocaleUtil.toLocale(language);
-        return new SimpleLocaleContext(locale);
-    }
 
-    @Override
-    public void setLocaleContext(HttpServletRequest request, @Nullable HttpServletResponse response, @Nullable LocaleContext localeContext) {
-        throw new UnsupportedOperationException("Cannot change fixed locale - use a different locale resolution strategy");
-    }
+	@Override
+	public LocaleContext resolveLocaleContext(HttpServletRequest request) {
+		String language = request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
+		Locale locale = LocaleUtil.toLocale(language);
+		return new SimpleLocaleContext(locale);
+	}
+
+	@Override
+	public void setLocaleContext(HttpServletRequest request, @Nullable HttpServletResponse response,
+			@Nullable LocaleContext localeContext) {
+		throw new UnsupportedOperationException(
+				"Cannot change fixed locale - use a different locale resolution strategy");
+	}
+
 }

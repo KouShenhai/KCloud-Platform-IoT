@@ -50,6 +50,7 @@ public abstract class BaseDO extends DTO {
 	public static final String DEPT_PATH = "deptPath";
 
 	public static final String TENANT_ID = "tenantId";
+
 	public static final String FIELD_DEPT_PATH = "dept_path";
 
 	@Serial

@@ -88,10 +88,12 @@ public class DataFilterAspect {
 		sqlFilter.append(LEFT);
 		if (CollectionUtil.isNotEmpty(deptPaths)) {
 			for (String deptPath : deptPaths) {
-				sqlFilter.append(alias).append(deptPathColumn).append(SPACE).append(LIKE).append(SPACE).append(QUOT).append(deptPath.trim()).append(PERCENT).append(QUOT).append(SPACE).append(OR).append(SPACE);
+				sqlFilter.append(alias).append(deptPathColumn).append(SPACE).append(LIKE).append(SPACE).append(QUOT)
+						.append(deptPath.trim()).append(PERCENT).append(QUOT).append(SPACE).append(OR).append(SPACE);
 			}
 		}
-		sqlFilter.append(alias).append(userIdColumn).append(SPACE).append(EQUAL).append(SPACE).append(QUOT).append(user.getId()).append(QUOT);
+		sqlFilter.append(alias).append(userIdColumn).append(SPACE).append(EQUAL).append(SPACE).append(QUOT)
+				.append(user.getId()).append(QUOT);
 		sqlFilter.append(RIGHT);
 		String sql = sqlFilter.toString();
 		after(sql);

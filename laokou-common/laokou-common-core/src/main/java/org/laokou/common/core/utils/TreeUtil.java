@@ -37,7 +37,7 @@ import static org.laokou.common.i18n.common.Constant.COMMA;
 public class TreeUtil {
 
 	public static <T> TreeNode<T> rootRootNode(String name) {
-		return new TreeNode<>(0L, name, null,"0", new ArrayList<>(0));
+		return new TreeNode<>(0L, name, null, "0", new ArrayList<>(0));
 	}
 
 	public static <T> TreeNode<T> rootRootNode() {

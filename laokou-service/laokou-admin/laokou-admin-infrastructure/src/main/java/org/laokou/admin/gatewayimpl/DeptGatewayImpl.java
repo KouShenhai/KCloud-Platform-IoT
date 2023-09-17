@@ -71,7 +71,7 @@ public class DeptGatewayImpl implements DeptGateway {
 		}
 		DeptDO deptDO = DeptConvertor.toDataObject(dept);
 		deptDO.setId(IdUtil.defaultId());
-		deptDO.setPath(getPath(deptDO.getPid(),deptDO.getId()));
+		deptDO.setPath(getPath(deptDO.getPid(), deptDO.getId()));
 		return insertDept(deptDO);
 	}
 
@@ -93,10 +93,10 @@ public class DeptGatewayImpl implements DeptGateway {
 		DeptDO deptDO = DeptConvertor.toDataObject(dept);
 		DeptDO dep = deptMapper.selectById(deptDO.getId());
 		deptDO.setVersion(dep.getVersion());
-		deptDO.setPath(getPath(deptDO.getPid(),deptDO.getId()));
+		deptDO.setPath(getPath(deptDO.getPid(), deptDO.getId()));
 		// 获取子节点
 		List<DeptDO> deptChildren = deptMapper.selectDeptChildrenByLikePath(dep.getPath());
-		return updateDept(deptDO,dept.getPath(),deptDO.getPath(),deptChildren);
+		return updateDept(deptDO, dept.getPath(), deptDO.getPath(), deptChildren);
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean updateDept(DeptDO deptDO,String oldPath,String newPath,List<DeptDO> deptChildren) {
+	public Boolean updateDept(DeptDO deptDO, String oldPath, String newPath, List<DeptDO> deptChildren) {
 		return deptMapper.updateById(deptDO) > 0 && updateDeptChildren(oldPath, newPath, deptChildren);
 	}
 
@@ -142,19 +142,19 @@ public class DeptGatewayImpl implements DeptGateway {
 		});
 	}
 
-	private Boolean updateDeptChildren(String oldPath,String newPath,List<DeptDO> deptChildren) {
+	private Boolean updateDeptChildren(String oldPath, String newPath, List<DeptDO> deptChildren) {
 		if (CollectionUtil.isEmpty(deptChildren)) {
 			return false;
 		}
 		boolean flag = true;
 		for (DeptDO deptChild : deptChildren) {
-			deptChild.setPath(deptChild.getPath().replace(oldPath,newPath));
+			deptChild.setPath(deptChild.getPath().replace(oldPath, newPath));
 			flag = flag && deptMapper.updateById(deptChild) > 0;
 		}
 		return flag;
 	}
 
-	private String getPath(Long pid,Long id) {
+	private String getPath(Long pid, Long id) {
 		String path = deptMapper.getDeptPathByPid(pid);
 		return StringUtil.isNotEmpty(path) ? path + COMMA + id : DEFAULT_STRING + COMMA + id;
 	}

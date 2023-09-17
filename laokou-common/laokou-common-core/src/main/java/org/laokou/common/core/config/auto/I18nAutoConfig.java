@@ -31,9 +31,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class I18nAutoConfig implements WebMvcConfigurer {
 
-    @Bean("i18nLocaleResolver")
-    public LocaleResolver i18nLocaleResolver() {
-        return new I18nLocalResolve();
-    }
+	@Bean("i18nLocaleResolver")
+	public LocaleResolver i18nLocaleResolver() {
+		return new I18nLocalResolve();
+	}
 
 }
