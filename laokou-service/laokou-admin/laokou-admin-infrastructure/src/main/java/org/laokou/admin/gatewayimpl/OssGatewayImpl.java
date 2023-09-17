@@ -15,18 +15,18 @@
  *
  */
 
-package org.laokou.admin.command.oss.query;
+package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.domain.oss.Oss;
-import org.laokou.admin.dto.oss.OssListQry;
-import org.laokou.admin.dto.oss.clientobject.OssCO;
+import org.laokou.admin.gatewayimpl.database.OssMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,17 +34,18 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class OssListQryExe {
+public class OssGatewayImpl implements OssGateway {
 
-    private final OssGateway ossGateway;
+    private final OssMapper ossMapper;
 
-    public Result<Datas<OssCO>> execute(OssListQry qry) {
-        Oss oss = OssConvertor.toEntity(new OssCO(qry.getName()));
-        Datas<Oss> newPage = ossGateway.list(oss, new PageQuery(qry.getPageNum(), qry.getPageSize()));
-        Datas<OssCO> datas = new Datas<>();
+    @Override
+    public Datas<Oss> list(Oss oss, PageQuery pageQuery) {
+        IPage<OssDO> page = new Page<>(pageQuery.getPageNum(),pageQuery.getPageSize());
+        IPage<OssDO> newPage = ossMapper.getOssListByLikeName(page, oss.getName(), pageQuery.getSqlFilter());
+        Datas<Oss> datas = new Datas<>();
+        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),Oss.class));
         datas.setTotal(newPage.getTotal());
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),OssCO.class));
-        return Result.of(datas);
+        return datas;
     }
 
 }

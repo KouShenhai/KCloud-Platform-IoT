@@ -17,9 +17,28 @@
 
 package org.laokou.admin.domain.oss;
 
+import lombok.Data;
+
 /**
  * @author laokou
  */
+@Data
 public class Oss {
+
+    private Long id;
+
+    private String name;
+
+    private String endpoint;
+
+    private String region;
+
+    private String accessKey;
+
+    private String secretKey;
+
+    private String bucketName;
+
+    private Integer pathStyleAccessEnabled;
 
 }

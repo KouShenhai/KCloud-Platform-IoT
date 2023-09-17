@@ -15,21 +15,17 @@
  *
  */
 
-package org.laokou.admin.dto.oss;
+package org.laokou.admin.web;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.StringUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author laokou
  */
-@Data
-public class OssListQry extends PageQuery {
-
-    private String name;
-
-    public void setName(String name) {
-        this.name = StringUtil.like(name);
-    }
+@RestController
+@Tag(name = "SmsController", description = "短信管理")
+@RequiredArgsConstructor
+public class SmsController {
 }

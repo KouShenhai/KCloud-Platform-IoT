@@ -15,21 +15,25 @@
  *
  */
 
-package org.laokou.admin.dto.oss;
+package org.laokou.admin.convertor;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.admin.domain.oss.Oss;
+import org.laokou.admin.dto.oss.clientobject.OssCO;
+import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
+import org.laokou.common.core.utils.ConvertUtil;
 
 /**
  * @author laokou
  */
-@Data
-public class OssListQry extends PageQuery {
+public class OssConvertor {
 
-    private String name;
-
-    public void setName(String name) {
-        this.name = StringUtil.like(name);
+    public static Oss toEntity(OssCO ossCO) {
+        return ConvertUtil.sourceToTarget(ossCO, Oss.class);
     }
+
+    public static OssDO toDataObject(Oss oss) {
+        return ConvertUtil.sourceToTarget(oss, OssDO.class);
+    }
+
+
 }

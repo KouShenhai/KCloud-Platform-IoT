@@ -15,9 +15,15 @@
  */
 package org.laokou.admin.domain.gateway;
 
+import org.laokou.admin.domain.oss.Oss;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
+
 /**
  * @author laokou
  */
 public interface OssGateway {
+
+    Datas<Oss> list(Oss oss, PageQuery pageQuery);
 
 }
