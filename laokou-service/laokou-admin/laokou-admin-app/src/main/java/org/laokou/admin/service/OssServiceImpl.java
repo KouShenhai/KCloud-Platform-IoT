@@ -70,7 +70,7 @@ public class OssServiceImpl implements OssServiceI {
 
 	@Override
 	public Result<Datas<OssCO>> list(OssListQry qry) {
-		return null;
+		return ossListQryExe.execute(qry);
 	}
 
 	@Override

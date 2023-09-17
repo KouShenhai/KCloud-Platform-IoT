@@ -24,6 +24,7 @@ import org.laokou.admin.dto.user.UserGetQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,7 +37,7 @@ public class UserGetQryExe {
 	private final UserGateway userGateway;
 
 	public Result<UserCO> execute(UserGetQry qry) {
-		User user = userGateway.getById(qry.getId());
+		User user = userGateway.getById(qry.getId(), UserUtil.getTenantId());
 		return Result.of(ConvertUtil.sourceToTarget(user, UserCO.class));
 	}
 

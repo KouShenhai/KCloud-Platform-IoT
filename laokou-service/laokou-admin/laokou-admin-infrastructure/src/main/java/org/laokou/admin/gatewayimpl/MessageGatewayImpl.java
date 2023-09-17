@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +49,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.laokou.admin.common.Constant.TENANT;
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_MESSAGE;
 import static org.laokou.common.rocketmq.constant.MqConstant.*;
 
@@ -75,7 +73,6 @@ public class MessageGatewayImpl implements MessageGateway {
 	private final RocketMqTemplate rocketMqTemplate;
 
 	@Override
-	@DS(TENANT)
 	@DataFilter(alias = BOOT_SYS_MESSAGE)
 	public Datas<Message> list(Message message, PageQuery pageQuery) {
 		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
@@ -88,7 +85,6 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean insert(Message message) {
 		MessageDO messageDO = MessageConvertor.toDataObject(message);
 		Boolean flag = insertMessage(messageDO, message);
@@ -100,7 +96,6 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public Message getById(Long id) {
 		MessageDO messageDO = messageMapper.selectById(id);
 		return ConvertUtil.sourceToTarget(messageDO, Message.class);

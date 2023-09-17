@@ -26,10 +26,12 @@ import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
+import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
+import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
@@ -56,6 +58,7 @@ import static org.laokou.admin.common.DsConstant.BOOT_SYS_USER;
 public class UserGatewayImpl implements UserGateway {
 
 	private final UserMapper userMapper;
+	private final RoleMapper roleMapper;
 
 	private final PasswordEncoder passwordEncoder;
 
@@ -97,11 +100,15 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	public User getById(Long id) {
+	public User getById(Long id,Long tenantId) {
 		UserDO userDO = userMapper.selectOne(
-				Wrappers.query(UserDO.class).eq("id", id).select("id", "username", "status", "dept_id", "dept_path"));
+				Wrappers.query(UserDO.class).eq("id", id).select("id", "username", "status", "dept_id", "dept_path","super_admin"));
 		User user = ConvertUtil.sourceToTarget(userDO, User.class);
-		user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
+		if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
+			user.setRoleIds(roleMapper.getRoleIdsByTenantId(tenantId));
+		} else {
+			user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
+		}
 		return user;
 	}
 

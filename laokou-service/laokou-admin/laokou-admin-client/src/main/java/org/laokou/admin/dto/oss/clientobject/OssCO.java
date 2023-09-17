@@ -26,4 +26,20 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 public class OssCO extends ClientObject {
 
+    private Long id;
+
+    private String name;
+
+    private String endpoint;
+
+    private String region;
+
+    private String accessKey;
+
+    private String secretKey;
+
+    private String bucketName;
+
+    private Integer pathStyleAccessEnabled;
+
 }
