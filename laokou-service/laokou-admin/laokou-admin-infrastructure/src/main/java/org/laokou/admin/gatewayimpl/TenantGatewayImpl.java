@@ -18,7 +18,6 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +33,6 @@ import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -65,9 +63,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	@Override
 	public Boolean insert(Tenant tenant) {
 		TenantDO tenantDO = TenantConvertor.toDataObject(tenant);
-		tenantDO.setId(IdUtil.defaultId());
-		Long tenantCount = userMapper.selectCount(Wrappers.query(UserDO.class).eq("tenant_id", tenantDO.getId()));
-		return insertTenant(tenantDO,tenantCount);
+		return insertTenant(tenantDO);
 	}
 
 	@Override
@@ -99,9 +95,9 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean insertTenant(TenantDO tenantDO,Long tenantCount) {
+	public Boolean insertTenant(TenantDO tenantDO) {
 		boolean flag = tenantMapper.insert(tenantDO) > 0;
-		return flag && insertUser(tenantCount,tenantDO.getId());
+		return flag && insertUser(tenantDO.getId());
 	}
 
 	public Boolean updateTenant(TenantDO tenantDO) {
@@ -130,10 +126,7 @@ public class TenantGatewayImpl implements TenantGateway {
 		});
 	}
 
-	private Boolean insertUser(Long tenantCount,Long tenantId) {
-		if (tenantCount > 0) {
-			return false;
-		}
+	private Boolean insertUser(Long tenantId) {
 		// 初始化超级管理员
 		UserDO userDO = new UserDO();
 		userDO.setUsername(TENANT_USERNAME);
