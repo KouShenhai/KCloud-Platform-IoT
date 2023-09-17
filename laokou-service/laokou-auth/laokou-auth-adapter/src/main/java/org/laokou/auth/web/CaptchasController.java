@@ -25,6 +25,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -33,12 +34,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "CaptchasController", description = "验证码")
 @RequiredArgsConstructor
+@RequestMapping("v1/captchas")
 public class CaptchasController {
 
 	private final CaptchasServiceI captchasServiceI;
 
 	@TraceLog
-	@GetMapping("v1/captchas/{uuid}")
+	@GetMapping("{uuid}")
 	@Operation(summary = "验证码", description = "获取验证码")
 	public Result<String> get(@PathVariable("uuid") String uuid) {
 		return captchasServiceI.get(new CaptchaGetQry(uuid));

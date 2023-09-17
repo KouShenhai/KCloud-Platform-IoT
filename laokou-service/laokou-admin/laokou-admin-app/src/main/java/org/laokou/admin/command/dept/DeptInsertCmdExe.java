@@ -38,6 +38,7 @@ import org.springframework.stereotype.Component;
 public class DeptInsertCmdExe {
 
 	private final DeptGateway deptGateway;
+
 	private final DeptMapper deptMapper;
 
 	public Result<Boolean> execute(DeptInsertCmd cmd) {

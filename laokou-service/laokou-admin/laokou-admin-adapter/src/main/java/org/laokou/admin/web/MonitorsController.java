@@ -27,6 +27,7 @@ import org.laokou.admin.dto.monitor.clientobject.ServerCO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -35,19 +36,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "MonitorsController", description = "监控管理")
 @RequiredArgsConstructor
+@RequestMapping("v1/monitors")
 public class MonitorsController {
 
 	private final MonitorsServiceI monitorsServiceI;
 
 	@TraceLog
-	@GetMapping("v1/monitors/cache")
+	@GetMapping("cache")
 	@Operation(summary = "监控管理", description = "缓存监控")
 	public Result<CacheCO> cache() {
 		return monitorsServiceI.cache(new MonitorCacheGetQry());
 	}
 
 	@TraceLog
-	@GetMapping("v1/monitors/server")
+	@GetMapping("server")
 	@Operation(summary = "监控管理", description = "主机监控")
 	public Result<ServerCO> server() {
 		return monitorsServiceI.server(new MonitorServerGetQry());

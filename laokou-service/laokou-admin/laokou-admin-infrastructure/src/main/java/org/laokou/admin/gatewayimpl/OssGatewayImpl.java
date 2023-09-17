@@ -36,16 +36,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OssGatewayImpl implements OssGateway {
 
-    private final OssMapper ossMapper;
+	private final OssMapper ossMapper;
 
-    @Override
-    public Datas<Oss> list(Oss oss, PageQuery pageQuery) {
-        IPage<OssDO> page = new Page<>(pageQuery.getPageNum(),pageQuery.getPageSize());
-        IPage<OssDO> newPage = ossMapper.getOssListByLikeName(page, oss.getName(), pageQuery.getSqlFilter());
-        Datas<Oss> datas = new Datas<>();
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),Oss.class));
-        datas.setTotal(newPage.getTotal());
-        return datas;
-    }
+	@Override
+	public Datas<Oss> list(Oss oss, PageQuery pageQuery) {
+		IPage<OssDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+		IPage<OssDO> newPage = ossMapper.getOssListByLikeName(page, oss.getName(), pageQuery.getSqlFilter());
+		Datas<Oss> datas = new Datas<>();
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Oss.class));
+		datas.setTotal(newPage.getTotal());
+		return datas;
+	}
 
 }

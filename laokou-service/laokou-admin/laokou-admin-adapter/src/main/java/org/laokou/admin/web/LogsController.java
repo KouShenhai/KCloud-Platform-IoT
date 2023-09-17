@@ -33,6 +33,7 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -41,12 +42,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "LogsController", description = "日志管理")
 @RequiredArgsConstructor
+@RequestMapping("v1/logs")
 public class LogsController {
 
 	private final LogsServiceI logsServiceI;
 
 	@TraceLog
-	@PostMapping(value = "v1/logs/operate-list")
+	@PostMapping(value = "operate-list")
 	@Operation(summary = "日志管理", description = "查询操作日志列表")
 	@PreAuthorize("hasAuthority('logs:operate-list')")
 	public Result<Datas<OperateLogCO>> operateList(@RequestBody LogOperateListQry qry) {
@@ -54,7 +56,7 @@ public class LogsController {
 	}
 
 	@TraceLog
-	@PostMapping(value = "v1/logs/operate-export")
+	@PostMapping(value = "operate-export")
 	@Operation(summary = "日志管理", description = "导出操作日志")
 	@OperateLog(module = "日志管理", operation = "导出操作日志")
 	@PreAuthorize("hasAuthority('logs:operate-export')")
@@ -63,7 +65,7 @@ public class LogsController {
 	}
 
 	@TraceLog
-	@PostMapping(value = "v1/logs/login-list")
+	@PostMapping(value = "login-list")
 	@Operation(summary = "日志管理", description = "查询登录日志列表")
 	@PreAuthorize("hasAuthority('logs:login-list')")
 	public Result<Datas<LoginLogCO>> loginList(@RequestBody LogLoginListQry qry) {
@@ -71,7 +73,7 @@ public class LogsController {
 	}
 
 	@TraceLog
-	@PostMapping(value = "v1/logs/login-export")
+	@PostMapping(value = "login-export")
 	@Operation(summary = "日志管理", description = "导出登录日志")
 	@OperateLog(module = "日志管理", operation = "导出登录日志")
 	@PreAuthorize("hasAuthority('logs:login-export')")

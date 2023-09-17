@@ -40,12 +40,13 @@ import java.util.List;
 @RestController
 @Tag(name = "PackagesController", description = "套餐管理")
 @RequiredArgsConstructor
+@RequestMapping("v1/packages")
 public class PackagesController {
 
 	private final PackagesServiceI packagesServiceI;
 
 	@TraceLog
-	@PostMapping("v1/packages/list")
+	@PostMapping("list")
 	@Operation(summary = "套餐管理", description = "查询套餐列表")
 	@PreAuthorize("hasAuthority('packages:list')")
 	public Result<Datas<PackageCO>> list(@RequestBody PackageListQry qry) {
@@ -53,7 +54,7 @@ public class PackagesController {
 	}
 
 	@TraceLog
-	@PostMapping("v1/packages")
+	@PostMapping
 	@Operation(summary = "套餐管理", description = "新增套餐")
 	@OperateLog(module = "套餐管理", operation = "新增套餐")
 	@PreAuthorize("hasAuthority('packages:insert')")
@@ -62,7 +63,7 @@ public class PackagesController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/packages/{id}")
+	@GetMapping("{id}")
 	@Operation(summary = "套餐管理", description = "查看套餐")
 	@DataCache(name = "packages", key = "#id")
 	public Result<PackageCO> getById(@PathVariable("id") Long id) {
@@ -70,7 +71,7 @@ public class PackagesController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/packages")
+	@PutMapping
 	@Operation(summary = "套餐管理", description = "修改套餐")
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
 	@PreAuthorize("hasAuthority('packages:update')")
@@ -80,7 +81,7 @@ public class PackagesController {
 	}
 
 	@TraceLog
-	@DeleteMapping("v1/packages/{id}")
+	@DeleteMapping("{id}")
 	@Operation(summary = "套餐管理", description = "删除套餐")
 	@OperateLog(module = "套餐管理", operation = "删除套餐")
 	@PreAuthorize("hasAuthority('packages:delete')")
@@ -90,7 +91,7 @@ public class PackagesController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/packages/option-list")
+	@GetMapping("option-list")
 	@Operation(summary = "套餐管理", description = "下拉列表")
 	public Result<List<OptionCO>> optionList() {
 		return packagesServiceI.optionList(new PackageOptionListQry());

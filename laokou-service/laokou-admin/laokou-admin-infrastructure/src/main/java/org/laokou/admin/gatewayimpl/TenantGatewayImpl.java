@@ -80,7 +80,7 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	@Override
 	public Tenant getById(Long id) {
-		return ConvertUtil.sourceToTarget(tenantMapper.selectById(id),Tenant.class);
+		return ConvertUtil.sourceToTarget(tenantMapper.selectById(id), Tenant.class);
 	}
 
 	@Override
