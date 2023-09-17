@@ -42,12 +42,13 @@ import java.util.List;
 @RestController
 @Tag(name = "UsersController", description = "用户管理")
 @RequiredArgsConstructor
+@RequestMapping("v1/users")
 public class UsersController {
 
 	private final UsersServiceI usersServiceI;
 
 	@TraceLog
-	@PutMapping("v1/users")
+	@PutMapping
 	@Operation(summary = "用户管理", description = "修改用户")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@PreAuthorize("hasAuthority('users:update')")
@@ -57,7 +58,7 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@PostMapping("v1/users/online-list")
+	@PostMapping("online-list")
 	@PreAuthorize("hasAuthority('users:online-list')")
 	@Operation(summary = "在线用户", description = "查询在线用户列表")
 	public Result<Datas<UserOnlineCO>> onlineList() {
@@ -65,7 +66,7 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@DeleteMapping("v1/users/online-kill")
+	@DeleteMapping("online-kill")
 	@Operation(summary = "在线用户", description = "强踢在线用户")
 	@OperateLog(module = "用户管理", operation = "强踢在线用户")
 	@PreAuthorize("hasAuthority('users:online-kill')")
@@ -74,28 +75,28 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/users/profile")
+	@GetMapping("profile")
 	@Operation(summary = "个人中心", description = "查看个人信息")
 	public Result<UserProfileCO> getProfile() {
 		return usersServiceI.getProfile(new UserProfileGetQry());
 	}
 
 	@TraceLog
-	@GetMapping("v1/users/option-list")
+	@GetMapping("option-list")
 	@Operation(summary = "用户管理", description = "下拉列表")
 	public Result<List<OptionCO>> optionList() {
 		return usersServiceI.optionList(new UserOptionListQry());
 	}
 
 	@TraceLog
-	@PutMapping("v1/users/profile")
+	@PutMapping("profile")
 	@Operation(summary = "个人中心", description = "修改个人信息")
 	public Result<Boolean> updateProfile(@RequestBody UserProfileUpdateCmd cmd) {
 		return usersServiceI.updateProfile(cmd);
 	}
 
 	@TraceLog
-	@PutMapping("v1/users/status")
+	@PutMapping("status")
 	@Operation(summary = "用户管理", description = "修改用户状态")
 	@OperateLog(module = "用户管理", operation = "修改用户状态")
 	@PreAuthorize("hasAuthority('users:status')")
@@ -104,7 +105,7 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/users/reset-password")
+	@PutMapping("reset-password")
 	@Operation(summary = "用户管理", description = "重置密码")
 	@OperateLog(module = "用户管理", operation = "重置密码")
 	@PreAuthorize("hasAuthority('users:reset-password')")
@@ -113,14 +114,14 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/users/password")
+	@PutMapping("password")
 	@Operation(summary = "个人中心", description = "修改密码")
 	public Result<Boolean> updatePassword(@RequestBody UserPasswordResetCmd cmd) {
 		return usersServiceI.resetPassword(cmd);
 	}
 
 	@TraceLog
-	@PostMapping("v1/users")
+	@PostMapping
 	@Operation(summary = "用户管理", description = "新增用户")
 	@OperateLog(module = "用户管理", operation = "新增用户")
 	@PreAuthorize("hasAuthority('users:insert')")
@@ -129,7 +130,7 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/users/{id}")
+	@GetMapping("{id}")
 	@Operation(summary = "用户管理", description = "查看用户")
 	@DataCache(name = "users", key = "#id")
 	public Result<UserCO> getById(@PathVariable("id") Long id) {
@@ -137,7 +138,7 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@DeleteMapping("v1/users/{id}")
+	@DeleteMapping("{id}")
 	@Operation(summary = "用户管理", description = "删除用户")
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@PreAuthorize("hasAuthority('users:delete')")
@@ -147,7 +148,7 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@PostMapping("v1/users/list")
+	@PostMapping("list")
 	@Operation(summary = "用户管理", description = "查询用户列表")
 	@PreAuthorize("hasAuthority('users:list')")
 	public Result<Datas<UserCO>> list(@RequestBody UserListQry qry) {

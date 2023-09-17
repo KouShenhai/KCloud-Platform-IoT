@@ -38,18 +38,19 @@ import java.util.List;
 @RestController
 @Tag(name = "DeptsController", description = "部门管理")
 @RequiredArgsConstructor
+@RequestMapping("v1/depts")
 public class DeptsController {
 
 	private final DeptsServiceI deptsServiceI;
 
-	@GetMapping("v1/depts/tree")
+	@GetMapping("tree")
 	@TraceLog
 	@Operation(summary = "部门管理", description = "树形部门列表")
 	public Result<DeptCO> tree() {
 		return deptsServiceI.tree(new DeptTreeGetQry());
 	}
 
-	@PostMapping("v1/depts/list")
+	@PostMapping("list")
 	@Operation(summary = "部门管理", description = "查询菜单列表")
 	@PreAuthorize("hasAuthority('depts:list')")
 	@TraceLog
@@ -57,7 +58,7 @@ public class DeptsController {
 		return deptsServiceI.list(qry);
 	}
 
-	@PostMapping("v1/depts")
+	@PostMapping
 	@Operation(summary = "部门管理", description = "新增菜单")
 	@OperateLog(module = "部门管理", operation = "新增菜单")
 	@PreAuthorize("hasAuthority('depts:insert')")
@@ -66,7 +67,7 @@ public class DeptsController {
 		return deptsServiceI.insert(cmd);
 	}
 
-	@PutMapping("v1/depts")
+	@PutMapping
 	@Operation(summary = "部门管理", description = "修改菜单")
 	@OperateLog(module = "部门管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('depts:update')")
@@ -76,7 +77,7 @@ public class DeptsController {
 		return deptsServiceI.update(cmd);
 	}
 
-	@GetMapping("v1/depts/{id}")
+	@GetMapping("{id}")
 	@TraceLog
 	@Operation(summary = "部门管理", description = "查看菜单")
 	@DataCache(name = "depts", key = "#id")
@@ -84,7 +85,7 @@ public class DeptsController {
 		return deptsServiceI.getById(new DeptGetQry(id));
 	}
 
-	@DeleteMapping("v1/depts/{id}")
+	@DeleteMapping("{id}")
 	@TraceLog
 	@Operation(summary = "部门管理", description = "删除菜单")
 	@OperateLog(module = "部门管理", operation = "删除菜单")
@@ -94,7 +95,7 @@ public class DeptsController {
 		return deptsServiceI.deleteById(new DeptDeleteCmd(id));
 	}
 
-	@GetMapping("v1/depts/{roleId}/ids")
+	@GetMapping("{roleId}/ids")
 	@TraceLog
 	@Operation(summary = "部门管理", description = "部门IDS")
 	public Result<List<Long>> ids(@PathVariable(value = "roleId") Long roleId) {

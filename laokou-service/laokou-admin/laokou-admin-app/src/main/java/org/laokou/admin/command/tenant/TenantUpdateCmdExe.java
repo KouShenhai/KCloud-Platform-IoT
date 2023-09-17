@@ -32,11 +32,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TenantUpdateCmdExe {
 
-    private final TenantGateway tenantGateway;
+	private final TenantGateway tenantGateway;
 
-    public Result<Boolean> execute(TenantUpdateCmd cmd) {
-        Tenant tenant = TenantConvertor.toEntity(cmd.getTenantCO());
-        return Result.of(tenantGateway.update(tenant));
-    }
+	public Result<Boolean> execute(TenantUpdateCmd cmd) {
+		Tenant tenant = TenantConvertor.toEntity(cmd.getTenantCO());
+		return Result.of(tenantGateway.update(tenant));
+	}
 
 }

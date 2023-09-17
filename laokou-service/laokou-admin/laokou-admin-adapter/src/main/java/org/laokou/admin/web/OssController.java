@@ -40,12 +40,13 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @Tag(name = "OssController", description = "存储管理")
 @RequiredArgsConstructor
+@RequestMapping("v1/oss")
 public class OssController {
 
 	private final OssServiceI ossServiceI;
 
 	@TraceLog
-	@PostMapping("v1/oss/list")
+	@PostMapping("list")
 	@Operation(summary = "存储管理", description = "查询存储列表")
 	@PreAuthorize("hasAuthority('oss:list')")
 	public Result<Datas<OssCO>> list(@RequestBody OssListQry qry) {
@@ -53,14 +54,14 @@ public class OssController {
 	}
 
 	@TraceLog
-	@PostMapping("v1/oss/upload")
+	@PostMapping("upload")
 	@Operation(summary = "存储管理", description = "上传文件")
 	public Result<FileCO> upload(@RequestPart("file") MultipartFile file) {
 		return ossServiceI.upload(new OssUploadCmd(file));
 	}
 
 	@TraceLog
-	@PostMapping("v1/oss")
+	@PostMapping
 	@Operation(summary = "存储管理", description = "新增存储")
 	@OperateLog(module = "存储管理", operation = "新增存储")
 	@PreAuthorize("hasAuthority('oss:insert')")
@@ -69,7 +70,7 @@ public class OssController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/oss/{id}")
+	@GetMapping("{id}")
 	@Operation(summary = "存储管理", description = "查看存储")
 	@DataCache(name = "oss", key = "#id")
 	public Result<OssCO> getById(@PathVariable("id") Long id) {
@@ -77,7 +78,7 @@ public class OssController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/oss")
+	@PutMapping
 	@Operation(summary = "存储管理", description = "修改存储")
 	@OperateLog(module = "存储管理", operation = "修改存储")
 	@PreAuthorize("hasAuthority('oss:update')")
@@ -87,7 +88,7 @@ public class OssController {
 	}
 
 	@TraceLog
-	@DeleteMapping("v1/oss/{id}")
+	@DeleteMapping("{id}")
 	@Operation(summary = "存储管理", description = "删除存储")
 	@OperateLog(module = "存储管理", operation = "删除存储")
 	@PreAuthorize("hasAuthority('oss:delete')")

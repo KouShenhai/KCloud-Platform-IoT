@@ -38,19 +38,20 @@ import java.util.List;
 @RestController
 @Tag(name = "MenusController", description = "菜单管理")
 @RequiredArgsConstructor
+@RequestMapping("v1/menus")
 public class MenusController {
 
 	private final MenusServiceI menusServiceI;
 
 	@TraceLog
-	@GetMapping("v1/menus/tree-list")
+	@GetMapping("tree-list")
 	@Operation(summary = "菜单管理", description = "树形菜单列表（用户）")
 	public Result<MenuCO> treeList() {
 		return menusServiceI.treeList(new MenuTreeListQry());
 	}
 
 	@TraceLog
-	@PostMapping("v1/menus/list")
+	@PostMapping("list")
 	@Operation(summary = "菜单管理", description = "查询菜单列表")
 	@PreAuthorize("hasAuthority('menus:list')")
 	public Result<List<MenuCO>> list(@RequestBody MenuListQry qry) {
@@ -58,7 +59,7 @@ public class MenusController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/menus/{id}")
+	@GetMapping("{id}")
 	@Operation(summary = "菜单管理", description = "查看菜单")
 	@DataCache(name = "menus", key = "#id")
 	public Result<MenuCO> getById(@PathVariable("id") Long id) {
@@ -66,7 +67,7 @@ public class MenusController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/menus")
+	@PutMapping
 	@Operation(summary = "菜单管理", description = "修改菜单")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('menus:update')")
@@ -76,7 +77,7 @@ public class MenusController {
 	}
 
 	@TraceLog
-	@PostMapping("v1/menus")
+	@PostMapping
 	@Operation(summary = "菜单管理", description = "新增菜单")
 	@OperateLog(module = "菜单管理", operation = "新增菜单")
 	@PreAuthorize("hasAuthority('menus:insert')")
@@ -85,7 +86,7 @@ public class MenusController {
 	}
 
 	@TraceLog
-	@DeleteMapping("v1/menus/{id}")
+	@DeleteMapping("{id}")
 	@Operation(summary = "菜单管理", description = "删除菜单")
 	@OperateLog(module = "菜单管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('menus:delete')")
@@ -95,21 +96,21 @@ public class MenusController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/menus/tree")
+	@GetMapping("tree")
 	@Operation(summary = "菜单管理", description = "树形菜单列表")
 	public Result<MenuCO> tree() {
 		return menusServiceI.tree(new MenuTreeGetQry());
 	}
 
 	@TraceLog
-	@GetMapping("v1/menus/{roleId}/ids")
+	@GetMapping("{roleId}/ids")
 	@Operation(summary = "菜单管理", description = "菜单树IDS")
 	public Result<List<Long>> ids(@PathVariable(value = "roleId") Long roleId) {
 		return menusServiceI.ids(new MenuIDSGetQry(roleId));
 	}
 
 	@TraceLog
-	@GetMapping("v1/menus/tenant-tree")
+	@GetMapping("tenant-tree")
 	@Operation(summary = "菜单管理", description = "树形租户菜单列表")
 	public Result<MenuCO> tenantTree() {
 		return menusServiceI.tenantTree(new MenuTenantTreeGetQry());

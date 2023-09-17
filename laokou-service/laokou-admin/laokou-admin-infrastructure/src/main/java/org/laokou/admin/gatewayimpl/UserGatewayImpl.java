@@ -58,6 +58,7 @@ import static org.laokou.admin.common.DsConstant.BOOT_SYS_USER;
 public class UserGatewayImpl implements UserGateway {
 
 	private final UserMapper userMapper;
+
 	private final RoleMapper roleMapper;
 
 	private final PasswordEncoder passwordEncoder;
@@ -100,13 +101,14 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	public User getById(Long id,Long tenantId) {
-		UserDO userDO = userMapper.selectOne(
-				Wrappers.query(UserDO.class).eq("id", id).select("id", "username", "status", "dept_id", "dept_path","super_admin"));
+	public User getById(Long id, Long tenantId) {
+		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class).eq("id", id).select("id", "username",
+				"status", "dept_id", "dept_path", "super_admin"));
 		User user = ConvertUtil.sourceToTarget(userDO, User.class);
 		if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
 			user.setRoleIds(roleMapper.getRoleIdsByTenantId(tenantId));
-		} else {
+		}
+		else {
 			user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
 		}
 		return user;

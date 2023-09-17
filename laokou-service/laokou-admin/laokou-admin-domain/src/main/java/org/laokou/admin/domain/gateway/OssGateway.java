@@ -24,6 +24,6 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 public interface OssGateway {
 
-    Datas<Oss> list(Oss oss, PageQuery pageQuery);
+	Datas<Oss> list(Oss oss, PageQuery pageQuery);
 
 }

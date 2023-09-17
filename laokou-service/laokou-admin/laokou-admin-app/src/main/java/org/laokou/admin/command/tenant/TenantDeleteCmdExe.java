@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TenantDeleteCmdExe {
 
-    private final TenantGateway tenantGateway;
+	private final TenantGateway tenantGateway;
 
-    public Result<Boolean> execute(TenantDeleteCmd cmd) {
-        return Result.of(tenantGateway.deleteById(cmd.getId()));
-    }
+	public Result<Boolean> execute(TenantDeleteCmd cmd) {
+		return Result.of(tenantGateway.deleteById(cmd.getId()));
+	}
 
 }

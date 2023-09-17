@@ -24,6 +24,7 @@ import org.laokou.auth.dto.secret.SecretGetQry;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,12 +33,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "SecretsController", description = "安全配置")
 @RequiredArgsConstructor
+@RequestMapping("v1/secrets")
 public class SecretsController {
 
 	private final SecretsServiceI secretsServiceI;
 
 	@TraceLog
-	@GetMapping("v1/secrets")
+	@GetMapping
 	@Operation(summary = "安全配置", description = "获取密钥")
 	public Result<String> get() {
 		return secretsServiceI.get(new SecretGetQry());

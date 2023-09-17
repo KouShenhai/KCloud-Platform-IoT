@@ -34,7 +34,7 @@ public interface UserGateway {
 
 	Boolean updateInfo(User user);
 
-	User getById(Long id,Long tenantId);
+	User getById(Long id, Long tenantId);
 
 	Datas<User> list(User user, PageQuery pageQuery);
 

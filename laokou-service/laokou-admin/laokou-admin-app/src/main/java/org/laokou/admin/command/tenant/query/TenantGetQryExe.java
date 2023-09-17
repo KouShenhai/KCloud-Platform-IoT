@@ -32,10 +32,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TenantGetQryExe {
 
-    private final TenantGateway tenantGateway;
+	private final TenantGateway tenantGateway;
 
-    public Result<TenantCO> execute(TenantGetQry qry) {
-        return Result.of(ConvertUtil.sourceToTarget(tenantGateway.getById(qry.getId()),TenantCO.class));
-    }
+	public Result<TenantCO> execute(TenantGetQry qry) {
+		return Result.of(ConvertUtil.sourceToTarget(tenantGateway.getById(qry.getId()), TenantCO.class));
+	}
 
 }

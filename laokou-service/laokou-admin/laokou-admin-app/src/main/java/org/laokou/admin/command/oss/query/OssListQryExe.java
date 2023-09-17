@@ -35,15 +35,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OssListQryExe {
 
-    private final OssGateway ossGateway;
+	private final OssGateway ossGateway;
 
-    public Result<Datas<OssCO>> execute(OssListQry qry) {
-        Oss oss = ConvertUtil.sourceToTarget(qry,Oss.class);
-        Datas<Oss> newPage = ossGateway.list(oss, new PageQuery(qry.getPageNum(), qry.getPageSize()));
-        Datas<OssCO> datas = new Datas<>();
-        datas.setTotal(newPage.getTotal());
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),OssCO.class));
-        return Result.of(datas);
-    }
+	public Result<Datas<OssCO>> execute(OssListQry qry) {
+		Oss oss = ConvertUtil.sourceToTarget(qry, Oss.class);
+		Datas<Oss> newPage = ossGateway.list(oss, new PageQuery(qry.getPageNum(), qry.getPageSize()));
+		Datas<OssCO> datas = new Datas<>();
+		datas.setTotal(newPage.getTotal());
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), OssCO.class));
+		return Result.of(datas);
+	}
 
 }

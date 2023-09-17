@@ -39,12 +39,13 @@ import java.io.IOException;
 @RestController
 @Tag(name = "DefinitionsController", description = "流程定义")
 @RequiredArgsConstructor
+@RequestMapping("v1/definitions")
 public class DefinitionsController {
 
 	private final DefinitionsServiceI definitionsServiceI;
 
 	@TraceLog
-	@PostMapping("v1/definitions")
+	@PostMapping
 	@Operation(summary = "流程定义", description = "新增流程")
 	@OperateLog(module = "流程定义", operation = "新增流程")
 	@PreAuthorize("hasAuthority('definitions:insert')")
@@ -53,7 +54,7 @@ public class DefinitionsController {
 	}
 
 	@TraceLog
-	@PostMapping("v1/definitions/list")
+	@PostMapping("list")
 	@Operation(summary = "流程定义", description = "查询流程列表")
 	@PreAuthorize("hasAuthority('definitions:list')")
 	public Result<Datas<DefinitionCO>> list(@RequestBody DefinitionListQry qry) {
@@ -61,7 +62,7 @@ public class DefinitionsController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/definitions/{definitionId}/diagram")
+	@GetMapping("{definitionId}/diagram")
 	@Operation(summary = "流程定义", description = "流程图")
 	@PreAuthorize("hasAuthority('definitions:diagram')")
 	public Result<String> diagram(@PathVariable("definitionId") String definitionId) {
@@ -69,7 +70,7 @@ public class DefinitionsController {
 	}
 
 	@TraceLog
-	@DeleteMapping("v1/definitions/{deploymentId}")
+	@DeleteMapping("{deploymentId}")
 	@Operation(summary = "流程定义", description = "删除流程")
 	@OperateLog(module = "流程定义", operation = "删除流程")
 	@PreAuthorize("hasAuthority('definitions:delete')")
@@ -78,7 +79,7 @@ public class DefinitionsController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/definitions/{definitionId}/suspend")
+	@PutMapping("{definitionId}/suspend")
 	@Operation(summary = "流程定义", description = "挂起流程")
 	@OperateLog(module = "流程定义", operation = "挂起流程")
 	@PreAuthorize("hasAuthority('definitions:suspend')")
@@ -87,7 +88,7 @@ public class DefinitionsController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/definitions/{definitionId}/activate")
+	@PutMapping("{definitionId}/activate")
 	@Operation(summary = "流程定义", description = "激活流程")
 	@OperateLog(module = "流程定义", operation = "激活流程")
 	@PreAuthorize("hasAuthority('definitions:activate')")
@@ -96,7 +97,7 @@ public class DefinitionsController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/definitions/template")
+	@GetMapping("template")
 	@Operation(summary = "流程定义", description = "流程模板")
 	@PreAuthorize("hasAuthority('definitions:template')")
 	public Result<Boolean> template(HttpServletResponse response) {

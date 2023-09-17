@@ -27,6 +27,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class TenantInsertCmd extends CommonCommand {
 
-    private TenantCO tenantCO;
+	private TenantCO tenantCO;
 
 }

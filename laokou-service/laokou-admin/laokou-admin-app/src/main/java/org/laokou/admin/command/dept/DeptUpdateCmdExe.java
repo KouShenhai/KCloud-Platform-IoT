@@ -40,6 +40,7 @@ import static org.laokou.admin.common.BizCode.ID_NOT_NULL;
 public class DeptUpdateCmdExe {
 
 	private final DeptGateway deptGateway;
+
 	private final DeptMapper deptMapper;
 
 	public Result<Boolean> execute(DeptUpdateCmd cmd) {

@@ -26,6 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -34,12 +35,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "LogoutsController", description = "认证授权")
 @RequiredArgsConstructor
+@RequestMapping("v1/logouts")
 public class LogoutsController {
 
 	private final LogoutsServiceI logoutsServiceI;
 
 	@TraceLog
-	@PostMapping("v1/logouts")
+	@PostMapping
 	@Operation(summary = "认证授权", description = "退出登录")
 	public Result<Boolean> logout(@RequestBody LogoutCmd cmd) {
 		return logoutsServiceI.logout(cmd);

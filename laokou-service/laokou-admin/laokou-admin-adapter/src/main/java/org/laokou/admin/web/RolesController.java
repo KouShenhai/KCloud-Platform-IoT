@@ -40,12 +40,13 @@ import java.util.List;
 @RestController
 @Tag(name = "RolesController", description = "角色管理")
 @RequiredArgsConstructor
+@RequestMapping("v1/roles")
 public class RolesController {
 
 	private final RolesServiceI rolesServiceI;
 
 	@TraceLog
-	@PostMapping("v1/roles/list")
+	@PostMapping("list")
 	@Operation(summary = "角色管理", description = "查询角色列表")
 	@PreAuthorize("hasAuthority('roles:list')")
 	public Result<Datas<RoleCO>> list(@RequestBody RoleListQry qry) {
@@ -53,14 +54,14 @@ public class RolesController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/roles/option-list")
+	@GetMapping("option-list")
 	@Operation(summary = "角色管理", description = "下拉列表")
 	public Result<List<OptionCO>> optionList() {
 		return rolesServiceI.optionList(new RoleOptionListQry());
 	}
 
 	@TraceLog
-	@GetMapping("v1/roles/{id}")
+	@GetMapping("{id}")
 	@Operation(summary = "角色管理", description = "查看角色")
 	@DataCache(name = "roles", key = "#id")
 	public Result<RoleCO> getById(@PathVariable("id") Long id) {
@@ -68,7 +69,7 @@ public class RolesController {
 	}
 
 	@TraceLog
-	@PostMapping("v1/roles")
+	@PostMapping
 	@Operation(summary = "角色管理", description = "新增角色")
 	@OperateLog(module = "角色管理", operation = "新增角色")
 	@PreAuthorize("hasAuthority('roles:insert')")
@@ -77,7 +78,7 @@ public class RolesController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/roles")
+	@PutMapping
 	@Operation(summary = "角色管理", description = "修改角色")
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@PreAuthorize("hasAuthority('roles:update')")
@@ -87,7 +88,7 @@ public class RolesController {
 	}
 
 	@TraceLog
-	@DeleteMapping("v1/roles/{id}")
+	@DeleteMapping("{id}")
 	@Operation(summary = "角色管理", description = "删除角色")
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@PreAuthorize("hasAuthority('roles:delete')")

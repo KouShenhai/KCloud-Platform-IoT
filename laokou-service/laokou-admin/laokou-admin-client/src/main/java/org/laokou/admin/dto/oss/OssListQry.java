@@ -27,9 +27,10 @@ import org.laokou.common.i18n.utils.StringUtil;
 @Data
 public class OssListQry extends PageQuery {
 
-    private String name;
+	private String name;
 
-    public void setName(String name) {
-        this.name = StringUtil.like(name);
-    }
+	public void setName(String name) {
+		this.name = StringUtil.like(name);
+	}
+
 }

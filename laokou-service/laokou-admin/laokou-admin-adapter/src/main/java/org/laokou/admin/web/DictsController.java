@@ -40,11 +40,12 @@ import java.util.List;
 @RestController
 @Tag(name = "DictsController", description = "字典管理")
 @RequiredArgsConstructor
+@RequestMapping("v1/dicts")
 public class DictsController {
 
 	private final DictsServiceI dictsServiceI;
 
-	@PostMapping(value = "v1/dicts/list")
+	@PostMapping(value = "list")
 	@TraceLog
 	@Operation(summary = "字典管理", description = "查询字典列表")
 	@PreAuthorize("hasAuthority('dicts:list')")
@@ -53,14 +54,14 @@ public class DictsController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/dicts/{type}/option-list")
+	@GetMapping("{type}/option-list")
 	@Operation(summary = "字典管理", description = "下拉列表")
 	public Result<List<OptionCO>> optionList(@PathVariable("type") String type) {
 		return dictsServiceI.optionList(new DictOptionListQry(type));
 	}
 
 	@TraceLog
-	@GetMapping(value = "v1/dicts/{id}")
+	@GetMapping(value = "{id}")
 	@Operation(summary = "字典管理", description = "查看字典")
 	@DataCache(name = "dicts", key = "#id")
 	public Result<DictCO> getById(@PathVariable("id") Long id) {
@@ -68,7 +69,7 @@ public class DictsController {
 	}
 
 	@TraceLog
-	@PostMapping(value = "v1/dicts")
+	@PostMapping
 	@Operation(summary = "字典管理", description = "新增字典")
 	@OperateLog(module = "字典管理", operation = "新增字典")
 	@PreAuthorize("hasAuthority('dicts:insert')")
@@ -77,7 +78,7 @@ public class DictsController {
 	}
 
 	@TraceLog
-	@PutMapping(value = "v1/dicts")
+	@PutMapping
 	@Operation(summary = "字典管理", description = "修改字典")
 	@OperateLog(module = "字典管理", operation = "修改字典")
 	@PreAuthorize("hasAuthority('dicts:update')")
@@ -87,7 +88,7 @@ public class DictsController {
 	}
 
 	@TraceLog
-	@DeleteMapping(value = "v1/dicts/{id}")
+	@DeleteMapping(value = "{id}")
 	@Operation(summary = "字典管理", description = "删除字典")
 	@OperateLog(module = "字典管理", operation = "删除字典")
 	@PreAuthorize("hasAuthority('dicts:delete')")

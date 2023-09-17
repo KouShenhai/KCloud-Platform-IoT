@@ -36,12 +36,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "MessagesController", description = "消息管理")
+@RequestMapping("v1/messages")
 public class MessagesController {
 
 	private final MessagesServiceI messagesServiceI;
 
 	@TraceLog
-	@PostMapping("v1/messages")
+	@PostMapping
 	@Operation(summary = "消息管理", description = "新增消息")
 	@OperateLog(module = "消息管理", operation = "新增消息")
 	@PreAuthorize("hasAuthority('messages:insert')")
@@ -50,7 +51,7 @@ public class MessagesController {
 	}
 
 	@TraceLog
-	@PostMapping("v1/messages/list")
+	@PostMapping("ist")
 	@Operation(summary = "消息管理", description = "查询消息列表")
 	@PreAuthorize("hasAuthority('messages:list')")
 	public Result<Datas<MessageCO>> list(@RequestBody MessageListQry qry) {
@@ -58,7 +59,7 @@ public class MessagesController {
 	}
 
 	@TraceLog
-	@PostMapping("v1/messages/{detailId}")
+	@PostMapping("{detailId}")
 	@Operation(summary = "消息管理", description = "查看消息")
 	@OperateLog(module = "消息管理", operation = "查看消息")
 	public Result<MessageCO> read(@PathVariable("detailId") Long detailId) {
@@ -66,7 +67,7 @@ public class MessagesController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/messages/{id}")
+	@GetMapping("{id}")
 	@Operation(summary = "消息管理", description = "查看消息")
 	@PreAuthorize("hasAuthority('messages:detail')")
 	@DataCache(name = "messages", key = "#id")
@@ -75,14 +76,14 @@ public class MessagesController {
 	}
 
 	@TraceLog
-	@PostMapping("v1/messages/unread-list")
+	@PostMapping("unread-list")
 	@Operation(summary = "消息管理", description = "未读消息列表")
 	public Result<Datas<MessageCO>> unreadList(@RequestBody MessageUnreadListQry qry) {
 		return messagesServiceI.unreadList(qry);
 	}
 
 	@TraceLog
-	@GetMapping("v1/message/unread-count")
+	@GetMapping("unread-count")
 	@Operation(summary = "消息管理", description = "未读消息数量")
 	public Result<Integer> unreadCount() {
 		return messagesServiceI.unreadCount(new MessageUnreadCountGetQry());

@@ -40,12 +40,13 @@ import java.util.List;
 @RestController
 @Tag(name = "SourcesController", description = "数据源管理")
 @RequiredArgsConstructor
+@RequestMapping("v1/sources")
 public class SourcesController {
 
 	private final SourcesServiceI sourcesServiceI;
 
 	@TraceLog
-	@PostMapping("v1/sources/list")
+	@PostMapping("list")
 	@Operation(summary = "数据源管理", description = "查询数据源列表")
 	@PreAuthorize("hasAuthority('sources:list')")
 	public Result<Datas<SourceCO>> list(@RequestBody SourceListQry qry) {
@@ -53,7 +54,7 @@ public class SourcesController {
 	}
 
 	@TraceLog
-	@PostMapping("v1/sources")
+	@PostMapping
 	@Operation(summary = "数据源管理", description = "新增数据源")
 	@OperateLog(module = "数据源管理", operation = "数据源新增")
 	@PreAuthorize("hasAuthority('sources:insert')")
@@ -62,7 +63,7 @@ public class SourcesController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/sources/{id}")
+	@GetMapping("{id}")
 	@Operation(summary = "数据源管理", description = "查看数据源")
 	@DataCache(name = "sources", key = "#id")
 	public Result<SourceCO> getById(@PathVariable("id") Long id) {
@@ -70,7 +71,7 @@ public class SourcesController {
 	}
 
 	@TraceLog
-	@PutMapping("v1/sources")
+	@PutMapping
 	@Operation(summary = "数据源管理", description = "修改数据源")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@PreAuthorize("hasAuthority('sources:update')")
@@ -80,7 +81,7 @@ public class SourcesController {
 	}
 
 	@TraceLog
-	@DeleteMapping("v1/sources/{id}")
+	@DeleteMapping("{id}")
 	@Operation(summary = "数据源管理", description = "删除数据源")
 	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@PreAuthorize("hasAuthority('sources:delete')")
@@ -90,7 +91,7 @@ public class SourcesController {
 	}
 
 	@TraceLog
-	@GetMapping("v1/sources/option-list")
+	@GetMapping("option-list")
 	@Operation(summary = "数据源管理", description = "下拉列表")
 	public Result<List<OptionCO>> optionList() {
 		return sourcesServiceI.optionList(new SourceOptionListQry());
