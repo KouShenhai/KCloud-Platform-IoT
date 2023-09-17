@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.i18n.utils;
@@ -26,7 +26,6 @@ import static org.laokou.common.i18n.common.Constant.ROD;
  * @author laokou
  */
 public class LocaleUtil {
-
 
 	public static Locale toLocale(String language) {
 		if (StringUtil.isEmpty(language)) {

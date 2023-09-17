@@ -98,8 +98,8 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	public User getById(Long id) {
-		UserDO userDO = userMapper
-				.selectOne(Wrappers.query(UserDO.class).eq("id", id).select("id", "username", "status", "dept_id","dept_path"));
+		UserDO userDO = userMapper.selectOne(
+				Wrappers.query(UserDO.class).eq("id", id).select("id", "username", "status", "dept_id", "dept_path"));
 		User user = ConvertUtil.sourceToTarget(userDO, User.class);
 		user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
 		return user;

@@ -40,6 +40,7 @@
           and e.user_id = #{userId}
           and a.del_flag = 0
           and a.tenant_id = #{tenantId}
+        group by a.path
     </select>
 
 </mapper>

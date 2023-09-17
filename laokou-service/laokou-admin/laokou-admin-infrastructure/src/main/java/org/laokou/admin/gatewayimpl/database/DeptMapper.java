@@ -34,8 +34,8 @@ public interface DeptMapper extends BatchMapper<DeptDO> {
 
 	List<Long> getDeptIdsByRoleId(@Param("roleId") Long roleId);
 
-	String getDeptPathByPid(@Param("pid")Long pid);
+	String getDeptPathByPid(@Param("pid") Long pid);
 
-	List<DeptDO> selectDeptChildrenByLikePath(@Param("path")String path);
+	List<DeptDO> selectDeptChildrenByLikePath(@Param("path") String path);
 
 }
