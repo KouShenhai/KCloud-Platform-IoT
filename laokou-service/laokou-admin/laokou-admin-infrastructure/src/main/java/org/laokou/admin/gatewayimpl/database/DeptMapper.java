@@ -36,6 +36,6 @@ public interface DeptMapper extends BatchMapper<DeptDO> {
 
 	String getDeptPathByPid(@Param("pid") Long pid);
 
-	List<DeptDO> selectDeptChildrenByLikePath(@Param("path") String path);
+	List<DeptDO> selectDeptChildrenListByLikePath(@Param("path") String path);
 
 }
