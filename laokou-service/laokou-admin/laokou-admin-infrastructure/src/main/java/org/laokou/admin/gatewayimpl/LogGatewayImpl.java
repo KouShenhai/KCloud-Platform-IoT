@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.admin.domain.log.LoginLog;
 import org.laokou.admin.domain.log.OperateLog;
+import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.common.i18n.dto.Datas;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Component;
 public class LogGatewayImpl implements LogGateway {
 
     private final OperateLogMapper operateLogMapper;
+    private final LoginLogMapper loginLogMapper;
 
     @Override
     public Datas<LoginLog> loginList() {
