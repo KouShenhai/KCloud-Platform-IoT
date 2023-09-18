@@ -16,6 +16,7 @@
 package org.laokou.admin.domain.gateway;
 
 import org.laokou.admin.domain.oss.Oss;
+import org.laokou.admin.domain.oss.OssLog;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 
@@ -33,5 +34,7 @@ public interface OssGateway {
 	Boolean update(Oss oss);
 
 	Boolean deleteById(Long id);
+
+	void publish(OssLog ossLog);
 
 }

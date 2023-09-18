@@ -12,28 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
-package org.laokou.admin.dto.log.domainevent;
+package org.laokou.admin.domain.oss;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.context.ApplicationEvent;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.time.Clock;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author laokou
  */
-@Getter
-@Setter
-public class OssLogEvent extends ApplicationEvent implements Serializable {
-
-	@Serial
-	private static final long serialVersionUID = 3776732013732856552L;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class OssLog {
 
 	private String md5;
 
@@ -42,13 +36,5 @@ public class OssLogEvent extends ApplicationEvent implements Serializable {
 	private String name;
 
 	private Long size;
-
-	public OssLogEvent(Object source) {
-		super(source);
-	}
-
-	public OssLogEvent(Object source, Clock clock) {
-		super(source, clock);
-	}
 
 }

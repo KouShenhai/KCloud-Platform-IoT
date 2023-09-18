@@ -21,10 +21,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.domain.oss.Oss;
+import org.laokou.admin.domain.oss.OssLog;
+import org.laokou.admin.dto.log.domainevent.OssLogEvent;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.core.utils.ConvertUtil;
@@ -45,6 +48,7 @@ public class OssGatewayImpl implements OssGateway {
 
 	private final OssMapper ossMapper;
 	private final TransactionalUtil transactionalUtil;
+	private final DomainEventPublisher domainEventPublisher;
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_OSS)
@@ -87,6 +91,20 @@ public class OssGatewayImpl implements OssGateway {
 				return false;
 			}
 		});
+	}
+
+	@Override
+	public void publish(OssLog ossLog) {
+		domainEventPublisher.publish(getEvent(ossLog));
+	}
+
+	private OssLogEvent getEvent(OssLog ossLog) {
+		OssLogEvent event = new OssLogEvent(this);
+		event.setMd5(ossLog.getMd5());
+		event.setUrl(ossLog.getUrl());
+		event.setName(ossLog.getName());
+		event.setSize(ossLog.getSize());
+		return event;
 	}
 
 	private Boolean insertOss(OssDO ossDO) {
