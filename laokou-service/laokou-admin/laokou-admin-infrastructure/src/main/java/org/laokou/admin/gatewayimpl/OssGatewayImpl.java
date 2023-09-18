@@ -47,7 +47,9 @@ import static org.laokou.admin.common.DsConstant.BOOT_SYS_OSS;
 public class OssGatewayImpl implements OssGateway {
 
 	private final OssMapper ossMapper;
+
 	private final TransactionalUtil transactionalUtil;
+
 	private final DomainEventPublisher domainEventPublisher;
 
 	@Override
@@ -63,7 +65,7 @@ public class OssGatewayImpl implements OssGateway {
 
 	@Override
 	public Oss getById(Long id) {
-		return ConvertUtil.sourceToTarget(ossMapper.selectById(id),Oss.class);
+		return ConvertUtil.sourceToTarget(ossMapper.selectById(id), Oss.class);
 	}
 
 	@Override

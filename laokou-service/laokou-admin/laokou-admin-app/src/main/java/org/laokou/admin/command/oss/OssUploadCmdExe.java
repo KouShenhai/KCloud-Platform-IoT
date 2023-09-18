@@ -49,52 +49,55 @@ import static org.laokou.admin.common.Constant.MAX_FILE_SIZE;
 @RequiredArgsConstructor
 public class OssUploadCmdExe {
 
-    private final StorageFactory storageFactory;
-    private final OssLogMapper ossLogMapper;
-    private final OssGateway ossGateway;
+	private final StorageFactory storageFactory;
 
-    public Result<FileCO> execute(OssUploadCmd cmd) {
-        return Result.of(upload(cmd.getFile()));
-    }
+	private final OssLogMapper ossLogMapper;
 
-    @SneakyThrows
-    private FileCO upload(MultipartFile file) {
-        String fileName = file.getOriginalFilename();
-        long fileSize = file.getSize();
-        // 一次读取字节数
-        int limitRead = (int) (fileSize + 1);
-        String contentType = file.getContentType();
-        InputStream inputStream = file.getInputStream();
-        before(fileSize);
-        ByteArrayOutputStream bos = getCacheStream(inputStream);
-        String md5 = DigestUtils.md5DigestAsHex(new ByteArrayInputStream(bos.toByteArray()));
-        OssLogDO ossLogDO = ossLogMapper.selectOne(Wrappers.query(OssLogDO.class).eq("md5", md5).select("url"));
-        if (ossLogDO != null) {
-            return new FileCO(ossLogDO.getUrl(),md5);
-        }
-        String url = storageFactory.build(UserUtil.getTenantId()).upload(limitRead, fileSize, fileName, new ByteArrayInputStream(bos.toByteArray()), contentType);
-        after(new OssLog(md5,url,fileName,fileSize));
-        return new FileCO(url,md5);
-    }
+	private final OssGateway ossGateway;
 
-    @SneakyThrows
-    private ByteArrayOutputStream getCacheStream(InputStream inputStream) {
-        // 缓存流
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bos.writeBytes(inputStream.readAllBytes());
-        return bos;
-    }
+	public Result<FileCO> execute(OssUploadCmd cmd) {
+		return Result.of(upload(cmd.getFile()));
+	}
 
-    private void before(long fileSize) {
-        log.info("文件上传前，校验文件大小");
-        if (fileSize > MAX_FILE_SIZE) {
-            throw new GlobalException("单个文件上传不能超过100M，请重新选择文件并上传");
-        }
-    }
+	@SneakyThrows
+	private FileCO upload(MultipartFile file) {
+		String fileName = file.getOriginalFilename();
+		long fileSize = file.getSize();
+		// 一次读取字节数
+		int limitRead = (int) (fileSize + 1);
+		String contentType = file.getContentType();
+		InputStream inputStream = file.getInputStream();
+		before(fileSize);
+		ByteArrayOutputStream bos = getCacheStream(inputStream);
+		String md5 = DigestUtils.md5DigestAsHex(new ByteArrayInputStream(bos.toByteArray()));
+		OssLogDO ossLogDO = ossLogMapper.selectOne(Wrappers.query(OssLogDO.class).eq("md5", md5).select("url"));
+		if (ossLogDO != null) {
+			return new FileCO(ossLogDO.getUrl(), md5);
+		}
+		String url = storageFactory.build(UserUtil.getTenantId()).upload(limitRead, fileSize, fileName,
+				new ByteArrayInputStream(bos.toByteArray()), contentType);
+		after(new OssLog(md5, url, fileName, fileSize));
+		return new FileCO(url, md5);
+	}
 
-    private void after(OssLog ossLog) {
-        log.info("文件上传后，存入日志");
-        ossGateway.publish(ossLog);
-    }
+	@SneakyThrows
+	private ByteArrayOutputStream getCacheStream(InputStream inputStream) {
+		// 缓存流
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		bos.writeBytes(inputStream.readAllBytes());
+		return bos;
+	}
+
+	private void before(long fileSize) {
+		log.info("文件上传前，校验文件大小");
+		if (fileSize > MAX_FILE_SIZE) {
+			throw new GlobalException("单个文件上传不能超过100M，请重新选择文件并上传");
+		}
+	}
+
+	private void after(OssLog ossLog) {
+		log.info("文件上传后，存入日志");
+		ossGateway.publish(ossLog);
+	}
 
 }

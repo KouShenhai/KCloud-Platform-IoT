@@ -31,10 +31,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OssUpdateCmdExe {
 
-    private final OssGateway ossGateway;
+	private final OssGateway ossGateway;
 
-    public Result<Boolean> execute(OssUpdateCmd cmd) {
-        return Result.of(ossGateway.update(OssConvertor.toEntity(cmd.getOssCO())));
-    }
+	public Result<Boolean> execute(OssUpdateCmd cmd) {
+		return Result.of(ossGateway.update(OssConvertor.toEntity(cmd.getOssCO())));
+	}
 
 }

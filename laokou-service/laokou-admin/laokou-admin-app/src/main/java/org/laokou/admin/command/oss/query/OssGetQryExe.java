@@ -33,11 +33,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OssGetQryExe {
 
-    private final OssGateway ossGateway;
+	private final OssGateway ossGateway;
 
-    public Result<OssCO> execute(OssGetQry qry) {
-        Oss oss = ossGateway.getById(qry.getId());
-        return Result.of(ConvertUtil.sourceToTarget(oss,OssCO.class));
-    }
+	public Result<OssCO> execute(OssGetQry qry) {
+		Oss oss = ossGateway.getById(qry.getId());
+		return Result.of(ConvertUtil.sourceToTarget(oss, OssCO.class));
+	}
 
 }

@@ -83,11 +83,11 @@ public class UsersServiceImpl implements UserDetailsService {
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 		String clientPassword = user.getPassword();
 		if (!passwordEncoder.matches(password, clientPassword)) {
-			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip,user);
+			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip, user);
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw getException(USERNAME_DISABLE, username, type, tenantId, ip,user);
+			throw getException(USERNAME_DISABLE, username, type, tenantId, ip, user);
 		}
 		// 用户ID
 		Long userId = user.getId();
@@ -96,7 +96,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		User u = new User(userId, superAdmin, tenantId);
 		List<String> permissionsList = menuGateway.getPermissions(u);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			throw getException(USERNAME_NOT_PERMISSION, username, type, tenantId, ip,user);
+			throw getException(USERNAME_NOT_PERMISSION, username, type, tenantId, ip, user);
 		}
 		List<String> deptPaths = deptGateway.getDeptPaths(u);
 		user.setDeptPaths(deptPaths);
@@ -108,12 +108,13 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 默认数据库
 		user.setSourceName(DEFAULT_SOURCE);
 		// 登录成功
-		loginLogGateway.publish(
-				new LoginLog(userId,username, type, tenantId, SUCCESS_STATUS, MessageUtil.getMessage(LOGIN_SUCCEEDED), ip,user.getDeptId(),user.getDeptPath()));
+		loginLogGateway.publish(new LoginLog(userId, username, type, tenantId, SUCCESS_STATUS,
+				MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
 		return user;
 	}
 
-	private UsernameNotFoundException getException(int code, String username, String type, Long tenantId, String ip,User user) {
+	private UsernameNotFoundException getException(int code, String username, String type, Long tenantId, String ip,
+			User user) {
 		String message = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
 		Long userId = null;
@@ -124,7 +125,8 @@ public class UsersServiceImpl implements UserDetailsService {
 			deptId = user.getDeptId();
 			deptPath = user.getDeptPath();
 		}
-		loginLogGateway.publish(new LoginLog(userId,username, type, tenantId, FAIL_STATUS, message, ip,deptId,deptPath));
+		loginLogGateway
+				.publish(new LoginLog(userId, username, type, tenantId, FAIL_STATUS, message, ip, deptId, deptPath));
 		throw new UsernameNotFoundException(message);
 	}
 

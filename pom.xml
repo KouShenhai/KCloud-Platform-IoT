@@ -47,7 +47,7 @@
         <!--cloud-alibaba版本-->
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
         <!--spring-doc版本-->
-        <spring-doc.version>2.1.0</spring-doc.version>
+        <spring-doc.version>2.2.0</spring-doc.version>
         <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
         <docker.registry.name>koushenhai</docker.registry.name>
         <docker.version>1.2.2</docker.version>
