@@ -40,4 +40,9 @@ public interface Constant {
 	 */
 	long DEFAULT_TENANT = 0;
 
+	/**
+	 * 最大文件大小
+	 */
+	long MAX_FILE_SIZE = 100 * 1024 * 1024;
+
 }

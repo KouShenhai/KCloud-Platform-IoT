@@ -39,7 +39,7 @@ public class UserOnlineKillCmdExe {
 		String token = cmd.getToken();
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-		long expire = redisUtil.getExpire(userInfoKey);
+		Long expire = redisUtil.getExpire(userInfoKey);
 		if (expire > 0) {
 			redisUtil.set(userKillKey, DEFAULT, expire);
 			return Result.of(redisUtil.delete(userInfoKey));

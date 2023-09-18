@@ -17,13 +17,17 @@
 
 package org.laokou.admin.dto.oss.clientobject;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FileCO extends ClientObject {
 
 	private String url;

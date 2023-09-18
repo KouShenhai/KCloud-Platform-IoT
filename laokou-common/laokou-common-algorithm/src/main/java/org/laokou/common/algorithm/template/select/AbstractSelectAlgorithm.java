@@ -32,6 +32,6 @@ public abstract class AbstractSelectAlgorithm<T> implements Algorithm {
 	 * @param arg
 	 * @return
 	 */
-	protected abstract T select(List<T> list, Object arg);
+	public abstract T select(List<T> list, Object arg);
 
 }

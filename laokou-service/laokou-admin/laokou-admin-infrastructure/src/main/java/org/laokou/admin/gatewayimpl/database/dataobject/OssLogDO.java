@@ -39,8 +39,8 @@ public class OssLogDO extends BaseDO {
 
 	private String url;
 
-	private String fileName;
+	private String name;
 
-	private Long fileSize;
+	private Long size;
 
 }
