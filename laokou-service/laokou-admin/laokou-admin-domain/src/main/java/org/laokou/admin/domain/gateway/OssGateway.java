@@ -26,4 +26,12 @@ public interface OssGateway {
 
 	Datas<Oss> list(Oss oss, PageQuery pageQuery);
 
+	Oss getById(Long id);
+
+	Boolean insert(Oss oss);
+
+	Boolean update(Oss oss);
+
+	Boolean deleteById(Long id);
+
 }

@@ -18,6 +18,7 @@
 package org.laokou.admin.dto.oss;
 
 import lombok.Data;
+import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
@@ -25,5 +26,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  */
 @Data
 public class OssInsertCmd extends CommonCommand {
+
+    private OssCO ossCO;
 
 }

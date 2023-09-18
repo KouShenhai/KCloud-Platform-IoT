@@ -82,7 +82,7 @@ public class OssController {
 	@Operation(summary = "存储管理", description = "修改存储")
 	@OperateLog(module = "存储管理", operation = "修改存储")
 	@PreAuthorize("hasAuthority('oss:update')")
-	@DataCache(name = "oss", key = "#dto.id", type = Cache.DEL)
+	@DataCache(name = "oss", key = "#cmd.ossCO.id", type = Cache.DEL)
 	public Result<Boolean> update(@RequestBody OssUpdateCmd cmd) {
 		return ossServiceI.update(cmd);
 	}

@@ -18,6 +18,10 @@
 package org.laokou.admin.command.oss;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.OssConvertor;
+import org.laokou.admin.domain.gateway.OssGateway;
+import org.laokou.admin.dto.oss.OssInsertCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +30,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class OssInsertCmdExe {
+
+    private final OssGateway ossGateway;
+
+    public Result<Boolean> execute(OssInsertCmd cmd) {
+        return Result.of(ossGateway.insert(OssConvertor.toEntity(cmd.getOssCO())));
+    }
 
 }

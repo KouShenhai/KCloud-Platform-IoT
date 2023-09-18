@@ -91,7 +91,16 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	@Override
 	public Boolean deleteById(Long id) {
-		return deleteTenant(id);
+		return transactionalUtil.execute(r -> {
+			try {
+				return tenantMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
 	}
 
 	@Transactional(rollbackFor = Exception.class)
@@ -104,19 +113,6 @@ public class TenantGatewayImpl implements TenantGateway {
 		return transactionalUtil.execute(r -> {
 			try {
 				return tenantMapper.updateById(tenantDO) > 0;
-			}
-			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
-				r.setRollbackOnly();
-				return false;
-			}
-		});
-	}
-
-	public Boolean deleteTenant(Long id) {
-		return transactionalUtil.execute(r -> {
-			try {
-				return tenantMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());

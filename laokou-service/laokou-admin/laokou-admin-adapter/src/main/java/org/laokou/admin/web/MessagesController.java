@@ -51,7 +51,7 @@ public class MessagesController {
 	}
 
 	@TraceLog
-	@PostMapping("ist")
+	@PostMapping("list")
 	@Operation(summary = "消息管理", description = "查询消息列表")
 	@PreAuthorize("hasAuthority('messages:list')")
 	public Result<Datas<MessageCO>> list(@RequestBody MessageListQry qry) {
