@@ -15,16 +15,21 @@
  *
  */
 
-package org.laokou.admin.domain.oss;
+package org.laokou.admin.gatewayimpl.database;
+
+import com.baomidou.dynamic.datasource.annotation.DS;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.springframework.stereotype.Repository;
+
+import static org.laokou.admin.common.Constant.TENANT;
 
 /**
  * @author laokou
  */
-public enum Type {
-
-	/**
-	 * Amazon S3
-	 */
-	S3
-
+@Repository
+@Mapper
+@DS(TENANT)
+public interface OssLogMapper extends BatchMapper<OssLogDO> {
 }

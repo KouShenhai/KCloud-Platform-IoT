@@ -17,14 +17,80 @@
 
 package org.laokou.admin.command.oss;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.dto.oss.OssUploadCmd;
+import org.laokou.admin.dto.oss.clientobject.FileCO;
+import org.laokou.admin.gatewayimpl.database.OssLogMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
+import org.laokou.admin.storage.StorageFactory;
+import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+
+import static org.laokou.admin.common.Constant.MAX_FILE_SIZE;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OssUploadCmdExe {
+
+    private final StorageFactory storageFactory;
+    private final OssLogMapper ossLogMapper;
+
+    public Result<FileCO> execute(OssUploadCmd cmd) {
+        return Result.of(upload(cmd.getFile()));
+    }
+
+    @SneakyThrows
+    private FileCO upload(MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        long fileSize = file.getSize();
+        // 一次读取字节数
+        int limitRead = (int) (fileSize + 1);
+        String contentType = file.getContentType();
+        InputStream inputStream = file.getInputStream();
+        before(fileSize);
+        ByteArrayOutputStream bos = getCacheStream(inputStream);
+        String md5 = DigestUtils.md5DigestAsHex(new ByteArrayInputStream(bos.toByteArray()));
+        OssLogDO ossLogDO = ossLogMapper.selectOne(Wrappers.query(OssLogDO.class).eq("md5", md5).select("url"));
+        if (ossLogDO != null) {
+            return new FileCO(ossLogDO.getUrl(),md5);
+        }
+        String url = storageFactory.build(UserUtil.getTenantId()).upload(limitRead, fileSize, fileName, new ByteArrayInputStream(bos.toByteArray()), contentType);
+        after();
+        return new FileCO(url,md5);
+    }
+
+    @SneakyThrows
+    private ByteArrayOutputStream getCacheStream(InputStream inputStream) {
+        // 缓存流
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bos.writeBytes(inputStream.readAllBytes());
+        return bos;
+    }
+
+    private void before(long fileSize) {
+        log.info("文件上传前");
+        if (fileSize > MAX_FILE_SIZE) {
+            throw new GlobalException("单个文件上传不能超过100M，请重新选择文件并上传");
+        }
+    }
+
+    private void after() {
+        log.info("文件上传后");
+    }
 
 }

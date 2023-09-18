@@ -75,7 +75,7 @@ public class OssServiceImpl implements OssServiceI {
 
 	@Override
 	public Result<FileCO> upload(OssUploadCmd cmd) {
-		return null;
+		return ossUploadCmdExe.execute(cmd);
 	}
 
 }

@@ -112,10 +112,25 @@ public class RedisUtil {
 	}
 
 	public void set(String key, Object value, long expire) {
-		redissonClient.getBucket(key).set(value, expire, TimeUnit.SECONDS);
+		redissonClient.getBucket(key).set(value, Duration.ofSeconds(expire));
 	}
 
-	public long getExpire(String key) {
+	public void lSet(String key, List<Object> objList, long expire) {
+		RList<Object> rList = redissonClient.getList(key);
+		if (rList.addAll(objList)) {
+			rList.expireIfNotSet(Duration.ofSeconds(expire));
+		}
+	}
+
+	public List<Object> lGetAll(String key) {
+		return redissonClient.getList(key).readAll();
+	}
+
+	public Object lGet(String key,int index) {
+		return redissonClient.getList(key).get(index);
+	}
+
+	public Long getExpire(String key) {
 		return redisTemplate.getExpire(key);
 	}
 
@@ -136,7 +151,7 @@ public class RedisUtil {
 	}
 
 	public boolean hasKey(String key) {
-		return redisTemplate.hasKey(key);
+		return Boolean.TRUE.equals(redisTemplate.hasKey(key));
 	}
 
 	public boolean hasHashKey(String key, String field) {
