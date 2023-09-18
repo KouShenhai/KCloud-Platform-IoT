@@ -24,6 +24,7 @@ import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.springframework.stereotype.Repository;
 
 import static org.laokou.auth.common.Constant.SHARDING_SPHERE;
+import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
 
 /**
  * @author laokou
@@ -40,7 +41,7 @@ public interface UserMapper {
 	 * @param type 登录类型
 	 * @return UserDO
 	 */
-	UserDO getUserByUsernameAndTenantId(@Param("username") String username, @Param("tenantId") Long tenantId,
+	UserDO getUserByUsernameAndTenantId(@Param("username") String username, @Param(TENANT_ID) Long tenantId,
 			@Param("type") String type);
 
 }

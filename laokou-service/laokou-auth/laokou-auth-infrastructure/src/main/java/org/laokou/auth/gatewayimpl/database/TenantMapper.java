@@ -23,6 +23,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
+
 /**
  * @author laokou
  */
@@ -35,6 +37,6 @@ public interface TenantMapper {
 	 * @param tenantId 租户ID
 	 * @return List<String>
 	 */
-	List<String> getPermissionsByTenantId(@Param("tenantId") Long tenantId);
+	List<String> getPermissionsByTenantId(@Param(TENANT_ID) Long tenantId);
 
 }

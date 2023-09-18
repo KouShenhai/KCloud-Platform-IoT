@@ -17,14 +17,22 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.admin.domain.log.LoginLog;
 import org.laokou.admin.domain.log.OperateLog;
+import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.admin.common.DsConstant.BOOT_SYS_OPERATE_LOG;
 
 /**
  * @author laokou
@@ -42,7 +50,10 @@ public class LogGatewayImpl implements LogGateway {
     }
 
     @Override
-    public Datas<OperateLog> operateList() {
+    @DataFilter(alias = BOOT_SYS_OPERATE_LOG)
+    public Datas<OperateLog> operateList(OperateLog operateLog, User user, PageQuery pageQuery) {
+        IPage<OperateLogDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+        IPage<OperateLogDO> newPage = operateLogMapper.getOperateListByTenantIdAndLikeModuleNameAndStatus(page, user.getTenantId(), operateLog.getModuleName(), operateLog.getStatus(), pageQuery.getSqlFilter());
         return null;
     }
 }

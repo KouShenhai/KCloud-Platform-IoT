@@ -17,10 +17,15 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
+
+import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
+import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
 
 /**
  * @author laokou
@@ -28,4 +33,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface OperateLogMapper extends BatchMapper<OperateLogDO> {
+
+    IPage<OperateLogDO> getOperateListByTenantIdAndLikeModuleNameAndStatus(IPage<OperateLogDO> page
+            , @Param(TENANT_ID)Long tenantId
+            , @Param("moduleName")String moduleName
+            , @Param("status")Integer status
+            , @Param(SQL_FILTER)String sqlFilter);
+
 }

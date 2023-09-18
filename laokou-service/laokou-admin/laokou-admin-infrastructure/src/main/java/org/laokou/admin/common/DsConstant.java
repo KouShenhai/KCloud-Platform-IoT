@@ -40,4 +40,6 @@ public interface DsConstant {
 
 	String BOOT_SYS_PACKAGE = "boot_sys_package";
 
+	String BOOT_SYS_OPERATE_LOG = "boot_sys_operate_log";
+
 }
