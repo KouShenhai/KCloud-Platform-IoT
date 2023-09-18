@@ -35,6 +35,11 @@ public class LoginLogEvent extends ApplicationEvent implements Serializable {
 	private static final long serialVersionUID = -325094951800650353L;
 
 	/**
+	 * 用户ID
+	 */
+	private Long userId;
+
+	/**
 	 * 登录用户
 	 */
 	private String username;
@@ -79,6 +84,15 @@ public class LoginLogEvent extends ApplicationEvent implements Serializable {
 	 */
 	private Long tenantId;
 
+	/**
+	 * 部门ID
+	 */
+	private Long deptId;
+
+	/**
+	 * 部门PATH
+	 */
+	private String deptPath;
 	public LoginLogEvent(Object source) {
 		super(source);
 	}

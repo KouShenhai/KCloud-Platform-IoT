@@ -226,28 +226,28 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 验证验证码
 		Boolean validate = captchaGateway.validate(uuid, captcha);
 		if (validate == null) {
-			throw getException(CAPTCHA_EXPIRED, username, type, tenantId, ip);
+			throw getException(CAPTCHA_EXPIRED, username, type, tenantId, ip,null);
 		}
 		if (Boolean.FALSE.equals(validate)) {
-			throw getException(CAPTCHA_ERROR, username, type, tenantId, ip);
+			throw getException(CAPTCHA_ERROR, username, type, tenantId, ip,null);
 		}
 		// 加密
 		String encryptName = AesUtil.encrypt(username);
 		// 多租户查询
 		User user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, type));
 		if (user == null) {
-			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip);
+			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip, null);
 		}
 		if (AUTH_PASSWORD.equals(type)) {
 			// 验证密码
 			String clientPassword = user.getPassword();
 			if (!passwordEncoder.matches(password, clientPassword)) {
-				throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip);
+				throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip,user);
 			}
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw getException(USERNAME_DISABLE, username, type, tenantId, ip);
+			throw getException(USERNAME_DISABLE, username, type, tenantId, ip,user);
 		}
 		Long userId = user.getId();
 		Integer superAdmin = user.getSuperAdmin();
@@ -255,7 +255,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		User u = new User(userId, superAdmin, tenantId);
 		List<String> permissionsList = menuGateway.getPermissions(u);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			throw getException(USERNAME_NOT_PERMISSION, username, type, tenantId, ip);
+			throw getException(USERNAME_NOT_PERMISSION, username, type, tenantId, ip,user);
 		}
 		// 部门列表
 		List<String> deptPaths = deptGateway.getDeptPaths(u);
@@ -276,7 +276,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		user.setLoginDate(DateUtil.now());
 		// 登录成功
 		loginLogGateway.publish(
-				new LoginLog(username, type, tenantId, SUCCESS_STATUS, MessageUtil.getMessage(LOGIN_SUCCEEDED), ip));
+				new LoginLog(userId,username, type, tenantId, SUCCESS_STATUS, MessageUtil.getMessage(LOGIN_SUCCEEDED), ip,user.getDeptId(),user.getDeptPath()));
 		return new UsernamePasswordAuthenticationToken(user, encryptName, user.getAuthorities());
 	}
 
@@ -293,10 +293,18 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	}
 
 	private OAuth2AuthenticationException getException(int code, String username, String type, Long tenantId,
-			String ip) {
+			String ip,User user) {
 		String message = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
-		loginLogGateway.publish(new LoginLog(username, type, tenantId, FAIL_STATUS, message, ip));
+		Long userId = null;
+		Long deptId = null;
+		String deptPath = null;
+		if (user != null) {
+			userId = user.getId();
+			deptId = user.getDeptId();
+			deptPath = user.getDeptPath();
+		}
+		loginLogGateway.publish(new LoginLog(userId,username, type, tenantId, FAIL_STATUS, message, ip,deptId,deptPath));
 		throw OAuth2ExceptionHandler.getException(code, message);
 	}
 
