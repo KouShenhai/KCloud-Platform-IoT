@@ -18,6 +18,12 @@
 package org.laokou.admin.command.oss.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.OssGateway;
+import org.laokou.admin.domain.oss.Oss;
+import org.laokou.admin.dto.oss.OssGetQry;
+import org.laokou.admin.dto.oss.clientobject.OssCO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +32,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class OssGetQryExe {
+
+    private final OssGateway ossGateway;
+
+    public Result<OssCO> execute(OssGetQry qry) {
+        Oss oss = ossGateway.getById(qry.getId());
+        return Result.of(ConvertUtil.sourceToTarget(oss,OssCO.class));
+    }
 
 }

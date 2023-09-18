@@ -20,6 +20,9 @@ package org.laokou.admin.gatewayimpl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.convertor.OssConvertor;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.OssGateway;
 import org.laokou.admin.domain.oss.Oss;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
@@ -27,18 +30,24 @@ import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.admin.common.DsConstant.BOOT_SYS_OSS;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OssGatewayImpl implements OssGateway {
 
 	private final OssMapper ossMapper;
+	private final TransactionalUtil transactionalUtil;
 
 	@Override
+	@DataFilter(alias = BOOT_SYS_OSS)
 	public Datas<Oss> list(Oss oss, PageQuery pageQuery) {
 		IPage<OssDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<OssDO> newPage = ossMapper.getOssListByLikeName(page, oss.getName(), pageQuery.getSqlFilter());
@@ -46,6 +55,64 @@ public class OssGatewayImpl implements OssGateway {
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Oss.class));
 		datas.setTotal(newPage.getTotal());
 		return datas;
+	}
+
+	@Override
+	public Oss getById(Long id) {
+		return ConvertUtil.sourceToTarget(ossMapper.selectById(id),Oss.class);
+	}
+
+	@Override
+	public Boolean insert(Oss oss) {
+		OssDO ossDO = OssConvertor.toDataObject(oss);
+		return insertOss(ossDO);
+	}
+
+	@Override
+	public Boolean update(Oss oss) {
+		OssDO ossDO = OssConvertor.toDataObject(oss);
+		ossDO.setVersion(ossMapper.getVersion(ossDO.getId(), OssDO.class));
+		return updateOss(ossDO);
+	}
+
+	@Override
+	public Boolean deleteById(Long id) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return ossMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	private Boolean insertOss(OssDO ossDO) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return ossMapper.insert(ossDO) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
+	}
+
+	private Boolean updateOss(OssDO ossDO) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return ossMapper.updateById(ossDO) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				return false;
+			}
+		});
 	}
 
 }

@@ -80,10 +80,6 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	@Override
 	public Boolean deleteById(Long id) {
-		return deleteSource(id);
-	}
-
-	private Boolean deleteSource(Long id) {
 		return transactionalUtil.execute(r -> {
 			try {
 				return sourceMapper.deleteById(id) > 0;

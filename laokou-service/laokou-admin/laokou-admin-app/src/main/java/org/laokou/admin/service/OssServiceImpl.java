@@ -50,22 +50,22 @@ public class OssServiceImpl implements OssServiceI {
 
 	@Override
 	public Result<Boolean> insert(OssInsertCmd cmd) {
-		return null;
+		return ossInsertCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> update(OssUpdateCmd cmd) {
-		return null;
+		return ossUpdateCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> deleteById(OssDeleteCmd cmd) {
-		return null;
+		return ossDeleteCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<OssCO> getById(OssGetQry qry) {
-		return null;
+		return ossGetQryExe.execute(qry);
 	}
 
 	@Override
