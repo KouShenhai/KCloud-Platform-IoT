@@ -16,8 +16,7 @@
  */
 package org.laokou.admin.dto.log.domainevent;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
@@ -36,85 +35,43 @@ public class OperateLogEvent extends ApplicationEvent implements Serializable {
 	@Serial
 	private static final long serialVersionUID = -6523521638764501311L;
 
-	/**
-	 * 模块名称
-	 */
+	@Schema(name = "name", description = "操作名称")
+	private String name;
+
+	@Schema(name = "moduleName", description = "操作的模块名称")
 	private String moduleName;
 
-	/**
-	 * 操作名称
-	 */
-	private String operationName;
+	@Schema(name = "uri", description = "操作的URI")
+	private String uri;
 
-	/**
-	 * 请求URI
-	 */
-	private String requestUri;
-
-	/**
-	 * 请求方式
-	 */
-	private String requestMethod;
-
-	/**
-	 * 请求参数
-	 */
-	private String requestParams;
-
-	/**
-	 * 浏览器版本
-	 */
-	private String userAgent;
-
-	/**
-	 * IP地址
-	 */
-	private String requestIp;
-
-	/**
-	 * 归属地
-	 */
-	private String requestAddress;
-
-	/**
-	 * 状态 0：成功 1：失败
-	 */
-	private Integer requestStatus;
-
-	/**
-	 * 操作人
-	 */
-	private String operator;
-
-	/**
-	 * 创建人
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	private Long creator;
-
-	/**
-	 * 错误信息
-	 */
-	private String errorMsg;
-
-	/**
-	 * 方法名称
-	 */
+	@Schema(name = "methodName", description = "操作的方法名")
 	private String methodName;
 
-	/**
-	 * 部门id
-	 */
-	private Long deptId;
+	@Schema(name = "requestType", description = "操作的请求类型")
+	private String requestType;
 
-	/**
-	 * 租户id
-	 */
-	private Long tenantId;
+	@Schema(name = "requestParams", description = "操作的请求参数")
+	private String requestParams;
 
-	/**
-	 * 耗时（毫秒）
-	 */
+	@Schema(name = "userAgent", description = "操作的浏览器")
+	private String userAgent;
+
+	@Schema(name = "ip", description = "操作的IP地址")
+	private String ip;
+
+	@Schema(name = "address", description = "操作的归属地")
+	private String address;
+
+	@Schema(name = "status", description = "操作状态 0成功 1失败")
+	private Integer status;
+
+	@Schema(name = "operator", description = "操作人")
+	private String operator;
+
+	@Schema(name = "errorMessage", description = "错误信息")
+	private String errorMessage;
+
+	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
 	private Long takeTime;
 
 	public OperateLogEvent(Object source) {
