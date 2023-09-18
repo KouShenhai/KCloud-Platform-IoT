@@ -78,16 +78,16 @@ public class UsersServiceImpl implements UserDetailsService {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String ip = IpUtil.getIpAddr(request);
 		if (user == null) {
-			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip);
+			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip, null);
 		}
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 		String clientPassword = user.getPassword();
 		if (!passwordEncoder.matches(password, clientPassword)) {
-			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip);
+			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip,user);
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw getException(USERNAME_DISABLE, username, type, tenantId, ip);
+			throw getException(USERNAME_DISABLE, username, type, tenantId, ip,user);
 		}
 		// 用户ID
 		Long userId = user.getId();
@@ -96,7 +96,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		User u = new User(userId, superAdmin, tenantId);
 		List<String> permissionsList = menuGateway.getPermissions(u);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			throw getException(USERNAME_NOT_PERMISSION, username, type, tenantId, ip);
+			throw getException(USERNAME_NOT_PERMISSION, username, type, tenantId, ip,user);
 		}
 		List<String> deptPaths = deptGateway.getDeptPaths(u);
 		user.setDeptPaths(deptPaths);
@@ -109,14 +109,22 @@ public class UsersServiceImpl implements UserDetailsService {
 		user.setSourceName(DEFAULT_SOURCE);
 		// 登录成功
 		loginLogGateway.publish(
-				new LoginLog(username, type, tenantId, SUCCESS_STATUS, MessageUtil.getMessage(LOGIN_SUCCEEDED), ip));
+				new LoginLog(userId,username, type, tenantId, SUCCESS_STATUS, MessageUtil.getMessage(LOGIN_SUCCEEDED), ip,user.getDeptId(),user.getDeptPath()));
 		return user;
 	}
 
-	private UsernameNotFoundException getException(int code, String username, String type, Long tenantId, String ip) {
+	private UsernameNotFoundException getException(int code, String username, String type, Long tenantId, String ip,User user) {
 		String message = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
-		loginLogGateway.publish(new LoginLog(username, type, tenantId, FAIL_STATUS, message, ip));
+		Long userId = null;
+		Long deptId = null;
+		String deptPath = null;
+		if (user != null) {
+			userId = user.getId();
+			deptId = user.getDeptId();
+			deptPath = user.getDeptPath();
+		}
+		loginLogGateway.publish(new LoginLog(userId,username, type, tenantId, FAIL_STATUS, message, ip,deptId,deptPath));
 		throw new UsernameNotFoundException(message);
 	}
 

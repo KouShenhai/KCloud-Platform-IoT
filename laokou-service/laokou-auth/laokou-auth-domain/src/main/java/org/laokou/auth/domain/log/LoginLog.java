@@ -29,6 +29,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginLog {
 
+	private Long userId;
+
 	private String username;
 
 	private String type;
@@ -40,5 +42,9 @@ public class LoginLog {
 	private String message;
 
 	private String ip;
+
+	private Long deptId;
+
+	private String deptPath;
 
 }
