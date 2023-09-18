@@ -19,16 +19,16 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.LogsServiceI;
-import org.laokou.admin.dto.log.LogLoginExportCmd;
-import org.laokou.admin.dto.log.LogLoginListQry;
-import org.laokou.admin.dto.log.LogOperateExportCmd;
-import org.laokou.admin.dto.log.LogOperateListQry;
+import org.laokou.admin.dto.log.LoginLogExportCmd;
+import org.laokou.admin.dto.log.LoginLogListQry;
+import org.laokou.admin.dto.log.OperateLogExportCmd;
+import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
-import org.laokou.admin.command.log.LogLoginExportCmdExe;
-import org.laokou.admin.command.log.LogOperateExportCmdExe;
-import org.laokou.admin.command.log.query.LogLoginListQryExe;
-import org.laokou.admin.command.log.query.LogOperateListQryExe;
+import org.laokou.admin.command.log.LoginLogExportCmdExe;
+import org.laokou.admin.command.log.OperateLogExportCmdExe;
+import org.laokou.admin.command.log.query.LoginLogListQryExe;
+import org.laokou.admin.command.log.query.OperateLogListQryExe;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
@@ -40,31 +40,31 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LogsServiceImpl implements LogsServiceI {
 
-	private final LogOperateListQryExe logOperateListQryExe;
+	private final OperateLogListQryExe operateLogListQryExe;
 
-	private final LogOperateExportCmdExe logOperateExportCmdExe;
+	private final OperateLogExportCmdExe operateLogExportCmdExe;
 
-	private final LogLoginListQryExe logLoginListQryExe;
+	private final LoginLogListQryExe loginLogListQryExe;
 
-	private final LogLoginExportCmdExe logLoginExportCmdExe;
+	private final LoginLogExportCmdExe loginLogExportCmdExe;
 
 	@Override
-	public Result<Datas<OperateLogCO>> operateList(LogOperateListQry qry) {
+	public Result<Datas<OperateLogCO>> operateList(OperateLogListQry qry) {
 		return null;
 	}
 
 	@Override
-	public Result<Boolean> operateExport(LogOperateExportCmd cmd) {
+	public Result<Boolean> operateExport(OperateLogExportCmd cmd) {
 		return null;
 	}
 
 	@Override
-	public Result<Datas<LoginLogCO>> loginList(LogLoginListQry qry) {
+	public Result<Datas<LoginLogCO>> loginList(LoginLogListQry qry) {
 		return null;
 	}
 
 	@Override
-	public Result<Boolean> loginExport(LogLoginExportCmd cmd) {
+	public Result<Boolean> loginExport(LoginLogExportCmd cmd) {
 		return null;
 	}
 

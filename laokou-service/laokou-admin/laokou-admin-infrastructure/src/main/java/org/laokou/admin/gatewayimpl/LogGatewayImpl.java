@@ -14,28 +14,33 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.api;
 
-import org.laokou.admin.dto.log.LoginLogExportCmd;
-import org.laokou.admin.dto.log.LoginLogListQry;
-import org.laokou.admin.dto.log.OperateLogExportCmd;
-import org.laokou.admin.dto.log.OperateLogListQry;
-import org.laokou.admin.dto.log.clientobject.LoginLogCO;
-import org.laokou.admin.dto.log.clientobject.OperateLogCO;
+package org.laokou.admin.gatewayimpl;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.LogGateway;
+import org.laokou.admin.domain.log.LoginLog;
+import org.laokou.admin.domain.log.OperateLog;
+import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface LogsServiceI {
+@Component
+@RequiredArgsConstructor
+public class LogGatewayImpl implements LogGateway {
 
-	Result<Datas<OperateLogCO>> operateList(OperateLogListQry qry);
+    private final OperateLogMapper operateLogMapper;
 
-	Result<Boolean> operateExport(OperateLogExportCmd cmd);
+    @Override
+    public Datas<LoginLog> loginList() {
+        return null;
+    }
 
-	Result<Datas<LoginLogCO>> loginList(LoginLogListQry qry);
-
-	Result<Boolean> loginExport(LoginLogExportCmd cmd);
-
+    @Override
+    public Datas<OperateLog> operateList() {
+        return null;
+    }
 }

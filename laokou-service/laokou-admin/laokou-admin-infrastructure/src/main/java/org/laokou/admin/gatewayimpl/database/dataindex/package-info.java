@@ -1,1 +1,0 @@
-package org.laokou.admin.gatewayimpl.database.dataindex;

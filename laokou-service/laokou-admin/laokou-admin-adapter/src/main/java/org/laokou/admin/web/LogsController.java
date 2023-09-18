@@ -20,10 +20,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.LogsServiceI;
-import org.laokou.admin.dto.log.LogLoginExportCmd;
-import org.laokou.admin.dto.log.LogLoginListQry;
-import org.laokou.admin.dto.log.LogOperateExportCmd;
-import org.laokou.admin.dto.log.LogOperateListQry;
+import org.laokou.admin.dto.log.LoginLogExportCmd;
+import org.laokou.admin.dto.log.LoginLogListQry;
+import org.laokou.admin.dto.log.OperateLogExportCmd;
+import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
 import org.laokou.admin.domain.annotation.OperateLog;
@@ -51,7 +51,7 @@ public class LogsController {
 	@PostMapping(value = "operate-list")
 	@Operation(summary = "日志管理", description = "查询操作日志列表")
 	@PreAuthorize("hasAuthority('logs:operate-list')")
-	public Result<Datas<OperateLogCO>> operateList(@RequestBody LogOperateListQry qry) {
+	public Result<Datas<OperateLogCO>> operateList(@RequestBody OperateLogListQry qry) {
 		return logsServiceI.operateList(qry);
 	}
 
@@ -60,7 +60,7 @@ public class LogsController {
 	@Operation(summary = "日志管理", description = "导出操作日志")
 	@OperateLog(module = "日志管理", operation = "导出操作日志")
 	@PreAuthorize("hasAuthority('logs:operate-export')")
-	public Result<Boolean> operateExport(@RequestBody LogOperateExportCmd cmd) {
+	public Result<Boolean> operateExport(@RequestBody OperateLogExportCmd cmd) {
 		return logsServiceI.operateExport(cmd);
 	}
 
@@ -68,7 +68,7 @@ public class LogsController {
 	@PostMapping(value = "login-list")
 	@Operation(summary = "日志管理", description = "查询登录日志列表")
 	@PreAuthorize("hasAuthority('logs:login-list')")
-	public Result<Datas<LoginLogCO>> loginList(@RequestBody LogLoginListQry qry) {
+	public Result<Datas<LoginLogCO>> loginList(@RequestBody LoginLogListQry qry) {
 		return logsServiceI.loginList(qry);
 	}
 
@@ -77,7 +77,7 @@ public class LogsController {
 	@Operation(summary = "日志管理", description = "导出登录日志")
 	@OperateLog(module = "日志管理", operation = "导出登录日志")
 	@PreAuthorize("hasAuthority('logs:login-export')")
-	public Result<Boolean> loginExport(@RequestBody LogLoginExportCmd cmd) {
+	public Result<Boolean> loginExport(@RequestBody LoginLogExportCmd cmd) {
 		return logsServiceI.loginExport(cmd);
 	}
 

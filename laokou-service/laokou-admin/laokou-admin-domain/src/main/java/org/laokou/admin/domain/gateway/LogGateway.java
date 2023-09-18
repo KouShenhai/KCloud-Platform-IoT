@@ -14,28 +14,20 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.api;
 
-import org.laokou.admin.dto.log.LoginLogExportCmd;
-import org.laokou.admin.dto.log.LoginLogListQry;
-import org.laokou.admin.dto.log.OperateLogExportCmd;
-import org.laokou.admin.dto.log.OperateLogListQry;
-import org.laokou.admin.dto.log.clientobject.LoginLogCO;
-import org.laokou.admin.dto.log.clientobject.OperateLogCO;
+package org.laokou.admin.domain.gateway;
+
+import org.laokou.admin.domain.log.LoginLog;
+import org.laokou.admin.domain.log.OperateLog;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
 
 /**
  * @author laokou
  */
-public interface LogsServiceI {
+public interface LogGateway {
 
-	Result<Datas<OperateLogCO>> operateList(OperateLogListQry qry);
+    Datas<LoginLog> loginList();
 
-	Result<Boolean> operateExport(OperateLogExportCmd cmd);
-
-	Result<Datas<LoginLogCO>> loginList(LoginLogListQry qry);
-
-	Result<Boolean> loginExport(LoginLogExportCmd cmd);
+    Datas<OperateLog> operateList();
 
 }

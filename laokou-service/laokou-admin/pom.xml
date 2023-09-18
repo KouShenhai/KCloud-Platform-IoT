@@ -24,12 +24,10 @@
         <version>${laokou.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.laokou</groupId>
     <artifactId>laokou-admin</artifactId>
     <version>${laokou.version}</version>
     <packaging>pom</packaging>
     <modules>
-        <module>laokou-admin-server</module>
         <module>laokou-admin-client</module>
         <module>laokou-admin-app</module>
         <module>laokou-admin-adapter</module>
