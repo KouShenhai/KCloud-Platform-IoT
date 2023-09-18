@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * @author laokou
  */
@@ -39,33 +40,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StorageFactory {
 
-    private final OssMapper ossMapper;
-    private final RedisUtil redisUtil;
+	private final OssMapper ossMapper;
 
-    public StorageService<AmazonS3> build(Long tenantId) {
-        return new AmazonS3StorageService(getOssConfig(tenantId));
-    }
+	private final RedisUtil redisUtil;
 
-    private OssCO getOssConfig(Long tenantId) {
-        AbstractSelectAlgorithm<OssDO> algorithm = new HashSelectAlgorithm<>();
-        OssDO ossDO = algorithm.select(getOssCache(tenantId), System.currentTimeMillis());
-        return ConvertUtil.sourceToTarget(ossDO,OssCO.class);
-    }
+	public StorageService<AmazonS3> build(Long tenantId) {
+		return new AmazonS3StorageService(getOssConfig(tenantId));
+	}
 
-    private List<OssDO> getOssCache(Long tenantId) {
-        String ossConfigKey = RedisKeyUtil.getOssConfigKey(tenantId);
-        List<Object> objList = redisUtil.lGetAll(ossConfigKey);
-        if (CollectionUtil.isNotEmpty(objList)) {
-            return ConvertUtil.sourceToTarget(objList,OssDO.class);
-        }
-        List<OssDO> list = ossMapper.getOssListByLikeName(null);
-        if (CollectionUtil.isEmpty(list)) {
-            throw new GlobalException("请配置OSS");
-        }
-        List<Object> objs = new ArrayList<>(list.size());
-        objs.addAll(list);
-        redisUtil.lSet(ossConfigKey, objs,RedisUtil.HOUR_ONE_EXPIRE);
-        return list;
-    }
+	private OssCO getOssConfig(Long tenantId) {
+		AbstractSelectAlgorithm<OssDO> algorithm = new HashSelectAlgorithm<>();
+		OssDO ossDO = algorithm.select(getOssCache(tenantId), System.currentTimeMillis());
+		return ConvertUtil.sourceToTarget(ossDO, OssCO.class);
+	}
+
+	private List<OssDO> getOssCache(Long tenantId) {
+		String ossConfigKey = RedisKeyUtil.getOssConfigKey(tenantId);
+		List<Object> objList = redisUtil.lGetAll(ossConfigKey);
+		if (CollectionUtil.isNotEmpty(objList)) {
+			return ConvertUtil.sourceToTarget(objList, OssDO.class);
+		}
+		List<OssDO> list = ossMapper.getOssListByLikeName(null);
+		if (CollectionUtil.isEmpty(list)) {
+			throw new GlobalException("请配置OSS");
+		}
+		List<Object> objs = new ArrayList<>(list.size());
+		objs.addAll(list);
+		redisUtil.lSet(ossConfigKey, objs, RedisUtil.HOUR_ONE_EXPIRE);
+		return list;
+	}
 
 }

@@ -126,7 +126,7 @@ public class RedisUtil {
 		return redissonClient.getList(key).readAll();
 	}
 
-	public Object lGet(String key,int index) {
+	public Object lGet(String key, int index) {
 		return redissonClient.getList(key).get(index);
 	}
 

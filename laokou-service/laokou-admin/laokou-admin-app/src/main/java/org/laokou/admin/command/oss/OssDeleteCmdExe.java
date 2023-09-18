@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OssDeleteCmdExe {
 
-    private final OssGateway ossGateway;
+	private final OssGateway ossGateway;
 
-    public Result<Boolean> execute(OssDeleteCmd cmd) {
-        return Result.of(ossGateway.deleteById(cmd.getId()));
-    }
+	public Result<Boolean> execute(OssDeleteCmd cmd) {
+		return Result.of(ossGateway.deleteById(cmd.getId()));
+	}
 
 }

@@ -37,26 +37,27 @@ import java.util.concurrent.CompletableFuture;
 @Component
 @NonNullApi
 @RequiredArgsConstructor
-public class OssLogHandler  implements ApplicationListener<OssLogEvent> {
+public class OssLogHandler implements ApplicationListener<OssLogEvent> {
 
-    private final OssLogMapper ossLogMapper;
-    private final ThreadPoolTaskExecutor taskExecutor;
+	private final OssLogMapper ossLogMapper;
 
-    @Override
-    public void onApplicationEvent(OssLogEvent event) {
-        CompletableFuture.runAsync(() -> {
-            try {
-                execute(event);
-            }
-            catch (Exception e) {
-                log.error("数据插入失败，错误信息：{}", e.getMessage());
-            }
-        }, taskExecutor);
-    }
+	private final ThreadPoolTaskExecutor taskExecutor;
 
-    private void execute(OssLogEvent event) {
-        OssLogDO ossLogDO = ConvertUtil.sourceToTarget(event, OssLogDO.class);
-        ossLogMapper.insert(ossLogDO);
-    }
+	@Override
+	public void onApplicationEvent(OssLogEvent event) {
+		CompletableFuture.runAsync(() -> {
+			try {
+				execute(event);
+			}
+			catch (Exception e) {
+				log.error("数据插入失败，错误信息：{}", e.getMessage());
+			}
+		}, taskExecutor);
+	}
+
+	private void execute(OssLogEvent event) {
+		OssLogDO ossLogDO = ConvertUtil.sourceToTarget(event, OssLogDO.class);
+		ossLogMapper.insert(ossLogDO);
+	}
 
 }

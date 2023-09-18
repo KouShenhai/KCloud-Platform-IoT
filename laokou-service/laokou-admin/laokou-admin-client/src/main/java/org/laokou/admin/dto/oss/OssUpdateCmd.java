@@ -27,6 +27,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class OssUpdateCmd extends CommonCommand {
 
-    private OssCO ossCO;
+	private OssCO ossCO;
 
 }

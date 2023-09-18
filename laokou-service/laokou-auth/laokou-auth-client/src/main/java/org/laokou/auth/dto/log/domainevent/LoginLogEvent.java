@@ -93,6 +93,7 @@ public class LoginLogEvent extends ApplicationEvent implements Serializable {
 	 * 部门PATH
 	 */
 	private String deptPath;
+
 	public LoginLogEvent(Object source) {
 		super(source);
 	}

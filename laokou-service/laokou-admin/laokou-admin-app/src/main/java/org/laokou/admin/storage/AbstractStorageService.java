@@ -43,12 +43,12 @@ public abstract class AbstractStorageService<O> implements StorageService<O> {
 			putObject(obj, limitRead, fileSize, newFileName, inputStream, contentType);
 			// 获取地址
 			return getUrl(obj, newFileName);
-		} catch (Exception ex) {
-			log.error("文件上传失败，错误信息：{}",ex.getMessage());
-			throw new GlobalException(String.format("文件上传失败，错误信息：%s",ex.getMessage()));
+		}
+		catch (Exception ex) {
+			log.error("文件上传失败，错误信息：{}", ex.getMessage());
+			throw new GlobalException(String.format("文件上传失败，错误信息：%s", ex.getMessage()));
 		}
 	}
-
 
 	/**
 	 * 获取连接对象

@@ -32,4 +32,5 @@ import static org.laokou.admin.common.Constant.TENANT;
 @Mapper
 @DS(TENANT)
 public interface OssLogMapper extends BatchMapper<OssLogDO> {
+
 }
