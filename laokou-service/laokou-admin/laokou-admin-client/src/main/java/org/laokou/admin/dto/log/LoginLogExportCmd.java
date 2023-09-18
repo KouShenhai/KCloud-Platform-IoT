@@ -24,6 +24,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-public class LogOperateListQry extends CommonCommand {
+public class LoginLogExportCmd extends CommonCommand {
+
+	private String name;
+
+	private Integer status;
 
 }

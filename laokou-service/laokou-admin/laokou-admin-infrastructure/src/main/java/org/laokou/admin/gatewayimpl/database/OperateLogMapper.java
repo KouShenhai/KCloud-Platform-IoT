@@ -15,16 +15,17 @@
  *
  */
 
-package org.laokou.admin.command.log;
+package org.laokou.admin.gatewayimpl.database;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class LogLoginExportCmdExe {
-
+@Repository
+@Mapper
+public interface OperateLogMapper extends BatchMapper<OperateLogDO> {
 }

@@ -15,16 +15,15 @@
  *
  */
 
-package org.laokou.admin.command.log.query;
+package org.laokou.admin.dto.log;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class LogOperateListQryExe {
+@Data
+public class LoginLogListQry extends PageQuery {
 
 }

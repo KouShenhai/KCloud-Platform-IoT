@@ -15,15 +15,24 @@
  *
  */
 
-package org.laokou.admin.dto.log;
+package org.laokou.admin.gatewayimpl.database;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.springframework.stereotype.Repository;
+
+import static org.laokou.admin.common.Constant.SHARDING_SPHERE_READWRITE;
 
 /**
  * @author laokou
  */
-@Data
-public class LogOperateExportCmd extends CommonCommand {
+@Repository
+@Mapper
+@DS(SHARDING_SPHERE_READWRITE)
+public interface LoginLogMapper extends BatchMapper<LoginLogDO> {
+
+
 
 }

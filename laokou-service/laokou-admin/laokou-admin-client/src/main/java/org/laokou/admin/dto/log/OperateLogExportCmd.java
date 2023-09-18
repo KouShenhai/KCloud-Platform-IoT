@@ -15,16 +15,15 @@
  *
  */
 
-package org.laokou.admin.command.log;
+package org.laokou.admin.dto.log;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class LogOperateExportCmdExe {
+@Data
+public class OperateLogExportCmd extends CommonCommand {
 
 }

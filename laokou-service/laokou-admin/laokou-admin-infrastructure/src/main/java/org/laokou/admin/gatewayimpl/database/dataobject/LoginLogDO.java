@@ -34,28 +34,44 @@ public class LoginLogDO extends BaseDO {
 	@Serial
 	private static final long serialVersionUID = 4289483981365827983L;
 
-	@Schema(name = "loginName", description = "登录用户")
-	private String loginName;
+	/**
+	 * 登录的用户名
+	 */
+	private String username;
 
-	@Schema(name = "requestIp", description = "请求IP")
-	private String requestIp;
+	/**
+	 * 登录的IP地址
+	 */
+	private String ip;
 
-	@Schema(name = "requestAddress", description = "请求地址")
-	private String requestAddress;
+	/**
+	 * 登录的归属地
+	 */
+	private String address;
 
-	@Schema(name = "browser", description = "浏览器")
+	/**
+	 * 登录的浏览器
+	 */
 	private String browser;
 
-	@Schema(name = "os", description = "操作系统")
+	/**
+	 * 登录的操作系统
+	 */
 	private String os;
 
-	@Schema(name = "requestStatus", description = "请求状态 0成功 1失败")
-	private Integer requestStatus;
+	/**
+	 * 登录状态 0登录成功 1登录失败
+	 */
+	private Integer status;
 
-	@Schema(name = "msg", description = "提示信息")
-	private String msg;
+	/**
+	 * 登录信息
+	 */
+	private String message;
 
-	@Schema(name = "loginType", description = "登录类型")
-	private String loginType;
+	/**
+	 * 登录类型
+	 */
+	private String type;
 
 }

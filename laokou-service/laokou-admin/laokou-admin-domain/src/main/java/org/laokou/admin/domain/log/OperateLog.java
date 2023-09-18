@@ -15,19 +15,10 @@
  *
  */
 
-package org.laokou.admin.dto.log;
-
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+package org.laokou.admin.domain.log;
 
 /**
  * @author laokou
  */
-@Data
-public class LogLoginExportCmd extends CommonCommand {
-
-	private String name;
-
-	private Integer status;
-
+public class OperateLog {
 }
