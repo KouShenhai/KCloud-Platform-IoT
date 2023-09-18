@@ -12,43 +12,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
+package org.laokou.admin.common.event;
 
-package org.laokou.admin.dto.log.domainevent;
-
-import lombok.Getter;
-import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.SpringContextUtil;
 import org.springframework.context.ApplicationEvent;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.time.Clock;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Getter
-@Setter
-public class OssLogEvent extends ApplicationEvent implements Serializable {
+@Component
+@Slf4j
+public class DomainEventPublisher {
 
-	@Serial
-	private static final long serialVersionUID = 3776732013732856552L;
-
-	private String md5;
-
-	private String url;
-
-	private String name;
-
-	private Long size;
-
-	public OssLogEvent(Object source) {
-		super(source);
-	}
-
-	public OssLogEvent(Object source, Clock clock) {
-		super(source, clock);
+	public void publish(ApplicationEvent event) {
+		SpringContextUtil.publishEvent(event);
 	}
 
 }

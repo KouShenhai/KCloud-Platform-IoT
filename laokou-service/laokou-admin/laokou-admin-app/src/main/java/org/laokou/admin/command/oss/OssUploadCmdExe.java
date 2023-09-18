@@ -21,6 +21,8 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.domain.gateway.OssGateway;
+import org.laokou.admin.domain.oss.OssLog;
 import org.laokou.admin.dto.oss.OssUploadCmd;
 import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.gatewayimpl.database.OssLogMapper;
@@ -49,6 +51,7 @@ public class OssUploadCmdExe {
 
     private final StorageFactory storageFactory;
     private final OssLogMapper ossLogMapper;
+    private final OssGateway ossGateway;
 
     public Result<FileCO> execute(OssUploadCmd cmd) {
         return Result.of(upload(cmd.getFile()));
@@ -70,7 +73,7 @@ public class OssUploadCmdExe {
             return new FileCO(ossLogDO.getUrl(),md5);
         }
         String url = storageFactory.build(UserUtil.getTenantId()).upload(limitRead, fileSize, fileName, new ByteArrayInputStream(bos.toByteArray()), contentType);
-        after();
+        after(new OssLog(md5,url,fileName,fileSize));
         return new FileCO(url,md5);
     }
 
@@ -83,14 +86,15 @@ public class OssUploadCmdExe {
     }
 
     private void before(long fileSize) {
-        log.info("文件上传前");
+        log.info("文件上传前，校验文件大小");
         if (fileSize > MAX_FILE_SIZE) {
             throw new GlobalException("单个文件上传不能超过100M，请重新选择文件并上传");
         }
     }
 
-    private void after() {
-        log.info("文件上传后");
+    private void after(OssLog ossLog) {
+        log.info("文件上传后，存入日志");
+        ossGateway.publish(ossLog);
     }
 
 }
