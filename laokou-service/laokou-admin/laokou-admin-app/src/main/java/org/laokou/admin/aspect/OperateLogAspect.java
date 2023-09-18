@@ -27,13 +27,13 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,7 +43,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 import static org.laokou.common.i18n.common.Constant.*;
 
@@ -56,7 +55,7 @@ import static org.laokou.common.i18n.common.Constant.*;
 @RequiredArgsConstructor
 public class OperateLogAspect {
 
-	private final ThreadPoolTaskExecutor taskExecutor;
+	private final DomainEventPublisher domainEventPublisher;
 
 	private static final String[] REMOVE_PARAMS = { "username", "password", "mobile", "mail" };
 
@@ -74,12 +73,12 @@ public class OperateLogAspect {
 	 */
 	@AfterReturning(pointcut = "@annotation(org.laokou.admin.domain.annotation.OperateLog)")
 	public void doAfterReturning(JoinPoint joinPoint) {
-		CompletableFuture.runAsync(() -> handleLog(joinPoint, null), taskExecutor);
+		handleLog(joinPoint, null);
 	}
 
 	@AfterThrowing(pointcut = "@annotation(org.laokou.admin.domain.annotation.OperateLog)", throwing = "e")
 	public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
-		CompletableFuture.runAsync(() -> handleLog(joinPoint, e), taskExecutor);
+		handleLog(joinPoint, e);
 	}
 
 	private void handleLog(final JoinPoint joinPoint, final Exception e) {
@@ -94,7 +93,7 @@ public class OperateLogAspect {
 		// 构建事件对象
 		assert operateLog != null;
 		OperateLogEvent event = buildEvent(operateLog, request, joinPoint, e);
-		SpringContextUtil.publishEvent(event);
+		domainEventPublisher.publish(event);
 	}
 
 	private OperateLogEvent buildEvent(OperateLog operateLog, HttpServletRequest request, JoinPoint joinPoint,
@@ -108,22 +107,21 @@ public class OperateLogAspect {
 			OperateLogEvent event = new OperateLogEvent(this);
 			assert operateLog != null;
 			event.setModuleName(operateLog.module());
-			event.setOperationName(operateLog.operation());
-			event.setRequestUri(request.getRequestURI());
-			event.setRequestIp(ip);
-			event.setRequestAddress(AddressUtil.getRealAddress(ip));
+			event.setName(operateLog.operation());
+			event.setUri(request.getRequestURI());
+			event.setIp(ip);
+			event.setAddress(AddressUtil.getRealAddress(ip));
 			event.setOperator(UserUtil.getUserName());
-			event.setDeptId(UserUtil.getDeptId());
 			if (null != e) {
-				event.setRequestStatus(FAIL_STATUS);
-				event.setErrorMsg(e.getMessage());
+				event.setStatus(FAIL_STATUS);
+				event.setErrorMessage(e.getMessage());
 			}
 			else {
-				event.setRequestStatus(SUCCESS_STATUS);
+				event.setStatus(SUCCESS_STATUS);
 			}
 			event.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
 			event.setMethodName(className + DOT + methodName + LEFT + RIGHT);
-			event.setRequestMethod(request.getMethod());
+			event.setRequestType(request.getMethod());
 			Object obj;
 			if (CollectionUtil.isEmpty(params)) {
 				obj = null;
@@ -145,7 +143,6 @@ public class OperateLogAspect {
 					event.setRequestParams(str);
 				}
 			}
-			event.setTenantId(UserUtil.getTenantId());
 			StopWatch stopWatch = TASK_TIME_LOCAL.get();
 			stopWatch.stop();
 			event.setTakeTime(stopWatch.getTotalTimeMillis());

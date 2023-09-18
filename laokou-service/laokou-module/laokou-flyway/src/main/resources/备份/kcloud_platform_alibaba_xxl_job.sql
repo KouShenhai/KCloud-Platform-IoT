@@ -11,7 +11,7 @@
  Target Server Version : 80033 (8.0.33)
  File Encoding         : 65001
 
- Date: 12/09/2023 15:51:13
+ Date: 18/09/2023 20:07:18
 */
 
 SET NAMES utf8mb4;
@@ -37,6 +37,12 @@ CREATE TABLE `flyway_schema_history`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of flyway_schema_history
+-- ----------------------------
+INSERT INTO `flyway_schema_history` VALUES (1, '1.0', 'init', 'SQL', 'V1.0__init.sql', 1132581815, 'root', '2023-06-30 22:59:57', 193, 1);
+INSERT INTO `flyway_schema_history` VALUES (2, '1.1', 'update', 'SQL', 'V1.1__update.sql', -1833379737, 'root', '2023-07-05 23:12:11', 387, 1);
+
+-- ----------------------------
 -- Table structure for xxl_job_group
 -- ----------------------------
 DROP TABLE IF EXISTS `xxl_job_group`;
@@ -49,6 +55,12 @@ CREATE TABLE `xxl_job_group`  (
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of xxl_job_group
+-- ----------------------------
+INSERT INTO `xxl_job_group` VALUES (1, 'xxl-job-executor-sample', '示例执行器', 0, NULL, '2023-09-17 14:14:16');
+INSERT INTO `xxl_job_group` VALUES (3, 'monitor-platform-job-admin', '监控平台', 1, 'http://192.168.62.1:9998', '2023-04-03 19:25:18');
 
 -- ----------------------------
 -- Table structure for xxl_job_info
@@ -83,6 +95,12 @@ CREATE TABLE `xxl_job_info`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of xxl_job_info
+-- ----------------------------
+INSERT INTO `xxl_job_info` VALUES (1, 1, '测试任务1', '2018-11-03 22:21:31', '2018-11-03 22:21:31', 'XXL', '', 'CRON', '0 0 0 * * ? *', 'DO_NOTHING', 'FIRST', 'demoJobHandler', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2018-11-03 22:21:31', '', 0, 0, 0);
+INSERT INTO `xxl_job_info` VALUES (2, 3, '监控平台任务', '2023-04-03 19:20:11', '2023-04-03 19:29:39', '老寇', '', 'CRON', '* * * * * ?', 'DO_NOTHING', 'FIRST', 'demoJobHandler', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2023-04-03 19:20:11', '', 0, 0, 0);
+
+-- ----------------------------
 -- Table structure for xxl_job_lock
 -- ----------------------------
 DROP TABLE IF EXISTS `xxl_job_lock`;
@@ -90,6 +108,11 @@ CREATE TABLE `xxl_job_lock`  (
   `lock_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '锁名称',
   PRIMARY KEY (`lock_name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of xxl_job_lock
+-- ----------------------------
+INSERT INTO `xxl_job_lock` VALUES ('schedule_lock');
 
 -- ----------------------------
 -- Table structure for xxl_job_log
@@ -117,6 +140,10 @@ CREATE TABLE `xxl_job_log`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 99 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of xxl_job_log
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for xxl_job_log_report
 -- ----------------------------
 DROP TABLE IF EXISTS `xxl_job_log_report`;
@@ -129,7 +156,19 @@ CREATE TABLE `xxl_job_log_report`  (
   `update_time` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `i_trigger_day`(`trigger_day` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of xxl_job_log_report
+-- ----------------------------
+INSERT INTO `xxl_job_log_report` VALUES (1, '2023-04-03 00:00:00', 4, 3, 91, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (2, '2023-04-02 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (3, '2023-04-01 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (4, '2023-04-04 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (5, '2023-04-05 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (6, '2023-09-17 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (7, '2023-09-16 00:00:00', 0, 0, 0, NULL);
+INSERT INTO `xxl_job_log_report` VALUES (8, '2023-09-15 00:00:00', 0, 0, 0, NULL);
 
 -- ----------------------------
 -- Table structure for xxl_job_logglue
@@ -147,6 +186,10 @@ CREATE TABLE `xxl_job_logglue`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of xxl_job_logglue
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for xxl_job_registry
 -- ----------------------------
 DROP TABLE IF EXISTS `xxl_job_registry`;
@@ -161,6 +204,10 @@ CREATE TABLE `xxl_job_registry`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 122 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of xxl_job_registry
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for xxl_job_user
 -- ----------------------------
 DROP TABLE IF EXISTS `xxl_job_user`;
@@ -173,5 +220,10 @@ CREATE TABLE `xxl_job_user`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `i_username`(`username` ASC) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of xxl_job_user
+-- ----------------------------
+INSERT INTO `xxl_job_user` VALUES (1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 1, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

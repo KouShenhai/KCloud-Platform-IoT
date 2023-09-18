@@ -23,6 +23,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
+
 /**
  * @author laokou
  */
@@ -30,8 +32,8 @@ import java.util.List;
 @Mapper
 public interface DeptMapper {
 
-	List<String> getDeptPathsByTenantId(@Param("tenantId") Long tenantId);
+	List<String> getDeptPathsByTenantId(@Param(TENANT_ID) Long tenantId);
 
-	List<String> getDeptPathsByUserIdAndTenantId(@Param("userId") Long userId, @Param("tenantId") Long tenantId);
+	List<String> getDeptPathsByUserIdAndTenantId(@Param("userId") Long userId, @Param(TENANT_ID) Long tenantId);
 
 }

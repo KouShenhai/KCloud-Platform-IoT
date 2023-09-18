@@ -11,7 +11,7 @@
  Target Server Version : 80033 (8.0.33)
  File Encoding         : 65001
 
- Date: 13/09/2023 10:27:16
+ Date: 18/09/2023 20:07:13
 */
 
 SET NAMES utf8mb4;
@@ -23,13 +23,14 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `boot_sys_user_0`;
 CREATE TABLE `boot_sys_user_0`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `creator` bigint NOT NULL COMMENT '创建人',
-  `editor` bigint NULL DEFAULT NULL COMMENT '编辑人',
+  `creator` bigint NOT NULL DEFAULT 0 COMMENT '创建人',
+  `editor` bigint NOT NULL DEFAULT 0 COMMENT '编辑人',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 0未删除 1已删除',
   `version` int NOT NULL DEFAULT 0 COMMENT '版本号',
   `dept_id` bigint NOT NULL DEFAULT 0 COMMENT '部门ID',
+  `dept_path` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '部门PATH',
   `tenant_id` bigint NOT NULL DEFAULT 0 COMMENT '租户ID',
   `username` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '用户名',
   `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '密码',
@@ -47,7 +48,8 @@ CREATE TABLE `boot_sys_user_0`  (
 -- ----------------------------
 -- Records of boot_sys_user_0
 -- ----------------------------
-INSERT INTO `boot_sys_user_0` VALUES (1537114827246292998, 1341620898007281665, 1341620898007281665, '2023-02-09 22:59:04', '2023-02-09 22:59:04', 0, 0, 0, 1, '5/Pqo/yVzE72YyPDE5RKAw==', '{bcrypt}$2a$10$ToBq5JB191IUkAfnqfeV5OFLOFDvhr9wWaRm1LhTn5sbL8uyJ0Gre', 1, NULL, 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', NULL);
+INSERT INTO `boot_sys_user_0` VALUES (910193112402362368, 1341620898007281665, 1341620898007281665, '2023-09-17 15:42:27', '2023-09-17 15:42:27', 0, 0, 1535887940687765505, '0,1535887940687765505', 1703312526740615171, '5/Pqo/yVzE72YyPDE5RKAw==', '{bcrypt}$2a$10$tfrR0lGv5RChP27iEKrxoO9/g7vtaUdSXqb3vnzfe.GiDmJVBO1Fq', 1, NULL, 0, 'https://i.postimg.cc/FsHgVKzX/1.gif', NULL);
+INSERT INTO `boot_sys_user_0` VALUES (1537114827246292998, 1341620898007281665, 1341620898007281665, '2023-02-09 22:59:04', '2023-02-09 22:59:04', 0, 0, 0, '0', 1, '5/Pqo/yVzE72YyPDE5RKAw==', '{bcrypt}$2a$10$ToBq5JB191IUkAfnqfeV5OFLOFDvhr9wWaRm1LhTn5sbL8uyJ0Gre', 1, NULL, 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', NULL);
 
 -- ----------------------------
 -- Table structure for boot_sys_user_1
@@ -55,13 +57,14 @@ INSERT INTO `boot_sys_user_0` VALUES (1537114827246292998, 1341620898007281665, 
 DROP TABLE IF EXISTS `boot_sys_user_1`;
 CREATE TABLE `boot_sys_user_1`  (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `creator` bigint NOT NULL COMMENT '创建人',
-  `editor` bigint NULL DEFAULT NULL COMMENT '编辑人',
+  `creator` bigint NOT NULL DEFAULT 0 COMMENT '创建人',
+  `editor` bigint NOT NULL DEFAULT 0 COMMENT '编辑人',
   `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 0未删除 1已删除',
   `version` int NOT NULL DEFAULT 0 COMMENT '版本号',
   `dept_id` bigint NOT NULL DEFAULT 0 COMMENT '部门ID',
+  `dept_path` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '部门PATH',
   `tenant_id` bigint NOT NULL DEFAULT 0 COMMENT '租户ID',
   `username` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '用户名',
   `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '密码',
@@ -79,7 +82,7 @@ CREATE TABLE `boot_sys_user_1`  (
 -- ----------------------------
 -- Records of boot_sys_user_1
 -- ----------------------------
-INSERT INTO `boot_sys_user_1` VALUES (1537114827246293001, 1537114827246292998, NULL, '2023-02-15 13:18:39', '2023-02-15 13:18:39', 0, 0, 1584488411756171278, 1, 'cmV6CFYc1NUWgni0E8xpdg==', '{bcrypt}$2a$10$nbLXUQeCfuiw.7wZwuOT.e0r1mr.ZQcLIlFbil28PCrPBNAnPLRT.', 0, NULL, 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', NULL);
+INSERT INTO `boot_sys_user_1` VALUES (1537114827246293001, 1537114827246292998, 1537114827246292998, '2023-02-15 13:18:39', '2023-02-15 13:18:39', 0, 0, 1584488411756171278, '0', 1, 'cmV6CFYc1NUWgni0E8xpdg==', '{bcrypt}$2a$10$nbLXUQeCfuiw.7wZwuOT.e0r1mr.ZQcLIlFbil28PCrPBNAnPLRT.', 0, NULL, 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', NULL);
 
 -- ----------------------------
 -- Table structure for flyway_schema_history

@@ -51,7 +51,7 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 * @param tenantId
 	 * @return
 	 */
-	List<UserDO> getOptionListByTenantId(@Param("tenantId") Long tenantId);
+	List<UserDO> getOptionListByTenantId(@Param(TENANT_ID) Long tenantId);
 
 	/**
 	 * 查询用户列表

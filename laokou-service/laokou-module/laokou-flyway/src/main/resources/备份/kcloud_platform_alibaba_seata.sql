@@ -11,7 +11,7 @@
  Target Server Version : 80033 (8.0.33)
  File Encoding         : 65001
 
- Date: 12/09/2023 15:50:49
+ Date: 18/09/2023 20:06:55
 */
 
 SET NAMES utf8mb4;
@@ -38,6 +38,10 @@ CREATE TABLE `branch_table`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of branch_table
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for distributed_lock
 -- ----------------------------
 DROP TABLE IF EXISTS `distributed_lock`;
@@ -47,6 +51,14 @@ CREATE TABLE `distributed_lock`  (
   `expire` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`lock_key`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of distributed_lock
+-- ----------------------------
+INSERT INTO `distributed_lock` VALUES ('AsyncCommitting', ' ', 0);
+INSERT INTO `distributed_lock` VALUES ('RetryCommitting', ' ', 0);
+INSERT INTO `distributed_lock` VALUES ('RetryRollbacking', ' ', 0);
+INSERT INTO `distributed_lock` VALUES ('TxTimeoutCheck', ' ', 0);
 
 -- ----------------------------
 -- Table structure for flyway_schema_history
@@ -66,6 +78,12 @@ CREATE TABLE `flyway_schema_history`  (
   PRIMARY KEY (`installed_rank`) USING BTREE,
   INDEX `flyway_schema_history_s_idx`(`success` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of flyway_schema_history
+-- ----------------------------
+INSERT INTO `flyway_schema_history` VALUES (1, '1.0', 'init', 'SQL', 'V1.0__init.sql', -1435442368, 'root', '2023-06-30 22:59:43', 77, 1);
+INSERT INTO `flyway_schema_history` VALUES (2, '1.1', 'update', 'SQL', 'V1.1__update.sql', -1760440453, 'root', '2023-07-05 23:12:13', 94, 1);
 
 -- ----------------------------
 -- Table structure for global_table
@@ -89,6 +107,10 @@ CREATE TABLE `global_table`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of global_table
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for lock_table
 -- ----------------------------
 DROP TABLE IF EXISTS `lock_table`;
@@ -108,5 +130,9 @@ CREATE TABLE `lock_table`  (
   INDEX `idx_branch_id`(`branch_id` ASC) USING BTREE,
   INDEX `idx_xid`(`xid` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of lock_table
+-- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

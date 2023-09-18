@@ -23,6 +23,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
+
 /**
  * @author laokou
  */
@@ -34,7 +36,7 @@ public interface MenuMapper extends BatchMapper<MenuDO> {
 
 	List<MenuDO> getMenuListLikeName(@Param("type") Integer type, @Param("name") String name);
 
-	List<MenuDO> getMenuListByTenantIdAndLikeName(@Param("type") Integer type, @Param("tenantId") Long tenantId,
+	List<MenuDO> getMenuListByTenantIdAndLikeName(@Param("type") Integer type, @Param(TENANT_ID) Long tenantId,
 			@Param("name") String name);
 
 	List<Long> getMenuIdsByRoleId(@Param("roleId") Long roleId);
