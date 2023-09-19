@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.log;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
 
@@ -25,5 +26,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
  */
 @Data
 public class OperateLogExportCmd extends CommonCommand {
+
+    private HttpServletResponse response;
 
 }

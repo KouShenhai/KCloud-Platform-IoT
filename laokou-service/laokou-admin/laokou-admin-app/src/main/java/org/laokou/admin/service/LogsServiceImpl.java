@@ -54,8 +54,8 @@ public class LogsServiceImpl implements LogsServiceI {
 	}
 
 	@Override
-	public Result<Boolean> operateExport(OperateLogExportCmd cmd) {
-		return null;
+	public void operateExport(OperateLogExportCmd cmd) {
+		operateLogExportCmdExe.execute(cmd);
 	}
 
 	@Override

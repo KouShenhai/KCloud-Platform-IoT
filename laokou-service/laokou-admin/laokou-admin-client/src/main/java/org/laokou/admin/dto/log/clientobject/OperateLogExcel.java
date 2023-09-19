@@ -15,21 +15,18 @@
  *
  */
 
-package org.laokou.admin.domain.gateway;
+package org.laokou.admin.dto.log.clientobject;
 
-import org.laokou.admin.domain.log.LoginLog;
-import org.laokou.admin.domain.log.OperateLog;
-import org.laokou.admin.domain.user.User;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
+import com.alibaba.excel.annotation.ExcelProperty;
+import lombok.Data;
+import org.laokou.common.i18n.dto.Excel;
 
 /**
  * @author laokou
  */
-public interface LogGateway {
+@Data
+public class OperateLogExcel extends Excel {
 
-    Datas<LoginLog> loginList();
-
-    Datas<OperateLog> operateList(OperateLog operateLog, User user, PageQuery pageQuery);
-
+    @ExcelProperty(value = "名称")
+    private String name;
 }

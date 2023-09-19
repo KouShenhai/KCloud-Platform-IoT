@@ -15,21 +15,10 @@
  *
  */
 
-package org.laokou.admin.domain.gateway;
-
-import org.laokou.admin.domain.log.LoginLog;
-import org.laokou.admin.domain.log.OperateLog;
-import org.laokou.admin.domain.user.User;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
+package org.laokou.common.i18n.dto;
 
 /**
  * @author laokou
  */
-public interface LogGateway {
-
-    Datas<LoginLog> loginList();
-
-    Datas<OperateLog> operateList(OperateLog operateLog, User user, PageQuery pageQuery);
-
+public abstract class Excel extends DTO{
 }

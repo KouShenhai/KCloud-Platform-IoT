@@ -30,6 +30,7 @@ import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+import org.laokou.common.i18n.utils.StringUtil;
 
 import java.util.Map;
 
@@ -47,7 +48,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 		if (parameter instanceof Map map) {
 			try {
 				Object obj = map.get(SQL_FILTER);
-				if (obj != null) {
+				if (obj != null && StringUtil.isNotEmpty(obj.toString())) {
 					// 获取aop拼接的sql
 					String sqlFilter = obj.toString();
 					// 获取select查询语句

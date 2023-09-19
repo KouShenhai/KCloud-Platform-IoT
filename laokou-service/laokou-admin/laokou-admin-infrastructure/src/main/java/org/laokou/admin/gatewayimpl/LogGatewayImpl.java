@@ -61,9 +61,4 @@ public class LogGatewayImpl implements LogGateway {
         return datas;
     }
 
-    @Override
-    public Boolean operateExport(OperateLog operateLog, User user, PageQuery pageQuery) {
-        return null;
-    }
-
 }

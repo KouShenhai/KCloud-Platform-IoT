@@ -15,21 +15,18 @@
  *
  */
 
-package org.laokou.admin.domain.gateway;
+package org.laokou.common.mybatisplus.handler;
 
-import org.laokou.admin.domain.log.LoginLog;
-import org.laokou.admin.domain.log.OperateLog;
-import org.laokou.admin.domain.user.User;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.ResultHandler;
+
+import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
 
 /**
  * @author laokou
  */
-public interface LogGateway {
+public interface ExcelResultHandler<DO> {
 
-    Datas<LoginLog> loginList();
-
-    Datas<OperateLog> operateList(OperateLog operateLog, User user, PageQuery pageQuery);
+    void resultListFilter(@Param("param") DO param, ResultHandler<DO> handler,@Param(SQL_FILTER)String sqlFilter);
 
 }

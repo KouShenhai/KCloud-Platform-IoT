@@ -32,7 +32,7 @@ public interface LogsServiceI {
 
 	Result<Datas<OperateLogCO>> operateList(OperateLogListQry qry);
 
-	Result<Boolean> operateExport(OperateLogExportCmd cmd);
+	void operateExport(OperateLogExportCmd cmd);
 
 	Result<Datas<LoginLogCO>> loginList(LoginLogListQry qry);
 
