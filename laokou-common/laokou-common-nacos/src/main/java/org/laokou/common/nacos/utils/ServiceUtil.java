@@ -24,9 +24,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -43,7 +45,17 @@ public class ServiceUtil {
 
 	private final NacosDiscoveryProperties nacosDiscoveryProperties;
 
-	public ServiceInstance getServiceInstance(String serviceId) {
+	private final DiscoveryClient nacosDiscoveryClient;
+
+	public List<String> getServices() {
+		return nacosDiscoveryClient.getServices();
+	}
+
+	public List<ServiceInstance> getInstances(String serviceId) {
+		return nacosDiscoveryClient.getInstances(serviceId);
+	}
+
+	public ServiceInstance getInstance(String serviceId) {
 		return loadBalancerClient.choose(serviceId);
 	}
 

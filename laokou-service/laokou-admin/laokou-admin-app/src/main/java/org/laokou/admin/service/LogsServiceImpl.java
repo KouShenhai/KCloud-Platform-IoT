@@ -50,12 +50,12 @@ public class LogsServiceImpl implements LogsServiceI {
 
 	@Override
 	public Result<Datas<OperateLogCO>> operateList(OperateLogListQry qry) {
-		return null;
+		return operateLogListQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<Boolean> operateExport(OperateLogExportCmd cmd) {
-		return null;
+	public void operateExport(OperateLogExportCmd cmd) {
+		operateLogExportCmdExe.execute(cmd);
 	}
 
 	@Override
@@ -64,8 +64,8 @@ public class LogsServiceImpl implements LogsServiceI {
 	}
 
 	@Override
-	public Result<Boolean> loginExport(LoginLogExportCmd cmd) {
-		return null;
+	public void loginExport(LoginLogExportCmd cmd) {
+
 	}
 
 }

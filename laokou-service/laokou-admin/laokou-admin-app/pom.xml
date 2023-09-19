@@ -24,10 +24,6 @@
             <artifactId>aws-java-sdk-s3</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>easyexcel</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-algorithm</artifactId>
         </dependency>

@@ -51,7 +51,9 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	@Override
 	public List<Dept> list(Dept dept, Long tenantId) {
-		List<DeptDO> list = deptMapper.getDeptListByTenantIdAndLikeName(tenantId, dept.getName());
+		DeptDO deptDO = DeptConvertor.toDataObject(dept);
+		deptDO.setTenantId(tenantId);
+		List<DeptDO> list = deptMapper.getDeptList(deptDO);
 		return ConvertUtil.sourceToTarget(list, Dept.class);
 	}
 

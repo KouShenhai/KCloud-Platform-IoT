@@ -18,7 +18,17 @@
 package org.laokou.admin.command.log;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.common.utils.ExcelUtil;
+import org.laokou.admin.domain.annotation.DataFilter;
+import org.laokou.admin.dto.log.OperateLogExportCmd;
+import org.laokou.admin.dto.log.clientobject.OperateLogExcel;
+import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
+import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.admin.common.DsConstant.BOOT_SYS_OPERATE_LOG;
 
 /**
  * @author laokou
@@ -26,5 +36,19 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class OperateLogExportCmdExe {
+
+    @DataFilter(alias = BOOT_SYS_OPERATE_LOG)
+    public void execute(OperateLogExportCmd cmd) {
+        OperateLogMapper operateLogMapper = SpringContextUtil.getBean(OperateLogMapper.class);
+        ExcelUtil.export(cmd.getResponse(), buildOperateLog(cmd), cmd.getSqlFilter(), operateLogMapper, OperateLogExcel.class);
+    }
+
+    private OperateLogDO buildOperateLog(OperateLogExportCmd cmd) {
+        OperateLogDO operateLogDO = new OperateLogDO();
+        operateLogDO.setTenantId(UserUtil.getTenantId());
+        operateLogDO.setModuleName(cmd.getModuleName());
+        operateLogDO.setStatus(cmd.getStatus());
+        return operateLogDO;
+    }
 
 }

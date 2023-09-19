@@ -20,7 +20,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.OperateLogMapper">
 
-    <select id="getOperateListByTenantIdAndLikeModuleNameAndStatus" resultType="org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO">
+    <select id="getOperateListByTenantIdAndLikeModuleNameFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO">
         select id
              , `name`
              , module_name
@@ -35,6 +35,7 @@
              , operator
              , error_message
              , take_time
+             , create_date
         from boot_sys_operate_log
         where del_flag = 0
             and tenant_id = #{tenantId}
@@ -43,6 +44,34 @@
         </if>
         <if test="status != null">
             and status = #{status}
+        </if>
+        order by create_date desc
+    </select>
+
+    <select id="resultListFilter" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO">
+        select id
+        , `name`
+        , module_name
+        , uri
+        , method_name
+        , request_type
+        , request_params
+        , user_agent
+        , ip
+        , address
+        , `status`
+        , operator
+        , error_message
+        , take_time
+        , create_date
+        from boot_sys_operate_log
+        where del_flag = 0
+        and tenant_id = #{param.tenantId}
+        <if test="param.moduleName != null and param.moduleName != ''">
+            and `module_name` like #{param.moduleName}
+        </if>
+        <if test="param.status != null">
+            and status = #{param.status}
         </if>
         order by create_date desc
     </select>

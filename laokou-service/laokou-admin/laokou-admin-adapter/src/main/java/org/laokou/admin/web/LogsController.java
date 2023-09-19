@@ -18,15 +18,16 @@ package org.laokou.admin.web;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.LogsServiceI;
+import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.log.LoginLogExportCmd;
 import org.laokou.admin.dto.log.LoginLogListQry;
 import org.laokou.admin.dto.log.OperateLogExportCmd;
 import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.LoginLogCO;
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
-import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -55,13 +56,13 @@ public class LogsController {
 		return logsServiceI.operateList(qry);
 	}
 
-	@TraceLog
 	@PostMapping(value = "operate-export")
 	@Operation(summary = "日志管理", description = "导出操作日志")
-	@OperateLog(module = "日志管理", operation = "导出操作日志")
 	@PreAuthorize("hasAuthority('logs:operate-export')")
-	public Result<Boolean> operateExport(@RequestBody OperateLogExportCmd cmd) {
-		return logsServiceI.operateExport(cmd);
+	@OperateLog(module = "日志管理",operation = "导出操作日志")
+	public void operateExport(@RequestBody OperateLogExportCmd cmd, HttpServletResponse response) {
+		cmd.setResponse(response);
+		logsServiceI.operateExport(cmd);
 	}
 
 	@TraceLog
@@ -72,13 +73,12 @@ public class LogsController {
 		return logsServiceI.loginList(qry);
 	}
 
-	@TraceLog
 	@PostMapping(value = "login-export")
 	@Operation(summary = "日志管理", description = "导出登录日志")
-	@OperateLog(module = "日志管理", operation = "导出登录日志")
 	@PreAuthorize("hasAuthority('logs:login-export')")
-	public Result<Boolean> loginExport(@RequestBody LoginLogExportCmd cmd) {
-		return logsServiceI.loginExport(cmd);
+	@OperateLog(module = "日志管理",operation = "导出登录日志")
+	public void loginExport(@RequestBody LoginLogExportCmd cmd) {
+		logsServiceI.loginExport(cmd);
 	}
 
 }

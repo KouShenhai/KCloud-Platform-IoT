@@ -23,8 +23,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
-
 /**
  * @author laokou
  */
@@ -32,7 +30,7 @@ import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID
 @Mapper
 public interface DeptMapper extends BatchMapper<DeptDO> {
 
-	List<DeptDO> getDeptListByTenantIdAndLikeName(@Param(TENANT_ID) Long tenantId, @Param("name") String name);
+	List<DeptDO> getDeptList(@Param("deptDO")DeptDO deptDO);
 
 	List<Long> getDeptIdsByRoleId(@Param("roleId") Long roleId);
 

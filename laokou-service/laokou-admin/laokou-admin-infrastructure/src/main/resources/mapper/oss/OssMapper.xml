@@ -19,7 +19,7 @@
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.OssMapper">
-    <select id="getOssListByLikeName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.OssDO">
+    <select id="getOssListByLikeNameFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.OssDO">
         select id
             , `name`
             , access_key

@@ -14,25 +14,19 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.apache.ibatis.annotations.Mapper;
+package org.laokou.common.mybatisplus.handler;
+
 import org.apache.ibatis.annotations.Param;
-import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.session.ResultHandler;
 
 import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
 
 /**
  * @author laokou
  */
-@Mapper
-@Repository
-public interface PackageMapper extends BatchMapper<PackageDO> {
+public interface ExcelResultHandler<DO> {
 
-	IPage<PackageDO> getPackageListByLikeNameFilter(IPage<PackageDO> page, @Param("name") String name,
-			@Param(SQL_FILTER) String sqlFilter);
+    void resultListFilter(@Param("param") DO param, ResultHandler<DO> handler,@Param(SQL_FILTER)String sqlFilter);
 
 }
