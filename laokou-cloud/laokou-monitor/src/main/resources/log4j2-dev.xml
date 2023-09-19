@@ -65,6 +65,7 @@
     </Appenders>
     <Loggers>
         <AsyncLogger name="org.laokou" additivity="FALSE" level="INFO">
+            <AppenderRef ref="console"/>
             <AppenderRef ref="async_file"/>
         </AsyncLogger>
         <root level="INFO">

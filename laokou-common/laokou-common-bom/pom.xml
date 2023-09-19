@@ -107,7 +107,7 @@
         <!--swagger版本-->
         <swagger.version>2.2.15</swagger.version>
         <!--disruptor版本-->
-        <disruptor.version>4.0.0.RC1</disruptor.version>
+        <disruptor.version>3.4.4</disruptor.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
