@@ -9,27 +9,27 @@
     },
     {
       "name": "spring.security.oauth2.authorization-server.token",
-      "type": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties$Token",
+      "type": "org.laokou.auth.oauth2.config.OAuth2AuthorizationServerProperties$Token",
       "description": "Token配置.",
-      "sourceType": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties"
+      "sourceType": "org.laokou.auth.oauth2.config.OAuth2AuthorizationServerProperties"
     },
     {
       "name": "spring.security.oauth2.authorization-server.client",
-      "type": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties$Client",
+      "type": "org.laokou.auth.oauth2.config.OAuth2AuthorizationServerProperties$Client",
       "description": "Client配置.",
-      "sourceType": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties"
+      "sourceType": "org.laokou.auth.oauth2.config.OAuth2AuthorizationServerProperties"
     },
     {
       "name": "spring.security.oauth2.authorization-server.registration",
-      "type": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties$Registration",
+      "type": "org.laokou.auth.oauth2.config.OAuth2AuthorizationServerProperties$Registration",
       "description": "Registration配置.",
-      "sourceType": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties"
+      "sourceType": "org.laokou.auth.oauth2.config.OAuth2AuthorizationServerProperties"
     },
     {
       "name": "spring.security.oauth2.authorization-server.request-matcher",
-      "type": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties$RequestMatcher",
+      "type": "org.laokou.auth.oauth2.config.OAuth2AuthorizationServerProperties$RequestMatcher",
       "description": "RequestMatcher配置.",
-      "sourceType": "org.laokou.auth.server.infrastructure.config.OAuth2AuthorizationServerProperties"
+      "sourceType": "org.laokou.auth.oauth2.config.OAuth2AuthorizationServerProperties"
     }
   ]
 }
