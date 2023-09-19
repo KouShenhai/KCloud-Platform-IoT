@@ -72,9 +72,19 @@ public interface Constant {
 	String LIKE = "like";
 
 	/**
-	 * 引号
+	 * 双引号
 	 */
-	String QUOT = "\"";
+	String DOUBLE_QUOT = "\"";
+
+	/**
+	 * 单引号
+	 */
+	String SINGLE_QUOT = "'";
+
+	/**
+	 * 空
+	 */
+	String EMPTY = "";
 
 	/**
 	 * 并

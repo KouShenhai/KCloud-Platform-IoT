@@ -34,6 +34,8 @@ import org.laokou.common.i18n.utils.StringUtil;
 
 import java.util.Map;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.Constant.SINGLE_QUOT;
 import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
 
 /**
@@ -45,7 +47,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 	@Override
 	public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
 			ResultHandler resultHandler, BoundSql boundSql) {
-		if (parameter instanceof Map map) {
+		if (parameter instanceof Map<?,?> map) {
 			try {
 				Object obj = map.get(SQL_FILTER);
 				if (obj != null && StringUtil.isNotEmpty(obj.toString())) {
@@ -63,7 +65,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 						AndExpression andExpression = new AndExpression(expression, new StringValue(sqlFilter));
 						plainSelect.setWhere(andExpression);
 					}
-					String newSql = select.toString().replaceAll("'", "");
+					String newSql = select.toString().replaceAll(SINGLE_QUOT, EMPTY);
 					// 新sql写入
 					PluginUtils.mpBoundSql(boundSql).sql(newSql);
 				}

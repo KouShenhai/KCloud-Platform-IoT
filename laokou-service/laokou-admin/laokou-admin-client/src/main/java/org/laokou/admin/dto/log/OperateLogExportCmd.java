@@ -19,13 +19,12 @@ package org.laokou.admin.dto.log;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-public class OperateLogExportCmd extends CommonCommand {
+public class OperateLogExportCmd extends OperateLogListQry {
 
     private HttpServletResponse response;
 
