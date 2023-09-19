@@ -89,3 +89,6 @@ spring:
       httpserver:
         # netty日志
         wiretap: false
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

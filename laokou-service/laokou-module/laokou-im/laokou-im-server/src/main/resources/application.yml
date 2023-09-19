@@ -35,3 +35,6 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

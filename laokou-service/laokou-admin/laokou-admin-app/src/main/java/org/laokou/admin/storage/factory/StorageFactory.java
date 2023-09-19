@@ -14,13 +14,15 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.storage;
+package org.laokou.admin.storage.factory;
 
 import com.amazonaws.services.s3.AmazonS3;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
+import org.laokou.admin.storage.AmazonS3StorageService;
+import org.laokou.admin.storage.StorageService;
 import org.laokou.common.algorithm.template.select.AbstractSelectAlgorithm;
 import org.laokou.common.algorithm.template.select.HashSelectAlgorithm;
 import org.laokou.common.core.utils.CollectionUtil;

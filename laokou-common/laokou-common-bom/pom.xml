@@ -96,8 +96,6 @@
         <shardingsphere.version>5.3.2</shardingsphere.version>
         <!--p6spy版本-->
         <p6spy.version>3.9.1</p6spy.version>
-        <!--logback-kafka-appender版本-->
-        <logback-kafka-appender.version>0.2.0-RC2</logback-kafka-appender.version>
         <!--rocketmq-logappender版本-->
         <rocketmq-logappender.version>5.0.0-PREVIEW</rocketmq-logappender.version>
         <!--kafka版本-->
@@ -108,11 +106,18 @@
         <gson.version>2.10.1</gson.version>
         <!--swagger版本-->
         <swagger.version>2.2.15</swagger.version>
+        <!--disruptor版本-->
+        <disruptor.version>3.4.4</disruptor.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>${disruptor.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-annotations-jakarta</artifactId>
@@ -264,11 +269,6 @@
                 <version>${kafka.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.danielwegener</groupId>
-                <artifactId>logback-kafka-appender</artifactId>
-                <version>${logback-kafka-appender.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>p6spy</groupId>
                 <artifactId>p6spy</artifactId>
                 <version>${p6spy.version}</version>
@@ -311,11 +311,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-algorithm</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-logback</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
