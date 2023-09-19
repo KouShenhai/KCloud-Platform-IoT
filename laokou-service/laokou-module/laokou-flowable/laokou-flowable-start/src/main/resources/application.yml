@@ -61,3 +61,6 @@ flowable:
   enable-history-cleaning: true
   # 一周后清理历史记录
   history-cleaning-after: 7
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

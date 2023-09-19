@@ -41,3 +41,6 @@ spring:
   cloud:
     config:
       initialize-on-context-refresh: true
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

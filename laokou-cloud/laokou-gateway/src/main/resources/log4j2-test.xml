@@ -29,7 +29,7 @@
         <!-- 日志文件大小 -->
         <property name="LOG_ROLL_SIZE" value="500 MB"/>
         <!-- 服务名称 -->
-        <property name="APP_NAME" value="laokou-auth"/>
+        <property name="APP_NAME" value="laokou-gateway"/>
         <!-- -Dlog4j.skipJansi=false -->
         <!-- 日志格式 -->
         <!--
