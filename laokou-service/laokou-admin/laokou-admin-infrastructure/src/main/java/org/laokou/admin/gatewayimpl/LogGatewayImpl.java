@@ -28,6 +28,7 @@ import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.springframework.stereotype.Component;
@@ -53,7 +54,16 @@ public class LogGatewayImpl implements LogGateway {
     @DataFilter(alias = BOOT_SYS_OPERATE_LOG)
     public Datas<OperateLog> operateList(OperateLog operateLog, User user, PageQuery pageQuery) {
         IPage<OperateLogDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-        IPage<OperateLogDO> newPage = operateLogMapper.getOperateListByTenantIdAndLikeModuleNameAndStatus(page, user.getTenantId(), operateLog.getModuleName(), operateLog.getStatus(), pageQuery.getSqlFilter());
+        IPage<OperateLogDO> newPage = operateLogMapper.getOperateListByTenantIdAndLikeModuleNameFilter(page, user.getTenantId(), operateLog.getModuleName(), operateLog.getStatus(), pageQuery.getSqlFilter());
+        Datas<OperateLog> datas = new Datas<>();
+        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),OperateLog.class));
+        datas.setTotal(newPage.getTotal());
+        return datas;
+    }
+
+    @Override
+    public Boolean operateExport(OperateLog operateLog, User user, PageQuery pageQuery) {
         return null;
     }
+
 }

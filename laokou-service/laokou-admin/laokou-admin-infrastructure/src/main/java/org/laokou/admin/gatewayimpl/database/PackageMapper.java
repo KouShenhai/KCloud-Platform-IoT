@@ -32,7 +32,7 @@ import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
 @Repository
 public interface PackageMapper extends BatchMapper<PackageDO> {
 
-	IPage<PackageDO> getPackageListByLikeName(IPage<PackageDO> page, @Param("name") String name,
+	IPage<PackageDO> getPackageListByLikeNameFilter(IPage<PackageDO> page, @Param("name") String name,
 			@Param(SQL_FILTER) String sqlFilter);
 
 }

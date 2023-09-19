@@ -50,7 +50,7 @@ public class LogsServiceImpl implements LogsServiceI {
 
 	@Override
 	public Result<Datas<OperateLogCO>> operateList(OperateLogListQry qry) {
-		return null;
+		return operateLogListQryExe.execute(qry);
 	}
 
 	@Override

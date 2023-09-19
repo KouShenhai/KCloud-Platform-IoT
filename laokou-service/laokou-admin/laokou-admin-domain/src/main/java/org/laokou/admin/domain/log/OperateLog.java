@@ -20,6 +20,8 @@ package org.laokou.admin.domain.log;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * @author laokou
  */
@@ -64,5 +66,8 @@ public class OperateLog {
 
     @Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
     private Long takeTime;
+
+    @Schema(name = "createDate", description = "创建时间")
+    private LocalDateTime createDate;
 
 }

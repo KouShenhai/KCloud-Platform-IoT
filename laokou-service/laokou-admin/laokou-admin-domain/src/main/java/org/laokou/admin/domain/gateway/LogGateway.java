@@ -32,4 +32,6 @@ public interface LogGateway {
 
     Datas<OperateLog> operateList(OperateLog operateLog, User user, PageQuery pageQuery);
 
+    Boolean operateExport(OperateLog operateLog, User user, PageQuery pageQuery);
+
 }
