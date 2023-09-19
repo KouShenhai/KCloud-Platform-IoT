@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.LogsServiceI;
-import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.log.LoginLogExportCmd;
 import org.laokou.admin.dto.log.LoginLogListQry;
 import org.laokou.admin.dto.log.OperateLogExportCmd;
@@ -75,7 +74,6 @@ public class LogsController {
 	@TraceLog
 	@PostMapping(value = "login-export")
 	@Operation(summary = "日志管理", description = "导出登录日志")
-	@OperateLog(module = "日志管理", operation = "导出登录日志")
 	@PreAuthorize("hasAuthority('logs:login-export')")
 	public Result<Boolean> loginExport(@RequestBody LoginLogExportCmd cmd) {
 		return logsServiceI.loginExport(cmd);
