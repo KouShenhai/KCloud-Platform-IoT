@@ -36,6 +36,6 @@ public interface LogsServiceI {
 
 	Result<Datas<LoginLogCO>> loginList(LoginLogListQry qry);
 
-	Result<Boolean> loginExport(LoginLogExportCmd cmd);
+	void loginExport(LoginLogExportCmd cmd);
 
 }

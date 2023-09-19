@@ -40,7 +40,7 @@ public class OperateLogExportCmdExe {
     @DataFilter(alias = BOOT_SYS_OPERATE_LOG)
     public void execute(OperateLogExportCmd cmd) {
         OperateLogMapper operateLogMapper = SpringContextUtil.getBean(OperateLogMapper.class);
-        ExcelUtil.export(cmd.getResponse(),buildOperateLog(cmd),cmd.getSqlFilter(),operateLogMapper, OperateLogExcel.class);
+        ExcelUtil.export(cmd.getResponse(), buildOperateLog(cmd), cmd.getSqlFilter(), operateLogMapper, OperateLogExcel.class);
     }
 
     private OperateLogDO buildOperateLog(OperateLogExportCmd cmd) {

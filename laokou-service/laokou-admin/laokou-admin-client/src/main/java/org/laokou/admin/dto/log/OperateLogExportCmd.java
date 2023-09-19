@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.log;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
 
@@ -26,6 +27,7 @@ import lombok.Data;
 @Data
 public class OperateLogExportCmd extends OperateLogListQry {
 
+    @JsonIgnore
     private HttpServletResponse response;
 
 }

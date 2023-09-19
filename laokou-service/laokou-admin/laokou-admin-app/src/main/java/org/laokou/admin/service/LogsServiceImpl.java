@@ -64,8 +64,8 @@ public class LogsServiceImpl implements LogsServiceI {
 	}
 
 	@Override
-	public Result<Boolean> loginExport(LoginLogExportCmd cmd) {
-		return null;
+	public void loginExport(LoginLogExportCmd cmd) {
+
 	}
 
 }
