@@ -14,28 +14,28 @@
  * limitations under the License.
  *
  */
-package org.laokou.api.server.controller;
 
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.secret.annotation.ApiSecret;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+package org.laokou.auth.module.oauth2.authentication;
+
+import org.springframework.security.core.Authentication;
+
+import java.util.Map;
+
+import static org.laokou.auth.common.Constant.AUTH_MOBILE;
 
 /**
  * @author laokou
  */
-@RestController
-@Slf4j
-public class ApiController {
+public class OAuth2MobileAuthenticationConverter extends AbstractOAuth2BaseAuthenticationConverter {
 
-	@ApiSecret
-	@GetMapping("/test")
-	public void test() {
-		log.info("测试验签，验签通过");
+	@Override
+	String getGrantType() {
+		return AUTH_MOBILE;
 	}
 
-	/**
-	 * 增加邮箱，验证码 API调用
-	 */
+	@Override
+	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
+		return new OAuth2MobileAuthenticationToken(clientPrincipal, additionalParameters);
+	}
 
 }

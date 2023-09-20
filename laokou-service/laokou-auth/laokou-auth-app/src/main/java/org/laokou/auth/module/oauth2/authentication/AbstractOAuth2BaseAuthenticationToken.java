@@ -15,27 +15,28 @@
  *
  */
 
-package org.laokou.auth.oauth2.authentication;
+package org.laokou.auth.module.oauth2.authentication;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationGrantAuthenticationToken;
 
 import java.util.Map;
-
-import static org.laokou.auth.common.Constant.AUTH_MAIL;
 
 /**
  * @author laokou
  */
-public class OAuth2MailAuthenticationToken extends AbstractOAuth2BaseAuthenticationToken {
+public abstract class AbstractOAuth2BaseAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
 
 	/**
 	 * Sub-class constructor.
+	 * @param authorizationGrantType
 	 * @param clientPrincipal the authenticated client principal
 	 * @param additionalParameters the additional parameters
 	 */
-	protected OAuth2MailAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		super(new AuthorizationGrantType(AUTH_MAIL), clientPrincipal, additionalParameters);
+	protected AbstractOAuth2BaseAuthenticationToken(AuthorizationGrantType authorizationGrantType,
+			Authentication clientPrincipal, Map<String, Object> additionalParameters) {
+		super(authorizationGrantType, clientPrincipal, additionalParameters);
 	}
 
 }

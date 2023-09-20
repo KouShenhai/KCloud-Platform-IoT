@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.auth.oauth2.authentication;
+package org.laokou.auth.module.oauth2.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -36,19 +36,19 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.common.BizCode.CAPTCHA_NOT_NULL;
-import static org.laokou.auth.common.BizCode.MAIL_NOT_NULL;
-import static org.laokou.auth.common.Constant.AUTH_MAIL;
-import static org.laokou.auth.common.Constant.MAIL;
-import static org.laokou.auth.common.exception.ErrorCode.MAIL_ERROR;
+import static org.laokou.auth.common.BizCode.MOBILE_NOT_NULL;
+import static org.laokou.auth.common.Constant.AUTH_MOBILE;
+import static org.laokou.auth.common.Constant.MOBILE;
+import static org.laokou.auth.common.exception.ErrorCode.MOBILE_ERROR;
 
 /**
  * @author laokou
  */
 @Slf4j
 @Component
-public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
+public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthenticationProvider {
 
-	public OAuth2MailAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway,
+	public OAuth2MobileAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway,
 			PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway,
 			OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
 			SourceGateway sourceGateway, RedisUtil redisUtil, LoginLogGateway loginLogGateway) {
@@ -58,33 +58,32 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 
 	@Override
 	public boolean supports(Class<?> authentication) {
-		return OAuth2MailAuthenticationToken.class.isAssignableFrom(authentication);
+		return OAuth2MobileAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 
 	@Override
 	Authentication login(HttpServletRequest request) {
-		// 判断验证码
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
 			throw OAuth2ExceptionHandler.getException(CAPTCHA_NOT_NULL, MessageUtil.getMessage(CAPTCHA_NOT_NULL));
 		}
-		String mail = request.getParameter(MAIL);
-		log.info("邮箱：{}", SensitiveUtil.format(TypeEnum.MAIL, mail));
-		if (StringUtil.isEmpty(mail)) {
-			throw OAuth2ExceptionHandler.getException(MAIL_NOT_NULL, MessageUtil.getMessage(MAIL_NOT_NULL));
+		String mobile = request.getParameter(MOBILE);
+		log.info("手机：{}", SensitiveUtil.format(TypeEnum.MOBILE, mobile));
+		if (StringUtil.isEmpty(mobile)) {
+			throw OAuth2ExceptionHandler.getException(MOBILE_NOT_NULL, MessageUtil.getMessage(MOBILE_NOT_NULL));
 		}
-		boolean isMail = RegexUtil.mailRegex(mail);
-		if (!isMail) {
-			throw OAuth2ExceptionHandler.getException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
+		boolean isMobile = RegexUtil.mobileRegex(mobile);
+		if (!isMobile) {
+			throw OAuth2ExceptionHandler.getException(MOBILE_ERROR, MessageUtil.getMessage(MOBILE_ERROR));
 		}
 		// 获取用户信息,并认证信息
-		return super.getUserInfo(mail, "", request, code, mail);
+		return super.getUserInfo(mobile, "", request, code, mobile);
 	}
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return new AuthorizationGrantType(AUTH_MAIL);
+		return new AuthorizationGrantType(AUTH_MOBILE);
 	}
 
 }

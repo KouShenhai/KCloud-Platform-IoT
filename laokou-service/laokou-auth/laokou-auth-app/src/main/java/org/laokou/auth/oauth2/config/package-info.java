@@ -1,1 +1,0 @@
-package org.laokou.auth.oauth2.config;

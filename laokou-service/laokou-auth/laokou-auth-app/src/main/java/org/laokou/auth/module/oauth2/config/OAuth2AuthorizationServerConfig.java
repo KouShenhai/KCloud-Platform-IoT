@@ -14,12 +14,13 @@
  * limitations under the License.
  *
  */
-package org.laokou.auth.oauth2.config;
+package org.laokou.auth.module.oauth2.config;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.laokou.auth.module.oauth2.authentication.*;
 import org.laokou.auth.oauth2.authentication.*;
 import org.laokou.auth.service.UsersServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

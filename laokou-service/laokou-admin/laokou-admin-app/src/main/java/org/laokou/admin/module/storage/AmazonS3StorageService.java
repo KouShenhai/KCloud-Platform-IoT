@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.storage;
+package org.laokou.admin.module.storage;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;

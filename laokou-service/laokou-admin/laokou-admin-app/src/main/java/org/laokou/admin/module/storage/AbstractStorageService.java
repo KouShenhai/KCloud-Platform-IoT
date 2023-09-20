@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.storage;
+package org.laokou.admin.module.storage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
