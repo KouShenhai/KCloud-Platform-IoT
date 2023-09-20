@@ -15,23 +15,28 @@
  *
  */
 
-package org.laokou.admin.command.monitor.query;
+package org.laokou.admin.service;
 
-import org.laokou.admin.dto.monitor.MonitorServerGetQry;
-import org.laokou.admin.dto.monitor.clientobject.ServerCO;
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.api.TokensServiceI;
+import org.laokou.admin.command.token.qry.TokenGetQryExe;
+import org.laokou.admin.dto.token.TokenGetQry;
+import org.laokou.admin.dto.token.clientobject.TokenCO;
 import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-@Component
-public class MonitorServerGetQryExe {
+@Service
+@RequiredArgsConstructor
+public class TokensServiceIImpl implements TokensServiceI {
 
-	public Result<ServerCO> execute(MonitorServerGetQry qry) {
-		ServerCO serverCO = new ServerCO();
-		serverCO.copyTo();
-		return Result.of(serverCO);
+	private final TokenGetQryExe tokenGetQryExe;
+
+	@Override
+	public Result<TokenCO> generate(TokenGetQry qry) {
+		return tokenGetQryExe.execute(qry);
 	}
 
 }

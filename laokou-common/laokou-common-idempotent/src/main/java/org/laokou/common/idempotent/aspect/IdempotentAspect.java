@@ -67,10 +67,10 @@ public class IdempotentAspect {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String requestId = request.getHeader(REQUEST_ID);
 		if (StringUtil.isEmpty(requestId)) {
-			throw new GlobalException("提交失败，令牌不为空");
+			throw new GlobalException("提交失败，令牌不能为空");
 		}
-		String idempotentTokenKey = RedisKeyUtil.getIdempotentTokenKey(requestId);
-		Boolean result = redisUtil.execute(REDIS_SCRIPT, Collections.singletonList(idempotentTokenKey));
+		String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(requestId);
+		Boolean result = redisUtil.execute(REDIS_SCRIPT, Collections.singletonList(apiIdempotentKey));
 		if (!result) {
 			throw new GlobalException("不可重复提交请求");
 		}

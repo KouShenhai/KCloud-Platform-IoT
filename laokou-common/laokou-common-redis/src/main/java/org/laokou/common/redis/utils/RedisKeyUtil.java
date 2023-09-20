@@ -92,10 +92,10 @@ public final class RedisKeyUtil {
 	}
 
 	/**
-	 * 接口幂等性令牌Key
+	 * 接口幂等性Key
 	 */
-	public static String getIdempotentTokenKey(String token) {
-		return "idempotent:token:" + token;
+	public static String getApiIdempotentKey(String token) {
+		return "api:idempotent:" + token;
 	}
 
 }
