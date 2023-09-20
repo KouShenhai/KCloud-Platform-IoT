@@ -28,7 +28,7 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 public interface LogGateway {
 
-    Datas<LoginLog> loginList();
+    Datas<LoginLog> loginList(LoginLog loginLog,User user,PageQuery pageQuery);
 
     Datas<OperateLog> operateList(OperateLog operateLog, User user, PageQuery pageQuery);
 

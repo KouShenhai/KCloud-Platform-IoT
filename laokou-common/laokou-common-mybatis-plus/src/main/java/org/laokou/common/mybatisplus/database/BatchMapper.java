@@ -22,11 +22,14 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
+import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
 
 /**
  * @author laokou
@@ -65,5 +68,7 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 		}
 		return value.getVersion();
 	}
+
+	void resultListFilter(@Param("param") T param, ResultHandler<T> handler, @Param(SQL_FILTER)String sqlFilter);
 
 }

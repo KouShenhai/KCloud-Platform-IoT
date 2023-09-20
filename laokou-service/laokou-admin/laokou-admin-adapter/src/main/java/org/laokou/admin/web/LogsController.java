@@ -77,7 +77,8 @@ public class LogsController {
 	@Operation(summary = "日志管理", description = "导出登录日志")
 	@PreAuthorize("hasAuthority('logs:login-export')")
 	@OperateLog(module = "日志管理",operation = "导出登录日志")
-	public void loginExport(@RequestBody LoginLogExportCmd cmd) {
+	public void loginExport(@RequestBody LoginLogExportCmd cmd,HttpServletResponse response) {
+		cmd.setResponse(response);
 		logsServiceI.loginExport(cmd);
 	}
 

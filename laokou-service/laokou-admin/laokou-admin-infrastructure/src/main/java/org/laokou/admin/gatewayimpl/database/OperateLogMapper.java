@@ -22,7 +22,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
-import org.laokou.common.mybatisplus.handler.ExcelResultHandler;
 import org.springframework.stereotype.Repository;
 
 import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
@@ -33,7 +32,7 @@ import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID
  */
 @Repository
 @Mapper
-public interface OperateLogMapper extends BatchMapper<OperateLogDO>, ExcelResultHandler<OperateLogDO> {
+public interface OperateLogMapper extends BatchMapper<OperateLogDO> {
 
     IPage<OperateLogDO> getOperateListByTenantIdAndLikeModuleNameFilter(IPage<OperateLogDO> page
             , @Param(TENANT_ID)Long tenantId

@@ -18,6 +18,16 @@
 package org.laokou.admin.command.log.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.LogGateway;
+import org.laokou.admin.domain.log.LoginLog;
+import org.laokou.admin.domain.user.User;
+import org.laokou.admin.dto.log.LoginLogListQry;
+import org.laokou.admin.dto.log.clientobject.LoginLogCO;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +36,16 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class LoginLogListQryExe {
+
+    private final LogGateway logGateway;
+
+    public Result<Datas<LoginLogCO>> execute(LoginLogListQry qry) {
+        LoginLog loginLog = ConvertUtil.sourceToTarget(qry, LoginLog.class);
+        Datas<LoginLog> newPage = logGateway.loginList(loginLog, new User(UserUtil.getTenantId()), new PageQuery(qry.getPageNum(), qry.getPageSize()));
+        Datas<LoginLogCO> datas = new Datas<>();
+        datas.setTotal(newPage.getTotal());
+        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), LoginLogCO.class));
+        return Result.of(datas);
+    }
 
 }

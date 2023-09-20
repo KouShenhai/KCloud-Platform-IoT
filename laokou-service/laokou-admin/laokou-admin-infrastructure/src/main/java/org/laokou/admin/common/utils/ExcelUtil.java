@@ -29,7 +29,8 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.mybatisplus.handler.ExcelResultHandler;
+import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -50,19 +51,19 @@ public class ExcelUtil {
     private static final String CONTENT_DISPOSITION_VALUE = "attachment;filename=";
     private static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
-   public static <DO> void export(HttpServletResponse response,DO param,String sqlFilter, ExcelResultHandler<DO> excelResultHandler,Class<?> clazz) {
-       export(DEFAULT_SIZE,response,param,sqlFilter,excelResultHandler,clazz);
+   public static <T extends BaseDO> void export(HttpServletResponse response, T param, String sqlFilter, BatchMapper<T> batchMapper, Class<?> clazz) {
+       export(DEFAULT_SIZE,response,param,sqlFilter,batchMapper,clazz);
    }
 
    @SneakyThrows
-   public static <DO> void export(int size, HttpServletResponse response,DO param,String sqlFilter, ExcelResultHandler<DO> excelResultHandler,Class<?> clazz) {
+   public static <T extends BaseDO> void export(int size, HttpServletResponse response, T param, String sqlFilter, BatchMapper<T> batchMapper, Class<?> clazz) {
        try (ServletOutputStream out = response.getOutputStream();
             ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
            // https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
            // 设置请求头
            header(response);
-           List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
-           excelResultHandler.resultListFilter(param, resultContext -> {
+           List<T> list = Collections.synchronizedList(new ArrayList<>(size));
+           batchMapper.resultListFilter(param, resultContext -> {
                list.add(resultContext.getResultObject());
                if (list.size() % size == 0) {
                    writeSheet(list, clazz, excelWriter);
