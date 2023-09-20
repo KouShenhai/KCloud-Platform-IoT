@@ -41,12 +41,12 @@ public class MonitorsServiceImpl implements MonitorsServiceI {
 
 	@Override
 	public Result<CacheCO> cache(MonitorCacheGetQry qry) {
-		return null;
+		return monitorCacheGetQryExe.execute(qry);
 	}
 
 	@Override
 	public Result<ServerCO> server(MonitorServerGetQry qry) {
-		return null;
+		return monitorServerGetQryExe.execute(qry);
 	}
 
 }

@@ -18,6 +18,9 @@
 package org.laokou.admin.command.monitor.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dto.monitor.MonitorServerGetQry;
+import org.laokou.admin.dto.monitor.clientobject.ServerCO;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +29,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MonitorServerGetQryExe {
+
+    public Result<ServerCO> execute(MonitorServerGetQry qry) {
+        ServerCO serverCO = new ServerCO();
+        serverCO.copyTo();
+        return Result.of(serverCO);
+    }
 
 }
