@@ -30,6 +30,7 @@ import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.Cache;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -120,6 +121,7 @@ public class UsersController {
 		return usersServiceI.resetPassword(cmd);
 	}
 
+	@Idempotent
 	@TraceLog
 	@PostMapping
 	@Operation(summary = "用户管理", description = "新增用户")

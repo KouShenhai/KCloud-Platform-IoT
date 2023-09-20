@@ -16,9 +16,14 @@
  */
 package org.laokou.common.idempotent.annotation;
 
+import java.lang.annotation.*;
+
 /**
  * @author laokou
  */
+@Target({ ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface Idempotent {
 
 }
