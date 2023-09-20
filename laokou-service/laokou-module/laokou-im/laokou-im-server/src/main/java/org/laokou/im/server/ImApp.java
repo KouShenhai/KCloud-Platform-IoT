@@ -32,8 +32,10 @@ import static org.laokou.common.i18n.common.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class, ReactiveSecurityAutoConfiguration.class,
-		ReactiveManagementWebSecurityAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
+@SpringBootApplication(scanBasePackages = "org.laokou",
+		exclude = { SecurityAutoConfiguration.class, ReactiveSecurityAutoConfiguration.class,
+				ReactiveManagementWebSecurityAutoConfiguration.class,
+				ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableEncryptableProperties
 @EnableDiscoveryClient
 public class ImApp {

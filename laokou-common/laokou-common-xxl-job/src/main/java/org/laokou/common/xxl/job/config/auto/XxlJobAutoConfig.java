@@ -22,13 +22,11 @@ import org.laokou.common.xxl.job.config.XxlJobProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author laokou
  */
 @AutoConfiguration
-@ComponentScan("org.laokou.common.xxl.job")
 @ConditionalOnClass(XxlJobProperties.class)
 public class XxlJobAutoConfig {
 

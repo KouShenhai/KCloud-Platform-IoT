@@ -19,7 +19,6 @@ package org.laokou.common.trace.config.auto;
 
 import org.laokou.common.trace.interceptor.TraceInterceptor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -27,7 +26,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author laokou
  */
 @AutoConfiguration
-@ComponentScan("org.laokou.common.trace")
 public class TraceAutoConfig implements WebMvcConfigurer {
 
 	@Override

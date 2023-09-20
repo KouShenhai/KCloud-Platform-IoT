@@ -35,7 +35,7 @@ import static org.laokou.common.i18n.common.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class })
+@SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy(exposeProxy = true)

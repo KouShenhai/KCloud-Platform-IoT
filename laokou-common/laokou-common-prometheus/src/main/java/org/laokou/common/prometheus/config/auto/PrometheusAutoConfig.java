@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 /**
@@ -29,7 +28,6 @@ import org.springframework.core.env.Environment;
  */
 @AutoConfiguration
 @RequiredArgsConstructor
-@ComponentScan("org.laokou.common.prometheus")
 public class PrometheusAutoConfig {
 
 	private final Environment environment;

@@ -24,7 +24,6 @@ import org.laokou.common.core.utils.RequestUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 
 import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
 import static org.laokou.common.core.constant.BizConstant.TRACE_ID;
@@ -35,7 +34,6 @@ import static org.laokou.common.core.constant.BizConstant.TRACE_ID;
  * @author laokou
  */
 @AutoConfiguration
-@ComponentScan("org.laokou.common.openfeign")
 public class OpenFeignAutoConfig implements RequestInterceptor {
 
 	@Bean

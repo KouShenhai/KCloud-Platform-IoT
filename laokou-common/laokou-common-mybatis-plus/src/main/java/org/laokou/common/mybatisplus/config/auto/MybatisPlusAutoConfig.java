@@ -32,7 +32,6 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.TransactionOperations;
@@ -42,13 +41,12 @@ import javax.sql.DataSource;
 import java.net.InetAddress;
 
 /**
- * mybatis-plus的配置
+ * mybatis-plus配置
  *
  * @author laokou
  */
 @AutoConfiguration
 @ConditionalOnClass({ DataSource.class })
-@ComponentScan("org.laokou.common.mybatisplus")
 public class MybatisPlusAutoConfig {
 
 	@Bean

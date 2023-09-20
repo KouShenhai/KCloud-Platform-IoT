@@ -1,1 +1,0 @@
-package org.laokou.common.log4j2.config.auto;
