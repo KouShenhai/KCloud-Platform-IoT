@@ -34,10 +34,8 @@ import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID
 @Mapper
 public interface OperateLogMapper extends BatchMapper<OperateLogDO> {
 
-    IPage<OperateLogDO> getOperateListByTenantIdAndLikeModuleNameFilter(IPage<OperateLogDO> page
-            , @Param(TENANT_ID)Long tenantId
-            , @Param("moduleName")String moduleName
-            , @Param("status")Integer status
-            , @Param(SQL_FILTER)String sqlFilter);
+	IPage<OperateLogDO> getOperateListByTenantIdAndLikeModuleNameFilter(IPage<OperateLogDO> page,
+			@Param(TENANT_ID) Long tenantId, @Param("moduleName") String moduleName, @Param("status") Integer status,
+			@Param(SQL_FILTER) String sqlFilter);
 
 }

@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MonitorServerGetQryExe {
 
-    public Result<ServerCO> execute(MonitorServerGetQry qry) {
-        ServerCO serverCO = new ServerCO();
-        serverCO.copyTo();
-        return Result.of(serverCO);
-    }
+	public Result<ServerCO> execute(MonitorServerGetQry qry) {
+		ServerCO serverCO = new ServerCO();
+		serverCO.copyTo();
+		return Result.of(serverCO);
+	}
 
 }

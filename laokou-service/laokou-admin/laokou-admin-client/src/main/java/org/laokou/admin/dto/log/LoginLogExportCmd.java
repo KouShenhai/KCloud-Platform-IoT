@@ -27,7 +27,7 @@ import lombok.Data;
 @Data
 public class LoginLogExportCmd extends LoginLogListQry {
 
-    @JsonIgnore
-    private HttpServletResponse response;
+	@JsonIgnore
+	private HttpServletResponse response;
 
 }

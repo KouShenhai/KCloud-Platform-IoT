@@ -47,7 +47,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 	@Override
 	public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
 			ResultHandler resultHandler, BoundSql boundSql) {
-		if (parameter instanceof Map<?,?> map) {
+		if (parameter instanceof Map<?, ?> map) {
 			try {
 				Object obj = map.get(SQL_FILTER);
 				if (obj != null && StringUtil.isNotEmpty(obj.toString())) {

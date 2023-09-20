@@ -36,6 +36,8 @@ import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
 @DS(SHARDING_SPHERE_READWRITE)
 public interface LoginLogMapper extends BatchMapper<LoginLogDO> {
 
-    IPage<LoginLogDO> getLoginLogByTenantIdAndLikeUsernameFilter(IPage<LoginLogDO> page,@Param("tenantId")Long tenantId,@Param("username")String username,@Param("status")Integer status,@Param(SQL_FILTER)String sqlFilter);
+	IPage<LoginLogDO> getLoginLogByTenantIdAndLikeUsernameFilter(IPage<LoginLogDO> page,
+			@Param("tenantId") Long tenantId, @Param("username") String username, @Param("status") Integer status,
+			@Param(SQL_FILTER) String sqlFilter);
 
 }

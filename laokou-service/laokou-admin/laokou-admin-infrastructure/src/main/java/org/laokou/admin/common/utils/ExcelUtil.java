@@ -44,64 +44,72 @@ import java.util.List;
 @Slf4j
 public class ExcelUtil {
 
-    private static final int DEFAULT_SIZE = 1000;
-    private static final String EXCEL_SUFFIX = ".xlsx";
-    private static final String CONTENT_TYPE_VALUE = "application/vnd.ms-excel";
-    private static final String CONTENT_DISPOSITION = "Content-disposition";
-    private static final String CONTENT_DISPOSITION_VALUE = "attachment;filename=";
-    private static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
+	private static final int DEFAULT_SIZE = 1000;
 
-   public static <T extends BaseDO> void export(HttpServletResponse response, T param, String sqlFilter, BatchMapper<T> batchMapper, Class<?> clazz) {
-       export(DEFAULT_SIZE,response,param,sqlFilter,batchMapper,clazz);
-   }
+	private static final String EXCEL_SUFFIX = ".xlsx";
 
-   @SneakyThrows
-   public static <T extends BaseDO> void export(int size, HttpServletResponse response, T param, String sqlFilter, BatchMapper<T> batchMapper, Class<?> clazz) {
-       try (ServletOutputStream out = response.getOutputStream();
-            ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
-           // https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
-           // 设置请求头
-           header(response);
-           List<T> list = Collections.synchronizedList(new ArrayList<>(size));
-           batchMapper.resultListFilter(param, resultContext -> {
-               list.add(resultContext.getResultObject());
-               if (list.size() % size == 0) {
-                   writeSheet(list, clazz, excelWriter);
-               }
-           },sqlFilter);
-           if (list.size() % size != 0) {
-               writeSheet(list, clazz, excelWriter);
-           }
-           // 刷新数据
-           excelWriter.finish();
-       } catch (Exception e) {
-           log.error("错误信息：{}",e.getMessage());
-           fail(response);
-       }
-   }
+	private static final String CONTENT_TYPE_VALUE = "application/vnd.ms-excel";
 
-   @SneakyThrows
-   private static void fail(HttpServletResponse response) {
-       response.reset();
-       response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
-       response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-       response.getWriter().println(JacksonUtil.toJsonStr(Result.fail("导出失败")));
-   }
+	private static final String CONTENT_DISPOSITION = "Content-disposition";
 
-   private static void header(HttpServletResponse response) {
-       String fileName = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + EXCEL_SUFFIX;
-       response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-       response.setContentType(CONTENT_TYPE_VALUE);
-       response.setHeader(CONTENT_DISPOSITION,
-               CONTENT_DISPOSITION_VALUE + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + EXCEL_SUFFIX);
-       response.addHeader(ACCESS_CONTROL_EXPOSE_HEADERS, CONTENT_DISPOSITION);
-   }
+	private static final String CONTENT_DISPOSITION_VALUE = "attachment;filename=";
 
-    private static <DO> void writeSheet(List<DO> list, Class<?> clazz, ExcelWriter excelWriter) {
-        WriteSheet writeSheet = EasyExcel.writerSheet().head(clazz).build();
-        // 写数据
-        excelWriter.write(ConvertUtil.sourceToTarget(list, clazz), writeSheet);
-        list.clear();
-    }
+	private static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
+
+	public static <T extends BaseDO> void export(HttpServletResponse response, T param, String sqlFilter,
+			BatchMapper<T> batchMapper, Class<?> clazz) {
+		export(DEFAULT_SIZE, response, param, sqlFilter, batchMapper, clazz);
+	}
+
+	@SneakyThrows
+	public static <T extends BaseDO> void export(int size, HttpServletResponse response, T param, String sqlFilter,
+			BatchMapper<T> batchMapper, Class<?> clazz) {
+		try (ServletOutputStream out = response.getOutputStream();
+				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
+			// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
+			// 设置请求头
+			header(response);
+			List<T> list = Collections.synchronizedList(new ArrayList<>(size));
+			batchMapper.resultListFilter(param, resultContext -> {
+				list.add(resultContext.getResultObject());
+				if (list.size() % size == 0) {
+					writeSheet(list, clazz, excelWriter);
+				}
+			}, sqlFilter);
+			if (list.size() % size != 0) {
+				writeSheet(list, clazz, excelWriter);
+			}
+			// 刷新数据
+			excelWriter.finish();
+		}
+		catch (Exception e) {
+			log.error("错误信息：{}", e.getMessage());
+			fail(response);
+		}
+	}
+
+	@SneakyThrows
+	private static void fail(HttpServletResponse response) {
+		response.reset();
+		response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+		response.getWriter().println(JacksonUtil.toJsonStr(Result.fail("导出失败")));
+	}
+
+	private static void header(HttpServletResponse response) {
+		String fileName = DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + EXCEL_SUFFIX;
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+		response.setContentType(CONTENT_TYPE_VALUE);
+		response.setHeader(CONTENT_DISPOSITION,
+				CONTENT_DISPOSITION_VALUE + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + EXCEL_SUFFIX);
+		response.addHeader(ACCESS_CONTROL_EXPOSE_HEADERS, CONTENT_DISPOSITION);
+	}
+
+	private static <DO> void writeSheet(List<DO> list, Class<?> clazz, ExcelWriter excelWriter) {
+		WriteSheet writeSheet = EasyExcel.writerSheet().head(clazz).build();
+		// 写数据
+		excelWriter.write(ConvertUtil.sourceToTarget(list, clazz), writeSheet);
+		list.clear();
+	}
 
 }

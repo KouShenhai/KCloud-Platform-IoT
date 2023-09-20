@@ -59,4 +59,5 @@ public class OperateLogHandler implements ApplicationListener<OperateLogEvent> {
 			}
 		}, taskExecutor);
 	}
+
 }

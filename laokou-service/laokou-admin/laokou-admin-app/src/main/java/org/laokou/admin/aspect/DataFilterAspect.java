@@ -88,8 +88,9 @@ public class DataFilterAspect {
 		sqlFilter.append(LEFT);
 		if (CollectionUtil.isNotEmpty(deptPaths)) {
 			for (String deptPath : deptPaths) {
-				sqlFilter.append(alias).append(deptPathColumn).append(SPACE).append(LIKE).append(SPACE).append(DOUBLE_QUOT)
-						.append(deptPath.trim()).append(PERCENT).append(DOUBLE_QUOT).append(SPACE).append(OR).append(SPACE);
+				sqlFilter.append(alias).append(deptPathColumn).append(SPACE).append(LIKE).append(SPACE)
+						.append(DOUBLE_QUOT).append(deptPath.trim()).append(PERCENT).append(DOUBLE_QUOT).append(SPACE)
+						.append(OR).append(SPACE);
 			}
 		}
 		sqlFilter.append(alias).append(userIdColumn).append(SPACE).append(EQUAL).append(SPACE).append(DOUBLE_QUOT)

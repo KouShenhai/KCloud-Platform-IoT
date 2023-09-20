@@ -20,5 +20,6 @@ package org.laokou.common.i18n.dto;
 /**
  * @author laokou
  */
-public abstract class Excel extends DTO{
+public abstract class Excel extends DTO {
+
 }

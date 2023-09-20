@@ -37,15 +37,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoginLogListQryExe {
 
-    private final LogGateway logGateway;
+	private final LogGateway logGateway;
 
-    public Result<Datas<LoginLogCO>> execute(LoginLogListQry qry) {
-        LoginLog loginLog = ConvertUtil.sourceToTarget(qry, LoginLog.class);
-        Datas<LoginLog> newPage = logGateway.loginList(loginLog, new User(UserUtil.getTenantId()), new PageQuery(qry.getPageNum(), qry.getPageSize()));
-        Datas<LoginLogCO> datas = new Datas<>();
-        datas.setTotal(newPage.getTotal());
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), LoginLogCO.class));
-        return Result.of(datas);
-    }
+	public Result<Datas<LoginLogCO>> execute(LoginLogListQry qry) {
+		LoginLog loginLog = ConvertUtil.sourceToTarget(qry, LoginLog.class);
+		Datas<LoginLog> newPage = logGateway.loginList(loginLog, new User(UserUtil.getTenantId()),
+				new PageQuery(qry.getPageNum(), qry.getPageSize()));
+		Datas<LoginLogCO> datas = new Datas<>();
+		datas.setTotal(newPage.getTotal());
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), LoginLogCO.class));
+		return Result.of(datas);
+	}
 
 }

@@ -44,29 +44,32 @@ import static org.laokou.admin.common.DsConstant.BOOT_SYS_OPERATE_LOG;
 @RequiredArgsConstructor
 public class LogGatewayImpl implements LogGateway {
 
-    private final OperateLogMapper operateLogMapper;
-    private final LoginLogMapper loginLogMapper;
+	private final OperateLogMapper operateLogMapper;
 
-    @Override
-    @DataFilter(alias = BOOT_SYS_LOGIN_LOG)
-    public Datas<LoginLog> loginList(LoginLog loginLog,User user,PageQuery pageQuery) {
-        IPage<LoginLogDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-        IPage<LoginLogDO> newPage = loginLogMapper.getLoginLogByTenantIdAndLikeUsernameFilter(page, user.getTenantId(), loginLog.getUsername(), loginLog.getStatus(), pageQuery.getSqlFilter());
-        Datas<LoginLog> datas = new Datas<>();
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),LoginLog.class));
-        datas.setTotal(newPage.getTotal());
-        return datas;
-    }
+	private final LoginLogMapper loginLogMapper;
 
-    @Override
-    @DataFilter(alias = BOOT_SYS_OPERATE_LOG)
-    public Datas<OperateLog> operateList(OperateLog operateLog, User user, PageQuery pageQuery) {
-        IPage<OperateLogDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-        IPage<OperateLogDO> newPage = operateLogMapper.getOperateListByTenantIdAndLikeModuleNameFilter(page, user.getTenantId(), operateLog.getModuleName(), operateLog.getStatus(), pageQuery.getSqlFilter());
-        Datas<OperateLog> datas = new Datas<>();
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),OperateLog.class));
-        datas.setTotal(newPage.getTotal());
-        return datas;
-    }
+	@Override
+	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
+	public Datas<LoginLog> loginList(LoginLog loginLog, User user, PageQuery pageQuery) {
+		IPage<LoginLogDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+		IPage<LoginLogDO> newPage = loginLogMapper.getLoginLogByTenantIdAndLikeUsernameFilter(page, user.getTenantId(),
+				loginLog.getUsername(), loginLog.getStatus(), pageQuery.getSqlFilter());
+		Datas<LoginLog> datas = new Datas<>();
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), LoginLog.class));
+		datas.setTotal(newPage.getTotal());
+		return datas;
+	}
+
+	@Override
+	@DataFilter(alias = BOOT_SYS_OPERATE_LOG)
+	public Datas<OperateLog> operateList(OperateLog operateLog, User user, PageQuery pageQuery) {
+		IPage<OperateLogDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+		IPage<OperateLogDO> newPage = operateLogMapper.getOperateListByTenantIdAndLikeModuleNameFilter(page,
+				user.getTenantId(), operateLog.getModuleName(), operateLog.getStatus(), pageQuery.getSqlFilter());
+		Datas<OperateLog> datas = new Datas<>();
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), OperateLog.class));
+		datas.setTotal(newPage.getTotal());
+		return datas;
+	}
 
 }

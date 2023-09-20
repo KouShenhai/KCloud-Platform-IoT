@@ -69,6 +69,6 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 		return value.getVersion();
 	}
 
-	void resultListFilter(@Param("param") T param, ResultHandler<T> handler, @Param(SQL_FILTER)String sqlFilter);
+	void resultListFilter(@Param("param") T param, ResultHandler<T> handler, @Param(SQL_FILTER) String sqlFilter);
 
 }

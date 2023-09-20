@@ -37,18 +37,19 @@ import static org.laokou.admin.common.DsConstant.BOOT_SYS_LOGIN_LOG;
 @RequiredArgsConstructor
 public class LoginLogExportCmdExe {
 
-    @DataFilter(alias = BOOT_SYS_LOGIN_LOG)
-    public void execute(LoginLogExportCmd cmd) {
-        LoginLogMapper loginLogMapper = SpringContextUtil.getBean(LoginLogMapper.class);
-        ExcelUtil.export(cmd.getResponse(), buildLoginLog(cmd), cmd.getSqlFilter(), loginLogMapper, LoginLogExcel.class);
-    }
+	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
+	public void execute(LoginLogExportCmd cmd) {
+		LoginLogMapper loginLogMapper = SpringContextUtil.getBean(LoginLogMapper.class);
+		ExcelUtil.export(cmd.getResponse(), buildLoginLog(cmd), cmd.getSqlFilter(), loginLogMapper,
+				LoginLogExcel.class);
+	}
 
-    private LoginLogDO buildLoginLog(LoginLogExportCmd cmd) {
-        LoginLogDO loginLogDO = new LoginLogDO();
-        loginLogDO.setTenantId(UserUtil.getTenantId());
-        loginLogDO.setUsername(cmd.getUsername());
-        loginLogDO.setStatus(cmd.getStatus());
-        return loginLogDO;
-    }
+	private LoginLogDO buildLoginLog(LoginLogExportCmd cmd) {
+		LoginLogDO loginLogDO = new LoginLogDO();
+		loginLogDO.setTenantId(UserUtil.getTenantId());
+		loginLogDO.setUsername(cmd.getUsername());
+		loginLogDO.setStatus(cmd.getStatus());
+		return loginLogDO;
+	}
 
 }

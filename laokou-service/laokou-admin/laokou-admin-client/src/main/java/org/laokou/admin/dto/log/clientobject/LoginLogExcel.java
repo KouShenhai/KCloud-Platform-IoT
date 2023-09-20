@@ -30,67 +30,67 @@ import java.time.LocalDateTime;
 @Data
 public class LoginLogExcel extends Excel {
 
-    /**
-     * 登录的用户名
-     */
-    @ColumnWidth(30)
-    @ExcelProperty(value = "用户名称",index = 0)
-    private String username;
+	/**
+	 * 登录的用户名
+	 */
+	@ColumnWidth(30)
+	@ExcelProperty(value = "用户名称", index = 0)
+	private String username;
 
-    /**
-     * 登录的IP地址
-     */
-    @ColumnWidth(30)
-    @ExcelProperty(value = "登录地址",index = 1)
-    private String ip;
+	/**
+	 * 登录的IP地址
+	 */
+	@ColumnWidth(30)
+	@ExcelProperty(value = "登录地址", index = 1)
+	private String ip;
 
-    /**
-     * 登录的归属地
-     */
-    @ColumnWidth(30)
-    @ExcelProperty(value = "登录地点",index = 2)
-    private String address;
+	/**
+	 * 登录的归属地
+	 */
+	@ColumnWidth(30)
+	@ExcelProperty(value = "登录地点", index = 2)
+	private String address;
 
-    /**
-     * 登录的浏览器
-     */
-    @ColumnWidth(30)
-    @ExcelProperty(value = "浏览器",index = 3)
-    private String browser;
+	/**
+	 * 登录的浏览器
+	 */
+	@ColumnWidth(30)
+	@ExcelProperty(value = "浏览器", index = 3)
+	private String browser;
 
-    /**
-     * 登录的操作系统
-     */
-    @ColumnWidth(30)
-    @ExcelProperty(value = "操作系统",index = 4)
-    private String os;
+	/**
+	 * 登录的操作系统
+	 */
+	@ColumnWidth(30)
+	@ExcelProperty(value = "操作系统", index = 4)
+	private String os;
 
-    /**
-     * 登录状态 0登录成功 1登录失败
-     */
-    @ColumnWidth(30)
-    @ExcelProperty(value = "登录状态",index = 5)
-    private Integer status;
+	/**
+	 * 登录状态 0登录成功 1登录失败
+	 */
+	@ColumnWidth(30)
+	@ExcelProperty(value = "登录状态", index = 5)
+	private Integer status;
 
-    /**
-     * 登录信息
-     */
-    @ColumnWidth(30)
-    @ExcelProperty(value = "登录信息",index = 6)
-    private String message;
+	/**
+	 * 登录信息
+	 */
+	@ColumnWidth(30)
+	@ExcelProperty(value = "登录信息", index = 6)
+	private String message;
 
-    /**
-     * 登录类型
-     */
-    @ColumnWidth(30)
-    @ExcelProperty(value = "登录类型",index = 7)
-    private String type;
+	/**
+	 * 登录类型
+	 */
+	@ColumnWidth(30)
+	@ExcelProperty(value = "登录类型", index = 7)
+	private String type;
 
-    /**
-     * 登录时间
-     */
-    @ColumnWidth(30)
-    @ExcelProperty(value = "登录时间",index = 8)
-    private LocalDateTime createDate;
+	/**
+	 * 登录时间
+	 */
+	@ColumnWidth(30)
+	@ExcelProperty(value = "登录时间", index = 8)
+	private LocalDateTime createDate;
 
 }
