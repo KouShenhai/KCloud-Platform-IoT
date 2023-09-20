@@ -20,10 +20,57 @@ package org.laokou.admin.dto.log.clientobject;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.time.LocalDateTime;
+
 /**
  * @author laokou
  */
 @Data
 public class LoginLogCO extends ClientObject {
+
+    /**
+     * 登录的用户名
+     */
+    private String username;
+
+    /**
+     * 登录的IP地址
+     */
+    private String ip;
+
+    /**
+     * 登录的归属地
+     */
+    private String address;
+
+    /**
+     * 登录的浏览器
+     */
+    private String browser;
+
+    /**
+     * 登录的操作系统
+     */
+    private String os;
+
+    /**
+     * 登录状态 0登录成功 1登录失败
+     */
+    private Integer status;
+
+    /**
+     * 登录信息
+     */
+    private String message;
+
+    /**
+     * 登录类型
+     */
+    private String type;
+
+    /**
+     * 登录时间
+     */
+    private LocalDateTime createDate;
 
 }

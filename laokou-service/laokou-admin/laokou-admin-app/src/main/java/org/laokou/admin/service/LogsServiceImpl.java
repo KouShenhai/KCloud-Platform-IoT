@@ -60,7 +60,7 @@ public class LogsServiceImpl implements LogsServiceI {
 
 	@Override
 	public Result<Datas<LoginLogCO>> loginList(LoginLogListQry qry) {
-		return null;
+		return loginLogListQryExe.execute(qry);
 	}
 
 	@Override

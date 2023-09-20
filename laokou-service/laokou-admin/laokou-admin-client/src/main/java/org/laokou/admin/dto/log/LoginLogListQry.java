@@ -19,6 +19,7 @@ package org.laokou.admin.dto.log;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * @author laokou
@@ -26,4 +27,10 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class LoginLogListQry extends PageQuery {
 
+    private String username;
+    private Integer status;
+
+    public void setUsername(String username) {
+        this.username = StringUtil.like(username);
+    }
 }
