@@ -49,10 +49,12 @@ nacos:
         enabled: true
       enable:
         userAgentAuthWhite: false
-      enabled: false
+      enabled: true
       plugin:
         nacos:
           token:
+            cache:
+              enable: false
             expire:
               seconds: 18000
             secret:
