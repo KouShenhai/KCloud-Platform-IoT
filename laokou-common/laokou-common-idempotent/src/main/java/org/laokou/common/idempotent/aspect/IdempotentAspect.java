@@ -64,8 +64,7 @@ public class IdempotentAspect {
 
 	@Before("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
 	public void doBefore() {
-		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		String requestId = request.getHeader(REQUEST_ID);
+		String requestId = getRequestId();
 		if (StringUtil.isEmpty(requestId)) {
 			throw new GlobalException("提交失败，令牌不能为空");
 		}
@@ -74,6 +73,15 @@ public class IdempotentAspect {
 		if (!result) {
 			throw new GlobalException("不可重复提交请求");
 		}
+	}
+
+	private String getRequestId() {
+		HttpServletRequest request = RequestUtil.getHttpServletRequest();
+		String requestId = request.getHeader(REQUEST_ID);
+		if (StringUtil.isEmpty(requestId)) {
+			return request.getParameter(REQUEST_ID);
+		}
+		return requestId;
 	}
 
 }
