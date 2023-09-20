@@ -29,6 +29,7 @@ import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.Cache;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -60,6 +61,7 @@ public class OssController {
 		return ossServiceI.upload(new OssUploadCmd(file));
 	}
 
+	@Idempotent
 	@TraceLog
 	@PostMapping
 	@Operation(summary = "存储管理", description = "新增存储")
