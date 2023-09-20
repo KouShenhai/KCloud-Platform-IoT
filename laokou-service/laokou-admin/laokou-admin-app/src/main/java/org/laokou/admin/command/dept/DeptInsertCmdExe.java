@@ -48,9 +48,6 @@ public class DeptInsertCmdExe {
 		if (count > 0) {
 			throw new GlobalException("部门已存在，请重新填写");
 		}
-		if (deptCO.getId().equals(deptCO.getPid())) {
-			throw new GlobalException("上级部门不能为当前部门");
-		}
 		return Result.of(deptGateway.insert(DeptConvertor.toEntity(deptCO)));
 	}
 
