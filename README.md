@@ -250,12 +250,16 @@ GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KClou
 
 ### 🐭 鸣谢组织
 [Spring社区](https://spring.io)  
-[阿里巴巴社区](https://github.com/alibaba/spring-cloud-alibaba)  
+[Jetbrains社区](https://www.jetbrains.com/community)  
+[阿里巴巴社区](https://github.com/alibaba)  
 [人人社区](https://www.renren.io)   
 [若依社区](https://www.ruoyi.vip)  
-[苞米豆社区](https://baomidou.com/)  
+[苞米豆社区](https://baomidou.com)  
 [livk-cloud社区](https://gitter.im/livk-cloud/community)  
 [laokouyun社区](https://github.com/laokouyun)  
+
+非常感谢 Jetbrains 提供的许可证    
+<a href="https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support"><img alt="暂无图片" width="100" height="100" src="doc/image/jb_beam.png"/></a>
 
 ### 🐼 鸣谢个人
 <a href="https://github.com/KouShenhai" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/KouShenhai/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
