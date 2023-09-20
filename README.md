@@ -58,25 +58,25 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 
 ### ✂ 技术体系
 #### 🎯 Spring全家桶及核心技术版本
-| 组件                          | 版本           |
-|:----------------------------|:-------------|
-| Spring Boot                 | 3.1.3        |
-| Spring Cloud                | 2022.0.4     |
-| Spring Cloud Alibaba        | 2022.0.0.0   |
-| Spring Boot Admin           | 3.1.5        |
-| Spring Authorization Server | 1.1.2        |
-| Mybatis Plus                | 3.5.3.2      |
-| Nacos                       | 2.2.0.1      |
-| Seata                       | 1.7.0        |
-| Sentinel                    | 1.8.6        |
-| Mysql                       | 8.0.33       |
-| Redis                       | 7.0.11       |
-| Elasticsearch               | 8.6.2        |
-| RocketMQ                    | 5.1.1        |
-| Flowable                    | 7.0.0.M2     |
-| ShardingSphere              | 5.3.2        |
-| OpenResty                   | 1.21.4.1     |
-| Netty                       | 4.1.96.Final |
+| 组件                          | 版本              |
+|:----------------------------|:----------------|
+| Spring Boot                 | 3.1.3           |
+| Spring Cloud                | 2022.0.4        |
+| Spring Cloud Alibaba        | 2022.0.0.0      |
+| Spring Boot Admin           | 3.1.5           |
+| Spring Authorization Server | 1.1.2           |
+| Mybatis Plus                | 3.5.3.2         |
+| Nacos                       | 2.2.4-OEM       |
+| Seata                       | 1.7.0           |
+| Sentinel                    | 1.8.6           |
+| Mysql                       | 8.0.33          |
+| Redis                       | 7.0.11          |
+| Elasticsearch               | 8.6.2           |
+| RocketMQ                    | 5.1.1           |
+| Flowable                    | 7.0.0.M2        |
+| ShardingSphere              | 5.3.2           |
+| OpenResty                   | 1.21.4.1        |
+| Netty                       | 4.1.96.Final    |
 
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos

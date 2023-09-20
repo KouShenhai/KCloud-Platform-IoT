@@ -64,6 +64,8 @@ public class ServiceUtil {
 		Properties properties = new Properties();
 		properties.put(PropertyKeyConst.NAMESPACE, nacosDiscoveryProperties.getNamespace());
 		properties.put(PropertyKeyConst.SERVER_ADDR, nacosDiscoveryProperties.getServerAddr());
+		properties.put(PropertyKeyConst.USERNAME, nacosDiscoveryProperties.getUsername());
+		properties.put(PropertyKeyConst.PASSWORD, nacosDiscoveryProperties.getPassword());
 		return NacosFactory.createNamingService(properties);
 	}
 

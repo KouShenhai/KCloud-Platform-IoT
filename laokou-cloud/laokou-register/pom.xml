@@ -28,9 +28,9 @@
 
     <properties>
         <!--nacos版本-->
-        <nacos.version>2.2.0.1</nacos.version>
+        <nacos.version>2.2.4-OEM</nacos.version>
         <!--spring-boot版本-->
-        <spring-boot.version>2.7.10</spring-boot.version>
+        <spring-boot.version>2.7.15</spring-boot.version>
     </properties>
 
     <dependencies>
