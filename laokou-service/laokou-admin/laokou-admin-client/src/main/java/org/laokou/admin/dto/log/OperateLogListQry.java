@@ -28,12 +28,13 @@ import org.laokou.common.i18n.utils.StringUtil;
 @Data
 public class OperateLogListQry extends PageQuery {
 
-    private Integer status;
+	private Integer status;
 
-    @Schema(name = "moduleName", description = "操作的模块名称")
-    private String moduleName;
+	@Schema(name = "moduleName", description = "操作的模块名称")
+	private String moduleName;
 
-    public void setModuleName(String moduleName) {
-        this.moduleName = StringUtil.like(moduleName);
-    }
+	public void setModuleName(String moduleName) {
+		this.moduleName = StringUtil.like(moduleName);
+	}
+
 }

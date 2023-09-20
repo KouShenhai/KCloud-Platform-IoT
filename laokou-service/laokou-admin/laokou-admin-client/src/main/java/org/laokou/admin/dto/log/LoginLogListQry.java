@@ -27,10 +27,12 @@ import org.laokou.common.i18n.utils.StringUtil;
 @Data
 public class LoginLogListQry extends PageQuery {
 
-    private String username;
-    private Integer status;
+	private String username;
 
-    public void setUsername(String username) {
-        this.username = StringUtil.like(username);
-    }
+	private Integer status;
+
+	public void setUsername(String username) {
+		this.username = StringUtil.like(username);
+	}
+
 }

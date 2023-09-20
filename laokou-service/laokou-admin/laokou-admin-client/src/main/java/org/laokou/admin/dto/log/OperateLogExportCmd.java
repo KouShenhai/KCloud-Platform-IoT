@@ -27,7 +27,7 @@ import lombok.Data;
 @Data
 public class OperateLogExportCmd extends OperateLogListQry {
 
-    @JsonIgnore
-    private HttpServletResponse response;
+	@JsonIgnore
+	private HttpServletResponse response;
 
 }

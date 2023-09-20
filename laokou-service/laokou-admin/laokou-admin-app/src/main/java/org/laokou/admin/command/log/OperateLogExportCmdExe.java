@@ -37,18 +37,19 @@ import static org.laokou.admin.common.DsConstant.BOOT_SYS_OPERATE_LOG;
 @RequiredArgsConstructor
 public class OperateLogExportCmdExe {
 
-    @DataFilter(alias = BOOT_SYS_OPERATE_LOG)
-    public void execute(OperateLogExportCmd cmd) {
-        OperateLogMapper operateLogMapper = SpringContextUtil.getBean(OperateLogMapper.class);
-        ExcelUtil.export(cmd.getResponse(), buildOperateLog(cmd), cmd.getSqlFilter(), operateLogMapper, OperateLogExcel.class);
-    }
+	@DataFilter(alias = BOOT_SYS_OPERATE_LOG)
+	public void execute(OperateLogExportCmd cmd) {
+		OperateLogMapper operateLogMapper = SpringContextUtil.getBean(OperateLogMapper.class);
+		ExcelUtil.export(cmd.getResponse(), buildOperateLog(cmd), cmd.getSqlFilter(), operateLogMapper,
+				OperateLogExcel.class);
+	}
 
-    private OperateLogDO buildOperateLog(OperateLogExportCmd cmd) {
-        OperateLogDO operateLogDO = new OperateLogDO();
-        operateLogDO.setTenantId(UserUtil.getTenantId());
-        operateLogDO.setModuleName(cmd.getModuleName());
-        operateLogDO.setStatus(cmd.getStatus());
-        return operateLogDO;
-    }
+	private OperateLogDO buildOperateLog(OperateLogExportCmd cmd) {
+		OperateLogDO operateLogDO = new OperateLogDO();
+		operateLogDO.setTenantId(UserUtil.getTenantId());
+		operateLogDO.setModuleName(cmd.getModuleName());
+		operateLogDO.setStatus(cmd.getStatus());
+		return operateLogDO;
+	}
 
 }
