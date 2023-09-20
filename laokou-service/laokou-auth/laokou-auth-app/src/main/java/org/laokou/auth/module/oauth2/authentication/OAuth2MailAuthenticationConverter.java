@@ -15,7 +15,7 @@
  * 
  */
 
-package org.laokou.auth.oauth2.authentication;
+package org.laokou.auth.module.oauth2.authentication;
 
 import org.springframework.security.core.Authentication;
 
