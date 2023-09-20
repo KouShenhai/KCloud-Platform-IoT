@@ -17,6 +17,7 @@
 package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,12 +38,17 @@ public class PageQuery extends Query {
 	private static final long serialVersionUID = 6412915892334241813L;
 
 	@NotNull(message = "显示页码不为空")
+	@Min(value = 1)
 	@Schema(name = "pageNum", description = "页码")
 	private Integer pageNum;
 
 	@NotNull(message = "显示条数不为空")
 	@Schema(name = "pageSize", description = "条数")
+	@Min(value = 1)
 	private Integer pageSize;
+
+	@Schema(name = "pageIndex", description = "索引")
+	private Integer pageIndex;
 
 	@Schema(name = SQL_FILTER, description = "SQL拼接")
 	private String sqlFilter;
@@ -50,6 +56,13 @@ public class PageQuery extends Query {
 	public PageQuery(Integer pageNum, Integer pageSize) {
 		this.pageNum = pageNum;
 		this.pageSize = pageSize;
+	}
+
+	public Integer getPageIndex() {
+		if (pageNum > 0) {
+			return (pageNum - 1) * pageSize;
+		}
+		return 0;
 	}
 
 }

@@ -32,8 +32,9 @@ import static org.laokou.common.i18n.common.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication(exclude = { OAuth2AuthorizationServerAutoConfiguration.class,
-		OAuth2AuthorizationServerJwtAutoConfiguration.class })
+@SpringBootApplication(scanBasePackages = "org.laokou",
+		exclude = { OAuth2AuthorizationServerAutoConfiguration.class,
+				OAuth2AuthorizationServerJwtAutoConfiguration.class })
 @EnableConfigurationProperties
 @EnableEncryptableProperties
 @EnableDiscoveryClient

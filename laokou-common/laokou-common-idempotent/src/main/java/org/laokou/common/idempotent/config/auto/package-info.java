@@ -1,1 +1,0 @@
-package org.laokou.common.idempotent.config.auto;

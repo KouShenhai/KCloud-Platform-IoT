@@ -1,1 +1,0 @@
-package org.laokou.common.shardingsphere.config.auto;

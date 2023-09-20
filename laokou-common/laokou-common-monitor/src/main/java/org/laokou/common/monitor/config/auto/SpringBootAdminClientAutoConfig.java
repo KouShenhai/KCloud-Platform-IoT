@@ -66,7 +66,6 @@ import static org.springframework.web.reactive.function.client.ExchangeFilterFun
 /**
  * @author laokou
  */
-@ComponentScan(value = "org.laokou.common.monitor")
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnWebApplication
 @AutoConfiguration

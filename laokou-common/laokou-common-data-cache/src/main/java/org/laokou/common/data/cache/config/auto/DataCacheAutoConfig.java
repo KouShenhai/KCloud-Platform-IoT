@@ -22,7 +22,6 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
@@ -32,7 +31,6 @@ import java.util.concurrent.TimeUnit;
  * @author laokou
  */
 @AutoConfiguration
-@ComponentScan("org.laokou.common.data.cache")
 @ConditionalOnClass(LettuceConnectionFactory.class)
 public class DataCacheAutoConfig {
 

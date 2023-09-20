@@ -25,14 +25,12 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
 
 /**
  * @author laokou
  */
 @AutoConfiguration
-@ComponentScan("org.laokou.common.nacos")
 @Slf4j
 public class NacosAutoConfig {
 
