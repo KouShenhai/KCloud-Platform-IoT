@@ -64,4 +64,5 @@ public class PageQuery extends Query {
 		}
 		return 0;
 	}
+
 }
