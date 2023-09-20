@@ -65,7 +65,7 @@ public class LogsServiceImpl implements LogsServiceI {
 
 	@Override
 	public void loginExport(LoginLogExportCmd cmd) {
-
+		loginLogExportCmdExe.execute(cmd);
 	}
 
 }

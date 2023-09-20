@@ -17,17 +17,17 @@
 
 package org.laokou.admin.dto.log;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-public class LoginLogExportCmd extends CommonCommand {
+public class LoginLogExportCmd extends LoginLogListQry {
 
-	private String name;
-
-	private Integer status;
+    @JsonIgnore
+    private HttpServletResponse response;
 
 }

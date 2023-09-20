@@ -28,6 +28,7 @@
              , browser
              , os
              , `status`
+             , `type`
              , message
         from boot_sys_login_log
         where del_flag = 0
@@ -40,4 +41,27 @@
         </if>
         order by create_date desc
     </select>
+
+    <select id="resultListFilter" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO">
+        select create_date
+        , username
+        , ip
+        , address
+        , browser
+        , os
+        , `status`
+        , `type`
+        , message
+        from boot_sys_login_log
+        where del_flag = 0
+        and tenant_id = #{param.tenantId}
+        <if test="param.username != null and param.username != ''">
+            and `username` like #{param.username}
+        </if>
+        <if test="param.status != null">
+            and status = #{param.status}
+        </if>
+        order by create_date desc
+    </select>
+
 </mapper>

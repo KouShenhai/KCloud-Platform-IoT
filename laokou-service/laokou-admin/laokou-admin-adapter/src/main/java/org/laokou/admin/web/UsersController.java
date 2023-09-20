@@ -61,8 +61,8 @@ public class UsersController {
 	@PostMapping("online-list")
 	@PreAuthorize("hasAuthority('users:online-list')")
 	@Operation(summary = "在线用户", description = "查询在线用户列表")
-	public Result<Datas<UserOnlineCO>> onlineList() {
-		return usersServiceI.onlineList(new UserOnlineListQry());
+	public Result<Datas<UserOnlineCO>> onlineList(@RequestBody UserOnlineListQry qry) {
+		return usersServiceI.onlineList(qry);
 	}
 
 	@TraceLog
