@@ -15,6 +15,10 @@
  */
 package io.seata.server.storage.redis;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import io.seata.common.exception.RedisException;
 import io.seata.common.util.ConfigTools;
 import io.seata.common.util.StringUtils;
@@ -23,13 +27,15 @@ import io.seata.config.ConfigurationFactory;
 import io.seata.core.constants.ConfigurationKeys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import redis.clients.jedis.*;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolAbstract;
+import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisSentinelPool;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
-import static io.seata.common.DefaultValues.*;
+import static io.seata.common.DefaultValues.DEFAULT_REDIS_MAX_IDLE;
+import static io.seata.common.DefaultValues.DEFAULT_REDIS_MAX_TOTAL;
+import static io.seata.common.DefaultValues.DEFAULT_REDIS_MIN_IDLE;
 
 /**
  * @author funkye

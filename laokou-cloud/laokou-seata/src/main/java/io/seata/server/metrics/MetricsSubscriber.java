@@ -15,6 +15,11 @@
  */
 package io.seata.server.metrics;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
+
 import com.google.common.eventbus.Subscribe;
 import io.seata.core.event.GlobalTransactionEvent;
 import io.seata.core.model.GlobalStatus;
@@ -23,12 +28,10 @@ import io.seata.server.event.EventBusManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
-
-import static io.seata.metrics.IdConstants.*;
+import static io.seata.metrics.IdConstants.APP_ID_KEY;
+import static io.seata.metrics.IdConstants.GROUP_KEY;
+import static io.seata.metrics.IdConstants.STATUS_VALUE_AFTER_COMMITTED_KEY;
+import static io.seata.metrics.IdConstants.STATUS_VALUE_AFTER_ROLLBACKED_KEY;
 
 /**
  * Event subscriber for metrics

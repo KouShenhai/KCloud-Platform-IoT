@@ -59,10 +59,10 @@ public class ServerRunner implements CommandLineRunner, DisposableBean, Applicat
 			started = true;
 
 			long cost = System.currentTimeMillis() - start;
-			LOGGER.info(
-					"\r\n you can visit seata console UI on http://127.0.0.1:{}. \r\n you can visit seata console UI on https://127.0.0.1:{}. ",
-					this.port, this.port);
-			LOGGER.info("\r\n log path: {}.", this.logPath);
+			LOGGER.info("\r\n you can visit seata console UI on http://127.0.0.1:{}. \r\n log path: {}.", this.port,
+					this.logPath);
+			LOGGER.info("\r\n you can visit seata console UI on https://127.0.0.1:{}. \r\n log path: {}.", this.port,
+					this.logPath);
 			LOGGER.info("seata server started in {} millSeconds", cost);
 		}
 		catch (Throwable e) {

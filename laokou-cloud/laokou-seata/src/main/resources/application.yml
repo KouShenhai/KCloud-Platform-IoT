@@ -63,37 +63,16 @@ seata:
       group: @SEATA-GROUP@
       username: @NACOS-USERNAME@
       password: @NACOS-PASSWORD@
-      context-path:
-      data-id: seataServer.properties
   registry:
     type: nacos
     nacos:
-      application: ${spring.application.name}
       server-addr: @NACOS-DISCOVERY-ADDRESS@
       group: @SEATA-GROUP@
       namespace: @NACOS-NAMESPACE@
-      cluster: default
       username: @NACOS-USERNAME@
       password: @NACOS-PASSWORD@
-  store:
-    mode: db
-    db:
-      datasource: druid
-      db-type: mysql
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://@MYSQL-HOST@:@MYSQL-PORT@/@MYSQL-DB-SEATA@?rewriteBatchedStatements=true
-      user: @MYSQL-USERNAME@
-      password: @MYSQL-PASSWORD@
-      min-conn: 10
-      max-conn: 100
-      global-table: global_table
-      branch-table: branch_table
-      lock-table: lock_table
-      distributed-lock-table: distributed_lock
-      query-limit: 1000
-      max-wait: 5000
   security:
     secretKey: SeataSecretKey0c382ef121d778043159209298fd40bf3850a017
     tokenValidityInMilliseconds: 1800000
     ignore:
-      urls: /,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/api/v1/auth/login
+      urls: /,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.jpeg,/**/*.ico,/api/v1/auth/login
