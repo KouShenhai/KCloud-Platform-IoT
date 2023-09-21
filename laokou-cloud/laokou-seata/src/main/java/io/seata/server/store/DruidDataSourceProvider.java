@@ -15,11 +15,12 @@
  */
 package io.seata.server.store;
 
-import com.alibaba.druid.pool.DruidDataSource;
+import javax.sql.DataSource;
+
 import io.seata.common.loader.LoadLevel;
 import io.seata.core.store.db.AbstractDataSourceProvider;
+import com.alibaba.druid.pool.DruidDataSource;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 
 /**

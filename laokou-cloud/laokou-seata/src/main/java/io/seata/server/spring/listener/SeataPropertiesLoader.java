@@ -28,9 +28,19 @@ import org.springframework.core.annotation.Order;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertiesPropertySource;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
 
-import static io.seata.common.ConfigurationKeys.*;
+import static io.seata.common.ConfigurationKeys.FILE_ROOT_PREFIX_CONFIG;
+import static io.seata.common.ConfigurationKeys.FILE_ROOT_PREFIX_REGISTRY;
+import static io.seata.common.ConfigurationKeys.METRICS_PREFIX;
+import static io.seata.common.ConfigurationKeys.SEATA_FILE_PREFIX_ROOT_CONFIG;
+import static io.seata.common.ConfigurationKeys.SERVER_PREFIX;
+import static io.seata.common.ConfigurationKeys.STORE_PREFIX;
+import static io.seata.common.ConfigurationKeys.TRANSPORT_PREFIX;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SeataPropertiesLoader implements ApplicationContextInitializer<ConfigurableApplicationContext> {

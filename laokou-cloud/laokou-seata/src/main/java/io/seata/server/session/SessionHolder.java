@@ -15,6 +15,11 @@
  */
 package io.seata.server.session;
 
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
 import io.seata.common.ConfigurationKeys;
 import io.seata.common.XID;
 import io.seata.common.exception.ShouldNeverHappenException;
@@ -34,11 +39,6 @@ import io.seata.server.store.StoreConfig;
 import io.seata.server.store.StoreConfig.SessionMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 import static io.seata.common.DefaultValues.DEFAULT_DISTRIBUTED_LOCK_EXPIRE_TIME;
 
