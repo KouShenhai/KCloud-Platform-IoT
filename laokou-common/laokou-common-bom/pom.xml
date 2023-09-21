@@ -25,15 +25,15 @@
     <version>${laokou.version}</version>
     <packaging>pom</packaging>
     <properties>
-        <laokou.version>3.1.3</laokou.version>
+        <laokou.version>3.1.4</laokou.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.1.3</spring-boot.version>
+        <spring-boot.version>3.1.4</spring-boot.version>
         <!--lombok版本-->
         <lombok.version>1.18.26</lombok.version>
         <!--mysql版本-->
         <mysql.version>8.0.33</mysql.version>
         <!--admin版本-->
-        <spring-boot-admin.version>3.1.5</spring-boot-admin.version>
+        <spring-boot-admin.version>3.1.6</spring-boot-admin.version>
         <!--flowable版本-->
         <flowable.version>7.0.0.M2</flowable.version>
         <!--mybatis-plus版本 -->
@@ -73,7 +73,7 @@
         <!--spring-security-oauth2-authorization-server版本-->
         <spring-security-oauth2-authorization-server.version>1.1.2</spring-security-oauth2-authorization-server.version>
         <!--spring-boot-starter-oauth2-resource-server版本-->
-        <spring-boot-starter-oauth2-resource-server.version>3.1.3</spring-boot-starter-oauth2-resource-server.version>
+        <spring-boot-starter-oauth2-resource-server.version>3.1.4</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
         <aws-java-sdk-s3.version>1.12.267</aws-java-sdk-s3.version>
         <!--dynamic-datasource版本-->
@@ -152,11 +152,6 @@
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-flowable-app</artifactId>
                 <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-amqp</artifactId>
-                <version>${spring-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -305,11 +300,6 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-logstash-cllient</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-algorithm</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
@@ -336,11 +326,6 @@
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-jasypt</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-common-wechat-mp</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

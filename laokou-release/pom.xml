@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.koushenhai</groupId>
     <artifactId>laokou-release</artifactId>
-    <version>3.1.3-M1</version>
+    <version>3.1.4-M1</version>
     <name>laokou-release</name>
     <description>一个企业级微服务架构的云服务多租户SaaS平台</description>
     <url>https://koushenhai.github.io/KCloud-Platform-Alibaba</url>
