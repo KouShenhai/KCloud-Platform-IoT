@@ -35,7 +35,6 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.*;
@@ -47,6 +46,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AccessTokenAuthenticationToken;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2ClientAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
@@ -95,26 +95,27 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(OidcParameterNames.ID_TOKEN);
 
+	/**
+	 * 认证
+	 */
 	@SneakyThrows
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+	public Authentication authenticate(Authentication authentication) {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		return getToken(authentication, login(request));
+		return authenticate(authentication, principal(request));
 	}
 
 	/**
-	 * Token是否支持认证（provider）
+	 * @see OAuth2AuthorizationCodeAuthenticationProvider#supports(Class)
+	 * 是否支持认证（provider）
 	 * @param authentication 类型
 	 * @return boolean
 	 */
 	abstract public boolean supports(Class<?> authentication);
 
 	/**
-	 * 登录
-	 * @param request request
-	 * @return Authentication
-	 * @throws IOException IOException
+	 * 认证
 	 */
-	abstract Authentication login(HttpServletRequest request) throws IOException;
+	abstract Authentication principal(HttpServletRequest request) throws IOException;
 
 	/**
 	 * 认证类型
@@ -123,12 +124,12 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	abstract AuthorizationGrantType getGrantType();
 
 	/**
-	 * 获取token
+	 * 获取令牌
 	 * @param authentication authentication
 	 * @param principal principal
 	 * @return Authentication
 	 */
-	protected Authentication getToken(Authentication authentication, Authentication principal) {
+	protected Authentication authenticate(Authentication authentication, Authentication principal) {
 		// 仿照授权码模式
 		// 生成token（access_token + refresh_token）
 		AbstractOAuth2BaseAuthenticationToken auth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;
@@ -217,7 +218,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	 * @param uuid 唯一标识
 	 * @return UsernamePasswordAuthenticationToken
 	 */
-	protected UsernamePasswordAuthenticationToken getUserInfo(String username, String password,
+	protected UsernamePasswordAuthenticationToken authenticationToken(String username, String password,
 			HttpServletRequest request, String captcha, String uuid) {
 		AuthorizationGrantType grantType = getGrantType();
 		String type = grantType.getValue();

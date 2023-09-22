@@ -56,7 +56,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 	}
 
 	@Override
-	Authentication login(HttpServletRequest request) {
+	Authentication principal(HttpServletRequest request) {
 		// 判断唯一标识是否为空
 		String uuid = request.getParameter(UUID);
 		log.info("唯一标识：{}", uuid);
@@ -82,7 +82,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 			throw OAuth2ExceptionHandler.getException(PASSWORD_NOT_NULL, MessageUtil.getMessage(PASSWORD_NOT_NULL));
 		}
 		// 获取用户信息,并认证信息
-		return super.getUserInfo(username, password, request, captcha, uuid);
+		return super.authenticationToken(username, password, request, captcha, uuid);
 	}
 
 	@Override

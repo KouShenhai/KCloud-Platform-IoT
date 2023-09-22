@@ -62,7 +62,7 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 	}
 
 	@Override
-	Authentication login(HttpServletRequest request) {
+	Authentication principal(HttpServletRequest request) {
 		// 判断验证码
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
@@ -79,7 +79,7 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 			throw OAuth2ExceptionHandler.getException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
 		}
 		// 获取用户信息,并认证信息
-		return super.getUserInfo(mail, "", request, code, mail);
+		return super.authenticationToken(mail, "", request, code, mail);
 	}
 
 	@Override
