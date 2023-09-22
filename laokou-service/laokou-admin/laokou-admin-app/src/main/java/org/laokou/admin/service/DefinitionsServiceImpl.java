@@ -51,7 +51,7 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
 	@Override
 	public Result<Boolean> insert(DefinitionInsertCmd cmd) {
-		return null;
+		return definitionInsertCmdExe.execute(cmd);
 	}
 
 	@Override
