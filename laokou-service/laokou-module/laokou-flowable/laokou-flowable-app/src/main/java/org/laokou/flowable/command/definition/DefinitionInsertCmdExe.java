@@ -51,7 +51,7 @@ public class DefinitionInsertCmdExe {
 		String name = process.getName() + BPMN_FILE_SUFFIX;
 		long count = repositoryService.createDeploymentQuery().deploymentKey(key).count();
 		if (count > 0) {
-			throw new GlobalException("流程已存在，请重新上传");
+			throw new GlobalException("流程已存在，请更换流程图并上传");
 		}
 		return Result.of(deploy(key, name, bpmnModel));
 	}

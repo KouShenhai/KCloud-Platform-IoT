@@ -33,25 +33,25 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DefinitionSuspendCmdExe {
 
-    private final RepositoryService repositoryService;
+	private final RepositoryService repositoryService;
 
-    public Result<Boolean> execute(DefinitionSuspendCmd cmd) {
-        String definitionId = cmd.getDefinitionId();
-        final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-                .processDefinitionId(definitionId).singleResult();
-        if (!processDefinition.isSuspended()) {
-            return Result.of(suspend(definitionId));
-        }
-        else {
-            throw new GlobalException("挂起失败，流程已挂起");
-        }
-    }
+	public Result<Boolean> execute(DefinitionSuspendCmd cmd) {
+		String definitionId = cmd.getDefinitionId();
+		final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+				.processDefinitionId(definitionId).singleResult();
+		if (!processDefinition.isSuspended()) {
+			return Result.of(suspend(definitionId));
+		}
+		else {
+			throw new GlobalException("挂起失败，流程已挂起");
+		}
+	}
 
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean suspend(String definitionId) {
-        // 挂起
-        repositoryService.suspendProcessDefinitionById(definitionId, true, null);
-        return true;
-    }
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean suspend(String definitionId) {
+		// 挂起
+		repositoryService.suspendProcessDefinitionById(definitionId, true, null);
+		return true;
+	}
 
 }

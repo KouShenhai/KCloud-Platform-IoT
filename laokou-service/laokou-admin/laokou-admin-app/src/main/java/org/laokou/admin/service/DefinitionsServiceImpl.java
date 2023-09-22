@@ -61,26 +61,27 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
 	@Override
 	public Result<String> diagram(DefinitionDiagramGetQry qry) {
-		return null;
+		return definitionDiagramGetQryExe.execute(qry);
 	}
 
 	@Override
 	public Result<Boolean> delete(DefinitionDeleteCmd cmd) {
-		return null;
+		return definitionDeleteCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> suspend(DefinitionSuspendCmd cmd) {
-		return null;
+		return definitionSuspendCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> activate(DefinitionActiveCmd cmd) {
-		return null;
+		return definitionActiveCmdExe.execute(cmd);
 	}
 
 	@Override
 	public void template(DefinitionTemplateCmd qry) {
+		definitionTemplateCmdExe.executeVoid(qry);
 	}
 
 }

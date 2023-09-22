@@ -38,35 +38,35 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DefinitionListQryExe {
 
-    private final RepositoryService repositoryService;
+	private final RepositoryService repositoryService;
 
-    public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) {
-        String name = qry.getName();
-        ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().latestVersion()
-                .orderByProcessDefinitionKey().asc();
-        if (StringUtil.isNotEmpty(name)) {
-            query.processDefinitionNameLike(StringUtil.like(name));
-        }
-        long total = query.count();
-        int pageNum = qry.getPageNum();
-        int pageSize = qry.getPageSize();
-        int pageIndex = pageSize * (pageNum - 1);
-        List<ProcessDefinition> definitionList = query.listPage(pageIndex, pageSize);
-        List<DefinitionCO> list = new ArrayList<>(definitionList.size());
-        for (ProcessDefinition definition : definitionList) {
-            list.add(toDefinitionCO(definition));
-        }
-        return Result.of(new Datas<>(total,list));
-    }
+	public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) {
+		String name = qry.getName();
+		ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().latestVersion()
+				.orderByProcessDefinitionKey().asc();
+		if (StringUtil.isNotEmpty(name)) {
+			query.processDefinitionNameLike(StringUtil.like(name));
+		}
+		long total = query.count();
+		int pageNum = qry.getPageNum();
+		int pageSize = qry.getPageSize();
+		int pageIndex = pageSize * (pageNum - 1);
+		List<ProcessDefinition> definitionList = query.listPage(pageIndex, pageSize);
+		List<DefinitionCO> list = new ArrayList<>(definitionList.size());
+		for (ProcessDefinition definition : definitionList) {
+			list.add(toDefinitionCO(definition));
+		}
+		return Result.of(new Datas<>(total, list));
+	}
 
-    private DefinitionCO toDefinitionCO(ProcessDefinition definition) {
-        DefinitionCO co = new DefinitionCO();
-        co.setDefinitionId(definition.getId());
-        co.setProcessKey(definition.getKey());
-        co.setProcessName(definition.getName());
-        co.setDeploymentId(definition.getDeploymentId());
-        co.setIsSuspended(definition.isSuspended());
-        return co;
-    }
+	private DefinitionCO toDefinitionCO(ProcessDefinition definition) {
+		DefinitionCO co = new DefinitionCO();
+		co.setDefinitionId(definition.getId());
+		co.setProcessKey(definition.getKey());
+		co.setProcessName(definition.getName());
+		co.setDeploymentId(definition.getDeploymentId());
+		co.setIsSuspended(definition.isSuspended());
+		return co;
+	}
 
 }

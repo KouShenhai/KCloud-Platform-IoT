@@ -30,6 +30,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class DefinitionDeleteCmd extends CommonCommand {
 
-    private String deploymentId;
+	private String deploymentId;
 
 }

@@ -33,46 +33,46 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 
-    private final Throwable throwable;
+	private final Throwable throwable;
 
-    @Override
-    public Result<Boolean> insert(MultipartFile file) {
-        errLog();
-        return Result.fail("新增流程失败，请联系管理员");
-    }
+	@Override
+	public Result<Boolean> insert(MultipartFile file) {
+		errLog();
+		return Result.fail("新增流程失败，请联系管理员");
+	}
 
-    @Override
-    public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) {
-        errLog();
-        return Result.of(Datas.of());
-    }
+	@Override
+	public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) {
+		errLog();
+		return Result.of(Datas.of());
+	}
 
-    @Override
-    public Result<Boolean> suspend(String definitionId) {
-        errLog();
-        return Result.fail("挂起流程失败，请联系管理员");
-    }
+	@Override
+	public Result<Boolean> suspend(String definitionId) {
+		errLog();
+		return Result.fail("挂起流程失败，请联系管理员");
+	}
 
-    @Override
-    public Result<Boolean> activate(String definitionId) {
-        errLog();
-        return Result.fail("激活流程失败，请联系管理员");
-    }
+	@Override
+	public Result<Boolean> activate(String definitionId) {
+		errLog();
+		return Result.fail("激活流程失败，请联系管理员");
+	}
 
-    @Override
-    public Result<String> diagram(String definitionId) {
-        errLog();
-        return Result.fail("查看流程图失败，请联系管理员");
-    }
+	@Override
+	public Result<String> diagram(String definitionId) {
+		errLog();
+		return Result.fail("查看流程图失败，请联系管理员");
+	}
 
-    @Override
-    public Result<Boolean> delete(String deploymentId) {
-        errLog();
-        return Result.fail("删除流程失败，请联系管理员");
-    }
+	@Override
+	public Result<Boolean> delete(String deploymentId) {
+		errLog();
+		return Result.fail("删除流程失败，请联系管理员");
+	}
 
-    private void errLog() {
-        log.error("服务调用失败，报错原因：{}", throwable.getMessage());
-    }
+	private void errLog() {
+		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
+	}
 
 }

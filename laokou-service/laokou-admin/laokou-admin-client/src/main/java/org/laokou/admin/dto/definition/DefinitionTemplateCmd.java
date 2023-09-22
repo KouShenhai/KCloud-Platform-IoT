@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.definition;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +32,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class DefinitionTemplateCmd extends CommonCommand {
 
+	@JsonIgnore
 	private HttpServletResponse response;
 
 }

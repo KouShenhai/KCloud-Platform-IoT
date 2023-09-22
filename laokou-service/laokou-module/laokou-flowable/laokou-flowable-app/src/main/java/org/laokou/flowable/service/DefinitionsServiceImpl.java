@@ -39,10 +39,15 @@ import org.springframework.stereotype.Service;
 public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
 	private final DefinitionInsertCmdExe definitionInsertCmdExe;
+
 	private final DefinitionListQryExe definitionListQryExe;
+
 	private final DefinitionActiveCmdExe definitionActiveCmdExe;
+
 	private final DefinitionSuspendCmdExe definitionSuspendCmdExe;
+
 	private final DefinitionDeleteCmdExe definitionDeleteCmdExe;
+
 	private final DefinitionDiagramGetQryExe definitionDiagramGetQryExe;
 
 	@Override

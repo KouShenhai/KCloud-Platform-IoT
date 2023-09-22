@@ -32,10 +32,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DefinitionListQryExe {
 
-    private final DefinitionsFeignClient definitionsFeignClient;
+	private final DefinitionsFeignClient definitionsFeignClient;
 
-    public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) {
-        return definitionsFeignClient.list(qry);
-    }
+	public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) {
+		return definitionsFeignClient.list(qry);
+	}
 
 }

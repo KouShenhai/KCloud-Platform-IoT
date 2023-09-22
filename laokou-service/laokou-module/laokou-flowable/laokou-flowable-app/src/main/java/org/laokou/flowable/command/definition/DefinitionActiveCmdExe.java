@@ -33,24 +33,25 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DefinitionActiveCmdExe {
 
-    private final RepositoryService repositoryService;
+	private final RepositoryService repositoryService;
 
-    public Result<Boolean> execute(DefinitionActivateCmd cmd) {
-        String definitionId = cmd.getDefinitionId();
-        ProcessDefinition definition = repositoryService.createProcessDefinitionQuery().processDefinitionId(definitionId).singleResult();
-        if (definition.isSuspended()) {
-            return Result.of(activate(definitionId));
-        }
-        else {
-            throw new GlobalException("激活失败，流程已激活");
-        }
-    }
+	public Result<Boolean> execute(DefinitionActivateCmd cmd) {
+		String definitionId = cmd.getDefinitionId();
+		ProcessDefinition definition = repositoryService.createProcessDefinitionQuery()
+				.processDefinitionId(definitionId).singleResult();
+		if (definition.isSuspended()) {
+			return Result.of(activate(definitionId));
+		}
+		else {
+			throw new GlobalException("激活失败，流程已激活");
+		}
+	}
 
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean activate(String definitionId) {
-        // 激活
-        repositoryService.activateProcessDefinitionById(definitionId, true, null);
-        return true;
-    }
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean activate(String definitionId) {
+		// 激活
+		repositoryService.activateProcessDefinitionById(definitionId, true, null);
+		return true;
+	}
 
 }

@@ -18,6 +18,9 @@
 package org.laokou.admin.command.definition;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dto.definition.DefinitionActiveCmd;
+import org.laokou.admin.gatewayimpl.feign.DefinitionsFeignClient;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +29,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class DefinitionActiveCmdExe {
+
+	private final DefinitionsFeignClient definitionsFeignClient;
+
+	public Result<Boolean> execute(DefinitionActiveCmd cmd) {
+		return definitionsFeignClient.activate(cmd.getDefinitionId());
+	}
 
 }

@@ -26,29 +26,29 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 public class DefinitionCO extends ClientObject {
 
-    /**
-     * 定义ID
-     */
-    private String definitionId;
+	/**
+	 * 定义ID
+	 */
+	private String definitionId;
 
-    /**
-     * 流程名称
-     */
-    private String processName;
+	/**
+	 * 流程名称
+	 */
+	private String processName;
 
-    /**
-     * 流程KEY
-     */
-    private String processKey;
+	/**
+	 * 流程KEY
+	 */
+	private String processKey;
 
-    /**
-     * 部署ID
-     */
-    private String deploymentId;
+	/**
+	 * 部署ID
+	 */
+	private String deploymentId;
 
-    /**
-     * 流程状态 0激活 1挂起
-     */
-    private Boolean isSuspended;
+	/**
+	 * 流程状态 0激活 1挂起
+	 */
+	private Boolean isSuspended;
 
 }

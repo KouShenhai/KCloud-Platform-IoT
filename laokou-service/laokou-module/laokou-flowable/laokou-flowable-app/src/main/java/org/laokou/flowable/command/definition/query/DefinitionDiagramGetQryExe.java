@@ -42,27 +42,27 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class DefinitionDiagramGetQryExe {
 
-    private final RepositoryService repositoryService;
+	private final RepositoryService repositoryService;
 
-    public Result<String> execute(DefinitionDiagramGetQry qry) {
-        String definitionId = qry.getDefinitionId();
-        // 获取图片流
-        DefaultProcessDiagramGenerator diagramGenerator = new DefaultProcessDiagramGenerator();
-        BpmnModel bpmnModel = repositoryService.getBpmnModel(definitionId);
-        // 输出为图片
-        InputStream inputStream = diagramGenerator.generateDiagram(bpmnModel, "png", Collections.emptyList(),
-                Collections.emptyList(), "宋体", "宋体", "宋体", null, 1.0, false);
-        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-            BufferedImage image = ImageIO.read(inputStream);
-            if (null != image) {
-                ImageIO.write(image, "png", outputStream);
-            }
-            return Result.of(Base64.encodeBase64String(outputStream.toByteArray()));
-        }
-        catch (IOException e) {
-            log.error("错误信息：{}", e.getMessage());
-            return Result.of("");
-        }
-    }
+	public Result<String> execute(DefinitionDiagramGetQry qry) {
+		String definitionId = qry.getDefinitionId();
+		// 获取图片流
+		DefaultProcessDiagramGenerator diagramGenerator = new DefaultProcessDiagramGenerator();
+		BpmnModel bpmnModel = repositoryService.getBpmnModel(definitionId);
+		// 输出为图片
+		InputStream inputStream = diagramGenerator.generateDiagram(bpmnModel, "png", Collections.emptyList(),
+				Collections.emptyList(), "宋体", "宋体", "宋体", null, 1.0, false);
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			BufferedImage image = ImageIO.read(inputStream);
+			if (null != image) {
+				ImageIO.write(image, "png", outputStream);
+			}
+			return Result.of(Base64.encodeBase64String(outputStream.toByteArray()));
+		}
+		catch (IOException e) {
+			log.error("错误信息：{}", e.getMessage());
+			return Result.of("");
+		}
+	}
 
 }

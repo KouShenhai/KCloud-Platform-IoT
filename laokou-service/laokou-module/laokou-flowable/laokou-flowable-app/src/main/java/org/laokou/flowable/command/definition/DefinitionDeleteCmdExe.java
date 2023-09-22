@@ -31,13 +31,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DefinitionDeleteCmdExe {
 
-    private final RepositoryService repositoryService;
+	private final RepositoryService repositoryService;
 
-    @Transactional(rollbackFor = Exception.class)
-    public Result<Boolean> execute(DefinitionDeleteCmd cmd) {
-        // true允许级联删除 不设置会导致数据库关联异常
-        repositoryService.deleteDeployment(cmd.getDeploymentId(), true);
-        return Result.of(true);
-    }
+	@Transactional(rollbackFor = Exception.class)
+	public Result<Boolean> execute(DefinitionDeleteCmd cmd) {
+		// true允许级联删除 不设置会导致数据库关联异常
+		repositoryService.deleteDeployment(cmd.getDeploymentId(), true);
+		return Result.of(true);
+	}
 
 }
