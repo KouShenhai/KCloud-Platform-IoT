@@ -22,6 +22,7 @@ import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserStatusUpdateCmd;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,7 +35,13 @@ public class UserStatusUpdateCmdExe {
 	private final UserGateway userGateway;
 
 	public Result<Boolean> execute(UserStatusUpdateCmd cmd) {
-		return Result.of(userGateway.updateInfo(new User(cmd.getId(), cmd.getStatus())));
+		return Result.of(userGateway.updateInfo(toUser(cmd)));
+	}
+
+	private User toUser(UserStatusUpdateCmd cmd) {
+		User user = new User(cmd.getId(), cmd.getStatus());
+		user.setEditor(UserUtil.getUserId());
+		return user;
 	}
 
 }

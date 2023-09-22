@@ -15,17 +15,14 @@
  *
  */
 
-package org.laokou.admin.service;
+package org.laokou.flowable.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.api.DefinitionsServiceI;
-import org.laokou.admin.dto.definition.*;
-import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
-import org.laokou.admin.command.definition.*;
-import org.laokou.admin.command.definition.query.DefinitionDiagramGetQryExe;
-import org.laokou.admin.command.definition.query.DefinitionListQryExe;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.flowable.api.DefinitionsServiceI;
+import org.laokou.flowable.command.definition.DefinitionInsertCmdExe;
+import org.laokou.flowable.dto.definition.DefinitionInsertCmd;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,50 +34,34 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
 	private final DefinitionInsertCmdExe definitionInsertCmdExe;
 
-	private final DefinitionListQryExe definitionListQryExe;
-
-	private final DefinitionDiagramGetQryExe definitionDiagramGetQryExe;
-
-	private final DefinitionDeleteCmdExe definitionDeleteCmdExe;
-
-	private final DefinitionSuspendCmdExe definitionSuspendCmdExe;
-
-	private final DefinitionActiveCmdExe definitionActiveCmdExe;
-
-	private final DefinitionTemplateCmdExe definitionTemplateCmdExe;
-
 	@Override
 	public Result<Boolean> insert(DefinitionInsertCmd cmd) {
+		return definitionInsertCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<Datas<?>> list() {
 		return null;
 	}
 
 	@Override
-	public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) {
+	public Result<String> diagram() {
 		return null;
 	}
 
 	@Override
-	public Result<String> diagram(DefinitionDiagramGetQry qry) {
+	public Result<Boolean> delete() {
 		return null;
 	}
 
 	@Override
-	public Result<Boolean> delete(DefinitionDeleteCmd cmd) {
+	public Result<Boolean> suspend() {
 		return null;
 	}
 
 	@Override
-	public Result<Boolean> suspend(DefinitionSuspendCmd cmd) {
+	public Result<Boolean> activate() {
 		return null;
-	}
-
-	@Override
-	public Result<Boolean> activate(DefinitionActiveCmd cmd) {
-		return null;
-	}
-
-	@Override
-	public void template(DefinitionTemplateCmd qry) {
 	}
 
 }

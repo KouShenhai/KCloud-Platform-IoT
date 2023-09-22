@@ -25,6 +25,7 @@ import org.laokou.admin.convertor.PackageConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.PackageGateway;
 import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.PackageMapper;
 import org.laokou.admin.gatewayimpl.database.PackageMenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
@@ -36,7 +37,6 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,18 +62,18 @@ public class PackageGatewayImpl implements PackageGateway {
 	private final BatchUtil batchUtil;
 
 	@Override
-	public Boolean insert(Package pack) {
+	public Boolean insert(Package pack, User user) {
 		PackageDO packageDO = PackageConvertor.toDataObject(pack);
-		return insertPackage(packageDO, pack);
+		return insertPackage(packageDO, pack, user);
 	}
 
 	@Override
-	public Boolean update(Package pack) {
+	public Boolean update(Package pack, User user) {
 		Long id = pack.getId();
 		PackageDO packageDO = PackageConvertor.toDataObject(pack);
 		packageDO.setVersion(packageMapper.getVersion(id, PackageDO.class));
 		List<Long> ids = packageMenuMapper.getIdsByPackageId(id);
-		return updatePackage(packageDO, pack, ids);
+		return updatePackage(packageDO, pack, ids, user);
 	}
 
 	@Override
@@ -111,42 +111,46 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean insertPackage(PackageDO packageDO, Package pack) {
+	public Boolean insertPackage(PackageDO packageDO, Package pack, User user) {
 		boolean flag = packageMapper.insert(packageDO) > 0;
-		return flag && insertPackageMenu(packageDO.getId(), pack.getMenuIds());
+		return flag && insertPackageMenu(packageDO.getId(), pack.getMenuIds(), user);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean updatePackage(PackageDO packageDO, Package pack, List<Long> ids) {
+	public Boolean updatePackage(PackageDO packageDO, Package pack, List<Long> ids, User user) {
 		boolean flag = packageMapper.updateById(packageDO) > 0;
-		return flag && updatePackageMenu(packageDO.getId(), pack.getMenuIds(), ids);
+		return flag && updatePackageMenu(packageDO.getId(), pack.getMenuIds(), ids, user);
 	}
 
-	private Boolean updatePackageMenu(Long packageId, List<Long> menuIds, List<Long> ids) {
+	private Boolean updatePackageMenu(Long packageId, List<Long> menuIds, List<Long> ids, User user) {
 		boolean flag = true;
 		if (CollectionUtil.isNotEmpty(ids)) {
 			flag = packageMenuMapper.deletePackageMenuByIds(ids) > 0;
 		}
-		return flag && insertPackageMenu(packageId, menuIds);
+		return flag && insertPackageMenu(packageId, menuIds, user);
 	}
 
-	private Boolean insertPackageMenu(Long packageId, List<Long> menuIds) {
+	private Boolean insertPackageMenu(Long packageId, List<Long> menuIds, User user) {
 		if (CollectionUtil.isEmpty(menuIds)) {
 			return false;
 		}
 		List<PackageMenuDO> list = new ArrayList<>(menuIds.size());
 		for (Long menuId : menuIds) {
-			PackageMenuDO packageMenuDO = new PackageMenuDO();
-			packageMenuDO.setMenuId(menuId);
-			packageMenuDO.setPackageId(packageId);
-			packageMenuDO.setId(IdUtil.defaultId());
-			packageMenuDO.setCreator(UserUtil.getUserId());
-			packageMenuDO.setDeptId(UserUtil.getDeptId());
-			packageMenuDO.setTenantId(UserUtil.getTenantId());
-			list.add(packageMenuDO);
+			list.add(toPackageMenuDO(packageId, menuId, user));
 		}
 		batchUtil.insertBatch(list, packageMenuMapper::insertBatch);
 		return true;
+	}
+
+	private PackageMenuDO toPackageMenuDO(Long packageId, Long menuId, User user) {
+		PackageMenuDO packageMenuDO = new PackageMenuDO();
+		packageMenuDO.setMenuId(menuId);
+		packageMenuDO.setPackageId(packageId);
+		packageMenuDO.setId(IdUtil.defaultId());
+		packageMenuDO.setCreator(user.getId());
+		packageMenuDO.setDeptId(user.getDeptId());
+		packageMenuDO.setTenantId(user.getTenantId());
+		return packageMenuDO;
 	}
 
 }

@@ -25,9 +25,9 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 public interface RoleGateway {
 
-	Boolean insert(Role role);
+	Boolean insert(Role role, User user);
 
-	Boolean update(Role role);
+	Boolean update(Role role, User user);
 
 	Role getById(Long id);
 

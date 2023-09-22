@@ -38,6 +38,6 @@ public interface DefinitionsServiceI {
 
 	Result<Boolean> activate(DefinitionActiveCmd cmd);
 
-	Result<Boolean> template(DefinitionTemplateCmd qry);
+	void template(DefinitionTemplateCmd qry);
 
 }

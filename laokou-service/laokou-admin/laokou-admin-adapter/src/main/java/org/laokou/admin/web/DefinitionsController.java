@@ -96,12 +96,11 @@ public class DefinitionsController {
 		return definitionsServiceI.activate(new DefinitionActiveCmd(definitionId));
 	}
 
-	@TraceLog
 	@GetMapping("template")
 	@Operation(summary = "流程定义", description = "流程模板")
 	@PreAuthorize("hasAuthority('definitions:template')")
-	public Result<Boolean> template(HttpServletResponse response) {
-		return definitionsServiceI.template(new DefinitionTemplateCmd(response));
+	public void template(HttpServletResponse response) {
+		definitionsServiceI.template(new DefinitionTemplateCmd(response));
 	}
 
 }

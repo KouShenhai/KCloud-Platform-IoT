@@ -24,6 +24,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-public class DefinitionSuspend extends CommonCommand {
+public class DefinitionSuspendCmd extends CommonCommand {
 
 }

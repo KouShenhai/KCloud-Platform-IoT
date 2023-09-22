@@ -39,7 +39,6 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,19 +66,19 @@ public class RoleGatewayImpl implements RoleGateway {
 	private final TransactionalUtil transactionalUtil;
 
 	@Override
-	public Boolean insert(Role role) {
+	public Boolean insert(Role role, User user) {
 		RoleDO roleDO = RoleConvertor.toDataObject(role);
-		return insertRole(roleDO, role);
+		return insertRole(roleDO, role, user);
 	}
 
 	@Override
-	public Boolean update(Role role) {
+	public Boolean update(Role role, User user) {
 		Long id = role.getId();
 		RoleDO roleDO = RoleConvertor.toDataObject(role);
 		roleDO.setVersion(roleMapper.getVersion(id, RoleDO.class));
 		List<Long> ids1 = roleMenuMapper.getIdsByRoleId(id);
 		List<Long> ids2 = roleDeptMapper.getIdsByRoleId(id);
-		return updateRole(roleDO, role, ids1, ids2);
+		return updateRole(roleDO, role, ids1, ids2, user);
 	}
 
 	@Override
@@ -115,50 +114,42 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean insertRole(RoleDO roleDO, Role role) {
+	public Boolean insertRole(RoleDO roleDO, Role role, User user) {
 		boolean flag = roleMapper.insert(roleDO) > 0;
-		flag = flag && insertRoleMenu(roleDO.getId(), role.getMenuIds());
-		flag = flag && insertRoleDept(roleDO.getId(), role.getDeptIds());
+		flag = flag && insertRoleMenu(roleDO.getId(), role.getMenuIds(), user);
+		flag = flag && insertRoleDept(roleDO.getId(), role.getDeptIds(), user);
 		return flag;
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean updateRole(RoleDO roleDO, Role role, List<Long> ids1, List<Long> ids2) {
+	public Boolean updateRole(RoleDO roleDO, Role role, List<Long> ids1, List<Long> ids2, User user) {
 		boolean flag = roleMapper.updateById(roleDO) > 0;
-		flag = flag && updateRoleMenu(roleDO.getId(), role.getMenuIds(), ids1);
-		flag = flag && updateRoleDept(roleDO.getId(), role.getDeptIds(), ids2);
+		flag = flag && updateRoleMenu(roleDO.getId(), role.getMenuIds(), ids1, user);
+		flag = flag && updateRoleDept(roleDO.getId(), role.getDeptIds(), ids2, user);
 		return flag;
 	}
 
-	private Boolean updateRoleMenu(Long roleId, List<Long> menuIds, List<Long> ids) {
+	private Boolean updateRoleMenu(Long roleId, List<Long> menuIds, List<Long> ids, User user) {
 		boolean flag = true;
 		if (CollectionUtil.isNotEmpty(ids)) {
 			flag = roleMenuMapper.deleteRoleMenuByIds(ids) > 0;
 		}
-		return flag && insertRoleMenu(roleId, menuIds);
+		return flag && insertRoleMenu(roleId, menuIds, user);
 	}
 
-	private Boolean updateRoleDept(Long roleId, List<Long> deptIds, List<Long> ids) {
+	private Boolean updateRoleDept(Long roleId, List<Long> deptIds, List<Long> ids, User user) {
 		boolean flag = true;
 		if (CollectionUtil.isNotEmpty(ids)) {
 			flag = roleDeptMapper.deleteRoleDeptByIds(ids) > 0;
 		}
-		return flag && insertRoleDept(roleId, deptIds);
+		return flag && insertRoleDept(roleId, deptIds, user);
 	}
 
-	private Boolean insertRoleMenu(Long roleId, List<Long> menuIds) {
+	private Boolean insertRoleMenu(Long roleId, List<Long> menuIds, User user) {
 		if (CollectionUtil.isNotEmpty(menuIds)) {
 			List<RoleMenuDO> list = new ArrayList<>(menuIds.size());
 			for (Long menuId : menuIds) {
-				RoleMenuDO roleMenuDO = new RoleMenuDO();
-				roleMenuDO.setRoleId(roleId);
-				roleMenuDO.setMenuId(menuId);
-				roleMenuDO.setId(IdUtil.defaultId());
-				roleMenuDO.setDeptId(UserUtil.getDeptId());
-				roleMenuDO.setTenantId(UserUtil.getTenantId());
-				roleMenuDO.setCreator(UserUtil.getUserId());
-				roleMenuDO.setDeptPath(UserUtil.getDeptPath());
-				list.add(roleMenuDO);
+				list.add(toRoleMenuDO(roleId, menuId, user));
 			}
 			batchUtil.insertBatch(list, roleMenuMapper::insertBatch);
 			return true;
@@ -166,23 +157,39 @@ public class RoleGatewayImpl implements RoleGateway {
 		return false;
 	}
 
-	private Boolean insertRoleDept(Long roleId, List<Long> deptIds) {
+	private Boolean insertRoleDept(Long roleId, List<Long> deptIds, User user) {
 		if (CollectionUtil.isNotEmpty(deptIds)) {
 			List<RoleDeptDO> list = new ArrayList<>(deptIds.size());
 			for (Long deptId : deptIds) {
-				RoleDeptDO roleDeptDO = new RoleDeptDO();
-				roleDeptDO.setRoleId(roleId);
-				roleDeptDO.setDeptId(deptId);
-				roleDeptDO.setId(IdUtil.defaultId());
-				roleDeptDO.setTenantId(UserUtil.getTenantId());
-				roleDeptDO.setCreator(UserUtil.getUserId());
-				roleDeptDO.setDeptPath(UserUtil.getDeptPath());
-				list.add(roleDeptDO);
+				list.add(toRoleDeptDO(roleId, deptId, user));
 			}
 			batchUtil.insertBatch(list, roleDeptMapper::insertBatch);
 			return true;
 		}
 		return false;
+	}
+
+	private RoleMenuDO toRoleMenuDO(Long roleId, Long menuId, User user) {
+		RoleMenuDO roleMenuDO = new RoleMenuDO();
+		roleMenuDO.setRoleId(roleId);
+		roleMenuDO.setMenuId(menuId);
+		roleMenuDO.setId(IdUtil.defaultId());
+		roleMenuDO.setDeptId(user.getDeptId());
+		roleMenuDO.setTenantId(user.getTenantId());
+		roleMenuDO.setCreator(user.getId());
+		roleMenuDO.setDeptPath(user.getDeptPath());
+		return roleMenuDO;
+	}
+
+	private RoleDeptDO toRoleDeptDO(Long roleId, Long deptId, User user) {
+		RoleDeptDO roleDeptDO = new RoleDeptDO();
+		roleDeptDO.setRoleId(roleId);
+		roleDeptDO.setDeptId(deptId);
+		roleDeptDO.setId(IdUtil.defaultId());
+		roleDeptDO.setTenantId(user.getTenantId());
+		roleDeptDO.setCreator(user.getId());
+		roleDeptDO.setDeptPath(user.getDeptPath());
+		return roleDeptDO;
 	}
 
 }

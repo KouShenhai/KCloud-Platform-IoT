@@ -51,8 +51,6 @@ public abstract class BaseDO extends DTO {
 
 	public static final String TENANT_ID = "tenantId";
 
-	public static final String FIELD_DEPT_PATH = "dept_path";
-
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;
 

@@ -26,10 +26,10 @@ spring:
     active: @PROFILE-ACTIVE@
   webflux:
     multipart:
-      max-in-memory-size: 512
+      max-in-memory-size: -1
       max-parts: -1
       max-disk-usage-per-part: -1
-      max-headers-size: 20
+      max-headers-size: -1
   cloud:
     inetutils:
       ignored-interfaces:

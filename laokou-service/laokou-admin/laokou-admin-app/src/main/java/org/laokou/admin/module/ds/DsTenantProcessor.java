@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.config;
+package org.laokou.admin.module.ds;
 
 import com.baomidou.dynamic.datasource.processor.DsProcessor;
 import org.aopalliance.intercept.MethodInvocation;

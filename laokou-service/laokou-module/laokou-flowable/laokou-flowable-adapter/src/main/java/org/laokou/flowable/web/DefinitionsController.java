@@ -21,6 +21,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.flowable.api.DefinitionsServiceI;
+import org.laokou.flowable.dto.definition.DefinitionInsertCmd;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,39 +32,42 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "DefinitionsController", description = "流程定义")
+@RequestMapping("v1/definitions")
 public class DefinitionsController {
 
-	@PostMapping(value = "v1/definitions")
+	private final DefinitionsServiceI definitionsServiceI;
+
+	@PostMapping
 	@Operation(summary = "流程定义", description = "新增流程")
 	public Result<Boolean> insert(@RequestPart("file") MultipartFile file) {
-		return Result.of(null);
+		return definitionsServiceI.insert(new DefinitionInsertCmd(file));
 	}
 
-	@PostMapping(value = "v1/definitions/list")
+	@PostMapping(value = "list")
 	@Operation(summary = "流程定义", description = "查询流程列表")
 	public Result<?> list() {
 		return Result.of(null);
 	}
 
-	@GetMapping(value = "v1/definitions/{definitionId}/diagram")
+	@GetMapping(value = "{definitionId}/diagram")
 	@Operation(summary = "流程定义", description = "流程图")
 	public Result<String> diagram(@PathVariable("definitionId") String definitionId) {
 		return Result.of(null);
 	}
 
-	@DeleteMapping(value = "v1/definitions/{deploymentId}")
+	@DeleteMapping(value = "{deploymentId}")
 	@Operation(summary = "流程定义", description = "删除流程")
 	public Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId) {
 		return Result.of(null);
 	}
 
-	@PutMapping(value = "v1/definitions/{definitionId}/suspend")
+	@PutMapping(value = "{definitionId}/suspend")
 	@Operation(summary = "流程定义", description = "挂起流程")
 	public Result<Boolean> suspend(@PathVariable("definitionId") String definitionId) {
 		return Result.of(null);
 	}
 
-	@PutMapping(value = "v1/definitions/{definitionId}/activate")
+	@PutMapping(value = "{definitionId}/activate")
 	@Operation(summary = "流程定义", description = "激活流程")
 	public Result<Boolean> activate(@PathVariable("definitionId") String definitionId) {
 		return Result.of(null);
