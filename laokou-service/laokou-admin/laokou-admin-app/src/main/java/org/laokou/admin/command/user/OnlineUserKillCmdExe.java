@@ -15,27 +15,36 @@
  *
  */
 
-package org.laokou.admin.command.definition.query;
+package org.laokou.admin.command.user;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.definition.DefinitionListQry;
-import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
-import org.laokou.admin.gatewayimpl.feign.DefinitionsFeignClient;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.admin.dto.user.OnlineUserKillCmd;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.i18n.common.Constant.DEFAULT;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class DefinitionListQryExe {
+public class OnlineUserKillCmdExe {
 
-	private final DefinitionsFeignClient definitionsFeignClient;
+	private final RedisUtil redisUtil;
 
-	public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) {
-		return definitionsFeignClient.list(qry);
+	public Result<Boolean> execute(OnlineUserKillCmd cmd) {
+		String token = cmd.getToken();
+		String userKillKey = RedisKeyUtil.getUserKillKey(token);
+		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
+		Long expire = redisUtil.getExpire(userInfoKey);
+		if (expire > 0) {
+			redisUtil.set(userKillKey, DEFAULT, expire);
+			return Result.of(redisUtil.delete(userInfoKey));
+		}
+		return Result.of(false);
 	}
 
 }

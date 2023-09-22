@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DefinitionInsertCmdExe {
 
-    private final DefinitionsFeignClient definitionsFeignClient;
+	private final DefinitionsFeignClient definitionsFeignClient;
 
-    public Result<Boolean> execute(DefinitionInsertCmd cmd) {
-        return definitionsFeignClient.insert(cmd.getFile());
-    }
+	public Result<Boolean> execute(DefinitionInsertCmd cmd) {
+		return definitionsFeignClient.insert(cmd.getFile());
+	}
 
 }

@@ -15,36 +15,29 @@
  *
  */
 
-package org.laokou.admin.command.user;
+package org.laokou.flowable.command.definition;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.user.UserOnlineKillCmd;
+import org.flowable.engine.RepositoryService;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.redis.utils.RedisKeyUtil;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.flowable.dto.definition.DefinitionDeleteCmd;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.Constant.DEFAULT;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class UserOnlineKillCmdExe {
+public class DefinitionDeleteCmdExe {
 
-	private final RedisUtil redisUtil;
+	private final RepositoryService repositoryService;
 
-	public Result<Boolean> execute(UserOnlineKillCmd cmd) {
-		String token = cmd.getToken();
-		String userKillKey = RedisKeyUtil.getUserKillKey(token);
-		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
-		Long expire = redisUtil.getExpire(userInfoKey);
-		if (expire > 0) {
-			redisUtil.set(userKillKey, DEFAULT, expire);
-			return Result.of(redisUtil.delete(userInfoKey));
-		}
-		return Result.of(false);
+	@Transactional(rollbackFor = Exception.class)
+	public Result<Boolean> execute(DefinitionDeleteCmd cmd) {
+		// true允许级联删除 不设置会导致数据库关联异常
+		repositoryService.deleteDeployment(cmd.getDeploymentId(), true);
+		return Result.of(true);
 	}
 
 }

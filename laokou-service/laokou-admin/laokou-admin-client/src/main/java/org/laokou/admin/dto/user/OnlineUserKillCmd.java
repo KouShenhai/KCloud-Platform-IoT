@@ -18,14 +18,14 @@
 package org.laokou.admin.dto.user;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-public class UserOnlineListQry extends PageQuery {
+public class OnlineUserKillCmd extends CommonCommand {
 
-	private String username;
+	private String token;
 
 }

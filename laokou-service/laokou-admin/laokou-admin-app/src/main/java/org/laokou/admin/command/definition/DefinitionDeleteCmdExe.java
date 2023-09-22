@@ -18,6 +18,9 @@
 package org.laokou.admin.command.definition;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dto.definition.DefinitionDeleteCmd;
+import org.laokou.admin.gatewayimpl.feign.DefinitionsFeignClient;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +29,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class DefinitionDeleteCmdExe {
+
+	private final DefinitionsFeignClient definitionsFeignClient;
+
+	public Result<Boolean> execute(DefinitionDeleteCmd cmd) {
+		return definitionsFeignClient.delete(cmd.getDeploymentId());
+	}
 
 }

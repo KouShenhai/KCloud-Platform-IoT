@@ -26,8 +26,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DefinitionsFeignClientFallbackFactory implements FallbackFactory<DefinitionsFeignClientFallback> {
-    @Override
-    public DefinitionsFeignClientFallback create(Throwable throwable) {
-        return new DefinitionsFeignClientFallback(throwable);
-    }
+
+	@Override
+	public DefinitionsFeignClientFallback create(Throwable throwable) {
+		return new DefinitionsFeignClientFallback(throwable);
+	}
+
 }

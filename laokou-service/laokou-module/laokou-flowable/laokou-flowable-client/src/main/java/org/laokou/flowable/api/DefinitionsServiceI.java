@@ -17,7 +17,8 @@ package org.laokou.flowable.api;
 
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.flowable.dto.definition.DefinitionInsertCmd;
+import org.laokou.flowable.dto.definition.*;
+import org.laokou.flowable.dto.definition.clientobject.DefinitionCO;
 
 /**
  * @author laokou
@@ -26,14 +27,14 @@ public interface DefinitionsServiceI {
 
 	Result<Boolean> insert(DefinitionInsertCmd cmd);
 
-	Result<Datas<?>> list();
+	Result<Datas<DefinitionCO>> list(DefinitionListQry qry);
 
-	Result<String> diagram();
+	Result<String> diagram(DefinitionDiagramGetQry qry);
 
-	Result<Boolean> delete();
+	Result<Boolean> delete(DefinitionDeleteCmd cmd);
 
-	Result<Boolean> suspend();
+	Result<Boolean> suspend(DefinitionSuspendCmd cmd);
 
-	Result<Boolean> activate();
+	Result<Boolean> activate(DefinitionActivateCmd cmd);
 
 }
