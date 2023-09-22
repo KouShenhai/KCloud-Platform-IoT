@@ -106,7 +106,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	/**
 	 * @see OAuth2AuthorizationCodeAuthenticationProvider#supports(Class)
-	 * Token是否支持认证（provider）
+	 * 是否支持认证（provider）
 	 * @param authentication 类型
 	 * @return boolean
 	 */
