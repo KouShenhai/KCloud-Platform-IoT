@@ -38,7 +38,7 @@ import static org.laokou.admin.common.DsConstant.BOOT_SYS_LOGIN_LOG;
 public class LoginLogExportCmdExe {
 
 	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
-	public void execute(LoginLogExportCmd cmd) {
+	public void executeVoid(LoginLogExportCmd cmd) {
 		LoginLogMapper loginLogMapper = SpringContextUtil.getBean(LoginLogMapper.class);
 		ExcelUtil.export(cmd.getResponse(), buildLoginLog(cmd), cmd.getSqlFilter(), loginLogMapper,
 				LoginLogExcel.class);

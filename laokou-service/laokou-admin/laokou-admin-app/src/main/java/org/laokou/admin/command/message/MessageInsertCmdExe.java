@@ -46,8 +46,8 @@ public class MessageInsertCmdExe {
 		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
 	}
 
-	private Message toMessage(MessageCO messageCO) {
-		return MessageConvertor.toEntity(messageCO);
+	private Message toMessage(MessageCO co) {
+		return MessageConvertor.toEntity(co);
 	}
 
 }

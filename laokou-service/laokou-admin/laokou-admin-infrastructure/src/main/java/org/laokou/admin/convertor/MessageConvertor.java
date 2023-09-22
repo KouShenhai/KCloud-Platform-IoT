@@ -27,8 +27,8 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class MessageConvertor {
 
-	public static Message toEntity(MessageCO messageCO) {
-		return ConvertUtil.sourceToTarget(messageCO, Message.class);
+	public static Message toEntity(MessageCO co) {
+		return ConvertUtil.sourceToTarget(co, Message.class);
 	}
 
 	public static MessageDO toDataObject(Message message) {
