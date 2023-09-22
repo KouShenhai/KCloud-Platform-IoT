@@ -47,6 +47,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AccessTokenAuthenticationToken;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2ClientAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
@@ -98,10 +99,11 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	@SneakyThrows
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		return getToken(authentication, login(request));
+		return authenticate(authentication, login(request));
 	}
 
 	/**
+	 * @see OAuth2AuthorizationCodeAuthenticationProvider#supports(Class)
 	 * Token是否支持认证（provider）
 	 * @param authentication 类型
 	 * @return boolean
@@ -128,7 +130,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	 * @param principal principal
 	 * @return Authentication
 	 */
-	protected Authentication getToken(Authentication authentication, Authentication principal) {
+	protected Authentication authenticate(Authentication authentication, Authentication principal) {
 		// 仿照授权码模式
 		// 生成token（access_token + refresh_token）
 		AbstractOAuth2BaseAuthenticationToken auth2BaseAuthenticationToken = (AbstractOAuth2BaseAuthenticationToken) authentication;
@@ -217,7 +219,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	 * @param uuid 唯一标识
 	 * @return UsernamePasswordAuthenticationToken
 	 */
-	protected UsernamePasswordAuthenticationToken getUserInfo(String username, String password,
+	protected UsernamePasswordAuthenticationToken authenticationToken(String username, String password,
 			HttpServletRequest request, String captcha, String uuid) {
 		AuthorizationGrantType grantType = getGrantType();
 		String type = grantType.getValue();

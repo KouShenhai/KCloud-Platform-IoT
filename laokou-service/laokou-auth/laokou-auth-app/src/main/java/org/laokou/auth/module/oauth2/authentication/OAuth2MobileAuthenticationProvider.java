@@ -78,7 +78,7 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 			throw OAuth2ExceptionHandler.getException(MOBILE_ERROR, MessageUtil.getMessage(MOBILE_ERROR));
 		}
 		// 获取用户信息,并认证信息
-		return super.getUserInfo(mobile, "", request, code, mobile);
+		return super.authenticationToken(mobile, "", request, code, mobile);
 	}
 
 	@Override
