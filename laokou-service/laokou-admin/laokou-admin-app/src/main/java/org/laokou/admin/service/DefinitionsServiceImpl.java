@@ -56,7 +56,7 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
 	@Override
 	public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) {
-		return null;
+		return definitionListQryExe.execute(qry);
 	}
 
 	@Override

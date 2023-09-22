@@ -18,13 +18,13 @@
 package org.laokou.admin.dto.definition;
 
 import lombok.Data;
-import org.laokou.admin.dto.packages.PackageGetQry;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
 @Data
-public class DefinitionListQry extends PackageGetQry {
+public class DefinitionListQry extends PageQuery {
 
 	private String name;
 

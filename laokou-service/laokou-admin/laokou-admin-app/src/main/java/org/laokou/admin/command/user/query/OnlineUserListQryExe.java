@@ -18,7 +18,7 @@
 package org.laokou.admin.command.user.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.user.UserOnlineListQry;
+import org.laokou.admin.dto.user.OnlineUserListQry;
 import org.laokou.admin.dto.user.clientobject.UserOnlineCO;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.i18n.dto.Datas;
@@ -38,11 +38,11 @@ import java.util.Set;
  */
 @Component
 @RequiredArgsConstructor
-public class UserOnlineListQryExe {
+public class OnlineUserListQryExe {
 
 	private final RedisUtil redisUtil;
 
-	public Result<Datas<UserOnlineCO>> execute(UserOnlineListQry qry) {
+	public Result<Datas<UserOnlineCO>> execute(OnlineUserListQry qry) {
 		return Result.of(getDatas(qry));
 	}
 
@@ -58,7 +58,7 @@ public class UserOnlineListQryExe {
 		return RedisKeyUtil.getUserInfoKey("");
 	}
 
-	private Datas<UserOnlineCO> getDatas(UserOnlineListQry qry) {
+	private Datas<UserOnlineCO> getDatas(OnlineUserListQry qry) {
 		Set<String> keys = getKeys();
 		String keyword = qry.getUsername();
 		Integer pageNum = qry.getPageNum();

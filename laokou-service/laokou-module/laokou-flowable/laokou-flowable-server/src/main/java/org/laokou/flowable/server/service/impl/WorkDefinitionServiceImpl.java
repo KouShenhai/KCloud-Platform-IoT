@@ -158,11 +158,11 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 		if (processDefinition.isSuspended()) {
 			// 激活
 			repositoryService.activateProcessDefinitionById(definitionId, true, null);
+			return true;
 		}
 		else {
 			throw new GlobalException("激活失败，流程已激活");
 		}
-		return true;
 	}
 
 }

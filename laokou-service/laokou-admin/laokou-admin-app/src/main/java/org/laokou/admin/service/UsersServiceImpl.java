@@ -26,9 +26,9 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	private final UserInsertCmdExe userInsertCmdExe;
 
-	private final UserOnlineKillCmdExe userOnlineKillCmdExe;
+	private final OnlineUserKillCmdExe onlineUserKillCmdExe;
 
-	private final UserOnlineListQryExe userOnlineListQryExe;
+	private final OnlineUserListQryExe onlineUserListQryExe;
 
 	private final UserProfileGetQryExe userProfileGetQryExe;
 
@@ -57,13 +57,13 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Result<Boolean> onlineKill(UserOnlineKillCmd cmd) {
-		return userOnlineKillCmdExe.execute(cmd);
+	public Result<Boolean> onlineKill(OnlineUserKillCmd cmd) {
+		return onlineUserKillCmdExe.execute(cmd);
 	}
 
 	@Override
-	public Result<Datas<UserOnlineCO>> onlineList(UserOnlineListQry qry) {
-		return userOnlineListQryExe.execute(qry);
+	public Result<Datas<UserOnlineCO>> onlineList(OnlineUserListQry qry) {
+		return onlineUserListQryExe.execute(qry);
 	}
 
 	@Override

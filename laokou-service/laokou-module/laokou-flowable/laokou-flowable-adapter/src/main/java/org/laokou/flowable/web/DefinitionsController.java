@@ -20,9 +20,11 @@ package org.laokou.flowable.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.api.DefinitionsServiceI;
-import org.laokou.flowable.dto.definition.DefinitionInsertCmd;
+import org.laokou.flowable.dto.definition.*;
+import org.laokou.flowable.dto.definition.clientobject.DefinitionCO;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,32 +48,32 @@ public class DefinitionsController {
 
 	@PostMapping(value = "list")
 	@Operation(summary = "流程定义", description = "查询流程列表")
-	public Result<?> list() {
-		return Result.of(null);
+	public Result<Datas<DefinitionCO>> list(@RequestBody DefinitionListQry qry) {
+		return definitionsServiceI.list(qry);
 	}
 
 	@GetMapping(value = "{definitionId}/diagram")
 	@Operation(summary = "流程定义", description = "流程图")
 	public Result<String> diagram(@PathVariable("definitionId") String definitionId) {
-		return Result.of(null);
+		return definitionsServiceI.diagram(new DefinitionDiagramGetQry(definitionId));
 	}
 
 	@DeleteMapping(value = "{deploymentId}")
 	@Operation(summary = "流程定义", description = "删除流程")
 	public Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId) {
-		return Result.of(null);
+		return definitionsServiceI.delete(new DefinitionDeleteCmd(deploymentId));
 	}
 
 	@PutMapping(value = "{definitionId}/suspend")
 	@Operation(summary = "流程定义", description = "挂起流程")
 	public Result<Boolean> suspend(@PathVariable("definitionId") String definitionId) {
-		return Result.of(null);
+		return definitionsServiceI.suspend(new DefinitionSuspendCmd(definitionId));
 	}
 
 	@PutMapping(value = "{definitionId}/activate")
 	@Operation(summary = "流程定义", description = "激活流程")
 	public Result<Boolean> activate(@PathVariable("definitionId") String definitionId) {
-		return Result.of(null);
+		return definitionsServiceI.activate(new DefinitionActivateCmd(definitionId));
 	}
 
 }

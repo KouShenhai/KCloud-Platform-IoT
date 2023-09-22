@@ -18,7 +18,7 @@
 package org.laokou.admin.command.user;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.user.UserOnlineKillCmd;
+import org.laokou.admin.dto.user.OnlineUserKillCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -31,11 +31,11 @@ import static org.laokou.common.i18n.common.Constant.DEFAULT;
  */
 @Component
 @RequiredArgsConstructor
-public class UserOnlineKillCmdExe {
+public class OnlineUserKillCmdExe {
 
 	private final RedisUtil redisUtil;
 
-	public Result<Boolean> execute(UserOnlineKillCmd cmd) {
+	public Result<Boolean> execute(OnlineUserKillCmd cmd) {
 		String token = cmd.getToken();
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);

@@ -15,27 +15,29 @@
  *
  */
 
-package org.laokou.admin.command.definition.query;
+package org.laokou.flowable.command.definition;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.definition.DefinitionListQry;
-import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
-import org.laokou.admin.gatewayimpl.feign.DefinitionsFeignClient;
-import org.laokou.common.i18n.dto.Datas;
+import org.flowable.engine.RepositoryService;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.flowable.dto.definition.DefinitionDeleteCmd;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class DefinitionListQryExe {
+public class DefinitionDeleteCmdExe {
 
-    private final DefinitionsFeignClient definitionsFeignClient;
+    private final RepositoryService repositoryService;
 
-    public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) {
-        return definitionsFeignClient.list(qry);
+    @Transactional(rollbackFor = Exception.class)
+    public Result<Boolean> execute(DefinitionDeleteCmd cmd) {
+        // true允许级联删除 不设置会导致数据库关联异常
+        repositoryService.deleteDeployment(cmd.getDeploymentId(), true);
+        return Result.of(true);
     }
 
 }

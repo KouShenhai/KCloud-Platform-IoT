@@ -62,7 +62,7 @@ public class UsersController {
 	@PostMapping("online-list")
 	@PreAuthorize("hasAuthority('users:online-list')")
 	@Operation(summary = "在线用户", description = "查询在线用户列表")
-	public Result<Datas<UserOnlineCO>> onlineList(@RequestBody UserOnlineListQry qry) {
+	public Result<Datas<UserOnlineCO>> onlineList(@RequestBody OnlineUserListQry qry) {
 		return usersServiceI.onlineList(qry);
 	}
 
@@ -71,7 +71,7 @@ public class UsersController {
 	@Operation(summary = "在线用户", description = "强踢在线用户")
 	@OperateLog(module = "用户管理", operation = "强踢在线用户")
 	@PreAuthorize("hasAuthority('users:online-kill')")
-	public Result<Boolean> onlineKill(@RequestBody UserOnlineKillCmd cmd) {
+	public Result<Boolean> onlineKill(@RequestBody OnlineUserKillCmd cmd) {
 		return usersServiceI.onlineKill(cmd);
 	}
 

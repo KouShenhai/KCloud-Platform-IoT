@@ -21,8 +21,14 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.api.DefinitionsServiceI;
+import org.laokou.flowable.command.definition.DefinitionActiveCmdExe;
+import org.laokou.flowable.command.definition.DefinitionDeleteCmdExe;
 import org.laokou.flowable.command.definition.DefinitionInsertCmdExe;
-import org.laokou.flowable.dto.definition.DefinitionInsertCmd;
+import org.laokou.flowable.command.definition.DefinitionSuspendCmdExe;
+import org.laokou.flowable.command.definition.query.DefinitionDiagramGetQryExe;
+import org.laokou.flowable.command.definition.query.DefinitionListQryExe;
+import org.laokou.flowable.dto.definition.*;
+import org.laokou.flowable.dto.definition.clientobject.DefinitionCO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -33,6 +39,11 @@ import org.springframework.stereotype.Service;
 public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
 	private final DefinitionInsertCmdExe definitionInsertCmdExe;
+	private final DefinitionListQryExe definitionListQryExe;
+	private final DefinitionActiveCmdExe definitionActiveCmdExe;
+	private final DefinitionSuspendCmdExe definitionSuspendCmdExe;
+	private final DefinitionDeleteCmdExe definitionDeleteCmdExe;
+	private final DefinitionDiagramGetQryExe definitionDiagramGetQryExe;
 
 	@Override
 	public Result<Boolean> insert(DefinitionInsertCmd cmd) {
@@ -40,28 +51,28 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 	}
 
 	@Override
-	public Result<Datas<?>> list() {
-		return null;
+	public Result<Datas<DefinitionCO>> list(DefinitionListQry qry) {
+		return definitionListQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<String> diagram() {
-		return null;
+	public Result<String> diagram(DefinitionDiagramGetQry qry) {
+		return definitionDiagramGetQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<Boolean> delete() {
-		return null;
+	public Result<Boolean> delete(DefinitionDeleteCmd cmd) {
+		return definitionDeleteCmdExe.execute(cmd);
 	}
 
 	@Override
-	public Result<Boolean> suspend() {
-		return null;
+	public Result<Boolean> suspend(DefinitionSuspendCmd cmd) {
+		return definitionSuspendCmdExe.execute(cmd);
 	}
 
 	@Override
-	public Result<Boolean> activate() {
-		return null;
+	public Result<Boolean> activate(DefinitionActivateCmd cmd) {
+		return definitionActiveCmdExe.execute(cmd);
 	}
 
 }

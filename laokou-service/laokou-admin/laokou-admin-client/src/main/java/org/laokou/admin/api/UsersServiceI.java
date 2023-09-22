@@ -50,14 +50,14 @@ public interface UsersServiceI {
 	 * @param cmd 指令
 	 * @return Result<Boolean>
 	 */
-	Result<Boolean> onlineKill(UserOnlineKillCmd cmd);
+	Result<Boolean> onlineKill(OnlineUserKillCmd cmd);
 
 	/**
 	 * 在线用户查询
 	 * @param qry 查询
 	 * @return Result<Datas<UserOnlineCO>>
 	 */
-	Result<Datas<UserOnlineCO>> onlineList(UserOnlineListQry qry);
+	Result<Datas<UserOnlineCO>> onlineList(OnlineUserListQry qry);
 
 	/**
 	 * 用户基本信息
