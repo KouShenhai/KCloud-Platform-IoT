@@ -19,15 +19,18 @@ package org.laokou.admin.command.role;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.role.RoleUpdateCmd;
-import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.common.BizCode;
 import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.gateway.RoleGateway;
+import org.laokou.admin.domain.user.User;
+import org.laokou.admin.dto.role.RoleUpdateCmd;
+import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -52,7 +55,8 @@ public class RoleUpdateCmdExe {
 		if (count > 0) {
 			throw new GlobalException("角色已存在，请重新填写");
 		}
-		return Result.of(roleGateway.update(RoleConvertor.toEntity(roleCO)));
+		User user = ConvertUtil.sourceToTarget(UserUtil.user(),User.class);
+		return Result.of(roleGateway.update(RoleConvertor.toEntity(roleCO),user));
 	}
 
 }

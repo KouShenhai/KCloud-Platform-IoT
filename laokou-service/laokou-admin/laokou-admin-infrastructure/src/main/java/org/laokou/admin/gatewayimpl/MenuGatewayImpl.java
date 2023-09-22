@@ -22,10 +22,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
+import org.laokou.admin.domain.user.SuperAdmin;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
@@ -107,7 +107,6 @@ public class MenuGatewayImpl implements MenuGateway {
 		List<MenuDO> list = menuMapper.getTenantMenuList();
 		return ConvertUtil.sourceToTarget(list, Menu.class);
 	}
-
 	private List<MenuDO> getMenuList(Integer type, User user) {
 		Long userId = user.getId();
 		Long tenantId = user.getTenantId();

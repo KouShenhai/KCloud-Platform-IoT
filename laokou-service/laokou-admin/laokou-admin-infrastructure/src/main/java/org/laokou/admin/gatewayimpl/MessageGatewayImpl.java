@@ -26,6 +26,7 @@ import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.domain.message.Type;
+import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
@@ -41,7 +42,6 @@ import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.rocketmq.dto.MqDTO;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
-import org.laokou.common.security.utils.UserUtil;
 import org.laokou.im.client.WsMsgCO;
 import org.springframework.stereotype.Component;
 
@@ -85,9 +85,9 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	@Override
-	public Boolean insert(Message message) {
+	public Boolean insert(Message message,User user) {
 		MessageDO messageDO = MessageConvertor.toDataObject(message);
-		Boolean flag = insertMessage(messageDO, message);
+		Boolean flag = insertMessage(messageDO, message,user);
 		// 插入成功发送消息
 		if (flag) {
 			pushMessage(message.getReceiver(), message.getType());
@@ -112,11 +112,11 @@ public class MessageGatewayImpl implements MessageGateway {
 				new MqDTO(JacksonUtil.toJsonStr(wsMsgCO)));
 	}
 
-	private Boolean insertMessage(MessageDO messageDO, Message message) {
+	private Boolean insertMessage(MessageDO messageDO, Message message, User user) {
 		return transactionalUtil.execute(rollback -> {
 			try {
 				return messageMapper.insert(messageDO) > 0
-						&& insertMessageDetail(messageDO.getId(), message.getReceiver());
+						&& insertMessageDetail(messageDO.getId(), message.getReceiver(),user);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
@@ -126,7 +126,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		});
 	}
 
-	private Boolean insertMessageDetail(Long id, Set<String> receiver) {
+	private Boolean insertMessageDetail(Long id, Set<String> receiver,User user) {
 		if (CollectionUtil.isEmpty(receiver)) {
 			return false;
 		}
@@ -136,11 +136,11 @@ public class MessageGatewayImpl implements MessageGateway {
 			messageDetailDO.setUserId(Long.parseLong(str));
 			messageDetailDO.setId(IdUtil.defaultId());
 			messageDetailDO.setCreateDate(DateUtil.now());
-			messageDetailDO.setCreator(UserUtil.getUserId());
-			messageDetailDO.setDeptId(UserUtil.getDeptId());
-			messageDetailDO.setTenantId(UserUtil.getTenantId());
+			messageDetailDO.setCreator(user.getId());
+			messageDetailDO.setDeptId(user.getDeptId());
+			messageDetailDO.setTenantId(user.getTenantId());
 			messageDetailDO.setMessageId(id);
-			messageDetailDO.setDeptPath(UserUtil.getDeptPath());
+			messageDetailDO.setDeptPath(user.getDeptPath());
 			list.add(messageDetailDO);
 		}
 		batchUtil.insertBatch(list, messageDetailMapper::insertBatch);

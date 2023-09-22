@@ -10,4 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-flowable-app</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-flowable-infrastructure</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

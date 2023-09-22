@@ -52,6 +52,8 @@ public class User {
 
 	private LocalDateTime createDate;
 
+	private Long creator;
+
 	private Integer superAdmin;
 
 	private Long tenantId;

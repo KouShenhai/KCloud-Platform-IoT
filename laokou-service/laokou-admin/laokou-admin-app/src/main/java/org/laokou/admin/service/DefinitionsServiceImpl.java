@@ -80,8 +80,7 @@ public class DefinitionsServiceImpl implements DefinitionsServiceI {
 	}
 
 	@Override
-	public Result<Boolean> template(DefinitionTemplateCmd qry) {
-		return null;
+	public void template(DefinitionTemplateCmd qry) {
 	}
 
 }

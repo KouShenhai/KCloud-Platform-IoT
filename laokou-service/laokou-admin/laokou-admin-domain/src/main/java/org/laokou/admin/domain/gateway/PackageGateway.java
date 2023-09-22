@@ -16,6 +16,7 @@
 package org.laokou.admin.domain.gateway;
 
 import org.laokou.admin.domain.packages.Package;
+import org.laokou.admin.domain.user.User;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 
@@ -24,9 +25,9 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 public interface PackageGateway {
 
-	Boolean insert(Package pack);
+	Boolean insert(Package pack, User user);
 
-	Boolean update(Package pack);
+	Boolean update(Package pack, User user);
 
 	Datas<Package> list(Package pack, PageQuery pageQuery);
 

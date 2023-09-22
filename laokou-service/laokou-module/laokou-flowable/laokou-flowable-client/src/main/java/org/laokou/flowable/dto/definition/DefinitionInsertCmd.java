@@ -17,13 +17,20 @@
 
 package org.laokou.flowable.dto.definition;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class DefinitionInsertCmd extends CommonCommand {
+
+    private MultipartFile file;
 
 }

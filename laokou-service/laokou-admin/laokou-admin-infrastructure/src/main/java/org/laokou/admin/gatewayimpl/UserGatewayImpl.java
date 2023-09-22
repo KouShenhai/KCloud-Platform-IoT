@@ -25,13 +25,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.UserGateway;
+import org.laokou.admin.domain.user.SuperAdmin;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
-import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
@@ -39,7 +39,6 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -129,14 +128,14 @@ public class UserGatewayImpl implements UserGateway {
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertUser(UserDO userDO, User user) {
 		boolean flag = userMapper.insert(userDO) > 0;
-		return flag && insertUserRole(userDO.getId(), user.getRoleIds());
+		return flag && insertUserRole(userDO.getId(), user.getRoleIds(),user);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateUser(UserDO userDO, User user, List<Long> ids) {
 		boolean flag = userMapper.updateUser(userDO) > 0;
 		flag = flag && deleteUserRole(ids);
-		return flag && insertUserRole(userDO.getId(), user.getRoleIds());
+		return flag && insertUserRole(userDO.getId(), user.getRoleIds(),user);
 	}
 
 	private Boolean deleteUserRole(List<Long> ids) {
@@ -154,7 +153,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	private UserDO getUpdateUserDO(User user) {
 		UserDO userDO = UserConvertor.toDataObject(user);
-		userDO.setEditor(UserUtil.getUserId());
+		userDO.setEditor(user.getEditor());
 		userDO.setUpdateDate(DateUtil.now());
 		userDO.setVersion(userMapper.getVersion(userDO.getId(), UserDO.class));
 		return userDO;
@@ -166,7 +165,7 @@ public class UserGatewayImpl implements UserGateway {
 		return updateUserDO;
 	}
 
-	private Boolean insertUserRole(Long userId, List<Long> roleIds) {
+	private Boolean insertUserRole(Long userId, List<Long> roleIds, User user) {
 		if (CollectionUtil.isEmpty(roleIds)) {
 			return false;
 		}
@@ -174,12 +173,12 @@ public class UserGatewayImpl implements UserGateway {
 		for (Long roleId : roleIds) {
 			UserRoleDO userRoleDO = new UserRoleDO();
 			userRoleDO.setId(IdUtil.defaultId());
-			userRoleDO.setDeptId(UserUtil.getDeptId());
-			userRoleDO.setTenantId(UserUtil.getTenantId());
-			userRoleDO.setCreator(UserUtil.getUserId());
+			userRoleDO.setDeptId(user.getDeptId());
+			userRoleDO.setTenantId(user.getTenantId());
+			userRoleDO.setCreator(user.getCreator());
 			userRoleDO.setUserId(userId);
 			userRoleDO.setRoleId(roleId);
-			userRoleDO.setDeptPath(UserUtil.getDeptPath());
+			userRoleDO.setDeptPath(user.getDeptPath());
 			list.add(userRoleDO);
 		}
 		batchUtil.insertBatch(list, userRoleMapper::insertBatch);

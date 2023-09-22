@@ -18,6 +18,7 @@
 package org.laokou.admin.domain.gateway;
 
 import org.laokou.admin.domain.message.Message;
+import org.laokou.admin.domain.user.User;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 
@@ -28,7 +29,7 @@ public interface MessageGateway {
 
 	Datas<Message> list(Message message, PageQuery pageQuery);
 
-	Boolean insert(Message message);
+	Boolean insert(Message message, User user);
 
 	Message getById(Long id);
 

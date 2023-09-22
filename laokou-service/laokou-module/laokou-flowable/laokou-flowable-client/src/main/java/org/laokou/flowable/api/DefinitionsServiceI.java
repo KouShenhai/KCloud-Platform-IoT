@@ -17,13 +17,14 @@ package org.laokou.flowable.api;
 
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.flowable.dto.definition.DefinitionInsertCmd;
 
 /**
  * @author laokou
  */
 public interface DefinitionsServiceI {
 
-	Result<Boolean> insert();
+	Result<Boolean> insert(DefinitionInsertCmd cmd);
 
 	Result<Datas<?>> list();
 
