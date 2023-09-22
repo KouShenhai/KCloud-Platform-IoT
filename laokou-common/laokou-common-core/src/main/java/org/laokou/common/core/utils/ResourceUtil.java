@@ -27,10 +27,10 @@ import org.springframework.util.ResourceUtils;
  */
 public class ResourceUtil extends ResourceUtils {
 
-	private static final ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+	private static final ResourcePatternResolver RESOLVER = new PathMatchingResourcePatternResolver();
 
 	public static Resource getResource(String location) {
-		return resolver.getResource(location);
+		return RESOLVER.getResource(location);
 	}
 
 }
