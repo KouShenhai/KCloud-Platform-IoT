@@ -20,8 +20,10 @@ package org.laokou.admin.command.message;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.gateway.MessageGateway;
+import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.message.MessageInsertCmd;
+import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
@@ -37,11 +39,15 @@ public class MessageInsertCmdExe {
 	private final MessageGateway messageGateway;
 
 	public Result<Boolean> execute(MessageInsertCmd cmd) {
-		return Result.of(messageGateway.insert(MessageConvertor.toEntity(cmd.getMessageCO()),toUser()));
+		return Result.of(messageGateway.insert(toMessage(cmd.getMessageCO()),toUser()));
 	}
 
 	private User toUser() {
 		return ConvertUtil.sourceToTarget(UserUtil.user(),User.class);
+	}
+
+	private Message toMessage(MessageCO messageCO) {
+		return MessageConvertor.toEntity(messageCO);
 	}
 
 }
