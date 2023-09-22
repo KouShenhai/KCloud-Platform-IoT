@@ -128,14 +128,14 @@ public class UserGatewayImpl implements UserGateway {
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertUser(UserDO userDO, User user) {
 		boolean flag = userMapper.insert(userDO) > 0;
-		return flag && insertUserRole(userDO.getId(), user.getRoleIds(),user);
+		return flag && insertUserRole(userDO.getId(), user.getRoleIds(), user);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateUser(UserDO userDO, User user, List<Long> ids) {
 		boolean flag = userMapper.updateUser(userDO) > 0;
 		flag = flag && deleteUserRole(ids);
-		return flag && insertUserRole(userDO.getId(), user.getRoleIds(),user);
+		return flag && insertUserRole(userDO.getId(), user.getRoleIds(), user);
 	}
 
 	private Boolean deleteUserRole(List<Long> ids) {

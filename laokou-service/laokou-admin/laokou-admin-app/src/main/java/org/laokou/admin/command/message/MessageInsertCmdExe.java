@@ -39,11 +39,11 @@ public class MessageInsertCmdExe {
 	private final MessageGateway messageGateway;
 
 	public Result<Boolean> execute(MessageInsertCmd cmd) {
-		return Result.of(messageGateway.insert(toMessage(cmd.getMessageCO()),toUser()));
+		return Result.of(messageGateway.insert(toMessage(cmd.getMessageCO()), toUser()));
 	}
 
 	private User toUser() {
-		return ConvertUtil.sourceToTarget(UserUtil.user(),User.class);
+		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
 	}
 
 	private Message toMessage(MessageCO messageCO) {

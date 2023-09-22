@@ -85,9 +85,9 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	@Override
-	public Boolean insert(Message message,User user) {
+	public Boolean insert(Message message, User user) {
 		MessageDO messageDO = MessageConvertor.toDataObject(message);
-		Boolean flag = insertMessage(messageDO, message,user);
+		Boolean flag = insertMessage(messageDO, message, user);
 		// 插入成功发送消息
 		if (flag) {
 			pushMessage(message.getReceiver(), message.getType());
@@ -116,7 +116,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		return transactionalUtil.execute(rollback -> {
 			try {
 				return messageMapper.insert(messageDO) > 0
-						&& insertMessageDetail(messageDO.getId(), message.getReceiver(),user);
+						&& insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
@@ -126,13 +126,13 @@ public class MessageGatewayImpl implements MessageGateway {
 		});
 	}
 
-	private Boolean insertMessageDetail(Long messageId, Set<String> receiver,User user) {
+	private Boolean insertMessageDetail(Long messageId, Set<String> receiver, User user) {
 		if (CollectionUtil.isEmpty(receiver)) {
 			return false;
 		}
 		List<MessageDetailDO> list = new ArrayList<>(receiver.size());
 		for (String userId : receiver) {
-			list.add(toMessageDetailDO(messageId,userId,user));
+			list.add(toMessageDetailDO(messageId, userId, user));
 		}
 		batchUtil.insertBatch(list, messageDetailMapper::insertBatch);
 		return true;
@@ -142,7 +142,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		return type == Type.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
 	}
 
-	private MessageDetailDO toMessageDetailDO(Long messageId,String userId,User user) {
+	private MessageDetailDO toMessageDetailDO(Long messageId, String userId, User user) {
 		MessageDetailDO messageDetailDO = new MessageDetailDO();
 		messageDetailDO.setUserId(Long.parseLong(userId));
 		messageDetailDO.setId(IdUtil.defaultId());

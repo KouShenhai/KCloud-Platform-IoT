@@ -32,36 +32,36 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DefinitionsServiceImpl implements DefinitionsServiceI {
 
-    private final DefinitionInsertCmdExe definitionInsertCmdExe;
+	private final DefinitionInsertCmdExe definitionInsertCmdExe;
 
-    @Override
-    public Result<Boolean> insert(DefinitionInsertCmd cmd) {
-        return definitionInsertCmdExe.execute(cmd);
-    }
+	@Override
+	public Result<Boolean> insert(DefinitionInsertCmd cmd) {
+		return definitionInsertCmdExe.execute(cmd);
+	}
 
-    @Override
-    public Result<Datas<?>> list() {
-        return null;
-    }
+	@Override
+	public Result<Datas<?>> list() {
+		return null;
+	}
 
-    @Override
-    public Result<String> diagram() {
-        return null;
-    }
+	@Override
+	public Result<String> diagram() {
+		return null;
+	}
 
-    @Override
-    public Result<Boolean> delete() {
-        return null;
-    }
+	@Override
+	public Result<Boolean> delete() {
+		return null;
+	}
 
-    @Override
-    public Result<Boolean> suspend() {
-        return null;
-    }
+	@Override
+	public Result<Boolean> suspend() {
+		return null;
+	}
 
-    @Override
-    public Result<Boolean> activate() {
-        return null;
-    }
+	@Override
+	public Result<Boolean> activate() {
+		return null;
+	}
 
 }

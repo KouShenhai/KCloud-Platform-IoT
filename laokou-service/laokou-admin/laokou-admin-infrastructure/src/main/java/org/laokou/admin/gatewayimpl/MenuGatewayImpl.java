@@ -107,6 +107,7 @@ public class MenuGatewayImpl implements MenuGateway {
 		List<MenuDO> list = menuMapper.getTenantMenuList();
 		return ConvertUtil.sourceToTarget(list, Menu.class);
 	}
+
 	private List<MenuDO> getMenuList(Integer type, User user) {
 		Long userId = user.getId();
 		Long tenantId = user.getTenantId();

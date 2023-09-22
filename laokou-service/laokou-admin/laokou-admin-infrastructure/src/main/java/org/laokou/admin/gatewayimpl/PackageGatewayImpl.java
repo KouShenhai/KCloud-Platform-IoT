@@ -62,18 +62,18 @@ public class PackageGatewayImpl implements PackageGateway {
 	private final BatchUtil batchUtil;
 
 	@Override
-	public Boolean insert(Package pack,User user) {
+	public Boolean insert(Package pack, User user) {
 		PackageDO packageDO = PackageConvertor.toDataObject(pack);
 		return insertPackage(packageDO, pack, user);
 	}
 
 	@Override
-	public Boolean update(Package pack,User user) {
+	public Boolean update(Package pack, User user) {
 		Long id = pack.getId();
 		PackageDO packageDO = PackageConvertor.toDataObject(pack);
 		packageDO.setVersion(packageMapper.getVersion(id, PackageDO.class));
 		List<Long> ids = packageMenuMapper.getIdsByPackageId(id);
-		return updatePackage(packageDO, pack, ids,user);
+		return updatePackage(packageDO, pack, ids, user);
 	}
 
 	@Override
@@ -111,23 +111,23 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean insertPackage(PackageDO packageDO, Package pack,User user) {
+	public Boolean insertPackage(PackageDO packageDO, Package pack, User user) {
 		boolean flag = packageMapper.insert(packageDO) > 0;
-		return flag && insertPackageMenu(packageDO.getId(), pack.getMenuIds(),user);
+		return flag && insertPackageMenu(packageDO.getId(), pack.getMenuIds(), user);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public Boolean updatePackage(PackageDO packageDO, Package pack, List<Long> ids,User user) {
+	public Boolean updatePackage(PackageDO packageDO, Package pack, List<Long> ids, User user) {
 		boolean flag = packageMapper.updateById(packageDO) > 0;
-		return flag && updatePackageMenu(packageDO.getId(), pack.getMenuIds(), ids,user);
+		return flag && updatePackageMenu(packageDO.getId(), pack.getMenuIds(), ids, user);
 	}
 
-	private Boolean updatePackageMenu(Long packageId, List<Long> menuIds, List<Long> ids,User user) {
+	private Boolean updatePackageMenu(Long packageId, List<Long> menuIds, List<Long> ids, User user) {
 		boolean flag = true;
 		if (CollectionUtil.isNotEmpty(ids)) {
 			flag = packageMenuMapper.deletePackageMenuByIds(ids) > 0;
 		}
-		return flag && insertPackageMenu(packageId, menuIds,user);
+		return flag && insertPackageMenu(packageId, menuIds, user);
 	}
 
 	private Boolean insertPackageMenu(Long packageId, List<Long> menuIds, User user) {
@@ -136,13 +136,13 @@ public class PackageGatewayImpl implements PackageGateway {
 		}
 		List<PackageMenuDO> list = new ArrayList<>(menuIds.size());
 		for (Long menuId : menuIds) {
-			list.add(toPackageMenuDO(packageId,menuId,user));
+			list.add(toPackageMenuDO(packageId, menuId, user));
 		}
 		batchUtil.insertBatch(list, packageMenuMapper::insertBatch);
 		return true;
 	}
 
-	private PackageMenuDO toPackageMenuDO(Long packageId,Long menuId,User user) {
+	private PackageMenuDO toPackageMenuDO(Long packageId, Long menuId, User user) {
 		PackageMenuDO packageMenuDO = new PackageMenuDO();
 		packageMenuDO.setMenuId(menuId);
 		packageMenuDO.setPackageId(packageId);

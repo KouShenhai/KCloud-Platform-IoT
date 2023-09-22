@@ -37,32 +37,28 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DefinitionInsertCmdExe {
 
-    private static final String BPMN_FILE_SUFFIX = ".bpmn";
-    private final RepositoryService repositoryService;
+	private static final String BPMN_FILE_SUFFIX = ".bpmn";
 
-    @SneakyThrows
-    public Result<Boolean> execute(DefinitionInsertCmd cmd) {
-        BpmnXMLConverter converter = new BpmnXMLConverter();
-        InputStreamSource inputStreamSource = new InputStreamSource(cmd.getFile().getInputStream());
-        BpmnModel bpmnModel = converter.convertToBpmnModel(inputStreamSource, true, true);
-        Process process = bpmnModel.getProcesses().stream().findFirst().orElse(new Process());
-        String key = process.getId();
-        String name = process.getName() + BPMN_FILE_SUFFIX;
-        long count = repositoryService.createDeploymentQuery().deploymentKey(key).count();
-        if (count > 0) {
-            throw new GlobalException("流程已存在，请重新上传");
-        }
-        return Result.of(deploy(key, name, bpmnModel));
-    }
+	private final RepositoryService repositoryService;
 
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean deploy(String key,String name,BpmnModel bpmnModel) {
-        return repositoryService.createDeployment()
-                .name(name)
-                .key(key)
-                .addBpmnModel(name, bpmnModel)
-                .deploy()
-                .isNew();
-    }
+	@SneakyThrows
+	public Result<Boolean> execute(DefinitionInsertCmd cmd) {
+		BpmnXMLConverter converter = new BpmnXMLConverter();
+		InputStreamSource inputStreamSource = new InputStreamSource(cmd.getFile().getInputStream());
+		BpmnModel bpmnModel = converter.convertToBpmnModel(inputStreamSource, true, true);
+		Process process = bpmnModel.getProcesses().stream().findFirst().orElse(new Process());
+		String key = process.getId();
+		String name = process.getName() + BPMN_FILE_SUFFIX;
+		long count = repositoryService.createDeploymentQuery().deploymentKey(key).count();
+		if (count > 0) {
+			throw new GlobalException("流程已存在，请重新上传");
+		}
+		return Result.of(deploy(key, name, bpmnModel));
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean deploy(String key, String name, BpmnModel bpmnModel) {
+		return repositoryService.createDeployment().name(name).key(key).addBpmnModel(name, bpmnModel).deploy().isNew();
+	}
 
 }

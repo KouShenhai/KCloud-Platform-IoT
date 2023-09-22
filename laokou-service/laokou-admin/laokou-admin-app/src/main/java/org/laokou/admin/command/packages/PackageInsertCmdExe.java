@@ -38,11 +38,11 @@ public class PackageInsertCmdExe {
 
 	public Result<Boolean> execute(PackageInsertCmd cmd) {
 		Package pack = ConvertUtil.sourceToTarget(cmd.getPackageCO(), Package.class);
-		return Result.of(packageGateway.insert(pack,toUser()));
+		return Result.of(packageGateway.insert(pack, toUser()));
 	}
 
 	private User toUser() {
-		return ConvertUtil.sourceToTarget(UserUtil.user(),User.class);
+		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
 	}
 
 }
