@@ -62,7 +62,7 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 	}
 
 	@Override
-	Authentication login(HttpServletRequest request) {
+	Authentication principal(HttpServletRequest request) {
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {

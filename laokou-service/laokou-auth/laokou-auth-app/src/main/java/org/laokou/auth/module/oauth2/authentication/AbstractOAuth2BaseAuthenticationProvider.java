@@ -35,7 +35,6 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.*;
@@ -96,10 +95,13 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(OidcParameterNames.ID_TOKEN);
 
+	/**
+	 * 认证
+	 */
 	@SneakyThrows
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+	public Authentication authenticate(Authentication authentication) {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		return authenticate(authentication, login(request));
+		return authenticate(authentication, principal(request));
 	}
 
 	/**
@@ -111,12 +113,9 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	abstract public boolean supports(Class<?> authentication);
 
 	/**
-	 * 登录
-	 * @param request request
-	 * @return Authentication
-	 * @throws IOException IOException
+	 * 认证
 	 */
-	abstract Authentication login(HttpServletRequest request) throws IOException;
+	abstract Authentication principal(HttpServletRequest request) throws IOException;
 
 	/**
 	 * 认证类型
@@ -125,7 +124,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	abstract AuthorizationGrantType getGrantType();
 
 	/**
-	 * 获取token
+	 * 获取令牌
 	 * @param authentication authentication
 	 * @param principal principal
 	 * @return Authentication

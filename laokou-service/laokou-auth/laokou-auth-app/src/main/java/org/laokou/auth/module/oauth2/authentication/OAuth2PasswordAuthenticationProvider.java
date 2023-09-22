@@ -56,7 +56,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 	}
 
 	@Override
-	Authentication login(HttpServletRequest request) {
+	Authentication principal(HttpServletRequest request) {
 		// 判断唯一标识是否为空
 		String uuid = request.getParameter(UUID);
 		log.info("唯一标识：{}", uuid);
