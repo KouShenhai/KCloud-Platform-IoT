@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.api.DefinitionsServiceI;
 import org.laokou.flowable.dto.definition.DefinitionInsertCmd;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,7 +38,7 @@ public class DefinitionsController {
 
 	private final DefinitionsServiceI definitionsServiceI;
 
-	@PostMapping
+	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Operation(summary = "流程定义", description = "新增流程")
 	public Result<Boolean> insert(@RequestPart("file") MultipartFile file) {
 		return definitionsServiceI.insert(new DefinitionInsertCmd(file));

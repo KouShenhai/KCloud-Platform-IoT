@@ -15,20 +15,19 @@
  *
  */
 
-package org.laokou.admin.enums;
+package org.laokou.admin.gatewayimpl.feign.factory;
+
+import org.laokou.admin.gatewayimpl.feign.fallback.DefinitionsFeignClientFallback;
+import org.springframework.cloud.openfeign.FallbackFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public enum AuditEnum {
-
-	/**
-	 * 拒绝
-	 */
-	NO,
-	/**
-	 * 通过
-	 */
-	YES
-
+@Component
+public class DefinitionsFeignClientFallbackFactory implements FallbackFactory<DefinitionsFeignClientFallback> {
+    @Override
+    public DefinitionsFeignClientFallback create(Throwable throwable) {
+        return new DefinitionsFeignClientFallback(throwable);
+    }
 }

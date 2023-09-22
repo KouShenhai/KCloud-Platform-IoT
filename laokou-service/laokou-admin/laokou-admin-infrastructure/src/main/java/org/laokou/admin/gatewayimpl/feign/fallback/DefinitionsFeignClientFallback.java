@@ -15,24 +15,31 @@
  *
  */
 
-package org.laokou.admin.dto.definition;
+package org.laokou.admin.gatewayimpl.feign.fallback;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.gatewayimpl.feign.DefinitionsFeignClient;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class DefinitionInsertCmd extends CommonCommand {
+@Slf4j
+@RequiredArgsConstructor
+public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 
-	@JsonIgnore
-	private MultipartFile file;
+    private final Throwable throwable;
+
+    @Override
+    public Result<Boolean> insert(MultipartFile file) {
+        errLog();
+        return Result.fail("流程新增失败，请联系管理员");
+    }
+
+    private void errLog() {
+        log.error("服务调用失败，报错原因：{}", throwable.getMessage());
+    }
 
 }
