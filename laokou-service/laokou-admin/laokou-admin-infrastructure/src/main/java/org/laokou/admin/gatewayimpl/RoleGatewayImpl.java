@@ -149,15 +149,7 @@ public class RoleGatewayImpl implements RoleGateway {
 		if (CollectionUtil.isNotEmpty(menuIds)) {
 			List<RoleMenuDO> list = new ArrayList<>(menuIds.size());
 			for (Long menuId : menuIds) {
-				RoleMenuDO roleMenuDO = new RoleMenuDO();
-				roleMenuDO.setRoleId(roleId);
-				roleMenuDO.setMenuId(menuId);
-				roleMenuDO.setId(IdUtil.defaultId());
-				roleMenuDO.setDeptId(user.getDeptId());
-				roleMenuDO.setTenantId(user.getTenantId());
-				roleMenuDO.setCreator(user.getId());
-				roleMenuDO.setDeptPath(user.getDeptPath());
-				list.add(roleMenuDO);
+				list.add(toRoleMenuDO(roleId,menuId,user));
 			}
 			batchUtil.insertBatch(list, roleMenuMapper::insertBatch);
 			return true;
@@ -169,19 +161,35 @@ public class RoleGatewayImpl implements RoleGateway {
 		if (CollectionUtil.isNotEmpty(deptIds)) {
 			List<RoleDeptDO> list = new ArrayList<>(deptIds.size());
 			for (Long deptId : deptIds) {
-				RoleDeptDO roleDeptDO = new RoleDeptDO();
-				roleDeptDO.setRoleId(roleId);
-				roleDeptDO.setDeptId(deptId);
-				roleDeptDO.setId(IdUtil.defaultId());
-				roleDeptDO.setTenantId(user.getTenantId());
-				roleDeptDO.setCreator(user.getId());
-				roleDeptDO.setDeptPath(user.getDeptPath());
-				list.add(roleDeptDO);
+				list.add(toRoleDeptDO(roleId,deptId,user));
 			}
 			batchUtil.insertBatch(list, roleDeptMapper::insertBatch);
 			return true;
 		}
 		return false;
+	}
+
+	private RoleMenuDO toRoleMenuDO(Long roleId,Long menuId,User user) {
+		RoleMenuDO roleMenuDO = new RoleMenuDO();
+		roleMenuDO.setRoleId(roleId);
+		roleMenuDO.setMenuId(menuId);
+		roleMenuDO.setId(IdUtil.defaultId());
+		roleMenuDO.setDeptId(user.getDeptId());
+		roleMenuDO.setTenantId(user.getTenantId());
+		roleMenuDO.setCreator(user.getId());
+		roleMenuDO.setDeptPath(user.getDeptPath());
+		return roleMenuDO;
+	}
+
+	private RoleDeptDO toRoleDeptDO(Long roleId,Long deptId,User user) {
+		RoleDeptDO roleDeptDO = new RoleDeptDO();
+		roleDeptDO.setRoleId(roleId);
+		roleDeptDO.setDeptId(deptId);
+		roleDeptDO.setId(IdUtil.defaultId());
+		roleDeptDO.setTenantId(user.getTenantId());
+		roleDeptDO.setCreator(user.getId());
+		roleDeptDO.setDeptPath(user.getDeptPath());
+		return roleDeptDO;
 	}
 
 }

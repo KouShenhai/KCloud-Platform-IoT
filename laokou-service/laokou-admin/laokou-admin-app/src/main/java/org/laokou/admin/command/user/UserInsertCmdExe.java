@@ -33,12 +33,16 @@ public class UserInsertCmdExe {
 		if (count > 0) {
 			throw new GlobalException("用户名已存在，请重新输入");
 		}
+		return Result.of(userGateway.insert(toUser(userCO)));
+	}
+
+	private User toUser(UserCO userCO) {
 		User user = UserConvertor.toEntity(userCO);
 		user.setTenantId(UserUtil.getTenantId());
 		user.setCreator(UserUtil.getUserId());
 		user.setDeptId(UserUtil.getDeptId());
 		user.setDeptPath(UserUtil.getDeptPath());
-		return Result.of(userGateway.insert(user));
+		return user;
 	}
 
 }

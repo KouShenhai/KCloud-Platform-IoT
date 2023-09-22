@@ -38,8 +38,11 @@ public class PackageUpdateCmdExe {
 
 	public Result<Boolean> execute(PackageUpdateCmd cmd) {
 		Package pack = ConvertUtil.sourceToTarget(cmd.getPackageCO(), Package.class);
-		User user = ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
-		return Result.of(packageGateway.update(pack,user));
+		return Result.of(packageGateway.update(pack,toUser()));
+	}
+
+	private User toUser() {
+		return ConvertUtil.sourceToTarget(UserUtil.user(), User.class);
 	}
 
 }

@@ -126,22 +126,13 @@ public class MessageGatewayImpl implements MessageGateway {
 		});
 	}
 
-	private Boolean insertMessageDetail(Long id, Set<String> receiver,User user) {
+	private Boolean insertMessageDetail(Long messageId, Set<String> receiver,User user) {
 		if (CollectionUtil.isEmpty(receiver)) {
 			return false;
 		}
 		List<MessageDetailDO> list = new ArrayList<>(receiver.size());
-		for (String str : receiver) {
-			MessageDetailDO messageDetailDO = new MessageDetailDO();
-			messageDetailDO.setUserId(Long.parseLong(str));
-			messageDetailDO.setId(IdUtil.defaultId());
-			messageDetailDO.setCreateDate(DateUtil.now());
-			messageDetailDO.setCreator(user.getId());
-			messageDetailDO.setDeptId(user.getDeptId());
-			messageDetailDO.setTenantId(user.getTenantId());
-			messageDetailDO.setMessageId(id);
-			messageDetailDO.setDeptPath(user.getDeptPath());
-			list.add(messageDetailDO);
+		for (String userId : receiver) {
+			list.add(toMessageDetailDO(messageId,userId,user));
 		}
 		batchUtil.insertBatch(list, messageDetailMapper::insertBatch);
 		return true;
@@ -149,6 +140,19 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	private String getMessageTag(Integer type) {
 		return type == Type.NOTICE.ordinal() ? LAOKOU_NOTICE_MESSAGE_TAG : LAOKOU_REMIND_MESSAGE_TAG;
+	}
+
+	private MessageDetailDO toMessageDetailDO(Long messageId,String userId,User user) {
+		MessageDetailDO messageDetailDO = new MessageDetailDO();
+		messageDetailDO.setUserId(Long.parseLong(userId));
+		messageDetailDO.setId(IdUtil.defaultId());
+		messageDetailDO.setCreateDate(DateUtil.now());
+		messageDetailDO.setCreator(user.getId());
+		messageDetailDO.setDeptId(user.getDeptId());
+		messageDetailDO.setTenantId(user.getTenantId());
+		messageDetailDO.setMessageId(messageId);
+		messageDetailDO.setDeptPath(user.getDeptPath());
+		return messageDetailDO;
 	}
 
 }

@@ -136,17 +136,21 @@ public class PackageGatewayImpl implements PackageGateway {
 		}
 		List<PackageMenuDO> list = new ArrayList<>(menuIds.size());
 		for (Long menuId : menuIds) {
-			PackageMenuDO packageMenuDO = new PackageMenuDO();
-			packageMenuDO.setMenuId(menuId);
-			packageMenuDO.setPackageId(packageId);
-			packageMenuDO.setId(IdUtil.defaultId());
-			packageMenuDO.setCreator(user.getId());
-			packageMenuDO.setDeptId(user.getDeptId());
-			packageMenuDO.setTenantId(user.getTenantId());
-			list.add(packageMenuDO);
+			list.add(toPackageMenuDO(packageId,menuId,user));
 		}
 		batchUtil.insertBatch(list, packageMenuMapper::insertBatch);
 		return true;
+	}
+
+	private PackageMenuDO toPackageMenuDO(Long packageId,Long menuId,User user) {
+		PackageMenuDO packageMenuDO = new PackageMenuDO();
+		packageMenuDO.setMenuId(menuId);
+		packageMenuDO.setPackageId(packageId);
+		packageMenuDO.setId(IdUtil.defaultId());
+		packageMenuDO.setCreator(user.getId());
+		packageMenuDO.setDeptId(user.getDeptId());
+		packageMenuDO.setTenantId(user.getTenantId());
+		return packageMenuDO;
 	}
 
 }

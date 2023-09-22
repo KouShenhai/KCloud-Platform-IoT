@@ -35,9 +35,13 @@ public class UserPasswordResetCmdExe {
 	private final UserGateway userGateway;
 
 	public Result<Boolean> execute(UserPasswordResetCmd cmd) {
+		return Result.of(userGateway.resetPassword(toUser(cmd)));
+	}
+
+	private User toUser(UserPasswordResetCmd cmd) {
 		User user = new User(cmd.getId(), cmd.getPassword());
 		user.setEditor(UserUtil.getUserId());
-		return Result.of(userGateway.resetPassword(user));
+		return user;
 	}
 
 }

@@ -31,7 +31,6 @@ import org.springframework.stereotype.Component;
 public class UserDeleteCmdExe {
 
 	private final UserGateway userGateway;
-
 	public Result<Boolean> execute(UserDeleteCmd cmd) {
 		return Result.of(userGateway.deleteById(cmd.getId()));
 	}

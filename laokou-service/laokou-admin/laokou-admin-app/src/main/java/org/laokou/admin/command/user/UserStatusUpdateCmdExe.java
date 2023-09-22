@@ -35,9 +35,13 @@ public class UserStatusUpdateCmdExe {
 	private final UserGateway userGateway;
 
 	public Result<Boolean> execute(UserStatusUpdateCmd cmd) {
+		return Result.of(userGateway.updateInfo(toUser(cmd)));
+	}
+
+	private User toUser(UserStatusUpdateCmd cmd) {
 		User user = new User(cmd.getId(), cmd.getStatus());
 		user.setEditor(UserUtil.getUserId());
-		return Result.of(userGateway.updateInfo(user));
+		return user;
 	}
 
 }

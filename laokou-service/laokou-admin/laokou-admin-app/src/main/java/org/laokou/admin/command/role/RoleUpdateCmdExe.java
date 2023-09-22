@@ -55,8 +55,11 @@ public class RoleUpdateCmdExe {
 		if (count > 0) {
 			throw new GlobalException("角色已存在，请重新填写");
 		}
-		User user = ConvertUtil.sourceToTarget(UserUtil.user(),User.class);
-		return Result.of(roleGateway.update(RoleConvertor.toEntity(roleCO),user));
+		return Result.of(roleGateway.update(RoleConvertor.toEntity(roleCO),toUser()));
+	}
+
+	private User toUser() {
+		return ConvertUtil.sourceToTarget(UserUtil.user(),User.class);
 	}
 
 }

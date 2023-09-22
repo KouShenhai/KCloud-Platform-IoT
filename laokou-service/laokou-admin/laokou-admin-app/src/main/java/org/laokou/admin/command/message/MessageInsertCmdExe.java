@@ -37,8 +37,11 @@ public class MessageInsertCmdExe {
 	private final MessageGateway messageGateway;
 
 	public Result<Boolean> execute(MessageInsertCmd cmd) {
-		User user = ConvertUtil.sourceToTarget(UserUtil.user(),User.class);
-		return Result.of(messageGateway.insert(MessageConvertor.toEntity(cmd.getMessageCO()),user));
+		return Result.of(messageGateway.insert(MessageConvertor.toEntity(cmd.getMessageCO()),toUser()));
+	}
+
+	private User toUser() {
+		return ConvertUtil.sourceToTarget(UserUtil.user(),User.class);
 	}
 
 }

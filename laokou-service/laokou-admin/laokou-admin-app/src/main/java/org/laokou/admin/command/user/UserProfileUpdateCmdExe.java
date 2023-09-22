@@ -50,9 +50,13 @@ public class UserProfileUpdateCmdExe {
 		UserProfileCO userProfileCO = cmd.getUserProfileCO();
 		validate(userProfileCO);
 		encrypt(userProfileCO);
+		return Result.of(userGateway.updateInfo(toUser(userProfileCO)));
+	}
+
+	private User toUser(UserProfileCO userProfileCO) {
 		User user = ConvertUtil.sourceToTarget(userProfileCO, User.class);
 		user.setEditor(UserUtil.getUserId());
-		return Result.of(userGateway.updateInfo(user));
+		return user;
 	}
 
 	private void encrypt(UserProfileCO userProfileCO) {
