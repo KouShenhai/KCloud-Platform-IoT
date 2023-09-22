@@ -28,7 +28,7 @@ import static org.laokou.common.i18n.common.Constant.TRUE;
 /**
  * @author laokou
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "org.laokou")
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 public class FlowableApp {
