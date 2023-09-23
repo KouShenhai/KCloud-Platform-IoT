@@ -64,13 +64,13 @@
         </Async>
     </Appenders>
     <Loggers>
-        <AsyncLogger name="org.laokou" additivity="FALSE" level="INFO">
+        <AsyncLogger name="org.laokou" additivity="FALSE" includeLocation="TRUE" level="INFO">
             <AppenderRef ref="console"/>
             <AppenderRef ref="async_file"/>
         </AsyncLogger>
-        <root level="INFO">
+        <AsyncRoot level="INFO" additivity="FALSE" includeLocation="TRUE">
             <AppenderRef ref="console"/>
             <AppenderRef ref="async_file"/>
-        </root>
+        </AsyncRoot>
     </Loggers>
 </Configuration>
