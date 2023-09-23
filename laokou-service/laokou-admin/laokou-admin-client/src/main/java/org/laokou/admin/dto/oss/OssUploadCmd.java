@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.oss;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class OssUploadCmd extends CommonCommand {
 
+	@JsonIgnore
 	private MultipartFile file;
 
 }

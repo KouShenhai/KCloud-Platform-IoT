@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.message.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.laokou.admin.common.Constant.TENANT;
+
 /**
  * @author laokou
  */
@@ -42,6 +45,7 @@ public class MessageUnreadListQryExe {
 
 	private final MessageMapper messageMapper;
 
+	@DS(TENANT)
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW,
 			isolation = Isolation.READ_UNCOMMITTED, readOnly = true)
 	public Result<Datas<MessageCO>> execute(MessageUnreadListQry qry) {

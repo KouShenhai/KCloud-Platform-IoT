@@ -27,7 +27,7 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 public interface MessageGateway {
 
-	Datas<Message> list(Message message, PageQuery pageQuery);
+	Datas<Message> list(Message message,User user, PageQuery pageQuery);
 
 	Boolean insert(Message message, User user);
 

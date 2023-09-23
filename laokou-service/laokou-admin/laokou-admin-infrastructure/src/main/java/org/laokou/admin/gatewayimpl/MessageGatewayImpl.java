@@ -37,13 +37,12 @@ import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.rocketmq.dto.MqDTO;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.im.client.WsMsgCO;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,11 +61,7 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	private final MessageMapper messageMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	private final MessageDetailMapper messageDetailMapper;
-
-	private final BatchUtil batchUtil;
 
 	private static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
 
@@ -74,9 +69,9 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_MESSAGE)
-	public Datas<Message> list(Message message, PageQuery pageQuery) {
+	public Datas<Message> list(Message message,User user, PageQuery pageQuery) {
 		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<MessageDO> newPage = messageMapper.getMessageListByLikeTitleFilter(page, message.getTitle(),
+		IPage<MessageDO> newPage = messageMapper.getMessageListByTenantIdAndLikeTitleFilter(page,user.getTenantId(), message.getTitle(),
 				pageQuery.getSqlFilter());
 		Datas<Message> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
@@ -105,25 +100,17 @@ public class MessageGatewayImpl implements MessageGateway {
 		if (CollectionUtil.isEmpty(receiver)) {
 			return;
 		}
-		WsMsgCO wsMsgCO = new WsMsgCO();
-		wsMsgCO.setMsg(DEFAULT_MESSAGE);
-		wsMsgCO.setReceiver(receiver);
+		WsMsgCO co = new WsMsgCO();
+		co.setMsg(DEFAULT_MESSAGE);
+		co.setReceiver(receiver);
 		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(type),
-				new MqDTO(JacksonUtil.toJsonStr(wsMsgCO)));
+				new MqDTO(JacksonUtil.toJsonStr(co)));
 	}
 
-	private Boolean insertMessage(MessageDO messageDO, Message message, User user) {
-		return transactionalUtil.execute(rollback -> {
-			try {
-				return messageMapper.insert(messageDO) > 0
-						&& insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
-			}
-			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
-				rollback.setRollbackOnly();
-				return false;
-			}
-		});
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean insertMessage(MessageDO messageDO, Message message, User user) {
+		boolean flag = messageMapper.insert(messageDO) > 0;
+		return flag && insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
 	}
 
 	private Boolean insertMessageDetail(Long messageId, Set<String> receiver, User user) {
@@ -134,7 +121,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		for (String userId : receiver) {
 			list.add(toMessageDetailDO(messageId, userId, user));
 		}
-		batchUtil.insertBatch(list, messageDetailMapper::insertBatch);
+		messageDetailMapper.insertBatch(list);
 		return true;
 	}
 

@@ -57,6 +57,7 @@ public class OssController {
 	@TraceLog
 	@PostMapping("upload")
 	@Operation(summary = "存储管理", description = "上传文件")
+	@OperateLog(module = "存储管理", operation = "上传文件")
 	public Result<FileCO> upload(@RequestPart("file") MultipartFile file) {
 		return ossServiceI.upload(new OssUploadCmd(file));
 	}

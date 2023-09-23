@@ -31,13 +31,14 @@
 			  and p.type = #{type}
     </select>
 
-	<select id="getMessageListByLikeTitleFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MessageDO">
+	<select id="getMessageListByTenantIdAndLikeTitleFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MessageDO">
 		select id
 		     ,create_date
 		     ,title
 		     ,`type`
 		from boot_sys_message
 		where del_flag = 0
+		  	and tenant_id = #{tenantId}
 		<if test="title != null and title != ''">
 			and title like #{title}
 		</if>

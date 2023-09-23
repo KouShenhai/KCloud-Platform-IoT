@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.message;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.domain.message.Read;
@@ -30,6 +31,8 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.admin.common.Constant.TENANT;
 
 /**
  * @author laokou
@@ -45,6 +48,7 @@ public class MessageReadCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@DS(TENANT)
 	public Result<MessageCO> execute(MessageReadCmd cmd) {
 		Long detailId = cmd.getDetailId();
 		updateFlag(detailId);

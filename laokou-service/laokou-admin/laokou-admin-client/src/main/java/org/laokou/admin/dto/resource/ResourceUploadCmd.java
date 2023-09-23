@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.resource;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class ResourceUploadCmd extends CommonCommand {
 
+	@JsonIgnore
 	private MultipartFile file;
 
 }
