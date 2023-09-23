@@ -16,7 +16,6 @@
  */
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,7 +25,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.laokou.admin.common.Constant.TENANT;
 import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
 
 /**
@@ -34,7 +32,6 @@ import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
  */
 @Repository
 @Mapper
-@DS(TENANT)
 public interface OssMapper extends BatchMapper<OssDO> {
 
 	IPage<OssDO> getOssListByLikeNameFilter(IPage<OssDO> page, @Param("name") String name,

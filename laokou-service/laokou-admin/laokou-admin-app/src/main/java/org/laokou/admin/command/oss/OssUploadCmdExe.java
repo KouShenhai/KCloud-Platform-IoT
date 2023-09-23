@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.oss;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -40,6 +41,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import static org.laokou.admin.common.Constant.MAX_FILE_SIZE;
+import static org.laokou.admin.common.Constant.TENANT;
 
 /**
  * @author laokou
@@ -60,6 +62,7 @@ public class OssUploadCmdExe {
 	}
 
 	@SneakyThrows
+	@DS(TENANT)
 	private FileCO upload(MultipartFile file) {
 		String fileName = file.getOriginalFilename();
 		long fileSize = file.getSize();
