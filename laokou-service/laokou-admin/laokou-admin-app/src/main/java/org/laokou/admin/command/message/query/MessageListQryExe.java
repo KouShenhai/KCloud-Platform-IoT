@@ -20,12 +20,14 @@ package org.laokou.admin.command.message.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
+import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.message.MessageListQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -40,11 +42,15 @@ public class MessageListQryExe {
 	public Result<Datas<MessageCO>> execute(MessageListQry qry) {
 		PageQuery pageQuery = new PageQuery(qry.getPageNum(), qry.getPageSize());
 		Message message = ConvertUtil.sourceToTarget(qry, Message.class);
-		Datas<Message> list = messageGateway.list(message, pageQuery);
+		Datas<Message> list = messageGateway.list(message,toUser(), pageQuery);
 		Datas<MessageCO> datas = new Datas<>();
 		datas.setRecords(ConvertUtil.sourceToTarget(list.getRecords(), MessageCO.class));
 		datas.setTotal(list.getTotal());
 		return Result.of(datas);
+	}
+
+	private User toUser() {
+		return new User(UserUtil.getTenantId());
 	}
 
 }

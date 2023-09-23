@@ -70,6 +70,7 @@ public class ResourceController {
 	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@TraceLog
 	@Operation(summary = "资源管理", description = "上传资源")
+	@OperateLog(module = "资源管理", operation = "上传资源")
 	public Result<FileCO> upload(@RequestPart("file") MultipartFile file) {
 		return resourceServiceI.upload(new ResourceUploadCmd(file));
 	}

@@ -26,4 +26,18 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 public class ResourceCO extends ClientObject {
 
+    private Long id;
+
+    private String title;
+
+    private String url;
+
+    private Integer status;
+
+    private String code;
+
+    private String remark;
+
+    private String instanceId;
+
 }
