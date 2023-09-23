@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.dict;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.dict.DictUpdateCmd;
@@ -30,6 +31,8 @@ import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.admin.common.Constant.TENANT;
+
 /**
  * @author laokou
  */
@@ -41,6 +44,7 @@ public class DictUpdateCmdExe {
 
 	private final DictMapper dictMapper;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(DictUpdateCmd cmd) {
 		DictCO dictCO = cmd.getDictCO();
 		Long id = dictCO.getId();

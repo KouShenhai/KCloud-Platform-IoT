@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.admin.common.Constant.TENANT;
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_OSS;
 
 /**
@@ -54,6 +56,7 @@ public class OssGatewayImpl implements OssGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_OSS)
+	@DS(TENANT)
 	public Datas<Oss> list(Oss oss, PageQuery pageQuery) {
 		IPage<OssDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<OssDO> newPage = ossMapper.getOssListByLikeNameFilter(page, oss.getName(), pageQuery.getSqlFilter());
@@ -64,11 +67,13 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	@Override
+	@DS(TENANT)
 	public Oss getById(Long id) {
 		return ConvertUtil.sourceToTarget(ossMapper.selectById(id), Oss.class);
 	}
 
 	@Override
+	@DS(TENANT)
 	public Boolean insert(Oss oss) {
 		OssDO ossDO = OssConvertor.toDataObject(oss);
 		return insertOss(ossDO);
@@ -82,6 +87,7 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	@Override
+	@DS(TENANT)
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.execute(r -> {
 			try {
