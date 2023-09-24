@@ -18,6 +18,7 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,7 @@ import org.laokou.common.core.utils.DateUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.rocketmq.dto.MqDTO;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
@@ -68,6 +70,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	private static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
 
 	private final RocketMqTemplate rocketMqTemplate;
+	private final BatchUtil batchUtil;
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_MESSAGE)
@@ -126,7 +129,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		for (String userId : receiver) {
 			list.add(toMessageDetailDO(messageId, userId, user));
 		}
-		messageDetailMapper.insertBatch(list);
+		batchUtil.insertBatch(list,messageDetailMapper::insertBatch, DynamicDataSourceContextHolder.peek());
 		return true;
 	}
 
