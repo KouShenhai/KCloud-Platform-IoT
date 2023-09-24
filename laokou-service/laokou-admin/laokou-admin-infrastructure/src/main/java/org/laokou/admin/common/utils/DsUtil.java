@@ -19,7 +19,7 @@ package org.laokou.admin.common.utils;
 
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
-import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
+import com.baomidou.dynamic.datasource.creator.hikaricp.HikariDataSourceCreator;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -78,8 +78,8 @@ public class DsUtil {
 		// 连接数据源
 		connectDs(properties);
 		DynamicRoutingDataSource dynamicRoutingDataSource = dynamicUtil.getDataSource();
-		DefaultDataSourceCreator dataSourceCreator = dynamicUtil.getDefaultDataSourceCreator();
-		DataSource dataSource = dataSourceCreator.createDataSource(properties);
+		HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
+		DataSource dataSource = hikariDataSourceCreator.createDataSource(properties);
 		dynamicRoutingDataSource.addDataSource(sourceName, dataSource);
 	}
 

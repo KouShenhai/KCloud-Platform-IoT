@@ -18,7 +18,7 @@
 package org.laokou.admin.common.utils;
 
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
-import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
+import com.baomidou.dynamic.datasource.creator.hikaricp.HikariDataSourceCreator;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.springframework.stereotype.Component;
 
@@ -39,8 +39,8 @@ public class DynamicUtil {
 		return getDataSource().getDataSources();
 	}
 
-	public DefaultDataSourceCreator getDefaultDataSourceCreator() {
-		return SpringContextUtil.getBean(DefaultDataSourceCreator.class);
+	public HikariDataSourceCreator getHikariDataSourceCreator() {
+		return SpringContextUtil.getBean(HikariDataSourceCreator.class);
 	}
 
 }
