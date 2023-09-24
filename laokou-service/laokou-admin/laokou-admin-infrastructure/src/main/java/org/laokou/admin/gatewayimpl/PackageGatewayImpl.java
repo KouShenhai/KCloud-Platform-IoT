@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -138,7 +139,7 @@ public class PackageGatewayImpl implements PackageGateway {
 		for (Long menuId : menuIds) {
 			list.add(toPackageMenuDO(packageId, menuId, user));
 		}
-		batchUtil.insertBatch(list, packageMenuMapper::insertBatch);
+		batchUtil.insertBatch(list, packageMenuMapper::insertBatch, DynamicDataSourceContextHolder.peek());
 		return true;
 	}
 

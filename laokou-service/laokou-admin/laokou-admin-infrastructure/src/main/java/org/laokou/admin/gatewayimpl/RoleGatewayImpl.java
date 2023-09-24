@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -151,7 +152,7 @@ public class RoleGatewayImpl implements RoleGateway {
 			for (Long menuId : menuIds) {
 				list.add(toRoleMenuDO(roleId, menuId, user));
 			}
-			batchUtil.insertBatch(list, roleMenuMapper::insertBatch);
+			batchUtil.insertBatch(list, roleMenuMapper::insertBatch,DynamicDataSourceContextHolder.peek());
 			return true;
 		}
 		return false;
@@ -163,7 +164,7 @@ public class RoleGatewayImpl implements RoleGateway {
 			for (Long deptId : deptIds) {
 				list.add(toRoleDeptDO(roleId, deptId, user));
 			}
-			batchUtil.insertBatch(list, roleDeptMapper::insertBatch);
+			batchUtil.insertBatch(list, roleDeptMapper::insertBatch, DynamicDataSourceContextHolder.peek());
 			return true;
 		}
 		return false;

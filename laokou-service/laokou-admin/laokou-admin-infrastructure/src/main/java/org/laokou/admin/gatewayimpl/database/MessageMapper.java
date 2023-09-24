@@ -15,6 +15,7 @@
  */
 package org.laokou.admin.gatewayimpl.database;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -22,6 +23,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
+import static org.laokou.admin.common.Constant.TENANT;
 import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
 
 /**
@@ -29,6 +31,7 @@ import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
  */
 @Repository
 @Mapper
+@DS(TENANT)
 public interface MessageMapper extends BatchMapper<MessageDO> {
 
 	IPage<MessageDO> getUnreadMessageListByUserIdAndType(IPage<MessageDO> page, @Param("userId") Long userId,
