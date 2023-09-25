@@ -25,14 +25,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class PollSelectAlgorithm<T> extends AbstractSelectAlgorithm<T> {
 
-    private static final AtomicInteger ATOMIC = new AtomicInteger(-1);
+	private static final AtomicInteger ATOMIC = new AtomicInteger(-1);
 
-    @Override
-    public T select(List<T> list, Object arg) {
-        if (ATOMIC.incrementAndGet() == list.size()) {
-            ATOMIC.compareAndSet(ATOMIC.get(),0);
-        }
-        return list.get(ATOMIC.get());
-    }
+	@Override
+	public T select(List<T> list, Object arg) {
+		if (ATOMIC.incrementAndGet() == list.size()) {
+			ATOMIC.compareAndSet(ATOMIC.get(), 0);
+		}
+		return list.get(ATOMIC.get());
+	}
 
 }

@@ -28,6 +28,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
@@ -48,11 +50,11 @@ public class BatchUtil {
 	private static final int DEFAULT_BATCH_NUM = 1000;
 
 	public <T> void insertBatch(List<T> dataList, Consumer<List<T>> batchOps) {
-		insertBatch(dataList, DEFAULT_BATCH_NUM, batchOps,MASTER);
+		insertBatch(dataList, DEFAULT_BATCH_NUM, batchOps, MASTER);
 	}
 
 	public <T> void insertBatch(List<T> dataList, Consumer<List<T>> batchOps, String ds) {
-		insertBatch(dataList,DEFAULT_BATCH_NUM,batchOps,ds);
+		insertBatch(dataList, DEFAULT_BATCH_NUM, batchOps, ds);
 	}
 
 	/**
@@ -62,34 +64,51 @@ public class BatchUtil {
 	 * @param batchOps 函数
 	 */
 	@SneakyThrows
-	public <T> void insertBatch(List<T> dataList, int batchNum, Consumer<List<T>> batchOps,String ds) {
+	public <T> void insertBatch(List<T> dataList, int batchNum, Consumer<List<T>> batchOps, String ds) {
 		// 数据分组
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
 		List<CompletableFuture<Void>> futures = new ArrayList<>(partition.size());
-		partition.forEach(item -> futures
-				.add(CompletableFuture.runAsync(() -> {
-					try {
-						DynamicDataSourceContextHolder.push(ds);
-						transactionalUtil.executeWithoutResult(callback -> {
-							try {
-								batchOps.accept(item);
-							} catch (Exception e) {
-								// 回滚标识
-								rollback.compareAndSet(false, true);
-								log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", e.getMessage());
+		CountDownLatch latch = new CountDownLatch(partition.size());
+		partition.forEach(item -> {
+			futures.add(CompletableFuture.runAsync(() -> {
+				try {
+					DynamicDataSourceContextHolder.push(ds);
+					transactionalUtil.executeWithoutResult(callback -> {
+						try {
+							batchOps.accept(item);
+							boolean timeout = !latch.await(60, TimeUnit.SECONDS);
+							if (timeout) {
+								handleException(rollback, "等待超时");
+							}
+						}
+						catch (Exception e) {
+							handleException(rollback, e.getMessage());
+						}
+						finally {
+							if (rollback.get()) {
 								callback.setRollbackOnly();
 							}
-						});
-					} finally {
-						DynamicDataSourceContextHolder.clear();
-					}
-		}, taskExecutor)));
+						}
+					});
+				}
+				finally {
+					DynamicDataSourceContextHolder.clear();
+				}
+			}, taskExecutor));
+			latch.countDown();
+		});
 		// 阻塞主线程
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
 			throw new GlobalException("批量插入数据异常，数据已回滚");
 		}
+	}
+
+	private void handleException(AtomicBoolean rollback, String msg) {
+		// 回滚标识
+		rollback.compareAndSet(false, true);
+		log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", msg);
 	}
 
 }

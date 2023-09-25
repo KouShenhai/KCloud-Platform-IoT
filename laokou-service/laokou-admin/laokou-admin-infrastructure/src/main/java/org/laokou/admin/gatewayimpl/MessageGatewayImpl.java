@@ -70,15 +70,16 @@ public class MessageGatewayImpl implements MessageGateway {
 	private static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
 
 	private final RocketMqTemplate rocketMqTemplate;
+
 	private final BatchUtil batchUtil;
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_MESSAGE)
 	@DS(TENANT)
-	public Datas<Message> list(Message message,User user, PageQuery pageQuery) {
+	public Datas<Message> list(Message message, User user, PageQuery pageQuery) {
 		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<MessageDO> newPage = messageMapper.getMessageListByTenantIdAndLikeTitleFilter(page,user.getTenantId(), message.getTitle(),
-				pageQuery.getSqlFilter());
+		IPage<MessageDO> newPage = messageMapper.getMessageListByTenantIdAndLikeTitleFilter(page, user.getTenantId(),
+				message.getTitle(), pageQuery.getSqlFilter());
 		Datas<Message> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Message.class));
@@ -129,7 +130,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		for (String userId : receiver) {
 			list.add(toMessageDetailDO(messageId, userId, user));
 		}
-		batchUtil.insertBatch(list,messageDetailMapper::insertBatch, DynamicDataSourceContextHolder.peek());
+		batchUtil.insertBatch(list, messageDetailMapper::insertBatch, DynamicDataSourceContextHolder.peek());
 		return true;
 	}
 

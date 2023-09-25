@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -181,7 +182,7 @@ public class UserGatewayImpl implements UserGateway {
 			userRoleDO.setDeptPath(user.getDeptPath());
 			list.add(userRoleDO);
 		}
-		batchUtil.insertBatch(list, userRoleMapper::insertBatch);
+		batchUtil.insertBatch(list, userRoleMapper::insertBatch, DynamicDataSourceContextHolder.peek());
 		return true;
 	}
 
