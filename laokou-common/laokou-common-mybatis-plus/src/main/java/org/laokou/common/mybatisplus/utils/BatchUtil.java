@@ -77,16 +77,9 @@ public class BatchUtil {
 					transactionalUtil.executeWithoutResult(callback -> {
 						try {
 							batchOps.accept(item);
-							if (!rollback.get()) {
-								boolean timeout = !latch.await(120, TimeUnit.SECONDS);
-								if (timeout) {
-									handleException(rollback, "等待超时");
-								}
-							}
-							// 如果CountDownLatch 已经计完数啦，直接唤醒所有被阻塞的线程
-							// 如果后面的线程出现问题，将回滚标识设置true，之前所有被阻塞的线程直接被唤醒
-							else if (rollback.get() || latch.getCount() == 0){
-								latch.notifyAll();
+							boolean timeout = !latch.await(60, TimeUnit.SECONDS);
+							if (timeout) {
+								handleException(rollback, "等待超时");
 							}
 						}
 						catch (Exception e) {
