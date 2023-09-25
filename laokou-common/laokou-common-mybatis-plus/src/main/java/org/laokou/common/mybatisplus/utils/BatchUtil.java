@@ -25,10 +25,9 @@ import org.laokou.common.i18n.common.GlobalException;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
@@ -68,36 +67,9 @@ public class BatchUtil {
 		// 数据分组
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
-		List<CompletableFuture<Void>> futures = new ArrayList<>(partition.size());
-		CountDownLatch latch = new CountDownLatch(partition.size());
-		partition.forEach(item -> {
-			futures.add(CompletableFuture.runAsync(() -> {
-				try {
-					DynamicDataSourceContextHolder.push(ds);
-					transactionalUtil.executeWithoutResult(callback -> {
-						try {
-							batchOps.accept(item);
-							boolean timeout = !latch.await(60, TimeUnit.SECONDS);
-							if (timeout) {
-								handleException(rollback, "等待超时");
-							}
-						}
-						catch (Exception e) {
-							handleException(rollback, e.getMessage());
-						}
-						finally {
-							if (rollback.get()) {
-								callback.setRollbackOnly();
-							}
-						}
-					});
-				}
-				finally {
-					DynamicDataSourceContextHolder.clear();
-				}
-			}, taskExecutor));
-			latch.countDown();
-		});
+		CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
+		List<CompletableFuture<Void>> futures = partition.stream()
+				.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, batchOps,cyclicBarrier, rollback, ds),taskExecutor)).toList();
 		// 阻塞主线程
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
@@ -105,10 +77,34 @@ public class BatchUtil {
 		}
 	}
 
-	private void handleException(AtomicBoolean rollback, String msg) {
+	private <T> void handleBatch(List<T> item, Consumer<List<T>> batchOps,CyclicBarrier cyclicBarrier, AtomicBoolean rollback, String ds) {
+		try {
+			DynamicDataSourceContextHolder.push(ds);
+			transactionalUtil.executeWithoutResult(callback -> {
+				try {
+					batchOps.accept(item);
+					cyclicBarrier.await(60, TimeUnit.SECONDS);
+				}
+				catch (Exception e) {
+					handleException(cyclicBarrier,rollback, e.getMessage());
+				}
+				finally {
+					if (rollback.get()) {
+						callback.setRollbackOnly();
+					}
+				}
+			});
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
+	}
+
+	private void handleException(CyclicBarrier cyclicBarrier,AtomicBoolean rollback, String msg) {
 		// 回滚标识
 		rollback.compareAndSet(false, true);
 		log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", msg);
+		cyclicBarrier.reset();
 	}
 
 }
