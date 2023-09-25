@@ -17,6 +17,7 @@
 
 package org.laokou.auth.event.handler;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
+
+import static org.laokou.auth.common.Constant.SHARDING_SPHERE_READWRITE;
 
 /**
  * @author laokou
@@ -55,6 +58,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 		}, taskExecutor);
 	}
 
+	@DS(SHARDING_SPHERE_READWRITE)
 	private void execute(LoginLogEvent event) {
 		LoginLogDO logDO = ConvertUtil.sourceToTarget(event, LoginLogDO.class);
 		logDO.setCreator(event.getUserId());
