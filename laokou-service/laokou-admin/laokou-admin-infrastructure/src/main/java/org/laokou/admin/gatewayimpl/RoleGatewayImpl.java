@@ -152,7 +152,7 @@ public class RoleGatewayImpl implements RoleGateway {
 			for (Long menuId : menuIds) {
 				list.add(toRoleMenuDO(roleId, menuId, user));
 			}
-			batchUtil.insertBatch(list, roleMenuMapper::insertBatch,DynamicDataSourceContextHolder.peek());
+			batchUtil.insertBatch(list, roleMenuMapper::insertBatch, DynamicDataSourceContextHolder.peek());
 			return true;
 		}
 		return false;

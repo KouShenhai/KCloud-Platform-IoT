@@ -30,8 +30,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceListQryExe {
 
-    public Result<Datas<ResourceCO>> execute() {
-        return null;
-    }
+	public Result<Datas<ResourceCO>> execute() {
+		return null;
+	}
 
 }
