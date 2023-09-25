@@ -262,34 +262,12 @@ GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KClou
 <a href="https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support"><img alt="暂无图片" width="100" height="100" src="doc/image/jb_beam.png"/></a>
 
 ### 🐼 鸣谢个人
-<a href="https://github.com/KouShenhai" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/KouShenhai/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/48756217?s=64&amp;v=4" alt="@KouShenhai" height="32" width="32" data-view-component="true" class="avatar circle">
-</a>
-<a href="https://github.com/liang99" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/liang99/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/26246537?s=64&amp;v=4" alt="@liang99" height="32" width="32" data-view-component="true" class="avatar circle">
-</a>
-<a href="https://github.com/livk-cloud" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/livk-cloud/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/50291874?s=64&amp;v=4" alt="@livk-cloud" height="32" width="32" data-view-component="true" class="avatar circle">
-</a>  
-<a href="https://github.com/liukefu2050" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/liukefu2050/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/21030225?s=64&amp;v=4" alt="@liukefu2050" height="32" width="32" data-view-component="true" class="avatar circle">
-</a>
-<a href="https://github.com/HalfPomelo" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/HalfPomelo/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/127269482?s=64&amp;v=4" alt="@HalfPomelo" height="32" width="32" data-view-component="true" class="avatar circle">
-</a>
-<a href="https://github.com/lixin" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/lixin/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/69209385?s=64&amp;v=4" alt="@lixin" height="32" width="32" data-view-component="true" class="avatar circle">
-</a>
-<a href="https://github.com/simman" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/simman/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/2041471?s=64&amp;v=4" alt="@simman" height="32" width="32" data-view-component="true" class="avatar circle">
-</a>
-<a href="https://github.com/suhengli" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/suhengli/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/43296325?v=4" alt="@suhengli" height="32" width="32" data-view-component="true" class="avatar circle">
-</a>
-<a href="https://github.com/gitkakafu" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/gitkakafu/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/89563182?v=4" alt="@gitkakafu" height="32" width="32" data-view-component="true" class="avatar circle">
-</a>
-
+|                                                👤                                                |                                                👤                                                |                                           👤                                         |                                            👤                                            |                                           👤                                            |                                           👤                                            |
+|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------:|
+| <img height='50' width='50' src='https://avatars.githubusercontent.com/u/48756217?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/26246537?s=64&amp;v=4'> |                           <img height='50' width='50' src='https://avatars.githubusercontent.com/u/50291874?s=64&amp;v=4'>                        | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/21030225?s=64&amp;v=4'> |                           <img height='50' width='50' src='https://avatars.githubusercontent.com/u/127269482?s=64&amp;v=4'>                           |                           <img height='50' width='50' src='https://avatars.githubusercontent.com/u/69209385?s=64&amp;v=4'>                           |
+|                           [KouShenhai](https://github.com/KouShenhai)                            |                              [liang99](https://github.com/liang99)                               |                             [livk-cloud](https://github.com/livk-cloud)                          |                       [liukefu2050](https://github.com/liukefu2050)                       |                              [HalfPomelo](https://github.com/HalfPomelo)                               |                             [lixin](https://github.com/lixin)                             |
+|<img height='50' width='50' src='https://avatars.githubusercontent.com/u/2041471?s=64&amp;v=4'>|<img height='50' width='50' src='https://avatars.githubusercontent.com/u/43296325?s=64&amp;v=4'>|<img height='50' width='50' src='https://avatars.githubusercontent.com/u/89563182?s=64&amp;v=4'>|
+|[simman](https://github.com/simman)   |                                               [suhengli](https://github.com/suhengli)                                               |[gitkakafu](https://github.com/gitkakafu)|
 ### 🐸 联系作者
 博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)    
 
