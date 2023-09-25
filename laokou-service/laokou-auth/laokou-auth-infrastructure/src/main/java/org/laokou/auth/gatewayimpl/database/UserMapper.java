@@ -17,13 +17,11 @@
 
 package org.laokou.auth.gatewayimpl.database;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.springframework.stereotype.Repository;
 
-import static org.laokou.auth.common.Constant.SHARDING_SPHERE;
 import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
 
 /**
@@ -31,7 +29,6 @@ import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID
  */
 @Mapper
 @Repository
-@DS(SHARDING_SPHERE)
 public interface UserMapper {
 
 	/**

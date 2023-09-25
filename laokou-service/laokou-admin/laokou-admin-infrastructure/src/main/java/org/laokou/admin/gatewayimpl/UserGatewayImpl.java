@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -47,6 +48,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
+import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_USER;
 
 /**
@@ -68,12 +71,14 @@ public class UserGatewayImpl implements UserGateway {
 	private final UserRoleMapper userRoleMapper;
 
 	@Override
+	@DS(SHARDING_SPHERE)
 	public Boolean insert(User user) {
 		UserDO userDO = getInsertUserDO(user);
 		return insertUser(userDO, user);
 	}
 
 	@Override
+	@DS(SHARDING_SPHERE)
 	public Boolean update(User user) {
 		UserDO userDO = getUpdateUserDO(user);
 		List<Long> ids = userRoleMapper.getIdsByUserId(userDO.getId());
@@ -81,6 +86,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
+	@DS(SHARDING_SPHERE)
 	public Boolean deleteById(Long id) {
 		return deleteUserById(id);
 	}
@@ -91,31 +97,39 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
+	@DS(SHARDING_SPHERE)
 	public Boolean resetPassword(User user) {
 		return updateUser(getResetPasswordDO(user));
 	}
 
 	@Override
+	@DS(SHARDING_SPHERE)
 	public Boolean updateInfo(User user) {
 		return updateUser(getUpdateUserDO(user));
 	}
 
 	@Override
+	@DS(SHARDING_SPHERE)
 	public User getById(Long id, Long tenantId) {
 		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class).eq("id", id).select("id", "username",
 				"status", "dept_id", "dept_path", "super_admin"));
 		User user = ConvertUtil.sourceToTarget(userDO, User.class);
-		if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
-			user.setRoleIds(roleMapper.getRoleIdsByTenantId(tenantId));
-		}
-		else {
-			user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
+		try {
+			DynamicDataSourceContextHolder.push(MASTER);
+			if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
+				user.setRoleIds(roleMapper.getRoleIdsByTenantId(tenantId));
+			} else {
+				user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
+			}
+		} finally {
+			DynamicDataSourceContextHolder.clear();
 		}
 		return user;
 	}
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_USER)
+	@DS(SHARDING_SPHERE)
 	public Datas<User> list(User user, PageQuery pageQuery) {
 		Page<UserDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<UserDO> newPage = userMapper.getUserListByTenantIdAndUsernameFilter(page, user.getTenantId(),
@@ -182,7 +196,7 @@ public class UserGatewayImpl implements UserGateway {
 			userRoleDO.setDeptPath(user.getDeptPath());
 			list.add(userRoleDO);
 		}
-		batchUtil.insertBatch(list, userRoleMapper::insertBatch, DynamicDataSourceContextHolder.peek());
+		batchUtil.insertBatch(list, userRoleMapper::insertBatch);
 		return true;
 	}
 

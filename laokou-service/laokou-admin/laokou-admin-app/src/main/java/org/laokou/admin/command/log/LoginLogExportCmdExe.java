@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.log;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.common.utils.ExcelUtil;
 import org.laokou.admin.domain.annotation.DataFilter;
@@ -28,6 +29,7 @@ import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.admin.common.Constant.SHARDING_SPHERE_READWRITE;
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_LOGIN_LOG;
 
 /**
@@ -38,6 +40,7 @@ import static org.laokou.admin.common.DsConstant.BOOT_SYS_LOGIN_LOG;
 public class LoginLogExportCmdExe {
 
 	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
+	@DS(SHARDING_SPHERE_READWRITE)
 	public void executeVoid(LoginLogExportCmd cmd) {
 		LoginLogMapper loginLogMapper = SpringContextUtil.getBean(LoginLogMapper.class);
 		ExcelUtil.export(cmd.getResponse(), buildLoginLog(cmd), cmd.getSqlFilter(), loginLogMapper,

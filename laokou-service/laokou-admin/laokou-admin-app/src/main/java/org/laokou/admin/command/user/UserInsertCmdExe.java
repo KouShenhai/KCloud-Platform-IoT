@@ -1,5 +1,6 @@
 package org.laokou.admin.command.user;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.UserConvertor;
@@ -15,6 +16,8 @@ import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
+
 /**
  * @author laokou
  */
@@ -26,6 +29,7 @@ public class UserInsertCmdExe {
 
 	private final UserMapper userMapper;
 
+	@DS(SHARDING_SPHERE)
 	public Result<Boolean> execute(UserInsertCmd cmd) {
 		UserCO userCO = cmd.getUserCO();
 		Long count = userMapper.selectCount(
