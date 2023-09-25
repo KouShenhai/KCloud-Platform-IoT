@@ -18,6 +18,7 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -47,6 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_USER;
 
@@ -112,11 +114,15 @@ public class UserGatewayImpl implements UserGateway {
 		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class).eq("id", id).select("id", "username",
 				"status", "dept_id", "dept_path", "super_admin"));
 		User user = ConvertUtil.sourceToTarget(userDO, User.class);
-		if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
-			user.setRoleIds(roleMapper.getRoleIdsByTenantId(tenantId));
-		}
-		else {
-			user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
+		try {
+			DynamicDataSourceContextHolder.push(MASTER);
+			if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
+				user.setRoleIds(roleMapper.getRoleIdsByTenantId(tenantId));
+			} else {
+				user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
+			}
+		} finally {
+			DynamicDataSourceContextHolder.clear();
 		}
 		return user;
 	}
