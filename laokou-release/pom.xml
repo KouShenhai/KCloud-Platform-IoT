@@ -68,7 +68,7 @@
         </developer>
     </developers>
     <scm>
-        <tag>kcloud-platform-alibaba-3.0.5.RELEASE</tag>
+        <tag>kcloud-platform-alibaba-3.1.4.RELEASE</tag>
         <url>https://github.com/KouShenhai/KCloud-Platform-Alibaba</url>
         <connection>scm:git:https://github.com/KouShenhai/KCloud-Platform-Alibaba.git</connection>
         <developerConnection>scm:git:https://github.com/KouShenhai/KCloud-Platform-Alibaba.git</developerConnection>
