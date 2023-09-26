@@ -23,8 +23,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import static com.alibaba.nacos.sys.env.EnvUtil.NACOS_HOME_KEY;
-
 /**
  * @version 2.2.0 Nacos starter.
  * @author nacos
@@ -36,7 +34,6 @@ import static com.alibaba.nacos.sys.env.EnvUtil.NACOS_HOME_KEY;
 public class NacosApp {
 
 	public static void main(String[] args) {
-		System.setProperty(NACOS_HOME_KEY, "nacos");
 		new SpringApplicationBuilder(NacosApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
