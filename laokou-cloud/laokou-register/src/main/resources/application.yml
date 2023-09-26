@@ -108,3 +108,6 @@ spring:
     name: @pom.artifactId@
   profiles:
     active: @PROFILE-ACTIVE@
+  sql:
+    init:
+      platform: mysql
