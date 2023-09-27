@@ -25,8 +25,10 @@ import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.springframework.context.ApplicationListener;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author laokou
@@ -39,15 +41,23 @@ public class OperateLogHandler implements ApplicationListener<OperateLogEvent> {
 
 	private final OperateLogMapper operateLogMapper;
 
+	private final ThreadPoolTaskExecutor taskExecutor;
+
 	private void execute(OperateLogEvent event) {
 		OperateLogDO operateLogDO = ConvertUtil.sourceToTarget(event, OperateLogDO.class);
 		operateLogMapper.insert(operateLogDO);
 	}
 
 	@Override
-	@Async
 	public void onApplicationEvent(OperateLogEvent event) {
-		execute(event);
+		CompletableFuture.runAsync(() -> {
+			try {
+				execute(event);
+			}
+			catch (Exception e) {
+				log.error("数据插入失败，错误信息：{}", e.getMessage());
+			}
+		}, taskExecutor);
 	}
 
 }
