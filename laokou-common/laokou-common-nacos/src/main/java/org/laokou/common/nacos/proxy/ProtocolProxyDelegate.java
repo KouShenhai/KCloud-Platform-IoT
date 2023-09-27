@@ -50,7 +50,7 @@ public class ProtocolProxyDelegate implements ProtocolProxy {
 	}
 
 	private ProtocolProxy getProxy() {
-		return sslEnabled ? httpsProtocolProxy : httpProtocolProxy;
+		return httpProtocolProxy;
 	}
 
 }

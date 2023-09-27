@@ -15,9 +15,8 @@
  */
 package io.seata.server;
 
-import io.seata.common.aot.NativeUtils;
-import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import io.seata.common.aot.NativeUtils;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -32,9 +31,9 @@ public class SeataApp {
 	public static void main(String[] args) throws InterruptedException {
 		try {
 			// run the spring-boot application
-			System.setProperty(TlsSystemConfig.TLS_ENABLE, "true");
-			System.setProperty(TlsSystemConfig.CLIENT_AUTH, "true");
-			System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+//			System.setProperty(TlsSystemConfig.TLS_ENABLE, "true");
+//			System.setProperty(TlsSystemConfig.CLIENT_AUTH, "true");
+//			System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 			new SpringApplicationBuilder(SeataApp.class).web(WebApplicationType.SERVLET).run(args);
 		}
 		catch (Throwable t) {

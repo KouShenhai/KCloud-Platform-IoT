@@ -240,8 +240,8 @@
                 <MYSQL-DB-POWER-JOB>kcloud_platform_alibaba_power_job</MYSQL-DB-POWER-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
-                <NACOS-DISCOVERY-ADDRESS>https://127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
-                <NACOS-CONFIG-ADDRESS>https://127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
+                <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
+                <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
                 <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
                 <NACOS-USERNAME>nacos</NACOS-USERNAME>
                 <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
@@ -283,9 +283,9 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-NAMESPACE>${NACOS-NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-DISCOVERY-ADDRESS>${NACOS-DISCOVERY-ADDRESS:https://127.0.0.1:8848}</NACOS-DISCOVERY-ADDRESS>
+                <NACOS-DISCOVERY-ADDRESS>${NACOS-DISCOVERY-ADDRESS:127.0.0.1:8848}</NACOS-DISCOVERY-ADDRESS>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-CONFIG-ADDRESS>${NACOS-CONFIG-ADDRESS:https://127.0.0.1:8848}</NACOS-CONFIG-ADDRESS>
+                <NACOS-CONFIG-ADDRESS>${NACOS-CONFIG-ADDRESS:127.0.0.1:8848}</NACOS-CONFIG-ADDRESS>
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-GROUP>${NACOS-GROUP:LAOKOU_GROUP}</NACOS-GROUP>
                 <!--suppress UnresolvedMavenProperty -->

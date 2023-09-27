@@ -16,14 +16,11 @@
  */
 package org.laokou.gateway;
 
-import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-
-import static org.laokou.common.i18n.common.Constant.TRUE;
 
 /**
  * @author laokou
@@ -34,9 +31,9 @@ import static org.laokou.common.i18n.common.Constant.TRUE;
 public class GatewayApp {
 
 	public static void main(String[] args) {
-		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+//		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+//		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+//		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 
