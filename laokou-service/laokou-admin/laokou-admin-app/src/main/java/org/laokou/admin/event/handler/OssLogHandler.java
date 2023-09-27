@@ -25,6 +25,7 @@ import org.laokou.admin.gatewayimpl.database.OssLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -44,6 +45,7 @@ public class OssLogHandler implements ApplicationListener<OssLogEvent> {
 	private final ThreadPoolTaskExecutor taskExecutor;
 
 	@Override
+	@Async
 	public void onApplicationEvent(OssLogEvent event) {
 		CompletableFuture.runAsync(() -> {
 			try {

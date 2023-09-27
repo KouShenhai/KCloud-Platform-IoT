@@ -17,7 +17,7 @@
 
 package org.laokou.auth.event.handler;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +26,7 @@ import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -47,18 +48,21 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 	private final ThreadPoolTaskExecutor taskExecutor;
 
 	@Override
+	@Async
 	public void onApplicationEvent(LoginLogEvent event) {
 		CompletableFuture.runAsync(() -> {
 			try {
+				DynamicDataSourceContextHolder.push(SHARDING_SPHERE_READWRITE);
 				execute(event);
 			}
 			catch (Exception e) {
 				log.error("数据插入失败，错误信息：{}", e.getMessage());
+			} finally {
+				DynamicDataSourceContextHolder.clear();
 			}
 		}, taskExecutor);
 	}
 
-	@DS(SHARDING_SPHERE_READWRITE)
 	private void execute(LoginLogEvent event) {
 		LoginLogDO logDO = ConvertUtil.sourceToTarget(event, LoginLogDO.class);
 		logDO.setCreator(event.getUserId());
