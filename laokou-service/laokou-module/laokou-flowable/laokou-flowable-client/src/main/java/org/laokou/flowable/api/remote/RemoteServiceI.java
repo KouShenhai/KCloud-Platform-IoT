@@ -1,6 +1,6 @@
 package org.laokou.flowable.api.remote;
 
-public interface RemoteTasksServiceI {
+public interface RemoteServiceI {
 
     void test();
 

@@ -18,20 +18,20 @@
 package org.laokou.admin.gatewayimpl.rpc;
 
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.laokou.admin.api.remote.RemoteTasksServiceI;
+import org.laokou.admin.api.remote.RemoteServiceI;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
 @Component
-public class TaskMapper {
+public class RemoteMapper {
 
     @DubboReference
-    private RemoteTasksServiceI remoteTasksServiceI;
+    private RemoteServiceI remoteServiceI;
 
     public void test() {
-        remoteTasksServiceI.test();
+        remoteServiceI.test();
     }
 
 
