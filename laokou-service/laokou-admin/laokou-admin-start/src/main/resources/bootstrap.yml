@@ -61,41 +61,41 @@ spring:
             group: ${NACOS-GROUP}
             refresh: true
 
-#dubbo:
-#  application:
-#    id: ${spring.application.name}
-#    name: ${dubbo.application.id}
-#  protocol:
-#    name: dubbo
-#    port: -1
-#    ssl-enabled: true
-#  registry:
-#    address: 127.0.0.1:8848
-#    username: ${NACOS-USERNAME}
-#    group: ${DUBBO-GROUP}
-#    password: ${NACOS-PASSWORD}
-#    parameters:
-#      namespace: ${DUBBO-NAMESPACE}
-#      register-consumer-url: true
-#    protocol: nacos
-#  metadata-report:
-#    address: ${DUBBO-REGISTRY-ADDRESS}
-#    username: ${NACOS-USERNAME}
-#    group: ${DUBBO-GROUP}
-#    password: ${NACOS-PASSWORD}
-#    parameters:
-#      namespace: ${DUBBO-NAMESPACE}
-#      register-consumer-url: true
-#  config-center:
-#    address: ${DUBBO-REGISTRY-ADDRESS}
-#    username: ${NACOS-USERNAME}
-#    group: ${DUBBO-GROUP}
-#    password: ${NACOS-PASSWORD}
-#    parameters:
-#      namespace: ${DUBBO-NAMESPACE}
-#      register-consumer-url: true
-#  consumer:
-#    check: false
-#    timeout: 5000
-#  scan:
-#    base-packages: org.laokou.admin.gatewayimpl.rpc
+dubbo:
+  application:
+    id: ${spring.application.name}
+    name: ${dubbo.application.id}
+  protocol:
+    name: dubbo
+    port: -1
+    ssl-enabled: true
+  registry:
+    address: 127.0.0.1:8848
+    username: ${NACOS-USERNAME}
+    group: ${DUBBO-GROUP}
+    password: ${NACOS-PASSWORD}
+    parameters:
+      namespace: ${DUBBO-NAMESPACE}
+      register-consumer-url: true
+    protocol: nacos
+  metadata-report:
+    address: ${DUBBO-REGISTRY-ADDRESS}
+    username: ${NACOS-USERNAME}
+    group: ${DUBBO-GROUP}
+    password: ${NACOS-PASSWORD}
+    parameters:
+      namespace: ${DUBBO-NAMESPACE}
+      register-consumer-url: true
+  config-center:
+    address: ${DUBBO-REGISTRY-ADDRESS}
+    username: ${NACOS-USERNAME}
+    group: ${DUBBO-GROUP}
+    password: ${NACOS-PASSWORD}
+    parameters:
+      namespace: ${DUBBO-NAMESPACE}
+      register-consumer-url: true
+  consumer:
+    check: false
+    timeout: 5000
+  scan:
+    base-packages: org.laokou.admin.gatewayimpl.rpc

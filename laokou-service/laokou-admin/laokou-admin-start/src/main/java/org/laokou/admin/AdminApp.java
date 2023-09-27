@@ -20,6 +20,7 @@ package org.laokou.admin;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
@@ -41,7 +42,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @EnableEncryptableProperties
 @RequiredArgsConstructor
 @EnableFeignClients
-//@EnableDubbo
+@EnableDubbo
 @EnableAsync
 public class AdminApp {
 
