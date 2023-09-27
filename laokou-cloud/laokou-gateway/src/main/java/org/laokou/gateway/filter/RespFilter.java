@@ -21,8 +21,8 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.GlobalException;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.common.StatusCode;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.gateway.constant.Constant;
 import org.reactivestreams.Publisher;
@@ -47,7 +47,7 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
-import static org.laokou.gateway.constant.Constant.OAUTH2_AUTH_URI;
+import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
 import static org.laokou.gateway.exception.ErrorCode.INVALID_CLIENT;
 
 /**
@@ -66,9 +66,9 @@ public class RespFilter implements GlobalFilter, Ordered {
 		String requestUri = request.getPath().pathWithinApplication().value();
 		// 表单提交
 		MediaType mediaType = request.getHeaders().getContentType();
-		if (OAUTH2_AUTH_URI.contains(requestUri) && HttpMethod.POST.matches(request.getMethod().name())
+		if (OAUTH2_URI.contains(requestUri) && HttpMethod.POST.matches(request.getMethod().name())
 				&& MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
-			return oauth2Resp(exchange, chain);
+			return response(exchange, chain);
 		}
 		else {
 			return chain.filter(exchange);
@@ -78,7 +78,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 	/**
 	 * OAuth2响应
 	 */
-	private Mono<Void> oauth2Resp(ServerWebExchange exchange, GatewayFilterChain chain) {
+	private Mono<Void> response(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerHttpResponse response = exchange.getResponse();
 		DataBufferFactory dataBufferFactory = response.bufferFactory();
 		ServerHttpResponseDecorator serverHttpResponseDecorator = new ServerHttpResponseDecorator(response) {
@@ -89,8 +89,8 @@ public class RespFilter implements GlobalFilter, Ordered {
 				if (contentType.contains(MediaType.APPLICATION_JSON_VALUE)
 						&& Objects.requireNonNull(response.getStatusCode()).value() != StatusCode.OK
 						&& body instanceof Flux) {
-					Flux<? extends DataBuffer> fluxBody = (Flux<? extends DataBuffer>) body;
-					return super.writeWith(fluxBody.map(dataBuffer -> {
+					Flux<? extends DataBuffer> flux = Flux.from(body);
+					return super.writeWith(flux.map(dataBuffer -> {
 						// 修改状态码
 						response.setStatusCode(HttpStatus.OK);
 						byte[] content = new byte[dataBuffer.readableByteCount()];

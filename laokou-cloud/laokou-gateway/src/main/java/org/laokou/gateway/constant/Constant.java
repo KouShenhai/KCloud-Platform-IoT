@@ -24,7 +24,7 @@ public interface Constant {
 	/**
 	 * 密码模式-请求地址
 	 */
-	String OAUTH2_AUTH_URI = "/auth/oauth2/token";
+	String OAUTH2_URI = "/auth/oauth2/token";
 
 	/**
 	 * OAuth2错误信息
