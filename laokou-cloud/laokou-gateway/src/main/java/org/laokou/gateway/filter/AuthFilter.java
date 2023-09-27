@@ -55,7 +55,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import static org.laokou.common.core.constant.BizConstant.*;
-import static org.laokou.gateway.constant.Constant.OAUTH2_AUTH_URI;
+import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
 import static org.laokou.gateway.filter.AuthFilter.PREFIX;
 
 /**
@@ -89,9 +89,9 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		}
 		// 表单提交
 		MediaType mediaType = request.getHeaders().getContentType();
-		if (OAUTH2_AUTH_URI.contains(requestUri) && HttpMethod.POST.matches(request.getMethod().name())
+		if (OAUTH2_URI.contains(requestUri) && HttpMethod.POST.matches(request.getMethod().name())
 				&& MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
-			return oauth2Decode(exchange, chain);
+			return decode(exchange, chain);
 		}
 		// 获取token
 		String token = RequestUtil.getParamValue(request, AUTHORIZATION);
@@ -113,7 +113,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 	 * @param exchange exchange
 	 * @return Mono<Void>
 	 */
-	private Mono<Void> oauth2Decode(ServerWebExchange exchange, GatewayFilterChain chain) {
+	private Mono<Void> decode(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerRequest serverRequest = ServerRequest.create(exchange, HandlerStrategies.withDefaults().messageReaders());
 		Mono<String> modifiedBody = serverRequest.bodyToMono(String.class).flatMap(decrypt());
 		BodyInserter<Mono<String>, ReactiveHttpOutputMessage> bodyInserter = BodyInserters.fromPublisher(modifiedBody,
