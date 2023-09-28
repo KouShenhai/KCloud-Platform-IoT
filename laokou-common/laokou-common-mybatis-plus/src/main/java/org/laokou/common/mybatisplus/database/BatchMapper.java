@@ -76,13 +76,13 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 	@Update("${sql}")
 	void create(@Param("sql")String sql);
 
-	default void insertTable(T t,String sql) {
+	default Boolean insertTable(T t,String sql) {
 		try {
 			t.setId(IdUtil.defaultId());
-			this.insert(t);
+			return this.insert(t) > 0;
 		} catch (Exception e) {
 			this.create(sql);
-			this.insert(t);
+			return this.insert(t) > 0;
 		}
 	}
 

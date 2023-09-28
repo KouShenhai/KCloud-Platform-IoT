@@ -25,6 +25,8 @@ import org.laokou.auth.dto.log.domainevent.LoginLogEvent;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.shardingsphere.utils.TableUtil;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -66,7 +68,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 	private void execute(LoginLogEvent event) {
 		LoginLogDO logDO = ConvertUtil.sourceToTarget(event, LoginLogDO.class);
 		logDO.setCreator(event.getUserId());
-		loginLogMapper.insert(logDO);
+		loginLogMapper.insertTable(logDO, TableUtil.getLoginLogSqlScript(DateUtil.now()));
 	}
 
 }

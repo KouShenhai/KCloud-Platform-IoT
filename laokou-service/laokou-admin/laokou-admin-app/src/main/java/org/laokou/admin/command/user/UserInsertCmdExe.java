@@ -16,7 +16,7 @@ import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
+import static org.laokou.admin.common.Constant.USER;
 
 /**
  * @author laokou
@@ -29,7 +29,7 @@ public class UserInsertCmdExe {
 
 	private final UserMapper userMapper;
 
-	@DS(SHARDING_SPHERE)
+	@DS(USER)
 	public Result<Boolean> execute(UserInsertCmd cmd) {
 		UserCO userCO = cmd.getUserCO();
 		Long count = userMapper.selectCount(

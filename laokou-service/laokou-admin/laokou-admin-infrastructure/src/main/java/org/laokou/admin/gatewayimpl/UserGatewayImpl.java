@@ -41,6 +41,7 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
+import org.laokou.common.shardingsphere.utils.TableUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
-import static org.laokou.admin.common.Constant.SHARDING_SPHERE;
+import static org.laokou.admin.common.Constant.USER;
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_USER;
 
 /**
@@ -71,14 +72,14 @@ public class UserGatewayImpl implements UserGateway {
 	private final UserRoleMapper userRoleMapper;
 
 	@Override
-	@DS(SHARDING_SPHERE)
+	@DS(USER)
 	public Boolean insert(User user) {
 		UserDO userDO = getInsertUserDO(user);
 		return insertUser(userDO, user);
 	}
 
 	@Override
-	@DS(SHARDING_SPHERE)
+	@DS(USER)
 	public Boolean update(User user) {
 		UserDO userDO = getUpdateUserDO(user);
 		List<Long> ids = userRoleMapper.getIdsByUserId(userDO.getId());
@@ -86,7 +87,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	@DS(SHARDING_SPHERE)
+	@DS(USER)
 	public Boolean deleteById(Long id) {
 		return deleteUserById(id);
 	}
@@ -97,19 +98,19 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	@DS(SHARDING_SPHERE)
+	@DS(USER)
 	public Boolean resetPassword(User user) {
 		return updateUser(getResetPasswordDO(user));
 	}
 
 	@Override
-	@DS(SHARDING_SPHERE)
+	@DS(USER)
 	public Boolean updateInfo(User user) {
 		return updateUser(getUpdateUserDO(user));
 	}
 
 	@Override
-	@DS(SHARDING_SPHERE)
+	@DS(USER)
 	public User getById(Long id, Long tenantId) {
 		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class).eq("id", id).select("id", "username",
 				"status", "dept_id", "dept_path", "super_admin"));
@@ -129,7 +130,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_USER)
-	@DS(SHARDING_SPHERE)
+	@DS(USER)
 	public Datas<User> list(User user, PageQuery pageQuery) {
 		Page<UserDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<UserDO> newPage = userMapper.getUserListByTenantIdAndUsernameFilter(page, user.getTenantId(),
@@ -142,7 +143,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertUser(UserDO userDO, User user) {
-		boolean flag = userMapper.insert(userDO) > 0;
+		boolean flag = userMapper.insertTable(userDO, TableUtil.getUserSqlScript(DateUtil.now()));
 		return flag && insertUserRole(userDO.getId(), user.getRoleIds(), user);
 	}
 
