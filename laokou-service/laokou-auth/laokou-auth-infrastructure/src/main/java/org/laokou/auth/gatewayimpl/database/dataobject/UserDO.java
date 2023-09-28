@@ -14,43 +14,51 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.auth.gatewayimpl.database.dataobject;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
+import org.laokou.common.mybatisplus.handler.JasyptTypeHandler;
+
 import java.io.Serial;
-import java.io.Serializable;
 
 /**
  * @author laokou
  */
 @Data
-public class UserDO implements Serializable {
+@TableName(value = "boot_sys_user", autoResultMap = true)
+@Schema(name = "UserDO", description = "用户")
+public class UserDO extends BaseDO {
 
 	@Serial
-	private static final long serialVersionUID = 3319752558160144611L;
+	private static final long serialVersionUID = 1181289215379287683L;
 
-	@Schema
-	private Long id;
-
+	@Schema(name = "username", description = "用户名", example = "admin")
+	@TableField(value = "username", typeHandler = JasyptTypeHandler.class)
 	private String username;
 
-	private String avatar;
-
-	private Integer superAdmin;
-
-	private Integer status;
-
-	private String mail;
-
-	private String mobile;
-
+	@Schema(name = "password", description = "密码", example = "123456")
 	private String password;
 
-	private Long deptId;
+	@Schema(name = "superAdmin", description = "超级管理员标识 0否 1是", example = "1")
+	private Integer superAdmin;
 
-	private String deptPath;
+	@Schema(name = "avatar", description = "头像", example = "https://pic.cnblogs.com/avatar/simple_avatar.gif")
+	private String avatar;
 
-	private Long tenantId;
+	@Schema(name = "mail", description = "邮箱", example = "2413176044@qq.com")
+	@TableField(value = "mail", typeHandler = JasyptTypeHandler.class)
+	private String mail;
+
+	@Schema(name = "status", description = "用户状态 0正常 1锁定", example = "0")
+	private Integer status;
+
+	@Schema(name = "mobile", description = "手机号", example = "18974432500")
+	@TableField(value = "mobile", typeHandler = JasyptTypeHandler.class)
+	private String mobile;
 
 }

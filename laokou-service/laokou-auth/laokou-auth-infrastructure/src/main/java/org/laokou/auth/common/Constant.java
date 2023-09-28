@@ -61,13 +61,13 @@ public interface Constant {
 	String TENANT_ID = "tenantId";
 
 	/**
-	 * 分库分表
+	 * 用户
 	 */
-	String SHARDING_SPHERE = "shardingSphere";
+	String USER = "user";
 
 	/**
-	 * 读写分离
+	 * 登录日志
 	 */
-	String SHARDING_SPHERE_READWRITE = "shardingSphereReadWrite";
+	String LOGIN_LOG = "login_log";
 
 }

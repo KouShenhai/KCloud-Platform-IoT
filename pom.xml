@@ -219,8 +219,6 @@
                 <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
                 <MAIL-USERNAME>xxx</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
-                <DUBBO-REGISTRY-ADDRESS>nacos://127.0.0.1:8848</DUBBO-REGISTRY-ADDRESS>
-                <DUBBO-GROUP>DUBBO_GROUP</DUBBO-GROUP>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -254,8 +252,6 @@
                 <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
                 <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
-                <DUBBO-REGISTRY-ADDRESS>nacos://127.0.0.1:8848</DUBBO-REGISTRY-ADDRESS>
-                <DUBBO-GROUP>DUBBO_GROUP</DUBBO-GROUP>
             </properties>
         </profile>
         <!-- 正式环境 -->
@@ -308,10 +304,6 @@
                 <MAIL-USERNAME>${MAIL-USERNAME:2413176044@qq.com}</MAIL-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
                 <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT-ENCRYPTOR-PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
-                <!--suppress UnresolvedMavenProperty -->
-                <DUBBO-REGISTRY-ADDRESS>${DUBBO-REGISTRY-ADDRESS:nacos://127.0.0.1:8848}</DUBBO-REGISTRY-ADDRESS>
-                <!--suppress UnresolvedMavenProperty -->
-                <DUBBO-GROUP>${DUBBO-GROUP:DUBBO_GROUP}</DUBBO-GROUP>
             </properties>
         </profile>
     </profiles>

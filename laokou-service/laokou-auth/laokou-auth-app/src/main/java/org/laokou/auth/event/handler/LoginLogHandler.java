@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
 
-import static org.laokou.auth.common.Constant.SHARDING_SPHERE_READWRITE;
+import static org.laokou.auth.common.Constant.LOGIN_LOG;
 
 /**
  * @author laokou
@@ -52,7 +52,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 	public void onApplicationEvent(LoginLogEvent event) {
 		CompletableFuture.runAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(SHARDING_SPHERE_READWRITE);
+				DynamicDataSourceContextHolder.push(LOGIN_LOG);
 				execute(event);
 			}
 			catch (Exception e) {

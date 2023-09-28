@@ -30,10 +30,10 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.shardingsphere.utils.CryptoUtil;
 import org.springframework.util.StringUtils;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +109,7 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 
 	private List<String> getList(String value) {
 		List<String> list = new ArrayList<>(50);
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(
 				new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8))) {
 			String str;
 			while ((str = reader.readLine()) != null) {

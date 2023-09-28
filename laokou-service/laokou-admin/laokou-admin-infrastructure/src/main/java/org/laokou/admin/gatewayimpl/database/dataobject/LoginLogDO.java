@@ -27,7 +27,7 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-@TableName("boot_sys_login_log")
+@TableName("boot_sys_login_log.sql")
 @Schema(name = "LoginLogDO", description = "登录日志")
 public class LoginLogDO extends BaseDO {
 
