@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS `kcloud_platform_alibaba_user`.`boot_sys_user_${suffix}` (
+`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+`creator` bigint NOT NULL DEFAULT '0' COMMENT '创建人',
+`editor` bigint NOT NULL DEFAULT '0' COMMENT '编辑人',
+`create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+`update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+`del_flag` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除标识 0未删除 1已删除',
+`version` int NOT NULL DEFAULT '0' COMMENT '版本号',
+`dept_id` bigint NOT NULL DEFAULT '0' COMMENT '部门ID',
+`dept_path` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '部门PATH',
+`tenant_id` bigint NOT NULL DEFAULT '0' COMMENT '租户ID',
+`username` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '用户名',
+`password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '密码',
+`super_admin` tinyint(1) NOT NULL DEFAULT '0' COMMENT '超级管理员标识 0否 1是',
+`mail` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '邮箱',
+`status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态 0正常 1锁定',
+`avatar` varchar(400) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT 'https://i.postimg.cc/FsHgVKzX/1.gif' COMMENT '头像',
+`mobile` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '手机号',
+PRIMARY KEY (`id`) USING BTREE,
+UNIQUE KEY `idx_tenant_id_username` (`tenant_id`,`username`) USING BTREE COMMENT '租户_用户名_唯一索引',
+KEY `idx_tenant_id_mail` (`tenant_id`,`mail`) USING BTREE COMMENT '租户_邮箱_唯一索引',
+KEY `idx_tenant_id_mobile` (`tenant_id`,`mobile`) USING BTREE COMMENT '租户_手机号_唯一索引'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='用户';

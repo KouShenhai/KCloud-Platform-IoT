@@ -25,6 +25,8 @@ import org.laokou.auth.dto.log.domainevent.LoginLogEvent;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.shardingsphere.utils.TableUtil;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -32,7 +34,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
 
-import static org.laokou.auth.common.Constant.SHARDING_SPHERE_READWRITE;
+import static org.laokou.auth.common.Constant.LOGIN_LOG;
 
 /**
  * @author laokou
@@ -52,7 +54,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 	public void onApplicationEvent(LoginLogEvent event) {
 		CompletableFuture.runAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(SHARDING_SPHERE_READWRITE);
+				DynamicDataSourceContextHolder.push(LOGIN_LOG);
 				execute(event);
 			}
 			catch (Exception e) {
@@ -66,7 +68,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 	private void execute(LoginLogEvent event) {
 		LoginLogDO logDO = ConvertUtil.sourceToTarget(event, LoginLogDO.class);
 		logDO.setCreator(event.getUserId());
-		loginLogMapper.insert(logDO);
+		loginLogMapper.insertTable(logDO, TableUtil.getLoginLogSqlScript(DateUtil.now()));
 	}
 
 }

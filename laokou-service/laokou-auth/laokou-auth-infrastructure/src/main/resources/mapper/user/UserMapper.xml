@@ -35,10 +35,7 @@
         FROM `boot_sys_user` a
         where a.del_flag = 0
             and a.tenant_id = #{tenantId}
-        <if test="type != null and type == 'password' and username != null and username != ''">
-            and a.username = #{username}
-        </if>
-        <if test="type != null and type == 'authorization_code' and username != null and username != ''">
+        <if test="type != null and (type == 'authorization_code' or type == 'password') and (username != null and username != '')">
             and a.username = #{username}
         </if>
         <if test="type != null and type == 'mail' and username != null and username != ''">

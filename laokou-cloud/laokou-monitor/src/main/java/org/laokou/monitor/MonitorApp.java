@@ -16,15 +16,12 @@
  */
 package org.laokou.monitor;
 
-import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-
-import static java.lang.Boolean.TRUE;
 
 /**
  * @author laokou
@@ -36,9 +33,9 @@ import static java.lang.Boolean.TRUE;
 public class MonitorApp {
 
 	public static void main(String[] args) {
-		System.setProperty(TlsSystemConfig.TLS_ENABLE, String.valueOf(TRUE));
-		System.setProperty(TlsSystemConfig.CLIENT_AUTH, String.valueOf(TRUE));
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+//		System.setProperty(TlsSystemConfig.TLS_ENABLE, String.valueOf(TRUE));
+//		System.setProperty(TlsSystemConfig.CLIENT_AUTH, String.valueOf(TRUE));
+//		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		new SpringApplicationBuilder(MonitorApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 

@@ -20,6 +20,7 @@ package org.laokou.auth.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
@@ -29,7 +30,7 @@ import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID
  */
 @Mapper
 @Repository
-public interface UserMapper {
+public interface UserMapper extends BatchMapper<UserDO> {
 
 	/**
 	 * 根据用户名和租户ID查询用户

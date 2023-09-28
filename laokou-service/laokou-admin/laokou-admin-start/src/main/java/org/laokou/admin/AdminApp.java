@@ -18,9 +18,9 @@
  */
 package org.laokou.admin;
 
-import com.alibaba.nacos.common.tls.TlsSystemConfig;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
@@ -32,8 +32,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import static org.laokou.common.i18n.common.Constant.TRUE;
-
 /**
  * @author laokou
  */
@@ -44,14 +42,14 @@ import static org.laokou.common.i18n.common.Constant.TRUE;
 @EnableEncryptableProperties
 @RequiredArgsConstructor
 @EnableFeignClients
-//@EnableDubbo
+@EnableDubbo
 @EnableAsync
 public class AdminApp {
 
 	public static void main(String[] args) {
-		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+//		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+//		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+//		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);

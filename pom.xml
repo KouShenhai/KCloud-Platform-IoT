@@ -219,9 +219,6 @@
                 <MAIL-PASSWORD>xxx</MAIL-PASSWORD>
                 <MAIL-USERNAME>xxx</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
-                <DUBBO-REGISTRY-ADDRESS>nacos://127.0.0.1:8848</DUBBO-REGISTRY-ADDRESS>
-                <DUBBO-NAMESPACE>4f202afe-3678-4ccb-8837-4071d663fee1</DUBBO-NAMESPACE>
-                <DUBBO-GROUP>DUBBO_GROUP</DUBBO-GROUP>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -240,8 +237,8 @@
                 <MYSQL-DB-POWER-JOB>kcloud_platform_alibaba_power_job</MYSQL-DB-POWER-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
-                <NACOS-DISCOVERY-ADDRESS>https://127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
-                <NACOS-CONFIG-ADDRESS>https://127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
+                <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
+                <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
                 <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
                 <NACOS-USERNAME>nacos</NACOS-USERNAME>
                 <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
@@ -255,9 +252,6 @@
                 <MAIL-PASSWORD>ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)</MAIL-PASSWORD>
                 <MAIL-USERNAME>2413176044@qq.com</MAIL-USERNAME>
                 <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
-                <DUBBO-REGISTRY-ADDRESS>nacos://127.0.0.1:8848</DUBBO-REGISTRY-ADDRESS>
-                <DUBBO-NAMESPACE>4f202afe-3678-4ccb-8837-4071d663fee1</DUBBO-NAMESPACE>
-                <DUBBO-GROUP>DUBBO_GROUP</DUBBO-GROUP>
             </properties>
         </profile>
         <!-- 正式环境 -->
@@ -283,9 +277,9 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-NAMESPACE>${NACOS-NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-DISCOVERY-ADDRESS>${NACOS-DISCOVERY-ADDRESS:https://127.0.0.1:8848}</NACOS-DISCOVERY-ADDRESS>
+                <NACOS-DISCOVERY-ADDRESS>${NACOS-DISCOVERY-ADDRESS:127.0.0.1:8848}</NACOS-DISCOVERY-ADDRESS>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-CONFIG-ADDRESS>${NACOS-CONFIG-ADDRESS:https://127.0.0.1:8848}</NACOS-CONFIG-ADDRESS>
+                <NACOS-CONFIG-ADDRESS>${NACOS-CONFIG-ADDRESS:127.0.0.1:8848}</NACOS-CONFIG-ADDRESS>
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-GROUP>${NACOS-GROUP:LAOKOU_GROUP}</NACOS-GROUP>
                 <!--suppress UnresolvedMavenProperty -->
@@ -310,12 +304,6 @@
                 <MAIL-USERNAME>${MAIL-USERNAME:2413176044@qq.com}</MAIL-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
                 <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT-ENCRYPTOR-PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
-                <!--suppress UnresolvedMavenProperty -->
-                <DUBBO-REGISTRY-ADDRESS>${DUBBO-REGISTRY-ADDRESS:nacos://127.0.0.1:8848}</DUBBO-REGISTRY-ADDRESS>
-                <!--suppress UnresolvedMavenProperty -->
-                <DUBBO-NAMESPACE>${DUBBO-NAMESPACE:4f202afe-3678-4ccb-8837-4071d663fee1}</DUBBO-NAMESPACE>
-                <!--suppress UnresolvedMavenProperty -->
-                <DUBBO-GROUP>${DUBBO-GROUP:DUBBO_GROUP}</DUBBO-GROUP>
             </properties>
         </profile>
     </profiles>

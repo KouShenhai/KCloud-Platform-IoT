@@ -35,7 +35,7 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.admin.common.Constant.SHARDING_SPHERE_READWRITE;
+import static org.laokou.admin.common.Constant.LOGIN_LOG;
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_LOGIN_LOG;
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_OPERATE_LOG;
 
@@ -52,7 +52,7 @@ public class LogGatewayImpl implements LogGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
-	@DS(SHARDING_SPHERE_READWRITE)
+	@DS(LOGIN_LOG)
 	public Datas<LoginLog> loginList(LoginLog loginLog, User user, PageQuery pageQuery) {
 		IPage<LoginLogDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<LoginLogDO> newPage = loginLogMapper.getLoginLogByTenantIdAndLikeUsernameFilter(page, user.getTenantId(),

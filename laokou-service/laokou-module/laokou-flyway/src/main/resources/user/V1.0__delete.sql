@@ -1,0 +1,2 @@
+DROP DATABASE kcloud_platform_alibaba_user_0;
+DROP DATABASE kcloud_platform_alibaba_user_1;

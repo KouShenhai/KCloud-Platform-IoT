@@ -41,9 +41,6 @@ spring:
         # 读取公共配置
         # Data Id 在默认的组 DEFAULT_GROUP,不支持配置的动态刷新
         extension-configs:
-          - data-id: application-common-datasource.yaml
-            group: ${NACOS-GROUP}
-            refresh: true
           - data-id: application-common.yaml
             group: ${NACOS-GROUP}
             refresh: true

@@ -36,8 +36,8 @@ public class CreateTable {
 
 	public static void main(String[] args) {
 		List<String> tableList = List.of("kcloud_platform_alibaba", "kcloud_platform_alibaba_flowable",
-				"kcloud_platform_alibaba_nacos", "kcloud_platform_alibaba_tenant", "kcloud_platform_alibaba_user_0",
-				"kcloud_platform_alibaba_user_1", "kcloud_platform_alibaba_xxl_job", "kcloud_platform_alibaba_seata");
+				"kcloud_platform_alibaba_nacos", "kcloud_platform_alibaba_tenant", "kcloud_platform_alibaba_user",
+				"kcloud_platform_alibaba_xxl_job", "kcloud_platform_alibaba_seata", "kcloud_platform_alibaba_login_log");
 		tableList.forEach(item -> {
 			Connection connection;
 			try {
