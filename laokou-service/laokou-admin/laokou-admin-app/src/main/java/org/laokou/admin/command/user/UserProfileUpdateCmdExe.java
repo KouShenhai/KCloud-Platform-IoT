@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.user;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
@@ -34,6 +35,7 @@ import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.admin.common.BizCode.ID_NOT_NULL;
+import static org.laokou.admin.common.Constant.USER;
 
 /**
  * @author laokou
@@ -46,6 +48,7 @@ public class UserProfileUpdateCmdExe {
 
 	private final UserMapper userMapper;
 
+	@DS(USER)
 	public Result<Boolean> execute(UserProfileUpdateCmd cmd) {
 		UserProfileCO userProfileCO = cmd.getUserProfileCO();
 		validate(userProfileCO);
