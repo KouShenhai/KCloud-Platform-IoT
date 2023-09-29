@@ -15,21 +15,21 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.rpc;
+package org.laokou.admin.dto.remote;
 
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@Component
-public class RemoteMapper {
-//
-//    @DubboReference(version = "1.0.0")
-//    private RemoteServiceI remoteServiceI;
-//
-//    public void getAssigneeByInstanceId(String instanceId) {
-//        Result<String> result = remoteServiceI.getAssigneeByInstanceId(new RemoteAssigneeGetQry(instanceId));
-//    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RemoteAssigneeGetQry extends CommonCommand {
+
+    private String instanceId;
 
 }
