@@ -156,7 +156,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	private Boolean deleteUserRole(List<Long> ids) {
 		if (CollectionUtil.isEmpty(ids)) {
-			return false;
+			return true;
 		}
 		return userRoleMapper.deleteUserRoleByIds(ids) > 0;
 	}
