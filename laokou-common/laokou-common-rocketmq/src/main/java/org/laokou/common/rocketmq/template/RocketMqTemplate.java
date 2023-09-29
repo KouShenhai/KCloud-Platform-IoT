@@ -202,8 +202,8 @@ public class RocketMqTemplate implements InitializingBean {
 	 * @return
 	 */
 	public boolean sendTransactionMessage(String topic, MqCO co, String transactionId) {
-		Message<MqCO> message = MessageBuilder.withPayload(co)
-				.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId).build();
+		Message<MqCO> message = MessageBuilder.withPayload(co).setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
+				.build();
 		return rocketMQTemplate.sendMessageInTransaction(topic, message, null).getSendStatus()
 				.equals(SendStatus.SEND_OK);
 	}

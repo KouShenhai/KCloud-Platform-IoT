@@ -31,22 +31,22 @@ import java.util.Map;
  */
 public class TableUtil {
 
-    @SneakyThrows
-    public static String getLoginLogSqlScript(LocalDateTime localDateTime) {
-        return getContent(localDateTime,"script/boot_sys_login_log.sql");
-    }
+	@SneakyThrows
+	public static String getLoginLogSqlScript(LocalDateTime localDateTime) {
+		return getContent(localDateTime, "script/boot_sys_login_log.sql");
+	}
 
-    @SneakyThrows
-    public static String getUserSqlScript(LocalDateTime localDateTime) {
-        return getContent(localDateTime,"script/boot_sys_user.sql");
-    }
+	@SneakyThrows
+	public static String getUserSqlScript(LocalDateTime localDateTime) {
+		return getContent(localDateTime, "script/boot_sys_user.sql");
+	}
 
-    @SneakyThrows
-    private static String getContent(LocalDateTime localDateTime,String location) {
-        Map<String, Object> params = new HashMap<>(1);
-        params.put("suffix", DateUtil.format(localDateTime,DateUtil.YYYYMM));
-        String template = new String(ResourceUtil.getResource(location).getInputStream().readAllBytes());
-        return TemplateUtil.getContent(template,params);
-    }
+	@SneakyThrows
+	private static String getContent(LocalDateTime localDateTime, String location) {
+		Map<String, Object> params = new HashMap<>(1);
+		params.put("suffix", DateUtil.format(localDateTime, DateUtil.YYYYMM));
+		String template = new String(ResourceUtil.getResource(location).getInputStream().readAllBytes());
+		return TemplateUtil.getContent(template, params);
+	}
 
 }

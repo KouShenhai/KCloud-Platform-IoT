@@ -47,9 +47,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class AdminApp {
 
 	public static void main(String[] args) {
-//		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-//		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-//		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		// System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);

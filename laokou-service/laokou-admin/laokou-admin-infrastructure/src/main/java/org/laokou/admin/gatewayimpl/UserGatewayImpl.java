@@ -119,10 +119,12 @@ public class UserGatewayImpl implements UserGateway {
 			DynamicDataSourceContextHolder.push(MASTER);
 			if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
 				user.setRoleIds(roleMapper.getRoleIdsByTenantId(tenantId));
-			} else {
+			}
+			else {
 				user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
 			}
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 		return user;

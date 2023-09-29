@@ -33,9 +33,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class MonitorApp {
 
 	public static void main(String[] args) {
-//		System.setProperty(TlsSystemConfig.TLS_ENABLE, String.valueOf(TRUE));
-//		System.setProperty(TlsSystemConfig.CLIENT_AUTH, String.valueOf(TRUE));
-//		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		// System.setProperty(TlsSystemConfig.TLS_ENABLE, String.valueOf(TRUE));
+		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, String.valueOf(TRUE));
+		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		new SpringApplicationBuilder(MonitorApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 

@@ -31,9 +31,9 @@ public class SeataApp {
 	public static void main(String[] args) throws InterruptedException {
 		try {
 			// run the spring-boot application
-//			System.setProperty(TlsSystemConfig.TLS_ENABLE, "true");
-//			System.setProperty(TlsSystemConfig.CLIENT_AUTH, "true");
-//			System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+			// System.setProperty(TlsSystemConfig.TLS_ENABLE, "true");
+			// System.setProperty(TlsSystemConfig.CLIENT_AUTH, "true");
+			// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 			new SpringApplicationBuilder(SeataApp.class).web(WebApplicationType.SERVLET).run(args);
 		}
 		catch (Throwable t) {

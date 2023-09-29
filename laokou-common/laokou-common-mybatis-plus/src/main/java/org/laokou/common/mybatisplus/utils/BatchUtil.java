@@ -68,8 +68,10 @@ public class BatchUtil {
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
 		CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
-		List<CompletableFuture<Void>> futures = partition.parallelStream()
-				.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, batchOps,cyclicBarrier, rollback, ds),taskExecutor)).toList();
+		List<CompletableFuture<Void>> futures = partition
+				.parallelStream().map(item -> CompletableFuture
+						.runAsync(() -> handleBatch(item, batchOps, cyclicBarrier, rollback, ds), taskExecutor))
+				.toList();
 		// 阻塞主线程
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
@@ -77,7 +79,8 @@ public class BatchUtil {
 		}
 	}
 
-	private <T> void handleBatch(List<T> item, Consumer<List<T>> batchOps,CyclicBarrier cyclicBarrier, AtomicBoolean rollback, String ds) {
+	private <T> void handleBatch(List<T> item, Consumer<List<T>> batchOps, CyclicBarrier cyclicBarrier,
+			AtomicBoolean rollback, String ds) {
 		try {
 			DynamicDataSourceContextHolder.push(ds);
 			transactionalUtil.executeWithoutResult(callback -> {
@@ -86,7 +89,7 @@ public class BatchUtil {
 					cyclicBarrier.await(60, TimeUnit.SECONDS);
 				}
 				catch (Exception e) {
-					handleException(cyclicBarrier,rollback, e.getMessage());
+					handleException(cyclicBarrier, rollback, e.getMessage());
 				}
 				finally {
 					if (rollback.get()) {
@@ -100,7 +103,7 @@ public class BatchUtil {
 		}
 	}
 
-	private void handleException(CyclicBarrier cyclicBarrier,AtomicBoolean rollback, String msg) {
+	private void handleException(CyclicBarrier cyclicBarrier, AtomicBoolean rollback, String msg) {
 		// 回滚标识
 		rollback.compareAndSet(false, true);
 		log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", msg);
