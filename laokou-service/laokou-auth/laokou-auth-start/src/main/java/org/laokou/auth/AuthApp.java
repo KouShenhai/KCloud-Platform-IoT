@@ -44,9 +44,9 @@ public class AuthApp {
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 		// https://github.com/alibaba/nacos/pull/3654
 		// 请查看 HttpLoginProcessor
-//		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-//		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-//		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		// System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

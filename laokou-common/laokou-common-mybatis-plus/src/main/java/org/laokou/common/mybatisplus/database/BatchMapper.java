@@ -74,13 +74,14 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 	void resultListFilter(@Param("param") T param, ResultHandler<T> handler, @Param(SQL_FILTER) String sqlFilter);
 
 	@Update("${sql}")
-	void create(@Param("sql")String sql);
+	void create(@Param("sql") String sql);
 
-	default Boolean insertTable(T t,String sql) {
+	default Boolean insertTable(T t, String sql) {
 		try {
 			t.setId(IdUtil.defaultId());
 			return this.insert(t) > 0;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			this.create(sql);
 			return this.insert(t) > 0;
 		}

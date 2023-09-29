@@ -26,6 +26,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaskMapper {
 
-    String getAssigneeByInstanceId(@Param("instanceId")String instanceId);
+	String getAssigneeByInstanceId(@Param("instanceId") String instanceId);
 
 }

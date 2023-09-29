@@ -42,9 +42,9 @@ public class ImApp {
 	 * @param args args
 	 */
 	public static void main(final String[] args) {
-//		System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-//		System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-//		System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		// System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
 		new SpringApplicationBuilder(ImApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 

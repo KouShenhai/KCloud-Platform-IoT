@@ -24,12 +24,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RemoteMapper {
-//
-//    @DubboReference(version = "1.0.0")
-//    private RemoteServiceI remoteServiceI;
-//
-//    public void getAssigneeByInstanceId(String instanceId) {
-//        Result<String> result = remoteServiceI.getAssigneeByInstanceId(new RemoteAssigneeGetQry(instanceId));
-//    }
+
+	//
+	// @DubboReference(version = "1.0.0")
+	// private RemoteServiceI remoteServiceI;
+	//
+	// public void getAssigneeByInstanceId(String instanceId) {
+	// Result<String> result = remoteServiceI.getAssigneeByInstanceId(new
+	// RemoteAssigneeGetQry(instanceId));
+	// }
 
 }
