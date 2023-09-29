@@ -54,7 +54,7 @@
         , message
         from boot_sys_login_log
         where del_flag = 0
-        and tenant_id = #{param.tenantId}
+            and tenant_id = #{param.tenantId}
         <if test="param.username != null and param.username != ''">
             and `username` like #{param.username}
         </if>
