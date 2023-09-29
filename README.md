@@ -77,17 +77,19 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | ShardingSphere              | 5.3.2        |
 | OpenResty                   | 1.21.4.1     |
 | Netty                       | 4.1.97.Final |
+| Dubbo                       | 3.2.6        |
+| Kafka                       | 3.5.1        |
 
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
 - 认证授权：Spring Security OAuth2 Authorization Server
-- 远程调用：Spring Cloud OpenFeign & OkHttp & HttpClient & WebClient
+- 远程调用：Dubbo & Spring Cloud OpenFeign & OkHttp & HttpClient & WebClient
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Sentinel
 - 分库分表&读写分离：ShardingSphere
 - 分布式事务：Seata & RocketMQ
-- 消息队列：RocketMQ
+- 消息队列：RocketMQ & Kafka
 - 服务监控：Spring Boot Admin & Prometheus
 - 链路跟踪：SkyWalking
 - 任务调度：XXL Job
@@ -123,6 +125,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
         └── laokou-common-sensitive                --- 敏感词组件  
         └── laokou-common-lock                     --- 分布式锁组件  
         └── laokou-common-trace                    --- 链路跟踪组件  
+        └── laokou-common-dubbo                    --- 远程调用组件   
         └── laokou-common-nacos                    --- 注册发现组件  
         └── laokou-common-netty                    --- 网络通讯组件  
         └── laokou-common-jasypt                   --- 加密解密组件  
@@ -152,6 +155,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
                 └── laokou-api                     --- API模块  
                 └── laokou-im                      --- 即时通讯模块  
                 └── laokou-flowable                --- 工作流程模块  
+                └── laokou-logstash                --- 日志收集模块  
                 └── laokou-flyway                  --- 数据库版本控制模块  
 ~~~
 

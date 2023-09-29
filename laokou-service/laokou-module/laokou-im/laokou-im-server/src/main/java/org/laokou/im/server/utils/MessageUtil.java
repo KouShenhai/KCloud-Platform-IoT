@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.netty.config.Server;
-import org.laokou.common.rocketmq.dto.MqDTO;
+import org.laokou.common.rocketmq.clientobject.MqCO;
 import org.laokou.im.client.WsMsgCO;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -45,7 +45,7 @@ public class MessageUtil {
 		if (StringUtil.isEmpty(message)) {
 			return;
 		}
-		MqDTO dto = JacksonUtil.toBean(message, MqDTO.class);
+		MqCO dto = JacksonUtil.toBean(message, MqCO.class);
 		String body = dto.getBody();
 		WsMsgCO msgDTO = JacksonUtil.toBean(body, WsMsgCO.class);
 		String msg = msgDTO.getMsg();

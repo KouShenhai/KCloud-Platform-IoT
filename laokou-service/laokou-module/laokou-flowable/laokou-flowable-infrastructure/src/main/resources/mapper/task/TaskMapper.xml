@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 /*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
@@ -14,26 +16,16 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.rocketmq.dto;
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.flowable.gatewayimpl.database.TaskMapper">
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+    <select id="getAssigneeByInstanceId" resultType="string">
+        SELECT a.assignee_
+        FROM ACT_HI_ACTINST a
+        JOIN ACT_RU_TASK b ON b.id_ = a.task_id_
+        WHERE act_type_ = 'userTask'
+          AND b.proc_inst_id_ = #{instanceId}
+    </select>
 
-import java.io.Serial;
-import java.io.Serializable;
-
-/**
- * @author laokou
- */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class MqDTO implements Serializable {
-
-	@Serial
-	private static final long serialVersionUID = -6328542667576164499L;
-
-	private String body;
-
-}
+</mapper>

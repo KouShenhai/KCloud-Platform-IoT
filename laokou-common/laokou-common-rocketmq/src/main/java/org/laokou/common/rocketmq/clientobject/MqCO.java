@@ -14,22 +14,26 @@
  * limitations under the License.
  *
  */
+package org.laokou.common.rocketmq.clientobject;
 
-package org.laokou.admin.gatewayimpl.rpc;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.ClientObject;
 
-import org.springframework.stereotype.Component;
+import java.io.Serial;
 
 /**
  * @author laokou
  */
-@Component
-public class RemoteMapper {
-//
-//    @DubboReference(version = "1.0.0")
-//    private RemoteServiceI remoteServiceI;
-//
-//    public void getAssigneeByInstanceId(String instanceId) {
-//        Result<String> result = remoteServiceI.getAssigneeByInstanceId(new RemoteAssigneeGetQry(instanceId));
-//    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class MqCO extends ClientObject {
+
+	@Serial
+	private static final long serialVersionUID = -6328542667576164499L;
+
+	private String body;
 
 }

@@ -13,13 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.api.remote;
+package org.laokou.flowable.gatewayimpl.database;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-public interface RemoteServiceI {
+@Mapper
+@Repository
+public interface TaskMapper {
 
-    void test();
+    String getAssigneeByInstanceId(@Param("instanceId")String instanceId);
 
 }

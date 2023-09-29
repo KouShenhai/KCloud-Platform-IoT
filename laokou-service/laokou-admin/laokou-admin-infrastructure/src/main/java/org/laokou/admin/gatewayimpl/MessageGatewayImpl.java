@@ -41,7 +41,7 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
-import org.laokou.common.rocketmq.dto.MqDTO;
+import org.laokou.common.rocketmq.clientobject.MqCO;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.im.client.WsMsgCO;
 import org.springframework.stereotype.Component;
@@ -113,7 +113,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		co.setMsg(DEFAULT_MESSAGE);
 		co.setReceiver(receiver);
 		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(type),
-				new MqDTO(JacksonUtil.toJsonStr(co)));
+				new MqCO(JacksonUtil.toJsonStr(co)));
 	}
 
 	@Transactional(rollbackFor = Exception.class)

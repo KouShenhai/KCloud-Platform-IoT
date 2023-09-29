@@ -15,20 +15,21 @@
  *
  */
 
-package org.laokou.flowable.service.remote;
+package org.laokou.admin.dto.remote;
 
-import org.apache.dubbo.config.annotation.DubboService;
-import org.laokou.flowable.api.remote.RemoteServiceI;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@DubboService
-public class RemoteServiceImpl implements RemoteServiceI {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RemoteAssigneeGetQry extends CommonCommand {
 
-    @Override
-    public void test() {
-        System.out.println(1111);
-    }
+    private String instanceId;
 
 }
