@@ -24,7 +24,7 @@ import org.apache.rocketmq.client.producer.SendStatus;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.laokou.common.rocketmq.constant.MqConstant;
-import org.laokou.common.rocketmq.dto.MqDTO;
+import org.laokou.common.rocketmq.clientobject.MqCO;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -46,23 +46,23 @@ public class RocketMqTemplate implements InitializingBean {
 	/**
 	 * 同步发送
 	 * @param topic
-	 * @param dto
+	 * @param co
 	 * @param timeout
 	 * @return
 	 */
-	public boolean sendSyncMessage(String topic, MqDTO dto, long timeout) {
-		return rocketMQTemplate.syncSend(topic, dto, timeout).getSendStatus().equals(SendStatus.SEND_OK);
+	public boolean sendSyncMessage(String topic, MqCO co, long timeout) {
+		return rocketMQTemplate.syncSend(topic, co, timeout).getSendStatus().equals(SendStatus.SEND_OK);
 	}
 
 	/**
 	 * 同步发送
 	 * @param topic
-	 * @param dto
+	 * @param co
 	 * @param timeout
 	 * @return
 	 */
-	public boolean sendSyncMessage(String topic, MqDTO dto, long timeout, int delayLevel) {
-		Message<MqDTO> payload = MessageBuilder.withPayload(dto).build();
+	public boolean sendSyncMessage(String topic, MqCO co, long timeout, int delayLevel) {
+		Message<MqCO> payload = MessageBuilder.withPayload(co).build();
 		return rocketMQTemplate.syncSend(topic, payload, timeout, delayLevel).getSendStatus()
 				.equals(SendStatus.SEND_OK);
 	}
@@ -70,19 +70,19 @@ public class RocketMqTemplate implements InitializingBean {
 	/**
 	 * 同步发送消息
 	 * @param topic topic
-	 * @param dto dto
+	 * @param co co
 	 */
-	public boolean sendSyncMessage(String topic, MqDTO dto) {
-		return rocketMQTemplate.syncSend(topic, dto).getSendStatus().equals(SendStatus.SEND_OK);
+	public boolean sendSyncMessage(String topic, MqCO co) {
+		return rocketMQTemplate.syncSend(topic, co).getSendStatus().equals(SendStatus.SEND_OK);
 	}
 
 	/**
 	 * 异步发送消息
 	 * @param topic topic
-	 * @param dto dto
+	 * @param co co
 	 */
-	public void sendAsyncMessage(String topic, MqDTO dto) {
-		rocketMQTemplate.asyncSend(topic, dto, new SendCallback() {
+	public void sendAsyncMessage(String topic, MqCO co) {
+		rocketMQTemplate.asyncSend(topic, co, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("发送成功");
@@ -99,10 +99,10 @@ public class RocketMqTemplate implements InitializingBean {
 	 * 异步发送消息
 	 * @param topic topic
 	 * @param tag
-	 * @param dto dto
+	 * @param co co
 	 */
-	public void sendAsyncMessage(String topic, String tag, MqDTO dto) {
-		rocketMQTemplate.asyncSend(String.format(MqConstant.TOPIC_TAG, topic, tag), dto, new SendCallback() {
+	public void sendAsyncMessage(String topic, String tag, MqCO co) {
+		rocketMQTemplate.asyncSend(String.format(MqConstant.TOPIC_TAG, topic, tag), co, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("发送成功");
@@ -118,10 +118,10 @@ public class RocketMqTemplate implements InitializingBean {
 	/**
 	 * 异步发送消息
 	 * @param topic topic
-	 * @param dto dto
+	 * @param co co
 	 */
-	public void sendAsyncMessage(String topic, MqDTO dto, long timeout) {
-		rocketMQTemplate.asyncSend(topic, dto, new SendCallback() {
+	public void sendAsyncMessage(String topic, MqCO co, long timeout) {
+		rocketMQTemplate.asyncSend(topic, co, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("发送成功");
@@ -137,40 +137,40 @@ public class RocketMqTemplate implements InitializingBean {
 	/**
 	 * 单向发送消息
 	 * @param topic topic
-	 * @param dto dto
+	 * @param co co
 	 */
-	public void sendOneWayMessage(String topic, MqDTO dto) {
+	public void sendOneWayMessage(String topic, MqCO co) {
 		// 单向发送，只负责发送消息，不会触发回调函数，即发送消息请求不等待
 		// 适用于耗时短，但对可靠性不高的场景，如日志收集
-		rocketMQTemplate.sendOneWay(topic, dto);
+		rocketMQTemplate.sendOneWay(topic, co);
 	}
 
 	/**
 	 * 延迟消息
 	 * @param topic
 	 * @param delay
-	 * @param dto
+	 * @param co
 	 */
-	public boolean sendDelayMessage(String topic, long delay, MqDTO dto) {
-		return rocketMQTemplate.syncSendDelayTimeSeconds(topic, dto, delay).getSendStatus().equals(SendStatus.SEND_OK);
+	public boolean sendDelayMessage(String topic, long delay, MqCO co) {
+		return rocketMQTemplate.syncSendDelayTimeSeconds(topic, co, delay).getSendStatus().equals(SendStatus.SEND_OK);
 	}
 
 	/**
 	 * 同步发送顺序消息
 	 * @param topic topic
-	 * @param dto dto
+	 * @param co co
 	 */
-	public boolean sendSyncOrderlyMessage(String topic, MqDTO dto, String id) {
-		return rocketMQTemplate.syncSendOrderly(topic, dto, id).getSendStatus().equals(SendStatus.SEND_OK);
+	public boolean sendSyncOrderlyMessage(String topic, MqCO co, String id) {
+		return rocketMQTemplate.syncSendOrderly(topic, co, id).getSendStatus().equals(SendStatus.SEND_OK);
 	}
 
 	/**
 	 * 异步发送顺序消息
 	 * @param topic topic
-	 * @param dto dto
+	 * @param co co
 	 */
-	public void sendAsyncOrderlyMessage(String topic, MqDTO dto, String id) {
-		rocketMQTemplate.asyncSendOrderly(topic, dto, id, new SendCallback() {
+	public void sendAsyncOrderlyMessage(String topic, MqCO co, String id) {
+		rocketMQTemplate.asyncSendOrderly(topic, co, id, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
 				log.info("发送成功");
@@ -186,23 +186,23 @@ public class RocketMqTemplate implements InitializingBean {
 	/**
 	 * 单向发送顺序消息
 	 * @param topic topic
-	 * @param dto dto
+	 * @param co co
 	 */
-	public void sendOneWayOrderlyMessage(String topic, MqDTO dto, String id) {
+	public void sendOneWayOrderlyMessage(String topic, MqCO co, String id) {
 		// 单向发送，只负责发送消息，不会触发回调函数，即发送消息请求不等待
 		// 适用于耗时短，但对可靠性不高的场景，如日志收集
-		rocketMQTemplate.sendOneWayOrderly(topic, dto, id);
+		rocketMQTemplate.sendOneWayOrderly(topic, co, id);
 	}
 
 	/**
 	 * 事务消息
 	 * @param topic
-	 * @param dto
+	 * @param co
 	 * @param transactionId
 	 * @return
 	 */
-	public boolean sendTransactionMessage(String topic, MqDTO dto, String transactionId) {
-		Message<MqDTO> message = MessageBuilder.withPayload(dto)
+	public boolean sendTransactionMessage(String topic, MqCO co, String transactionId) {
+		Message<MqCO> message = MessageBuilder.withPayload(co)
 				.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId).build();
 		return rocketMQTemplate.sendMessageInTransaction(topic, message, null).getSendStatus()
 				.equals(SendStatus.SEND_OK);
@@ -211,17 +211,17 @@ public class RocketMqTemplate implements InitializingBean {
 	/**
 	 * 转换并发送
 	 * @param topic
-	 * @param dto
+	 * @param co
 	 */
-	public void convertAndSendMessage(String topic, MqDTO dto) {
-		rocketMQTemplate.convertAndSend(topic, dto);
+	public void convertAndSendMessage(String topic, MqCO co) {
+		rocketMQTemplate.convertAndSend(topic, co);
 	}
 
 	/**
 	 * 发送并接收
 	 */
-	public Object sendAndReceiveMessage(String topic, MqDTO dto, Class<?> clazz) {
-		return rocketMQTemplate.sendAndReceive(topic, dto, clazz);
+	public Object sendAndReceiveMessage(String topic, MqCO co, Class<?> clazz) {
+		return rocketMQTemplate.sendAndReceive(topic, co, clazz);
 	}
 
 	@Override
