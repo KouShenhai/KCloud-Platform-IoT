@@ -202,12 +202,6 @@ CREATE TABLE `boot_sys_user_202206`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1707428077144997890 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of boot_sys_user_202206
--- ----------------------------
-INSERT INTO `boot_sys_user_202206` VALUES (1707428076855590914, 1341620898007281665, 1341620898007281665, '2022-06-16 00:33:39', '2023-09-25 04:55:45', 0, 23, 1535887940687765505, '0,1535887940687765505', 0, 'WPvtQBxvQwzVj5SJsKCifQ==', '{bcrypt}$2a$10$Wac.3sTE4A4pi/Zy6B/HWOstwLFjOH9g8Qrf4gHiBLa/avKAVcwpG', 0, '', 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', '');
-INSERT INTO `boot_sys_user_202206` VALUES (1707428077144997889, 1341620898007281665, 1341620898007281665, '2022-06-16 00:48:28', '2023-09-17 13:39:06', 0, 71, 1535881356595175426, '0,1535887940687765505,1535881356595175426', 0, 'JSB4EWKd5aI/aISsDw0ODA==', '{bcrypt}$2a$10$cF89J1QesYz2sYghWbw6d./ly/zWK4yH8ehr2/l33UvtD3sCNHh.i', 0, '', 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', '');
-
--- ----------------------------
 -- Table structure for boot_sys_user_202207
 -- ----------------------------
 DROP TABLE IF EXISTS `boot_sys_user_202207`;
@@ -460,12 +454,6 @@ CREATE TABLE `boot_sys_user_202302`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1707428077488930818 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of boot_sys_user_202302
--- ----------------------------
-INSERT INTO `boot_sys_user_202302` VALUES (1707428077199523842, 1341620898007281665, 1341620898007281665, '2023-02-09 22:59:04', '2023-02-09 22:59:04', 0, 0, 0, '0', 1, '5/Pqo/yVzE72YyPDE5RKAw==', '{bcrypt}$2a$10$ToBq5JB191IUkAfnqfeV5OFLOFDvhr9wWaRm1LhTn5sbL8uyJ0Gre', 1, '', 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', '');
-INSERT INTO `boot_sys_user_202302` VALUES (1707428077488930817, 1537114827246292998, 1537114827246292998, '2023-02-15 13:18:39', '2023-02-15 13:18:39', 0, 0, 1584488411756171278, '0', 1, 'cmV6CFYc1NUWgni0E8xpdg==', '{bcrypt}$2a$10$nbLXUQeCfuiw.7wZwuOT.e0r1mr.ZQcLIlFbil28PCrPBNAnPLRT.', 0, '', 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', '');
-
--- ----------------------------
 -- Table structure for boot_sys_user_202303
 -- ----------------------------
 DROP TABLE IF EXISTS `boot_sys_user_202303`;
@@ -492,11 +480,6 @@ CREATE TABLE `boot_sys_user_202303`  (
                                          INDEX `idx_tenant_id_mail`(`tenant_id` ASC, `mail` ASC) USING BTREE COMMENT '租户_邮箱_唯一索引',
                                          INDEX `idx_tenant_id_mobile`(`tenant_id` ASC, `mobile` ASC) USING BTREE COMMENT '租户_手机号_唯一索引'
 ) ENGINE = InnoDB AUTO_INCREMENT = 1707428076452937731 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of boot_sys_user_202303
--- ----------------------------
-INSERT INTO `boot_sys_user_202303` VALUES (1707428076452937730, 1341620898007281665, 1341620898007281665, '2023-03-09 13:52:04', '2023-09-22 03:20:30', 0, 75, 1535887940687765505, '0,1535887940687765505', 0, 'xa1Nz1ENwGc9qWoUseZn6A==', '{bcrypt}$2a$10$.GMEgS3MXRzAZfni2pyrbO2jPpYPvwphk/yIiCNPQZBMWRUwg4Gt2', 0, '', 0, 'http://127.0.0.1:81/upload/node2/b4e5bb3944a046a6bb54f8bfd2c830c1.webp', '');
 
 -- ----------------------------
 -- Table structure for boot_sys_user_202304
@@ -685,12 +668,6 @@ CREATE TABLE `boot_sys_user_202309`  (
                                          INDEX `idx_tenant_id_mail`(`tenant_id` ASC, `mail` ASC) USING BTREE COMMENT '租户_邮箱_唯一索引',
                                          INDEX `idx_tenant_id_mobile`(`tenant_id` ASC, `mobile` ASC) USING BTREE COMMENT '租户_手机号_唯一索引'
 ) ENGINE = InnoDB AUTO_INCREMENT = 1707428076079644674 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of boot_sys_user_202309
--- ----------------------------
-INSERT INTO `boot_sys_user_202309` VALUES (1707428069997903873, 1341620898007281665, 910193112402362368, '2023-09-17 15:42:27', '2023-09-25 05:05:57', 0, 1, 1535887940687765505, '0,1535887940687765505', 1703312526740615171, '5/Pqo/yVzE72YyPDE5RKAw==', '{bcrypt}$2a$10$tfrR0lGv5RChP27iEKrxoO9/g7vtaUdSXqb3vnzfe.GiDmJVBO1Fq', 1, '', 0, 'https://i.postimg.cc/FsHgVKzX/1.gif', '');
-INSERT INTO `boot_sys_user_202309` VALUES (1707428076079644673, 910193112402362368, 910193112402362368, '2023-09-23 20:13:09', '2023-09-23 20:13:09', 0, 0, 1535887940687765505, '0,1535887940687765505', 1703312526740615171, 'cSjZ+Jz+mwGui+vPZ1BxGw==', '{bcrypt}$2a$10$iTfk2uTCO6EOsqtBtaj4p.e.c3g9t5r/QT9P4MWSm7datxLoPFyuC', 0, '', 0, 'https://i.postimg.cc/FsHgVKzX/1.gif', '');
 
 -- ----------------------------
 -- Table structure for boot_sys_user_202310
