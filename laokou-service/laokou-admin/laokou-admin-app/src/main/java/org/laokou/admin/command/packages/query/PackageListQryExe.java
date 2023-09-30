@@ -24,7 +24,6 @@ import org.laokou.admin.dto.packages.PackageListQry;
 import org.laokou.admin.dto.packages.clientobject.PackageCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +38,7 @@ public class PackageListQryExe {
 
 	public Result<Datas<PackageCO>> execute(PackageListQry qry) {
 		Package pack = ConvertUtil.sourceToTarget(qry, Package.class);
-		Datas<Package> newPage = packageGateway.list(pack, new PageQuery(qry.getPageNum(), qry.getPageSize()));
+		Datas<Package> newPage = packageGateway.list(pack, qry);
 		Datas<PackageCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), PackageCO.class));

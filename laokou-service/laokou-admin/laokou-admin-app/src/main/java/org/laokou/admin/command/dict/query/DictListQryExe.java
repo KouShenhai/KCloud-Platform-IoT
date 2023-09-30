@@ -24,7 +24,6 @@ import org.laokou.admin.dto.dict.DictListQry;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +38,7 @@ public class DictListQryExe {
 
 	public Result<Datas<DictCO>> execute(DictListQry qry) {
 		Dict dict = ConvertUtil.sourceToTarget(qry, Dict.class);
-		Datas<Dict> datas = dictGateway.list(dict, new PageQuery(qry.getPageNum(), qry.getPageSize()));
+		Datas<Dict> datas = dictGateway.list(dict, qry);
 		Datas<DictCO> da = new Datas<>();
 		da.setRecords(ConvertUtil.sourceToTarget(datas.getRecords(), DictCO.class));
 		da.setTotal(datas.getTotal());

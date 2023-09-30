@@ -24,7 +24,6 @@ import org.laokou.admin.dto.oss.OssListQry;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +38,7 @@ public class OssListQryExe {
 
 	public Result<Datas<OssCO>> execute(OssListQry qry) {
 		Oss oss = ConvertUtil.sourceToTarget(qry, Oss.class);
-		Datas<Oss> newPage = ossGateway.list(oss, new PageQuery(qry.getPageNum(), qry.getPageSize()));
+		Datas<Oss> newPage = ossGateway.list(oss, qry);
 		Datas<OssCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), OssCO.class));

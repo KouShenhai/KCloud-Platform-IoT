@@ -21,12 +21,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
+import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
 
 /**
@@ -53,12 +54,10 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	/**
 	 * 查询用户列表
 	 * @param page
-	 * @param tenantId
-	 * @param username
-	 * @param sqlFilter
+	 * @param userDO
+	 * @param pageQuery
 	 * @return
 	 */
-	IPage<UserDO> getUserListByTenantIdAndUsernameFilter(IPage<UserDO> page, @Param(TENANT_ID) Long tenantId,
-			@Param("username") String username, @Param(SQL_FILTER) String sqlFilter);
+	IPage<UserDO> getUserListFilter(IPage<UserDO> page, @Param("user") UserDO userDO, @Param(PAGE_QUERY)PageQuery pageQuery);
 
 }

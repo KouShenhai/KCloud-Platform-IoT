@@ -59,7 +59,7 @@ public class OssGatewayImpl implements OssGateway {
 	@DS(TENANT)
 	public Datas<Oss> list(Oss oss, PageQuery pageQuery) {
 		IPage<OssDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<OssDO> newPage = ossMapper.getOssListByLikeNameFilter(page, oss.getName(), pageQuery.getSqlFilter());
+		IPage<OssDO> newPage = ossMapper.getOssListByLikeNameFilter(page, oss.getName(), pageQuery);
 		Datas<Oss> datas = new Datas<>();
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Oss.class));
 		datas.setTotal(newPage.getTotal());

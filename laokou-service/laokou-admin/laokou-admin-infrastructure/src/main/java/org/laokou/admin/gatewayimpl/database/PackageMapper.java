@@ -20,10 +20,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
-import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
+import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
  * @author laokou
@@ -33,6 +34,6 @@ import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
 public interface PackageMapper extends BatchMapper<PackageDO> {
 
 	IPage<PackageDO> getPackageListByLikeNameFilter(IPage<PackageDO> page, @Param("name") String name,
-			@Param(SQL_FILTER) String sqlFilter);
+													@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

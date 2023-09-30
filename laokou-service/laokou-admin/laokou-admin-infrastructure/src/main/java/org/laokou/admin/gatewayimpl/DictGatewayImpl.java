@@ -90,7 +90,7 @@ public class DictGatewayImpl implements DictGateway {
 	public Datas<Dict> list(Dict dict, PageQuery pageQuery) {
 		IPage<DictDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<DictDO> newPage = dictMapper.getDictListByLikeTypeAndLikeLabelFilter(page, dict.getType(),
-				dict.getLabel(), pageQuery.getSqlFilter());
+				dict.getLabel(), pageQuery);
 		Datas<Dict> datas = new Datas<>();
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Dict.class));
 		datas.setTotal(newPage.getTotal());

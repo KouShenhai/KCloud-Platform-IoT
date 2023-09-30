@@ -26,7 +26,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.core5.http.ContentType;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.database.BatchMapper;
@@ -56,13 +57,13 @@ public class ExcelUtil {
 
 	private static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
-	public static <T extends BaseDO> void export(HttpServletResponse response, T param, String sqlFilter,
+	public static <T extends BaseDO> void export(HttpServletResponse response, T param, PageQuery pageQuery,
 			BatchMapper<T> batchMapper, Class<?> clazz) {
-		export(DEFAULT_SIZE, response, param, sqlFilter, batchMapper, clazz);
+		export(DEFAULT_SIZE, response, param, pageQuery, batchMapper, clazz);
 	}
 
 	@SneakyThrows
-	public static <T extends BaseDO> void export(int size, HttpServletResponse response, T param, String sqlFilter,
+	public static <T extends BaseDO> void export(int size, HttpServletResponse response, T param, PageQuery pageQuery,
 			BatchMapper<T> batchMapper, Class<?> clazz) {
 		try (ServletOutputStream out = response.getOutputStream();
 				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
@@ -75,7 +76,7 @@ public class ExcelUtil {
 				if (list.size() % size == 0) {
 					writeSheet(list, clazz, excelWriter);
 				}
-			}, sqlFilter);
+			}, pageQuery);
 			if (list.size() % size != 0) {
 				writeSheet(list, clazz, excelWriter);
 			}

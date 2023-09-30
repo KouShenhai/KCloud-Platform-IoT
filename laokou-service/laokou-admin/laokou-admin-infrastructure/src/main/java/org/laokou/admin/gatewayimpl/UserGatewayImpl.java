@@ -36,7 +36,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -135,8 +135,7 @@ public class UserGatewayImpl implements UserGateway {
 	@DS(USER)
 	public Datas<User> list(User user, PageQuery pageQuery) {
 		Page<UserDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<UserDO> newPage = userMapper.getUserListByTenantIdAndUsernameFilter(page, user.getTenantId(),
-				user.getUsername(), pageQuery.getSqlFilter());
+		IPage<UserDO> newPage = userMapper.getUserListFilter(page, UserConvertor.toDataObject(user), pageQuery.time());
 		Datas<User> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), User.class));

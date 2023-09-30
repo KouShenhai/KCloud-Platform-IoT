@@ -19,7 +19,7 @@ package org.laokou.admin.dto.monitor.clientobject;
 import lombok.Data;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.BigDecimalUtil;
-import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.dto.ClientObject;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;

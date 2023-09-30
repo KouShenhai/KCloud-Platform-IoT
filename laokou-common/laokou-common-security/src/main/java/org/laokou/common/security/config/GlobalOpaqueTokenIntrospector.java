@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;

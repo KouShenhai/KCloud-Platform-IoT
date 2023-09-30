@@ -25,7 +25,6 @@ import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
@@ -44,13 +43,13 @@ public class UserListQryExe {
 
 	public Result<Datas<UserCO>> execute(UserListQry qry) {
 		User user = new User(qry.getUsername(), UserUtil.getTenantId());
-		Datas<User> newPage = userGateway.list(user, new PageQuery(qry.getPageNum(), qry.getPageSize()));
+		Datas<User> newPage = userGateway.list(user, qry);
 		Datas<UserCO> datas = new Datas<>();
 		List<User> records = newPage.getRecords();
 		if (CollectionUtil.isNotEmpty(records)) {
-			List<UserCO> userCOS = ConvertUtil.sourceToTarget(records, UserCO.class);
-			userCOS.forEach(item -> item.setUsername(AesUtil.decrypt(item.getUsername())));
-			datas.setRecords(userCOS);
+			List<UserCO> coList = ConvertUtil.sourceToTarget(records, UserCO.class);
+			coList.forEach(item -> item.setUsername(AesUtil.decrypt(item.getUsername())));
+			datas.setRecords(coList);
 		}
 		datas.setTotal(newPage.getTotal());
 		return Result.of(datas);

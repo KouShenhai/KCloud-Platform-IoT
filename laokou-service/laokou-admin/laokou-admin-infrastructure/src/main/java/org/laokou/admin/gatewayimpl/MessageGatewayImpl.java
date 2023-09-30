@@ -36,6 +36,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.rocketmq.clientobject.MqCO;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
@@ -75,7 +76,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	public Datas<Message> list(Message message, User user, PageQuery pageQuery) {
 		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<MessageDO> newPage = messageMapper.getMessageListByTenantIdAndLikeTitleFilter(page, user.getTenantId(),
-				message.getTitle(), pageQuery.getSqlFilter());
+				message.getTitle(), pageQuery);
 		Datas<Message> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Message.class));
