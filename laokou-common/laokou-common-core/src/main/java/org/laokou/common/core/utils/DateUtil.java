@@ -181,13 +181,13 @@ public class DateUtil {
 		return LocalDateTime.now();
 	}
 
-	public static LocalDateTime getDateTimeOfTimestamp(long timestamp) {
+	public static LocalDateTime getLocalDateTimeOfTimestamp(long timestamp) {
 		Instant instant = Instant.ofEpochMilli(timestamp);
 		ZoneId zoneId = ZoneId.systemDefault();
 		return LocalDateTime.ofInstant(instant, zoneId);
 	}
 
-	public static long getTimestampOfDateTime(LocalDateTime localDateTime) {
+	public static long getTimestampOfLocalDateTime(LocalDateTime localDateTime) {
 		ZoneId zoneId = ZoneId.systemDefault();
 		return localDateTime.atZone(zoneId).toInstant().toEpochMilli();
 	}
