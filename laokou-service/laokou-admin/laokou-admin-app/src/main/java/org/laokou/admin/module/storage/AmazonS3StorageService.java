@@ -27,7 +27,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
-import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.i18n.utils.DateUtil;
 
 import java.io.InputStream;
 import java.net.URL;

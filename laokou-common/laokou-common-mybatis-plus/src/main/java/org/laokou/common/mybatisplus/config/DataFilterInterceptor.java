@@ -30,13 +30,14 @@ import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import java.util.Map;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY;
 import static org.laokou.common.i18n.common.Constant.SINGLE_QUOT;
-import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
+import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
  * @author laokou
@@ -49,10 +50,14 @@ public class DataFilterInterceptor implements InnerInterceptor {
 			ResultHandler resultHandler, BoundSql boundSql) {
 		if (parameter instanceof Map<?, ?> map) {
 			try {
-				Object obj = map.get(SQL_FILTER);
-				if (obj != null && StringUtil.isNotEmpty(obj.toString())) {
+				Object obj = map.get(PAGE_QUERY);
+				if (obj != null) {
 					// 获取aop拼接的sql
-					String sqlFilter = obj.toString();
+					PageQuery pageQuery = (PageQuery) obj;
+					String sqlFilter = pageQuery.getSqlFilter();
+					if (StringUtil.isEmpty(sqlFilter)) {
+						return;
+					}
 					// 获取select查询语句
 					Select select = (Select) CCJSqlParserUtil.parse(boundSql.getSql());
 					PlainSelect plainSelect = (PlainSelect) select.getSelectBody();

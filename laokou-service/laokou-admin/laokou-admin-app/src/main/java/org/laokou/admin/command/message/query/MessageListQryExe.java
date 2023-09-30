@@ -25,7 +25,6 @@ import org.laokou.admin.dto.message.MessageListQry;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -40,9 +39,8 @@ public class MessageListQryExe {
 	private final MessageGateway messageGateway;
 
 	public Result<Datas<MessageCO>> execute(MessageListQry qry) {
-		PageQuery pageQuery = new PageQuery(qry.getPageNum(), qry.getPageSize());
 		Message message = ConvertUtil.sourceToTarget(qry, Message.class);
-		Datas<Message> list = messageGateway.list(message, toUser(), pageQuery);
+		Datas<Message> list = messageGateway.list(message, toUser(), qry);
 		Datas<MessageCO> datas = new Datas<>();
 		datas.setRecords(ConvertUtil.sourceToTarget(list.getRecords(), MessageCO.class));
 		datas.setTotal(list.getTotal());

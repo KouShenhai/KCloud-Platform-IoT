@@ -70,8 +70,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	@DataFilter(alias = BOOT_SYS_TENANT)
 	public Datas<Tenant> list(Tenant tenant, PageQuery pageQuery) {
 		IPage<TenantDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<TenantDO> newPage = tenantMapper.getTenantListByLikeNameFilter(page, tenant.getName(),
-				pageQuery.getSqlFilter());
+		IPage<TenantDO> newPage = tenantMapper.getTenantListByLikeNameFilter(page, tenant.getName(), pageQuery);
 		Datas<Tenant> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Tenant.class));

@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.core.utils;
+package org.laokou.common.i18n.utils;
 
 import org.laokou.common.i18n.common.GlobalException;
 import java.time.*;

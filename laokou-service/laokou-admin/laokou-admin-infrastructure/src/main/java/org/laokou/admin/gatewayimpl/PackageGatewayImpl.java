@@ -80,8 +80,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	@DataFilter(alias = BOOT_SYS_PACKAGE)
 	public Datas<Package> list(Package pack, PageQuery pageQuery) {
 		IPage<PackageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<PackageDO> newPage = packageMapper.getPackageListByLikeNameFilter(page, pack.getName(),
-				pageQuery.getSqlFilter());
+		IPage<PackageDO> newPage = packageMapper.getPackageListByLikeNameFilter(page, pack.getName(), pageQuery);
 		Datas<Package> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Package.class));

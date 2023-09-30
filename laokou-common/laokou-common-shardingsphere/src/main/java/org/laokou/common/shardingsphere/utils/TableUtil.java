@@ -18,7 +18,7 @@
 package org.laokou.common.shardingsphere.utils;
 
 import lombok.SneakyThrows;
-import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 

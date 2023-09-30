@@ -21,8 +21,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.utils.DateUtil;
 import java.io.Serial;
+import java.time.LocalDateTime;
 
 /**
  * @author laokou
@@ -32,10 +34,10 @@ import java.io.Serial;
 @Schema(name = "PageQuery", description = "分页")
 public class PageQuery extends Query {
 
-	public static final String SQL_FILTER = "sqlFilter";
-
 	@Serial
 	private static final long serialVersionUID = 6412915892334241813L;
+
+	public static final String PAGE_QUERY = "pageQuery";
 
 	@NotNull(message = "显示页码不为空")
 	@Min(value = 1)
@@ -50,19 +52,47 @@ public class PageQuery extends Query {
 	@Schema(name = "pageIndex", description = "索引")
 	private Integer pageIndex;
 
-	@Schema(name = SQL_FILTER, description = "SQL拼接")
+	@Schema(name = "sqlFilter", description = "SQL拼接")
 	private String sqlFilter;
+
+	@Schema(name = "startTime", description = "开始时间")
+	private String startTime;
+
+	@Schema(name = "endTime", description = "结束时间")
+	private String endTime;
 
 	public PageQuery(Integer pageNum, Integer pageSize) {
 		this.pageNum = pageNum;
 		this.pageSize = pageSize;
 	}
 
-	public Integer getPageIndex() {
-		if (pageNum > 0) {
-			return (pageNum - 1) * pageSize;
+	public PageQuery time() {
+		if (this.startTime == null) {
+			throw new GlobalException("开始时间不为空");
 		}
-		return 0;
+		if (this.endTime == null) {
+			throw new GlobalException("结束时间不为空");
+		}
+		int yearOfDays = 730;
+		LocalDateTime startDate = DateUtil.parseTime(startTime,DateUtil.YYYY_MM_DD_HH_MM_SS);
+		LocalDateTime endDate = DateUtil.parseTime(endTime,DateUtil.YYYY_MM_DD_HH_MM_SS);
+		LocalDateTime minDate = LocalDateTime.of(2021, 12, 31, 23, 59, 59);
+		LocalDateTime maxDate = LocalDateTime.of(2100,1,1,0,0,0);
+		if (DateUtil.isAfter(startDate,endDate)) {
+			throw new GlobalException("结束时间必须大于开始时间");
+		}
+		if (DateUtil.getDays(startDate,endDate) > yearOfDays) {
+			throw new GlobalException("开始时间和结束时间间隔不能超过两年");
+		}
+		if (DateUtil.isBefore(startDate,minDate) || DateUtil.isAfter(endDate,maxDate)) {
+			throw new GlobalException("开始时间和结束时间只允许在2022-01-01 ~ 2099-12-31范围之内");
+		}
+		return this;
+	}
+
+	public PageQuery page() {
+		this.pageIndex = (pageNum - 1) * pageSize;
+		return this;
 	}
 
 }

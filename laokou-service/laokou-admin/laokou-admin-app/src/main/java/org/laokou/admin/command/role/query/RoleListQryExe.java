@@ -25,7 +25,6 @@ import org.laokou.admin.dto.role.RoleListQry;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -41,8 +40,7 @@ public class RoleListQryExe {
 
 	public Result<Datas<RoleCO>> execute(RoleListQry qry) {
 		Role role = ConvertUtil.sourceToTarget(qry, Role.class);
-		Datas<Role> datas = roleGateway.list(new User(UserUtil.getTenantId()), role,
-				new PageQuery(qry.getPageNum(), qry.getPageSize()));
+		Datas<Role> datas = roleGateway.list(new User(UserUtil.getTenantId()), role, qry);
 		Datas<RoleCO> newDatas = new Datas<>();
 		newDatas.setTotal(datas.getTotal());
 		newDatas.setRecords(ConvertUtil.sourceToTarget(datas.getRecords(), RoleCO.class));

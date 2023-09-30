@@ -28,7 +28,7 @@ import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.utils.MessageUtil;

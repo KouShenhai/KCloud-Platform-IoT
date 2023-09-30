@@ -43,7 +43,7 @@ public class LoginLogExportCmdExe {
 	@DS(LOGIN_LOG)
 	public void executeVoid(LoginLogExportCmd cmd) {
 		LoginLogMapper loginLogMapper = SpringContextUtil.getBean(LoginLogMapper.class);
-		ExcelUtil.export(cmd.getResponse(), buildLoginLog(cmd), cmd.getSqlFilter(), loginLogMapper,
+		ExcelUtil.export(cmd.getResponse(), buildLoginLog(cmd), cmd.time(), loginLogMapper,
 				LoginLogExcel.class);
 	}
 

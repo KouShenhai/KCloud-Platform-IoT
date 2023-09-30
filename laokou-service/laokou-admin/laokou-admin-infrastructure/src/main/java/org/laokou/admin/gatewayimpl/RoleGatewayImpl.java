@@ -106,7 +106,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	public Datas<Role> list(User user, Role role, PageQuery pageQuery) {
 		IPage<RoleDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<RoleDO> newPage = roleMapper.getRoleListByTenantIdAndLikeNameFilter(page, user.getTenantId(),
-				role.getName(), pageQuery.getSqlFilter());
+				role.getName(), pageQuery);
 		Datas<Role> datas = new Datas<>();
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Role.class));
 		datas.setTotal(newPage.getTotal());

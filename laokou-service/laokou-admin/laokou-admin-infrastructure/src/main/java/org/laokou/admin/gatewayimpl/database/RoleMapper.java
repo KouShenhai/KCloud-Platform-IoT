@@ -19,12 +19,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
+import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
 
 /**
@@ -35,7 +36,7 @@ import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID
 public interface RoleMapper extends BatchMapper<RoleDO> {
 
 	IPage<RoleDO> getRoleListByTenantIdAndLikeNameFilter(IPage<RoleDO> page, @Param(TENANT_ID) Long tenantId,
-			@Param("name") String name, @Param(SQL_FILTER) String sqlFilter);
+			@Param("name") String name, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 	List<Long> getRoleIdsByTenantId(@Param(TENANT_ID) Long tenantId);
 

@@ -26,13 +26,13 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
-import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.dto.PageQuery.SQL_FILTER;
+import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
  * @author laokou
@@ -72,7 +72,7 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 		return value.getVersion();
 	}
 
-	void resultListFilter(@Param("param") T param, ResultHandler<T> handler, @Param(SQL_FILTER) String sqlFilter);
+	void resultListFilter(@Param("param") T param, ResultHandler<T> handler, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 	@Update("${sql}")
 	void create(@Param("sql") String sql);

@@ -24,7 +24,6 @@ import org.laokou.admin.dto.tenant.TenantListQry;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +38,7 @@ public class TenantListQryExe {
 
 	public Result<Datas<TenantCO>> execute(TenantListQry qry) {
 		Tenant tenant = ConvertUtil.sourceToTarget(qry, Tenant.class);
-		Datas<Tenant> newPage = tenantGateway.list(tenant, new PageQuery(qry.getPageNum(), qry.getPageSize()));
+		Datas<Tenant> newPage = tenantGateway.list(tenant, qry);
 		Datas<TenantCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), TenantCO.class));

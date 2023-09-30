@@ -25,7 +25,6 @@ import org.laokou.admin.dto.log.OperateLogListQry;
 import org.laokou.admin.dto.log.clientobject.OperateLogCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -42,7 +41,7 @@ public class OperateLogListQryExe {
 	public Result<Datas<OperateLogCO>> execute(OperateLogListQry qry) {
 		OperateLog operateLog = ConvertUtil.sourceToTarget(qry, OperateLog.class);
 		Datas<OperateLog> newPage = logGateway.operateList(operateLog, new User(UserUtil.getTenantId()),
-				new PageQuery(qry.getPageNum(), qry.getPageSize()));
+				qry);
 		Datas<OperateLogCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), OperateLogCO.class));
