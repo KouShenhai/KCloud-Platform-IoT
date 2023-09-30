@@ -24,9 +24,8 @@ import org.laokou.auth.common.event.DomainEventPublisher;
 import org.laokou.auth.domain.gateway.LoginLogGateway;
 import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.dto.log.domainevent.LoginLogEvent;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.AddressUtil;
+import org.laokou.common.core.utils.RequestUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
@@ -55,10 +54,12 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 		String os = userAgent.getOperatingSystem().getName();
 		// 获取客户端浏览器
 		String browser = userAgent.getBrowser().getName();
+		// IP地址
+		String ip = loginLog.getIp();
 		LoginLogEvent event = new LoginLogEvent(this);
 		event.setUsername(loginLog.getUsername());
-		event.setIp(loginLog.getIp());
-		event.setAddress(AddressUtil.getRealAddress(loginLog.getIp()));
+		event.setIp(ip);
+		event.setAddress(AddressUtil.getRealAddress(ip));
 		event.setBrowser(browser);
 		event.setOs(os);
 		event.setDeptId(loginLog.getDeptId());

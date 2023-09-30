@@ -21,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.Constant;
 import org.laokou.common.i18n.utils.StringUtil;
 
+import static org.laokou.common.i18n.common.Constant.*;
+
 /**
  * IP工具类
  *
@@ -28,12 +30,6 @@ import org.laokou.common.i18n.utils.StringUtil;
  */
 @Slf4j
 public class IpUtil {
-
-	private static final String IP_UNKNOWN = "unknown";
-
-	private static final String LOCAL_IP = "127.0.0.1";
-
-	private static final String LOCAL_NETWORK_SEGMENT = "0:0:0:0:0:0:0:1";
 
 	public static String getIpAddr(HttpServletRequest request) {
 		if (request == null) {

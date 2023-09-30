@@ -37,10 +37,10 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.DateUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
-import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.shardingsphere.utils.TableUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -190,7 +190,7 @@ public class UserGatewayImpl implements UserGateway {
 		List<UserRoleDO> list = new ArrayList<>(roleIds.size());
 		for (Long roleId : roleIds) {
 			UserRoleDO userRoleDO = new UserRoleDO();
-			userRoleDO.setId(IdUtil.defaultId());
+			userRoleDO.setId(IdGenerator.defaultSnowflakeId());
 			userRoleDO.setDeptId(user.getDeptId());
 			userRoleDO.setTenantId(user.getTenantId());
 			userRoleDO.setCreator(user.getCreator());

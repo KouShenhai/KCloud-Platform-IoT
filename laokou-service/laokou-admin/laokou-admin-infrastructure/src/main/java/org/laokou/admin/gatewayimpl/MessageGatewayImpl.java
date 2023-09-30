@@ -33,14 +33,10 @@ import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.DateUtil;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
-import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.rocketmq.clientobject.MqCO;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.im.dto.message.clientobject.WsMsgCO;
@@ -141,7 +137,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	private MessageDetailDO toMessageDetailDO(Long messageId, String userId, User user) {
 		MessageDetailDO messageDetailDO = new MessageDetailDO();
 		messageDetailDO.setUserId(Long.parseLong(userId));
-		messageDetailDO.setId(IdUtil.defaultId());
+		messageDetailDO.setId(IdGenerator.defaultSnowflakeId());
 		messageDetailDO.setCreateDate(DateUtil.now());
 		messageDetailDO.setCreator(user.getId());
 		messageDetailDO.setDeptId(user.getDeptId());

@@ -18,9 +18,10 @@ package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.*;
 import org.lionsoul.ip2region.xdb.Searcher;
 import java.io.IOException;
+
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * @author laokou
@@ -30,9 +31,7 @@ public class AddressUtil {
 
 	private static final Searcher SEARCHER;
 
-	private static final String LOCAL_NETWORK_DESC = "内网IP";
-
-	private static final String IGNORE_DESC = "0";
+	private static final String IGNORE = "0";
 
 	static {
 		try {
@@ -47,19 +46,19 @@ public class AddressUtil {
 	@SneakyThrows
 	public static String getRealAddress(String ip) {
 		if (IpUtil.internalIp(ip)) {
-			return LOCAL_NETWORK_DESC;
+			return LOCAL_NETWORK_LABEL;
 		}
 		return addressFormat(SEARCHER.search(ip));
 	}
 
 	private static String addressFormat(String address) {
-		StringBuilder stringBuffer = new StringBuilder();
-		String[] info = address.split("\\|");
+		StringBuilder stringBuilder = new StringBuilder(address.length());
+		String[] info = address.split(BACKSLASH + ERECT);
 		for (String str : info) {
-			str = IGNORE_DESC.equals(str) ? "" : str + " ";
-			stringBuffer.append(str);
+			str = IGNORE.equals(str) ? EMPTY : str + SPACE;
+			stringBuilder.append(str);
 		}
-		return stringBuffer.toString().trim();
+		return stringBuilder.toString().trim();
 	}
 
 }

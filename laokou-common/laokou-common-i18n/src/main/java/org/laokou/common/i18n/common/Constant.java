@@ -27,6 +27,21 @@ public interface Constant {
 	String SLASH = "/";
 
 	/**
+	 * 分割参数
+	 */
+	String ERECT = "|";
+
+	/**
+	 * 分割参数
+	 */
+	String BACKSLASH = "\\";
+
+	/**
+	 * 分割参数
+	 */
+	String AT = "@";
+
+	/**
 	 * 百分号
 	 */
 	String PERCENT = "%";
@@ -140,5 +155,25 @@ public interface Constant {
 	 * RSA
 	 */
 	String ALGORITHM_RSA = "RSA";
+
+	/**
+	 * 本地网络描述
+	 */
+	String LOCAL_NETWORK_LABEL = "内网";
+
+	/**
+	 * 本地IP
+	 */
+	String LOCAL_IP = "127.0.0.1";
+
+	/**
+	 * IP未知
+	 */
+	String IP_UNKNOWN = "unknown";
+
+	/**
+	 * 本地网段
+	 */
+	String LOCAL_NETWORK_SEGMENT = "0:0:0:0:0:0:0:1";
 
 }

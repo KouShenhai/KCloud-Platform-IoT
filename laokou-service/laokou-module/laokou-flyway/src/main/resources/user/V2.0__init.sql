@@ -46,12 +46,6 @@ CREATE TABLE `boot_sys_user_202201`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1707428076784287746 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of boot_sys_user_202201
--- ----------------------------
-INSERT INTO `boot_sys_user_202201` VALUES (1707428076142559234, 1341620898007281665, 1341620898007281665, '2022-01-01 20:13:11', '2023-09-28 09:32:15', 0, 50, 1535887940687765505, '0,1535887940687765505', 0, '1ftkBJEIvmOFuxJygs2jnQ==', '{bcrypt}$2a$10$bGXM7u58FPMDanMyqvZ7Reb9sqJiUTCdAcb1wN5IIkFa8nYOMOioK', 1, 'LkZpbZYqPmJRj54OG9P8xdgn8lmGt/9oxQT94xbsZyE=', 0, 'http://localhost:9000/laokou-minio-bucket/c10bbd207e3c47329ba02a0ef8162d50.jpg', 'i7KGWPr+sZqGBXO4JViAGg==');
-INSERT INTO `boot_sys_user_202201` VALUES (1707428076784287745, 1341620898007281665, 1341620898007281665, '2022-01-31 11:29:35', '2023-09-28 09:32:23', 0, 13, 1535881356595175426, '0,1535887940687765505,1535881356595175426', 0, 'UZdko/elN7be8o8HlsNYDw==', '{bcrypt}$2a$10$ysAmruc249SiAUpIqQzrpeM8wcdpgIJ6nEdtsXQnDrBgvLZkt7tJ6', 0, '', 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', '');
-
--- ----------------------------
 -- Table structure for boot_sys_user_202202
 -- ----------------------------
 DROP TABLE IF EXISTS `boot_sys_user_202202`;

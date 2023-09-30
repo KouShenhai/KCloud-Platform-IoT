@@ -26,8 +26,8 @@ import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,7 +60,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	@Override
 	public Boolean insert(Dept dept) {
 		DeptDO deptDO = DeptConvertor.toDataObject(dept);
-		deptDO.setId(IdUtil.defaultId());
+		deptDO.setId(IdGenerator.defaultSnowflakeId());
 		deptDO.setPath(getPath(deptDO.getPid(), deptDO.getId()));
 		return insertDept(deptDO);
 	}

@@ -17,9 +17,32 @@
 package org.laokou.common.core.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.StringUtil;
+import org.springframework.util.Assert;
+
+import java.lang.management.ManagementFactory;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.time.LocalDateTime;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.laokou.common.i18n.common.Constant.AT;
 
 /**
+ *
+ * 分布式高效有序 ID 生产黑科技(sequence)
+ *
+ * <p>
+ * 优化开源项目：<a href="https://gitee.com/yu120/sequence">...</a>
+ * </p>
+ *
+ * @author hubin
  * @author laokou
+ * @since 2016-08-18
  */
 @Slf4j
 public class IdGenerator {
@@ -35,15 +58,27 @@ public class IdGenerator {
 	private static final long SYS_ID = 1L;
 
 	/**
-	 * 学花算法
+	 * 雪花算法
 	 */
 	private static final Snowflake INSTANCE = new Snowflake(DATA_ID, SYS_ID);
 
 	/**
 	 * 默认雪花ID
+	 * @return long
 	 */
 	public static long defaultSnowflakeId() {
 		return INSTANCE.nextId();
+	}
+
+	/**
+	 * 雪花ID生成时间
+	 * @param snowflakeId 雪花ID
+	 * @return LocalDateTime
+	 */
+	public static LocalDateTime getLocalDateTime(long snowflakeId) {
+		// 第一段 时间戳部分 (反推 -> 右移left + start)
+		long timestamp = (snowflakeId >> Snowflake.TIMESTAMP_LEFT) + Snowflake.START_TIMESTAMP;
+		return DateUtil.getLocalDateTimeOfTimestamp(timestamp);
 	}
 
 	static class Snowflake {
@@ -54,7 +89,7 @@ public class IdGenerator {
 		private final static long START_TIMESTAMP = 1480166465631L;
 
 		/**
-		 * 每一部分占用的位数 序列号占用的位数
+		 * 序列标识占用的位数
 		 */
 		private final static long SEQUENCE_BIT = 13;
 
@@ -64,45 +99,62 @@ public class IdGenerator {
 		private final static long MACHINE_BIT = 5;
 
 		/**
-		 * 数据中心占用的位数
+		 * 数据标识占用的位数
 		 */
-		private final static long DATA_CENTER_BIT = 5;
+		private final static long DATACENTER_BIT = 5;
 
 		/**
-		 * 每一部分的最大值
+		 * 机器标识最大值
+		 */
+		private final static long MAX_MACHINE = ~(-1L << MACHINE_BIT);
+
+		/**
+		 * 数据标识最大值
+		 */
+		private final static long MAX_DATACENTER = ~(-1L << DATACENTER_BIT);
+
+		/**
+		 * 序列标识最大值
 		 */
 		private final static long MAX_SEQUENCE = ~(-1L << SEQUENCE_BIT);
 
-		private final static long MAX_MACHINE_NUM = ~(-1L << MACHINE_BIT);
-
-		private final static long MAX_DATA_CENTER_NUM = ~(-1L << DATA_CENTER_BIT);
-
 		/**
-		 * 每一部分向左的位移
+		 * 机器标识向左移
 		 */
 		private final static long MACHINE_LEFT = SEQUENCE_BIT;
 
-		private final static long DATA_CENTER_LEFT = SEQUENCE_BIT + MACHINE_BIT;
-
-		private final static long TIMESTAMP_LEFT = DATA_CENTER_LEFT + DATA_CENTER_BIT;
-
 		/**
-		 * 数据中心ID
+		 * 数据标识向左移
 		 */
-		private final long DATACENTER_ID;
+		private final static long DATACENTER_LEFT = SEQUENCE_BIT + MACHINE_BIT;
 
 		/**
-		 * 机器标志ID
+		 * 时间戳向左移
+		 */
+		private final static long TIMESTAMP_LEFT = SEQUENCE_BIT + MACHINE_BIT + DATACENTER_BIT;
+
+		/**
+		 * 机器标识ID
 		 */
 		private final long MACHINE_ID;
 
 		/**
-		 * 序列号
+		 * 数据标识ID
+		 */
+		private final long DATACENTER_ID;
+
+		/**
+		 * IP地址
+		 */
+		private InetAddress inetAddress;
+
+		/**
+		 * 并发控制
 		 */
 		private long sequence = 0L;
 
 		/**
-		 * 上一次时间戳
+		 * 上一次生产ID时间戳
 		 */
 		private long lastTimeStamp = -1L;
 
@@ -115,7 +167,7 @@ public class IdGenerator {
 		}
 
 		private long getNewTimeStamp() {
-			return System.currentTimeMillis();
+			return SystemClock.now();
 		}
 
 		/**
@@ -124,25 +176,94 @@ public class IdGenerator {
 		 * @param machineId 机器标志ID
 		 */
 		public Snowflake(final long dataCenterId, final long machineId) {
-			if (dataCenterId > MAX_DATA_CENTER_NUM || dataCenterId < 0) {
-				throw new RuntimeException("DtaCenterId can't be greater than MAX_DATA_CENTER_NUM or less than 0！");
-			}
-			if (machineId > MAX_MACHINE_NUM || machineId < 0) {
-				throw new RuntimeException("MachineId can't be greater than MAX_MACHINE_NUM or less than 0！");
-			}
-			this.DATACENTER_ID = dataCenterId;
+			Assert.isTrue(machineId <= MAX_MACHINE && machineId >= 0,
+					String.format("MachineId can't be greater than %s or less than 0", MAX_MACHINE));
+			Assert.isTrue(dataCenterId <= MAX_DATACENTER && dataCenterId >= 0,
+					String.format("DtaCenterId can't be greater than %s or less than 0", MAX_DATACENTER));
 			this.MACHINE_ID = machineId;
+			this.DATACENTER_ID = dataCenterId;
+		}
+
+		public Snowflake(InetAddress inetAddress) {
+			this.inetAddress = inetAddress;
+			DATACENTER_ID = getDatacenterId();
+			MACHINE_ID = getMaxMachineId(DATACENTER_ID);
 		}
 
 		/**
-		 * 产生下一个ID
+		 * 数据标识ID
+		 */
+		private long getDatacenterId() {
+			long id = 0L;
+			try {
+				if (null == this.inetAddress) {
+					this.inetAddress = InetAddress.getLocalHost();
+				}
+				NetworkInterface network = NetworkInterface.getByInetAddress(this.inetAddress);
+				if (null == network) {
+					id = 1L;
+				}
+				else {
+					byte[] mac = network.getHardwareAddress();
+					if (null != mac) {
+						id = ((0x000000FF & (long) mac[mac.length - 2])
+								| (0x0000FF00 & (((long) mac[mac.length - 1]) << 8))) >> 6;
+						id = id % (Snowflake.MAX_DATACENTER + 1);
+					}
+				}
+			}
+			catch (Exception e) {
+				log.warn(" getDatacenterId: " + e.getMessage());
+			}
+			return id;
+		}
+
+		/**
+		 * 机器标识ID
+		 */
+		protected long getMaxMachineId(long datacenterId) {
+			StringBuilder mpid = new StringBuilder();
+			mpid.append(datacenterId);
+			String name = ManagementFactory.getRuntimeMXBean().getName();
+			if (StringUtil.isNotEmpty(name)) {
+				/*
+				 * GET jvmPid
+				 */
+				mpid.append(name.split(AT)[0]);
+			}
+			/*
+			 * MAC + PID 的 hashcode 获取16个低位
+			 */
+			return (mpid.toString().hashCode() & 0xffff) % (Snowflake.MAX_MACHINE + 1);
+		}
+
+		/**
+		 * 生产雪花ID
 		 */
 		public synchronized long nextId() {
 			long currTimeStamp = getNewTimeStamp();
+			int maxOffset = 5;
+			// 闰秒
 			if (currTimeStamp < lastTimeStamp) {
-				throw new RuntimeException("Clock moved backwards.  Refusing to generate id");
+				long offset = lastTimeStamp - currTimeStamp;
+				if (offset <= maxOffset) {
+					try {
+						wait(offset << 1);
+						currTimeStamp = getNewTimeStamp();
+						if (currTimeStamp < lastTimeStamp) {
+							throw new RuntimeException(String.format(
+									"Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
+						}
+					}
+					catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				}
+				else {
+					throw new RuntimeException(String
+							.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
+				}
 			}
-
 			if (currTimeStamp == lastTimeStamp) {
 				// 相同毫秒内，序列号自增
 				sequence = (sequence + 1) & MAX_SEQUENCE;
@@ -152,19 +273,88 @@ public class IdGenerator {
 				}
 			}
 			else {
-				// 不同毫秒内，序列号置为0
-				sequence = 0L;
+				// 不同毫秒内，序列号置为 1 - 2 随机数
+				sequence = ThreadLocalRandom.current().nextLong(1, 3);
 			}
-
 			lastTimeStamp = currTimeStamp;
 			// 时间戳部分
 			return (currTimeStamp - START_TIMESTAMP) << TIMESTAMP_LEFT
-					// 数据中心部分
-					| DATACENTER_ID << DATA_CENTER_LEFT
+					// 数据标识部分
+					| DATACENTER_ID << DATACENTER_LEFT
 					// 机器标识部分
 					| MACHINE_ID << MACHINE_LEFT
-					// 序列号部分
+					// 序列标识部分
 					| sequence;
+		}
+
+	}
+
+	/**
+	 * 高并发场景下System.currentTimeMillis()的性能问题的优化
+	 *
+	 * <p>
+	 * System.currentTimeMillis()的调用比new一个普通对象要耗时的多（具体耗时高出多少我还没测试过，有人说是100倍左右）
+	 * </p>
+	 * <p>
+	 * System.currentTimeMillis()之所以慢是因为去跟系统打了一次交道
+	 * </p>
+	 * <p>
+	 * 后台定时更新时钟，JVM退出时，线程自动回收
+	 * </p>
+	 * <p>
+	 * 10亿：43410,206,210.72815533980582%
+	 * </p>
+	 * <p>
+	 * 1亿：4699,29,162.0344827586207%
+	 * </p>
+	 * <p>
+	 * 1000万：480,12,40.0%
+	 * </p>
+	 * <p>
+	 * 100万：50,10,5.0%
+	 * </p>
+	 *
+	 * @author hubin
+	 * @since 2016-08-01
+	 */
+	static class SystemClock {
+
+		private final long period;
+
+		private final AtomicLong now;
+
+		private SystemClock(long period) {
+			this.period = period;
+			this.now = new AtomicLong(System.currentTimeMillis());
+			scheduleClockUpdating();
+		}
+
+		private static SystemClock instance() {
+			return InstanceHolder.INSTANCE;
+		}
+
+		public static long now() {
+			return instance().currentTimeMillis();
+		}
+
+		private void scheduleClockUpdating() {
+			ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(runnable -> {
+				Thread thread = new Thread(runnable, "System Clock");
+				thread.setDaemon(true);
+				return thread;
+			});
+			scheduler.scheduleAtFixedRate(() -> now.set(System.currentTimeMillis()), period, period,
+					TimeUnit.MILLISECONDS);
+		}
+
+		private long currentTimeMillis() {
+			return now.get();
+		}
+
+		private static class InstanceHolder {
+
+			public static final SystemClock INSTANCE = new SystemClock(1);
+
 		}
 
 	}

@@ -62,7 +62,6 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	@Override
 	public void destroy() {
-
 	}
 
 	public static void publishEvent(ApplicationEvent event) {
