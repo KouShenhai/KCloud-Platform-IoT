@@ -150,6 +150,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 ├── laokou-service         
         └── laokou-auth                            --- 认证授权模块  
         └── laokou-admin                           --- 后台管理模块  
+        └── laokou-report                          --- 报表统计模块  
         └── laokou-generate                        --- 模板生成模块  
         └── laokou-modlule  
                 └── laokou-api                     --- API模块  

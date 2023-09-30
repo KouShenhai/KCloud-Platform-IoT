@@ -33,5 +33,6 @@
         <module>laokou-module</module>
         <module>laokou-auth</module>
         <module>laokou-generate</module>
+        <module>laokou-report</module>
     </modules>
 </project>

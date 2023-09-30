@@ -17,20 +17,26 @@
  *
  */
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>laokou-module</artifactId>
+        <artifactId>laokou-im</artifactId>
         <groupId>org.laokou</groupId>
         <version>${laokou.version}</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>laokou-im</artifactId>
-    <version>${laokou.version}</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>laokou-im-client</module>
-        <module>laokou-im-app</module>
-        <module>laokou-im-infrastructure</module>
-        <module>laokou-im-start</module>
-    </modules>
+    <artifactId>laokou-im-app</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-auth-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-im-infrastructure</artifactId>
+        </dependency>
+    </dependencies>
 </project>

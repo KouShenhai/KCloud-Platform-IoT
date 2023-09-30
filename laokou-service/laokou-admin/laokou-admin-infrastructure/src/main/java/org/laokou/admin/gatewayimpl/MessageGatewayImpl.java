@@ -43,7 +43,7 @@ import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.IdUtil;
 import org.laokou.common.rocketmq.clientobject.MqCO;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
-import org.laokou.im.client.WsMsgCO;
+import org.laokou.im.dto.message.clientobject.WsMsgCO;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
