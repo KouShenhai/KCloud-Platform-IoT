@@ -104,7 +104,7 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertTenant(TenantDO tenantDO) {
-		boolean flag = tenantMapper.insert(tenantDO) > 0;
+		boolean flag = tenantMapper.insertTable(tenantDO);
 		return flag && insertUser(tenantDO.getId());
 	}
 
@@ -128,7 +128,7 @@ public class TenantGatewayImpl implements TenantGateway {
 		userDO.setTenantId(tenantId);
 		userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
 		userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
-		return userMapper.insert(userDO) > 0;
+		return userMapper.insertTable(userDO);
 	}
 
 }

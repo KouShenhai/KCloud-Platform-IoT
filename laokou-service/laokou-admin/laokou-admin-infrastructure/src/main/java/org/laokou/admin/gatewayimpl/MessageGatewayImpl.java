@@ -115,7 +115,7 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertMessage(MessageDO messageDO, Message message, User user) {
-		boolean flag = messageMapper.insert(messageDO) > 0;
+		boolean flag = messageMapper.insertTable(messageDO);
 		return flag && insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
 	}
 

@@ -139,7 +139,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	private Boolean insertMenu(MenuDO menuDO) {
 		return transactionalUtil.execute(r -> {
 			try {
-				return menuMapper.insert(menuDO) > 0;
+				return menuMapper.insertTable(menuDO);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());

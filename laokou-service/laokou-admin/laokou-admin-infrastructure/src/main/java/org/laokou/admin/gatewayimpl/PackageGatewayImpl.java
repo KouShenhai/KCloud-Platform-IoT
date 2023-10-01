@@ -111,7 +111,7 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertPackage(PackageDO packageDO, Package pack, User user) {
-		boolean flag = packageMapper.insert(packageDO) > 0;
+		boolean flag = packageMapper.insertTable(packageDO);
 		return flag && insertPackageMenu(packageDO.getId(), pack.getMenuIds(), user);
 	}
 

@@ -42,7 +42,7 @@
 		<if test="title != null and title != ''">
 			and title like #{title}
 		</if>
-		order by create_date desc
+		order by id desc
 	</select>
 
 	<select id="getMessageByDetailId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MessageDO">

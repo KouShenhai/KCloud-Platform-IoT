@@ -59,7 +59,7 @@ public class OperateLogHandler implements ApplicationListener<OperateLogEvent> {
 
 	private void execute(OperateLogEvent event) {
 		OperateLogDO operateLogDO = ConvertUtil.sourceToTarget(event, OperateLogDO.class);
-		operateLogMapper.insert(operateLogDO);
+		operateLogMapper.insertTable(operateLogDO);
 	}
 
 }

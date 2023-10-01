@@ -115,7 +115,7 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertRole(RoleDO roleDO, Role role, User user) {
-		boolean flag = roleMapper.insert(roleDO) > 0;
+		boolean flag = roleMapper.insertTable(roleDO);
 		flag = flag && insertRoleMenu(roleDO.getId(), role.getMenuIds(), user);
 		flag = flag && insertRoleDept(roleDO.getId(), role.getDeptIds(), user);
 		return flag;

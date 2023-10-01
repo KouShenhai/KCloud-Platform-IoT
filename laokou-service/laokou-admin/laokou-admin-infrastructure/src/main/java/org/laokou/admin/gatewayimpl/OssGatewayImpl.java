@@ -118,7 +118,7 @@ public class OssGatewayImpl implements OssGateway {
 	private Boolean insertOss(OssDO ossDO) {
 		return transactionalUtil.execute(r -> {
 			try {
-				return ossMapper.insert(ossDO) > 0;
+				return ossMapper.insertTable(ossDO);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());

@@ -88,4 +88,14 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 		}
 	}
 
+	default Boolean insertTable(T t) {
+		try {
+			t.setId(IdGenerator.defaultSnowflakeId());
+			return this.insert(t) > 0;
+		}
+		catch (Exception e) {
+			return false;
+		}
+	}
+
 }

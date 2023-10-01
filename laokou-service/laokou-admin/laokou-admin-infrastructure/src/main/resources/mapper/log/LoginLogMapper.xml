@@ -21,7 +21,8 @@
 <mapper namespace="org.laokou.admin.gatewayimpl.database.LoginLogMapper">
 
     <select id="getLoginLogListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO">
-        select create_date
+        select id
+             , create_date
              , username
              , ip
              , address
@@ -40,11 +41,12 @@
         <if test="status != null">
             and `status` = #{status}
         </if>
-        order by create_date desc
+        order by id desc
     </select>
 
     <select id="resultListFilter" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO">
-        select create_date
+        select id
+        , create_date
         , username
         , ip
         , address
@@ -62,7 +64,7 @@
         <if test="param.status != null">
             and status = #{param.status}
         </if>
-        order by create_date desc
+        order by id desc
     </select>
 
 </mapper>

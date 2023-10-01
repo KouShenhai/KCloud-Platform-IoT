@@ -100,7 +100,7 @@ public class DictGatewayImpl implements DictGateway {
 	private Boolean insertDict(DictDO dictDO) {
 		return transactionalUtil.execute(r -> {
 			try {
-				return dictMapper.insert(dictDO) > 0;
+				return dictMapper.insertTable(dictDO);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
