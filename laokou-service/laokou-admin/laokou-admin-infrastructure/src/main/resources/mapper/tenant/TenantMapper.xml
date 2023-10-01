@@ -28,6 +28,6 @@
         <if test="name != null and name != ''">
             and `name` like #{name}
         </if>
-        order by create_date desc
+        order by id desc
     </select>
 </mapper>

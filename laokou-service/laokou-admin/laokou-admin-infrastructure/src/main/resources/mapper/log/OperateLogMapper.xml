@@ -45,7 +45,7 @@
         <if test="status != null">
             and status = #{status}
         </if>
-        order by create_date desc
+        order by id desc
     </select>
 
     <select id="resultListFilter" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO">
@@ -73,7 +73,7 @@
         <if test="param.status != null">
             and status = #{param.status}
         </if>
-        order by create_date desc
+        order by id desc
     </select>
 
 </mapper>

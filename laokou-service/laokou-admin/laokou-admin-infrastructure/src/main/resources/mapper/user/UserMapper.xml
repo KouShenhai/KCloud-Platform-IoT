@@ -68,7 +68,7 @@
         <if test="tenantId != null">
             and tenant_id = #{tenantId}
         </if>
-        order by create_date desc
+        order by id desc
     </select>
     <select id="getUserListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
         select id
@@ -85,7 +85,7 @@
         <if test="user.username != null and user.username != ''">
             and `username` = #{user.username}
         </if>
-        order by create_date desc
+        order by id desc
     </select>
 
 </mapper>
