@@ -107,7 +107,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	private Boolean insertSource(SourceDO sourceDO) {
 		return transactionalUtil.execute(r -> {
 			try {
-				return sourceMapper.insert(sourceDO) > 0;
+				return sourceMapper.insertTable(sourceDO);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());

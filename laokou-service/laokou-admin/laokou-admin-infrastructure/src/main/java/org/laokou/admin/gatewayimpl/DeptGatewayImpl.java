@@ -109,7 +109,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	private Boolean insertDept(DeptDO deptDO) {
 		return transactionalUtil.execute(r -> {
 			try {
-				return deptMapper.insert(deptDO) > 0;
+				return deptMapper.insertTable(deptDO);
 			}
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());

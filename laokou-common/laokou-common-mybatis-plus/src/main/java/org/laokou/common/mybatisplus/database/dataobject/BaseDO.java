@@ -54,7 +54,7 @@ public abstract class BaseDO extends DTO {
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;
 
-	@TableId(type = IdType.AUTO)
+	@TableId(type = IdType.INPUT)
 	@Schema(name = ID, description = "ID")
 	private Long id;
 
