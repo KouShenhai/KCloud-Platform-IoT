@@ -59,11 +59,13 @@ public class GlobalLockFileServiceImpl implements GlobalLockService {
 		final Collection<GlobalSession> allSessions = SessionHolder.getRootSessionManager().allSessions();
 
 		final AtomicInteger total = new AtomicInteger();
-		List<RowLock> result = allSessions.parallelStream().filter(obtainGlobalSessionPredicate(param))
-				.flatMap(globalSession -> globalSession.getBranchSessions().stream())
-				.filter(obtainBranchSessionPredicate(param))
-				.flatMap(branchSession -> filterAndMap(param, branchSession))
-				.peek(globalSession -> total.incrementAndGet()).collect(Collectors.toList());
+		List<RowLock> result = allSessions.parallelStream()
+			.filter(obtainGlobalSessionPredicate(param))
+			.flatMap(globalSession -> globalSession.getBranchSessions().stream())
+			.filter(obtainBranchSessionPredicate(param))
+			.flatMap(branchSession -> filterAndMap(param, branchSession))
+			.peek(globalSession -> total.incrementAndGet())
+			.collect(Collectors.toList());
 
 		return PageResult.build(convert(result), param.getPageNum(), param.getPageSize());
 

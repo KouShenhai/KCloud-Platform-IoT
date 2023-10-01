@@ -39,8 +39,11 @@ public class FlywaySync {
 				"kcloud_platform_alibaba_user", "user", "kcloud_platform_alibaba_login_log", "login-log",
 				"kcloud_platform_alibaba_xxl_job", "xxl-job", "kcloud_platform_alibaba_seata", "seata");
 		tableMap.forEach((k, v) -> {
-			Flyway flyway = Flyway.configure().dataSource(String.format(URL, k), USERNAME, PASSWORD)
-					.locations(new Location(v)).defaultSchema(k).load();
+			Flyway flyway = Flyway.configure()
+				.dataSource(String.format(URL, k), USERNAME, PASSWORD)
+				.locations(new Location(v))
+				.defaultSchema(k)
+				.load();
 			flyway.migrate();
 		});
 	}

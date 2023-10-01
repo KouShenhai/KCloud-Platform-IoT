@@ -148,9 +148,10 @@ public class RedisTransactionStoreManager extends AbstractTransactionStoreManage
 	public void initGlobalMap() {
 		if (CollectionUtils.isEmpty(branchMap)) {
 			globalMap = ImmutableMap.<LogOperation, Function<GlobalTransactionDO, Boolean>>builder()
-					.put(LogOperation.GLOBAL_ADD, this::insertGlobalTransactionDO)
-					.put(LogOperation.GLOBAL_UPDATE, this::updateGlobalTransactionDO)
-					.put(LogOperation.GLOBAL_REMOVE, this::deleteGlobalTransactionDO).build();
+				.put(LogOperation.GLOBAL_ADD, this::insertGlobalTransactionDO)
+				.put(LogOperation.GLOBAL_UPDATE, this::updateGlobalTransactionDO)
+				.put(LogOperation.GLOBAL_REMOVE, this::deleteGlobalTransactionDO)
+				.build();
 		}
 	}
 
@@ -161,9 +162,10 @@ public class RedisTransactionStoreManager extends AbstractTransactionStoreManage
 	public void initBranchMap() {
 		if (CollectionUtils.isEmpty(branchMap)) {
 			branchMap = ImmutableMap.<LogOperation, Function<BranchTransactionDO, Boolean>>builder()
-					.put(LogOperation.BRANCH_ADD, this::insertBranchTransactionDO)
-					.put(LogOperation.BRANCH_UPDATE, this::updateBranchTransactionDO)
-					.put(LogOperation.BRANCH_REMOVE, this::deleteBranchTransactionDO).build();
+				.put(LogOperation.BRANCH_ADD, this::insertBranchTransactionDO)
+				.put(LogOperation.BRANCH_UPDATE, this::updateBranchTransactionDO)
+				.put(LogOperation.BRANCH_REMOVE, this::deleteBranchTransactionDO)
+				.build();
 		}
 	}
 
@@ -443,8 +445,10 @@ public class RedisTransactionStoreManager extends AbstractTransactionStoreManage
 			return globalSessions;
 		}
 		int perStatusLimit = resetLogQueryLimit(targetMap);
-		final long countGlobalSessions = targetMap.values().stream()
-				.collect(Collectors.summarizingInt(Integer::intValue)).getSum();
+		final long countGlobalSessions = targetMap.values()
+			.stream()
+			.collect(Collectors.summarizingInt(Integer::intValue))
+			.getSum();
 		// queryCount
 		final long queryCount = Math.min(logQueryLimit, countGlobalSessions);
 		List<List<String>> list = new ArrayList<>();
@@ -469,8 +473,10 @@ public class RedisTransactionStoreManager extends AbstractTransactionStoreManage
 		if (targetMap.size() == 0 || logQueryLimit <= 0) {
 			return list;
 		}
-		final long countGlobalSessions = targetMap.values().stream()
-				.collect(Collectors.summarizingInt(Integer::intValue)).getSum();
+		final long countGlobalSessions = targetMap.values()
+			.stream()
+			.collect(Collectors.summarizingInt(Integer::intValue))
+			.getSum();
 		// queryCount
 		final long queryCount = Math.min(logQueryLimit, countGlobalSessions);
 		try (Jedis jedis = JedisPooledFactory.getJedisInstance()) {

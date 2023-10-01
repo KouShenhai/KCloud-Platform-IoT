@@ -63,8 +63,9 @@ public class RocketMqTemplate implements InitializingBean {
 	 */
 	public boolean sendSyncMessage(String topic, MqCO co, long timeout, int delayLevel) {
 		Message<MqCO> payload = MessageBuilder.withPayload(co).build();
-		return rocketMQTemplate.syncSend(topic, payload, timeout, delayLevel).getSendStatus()
-				.equals(SendStatus.SEND_OK);
+		return rocketMQTemplate.syncSend(topic, payload, timeout, delayLevel)
+			.getSendStatus()
+			.equals(SendStatus.SEND_OK);
 	}
 
 	/**
@@ -202,10 +203,12 @@ public class RocketMqTemplate implements InitializingBean {
 	 * @return
 	 */
 	public boolean sendTransactionMessage(String topic, MqCO co, String transactionId) {
-		Message<MqCO> message = MessageBuilder.withPayload(co).setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
-				.build();
-		return rocketMQTemplate.sendMessageInTransaction(topic, message, null).getSendStatus()
-				.equals(SendStatus.SEND_OK);
+		Message<MqCO> message = MessageBuilder.withPayload(co)
+			.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
+			.build();
+		return rocketMQTemplate.sendMessageInTransaction(topic, message, null)
+			.getSendStatus()
+			.equals(SendStatus.SEND_OK);
 	}
 
 	/**

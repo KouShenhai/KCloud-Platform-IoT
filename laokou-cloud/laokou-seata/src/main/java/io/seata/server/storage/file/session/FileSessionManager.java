@@ -60,7 +60,7 @@ import static io.seata.common.DefaultValues.DEFAULT_SERVICE_SESSION_RELOAD_READ_
 public class FileSessionManager extends AbstractSessionManager implements Reloadable {
 
 	private static final int READ_SIZE = ConfigurationFactory.getInstance()
-			.getInt(ConfigurationKeys.SERVICE_SESSION_RELOAD_READ_SIZE, DEFAULT_SERVICE_SESSION_RELOAD_READ_SIZE);
+		.getInt(ConfigurationKeys.SERVICE_SESSION_RELOAD_READ_SIZE, DEFAULT_SERVICE_SESSION_RELOAD_READ_SIZE);
 
 	/**
 	 * The Session map.
@@ -330,7 +330,7 @@ public class FileSessionManager extends AbstractSessionManager implements Reload
 					GlobalSession foundGlobalSession = sessionMap.get(branchSession.getXid());
 					if (foundGlobalSession == null) {
 						unhandledBranchBuffer.computeIfAbsent(branchSession.getXid(), key -> new HashMap<>())
-								.put(branchSession.getBranchId(), branchSession);
+							.put(branchSession.getBranchId(), branchSession);
 					}
 					else {
 						BranchSession existingBranch = foundGlobalSession.getBranch(branchSession.getBranchId());

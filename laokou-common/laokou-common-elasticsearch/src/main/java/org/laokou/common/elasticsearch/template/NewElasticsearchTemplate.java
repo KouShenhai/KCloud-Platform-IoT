@@ -652,8 +652,10 @@ public class NewElasticsearchTemplate {
 			log.error("索引【{}】已存在，创建失败", indexName);
 			return;
 		}
-		elasticsearchClient.indices().create(request -> request.index(indexName)
-				.aliases(indexAlias, fn -> fn.isWriteIndex(true)).mappings(getMapping(clazz)));
+		elasticsearchClient.indices()
+			.create(request -> request.index(indexName)
+				.aliases(indexAlias, fn -> fn.isWriteIndex(true))
+				.mappings(getMapping(clazz)));
 	}
 
 	private <TDocument> TypeMapping getMapping(Class<TDocument> clazz) {

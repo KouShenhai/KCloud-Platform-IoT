@@ -54,7 +54,7 @@ public class LogoutCmdExe {
 			return Result.of(true);
 		}
 		User user = (User) ((UsernamePasswordAuthenticationToken) Objects
-				.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
+			.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
 		if (user == null) {
 			return Result.of(true);
 		}

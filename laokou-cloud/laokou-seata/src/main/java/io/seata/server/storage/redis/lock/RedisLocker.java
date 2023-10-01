@@ -150,8 +150,9 @@ public class RedisLocker extends AbstractLocker {
 		Long branchId = rowLocks.get(0).getBranchId();
 		List<LockDO> needLockDOS = convertToLockDO(rowLocks);
 		if (needLockDOS.size() > 1) {
-			needLockDOS = needLockDOS.stream().filter(LambdaUtils.distinctByKey(LockDO::getRowKey))
-					.collect(Collectors.toList());
+			needLockDOS = needLockDOS.stream()
+				.filter(LambdaUtils.distinctByKey(LockDO::getRowKey))
+				.collect(Collectors.toList());
 		}
 		List<String> needLockKeys = new ArrayList<>();
 		needLockDOS.forEach(lockDO -> needLockKeys.add(buildLockKey(lockDO.getRowKey())));
@@ -178,8 +179,9 @@ public class RedisLocker extends AbstractLocker {
 			// Therefore, if a global lock is found in the Rollbacking state,
 			// the fail-fast code is returned directly.
 			if (!autoCommit) {
-				boolean hasRollBackingLock = existedLockInfos.parallelStream().anyMatch(
-						result -> StringUtils.equals(result.get(1), String.valueOf(LockStatus.Rollbacking.getCode())));
+				boolean hasRollBackingLock = existedLockInfos.parallelStream()
+					.anyMatch(result -> StringUtils.equals(result.get(1),
+							String.valueOf(LockStatus.Rollbacking.getCode())));
 				if (hasRollBackingLock) {
 					throw new StoreException(new BranchTransactionException(LockKeyConflictFailFast));
 				}
@@ -250,8 +252,10 @@ public class RedisLocker extends AbstractLocker {
 	private boolean acquireLockByLua(Jedis jedis, List<RowLock> rowLocks) {
 		String needLockXid = rowLocks.get(0).getXid();
 		Long branchId = rowLocks.get(0).getBranchId();
-		List<LockDO> needLockDOs = rowLocks.stream().map(this::convertToLockDO)
-				.filter(LambdaUtils.distinctByKey(LockDO::getRowKey)).collect(Collectors.toList());
+		List<LockDO> needLockDOs = rowLocks.stream()
+			.map(this::convertToLockDO)
+			.filter(LambdaUtils.distinctByKey(LockDO::getRowKey))
+			.collect(Collectors.toList());
 		ArrayList<String> keys = new ArrayList<>();
 		ArrayList<String> args = new ArrayList<>();
 		int size = needLockDOs.size();
@@ -354,7 +358,7 @@ public class RedisLocker extends AbstractLocker {
 			if (CollectionUtils.isNotEmpty(branchAndLockKeys)) {
 				try (Pipeline pipeline = jedis.pipelined()) {
 					branchAndLockKeys.values()
-							.forEach(k -> pipeline.hset(k, STATUS, String.valueOf(lockStatus.getCode())));
+						.forEach(k -> pipeline.hset(k, STATUS, String.valueOf(lockStatus.getCode())));
 					pipeline.sync();
 				}
 			}

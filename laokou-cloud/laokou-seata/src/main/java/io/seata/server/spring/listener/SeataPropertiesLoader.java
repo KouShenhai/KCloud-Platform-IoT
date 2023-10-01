@@ -57,7 +57,7 @@ public class SeataPropertiesLoader implements ApplicationContextInitializer<Conf
 		if (CollectionUtils.isNotEmpty(configs)) {
 			Optional<FileConfiguration> originFileInstance = ConfigurationFactory.getOriginFileInstance();
 			originFileInstance
-					.ifPresent(fileConfiguration -> configs.putAll(fileConfiguration.getFileConfig().getAllConfig()));
+				.ifPresent(fileConfiguration -> configs.putAll(fileConfiguration.getFileConfig().getAllConfig()));
 			Properties properties = new Properties();
 			configs.forEach((k, v) -> {
 				if (v instanceof String) {

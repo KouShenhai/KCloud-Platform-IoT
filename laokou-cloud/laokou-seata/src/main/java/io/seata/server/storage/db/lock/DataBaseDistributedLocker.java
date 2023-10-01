@@ -239,8 +239,9 @@ public class DataBaseDistributedLocker implements DistributedLocker {
 	}
 
 	protected DistributedLockDO getDistributedLockDO(Connection connection, String key) throws SQLException {
-		try (PreparedStatement pst = connection.prepareStatement(DistributedLockSqlFactory
-				.getDistributedLogStoreSql(dbType).getSelectDistributeForUpdateSql(distributedLockTable))) {
+		try (PreparedStatement pst = connection
+			.prepareStatement(DistributedLockSqlFactory.getDistributedLogStoreSql(dbType)
+				.getSelectDistributeForUpdateSql(distributedLockTable))) {
 
 			pst.setString(1, key);
 			ResultSet resultSet = pst.executeQuery();

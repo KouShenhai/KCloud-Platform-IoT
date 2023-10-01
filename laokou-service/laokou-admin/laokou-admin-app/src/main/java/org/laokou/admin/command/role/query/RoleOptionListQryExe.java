@@ -41,8 +41,10 @@ public class RoleOptionListQryExe {
 	private final RoleMapper roleMapper;
 
 	public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
-		List<RoleDO> list = roleMapper.selectList(Wrappers.query(RoleDO.class).eq("tenant_id", UserUtil.getTenantId())
-				.select("id", "name").orderByDesc("sort"));
+		List<RoleDO> list = roleMapper.selectList(Wrappers.query(RoleDO.class)
+			.eq("tenant_id", UserUtil.getTenantId())
+			.select("id", "name")
+			.orderByDesc("sort"));
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}

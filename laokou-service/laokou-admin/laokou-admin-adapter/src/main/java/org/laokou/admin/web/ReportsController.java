@@ -33,11 +33,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("v1/reports")
 public class ReportsController {
 
-    private final RemoteMapper remoteMapper;
+	private final RemoteMapper remoteMapper;
 
-    @GetMapping
-    public void test() {
-        remoteMapper.test();
-    }
+	@GetMapping
+	public void test() {
+		remoteMapper.test();
+	}
 
 }

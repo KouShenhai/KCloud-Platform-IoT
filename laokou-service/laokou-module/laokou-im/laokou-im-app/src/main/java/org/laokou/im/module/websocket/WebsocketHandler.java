@@ -66,8 +66,10 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	public static final Cache<String, Channel> USER_CACHE;
 
 	static {
-		USER_CACHE = Caffeine.newBuilder().expireAfterAccess(RedisUtil.HOUR_ONE_EXPIRE, TimeUnit.SECONDS)
-				.initialCapacity(100).build();
+		USER_CACHE = Caffeine.newBuilder()
+			.expireAfterAccess(RedisUtil.HOUR_ONE_EXPIRE, TimeUnit.SECONDS)
+			.initialCapacity(100)
+			.build();
 	}
 
 	@Override

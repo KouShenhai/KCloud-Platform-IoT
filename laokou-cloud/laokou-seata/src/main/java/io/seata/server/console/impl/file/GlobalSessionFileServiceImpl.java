@@ -53,8 +53,9 @@ public class GlobalSessionFileServiceImpl implements GlobalSessionService {
 
 		final Collection<GlobalSession> allSessions = SessionHolder.getRootSessionManager().allSessions();
 
-		final List<GlobalSession> filteredSessions = allSessions.parallelStream().filter(obtainPredicate(param))
-				.collect(Collectors.toList());
+		final List<GlobalSession> filteredSessions = allSessions.parallelStream()
+			.filter(obtainPredicate(param))
+			.collect(Collectors.toList());
 
 		return PageResult.build(SessionConverter.convertGlobalSession(filteredSessions), param.getPageNum(),
 				param.getPageSize());

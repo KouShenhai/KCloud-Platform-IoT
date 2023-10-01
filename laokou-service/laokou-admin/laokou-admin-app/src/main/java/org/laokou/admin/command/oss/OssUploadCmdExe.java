@@ -77,8 +77,8 @@ public class OssUploadCmdExe {
 		if (ossLogDO != null) {
 			return new FileCO(ossLogDO.getUrl(), md5);
 		}
-		String url = storageFactory.build(UserUtil.getTenantId()).upload(limitRead, fileSize, fileName,
-				new ByteArrayInputStream(bos.toByteArray()), contentType);
+		String url = storageFactory.build(UserUtil.getTenantId())
+			.upload(limitRead, fileSize, fileName, new ByteArrayInputStream(bos.toByteArray()), contentType);
 		after(new OssLog(md5, url, fileName, fileSize));
 		return new FileCO(url, md5);
 	}

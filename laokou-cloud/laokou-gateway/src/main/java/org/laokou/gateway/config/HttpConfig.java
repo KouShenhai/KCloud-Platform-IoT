@@ -57,10 +57,11 @@ public class HttpConfig {
 		 * https://github.com/reactor/reactor-netty/issues/1318#issuecomment-702668918
 		 */
 		ConnectionProvider connectionProvider = ConnectionProvider.builder("connectionProvider")
-				.maxIdleTime(Duration.ofSeconds(10)).build();
+			.maxIdleTime(Duration.ofSeconds(10))
+			.build();
 		HttpClient httpClient = HttpClient.create(connectionProvider)
-				.wiretap("reactor.netty.http.client.HttpClient", LogLevel.DEBUG, AdvancedByteBufFormat.TEXTUAL)
-				.responseTimeout(Duration.of(5, ChronoUnit.SECONDS));
+			.wiretap("reactor.netty.http.client.HttpClient", LogLevel.DEBUG, AdvancedByteBufFormat.TEXTUAL)
+			.responseTimeout(Duration.of(5, ChronoUnit.SECONDS));
 		return WebClient.builder().clientConnector(new ReactorClientHttpConnector(httpClient)).build();
 	}
 

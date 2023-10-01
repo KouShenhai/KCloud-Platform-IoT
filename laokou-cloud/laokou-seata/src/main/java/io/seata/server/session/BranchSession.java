@@ -46,7 +46,7 @@ public class BranchSession implements Lockable, Comparable<BranchSession>, Sessi
 	private static final int MAX_BRANCH_SESSION_SIZE = StoreConfig.getMaxBranchSessionSize();
 
 	private static ThreadLocal<ByteBuffer> byteBufferThreadLocal = ThreadLocal
-			.withInitial(() -> ByteBuffer.allocate(MAX_BRANCH_SESSION_SIZE));
+		.withInitial(() -> ByteBuffer.allocate(MAX_BRANCH_SESSION_SIZE));
 
 	private String xid;
 

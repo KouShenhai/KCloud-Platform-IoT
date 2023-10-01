@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package org.laokou.common.prometheus.config.auto;
 
@@ -34,8 +34,8 @@ public class PrometheusAutoConfig {
 
 	@Bean
 	MeterRegistryCustomizer<MeterRegistry> configurer() {
-		return (registry) -> registry.config().commonTags("application",
-				environment.getProperty("spring.application.name"));
+		return (registry) -> registry.config()
+			.commonTags("application", environment.getProperty("spring.application.name"));
 	}
 
 }

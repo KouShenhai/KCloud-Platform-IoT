@@ -134,7 +134,7 @@ public class LogStoreDataBaseDAO implements LogStore {
 	@Override
 	public GlobalTransactionDO queryGlobalTransactionDO(long transactionId) {
 		String sql = LogStoreSqlsFactory.getLogStoreSqls(dbType)
-				.getQueryGlobalTransactionSQLByTransactionId(globalTable);
+			.getQueryGlobalTransactionSQLByTransactionId(globalTable);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -171,8 +171,8 @@ public class LogStoreDataBaseDAO implements LogStore {
 
 			String paramsPlaceHolder = org.apache.commons.lang.StringUtils.repeat("?", ",", statuses.length);
 
-			String sql = LogStoreSqlsFactory.getLogStoreSqls(dbType).getQueryGlobalTransactionSQLByStatus(globalTable,
-					paramsPlaceHolder);
+			String sql = LogStoreSqlsFactory.getLogStoreSqls(dbType)
+				.getQueryGlobalTransactionSQLByStatus(globalTable, paramsPlaceHolder);
 			ps = conn.prepareStatement(sql);
 			for (int i = 0; i < statuses.length; i++) {
 				int status = statuses[i];
@@ -301,8 +301,8 @@ public class LogStoreDataBaseDAO implements LogStore {
 		int length = xids.size();
 		List<BranchTransactionDO> rets = new ArrayList<>(length * 3);
 		String paramsPlaceHolder = org.apache.commons.lang.StringUtils.repeat("?", ",", length);
-		String sql = LogStoreSqlsFactory.getLogStoreSqls(dbType).getQueryBranchTransaction(branchTable,
-				paramsPlaceHolder);
+		String sql = LogStoreSqlsFactory.getLogStoreSqls(dbType)
+			.getQueryBranchTransaction(branchTable, paramsPlaceHolder);
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -452,8 +452,8 @@ public class LogStoreDataBaseDAO implements LogStore {
 		globalTransactionDO.setTimeout(rs.getInt(ServerTableColumnsName.GLOBAL_TABLE_TIMEOUT));
 		globalTransactionDO.setTransactionId(rs.getLong(ServerTableColumnsName.GLOBAL_TABLE_TRANSACTION_ID));
 		globalTransactionDO.setTransactionName(rs.getString(ServerTableColumnsName.GLOBAL_TABLE_TRANSACTION_NAME));
-		globalTransactionDO.setTransactionServiceGroup(
-				rs.getString(ServerTableColumnsName.GLOBAL_TABLE_TRANSACTION_SERVICE_GROUP));
+		globalTransactionDO
+			.setTransactionServiceGroup(rs.getString(ServerTableColumnsName.GLOBAL_TABLE_TRANSACTION_SERVICE_GROUP));
 		globalTransactionDO.setApplicationData(rs.getString(ServerTableColumnsName.GLOBAL_TABLE_APPLICATION_DATA));
 		globalTransactionDO.setGmtCreate(rs.getTimestamp(ServerTableColumnsName.GLOBAL_TABLE_GMT_CREATE));
 		globalTransactionDO.setGmtModified(rs.getTimestamp(ServerTableColumnsName.GLOBAL_TABLE_GMT_MODIFIED));

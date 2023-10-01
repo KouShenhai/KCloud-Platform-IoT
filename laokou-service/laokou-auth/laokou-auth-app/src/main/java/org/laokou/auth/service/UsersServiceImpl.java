@@ -126,7 +126,7 @@ public class UsersServiceImpl implements UserDetailsService {
 			deptPath = user.getDeptPath();
 		}
 		loginLogGateway
-				.publish(new LoginLog(userId, username, type, tenantId, FAIL_STATUS, message, ip, deptId, deptPath));
+			.publish(new LoginLog(userId, username, type, tenantId, FAIL_STATUS, message, ip, deptId, deptPath));
 		throw new UsernameNotFoundException(message);
 	}
 

@@ -87,9 +87,12 @@ public class AmazonS3StorageService extends AbstractStorageService<AmazonS3> {
 				endpoint, region);
 		AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
 		AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(awsCredentials);
-		return AmazonS3Client.builder().withEndpointConfiguration(endpointConfiguration)
-				.withClientConfiguration(clientConfiguration).withCredentials(awsCredentialsProvider)
-				.withPathStyleAccessEnabled(pathStyleAccessEnabled).build();
+		return AmazonS3Client.builder()
+			.withEndpointConfiguration(endpointConfiguration)
+			.withClientConfiguration(clientConfiguration)
+			.withCredentials(awsCredentialsProvider)
+			.withPathStyleAccessEnabled(pathStyleAccessEnabled)
+			.build();
 	}
 
 }

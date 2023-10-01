@@ -278,7 +278,7 @@ public class FileTransactionStoreManager extends AbstractTransactionStoreManager
 
 	private boolean findTimeoutAndSave() throws IOException {
 		List<GlobalSession> globalSessionsOverMaxTimeout = sessionManager
-				.findGlobalSessions(new SessionCondition(MAX_TRX_TIMEOUT_MILLS));
+			.findGlobalSessions(new SessionCondition(MAX_TRX_TIMEOUT_MILLS));
 		if (CollectionUtils.isEmpty(globalSessionsOverMaxTimeout)) {
 			return true;
 		}

@@ -80,9 +80,9 @@ public class GeneratorMain {
 
 		FastAutoGenerator.create(URL, USERNAME, PASSWORD).globalConfig(builder -> {
 			builder.author("laokou") // 设置作者
-					// .enableSwagger() // 开启 swagger 模式
-					.enableSpringdoc() // 开启 springdoc 模式
-					.outputDir(GENERATOR_PATH); // 指定输出目录
+				// .enableSwagger() // 开启 swagger 模式
+				.enableSpringdoc() // 开启 springdoc 模式
+				.outputDir(GENERATOR_PATH); // 指定输出目录
 		}).dataSourceConfig(builder -> builder.typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {
 			// 自定义类型转换
 			if (metaInfo.getJdbcType() == SMALLINT) {
@@ -97,53 +97,71 @@ public class GeneratorMain {
 			return typeRegistry.getColumnType(metaInfo);
 		})).packageConfig(builder -> {
 			builder.parent(PACKAGE_PATH) // 设置父包名
-					.moduleName(MODULE_NAME) // 设置模块名
-					// .entity("entity")
-					.pathInfo(Collections.singletonMap(OutputFile.xml, MODULE_NAME + File.separator + "xml")); // 设置mapperXml生成路径
+				.moduleName(MODULE_NAME) // 设置模块名
+				// .entity("entity")
+				.pathInfo(Collections.singletonMap(OutputFile.xml, MODULE_NAME + File.separator + "xml")); // 设置mapperXml生成路径
 		}).strategyConfig(builder -> {
 			builder.addInclude(TABLES) // 设置需要生成的表名
-					.addTablePrefix("act_", "flw_", "oauth2_", "boot_", "t_") // 设置过滤表前缀
-					.serviceBuilder() // service策略配置
-					.formatServiceFileName("%sService").formatServiceImplFileName("%sServiceImpl").enableFileOverride()
-					.entityBuilder() // 实体类策略配置
-					.formatFileName("%sDO").enableFileOverride()
-					// .idType(IdType.ASSIGN_ID)//主键策略 雪花算法自动生成的id
-					// .addTableFills(new Column("create_date", FieldFill.INSERT)) //
-					// 自动填充配置
-					// .addTableFills(new Property("update_date",
-					// FieldFill.INSERT_UPDATE))
-					.superClass(BaseDO.class)
-					.addSuperEntityColumns("id", "creator", "editor", "create_date", "update_date", "del_flag",
-							"version")
-					.enableLombok() // 开启lombok
-					.logicDeleteColumnName("delFlag")// 说明逻辑删除是哪个字段
-					.enableTableFieldAnnotation()// 属性加上注解说明
-					.controllerBuilder() // controller 策略配置
-					.formatFileName("%sController").enableRestStyle() // 开启RestController注解
-					.enableFileOverride().mapperBuilder()// mapper策略配置
-					.formatMapperFileName("%sMapper").enableMapperAnnotation()// @mapper注解开启
-					.formatXmlFileName("%sMapper").superClass(BatchMapper.class).enableFileOverride();
+				.addTablePrefix("act_", "flw_", "oauth2_", "boot_", "t_") // 设置过滤表前缀
+				.serviceBuilder() // service策略配置
+				.formatServiceFileName("%sService")
+				.formatServiceImplFileName("%sServiceImpl")
+				.enableFileOverride()
+				.entityBuilder() // 实体类策略配置
+				.formatFileName("%sDO")
+				.enableFileOverride()
+				// .idType(IdType.ASSIGN_ID)//主键策略 雪花算法自动生成的id
+				// .addTableFills(new Column("create_date", FieldFill.INSERT)) //
+				// 自动填充配置
+				// .addTableFills(new Property("update_date",
+				// FieldFill.INSERT_UPDATE))
+				.superClass(BaseDO.class)
+				.addSuperEntityColumns("id", "creator", "editor", "create_date", "update_date", "del_flag", "version")
+				.enableLombok() // 开启lombok
+				.logicDeleteColumnName("delFlag")// 说明逻辑删除是哪个字段
+				.enableTableFieldAnnotation()// 属性加上注解说明
+				.controllerBuilder() // controller 策略配置
+				.formatFileName("%sController")
+				.enableRestStyle() // 开启RestController注解
+				.enableFileOverride()
+				.mapperBuilder()// mapper策略配置
+				.formatMapperFileName("%sMapper")
+				.enableMapperAnnotation()// @mapper注解开启
+				.formatXmlFileName("%sMapper")
+				.superClass(BatchMapper.class)
+				.enableFileOverride();
 		}).templateConfig(builder -> {
-			builder.entity("/templates/mybatisplus/entity.java").mapper("/templates/mybatisplus/mapper.java")
-					.xml("/templates/mybatisplus/mapper.xml").service("/templates/mybatisplus/service.java")
-					.serviceImpl("/templates/mybatisplus/serviceImpl.java")
-					.controller("/templates/mybatisplus/controller.java");
+			builder.entity("/templates/mybatisplus/entity.java")
+				.mapper("/templates/mybatisplus/mapper.java")
+				.xml("/templates/mybatisplus/mapper.xml")
+				.service("/templates/mybatisplus/service.java")
+				.serviceImpl("/templates/mybatisplus/serviceImpl.java")
+				.controller("/templates/mybatisplus/controller.java");
 		}).injectionConfig(builder -> {
 			List<CustomFile> customFiles = new ArrayList<>();
 
 			customFiles.add(new CustomFile.Builder().fileName("Qo.java")
-					.templatePath("/templates/mybatisplus/qo.java.ftl").enableFileOverride().build());
+				.templatePath("/templates/mybatisplus/qo.java.ftl")
+				.enableFileOverride()
+				.build());
 			customFiles.add(new CustomFile.Builder().fileName("VO.java")
-					.templatePath("/templates/mybatisplus/vo.java.ftl").enableFileOverride().build());
+				.templatePath("/templates/mybatisplus/vo.java.ftl")
+				.enableFileOverride()
+				.build());
 			customFiles.add(new CustomFile.Builder().fileName("DTO.java")
-					.templatePath("/templates/mybatisplus/dto.java.ftl").enableFileOverride().build());
+				.templatePath("/templates/mybatisplus/dto.java.ftl")
+				.enableFileOverride()
+				.build());
 			customFiles.add(new CustomFile.Builder().fileName("Excel.java")
-					.templatePath("/templates/mybatisplus/excel.java.ftl").enableFileOverride().build());
+				.templatePath("/templates/mybatisplus/excel.java.ftl")
+				.enableFileOverride()
+				.build());
 
 			builder.customFile(customFiles);
 		})
-				// 使用Freemarker引擎模板，默认的是Velocity引擎模板
-				.templateEngine(new EnhanceFreemarkerTemplateEngine()).execute();
+			// 使用Freemarker引擎模板，默认的是Velocity引擎模板
+			.templateEngine(new EnhanceFreemarkerTemplateEngine())
+			.execute();
 	}
 
 }

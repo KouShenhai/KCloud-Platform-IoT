@@ -58,6 +58,7 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 * @param pageQuery
 	 * @return
 	 */
-	IPage<UserDO> getUserListFilter(IPage<UserDO> page, @Param("user") UserDO userDO, @Param(PAGE_QUERY)PageQuery pageQuery);
+	IPage<UserDO> getUserListFilter(IPage<UserDO> page, @Param("user") UserDO userDO,
+			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

@@ -64,21 +64,24 @@ public class OAuth2ResourceServerAutoConfig {
 			ForbiddenExceptionHandler forbiddenExceptionHandler, OAuth2ResourceServerProperties properties,
 			HttpSecurity http) throws Exception {
 		OAuth2ResourceServerProperties.RequestMatcher requestMatcher = Optional
-				.ofNullable(properties.getRequestMatcher())
-				.orElseGet(OAuth2ResourceServerProperties.RequestMatcher::new);
+			.ofNullable(properties.getRequestMatcher())
+			.orElseGet(OAuth2ResourceServerProperties.RequestMatcher::new);
 		Set<String> patterns = Optional.ofNullable(requestMatcher.getPatterns()).orElseGet(HashSet::new);
-		return http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable)
-				// 基于token，关闭session
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(request -> request.requestMatchers(patterns.toArray(String[]::new)).permitAll()
-						.anyRequest().authenticated())
-				// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
-				// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
-				.oauth2ResourceServer(
-						oauth2 -> oauth2.opaqueToken(token -> token.introspector(globalOpaqueTokenIntrospector))
-								.accessDeniedHandler(forbiddenExceptionHandler)
-								.authenticationEntryPoint(invalidAuthenticationEntryPoint))
-				.build();
+		return http.csrf(AbstractHttpConfigurer::disable)
+			.cors(AbstractHttpConfigurer::disable)
+			// 基于token，关闭session
+			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+			.authorizeHttpRequests(request -> request.requestMatchers(patterns.toArray(String[]::new))
+				.permitAll()
+				.anyRequest()
+				.authenticated())
+			// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
+			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
+			.oauth2ResourceServer(
+					oauth2 -> oauth2.opaqueToken(token -> token.introspector(globalOpaqueTokenIntrospector))
+						.accessDeniedHandler(forbiddenExceptionHandler)
+						.authenticationEntryPoint(invalidAuthenticationEntryPoint))
+			.build();
 	}
 
 }

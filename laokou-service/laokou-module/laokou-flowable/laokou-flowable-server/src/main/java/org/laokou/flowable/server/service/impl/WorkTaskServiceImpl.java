@@ -134,7 +134,9 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 		String businessKey = dto.getBusinessKey();
 		String businessName = dto.getBusinessName();
 		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-				.processDefinitionKey(processKey).latestVersion().singleResult();
+			.processDefinitionKey(processKey)
+			.latestVersion()
+			.singleResult();
 		if (processDefinition == null) {
 			throw new GlobalException("流程未定义");
 		}
@@ -215,23 +217,29 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 		String processDefinitionId;
 		// 获取当前的流程实例
 		final ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
-				.processInstanceId(processInstanceId).singleResult();
+			.processInstanceId(processInstanceId)
+			.singleResult();
 		// 如果流程已结束，则得到结束节点
 		if (null == processInstance) {
 			final HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery()
-					.processInstanceId(processInstanceId).singleResult();
+				.processInstanceId(processInstanceId)
+				.singleResult();
 			processDefinitionId = hpi.getProcessDefinitionId();
 		}
 		else {
 			// 没有结束，获取当前活动节点
 			// 根据流程实例id获取当前处于ActivityId集合
-			final ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId)
-					.singleResult();
+			final ProcessInstance pi = runtimeService.createProcessInstanceQuery()
+				.processInstanceId(processInstanceId)
+				.singleResult();
 			processDefinitionId = pi.getProcessDefinitionId();
 		}
 		// 获取活动节点
 		final List<HistoricActivityInstance> highLightedFlowList = historyService.createHistoricActivityInstanceQuery()
-				.processInstanceId(processInstanceId).orderByHistoricActivityInstanceStartTime().asc().list();
+			.processInstanceId(processInstanceId)
+			.orderByHistoricActivityInstanceStartTime()
+			.asc()
+			.list();
 		List<String> highLightedFlows = new ArrayList<>(5);
 		List<String> highLightedNodes = new ArrayList<>(5);
 		// 高亮线

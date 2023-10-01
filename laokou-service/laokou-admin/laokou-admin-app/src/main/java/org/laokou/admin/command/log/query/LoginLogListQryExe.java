@@ -40,8 +40,7 @@ public class LoginLogListQryExe {
 
 	public Result<Datas<LoginLogCO>> execute(LoginLogListQry qry) {
 		LoginLog loginLog = ConvertUtil.sourceToTarget(qry, LoginLog.class);
-		Datas<LoginLog> newPage = logGateway.loginList(loginLog, new User(UserUtil.getTenantId()),
-				qry);
+		Datas<LoginLog> newPage = logGateway.loginList(loginLog, new User(UserUtil.getTenantId()), qry);
 		Datas<LoginLogCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), LoginLogCO.class));

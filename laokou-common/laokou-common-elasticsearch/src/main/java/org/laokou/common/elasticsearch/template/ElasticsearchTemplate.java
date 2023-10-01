@@ -463,8 +463,8 @@ public class ElasticsearchTemplate {
 		// 删除操作Request
 		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(indexName);
 		deleteIndexRequest.indicesOptions(IndicesOptions.LENIENT_EXPAND_OPEN);
-		AcknowledgedResponse acknowledgedResponse = restHighLevelClient.indices().delete(deleteIndexRequest,
-				RequestOptions.DEFAULT);
+		AcknowledgedResponse acknowledgedResponse = restHighLevelClient.indices()
+			.delete(deleteIndexRequest, RequestOptions.DEFAULT);
 		if (!acknowledgedResponse.isAcknowledged()) {
 			log.error("索引【{}】删除失败", indexName);
 			return false;
@@ -710,8 +710,8 @@ public class ElasticsearchTemplate {
 		// 封装es索引的mapping
 		CreateIndexRequest createIndexRequest = getCreateIndexRequest(indexName, indexAlias, fieldMappingList);
 		// 同步方式创建索引
-		CreateIndexResponse createIndexResponse = restHighLevelClient.indices().create(createIndexRequest,
-				RequestOptions.DEFAULT);
+		CreateIndexResponse createIndexResponse = restHighLevelClient.indices()
+			.create(createIndexRequest, RequestOptions.DEFAULT);
 		boolean acknowledged = createIndexResponse.isAcknowledged();
 		if (acknowledged) {
 			log.info("索引:{}创建成功", indexName);
@@ -731,8 +731,11 @@ public class ElasticsearchTemplate {
 	 * @throws IOException IOException
 	 */
 	private XContentBuilder packEsAliases(String alias) throws IOException {
-		XContentBuilder aliases = XContentFactory.jsonBuilder().startObject().startObject(alias)
-				.field("is_write_index", false).endObject();
+		XContentBuilder aliases = XContentFactory.jsonBuilder()
+			.startObject()
+			.startObject(alias)
+			.field("is_write_index", false)
+			.endObject();
 		aliases.endObject();
 		aliases.close();
 		return aliases;
@@ -745,8 +748,10 @@ public class ElasticsearchTemplate {
 	 * @throws IOException IOException
 	 */
 	private XContentBuilder packEsMapping(List<FieldMapping> fieldMappingList) throws IOException {
-		XContentBuilder mapping = XContentFactory.jsonBuilder().startObject().field("dynamic", true)
-				.startObject("properties");
+		XContentBuilder mapping = XContentFactory.jsonBuilder()
+			.startObject()
+			.field("dynamic", true)
+			.startObject("properties");
 		// 循环实体对象的类型集合封装ES的Mapping
 		for (FieldMapping fieldMapping : fieldMappingList) {
 			String field = fieldMapping.getField();
@@ -755,18 +760,24 @@ public class ElasticsearchTemplate {
 			// 设置分词规则
 			if (EsConstant.NOT_ANALYZED.equals(participle)) {
 				if ("date".equals(dataType)) {
-					mapping.startObject(field).field("type", dataType)
-							.field("format", "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis").endObject();
+					mapping.startObject(field)
+						.field("type", dataType)
+						.field("format", "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis")
+						.endObject();
 				}
 				else {
 					mapping.startObject(field).field("type", dataType).endObject();
 				}
 			}
 			else if (EsConstant.IK_INDEX.equals(participle)) {
-				mapping.startObject(field).field("type", dataType).field("eager_global_ordinals", true)
-						// fielddata=true 用来解决text字段不能进行聚合操作
-						.field("fielddata", true).field("analyzer", "ik_pinyin").field("search_analyzer", "ik_max_word")
-						.endObject();
+				mapping.startObject(field)
+					.field("type", dataType)
+					.field("eager_global_ordinals", true)
+					// fielddata=true 用来解决text字段不能进行聚合操作
+					.field("fielddata", true)
+					.field("analyzer", "ik_pinyin")
+					.field("search_analyzer", "ik_max_word")
+					.endObject();
 			}
 		}
 		return mapping;
@@ -778,23 +789,35 @@ public class ElasticsearchTemplate {
 	 * @throws IOException IOException
 	 */
 	private XContentBuilder packSettingMapping() throws IOException {
-		XContentBuilder setting = XContentFactory.jsonBuilder().startObject().startObject("index")
-				.field("number_of_shards", 1).field("number_of_replicas", 1).field("refresh_interval", "30s")
-				.startObject("analysis");
+		XContentBuilder setting = XContentFactory.jsonBuilder()
+			.startObject()
+			.startObject("index")
+			.field("number_of_shards", 1)
+			.field("number_of_replicas", 1)
+			.field("refresh_interval", "30s")
+			.startObject("analysis");
 		// ik分词拼音
-		setting.startObject("analyzer").startObject("ik_pinyin").field("tokenizer", "ik_max_word")
-				.field("filter", "laokou_pinyin").endObject();
+		setting.startObject("analyzer")
+			.startObject("ik_pinyin")
+			.field("tokenizer", "ik_max_word")
+			.field("filter", "laokou_pinyin")
+			.endObject();
 		setting.endObject();
 		// 设置拼音分词器分词
-		setting.startObject("filter").startObject("laokou_pinyin").field("type", "pinyin")
-				// 不会这样划分：刘德华 > [liu,de,hua]
-				.field("keep_full_pinyin", false)
-				// 这样划分：刘德华 > [liudehua]
-				.field("keep_joined_full_pinyin", true)
-				// 保留原始中文
-				.field("keep_original", true).field("limit_first_letter_length", 16)
-				.field("remove_duplicated_term", true).field("none_chinese_pinyin_tokenize", false).endObject()
-				.endObject();
+		setting.startObject("filter")
+			.startObject("laokou_pinyin")
+			.field("type", "pinyin")
+			// 不会这样划分：刘德华 > [liu,de,hua]
+			.field("keep_full_pinyin", false)
+			// 这样划分：刘德华 > [liudehua]
+			.field("keep_joined_full_pinyin", true)
+			// 保留原始中文
+			.field("keep_original", true)
+			.field("limit_first_letter_length", 16)
+			.field("remove_duplicated_term", true)
+			.field("none_chinese_pinyin_tokenize", false)
+			.endObject()
+			.endObject();
 		setting.endObject().endObject().endObject();
 		setting.close();
 		return setting;

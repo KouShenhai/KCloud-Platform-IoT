@@ -40,8 +40,7 @@ public class OperateLogListQryExe {
 
 	public Result<Datas<OperateLogCO>> execute(OperateLogListQry qry) {
 		OperateLog operateLog = ConvertUtil.sourceToTarget(qry, OperateLog.class);
-		Datas<OperateLog> newPage = logGateway.operateList(operateLog, new User(UserUtil.getTenantId()),
-				qry);
+		Datas<OperateLog> newPage = logGateway.operateList(operateLog, new User(UserUtil.getTenantId()), qry);
 		Datas<OperateLogCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), OperateLogCO.class));

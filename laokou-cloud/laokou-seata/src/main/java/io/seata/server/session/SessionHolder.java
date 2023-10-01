@@ -196,8 +196,9 @@ public class SessionHolder {
 								case RollbackRetrying:
 								case TimeoutRollbacking:
 								case TimeoutRollbackRetrying:
-									globalSession.getBranchSessions().parallelStream().forEach(
-											branchSession -> branchSession.setLockStatus(LockStatus.Rollbacking));
+									globalSession.getBranchSessions()
+										.parallelStream()
+										.forEach(branchSession -> branchSession.setLockStatus(LockStatus.Rollbacking));
 									queueToRetryRollback(globalSession);
 									break;
 								case Begin:
@@ -223,7 +224,7 @@ public class SessionHolder {
 
 				long now = System.currentTimeMillis();
 				List<GlobalSession> errorStatusGlobalSessions = ROOT_SESSION_MANAGER
-						.findGlobalSessions(searchCondition);
+					.findGlobalSessions(searchCondition);
 				while (!CollectionUtils.isEmpty(errorStatusGlobalSessions)) {
 					for (GlobalSession errorStatusGlobalSession : errorStatusGlobalSessions) {
 						if (errorStatusGlobalSession.getBeginTime() >= now) {
@@ -389,7 +390,7 @@ public class SessionHolder {
 	 */
 	public static boolean acquireDistributedLock(String lockKey) {
 		return DISTRIBUTED_LOCKER
-				.acquireLock(new DistributedLockDO(lockKey, XID.getIpAddressAndPort(), DISTRIBUTED_LOCK_EXPIRE_TIME));
+			.acquireLock(new DistributedLockDO(lockKey, XID.getIpAddressAndPort(), DISTRIBUTED_LOCK_EXPIRE_TIME));
 	}
 
 	/**
@@ -398,7 +399,7 @@ public class SessionHolder {
 	 */
 	public static boolean releaseDistributedLock(String lockKey) {
 		return DISTRIBUTED_LOCKER
-				.releaseLock(new DistributedLockDO(lockKey, XID.getIpAddressAndPort(), DISTRIBUTED_LOCK_EXPIRE_TIME));
+			.releaseLock(new DistributedLockDO(lockKey, XID.getIpAddressAndPort(), DISTRIBUTED_LOCK_EXPIRE_TIME));
 	}
 
 	/**

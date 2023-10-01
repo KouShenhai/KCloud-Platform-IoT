@@ -252,8 +252,8 @@ public class IdGenerator {
 						wait(offset << 1);
 						currTimeStamp = getNewTimeStamp();
 						if (currTimeStamp < lastTimeStamp) {
-							throw new RuntimeException(String.format(
-									"Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
+							throw new RuntimeException(String
+								.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
 						}
 					}
 					catch (Exception e) {
@@ -262,7 +262,7 @@ public class IdGenerator {
 				}
 				else {
 					throw new RuntimeException(String
-							.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
+						.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
 				}
 			}
 			if (currTimeStamp == lastTimeStamp) {
