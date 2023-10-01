@@ -15,23 +15,20 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.rpc;
+package org.laokou.report.service;
 
-import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.laokou.report.api.ReportServiceI;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-@Component
-public class RemoteMapper {
-
-	 @DubboReference(version = "1.0.0")
-	 private ReportServiceI reportServiceI;
-
-     public void test() {
-         reportServiceI.test();
-     }
-
+@Service
+@DubboService(version = "1.0.0")
+public class ReportServiceImpl implements ReportServiceI {
+    @Override
+    public void test() {
+        System.out.println("111");
+    }
 }
