@@ -15,23 +15,29 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.rpc;
+package org.laokou.admin.web;
 
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.laokou.report.api.ReportServiceI;
-import org.springframework.stereotype.Component;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.gatewayimpl.rpc.RemoteMapper;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author laokou
  */
-@Component
-public class RemoteMapper {
+@RestController
+@Tag(name = "ReportsController", description = "报表管理")
+@RequiredArgsConstructor
+@RequestMapping("v1/reports")
+public class ReportsController {
 
-	 @DubboReference(version = "1.0.0")
-	 private ReportServiceI reportServiceI;
+    private final RemoteMapper remoteMapper;
 
-     public void test() {
-         reportServiceI.test();
-     }
+    @GetMapping
+    public void test() {
+        remoteMapper.test();
+    }
 
 }
