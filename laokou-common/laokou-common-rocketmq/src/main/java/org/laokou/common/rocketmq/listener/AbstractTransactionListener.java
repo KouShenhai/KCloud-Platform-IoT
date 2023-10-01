@@ -34,7 +34,7 @@ public abstract class AbstractTransactionListener implements RocketMQLocalTransa
 	@Override
 	public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object args) {
 		String transactionId = Objects.requireNonNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID))
-				.toString();
+			.toString();
 		Object payload = message.getPayload();
 		log.info("执行本地事务");
 		try {
@@ -51,7 +51,7 @@ public abstract class AbstractTransactionListener implements RocketMQLocalTransa
 	@Override
 	public RocketMQLocalTransactionState checkLocalTransaction(Message message) {
 		String transactionId = Objects.requireNonNull(message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID))
-				.toString();
+			.toString();
 		log.info("事务回查");
 		if (checkLocalTransaction(transactionId)) {
 			log.info("事务回查后，提交");

@@ -239,9 +239,13 @@ public class HttpUtil {
 		SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
 		sslContext.init(null, trustManagers, new SecureRandom());
 		SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactoryBuilder.create()
-				.setSslContext(sslContext).setHostnameVerifier(new TrustAllHostnames()).build();
+			.setSslContext(sslContext)
+			.setHostnameVerifier(new TrustAllHostnames())
+			.build();
 		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = PoolingHttpClientConnectionManagerBuilder
-				.create().setSSLSocketFactory(sslConnectionSocketFactory).build();
+			.create()
+			.setSSLSocketFactory(sslConnectionSocketFactory)
+			.build();
 		builder.setConnectionManager(poolingHttpClientConnectionManager);
 	}
 

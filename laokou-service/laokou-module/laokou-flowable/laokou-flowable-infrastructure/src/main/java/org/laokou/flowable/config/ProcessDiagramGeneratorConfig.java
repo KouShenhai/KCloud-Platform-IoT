@@ -119,7 +119,7 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 		double maxY = 0.0D;
 		GraphicInfo nrOfLanes;
 		for (Iterator flowNodes = bpmnModel.getPools().iterator(); flowNodes
-				.hasNext(); maxY = nrOfLanes.getY() + nrOfLanes.getHeight()) {
+			.hasNext(); maxY = nrOfLanes.getY() + nrOfLanes.getHeight()) {
 			Pool artifacts = (Pool) flowNodes.next();
 			nrOfLanes = bpmnModel.getGraphicInfo(artifacts.getId());
 			minX = nrOfLanes.getX();

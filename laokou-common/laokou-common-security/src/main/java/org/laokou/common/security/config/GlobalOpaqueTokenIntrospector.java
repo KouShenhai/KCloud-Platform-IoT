@@ -101,7 +101,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		Instant nowAt = Instant.now();
 		long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
 		Object principal = ((UsernamePasswordAuthenticationToken) Objects
-				.requireNonNull(oAuth2Authorization.getAttribute(Principal.class.getName()))).getPrincipal();
+			.requireNonNull(oAuth2Authorization.getAttribute(Principal.class.getName()))).getPrincipal();
 		user = (User) principal;
 		// 过期时间
 		user.setExpireDate(DateUtil.plusSeconds(DateUtil.now(), expireTime));

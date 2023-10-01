@@ -71,8 +71,10 @@ public class MapUtil {
 			Map.Entry<String, String> entry = iterator.next();
 			String key = entry.getKey();
 			String value = entry.getValue();
-			stringBuilder.append(key).append("=")
-					.append(isEncode ? URLEncoder.encode(value, StandardCharsets.UTF_8) : value).append(AND);
+			stringBuilder.append(key)
+				.append("=")
+				.append(isEncode ? URLEncoder.encode(value, StandardCharsets.UTF_8) : value)
+				.append(AND);
 		}
 		String str = stringBuilder.toString();
 		return str.substring(0, str.length() - 1);

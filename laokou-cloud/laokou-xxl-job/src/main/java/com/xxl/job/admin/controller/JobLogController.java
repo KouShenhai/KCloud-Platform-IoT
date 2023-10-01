@@ -156,7 +156,7 @@ public class JobLogController {
 			// log cat
 			ExecutorBiz executorBiz = XxlJobScheduler.getExecutorBiz(jobLog.getExecutorAddress());
 			ReturnT<LogResult> logResult = executorBiz
-					.log(new LogParam(jobLog.getTriggerTime().getTime(), logId, fromLineNum));
+				.log(new LogParam(jobLog.getTriggerTime().getTime(), logId, fromLineNum));
 
 			// is end
 			if (logResult.getContent() != null

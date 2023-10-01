@@ -38,7 +38,8 @@ public class DefinitionActiveCmdExe {
 	public Result<Boolean> execute(DefinitionActivateCmd cmd) {
 		String definitionId = cmd.getDefinitionId();
 		ProcessDefinition definition = repositoryService.createProcessDefinitionQuery()
-				.processDefinitionId(definitionId).singleResult();
+			.processDefinitionId(definitionId)
+			.singleResult();
 		if (definition.isSuspended()) {
 			return Result.of(activate(definitionId));
 		}

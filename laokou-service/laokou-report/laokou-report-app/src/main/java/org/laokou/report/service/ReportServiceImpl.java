@@ -27,8 +27,10 @@ import org.springframework.stereotype.Service;
 @Service
 @DubboService(version = "1.0.0")
 public class ReportServiceImpl implements ReportServiceI {
-    @Override
-    public void test() {
-        System.out.println("111");
-    }
+
+	@Override
+	public void test() {
+		System.out.println("111");
+	}
+
 }

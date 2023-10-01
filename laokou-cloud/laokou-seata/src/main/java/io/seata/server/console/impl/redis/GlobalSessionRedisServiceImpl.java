@@ -83,8 +83,8 @@ public class GlobalSessionRedisServiceImpl implements GlobalSessionService {
 			if (param.getStatus() != null && GlobalStatus.get(param.getStatus()) != null) {
 				if (CollectionUtils.isNotEmpty(globalSessions)) {
 					globalSessionsNew = globalSessions.stream()
-							.filter(globalSession -> globalSession.getStatus().getCode() == (param.getStatus()))
-							.collect(Collectors.toList());
+						.filter(globalSession -> globalSession.getStatus().getCode() == (param.getStatus()))
+						.collect(Collectors.toList());
 					total = (long) globalSessionsNew.size();
 				}
 				else {

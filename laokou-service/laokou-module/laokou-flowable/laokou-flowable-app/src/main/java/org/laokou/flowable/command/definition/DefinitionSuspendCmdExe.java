@@ -38,7 +38,8 @@ public class DefinitionSuspendCmdExe {
 	public Result<Boolean> execute(DefinitionSuspendCmd cmd) {
 		String definitionId = cmd.getDefinitionId();
 		final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-				.processDefinitionId(definitionId).singleResult();
+			.processDefinitionId(definitionId)
+			.singleResult();
 		if (!processDefinition.isSuspended()) {
 			return Result.of(suspend(definitionId));
 		}

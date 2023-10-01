@@ -112,8 +112,9 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	@DS(USER)
 	public User getById(Long id, Long tenantId) {
-		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class).eq("id", id).select("id", "username",
-				"status", "dept_id", "dept_path", "super_admin"));
+		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class)
+			.eq("id", id)
+			.select("id", "username", "status", "dept_id", "dept_path", "super_admin"));
 		User user = ConvertUtil.sourceToTarget(userDO, User.class);
 		try {
 			DynamicDataSourceContextHolder.push(MASTER);

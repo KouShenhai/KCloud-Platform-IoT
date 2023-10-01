@@ -50,7 +50,7 @@ public class DictInsertCmdExe {
 		String type = dictCO.getType();
 		String value = dictCO.getValue();
 		Long count = dictMapper
-				.selectCount(Wrappers.lambdaQuery(DictDO.class).eq(DictDO::getValue, value).eq(DictDO::getType, type));
+			.selectCount(Wrappers.lambdaQuery(DictDO.class).eq(DictDO::getValue, value).eq(DictDO::getType, type));
 		if (count > 0) {
 			throw new GlobalException(String.format("类型为%s，值为%s的字典已存在，请重新填写", type, value));
 		}

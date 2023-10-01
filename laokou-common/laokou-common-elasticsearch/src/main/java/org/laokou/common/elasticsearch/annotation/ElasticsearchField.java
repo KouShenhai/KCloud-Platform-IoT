@@ -20,6 +20,7 @@ import java.lang.annotation.*;
 
 /**
  * Elasticsearch注解
+ *
  * @author laokou
  */
 @Target({ ElementType.FIELD, ElementType.METHOD })

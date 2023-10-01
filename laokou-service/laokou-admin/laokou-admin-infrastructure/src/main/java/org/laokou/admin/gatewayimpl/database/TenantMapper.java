@@ -34,6 +34,6 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 public interface TenantMapper extends BatchMapper<TenantDO> {
 
 	IPage<TenantDO> getTenantListByLikeNameFilter(IPage<TenantDO> page, @Param("name") String name,
-												  @Param(PAGE_QUERY) PageQuery pageQuery);
+			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

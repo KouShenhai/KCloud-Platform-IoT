@@ -34,10 +34,8 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 @Mapper
 public interface LoginLogMapper extends BatchMapper<LoginLogDO> {
 
-	IPage<LoginLogDO> getLoginLogListFilter(IPage<LoginLogDO> page
-			, @Param("tenantId") Long tenantId
-			, @Param("username") String username
-			, @Param("status") Integer status
-			, @Param(PAGE_QUERY) PageQuery pageQuery);
+	IPage<LoginLogDO> getLoginLogListFilter(IPage<LoginLogDO> page, @Param("tenantId") Long tenantId,
+			@Param("username") String username, @Param("status") Integer status,
+			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

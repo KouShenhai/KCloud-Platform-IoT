@@ -72,8 +72,11 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 		if (count > 0) {
 			throw new GlobalException("流程已存在，请重新上传");
 		}
-		repositoryService.createDeployment().name(processName).key(processId).addBpmnModel(processName, bpmnModel)
-				.deploy();
+		repositoryService.createDeployment()
+			.name(processName)
+			.key(processId)
+			.addBpmnModel(processName, bpmnModel)
+			.deploy();
 		return true;
 	}
 
@@ -84,8 +87,10 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 		Integer pageNum = dto.getPageNum();
 		Integer pageSize = dto.getPageSize();
 		String processName = dto.getProcessName();
-		ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery().latestVersion()
-				.orderByProcessDefinitionKey().asc();
+		ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery()
+			.latestVersion()
+			.orderByProcessDefinitionKey()
+			.asc();
 		if (StringUtil.isNotEmpty(processName)) {
 			processDefinitionQuery = processDefinitionQuery.processDefinitionNameLike("%" + processName + "%");
 		}
@@ -139,7 +144,8 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean suspendDefinition(String definitionId) {
 		final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-				.processDefinitionId(definitionId).singleResult();
+			.processDefinitionId(definitionId)
+			.singleResult();
 		if (processDefinition.isSuspended()) {
 			throw new GlobalException("挂起失败，流程已挂起");
 		}
@@ -154,7 +160,8 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean activateDefinition(String definitionId) {
 		final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-				.processDefinitionId(definitionId).singleResult();
+			.processDefinitionId(definitionId)
+			.singleResult();
 		if (processDefinition.isSuspended()) {
 			// 激活
 			repositoryService.activateProcessDefinitionById(definitionId, true, null);

@@ -102,7 +102,8 @@ public class ElasticsearchAutoConfig {
 		}
 		try {
 			return HttpHost.create(new URI(uri.getScheme(), null, uri.getHost(), uri.getPort(), uri.getPath(),
-					uri.getQuery(), uri.getFragment()).toString());
+					uri.getQuery(), uri.getFragment())
+				.toString());
 		}
 		catch (URISyntaxException ex) {
 			throw new IllegalStateException(ex);
@@ -126,16 +127,21 @@ public class ElasticsearchAutoConfig {
 		@Override
 		public void customize(HttpAsyncClientBuilder builder) {
 			builder.setDefaultCredentialsProvider(new PropertiesCredentialsProvider(this.properties));
-			MAP.from(this.properties::isSocketKeepAlive).to((keepAlive) -> builder
+			MAP.from(this.properties::isSocketKeepAlive)
+				.to((keepAlive) -> builder
 					.setDefaultIOReactorConfig(IOReactorConfig.custom().setSoKeepAlive(keepAlive).build()));
 		}
 
 		@Override
 		public void customize(RequestConfig.Builder builder) {
-			MAP.from(this.properties::getConnectionTimeout).whenNonNull().asInt(Duration::toMillis)
-					.to(builder::setConnectTimeout);
-			MAP.from(this.properties::getSocketTimeout).whenNonNull().asInt(Duration::toMillis)
-					.to(builder::setSocketTimeout);
+			MAP.from(this.properties::getConnectionTimeout)
+				.whenNonNull()
+				.asInt(Duration::toMillis)
+				.to(builder::setConnectTimeout);
+			MAP.from(this.properties::getSocketTimeout)
+				.whenNonNull()
+				.asInt(Duration::toMillis)
+				.to(builder::setSocketTimeout);
 		}
 
 	}
@@ -148,8 +154,11 @@ public class ElasticsearchAutoConfig {
 						properties.getPassword());
 				setCredentials(AuthScope.ANY, credentials);
 			}
-			properties.getUris().stream().map(this::toUri).filter(this::hasUserInfo)
-					.forEach(this::addUserInfoCredentials);
+			properties.getUris()
+				.stream()
+				.map(this::toUri)
+				.filter(this::hasUserInfo)
+				.forEach(this::addUserInfoCredentials);
 		}
 
 		private URI toUri(String uri) {
@@ -197,7 +206,7 @@ public class ElasticsearchAutoConfig {
 	@ConditionalOnClass(RestClientBuilder.class)
 	public RestHighLevelClient restHighLevelClient(RestClientBuilder elasticsearchRestClientBuilder) {
 		return new RestHighLevelClientBuilder(elasticsearchRestClientBuilder.build()).setApiCompatibilityMode(true)
-				.build();
+			.build();
 	}
 
 }

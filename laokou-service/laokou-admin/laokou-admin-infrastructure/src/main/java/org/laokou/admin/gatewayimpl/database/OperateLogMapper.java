@@ -37,6 +37,6 @@ public interface OperateLogMapper extends BatchMapper<OperateLogDO> {
 
 	IPage<OperateLogDO> getOperateListByTenantIdAndLikeModuleNameFilter(IPage<OperateLogDO> page,
 			@Param(TENANT_ID) Long tenantId, @Param("moduleName") String moduleName, @Param("status") Integer status,
-																		@Param(PAGE_QUERY) PageQuery pageQuery);
+			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

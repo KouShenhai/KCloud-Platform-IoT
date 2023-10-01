@@ -89,8 +89,8 @@ public class GlobalSessionDBServiceImpl implements GlobalSessionService {
 		List<Object> sqlParamList = new ArrayList<>();
 		String whereCondition = getWhereConditionByParam(param, sqlParamList);
 
-		String sourceSql = LogStoreSqlsFactory.getLogStoreSqls(dbType).getAllGlobalSessionSql(globalTable,
-				whereCondition);
+		String sourceSql = LogStoreSqlsFactory.getLogStoreSqls(dbType)
+			.getAllGlobalSessionSql(globalTable, whereCondition);
 		String querySessionSql = PageUtil.pageSql(sourceSql, dbType, param.getPageNum(), param.getPageSize());
 		String sessionCountSql = PageUtil.countSql(sourceSql, dbType);
 

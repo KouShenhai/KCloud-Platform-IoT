@@ -65,19 +65,28 @@ public class RedissonConfig {
 		int connectTimeout = (int) properties.getConnectTimeout().toMillis();
 		boolean isSsl = properties.getSsl().isEnabled();
 		if (properties.getSentinel() != null) {
-			config.useSentinelServers().setMasterName(properties.getSentinel().getMaster())
-					.addSentinelAddress(convertNodes(isSsl, properties.getSentinel().getNodes()))
-					.setDatabase(properties.getDatabase()).setTimeout(timeout).setConnectTimeout(connectTimeout)
-					.setPassword(properties.getPassword());
+			config.useSentinelServers()
+				.setMasterName(properties.getSentinel().getMaster())
+				.addSentinelAddress(convertNodes(isSsl, properties.getSentinel().getNodes()))
+				.setDatabase(properties.getDatabase())
+				.setTimeout(timeout)
+				.setConnectTimeout(connectTimeout)
+				.setPassword(properties.getPassword());
 		}
 		else if (properties.getCluster() != null) {
-			config.useClusterServers().addNodeAddress(convertNodes(isSsl, properties.getCluster().getNodes()))
-					.setPassword(properties.getPassword()).setTimeout(timeout).setConnectTimeout(connectTimeout);
+			config.useClusterServers()
+				.addNodeAddress(convertNodes(isSsl, properties.getCluster().getNodes()))
+				.setPassword(properties.getPassword())
+				.setTimeout(timeout)
+				.setConnectTimeout(connectTimeout);
 		}
 		else {
-			config.useSingleServer().setAddress(convertAddress(isSsl, properties.getHost(), properties.getPort()))
-					.setDatabase(properties.getDatabase()).setPassword(properties.getPassword())
-					.setConnectTimeout(connectTimeout).setTimeout(timeout);
+			config.useSingleServer()
+				.setAddress(convertAddress(isSsl, properties.getHost(), properties.getPort()))
+				.setDatabase(properties.getDatabase())
+				.setPassword(properties.getPassword())
+				.setConnectTimeout(connectTimeout)
+				.setTimeout(timeout);
 		}
 		config.setExecutor(taskExecutor.getThreadPoolExecutor());
 		// 使用json序列化方式

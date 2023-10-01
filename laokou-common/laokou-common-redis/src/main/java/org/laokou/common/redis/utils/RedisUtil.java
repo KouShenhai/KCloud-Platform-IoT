@@ -206,7 +206,7 @@ public class RedisUtil {
 
 	public List<Map<String, String>> getCommandStatus() {
 		Properties commandStats = (Properties) redisTemplate
-				.execute((RedisCallback<Object>) connection -> connection.serverCommands().info("commandstats"));
+			.execute((RedisCallback<Object>) connection -> connection.serverCommands().info("commandstats"));
 		List<Map<String, String>> pieList = new ArrayList<>();
 		assert commandStats != null;
 		commandStats.stringPropertyNames().forEach(key -> {

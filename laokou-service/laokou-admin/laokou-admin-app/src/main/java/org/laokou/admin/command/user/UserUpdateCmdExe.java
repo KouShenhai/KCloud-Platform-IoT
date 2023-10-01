@@ -33,7 +33,8 @@ public class UserUpdateCmdExe {
 	public Result<Boolean> execute(UserUpdateCmd cmd) {
 		UserCO userCO = cmd.getUserCO();
 		Long count = userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
-				.eq(UserDO::getUsername, AesUtil.encrypt(userCO.getUsername())).ne(UserDO::getId, userCO.getId()));
+			.eq(UserDO::getUsername, AesUtil.encrypt(userCO.getUsername()))
+			.ne(UserDO::getId, userCO.getId()));
 		if (count > 0) {
 			throw new GlobalException("用户名已存在，请重新输入");
 		}

@@ -104,7 +104,7 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 	 * The constant ASYNC_COMMITTING_RETRY_PERIOD.
 	 */
 	protected static final long ASYNC_COMMITTING_RETRY_PERIOD = CONFIG
-			.getLong(ConfigurationKeys.ASYNC_COMMITING_RETRY_PERIOD, DEFAULT_ASYNC_COMMITTING_RETRY_PERIOD);
+		.getLong(ConfigurationKeys.ASYNC_COMMITING_RETRY_PERIOD, DEFAULT_ASYNC_COMMITTING_RETRY_PERIOD);
 
 	/**
 	 * The constant ROLLBACKING_RETRY_PERIOD.
@@ -122,7 +122,7 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 	 * The Transaction undo log delete period.
 	 */
 	protected static final long UNDO_LOG_DELETE_PERIOD = CONFIG
-			.getLong(ConfigurationKeys.TRANSACTION_UNDO_LOG_DELETE_PERIOD, DEFAULT_UNDO_LOG_DELETE_PERIOD);
+		.getLong(ConfigurationKeys.TRANSACTION_UNDO_LOG_DELETE_PERIOD, DEFAULT_UNDO_LOG_DELETE_PERIOD);
 
 	/**
 	 * The Transaction undo log delay delete period
@@ -142,13 +142,14 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 	private static final int BRANCH_ASYNC_POOL_SIZE = Runtime.getRuntime().availableProcessors() * 2;
 
 	private static final long MAX_COMMIT_RETRY_TIMEOUT = ConfigurationFactory.getInstance()
-			.getLong(ConfigurationKeys.MAX_COMMIT_RETRY_TIMEOUT, DEFAULT_MAX_COMMIT_RETRY_TIMEOUT);
+		.getLong(ConfigurationKeys.MAX_COMMIT_RETRY_TIMEOUT, DEFAULT_MAX_COMMIT_RETRY_TIMEOUT);
 
 	private static final long MAX_ROLLBACK_RETRY_TIMEOUT = ConfigurationFactory.getInstance()
-			.getLong(ConfigurationKeys.MAX_ROLLBACK_RETRY_TIMEOUT, DEFAULT_MAX_ROLLBACK_RETRY_TIMEOUT);
+		.getLong(ConfigurationKeys.MAX_ROLLBACK_RETRY_TIMEOUT, DEFAULT_MAX_ROLLBACK_RETRY_TIMEOUT);
 
-	private static final boolean ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE = ConfigurationFactory.getInstance().getBoolean(
-			ConfigurationKeys.ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE, DEFAULT_ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE);
+	private static final boolean ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE = ConfigurationFactory.getInstance()
+		.getBoolean(ConfigurationKeys.ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE,
+				DEFAULT_ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE);
 
 	private final ScheduledThreadPoolExecutor retryRollbacking = new ScheduledThreadPoolExecutor(1,
 			new NamedThreadFactory(RETRY_ROLLBACKING, 1));
@@ -319,7 +320,7 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 		SessionCondition sessionCondition = new SessionCondition(GlobalStatus.Begin);
 		sessionCondition.setLazyLoadBranch(true);
 		Collection<GlobalSession> beginGlobalsessions = SessionHolder.getRootSessionManager()
-				.findGlobalSessions(sessionCondition);
+			.findGlobalSessions(sessionCondition);
 		if (CollectionUtils.isEmpty(beginGlobalsessions)) {
 			return;
 		}
@@ -368,7 +369,7 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 		SessionCondition sessionCondition = new SessionCondition(rollbackingStatuses);
 		sessionCondition.setLazyLoadBranch(true);
 		Collection<GlobalSession> rollbackingSessions = SessionHolder.getRetryRollbackingSessionManager()
-				.findGlobalSessions(sessionCondition);
+			.findGlobalSessions(sessionCondition);
 		if (CollectionUtils.isEmpty(rollbackingSessions)) {
 			return;
 		}
@@ -407,7 +408,7 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 		SessionCondition retryCommittingSessionCondition = new SessionCondition(retryCommittingStatuses);
 		retryCommittingSessionCondition.setLazyLoadBranch(true);
 		Collection<GlobalSession> committingSessions = SessionHolder.getRetryCommittingSessionManager()
-				.findGlobalSessions(retryCommittingSessionCondition);
+			.findGlobalSessions(retryCommittingSessionCondition);
 		if (CollectionUtils.isEmpty(committingSessions)) {
 			return;
 		}
@@ -448,7 +449,7 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 	protected void handleAsyncCommitting() {
 		SessionCondition sessionCondition = new SessionCondition(GlobalStatus.AsyncCommitting);
 		Collection<GlobalSession> asyncCommittingSessions = SessionHolder.getAsyncCommittingSessionManager()
-				.findGlobalSessions(sessionCondition);
+			.findGlobalSessions(sessionCondition);
 		if (CollectionUtils.isEmpty(asyncCommittingSessions)) {
 			return;
 		}

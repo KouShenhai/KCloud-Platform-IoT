@@ -68,10 +68,10 @@ public class BatchUtil {
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
 		CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
-		List<CompletableFuture<Void>> futures = partition
-				.parallelStream().map(item -> CompletableFuture
-						.runAsync(() -> handleBatch(item, batchOps, cyclicBarrier, rollback, ds), taskExecutor))
-				.toList();
+		List<CompletableFuture<Void>> futures = partition.parallelStream()
+			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, batchOps, cyclicBarrier, rollback, ds),
+					taskExecutor))
+			.toList();
 		// 阻塞主线程
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {

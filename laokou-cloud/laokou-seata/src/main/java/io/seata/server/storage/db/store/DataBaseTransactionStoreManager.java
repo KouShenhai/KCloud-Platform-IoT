@@ -133,7 +133,7 @@ public class DataBaseTransactionStoreManager extends AbstractTransactionStoreMan
 		}
 		// branch transactions
 		List<BranchTransactionDO> branchTransactionDOs = logStore
-				.queryBranchTransactionDO(globalTransactionDO.getXid());
+			.queryBranchTransactionDO(globalTransactionDO.getXid());
 		return getGlobalSession(globalTransactionDO, branchTransactionDOs);
 	}
 
@@ -189,19 +189,21 @@ public class DataBaseTransactionStoreManager extends AbstractTransactionStoreMan
 		List<GlobalTransactionDO> globalTransactionDOs = logStore.queryGlobalTransactionDO(states, logQueryLimit);
 		Map<String, List<BranchTransactionDO>> branchTransactionDOsMap = Collections.emptyMap();
 		if (CollectionUtils.isNotEmpty(globalTransactionDOs)) {
-			List<String> xids = globalTransactionDOs.stream().map(GlobalTransactionDO::getXid)
-					.collect(Collectors.toList());
+			List<String> xids = globalTransactionDOs.stream()
+				.map(GlobalTransactionDO::getXid)
+				.collect(Collectors.toList());
 			if (withBranchSessions) {
 				List<BranchTransactionDO> branchTransactionDOs = logStore.queryBranchTransactionDO(xids);
-				branchTransactionDOsMap = branchTransactionDOs.stream().collect(
-						Collectors.groupingBy(BranchTransactionDO::getXid, LinkedHashMap::new, Collectors.toList()));
+				branchTransactionDOsMap = branchTransactionDOs.stream()
+					.collect(Collectors.groupingBy(BranchTransactionDO::getXid, LinkedHashMap::new,
+							Collectors.toList()));
 			}
 		}
 		Map<String, List<BranchTransactionDO>> finalBranchTransactionDOsMap = branchTransactionDOsMap;
 		return globalTransactionDOs.stream()
-				.map(globalTransactionDO -> getGlobalSession(globalTransactionDO,
-						finalBranchTransactionDOsMap.get(globalTransactionDO.getXid()), withBranchSessions))
-				.collect(Collectors.toList());
+			.map(globalTransactionDO -> getGlobalSession(globalTransactionDO,
+					finalBranchTransactionDOsMap.get(globalTransactionDO.getXid()), withBranchSessions))
+			.collect(Collectors.toList());
 	}
 
 	@Override

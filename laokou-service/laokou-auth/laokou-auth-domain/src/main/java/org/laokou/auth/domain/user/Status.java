@@ -19,6 +19,7 @@ package org.laokou.auth.domain.user;
 
 /**
  * 用户状态
+ *
  * @author laokou
  */
 public enum Status {

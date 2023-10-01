@@ -40,7 +40,7 @@ public class PackageOptionListQryExe {
 
 	public Result<List<OptionCO>> execute() {
 		List<PackageDO> list = packageMapper
-				.selectList(Wrappers.query(PackageDO.class).select("id", "name").orderByDesc("create_date"));
+			.selectList(Wrappers.query(PackageDO.class).select("id", "name").orderByDesc("create_date"));
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}

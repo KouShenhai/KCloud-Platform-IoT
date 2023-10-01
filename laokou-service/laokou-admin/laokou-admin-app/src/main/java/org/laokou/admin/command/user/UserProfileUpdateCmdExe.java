@@ -72,15 +72,19 @@ public class UserProfileUpdateCmdExe {
 			throw new GlobalException(ID_NOT_NULL);
 		}
 		if (StringUtil.isNotEmpty(userProfileCO.getMobile())) {
-			Long count = userMapper.selectCount(Wrappers.query(UserDO.class).eq("tenant_id", UserUtil.getTenantId())
-					.eq("mobile", userProfileCO.getMobile()).ne("id", userProfileCO.getId()));
+			Long count = userMapper.selectCount(Wrappers.query(UserDO.class)
+				.eq("tenant_id", UserUtil.getTenantId())
+				.eq("mobile", userProfileCO.getMobile())
+				.ne("id", userProfileCO.getId()));
 			if (count > 0) {
 				throw new GlobalException("手机号已被注册，请重新填写");
 			}
 		}
 		if (StringUtil.isNotEmpty(userProfileCO.getMail())) {
-			Long count = userMapper.selectCount(Wrappers.query(UserDO.class).eq("tenant_id", UserUtil.getTenantId())
-					.eq("mail", userProfileCO.getMail()).ne("id", userProfileCO.getId()));
+			Long count = userMapper.selectCount(Wrappers.query(UserDO.class)
+				.eq("tenant_id", UserUtil.getTenantId())
+				.eq("mail", userProfileCO.getMail())
+				.ne("id", userProfileCO.getId()));
 			if (count > 0) {
 				throw new GlobalException("邮箱地址已被注册，请重新填写");
 			}

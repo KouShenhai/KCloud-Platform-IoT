@@ -62,7 +62,7 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 	private static final int MAX_GLOBAL_SESSION_SIZE = StoreConfig.getMaxGlobalSessionSize();
 
 	private static ThreadLocal<ByteBuffer> byteBufferThreadLocal = ThreadLocal
-			.withInitial(() -> ByteBuffer.allocate(MAX_GLOBAL_SESSION_SIZE));
+		.withInitial(() -> ByteBuffer.allocate(MAX_GLOBAL_SESSION_SIZE));
 
 	/**
 	 * If the global session's status is (Rollbacking or Committing) and currentTime -
@@ -70,7 +70,7 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 	 * rollback
 	 */
 	private static final int RETRY_DEAD_THRESHOLD = ConfigurationFactory.getInstance()
-			.getInt(ConfigurationKeys.RETRY_DEAD_THRESHOLD, DefaultValues.DEFAULT_RETRY_DEAD_THRESHOLD);
+		.getInt(ConfigurationKeys.RETRY_DEAD_THRESHOLD, DefaultValues.DEFAULT_RETRY_DEAD_THRESHOLD);
 
 	private String xid;
 
@@ -290,7 +290,7 @@ public class GlobalSession implements SessionLifecycle, SessionStorable {
 				if (branchSessions == null && isLazyLoadBranch()) {
 					branchSessions = new ArrayList<>();
 					Optional.ofNullable(SessionHolder.getRootSessionManager().findGlobalSession(xid, true))
-							.ifPresent(globalSession -> branchSessions.addAll(globalSession.getBranchSessions()));
+						.ifPresent(globalSession -> branchSessions.addAll(globalSession.getBranchSessions()));
 				}
 			}
 		}

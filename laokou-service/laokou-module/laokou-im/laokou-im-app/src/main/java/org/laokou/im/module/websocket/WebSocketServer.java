@@ -56,18 +56,18 @@ public class WebSocketServer extends AbstractServer {
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组
 		return serverBootstrap.group(boss, work)
-				// 指定通道
-				.channel(NioServerSocketChannel.class)
-				// 开启TCP底层心跳，维持长连接
-				.childOption(ChannelOption.SO_KEEPALIVE, true)
-				// 请求队列最大长度（如果连接建立频繁，服务器处理创建新连接较慢，可以适当调整参数）
-				.option(ChannelOption.SO_BACKLOG, 2048)
-				// 重复使用端口
-				.option(NioChannelOption.SO_REUSEADDR, true)
-				// 延迟发送
-				.option(ChannelOption.TCP_NODELAY, true)
-				// websocket处理类
-				.childHandler(channelInitializer);
+			// 指定通道
+			.channel(NioServerSocketChannel.class)
+			// 开启TCP底层心跳，维持长连接
+			.childOption(ChannelOption.SO_KEEPALIVE, true)
+			// 请求队列最大长度（如果连接建立频繁，服务器处理创建新连接较慢，可以适当调整参数）
+			.option(ChannelOption.SO_BACKLOG, 2048)
+			// 重复使用端口
+			.option(NioChannelOption.SO_REUSEADDR, true)
+			// 延迟发送
+			.option(ChannelOption.TCP_NODELAY, true)
+			// websocket处理类
+			.childHandler(channelInitializer);
 	}
 
 	@Override

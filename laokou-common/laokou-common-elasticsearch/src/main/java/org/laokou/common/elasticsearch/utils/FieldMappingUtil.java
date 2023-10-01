@@ -43,7 +43,7 @@ public class FieldMappingUtil {
 				// 获取字段名称
 				String name = field.getName();
 				fieldMappingList
-						.add(new FieldMapping(name, elasticsearchField.type(), elasticsearchField.participle()));
+					.add(new FieldMapping(name, elasticsearchField.type(), elasticsearchField.participle()));
 			}
 		}
 		return fieldMappingList;

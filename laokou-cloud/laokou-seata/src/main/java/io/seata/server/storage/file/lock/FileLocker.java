@@ -77,7 +77,7 @@ public class FileLocker extends AbstractLocker {
 
 		ConcurrentMap<BucketLockMap, Set<String>> bucketHolder = branchSession.getLockHolder();
 		ConcurrentMap<String, ConcurrentMap<Integer, BucketLockMap>> dbLockMap = CollectionUtils
-				.computeIfAbsent(LOCK_MAP, resourceId, key -> new ConcurrentHashMap<>());
+			.computeIfAbsent(LOCK_MAP, resourceId, key -> new ConcurrentHashMap<>());
 		boolean failFast = false;
 		boolean canLock = true;
 		for (RowLock lock : rowLocks) {

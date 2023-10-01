@@ -20,6 +20,6 @@ package org.laokou.report.api;
  */
 public interface ReportServiceI {
 
-    void test();
+	void test();
 
 }

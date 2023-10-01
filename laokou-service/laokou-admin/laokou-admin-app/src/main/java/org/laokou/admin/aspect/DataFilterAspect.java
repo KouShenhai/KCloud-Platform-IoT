@@ -47,8 +47,10 @@ public class DataFilterAspect {
 
 	@Before("@annotation(org.laokou.admin.domain.annotation.DataFilter)")
 	public void doBefore(JoinPoint point) {
-		Object param = Arrays.stream(point.getArgs()).filter(arg -> arg instanceof PageQuery).findFirst()
-				.orElse(new PageQuery());
+		Object param = Arrays.stream(point.getArgs())
+			.filter(arg -> arg instanceof PageQuery)
+			.findFirst()
+			.orElse(new PageQuery());
 		if (param instanceof PageQuery pageQuery) {
 			User user = UserUtil.user();
 			// 超级管理员不过滤数据
@@ -88,13 +90,28 @@ public class DataFilterAspect {
 		sqlFilter.append(LEFT);
 		if (CollectionUtil.isNotEmpty(deptPaths)) {
 			for (String deptPath : deptPaths) {
-				sqlFilter.append(alias).append(deptPathColumn).append(SPACE).append(LIKE).append(SPACE)
-						.append(DOUBLE_QUOT).append(deptPath.trim()).append(PERCENT).append(DOUBLE_QUOT).append(SPACE)
-						.append(OR).append(SPACE);
+				sqlFilter.append(alias)
+					.append(deptPathColumn)
+					.append(SPACE)
+					.append(LIKE)
+					.append(SPACE)
+					.append(DOUBLE_QUOT)
+					.append(deptPath.trim())
+					.append(PERCENT)
+					.append(DOUBLE_QUOT)
+					.append(SPACE)
+					.append(OR)
+					.append(SPACE);
 			}
 		}
-		sqlFilter.append(alias).append(userIdColumn).append(SPACE).append(EQUAL).append(SPACE).append(DOUBLE_QUOT)
-				.append(user.getId()).append(DOUBLE_QUOT);
+		sqlFilter.append(alias)
+			.append(userIdColumn)
+			.append(SPACE)
+			.append(EQUAL)
+			.append(SPACE)
+			.append(DOUBLE_QUOT)
+			.append(user.getId())
+			.append(DOUBLE_QUOT);
 		sqlFilter.append(RIGHT);
 		String sql = sqlFilter.toString();
 		after(sql);

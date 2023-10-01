@@ -49,9 +49,10 @@ public class DeptUpdateCmdExe {
 		if (id == null) {
 			throw new GlobalException(ID_NOT_NULL);
 		}
-		long count = deptMapper
-				.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getTenantId, UserUtil.getTenantId())
-						.eq(DeptDO::getName, deptCO.getName()).ne(DeptDO::getId, id));
+		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class)
+			.eq(DeptDO::getTenantId, UserUtil.getTenantId())
+			.eq(DeptDO::getName, deptCO.getName())
+			.ne(DeptDO::getId, id));
 		if (count > 0) {
 			throw new GlobalException("部门已存在，请重新填写");
 		}

@@ -58,8 +58,14 @@ public class TraceFilter implements GlobalFilter, Ordered {
 		log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}", requestUri, userId, username, tenantId, traceId);
 		// 清除
 		MDC.clear();
-		return chain.filter(exchange.mutate().request(request.mutate().header(USER_NAME, username)
-				.header(TENANT_ID, tenantId).header(USER_ID, userId).header(TRACE_ID, traceId).build()).build());
+		return chain.filter(exchange.mutate()
+			.request(request.mutate()
+				.header(USER_NAME, username)
+				.header(TENANT_ID, tenantId)
+				.header(USER_ID, userId)
+				.header(TRACE_ID, traceId)
+				.build())
+			.build());
 	}
 
 	@Override

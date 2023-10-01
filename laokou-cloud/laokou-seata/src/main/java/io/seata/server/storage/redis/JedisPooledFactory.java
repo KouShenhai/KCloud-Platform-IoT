@@ -100,13 +100,14 @@ public class JedisPooledFactory {
 								ConfigurationKeys.REDIS_SINGLE_MODE);
 						if (mode.equals(ConfigurationKeys.REDIS_SENTINEL_MODE)) {
 							String masterName = CONFIGURATION
-									.getConfig(ConfigurationKeys.STORE_REDIS_SENTINEL_MASTERNAME);
+								.getConfig(ConfigurationKeys.STORE_REDIS_SENTINEL_MASTERNAME);
 							if (StringUtils.isBlank(masterName)) {
 								throw new RedisException("The masterName is null in redis sentinel mode");
 							}
 							Set<String> sentinels = new HashSet<>(SENTINEL_HOST_NUMBER);
 							String[] sentinelHosts = CONFIGURATION
-									.getConfig(ConfigurationKeys.STORE_REDIS_SENTINEL_HOST).split(",");
+								.getConfig(ConfigurationKeys.STORE_REDIS_SENTINEL_HOST)
+								.split(",");
 							Arrays.asList(sentinelHosts).forEach(sentinelHost -> sentinels.add(sentinelHost));
 							tempJedisPool = new JedisSentinelPool(masterName, sentinels, poolConfig, 60000, password,
 									CONFIGURATION.getInt(ConfigurationKeys.STORE_REDIS_DATABASE, DATABASE));

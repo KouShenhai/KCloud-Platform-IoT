@@ -27,11 +27,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class RemoteMapper {
 
-	 @DubboReference(version = "1.0.0")
-	 private ReportServiceI reportServiceI;
+	@DubboReference(version = "1.0.0")
+	private ReportServiceI reportServiceI;
 
-     public void test() {
-         reportServiceI.test();
-     }
+	public void test() {
+		reportServiceI.test();
+	}
 
 }

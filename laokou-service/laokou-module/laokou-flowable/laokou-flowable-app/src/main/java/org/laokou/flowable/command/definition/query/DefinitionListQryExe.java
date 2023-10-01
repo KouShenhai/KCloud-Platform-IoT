@@ -42,8 +42,10 @@ public class DefinitionListQryExe {
 
 	public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) {
 		String name = qry.getName();
-		ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery().latestVersion()
-				.orderByProcessDefinitionKey().asc();
+		ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery()
+			.latestVersion()
+			.orderByProcessDefinitionKey()
+			.asc();
 		if (StringUtil.isNotEmpty(name)) {
 			query.processDefinitionNameLike(StringUtil.like(name));
 		}

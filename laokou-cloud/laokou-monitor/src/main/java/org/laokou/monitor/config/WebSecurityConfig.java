@@ -61,15 +61,20 @@ public class WebSecurityConfig {
 	SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http,
 			AdminServerProperties adminServerProperties) {
 		return http
-				.authorizeExchange(exchange -> exchange.pathMatchers(adminServerProperties.path("/assets/**"),
-						adminServerProperties.path("/variables.css"), adminServerProperties.path("/actuator/**"),
-						adminServerProperties.path("/instances/**"), adminServerProperties.path("/login")).permitAll()
-						.anyExchange().authenticated())
-				.formLogin(login -> login.loginPage(adminServerProperties.path("/login"))
-						.authenticationSuccessHandler(loginSuccessHandler(adminServerProperties.path("/"))))
-				.logout(logout -> logout.logoutUrl(adminServerProperties.path("/logout"))
-						.logoutSuccessHandler(logoutSuccessHandler(adminServerProperties.path("/login?logout"))))
-				.httpBasic(Customizer.withDefaults()).csrf(ServerHttpSecurity.CsrfSpec::disable).build();
+			.authorizeExchange(exchange -> exchange
+				.pathMatchers(adminServerProperties.path("/assets/**"), adminServerProperties.path("/variables.css"),
+						adminServerProperties.path("/actuator/**"), adminServerProperties.path("/instances/**"),
+						adminServerProperties.path("/login"))
+				.permitAll()
+				.anyExchange()
+				.authenticated())
+			.formLogin(login -> login.loginPage(adminServerProperties.path("/login"))
+				.authenticationSuccessHandler(loginSuccessHandler(adminServerProperties.path("/"))))
+			.logout(logout -> logout.logoutUrl(adminServerProperties.path("/logout"))
+				.logoutSuccessHandler(logoutSuccessHandler(adminServerProperties.path("/login?logout"))))
+			.httpBasic(Customizer.withDefaults())
+			.csrf(ServerHttpSecurity.CsrfSpec::disable)
+			.build();
 	}
 
 	private ServerLogoutSuccessHandler logoutSuccessHandler(String uri) {

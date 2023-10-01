@@ -174,8 +174,9 @@ public class SpringBootAdminClientAutoConfig {
 			if (client.getUsername() != null && client.getPassword() != null) {
 				webClient = webClient.filter(basicAuthentication(client.getUsername(), client.getPassword()));
 			}
-			SslContext context = SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE)
-					.build();
+			SslContext context = SslContextBuilder.forClient()
+				.trustManager(InsecureTrustManagerFactory.INSTANCE)
+				.build();
 			HttpClient httpClient = HttpClient.create().secure(t -> t.sslContext(context));
 			webClient.clientConnector(new ReactorClientHttpConnector(httpClient));
 			return new ReactiveRegistrationClient(webClient.build(), client.getReadTimeout());

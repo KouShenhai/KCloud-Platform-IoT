@@ -146,28 +146,34 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		AuthorizationGrantType grantType = getGrantType();
 		// 获取上下文
 		DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
-				.registeredClient(registeredClient).principal(principal).tokenType(OAuth2TokenType.ACCESS_TOKEN)
-				.authorizedScopes(scopes).authorizationServerContext(AuthorizationServerContextHolder.getContext())
-				.authorizationGrantType(grantType).authorizationGrant(auth2BaseAuthenticationToken);
+			.registeredClient(registeredClient)
+			.principal(principal)
+			.tokenType(OAuth2TokenType.ACCESS_TOKEN)
+			.authorizedScopes(scopes)
+			.authorizationServerContext(AuthorizationServerContextHolder.getContext())
+			.authorizationGrantType(grantType)
+			.authorizationGrant(auth2BaseAuthenticationToken);
 		DefaultOAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
 		// 生成access_token
 		OAuth2Token generatedAccessToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
-				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ACCESS_TOKEN_FAIL,
-						MessageUtil.getMessage(GENERATE_ACCESS_TOKEN_FAIL)));
+			.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ACCESS_TOKEN_FAIL,
+					MessageUtil.getMessage(GENERATE_ACCESS_TOKEN_FAIL)));
 		OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
 				generatedAccessToken.getTokenValue(), generatedAccessToken.getIssuedAt(),
 				generatedAccessToken.getExpiresAt(), tokenContext.getAuthorizedScopes());
 		// jwt
 		OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization.withRegisteredClient(registeredClient)
-				.principalName(loginName).authorizedScopes(scopes).authorizationGrantType(grantType);
+			.principalName(loginName)
+			.authorizedScopes(scopes)
+			.authorizationGrantType(grantType);
 		if (generatedAccessToken instanceof ClaimAccessor) {
 			authorizationBuilder
-					.token(accessToken,
-							(metadata) -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME,
-									((ClaimAccessor) generatedAccessToken).getClaims()))
-					.authorizedScopes(scopes)
-					// admin后台管理需要token，解析token获取用户信息，因此将用户信息存在数据库，下次直接查询数据库就可以获取用户信息
-					.attribute(Principal.class.getName(), principal);
+				.token(accessToken,
+						(metadata) -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME,
+								((ClaimAccessor) generatedAccessToken).getClaims()))
+				.authorizedScopes(scopes)
+				// admin后台管理需要token，解析token获取用户信息，因此将用户信息存在数据库，下次直接查询数据库就可以获取用户信息
+				.attribute(Principal.class.getName(), principal);
 		}
 		else {
 			authorizationBuilder.accessToken(accessToken);
@@ -178,8 +184,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				&& !clientPrincipal.getClientAuthenticationMethod().equals(ClientAuthenticationMethod.NONE)) {
 			tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
 			OAuth2Token generatedRefreshToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
-					.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_REFRESH_TOKEN_FAIL,
-							MessageUtil.getMessage(GENERATE_REFRESH_TOKEN_FAIL)));
+				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_REFRESH_TOKEN_FAIL,
+						MessageUtil.getMessage(GENERATE_REFRESH_TOKEN_FAIL)));
 			refreshToken = (OAuth2RefreshToken) generatedRefreshToken;
 			authorizationBuilder.refreshToken(refreshToken);
 		}
@@ -187,11 +193,12 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		OidcIdToken idToken;
 		if (scopes.contains(OidcScopes.OPENID)) {
 			tokenContext = tokenContextBuilder.tokenType(ID_TOKEN_TOKEN_TYPE)
-					// ID令牌定制器可能需要访问访问令牌、刷新令牌
-					.authorization(authorizationBuilder.build()).build();
+				// ID令牌定制器可能需要访问访问令牌、刷新令牌
+				.authorization(authorizationBuilder.build())
+				.build();
 			OAuth2Token generatedIdToken = Optional.ofNullable(this.tokenGenerator.generate(tokenContext))
-					.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ID_TOKEN_FAIL,
-							MessageUtil.getMessage(GENERATE_ID_TOKEN_FAIL)));
+				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ID_TOKEN_FAIL,
+						MessageUtil.getMessage(GENERATE_ID_TOKEN_FAIL)));
 			idToken = new OidcIdToken(generatedIdToken.getTokenValue(), generatedIdToken.getIssuedAt(),
 					generatedIdToken.getExpiresAt(), ((Jwt) generatedIdToken).getClaims());
 			authorizationBuilder.token(idToken,
@@ -305,7 +312,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			deptPath = user.getDeptPath();
 		}
 		loginLogGateway
-				.publish(new LoginLog(userId, username, type, tenantId, FAIL_STATUS, message, ip, deptId, deptPath));
+			.publish(new LoginLog(userId, username, type, tenantId, FAIL_STATUS, message, ip, deptId, deptPath));
 		throw OAuth2ExceptionHandler.getException(code, message);
 	}
 
