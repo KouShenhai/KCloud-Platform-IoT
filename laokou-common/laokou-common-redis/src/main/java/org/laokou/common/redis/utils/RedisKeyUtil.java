@@ -98,4 +98,11 @@ public final class RedisKeyUtil {
 		return "api:idempotent:" + token;
 	}
 
+	/**
+	 * 数据权限Key
+	 */
+	public static String getScopeSqlKey(Long userId) {
+		return "scope:sql:" + userId;
+	}
+
 }

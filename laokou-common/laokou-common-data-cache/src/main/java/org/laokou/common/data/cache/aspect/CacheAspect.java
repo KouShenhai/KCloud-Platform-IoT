@@ -16,6 +16,7 @@
  */
 package org.laokou.common.data.cache.aspect;
 
+import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -23,7 +24,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.enums.Cache;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -41,7 +41,7 @@ public class CacheAspect {
 
 	private final RedisUtil redisUtil;
 
-	private final com.github.benmanes.caffeine.cache.Cache<String, Object> caffeineCache;
+	private final Cache<String, Object> caffeineCache;
 
 	@Around("@annotation(org.laokou.common.data.cache.annotation.DataCache)")
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {
@@ -54,7 +54,7 @@ public class CacheAspect {
 		}
 		assert dataCache != null;
 		long expire = dataCache.expire();
-		Cache type = dataCache.type();
+		Type type = dataCache.type();
 		String key = dataCache.key();
 		String name = dataCache.name();
 		Object[] args = point.getArgs();

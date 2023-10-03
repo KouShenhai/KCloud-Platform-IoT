@@ -24,7 +24,7 @@ import org.laokou.admin.dto.menu.*;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.enums.Cache;
+import org.laokou.common.data.cache.aspect.Type;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -72,7 +72,7 @@ public class MenusController {
 	@Operation(summary = "菜单管理", description = "修改菜单")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('menus:update')")
-	@DataCache(name = "menus", key = "#cmd.menuCO.id", type = Cache.DEL)
+	@DataCache(name = "menus", key = "#cmd.menuCO.id", type = Type.DEL)
 	public Result<Boolean> update(@RequestBody MenuUpdateCmd cmd) {
 		return menusServiceI.update(cmd);
 	}
@@ -92,7 +92,7 @@ public class MenusController {
 	@Operation(summary = "菜单管理", description = "删除菜单")
 	@OperateLog(module = "菜单管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('menus:delete')")
-	@DataCache(name = "menus", key = "#id", type = Cache.DEL)
+	@DataCache(name = "menus", key = "#id", type = Type.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return menusServiceI.deleteById(new MenuDeleteCmd(id));
 	}

@@ -14,12 +14,12 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.data.cache.enums;
+package org.laokou.common.data.cache.aspect;
 
 /**
  * @author laokou
  */
-public enum Cache {
+public enum Type {
 
 	/**
 	 * 查询

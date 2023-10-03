@@ -25,7 +25,7 @@ import org.laokou.admin.dto.dict.*;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.enums.Cache;
+import org.laokou.common.data.cache.aspect.Type;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -84,7 +84,7 @@ public class DictsController {
 	@Operation(summary = "字典管理", description = "修改字典")
 	@OperateLog(module = "字典管理", operation = "修改字典")
 	@PreAuthorize("hasAuthority('dicts:update')")
-	@DataCache(name = "dicts", key = "#cmd.dictCO.id", type = Cache.DEL)
+	@DataCache(name = "dicts", key = "#cmd.dictCO.id", type = Type.DEL)
 	public Result<Boolean> update(@RequestBody DictUpdateCmd cmd) {
 		return dictsServiceI.update(cmd);
 	}
@@ -94,7 +94,7 @@ public class DictsController {
 	@Operation(summary = "字典管理", description = "删除字典")
 	@OperateLog(module = "字典管理", operation = "删除字典")
 	@PreAuthorize("hasAuthority('dicts:delete')")
-	@DataCache(name = "dicts", key = "#id", type = Cache.DEL)
+	@DataCache(name = "dicts", key = "#id", type = Type.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return dictsServiceI.deleteById(new DictDeleteCmd(id));
 	}

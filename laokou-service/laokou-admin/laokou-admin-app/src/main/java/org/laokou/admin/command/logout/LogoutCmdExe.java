@@ -63,6 +63,8 @@ public class LogoutCmdExe {
 		removeToken(authorization);
 		// 删除菜单key
 		deleteMenuTreeKey(userId);
+		// 删除范围Key
+		deleteScopeSqlKey(userId);
 		// 删除用户key
 		deleteUserInfoKey(token);
 		// 删除强踢Key
@@ -72,6 +74,11 @@ public class LogoutCmdExe {
 
 	private void removeToken(OAuth2Authorization authorization) {
 		oAuth2AuthorizationService.remove(authorization);
+	}
+
+	private void deleteScopeSqlKey(Long userId) {
+		String scopeSqlKey = RedisKeyUtil.getScopeSqlKey(userId);
+		redisUtil.delete(scopeSqlKey);
 	}
 
 	private void deleteUserInfoKey(String token) {
