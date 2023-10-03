@@ -16,7 +16,6 @@
  */
 package org.laokou.admin.aspect;
 
-import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -29,8 +28,6 @@ import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
-import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
@@ -50,9 +47,6 @@ import static org.laokou.common.i18n.common.Constant.*;
 @RequiredArgsConstructor
 public class DataFilterAspect {
 
-	private final RedisUtil redisUtil;
-	private final Cache<String, Object> caffeineCache;
-
 	@Before("@annotation(org.laokou.admin.domain.annotation.DataFilter)")
 	public void doBefore(JoinPoint point) {
 		Object param = Arrays.stream(point.getArgs())
@@ -67,7 +61,7 @@ public class DataFilterAspect {
 			}
 			try {
 				// 数据过滤
-				pageQuery.setSqlFilter(getSql(user, point));
+				pageQuery.setSqlFilter(getSqlFilter(user, point));
 			}
 			catch (Exception ex) {
 				log.error("错误信息:{}", ex.getMessage());
@@ -90,7 +84,7 @@ public class DataFilterAspect {
 		String deptPathColumn = dataFilter.deptPath();
 		String userIdColumn = dataFilter.userId();
 		List<String> deptPaths = user.getDeptPaths();
-		StringBuilder sqlFilter = new StringBuilder();
+		StringBuilder sqlFilter = new StringBuilder(300);
 		if (StringUtil.isNotEmpty(alias)) {
 			alias += DOT;
 		}
@@ -127,22 +121,6 @@ public class DataFilterAspect {
 
 	private void after(String sql) {
 		log.info("获取拼接后的SQL:{}", sql);
-	}
-
-	private String getSql(User user,JoinPoint point) {
-		String scopeSqlKey = RedisKeyUtil.getScopeSqlKey(user.getId());
-		Object obj = caffeineCache.getIfPresent(scopeSqlKey);
-		if (obj == null) {
-			obj = redisUtil.get(scopeSqlKey);
-			if (obj == null) {
-				String sql = getSqlFilter(user, point);
-				redisUtil.set(scopeSqlKey,sql,RedisUtil.HOUR_ONE_EXPIRE);
-				return sql;
-			}
-			caffeineCache.put(scopeSqlKey,obj);
-			return obj.toString();
-		}
-		return obj.toString();
 	}
 
 }

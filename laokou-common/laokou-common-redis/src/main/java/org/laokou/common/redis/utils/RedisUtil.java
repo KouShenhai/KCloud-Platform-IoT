@@ -188,7 +188,7 @@ public class RedisUtil {
 	public void hSet(String key, String field, Object value, long expire) {
 		RMap<Object, Object> map = redissonClient.getMap(key);
 		map.put(field, value);
-		map.expire(Duration.ofSeconds(expire));
+		map.expireIfNotSet(Duration.ofSeconds(expire));
 	}
 
 	public void hSet(String key, String field, Object value) {
