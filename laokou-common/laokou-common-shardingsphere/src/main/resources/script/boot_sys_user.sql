@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `kcloud_platform_alibaba_user`.`boot_sys_user_${suffix}` (
+CREATE TABLE IF NOT EXISTS `boot_sys_user_${suffix}` (
 `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
 `creator` bigint NOT NULL DEFAULT '0' COMMENT '创建人',
 `editor` bigint NOT NULL DEFAULT '0' COMMENT '编辑人',
@@ -18,6 +18,6 @@ CREATE TABLE IF NOT EXISTS `kcloud_platform_alibaba_user`.`boot_sys_user_${suffi
 `mobile` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '手机号',
 PRIMARY KEY (`id`) USING BTREE,
 UNIQUE KEY `idx_tenant_id_username` (`tenant_id`,`username`) USING BTREE COMMENT '租户_用户名_唯一索引',
-KEY `idx_tenant_id_mail` (`tenant_id`,`mail`) USING BTREE COMMENT '租户_邮箱_唯一索引',
-KEY `idx_tenant_id_mobile` (`tenant_id`,`mobile`) USING BTREE COMMENT '租户_手机号_唯一索引'
+KEY `idx_tenant_id_mail` (`tenant_id`,`mail`) USING BTREE COMMENT '租户_邮箱_索引',
+KEY `idx_tenant_id_mobile` (`tenant_id`,`mobile`) USING BTREE COMMENT '租户_手机号_索引'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='用户';

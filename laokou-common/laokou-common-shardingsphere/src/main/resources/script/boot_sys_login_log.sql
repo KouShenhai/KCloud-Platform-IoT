@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `kcloud_platform_alibaba_login_log`.`boot_sys_login_log_${suffix}`(
+CREATE TABLE IF NOT EXISTS `boot_sys_login_log_${suffix}`(
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `creator` bigint DEFAULT '0' COMMENT '创建者',
   `editor` bigint DEFAULT '0' COMMENT '编辑人',

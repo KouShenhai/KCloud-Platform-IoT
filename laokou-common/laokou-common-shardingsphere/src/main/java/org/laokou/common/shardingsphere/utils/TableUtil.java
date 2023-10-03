@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class TableUtil {
 
-	private static final String USER_TABLE_PREFIX = "`kcloud_platform_alibaba_user`.`boot_sys_user_%s`";
+	private static final String USER_TABLE_PREFIX = "boot_sys_user_";
 
 	@SneakyThrows
 	public static String getLoginLogSqlScript(LocalDateTime localDateTime) {
@@ -45,7 +45,7 @@ public class TableUtil {
 	}
 
 	public static String getUserTable(Long snowflakeId) {
-		return String.format(USER_TABLE_PREFIX , DateUtil.format(IdGenerator.getLocalDateTime(snowflakeId),DateUtil.YYYYMM));
+		return USER_TABLE_PREFIX + DateUtil.format(IdGenerator.getLocalDateTime(snowflakeId),DateUtil.YYYYMM);
 	}
 
 	@SneakyThrows
