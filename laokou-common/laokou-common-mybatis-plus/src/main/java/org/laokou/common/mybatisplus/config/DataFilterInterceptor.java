@@ -22,9 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.StringValue;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
-import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.select.PlainSelect;
-import net.sf.jsqlparser.statement.select.Select;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -32,6 +30,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.mybatisplus.utils.SqlUtil;
 
 import java.util.Map;
 
@@ -59,8 +58,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 						return;
 					}
 					// 获取select查询语句
-					Select select = (Select) CCJSqlParserUtil.parse(boundSql.getSql());
-					PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
+					PlainSelect plainSelect = SqlUtil.plainSelect(boundSql.getSql());
 					// 获取where
 					Expression expression = plainSelect.getWhere();
 					if (null == expression) {
@@ -70,7 +68,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 						AndExpression andExpression = new AndExpression(expression, new StringValue(sqlFilter));
 						plainSelect.setWhere(andExpression);
 					}
-					String newSql = select.toString().replaceAll(SINGLE_QUOT, EMPTY);
+					String newSql = plainSelect.toString().replaceAll(SINGLE_QUOT, EMPTY);
 					// 新sql写入
 					PluginUtils.mpBoundSql(boundSql).sql(newSql);
 				}
