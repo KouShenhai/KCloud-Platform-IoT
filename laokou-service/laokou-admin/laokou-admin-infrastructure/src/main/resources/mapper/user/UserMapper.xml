@@ -21,7 +21,7 @@
 <mapper namespace="org.laokou.admin.gatewayimpl.database.UserMapper">
 
     <update id="updateUser">
-        update boot_sys_user
+        update ${tableName}
         <set>
             version = version + 1,
             update_date = now(),
