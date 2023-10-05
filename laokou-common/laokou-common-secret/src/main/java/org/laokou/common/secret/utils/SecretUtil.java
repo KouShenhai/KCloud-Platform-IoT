@@ -16,6 +16,7 @@
  */
 package org.laokou.common.secret.utils;
 
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -68,7 +69,7 @@ public class SecretUtil {
 		}
 		long ts = Long.parseLong(timestamp);
 		// 判断时间戳
-		long nowTimestamp = System.currentTimeMillis();
+		long nowTimestamp = IdGenerator.SystemClock.now();
 		long maxTimestamp = ts + TIMEOUT_MILLIS;
 		long minTimestamp = ts - TIMEOUT_MILLIS;
 		if (nowTimestamp > maxTimestamp || nowTimestamp < minTimestamp) {

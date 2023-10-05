@@ -18,6 +18,7 @@ package org.laokou.common.mongodb.support;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.mongodb.dto.SearchDTO;
 import org.laokou.common.mongodb.form.QueryForm;
@@ -51,14 +52,14 @@ public class MongodbTemplate {
 	}
 
 	public Object get(Class<?> clazz, String id) {
-		long startTime = System.currentTimeMillis();
+		long startTime = IdGenerator.SystemClock.now();
 		final Object obj = mongoTemplate.findById(id, clazz);
-		log.info("消耗时间：{}ms", (System.currentTimeMillis() - startTime));
+		log.info("消耗时间：{}ms", (IdGenerator.SystemClock.now() - startTime));
 		return obj;
 	}
 
 	public SearchVO query(QueryForm queryForm) {
-		final long startTime = System.currentTimeMillis();
+		final long startTime = IdGenerator.SystemClock.now();
 		final Query query = new Query();
 		final String collectionName = queryForm.getCollectionName();
 		final Criteria criteria = new Criteria();
@@ -95,7 +96,7 @@ public class MongodbTemplate {
 		searchVO.setPageSize(pageSize);
 		searchVO.setTotal(total);
 		log.info("返回结果：{}", JacksonUtil.toJsonStr(searchVO));
-		log.info("消耗时间：{}ms", (System.currentTimeMillis() - startTime));
+		log.info("消耗时间：{}ms", (IdGenerator.SystemClock.now() - startTime));
 		return searchVO;
 	}
 

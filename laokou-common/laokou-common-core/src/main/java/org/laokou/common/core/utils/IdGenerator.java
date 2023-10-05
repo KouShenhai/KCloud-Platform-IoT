@@ -24,6 +24,7 @@ import org.springframework.util.Assert;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -49,19 +50,17 @@ import static org.laokou.common.i18n.common.Constant.AT;
 public class IdGenerator {
 
 	/**
-	 * 数据标识
-	 */
-	private static final long DATA_ID = 1L;
-
-	/**
-	 * 系统标识
-	 */
-	private static final long SYS_ID = 1L;
-
-	/**
 	 * 雪花算法
 	 */
-	private static final Snowflake INSTANCE = new Snowflake(DATA_ID, SYS_ID);
+	private static final Snowflake INSTANCE;
+
+	static {
+		try {
+			INSTANCE = new Snowflake(InetAddress.getLocalHost());
+		} catch (UnknownHostException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	/**
 	 * 默认雪花ID
@@ -318,7 +317,7 @@ public class IdGenerator {
 	 * @author hubin
 	 * @since 2016-08-01
 	 */
-	static class SystemClock {
+	public static class SystemClock {
 
 		private final long period;
 
@@ -326,7 +325,7 @@ public class IdGenerator {
 
 		private SystemClock(long period) {
 			this.period = period;
-			this.now = new AtomicLong(System.currentTimeMillis());
+			this.now = new AtomicLong(IdGenerator.SystemClock.now());
 			scheduleClockUpdating();
 		}
 

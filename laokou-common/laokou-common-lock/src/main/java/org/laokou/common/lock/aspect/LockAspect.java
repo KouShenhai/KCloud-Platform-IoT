@@ -17,6 +17,7 @@
 package org.laokou.common.lock.aspect;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.lock.annotation.Lock4j;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +57,7 @@ public class LockAspect {
 		}
 		assert lock4j != null;
 		// 时间戳
-		String key = lock4j.key() + System.currentTimeMillis();
+		String key = lock4j.key() + IdGenerator.SystemClock.now();
 		long expire = lock4j.expire();
 		long timeout = lock4j.timeout();
 		final LockType type = lock4j.type();
