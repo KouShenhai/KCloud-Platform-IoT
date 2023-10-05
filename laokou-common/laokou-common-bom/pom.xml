@@ -48,8 +48,6 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <!--commons-lang3版本-->
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <!--commons-fileupload版本-->
-        <commons-fileupload.version>1.5</commons-fileupload.version>
         <!--jasypt版本-->
         <jasypt.version>3.0.5</jasypt.version>
         <!--captcha版本-->
@@ -478,11 +476,6 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-fileupload</groupId>
-                <artifactId>commons-fileupload</artifactId>
-                <version>${commons-fileupload.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>

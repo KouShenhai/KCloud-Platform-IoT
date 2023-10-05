@@ -14,42 +14,24 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.data.cache.annotation;
-
-import org.laokou.common.data.cache.aspect.Type;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.lang.annotation.Documented;
+package org.laokou.common.data.cache.aspect;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface DataCache {
+public enum Type {
 
 	/**
-	 * 缓存名称
+	 * 查询
 	 */
-	String name();
-
+	GET,
 	/**
-	 * 缓存键
+	 * 新增
 	 */
-	String key();
-
+	PUT,
 	/**
-	 * 过期时间 单位秒 默认10分钟
+	 * 删除
 	 */
-	long expire() default 600;
-
-	/**
-	 * 操作类型
-	 */
-	Type type() default Type.GET;
+	DEL
 
 }

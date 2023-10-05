@@ -14,42 +14,38 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.data.cache.annotation;
 
-import org.laokou.common.data.cache.aspect.Type;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.lang.annotation.Documented;
+package org.laokou.common.mybatisplus.dsl;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface DataCache {
+public class SortColumn extends Column {
 
-	/**
-	 * 缓存名称
-	 */
-	String name();
+    private final Sort sort;
 
-	/**
-	 * 缓存键
-	 */
-	String key();
+    public SortColumn(Builder builder, Sort sort) {
+        super(builder);
+        this.sort = sort;
+    }
 
-	/**
-	 * 过期时间 单位秒 默认10分钟
-	 */
-	long expire() default 600;
+    public Sort sort() {
+        return sort;
+    }
 
-	/**
-	 * 操作类型
-	 */
-	Type type() default Type.GET;
+    public static class Builder extends Column.Builder {
+
+        private Sort sort;
+
+        public Builder withSort(Sort sort) {
+            this.sort = sort;
+            return this;
+        }
+
+        public SortColumn build() {
+            return new SortColumn(this, sort);
+        }
+
+    }
 
 }

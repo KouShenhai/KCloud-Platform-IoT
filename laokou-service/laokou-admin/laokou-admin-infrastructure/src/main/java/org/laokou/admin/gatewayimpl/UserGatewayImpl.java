@@ -145,13 +145,13 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertUser(UserDO userDO, User user) {
-		boolean flag = userMapper.insertTable(userDO, TableUtil.getUserSqlScript(DateUtil.now()));
+		boolean flag = userMapper.insertDynamicTable(userDO, TableUtil.getUserSqlScript(DateUtil.now()));
 		return flag && insertUserRole(userDO.getId(), user.getRoleIds(), user);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateUser(UserDO userDO, User user, List<Long> ids) {
-		boolean flag = userMapper.updateUser(userDO) > 0;
+		boolean flag = userMapper.updateUser(userDO,TableUtil.getUserTable(userDO.getId())) > 0;
 		flag = flag && deleteUserRole(ids);
 		return flag && insertUserRole(userDO.getId(), user.getRoleIds(), user);
 	}
@@ -205,7 +205,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateUser(UserDO userDO) {
-		return userMapper.updateUser(userDO) > 0;
+		return userMapper.updateUser(userDO,TableUtil.getUserTable(userDO.getId())) > 0;
 	}
 
 }

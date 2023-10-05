@@ -24,7 +24,7 @@ import org.laokou.admin.dto.dept.*;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.enums.Cache;
+import org.laokou.common.data.cache.aspect.Type;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -74,7 +74,7 @@ public class DeptsController {
 	@OperateLog(module = "部门管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('depts:update')")
 	@TraceLog
-	@DataCache(name = "depts", key = "#cmd.deptCO.id", type = Cache.DEL)
+	@DataCache(name = "depts", key = "#cmd.deptCO.id", type = Type.DEL)
 	public Result<Boolean> update(@RequestBody DeptUpdateCmd cmd) {
 		return deptsServiceI.update(cmd);
 	}
@@ -92,7 +92,7 @@ public class DeptsController {
 	@Operation(summary = "部门管理", description = "删除菜单")
 	@OperateLog(module = "部门管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('depts:delete')")
-	@DataCache(name = "depts", key = "#id", type = Cache.DEL)
+	@DataCache(name = "depts", key = "#id", type = Type.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return deptsServiceI.deleteById(new DeptDeleteCmd(id));
 	}

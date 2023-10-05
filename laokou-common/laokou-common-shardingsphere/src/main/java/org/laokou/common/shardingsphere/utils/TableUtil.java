@@ -18,6 +18,7 @@
 package org.laokou.common.shardingsphere.utils;
 
 import lombok.SneakyThrows;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.core.utils.TemplateUtil;
@@ -31,6 +32,8 @@ import java.util.Map;
  */
 public class TableUtil {
 
+	private static final String USER_TABLE_PREFIX = "boot_sys_user_";
+
 	@SneakyThrows
 	public static String getLoginLogSqlScript(LocalDateTime localDateTime) {
 		return getContent(localDateTime, "script/boot_sys_login_log.sql");
@@ -39,6 +42,10 @@ public class TableUtil {
 	@SneakyThrows
 	public static String getUserSqlScript(LocalDateTime localDateTime) {
 		return getContent(localDateTime, "script/boot_sys_user.sql");
+	}
+
+	public static String getUserTable(Long snowflakeId) {
+		return USER_TABLE_PREFIX + DateUtil.format(IdGenerator.getLocalDateTime(snowflakeId),DateUtil.YYYYMM);
 	}
 
 	@SneakyThrows

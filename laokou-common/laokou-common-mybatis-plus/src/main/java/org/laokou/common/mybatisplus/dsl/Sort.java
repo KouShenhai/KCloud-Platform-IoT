@@ -14,42 +14,42 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.data.cache.annotation;
 
-import org.laokou.common.data.cache.aspect.Type;
+package org.laokou.common.mybatisplus.dsl;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.lang.annotation.Documented;
+import org.laokou.common.i18n.dto.DSL;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface DataCache {
+public class Sort extends DSL {
 
-	/**
-	 * 缓存名称
-	 */
-	String name();
+    private int sort;
 
-	/**
-	 * 缓存键
-	 */
-	String key();
+    public boolean orderByDesc() {
+        return sort == Order.DESC;
+    }
 
-	/**
-	 * 过期时间 单位秒 默认10分钟
-	 */
-	long expire() default 600;
+    public boolean orderByAsc() {
+        return sort == Order.ASC;
+    }
 
-	/**
-	 * 操作类型
-	 */
-	Type type() default Type.GET;
+    public Sort asc() {
+        this.sort = Order.ASC;
+        return this;
+    }
+
+    public Sort desc() {
+        this.sort = Order.DESC;
+        return this;
+    }
+
+    interface Order {
+
+        int ASC = 0;
+
+        int DESC = 1;
+
+    }
 
 }

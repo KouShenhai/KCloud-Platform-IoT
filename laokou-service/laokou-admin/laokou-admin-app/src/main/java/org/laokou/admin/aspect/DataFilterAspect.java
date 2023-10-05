@@ -16,6 +16,7 @@
  */
 package org.laokou.admin.aspect;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -43,6 +44,7 @@ import static org.laokou.common.i18n.common.Constant.*;
 @Aspect
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class DataFilterAspect {
 
 	@Before("@annotation(org.laokou.admin.domain.annotation.DataFilter)")
@@ -59,8 +61,7 @@ public class DataFilterAspect {
 			}
 			try {
 				// 数据过滤
-				String sqlFilter = getSqlFilter(user, point);
-				pageQuery.setSqlFilter(sqlFilter);
+				pageQuery.setSqlFilter(getSqlFilter(user, point));
 			}
 			catch (Exception ex) {
 				log.error("错误信息:{}", ex.getMessage());
@@ -83,7 +84,7 @@ public class DataFilterAspect {
 		String deptPathColumn = dataFilter.deptPath();
 		String userIdColumn = dataFilter.userId();
 		List<String> deptPaths = user.getDeptPaths();
-		StringBuilder sqlFilter = new StringBuilder();
+		StringBuilder sqlFilter = new StringBuilder(300);
 		if (StringUtil.isNotEmpty(alias)) {
 			alias += DOT;
 		}

@@ -75,15 +75,18 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 	void resultListFilter(@Param("param") T param, ResultHandler<T> handler, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 	@Update("${sql}")
-	void create(@Param("sql") String sql);
+	void execute(@Param("sql") String sql);
 
-	default Boolean insertTable(T t, String sql) {
+	/**
+	 * 新增动态分表
+	 */
+	default Boolean insertDynamicTable(T t, String sql) {
 		try {
 			t.setId(IdGenerator.defaultSnowflakeId());
 			return this.insert(t) > 0;
 		}
 		catch (Exception e) {
-			this.create(sql);
+			this.execute(sql);
 			return this.insert(t) > 0;
 		}
 	}

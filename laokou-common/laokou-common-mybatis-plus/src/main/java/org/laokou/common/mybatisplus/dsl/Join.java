@@ -14,42 +14,26 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.data.cache.annotation;
 
-import org.laokou.common.data.cache.aspect.Type;
+package org.laokou.common.mybatisplus.dsl;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.lang.annotation.Documented;
+import org.laokou.common.i18n.dto.DSL;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface DataCache {
+public class Join extends DSL {
 
-	/**
-	 * 缓存名称
-	 */
-	String name();
+    private final String type;
 
-	/**
-	 * 缓存键
-	 */
-	String key();
+    public Join(String type) {
+        this.type = type;
+    }
 
-	/**
-	 * 过期时间 单位秒 默认10分钟
-	 */
-	long expire() default 600;
-
-	/**
-	 * 操作类型
-	 */
-	Type type() default Type.GET;
+    public interface Type {
+        String INNER = "join";
+        String LEFT = "left join";
+        String RIGHT = "right join";
+    }
 
 }

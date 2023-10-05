@@ -25,7 +25,7 @@ import org.laokou.admin.dto.tenant.*;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.enums.Cache;
+import org.laokou.common.data.cache.aspect.Type;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -77,7 +77,7 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "修改租户")
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@PreAuthorize("hasAuthority('tenants:update')")
-	@DataCache(name = "tenants", key = "#cmd.tenantCO.id", type = Cache.DEL)
+	@DataCache(name = "tenants", key = "#cmd.tenantCO.id", type = Type.DEL)
 	public Result<Boolean> update(@RequestBody TenantUpdateCmd cmd) {
 		return tenantsServiceI.update(cmd);
 	}
@@ -87,7 +87,7 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "删除租户")
 	@OperateLog(module = "租户管理", operation = "删除租户")
 	@PreAuthorize("hasAuthority('tenants:delete')")
-	@DataCache(name = "tenants", key = "#id", type = Cache.DEL)
+	@DataCache(name = "tenants", key = "#id", type = Type.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return tenantsServiceI.deleteById(new TenantDeleteCmd(id));
 	}

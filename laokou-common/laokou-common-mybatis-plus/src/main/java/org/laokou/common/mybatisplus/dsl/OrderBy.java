@@ -14,24 +14,32 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.data.cache.enums;
+
+package org.laokou.common.mybatisplus.dsl;
+
+import org.laokou.common.i18n.dto.DSL;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author laokou
  */
-public enum Cache {
+public class OrderBy extends DSL {
 
-	/**
-	 * 查询
-	 */
-	GET,
-	/**
-	 * 新增
-	 */
-	PUT,
-	/**
-	 * 删除
-	 */
-	DEL
+    private final List<SortColumn> COLUMNS = new ArrayList<>();
+
+    public OrderBy(Collection<? extends SortColumn> columns) {
+        this.COLUMNS.addAll(columns);
+    }
+
+    public List<SortColumn> columns() {
+        return COLUMNS;
+    }
+
+    public static OrderBy of(Collection<? extends SortColumn> columns) {
+        return new OrderBy(columns);
+    }
 
 }

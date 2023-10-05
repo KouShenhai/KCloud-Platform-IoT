@@ -25,7 +25,7 @@ import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.role.*;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.enums.Cache;
+import org.laokou.common.data.cache.aspect.Type;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -84,7 +84,7 @@ public class RolesController {
 	@Operation(summary = "角色管理", description = "修改角色")
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@PreAuthorize("hasAuthority('roles:update')")
-	@DataCache(name = "roles", key = "#cmd.roleCO.id", type = Cache.DEL)
+	@DataCache(name = "roles", key = "#cmd.roleCO.id", type = Type.DEL)
 	public Result<Boolean> update(@RequestBody RoleUpdateCmd cmd) {
 		return rolesServiceI.update(cmd);
 	}
@@ -94,7 +94,7 @@ public class RolesController {
 	@Operation(summary = "角色管理", description = "删除角色")
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@PreAuthorize("hasAuthority('roles:delete')")
-	@DataCache(name = "roles", key = "#id", type = Cache.DEL)
+	@DataCache(name = "roles", key = "#id", type = Type.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return rolesServiceI.deleteById(new RoleDeleteCmd(id));
 	}

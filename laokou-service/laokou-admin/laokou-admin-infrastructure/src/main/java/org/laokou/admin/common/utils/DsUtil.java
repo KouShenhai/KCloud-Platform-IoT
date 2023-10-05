@@ -37,7 +37,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.laokou.admin.common.DsConstant.*;
 
@@ -49,11 +48,11 @@ import static org.laokou.admin.common.DsConstant.*;
 @RequiredArgsConstructor
 public class DsUtil {
 
-	private static final String SELECT_TABLES_SQL_TEMPLATE = "select table_name from information_schema.tables where table_schema = (select database())";
-
 	private final SourceMapper sourceMapper;
 
 	private final DynamicUtil dynamicUtil;
+
+	private static final String SHOW_TABLES = "show tables";
 
 	private static final List<String> TABLES = List.of(BOOT_SYS_DICT, BOOT_SYS_MESSAGE, BOOT_SYS_MESSAGE_DETAIL,
 			BOOT_SYS_OSS, BOOT_SYS_OSS_LOG);
@@ -102,23 +101,30 @@ public class DsUtil {
 			throw new GlobalException("数据源驱动加载失败，请检查相关配置");
 		}
 		try {
+			// 5秒后连接超时
+			DriverManager.setLoginTimeout(5);
 			connection = DriverManager.getConnection(properties.getUrl(), properties.getUsername(),
 					properties.getPassword());
 		}
 		catch (Exception e) {
-			log.error("数据源连接失败，错误信息：{}", e.getMessage());
-			throw new GlobalException("数据源连接失败，请检查相关配置");
+			log.error("数据源连接超时，错误信息：{}", e.getMessage());
+			throw new GlobalException("数据源连接超时，请检查相关配置");
 		}
 		try {
-			ResultSet resultSet = connection.prepareStatement(SELECT_TABLES_SQL_TEMPLATE).executeQuery();
+			ResultSet rs = connection.prepareStatement(SHOW_TABLES).executeQuery();
 			List<String> tables = new ArrayList<>(TABLES.size());
-			while (resultSet.next()) {
-				String tableName = resultSet.getString("table_name");
-				tables.add(tableName);
+			while (rs.next()) {
+				String tableName = rs.getString(1);
+				if (TABLES.contains(tableName)) {
+					tables.add(tableName);
+				}
 			}
-			List<String> list = TABLES.stream().filter(item -> !tables.contains(item)).collect(Collectors.toList());
+			if (CollectionUtil.isEmpty(tables)) {
+				throw new GlobalException("未初始化表结构");
+			}
+			List<String> list = TABLES.stream().filter(i -> !tables.contains(i)).toList();
 			if (CollectionUtil.isNotEmpty(list)) {
-				throw new GlobalException(String.format("%s不存在，请检查数据库表", String.join("、", list)));
+				throw new GlobalException(String.format("%s不存在，请检查数据表", String.join("、", list)));
 			}
 		}
 		finally {
