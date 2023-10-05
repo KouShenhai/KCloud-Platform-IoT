@@ -145,7 +145,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertUser(UserDO userDO, User user) {
-		boolean flag = userMapper.insertTable(userDO, TableUtil.getUserSqlScript(DateUtil.now()));
+		boolean flag = userMapper.insertDynamicTable(userDO, TableUtil.getUserSqlScript(DateUtil.now()));
 		return flag && insertUserRole(userDO.getId(), user.getRoleIds(), user);
 	}
 

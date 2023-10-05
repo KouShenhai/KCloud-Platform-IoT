@@ -69,7 +69,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 	private void execute(LoginLogEvent event) {
 		LoginLogDO logDO = ConvertUtil.sourceToTarget(event, LoginLogDO.class);
 		logDO.setCreator(event.getUserId());
-		loginLogMapper.insertTable(logDO, TableUtil.getLoginLogSqlScript(DateUtil.now()));
+		loginLogMapper.insertDynamicTable(logDO, TableUtil.getLoginLogSqlScript(DateUtil.now()));
 	}
 
 }
