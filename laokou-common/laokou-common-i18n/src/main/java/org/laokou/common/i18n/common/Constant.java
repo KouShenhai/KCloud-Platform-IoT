@@ -77,6 +77,11 @@ public interface Constant {
 	String SPACE = " ";
 
 	/**
+	 * 换行
+	 */
+	String WRAP = "\n";
+
+	/**
 	 * 等于
 	 */
 	String EQUAL = "=";

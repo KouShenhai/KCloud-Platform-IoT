@@ -30,18 +30,19 @@ import org.laokou.common.i18n.common.GlobalException;
 @Slf4j
 public class SqlUtil {
 
-    @SneakyThrows
-    public static Select parseSql(String sql) {
-        try {
-            return (Select) CCJSqlParserUtil.parse(sql);
-        } catch (Exception e) {
-            log.error("SQL解析失败");
-            throw new GlobalException("SQL解析失败");
-        }
-    }
+	@SneakyThrows
+	public static Select parseSql(String sql) {
+		try {
+			return (Select) CCJSqlParserUtil.parse(sql);
+		}
+		catch (Exception e) {
+			log.error("SQL解析失败");
+			throw new GlobalException("SQL解析失败");
+		}
+	}
 
-    public static PlainSelect plainSelect(String sql) {
-        return (PlainSelect) parseSql(sql).getSelectBody();
-    }
+	public static PlainSelect plainSelect(String sql) {
+		return (PlainSelect) parseSql(sql).getSelectBody();
+	}
 
 }

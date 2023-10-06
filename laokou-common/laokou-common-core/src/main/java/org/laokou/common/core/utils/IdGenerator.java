@@ -57,7 +57,8 @@ public class IdGenerator {
 	static {
 		try {
 			INSTANCE = new Snowflake(InetAddress.getLocalHost());
-		} catch (UnknownHostException e) {
+		}
+		catch (UnknownHostException e) {
 			throw new RuntimeException(e);
 		}
 	}

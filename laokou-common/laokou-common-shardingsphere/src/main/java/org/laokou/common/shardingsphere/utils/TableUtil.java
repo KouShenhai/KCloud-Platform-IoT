@@ -45,7 +45,7 @@ public class TableUtil {
 	}
 
 	public static String getUserTable(Long snowflakeId) {
-		return USER_TABLE_PREFIX + DateUtil.format(IdGenerator.getLocalDateTime(snowflakeId),DateUtil.YYYYMM);
+		return USER_TABLE_PREFIX + DateUtil.format(IdGenerator.getLocalDateTime(snowflakeId), DateUtil.YYYYMM);
 	}
 
 	@SneakyThrows
