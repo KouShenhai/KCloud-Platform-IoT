@@ -42,7 +42,7 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 * @param userDO 用户
 	 * @return int
 	 */
-	Integer updateUser(@Param("userDO") UserDO userDO,@Param("tableName")String tableName);
+	Integer updateUser(@Param("userDO") UserDO userDO, @Param("tableName") String tableName);
 
 	/**
 	 * 根据租户ID查询下拉列表

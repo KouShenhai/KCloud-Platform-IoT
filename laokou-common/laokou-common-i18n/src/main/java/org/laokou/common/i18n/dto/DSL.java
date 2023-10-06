@@ -21,4 +21,5 @@ package org.laokou.common.i18n.dto;
  * @author laokou
  */
 public abstract class DSL extends DTO {
+
 }
