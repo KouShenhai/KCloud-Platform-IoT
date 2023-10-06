@@ -118,7 +118,7 @@ public class SqlTemplate {
 			String joinAlias = item.alias();
 			if (StringUtil.isNotEmpty(joinAlias)) {
 				sql.append(SPACE).append(AS).append(SPACE).append(joinAlias);
-				StringBuilder onBuilder = new StringBuilder(100);
+				StringBuilder onBuilder = new StringBuilder(50);
 				item.ons()
 					.forEach(i -> onBuilder.append(SelectDSL.Constant.AND)
 						.append(SPACE)
