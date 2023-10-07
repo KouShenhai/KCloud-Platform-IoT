@@ -253,6 +253,26 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 GitLab 后端地址：[KCloud-Platform-Alibaba](https://gitlab.com/KouShenhai/KCloud-Platform-Alibaba)  
 GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KCloud-Antdv-Alibaba)
 
+## 🙋 培训交流
+<table>
+    <tr>
+        <th>套餐</th>
+        <th>金额</th>
+        <th>权益（永久）</th>
+    </tr>
+    <tr>
+        <td>学生</td>
+        <td>￥ 199</td>
+        <td>技术培训 + 解决问题 + 一对一售后群 + 个性功能增强（需提供学生证）</td>
+    </tr>
+    <tr>
+        <td>个人</td>
+        <td>￥ 399</td>
+        <td>技术培训 + 解决问题 + 一对一售后群 + 个性功能增强</td>
+    </tr>
+</table>
+<img src="doc/image/wx.jpg" width="300" height="300">
+
 ### 🐭 鸣谢组织
 [Spring社区](https://spring.io)  
 [Jetbrains社区](https://www.jetbrains.com/community)  
