@@ -36,10 +36,11 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.mybatisplus.dsl.SelectDSL;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.shardingsphere.utils.TableUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,11 +48,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.admin.common.Constant.USER;
 import static org.laokou.admin.common.DsConstant.BOOT_SYS_USER;
+import static org.laokou.admin.gatewayimpl.database.dataobject.UserDO.*;
+import static org.laokou.common.mybatisplus.dsl.SelectDSL.Constant.DESC;
+import static org.laokou.common.mybatisplus.dsl.SelectDSL.Constant.INNER_JOIN;
 
 /**
  * @author laokou
@@ -206,6 +211,39 @@ public class UserGatewayImpl implements UserGateway {
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateUser(UserDO userDO) {
 		return userMapper.updateUser(userDO, TableUtil.getUserTable(userDO.getId())) > 0;
+	}
+
+	private SelectDSL getUserPageWrapper(PageQuery pageQuery, String tableName, String connector,
+			List<SelectDSL.Where> wheres) {
+		String fromAlias = "a";
+		String joinAlias = "b";
+		SelectDSL.Join join = new SelectDSL.Join.Builder().withAlias(joinAlias)
+			.withColumns(new SelectDSL.Column.Builder().withName(FIELD_ID).build())
+			.withFrom(tableName)
+			.withOffset(Long.valueOf(pageQuery.getPageIndex()))
+			.withLimit(Long.valueOf(pageQuery.getPageSize()))
+			.withType(INNER_JOIN)
+			.withOrderBy(SelectDSL.OrderBy.of(Collections
+				.singletonList(new SelectDSL.Column.Builder().withName(FIELD_ID).withSort(DESC).build())))
+			.withWheres(wheres)
+			.withOns(new SelectDSL.On.Builder().withFromColumn(FIELD_ID)
+				.withFromAlias(fromAlias)
+				.withJoinAlias(joinAlias)
+				.withJoinColumn(FIELD_ID)
+				.build())
+			.build();
+		return new SelectDSL.Builder().withAlias(fromAlias)
+			.withConnector(connector)
+			.withColumns(new SelectDSL.Column.Builder().withName(FIELD_ID).build(),
+					new SelectDSL.Column.Builder().withName(FIELD_USERNAME).build(),
+					new SelectDSL.Column.Builder().withName(FIELD_SUPER_ADMIN).build(),
+					new SelectDSL.Column.Builder().withName(FIELD_CREATE_DATE).build(),
+					new SelectDSL.Column.Builder().withName(FIELD_AVATAR).build(),
+					new SelectDSL.Column.Builder().withName(FIELD_STATUS).build(),
+					new SelectDSL.Column.Builder().withName(FIELD_DEPT_ID).build())
+			.withFrom(tableName)
+			.withJoin(join)
+			.build();
 	}
 
 }

@@ -51,6 +51,26 @@ public abstract class BaseDO extends DTO {
 
 	public static final String TENANT_ID = "tenantId";
 
+	public static final String FIELD_ID = ID;
+
+	public static final String FIELD_CREATOR = CREATOR;
+
+	public static final String FIELD_EDITOR = EDITOR;
+
+	public static final String FIELD_VERSION = VERSION;
+
+	public static final String FIELD_CREATE_DATE = "create_date";
+
+	public static final String FIELD_UPDATE_DATE = "update_date";
+
+	public static final String FIELD_DEL_FLAG = "del_flag";
+
+	public static final String FIELD_DEPT_ID = "dept_id";
+
+	public static final String FIELD_DEPT_PATH = "dept_path";
+
+	public static final String FIELD_TENANT_ID = "tenant_id";
+
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;
 

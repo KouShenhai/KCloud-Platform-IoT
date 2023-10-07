@@ -18,10 +18,12 @@
 package org.laokou.common.mybatisplus.dsl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,45 +41,13 @@ public class SqlTemplate {
 		return new ArrayList<>(0);
 	}
 
-	public static SelectDSL getUserPageWrapper(PageQuery pageQuery, String tableName, String connector,
-			SelectDSL.Where... wheres) {
-		String fromAlias = "a";
-		String joinAlias = "b";
-		SelectDSL.Join join = new SelectDSL.Join.Builder().withAlias(joinAlias)
-			.withColumns(new SelectDSL.Column.Builder().withName("id").build())
-			.withFrom(tableName)
-			.withOffset(Long.valueOf(pageQuery.getPageIndex()))
-			.withLimit(Long.valueOf(pageQuery.getPageSize()))
-			.withType(INNER_JOIN)
-			.withOrderBy(SelectDSL.OrderBy
-				.of(Collections.singletonList(new SelectDSL.Column.Builder().withName("id").withSort(DESC).build())))
-			.withWheres(wheres)
-			.withOns(new SelectDSL.On.Builder().withFromColumn("id")
-				.withFromAlias(fromAlias)
-				.withJoinAlias(joinAlias)
-				.withJoinColumn("id")
-				.build())
-			.build();
-		return new SelectDSL.Builder().withAlias(fromAlias)
-			.withConnector(connector)
-			.withColumns(new SelectDSL.Column.Builder().withName("id").withAlias("id").build(),
-					new SelectDSL.Column.Builder().withName("username").withAlias("username").build(),
-					new SelectDSL.Column.Builder().withName("super_admin").withAlias("superAdmin").build(),
-					new SelectDSL.Column.Builder().withName("create_date").withAlias("createDate").build(),
-					new SelectDSL.Column.Builder().withName("avatar").withAlias("avatar").build(),
-					new SelectDSL.Column.Builder().withName("`status`").withAlias("`status`").build(),
-					new SelectDSL.Column.Builder().withName("dept_id").withAlias("deptId").build())
-			.withFrom(tableName)
-			.withJoin(join)
-			.build();
-	}
-
 	public static String toSql(SelectDSL dsl) {
 		StringBuilder sql = new StringBuilder(300);
 		List<SelectDSL.Column> columns = dsl.columns();
 		String alias = dsl.alias();
 		List<SelectDSL.Join> joins = dsl.joins();
 		String connector = dsl.connector();
+		List<SelectDSL.Where> wheres = dsl.wheres();
 		if (StringUtil.isNotEmpty(connector)) {
 			sql.append(connector).append(WRAP);
 		}
@@ -88,60 +58,85 @@ public class SqlTemplate {
 			sql.append(SPACE).append(AS).append(SPACE).append(alias);
 		}
 		sql.append(WRAP);
-		joins.forEach(item -> {
-			sql.append(item.type())
-				.append(LEFT)
-				.append(SELECT)
-				.append(SPACE)
-				.append(item.columns().parallelStream().map(SelectDSL.Column::name).collect(Collectors.joining(COMMA)))
-				.append(SPACE)
-				.append(FROM)
-				.append(SPACE)
-				.append(item.from())
-				.append(SPACE);
-			List<SelectDSL.Where> wheres = item.wheres();
-			StringBuilder whereBuilder = new StringBuilder(200);
-			wheres.forEach(where -> whereBuilder.append(where.concat())
-				.append(SPACE)
-				.append(where.column())
-				.append(SPACE)
-				.append(where.compare1())
-				.append(SPACE)
-				.append(encodeStr(where.val1()))
-				.append(SPACE)
-				.append(StringUtil.isNotEmpty(where.compare2()) ? where.compare2() + SPACE + encodeStr(where.val2())
-						: EMPTY));
-			String where = whereBuilder.toString();
-			if (StringUtil.isNotEmpty(where)) {
-				sql.append(WHERE).append(where);
-			}
-			sql.append(SPACE)
-				.append(ORDER_BY)
-				.append(SPACE)
-				.append(orderBy(item.orderBy().columns()).parallelStream().collect(Collectors.joining(COMMA)));
-			sql.append(SPACE).append(LIMIT).append(SPACE).append(item.offset()).append(COMMA).append(item.limit());
-			sql.append(RIGHT);
-			String joinAlias = item.alias();
-			if (StringUtil.isNotEmpty(joinAlias)) {
-				sql.append(SPACE).append(AS).append(SPACE).append(joinAlias);
-				StringBuilder onBuilder = new StringBuilder(50);
-				item.ons()
-					.forEach(i -> onBuilder.append(SelectDSL.Constant.AND)
-						.append(SPACE)
-						.append(columnAlias(i.fromAlias(), i.fromColumn(),""))
-						.append(EQ)
-						.append(columnAlias(i.joinAlias(), i.joinColumn(),"")));
-				String on = onBuilder.toString();
-				if (StringUtil.isNotEmpty(on)) {
-					sql.append(SPACE).append(ON).append(SPACE).append(on.substring(4));
+		if (CollectionUtil.isNotEmpty(joins)) {
+			joins.forEach(item -> {
+				sql.append(item.type())
+					.append(LEFT)
+					.append(SELECT)
+					.append(SPACE)
+					.append(columns(item.columns(), EMPTY).parallelStream().collect(Collectors.joining(COMMA)))
+					.append(SPACE)
+					.append(FROM)
+					.append(SPACE)
+					.append(item.from())
+					.append(SPACE)
+					.append(AS)
+					.append(SPACE)
+					.append(item.alias())
+					.append(SPACE);
+				String where = where(item.wheres(), item.alias());
+				if (StringUtil.isNotEmpty(where)) {
+					sql.append(WHERE).append(SPACE).append(where);
 				}
-			}
-			sql.append(WRAP);
-		});
+				SelectDSL.GroupBy groupBy = item.groupBy();
+				if (groupBy != null && CollectionUtil.isNotEmpty(groupBy.columns())) {
+					sql.append(SPACE)
+						.append(GROUP_BY)
+						.append(SPACE)
+						.append(columns(groupBy.columns(), EMPTY).parallelStream().collect(Collectors.joining(COMMA)));
+				}
+				sql.append(SPACE)
+					.append(ORDER_BY)
+					.append(SPACE)
+					.append(orderBy(item.orderBy().columns()).parallelStream().collect(Collectors.joining(COMMA)));
+				sql.append(SPACE).append(LIMIT).append(SPACE).append(item.offset()).append(COMMA).append(item.limit());
+				sql.append(RIGHT);
+				String joinAlias = item.alias();
+				if (StringUtil.isNotEmpty(joinAlias)) {
+					sql.append(SPACE).append(AS).append(SPACE).append(joinAlias);
+					StringBuilder onBuilder = new StringBuilder(50);
+					item.ons()
+						.forEach(i -> onBuilder.append(SelectDSL.Constant.AND)
+							.append(SPACE)
+							.append(columnAlias(i.fromAlias(), i.fromColumn(), EMPTY))
+							.append(EQ)
+							.append(columnAlias(i.joinAlias(), i.joinColumn(), EMPTY)));
+					String on = onBuilder.toString();
+					if (StringUtil.isNotEmpty(on)) {
+						sql.append(SPACE).append(ON).append(SPACE).append(on, 4, on.length());
+					}
+				}
+				sql.append(WRAP);
+			});
+		}
+		String where = where(wheres, alias);
+		if (StringUtil.isNotEmpty(where)) {
+			sql.append(WHERE).append(SPACE).append(where);
+		}
 		return sql.toString();
 	}
 
+	private static String where(List<SelectDSL.Where> wheres, String alias) {
+		if (CollectionUtil.isEmpty(wheres)) {
+			return EMPTY;
+		}
+		StringBuilder whereBuilder = new StringBuilder(200);
+		wheres.forEach(where -> whereBuilder.append(where.concat())
+			.append(SPACE)
+			.append(columnAlias(alias, where.column(), EMPTY))
+			.append(SPACE)
+			.append(where.compare1())
+			.append(SPACE)
+			.append(encodeStr(where.val1()))
+			.append(SPACE)
+			.append(StringUtil.isNotEmpty(where.compare2()) ? where.compare2() + SPACE + encodeStr(where.val2())
+					: EMPTY)
+			.append(SPACE));
+		return whereBuilder.toString().trim();
+	}
+
 	public static void main(String[] args) {
+		long l = System.currentTimeMillis();
 		PageQuery pageQuery = new PageQuery(1, 1);
 		SelectDSL.Where where = new SelectDSL.Where.Builder().withCompare1("between")
 			.withCompare2("and")
@@ -149,8 +144,17 @@ public class SqlTemplate {
 			.withVal1("2022-01-01 00:00:00")
 			.withVal2("2023-12-31 00:00:00")
 			.build();
-		SelectDSL boot_sys_user_202201 = getUserPageWrapper(pageQuery.page(), "boot_sys_user_202201", "", where);
+		SelectDSL.Where where2 = new SelectDSL.Where.Builder().withCompare1("=")
+			.withConcat("and")
+			.withColumn("del_flag")
+			.withVal1("0")
+			.build();
+		SelectDSL boot_sys_user_202201 = getTestWrapper(pageQuery.page(), "boot_sys_user_202201", "",
+				Arrays.asList(where, where2));
+		SelectDSL boot_sys_user_2022011 = getTestCountWrapper("boot_sys_user_202201", "", Arrays.asList(where, where2));
 		log.info(toSql(boot_sys_user_202201));
+		log.info(toSql(boot_sys_user_2022011));
+		log.info(String.valueOf(l - System.currentTimeMillis()));
 	}
 
 	public static List<String> columns(List<SelectDSL.Column> columns, String alias) {
@@ -158,7 +162,7 @@ public class SqlTemplate {
 	}
 
 	public static String columnAlias(String alias, String column, String columnAlias) {
-		String as = "";
+		String as = EMPTY;
 		if (StringUtil.isNotEmpty(columnAlias)) {
 			as = SPACE + AS + SPACE + columnAlias;
 		}
@@ -1123,6 +1127,47 @@ public class SqlTemplate {
 
 	public static String dynamicUserTable(String ym) {
 		return "boot_sys_user_" + ym;
+	}
+
+	private static SelectDSL getTestCountWrapper(String tableName, String connector, List<SelectDSL.Where> wheres) {
+		return new SelectDSL.Builder().withConnector(connector)
+			.withColumns(new SelectDSL.Column.Builder().withName("count(1)").build())
+			.withFrom(tableName)
+			.withWhere(wheres)
+			.build();
+	}
+
+	private static SelectDSL getTestWrapper(PageQuery pageQuery, String tableName, String connector,
+			List<SelectDSL.Where> wheres) {
+		String fromAlias = "a";
+		String joinAlias = "b";
+		SelectDSL.Join join = new SelectDSL.Join.Builder().withAlias(joinAlias)
+			.withColumns(new SelectDSL.Column.Builder().withName("id").build())
+			.withFrom(tableName)
+			.withOffset(Long.valueOf(pageQuery.getPageIndex()))
+			.withLimit(Long.valueOf(pageQuery.getPageSize()))
+			.withType(INNER_JOIN)
+			.withOrderBy(SelectDSL.OrderBy
+				.of(Collections.singletonList(new SelectDSL.Column.Builder().withName("id").withSort(DESC).build())))
+			.withWheres(wheres)
+			.withOns(new SelectDSL.On.Builder().withFromColumn("id")
+				.withFromAlias(fromAlias)
+				.withJoinAlias(joinAlias)
+				.withJoinColumn("id")
+				.build())
+			.build();
+		return new SelectDSL.Builder().withAlias(fromAlias)
+			.withConnector(connector)
+			.withColumns(new SelectDSL.Column.Builder().withName("id").build(),
+					new SelectDSL.Column.Builder().withName("username").build(),
+					new SelectDSL.Column.Builder().withName("super_admin").build(),
+					new SelectDSL.Column.Builder().withName("create_date").build(),
+					new SelectDSL.Column.Builder().withName("avatar").build(),
+					new SelectDSL.Column.Builder().withName("`status`").build(),
+					new SelectDSL.Column.Builder().withName("dept_id").build())
+			.withFrom(tableName)
+			.withJoin(join)
+			.build();
 	}
 
 }

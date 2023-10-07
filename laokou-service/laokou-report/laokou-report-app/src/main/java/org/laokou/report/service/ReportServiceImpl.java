@@ -17,6 +17,7 @@
 
 package org.laokou.report.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.laokou.report.api.ReportServiceI;
 import org.springframework.stereotype.Service;
@@ -24,13 +25,14 @@ import org.springframework.stereotype.Service;
 /**
  * @author laokou
  */
+@Slf4j
 @Service
 @DubboService(version = "1.0.0")
 public class ReportServiceImpl implements ReportServiceI {
 
 	@Override
 	public void test() {
-		System.out.println("111");
+		log.info("Dubbo远程调用成功");
 	}
 
 }
