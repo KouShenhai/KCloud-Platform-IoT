@@ -46,7 +46,7 @@ import java.net.URI;
  * @author laokou
  */
 @Configuration(proxyBeanMethods = false)
-public class WebSecurityConfig {
+public class ReactiveSecurityConfig {
 
 	@Bean
 	public ClientHttpConnector customHttpClient() throws SSLException {
