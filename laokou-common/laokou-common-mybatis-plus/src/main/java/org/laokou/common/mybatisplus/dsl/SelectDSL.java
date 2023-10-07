@@ -18,9 +18,13 @@
 package org.laokou.common.mybatisplus.dsl;
 
 import org.laokou.common.i18n.dto.DSL;
-import org.laokou.common.i18n.utils.StringUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import static org.laokou.common.i18n.common.Constant.EMPTY;
 
 /**
  * @author laokou
@@ -331,8 +335,8 @@ public class SelectDSL extends DSL {
 				return this;
 			}
 
-			public Builder withWheres(Where... wheres) {
-				this.wheres = Arrays.asList(wheres);
+			public Builder withWheres(List<Where> wheres) {
+				this.wheres = wheres;
 				return this;
 			}
 
@@ -393,17 +397,17 @@ public class SelectDSL extends DSL {
 
 		public static class Builder {
 
-			private Object val1;
+			private Object val1 = EMPTY;
 
-			private Object val2;
+			private Object val2 = EMPTY;
 
-			private String column;
+			private String column = EMPTY;
 
-			private String concat;
+			private String concat = EMPTY;
 
-			private String compare1;
+			private String compare1 = EMPTY;
 
-			private String compare2;
+			private String compare2 = EMPTY;
 
 			public Builder withVal1(Object val1) {
 				this.val1 = val1;
@@ -436,9 +440,6 @@ public class SelectDSL extends DSL {
 			}
 
 			public Where build() {
-				if (StringUtil.isEmpty(concat)) {
-					concat = "";
-				}
 				return new Where(this);
 			}
 
@@ -477,6 +478,8 @@ public class SelectDSL extends DSL {
 		String UNION_ALL = "union all";
 
 		String ORDER_BY = "order by";
+
+		String GROUP_BY = "group by";
 
 		String BETWEEN = "between";
 
@@ -651,8 +654,8 @@ public class SelectDSL extends DSL {
 			return this;
 		}
 
-		public Builder withWhere(Where... wheres) {
-			this.wheres = Arrays.asList(wheres);
+		public Builder withWhere(List<Where> wheres) {
+			this.wheres = wheres;
 			return this;
 		}
 

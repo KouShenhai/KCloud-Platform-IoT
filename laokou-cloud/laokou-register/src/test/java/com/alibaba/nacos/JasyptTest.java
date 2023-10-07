@@ -17,12 +17,14 @@
 
 package com.alibaba.nacos;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
 
 /**
  * @author laokou
  */
+@Slf4j
 public class JasyptTest {
 
 	private static final String PBEWITHMD5ANDDES = "PBEWithMD5AndDES";
@@ -68,8 +70,8 @@ public class JasyptTest {
 		String plainText = "111";
 		String encryptWithMD5Str = encryptWithMD5(plainText, factor);
 		String decryptWithMD5Str = decryptWithMD5(encryptWithMD5Str, factor);
-		System.out.println("采用MD5加密前原文密文：" + encryptWithMD5Str);
-		System.out.println("采用MD5解密后密文原文:" + decryptWithMD5Str);
+		log.info("采用MD5加密前原文密文：" + encryptWithMD5Str);
+		log.info("采用MD5解密后密文原文:" + decryptWithMD5Str);
 	}
 
 }
