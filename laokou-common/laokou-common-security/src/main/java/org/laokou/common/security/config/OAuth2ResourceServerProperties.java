@@ -34,6 +34,8 @@ public class OAuth2ResourceServerProperties {
 
 	public static final String PREFIX = "spring.security.oauth2.resource-server";
 
+	public static final String ENABLED = "enabled";
+
 	private boolean enabled = true;
 
 	private RequestMatcher requestMatcher;
