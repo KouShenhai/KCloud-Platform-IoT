@@ -40,6 +40,7 @@ import static org.laokou.auth.common.BizCode.MAIL_NOT_NULL;
 import static org.laokou.auth.common.Constant.AUTH_MAIL;
 import static org.laokou.auth.common.Constant.MAIL;
 import static org.laokou.auth.common.exception.ErrorCode.MAIL_ERROR;
+import static org.laokou.common.i18n.common.Constant.EMPTY;
 
 /**
  * @author laokou
@@ -79,7 +80,7 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 			throw OAuth2ExceptionHandler.getException(MAIL_ERROR, MessageUtil.getMessage(MAIL_ERROR));
 		}
 		// 获取用户信息,并认证信息
-		return super.authenticationToken(mail, "", request, code, mail);
+		return super.authenticationToken(mail, EMPTY, request, code, mail);
 	}
 
 	@Override

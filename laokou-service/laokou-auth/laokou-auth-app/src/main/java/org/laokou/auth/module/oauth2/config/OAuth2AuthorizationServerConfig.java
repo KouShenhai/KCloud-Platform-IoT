@@ -281,14 +281,14 @@ class OAuth2AuthorizationServerConfig {
 		return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
 	}
 
-	private static RSAKey getRsaKey() {
+	private RSAKey getRsaKey() {
 		KeyPair keyPair = generateRsaKey();
 		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
 		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
 		return (new RSAKey.Builder(publicKey)).privateKey(privateKey).keyID(UUID.randomUUID().toString()).build();
 	}
 
-	private static KeyPair generateRsaKey() {
+	private KeyPair generateRsaKey() {
 		try {
 			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM_RSA);
 			keyPairGenerator.initialize(2048);
