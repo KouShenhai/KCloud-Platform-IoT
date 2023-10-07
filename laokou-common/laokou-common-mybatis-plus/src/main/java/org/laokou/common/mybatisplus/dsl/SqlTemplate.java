@@ -17,6 +17,7 @@
 
 package org.laokou.common.mybatisplus.dsl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
 
@@ -31,13 +32,14 @@ import static org.laokou.common.mybatisplus.dsl.SelectDSL.Constant.*;
 /**
  * @author laokou
  */
+@Slf4j
 public class SqlTemplate {
 
 	public static List<String> getUserTables(String start, String end) {
 		return new ArrayList<>(0);
 	}
 
-	public static SelectDSL getUserWrapper(PageQuery pageQuery, String tableName, String connector,
+	public static SelectDSL getUserPageWrapper(PageQuery pageQuery, String tableName, String connector,
 			SelectDSL.Where... wheres) {
 		String fromAlias = "a";
 		String joinAlias = "b";
@@ -58,13 +60,13 @@ public class SqlTemplate {
 			.build();
 		return new SelectDSL.Builder().withAlias(fromAlias)
 			.withConnector(connector)
-			.withColumns(new SelectDSL.Column.Builder().withName("id").build(),
-					new SelectDSL.Column.Builder().withName("username").build(),
-					new SelectDSL.Column.Builder().withName("super_admin").build(),
-					new SelectDSL.Column.Builder().withName("create_date").build(),
-					new SelectDSL.Column.Builder().withName("avatar").build(),
-					new SelectDSL.Column.Builder().withName("`status`").build(),
-					new SelectDSL.Column.Builder().withName("dept_id").build())
+			.withColumns(new SelectDSL.Column.Builder().withName("id").withAlias("id").build(),
+					new SelectDSL.Column.Builder().withName("username").withAlias("username").build(),
+					new SelectDSL.Column.Builder().withName("super_admin").withAlias("superAdmin").build(),
+					new SelectDSL.Column.Builder().withName("create_date").withAlias("createDate").build(),
+					new SelectDSL.Column.Builder().withName("avatar").withAlias("avatar").build(),
+					new SelectDSL.Column.Builder().withName("`status`").withAlias("`status`").build(),
+					new SelectDSL.Column.Builder().withName("dept_id").withAlias("deptId").build())
 			.withFrom(tableName)
 			.withJoin(join)
 			.build();
@@ -75,6 +77,10 @@ public class SqlTemplate {
 		List<SelectDSL.Column> columns = dsl.columns();
 		String alias = dsl.alias();
 		List<SelectDSL.Join> joins = dsl.joins();
+		String connector = dsl.connector();
+		if (StringUtil.isNotEmpty(connector)) {
+			sql.append(connector).append(WRAP);
+		}
 		sql.append(SELECT).append(WRAP);
 		sql.append(columns(columns, alias).parallelStream().collect(Collectors.joining(COMMA))).append(WRAP);
 		sql.append(FROM).append(SPACE).append(dsl.from());
@@ -122,9 +128,9 @@ public class SqlTemplate {
 				item.ons()
 					.forEach(i -> onBuilder.append(SelectDSL.Constant.AND)
 						.append(SPACE)
-						.append(columnAlias(i.fromAlias(), i.fromColumn()))
+						.append(columnAlias(i.fromAlias(), i.fromColumn(),""))
 						.append(EQ)
-						.append(columnAlias(i.joinAlias(), i.joinColumn())));
+						.append(columnAlias(i.joinAlias(), i.joinColumn(),"")));
 				String on = onBuilder.toString();
 				if (StringUtil.isNotEmpty(on)) {
 					sql.append(SPACE).append(ON).append(SPACE).append(on.substring(4));
@@ -143,19 +149,23 @@ public class SqlTemplate {
 			.withVal1("2022-01-01 00:00:00")
 			.withVal2("2023-12-31 00:00:00")
 			.build();
-		SelectDSL boot_sys_user_202201 = getUserWrapper(pageQuery.page(), "boot_sys_user_202201", "", where);
-		System.out.println(toSql(boot_sys_user_202201));
+		SelectDSL boot_sys_user_202201 = getUserPageWrapper(pageQuery.page(), "boot_sys_user_202201", "", where);
+		log.info(toSql(boot_sys_user_202201));
 	}
 
 	public static List<String> columns(List<SelectDSL.Column> columns, String alias) {
-		return columns.parallelStream().map(item -> columnAlias(alias, item.name())).toList();
+		return columns.parallelStream().map(item -> columnAlias(alias, item.name(), item.alias())).toList();
 	}
 
-	public static String columnAlias(String alias, String column) {
-		if (StringUtil.isEmpty(alias)) {
-			return column;
+	public static String columnAlias(String alias, String column, String columnAlias) {
+		String as = "";
+		if (StringUtil.isNotEmpty(columnAlias)) {
+			as = SPACE + AS + SPACE + columnAlias;
 		}
-		return alias + DOT + column;
+		if (StringUtil.isEmpty(alias)) {
+			return column + as;
+		}
+		return alias + DOT + column + as;
 	}
 
 	public static String columnSort(String sort, String column) {

@@ -45,6 +45,8 @@ public class SelectDSL extends DSL {
 
 	private final List<Where> wheres;
 
+	private final GroupBy groupBy;
+
 	public SelectDSL(Builder builder) {
 		this.from = builder.from;
 		this.columns = builder.columns;
@@ -55,6 +57,7 @@ public class SelectDSL extends DSL {
 		this.connector = builder.connector;
 		this.alias = builder.alias;
 		this.wheres = builder.wheres;
+		this.groupBy = builder.groupBy;
 	}
 
 	public List<Where> wheres() {
@@ -87,6 +90,10 @@ public class SelectDSL extends DSL {
 
 	public List<Join> joins() {
 		return joins;
+	}
+
+	public GroupBy groupBy() {
+		return groupBy;
 	}
 
 	public String connector() {
@@ -190,6 +197,8 @@ public class SelectDSL extends DSL {
 
 		private final List<On> ons;
 
+		private final GroupBy groupBy;
+
 		public Join(Builder builder) {
 			this.alias = builder.alias;
 			this.type = builder.type;
@@ -201,6 +210,11 @@ public class SelectDSL extends DSL {
 			this.columns = builder.columns;
 			this.wheres = builder.wheres;
 			this.ons = builder.ons;
+			this.groupBy = builder.groupBy;
+		}
+
+		public GroupBy groupBy() {
+			return groupBy;
 		}
 
 		public List<On> ons() {
@@ -264,6 +278,13 @@ public class SelectDSL extends DSL {
 			private List<Where> wheres;
 
 			private List<On> ons;
+
+			private GroupBy groupBy;
+
+			public Builder withGroupBy(GroupBy groupBy) {
+				this.groupBy = groupBy;
+				return this;
+			}
 
 			public Builder withAlias(String alias) {
 				this.alias = alias;
@@ -550,6 +571,24 @@ public class SelectDSL extends DSL {
 
 	}
 
+	public static class GroupBy {
+
+		private final List<Column> COLUMNS = new ArrayList<>();
+
+		public GroupBy(Collection<? extends Column> columns) {
+			this.COLUMNS.addAll(columns);
+		}
+
+		public List<Column> columns() {
+			return COLUMNS;
+		}
+
+		public static GroupBy of(Collection<? extends Column> columns) {
+			return new GroupBy(columns);
+		}
+
+	}
+
 	public static class Builder {
 
 		private String connector;
@@ -569,6 +608,8 @@ public class SelectDSL extends DSL {
 		private String alias;
 
 		private List<Where> wheres;
+
+		private GroupBy groupBy;
 
 		public Builder withLimit(Long limit) {
 			this.limit = limit;
@@ -602,6 +643,11 @@ public class SelectDSL extends DSL {
 
 		public Builder withAlias(String alias) {
 			this.alias = alias;
+			return this;
+		}
+
+		public Builder withGroupBy(GroupBy groupBy) {
+			this.groupBy = groupBy;
 			return this;
 		}
 
