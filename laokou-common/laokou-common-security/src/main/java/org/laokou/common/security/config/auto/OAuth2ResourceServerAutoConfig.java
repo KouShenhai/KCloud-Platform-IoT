@@ -40,6 +40,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.laokou.common.i18n.common.Constant.TRUE;
+
 /**
  * 关闭oauth2,请在yml配置spring.oauth2.resource-server.enabled=false
  * 关闭security，请排除SecurityAutoConfiguration、ManagementWebSecurityAutoConfiguration
@@ -51,8 +53,8 @@ import java.util.Set;
 @EnableMethodSecurity
 @AutoConfigureAfter({ OAuth2AuthorizationAutoConfig.class })
 @Data
-@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = OAuth2ResourceServerProperties.PREFIX,
-		name = "enabled")
+@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = OAuth2ResourceServerProperties.PREFIX,
+		name = OAuth2ResourceServerProperties.ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2ResourceServerAutoConfig {
 

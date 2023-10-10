@@ -326,7 +326,7 @@ public class IdGenerator {
 
 		private SystemClock(long period) {
 			this.period = period;
-			this.now = new AtomicLong(IdGenerator.SystemClock.now());
+			this.now = new AtomicLong(System.currentTimeMillis());
 			scheduleClockUpdating();
 		}
 

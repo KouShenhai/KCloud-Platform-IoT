@@ -26,27 +26,16 @@ import org.laokou.common.mybatisplus.handler.JasyptTypeHandler;
 
 import java.io.Serial;
 
+import static org.laokou.common.mybatisplus.config.DynamicTableNameHandler.PLACE_HOLDER;
+import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_USER;
+
 /**
  * @author laokou
  */
 @Data
-@TableName(value = "boot_sys_user", autoResultMap = true)
+@TableName(value = BOOT_SYS_USER + PLACE_HOLDER, autoResultMap = true)
 @Schema(name = "UserDO", description = "用户")
 public class UserDO extends BaseDO {
-
-	public static final String FIELD_USERNAME = "username";
-
-	public static final String FIELD_PASSWORD = "password";
-
-	public static final String FIELD_SUPER_ADMIN = "super_admin";
-
-	public static final String FIELD_AVATAR = "avatar";
-
-	public static final String FIELD_MAIL = "mail";
-
-	public static final String FIELD_STATUS = "status";
-
-	public static final String FIELD_MOBILE = "mobile";
 
 	@Serial
 	private static final long serialVersionUID = 1181289215379287683L;

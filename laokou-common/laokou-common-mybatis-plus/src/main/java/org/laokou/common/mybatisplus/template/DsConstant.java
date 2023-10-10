@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.admin.common;
+package org.laokou.common.mybatisplus.template;
 
 /**
  * @author laokou
@@ -42,6 +42,6 @@ public interface DsConstant {
 
 	String BOOT_SYS_OPERATE_LOG = "boot_sys_operate_log";
 
-	String BOOT_SYS_LOGIN_LOG = "boot_sys_login_log.sql";
+	String BOOT_SYS_LOGIN_LOG = "boot_sys_login_log";
 
 }

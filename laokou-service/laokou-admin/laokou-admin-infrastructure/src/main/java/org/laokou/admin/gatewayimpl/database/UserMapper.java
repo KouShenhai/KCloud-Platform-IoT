@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
@@ -53,12 +52,17 @@ public interface UserMapper extends BatchMapper<UserDO> {
 
 	/**
 	 * 查询用户列表
-	 * @param page
-	 * @param userDO
+	 * @param tables
+	 * @param user
 	 * @param pageQuery
 	 * @return
 	 */
-	IPage<UserDO> getUserListFilter(IPage<UserDO> page, @Param("user") UserDO userDO,
+	List<UserDO> getUserListFilter(@Param("tables") List<String> tables, @Param("user") UserDO user,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
+
+	Integer getUserListTotalFilter(@Param("tables") List<String> tables, @Param("user") UserDO user,
+			@Param(PAGE_QUERY) PageQuery pageQuery);
+
+	Integer getUserCount(@Param("tables") List<String> tables, @Param("user") UserDO user);
 
 }

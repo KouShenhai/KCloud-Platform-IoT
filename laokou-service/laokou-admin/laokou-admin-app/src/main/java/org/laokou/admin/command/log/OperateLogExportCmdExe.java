@@ -28,7 +28,7 @@ import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.admin.common.DsConstant.BOOT_SYS_OPERATE_LOG;
+import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_OPERATE_LOG;
 
 /**
  * @author laokou

@@ -40,6 +40,7 @@ import static org.laokou.auth.common.BizCode.MOBILE_NOT_NULL;
 import static org.laokou.auth.common.Constant.AUTH_MOBILE;
 import static org.laokou.auth.common.Constant.MOBILE;
 import static org.laokou.auth.common.exception.ErrorCode.MOBILE_ERROR;
+import static org.laokou.common.i18n.common.Constant.EMPTY;
 
 /**
  * @author laokou
@@ -78,7 +79,7 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 			throw OAuth2ExceptionHandler.getException(MOBILE_ERROR, MessageUtil.getMessage(MOBILE_ERROR));
 		}
 		// 获取用户信息,并认证信息
-		return super.authenticationToken(mobile, "", request, code, mobile);
+		return super.authenticationToken(mobile, EMPTY, request, code, mobile);
 	}
 
 	@Override

@@ -92,6 +92,11 @@ public interface Constant {
 	String LIKE = "like";
 
 	/**
+	 * 下划线
+	 */
+	String UNDER = "_";
+
+	/**
 	 * 双引号
 	 */
 	String DOUBLE_QUOT = "\"";

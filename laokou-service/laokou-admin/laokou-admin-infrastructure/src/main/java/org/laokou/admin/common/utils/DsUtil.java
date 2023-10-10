@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.admin.common.DsConstant.*;
+import static org.laokou.common.mybatisplus.template.DsConstant.*;
 
 /**
  * @author laokou

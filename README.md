@@ -87,7 +87,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 - 远程调用：Dubbo & Spring Cloud OpenFeign & OkHttp & HttpClient & WebClient
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Sentinel
-- 分库分表&读写分离：ShardingSphere
+- 分库分表&读写分离：Mybatis Plus & ShardingSphere
 - 分布式事务：Seata & RocketMQ
 - 消息队列：RocketMQ & Kafka
 - 服务监控：Spring Boot Admin & Prometheus
