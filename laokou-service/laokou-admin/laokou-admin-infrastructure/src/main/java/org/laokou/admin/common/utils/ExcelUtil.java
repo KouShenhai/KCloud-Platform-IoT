@@ -57,21 +57,21 @@ public class ExcelUtil {
 
 	private static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
-	public static <T extends BaseDO> void export(List<String> tables,HttpServletResponse response, T param, PageQuery pageQuery,
-			BatchMapper<T> batchMapper, Class<?> clazz) {
-		export(tables,DEFAULT_SIZE, response, param, pageQuery, batchMapper, clazz);
+	public static <T extends BaseDO> void export(List<String> tables, HttpServletResponse response, T param,
+			PageQuery pageQuery, BatchMapper<T> batchMapper, Class<?> clazz) {
+		export(tables, DEFAULT_SIZE, response, param, pageQuery, batchMapper, clazz);
 	}
 
 	@SneakyThrows
-	public static <T extends BaseDO> void export(List<String> tables,int size, HttpServletResponse response, T param, PageQuery pageQuery,
-			BatchMapper<T> batchMapper, Class<?> clazz) {
+	public static <T extends BaseDO> void export(List<String> tables, int size, HttpServletResponse response, T param,
+			PageQuery pageQuery, BatchMapper<T> batchMapper, Class<?> clazz) {
 		try (ServletOutputStream out = response.getOutputStream();
 				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
 			// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
 			// 设置请求头
 			header(response);
 			List<T> list = Collections.synchronizedList(new ArrayList<>(size));
-			batchMapper.resultListFilter(tables,param, resultContext -> {
+			batchMapper.resultListFilter(tables, param, resultContext -> {
 				list.add(resultContext.getResultObject());
 				if (list.size() % size == 0) {
 					writeSheet(list, clazz, excelWriter);
