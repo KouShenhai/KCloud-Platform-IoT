@@ -42,7 +42,7 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 * @param type 登录类型
 	 * @return UserDO
 	 */
-	UserDO getUserByUsernameAndTenantId(@Param("tables") List<String> tables, @Param("username") String username, @Param(TENANT_ID) Long tenantId,
-										@Param("type") String type);
+	UserDO getUserByUsernameAndTenantId(@Param("tables") List<String> tables, @Param("username") String username,
+			@Param(TENANT_ID) Long tenantId, @Param("type") String type);
 
 }

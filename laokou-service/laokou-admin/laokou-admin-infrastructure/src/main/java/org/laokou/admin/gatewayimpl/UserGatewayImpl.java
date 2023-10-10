@@ -72,6 +72,7 @@ public class UserGatewayImpl implements UserGateway {
 	private final BatchUtil batchUtil;
 
 	private final UserRoleMapper userRoleMapper;
+
 	private final ThreadPoolTaskExecutor taskExecutor;
 
 	@Override
@@ -97,7 +98,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean deleteUserById(Long id) {
-		return userMapper.deleteDynamicTableById(id,getUserTableSuffix(id)) > 0;
+		return userMapper.deleteDynamicTableById(id, getUserTableSuffix(id)) > 0;
 	}
 
 	@Override
@@ -116,19 +117,20 @@ public class UserGatewayImpl implements UserGateway {
 	@DS(USER)
 	public User getById(Long id, Long tenantId) {
 		LocalDateTime localDateTime = IdGenerator.getLocalDateTime(id);
-		UserDO userDO = userMapper.getDynamicTableById(UserDO.class
-				, id
-				, UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM))
-				, "id", "username", "status", "dept_id", "dept_path", "super_admin");
+		UserDO userDO = userMapper.getDynamicTableById(UserDO.class, id,
+				UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM)), "id", "username", "status", "dept_id",
+				"dept_path", "super_admin");
 		User user = ConvertUtil.sourceToTarget(userDO, User.class);
 		try {
 			DynamicDataSourceContextHolder.push(MASTER);
 			if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
 				user.setRoleIds(roleMapper.getRoleIdsByTenantId(tenantId));
-			} else {
+			}
+			else {
 				user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
 			}
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 		return user;
@@ -140,12 +142,14 @@ public class UserGatewayImpl implements UserGateway {
 	public Datas<User> list(User user, PageQuery pageQuery) {
 		UserDO userDO = UserConvertor.toDataObject(user);
 		final PageQuery page = pageQuery.time().page().ignore(true);
-		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(), BOOT_SYS_USER);
+		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
+				BOOT_SYS_USER);
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture.supplyAsync(() -> {
 			try {
 				DynamicDataSourceContextHolder.push(USER);
 				return userMapper.getUserListFilter(dynamicTables, userDO, page);
-			} finally {
+			}
+			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
 		}, taskExecutor);
@@ -153,7 +157,8 @@ public class UserGatewayImpl implements UserGateway {
 			try {
 				DynamicDataSourceContextHolder.push(USER);
 				return userMapper.getUserListTotalFilter(dynamicTables, userDO, page);
-			} finally {
+			}
+			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
 		}, taskExecutor);
@@ -166,13 +171,14 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertUser(UserDO userDO, User user) {
-		boolean flag = userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),UNDER.concat(DateUtil.format(DateUtil.now(),DateUtil.YYYYMM)));
+		boolean flag = userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),
+				UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
 		return flag && insertUserRole(userDO.getId(), user.getRoleIds(), user);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateUser(UserDO userDO, User user, List<Long> ids) {
-		boolean flag = userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(),BOOT_SYS_USER)) > 0;
+		boolean flag = userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER)) > 0;
 		flag = flag && deleteUserRole(ids);
 		return flag && insertUserRole(userDO.getId(), user.getRoleIds(), user);
 	}
@@ -194,7 +200,8 @@ public class UserGatewayImpl implements UserGateway {
 		UserDO userDO = UserConvertor.toDataObject(user);
 		userDO.setEditor(user.getEditor());
 		userDO.setUpdateDate(DateUtil.now());
-		userDO.setVersion(userMapper.getDynamicTableVersion(userDO.getId(), UserDO.class,getUserTableSuffix(user.getId())));
+		userDO.setVersion(
+				userMapper.getDynamicTableVersion(userDO.getId(), UserDO.class, getUserTableSuffix(user.getId())));
 		return userDO;
 	}
 
@@ -226,12 +233,12 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateUser(UserDO userDO) {
-		return userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(),BOOT_SYS_USER)) > 0;
+		return userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER)) > 0;
 	}
 
 	private String getUserTableSuffix(Long id) {
 		LocalDateTime localDateTime = IdGenerator.getLocalDateTime(id);
-		return UNDER.concat(DateUtil.format(localDateTime,DateUtil.YYYYMM));
+		return UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM));
 	}
 
 }

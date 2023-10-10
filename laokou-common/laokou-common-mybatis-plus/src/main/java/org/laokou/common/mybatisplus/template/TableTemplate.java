@@ -40,21 +40,22 @@ import static org.laokou.common.i18n.common.Constant.UNDER;
 public class TableTemplate {
 
 	public static final String MAX_TIME = "2099-12-31 23:59:59";
+
 	public static final String MIN_TIME = "2022-01-01 00:00:00";
 
-	public static List<String> getDynamicTables(String start, String end,String tableName) {
+	public static List<String> getDynamicTables(String start, String end, String tableName) {
 		LocalDate date1 = toDate(start);
 		LocalDate date2 = toDate(end);
-		int subMonths = (int) (DateUtil.getMonths(date1,date2) + 1);
+		int subMonths = (int) (DateUtil.getMonths(date1, date2) + 1);
 		List<String> list = new ArrayList<>(subMonths);
-		while (DateUtil.isBefore(date1,date2) || date1.equals(date2)) {
-			list.add(tableName.concat(UNDER).concat(DateUtil.format(date1,DateUtil.YYYYMM)));
-			date1 = DateUtil.plusMonths(date1,1);
+		while (DateUtil.isBefore(date1, date2) || date1.equals(date2)) {
+			list.add(tableName.concat(UNDER).concat(DateUtil.format(date1, DateUtil.YYYYMM)));
+			date1 = DateUtil.plusMonths(date1, 1);
 		}
 		return list;
 	}
 
-	public static String getDynamicTable(Long snowflakeId,String tableName) {
+	public static String getDynamicTable(Long snowflakeId, String tableName) {
 		return tableName + UNDER + DateUtil.format(IdGenerator.getLocalDateTime(snowflakeId), DateUtil.YYYYMM);
 	}
 
@@ -78,7 +79,7 @@ public class TableTemplate {
 
 	private static LocalDate toDate(String dateStr) {
 		int year = Integer.parseInt(dateStr.substring(0, 4));
-		int month = Integer.parseInt(dateStr.substring(5,7));
+		int month = Integer.parseInt(dateStr.substring(5, 7));
 		return LocalDate.of(year, month, 1);
 	}
 

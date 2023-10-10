@@ -35,10 +35,10 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 @Mapper
 public interface LoginLogMapper extends BatchMapper<LoginLogDO> {
 
-	List<LoginLogDO> getLoginLogListFilter(@Param("tables") List<String> tables, @Param("log")LoginLogDO loginLogDO
-			, @Param(PAGE_QUERY) PageQuery pageQuery);
+	List<LoginLogDO> getLoginLogListFilter(@Param("tables") List<String> tables, @Param("log") LoginLogDO loginLogDO,
+			@Param(PAGE_QUERY) PageQuery pageQuery);
 
-	Integer getLoginLogCountFilter(@Param("tables") List<String> tables,@Param("log")LoginLogDO loginLogDO
-			, @Param(PAGE_QUERY) PageQuery pageQuery);
+	Integer getLoginLogCountFilter(@Param("tables") List<String> tables, @Param("log") LoginLogDO loginLogDO,
+			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

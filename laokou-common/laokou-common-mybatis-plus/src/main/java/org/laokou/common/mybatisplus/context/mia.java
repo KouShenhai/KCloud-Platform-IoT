@@ -23,8 +23,10 @@ import java.util.regex.Pattern;
  * @author laokou
  */
 public class mia {
-    public static void main(String[] args) {
-        String st = "33s%";
-        System.out.println(Pattern.quote("%"));
-    }
+
+	public static void main(String[] args) {
+		String st = "33s%";
+		System.out.println(Pattern.quote("%"));
+	}
+
 }

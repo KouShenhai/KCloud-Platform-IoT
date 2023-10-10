@@ -65,12 +65,14 @@ public class LogGatewayImpl implements LogGateway {
 		final PageQuery page = pageQuery.time().page().ignore(true);
 		LoginLogDO loginLogDO = ConvertUtil.sourceToTarget(loginLog, LoginLogDO.class);
 		loginLogDO.setTenantId(user.getTenantId());
-		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(), BOOT_SYS_LOGIN_LOG);
+		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
+				BOOT_SYS_LOGIN_LOG);
 		CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture.supplyAsync(() -> {
 			try {
 				DynamicDataSourceContextHolder.push(LOGIN_LOG);
 				return loginLogMapper.getLoginLogListFilter(dynamicTables, loginLogDO, page);
-			} finally {
+			}
+			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
 		}, taskExecutor);
@@ -78,7 +80,8 @@ public class LogGatewayImpl implements LogGateway {
 			try {
 				DynamicDataSourceContextHolder.push(LOGIN_LOG);
 				return loginLogMapper.getLoginLogCountFilter(dynamicTables, loginLogDO, page);
-			} finally {
+			}
+			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
 		}, taskExecutor);

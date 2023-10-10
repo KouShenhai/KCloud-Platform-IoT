@@ -81,7 +81,7 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 	/**
 	 * 新增动态分表
 	 */
-	default Boolean insertDynamicTable(T t, String sql,String suffix) {
+	default Boolean insertDynamicTable(T t, String sql, String suffix) {
 		try {
 			DynamicTableSuffixContextHolder.set(suffix);
 			t.setId(IdGenerator.defaultSnowflakeId());
@@ -90,36 +90,38 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 		catch (Exception e) {
 			this.execute(sql);
 			return this.insert(t) > 0;
-		} finally {
+		}
+		finally {
 			DynamicTableSuffixContextHolder.clear();
 		}
 	}
 
-	default Integer deleteDynamicTableById(Long id,String suffix) {
+	default Integer deleteDynamicTableById(Long id, String suffix) {
 		try {
 			DynamicTableSuffixContextHolder.set(suffix);
 			return this.deleteById(id);
-		} finally {
+		}
+		finally {
 			DynamicTableSuffixContextHolder.clear();
 		}
 	}
 
-	default Integer getDynamicTableVersion(Long id, Class<T> clazz,String suffix) {
+	default Integer getDynamicTableVersion(Long id, Class<T> clazz, String suffix) {
 		try {
 			DynamicTableSuffixContextHolder.set(suffix);
-			return getVersion(id,clazz);
-		} finally {
+			return getVersion(id, clazz);
+		}
+		finally {
 			DynamicTableSuffixContextHolder.clear();
 		}
 	}
 
-	default T getDynamicTableById(Class<T> clazz,Long id,String suffix,String...columns) {
+	default T getDynamicTableById(Class<T> clazz, Long id, String suffix, String... columns) {
 		try {
 			DynamicTableSuffixContextHolder.set(suffix);
-			return this.selectOne(Wrappers.query(clazz)
-					.eq("id", id)
-					.select(columns));
-		} finally {
+			return this.selectOne(Wrappers.query(clazz).eq("id", id).select(columns));
+		}
+		finally {
 			DynamicTableSuffixContextHolder.clear();
 		}
 	}
