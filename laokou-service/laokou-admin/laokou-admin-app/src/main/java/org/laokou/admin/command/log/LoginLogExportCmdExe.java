@@ -26,8 +26,12 @@ import org.laokou.admin.dto.log.clientobject.LoginLogExcel;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 import static org.laokou.admin.common.Constant.LOGIN_LOG;
 import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_LOGIN_LOG;
@@ -43,7 +47,10 @@ public class LoginLogExportCmdExe {
 	@DS(LOGIN_LOG)
 	public void executeVoid(LoginLogExportCmd cmd) {
 		LoginLogMapper loginLogMapper = SpringContextUtil.getBean(LoginLogMapper.class);
-		ExcelUtil.export(cmd.getResponse(), buildLoginLog(cmd), cmd.time(), loginLogMapper, LoginLogExcel.class);
+		PageQuery pageQuery = cmd.time().ignore(true);
+		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
+				BOOT_SYS_LOGIN_LOG);
+		ExcelUtil.export(dynamicTables,cmd.getResponse(), buildLoginLog(cmd), pageQuery, loginLogMapper, LoginLogExcel.class);
 	}
 
 	private LoginLogDO buildLoginLog(LoginLogExportCmd cmd) {

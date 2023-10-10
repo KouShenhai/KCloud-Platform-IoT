@@ -57,13 +57,13 @@ public class ExcelUtil {
 
 	private static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
-	public static <T extends BaseDO> void export(HttpServletResponse response, T param, PageQuery pageQuery,
+	public static <T extends BaseDO> void export(List<String> tables,HttpServletResponse response, T param, PageQuery pageQuery,
 			BatchMapper<T> batchMapper, Class<?> clazz) {
-		export(DEFAULT_SIZE, response, param, pageQuery, batchMapper, clazz);
+		export(tables,DEFAULT_SIZE, response, param, pageQuery, batchMapper, clazz);
 	}
 
 	@SneakyThrows
-	public static <T extends BaseDO> void export(int size, HttpServletResponse response, T param, PageQuery pageQuery,
+	public static <T extends BaseDO> void export(List<String> tables,int size, HttpServletResponse response, T param, PageQuery pageQuery,
 			BatchMapper<T> batchMapper, Class<?> clazz) {
 		try (ServletOutputStream out = response.getOutputStream();
 				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
@@ -71,7 +71,7 @@ public class ExcelUtil {
 			// 设置请求头
 			header(response);
 			List<T> list = Collections.synchronizedList(new ArrayList<>(size));
-			batchMapper.resultListFilter(param, resultContext -> {
+			batchMapper.resultListFilter(tables,param, resultContext -> {
 				list.add(resultContext.getResultObject());
 				if (list.size() % size == 0) {
 					writeSheet(list, clazz, excelWriter);
