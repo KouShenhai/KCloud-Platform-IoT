@@ -28,6 +28,8 @@ import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+
 import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_OPERATE_LOG;
 
 /**
@@ -40,7 +42,8 @@ public class OperateLogExportCmdExe {
 	@DataFilter(alias = BOOT_SYS_OPERATE_LOG)
 	public void executeVoid(OperateLogExportCmd cmd) {
 		OperateLogMapper operateLogMapper = SpringContextUtil.getBean(OperateLogMapper.class);
-		ExcelUtil.export(cmd.getResponse(), buildOperateLog(cmd), cmd, operateLogMapper, OperateLogExcel.class);
+		ExcelUtil.export(Collections.emptyList(), cmd.getResponse(), buildOperateLog(cmd), cmd, operateLogMapper,
+				OperateLogExcel.class);
 	}
 
 	private OperateLogDO buildOperateLog(OperateLogExportCmd cmd) {
