@@ -38,7 +38,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.laokou.admin.common.DsConstant.BOOT_SYS_TENANT;
+import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_TENANT;
 
 /**
  * @author laokou

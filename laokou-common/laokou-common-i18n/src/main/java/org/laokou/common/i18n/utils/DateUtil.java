@@ -113,6 +113,10 @@ public class DateUtil {
 		return localDateTime1.isBefore(localDateTime2);
 	}
 
+	public static boolean isBefore(LocalDate localDate1, LocalDate localDate2) {
+		return localDate1.isBefore(localDate2);
+	}
+
 	/**
 	 * 转换
 	 * @param dateTime 时间
@@ -165,6 +169,10 @@ public class DateUtil {
 	 */
 	public static LocalDateTime plusMonths(LocalDateTime localDateTime, long months) {
 		return localDateTime.plusMonths(months);
+	}
+
+	public static LocalDate plusMonths(LocalDate localDate, long months) {
+		return localDate.plusMonths(months);
 	}
 
 	/**

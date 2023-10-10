@@ -23,11 +23,14 @@ import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 import java.io.Serial;
 
+import static org.laokou.common.mybatisplus.config.DynamicTableNameHandler.PLACE_HOLDER;
+import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_LOGIN_LOG;
+
 /**
  * @author laokou
  */
 @Data
-@TableName("boot_sys_login_log.sql")
+@TableName(BOOT_SYS_LOGIN_LOG + PLACE_HOLDER)
 @Schema(name = "LoginLogDO", description = "登录日志")
 public class LoginLogDO extends BaseDO {
 

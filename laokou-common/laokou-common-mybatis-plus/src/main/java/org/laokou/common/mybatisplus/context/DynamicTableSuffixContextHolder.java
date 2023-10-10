@@ -20,12 +20,12 @@ package org.laokou.common.mybatisplus.context;
 /**
  * @author laokou
  */
-public class DynamicTableContextHolder {
+public class DynamicTableSuffixContextHolder {
 
 	private static final ThreadLocal<String> CONTEXT_HOLDER = new InheritableThreadLocal<>();
 
-	public static void set(String tableName) {
-		CONTEXT_HOLDER.set(tableName);
+	public static void set(String suffix) {
+		CONTEXT_HOLDER.set(suffix);
 	}
 
 	public static void clear() {

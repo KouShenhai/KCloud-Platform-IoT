@@ -71,21 +71,59 @@
         order by id desc
     </select>
     <select id="getUserListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
-        select id
-            ,`username`
-            ,super_admin
-            ,create_date
-            ,avatar
-            ,`status`
-            ,dept_id
-        FROM boot_sys_user
-        where del_flag = 0
-            and create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
+        <if test="tables != null and tables.size() > 0">
+        select * from (<foreach collection="tables" item="table" separator=" union all ">
+                select id
+                ,`username`
+                ,super_admin
+                ,create_date
+                ,avatar
+                ,`status`
+            FROM ${table} boot_sys_user
+            where del_flag = 0
             and tenant_id = #{user.tenantId}
-        <if test="user.username != null and user.username != ''">
-            and `username` = #{user.username}
-        </if>
+            and create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
+            <if test="user.username != null and user.username != ''">
+                and `username` = #{user.username}
+            </if>
+            <if test="pageQuery.sqlFilter != null and pageQuery.sqlFilter != ''">
+                and ${pageQuery.sqlFilter}
+            </if>
+            </foreach>) a
         order by id desc
+        limit ${pageQuery.pageIndex},${pageQuery.pageSize}
+        </if>
+    </select>
+    <select id="getUserListTotalFilter" resultType="java.lang.Integer">
+        <if test="tables != null and tables.size() > 0">
+            select sum(a.num) from (<foreach collection="tables" item="table" separator=" union all ">
+            select count(1) as num
+            FROM ${table} as boot_sys_user
+            where del_flag = 0
+            and tenant_id = #{user.tenantId}
+            and create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
+            <if test="user.username != null and user.username != ''">
+                and `username` = #{user.username}
+            </if>
+            <if test="pageQuery.sqlFilter != null and pageQuery.sqlFilter != ''">
+                and ${pageQuery.sqlFilter}
+            </if>
+            </foreach>) a
+        </if>
+    </select>
+    <select id="getUserCount" resultType="java.lang.Integer">
+        <if test="tables != null and tables.size() > 0">
+            select sum(a.n) from(<foreach collection="tables" item="table" separator=" union all ">
+                select count(1) as n
+                from ${table}
+                where del_flag = 0
+                and tenant_id = #{user.tenantId}
+                and username = #{user.username}
+                <if test="user.id != null">
+                    and id <![CDATA[ <> ]]> #{user.id}
+                </if>
+            </foreach>) a
+        </if>
     </select>
 
 </mapper>

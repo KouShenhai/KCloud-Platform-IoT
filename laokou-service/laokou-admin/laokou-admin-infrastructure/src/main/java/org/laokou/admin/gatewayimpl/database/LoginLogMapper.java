@@ -17,13 +17,14 @@
 
 package org.laokou.admin.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
@@ -34,8 +35,10 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 @Mapper
 public interface LoginLogMapper extends BatchMapper<LoginLogDO> {
 
-	IPage<LoginLogDO> getLoginLogListFilter(IPage<LoginLogDO> page, @Param("tenantId") Long tenantId,
-			@Param("username") String username, @Param("status") Integer status,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	List<LoginLogDO> getLoginLogListFilter(@Param("tables") List<String> tables, @Param("log")LoginLogDO loginLogDO
+			, @Param(PAGE_QUERY) PageQuery pageQuery);
+
+	Integer getLoginLogCountFilter(@Param("tables") List<String> tables,@Param("log")LoginLogDO loginLogDO
+			, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

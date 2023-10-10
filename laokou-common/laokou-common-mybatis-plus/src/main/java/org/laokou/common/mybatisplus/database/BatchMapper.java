@@ -27,6 +27,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 import org.springframework.stereotype.Repository;
 
@@ -80,14 +81,46 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 	/**
 	 * 新增动态分表
 	 */
-	default Boolean insertDynamicTable(T t, String sql) {
+	default Boolean insertDynamicTable(T t, String sql,String suffix) {
 		try {
+			DynamicTableSuffixContextHolder.set(suffix);
 			t.setId(IdGenerator.defaultSnowflakeId());
 			return this.insert(t) > 0;
 		}
 		catch (Exception e) {
 			this.execute(sql);
 			return this.insert(t) > 0;
+		} finally {
+			DynamicTableSuffixContextHolder.clear();
+		}
+	}
+
+	default Integer deleteDynamicTableById(Long id,String suffix) {
+		try {
+			DynamicTableSuffixContextHolder.set(suffix);
+			return this.deleteById(id);
+		} finally {
+			DynamicTableSuffixContextHolder.clear();
+		}
+	}
+
+	default Integer getDynamicTableVersion(Long id, Class<T> clazz,String suffix) {
+		try {
+			DynamicTableSuffixContextHolder.set(suffix);
+			return getVersion(id,clazz);
+		} finally {
+			DynamicTableSuffixContextHolder.clear();
+		}
+	}
+
+	default T getDynamicTableById(Class<T> clazz,Long id,String suffix,String...columns) {
+		try {
+			DynamicTableSuffixContextHolder.set(suffix);
+			return this.selectOne(Wrappers.query(clazz)
+					.eq("id", id)
+					.select(columns));
+		} finally {
+			DynamicTableSuffixContextHolder.clear();
 		}
 	}
 

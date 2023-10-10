@@ -30,7 +30,7 @@ import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.admin.common.Constant.LOGIN_LOG;
-import static org.laokou.admin.common.DsConstant.BOOT_SYS_LOGIN_LOG;
+import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_LOGIN_LOG;
 
 /**
  * @author laokou

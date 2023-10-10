@@ -26,11 +26,14 @@ import org.laokou.common.mybatisplus.handler.JasyptTypeHandler;
 
 import java.io.Serial;
 
+import static org.laokou.common.mybatisplus.config.DynamicTableNameHandler.PLACE_HOLDER;
+import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_USER;
+
 /**
  * @author laokou
  */
 @Data
-@TableName(value = "boot_sys_user", autoResultMap = true)
+@TableName(value = BOOT_SYS_USER + PLACE_HOLDER, autoResultMap = true)
 @Schema(name = "UserDO", description = "用户")
 public class UserDO extends BaseDO {
 

@@ -19,10 +19,8 @@ package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
@@ -40,23 +38,22 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.mybatisplus.dsl.SelectDSL;
+import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
-import org.laokou.common.shardingsphere.utils.TableUtil;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.admin.common.Constant.USER;
-import static org.laokou.admin.common.DsConstant.BOOT_SYS_USER;
-import static org.laokou.admin.gatewayimpl.database.dataobject.UserDO.*;
-import static org.laokou.common.mybatisplus.dsl.SelectDSL.Constant.DESC;
-import static org.laokou.common.mybatisplus.dsl.SelectDSL.Constant.INNER_JOIN;
+import static org.laokou.common.i18n.common.Constant.UNDER;
+import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_USER;
 
 /**
  * @author laokou
@@ -75,6 +72,7 @@ public class UserGatewayImpl implements UserGateway {
 	private final BatchUtil batchUtil;
 
 	private final UserRoleMapper userRoleMapper;
+	private final ThreadPoolTaskExecutor taskExecutor;
 
 	@Override
 	@DS(USER)
@@ -99,7 +97,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean deleteUserById(Long id) {
-		return userMapper.deleteById(id) > 0;
+		return userMapper.deleteDynamicTableById(id,getUserTableSuffix(id)) > 0;
 	}
 
 	@Override
@@ -117,20 +115,20 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	@DS(USER)
 	public User getById(Long id, Long tenantId) {
-		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class)
-			.eq("id", id)
-			.select("id", "username", "status", "dept_id", "dept_path", "super_admin"));
+		LocalDateTime localDateTime = IdGenerator.getLocalDateTime(id);
+		UserDO userDO = userMapper.getDynamicTableById(UserDO.class
+				, id
+				, UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM))
+				, "id", "username", "status", "dept_id", "dept_path", "super_admin");
 		User user = ConvertUtil.sourceToTarget(userDO, User.class);
 		try {
 			DynamicDataSourceContextHolder.push(MASTER);
 			if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
 				user.setRoleIds(roleMapper.getRoleIdsByTenantId(tenantId));
-			}
-			else {
+			} else {
 				user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
 			}
-		}
-		finally {
+		} finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 		return user;
@@ -138,25 +136,43 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_USER)
-	@DS(USER)
+	@SneakyThrows
 	public Datas<User> list(User user, PageQuery pageQuery) {
-		Page<UserDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<UserDO> newPage = userMapper.getUserListFilter(page, UserConvertor.toDataObject(user), pageQuery.time());
+		UserDO userDO = UserConvertor.toDataObject(user);
+		final PageQuery page = pageQuery.time().page().ignore(true);
+		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(), BOOT_SYS_USER);
+		CompletableFuture<List<UserDO>> c1 = CompletableFuture.supplyAsync(() -> {
+			try {
+				DynamicDataSourceContextHolder.push(USER);
+				return userMapper.getUserListFilter(dynamicTables, userDO, page);
+			} finally {
+				DynamicDataSourceContextHolder.clear();
+			}
+		}, taskExecutor);
+		CompletableFuture<Integer> c2 = CompletableFuture.supplyAsync(() -> {
+			try {
+				DynamicDataSourceContextHolder.push(USER);
+				return userMapper.getUserListTotalFilter(dynamicTables, userDO, page);
+			} finally {
+				DynamicDataSourceContextHolder.clear();
+			}
+		}, taskExecutor);
+		CompletableFuture.allOf(c1, c2).join();
 		Datas<User> datas = new Datas<>();
-		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), User.class));
+		datas.setTotal(c2.get());
+		datas.setRecords(ConvertUtil.sourceToTarget(c1.get(), User.class));
 		return datas;
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean insertUser(UserDO userDO, User user) {
-		boolean flag = userMapper.insertDynamicTable(userDO, TableUtil.getUserSqlScript(DateUtil.now()));
+		boolean flag = userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),UNDER.concat(DateUtil.format(DateUtil.now(),DateUtil.YYYYMM)));
 		return flag && insertUserRole(userDO.getId(), user.getRoleIds(), user);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateUser(UserDO userDO, User user, List<Long> ids) {
-		boolean flag = userMapper.updateUser(userDO, TableUtil.getUserTable(userDO.getId())) > 0;
+		boolean flag = userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(),BOOT_SYS_USER)) > 0;
 		flag = flag && deleteUserRole(ids);
 		return flag && insertUserRole(userDO.getId(), user.getRoleIds(), user);
 	}
@@ -178,7 +194,7 @@ public class UserGatewayImpl implements UserGateway {
 		UserDO userDO = UserConvertor.toDataObject(user);
 		userDO.setEditor(user.getEditor());
 		userDO.setUpdateDate(DateUtil.now());
-		userDO.setVersion(userMapper.getVersion(userDO.getId(), UserDO.class));
+		userDO.setVersion(userMapper.getDynamicTableVersion(userDO.getId(), UserDO.class,getUserTableSuffix(user.getId())));
 		return userDO;
 	}
 
@@ -210,40 +226,12 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateUser(UserDO userDO) {
-		return userMapper.updateUser(userDO, TableUtil.getUserTable(userDO.getId())) > 0;
+		return userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(),BOOT_SYS_USER)) > 0;
 	}
 
-	private SelectDSL getUserPageWrapper(PageQuery pageQuery, String tableName, String connector,
-			List<SelectDSL.Where> wheres) {
-		String fromAlias = "a";
-		String joinAlias = "b";
-		SelectDSL.Join join = new SelectDSL.Join.Builder().withAlias(joinAlias)
-			.withColumns(new SelectDSL.Column.Builder().withName(FIELD_ID).build())
-			.withFrom(tableName)
-			.withOffset(Long.valueOf(pageQuery.getPageIndex()))
-			.withLimit(Long.valueOf(pageQuery.getPageSize()))
-			.withType(INNER_JOIN)
-			.withOrderBy(SelectDSL.OrderBy.of(Collections
-				.singletonList(new SelectDSL.Column.Builder().withName(FIELD_ID).withSort(DESC).build())))
-			.withWheres(wheres)
-			.withOns(new SelectDSL.On.Builder().withFromColumn(FIELD_ID)
-				.withFromAlias(fromAlias)
-				.withJoinAlias(joinAlias)
-				.withJoinColumn(FIELD_ID)
-				.build())
-			.build();
-		return new SelectDSL.Builder().withAlias(fromAlias)
-			.withConnector(connector)
-			.withColumns(new SelectDSL.Column.Builder().withName(FIELD_ID).build(),
-					new SelectDSL.Column.Builder().withName(FIELD_USERNAME).build(),
-					new SelectDSL.Column.Builder().withName(FIELD_SUPER_ADMIN).build(),
-					new SelectDSL.Column.Builder().withName(FIELD_CREATE_DATE).build(),
-					new SelectDSL.Column.Builder().withName(FIELD_AVATAR).build(),
-					new SelectDSL.Column.Builder().withName(FIELD_STATUS).build(),
-					new SelectDSL.Column.Builder().withName(FIELD_DEPT_ID).build())
-			.withFrom(tableName)
-			.withJoin(join)
-			.build();
+	private String getUserTableSuffix(Long id) {
+		LocalDateTime localDateTime = IdGenerator.getLocalDateTime(id);
+		return UNDER.concat(DateUtil.format(localDateTime,DateUtil.YYYYMM));
 	}
 
 }

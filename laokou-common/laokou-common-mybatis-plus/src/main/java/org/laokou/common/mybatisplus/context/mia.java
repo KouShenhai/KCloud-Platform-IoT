@@ -14,26 +14,17 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.mybatisplus.config;
 
-import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
-import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
+package org.laokou.common.mybatisplus.context;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
+import java.util.regex.Pattern;
 
 /**
  * @author laokou
  */
-public class DynamicTableNameHandler implements TableNameHandler {
-
-	public static final String PLACE_HOLDER = "$$";
-
-	@Override
-	public String dynamicTableName(String sql, String tableName) {
-		if (tableName.endsWith(PLACE_HOLDER)) {
-			return tableName.concat(DynamicTableSuffixContextHolder.get()).replace(PLACE_HOLDER,EMPTY);
-		}
-		return tableName;
-	}
-
+public class mia {
+    public static void main(String[] args) {
+        String st = "33s%";
+        System.out.println(Pattern.quote("%"));
+    }
 }

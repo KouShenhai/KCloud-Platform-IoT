@@ -61,9 +61,16 @@ public class PageQuery extends Query {
 	@Schema(name = "endTime", description = "结束时间")
 	private String endTime;
 
+	private boolean ignore;
+
 	public PageQuery(Integer pageNum, Integer pageSize) {
 		this.pageNum = pageNum;
 		this.pageSize = pageSize;
+	}
+
+	public PageQuery ignore(boolean ignore) {
+		this.ignore = ignore;
+		return this;
 	}
 
 	public PageQuery time() {
