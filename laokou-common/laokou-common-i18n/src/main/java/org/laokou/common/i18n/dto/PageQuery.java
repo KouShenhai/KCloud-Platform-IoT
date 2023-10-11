@@ -61,7 +61,11 @@ public class PageQuery extends Query {
 	@Schema(name = "endTime", description = "结束时间")
 	private String endTime;
 
+	@Schema(name = "ignore", description = "是否忽略")
 	private boolean ignore;
+
+	@Schema(name = "lastId", description = "上一次ID，用于深度分页")
+	private Long lastId;
 
 	public PageQuery(Integer pageNum, Integer pageSize) {
 		this.pageNum = pageNum;

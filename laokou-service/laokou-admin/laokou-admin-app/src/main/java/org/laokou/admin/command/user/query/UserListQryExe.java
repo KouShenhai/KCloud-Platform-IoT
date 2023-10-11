@@ -51,6 +51,7 @@ public class UserListQryExe {
 			coList.forEach(item -> item.setUsername(AesUtil.decrypt(item.getUsername())));
 			datas.setRecords(coList);
 		}
+		datas.setLastId(newPage.getLastId());
 		datas.setTotal(newPage.getTotal());
 		return Result.of(datas);
 	}

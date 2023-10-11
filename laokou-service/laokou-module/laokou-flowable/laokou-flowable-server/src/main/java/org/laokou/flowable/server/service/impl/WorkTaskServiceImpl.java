@@ -41,7 +41,6 @@ import org.laokou.flowable.vo.AssigneeVO;
 import org.laokou.flowable.vo.PageVO;
 import org.laokou.flowable.vo.TaskVO;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.imageio.ImageIO;
@@ -155,7 +154,6 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public PageVO<TaskVO> queryTaskPage(TaskDTO dto) {
 		ValidatorUtil.validateEntity(dto);
 		IPage<TaskVO> page = new Page<>(dto.getPageNum(), dto.getPageSize());
@@ -164,7 +162,6 @@ public class WorkTaskServiceImpl implements WorkTaskService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public String diagramTask(String processInstanceId) throws IOException {
 		final InputStream inputStream = getInputStream(processInstanceId);
 		final BufferedImage image = ImageIO.read(inputStream);

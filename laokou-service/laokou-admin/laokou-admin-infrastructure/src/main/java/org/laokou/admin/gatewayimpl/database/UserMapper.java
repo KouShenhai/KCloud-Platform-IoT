@@ -63,6 +63,6 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	Integer getUserListTotalFilter(@Param("tables") List<String> tables, @Param("user") UserDO user,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
-	Integer getUserCount(@Param("tables") List<String> tables, @Param("user") UserDO user);
+	int getUserCount(@Param("tables") List<String> tables, @Param("user") UserDO user);
 
 }

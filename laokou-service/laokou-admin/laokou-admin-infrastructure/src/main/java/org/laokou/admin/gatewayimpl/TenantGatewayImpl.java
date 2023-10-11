@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -33,11 +34,15 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.laokou.admin.common.Constant.USER;
+import static org.laokou.common.i18n.common.Constant.UNDER;
 import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_TENANT;
 
 /**
@@ -122,13 +127,20 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	private Boolean insertUser(Long tenantId) {
-		// 初始化超级管理员
-		UserDO userDO = new UserDO();
-		userDO.setUsername(TENANT_USERNAME);
-		userDO.setTenantId(tenantId);
-		userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
-		userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
-		return userMapper.insertTable(userDO);
+		try {
+			DynamicDataSourceContextHolder.push(USER);
+			// 初始化超级管理员
+			UserDO userDO = new UserDO();
+			userDO.setUsername(TENANT_USERNAME);
+			userDO.setTenantId(tenantId);
+			userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
+			userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
+			return userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),
+					UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

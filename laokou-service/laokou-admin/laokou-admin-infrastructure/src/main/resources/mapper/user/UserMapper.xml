@@ -113,8 +113,8 @@
     </select>
     <select id="getUserCount" resultType="java.lang.Integer">
         <if test="tables != null and tables.size() > 0">
-            select sum(a.n) from(<foreach collection="tables" item="table" separator=" union all ">
-                select count(1) as n
+            select count(1) from (<foreach collection="tables" item="table" separator=" union all ">
+                select 1
                 from ${table}
                 where del_flag = 0
                 and tenant_id = #{user.tenantId}
@@ -122,7 +122,7 @@
                 <if test="user.id != null">
                     and id <![CDATA[ <> ]]> #{user.id}
                 </if>
-            </foreach>) a
+            </foreach>)a
         </if>
     </select>
 

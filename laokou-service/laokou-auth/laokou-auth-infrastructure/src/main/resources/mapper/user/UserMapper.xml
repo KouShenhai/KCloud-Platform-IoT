@@ -22,10 +22,10 @@
 
     <select id="getUserByUsernameAndTenantId" resultType="org.laokou.auth.gatewayimpl.database.dataobject.UserDO">
         <if test="tables != null and tables.size() > 0">
-            <foreach collection="tables" item="table" separator=" union ">
+            select * from (<foreach collection="tables" item="table" separator=" union all ">
                 SELECT a.id as id
                 ,a.username as username
-                ,a.password as password
+                ,a.`password` as `password`
                 ,a.avatar as avatar
                 ,a.super_admin as superAdmin
                 ,a.status as status
@@ -46,7 +46,8 @@
                 <if test="type != null and type == 'mobile' and username != null and username != ''">
                     and a.mobile = #{username}
                 </if>
-            </foreach>
+            </foreach>) a
+            limit 1
         </if>
     </select>
 
