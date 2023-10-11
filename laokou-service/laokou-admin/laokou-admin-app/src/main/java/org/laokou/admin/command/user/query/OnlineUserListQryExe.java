@@ -77,7 +77,8 @@ public class OnlineUserListQryExe {
 				list.add(co);
 			}
 		}
-		return new Datas<>(list.size(), list.stream().skip((long) (pageNum - 1) * pageSize).limit(pageSize).toList());
+		return new Datas<>(list.size(), list.stream().skip((long) (pageNum - 1) * pageSize).limit(pageSize).toList(),
+				null);
 	}
 
 }

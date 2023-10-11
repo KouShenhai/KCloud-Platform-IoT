@@ -111,7 +111,6 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public String diagramDefinition(String definitionId) {
 		// 获取图片流
 		DefaultProcessDiagramGenerator diagramGenerator = new DefaultProcessDiagramGenerator();
