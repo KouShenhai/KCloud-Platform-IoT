@@ -137,7 +137,8 @@ public class TenantGatewayImpl implements TenantGateway {
 			userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
 			return userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),
 					UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
