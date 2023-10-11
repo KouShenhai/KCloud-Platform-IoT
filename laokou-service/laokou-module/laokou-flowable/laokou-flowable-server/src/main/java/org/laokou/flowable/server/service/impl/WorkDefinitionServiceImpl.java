@@ -32,12 +32,12 @@ import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.flowable.dto.DefinitionDTO;
+import org.laokou.flowable.server.service.WorkDefinitionService;
 import org.laokou.flowable.vo.DefinitionVO;
 import org.laokou.flowable.vo.PageVO;
-import org.laokou.flowable.server.service.WorkDefinitionService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -81,7 +81,6 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class, readOnly = true, propagation = Propagation.REQUIRES_NEW)
 	public PageVO<DefinitionVO> queryDefinitionPage(DefinitionDTO dto) {
 		ValidatorUtil.validateEntity(dto);
 		Integer pageNum = dto.getPageNum();
