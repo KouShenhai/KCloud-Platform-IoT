@@ -17,19 +17,28 @@
 
 package org.laokou.admin.command.user.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.user.UserOptionListQry;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.jasypt.utils.AesUtil;
+import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.laokou.admin.common.Constant.USER;
+import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_USER;
+import static org.laokou.common.mybatisplus.template.TableTemplate.MAX_TIME;
+import static org.laokou.common.mybatisplus.template.TableTemplate.MIN_TIME;
 
 /**
  * @author laokou
@@ -40,8 +49,12 @@ public class UserOptionListQryExe {
 
 	private final UserMapper userMapper;
 
+	@DS(USER)
+	@DataFilter(alias = BOOT_SYS_USER)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
-		List<UserDO> list = userMapper.getOptionListByTenantId(UserUtil.getTenantId());
+		PageQuery pageQuery = qry.ignore(true);
+		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME, MAX_TIME, BOOT_SYS_USER);
+		List<UserDO> list = userMapper.getOptionListByTenantId(dynamicTables,UserUtil.getTenantId(),pageQuery);
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}

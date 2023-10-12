@@ -58,7 +58,7 @@ public class DefinitionListQryExe {
 		for (ProcessDefinition definition : definitionList) {
 			list.add(toDefinitionCO(definition));
 		}
-		return Result.of(new Datas<>(total, list));
+		return Result.of(new Datas<>(total, list,null));
 	}
 
 	private DefinitionCO toDefinitionCO(ProcessDefinition definition) {

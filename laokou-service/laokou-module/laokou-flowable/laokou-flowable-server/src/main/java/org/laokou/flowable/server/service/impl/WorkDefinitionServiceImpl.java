@@ -47,6 +47,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+
 /**
  * @author laokou
  */
@@ -126,7 +128,7 @@ public class WorkDefinitionServiceImpl implements WorkDefinitionService {
 		}
 		catch (IOException e) {
 			log.error("错误信息：{}", e.getMessage());
-			return "";
+			return EMPTY;
 		}
 	}
 
