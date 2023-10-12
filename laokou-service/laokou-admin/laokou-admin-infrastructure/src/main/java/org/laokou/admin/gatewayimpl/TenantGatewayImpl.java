@@ -27,11 +27,14 @@ import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.domain.user.SuperAdmin;
+import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
@@ -42,7 +45,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.laokou.admin.common.Constant.USER;
-import static org.laokou.common.i18n.common.Constant.UNDER;
+import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_TENANT;
 
 /**
@@ -60,6 +63,8 @@ public class TenantGatewayImpl implements TenantGateway {
 	private final PasswordEncoder passwordEncoder;
 
 	private final UserMapper userMapper;
+
+	private final DeptMapper deptMapper;
 
 	private static final String TENANT_USERNAME = "tenant";
 
@@ -127,6 +132,9 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	private Boolean insertUser(Long tenantId) {
+		DeptDO deptDO = new DeptDO();
+		deptDO.setTenantId(tenantId);
+		Boolean flag = insertDept(deptDO);
 		try {
 			DynamicDataSourceContextHolder.push(USER);
 			// 初始化超级管理员
@@ -135,12 +143,26 @@ public class TenantGatewayImpl implements TenantGateway {
 			userDO.setTenantId(tenantId);
 			userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
 			userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
-			return userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),
+			userDO.setDeptId(deptDO.getId());
+			userDO.setDeptPath(deptDO.getPath());
+			return flag && userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),
 					UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
+	}
+
+	private Boolean insertDept(DeptDO deptDO) {
+		Long id = IdGenerator.defaultSnowflakeId();
+		deptDO.setId(id);
+		deptDO.setName("多租户集团");
+		deptDO.setPath(DEFAULT + COMMA + id);
+		deptDO.setSort(1000);
+		deptDO.setDeptPath(deptDO.getPath());
+		deptDO.setDeptId(deptDO.getId());
+		deptDO.setPid(0L);
+		return deptMapper.insert(deptDO) > 0;
 	}
 
 }
