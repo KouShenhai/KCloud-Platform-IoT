@@ -60,15 +60,20 @@
         </where>
     </update>
     <select id="getOptionListByTenantId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
-        select id
+        <if test="tables != null and tables.size() > 0">
+        select * from (<foreach collection="tables" item="table" separator=" union all ">
+            select id
             ,username
-        from boot_sys_user
-        where del_flag = 0
+            from ${table} as boot_sys_user
+            where del_flag = 0
             and `status` = 0
-        <if test="tenantId != null">
             and tenant_id = #{tenantId}
-        </if>
+            <if test="pageQuery.sqlFilter != null and pageQuery.sqlFilter != ''">
+                and ${pageQuery.sqlFilter}
+            </if>
+        </foreach>)a
         order by id desc
+        </if>
     </select>
     <select id="getUserListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
         <if test="tables != null and tables.size() > 0">

@@ -34,6 +34,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+
 /**
  * @author laokou
  */
@@ -61,7 +63,7 @@ public class DefinitionDiagramGetQryExe {
 		}
 		catch (IOException e) {
 			log.error("错误信息：{}", e.getMessage());
-			return Result.of("");
+				return Result.of(EMPTY);
 		}
 	}
 

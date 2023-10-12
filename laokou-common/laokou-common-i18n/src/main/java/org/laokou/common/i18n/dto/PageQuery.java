@@ -42,12 +42,12 @@ public class PageQuery extends Query {
 	@NotNull(message = "显示页码不为空")
 	@Min(value = 1)
 	@Schema(name = "pageNum", description = "页码")
-	private Integer pageNum;
+	private Integer pageNum = 1;
 
 	@NotNull(message = "显示条数不为空")
 	@Schema(name = "pageSize", description = "条数")
 	@Min(value = 1)
-	private Integer pageSize;
+	private Integer pageSize = 10;
 
 	@Schema(name = "pageIndex", description = "索引")
 	private Integer pageIndex;
