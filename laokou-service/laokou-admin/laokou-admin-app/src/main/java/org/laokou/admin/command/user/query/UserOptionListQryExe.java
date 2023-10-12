@@ -54,7 +54,7 @@ public class UserOptionListQryExe {
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
 		PageQuery pageQuery = qry.ignore(true);
 		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME, MAX_TIME, BOOT_SYS_USER);
-		List<UserDO> list = userMapper.getOptionListByTenantId(dynamicTables,UserUtil.getTenantId(),pageQuery);
+		List<UserDO> list = userMapper.getOptionListByTenantId(dynamicTables, UserUtil.getTenantId(), pageQuery);
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}

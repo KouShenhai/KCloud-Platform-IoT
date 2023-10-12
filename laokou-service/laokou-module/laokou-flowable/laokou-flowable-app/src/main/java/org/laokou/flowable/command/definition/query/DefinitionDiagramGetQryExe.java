@@ -63,7 +63,7 @@ public class DefinitionDiagramGetQryExe {
 		}
 		catch (IOException e) {
 			log.error("错误信息：{}", e.getMessage());
-				return Result.of(EMPTY);
+			return Result.of(EMPTY);
 		}
 	}
 
