@@ -18,6 +18,7 @@
 package org.laokou.admin.command.resource.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -29,6 +30,8 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ResourceListQryExe {
+
+	private final ResourceGateway resourceGateway;
 
 	public Result<Datas<ResourceCO>> execute() {
 		return null;

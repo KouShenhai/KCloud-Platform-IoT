@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /*
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,18 +14,29 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.admin.gatewayimpl.database.PackageMapper">
 
-    <select id="getPackageListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.PackageDO">
-        select id
-            ,`name`
-        from boot_sys_package
-        where del_flag = 0
-        <if test="name != null and name != ''">
-            and `name` like #{name}
-        </if>
-        order by id desc
-    </select>
-</mapper>
+package org.laokou.admin.domain.resource;
+
+import lombok.Data;
+
+/**
+ * @author laokou
+ */
+@Data
+public class Resource {
+
+    private Long id;
+
+    private String title;
+
+    private String url;
+
+    private Integer status;
+
+    private String code;
+
+    private String remark;
+
+    private String instanceId;
+
+}

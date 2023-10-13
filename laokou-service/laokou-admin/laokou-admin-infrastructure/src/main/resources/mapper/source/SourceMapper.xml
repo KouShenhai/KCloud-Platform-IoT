@@ -29,7 +29,7 @@
         where del_flag = 0
             and name = #{name}
     </select>
-    <select id="getSourceListByLikeNameFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.SourceDO">
+    <select id="getSourceListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.SourceDO">
         select id
               ,`name`
               ,driver_class_name

@@ -31,7 +31,7 @@
 			  and p.type = #{type}
     </select>
 
-	<select id="getMessageListByTenantIdAndLikeTitleFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MessageDO">
+	<select id="getMessageListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MessageDO">
 		select id
 		     ,create_date
 		     ,title

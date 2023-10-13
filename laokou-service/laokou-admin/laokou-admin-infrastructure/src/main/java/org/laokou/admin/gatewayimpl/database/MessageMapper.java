@@ -35,7 +35,7 @@ public interface MessageMapper extends BatchMapper<MessageDO> {
 	IPage<MessageDO> getUnreadMessageListByUserIdAndType(IPage<MessageDO> page, @Param("userId") Long userId,
 			@Param("type") Integer type);
 
-	IPage<MessageDO> getMessageListByTenantIdAndLikeTitleFilter(IPage<MessageDO> page, @Param("tenantId") Long tenantId,
+	IPage<MessageDO> getMessageListFilter(IPage<MessageDO> page, @Param("tenantId") Long tenantId,
 			@Param("title") String title, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 	MessageDO getMessageByDetailId(@Param("detailId") Long detailId);

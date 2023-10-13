@@ -107,7 +107,7 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 		}
 	}
 
-	default Integer getDynamicTableVersion(Long id, Class<T> clazz, String suffix) {
+	default Integer getDynamicVersion(Long id, Class<T> clazz, String suffix) {
 		try {
 			DynamicTableSuffixContextHolder.set(suffix);
 			return getVersion(id, clazz);

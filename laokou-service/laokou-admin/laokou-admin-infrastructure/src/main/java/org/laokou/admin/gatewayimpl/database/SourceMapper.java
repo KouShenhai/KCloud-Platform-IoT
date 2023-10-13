@@ -40,7 +40,7 @@ public interface SourceMapper extends BatchMapper<SourceDO> {
 	 */
 	SourceDO getSourceByName(@Param("name") String name);
 
-	IPage<SourceDO> getSourceListByLikeNameFilter(IPage<SourceDO> page, @Param("name") String name,
+	IPage<SourceDO> getSourceListFilter(IPage<SourceDO> page, @Param("name") String name,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

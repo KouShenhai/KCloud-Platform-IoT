@@ -201,7 +201,7 @@ public class UserGatewayImpl implements UserGateway {
 		userDO.setEditor(user.getEditor());
 		userDO.setUpdateDate(DateUtil.now());
 		userDO.setVersion(
-				userMapper.getDynamicTableVersion(userDO.getId(), UserDO.class, getUserTableSuffix(user.getId())));
+				userMapper.getDynamicVersion(userDO.getId(), UserDO.class, getUserTableSuffix(user.getId())));
 		return userDO;
 	}
 

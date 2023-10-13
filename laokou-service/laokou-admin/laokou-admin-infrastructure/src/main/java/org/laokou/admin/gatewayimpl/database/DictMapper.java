@@ -33,7 +33,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 @Mapper
 public interface DictMapper extends BatchMapper<DictDO> {
 
-	IPage<DictDO> getDictListByLikeTypeAndLikeLabelFilter(IPage<DictDO> page, @Param("type") String type,
+	IPage<DictDO> getDictListFilter(IPage<DictDO> page, @Param("type") String type,
 			@Param("label") String label, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

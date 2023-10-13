@@ -35,9 +35,9 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 @Mapper
 public interface OssMapper extends BatchMapper<OssDO> {
 
-	IPage<OssDO> getOssListByLikeNameFilter(IPage<OssDO> page, @Param("name") String name,
+	IPage<OssDO> getOssListByFilter(IPage<OssDO> page, @Param("name") String name,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
-	List<OssDO> getOssListByLikeNameFilter(@Param("name") String name);
+	List<OssDO> getOssListByFilter(@Param("name") String name);
 
 }

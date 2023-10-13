@@ -33,7 +33,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 @Repository
 public interface PackageMapper extends BatchMapper<PackageDO> {
 
-	IPage<PackageDO> getPackageListByLikeNameFilter(IPage<PackageDO> page, @Param("name") String name,
+	IPage<PackageDO> getPackageListFilter(IPage<PackageDO> page, @Param("name") String name,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }
