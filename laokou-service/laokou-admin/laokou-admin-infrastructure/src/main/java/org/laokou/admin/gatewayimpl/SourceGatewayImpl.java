@@ -51,7 +51,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	@DataFilter(alias = BOOT_SYS_SOURCE)
 	public Datas<Source> list(Source source, PageQuery pageQuery) {
 		IPage<SourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<SourceDO> newPage = sourceMapper.getSourceListByLikeNameFilter(page, source.getName(), pageQuery);
+		IPage<SourceDO> newPage = sourceMapper.getSourceListFilter(page, source.getName(), pageQuery);
 		Datas<Source> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Source.class));

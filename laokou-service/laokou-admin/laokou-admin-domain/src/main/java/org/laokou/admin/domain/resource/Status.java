@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /*
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,18 +14,36 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.admin.gatewayimpl.database.PackageMapper">
 
-    <select id="getPackageListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.PackageDO">
-        select id
-            ,`name`
-        from boot_sys_package
-        where del_flag = 0
-        <if test="name != null and name != ''">
-            and `name` like #{name}
-        </if>
-        order by id desc
-    </select>
-</mapper>
+package org.laokou.admin.domain.resource;
+
+/**
+ * @author laokou
+ */
+public interface Status {
+
+    /**
+     * 待审批
+     */
+    int PENDING_APPROVAL = 0;
+    /**
+     * 审批中
+     */
+    int IN_APPROVAL = 1;
+    /**
+     * 驳回审批
+     */
+    int REJECT_APPROVAL = -1;
+    /**
+     * 通过审批
+     */
+    int APPROVED = 2;
+    /**
+     * 通过
+     */
+    int PASS = 1;
+    /**
+     * 拒绝
+     */
+    int REFUSE= -1;
+}

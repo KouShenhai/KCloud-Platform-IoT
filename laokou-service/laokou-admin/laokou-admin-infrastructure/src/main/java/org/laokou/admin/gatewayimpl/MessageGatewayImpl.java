@@ -75,7 +75,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	@DS(TENANT)
 	public Datas<Message> list(Message message, User user, PageQuery pageQuery) {
 		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<MessageDO> newPage = messageMapper.getMessageListByTenantIdAndLikeTitleFilter(page, user.getTenantId(),
+		IPage<MessageDO> newPage = messageMapper.getMessageListFilter(page, user.getTenantId(),
 				message.getTitle(), pageQuery);
 		Datas<Message> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());

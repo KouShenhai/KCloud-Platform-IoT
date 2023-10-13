@@ -14,12 +14,13 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.admin.gatewayimpl.database;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
@@ -29,11 +30,10 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 /**
  * @author laokou
  */
-@Mapper
 @Repository
-public interface TenantMapper extends BatchMapper<TenantDO> {
+@Mapper
+public interface ResourceMapper extends BatchMapper<ResourceDO> {
 
-	IPage<TenantDO> getTenantListFilter(IPage<TenantDO> page, @Param("name") String name,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+    IPage<ResourceDO> getResourceListFilter(IPage<ResourceDO> page,@Param("resource")ResourceDO resourceDO, @Param(PAGE_QUERY)PageQuery pageQuery);
 
 }

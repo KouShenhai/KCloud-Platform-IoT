@@ -15,9 +15,15 @@
  */
 package org.laokou.admin.domain.gateway;
 
+import org.laokou.admin.domain.resource.Resource;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.PageQuery;
+
 /**
  * @author laokou
  */
 public interface ResourceGateway {
+
+    Datas<Resource> list(Resource resource, PageQuery pageQuery);
 
 }

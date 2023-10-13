@@ -19,10 +19,8 @@ public class Datas<T> extends DTO {
 
 	private List<T> records;
 
-	private Long lastId;
-
 	public static <T> Datas<T> of() {
-		return new Datas<>(0, new ArrayList<>(0), null);
+		return new Datas<>(0, new ArrayList<>(0));
 	}
 
 }

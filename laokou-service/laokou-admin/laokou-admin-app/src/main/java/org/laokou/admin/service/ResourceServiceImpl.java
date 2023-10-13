@@ -89,7 +89,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	@Override
 	public Result<Datas<ResourceCO>> list(ResourceListQry qry) {
-		return null;
+		return resourceListQryExe.execute(qry);
 	}
 
 	@Override

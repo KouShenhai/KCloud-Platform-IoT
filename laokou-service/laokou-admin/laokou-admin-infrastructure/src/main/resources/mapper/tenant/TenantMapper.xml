@@ -20,7 +20,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.TenantMapper">
 
-    <select id="getTenantListByLikeNameFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.TenantDO">
+    <select id="getTenantListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.TenantDO">
         select id
              ,`name`
         from boot_sys_tenant
