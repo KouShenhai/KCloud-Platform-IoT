@@ -35,7 +35,7 @@
         <!--admin版本-->
         <spring-boot-admin.version>3.1.7</spring-boot-admin.version>
         <!--flowable版本-->
-        <flowable.version>7.0.0.M2</flowable.version>
+        <flowable.version>7.0.0</flowable.version>
         <!--mybatis-plus版本 -->
         <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
         <!--redisson版本-->
