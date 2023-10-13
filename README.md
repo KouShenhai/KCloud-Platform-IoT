@@ -294,7 +294,7 @@ GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KClou
 |<img height='50' width='50' src='https://avatars.githubusercontent.com/u/2041471?s=64&amp;v=4'>|<img height='50' width='50' src='https://avatars.githubusercontent.com/u/43296325?s=64&amp;v=4'>|<img height='50' width='50' src='https://avatars.githubusercontent.com/u/89563182?s=64&amp;v=4'>|
 |[simman](https://github.com/simman)   |                                               [suhengli](https://github.com/suhengli)                                               |[gitkakafu](https://github.com/gitkakafu)|  
 
-### 免责声明
+### 🚫 免责声明
 禁止使用本项目从事违法犯罪行为。作者无需承担法律责任，特此声明
 
 ### 🐸 联系作者
