@@ -263,12 +263,12 @@ GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KClou
     <tr>
         <td>学生</td>
         <td>￥ 199</td>
-        <td>技术培训 + 解决问题 + 一对一售后群 + 个性功能增强（需提供学生证）</td>
+        <td>技术培训 + 解决问题（优先） + 一对一售后群 + 个性功能增强（需提供学生证）</td>
     </tr>
     <tr>
         <td>个人</td>
         <td>￥ 399</td>
-        <td>技术培训 + 解决问题 + 一对一售后群 + 个性功能增强</td>
+        <td>技术培训 + 解决问题（优先） + 一对一售后群 + 个性功能增强</td>
     </tr>
 </table>
 <img src="doc/image/wx.png" width="300" height="300">
