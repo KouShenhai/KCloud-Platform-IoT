@@ -17,6 +17,8 @@
 
 package org.laokou.admin.gatewayimpl.database.dataobject;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
@@ -24,6 +26,8 @@ import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
  * @author laokou
  */
 @Data
+@TableName("boot_sys_resource")
+@Schema(name = "ResourceDO", description = "资源")
 public class ResourceDO extends BaseDO {
 
     private String title;

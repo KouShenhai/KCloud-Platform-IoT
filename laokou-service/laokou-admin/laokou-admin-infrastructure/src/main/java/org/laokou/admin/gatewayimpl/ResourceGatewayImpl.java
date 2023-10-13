@@ -17,13 +17,21 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.ResourceConvertor;
+import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.domain.resource.Resource;
-import org.laokou.admin.dto.resource.clientobject.ResourceCO;
+import org.laokou.admin.gatewayimpl.database.ResourceMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
+import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_RESOURCE;
 
 /**
  * @author laokou
@@ -32,9 +40,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceGatewayImpl implements ResourceGateway {
 
+    private final ResourceMapper resourceMapper;
+
     @Override
-    public Datas<ResourceCO> list(Resource resource, PageQuery pageQuery) {
-        return null;
+    @DataFilter(alias = BOOT_SYS_RESOURCE)
+    public Datas<Resource> list(Resource resource, PageQuery pageQuery) {
+        IPage<ResourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+        ResourceDO resourceDO = ResourceConvertor.toDataObject(resource);
+        IPage<ResourceDO> newPage = resourceMapper.getResourceListFilter(page, resourceDO, pageQuery);
+        Datas<Resource> datas = new Datas<>();
+        datas.setTotal(newPage.getTotal());
+        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),Resource.class));
+        return datas;
     }
 
 }

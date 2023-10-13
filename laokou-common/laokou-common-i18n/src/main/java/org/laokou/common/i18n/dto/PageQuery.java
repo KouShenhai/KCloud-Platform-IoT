@@ -84,7 +84,7 @@ public class PageQuery extends Query {
 		if (this.endTime == null) {
 			throw new GlobalException("结束时间不为空");
 		}
-		int yearOfDays = 730;
+		int twoYearOfDays = 730;
 		LocalDateTime startDate = DateUtil.parseTime(startTime, DateUtil.YYYY_MM_DD_HH_MM_SS);
 		LocalDateTime endDate = DateUtil.parseTime(endTime, DateUtil.YYYY_MM_DD_HH_MM_SS);
 		LocalDateTime minDate = LocalDateTime.of(2021, 12, 31, 23, 59, 59);
@@ -92,7 +92,7 @@ public class PageQuery extends Query {
 		if (DateUtil.isAfter(startDate, endDate)) {
 			throw new GlobalException("结束时间必须大于开始时间");
 		}
-		if (DateUtil.getDays(startDate, endDate) > yearOfDays) {
+		if (DateUtil.getDays(startDate, endDate) > twoYearOfDays) {
 			throw new GlobalException("开始时间和结束时间间隔不能超过两年");
 		}
 		if (DateUtil.isBefore(startDate, minDate) || DateUtil.isAfter(endDate, maxDate)) {
