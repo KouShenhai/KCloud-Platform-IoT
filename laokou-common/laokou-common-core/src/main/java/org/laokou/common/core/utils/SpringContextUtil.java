@@ -16,17 +16,23 @@
  */
 package org.laokou.common.core.utils;
 
+import io.micrometer.common.lang.NonNullApi;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * @author laokou
  */
 @Component
+@NonNullApi
 public class SpringContextUtil implements ApplicationContextAware, DisposableBean {
 
 	private static ApplicationContext applicationContext;
@@ -34,6 +40,10 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		SpringContextUtil.applicationContext = applicationContext;
+	}
+
+	public static DefaultListableBeanFactory getFactory() {
+		return (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
 	}
 
 	public static Object getBean(String name) {
@@ -57,11 +67,21 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	}
 
 	public static Class<?> getType(String name) {
-		return applicationContext.getType(name);
+		return Objects.requireNonNull(applicationContext.getType(name));
+	}
+
+	public static <T> void registerBean(Class<T> clazz,String beanName) {
+		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
+		getFactory().registerBeanDefinition(beanName,beanDefinitionBuilder.getBeanDefinition());
+	}
+
+	public static void removeBean(String beanName) {
+		getFactory().removeBeanDefinition(beanName);
 	}
 
 	@Override
 	public void destroy() {
+		applicationContext = null;
 	}
 
 	public static void publishEvent(ApplicationEvent event) {

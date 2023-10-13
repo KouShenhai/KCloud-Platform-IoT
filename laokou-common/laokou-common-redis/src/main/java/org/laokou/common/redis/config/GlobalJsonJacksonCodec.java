@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -40,14 +41,14 @@ import java.time.format.DateTimeFormatter;
 /**
  * @author laokou
  */
-public class CustomJsonJacksonCodec extends BaseCodec {
+public class GlobalJsonJacksonCodec extends BaseCodec {
 
-	public static final CustomJsonJacksonCodec INSTANCE = new CustomJsonJacksonCodec();
+	public static final GlobalJsonJacksonCodec INSTANCE = new GlobalJsonJacksonCodec();
 
 	private volatile ObjectMapper mapObjectMapper;
 
-	public CustomJsonJacksonCodec() {
-		this.mapObjectMapper = CustomJsonJacksonCodec.getObjectMapper();
+	public GlobalJsonJacksonCodec() {
+		this.mapObjectMapper = GlobalJsonJacksonCodec.getObjectMapper();
 	}
 
 	private final Encoder encoder = in -> {
@@ -82,7 +83,7 @@ public class CustomJsonJacksonCodec extends BaseCodec {
 
 	public static ObjectMapper getObjectMapper() {
 		// 解决查询缓存转换异常的问题
-		ObjectMapper objectMapper = new ObjectMapper();
+		ObjectMapper objectMapper = JsonMapper.builder().build();
 		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_MM_DD_HH_MM_SS);
 		// Long类型转String类型
 		JavaTimeModule javaTimeModule = new JavaTimeModule();

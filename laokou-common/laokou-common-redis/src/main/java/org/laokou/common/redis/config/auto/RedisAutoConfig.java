@@ -17,7 +17,7 @@
 package org.laokou.common.redis.config.auto;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.laokou.common.redis.config.CustomJsonJacksonCodec;
+import org.laokou.common.redis.config.GlobalJsonJacksonCodec;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -67,7 +67,7 @@ public class RedisAutoConfig {
 
 	private Jackson2JsonRedisSerializer<Object> getJsonRedisSerializer() {
 		// Json序列化配置
-		ObjectMapper objectMapper = CustomJsonJacksonCodec.getObjectMapper();
+		ObjectMapper objectMapper = GlobalJsonJacksonCodec.getObjectMapper();
 		return new Jackson2JsonRedisSerializer<>(objectMapper, Object.class);
 	}
 

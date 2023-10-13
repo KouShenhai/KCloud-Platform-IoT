@@ -17,6 +17,7 @@
 package org.laokou.common.core.utils;
 
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -36,7 +37,7 @@ public class JacksonUtil {
 
 	public static final String EMPTY_JSON = "{}";
 
-	private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
+	private static final ObjectMapper MAPPER = JsonMapper.builder().build().registerModule(new JavaTimeModule());
 
 	/**
 	 * json字符转Bean
