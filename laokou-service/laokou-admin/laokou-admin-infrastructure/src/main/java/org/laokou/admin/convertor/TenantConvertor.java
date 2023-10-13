@@ -27,8 +27,8 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class TenantConvertor {
 
-	public static Tenant toEntity(TenantCO tenantCO) {
-		return ConvertUtil.sourceToTarget(tenantCO, Tenant.class);
+	public static Tenant toEntity(TenantCO co) {
+		return ConvertUtil.sourceToTarget(co, Tenant.class);
 	}
 
 	public static TenantDO toDataObject(Tenant tenant) {

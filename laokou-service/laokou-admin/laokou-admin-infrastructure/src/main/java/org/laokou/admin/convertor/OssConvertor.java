@@ -27,8 +27,8 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class OssConvertor {
 
-	public static Oss toEntity(OssCO ossCO) {
-		return ConvertUtil.sourceToTarget(ossCO, Oss.class);
+	public static Oss toEntity(OssCO co) {
+		return ConvertUtil.sourceToTarget(co, Oss.class);
 	}
 
 	public static OssDO toDataObject(Oss oss) {

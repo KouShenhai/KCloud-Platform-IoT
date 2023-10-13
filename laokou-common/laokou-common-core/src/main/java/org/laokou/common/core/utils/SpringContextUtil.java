@@ -76,7 +76,10 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	}
 
 	public static void removeBean(String beanName) {
-		getFactory().removeBeanDefinition(beanName);
+		DefaultListableBeanFactory beanFactory = getFactory();
+		if (beanFactory.containsBeanDefinition(beanName)) {
+			beanFactory.removeBeanDefinition(beanName);
+		}
 	}
 
 	@Override
