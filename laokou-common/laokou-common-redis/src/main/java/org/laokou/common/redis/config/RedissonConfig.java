@@ -90,7 +90,7 @@ public class RedissonConfig {
 		}
 		config.setExecutor(taskExecutor.getThreadPoolExecutor());
 		// 使用json序列化方式
-		config.setCodec(CustomJsonJacksonCodec.INSTANCE);
+		config.setCodec(GlobalJsonJacksonCodec.INSTANCE);
 		return Redisson.create(config);
 	}
 

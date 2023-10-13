@@ -17,6 +17,7 @@
 package org.laokou.common.redis.utils;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.redisson.api.*;
 import org.springframework.data.redis.connection.RedisServerCommands;
@@ -32,6 +33,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author laokou
  */
+@Slf4j
 @RequiredArgsConstructor
 public class RedisUtil {
 
