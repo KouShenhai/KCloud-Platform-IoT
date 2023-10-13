@@ -63,7 +63,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Spring Boot                 | 3.1.4        |
 | Spring Cloud                | 2022.0.4     |
 | Spring Cloud Alibaba        | 2022.0.0.0   |
-| Spring Boot Admin           | 3.1.6        |
+| Spring Boot Admin           | 3.1.7        |
 | Spring Authorization Server | 1.1.2        |
 | Mybatis Plus                | 3.5.3.2      |
 | Nacos                       | 2.2.4-OEM    |
@@ -73,7 +73,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Redis                       | 7.0.11       |
 | Elasticsearch               | 8.6.2        |
 | RocketMQ                    | 5.1.1        |
-| Flowable                    | 7.0.0.M2     |
+| Flowable                    | 7.0.0     |
 | ShardingSphere              | 5.3.2        |
 | OpenResty                   | 1.21.4.1     |
 | Netty                       | 4.1.97.Final |
@@ -295,7 +295,7 @@ GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KClou
 |                               [simman](https://github.com/simman)                                |                             [suhengli](https://github.com/suhengli)                              |                            [gitkakafu](https://github.com/gitkakafu)                             |  
 
 ### 🚫 免责声明
-禁止使用本项目从事违法犯罪的行为。作者无需承担法律责任，特此声明
+禁止使用本项目从事一切违法犯罪行为。作者不承担任何法律责任，特此声明
 
 ### 🐸 联系作者
 博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)    
