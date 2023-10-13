@@ -31,3 +31,4 @@ hs_err_pid*
 nacos
 work
 file_store
+sessionStore

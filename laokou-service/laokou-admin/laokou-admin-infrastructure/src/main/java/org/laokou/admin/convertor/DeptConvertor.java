@@ -27,8 +27,8 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class DeptConvertor {
 
-	public static Dept toEntity(DeptCO deptCO) {
-		return ConvertUtil.sourceToTarget(deptCO, Dept.class);
+	public static Dept toEntity(DeptCO co) {
+		return ConvertUtil.sourceToTarget(co, Dept.class);
 	}
 
 	public static DeptDO toDataObject(Dept dept) {

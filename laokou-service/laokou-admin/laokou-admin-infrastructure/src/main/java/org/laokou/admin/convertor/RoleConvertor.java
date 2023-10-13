@@ -27,8 +27,8 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class RoleConvertor {
 
-	public static Role toEntity(RoleCO roleCO) {
-		return ConvertUtil.sourceToTarget(roleCO, Role.class);
+	public static Role toEntity(RoleCO co) {
+		return ConvertUtil.sourceToTarget(co, Role.class);
 	}
 
 	public static RoleDO toDataObject(Role role) {

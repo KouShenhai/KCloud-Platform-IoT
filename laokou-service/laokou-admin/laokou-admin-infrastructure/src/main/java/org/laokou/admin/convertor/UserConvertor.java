@@ -27,8 +27,8 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class UserConvertor {
 
-	public static User toEntity(UserCO userCO) {
-		return ConvertUtil.sourceToTarget(userCO, User.class);
+	public static User toEntity(UserCO co) {
+		return ConvertUtil.sourceToTarget(co, User.class);
 	}
 
 	public static UserDO toDataObject(User user) {

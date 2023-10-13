@@ -27,8 +27,8 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class DictConvertor {
 
-	public static Dict toEntity(DictCO dictCO) {
-		return ConvertUtil.sourceToTarget(dictCO, Dict.class);
+	public static Dict toEntity(DictCO co) {
+		return ConvertUtil.sourceToTarget(co, Dict.class);
 	}
 
 	public static DictDO toDataObject(Dict dict) {

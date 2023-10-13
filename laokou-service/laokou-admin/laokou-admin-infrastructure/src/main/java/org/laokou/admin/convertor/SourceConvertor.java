@@ -27,8 +27,8 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class SourceConvertor {
 
-	public static Source toEntity(SourceCO sourceCO) {
-		return ConvertUtil.sourceToTarget(sourceCO, Source.class);
+	public static Source toEntity(SourceCO co) {
+		return ConvertUtil.sourceToTarget(co, Source.class);
 	}
 
 	public static SourceDO toDataObject(Source source) {
