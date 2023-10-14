@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.ResourceServiceI;
+import org.laokou.admin.dto.oss.OssUploadCmd;
 import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.dto.resource.*;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
@@ -72,7 +73,7 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "上传资源")
 	@OperateLog(module = "资源管理", operation = "上传资源")
 	public Result<FileCO> upload(@RequestPart("file") MultipartFile file) {
-		return resourceServiceI.upload(new ResourceUploadCmd(file));
+		return resourceServiceI.upload(new OssUploadCmd(file));
 	}
 
 	@PostMapping("list")

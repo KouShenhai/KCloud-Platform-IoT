@@ -19,6 +19,8 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.ResourceServiceI;
+import org.laokou.admin.command.oss.OssUploadCmdExe;
+import org.laokou.admin.dto.oss.OssUploadCmd;
 import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.dto.resource.*;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
@@ -42,11 +44,11 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	private final ResourceSyncCmdExe resourceSyncCmdExe;
 
-	private final ResourceUploadCmdExe resourceUploadCmdExe;
-
 	private final ResourceListQryExe resourceListQryExe;
 
 	private final ResourceGetQryExe resourceGetQryExe;
+
+	private final OssUploadCmdExe ossUploadCmdExe;
 
 	private final ResourceDownloadCmdExe resourceDownloadCmdExe;
 
@@ -83,8 +85,8 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	@Override
-	public Result<FileCO> upload(ResourceUploadCmd cmd) {
-		return null;
+	public Result<FileCO> upload(OssUploadCmd cmd) {
+		return ossUploadCmdExe.execute(cmd);
 	}
 
 	@Override

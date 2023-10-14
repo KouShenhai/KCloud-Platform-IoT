@@ -634,11 +634,6 @@
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.laokou</groupId>
-                <artifactId>laokou-flowable-server</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.github.whvcse</groupId>
                 <artifactId>easy-captcha</artifactId>
                 <version>${easy-captcha.version}</version>

@@ -15,26 +15,29 @@
  *
  */
 
-package org.laokou.flowable.dto;
+package org.laokou.admin.gatewayimpl.database.dataobject;
 
-import jakarta.validation.constraints.NotNull;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import java.io.Serial;
-import java.io.Serializable;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 /**
  * @author laokou
  */
 @Data
-public class TransferDTO extends ResolveDTO implements Serializable {
+@TableName("boot_sys_resource_audit")
+@Schema(name = "ResourceAuditDO", description = "资源审批")
+public class ResourceAuditDO extends BaseDO {
 
-	@Serial
-	private static final long serialVersionUID = -9069535207783920486L;
+    private Long resourceId;
 
-	@NotNull(message = "用户编号不为空")
-	private Long userId;
+    private String title;
 
-	@NotNull(message = "转派人员编号不为空")
-	private Long assignee;
+    private String url;
+
+    private String code;
+
+    private String remark;
 
 }

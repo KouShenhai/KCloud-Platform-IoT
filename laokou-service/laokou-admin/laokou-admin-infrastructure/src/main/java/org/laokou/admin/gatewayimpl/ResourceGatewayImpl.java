@@ -24,7 +24,9 @@ import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.domain.resource.Resource;
+import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
 import org.laokou.admin.gatewayimpl.database.ResourceMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
@@ -41,6 +43,7 @@ import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_RESOURC
 public class ResourceGatewayImpl implements ResourceGateway {
 
     private final ResourceMapper resourceMapper;
+    private final ResourceAuditMapper resourceAuditMapper;
 
     @Override
     @DataFilter(alias = BOOT_SYS_RESOURCE)
@@ -58,6 +61,17 @@ public class ResourceGatewayImpl implements ResourceGateway {
     public Resource getById(Long id) {
         ResourceDO resourceDO = resourceMapper.selectById(id);
         return ConvertUtil.sourceToTarget(resourceDO, Resource.class);
+    }
+
+    @Override
+    public Boolean update(Resource resource) {
+        return null;
+    }
+
+    private Boolean insertResourceAudit(Resource resource) {
+        ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
+        resourceAuditDO.setResourceId(resource.getId());
+        return resourceAuditMapper.insertTable(resourceAuditDO);
     }
 
 }

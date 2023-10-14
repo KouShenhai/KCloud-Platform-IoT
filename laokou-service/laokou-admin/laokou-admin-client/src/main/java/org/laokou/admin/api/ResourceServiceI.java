@@ -16,6 +16,7 @@
  */
 package org.laokou.admin.api;
 
+import org.laokou.admin.dto.oss.OssUploadCmd;
 import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
@@ -34,7 +35,7 @@ public interface ResourceServiceI {
 
 	Result<Boolean> sync(ResourceSyncCmd cmd);
 
-	Result<FileCO> upload(ResourceUploadCmd cmd);
+	Result<FileCO> upload(OssUploadCmd cmd);
 
 	Result<Datas<ResourceCO>> list(ResourceListQry qry);
 

@@ -12,33 +12,20 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
-package org.laokou.flowable.dto;
+package org.laokou.admin.gatewayimpl.database;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-
-import java.io.Serial;
-import java.io.Serializable;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
+import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-@Data
-public class DefinitionDTO implements Serializable {
-
-	@Serial
-	private static final long serialVersionUID = -818653141079850719L;
-
-	@NotNull(message = "显示页码不为空")
-	private Integer pageNum;
-
-	@NotNull(message = "显示条数不为空")
-	private Integer pageSize;
-
-	@NotNull(message = "显示条数不为空")
-	private String processName;
-
+@Repository
+@Mapper
+public interface ResourceAuditMapper extends BatchMapper<ResourceAuditDO> {
 }

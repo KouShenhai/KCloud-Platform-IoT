@@ -70,7 +70,7 @@ public class OssUploadCmdExe {
 		int limitRead = (int) (fileSize + 1);
 		String contentType = file.getContentType();
 		InputStream inputStream = file.getInputStream();
-		before(fileSize);
+		before(file,fileSize);
 		ByteArrayOutputStream bos = getCacheStream(inputStream);
 		String md5 = DigestUtils.md5DigestAsHex(new ByteArrayInputStream(bos.toByteArray()));
 		OssLogDO ossLogDO = ossLogMapper.selectOne(Wrappers.query(OssLogDO.class).eq("md5", md5).select("url"));
@@ -91,7 +91,10 @@ public class OssUploadCmdExe {
 		return bos;
 	}
 
-	private void before(long fileSize) {
+	private void before(MultipartFile file,long fileSize) {
+		if (file.isEmpty()) {
+			throw new GlobalException("文件不能为空");
+		}
 		log.info("文件上传前，校验文件大小");
 		if (fileSize > MAX_FILE_SIZE) {
 			throw new GlobalException("单个文件上传不能超过100M，请重新选择文件并上传");
