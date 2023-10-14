@@ -24,12 +24,11 @@
         <version>${laokou.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>laokou-flowable</artifactId>
+    <version>${laokou.version}</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-flowable-client</module>
-        <module>laokou-flowable-server</module>
         <module>laokou-flowable-adapter</module>
         <module>laokou-flowable-app</module>
         <module>laokou-flowable-infrastructure</module>
