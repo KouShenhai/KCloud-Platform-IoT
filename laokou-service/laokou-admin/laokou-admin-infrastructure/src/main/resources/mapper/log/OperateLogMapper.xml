@@ -43,7 +43,7 @@
             and `module_name` like #{moduleName}
         </if>
         <if test="status != null">
-            and status = #{status}
+            and `status` = #{status}
         </if>
         order by id desc
     </select>

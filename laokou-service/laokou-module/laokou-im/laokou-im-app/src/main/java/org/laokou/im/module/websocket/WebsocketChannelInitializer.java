@@ -23,11 +23,20 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.laokou.common.core.utils.HttpUtil;
+import org.laokou.common.core.utils.ResourceUtil;
 import org.springframework.stereotype.Component;
 
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
+import java.io.InputStream;
+import java.security.KeyStore;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,8 +53,14 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 	private static final int MAX_CONTENT_LENGTH = 655350;
 
 	@Override
+	@SneakyThrows
 	protected void initChannel(NioSocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
+		SSLEngine sslEngine = sslContext().createSSLEngine();
+		sslEngine.setNeedClientAuth(false);
+		sslEngine.setUseClientMode(false);
+		// TLS
+		pipeline.addLast(new SslHandler(sslEngine));
 		// 心跳检测
 		pipeline.addLast(new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
 		// HTTP解码器
@@ -58,6 +73,23 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 		pipeline.addLast(websocketHandler);
 		// websocket协议
 		pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH));
+	}
+
+	@SneakyThrows
+	private SSLContext sslContext() {
+		String path = "scg-keystore.p12";
+		String password = "laokou";
+		String type = "PKCS12";
+		try (InputStream inputStream = ResourceUtil.getResource(path).getInputStream()) {
+			char[] passArray = password.toCharArray();
+			KeyStore keyStore = KeyStore.getInstance(type);
+			SSLContext sslContext = SSLContext.getInstance(HttpUtil.TLS_PROTOCOL_VERSION);
+			keyStore.load(inputStream,passArray);
+			KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+			keyManagerFactory.init(keyStore,passArray);
+			sslContext.init(keyManagerFactory.getKeyManagers(),null,null);
+			return sslContext;
+		}
 	}
 
 }

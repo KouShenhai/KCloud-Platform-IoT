@@ -119,7 +119,7 @@
   },
   {
     "id": "laokou-im",
-    "uri": "lb://laokou-im",
+    "uri": "lb:wss://laokou-im",
     "predicates": [
       {
         "name": "Path",

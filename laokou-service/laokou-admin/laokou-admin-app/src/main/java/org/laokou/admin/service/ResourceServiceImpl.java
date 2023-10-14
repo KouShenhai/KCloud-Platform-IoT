@@ -94,7 +94,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	@Override
 	public Result<ResourceCO> getById(ResourceGetQry qry) {
-		return null;
+		return resourceGetQryExe.execute(qry);
 	}
 
 	@Override

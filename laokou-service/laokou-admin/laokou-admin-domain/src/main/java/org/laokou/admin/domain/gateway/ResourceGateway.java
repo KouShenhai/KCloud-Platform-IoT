@@ -26,4 +26,6 @@ public interface ResourceGateway {
 
     Datas<Resource> list(Resource resource, PageQuery pageQuery);
 
+    Resource getById(Long id);
+
 }

@@ -54,4 +54,10 @@ public class ResourceGatewayImpl implements ResourceGateway {
         return datas;
     }
 
+    @Override
+    public Resource getById(Long id) {
+        ResourceDO resourceDO = resourceMapper.selectById(id);
+        return ConvertUtil.sourceToTarget(resourceDO, Resource.class);
+    }
+
 }

@@ -27,6 +27,10 @@ import org.laokou.common.i18n.utils.StringUtil;
 @Data
 public class ResourceListQry extends PageQuery {
 
+    private Long id;
+
+    private Integer status;
+
     private String code;
 
     private String title;
