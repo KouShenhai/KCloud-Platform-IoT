@@ -31,9 +31,9 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 特此说明，与Spring Boot版本保持一致
 
 ### ⌛ 浏览器
-推荐使用 Microsoft Edge浏览器  
-推荐使用 Microsoft Edge浏览器  
-推荐使用 Microsoft Edge浏览器  
+推荐 Microsoft Edge 浏览器  
+推荐 Microsoft Edge 浏览器  
+推荐 Microsoft Edge 浏览器  
 
 ### 🔎 功能介绍
 🚀 在线用户：强制踢出在线用户    
