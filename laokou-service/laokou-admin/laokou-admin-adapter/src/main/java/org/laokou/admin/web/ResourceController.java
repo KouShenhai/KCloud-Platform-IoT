@@ -128,7 +128,7 @@ public class ResourceController {
 
 	@GetMapping(value = "{instanceId}/diagram")
 	@TraceLog
-	@Operation(summary = "资源管理", description = "流程图")
+	@Operation(summary = "资源管理", description = "查看流程")
 	@PreAuthorize("hasAuthority('resource:diagram')")
 	public Result<String> diagram(@PathVariable("instanceId") String instanceId) {
 		return resourceServiceI.diagram(new ResourceDiagramGetQry(instanceId));

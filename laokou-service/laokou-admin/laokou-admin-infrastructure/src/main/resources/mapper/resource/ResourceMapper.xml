@@ -37,6 +37,12 @@
             <if test="resource.code != null and resource.code != ''">
                 and `code` = #{resource.code}
             </if>
+            <if test="resource.id != null">
+                and id = #{resource.id}
+            </if>
+            <if test="resource.status != null">
+                and `status` = #{resource.status}
+            </if>
         </where>
         order by id desc
     </select>

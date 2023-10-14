@@ -53,7 +53,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class HttpUtil {
 
-	private static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
+	public static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
 
 	private static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 
@@ -197,9 +197,9 @@ public class HttpUtil {
 		return sb.toString();
 	}
 
-	static class DisableValidationTrustManager implements X509TrustManager {
+	public static class DisableValidationTrustManager implements X509TrustManager {
 
-		DisableValidationTrustManager() {
+		public DisableValidationTrustManager() {
 		}
 
 		public void checkClientTrusted(X509Certificate[] x509Certificates, String s) {
@@ -230,14 +230,7 @@ public class HttpUtil {
 	 */
 	@SneakyThrows
 	public static void disableSsl(HttpClientBuilder builder) {
-		// X.509是密码学里公钥证书的格式标准，作为证书标准
-		X509TrustManager disabledTrustManager = new DisableValidationTrustManager();
-		// 信任库
-		TrustManager[] trustManagers = new TrustManager[] { disabledTrustManager };
-		// 怎么选择加密协议，请看 ProtocolVersion
-		// 为什么能找到对应的加密协议 请查看 SSLContextSpi
-		SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
-		sslContext.init(null, trustManagers, new SecureRandom());
+		SSLContext sslContext = sslContext();
 		SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactoryBuilder.create()
 			.setSslContext(sslContext)
 			.setHostnameVerifier(new TrustAllHostnames())
@@ -247,6 +240,19 @@ public class HttpUtil {
 			.setSSLSocketFactory(sslConnectionSocketFactory)
 			.build();
 		builder.setConnectionManager(poolingHttpClientConnectionManager);
+	}
+
+	@SneakyThrows
+	public static SSLContext sslContext() {
+		// X.509是密码学里公钥证书的格式标准，作为证书标准
+		X509TrustManager disabledTrustManager = new DisableValidationTrustManager();
+		// 信任库
+		TrustManager[] trustManagers = new TrustManager[] { disabledTrustManager };
+		// 怎么选择加密协议，请看 ProtocolVersion
+		// 为什么能找到对应的加密协议 请查看 SSLContextSpi
+		SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
+		sslContext.init(null, trustManagers, new SecureRandom());
+		return sslContext;
 	}
 
 }
