@@ -20,51 +20,9 @@ package org.laokou.flowable.dto.task.clientobject;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
-import java.io.Serial;
-import java.util.Map;
-
 /**
  * @author laokou
  */
 @Data
-public class AuditCO extends ClientObject {
-
-	@Serial
-	private static final long serialVersionUID = -945627686622034109L;
-
-	/**
-	 * 任务id
-	 */
-	private String taskId;
-
-	/**
-	 * 任务名称
-	 */
-	private String taskName;
-
-	/**
-	 * 审批意见
-	 */
-	private String comment;
-
-	/**
-	 * 实例ID
-	 */
-	private String instanceId;
-
-	/**
-	 * 业务标识
-	 */
-	private String businessKey;
-
-	/**
-	 * 实例名称
-	 */
-	private String instanceName;
-
-	/**
-	 * 流程变量
-	 */
-	private Map<String, Object> values;
-
+public class TaskCO extends ClientObject {
 }

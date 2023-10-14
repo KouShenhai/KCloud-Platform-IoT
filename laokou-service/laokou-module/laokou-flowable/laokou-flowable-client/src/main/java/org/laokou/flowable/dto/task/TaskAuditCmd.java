@@ -20,10 +20,26 @@ package org.laokou.flowable.dto.task;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
 
+import java.io.Serial;
+import java.util.Map;
+
 /**
  * @author laokou
  */
 @Data
 public class TaskAuditCmd extends CommonCommand {
+
+    @Serial
+    private static final long serialVersionUID = -945627686622034109L;
+
+    /**
+     * 任务id
+     */
+    private String taskId;
+
+    /**
+     * 流程变量
+     */
+    private Map<String, Object> values;
 
 }

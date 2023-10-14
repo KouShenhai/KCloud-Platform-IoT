@@ -15,23 +15,15 @@
  *
  */
 
-package org.laokou.flowable.dto.task.clientobject;
+package org.laokou.flowable.command.task.query;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.ClientObject;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Data
-public class ResolveCO extends ClientObject {
-
-	private String taskId;
-
-	private String businessKey;
-
-	private String instanceId;
-
-	private String instanceName;
-
+@Component
+@RequiredArgsConstructor
+public class TaskDiagramGetQryExe {
 }

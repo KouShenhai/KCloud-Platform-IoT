@@ -26,4 +26,8 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class TaskDelegateCmd extends CommonCommand {
 
+    private String taskId;
+    private Long userId;
+    private Long toUserId;
+
 }

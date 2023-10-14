@@ -18,12 +18,11 @@
 package org.laokou.flowable.dto.task;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-public class TaskTransferCmd extends CommonCommand {
+public class TaskTransferCmd extends TaskDelegateCmd {
 
 }
