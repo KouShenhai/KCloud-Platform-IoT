@@ -255,9 +255,6 @@ Github 前端地址：[KCloud-Antdv-Alibaba](https://github.com/KouShenhai/KClou
 Gtiee 后端地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KCloud-Platform-Alibaba)  
 Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-Antdv-Alibaba)  
 
-GitLab 后端地址：[KCloud-Platform-Alibaba](https://gitlab.com/KouShenhai/KCloud-Platform-Alibaba)  
-GitLab 前端地址：[KCloud-Antdv-Alibaba](https://gitlab.com/KouShenhai/KCloud-Antdv-Alibaba)
-
 ### 🙋 培训交流
 <table>
     <tr>
