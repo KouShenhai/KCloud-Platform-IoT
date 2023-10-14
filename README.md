@@ -30,6 +30,11 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 ### 💪 版本号
 特此说明，与Spring Boot版本保持一致
 
+### ⌛ 浏览器
+推荐使用 Microsoft Edge浏览器  
+推荐使用 Microsoft Edge浏览器  
+推荐使用 Microsoft Edge浏览器  
+
 ### 🔎 功能介绍
 🚀 在线用户：强制踢出在线用户    
 🚀 用户管理：用户信息增删改查（字段隔离&分库分表）（可重置密码）   
@@ -73,7 +78,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Redis                       | 7.0.11       |
 | Elasticsearch               | 8.6.2        |
 | RocketMQ                    | 5.1.1        |
-| Flowable                    | 7.0.0     |
+| Flowable                    | 7.0.0        |
 | ShardingSphere              | 5.3.2        |
 | OpenResty                   | 1.21.4.1     |
 | Netty                       | 4.1.97.Final |
