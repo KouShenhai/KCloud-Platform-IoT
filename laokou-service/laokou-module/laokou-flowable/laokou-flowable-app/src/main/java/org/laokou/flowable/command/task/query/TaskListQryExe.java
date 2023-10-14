@@ -15,19 +15,15 @@
  *
  */
 
-package org.laokou.flowable.dto.task.clientobject;
+package org.laokou.flowable.command.task.query;
 
-import lombok.Data;
-
-import java.io.Serial;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Data
-public class DelegateCO extends TransferCO {
-
-	@Serial
-	private static final long serialVersionUID = -4922465039180029063L;
-
+@Component
+@RequiredArgsConstructor
+public class TaskListQryExe {
 }

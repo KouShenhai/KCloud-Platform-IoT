@@ -17,16 +17,19 @@
 
 package org.laokou.flowable.dto.task.clientobject;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
 @Data
-public class TransferCO extends ResolveCO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class StartCO extends ClientObject {
 
-	private Long userId;
-
-	private Long transferId;
+    private String instanceId;
 
 }

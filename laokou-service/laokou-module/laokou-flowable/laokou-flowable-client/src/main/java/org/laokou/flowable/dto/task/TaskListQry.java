@@ -30,8 +30,6 @@ public class TaskListQry extends PageQuery {
 
 	private Long userId;
 
-	private String username;
-
-	private String processKey;
+	private String key;
 
 }
