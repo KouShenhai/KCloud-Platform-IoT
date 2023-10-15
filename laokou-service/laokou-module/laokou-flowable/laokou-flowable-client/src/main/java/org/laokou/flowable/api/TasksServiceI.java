@@ -18,6 +18,7 @@ package org.laokou.flowable.api;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.dto.task.*;
+import org.laokou.flowable.dto.task.clientobject.AuditCO;
 import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.laokou.flowable.dto.task.clientobject.TaskCO;
 
@@ -28,7 +29,7 @@ public interface TasksServiceI {
 
 	Result<Datas<TaskCO>> list(TaskListQry qry);
 
-	Result<Boolean> audit(TaskAuditCmd cmd);
+	Result<AuditCO> audit(TaskAuditCmd cmd);
 
 	Result<Boolean> resolve(TaskResolveCmd cmd);
 

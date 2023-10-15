@@ -18,13 +18,13 @@
 package org.laokou.admin.dto.resource;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
 @Data
-public class ResourceTaskListQry extends CommonCommand {
+public class ResourceTaskListQry extends PageQuery {
 
 	private String name;
 

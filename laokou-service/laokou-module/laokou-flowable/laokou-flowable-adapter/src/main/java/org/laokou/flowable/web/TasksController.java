@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.api.TasksServiceI;
 import org.laokou.flowable.dto.task.*;
+import org.laokou.flowable.dto.task.clientobject.AuditCO;
 import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.laokou.flowable.dto.task.clientobject.TaskCO;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +48,7 @@ public class TasksController {
 
 	@PostMapping(value = "audit")
 	@Operation(summary = "流程任务", description = "审批任务")
-	public Result<Boolean> audit(@RequestBody TaskAuditCmd cmd) {
+	public Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd) {
 		return tasksServiceI.audit(cmd);
 	}
 

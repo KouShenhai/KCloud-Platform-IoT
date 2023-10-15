@@ -297,7 +297,7 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 |                               [simman](https://github.com/simman)                                |                             [suhengli](https://github.com/suhengli)                              |                            [gitkakafu](https://github.com/gitkakafu)                             |  
 
 ### 🚫 免责声明
-禁止使用本项目从事一切违法犯罪行为。作者不承担任何法律责任，特此声明
+禁止使用本项目从事一切违法犯罪活动。作者不承担任何法律责任，特此声明
 
 ### 🐸 联系作者
 博客：[https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)    

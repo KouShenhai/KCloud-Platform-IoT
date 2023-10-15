@@ -30,4 +30,6 @@ public interface ResourceGateway {
 
     Boolean update(Resource resource);
 
+    void publish();
+
 }

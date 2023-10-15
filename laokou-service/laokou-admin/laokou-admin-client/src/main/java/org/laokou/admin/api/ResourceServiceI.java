@@ -55,7 +55,7 @@ public interface ResourceServiceI {
 
 	Result<Boolean> auditTask(ResourceAuditTaskCmd cmd);
 
-	Result<TaskCO> detailTask(ResourceDetailTaskGetQry qry);
+	Result<ResourceCO> detailTask(ResourceDetailTaskGetQry qry);
 
 	Result<Boolean> resolveTask(ResourceResolveTaskCmd cmd);
 

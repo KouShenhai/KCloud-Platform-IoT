@@ -126,7 +126,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	@Override
 	public Result<Datas<TaskCO>> taskList(ResourceTaskListQry qry) {
-		return null;
+		return resourceTaskListQryExe.execute(qry);
 	}
 
 	@Override
@@ -135,8 +135,8 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	@Override
-	public Result<TaskCO> detailTask(ResourceDetailTaskGetQry qry) {
-		return null;
+	public Result<ResourceCO> detailTask(ResourceDetailTaskGetQry qry) {
+		return resourceDetailTaskGetQryExe.execute(qry);
 	}
 
 	@Override

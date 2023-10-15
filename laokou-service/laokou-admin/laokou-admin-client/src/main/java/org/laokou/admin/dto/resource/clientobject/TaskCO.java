@@ -39,6 +39,7 @@ public class TaskCO extends ClientObject {
 	private LocalDateTime createDate;
 	private String definitionKey;
 	private String name;
+	private String username;
 	private String instanceName;
 	private String businessKey;
 

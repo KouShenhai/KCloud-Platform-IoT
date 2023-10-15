@@ -24,6 +24,7 @@ import org.laokou.flowable.api.TasksServiceI;
 import org.laokou.flowable.command.task.*;
 import org.laokou.flowable.command.task.query.TaskListQryExe;
 import org.laokou.flowable.dto.task.*;
+import org.laokou.flowable.dto.task.clientobject.AuditCO;
 import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.laokou.flowable.dto.task.clientobject.TaskCO;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class TasksServiceImpl implements TasksServiceI {
     }
 
     @Override
-    public Result<Boolean> audit(TaskAuditCmd cmd) {
+    public Result<AuditCO> audit(TaskAuditCmd cmd) {
         return taskAuditCmdExe.execute(cmd);
     }
 

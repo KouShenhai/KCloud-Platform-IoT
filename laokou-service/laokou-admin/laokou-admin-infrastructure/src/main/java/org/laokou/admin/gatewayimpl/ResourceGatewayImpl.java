@@ -43,6 +43,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.laokou.admin.common.Constant.KEY;
 import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_RESOURCE;
 
 /**
@@ -53,7 +54,6 @@ import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_RESOURC
 @RequiredArgsConstructor
 public class ResourceGatewayImpl implements ResourceGateway {
 
-    private static final String KEY = "Process_88888888";
     private final ResourceMapper resourceMapper;
     private final ResourceAuditMapper resourceAuditMapper;
     private final TasksFeignClient tasksFeignClient;
@@ -80,6 +80,11 @@ public class ResourceGatewayImpl implements ResourceGateway {
     @GlobalTransactional(rollbackFor = Exception.class)
     public Boolean update(Resource resource) {
         return updateResource(resource,resourceMapper.getVersion(resource.getId(),ResourceDO.class));
+    }
+
+    @Override
+    public void publish() {
+
     }
 
     @Transactional(rollbackFor = Exception.class)
