@@ -18,6 +18,9 @@
 package org.laokou.admin.command.resource;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dto.resource.ResourceAuditTaskCmd;
+import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +29,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ResourceAuditTaskCmdExe {
+
+    private final TasksFeignClient tasksFeignClient;
+
+    public Result<Boolean> execute(ResourceAuditTaskCmd cmd) {
+        return null;
+    }
 
 }

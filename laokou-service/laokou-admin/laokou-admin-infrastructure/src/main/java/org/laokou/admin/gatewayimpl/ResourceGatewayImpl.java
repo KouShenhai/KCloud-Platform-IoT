@@ -82,6 +82,11 @@ public class ResourceGatewayImpl implements ResourceGateway {
         return updateResource(resource,resourceMapper.getVersion(resource.getId(),ResourceDO.class));
     }
 
+    @Override
+    public void publish() {
+
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateResource(Resource resource,Integer version) {
         log.info("分布式事务，XID:{}", RootContext.getXID());
