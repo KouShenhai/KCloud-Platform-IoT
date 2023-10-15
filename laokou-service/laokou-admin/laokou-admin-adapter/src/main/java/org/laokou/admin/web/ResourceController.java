@@ -155,7 +155,7 @@ public class ResourceController {
 	@TraceLog
 	@GetMapping(value = "{id}/detail-task")
 	@Operation(summary = "资源管理", description = "查看任务")
-	public Result<TaskCO> detailTask(@PathVariable("id") Long id) {
+	public Result<ResourceCO> detailTask(@PathVariable("id") Long id) {
 		return resourceServiceI.detailTask(new ResourceDetailTaskGetQry(id));
 	}
 

@@ -45,4 +45,6 @@ public interface Constant {
 	 */
 	long MAX_FILE_SIZE = 100 * 1024 * 1024;
 
+	String KEY = "Process_88888888";
+
 }

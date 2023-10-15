@@ -18,7 +18,20 @@
 package org.laokou.admin.command.resource.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dto.resource.ResourceTaskListQry;
+import org.laokou.admin.dto.resource.TaskListQry;
+import org.laokou.admin.dto.resource.clientobject.TaskCO;
+import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+import static org.laokou.admin.common.Constant.KEY;
 
 /**
  * @author laokou
@@ -26,5 +39,29 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ResourceTaskListQryExe {
+
+    private final TasksFeignClient tasksFeignClient;
+
+    public Result<Datas<TaskCO>> execute(ResourceTaskListQry qry) {
+        Result<Datas<TaskCO>> result = tasksFeignClient.list(toQry(qry));
+        if (result.fail()) {
+            throw new GlobalException(result.getMsg());
+        }
+        List<TaskCO> records = result.getData().getRecords();
+        if (CollectionUtil.isNotEmpty(records)) {
+            records.parallelStream().forEach(item -> item.setUsername(UserUtil.getUserName()));
+        }
+        return result;
+    }
+
+    private TaskListQry toQry(ResourceTaskListQry qry) {
+        TaskListQry taskListQry = new TaskListQry();
+        taskListQry.setName(qry.getName());
+        taskListQry.setPageNum(qry.getPageNum());
+        taskListQry.setPageSize(qry.getPageSize());
+        taskListQry.setUserId(UserUtil.getUserId());
+        taskListQry.setKey(KEY);
+        return taskListQry;
+    }
 
 }
