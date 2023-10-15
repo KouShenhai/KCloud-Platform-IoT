@@ -15,27 +15,21 @@
  *
  */
 
-package org.laokou.admin.command.resource;
+package org.laokou.flowable.dto.task.clientobject;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.domain.gateway.ResourceGateway;
-import org.laokou.admin.dto.resource.ResourceAuditTaskCmd;
-import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class ResourceAuditTaskCmdExe {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class AuditCO extends ClientObject {
 
-    private final TasksFeignClient tasksFeignClient;
-    private final ResourceGateway resourceGateway;
-
-    public Result<Boolean> execute(ResourceAuditTaskCmd cmd) {
-        return null;
-    }
+    private String assignee;
 
 }

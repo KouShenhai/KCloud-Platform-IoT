@@ -20,6 +20,7 @@ package org.laokou.admin.gatewayimpl.feign.fallback;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.resource.*;
+import org.laokou.admin.dto.resource.clientobject.AuditCO;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
 import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
@@ -42,7 +43,7 @@ public class TasksFeignClientFallback implements TasksFeignClient {
     }
 
     @Override
-    public Result<Boolean> audit(TaskAuditCmd cmd) {
+    public Result<AuditCO> audit(TaskAuditCmd cmd) {
         errLog();
         return Result.fail("流程审批失败，请联系管理员");
     }

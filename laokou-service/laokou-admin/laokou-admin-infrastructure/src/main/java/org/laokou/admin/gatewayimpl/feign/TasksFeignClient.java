@@ -17,6 +17,7 @@ package org.laokou.admin.gatewayimpl.feign;
 
 import io.swagger.v3.oas.annotations.Operation;
 import org.laokou.admin.dto.resource.*;
+import org.laokou.admin.dto.resource.clientobject.AuditCO;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
 import org.laokou.admin.gatewayimpl.feign.factory.TasksFeignClientFallbackFactory;
@@ -42,7 +43,7 @@ public interface TasksFeignClient {
 
     @PostMapping(value = "audit")
     @Operation(summary = "流程任务", description = "审批任务")
-    Result<Boolean> audit(@RequestBody TaskAuditCmd cmd);
+    Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd);
 
     @PostMapping(value = "resolve")
     @Operation(summary = "流程任务", description = "处理任务")

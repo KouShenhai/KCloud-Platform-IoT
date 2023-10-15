@@ -27,6 +27,8 @@ import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.dto.task.TaskAuditCmd;
+import org.laokou.flowable.dto.task.clientobject.AuditCO;
+import org.laokou.flowable.gatewayimpl.database.TaskMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,11 +43,13 @@ import java.util.Map;
 public class TaskAuditCmdExe {
 
     private final TaskService taskService;
+    private final TaskMapper taskMapper;
 
-    public Result<Boolean> execute(TaskAuditCmd cmd) {
+    public Result<AuditCO> execute(TaskAuditCmd cmd) {
         log.info("分布式事务 XID:{}", RootContext.getXID());
         String taskId = cmd.getTaskId();
         Map<String, Object> values = cmd.getValues();
+        String instanceId = cmd.getInstanceId();
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         if (task == null) {
             throw new GlobalException("任务不存在");
@@ -53,17 +57,17 @@ public class TaskAuditCmdExe {
         if (DelegationState.PENDING.equals(task.getDelegationState())) {
             throw new GlobalException("非审批任务，请处理任务");
         }
-        return Result.of(audit(taskId,values));
+        return Result.of(audit(taskId,instanceId,values));
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Boolean audit(String taskId,Map<String, Object> values) {
+    public AuditCO audit(String taskId,String instanceId, Map<String, Object> values) {
         if (MapUtil.isNotEmpty(values)) {
             taskService.complete(taskId,values);
         } else {
             taskService.complete(taskId);
         }
-        return true;
+        return new AuditCO(taskMapper.getAssigneeByInstanceId(instanceId));
     }
 
 }

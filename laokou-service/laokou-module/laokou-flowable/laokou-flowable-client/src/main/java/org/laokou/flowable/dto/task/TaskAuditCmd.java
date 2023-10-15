@@ -37,6 +37,8 @@ public class TaskAuditCmd extends CommonCommand {
      */
     private String taskId;
 
+    private String instanceId;
+
     /**
      * 流程变量
      */
