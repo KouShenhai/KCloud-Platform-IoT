@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-flowable-client</artifactId>
+            <artifactId>laokou-common-core</artifactId>
         </dependency>
     </dependencies>
 
