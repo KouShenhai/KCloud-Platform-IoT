@@ -111,7 +111,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	@Override
 	public Result<Boolean> update(ResourceUpdateCmd cmd) {
-		return null;
+		return resourceUpdateCmdExe.execute(cmd);
 	}
 
 	@Override

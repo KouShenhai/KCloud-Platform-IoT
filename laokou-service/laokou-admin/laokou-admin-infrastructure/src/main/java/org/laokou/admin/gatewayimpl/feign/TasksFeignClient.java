@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.laokou.admin.dto.resource.*;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
+import org.laokou.admin.gatewayimpl.feign.factory.TasksFeignClientFallbackFactory;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.openfeign.constant.ServiceConstant;
@@ -32,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author laokou
  */
 @FeignClient(contextId = "tasks", value = ServiceConstant.LAOKOU_FLOWABLE, path = "v1/tasks",
-        fallbackFactory = Object.class)
+        fallbackFactory = TasksFeignClientFallbackFactory.class)
 public interface TasksFeignClient {
 
     @PostMapping(value = "list")

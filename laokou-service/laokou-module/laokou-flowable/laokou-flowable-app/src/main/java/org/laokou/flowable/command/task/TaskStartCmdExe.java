@@ -62,7 +62,7 @@ public class TaskStartCmdExe {
 
     @Transactional(rollbackFor = Exception.class)
     public StartCO start(String definitionKey,String businessKey,String instanceName) {
-        ProcessInstance processInstance = runtimeService.startProcessInstanceById(definitionKey, businessKey);
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionKey, businessKey);
         if (processInstance == null) {
             throw new GlobalException("流程不存在");
         }
