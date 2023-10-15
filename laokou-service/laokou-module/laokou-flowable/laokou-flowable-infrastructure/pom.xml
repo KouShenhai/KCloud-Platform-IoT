@@ -17,6 +17,10 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
+            <artifactId>laokou-flowable-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-seata</artifactId>
         </dependency>
         <dependency>
