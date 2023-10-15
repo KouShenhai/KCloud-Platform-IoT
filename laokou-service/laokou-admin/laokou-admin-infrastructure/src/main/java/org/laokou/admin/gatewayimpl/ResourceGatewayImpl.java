@@ -19,8 +19,10 @@ package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.ResourceGateway;
@@ -46,6 +48,7 @@ import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_RESOURC
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ResourceGatewayImpl implements ResourceGateway {
@@ -74,13 +77,14 @@ public class ResourceGatewayImpl implements ResourceGateway {
     }
 
     @Override
+    @GlobalTransactional(rollbackFor = Exception.class)
     public Boolean update(Resource resource) {
         return updateResource(resource,resourceMapper.getVersion(resource.getId(),ResourceDO.class));
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @GlobalTransactional
     public Boolean updateResource(Resource resource,Integer version) {
+        log.info("分布式事务，XID:{}", RootContext.getXID());
         Boolean flag = insertResourceAudit(resource);
         StartCO co = startTask(resource);
         int status = Status.PENDING_APPROVAL;
