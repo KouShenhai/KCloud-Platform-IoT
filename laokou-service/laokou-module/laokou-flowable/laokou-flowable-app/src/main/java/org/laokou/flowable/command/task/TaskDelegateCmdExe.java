@@ -36,28 +36,28 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class TaskDelegateCmdExe {
 
-    private final TaskService taskService;
+	private final TaskService taskService;
 
-    public Result<Boolean> execute(TaskDelegateCmd cmd) {
-        log.info("分布式事务 XID:{}", RootContext.getXID());
-        String taskId = cmd.getTaskId();
-        String owner = cmd.getUserId().toString();
-        String deleteReason = cmd.getToUserId().toString();
-        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-        if (task == null) {
-            throw new GlobalException("任务不存在");
-        }
-        if (!owner.equals(task.getAssignee())) {
-            throw new GlobalException("用户无权操作任务");
-        }
-        return Result.of(delegate(taskId,owner,deleteReason));
-    }
+	public Result<Boolean> execute(TaskDelegateCmd cmd) {
+		log.info("分布式事务 XID:{}", RootContext.getXID());
+		String taskId = cmd.getTaskId();
+		String owner = cmd.getUserId().toString();
+		String deleteReason = cmd.getToUserId().toString();
+		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+		if (task == null) {
+			throw new GlobalException("任务不存在");
+		}
+		if (!owner.equals(task.getAssignee())) {
+			throw new GlobalException("用户无权操作任务");
+		}
+		return Result.of(delegate(taskId, owner, deleteReason));
+	}
 
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean delegate(String taskId,String owner,String deleteReason) {
-        taskService.setOwner(taskId,owner);
-        taskService.deleteTask(taskId,deleteReason);
-        return true;
-    }
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean delegate(String taskId, String owner, String deleteReason) {
+		taskService.setOwner(taskId, owner);
+		taskService.deleteTask(taskId, deleteReason);
+		return true;
+	}
 
 }

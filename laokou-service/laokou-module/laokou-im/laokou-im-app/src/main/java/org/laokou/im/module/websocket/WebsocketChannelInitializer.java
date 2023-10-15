@@ -84,10 +84,11 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 			char[] passArray = password.toCharArray();
 			KeyStore keyStore = KeyStore.getInstance(type);
 			SSLContext sslContext = SSLContext.getInstance(HttpUtil.TLS_PROTOCOL_VERSION);
-			keyStore.load(inputStream,passArray);
-			KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-			keyManagerFactory.init(keyStore,passArray);
-			sslContext.init(keyManagerFactory.getKeyManagers(),null,null);
+			keyStore.load(inputStream, passArray);
+			KeyManagerFactory keyManagerFactory = KeyManagerFactory
+				.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+			keyManagerFactory.init(keyStore, passArray);
+			sslContext.init(keyManagerFactory.getKeyManagers(), null, null);
 			return sslContext;
 		}
 	}

@@ -27,6 +27,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class ResourceUpdateCmd extends CommonCommand {
 
-    private ResourceCO resourceCO;
+	private ResourceCO resourceCO;
 
 }

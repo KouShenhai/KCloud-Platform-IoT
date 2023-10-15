@@ -26,6 +26,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class TaskResolveCmd extends CommonCommand {
 
-    private String taskId;
+	private String taskId;
 
 }

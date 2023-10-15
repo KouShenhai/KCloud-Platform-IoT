@@ -27,14 +27,22 @@ import java.time.LocalDateTime;
 @Data
 public class TaskDO {
 
-    private String taskId;
-    private String taskName;
-    private String definitionId;
-    private String instanceId;
-    private LocalDateTime createDate;
-    private String definitionKey;
-    private String name;
-    private String instanceName;
-    private String businessKey;
+	private String taskId;
+
+	private String taskName;
+
+	private String definitionId;
+
+	private String instanceId;
+
+	private LocalDateTime createDate;
+
+	private String definitionKey;
+
+	private String name;
+
+	private String instanceName;
+
+	private String businessKey;
 
 }

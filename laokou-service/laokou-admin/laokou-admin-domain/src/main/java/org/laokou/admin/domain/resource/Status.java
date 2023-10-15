@@ -22,28 +22,34 @@ package org.laokou.admin.domain.resource;
  */
 public interface Status {
 
-    /**
-     * 待审批
-     */
-    int PENDING_APPROVAL = 0;
-    /**
-     * 审批中
-     */
-    int IN_APPROVAL = 1;
-    /**
-     * 驳回审批
-     */
-    int REJECT_APPROVAL = -1;
-    /**
-     * 通过审批
-     */
-    int APPROVED = 2;
-    /**
-     * 通过
-     */
-    int PASS = 1;
-    /**
-     * 拒绝
-     */
-    int REFUSE= -1;
+	/**
+	 * 待审批
+	 */
+	int PENDING_APPROVAL = 0;
+
+	/**
+	 * 审批中
+	 */
+	int IN_APPROVAL = 1;
+
+	/**
+	 * 驳回审批
+	 */
+	int REJECT_APPROVAL = -1;
+
+	/**
+	 * 通过审批
+	 */
+	int APPROVED = 2;
+
+	/**
+	 * 通过
+	 */
+	int PASS = 1;
+
+	/**
+	 * 拒绝
+	 */
+	int REFUSE = -1;
+
 }

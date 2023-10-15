@@ -70,9 +70,9 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 		return Objects.requireNonNull(applicationContext.getType(name));
 	}
 
-	public static <T> void registerBean(Class<T> clazz,String beanName) {
+	public static <T> void registerBean(Class<T> clazz, String beanName) {
 		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
-		getFactory().registerBeanDefinition(beanName,beanDefinitionBuilder.getBeanDefinition());
+		getFactory().registerBeanDefinition(beanName, beanDefinitionBuilder.getBeanDefinition());
 	}
 
 	public static void removeBean(String beanName) {

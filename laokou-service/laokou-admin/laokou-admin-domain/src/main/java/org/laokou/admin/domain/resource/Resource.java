@@ -25,18 +25,18 @@ import lombok.Data;
 @Data
 public class Resource {
 
-    private Long id;
+	private Long id;
 
-    private String title;
+	private String title;
 
-    private String url;
+	private String url;
 
-    private Integer status;
+	private Integer status;
 
-    private String code;
+	private String code;
 
-    private String remark;
+	private String remark;
 
-    private String instanceId;
+	private String instanceId;
 
 }

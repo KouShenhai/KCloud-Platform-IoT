@@ -32,10 +32,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceGetQryExe {
 
-    private final ResourceGateway resourceGateway;
+	private final ResourceGateway resourceGateway;
 
-    public Result<ResourceCO> execute(ResourceGetQry qry) {
-        return Result.of(ConvertUtil.sourceToTarget(resourceGateway.getById(qry.getId()),ResourceCO.class));
-    }
+	public Result<ResourceCO> execute(ResourceGetQry qry) {
+		return Result.of(ConvertUtil.sourceToTarget(resourceGateway.getById(qry.getId()), ResourceCO.class));
+	}
 
 }

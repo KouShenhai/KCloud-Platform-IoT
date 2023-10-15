@@ -33,14 +33,23 @@ public class TaskCO extends ClientObject {
 	private static final long serialVersionUID = -8942395421885937298L;
 
 	private String taskId;
+
 	private String taskName;
+
 	private String definitionId;
+
 	private String instanceId;
+
 	private LocalDateTime createDate;
+
 	private String definitionKey;
+
 	private String name;
+
 	private String username;
+
 	private String instanceName;
+
 	private String businessKey;
 
 }

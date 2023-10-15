@@ -37,10 +37,10 @@ public class ResourceListQryExe {
 	private final ResourceGateway resourceGateway;
 
 	public Result<Datas<ResourceCO>> execute(ResourceListQry qry) {
-		Resource resource = ConvertUtil.sourceToTarget(qry,Resource.class);
+		Resource resource = ConvertUtil.sourceToTarget(qry, Resource.class);
 		Datas<Resource> newPage = resourceGateway.list(resource, qry);
 		Datas<ResourceCO> datas = new Datas<>();
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),ResourceCO.class));
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), ResourceCO.class));
 		datas.setTotal(newPage.getTotal());
 		return Result.of(datas);
 	}

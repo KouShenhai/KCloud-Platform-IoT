@@ -37,25 +37,25 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class TaskResolveCmdExe {
 
-    private final TaskService taskService;
+	private final TaskService taskService;
 
-    public Result<Boolean> execute(TaskResolveCmd cmd) {
-        log.info("分布式事务 XID:{}", RootContext.getXID());
-        String taskId = cmd.getTaskId();
-        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-        if (task == null) {
-            throw new GlobalException("任务不存在");
-        }
-        if (DelegationState.RESOLVED.equals(task.getDelegationState())) {
-            throw new GlobalException("非处理任务，请审批任务");
-        }
-        return Result.of(resolve(taskId));
-    }
+	public Result<Boolean> execute(TaskResolveCmd cmd) {
+		log.info("分布式事务 XID:{}", RootContext.getXID());
+		String taskId = cmd.getTaskId();
+		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+		if (task == null) {
+			throw new GlobalException("任务不存在");
+		}
+		if (DelegationState.RESOLVED.equals(task.getDelegationState())) {
+			throw new GlobalException("非处理任务，请审批任务");
+		}
+		return Result.of(resolve(taskId));
+	}
 
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean resolve(String taskId) {
-        taskService.resolveTask(taskId);
-        return true;
-    }
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean resolve(String taskId) {
+		taskService.resolveTask(taskId);
+		return true;
+	}
 
 }

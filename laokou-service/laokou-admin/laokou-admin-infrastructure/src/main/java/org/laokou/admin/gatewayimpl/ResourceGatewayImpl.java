@@ -54,77 +54,79 @@ import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_RESOURC
 @RequiredArgsConstructor
 public class ResourceGatewayImpl implements ResourceGateway {
 
-    private final ResourceMapper resourceMapper;
-    private final ResourceAuditMapper resourceAuditMapper;
-    private final TasksFeignClient tasksFeignClient;
+	private final ResourceMapper resourceMapper;
 
-    @Override
-    @DataFilter(alias = BOOT_SYS_RESOURCE)
-    public Datas<Resource> list(Resource resource, PageQuery pageQuery) {
-        IPage<ResourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-        ResourceDO resourceDO = ResourceConvertor.toDataObject(resource);
-        IPage<ResourceDO> newPage = resourceMapper.getResourceListFilter(page, resourceDO, pageQuery);
-        Datas<Resource> datas = new Datas<>();
-        datas.setTotal(newPage.getTotal());
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),Resource.class));
-        return datas;
-    }
+	private final ResourceAuditMapper resourceAuditMapper;
 
-    @Override
-    public Resource getById(Long id) {
-        ResourceDO resourceDO = resourceMapper.selectById(id);
-        return ConvertUtil.sourceToTarget(resourceDO, Resource.class);
-    }
+	private final TasksFeignClient tasksFeignClient;
 
-    @Override
-    @GlobalTransactional(rollbackFor = Exception.class)
-    public Boolean update(Resource resource) {
-        return updateResource(resource,resourceMapper.getVersion(resource.getId(),ResourceDO.class));
-    }
+	@Override
+	@DataFilter(alias = BOOT_SYS_RESOURCE)
+	public Datas<Resource> list(Resource resource, PageQuery pageQuery) {
+		IPage<ResourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+		ResourceDO resourceDO = ResourceConvertor.toDataObject(resource);
+		IPage<ResourceDO> newPage = resourceMapper.getResourceListFilter(page, resourceDO, pageQuery);
+		Datas<Resource> datas = new Datas<>();
+		datas.setTotal(newPage.getTotal());
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Resource.class));
+		return datas;
+	}
 
-    @Override
-    public void publish() {
+	@Override
+	public Resource getById(Long id) {
+		ResourceDO resourceDO = resourceMapper.selectById(id);
+		return ConvertUtil.sourceToTarget(resourceDO, Resource.class);
+	}
 
-    }
+	@Override
+	@GlobalTransactional(rollbackFor = Exception.class)
+	public Boolean update(Resource resource) {
+		return updateResource(resource, resourceMapper.getVersion(resource.getId(), ResourceDO.class));
+	}
 
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean updateResource(Resource resource,Integer version) {
-        log.info("分布式事务，XID:{}", RootContext.getXID());
-        Boolean flag = insertResourceAudit(resource);
-        StartCO co = startTask(resource);
-        int status = Status.PENDING_APPROVAL;
-        return flag && updateResourceStatus(resource, status,version, co.getInstanceId());
-    }
+	@Override
+	public void publish() {
 
-    private StartCO startTask(Resource resource) {
-        TaskStartCmd cmd = new TaskStartCmd();
-        cmd.setBusinessKey(resource.getId().toString());
-        cmd.setDefinitionKey(KEY);
-        cmd.setInstanceName(resource.getTitle());
-        Result<StartCO> result = tasksFeignClient.start(cmd);
-        if (result.fail()) {
-            throw new GlobalException(result.getMsg());
-        }
-        return result.getData();
-    }
+	}
 
-    private Boolean updateResource(ResourceDO resourceDO) {
-        return resourceMapper.updateById(resourceDO) > 0;
-    }
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean updateResource(Resource resource, Integer version) {
+		log.info("分布式事务，XID:{}", RootContext.getXID());
+		Boolean flag = insertResourceAudit(resource);
+		StartCO co = startTask(resource);
+		int status = Status.PENDING_APPROVAL;
+		return flag && updateResourceStatus(resource, status, version, co.getInstanceId());
+	}
 
-    private Boolean updateResourceStatus(Resource resource,int status,Integer version,String instanceId) {
-        ResourceDO resourceDO = new ResourceDO();
-        resourceDO.setId(resource.getId());
-        resourceDO.setStatus(status);
-        resourceDO.setInstanceId(instanceId);
-        resourceDO.setVersion(version);
-        return updateResource(resourceDO);
-    }
+	private StartCO startTask(Resource resource) {
+		TaskStartCmd cmd = new TaskStartCmd();
+		cmd.setBusinessKey(resource.getId().toString());
+		cmd.setDefinitionKey(KEY);
+		cmd.setInstanceName(resource.getTitle());
+		Result<StartCO> result = tasksFeignClient.start(cmd);
+		if (result.fail()) {
+			throw new GlobalException(result.getMsg());
+		}
+		return result.getData();
+	}
 
-    private Boolean insertResourceAudit(Resource resource) {
-        ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
-        resourceAuditDO.setResourceId(resource.getId());
-        return resourceAuditMapper.insertTable(resourceAuditDO);
-    }
+	private Boolean updateResource(ResourceDO resourceDO) {
+		return resourceMapper.updateById(resourceDO) > 0;
+	}
+
+	private Boolean updateResourceStatus(Resource resource, int status, Integer version, String instanceId) {
+		ResourceDO resourceDO = new ResourceDO();
+		resourceDO.setId(resource.getId());
+		resourceDO.setStatus(status);
+		resourceDO.setInstanceId(instanceId);
+		resourceDO.setVersion(version);
+		return updateResource(resourceDO);
+	}
+
+	private Boolean insertResourceAudit(Resource resource) {
+		ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
+		resourceAuditDO.setResourceId(resource.getId());
+		return resourceAuditMapper.insertTable(resourceAuditDO);
+	}
 
 }

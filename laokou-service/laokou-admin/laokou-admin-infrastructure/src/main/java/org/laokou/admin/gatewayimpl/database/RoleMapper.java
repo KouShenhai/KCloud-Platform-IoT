@@ -35,8 +35,8 @@ import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID
 @Mapper
 public interface RoleMapper extends BatchMapper<RoleDO> {
 
-	IPage<RoleDO> getRoleListFilter(IPage<RoleDO> page, @Param(TENANT_ID) Long tenantId,
-			@Param("name") String name, @Param(PAGE_QUERY) PageQuery pageQuery);
+	IPage<RoleDO> getRoleListFilter(IPage<RoleDO> page, @Param(TENANT_ID) Long tenantId, @Param("name") String name,
+			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 	List<Long> getRoleIdsByTenantId(@Param(TENANT_ID) Long tenantId);
 

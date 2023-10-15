@@ -24,12 +24,12 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 public interface ResourceGateway {
 
-    Datas<Resource> list(Resource resource, PageQuery pageQuery);
+	Datas<Resource> list(Resource resource, PageQuery pageQuery);
 
-    Resource getById(Long id);
+	Resource getById(Long id);
 
-    Boolean update(Resource resource);
+	Boolean update(Resource resource);
 
-    void publish();
+	void publish();
 
 }

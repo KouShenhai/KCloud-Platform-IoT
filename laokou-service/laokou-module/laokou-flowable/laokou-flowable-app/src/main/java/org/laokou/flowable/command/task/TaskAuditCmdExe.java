@@ -42,32 +42,34 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TaskAuditCmdExe {
 
-    private final TaskService taskService;
-    private final TaskMapper taskMapper;
+	private final TaskService taskService;
 
-    public Result<AuditCO> execute(TaskAuditCmd cmd) {
-        log.info("分布式事务 XID:{}", RootContext.getXID());
-        String taskId = cmd.getTaskId();
-        Map<String, Object> values = cmd.getValues();
-        String instanceId = cmd.getInstanceId();
-        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-        if (task == null) {
-            throw new GlobalException("任务不存在");
-        }
-        if (DelegationState.PENDING.equals(task.getDelegationState())) {
-            throw new GlobalException("非审批任务，请处理任务");
-        }
-        return Result.of(audit(taskId,instanceId,values));
-    }
+	private final TaskMapper taskMapper;
 
-    @Transactional(rollbackFor = Exception.class)
-    public AuditCO audit(String taskId,String instanceId, Map<String, Object> values) {
-        if (MapUtil.isNotEmpty(values)) {
-            taskService.complete(taskId,values);
-        } else {
-            taskService.complete(taskId);
-        }
-        return new AuditCO(taskMapper.getAssigneeByInstanceId(instanceId));
-    }
+	public Result<AuditCO> execute(TaskAuditCmd cmd) {
+		log.info("分布式事务 XID:{}", RootContext.getXID());
+		String taskId = cmd.getTaskId();
+		Map<String, Object> values = cmd.getValues();
+		String instanceId = cmd.getInstanceId();
+		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+		if (task == null) {
+			throw new GlobalException("任务不存在");
+		}
+		if (DelegationState.PENDING.equals(task.getDelegationState())) {
+			throw new GlobalException("非审批任务，请处理任务");
+		}
+		return Result.of(audit(taskId, instanceId, values));
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public AuditCO audit(String taskId, String instanceId, Map<String, Object> values) {
+		if (MapUtil.isNotEmpty(values)) {
+			taskService.complete(taskId, values);
+		}
+		else {
+			taskService.complete(taskId);
+		}
+		return new AuditCO(taskMapper.getAssigneeByInstanceId(instanceId));
+	}
 
 }

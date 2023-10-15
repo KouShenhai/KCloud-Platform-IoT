@@ -39,36 +39,37 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class TaskStartCmdExe {
 
-    private final RuntimeService runtimeService;
-    private final RepositoryService repositoryService;
+	private final RuntimeService runtimeService;
 
-    public Result<StartCO> execute(TaskStartCmd cmd) {
-        log.info("分布式事务 XID:{}", RootContext.getXID());
-        String definitionKey = cmd.getDefinitionKey();
-        String instanceName = cmd.getInstanceName();
-        String businessKey = cmd.getBusinessKey();
-        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-                .processDefinitionKey(definitionKey)
-                .latestVersion()
-                .singleResult();
-        if (processDefinition == null) {
-            throw new GlobalException("流程未定义");
-        }
-        if (processDefinition.isSuspended()) {
-            throw new GlobalException("流程已被挂起，请激活流程");
-        }
-        return Result.of(start(definitionKey,businessKey,instanceName));
-    }
+	private final RepositoryService repositoryService;
 
-    @Transactional(rollbackFor = Exception.class)
-    public StartCO start(String definitionKey,String businessKey,String instanceName) {
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionKey, businessKey);
-        if (processInstance == null) {
-            throw new GlobalException("流程不存在");
-        }
-        String instanceId = processInstance.getId();
-        runtimeService.setProcessInstanceName(instanceId, instanceName);
-        return new StartCO(instanceId);
-    }
+	public Result<StartCO> execute(TaskStartCmd cmd) {
+		log.info("分布式事务 XID:{}", RootContext.getXID());
+		String definitionKey = cmd.getDefinitionKey();
+		String instanceName = cmd.getInstanceName();
+		String businessKey = cmd.getBusinessKey();
+		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+			.processDefinitionKey(definitionKey)
+			.latestVersion()
+			.singleResult();
+		if (processDefinition == null) {
+			throw new GlobalException("流程未定义");
+		}
+		if (processDefinition.isSuspended()) {
+			throw new GlobalException("流程已被挂起，请激活流程");
+		}
+		return Result.of(start(definitionKey, businessKey, instanceName));
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public StartCO start(String definitionKey, String businessKey, String instanceName) {
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionKey, businessKey);
+		if (processInstance == null) {
+			throw new GlobalException("流程不存在");
+		}
+		String instanceId = processInstance.getId();
+		runtimeService.setProcessInstanceName(instanceId, instanceName);
+		return new StartCO(instanceId);
+	}
 
 }

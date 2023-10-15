@@ -36,28 +36,28 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class TaskTransferCmdExe {
 
-    private final TaskService taskService;
+	private final TaskService taskService;
 
-    public Result<Boolean> execute(TaskTransferCmd cmd) {
-        log.info("分布式事务 XID:{}", RootContext.getXID());
-        String taskId = cmd.getTaskId();
-        String owner = cmd.getUserId().toString();
-        String assignee = cmd.getToUserId().toString();
-        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-        if (task == null) {
-            throw new GlobalException("任务不存在");
-        }
-        if (!owner.equals(task.getAssignee())) {
-            throw new GlobalException("用户无权操作任务");
-        }
-        return Result.of(transfer(taskId,owner,assignee));
-    }
+	public Result<Boolean> execute(TaskTransferCmd cmd) {
+		log.info("分布式事务 XID:{}", RootContext.getXID());
+		String taskId = cmd.getTaskId();
+		String owner = cmd.getUserId().toString();
+		String assignee = cmd.getToUserId().toString();
+		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+		if (task == null) {
+			throw new GlobalException("任务不存在");
+		}
+		if (!owner.equals(task.getAssignee())) {
+			throw new GlobalException("用户无权操作任务");
+		}
+		return Result.of(transfer(taskId, owner, assignee));
+	}
 
-    @Transactional(rollbackFor = Exception.class)
-    public Boolean transfer(String taskId,String owner,String assignee) {
-        taskService.setOwner(taskId, owner);
-        taskService.setAssignee(taskId, assignee);
-        return true;
-    }
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean transfer(String taskId, String owner, String assignee) {
+		taskService.setOwner(taskId, owner);
+		taskService.setAssignee(taskId, assignee);
+		return true;
+	}
 
 }

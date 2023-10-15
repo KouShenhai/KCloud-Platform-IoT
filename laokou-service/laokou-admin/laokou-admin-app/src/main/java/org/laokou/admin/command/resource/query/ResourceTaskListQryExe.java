@@ -40,28 +40,28 @@ import static org.laokou.admin.common.Constant.KEY;
 @RequiredArgsConstructor
 public class ResourceTaskListQryExe {
 
-    private final TasksFeignClient tasksFeignClient;
+	private final TasksFeignClient tasksFeignClient;
 
-    public Result<Datas<TaskCO>> execute(ResourceTaskListQry qry) {
-        Result<Datas<TaskCO>> result = tasksFeignClient.list(toQry(qry));
-        if (result.fail()) {
-            throw new GlobalException(result.getMsg());
-        }
-        List<TaskCO> records = result.getData().getRecords();
-        if (CollectionUtil.isNotEmpty(records)) {
-            records.parallelStream().forEach(item -> item.setUsername(UserUtil.getUserName()));
-        }
-        return result;
-    }
+	public Result<Datas<TaskCO>> execute(ResourceTaskListQry qry) {
+		Result<Datas<TaskCO>> result = tasksFeignClient.list(toQry(qry));
+		if (result.fail()) {
+			throw new GlobalException(result.getMsg());
+		}
+		List<TaskCO> records = result.getData().getRecords();
+		if (CollectionUtil.isNotEmpty(records)) {
+			records.parallelStream().forEach(item -> item.setUsername(UserUtil.getUserName()));
+		}
+		return result;
+	}
 
-    private TaskListQry toQry(ResourceTaskListQry qry) {
-        TaskListQry taskListQry = new TaskListQry();
-        taskListQry.setName(qry.getName());
-        taskListQry.setPageNum(qry.getPageNum());
-        taskListQry.setPageSize(qry.getPageSize());
-        taskListQry.setUserId(UserUtil.getUserId());
-        taskListQry.setKey(KEY);
-        return taskListQry;
-    }
+	private TaskListQry toQry(ResourceTaskListQry qry) {
+		TaskListQry taskListQry = new TaskListQry();
+		taskListQry.setName(qry.getName());
+		taskListQry.setPageNum(qry.getPageNum());
+		taskListQry.setPageSize(qry.getPageSize());
+		taskListQry.setUserId(UserUtil.getUserId());
+		taskListQry.setKey(KEY);
+		return taskListQry;
+	}
 
 }

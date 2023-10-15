@@ -30,6 +30,7 @@ public interface TaskMapper {
 
 	String getAssigneeByInstanceId(@Param("instanceId") String instanceId);
 
-	IPage<TaskDO> getTaskList(IPage<TaskDO> page,@Param("key")String key,@Param("userId")Long userId,@Param("name")String name);
+	IPage<TaskDO> getTaskList(IPage<TaskDO> page, @Param("key") String key, @Param("userId") Long userId,
+			@Param("name") String name);
 
 }

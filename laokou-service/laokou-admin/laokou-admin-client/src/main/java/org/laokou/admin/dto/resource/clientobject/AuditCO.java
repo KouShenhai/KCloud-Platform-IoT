@@ -30,6 +30,6 @@ import org.laokou.common.i18n.dto.ClientObject;
 @NoArgsConstructor
 public class AuditCO extends ClientObject {
 
-    private String assignee;
+	private String assignee;
 
 }

@@ -27,15 +27,16 @@ import org.laokou.common.i18n.utils.StringUtil;
 @Data
 public class ResourceListQry extends PageQuery {
 
-    private Long id;
+	private Long id;
 
-    private Integer status;
+	private Integer status;
 
-    private String code;
+	private String code;
 
-    private String title;
+	private String title;
 
-    public void setTitle(String title) {
-        this.title = StringUtil.like(title);
-    }
+	public void setTitle(String title) {
+		this.title = StringUtil.like(title);
+	}
+
 }
