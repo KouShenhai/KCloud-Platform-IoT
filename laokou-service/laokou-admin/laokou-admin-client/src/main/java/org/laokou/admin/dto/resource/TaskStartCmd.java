@@ -26,10 +26,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class TaskStartCmd extends CommonCommand {
 
-    private String definitionKey;
+	private String definitionKey;
 
-    private String businessKey;
+	private String businessKey;
 
-    private String instanceName;
+	private String instanceName;
 
 }

@@ -34,35 +34,35 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author laokou
  */
 @FeignClient(contextId = "tasks", value = ServiceConstant.LAOKOU_FLOWABLE, path = "v1/tasks",
-        fallbackFactory = TasksFeignClientFallbackFactory.class)
+		fallbackFactory = TasksFeignClientFallbackFactory.class)
 public interface TasksFeignClient {
 
-    @PostMapping(value = "list")
-    @Operation(summary = "流程任务", description = "查询任务列表")
-    Result<Datas<TaskCO>> list(@RequestBody TaskListQry qry);
+	@PostMapping(value = "list")
+	@Operation(summary = "流程任务", description = "查询任务列表")
+	Result<Datas<TaskCO>> list(@RequestBody TaskListQry qry);
 
-    @PostMapping(value = "audit")
-    @Operation(summary = "流程任务", description = "审批任务")
-    Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd);
+	@PostMapping(value = "audit")
+	@Operation(summary = "流程任务", description = "审批任务")
+	Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd);
 
-    @PostMapping(value = "resolve")
-    @Operation(summary = "流程任务", description = "处理任务")
-    Result<Boolean> resolve(@RequestBody TaskResolveCmd cmd);
+	@PostMapping(value = "resolve")
+	@Operation(summary = "流程任务", description = "处理任务")
+	Result<Boolean> resolve(@RequestBody TaskResolveCmd cmd);
 
-    @PostMapping(value = "start")
-    @Operation(summary = "流程任务", description = "开始任务")
-    Result<StartCO> start(@RequestBody TaskStartCmd cmd);
+	@PostMapping(value = "start")
+	@Operation(summary = "流程任务", description = "开始任务")
+	Result<StartCO> start(@RequestBody TaskStartCmd cmd);
 
-    @GetMapping(value = "{instanceId}/diagram")
-    @Operation(summary = "流程任务", description = "流程图")
-    Result<String> diagram(@PathVariable("instanceId") String instanceId);
+	@GetMapping(value = "{instanceId}/diagram")
+	@Operation(summary = "流程任务", description = "流程图")
+	Result<String> diagram(@PathVariable("instanceId") String instanceId);
 
-    @PostMapping("transfer")
-    @Operation(summary = "流程任务", description = "转办任务")
-    Result<Boolean> transfer(@RequestBody TaskTransferCmd cmd);
+	@PostMapping("transfer")
+	@Operation(summary = "流程任务", description = "转办任务")
+	Result<Boolean> transfer(@RequestBody TaskTransferCmd cmd);
 
-    @PostMapping("delegate")
-    @Operation(summary = "流程任务", description = "委派任务")
-    Result<Boolean> delegate(@RequestBody TaskDelegateCmd cmd);
+	@PostMapping("delegate")
+	@Operation(summary = "流程任务", description = "委派任务")
+	Result<Boolean> delegate(@RequestBody TaskDelegateCmd cmd);
 
 }

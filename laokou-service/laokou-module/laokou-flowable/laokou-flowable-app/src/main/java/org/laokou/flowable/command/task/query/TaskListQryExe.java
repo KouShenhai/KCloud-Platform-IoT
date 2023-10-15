@@ -36,18 +36,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TaskListQryExe {
 
-    private final TaskMapper taskMapper;
+	private final TaskMapper taskMapper;
 
-    public Result<Datas<TaskCO>> execute(TaskListQry qry) {
-        String key = qry.getKey();
-        String name = qry.getName();
-        Long userId = qry.getUserId();
-        IPage<TaskDO> page = new Page<>(qry.getPageNum(),qry.getPageSize());
-        IPage<TaskDO> newPage = taskMapper.getTaskList(page, key, userId, name);
-        Datas<TaskCO> datas = new Datas<>();
-        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),TaskCO.class));
-        datas.setTotal(newPage.getTotal());
-        return Result.of(datas);
-    }
+	public Result<Datas<TaskCO>> execute(TaskListQry qry) {
+		String key = qry.getKey();
+		String name = qry.getName();
+		Long userId = qry.getUserId();
+		IPage<TaskDO> page = new Page<>(qry.getPageNum(), qry.getPageSize());
+		IPage<TaskDO> newPage = taskMapper.getTaskList(page, key, userId, name);
+		Datas<TaskCO> datas = new Datas<>();
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), TaskCO.class));
+		datas.setTotal(newPage.getTotal());
+		return Result.of(datas);
+	}
 
 }

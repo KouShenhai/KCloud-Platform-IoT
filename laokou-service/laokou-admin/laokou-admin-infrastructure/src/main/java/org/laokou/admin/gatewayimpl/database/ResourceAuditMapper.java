@@ -30,6 +30,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface ResourceAuditMapper extends BatchMapper<ResourceAuditDO> {
 
-    ResourceAuditDO getResourceAuditById(@Param("resourceId") Long resourceId);
+	ResourceAuditDO getResourceAuditById(@Param("resourceId") Long resourceId);
 
 }

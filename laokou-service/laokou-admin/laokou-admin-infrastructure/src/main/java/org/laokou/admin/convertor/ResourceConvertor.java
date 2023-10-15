@@ -27,13 +27,12 @@ import org.laokou.common.core.utils.ConvertUtil;
  */
 public class ResourceConvertor {
 
-    public static Resource toEntity(ResourceCO co) {
-        return ConvertUtil.sourceToTarget(co, Resource.class);
-    }
+	public static Resource toEntity(ResourceCO co) {
+		return ConvertUtil.sourceToTarget(co, Resource.class);
+	}
 
-    public static ResourceDO toDataObject(Resource resource) {
-        return ConvertUtil.sourceToTarget(resource, ResourceDO.class);
-    }
-
+	public static ResourceDO toDataObject(Resource resource) {
+		return ConvertUtil.sourceToTarget(resource, ResourceDO.class);
+	}
 
 }

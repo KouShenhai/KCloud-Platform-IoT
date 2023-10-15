@@ -34,52 +34,52 @@ import org.laokou.common.i18n.dto.Result;
 @RequiredArgsConstructor
 public class TasksFeignClientFallback implements TasksFeignClient {
 
-    private final Throwable throwable;
+	private final Throwable throwable;
 
-    @Override
-    public Result<Datas<TaskCO>> list(TaskListQry qry) {
-        errLog();
-        return Result.of(Datas.of());
-    }
+	@Override
+	public Result<Datas<TaskCO>> list(TaskListQry qry) {
+		errLog();
+		return Result.of(Datas.of());
+	}
 
-    @Override
-    public Result<AuditCO> audit(TaskAuditCmd cmd) {
-        errLog();
-        return Result.fail("流程审批失败，请联系管理员");
-    }
+	@Override
+	public Result<AuditCO> audit(TaskAuditCmd cmd) {
+		errLog();
+		return Result.fail("流程审批失败，请联系管理员");
+	}
 
-    @Override
-    public Result<Boolean> resolve(TaskResolveCmd cmd) {
-        errLog();
-        return Result.fail("流程处理失败，请联系管理员");
-    }
+	@Override
+	public Result<Boolean> resolve(TaskResolveCmd cmd) {
+		errLog();
+		return Result.fail("流程处理失败，请联系管理员");
+	}
 
-    @Override
-    public Result<StartCO> start(TaskStartCmd cmd) {
-        errLog();
-        return Result.fail("流程启动失败，请联系管理员");
-    }
+	@Override
+	public Result<StartCO> start(TaskStartCmd cmd) {
+		errLog();
+		return Result.fail("流程启动失败，请联系管理员");
+	}
 
-    @Override
-    public Result<String> diagram(String instanceId) {
-        errLog();
-        return null;
-    }
+	@Override
+	public Result<String> diagram(String instanceId) {
+		errLog();
+		return null;
+	}
 
-    @Override
-    public Result<Boolean> transfer(TaskTransferCmd cmd) {
-        errLog();
-        return Result.fail("流程转办失败，请联系管理员");
-    }
+	@Override
+	public Result<Boolean> transfer(TaskTransferCmd cmd) {
+		errLog();
+		return Result.fail("流程转办失败，请联系管理员");
+	}
 
-    @Override
-    public Result<Boolean> delegate(TaskDelegateCmd cmd) {
-        errLog();
-        return Result.fail("流程委派失败，请联系管理员");
-    }
+	@Override
+	public Result<Boolean> delegate(TaskDelegateCmd cmd) {
+		errLog();
+		return Result.fail("流程委派失败，请联系管理员");
+	}
 
-    private void errLog() {
-        log.error("服务调用失败，报错原因：{}", throwable.getMessage());
-    }
+	private void errLog() {
+		log.error("服务调用失败，报错原因：{}", throwable.getMessage());
+	}
 
 }

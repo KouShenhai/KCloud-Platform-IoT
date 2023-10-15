@@ -26,8 +26,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TasksFeignClientFallbackFactory implements FallbackFactory<TasksFeignClientFallback> {
-    @Override
-    public TasksFeignClientFallback create(Throwable throwable) {
-        return new TasksFeignClientFallback(throwable);
-    }
+
+	@Override
+	public TasksFeignClientFallback create(Throwable throwable) {
+		return new TasksFeignClientFallback(throwable);
+	}
+
 }

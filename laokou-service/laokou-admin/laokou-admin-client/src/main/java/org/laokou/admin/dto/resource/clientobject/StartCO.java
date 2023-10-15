@@ -30,6 +30,6 @@ import org.laokou.common.i18n.dto.ClientObject;
 @NoArgsConstructor
 public class StartCO extends ClientObject {
 
-    private String instanceId;
+	private String instanceId;
 
 }

@@ -34,6 +34,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 @Mapper
 public interface ResourceMapper extends BatchMapper<ResourceDO> {
 
-    IPage<ResourceDO> getResourceListFilter(IPage<ResourceDO> page,@Param("resource")ResourceDO resourceDO, @Param(PAGE_QUERY)PageQuery pageQuery);
+	IPage<ResourceDO> getResourceListFilter(IPage<ResourceDO> page, @Param("resource") ResourceDO resourceDO,
+			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

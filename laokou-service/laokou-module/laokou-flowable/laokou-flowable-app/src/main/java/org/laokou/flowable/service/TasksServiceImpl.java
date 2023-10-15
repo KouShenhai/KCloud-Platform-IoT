@@ -36,46 +36,51 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TasksServiceImpl implements TasksServiceI {
 
-    private final TaskListQryExe taskListQryExe;
-    private final TaskAuditCmdExe taskAuditCmdExe;
-    private final TaskDelegateCmdExe taskDelegateCmdExe;
-    private final TaskResolveCmdExe taskResolveCmdExe;
-    private final TaskStartCmdExe taskStartCmdExe;
-    private final TaskTransferCmdExe taskTransferCmdExe;
+	private final TaskListQryExe taskListQryExe;
 
-    @Override
-    public Result<Datas<TaskCO>> list(TaskListQry qry) {
-        return taskListQryExe.execute(qry);
-    }
+	private final TaskAuditCmdExe taskAuditCmdExe;
 
-    @Override
-    public Result<AuditCO> audit(TaskAuditCmd cmd) {
-        return taskAuditCmdExe.execute(cmd);
-    }
+	private final TaskDelegateCmdExe taskDelegateCmdExe;
 
-    @Override
-    public Result<Boolean> resolve(TaskResolveCmd cmd) {
-        return taskResolveCmdExe.execute(cmd);
-    }
+	private final TaskResolveCmdExe taskResolveCmdExe;
 
-    @Override
-    public Result<StartCO> start(TaskStartCmd cmd) {
-        return taskStartCmdExe.execute(cmd);
-    }
+	private final TaskStartCmdExe taskStartCmdExe;
 
-    @Override
-    public Result<String> diagram() {
-        return null;
-    }
+	private final TaskTransferCmdExe taskTransferCmdExe;
 
-    @Override
-    public Result<Boolean> transfer(TaskTransferCmd cmd) {
-        return taskTransferCmdExe.execute(cmd);
-    }
+	@Override
+	public Result<Datas<TaskCO>> list(TaskListQry qry) {
+		return taskListQryExe.execute(qry);
+	}
 
-    @Override
-    public Result<Boolean> delegate(TaskDelegateCmd cmd) {
-        return taskDelegateCmdExe.execute(cmd);
-    }
+	@Override
+	public Result<AuditCO> audit(TaskAuditCmd cmd) {
+		return taskAuditCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<Boolean> resolve(TaskResolveCmd cmd) {
+		return taskResolveCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<StartCO> start(TaskStartCmd cmd) {
+		return taskStartCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<String> diagram() {
+		return null;
+	}
+
+	@Override
+	public Result<Boolean> transfer(TaskTransferCmd cmd) {
+		return taskTransferCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<Boolean> delegate(TaskDelegateCmd cmd) {
+		return taskDelegateCmdExe.execute(cmd);
+	}
 
 }

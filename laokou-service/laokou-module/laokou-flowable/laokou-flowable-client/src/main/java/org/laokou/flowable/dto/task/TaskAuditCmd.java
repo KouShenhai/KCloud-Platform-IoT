@@ -29,19 +29,19 @@ import java.util.Map;
 @Data
 public class TaskAuditCmd extends CommonCommand {
 
-    @Serial
-    private static final long serialVersionUID = -945627686622034109L;
+	@Serial
+	private static final long serialVersionUID = -945627686622034109L;
 
-    /**
-     * 任务id
-     */
-    private String taskId;
+	/**
+	 * 任务id
+	 */
+	private String taskId;
 
-    private String instanceId;
+	private String instanceId;
 
-    /**
-     * 流程变量
-     */
-    private Map<String, Object> values;
+	/**
+	 * 流程变量
+	 */
+	private Map<String, Object> values;
 
 }

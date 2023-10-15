@@ -31,11 +31,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceAuditTaskCmdExe {
 
-    private final TasksFeignClient tasksFeignClient;
-    private final ResourceGateway resourceGateway;
+	private final TasksFeignClient tasksFeignClient;
 
-    public Result<Boolean> execute(ResourceAuditTaskCmd cmd) {
-        return null;
-    }
+	private final ResourceGateway resourceGateway;
+
+	public Result<Boolean> execute(ResourceAuditTaskCmd cmd) {
+		return null;
+	}
 
 }

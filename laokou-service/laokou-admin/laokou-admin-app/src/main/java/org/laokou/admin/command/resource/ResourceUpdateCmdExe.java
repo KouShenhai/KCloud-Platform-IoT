@@ -32,10 +32,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceUpdateCmdExe {
 
-    private final ResourceGateway resourceGateway;
+	private final ResourceGateway resourceGateway;
 
-    public Result<Boolean> execute(ResourceUpdateCmd cmd) {
-        return Result.of(resourceGateway.update(ConvertUtil.sourceToTarget(cmd.getResourceCO(), Resource.class)));
-    }
+	public Result<Boolean> execute(ResourceUpdateCmd cmd) {
+		return Result.of(resourceGateway.update(ConvertUtil.sourceToTarget(cmd.getResourceCO(), Resource.class)));
+	}
 
 }

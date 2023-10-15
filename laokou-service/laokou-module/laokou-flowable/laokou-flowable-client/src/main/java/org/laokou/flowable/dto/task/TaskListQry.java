@@ -36,4 +36,5 @@ public class TaskListQry extends PageQuery {
 	public void setName(String name) {
 		this.name = StringUtil.like(name);
 	}
+
 }

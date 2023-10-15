@@ -33,11 +33,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceDetailTaskGetQryExe {
 
-    private final ResourceAuditMapper resourceAuditMapper;
+	private final ResourceAuditMapper resourceAuditMapper;
 
-    public Result<ResourceCO> execute(ResourceDetailTaskGetQry qry) {
-        ResourceAuditDO resourceAuditDO = resourceAuditMapper.getResourceAuditById(qry.getId());
-        return Result.of(ConvertUtil.sourceToTarget(resourceAuditDO,ResourceCO.class));
-    }
+	public Result<ResourceCO> execute(ResourceDetailTaskGetQry qry) {
+		ResourceAuditDO resourceAuditDO = resourceAuditMapper.getResourceAuditById(qry.getId());
+		return Result.of(ConvertUtil.sourceToTarget(resourceAuditDO, ResourceCO.class));
+	}
 
 }
