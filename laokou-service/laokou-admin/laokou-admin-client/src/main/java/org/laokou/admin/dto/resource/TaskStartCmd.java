@@ -15,25 +15,21 @@
  *
  */
 
-package org.laokou.flowable.dto.task;
+package org.laokou.admin.dto.resource;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
-public class TaskListQry extends PageQuery {
+public class TaskStartCmd extends CommonCommand {
 
-	private String name;
+    private String definitionKey;
 
-	private Long userId;
+    private String businessKey;
 
-	private String key;
+    private String instanceName;
 
-	public void setName(String name) {
-		this.name = StringUtil.like(name);
-	}
 }

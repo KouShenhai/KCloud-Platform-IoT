@@ -15,25 +15,31 @@
  *
  */
 
-package org.laokou.flowable.dto.task;
+package org.laokou.admin.dto.resource;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.dto.CommonCommand;
+
+import java.io.Serial;
+import java.util.Map;
 
 /**
  * @author laokou
  */
 @Data
-public class TaskListQry extends PageQuery {
+public class TaskAuditCmd extends CommonCommand {
 
-	private String name;
+    @Serial
+    private static final long serialVersionUID = -945627686622034109L;
 
-	private Long userId;
+    /**
+     * 任务id
+     */
+    private String taskId;
 
-	private String key;
+    /**
+     * 流程变量
+     */
+    private Map<String, Object> values;
 
-	public void setName(String name) {
-		this.name = StringUtil.like(name);
-	}
 }

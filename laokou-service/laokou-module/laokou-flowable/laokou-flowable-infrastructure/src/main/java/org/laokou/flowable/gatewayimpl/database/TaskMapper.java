@@ -15,8 +15,10 @@
  */
 package org.laokou.flowable.gatewayimpl.database;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.flowable.gatewayimpl.database.dataobject.TaskDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,5 +29,7 @@ import org.springframework.stereotype.Repository;
 public interface TaskMapper {
 
 	String getAssigneeByInstanceId(@Param("instanceId") String instanceId);
+
+	IPage<TaskDO> getTaskList(IPage<TaskDO> page,@Param("key")String key,@Param("userId")Long userId,@Param("name")String name);
 
 }

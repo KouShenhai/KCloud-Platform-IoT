@@ -46,11 +46,10 @@ public class TaskResolveCmdExe {
         if (task == null) {
             throw new GlobalException("任务不存在");
         }
-        if (DelegationState.PENDING.equals(task.getDelegationState())) {
-            return Result.of(resolve(taskId));
-        } else {
+        if (DelegationState.RESOLVED.equals(task.getDelegationState())) {
             throw new GlobalException("非处理任务，请审批任务");
         }
+        return Result.of(resolve(taskId));
     }
 
     @Transactional(rollbackFor = Exception.class)

@@ -175,11 +175,6 @@
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-flowable-domain</artifactId>
-                <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.laokou</groupId>
                 <artifactId>laokou-flowable-start</artifactId>
                 <version>${laokou.version}</version>
             </dependency>

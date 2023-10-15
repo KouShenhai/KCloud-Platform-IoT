@@ -19,19 +19,27 @@ package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.domain.resource.Resource;
+import org.laokou.admin.domain.resource.Status;
+import org.laokou.admin.dto.resource.TaskStartCmd;
+import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
 import org.laokou.admin.gatewayimpl.database.ResourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
+import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_RESOURCE;
 
@@ -42,8 +50,10 @@ import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_RESOURC
 @RequiredArgsConstructor
 public class ResourceGatewayImpl implements ResourceGateway {
 
+    private static final String KEY = "Process_88888888";
     private final ResourceMapper resourceMapper;
     private final ResourceAuditMapper resourceAuditMapper;
+    private final TasksFeignClient tasksFeignClient;
 
     @Override
     @DataFilter(alias = BOOT_SYS_RESOURCE)
@@ -65,7 +75,41 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
     @Override
     public Boolean update(Resource resource) {
-        return null;
+        return updateResource(resource,resourceMapper.getVersion(resource.getId(),ResourceDO.class));
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @GlobalTransactional
+    public Boolean updateResource(Resource resource,Integer version) {
+        Boolean flag = insertResourceAudit(resource);
+        StartCO co = startTask(resource);
+        int status = Status.PENDING_APPROVAL;
+        return flag && updateResourceStatus(resource, status,version, co.getInstanceId());
+    }
+
+    private StartCO startTask(Resource resource) {
+        TaskStartCmd cmd = new TaskStartCmd();
+        cmd.setBusinessKey(resource.getId().toString());
+        cmd.setDefinitionKey(KEY);
+        cmd.setInstanceName(resource.getTitle());
+        Result<StartCO> result = tasksFeignClient.start(cmd);
+        if (result.fail()) {
+            throw new GlobalException(result.getMsg());
+        }
+        return result.getData();
+    }
+
+    private Boolean updateResource(ResourceDO resourceDO) {
+        return resourceMapper.updateById(resourceDO) > 0;
+    }
+
+    private Boolean updateResourceStatus(Resource resource,int status,Integer version,String instanceId) {
+        ResourceDO resourceDO = new ResourceDO();
+        resourceDO.setId(resource.getId());
+        resourceDO.setStatus(status);
+        resourceDO.setInstanceId(instanceId);
+        resourceDO.setVersion(version);
+        return updateResource(resourceDO);
     }
 
     private Boolean insertResourceAudit(Resource resource) {

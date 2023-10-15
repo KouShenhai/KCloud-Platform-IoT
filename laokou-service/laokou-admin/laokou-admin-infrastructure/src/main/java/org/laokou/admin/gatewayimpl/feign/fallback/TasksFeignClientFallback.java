@@ -15,66 +15,70 @@
  *
  */
 
-package org.laokou.flowable.service;
+package org.laokou.admin.gatewayimpl.feign.fallback;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.dto.resource.*;
+import org.laokou.admin.dto.resource.clientobject.StartCO;
+import org.laokou.admin.dto.resource.clientobject.TaskCO;
+import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.flowable.api.TasksServiceI;
-import org.laokou.flowable.command.task.*;
-import org.laokou.flowable.command.task.query.TaskListQryExe;
-import org.laokou.flowable.dto.task.*;
-import org.laokou.flowable.dto.task.clientobject.StartCO;
-import org.laokou.flowable.dto.task.clientobject.TaskCO;
-import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-@Service
+@Slf4j
 @RequiredArgsConstructor
-public class TasksServiceImpl implements TasksServiceI {
+public class TasksFeignClientFallback implements TasksFeignClient {
 
-    private final TaskListQryExe taskListQryExe;
-    private final TaskAuditCmdExe taskAuditCmdExe;
-    private final TaskDelegateCmdExe taskDelegateCmdExe;
-    private final TaskResolveCmdExe taskResolveCmdExe;
-    private final TaskStartCmdExe taskStartCmdExe;
-    private final TaskTransferCmdExe taskTransferCmdExe;
+    private final Throwable throwable;
 
     @Override
     public Result<Datas<TaskCO>> list(TaskListQry qry) {
-        return taskListQryExe.execute(qry);
+        errLog();
+        return Result.of(Datas.of());
     }
 
     @Override
     public Result<Boolean> audit(TaskAuditCmd cmd) {
-        return taskAuditCmdExe.execute(cmd);
+        errLog();
+        return Result.fail("流程审批失败，请联系管理员");
     }
 
     @Override
     public Result<Boolean> resolve(TaskResolveCmd cmd) {
-        return taskResolveCmdExe.execute(cmd);
+        errLog();
+        return Result.fail("流程处理失败，请联系管理员");
     }
 
     @Override
     public Result<StartCO> start(TaskStartCmd cmd) {
-        return taskStartCmdExe.execute(cmd);
+        errLog();
+        return Result.fail("流程启动失败，请联系管理员");
     }
 
     @Override
-    public Result<String> diagram() {
+    public Result<String> diagram(String instanceId) {
+        errLog();
         return null;
     }
 
     @Override
     public Result<Boolean> transfer(TaskTransferCmd cmd) {
-        return taskTransferCmdExe.execute(cmd);
+        errLog();
+        return Result.fail("流程转办失败，请联系管理员");
     }
 
     @Override
     public Result<Boolean> delegate(TaskDelegateCmd cmd) {
-        return taskDelegateCmdExe.execute(cmd);
+        errLog();
+        return Result.fail("流程委派失败，请联系管理员");
+    }
+
+    private void errLog() {
+        log.error("服务调用失败，报错原因：{}", throwable.getMessage());
     }
 
 }

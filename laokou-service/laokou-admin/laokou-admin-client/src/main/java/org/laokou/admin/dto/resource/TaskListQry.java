@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.flowable.dto.task;
+package org.laokou.admin.dto.resource;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;

@@ -20,9 +20,22 @@ package org.laokou.flowable.dto.task.clientobject;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.time.LocalDateTime;
+
 /**
  * @author laokou
  */
 @Data
 public class TaskCO extends ClientObject {
+
+    private String taskId;
+    private String taskName;
+    private String definitionId;
+    private String instanceId;
+    private LocalDateTime createDate;
+    private String definitionKey;
+    private String name;
+    private String instanceName;
+    private String businessKey;
+
 }
