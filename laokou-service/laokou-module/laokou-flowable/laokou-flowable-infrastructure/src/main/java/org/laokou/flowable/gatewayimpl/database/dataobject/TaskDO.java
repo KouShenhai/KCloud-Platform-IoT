@@ -15,25 +15,26 @@
  *
  */
 
-package org.laokou.flowable.dto.task;
+package org.laokou.flowable.gatewayimpl.database.dataobject;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.StringUtil;
+
+import java.time.LocalDateTime;
 
 /**
  * @author laokou
  */
 @Data
-public class TaskListQry extends PageQuery {
+public class TaskDO {
 
-	private String name;
+    private String taskId;
+    private String taskName;
+    private String definitionId;
+    private String instanceId;
+    private LocalDateTime createDate;
+    private String definitionKey;
+    private String name;
+    private String instanceName;
+    private String businessKey;
 
-	private Long userId;
-
-	private String key;
-
-	public void setName(String name) {
-		this.name = StringUtil.like(name);
-	}
 }

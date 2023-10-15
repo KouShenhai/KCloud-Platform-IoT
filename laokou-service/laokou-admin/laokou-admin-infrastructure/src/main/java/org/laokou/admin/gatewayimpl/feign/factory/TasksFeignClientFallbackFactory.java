@@ -15,25 +15,19 @@
  *
  */
 
-package org.laokou.flowable.dto.task;
+package org.laokou.admin.gatewayimpl.feign.factory;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.admin.gatewayimpl.feign.fallback.TasksFeignClientFallback;
+import org.springframework.cloud.openfeign.FallbackFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Data
-public class TaskListQry extends PageQuery {
-
-	private String name;
-
-	private Long userId;
-
-	private String key;
-
-	public void setName(String name) {
-		this.name = StringUtil.like(name);
-	}
+@Component
+public class TasksFeignClientFallbackFactory implements FallbackFactory<TasksFeignClientFallback> {
+    @Override
+    public TasksFeignClientFallback create(Throwable throwable) {
+        return new TasksFeignClientFallback(throwable);
+    }
 }

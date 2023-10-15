@@ -22,6 +22,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.flowable.api.TasksServiceI;
+import org.laokou.flowable.dto.task.*;
+import org.laokou.flowable.dto.task.clientobject.StartCO;
+import org.laokou.flowable.dto.task.clientobject.TaskCO;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -30,48 +34,51 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Tag(name = "TasksController", description = "流程任务")
 @RequiredArgsConstructor
+@RequestMapping("v1/tasks")
 public class TasksController {
 
-	@PostMapping(value = "v1/task/list")
+	private final TasksServiceI tasksServiceI;
+
+	@PostMapping(value = "list")
 	@Operation(summary = "流程任务", description = "查询任务列表")
-	public Result<Datas<?>> list() {
-		return Result.of(null);
+	public Result<Datas<TaskCO>> list(@RequestBody TaskListQry qry) {
+		return tasksServiceI.list(qry);
 	}
 
-	@PostMapping(value = "v1/task/audit")
+	@PostMapping(value = "audit")
 	@Operation(summary = "流程任务", description = "审批任务")
-	public Result<Boolean> audit() {
-		return Result.of(null);
+	public Result<Boolean> audit(@RequestBody TaskAuditCmd cmd) {
+		return tasksServiceI.audit(cmd);
 	}
 
-	@PostMapping(value = "v1/task/resolve")
+	@PostMapping(value = "resolve")
 	@Operation(summary = "流程任务", description = "处理任务")
-	public Result<Boolean> resolve() {
-		return Result.of(null);
+	public Result<Boolean> resolve(@RequestBody TaskResolveCmd cmd) {
+		return tasksServiceI.resolve(cmd);
 	}
 
-	@PostMapping(value = "v1/task/start")
+	@PostMapping(value = "start")
 	@Operation(summary = "流程任务", description = "开始任务")
-	public Result<Boolean> start() {
-		return Result.of(null);
+	public Result<StartCO> start(@RequestBody TaskStartCmd cmd) {
+		return tasksServiceI.start(cmd);
 	}
 
-	@GetMapping(value = "v1/task/{instanceId}/diagram")
+	@GetMapping(value = "{instanceId}/diagram")
 	@Operation(summary = "流程任务", description = "流程图")
 	public Result<String> diagram(@PathVariable("instanceId") String instanceId) {
-		return Result.of(null);
+		return null;
 	}
 
-	@PostMapping("v1/task/transfer")
+	@PostMapping("transfer")
 	@Operation(summary = "流程任务", description = "转办任务")
-	public Result<Boolean> transfer() {
-		return Result.of(null);
+	public Result<Boolean> transfer(@RequestBody TaskTransferCmd cmd) {
+		return tasksServiceI.transfer(cmd);
 	}
 
-	@PostMapping("v1/task/delegate")
+	@PostMapping("delegate")
 	@Operation(summary = "流程任务", description = "委派任务")
-	public Result<Boolean> delegate() {
-		return Result.of(null);
+	public Result<Boolean> delegate(@RequestBody TaskDelegateCmd cmd) {
+		return tasksServiceI.delegate(cmd);
 	}
 
 }

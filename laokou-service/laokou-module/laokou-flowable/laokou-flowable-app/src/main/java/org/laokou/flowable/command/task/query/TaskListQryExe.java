@@ -17,7 +17,16 @@
 
 package org.laokou.flowable.command.task.query;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.flowable.dto.task.TaskListQry;
+import org.laokou.flowable.dto.task.clientobject.TaskCO;
+import org.laokou.flowable.gatewayimpl.database.TaskMapper;
+import org.laokou.flowable.gatewayimpl.database.dataobject.TaskDO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,4 +35,19 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TaskListQryExe {
+
+    private final TaskMapper taskMapper;
+
+    public Result<Datas<TaskCO>> execute(TaskListQry qry) {
+        String key = qry.getKey();
+        String name = qry.getName();
+        Long userId = qry.getUserId();
+        IPage<TaskDO> page = new Page<>(qry.getPageNum(),qry.getPageSize());
+        IPage<TaskDO> newPage = taskMapper.getTaskList(page, key, userId, name);
+        Datas<TaskCO> datas = new Datas<>();
+        datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(),TaskCO.class));
+        datas.setTotal(newPage.getTotal());
+        return Result.of(datas);
+    }
+
 }
