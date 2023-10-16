@@ -62,7 +62,7 @@ public class ResourceAuditTaskCmdExe {
 
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceAuditTaskCmd cmd) {
-		log.info("分布式事务 XID:{}", RootContext.getXID());
+		log.info("审批任务分布式事务 XID:{}", RootContext.getXID());
 		TaskAuditCmd taskAuditCmd = ConvertUtil.sourceToTarget(cmd, TaskAuditCmd.class);
 		Result<AuditCO> result = tasksFeignClient.audit(taskAuditCmd);
 		if (result.fail()) {

@@ -91,7 +91,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateResource(Resource resource, Integer version) {
-		log.info("分布式事务，XID:{}", RootContext.getXID());
+		log.info("开始任务分布式事务 XID:{}", RootContext.getXID());
 		Boolean flag = insertResourceAudit(resource);
 		StartCO co = startTask(resource);
 		int status = Status.PENDING_APPROVAL;
