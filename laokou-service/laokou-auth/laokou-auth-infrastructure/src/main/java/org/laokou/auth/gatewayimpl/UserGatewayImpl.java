@@ -47,7 +47,8 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	@DS(USER)
 	public User getUserByUsername(Auth auth) {
-		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME, DateUtil.format(DateUtil.now(),DateUtil.YYYY_MM_DD_HH_MM_SS), BOOT_SYS_USER);
+		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME,
+				DateUtil.format(DateUtil.now(), DateUtil.YYYY_MM_DD_HH_MM_SS), BOOT_SYS_USER);
 		UserDO userDO = userMapper.getUserByUsernameAndTenantId(dynamicTables, auth.getUsername(), auth.getTenantId(),
 				auth.getType());
 		return ConvertUtil.sourceToTarget(userDO, User.class);

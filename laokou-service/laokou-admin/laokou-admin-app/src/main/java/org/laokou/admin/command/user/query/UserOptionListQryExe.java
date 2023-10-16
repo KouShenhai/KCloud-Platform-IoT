@@ -53,7 +53,8 @@ public class UserOptionListQryExe {
 	@DataFilter(alias = BOOT_SYS_USER)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
 		PageQuery pageQuery = qry.ignore(true);
-		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME, DateUtil.format(DateUtil.now(),DateUtil.YYYY_MM_DD_HH_MM_SS), BOOT_SYS_USER);
+		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME,
+				DateUtil.format(DateUtil.now(), DateUtil.YYYY_MM_DD_HH_MM_SS), BOOT_SYS_USER);
 		List<UserDO> list = userMapper.getOptionListByTenantId(dynamicTables, UserUtil.getTenantId(), pageQuery);
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
