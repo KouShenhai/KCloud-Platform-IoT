@@ -131,7 +131,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	@Override
 	public Result<Boolean> auditTask(ResourceAuditTaskCmd cmd) {
-		return null;
+		return resourceAuditTaskCmdExe.execute(cmd);
 	}
 
 	@Override

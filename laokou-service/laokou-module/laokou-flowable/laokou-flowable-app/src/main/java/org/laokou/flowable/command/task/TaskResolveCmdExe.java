@@ -40,7 +40,7 @@ public class TaskResolveCmdExe {
 	private final TaskService taskService;
 
 	public Result<Boolean> execute(TaskResolveCmd cmd) {
-		log.info("分布式事务 XID:{}", RootContext.getXID());
+		log.info("处理流程分布式事务 XID:{}", RootContext.getXID());
 		String taskId = cmd.getTaskId();
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		if (task == null) {

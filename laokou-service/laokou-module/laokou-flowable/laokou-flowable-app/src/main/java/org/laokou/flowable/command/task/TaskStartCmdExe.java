@@ -44,7 +44,7 @@ public class TaskStartCmdExe {
 	private final RepositoryService repositoryService;
 
 	public Result<StartCO> execute(TaskStartCmd cmd) {
-		log.info("分布式事务 XID:{}", RootContext.getXID());
+		log.info("开始流程分布式事务 XID:{}", RootContext.getXID());
 		String definitionKey = cmd.getDefinitionKey();
 		String instanceName = cmd.getInstanceName();
 		String businessKey = cmd.getBusinessKey();
