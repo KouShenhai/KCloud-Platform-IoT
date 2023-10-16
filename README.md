@@ -238,9 +238,9 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 </table>
 
 ### 😛 用户权益
-- 采用Apache2.0开源协议，并且承诺永不参与商业用途，仅供大家无偿使用（点个star，拜托啦~🙏）
-- 采用Apache2.0开源协议，并且承诺永不参与商业用途，仅供大家无偿使用（点个star，拜托啦~🙏）
-- 采用Apache2.0开源协议，并且承诺永不参与商业用途，仅供大家无偿使用（点个star，拜托啦~🙏）
+- 采用Apache2.0开源协议，免费商用无需授权，请保留作者、Copyright信息（点个star，拜托啦~🙏）
+- 采用Apache2.0开源协议，免费商用无需授权，请保留作者、Copyright信息（点个star，拜托啦~🙏）
+- 采用Apache2.0开源协议，免费商用无需授权，请保留作者、Copyright信息（点个star，拜托啦~🙏）
 
 ### 😻 开源协议
 KCloud-Platform-Alibaba 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
