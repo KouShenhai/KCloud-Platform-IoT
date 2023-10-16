@@ -21,7 +21,6 @@ import io.netty.handler.ipfilter.IpFilterRuleType;
 import io.netty.handler.ipfilter.IpSubnetFilterRule;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.Constant.SLASH;
@@ -31,23 +30,19 @@ import static org.laokou.common.i18n.common.Constant.SLASH;
  */
 public class RuleUtil {
 
-	public static void addSource(List<IpSubnetFilterRule> sources, String source) {
+	public static IpSubnetFilterRule source(String source) {
 		if (!source.contains(SLASH)) {
 			source = source + SLASH + 32;
 		}
 		String[] ipAddressCidrPrefix = source.split(SLASH, 2);
 		String ipAddress = ipAddressCidrPrefix[0];
 		int cidrPrefix = Integer.parseInt(ipAddressCidrPrefix[1]);
-		sources.add(new IpSubnetFilterRule(ipAddress, cidrPrefix, IpFilterRuleType.ACCEPT));
+		return new IpSubnetFilterRule(ipAddress, cidrPrefix, IpFilterRuleType.ACCEPT);
 	}
 
 	@NotNull
 	public static List<IpSubnetFilterRule> convert(List<String> values) {
-		List<IpSubnetFilterRule> sources = new ArrayList<>();
-		for (String arg : values) {
-			addSource(sources, arg);
-		}
-		return sources;
+		return values.parallelStream().map(RuleUtil::source).toList();
 	}
 
 }
