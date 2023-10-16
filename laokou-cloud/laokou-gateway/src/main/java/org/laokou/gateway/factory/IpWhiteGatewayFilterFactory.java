@@ -22,8 +22,8 @@ import lombok.Data;
 import org.laokou.common.i18n.common.Constant;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.gateway.utils.RuleUtil;
 import org.laokou.gateway.utils.ResponseUtil;
+import org.laokou.gateway.utils.RuleUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
@@ -33,18 +33,18 @@ import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.laokou.gateway.exception.ErrorCode.IP_BLACK;
+import static org.laokou.gateway.exception.ErrorCode.IP_WHITE;
 
 /**
- * 仿照 RemoteAddrRoutePredicateFactory IP黑名单
+ * 仿照 RemoteAddrRoutePredicateFactory IP白名单
  *
  * @author laokou
  */
 @Component
-public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<IpBlackGatewayFilterFactory.Config> {
+public class IpWhiteGatewayFilterFactory extends AbstractGatewayFilterFactory<IpWhiteGatewayFilterFactory.Config> {
 
 	@Override
-	public GatewayFilter apply(Config config) {
+	public GatewayFilter apply(IpWhiteGatewayFilterFactory.Config config) {
 		List<IpSubnetFilterRule> sources = RuleUtil.convert(Arrays.asList(config.sources.split(Constant.COMMA)));
 		return (exchange, chain) -> {
 			if (StringUtil.isEmpty(config.sources)) {
@@ -52,16 +52,16 @@ public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<Ip
 			}
 			InetSocketAddress remoteAddress = config.remoteAddressResolver.resolve(exchange);
 			for (IpSubnetFilterRule source : sources) {
-				if (source.matches(remoteAddress)) {
-					return ResponseUtil.response(exchange, Result.fail(IP_BLACK));
+				if (!source.matches(remoteAddress)) {
+					return ResponseUtil.response(exchange, Result.fail(IP_WHITE));
 				}
 			}
 			return chain.filter(exchange);
 		};
 	}
 
-	public IpBlackGatewayFilterFactory() {
-		super(Config.class);
+	public IpWhiteGatewayFilterFactory() {
+		super(IpWhiteGatewayFilterFactory.Config.class);
 	}
 
 	@Data

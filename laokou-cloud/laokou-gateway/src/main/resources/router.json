@@ -32,9 +32,9 @@
         }
       },
       {
-        "name": "IpBlack",
+        "name": "IpWhite",
         "args": {
-          "sources": "192.168.62.100"
+          "sources": "127.0.0.1"
         }
       }
     ],
@@ -76,9 +76,9 @@
         }
       },
       {
-        "name": "IpBlack",
+        "name": "IpWhite",
         "args": {
-          "sources": "192.168.62.100"
+          "sources": "127.0.0.1"
         }
       }
     ],
@@ -150,9 +150,9 @@
         }
       },
       {
-        "name": "IpBlack",
+        "name": "IpWhite",
         "args": {
-          "sources": "192.168.62.100"
+          "sources": "127.0.0.1"
         }
       }
     ],

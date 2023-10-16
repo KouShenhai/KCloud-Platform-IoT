@@ -57,6 +57,8 @@ public class OAuth2ResourceServerConfig {
 		Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns())
 			.orElseGet(HashSet::new);
 		return http
+			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
+					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
 			.authorizeHttpRequests(request -> request
 				.requestMatchers(
 						patterns.stream().map(AntPathRequestMatcher::new).toArray(AntPathRequestMatcher[]::new))
