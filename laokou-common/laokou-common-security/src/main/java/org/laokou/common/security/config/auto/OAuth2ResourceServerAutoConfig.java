@@ -69,7 +69,13 @@ public class OAuth2ResourceServerAutoConfig {
 			.ofNullable(properties.getRequestMatcher())
 			.orElseGet(OAuth2ResourceServerProperties.RequestMatcher::new);
 		Set<String> patterns = Optional.ofNullable(requestMatcher.getPatterns()).orElseGet(HashSet::new);
-		return http.csrf(AbstractHttpConfigurer::disable)
+		return http
+			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
+					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
+			.requestCache(AbstractHttpConfigurer::disable)
+			.sessionManagement(AbstractHttpConfigurer::disable)
+			.securityContext(AbstractHttpConfigurer::disable)
+			.csrf(AbstractHttpConfigurer::disable)
 			.cors(AbstractHttpConfigurer::disable)
 			// 基于token，关闭session
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
