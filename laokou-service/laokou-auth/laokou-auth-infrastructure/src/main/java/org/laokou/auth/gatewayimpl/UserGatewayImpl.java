@@ -25,6 +25,7 @@ import org.laokou.auth.domain.user.User;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +33,6 @@ import java.util.List;
 
 import static org.laokou.auth.common.Constant.USER;
 import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_USER;
-import static org.laokou.common.mybatisplus.template.TableTemplate.MAX_TIME;
 import static org.laokou.common.mybatisplus.template.TableTemplate.MIN_TIME;
 
 /**
@@ -47,7 +47,7 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	@DS(USER)
 	public User getUserByUsername(Auth auth) {
-		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME, MAX_TIME, BOOT_SYS_USER);
+		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME, DateUtil.format(DateUtil.now(),DateUtil.YYYY_MM_DD_HH_MM_SS), BOOT_SYS_USER);
 		UserDO userDO = userMapper.getUserByUsernameAndTenantId(dynamicTables, auth.getUsername(), auth.getTenantId(),
 				auth.getType());
 		return ConvertUtil.sourceToTarget(userDO, User.class);

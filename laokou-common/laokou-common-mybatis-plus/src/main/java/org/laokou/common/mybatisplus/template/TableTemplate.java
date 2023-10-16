@@ -39,8 +39,6 @@ import static org.laokou.common.i18n.common.Constant.UNDER;
 @Slf4j
 public class TableTemplate {
 
-	public static final String MAX_TIME = "2099-12-31 23:59:59";
-
 	public static final String MIN_TIME = "2022-01-01 00:00:00";
 
 	public static List<String> getDynamicTables(String start, String end, String tableName) {
