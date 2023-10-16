@@ -20,10 +20,26 @@ package org.laokou.admin.dto.resource;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
 
+import java.util.Map;
+
 /**
  * @author laokou
  */
 @Data
 public class ResourceAuditTaskCmd extends CommonCommand {
+
+	private Long businessKey;
+
+	private String taskId;
+
+	private String taskName;
+
+	private String instanceId;
+
+	private String instanceName;
+
+	private String comment;
+
+	private Map<String, Object> values;
 
 }
