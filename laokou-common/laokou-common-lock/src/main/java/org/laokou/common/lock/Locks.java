@@ -14,26 +14,31 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.lock.factory;
+package org.laokou.common.lock;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.lock.enums.LockScope;
-import org.laokou.common.redis.utils.RedisUtil;
-import org.springframework.stereotype.Component;
+import org.laokou.common.lock.enums.LockType;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class LockFactory {
+public interface Locks {
 
-	private final RedisUtil redisUtil;
+	/**
+	 * 获取锁
+	 * @param type
+	 * @param key
+	 * @param expire
+	 * @param timeout
+	 * @return
+	 * @throws InterruptedException
+	 */
+	Boolean tryLock(LockType type, String key, long expire, long timeout) throws InterruptedException;
 
-	public Locks build(LockScope scope) {
-		return switch (scope) {
-			case DISTRIBUTED_LOCK -> new RedissonLock(redisUtil);
-		};
-	}
+	/**
+	 * 释放锁
+	 * @param type
+	 * @param key
+	 */
+	void unlock(LockType type, String key);
 
 }

@@ -17,21 +17,22 @@
 package org.laokou.common.lock.aspect;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.GlobalException;
-import org.laokou.common.lock.annotation.Lock4j;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.lock.enums.LockScope;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.lock.enums.LockType;
-import org.laokou.common.lock.factory.LockFactory;
-import org.laokou.common.lock.factory.Locks;
+import org.laokou.common.lock.Locks;
+import org.laokou.common.lock.RedissonLock;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
+
 import java.lang.reflect.Method;
 
 /**
@@ -43,7 +44,7 @@ import java.lang.reflect.Method;
 @RequiredArgsConstructor
 public class LockAspect {
 
-	private final LockFactory factory;
+	private final RedisUtil redisUtil;
 
 	@Around(value = "@annotation(org.laokou.common.lock.annotation.Lock4j)")
 	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -61,9 +62,8 @@ public class LockAspect {
 		long expire = lock4j.expire();
 		long timeout = lock4j.timeout();
 		final LockType type = lock4j.type();
-		final LockScope scope = lock4j.scope();
-		Locks locks = factory.build(scope);
-		Object obj = null;
+		Locks locks = new RedissonLock(redisUtil);
+		Object obj;
 		// 设置锁的自动过期时间，则执行业务的时间一定要小于锁的自动过期时间，否则就会报错
 		try {
 			if (locks.tryLock(type, key, expire, timeout)) {
