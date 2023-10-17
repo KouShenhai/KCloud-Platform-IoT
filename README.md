@@ -108,6 +108,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 - 持续集成&交付：Jenkins
 - 持久层框架：Mybatis Plus
 - JSON序列化：Jackson
+- 对象转换：MapStruct
 - 数据库：Mysql
 - 工作流：Flowable
 
