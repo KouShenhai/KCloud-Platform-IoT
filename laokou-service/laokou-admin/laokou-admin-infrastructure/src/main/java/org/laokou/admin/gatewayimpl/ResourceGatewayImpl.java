@@ -97,8 +97,13 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		StartCO co = startTask(resource);
 		int status = Status.PENDING_APPROVAL;
 		flag = flag && updateResourceStatus(resource, status, version, co.getInstanceId());
-		domainEventPublisher.publish(toMessageEvent(resource, co.getInstanceId()));
+		publishMessage(resource, co.getInstanceId());
 		return flag;
+	}
+
+	@Async
+	public void publishMessage(Resource resource,String instanceId) {
+		domainEventPublisher.publish(toMessageEvent(resource, instanceId));
 	}
 
 	private StartCO startTask(Resource resource) {
@@ -132,8 +137,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		return resourceAuditMapper.insertTable(resourceAuditDO);
 	}
 
-	@Async
-	public MessageEvent toMessageEvent(Resource resource, String instanceId) {
+	private MessageEvent toMessageEvent(Resource resource, String instanceId) {
 		String title = "资源待审批任务提醒";
 		String content = String.format("编号为%s，名称为%s的资源需要审批，请及时查看并审批", resource.getId(), resource.getTitle());
 		MessageEvent event = new MessageEvent(this);

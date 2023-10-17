@@ -48,8 +48,9 @@ public class ResourceTaskListQryExe {
 			throw new GlobalException(result.getMsg());
 		}
 		List<TaskCO> records = result.getData().getRecords();
+		String userName = UserUtil.getUserName();
 		if (CollectionUtil.isNotEmpty(records)) {
-			records.parallelStream().forEach(item -> item.setUsername(UserUtil.getUserName()));
+			records.parallelStream().forEach(item -> item.setUsername(userName));
 		}
 		return result;
 	}
