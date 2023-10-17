@@ -35,9 +35,9 @@ import java.net.URL;
 /**
  * @author laokou
  */
-public class AmazonS3StorageService extends AbstractStorageService<AmazonS3> {
+public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 
-	public AmazonS3StorageService(OssCO ossCO) {
+	public AmazonS3StorageDriver(OssCO ossCO) {
 		this.ossCO = ossCO;
 	}
 

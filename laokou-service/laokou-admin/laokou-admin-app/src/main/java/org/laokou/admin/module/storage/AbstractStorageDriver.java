@@ -27,7 +27,7 @@ import java.io.InputStream;
  * @author laokou
  */
 @Slf4j
-public abstract class AbstractStorageService<O> implements StorageService<O> {
+public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 
 	protected OssCO ossCO;
 

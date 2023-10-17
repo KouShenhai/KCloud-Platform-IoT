@@ -21,7 +21,7 @@ import java.io.InputStream;
 /**
  * @author laokou
  */
-public interface StorageService<O> {
+public interface StorageDriver<O> {
 
 	/**
 	 * 创建bucket
