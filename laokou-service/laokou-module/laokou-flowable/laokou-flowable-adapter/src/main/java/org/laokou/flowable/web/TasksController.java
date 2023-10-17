@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.api.TasksServiceI;
 import org.laokou.flowable.dto.task.*;
+import org.laokou.flowable.dto.task.clientobject.AssigneeCO;
 import org.laokou.flowable.dto.task.clientobject.AuditCO;
 import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.laokou.flowable.dto.task.clientobject.TaskCO;
@@ -80,6 +81,12 @@ public class TasksController {
 	@Operation(summary = "流程任务", description = "委派任务")
 	public Result<Boolean> delegate(@RequestBody TaskDelegateCmd cmd) {
 		return tasksServiceI.delegate(cmd);
+	}
+
+	@GetMapping("{instanceId}/assignee")
+	@Operation(summary = "流程任务", description = "流程人员")
+	public Result<AssigneeCO> assignee(@PathVariable("instanceId") String instanceId) {
+		return tasksServiceI.assignee(new TaskAssigneeGetQry(instanceId));
 	}
 
 }

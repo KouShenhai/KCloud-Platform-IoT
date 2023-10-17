@@ -20,6 +20,7 @@ package org.laokou.admin.gatewayimpl.feign.fallback;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.resource.*;
+import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
 import org.laokou.admin.dto.resource.clientobject.AuditCO;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
@@ -76,6 +77,12 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 	public Result<Boolean> delegate(TaskDelegateCmd cmd) {
 		errLog();
 		return Result.fail("流程委派失败，请联系管理员");
+	}
+
+	@Override
+	public Result<AssigneeCO> assignee(String instanceId) {
+		errLog();
+		return Result.fail("获取流程人员失败，请联系管理员");
 	}
 
 	private void errLog() {

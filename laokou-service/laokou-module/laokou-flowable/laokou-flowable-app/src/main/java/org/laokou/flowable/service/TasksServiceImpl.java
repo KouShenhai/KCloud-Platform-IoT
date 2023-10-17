@@ -24,6 +24,7 @@ import org.laokou.flowable.api.TasksServiceI;
 import org.laokou.flowable.command.task.*;
 import org.laokou.flowable.command.task.query.TaskListQryExe;
 import org.laokou.flowable.dto.task.*;
+import org.laokou.flowable.dto.task.clientobject.AssigneeCO;
 import org.laokou.flowable.dto.task.clientobject.AuditCO;
 import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.laokou.flowable.dto.task.clientobject.TaskCO;
@@ -47,6 +48,8 @@ public class TasksServiceImpl implements TasksServiceI {
 	private final TaskStartCmdExe taskStartCmdExe;
 
 	private final TaskTransferCmdExe taskTransferCmdExe;
+
+	private final TaskAssigneeGetQryExe taskAssigneeGetQryExe;
 
 	@Override
 	public Result<Datas<TaskCO>> list(TaskListQry qry) {
@@ -81,6 +84,11 @@ public class TasksServiceImpl implements TasksServiceI {
 	@Override
 	public Result<Boolean> delegate(TaskDelegateCmd cmd) {
 		return taskDelegateCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<AssigneeCO> assignee(TaskAssigneeGetQry qry) {
+		return taskAssigneeGetQryExe.execute(qry);
 	}
 
 }

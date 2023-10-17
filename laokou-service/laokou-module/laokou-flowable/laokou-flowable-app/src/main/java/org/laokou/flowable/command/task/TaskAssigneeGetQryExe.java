@@ -14,39 +14,29 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.dto.log.domainevent;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.laokou.common.i18n.dto.DomainEvent;
+package org.laokou.flowable.command.task;
 
-import java.io.Serial;
-import java.time.Clock;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.flowable.dto.task.TaskAssigneeGetQry;
+import org.laokou.flowable.dto.task.clientobject.AssigneeCO;
+import org.laokou.flowable.gatewayimpl.database.TaskMapper;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Setter
-@Getter
-public class AuditLogEvent extends DomainEvent {
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class TaskAssigneeGetQryExe {
 
-	@Serial
-	private static final long serialVersionUID = 1532877866226749304L;
+	private final TaskMapper taskMapper;
 
-	private Long businessId;
-
-	private Integer status;
-
-	private String approver;
-
-	private String comment;
-
-	public AuditLogEvent(Object source, Clock clock) {
-		super(source, clock);
-	}
-
-	public AuditLogEvent(Object source) {
-		super(source);
+	public Result<AssigneeCO> execute(TaskAssigneeGetQry qry) {
+		return Result.of(new AssigneeCO(taskMapper.getAssigneeByInstanceId(qry.getInstanceId())));
 	}
 
 }

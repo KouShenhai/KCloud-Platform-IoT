@@ -17,6 +17,7 @@ package org.laokou.admin.gatewayimpl.feign;
 
 import io.swagger.v3.oas.annotations.Operation;
 import org.laokou.admin.dto.resource.*;
+import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
 import org.laokou.admin.dto.resource.clientobject.AuditCO;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
@@ -64,5 +65,9 @@ public interface TasksFeignClient {
 	@PostMapping("delegate")
 	@Operation(summary = "流程任务", description = "委派任务")
 	Result<Boolean> delegate(@RequestBody TaskDelegateCmd cmd);
+
+	@GetMapping("{instanceId}/assignee")
+	@Operation(summary = "流程任务", description = "流程人员")
+	Result<AssigneeCO> assignee(@PathVariable("instanceId") String instanceId);
 
 }

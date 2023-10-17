@@ -23,11 +23,14 @@ import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.ResourceGateway;
+import org.laokou.admin.domain.message.Type;
 import org.laokou.admin.domain.resource.Resource;
 import org.laokou.admin.domain.resource.Status;
+import org.laokou.admin.dto.message.domainevent.MessageEvent;
 import org.laokou.admin.dto.resource.TaskStartCmd;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
@@ -40,6 +43,7 @@ import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,6 +63,8 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private final ResourceAuditMapper resourceAuditMapper;
 
 	private final TasksFeignClient tasksFeignClient;
+
+	private final DomainEventPublisher domainEventPublisher;
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_RESOURCE)
@@ -84,18 +90,20 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		return updateResource(resource, resourceMapper.getVersion(resource.getId(), ResourceDO.class));
 	}
 
-	@Override
-	public void publish() {
-
-	}
-
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateResource(Resource resource, Integer version) {
 		log.info("开始任务分布式事务 XID:{}", RootContext.getXID());
 		Boolean flag = insertResourceAudit(resource);
 		StartCO co = startTask(resource);
 		int status = Status.PENDING_APPROVAL;
-		return flag && updateResourceStatus(resource, status, version, co.getInstanceId());
+		flag = flag && updateResourceStatus(resource, status, version, co.getInstanceId());
+		publishMessage(resource, co.getInstanceId());
+		return flag;
+	}
+
+	@Async
+	public void publishMessage(Resource resource, String instanceId) {
+		domainEventPublisher.publish(toMessageEvent(resource, instanceId));
 	}
 
 	private StartCO startTask(Resource resource) {
@@ -127,6 +135,17 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
 		resourceAuditDO.setResourceId(resource.getId());
 		return resourceAuditMapper.insertTable(resourceAuditDO);
+	}
+
+	private MessageEvent toMessageEvent(Resource resource, String instanceId) {
+		String title = "资源待审批任务提醒";
+		String content = String.format("编号为%s，名称为%s的资源需要审批，请及时查看并审批", resource.getId(), resource.getTitle());
+		MessageEvent event = new MessageEvent(this);
+		event.setContent(content);
+		event.setTitle(title);
+		event.setInstanceId(instanceId);
+		event.setType(Type.REMIND.ordinal());
+		return event;
 	}
 
 }

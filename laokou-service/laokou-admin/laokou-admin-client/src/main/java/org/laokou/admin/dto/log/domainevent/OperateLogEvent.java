@@ -19,10 +19,9 @@ package org.laokou.admin.dto.log.domainevent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.context.ApplicationEvent;
+import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.Clock;
 
 /**
@@ -30,7 +29,7 @@ import java.time.Clock;
  */
 @Getter
 @Setter
-public class OperateLogEvent extends ApplicationEvent implements Serializable {
+public class OperateLogEvent extends DomainEvent {
 
 	@Serial
 	private static final long serialVersionUID = -6523521638764501311L;
