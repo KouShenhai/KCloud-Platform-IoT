@@ -20,13 +20,12 @@ import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.user.User;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.common.StatusCode;
-import org.laokou.common.i18n.utils.MessageUtil;
-import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.core.context.UserContextHolder;
+import org.laokou.common.i18n.common.StatusCode;
+import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
@@ -37,6 +36,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.stereotype.Component;
+
 import java.security.Principal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -77,7 +77,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 						MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 			}
 			// 写入当前线程
-			UserContextHolder.set(ConvertUtil.sourceToTarget(user, UserContextHolder.User.class));
+			UserContextHolder.set(convert(user));
 			return user;
 		}
 		obj = redisUtil.get(userInfoKey);
@@ -144,9 +144,17 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			}
 		}
 		// 写入当前线程
-		// 写入当前线程
-		UserContextHolder.set(ConvertUtil.sourceToTarget(user, UserContextHolder.User.class));
+		UserContextHolder.set(convert(user));
 		return user;
+	}
+
+	private UserContextHolder.User convert(User user) {
+		UserContextHolder.User u = new UserContextHolder.User();
+		u.setId(user.getId());
+		u.setDeptPath(user.getDeptPath());
+		u.setDeptId(user.getDeptId());
+		u.setTenantId(user.getTenantId());
+		return u;
 	}
 
 }
