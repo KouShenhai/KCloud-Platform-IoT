@@ -19,7 +19,7 @@ package org.laokou.common.sensitive.utils;
 
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.sensitive.annotation.SensitiveField;
-import org.laokou.common.sensitive.enums.TypeEnum;
+import org.laokou.common.sensitive.enums.Type;
 
 import java.lang.reflect.Field;
 
@@ -50,8 +50,8 @@ public class SensitiveUtil {
 		}
 	}
 
-	public static String format(TypeEnum typeEnum, String str) {
-		switch (typeEnum) {
+	public static String format(Type type, String str) {
+		switch (type) {
 			case MAIL -> {
 				return formatMail(str);
 			}

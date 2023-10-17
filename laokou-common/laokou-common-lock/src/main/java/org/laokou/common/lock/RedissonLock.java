@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.lock.factory;
+package org.laokou.common.lock;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

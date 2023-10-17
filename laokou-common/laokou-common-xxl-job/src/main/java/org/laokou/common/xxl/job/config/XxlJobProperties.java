@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = XxlJobProperties.PREFIX)
 public class XxlJobProperties {
 
-	public static final String PREFIX = "xxl.job";
+	public static final String PREFIX = "spring.xxl-job";
 
 	private Admin admin;
 

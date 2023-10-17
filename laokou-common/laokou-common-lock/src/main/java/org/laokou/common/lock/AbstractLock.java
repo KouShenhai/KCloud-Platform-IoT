@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.lock.factory;
+package org.laokou.common.lock;
 
 import org.laokou.common.lock.enums.LockType;
 

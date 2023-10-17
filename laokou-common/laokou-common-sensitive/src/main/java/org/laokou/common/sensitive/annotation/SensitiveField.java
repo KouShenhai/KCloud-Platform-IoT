@@ -16,7 +16,7 @@
  */
 package org.laokou.common.sensitive.annotation;
 
-import org.laokou.common.sensitive.enums.TypeEnum;
+import org.laokou.common.sensitive.enums.Type;
 
 import java.lang.annotation.*;
 
@@ -28,6 +28,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface SensitiveField {
 
-	TypeEnum type();
+	Type type();
 
 }

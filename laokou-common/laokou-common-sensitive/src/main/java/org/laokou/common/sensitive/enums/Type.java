@@ -14,26 +14,14 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.lock.factory;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.lock.enums.LockScope;
-import org.laokou.common.redis.utils.RedisUtil;
-import org.springframework.stereotype.Component;
+package org.laokou.common.sensitive.enums;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class LockFactory {
+public enum Type {
 
-	private final RedisUtil redisUtil;
-
-	public Locks build(LockScope scope) {
-		return switch (scope) {
-			case DISTRIBUTED_LOCK -> new RedissonLock(redisUtil);
-		};
-	}
+	MOBILE, MAIL,
 
 }

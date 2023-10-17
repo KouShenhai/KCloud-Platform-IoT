@@ -14,17 +14,31 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.lock.enums;
+package org.laokou.common.lock;
+
+import org.laokou.common.lock.enums.LockType;
 
 /**
  * @author laokou
  */
-
-public enum LockScope {
+public interface Locks {
 
 	/**
-	 * 分布式锁
+	 * 获取锁
+	 * @param type
+	 * @param key
+	 * @param expire
+	 * @param timeout
+	 * @return
+	 * @throws InterruptedException
 	 */
-	DISTRIBUTED_LOCK
+	Boolean tryLock(LockType type, String key, long expire, long timeout) throws InterruptedException;
+
+	/**
+	 * 释放锁
+	 * @param type
+	 * @param key
+	 */
+	void unlock(LockType type, String key);
 
 }
