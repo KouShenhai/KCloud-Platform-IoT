@@ -144,7 +144,6 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			}
 		}
 		// 写入当前线程
-		// 写入当前线程
 		UserContextHolder.set(ConvertUtil.sourceToTarget(user, UserContextHolder.User.class));
 		return user;
 	}
