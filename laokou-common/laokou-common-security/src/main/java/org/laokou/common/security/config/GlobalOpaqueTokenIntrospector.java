@@ -77,7 +77,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 						MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 			}
 			// 写入当前线程
-			UserContextHolder.set(toUserContext(user));
+			UserContextHolder.set(convert(user));
 			return user;
 		}
 		obj = redisUtil.get(userInfoKey);
@@ -144,11 +144,11 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			}
 		}
 		// 写入当前线程
-		UserContextHolder.set(toUserContext(user));
+		UserContextHolder.set(convert(user));
 		return user;
 	}
 
-	private UserContextHolder.User toUserContext(User user) {
+	private UserContextHolder.User convert(User user) {
 		UserContextHolder.User u = new UserContextHolder.User();
 		u.setId(user.getId());
 		u.setDeptPath(user.getDeptPath());
