@@ -20,7 +20,7 @@ package org.laokou.common.sensitive.enums;
 /**
  * @author laokou
  */
-public enum TypeEnum {
+public enum Type {
 
 	MOBILE, MAIL,
 

@@ -24,7 +24,7 @@ import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.sensitive.enums.TypeEnum;
+import org.laokou.common.sensitive.enums.Type;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -70,7 +70,7 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 			throw OAuth2ExceptionHandler.getException(CAPTCHA_NOT_NULL, MessageUtil.getMessage(CAPTCHA_NOT_NULL));
 		}
 		String mobile = request.getParameter(MOBILE);
-		log.info("手机：{}", SensitiveUtil.format(TypeEnum.MOBILE, mobile));
+		log.info("手机：{}", SensitiveUtil.format(Type.MOBILE, mobile));
 		if (StringUtil.isEmpty(mobile)) {
 			throw OAuth2ExceptionHandler.getException(MOBILE_NOT_NULL, MessageUtil.getMessage(MOBILE_NOT_NULL));
 		}
