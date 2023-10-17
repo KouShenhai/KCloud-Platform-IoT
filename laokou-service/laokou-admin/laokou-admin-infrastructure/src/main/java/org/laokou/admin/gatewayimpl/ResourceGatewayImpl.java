@@ -102,7 +102,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	@Async
-	public void publishMessage(Resource resource,String instanceId) {
+	public void publishMessage(Resource resource, String instanceId) {
 		domainEventPublisher.publish(toMessageEvent(resource, instanceId));
 	}
 
