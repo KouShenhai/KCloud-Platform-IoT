@@ -18,6 +18,7 @@ package org.laokou.flowable.api;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.dto.task.*;
+import org.laokou.flowable.dto.task.clientobject.AssigneeCO;
 import org.laokou.flowable.dto.task.clientobject.AuditCO;
 import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.laokou.flowable.dto.task.clientobject.TaskCO;
@@ -40,5 +41,7 @@ public interface TasksServiceI {
 	Result<Boolean> transfer(TaskTransferCmd cmd);
 
 	Result<Boolean> delegate(TaskDelegateCmd cmd);
+
+	Result<AssigneeCO> assignee(TaskAssigneeGetQry qry);
 
 }

@@ -164,3 +164,23 @@ UPDATE `kcloud_platform_alibaba`.`boot_sys_resource` SET `creator` = 13416208980
 UPDATE `kcloud_platform_alibaba`.`boot_sys_resource` SET `creator` = 1341620898007281665, `editor` = 1341620898007281665, `create_date` = '2022-10-26 12:44:49', `update_date` = '2023-10-15 22:52:41', `del_flag` = 0, `version` = 0, `dept_id` = 1535887940687765505, `dept_path` = '0,1535887940687765505', `tenant_id` = 0, `title` = '范倪Liu - 南半球与北海道.mp3', `status` = 2, `instance_id` = NULL, `url` = 'http://127.0.0.1:81/upload/node5/7931e662df164b0281752a26be9a74e3.mp3', `code` = 'audio', `remark` = '“我告别南半球奔向北海道，愿化作那昼夜的飞鸟将你拥抱”\n    尘埃力量携手旗下女歌手范倪Liu带来全新单曲《南半球与北海道》。范倪Liu治愈演绎，你的笑盛放于花海，那是我见过最美的画面。我告别南半球与北海道，与零度经线的距离只差分毫，只能目送你随日落消失于眼角。我多想能穿梭到平行时空，乘着风，奔向你...' WHERE `id` = 1585130300620607489;
 UPDATE `kcloud_platform_alibaba`.`boot_sys_resource` SET `creator` = 1341620898007281665, `editor` = 1707428076142559234, `create_date` = '2022-10-26 12:45:53', `update_date` = '2023-10-15 22:52:41', `del_flag` = 0, `version` = 1, `dept_id` = 1535887940687765505, `dept_path` = '0,1535887940687765505', `tenant_id` = 0, `title` = '凤凰传奇 - 海底.mp3', `status` = 2, `instance_id` = '7396a98a-6b16-11ee-850b-005056c00001', `url` = 'http://127.0.0.1:81/upload/node1/f98cb30cf0944015b082cc640f4a8a68.mp3', `code` = 'audio', `remark` = '《海底》，由一支榴莲作词，一支榴莲/寿延作曲，凤凰传奇在《为歌而赞》第七期演唱的歌曲，发行于2021年4月24日。' WHERE `id` = 1585130571937550338;
 UPDATE `kcloud_platform_alibaba`.`boot_sys_resource` SET `creator` = 1341620898007281665, `editor` = 1707428077144997889, `create_date` = '2022-11-02 17:24:09', `update_date` = '2023-10-15 22:52:41', `del_flag` = 0, `version` = 6, `dept_id` = 1535887940687765505, `dept_path` = '0,1535887940687765505', `tenant_id` = 0, `title` = '千百顺 - 很任性.flac', `status` = 1, `instance_id` = '1efe0c14-6b2d-11ee-b50c-005056c00001', `url` = 'http://127.0.0.1:81/upload/node1/d218ea8dc46e437a884778f53e27a590.flac', `code` = 'audio', `remark` = '《很任性》是由高进作词、作曲，千百顺演唱的歌曲，发行于2014年12月24日。收录于同名专辑《很任性》中。' WHERE `id` = 1587737315629010946;
+
+DROP TABLE IF EXISTS `boot_sys_audit_log`;
+CREATE TABLE `boot_sys_audit_log`  (
+                                       `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                                       `creator` bigint NOT NULL DEFAULT 0 COMMENT '创建人',
+                                       `editor` bigint NOT NULL DEFAULT 0 COMMENT '编辑人',
+                                       `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                       `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                                       `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '删除标识 0未删除 1已删除',
+                                       `version` int NOT NULL DEFAULT 0 COMMENT '版本号',
+                                       `dept_id` bigint NOT NULL DEFAULT 0 COMMENT '部门ID',
+                                       `dept_path` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '部门PATH',
+                                       `tenant_id` bigint NOT NULL DEFAULT 0 COMMENT '租户ID',
+                                       `business_id` bigint NOT NULL COMMENT '业务ID',
+                                       `approver` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '审批人',
+                                       `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '审批状态 -1驳回审批 1通过审批',
+                                       `comment` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '审批意见',
+                                       PRIMARY KEY (`id`) USING BTREE,
+                                       INDEX `idx_business_id_type`(`business_id` ASC) USING BTREE COMMENT '业务编号_索引'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '审批日志' ROW_FORMAT = DYNAMIC;

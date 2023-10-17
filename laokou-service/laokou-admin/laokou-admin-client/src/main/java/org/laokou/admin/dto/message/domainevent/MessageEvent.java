@@ -14,38 +14,38 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.dto.log.domainevent;
+
+package org.laokou.admin.dto.message.domainevent;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.dto.DomainEvent;
 
-import java.io.Serial;
 import java.time.Clock;
+import java.util.Set;
 
 /**
  * @author laokou
  */
-@Setter
 @Getter
-public class AuditLogEvent extends DomainEvent {
+@Setter
+public class MessageEvent extends DomainEvent {
 
-	@Serial
-	private static final long serialVersionUID = 1532877866226749304L;
+	private String title;
 
-	private Long businessId;
+	private String content;
 
-	private Integer status;
+	private Integer type;
 
-	private String approver;
+	private Set<String> receiver;
 
-	private String comment;
+	private String instanceId;
 
-	public AuditLogEvent(Object source, Clock clock) {
+	public MessageEvent(Object source, Clock clock) {
 		super(source, clock);
 	}
 
-	public AuditLogEvent(Object source) {
+	public MessageEvent(Object source) {
 		super(source);
 	}
 

@@ -22,7 +22,6 @@ import lombok.Data;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
 import java.io.Serial;
-import java.time.LocalDateTime;
 
 /**
  * @author laokou
@@ -38,14 +37,11 @@ public class AuditLogDO extends BaseDO {
 	@Schema(name = "businessId", description = "业务ID")
 	private Long businessId;
 
-	@Schema(name = "auditName", description = "审批名称")
-	private String auditName;
+	@Schema(name = "approver", description = "审批人")
+	private String approver;
 
-	@Schema(name = "auditDate", description = "审批时间")
-	private LocalDateTime auditDate;
-
-	@Schema(name = "auditStatus", description = "审批状态")
-	private Integer auditStatus;
+	@Schema(name = "status", description = "审批状态 -1驳回审批 1通过审批")
+	private Integer status;
 
 	@Schema(name = "comment", description = "审批意见")
 	private String comment;
