@@ -30,6 +30,10 @@
     <dependencies>
         <dependency>
             <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-prometheus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-log4j2</artifactId>
             <exclusions>
                 <exclusion>
