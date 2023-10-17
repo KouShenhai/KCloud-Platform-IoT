@@ -30,6 +30,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.ResourceUtil;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.web.server.Ssl;
 import org.springframework.stereotype.Component;
 
 import javax.net.ssl.KeyManagerFactory;
@@ -47,6 +49,7 @@ import java.util.concurrent.TimeUnit;
 public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
 	private final WebsocketHandler websocketHandler;
+	private final ServerProperties serverProperties;
 
 	private static final String WEBSOCKET_PATH = "/ws";
 
@@ -77,9 +80,10 @@ public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketCha
 
 	@SneakyThrows
 	private SSLContext sslContext() {
-		String path = "scg-keystore.p12";
-		String password = "laokou";
-		String type = "PKCS12";
+		Ssl ssl = serverProperties.getSsl();
+		String path = ssl.getKeyStore();
+		String password = ssl.getKeyStorePassword();
+		String type = ssl.getKeyStoreType();
 		try (InputStream inputStream = ResourceUtil.getResource(path).getInputStream()) {
 			char[] passArray = password.toCharArray();
 			KeyStore keyStore = KeyStore.getInstance(type);
