@@ -186,4 +186,9 @@ public interface Constant {
 	 */
 	String LOCAL_NETWORK_SEGMENT = "0:0:0:0:0:0:0:1";
 
+	/**
+	 * spring管理
+	 */
+	String SPRING = "spring";
+
 }
