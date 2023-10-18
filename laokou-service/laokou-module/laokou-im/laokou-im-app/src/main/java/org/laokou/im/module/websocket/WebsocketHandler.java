@@ -30,6 +30,7 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.ReferenceCountUtil;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -43,9 +44,13 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
+import static org.laokou.common.i18n.common.Constant.EMPTY;
 import static org.laokou.common.i18n.common.Constant.MARK;
 
 /**
@@ -63,12 +68,14 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	private final ReactiveRedisUtil reactiveRedisUtil;
 
+	private static final AtomicLong ATOMIC = new AtomicLong(0);
+
 	public static final Cache<String, Channel> USER_CACHE;
 
 	static {
 		USER_CACHE = Caffeine.newBuilder()
 			.expireAfterAccess(RedisUtil.HOUR_ONE_EXPIRE, TimeUnit.SECONDS)
-			.initialCapacity(100)
+			.initialCapacity(500)
 			.build();
 	}
 
@@ -83,7 +90,16 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
+	}
 
+	@PostConstruct
+	protected void sessionClock() {
+		ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(runnable -> {
+			Thread thread = new Thread(runnable, "Session Clock");
+			thread.setDaemon(true);
+			return thread;
+		});
+		scheduler.scheduleAtFixedRate(() -> log.info("会话连接数：{}", ATOMIC.get()), 1, 1, TimeUnit.MINUTES);
 	}
 
 	@Override
@@ -94,12 +110,16 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	@Override
 	public void handlerRemoved(ChannelHandlerContext ctx) {
 		// 移除channel
+		long value = ATOMIC.decrementAndGet();
+		if (value < 0) {
+			ATOMIC.compareAndSet(value, 0);
+		}
 		String channelId = ctx.channel().id().asLongText();
 		log.info("断开连接：{}", channelId);
 	}
 
 	private String getAuthorization(Map<String, String> paramMap) {
-		String Authorization = paramMap.getOrDefault(AUTHORIZATION, "");
+		String Authorization = paramMap.getOrDefault(AUTHORIZATION, EMPTY);
 		if (StringUtil.isNotEmpty(Authorization)) {
 			return Authorization.substring(7);
 		}
@@ -131,6 +151,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 				User user = (User) obj;
 				Channel channel = ctx.channel();
 				String userId = user.getId().toString();
+				ATOMIC.incrementAndGet();
 				USER_CACHE.put(userId, channel);
 			});
 		}
