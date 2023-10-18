@@ -50,6 +50,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
+import static org.laokou.common.i18n.common.Constant.EMPTY;
 import static org.laokou.common.i18n.common.Constant.MARK;
 
 /**
@@ -88,7 +89,8 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	}
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {}
+	protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
+	}
 
 	@PostConstruct
 	protected void sessionClock() {
@@ -97,8 +99,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			thread.setDaemon(true);
 			return thread;
 		});
-		scheduler.scheduleAtFixedRate(() -> log.info("当前会话连接数：{}",ATOMIC.get()), 1, 15,
-				TimeUnit.SECONDS);
+		scheduler.scheduleAtFixedRate(() -> log.info("会话连接数：{}", ATOMIC.get()), 1, 1, TimeUnit.MINUTES);
 	}
 
 	@Override
@@ -111,14 +112,14 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 		// 移除channel
 		long value = ATOMIC.decrementAndGet();
 		if (value < 0) {
-			ATOMIC.compareAndSet(value,0);
+			ATOMIC.compareAndSet(value, 0);
 		}
 		String channelId = ctx.channel().id().asLongText();
 		log.info("断开连接：{}", channelId);
 	}
 
 	private String getAuthorization(Map<String, String> paramMap) {
-		String Authorization = paramMap.getOrDefault(AUTHORIZATION, "");
+		String Authorization = paramMap.getOrDefault(AUTHORIZATION, EMPTY);
 		if (StringUtil.isNotEmpty(Authorization)) {
 			return Authorization.substring(7);
 		}

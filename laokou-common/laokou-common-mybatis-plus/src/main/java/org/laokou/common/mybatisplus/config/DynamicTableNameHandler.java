@@ -19,8 +19,6 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
-
 /**
  * @author laokou
  */
@@ -31,7 +29,7 @@ public class DynamicTableNameHandler implements TableNameHandler {
 	@Override
 	public String dynamicTableName(String sql, String tableName) {
 		if (tableName.endsWith(PLACE_HOLDER)) {
-			return tableName.concat(DynamicTableSuffixContextHolder.get()).replace(PLACE_HOLDER, EMPTY);
+			return tableName.substring(0,tableName.length() - PLACE_HOLDER.length()).concat(DynamicTableSuffixContextHolder.get());
 		}
 		return tableName;
 	}
