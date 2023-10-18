@@ -21,8 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
-import org.laokou.admin.module.storage.AmazonS3StorageService;
-import org.laokou.admin.module.storage.StorageService;
+import org.laokou.admin.module.storage.AmazonS3StorageDriver;
+import org.laokou.admin.module.storage.StorageDriver;
 import org.laokou.common.algorithm.template.select.AbstractSelectAlgorithm;
 import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
 import org.laokou.common.core.utils.CollectionUtil;
@@ -46,8 +46,8 @@ public class StorageFactory {
 
 	private final RedisUtil redisUtil;
 
-	public StorageService<AmazonS3> build(Long tenantId) {
-		return new AmazonS3StorageService(getOssConfig(tenantId));
+	public StorageDriver<AmazonS3> build(Long tenantId) {
+		return new AmazonS3StorageDriver(getOssConfig(tenantId));
 	}
 
 	private OssCO getOssConfig(Long tenantId) {

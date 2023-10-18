@@ -19,7 +19,7 @@ package org.laokou.admin.command.user.query;
 
 import org.laokou.admin.dto.user.UserProfileGetQry;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.auth.domain.user.User;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -31,7 +31,21 @@ import org.springframework.stereotype.Component;
 public class UserProfileGetQryExe {
 
 	public Result<UserProfileCO> execute(UserProfileGetQry qry) {
-		return Result.of(ConvertUtil.sourceToTarget(UserUtil.user(), UserProfileCO.class));
+		return Result.of(convert());
+	}
+
+	private UserProfileCO convert() {
+		User user = UserUtil.user();
+		UserProfileCO co = new UserProfileCO();
+		co.setId(user.getId());
+		co.setAvatar(user.getAvatar());
+		co.setUsername(user.getUsername());
+		co.setMobile(user.getMobile());
+		co.setMail(user.getMail());
+		co.setPermissionList(user.getPermissionList());
+		co.setTenantId(user.getTenantId());
+		co.setSuperAdmin(user.getSuperAdmin());
+		return co;
 	}
 
 }

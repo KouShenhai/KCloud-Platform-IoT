@@ -17,22 +17,16 @@
 
 package org.laokou.admin.convertor;
 
-import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.domain.user.User;
+import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Convertor;
+import org.mapstruct.Mapper;
 
 /**
  * @author laokou
  */
-public class UserConvertor {
-
-	public static User toEntity(UserCO co) {
-		return ConvertUtil.sourceToTarget(co, User.class);
-	}
-
-	public static UserDO toDataObject(User user) {
-		return ConvertUtil.sourceToTarget(user, UserDO.class);
-	}
+@Mapper(componentModel = "spring")
+public interface UserConvertor extends Convertor<UserCO, User, UserDO> {
 
 }

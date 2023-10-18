@@ -29,7 +29,7 @@
         <!--spring-boot版本-->
         <spring-boot.version>3.1.4</spring-boot.version>
         <!--lombok版本-->
-        <lombok.version>1.18.26</lombok.version>
+        <lombok.version>1.18.30</lombok.version>
         <!--mysql版本-->
         <mysql.version>8.0.33</mysql.version>
         <!--admin版本-->
@@ -108,11 +108,25 @@
         <disruptor.version>3.4.4</disruptor.version>
         <!--dubbo版本-->
         <dubbo.version>3.2.6</dubbo.version>
+        <!--lombok-mapstruct-binding版本-->
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+        <!--mapstruct版本-->
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-mapstruct-binding</artifactId>
+                <version>${lombok-mapstruct-binding.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-dubbo</artifactId>

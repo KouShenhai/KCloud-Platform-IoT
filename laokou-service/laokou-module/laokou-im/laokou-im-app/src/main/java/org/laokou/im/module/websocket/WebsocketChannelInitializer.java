@@ -49,6 +49,7 @@ import java.util.concurrent.TimeUnit;
 public class WebsocketChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
 	private final WebsocketHandler websocketHandler;
+
 	private final ServerProperties serverProperties;
 
 	private static final String WEBSOCKET_PATH = "/ws";

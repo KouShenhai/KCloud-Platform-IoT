@@ -76,7 +76,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 	@SneakyThrows
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		if (msg instanceof FullHttpRequest request) {
-			initWsInfo(ctx, request);
+			init(ctx, request);
 		}
 		super.channelRead(ctx, msg);
 	}
@@ -106,7 +106,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 		return Authorization;
 	}
 
-	private void initWsInfo(ChannelHandlerContext ctx, FullHttpRequest request) {
+	private void init(ChannelHandlerContext ctx, FullHttpRequest request) {
 		try {
 			if (request.decoderResult().isFailure() || !WS_HEADER_VALUE.equals(request.headers().get(WS_HEADER_NAME))) {
 				handleRequestError(ctx, HttpResponseStatus.BAD_REQUEST);
