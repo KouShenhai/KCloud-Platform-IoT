@@ -27,58 +27,58 @@ import java.time.LocalDateTime;
  */
 public class SqlEvent extends DomainEvent {
 
-    private String url;
-    private String sql;
-    private long costTime;
-    private LocalDateTime nowDate;
+	private String url;
 
-    public SqlEvent(Object source) {
-        super(source);
-    }
+	private String sql;
 
-    public SqlEvent(Object source, Clock clock) {
-        super(source, clock);
-    }
+	private long costTime;
 
-    public String getUrl() {
-        return url;
-    }
+	private LocalDateTime nowDate;
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public SqlEvent(Object source) {
+		super(source);
+	}
 
-    public String getSql() {
-        return sql;
-    }
+	public SqlEvent(Object source, Clock clock) {
+		super(source, clock);
+	}
 
-    public void setSql(String sql) {
-        this.sql = sql;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public long getCostTime() {
-        return costTime;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public void setCostTime(long costTime) {
-        this.costTime = costTime;
-    }
+	public String getSql() {
+		return sql;
+	}
 
-    public LocalDateTime getNowDate() {
-        return nowDate;
-    }
+	public void setSql(String sql) {
+		this.sql = sql;
+	}
 
-    public void setNowDate(LocalDateTime nowDate) {
-        this.nowDate = nowDate;
-    }
+	public long getCostTime() {
+		return costTime;
+	}
 
-    @Override
-    public String toString() {
-        return "SqlEvent{" +
-                "url='" + url + '\'' +
-                ", sql='" + sql + '\'' +
-                ", costTime=" + costTime +
-                ", nowDate=" + nowDate +
-                '}';
-    }
+	public void setCostTime(long costTime) {
+		this.costTime = costTime;
+	}
+
+	public LocalDateTime getNowDate() {
+		return nowDate;
+	}
+
+	public void setNowDate(LocalDateTime nowDate) {
+		this.nowDate = nowDate;
+	}
+
+	@Override
+	public String toString() {
+		return "SqlEvent{" + "url='" + url + '\'' + ", sql='" + sql + '\'' + ", costTime=" + costTime + ", nowDate="
+				+ nowDate + '}';
+	}
+
 }

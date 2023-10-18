@@ -37,22 +37,30 @@ import java.sql.Connection;
  * @author laokou
  */
 @Slf4j
-@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class}), @Signature(type = StatementHandler.class, method = "getBoundSql", args = {}), @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class}), @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}), @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class}),})
+@Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }),
+		@Signature(type = StatementHandler.class, method = "getBoundSql", args = {}),
+		@Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }),
+		@Signature(type = Executor.class, method = "query",
+				args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }),
+		@Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
+				RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class }), })
 public class SlowSqlInterceptor extends MybatisPlusInterceptor {
 
-    private static final long MAX_TIME = 500;
+	private static final long MAX_TIME = 500;
 
-    @Override
-    public Object intercept(Invocation invocation) throws Throwable {
-        long start = System.currentTimeMillis();
-        Object obj = super.intercept(invocation);
-        try {
-            long timeout = (System.currentTimeMillis() - start);
-            if (timeout > MAX_TIME) {
-                String sql = SqlUtil.formatSql(((StatementHandler) invocation.getTarget()).getBoundSql().getSql());
-            }
-        } catch (Exception ignored) {}
-        return obj;
-    }
+	@Override
+	public Object intercept(Invocation invocation) throws Throwable {
+		long start = System.currentTimeMillis();
+		Object obj = super.intercept(invocation);
+		try {
+			long timeout = (System.currentTimeMillis() - start);
+			if (timeout > MAX_TIME) {
+				String sql = SqlUtil.formatSql(((StatementHandler) invocation.getTarget()).getBoundSql().getSql());
+			}
+		}
+		catch (Exception ignored) {
+		}
+		return obj;
+	}
 
 }
