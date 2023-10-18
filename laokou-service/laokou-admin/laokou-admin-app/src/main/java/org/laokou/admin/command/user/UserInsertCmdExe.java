@@ -35,6 +35,8 @@ public class UserInsertCmdExe {
 
 	private final UserMapper userMapper;
 
+	private final UserConvertor userConvertor;
+
 	@DS(USER)
 	public Result<Boolean> execute(UserInsertCmd cmd) {
 		UserCO co = cmd.getUserCO();
@@ -55,7 +57,7 @@ public class UserInsertCmdExe {
 	}
 
 	private User toUser(UserCO co) {
-		User user = UserConvertor.toEntity(co);
+		User user = userConvertor.toEntity(co);
 		user.setTenantId(UserUtil.getTenantId());
 		user.setCreator(UserUtil.getUserId());
 		user.setDeptId(UserUtil.getDeptId());

@@ -67,6 +67,8 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final RoleMapper roleMapper;
 
+	private final UserConvertor userConvertor;
+
 	private final PasswordEncoder passwordEncoder;
 
 	private final BatchUtil batchUtil;
@@ -120,7 +122,7 @@ public class UserGatewayImpl implements UserGateway {
 		UserDO userDO = userMapper.getDynamicTableById(UserDO.class, id,
 				UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM)), "id", "username", "status", "dept_id",
 				"dept_path", "super_admin");
-		User user = ConvertUtil.sourceToTarget(userDO, User.class);
+		User user = userConvertor.convertEntity(userDO);
 		try {
 			DynamicDataSourceContextHolder.push(MASTER);
 			if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
@@ -140,7 +142,7 @@ public class UserGatewayImpl implements UserGateway {
 	@DataFilter(alias = BOOT_SYS_USER)
 	@SneakyThrows
 	public Datas<User> list(User user, PageQuery pageQuery) {
-		UserDO userDO = UserConvertor.toDataObject(user);
+		UserDO userDO = userConvertor.toDataObject(user);
 		final PageQuery page = pageQuery.time().page().ignore(true);
 		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
 				BOOT_SYS_USER);
@@ -191,13 +193,13 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	private UserDO getInsertUserDO(User user) {
-		UserDO userDO = UserConvertor.toDataObject(user);
+		UserDO userDO = userConvertor.toDataObject(user);
 		userDO.setPassword(passwordEncoder.encode(userDO.getPassword()));
 		return userDO;
 	}
 
 	private UserDO getUpdateUserDO(User user) {
-		UserDO userDO = UserConvertor.toDataObject(user);
+		UserDO userDO = userConvertor.toDataObject(user);
 		userDO.setEditor(user.getEditor());
 		userDO.setUpdateDate(DateUtil.now());
 		userDO.setVersion(userMapper.getDynamicVersion(userDO.getId(), UserDO.class, getUserTableSuffix(user.getId())));
