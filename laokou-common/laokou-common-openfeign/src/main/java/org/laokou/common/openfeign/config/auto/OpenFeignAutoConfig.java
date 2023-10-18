@@ -18,8 +18,11 @@ package org.laokou.common.openfeign.config.auto;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import feign.Response;
 import feign.Retryer;
+import feign.codec.ErrorDecoder;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
@@ -33,8 +36,9 @@ import static org.laokou.common.core.constant.BizConstant.TRACE_ID;
  *
  * @author laokou
  */
+@Slf4j
 @AutoConfiguration
-public class OpenFeignAutoConfig implements RequestInterceptor {
+public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
 
 	@Bean
 	public feign.Logger.Level loggerLevel() {
@@ -55,4 +59,10 @@ public class OpenFeignAutoConfig implements RequestInterceptor {
 		return new Retryer.Default();
 	}
 
+	@Override
+	public Exception decode(String methodKey, Response response) {
+		Exception exception = super.decode(methodKey, response);
+		log.error("拦截Feign报错信息：{}",exception.getMessage());
+		return exception;
+	}
 }
