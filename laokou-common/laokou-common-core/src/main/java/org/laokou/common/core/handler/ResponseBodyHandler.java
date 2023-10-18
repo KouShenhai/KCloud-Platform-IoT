@@ -41,20 +41,24 @@ import static org.laokou.common.i18n.common.Constant.EMPTY;
 @RestControllerAdvice
 @ConditionalOnClass(ResponseBodyAdvice.class)
 public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
-    @Override
-    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return true;
-    }
 
-    @Override
-    public Object beforeBodyWrite(@Nullable Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        log.info("拦截响应信息：{}", JacksonUtil.toJsonStr(body));
-        if (body instanceof Result<?> result) {
-            return result;
-        }
-        if (body == null) {
-            return Result.of(EMPTY);
-        }
-        return body;
-    }
+	@Override
+	public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+		return true;
+	}
+
+	@Override
+	public Object beforeBodyWrite(@Nullable Object body, MethodParameter returnType, MediaType selectedContentType,
+			Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request,
+			ServerHttpResponse response) {
+		log.info("拦截响应信息：{}", JacksonUtil.toJsonStr(body));
+		if (body instanceof Result<?> result) {
+			return result;
+		}
+		if (body == null) {
+			return Result.of(EMPTY);
+		}
+		return body;
+	}
+
 }
