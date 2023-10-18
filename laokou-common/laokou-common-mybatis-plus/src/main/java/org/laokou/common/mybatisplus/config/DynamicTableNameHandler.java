@@ -29,7 +29,8 @@ public class DynamicTableNameHandler implements TableNameHandler {
 	@Override
 	public String dynamicTableName(String sql, String tableName) {
 		if (tableName.endsWith(PLACE_HOLDER)) {
-			return tableName.substring(0,tableName.length() - PLACE_HOLDER.length()).concat(DynamicTableSuffixContextHolder.get());
+			return tableName.substring(0, tableName.length() - PLACE_HOLDER.length())
+				.concat(DynamicTableSuffixContextHolder.get());
 		}
 		return tableName;
 	}

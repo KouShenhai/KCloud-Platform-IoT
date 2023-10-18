@@ -41,6 +41,10 @@ public class SqlUtil {
 		}
 	}
 
+	public static String formatSql(String sql) {
+		return plainSelect(sql).toString();
+	}
+
 	public static PlainSelect plainSelect(String sql) {
 		return (PlainSelect) parseSql(sql).getSelectBody();
 	}

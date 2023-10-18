@@ -28,6 +28,7 @@ import lombok.SneakyThrows;
 import org.laokou.common.mybatisplus.config.DataFilterInterceptor;
 import org.laokou.common.mybatisplus.config.DynamicTableNameHandler;
 import org.laokou.common.mybatisplus.config.MybatisPlusSqlInjector;
+import org.laokou.common.mybatisplus.config.SlowSqlInterceptor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -52,20 +53,20 @@ public class MybatisPlusAutoConfig {
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
 	public MybatisPlusInterceptor mybatisPlusInterceptor() {
-		MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+		SlowSqlInterceptor interceptor = new SlowSqlInterceptor();
 		// 数据权限
-		mybatisPlusInterceptor.addInnerInterceptor(new DataFilterInterceptor());
+		interceptor.addInnerInterceptor(new DataFilterInterceptor());
 		// 分页插件
-		mybatisPlusInterceptor.addInnerInterceptor(paginationInnerInterceptor());
+		interceptor.addInnerInterceptor(paginationInnerInterceptor());
 		// 乐观锁
-		mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+		interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
 		// 防止全表更新与删除
-		mybatisPlusInterceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+		interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
 		// 动态表名
 		DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
 		dynamicTableNameInnerInterceptor.setTableNameHandler(new DynamicTableNameHandler());
-		mybatisPlusInterceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
-		return mybatisPlusInterceptor;
+		interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
+		return interceptor;
 	}
 
 	/**
