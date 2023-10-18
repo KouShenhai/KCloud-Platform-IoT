@@ -29,7 +29,7 @@ public class TasksFeignClientFallbackFactory implements FallbackFactory<TasksFei
 
 	@Override
 	public TasksFeignClientFallback create(Throwable throwable) {
-		return new TasksFeignClientFallback(throwable);
+		return new TasksFeignClientFallback();
 	}
 
 }

@@ -29,7 +29,7 @@ public class DefinitionsFeignClientFallbackFactory implements FallbackFactory<De
 
 	@Override
 	public DefinitionsFeignClientFallback create(Throwable throwable) {
-		return new DefinitionsFeignClientFallback(throwable);
+		return new DefinitionsFeignClientFallback();
 	}
 
 }

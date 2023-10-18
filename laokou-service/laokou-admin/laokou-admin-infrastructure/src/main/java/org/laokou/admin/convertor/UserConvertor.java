@@ -23,10 +23,12 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.dto.Convertor;
 import org.mapstruct.Mapper;
 
+import static org.laokou.common.i18n.common.Constant.SPRING;
+
 /**
  * @author laokou
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = SPRING)
 public interface UserConvertor extends Convertor<UserCO, User, UserDO> {
 
 }
