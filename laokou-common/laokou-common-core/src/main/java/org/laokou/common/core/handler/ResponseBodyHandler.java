@@ -40,7 +40,7 @@ import static org.laokou.common.i18n.common.Constant.EMPTY;
 @NonNullApi
 @RestControllerAdvice
 @ConditionalOnClass(ResponseBodyAdvice.class)
-public class ResponseBodyAdviceHandler implements ResponseBodyAdvice<Object> {
+public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
