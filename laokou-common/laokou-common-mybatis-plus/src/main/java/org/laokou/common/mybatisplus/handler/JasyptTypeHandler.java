@@ -28,6 +28,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+
 /**
  * @author laokou
  */
@@ -47,7 +49,7 @@ public class JasyptTypeHandler implements TypeHandler<String> {
 	public String getResult(ResultSet resultSet, String columnName) throws SQLException {
 		String data = resultSet.getString(columnName);
 		if (StringUtil.isEmpty(data)) {
-			return "";
+			return EMPTY;
 		}
 		return AesUtil.decrypt(data.trim());
 	}
@@ -56,7 +58,7 @@ public class JasyptTypeHandler implements TypeHandler<String> {
 	public String getResult(ResultSet resultSet, int columnIndex) throws SQLException {
 		String data = resultSet.getString(columnIndex);
 		if (StringUtil.isEmpty(data)) {
-			return "";
+			return EMPTY;
 		}
 		return AesUtil.decrypt(data.trim());
 	}
@@ -65,7 +67,7 @@ public class JasyptTypeHandler implements TypeHandler<String> {
 	public String getResult(CallableStatement callableStatement, int columnIndex) throws SQLException {
 		String data = callableStatement.getString(columnIndex);
 		if (StringUtil.isEmpty(data)) {
-			return "";
+			return EMPTY;
 		}
 		return AesUtil.decrypt(data.trim());
 	}

@@ -17,6 +17,7 @@
 package org.laokou.common.core.utils;
 
 import io.micrometer.common.lang.NonNullApi;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -31,6 +32,7 @@ import java.util.Objects;
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @NonNullApi
 public class SpringContextUtil implements ApplicationContextAware, DisposableBean {
@@ -88,7 +90,10 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	}
 
 	public static void publishEvent(ApplicationEvent event) {
-		applicationContext.publishEvent(event);
+		if (applicationContext != null) {
+			log.info("发布Spring事件");
+			applicationContext.publishEvent(event);
+		}
 	}
 
 }
