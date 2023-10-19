@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.command.task.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,8 @@ import org.laokou.flowable.gatewayimpl.database.TaskMapper;
 import org.laokou.flowable.gatewayimpl.database.dataobject.TaskDO;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.flowable.common.Constant.FLOWABLE;
+
 /**
  * @author laokou
  */
@@ -38,6 +41,7 @@ public class TaskListQryExe {
 
 	private final TaskMapper taskMapper;
 
+	@DS(FLOWABLE)
 	public Result<Datas<TaskCO>> execute(TaskListQry qry) {
 		String key = qry.getKey();
 		String name = qry.getName();

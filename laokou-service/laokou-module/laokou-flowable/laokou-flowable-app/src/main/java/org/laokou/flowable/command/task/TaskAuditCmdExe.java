@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.command.task;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
+import static org.laokou.flowable.common.Constant.FLOWABLE;
+
 /**
  * @author laokou
  */
@@ -46,6 +49,7 @@ public class TaskAuditCmdExe {
 
 	private final TaskMapper taskMapper;
 
+	@DS(FLOWABLE)
 	public Result<AuditCO> execute(TaskAuditCmd cmd) {
 		log.info("审批流程分布式事务 XID:{}", RootContext.getXID());
 		String taskId = cmd.getTaskId();

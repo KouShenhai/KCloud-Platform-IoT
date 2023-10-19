@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.command.task;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.dto.Result;
@@ -24,6 +25,8 @@ import org.laokou.flowable.dto.task.TaskAssigneeGetQry;
 import org.laokou.flowable.dto.task.clientobject.AssigneeCO;
 import org.laokou.flowable.gatewayimpl.database.TaskMapper;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.flowable.common.Constant.FLOWABLE;
 
 /**
  * @author laokou
@@ -35,6 +38,7 @@ public class TaskAssigneeGetQryExe {
 
 	private final TaskMapper taskMapper;
 
+	@DS(FLOWABLE)
 	public Result<AssigneeCO> execute(TaskAssigneeGetQry qry) {
 		return Result.of(new AssigneeCO(taskMapper.getAssigneeByInstanceId(qry.getInstanceId())));
 	}

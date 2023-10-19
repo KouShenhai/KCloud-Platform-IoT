@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.command.task;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,8 @@ import org.laokou.flowable.dto.task.TaskResolveCmd;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.laokou.flowable.common.Constant.FLOWABLE;
+
 /**
  * @author laokou
  */
@@ -39,6 +42,7 @@ public class TaskResolveCmdExe {
 
 	private final TaskService taskService;
 
+	@DS(FLOWABLE)
 	public Result<Boolean> execute(TaskResolveCmd cmd) {
 		log.info("处理流程分布式事务 XID:{}", RootContext.getXID());
 		String taskId = cmd.getTaskId();

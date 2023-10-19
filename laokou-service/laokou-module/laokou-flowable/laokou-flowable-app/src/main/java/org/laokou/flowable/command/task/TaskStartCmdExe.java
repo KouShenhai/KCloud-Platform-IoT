@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.command.task;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,8 @@ import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.laokou.flowable.common.Constant.FLOWABLE;
+
 /**
  * @author laokou
  */
@@ -43,6 +46,7 @@ public class TaskStartCmdExe {
 
 	private final RepositoryService repositoryService;
 
+	@DS(FLOWABLE)
 	public Result<StartCO> execute(TaskStartCmd cmd) {
 		log.info("开始流程分布式事务 XID:{}", RootContext.getXID());
 		String definitionKey = cmd.getDefinitionKey();

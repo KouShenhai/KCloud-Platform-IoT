@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.command.definition.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.ProcessDefinition;
@@ -31,6 +32,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.laokou.flowable.common.Constant.FLOWABLE;
+
 /**
  * @author laokou
  */
@@ -40,6 +43,7 @@ public class DefinitionListQryExe {
 
 	private final RepositoryService repositoryService;
 
+	@DS(FLOWABLE)
 	public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) {
 		String name = qry.getName();
 		ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery()

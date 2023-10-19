@@ -16,6 +16,7 @@
  */
 package org.laokou.common.security.config;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
+import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.common.security.exception.ErrorCode.FORCE_KILL;
 
 /**
@@ -59,6 +61,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 	private final Cache<String, Object> caffeineCache;
 
 	@Override
+	@DS(MASTER)
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
 		Object obj = redisUtil.get(userKillKey);

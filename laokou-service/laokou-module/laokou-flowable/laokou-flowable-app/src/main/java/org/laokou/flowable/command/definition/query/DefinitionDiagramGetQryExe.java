@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.command.definition.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.utils.Base64;
@@ -35,6 +36,7 @@ import java.io.InputStream;
 import java.util.Collections;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.flowable.common.Constant.FLOWABLE;
 
 /**
  * @author laokou
@@ -46,6 +48,7 @@ public class DefinitionDiagramGetQryExe {
 
 	private final RepositoryService repositoryService;
 
+	@DS(FLOWABLE)
 	public Result<String> execute(DefinitionDiagramGetQry qry) {
 		String definitionId = qry.getDefinitionId();
 		// 获取图片流

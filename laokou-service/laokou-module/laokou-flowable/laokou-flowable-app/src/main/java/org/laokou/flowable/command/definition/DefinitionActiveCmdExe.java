@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.command.definition;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.ProcessDefinition;
@@ -25,6 +26,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.dto.definition.DefinitionActivateCmd;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import static org.laokou.flowable.common.Constant.FLOWABLE;
 
 /**
  * @author laokou
@@ -35,6 +38,7 @@ public class DefinitionActiveCmdExe {
 
 	private final RepositoryService repositoryService;
 
+	@DS(FLOWABLE)
 	public Result<Boolean> execute(DefinitionActivateCmd cmd) {
 		String definitionId = cmd.getDefinitionId();
 		ProcessDefinition definition = repositoryService.createProcessDefinitionQuery()

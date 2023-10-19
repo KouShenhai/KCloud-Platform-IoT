@@ -19,7 +19,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
     <a target="_blank" href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/static/v1?label=Spring Boot&message=3.1.4&color=green" alt="SpringBoot"></a>
     <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2022.0.4&color=green"></a>
     <a target="_blank" href="https://github.com/alibaba/spring-cloud-alibaba"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud Alibaba&message=2022.0.0.0&color=orange"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.1.2&color=blue"></a>
+    <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.1.3&color=blue"></a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/JDK-17.0.4.1-blue.svg"/></a>
     <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流"></a>
 </p>
@@ -69,7 +69,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Spring Cloud                | 2022.0.4     |
 | Spring Cloud Alibaba        | 2022.0.0.0   |
 | Spring Boot Admin           | 3.1.7        |
-| Spring Authorization Server | 1.1.2        |
+| Spring Authorization Server | 1.1.3        |
 | Mybatis Plus                | 3.5.3.2      |
 | Nacos                       | 2.2.4-OEM    |
 | Seata                       | 1.7.1        |
@@ -94,7 +94,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 - 服务熔断&降级&限流：Sentinel
 - 分库分表&读写分离：Mybatis Plus & ShardingSphere
 - 分布式事务：Seata & RocketMQ
-- 消息队列：RocketMQ & Kafka
+- 消息队列：RocketMQ & Kafka & MQTT
 - 服务监控：Spring Boot Admin & Prometheus
 - 链路跟踪：SkyWalking
 - 任务调度：XXL Job
