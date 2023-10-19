@@ -35,7 +35,6 @@ import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Method;
@@ -59,13 +58,11 @@ public class OperateLogAspect {
 
 	private static final String[] REMOVE_PARAMS = { "username", "password", "mobile", "mail" };
 
-	private static final ThreadLocal<StopWatch> TASK_TIME_LOCAL = new NamedThreadLocal<>("耗时");
+	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new NamedThreadLocal<>("耗时");
 
 	@Before(value = "@annotation(org.laokou.admin.domain.annotation.OperateLog)")
 	public void doBefore() {
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		TASK_TIME_LOCAL.set(stopWatch);
+		TASK_TIME_LOCAL.set(IdGenerator.SystemClock.now());
 	}
 
 	/**
@@ -143,9 +140,7 @@ public class OperateLogAspect {
 					event.setRequestParams(str);
 				}
 			}
-			StopWatch stopWatch = TASK_TIME_LOCAL.get();
-			stopWatch.stop();
-			event.setTakeTime(stopWatch.getTotalTimeMillis());
+			event.setTakeTime(IdGenerator.SystemClock.now() - TASK_TIME_LOCAL.get());
 			return event;
 		}
 		catch (Exception ex) {
