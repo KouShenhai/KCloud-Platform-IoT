@@ -10,4 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-common-mqtt</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-mqtt</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

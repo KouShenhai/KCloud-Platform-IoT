@@ -112,11 +112,18 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!--mapstruct版本-->
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <!--mqtt版本-->
+        <mqtt.version>6.1.4</mqtt.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.integration</groupId>
+                <artifactId>spring-integration-mqtt</artifactId>
+                <version>${mqtt.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-mqtt</artifactId>
