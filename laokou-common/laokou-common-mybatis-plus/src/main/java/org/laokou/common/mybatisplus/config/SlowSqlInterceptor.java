@@ -29,6 +29,7 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.mybatisplus.utils.SqlUtil;
 
 import java.sql.Connection;
@@ -50,10 +51,10 @@ public class SlowSqlInterceptor extends MybatisPlusInterceptor {
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
-		long start = System.currentTimeMillis();
+		long start = IdGenerator.SystemClock.now();
 		Object obj = super.intercept(invocation);
 		try {
-			long timeout = (System.currentTimeMillis() - start);
+			long timeout = (IdGenerator.SystemClock.now() - start);
 			if (timeout > MAX_TIME) {
 				String sql = SqlUtil.formatSql(((StatementHandler) invocation.getTarget()).getBoundSql().getSql());
 			}
