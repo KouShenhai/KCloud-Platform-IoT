@@ -54,6 +54,8 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!--lombok版本-->
         <lombok.version>1.18.30</lombok.version>
+        <!--mqtt版本-->
+        <mqtt.version>6.1.4</mqtt.version>
         <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
         <docker.registry.name>koushenhai</docker.registry.name>
         <docker.version>1.2.2</docker.version>
@@ -66,6 +68,14 @@
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!-- 定义 mqtt 版本 -->
+            <dependency>
+                <groupId>org.springframework.integration</groupId>
+                <artifactId>spring-integration-mqtt</artifactId>
+                <version>${mqtt.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <!-- 定义 mapstruct 版本 -->
             <dependency>
                 <groupId>org.mapstruct</groupId>

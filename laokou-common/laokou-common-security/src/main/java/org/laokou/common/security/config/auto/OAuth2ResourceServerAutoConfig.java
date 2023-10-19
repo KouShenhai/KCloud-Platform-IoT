@@ -43,7 +43,7 @@ import java.util.Set;
 import static org.laokou.common.i18n.common.Constant.TRUE;
 
 /**
- * 关闭oauth2,请在yml配置spring.oauth2.resource-server.enabled=false
+ * 关闭OAuth2,请在yml配置spring.oauth2.resource-server.enabled=false
  * 关闭security，请排除SecurityAutoConfiguration、ManagementWebSecurityAutoConfiguration
  *
  * @author laokou

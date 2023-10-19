@@ -17,6 +17,7 @@
 
 package org.laokou.flowable.command.definition;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.flowable.bpmn.converter.BpmnXMLConverter;
@@ -30,6 +31,8 @@ import org.laokou.flowable.dto.definition.DefinitionInsertCmd;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.laokou.flowable.common.Constant.FLOWABLE;
+
 /**
  * @author laokou
  */
@@ -42,6 +45,7 @@ public class DefinitionInsertCmdExe {
 	private final RepositoryService repositoryService;
 
 	@SneakyThrows
+	@DS(FLOWABLE)
 	public Result<Boolean> execute(DefinitionInsertCmd cmd) {
 		BpmnXMLConverter converter = new BpmnXMLConverter();
 		InputStreamSource inputStreamSource = new InputStreamSource(cmd.getFile().getInputStream());

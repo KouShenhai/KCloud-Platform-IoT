@@ -47,3 +47,6 @@ spring:
           - data-id: application-common-seata.yaml
             group: ${NACOS-GROUP}
             refresh: true
+          - data-id: application-common-redis.yaml
+            group: ${NACOS-GROUP}
+            refresh: true

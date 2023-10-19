@@ -17,12 +17,15 @@
 
 package org.laokou.flowable.command.definition;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.flowable.engine.RepositoryService;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.dto.definition.DefinitionDeleteCmd;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import static org.laokou.flowable.common.Constant.FLOWABLE;
 
 /**
  * @author laokou
@@ -33,6 +36,7 @@ public class DefinitionDeleteCmdExe {
 
 	private final RepositoryService repositoryService;
 
+	@DS(FLOWABLE)
 	@Transactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(DefinitionDeleteCmd cmd) {
 		// true允许级联删除 不设置会导致数据库关联异常
