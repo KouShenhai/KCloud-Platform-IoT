@@ -5,16 +5,9 @@
     <parent>
         <artifactId>laokou-common</artifactId>
         <groupId>org.laokou</groupId>
-        <version>3.1.4</version>
+        <version>${laokou.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>laokou-common-mqtt</artifactId>
-
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
 </project>
