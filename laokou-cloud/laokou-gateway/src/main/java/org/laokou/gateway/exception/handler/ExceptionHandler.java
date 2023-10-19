@@ -54,6 +54,10 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 				log.error("无法找到请求的资源");
 				return ResponseUtil.response(exchange, Result.fail(NOT_FOUND));
 			}
+			if (statusCode == BAD_REQUEST) {
+				log.error("错误请求");
+				return ResponseUtil.response(exchange, Result.fail(BAD_REQUEST));
+			}
 			else {
 				log.error("服务器内部错误，无法完成请求");
 				return ResponseUtil.response(exchange, Result.fail(INTERNAL_SERVER_ERROR));

@@ -51,17 +51,10 @@ public class SensitiveUtil {
 	}
 
 	public static String format(Type type, String str) {
-		switch (type) {
-			case MAIL -> {
-				return formatMail(str);
-			}
-			case MOBILE -> {
-				return formatMobile(str);
-			}
-			default -> {
-				return "";
-			}
-		}
+		return switch (type) {
+			case MAIL -> formatMail(str);
+			case MOBILE -> formatMobile(str);
+		};
 	}
 
 	private static String formatMail(String mail) {
