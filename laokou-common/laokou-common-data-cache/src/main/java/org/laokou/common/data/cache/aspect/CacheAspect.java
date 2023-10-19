@@ -59,23 +59,18 @@ public class CacheAspect {
 		String name = dataCache.name();
 		Object[] args = point.getArgs();
 		key = RedisKeyUtil.getDataCacheKey(name, SpringExpressionUtil.parse(key, parameterNames, args, Long.class));
-		switch (type) {
-			case GET -> {
-				return get(key, point, expire);
-			}
+		return switch (type) {
+			case GET -> get(key, point, expire);
 			case PUT -> put(key, point, expire);
-			case DEL -> del(key);
-			default -> {
-				return point.proceed();
-			}
-		}
-		return point.proceed();
+			case DEL -> del(key, point);
+		};
 	}
 
-	private void put(String key, ProceedingJoinPoint point, long expire) throws Throwable {
+	private Object put(String key, ProceedingJoinPoint point, long expire) throws Throwable {
 		Object value = point.proceed();
 		redisUtil.set(key, value, expire);
 		caffeineCache.put(key, value);
+		return value;
 	}
 
 	private Object get(String key, ProceedingJoinPoint point, long expire) throws Throwable {
@@ -88,9 +83,10 @@ public class CacheAspect {
 		return value;
 	}
 
-	private void del(String key) {
+	private Object del(String key, ProceedingJoinPoint point) throws Throwable {
 		redisUtil.delete(key);
 		caffeineCache.invalidate(key);
+		return point.proceed();
 	}
 
 }

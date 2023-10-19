@@ -62,6 +62,7 @@
         <module>laokou-common-monitor</module>
         <module>laokou-common-sensitive</module>
         <module>laokou-common-dubbo</module>
+        <module>laokou-common-mqtt</module>
     </modules>
 
 </project>

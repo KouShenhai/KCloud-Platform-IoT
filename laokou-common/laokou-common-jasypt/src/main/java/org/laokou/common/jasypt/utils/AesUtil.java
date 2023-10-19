@@ -76,12 +76,10 @@ public class AesUtil {
 				}
 				String data = o.toString();
 				Aes aes = field.getAnnotation(Aes.class);
-				switch (aes.type()) {
-					case DECRYPT -> data = decrypt(data);
-					case ENCRYPT -> data = encrypt(data);
-					default -> {
-					}
-				}
+				data = switch (aes.type()) {
+					case DECRYPT -> decrypt(data);
+					case ENCRYPT -> encrypt(data);
+				};
 				// 属性赋值
 				field.set(obj, data);
 			}

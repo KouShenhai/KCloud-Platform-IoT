@@ -111,7 +111,7 @@ public class IpUtil {
 					long max = 4294967295L;
 					l = Long.parseLong(elements[0]);
 					if ((l < 0L) || (l > max)) {
-						return null;
+						return new byte[0];
 					}
 					bytes[0] = (byte) (int) (l >> 24 & 0xFF);
 					bytes[1] = (byte) (int) ((l & 0xFFFFFF) >> 16 & 0xFF);
@@ -122,13 +122,13 @@ public class IpUtil {
 					long len3 = 255L;
 					l = Integer.parseInt(elements[0]);
 					if ((l < 0L) || (l > len3)) {
-						return null;
+						return new byte[0];
 					}
 					bytes[0] = (byte) (int) (l & 0xFF);
 					l = Integer.parseInt(elements[1]);
 					long max2 = 16777215L;
 					if ((l < 0L) || (l > max2)) {
-						return null;
+						return new byte[0];
 					}
 					bytes[1] = (byte) (int) (l >> 16 & 0xFF);
 					bytes[2] = (byte) (int) ((l & 0xFFFF) >> 8 & 0xFF);
@@ -139,14 +139,14 @@ public class IpUtil {
 					for (i = 0; i < len1; ++i) {
 						l = Integer.parseInt(elements[i]);
 						if ((l < 0L) || (l > 255L)) {
-							return null;
+							return new byte[0];
 						}
 						bytes[i] = (byte) (int) (l & 0xFF);
 					}
 					l = Integer.parseInt(elements[2]);
 					long max3 = 65535L;
 					if ((l < 0L) || (l > max3)) {
-						return null;
+						return new byte[0];
 					}
 					bytes[2] = (byte) (int) (l >> 8 & 0xFF);
 					bytes[3] = (byte) (int) (l & 0xFF);
@@ -156,13 +156,13 @@ public class IpUtil {
 					for (i = 0; i < len2; ++i) {
 						l = Integer.parseInt(elements[i]);
 						if ((l < 0L) || (l > 255L)) {
-							return null;
+							return new byte[0];
 						}
 						bytes[i] = (byte) (int) (l & 0xFF);
 					}
 				}
 				default -> {
-					return null;
+					return new byte[0];
 				}
 			}
 		}
