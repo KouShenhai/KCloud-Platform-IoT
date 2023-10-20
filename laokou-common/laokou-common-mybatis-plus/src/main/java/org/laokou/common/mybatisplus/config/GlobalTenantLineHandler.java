@@ -17,34 +17,19 @@
 
 package org.laokou.common.mybatisplus.config;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-
-import java.time.Duration;
-
-import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
+import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.LongValue;
+import org.laokou.common.core.context.UserContextHolder;
 
 /**
  * @author laokou
  */
-@Data
-@Component
-@ConfigurationProperties(prefix = MYBATIS_PLUS)
-public class MybatisPlusExtensionProperties {
+public class GlobalTenantLineHandler implements TenantLineHandler {
 
-	public static final String SLOW_SQL = "slow-sql";
-
-	private boolean tenantEnabled = false;
-	private SlowSql slowSql;
-
-	@Data
-	public static class SlowSql {
-
-		private boolean enabled;
-
-		private Duration millis = Duration.ofMillis(500);
-
-	}
+    @Override
+    public Expression getTenantId() {
+        return new LongValue(UserContextHolder.get().getTenantId());
+    }
 
 }

@@ -21,10 +21,7 @@ import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.*;
 import lombok.SneakyThrows;
 import org.laokou.common.mybatisplus.config.*;
 import org.mybatis.spring.annotation.MapperScan;
@@ -71,15 +68,17 @@ public class MybatisPlusAutoConfig {
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
 	public MybatisPlusInterceptor mybatisPlusInterceptor() {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-		// 数据权限
+		// 数据权限插件
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
+		// 多租户插件
+		interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new GlobalTenantLineHandler()));
 		// 分页插件
 		interceptor.addInnerInterceptor(paginationInnerInterceptor());
-		// 乐观锁
+		// 乐观锁插件
 		interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
-		// 防止全表更新与删除
+		// 防止全表更新与删除插件
 		interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
-		// 动态表名
+		// 动态表名插件
 		DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
 		dynamicTableNameInnerInterceptor.setTableNameHandler(new DynamicTableNameHandler());
 		interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
