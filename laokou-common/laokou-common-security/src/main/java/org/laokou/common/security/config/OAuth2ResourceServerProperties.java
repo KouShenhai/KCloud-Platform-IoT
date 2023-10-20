@@ -23,18 +23,18 @@ import org.springframework.security.oauth2.server.authorization.settings.Configu
 import org.springframework.stereotype.Component;
 import java.util.Set;
 
+import static org.laokou.common.security.config.OAuth2ResourceServerProperties.PREFIX;
+
 /**
  * {@link ConfigurationSettingNames}
  * @author laokou
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = OAuth2ResourceServerProperties.PREFIX)
+@ConfigurationProperties(prefix = PREFIX)
 public class OAuth2ResourceServerProperties {
 
 	public static final String PREFIX = "spring.security.oauth2.resource-server";
-
-	public static final String ENABLED = "enabled";
 
 	private boolean enabled = true;
 

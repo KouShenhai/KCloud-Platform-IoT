@@ -83,10 +83,7 @@ public class OperateLogAspect {
 		// 获取注解
 		MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 		Method method = methodSignature.getMethod();
-		OperateLog operateLog = method.getAnnotation(OperateLog.class);
-		if (operateLog == null) {
-			operateLog = AnnotationUtils.findAnnotation(method, OperateLog.class);
-		}
+		OperateLog operateLog = AnnotationUtils.findAnnotation(method, OperateLog.class);
 		// 构建事件对象
 		assert operateLog != null;
 		OperateLogEvent event = buildEvent(operateLog, request, joinPoint, e);

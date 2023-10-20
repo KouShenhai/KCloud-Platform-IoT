@@ -15,16 +15,26 @@
  *
  */
 
-package org.laokou.flowable.common;
+package org.laokou.common.mybatisplus.database.dataobject;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_SQL_LOG;
 
 /**
  * @author laokou
  */
-public interface Constant {
+@Data
+@TableName(BOOT_SYS_SQL_LOG)
+@Schema(name = "SqlLogDO", description = "SQL日志")
+public final class SqlLogDO extends BaseDO {
 
-	/**
-	 * 流程
-	 */
-	String FLOWABLE = "flowable";
+	private String appName;
+
+	private String dsl;
+
+	private Long costTime;
 
 }

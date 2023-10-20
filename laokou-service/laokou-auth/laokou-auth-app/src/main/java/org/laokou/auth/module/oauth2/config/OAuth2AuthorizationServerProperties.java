@@ -29,6 +29,8 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.util.Set;
 
+import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties.PREFIX;
+
 /**
  * {@link org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerProperties}
  * {@link ConfigurationSettingNames}
@@ -36,7 +38,7 @@ import java.util.Set;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = OAuth2AuthorizationServerProperties.PREFIX)
+@ConfigurationProperties(prefix = PREFIX)
 public class OAuth2AuthorizationServerProperties implements InitializingBean {
 
 	public static final String PREFIX = "spring.security.oauth2.authorization-server";

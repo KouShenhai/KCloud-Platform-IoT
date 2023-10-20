@@ -90,7 +90,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 - API网关：Spring Cloud Gateway
 - 认证授权：Spring Security OAuth2 Authorization Server
 - 远程调用：Dubbo & Spring Cloud OpenFeign & OkHttp & HttpClient & WebClient
-- 负载均衡：Spring Cloud Loadbalancer
+- 负载均衡：Spring Cloud Loadbalancer & OpenResty
 - 服务熔断&降级&限流：Sentinel
 - 分库分表&读写分离：Mybatis Plus & ShardingSphere
 - 分布式事务：Seata & RocketMQ
@@ -99,7 +99,6 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 - 链路跟踪：SkyWalking
 - 任务调度：XXL Job
 - 日志分析：EFK
-- 负载均衡：OpenResty
 - 多级缓存：Caffeine & Redis
 - 统计报表：MongoDB
 - 对象存储：Amazon S3

@@ -16,6 +16,7 @@
  */
 package org.laokou.common.mybatisplus.config.auto;
 
+import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
@@ -25,21 +26,27 @@ import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import lombok.SneakyThrows;
-import org.laokou.common.mybatisplus.config.DataFilterInterceptor;
-import org.laokou.common.mybatisplus.config.DynamicTableNameHandler;
-import org.laokou.common.mybatisplus.config.MybatisPlusSqlInjector;
-import org.laokou.common.mybatisplus.config.SlowSqlInterceptor;
+import org.laokou.common.mybatisplus.config.*;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.net.InetAddress;
+import java.util.Properties;
+
+import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
+import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.mybatisplus.config.MybatisPlusExtensionProperties.SLOW_SQL;
 
 /**
  * mybatis-plus配置
@@ -48,12 +55,22 @@ import java.net.InetAddress;
  */
 @AutoConfiguration
 @ConditionalOnClass({ DataSource.class })
+@MapperScan("org.laokou.common.mybatisplus.database")
 public class MybatisPlusAutoConfig {
+
+	@Bean
+	@ConditionalOnProperty(havingValue = TRUE, prefix = MYBATIS_PLUS + DOT + SLOW_SQL, name = ENABLED)
+	public ConfigurationCustomizer slowSqlConfigurationCustomizer(ConfigurableEnvironment environment,
+			MybatisPlusExtensionProperties mybatisPlusExtensionProperties) {
+		SlowSqlInterceptor slowSqlInterceptor = new SlowSqlInterceptor();
+		slowSqlInterceptor.setProperties(properties(environment, mybatisPlusExtensionProperties));
+		return configuration -> configuration.addInterceptor(slowSqlInterceptor);
+	}
 
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
 	public MybatisPlusInterceptor mybatisPlusInterceptor() {
-		SlowSqlInterceptor interceptor = new SlowSqlInterceptor();
+		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 数据权限
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
 		// 分页插件
@@ -116,6 +133,21 @@ public class MybatisPlusAutoConfig {
 		// 溢出总页数后是进行处理，查看源码就知道是干啥的
 		paginationInnerInterceptor.setOverflow(true);
 		return paginationInnerInterceptor;
+	}
+
+	private Properties properties(ConfigurableEnvironment environment,
+			MybatisPlusExtensionProperties mybatisPlusExtensionProperties) {
+		String appName = getApplicationId(environment);
+		long millis = mybatisPlusExtensionProperties.getSlowSql().getMillis().toMillis();
+		Properties properties = new Properties();
+		properties.setProperty("appName", appName);
+		properties.setProperty("millis", String.valueOf(millis));
+		return properties;
+	}
+
+	private String getApplicationId(ConfigurableEnvironment environment) {
+		String name = environment.getProperty("spring.application.name");
+		return StringUtils.hasText(name) ? name : "application";
 	}
 
 }
