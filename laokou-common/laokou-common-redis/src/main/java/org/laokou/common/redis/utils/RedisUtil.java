@@ -125,7 +125,7 @@ public class RedisUtil {
 		}
 	}
 
-	public void lSet(String key,Object obj,long expire) {
+	public void lSet(String key, Object obj, long expire) {
 		RList<Object> rList = redissonClient.getList(key);
 		rList.add(obj);
 		rList.expireIfNotSet(Duration.ofSeconds(expire));
@@ -136,7 +136,7 @@ public class RedisUtil {
 	}
 
 	public void lTrim(String key, int start, int end) {
-		redissonClient.getList(key).trim(start,end);
+		redissonClient.getList(key).trim(start, end);
 	}
 
 	public List<Object> lGetAll(String key) {

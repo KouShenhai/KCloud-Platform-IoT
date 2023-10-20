@@ -53,8 +53,7 @@ public class GlobalJsonJacksonCodec extends BaseCodec {
 
 	@Override
 	public Decoder<Object> getValueDecoder() {
-		return (buf, state) -> mapObjectMapper
-				.readValue((InputStream) new ByteBufInputStream(buf), Object.class);
+		return (buf, state) -> mapObjectMapper.readValue((InputStream) new ByteBufInputStream(buf), Object.class);
 	}
 
 	@Override
