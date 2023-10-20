@@ -49,10 +49,7 @@ public class DataFilterAspect {
 
 	@Before("@annotation(org.laokou.admin.domain.annotation.DataFilter)")
 	public void doBefore(JoinPoint point) {
-		Object param = Arrays.stream(point.getArgs())
-			.filter(arg -> arg instanceof PageQuery)
-			.findFirst()
-			.orElse(new PageQuery());
+		Object param = Arrays.stream(point.getArgs()).filter(arg -> arg instanceof PageQuery).findFirst().orElse(null);
 		if (param instanceof PageQuery pageQuery) {
 			User user = UserUtil.user();
 			// 超级管理员不过滤数据
@@ -75,10 +72,7 @@ public class DataFilterAspect {
 	private String getSqlFilter(User user, JoinPoint point) {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
-		DataFilter dataFilter = method.getAnnotation(DataFilter.class);
-		if (dataFilter == null) {
-			dataFilter = AnnotationUtils.findAnnotation(method, DataFilter.class);
-		}
+		DataFilter dataFilter = AnnotationUtils.findAnnotation(method, DataFilter.class);
 		assert dataFilter != null;
 		String alias = dataFilter.alias();
 		String deptPathColumn = dataFilter.deptPath();

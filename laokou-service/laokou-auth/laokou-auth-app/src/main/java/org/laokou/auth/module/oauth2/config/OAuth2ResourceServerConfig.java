@@ -33,14 +33,16 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties.PREFIX;
+import static org.laokou.common.i18n.common.Constant.ENABLED;
+
 /**
  * @author laokou
  */
 @Data
 @Configuration
 @RefreshScope
-@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = OAuth2AuthorizationServerProperties.PREFIX,
-		name = "enabled")
+@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = PREFIX, name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2ResourceServerConfig {
 

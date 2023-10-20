@@ -46,4 +46,6 @@ public interface DsConstant {
 
 	String BOOT_SYS_RESOURCE = "boot_sys_resource";
 
+	String BOOT_SYS_SQL_LOG = "boot_sys_sql_log";
+
 }

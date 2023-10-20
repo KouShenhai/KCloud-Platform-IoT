@@ -17,51 +17,66 @@
 
 package org.laokou.common.mybatisplus.config;
 
-import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.cache.CacheKey;
-import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.statement.StatementHandler;
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
-import org.apache.ibatis.session.ResultHandler;
-import org.apache.ibatis.session.RowBounds;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.mybatisplus.event.SqlLogEvent;
 import org.laokou.common.mybatisplus.utils.SqlUtil;
 
 import java.sql.Connection;
+import java.util.Properties;
 
 /**
  * @author laokou
  */
 @Slf4j
-@Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }),
-		@Signature(type = StatementHandler.class, method = "getBoundSql", args = {}),
-		@Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }),
-		@Signature(type = Executor.class, method = "query",
-				args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }),
-		@Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
-				RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class }), })
-public class SlowSqlInterceptor extends MybatisPlusInterceptor {
+@Intercepts({
+		@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
+public class SlowSqlInterceptor implements Interceptor {
 
-	private static final long MAX_TIME = 500;
+	private Properties properties;
+
+	@Override
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
 		long start = IdGenerator.SystemClock.now();
-		Object obj = super.intercept(invocation);
-		try {
-			long timeout = (IdGenerator.SystemClock.now() - start);
-			if (timeout > MAX_TIME) {
-				String sql = SqlUtil.formatSql(((StatementHandler) invocation.getTarget()).getBoundSql().getSql());
+		Object obj = invocation.proceed();
+		long time = (IdGenerator.SystemClock.now() - start);
+		if (time > getMillis()) {
+			Object target = invocation.getTarget();
+			if (target instanceof StatementHandler statementHandler) {
+				String sql = SqlUtil.formatSql(statementHandler.getBoundSql().getSql());
+				SpringContextUtil.publishEvent(toSqlEvent(sql, time));
 			}
 		}
-		catch (Exception ignored) {
-		}
 		return obj;
+	}
+
+	private String getAppName() {
+		return properties.getProperty("appName");
+	}
+
+	private long getMillis() {
+		return Long.parseLong(properties.getProperty("millis"));
+	}
+
+	private SqlLogEvent toSqlEvent(String sql, long time) {
+		SqlLogEvent event = new SqlLogEvent(time);
+		event.setDsl(sql);
+		event.setCostTime(time);
+		event.setCreateDate(DateUtil.now());
+		event.setAppName(getAppName());
+		return event;
 	}
 
 }

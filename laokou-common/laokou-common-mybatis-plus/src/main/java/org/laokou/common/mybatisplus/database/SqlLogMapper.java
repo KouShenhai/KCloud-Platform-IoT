@@ -15,16 +15,17 @@
  *
  */
 
-package org.laokou.flowable.common;
+package org.laokou.common.mybatisplus.database;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.database.dataobject.SqlLogDO;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-public interface Constant {
-
-	/**
-	 * 流程
-	 */
-	String FLOWABLE = "flowable";
+@Repository
+@Mapper
+public interface SqlLogMapper extends BatchMapper<SqlLogDO> {
 
 }

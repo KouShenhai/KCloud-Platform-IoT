@@ -20,6 +20,7 @@ package org.laokou.common.mybatisplus.utils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
+import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
 import org.laokou.common.i18n.common.GlobalException;
@@ -31,9 +32,9 @@ import org.laokou.common.i18n.common.GlobalException;
 public class SqlUtil {
 
 	@SneakyThrows
-	public static Select parseSql(String sql) {
+	public static Statement parseSql(String sql) {
 		try {
-			return (Select) CCJSqlParserUtil.parse(sql);
+			return CCJSqlParserUtil.parse(sql);
 		}
 		catch (Exception e) {
 			log.error("SQL解析失败");
@@ -42,11 +43,11 @@ public class SqlUtil {
 	}
 
 	public static String formatSql(String sql) {
-		return plainSelect(sql).toString();
+		return parseSql(sql).toString();
 	}
 
 	public static PlainSelect plainSelect(String sql) {
-		return (PlainSelect) parseSql(sql).getSelectBody();
+		return (PlainSelect) ((Select) parseSql(sql)).getSelectBody();
 	}
 
 }

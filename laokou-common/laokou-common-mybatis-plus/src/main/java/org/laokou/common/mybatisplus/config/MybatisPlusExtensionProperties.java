@@ -15,16 +15,35 @@
  *
  */
 
-package org.laokou.flowable.common;
+package org.laokou.common.mybatisplus.config;
+
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+import java.time.Duration;
+
+import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
 
 /**
  * @author laokou
  */
-public interface Constant {
+@Data
+@Component
+@ConfigurationProperties(prefix = MYBATIS_PLUS)
+public class MybatisPlusExtensionProperties {
 
-	/**
-	 * 流程
-	 */
-	String FLOWABLE = "flowable";
+	public static final String SLOW_SQL = "slow-sql";
+
+	private SlowSql slowSql;
+
+	@Data
+	public static class SlowSql {
+
+		private boolean enabled;
+
+		private Duration millis = Duration.ofMillis(500);
+
+	}
 
 }

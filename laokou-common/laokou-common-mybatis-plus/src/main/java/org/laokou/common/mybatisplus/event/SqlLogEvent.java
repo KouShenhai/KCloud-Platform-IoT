@@ -17,6 +17,8 @@
 
 package org.laokou.common.mybatisplus.event;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.time.Clock;
@@ -25,60 +27,24 @@ import java.time.LocalDateTime;
 /**
  * @author laokou
  */
-public class SqlEvent extends DomainEvent {
+@Getter
+@Setter
+public class SqlLogEvent extends DomainEvent {
 
-	private String url;
-
-	private String sql;
+	private String dsl;
 
 	private long costTime;
 
-	private LocalDateTime nowDate;
+	private LocalDateTime createDate;
 
-	public SqlEvent(Object source) {
+	private String appName;
+
+	public SqlLogEvent(Object source) {
 		super(source);
 	}
 
-	public SqlEvent(Object source, Clock clock) {
+	public SqlLogEvent(Object source, Clock clock) {
 		super(source, clock);
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getSql() {
-		return sql;
-	}
-
-	public void setSql(String sql) {
-		this.sql = sql;
-	}
-
-	public long getCostTime() {
-		return costTime;
-	}
-
-	public void setCostTime(long costTime) {
-		this.costTime = costTime;
-	}
-
-	public LocalDateTime getNowDate() {
-		return nowDate;
-	}
-
-	public void setNowDate(LocalDateTime nowDate) {
-		this.nowDate = nowDate;
-	}
-
-	@Override
-	public String toString() {
-		return "SqlEvent{" + "url='" + url + '\'' + ", sql='" + sql + '\'' + ", costTime=" + costTime + ", nowDate="
-				+ nowDate + '}';
 	}
 
 }

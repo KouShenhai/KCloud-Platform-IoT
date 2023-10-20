@@ -191,4 +191,9 @@ public interface Constant {
 	 */
 	String SPRING = "spring";
 
+	/**
+	 * 开启
+	 */
+	String ENABLED = "enabled";
+
 }

@@ -40,7 +40,9 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.laokou.common.i18n.common.Constant.ENABLED;
 import static org.laokou.common.i18n.common.Constant.TRUE;
+import static org.laokou.common.security.config.OAuth2ResourceServerProperties.PREFIX;
 
 /**
  * 关闭OAuth2,请在yml配置spring.oauth2.resource-server.enabled=false
@@ -53,8 +55,7 @@ import static org.laokou.common.i18n.common.Constant.TRUE;
 @EnableMethodSecurity
 @AutoConfigureAfter({ OAuth2AuthorizationAutoConfig.class })
 @Data
-@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = OAuth2ResourceServerProperties.PREFIX,
-		name = OAuth2ResourceServerProperties.ENABLED)
+@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = PREFIX, name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2ResourceServerAutoConfig {
 

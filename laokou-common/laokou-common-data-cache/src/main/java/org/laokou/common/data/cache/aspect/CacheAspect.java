@@ -48,10 +48,7 @@ public class CacheAspect {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
 		String[] parameterNames = signature.getParameterNames();
-		DataCache dataCache = method.getAnnotation(DataCache.class);
-		if (dataCache == null) {
-			dataCache = AnnotationUtils.findAnnotation(method, DataCache.class);
-		}
+		DataCache dataCache = AnnotationUtils.findAnnotation(method, DataCache.class);
 		assert dataCache != null;
 		long expire = dataCache.expire();
 		Type type = dataCache.type();

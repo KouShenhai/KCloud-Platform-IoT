@@ -20,6 +20,7 @@ package org.laokou.common.mybatisplus.database;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -38,8 +39,6 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 /**
  * @author laokou
  */
-@Repository
-@Mapper
 public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 
 	/**
@@ -89,6 +88,7 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 			return this.insert(t) > 0;
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			this.execute(sql);
 			return this.insert(t) > 0;
 		}
@@ -133,6 +133,7 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 			return this.insert(t) > 0;
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
