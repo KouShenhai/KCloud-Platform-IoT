@@ -27,6 +27,7 @@ import org.springframework.data.redis.core.script.RedisScript;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * Redis工具类
@@ -195,6 +196,10 @@ public class RedisUtil {
 
 	public Set<String> keys(String pattern) {
 		return redisTemplate.keys(pattern);
+	}
+
+	public Set<String> keys() {
+		return redissonClient.getKeys().getKeysStream().collect(Collectors.toSet());
 	}
 
 	public long getAtomicValue(String key) {
