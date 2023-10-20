@@ -29,7 +29,15 @@ public class GlobalTenantLineHandler implements TenantLineHandler {
 
     @Override
     public Expression getTenantId() {
-        return new LongValue(UserContextHolder.get().getTenantId());
+        return new LongValue(tenantId());
+    }
+
+    private Long tenantId() {
+        Long tenantId = UserContextHolder.get().getTenantId();
+        if (tenantId == null) {
+            return 0L;
+        }
+        return tenantId;
     }
 
 }

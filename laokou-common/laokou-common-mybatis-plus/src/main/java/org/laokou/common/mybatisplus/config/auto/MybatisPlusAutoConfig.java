@@ -66,12 +66,14 @@ public class MybatisPlusAutoConfig {
 
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-	public MybatisPlusInterceptor mybatisPlusInterceptor() {
+	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtensionProperties mybatisPlusExtensionProperties) {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 数据权限插件
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
 		// 多租户插件
-		interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new GlobalTenantLineHandler()));
+		if (mybatisPlusExtensionProperties.getTenant().isEnabled()) {
+			interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new GlobalTenantLineHandler()));
+		}
 		// 分页插件
 		interceptor.addInnerInterceptor(paginationInnerInterceptor());
 		// 乐观锁插件

@@ -35,8 +35,13 @@ public class MybatisPlusExtensionProperties {
 
 	public static final String SLOW_SQL = "slow-sql";
 
-	private boolean tenantEnabled = false;
 	private SlowSql slowSql;
+	private Tenant tenant;
+
+	@Data
+	public static class Tenant {
+		private boolean enabled = false;
+	}
 
 	@Data
 	public static class SlowSql {
