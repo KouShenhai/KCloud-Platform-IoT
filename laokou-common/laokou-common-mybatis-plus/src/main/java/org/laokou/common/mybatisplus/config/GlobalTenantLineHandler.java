@@ -29,28 +29,28 @@ import java.util.Set;
  */
 public class GlobalTenantLineHandler implements TenantLineHandler {
 
-    private Set<String> ignoreTables;
+	private Set<String> ignoreTables;
 
-    public GlobalTenantLineHandler(Set<String> ignoreTables) {
-        this.ignoreTables = ignoreTables;
-    }
+	public GlobalTenantLineHandler(Set<String> ignoreTables) {
+		this.ignoreTables = ignoreTables;
+	}
 
-    @Override
-    public boolean ignoreTable(String tableName) {
-        return ignoreTables.contains(tableName);
-    }
+	@Override
+	public boolean ignoreTable(String tableName) {
+		return ignoreTables.contains(tableName);
+	}
 
-    @Override
-    public Expression getTenantId() {
-        return new LongValue(tenantId());
-    }
+	@Override
+	public Expression getTenantId() {
+		return new LongValue(tenantId());
+	}
 
-    private Long tenantId() {
-        Long tenantId = UserContextHolder.get().getTenantId();
-        if (tenantId == null) {
-            return 0L;
-        }
-        return tenantId;
-    }
+	private Long tenantId() {
+		Long tenantId = UserContextHolder.get().getTenantId();
+		if (tenantId == null) {
+			return 0L;
+		}
+		return tenantId;
+	}
 
 }

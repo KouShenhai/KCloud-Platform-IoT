@@ -70,20 +70,20 @@ public class UserProfileUpdateCmdExe {
 			throw new GlobalException(ID_NOT_NULL);
 		}
 		if (StringUtil.isNotEmpty(co.getMobile())) {
-//			Long count = userMapper.selectCount(Wrappers.query(UserDO.class)
-//				.eq("mobile", co.getMobile())
-//				.ne("id", co.getId()));
-//			if (count > 0) {
-//				throw new GlobalException("手机号已被注册，请重新填写");
-//			}
+			// Long count = userMapper.selectCount(Wrappers.query(UserDO.class)
+			// .eq("mobile", co.getMobile())
+			// .ne("id", co.getId()));
+			// if (count > 0) {
+			// throw new GlobalException("手机号已被注册，请重新填写");
+			// }
 		}
 		if (StringUtil.isNotEmpty(co.getMail())) {
-//			Long count = userMapper.selectCount(Wrappers.query(UserDO.class)
-//				.eq("mail", co.getMail())
-//				.ne("id", co.getId()));
-//			if (count > 0) {
-//				throw new GlobalException("邮箱地址已被注册，请重新填写");
-//			}
+			// Long count = userMapper.selectCount(Wrappers.query(UserDO.class)
+			// .eq("mail", co.getMail())
+			// .ne("id", co.getId()));
+			// if (count > 0) {
+			// throw new GlobalException("邮箱地址已被注册，请重新填写");
+			// }
 		}
 	}
 
