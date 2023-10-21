@@ -38,18 +38,22 @@ public class MybatisPlusExtensionProperties {
 	public static final String SLOW_SQL = "slow-sql";
 
 	private SlowSql slowSql = new SlowSql();
+
 	private Tenant tenant = new Tenant();
 
 	@Data
 	public static class Tenant {
+
 		private boolean enabled = false;
+
 		private Set<String> ignoreTables = Collections.emptySet();
+
 	}
 
 	@Data
 	public static class SlowSql {
 
-		private boolean enabled;
+		private boolean enabled = false;
 
 		private Duration millis = Duration.ofMillis(500);
 

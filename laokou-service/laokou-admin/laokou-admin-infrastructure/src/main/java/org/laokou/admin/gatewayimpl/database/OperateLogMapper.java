@@ -34,7 +34,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 @Mapper
 public interface OperateLogMapper extends BatchMapper<OperateLogDO> {
 
-	IPage<OperateLogDO> getOperateListFilter(IPage<OperateLogDO> page, @Param("moduleName") String moduleName, @Param("status") Integer status,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	IPage<OperateLogDO> getOperateListFilter(IPage<OperateLogDO> page, @Param("moduleName") String moduleName,
+			@Param("status") Integer status, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 }
