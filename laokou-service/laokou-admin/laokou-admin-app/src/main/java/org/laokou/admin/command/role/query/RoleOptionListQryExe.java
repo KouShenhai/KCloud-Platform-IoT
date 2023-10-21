@@ -25,7 +25,6 @@ import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -42,7 +41,6 @@ public class RoleOptionListQryExe {
 
 	public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
 		List<RoleDO> list = roleMapper.selectList(Wrappers.query(RoleDO.class)
-			.eq("tenant_id", UserUtil.getTenantId())
 			.select("id", "name")
 			.orderByDesc("sort"));
 		if (CollectionUtil.isEmpty(list)) {

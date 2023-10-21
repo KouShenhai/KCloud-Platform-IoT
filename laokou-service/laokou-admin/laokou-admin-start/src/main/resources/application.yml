@@ -90,7 +90,3 @@ spring:
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
-
-mybatis-plus:
-  tenant:
-    enabled: true

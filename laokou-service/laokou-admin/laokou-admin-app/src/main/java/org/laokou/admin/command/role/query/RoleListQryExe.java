@@ -40,7 +40,7 @@ public class RoleListQryExe {
 
 	public Result<Datas<RoleCO>> execute(RoleListQry qry) {
 		Role role = ConvertUtil.sourceToTarget(qry, Role.class);
-		Datas<Role> datas = roleGateway.list(new User(UserUtil.getTenantId()), role, qry);
+		Datas<Role> datas = roleGateway.list(role, qry);
 		Datas<RoleCO> newDatas = new Datas<>();
 		newDatas.setTotal(datas.getTotal());
 		newDatas.setRecords(ConvertUtil.sourceToTarget(datas.getRecords(), RoleCO.class));

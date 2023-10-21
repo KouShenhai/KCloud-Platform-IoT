@@ -72,7 +72,7 @@ public class MybatisPlusAutoConfig {
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
 		// 多租户插件
 		if (mybatisPlusExtensionProperties.getTenant().isEnabled()) {
-			interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new GlobalTenantLineHandler()));
+			interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new GlobalTenantLineHandler(mybatisPlusExtensionProperties.getTenant().getIgnoreTables())));
 		}
 		// 分页插件
 		interceptor.addInnerInterceptor(paginationInnerInterceptor());

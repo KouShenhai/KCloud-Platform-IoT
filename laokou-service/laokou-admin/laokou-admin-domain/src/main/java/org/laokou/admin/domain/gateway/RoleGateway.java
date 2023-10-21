@@ -33,6 +33,6 @@ public interface RoleGateway {
 
 	Boolean deleteById(Long id);
 
-	Datas<Role> list(User user, Role role, PageQuery pageQuery);
+	Datas<Role> list(Role role, PageQuery pageQuery);
 
 }

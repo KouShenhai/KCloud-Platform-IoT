@@ -94,10 +94,9 @@ public class LogGatewayImpl implements LogGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_OPERATE_LOG)
-	public Datas<OperateLog> operateList(OperateLog operateLog, User user, PageQuery pageQuery) {
+	public Datas<OperateLog> operateList(OperateLog operateLog, PageQuery pageQuery) {
 		IPage<OperateLogDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<OperateLogDO> newPage = operateLogMapper.getOperateListFilter(page, user.getTenantId(),
-				operateLog.getModuleName(), operateLog.getStatus(), pageQuery);
+		IPage<OperateLogDO> newPage = operateLogMapper.getOperateListFilter(page, operateLog.getModuleName(), operateLog.getStatus(), pageQuery);
 		Datas<OperateLog> datas = new Datas<>();
 		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), OperateLog.class));
 		datas.setTotal(newPage.getTotal());

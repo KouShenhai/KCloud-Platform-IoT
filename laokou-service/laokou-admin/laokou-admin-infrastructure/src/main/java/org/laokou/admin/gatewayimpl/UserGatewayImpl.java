@@ -126,7 +126,7 @@ public class UserGatewayImpl implements UserGateway {
 		try {
 			DynamicDataSourceContextHolder.push(MASTER);
 			if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
-				user.setRoleIds(roleMapper.getRoleIdsByTenantId(tenantId));
+				user.setRoleIds(roleMapper.getRoleIds());
 			}
 			else {
 				user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));

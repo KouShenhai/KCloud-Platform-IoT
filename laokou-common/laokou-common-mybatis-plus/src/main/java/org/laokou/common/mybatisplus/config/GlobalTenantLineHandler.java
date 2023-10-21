@@ -22,10 +22,23 @@ import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 import org.laokou.common.core.context.UserContextHolder;
 
+import java.util.Set;
+
 /**
  * @author laokou
  */
 public class GlobalTenantLineHandler implements TenantLineHandler {
+
+    private Set<String> ignoreTables;
+
+    public GlobalTenantLineHandler(Set<String> ignoreTables) {
+        this.ignoreTables = ignoreTables;
+    }
+
+    @Override
+    public boolean ignoreTable(String tableName) {
+        return ignoreTables.contains(tableName);
+    }
 
     @Override
     public Expression getTenantId() {
