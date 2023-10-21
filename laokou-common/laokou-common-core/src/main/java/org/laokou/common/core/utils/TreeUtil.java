@@ -103,7 +103,7 @@ public class TreeUtil {
 		@Schema(name = "pid", description = "父ID")
 		private Long pid;
 
-		@Schema(name = "path", description = "节点")
+		@Schema(name = "path", description = "节点PATH")
 		private String path;
 
 		@Schema(name = "children", description = "子节点")
