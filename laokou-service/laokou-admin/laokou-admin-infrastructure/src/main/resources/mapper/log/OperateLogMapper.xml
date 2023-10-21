@@ -38,7 +38,6 @@
              , create_date
         from boot_sys_operate_log
         where del_flag = 0
-            and tenant_id = #{tenantId}
         <if test="moduleName != null and moduleName != ''">
             and `module_name` like #{moduleName}
         </if>
@@ -66,12 +65,11 @@
         , create_date
         from boot_sys_operate_log
         where del_flag = 0
-        and tenant_id = #{param.tenantId}
         <if test="param.moduleName != null and param.moduleName != ''">
             and `module_name` like #{param.moduleName}
         </if>
         <if test="param.status != null">
-            and status = #{param.status}
+            and `status` = #{param.status}
         </if>
         order by id desc
     </select>

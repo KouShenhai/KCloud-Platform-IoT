@@ -73,9 +73,9 @@ public class MessageGatewayImpl implements MessageGateway {
 	@Override
 	@DataFilter(alias = BOOT_SYS_MESSAGE)
 	@DS(TENANT)
-	public Datas<Message> list(Message message, User user, PageQuery pageQuery) {
+	public Datas<Message> list(Message message, PageQuery pageQuery) {
 		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<MessageDO> newPage = messageMapper.getMessageListFilter(page, user.getTenantId(), message.getTitle(),
+		IPage<MessageDO> newPage = messageMapper.getMessageListFilter(page, message.getTitle(),
 				pageQuery);
 		Datas<Message> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());

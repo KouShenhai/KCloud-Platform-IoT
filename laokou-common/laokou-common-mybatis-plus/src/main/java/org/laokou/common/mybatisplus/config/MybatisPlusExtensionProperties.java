@@ -22,6 +22,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.Collections;
+import java.util.Set;
 
 import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
 
@@ -35,7 +37,14 @@ public class MybatisPlusExtensionProperties {
 
 	public static final String SLOW_SQL = "slow-sql";
 
-	private SlowSql slowSql;
+	private SlowSql slowSql = new SlowSql();
+	private Tenant tenant = new Tenant();
+
+	@Data
+	public static class Tenant {
+		private boolean enabled = false;
+		private Set<String> ignoreTables = Collections.emptySet();
+	}
 
 	@Data
 	public static class SlowSql {

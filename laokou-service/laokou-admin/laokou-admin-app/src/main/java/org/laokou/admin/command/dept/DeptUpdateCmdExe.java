@@ -19,15 +19,14 @@ package org.laokou.admin.command.dept;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.dept.DeptUpdateCmd;
 import org.laokou.admin.convertor.DeptConvertor;
 import org.laokou.admin.domain.gateway.DeptGateway;
+import org.laokou.admin.dto.dept.DeptUpdateCmd;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.admin.common.BizCode.ID_NOT_NULL;
@@ -50,7 +49,6 @@ public class DeptUpdateCmdExe {
 			throw new GlobalException(ID_NOT_NULL);
 		}
 		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class)
-			.eq(DeptDO::getTenantId, UserUtil.getTenantId())
 			.eq(DeptDO::getName, deptCO.getName())
 			.ne(DeptDO::getId, id));
 		if (count > 0) {

@@ -33,15 +33,14 @@
             , `status`
             , `type`
             , message
-            from ${table} boot_sys_login_log
-            where del_flag = 0
-            and tenant_id = #{log.tenantId}
-            and create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
+            from ${table} as boot_sys_login_log
+            where boot_sys_login_log.del_flag = 0
+            and boot_sys_login_log.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
             <if test="log.username != null and log.username != ''">
-                and `username` like #{log.username}
+                and boot_sys_login_log.`username` like #{log.username}
             </if>
             <if test="log.status != null">
-                and `status` = #{log.status}
+                and boot_sys_login_log.`status` = #{log.status}
             </if>
             <if test="pageQuery.sqlFilter != null and pageQuery.sqlFilter != ''">
                 and ${pageQuery.sqlFilter}
@@ -66,14 +65,13 @@
                 , `type`
                 , message
                 from ${table} as boot_sys_login_log
-                where del_flag = 0
-                and tenant_id = #{param.tenantId}
-                and create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
+                where boot_sys_login_log.del_flag = 0
+                and boot_sys_login_log.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
                 <if test="param.username != null and param.username != ''">
-                    and `username` like #{param.username}
+                    and boot_sys_login_log.`username` like #{param.username}
                 </if>
                 <if test="param.status != null">
-                    and `status` = #{param.status}
+                    and boot_sys_login_log.`status` = #{param.status}
                 </if>
                 <if test="pageQuery.sqlFilter != null and pageQuery.sqlFilter != ''">
                     and ${pageQuery.sqlFilter}
@@ -87,14 +85,13 @@
         select sum(a.n) from(<foreach collection="tables" item="table" separator=" union all ">
             select count(1) as n
             from ${table} as boot_sys_login_log
-            where del_flag = 0
-            and tenant_id = #{log.tenantId}
-            and create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
+            where boot_sys_login_log.del_flag = 0
+            and boot_sys_login_log.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
             <if test="log.username != null and log.username != ''">
-                and `username` like #{log.username}
+                and boot_sys_login_log.`username` like #{log.username}
             </if>
             <if test="log.status != null">
-                and `status` = #{log.status}
+                and boot_sys_login_log.`status` = #{log.status}
             </if>
             <if test="pageQuery.sqlFilter != null and pageQuery.sqlFilter != ''">
                 and ${pageQuery.sqlFilter}

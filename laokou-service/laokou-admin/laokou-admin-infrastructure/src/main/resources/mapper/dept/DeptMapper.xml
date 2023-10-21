@@ -21,7 +21,7 @@
 <mapper namespace="org.laokou.admin.gatewayimpl.database.DeptMapper">
     <select id="getDeptList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.DeptDO">
         select id,pid,`name`,sort from boot_sys_dept
-        where del_flag = 0 and tenant_id = #{deptDO.tenantId}
+        where del_flag = 0
         <if test="deptDO.name != null and deptDOname != ''">
             and `name` like concat('%',#{deptDO.name},'%')
         </if>

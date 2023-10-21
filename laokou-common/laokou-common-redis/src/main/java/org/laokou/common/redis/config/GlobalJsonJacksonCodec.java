@@ -45,40 +45,35 @@ public class GlobalJsonJacksonCodec extends BaseCodec {
 
 	public static final GlobalJsonJacksonCodec INSTANCE = new GlobalJsonJacksonCodec();
 
-	private volatile ObjectMapper mapObjectMapper;
+	private final ObjectMapper mapObjectMapper;
 
 	public GlobalJsonJacksonCodec() {
 		this.mapObjectMapper = GlobalJsonJacksonCodec.getObjectMapper();
 	}
 
-	private final Encoder encoder = in -> {
-		ByteBuf out = ByteBufAllocator.DEFAULT.buffer();
-		try {
-			ByteBufOutputStream os = new ByteBufOutputStream(out);
-			mapObjectMapper.writeValue((OutputStream) os, in);
-			return os.buffer();
-		}
-		catch (IOException e) {
-			out.release();
-			throw e;
-		}
-		catch (Exception e) {
-			out.release();
-			throw new IOException(e);
-		}
-	};
-
-	private final Decoder<Object> DECODER = (buf, state) -> mapObjectMapper
-		.readValue((InputStream) new ByteBufInputStream(buf), Object.class);
-
 	@Override
 	public Decoder<Object> getValueDecoder() {
-		return DECODER;
+		return (buf, state) -> mapObjectMapper.readValue((InputStream) new ByteBufInputStream(buf), Object.class);
 	}
 
 	@Override
 	public Encoder getValueEncoder() {
-		return encoder;
+		return in -> {
+			ByteBuf out = ByteBufAllocator.DEFAULT.buffer();
+			try {
+				ByteBufOutputStream os = new ByteBufOutputStream(out);
+				mapObjectMapper.writeValue((OutputStream) os, in);
+				return os.buffer();
+			}
+			catch (IOException e) {
+				out.release();
+				throw e;
+			}
+			catch (Exception e) {
+				out.release();
+				throw new IOException(e);
+			}
+		};
 	}
 
 	public static ObjectMapper getObjectMapper() {

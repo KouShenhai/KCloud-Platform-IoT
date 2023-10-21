@@ -26,17 +26,15 @@
              ,sort
         from boot_sys_role
         where del_flag = 0
-            and tenant_id = #{tenantId}
         <if test="name != '' and name != null">
             and `name` like #{name}
         </if>
         order by sort desc
     </select>
-    <select id="getRoleIdsByTenantId" resultType="java.lang.Long">
+    <select id="getRoleIds" resultType="java.lang.Long">
         select id
         from boot_sys_role
         where del_flag = 0
-            and tenant_id = #{tenantId}
     </select>
 
 </mapper>

@@ -26,7 +26,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
-import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
 
 /**
  * @author laokou
@@ -35,9 +34,9 @@ import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID
 @Mapper
 public interface RoleMapper extends BatchMapper<RoleDO> {
 
-	IPage<RoleDO> getRoleListFilter(IPage<RoleDO> page, @Param(TENANT_ID) Long tenantId, @Param("name") String name,
+	IPage<RoleDO> getRoleListFilter(IPage<RoleDO> page, @Param("name") String name,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
-	List<Long> getRoleIdsByTenantId(@Param(TENANT_ID) Long tenantId);
+	List<Long> getRoleIds();
 
 }
