@@ -20,12 +20,14 @@ package org.laokou.common.idempotent.aspect;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.idempotent.utils.IdempotentUtils;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.core.io.Resource;
@@ -49,7 +51,7 @@ public class IdempotentAspect {
 
 	private static final DefaultRedisScript<Boolean> REDIS_SCRIPT;
 
-	private static final String REQUEST_ID = "request-id";
+	public static final String REQUEST_ID = "request-id";
 
 	static {
 		try {
@@ -73,6 +75,12 @@ public class IdempotentAspect {
 		if (!result) {
 			throw new GlobalException("不可重复提交请求");
 		}
+		IdempotentUtils.setIdempotent();
+	}
+
+	@After("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
+	public void doAfter() {
+		IdempotentUtils.cleanIdempotent();
 	}
 
 	private String getRequestId() {
