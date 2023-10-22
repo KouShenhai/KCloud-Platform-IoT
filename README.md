@@ -265,7 +265,7 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
     <tr>
         <td>学生</td>
         <td>￥ 199</td>
-        <td>项目演示 + 视频教程（筹划中） + 解决问题（优先） + 一对一售后群 + 个性功能增强（需提供学生证）</td>
+        <td>项目演示 + 视频教程（筹划中） + 解决问题（优先） + 一对一售后群 + 个性功能增强</td>
     </tr>
     <tr>
         <td>个人</td>
