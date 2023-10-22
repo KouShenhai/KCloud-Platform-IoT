@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.token.TokenGetQry;
 import org.laokou.admin.dto.token.clientobject.TokenCO;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.idempotent.utils.IdempotentUtils;
+import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,10 +31,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TokenGetQryExe {
 
-	private final IdempotentUtils idempotentUtils;
+	private final IdempotentUtil idempotentUtil;
 
 	public Result<TokenCO> execute(TokenGetQry qry) {
-		return Result.of(new TokenCO(idempotentUtils.getIdempotentKey()));
+		return Result.of(new TokenCO(idempotentUtil.getIdempotentKey()));
 	}
 
 }
