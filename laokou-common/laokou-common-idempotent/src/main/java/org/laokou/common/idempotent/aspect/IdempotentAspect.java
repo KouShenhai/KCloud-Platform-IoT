@@ -27,7 +27,7 @@ import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.idempotent.utils.IdempotentUtils;
+import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.core.io.Resource;
@@ -75,12 +75,12 @@ public class IdempotentAspect {
 		if (!result) {
 			throw new GlobalException("不可重复提交请求");
 		}
-		IdempotentUtils.setIdempotent();
+		IdempotentUtil.setIdempotent();
 	}
 
 	@After("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
 	public void doAfter() {
-		IdempotentUtils.cleanIdempotent();
+		IdempotentUtil.cleanIdempotent();
 	}
 
 	private String getRequestId() {

@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.idempotent.aspect.IdempotentAspect;
-import org.laokou.common.idempotent.utils.IdempotentUtils;
+import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +46,7 @@ import static org.laokou.common.core.constant.BizConstant.TRACE_ID;
 @RequiredArgsConstructor
 public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
 
-	private final IdempotentUtils idempotentUtils;
+	private final IdempotentUtil idempotentUtil;
 
 	@Bean
 	public feign.Logger.Level loggerLevel() {
@@ -59,7 +59,7 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 		template.header(TRACE_ID, request.getHeader(TRACE_ID));
 		template.header(AUTHORIZATION, request.getHeader(AUTHORIZATION));
 
-		final boolean idempotent = IdempotentUtils.isIdempotent();
+		final boolean idempotent = IdempotentUtil.isIdempotent();
 		if (idempotent) {
 			// 获取当前Feign客户端的接口名称
 			String clientName = template.feignTarget().type().getName();
@@ -68,13 +68,12 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 			String method = template.method();
 			// 将接口名称+URL+请求方式组合成一个key
 			String uniqueKey = clientName + "_" + url + "_" + method;
-			Map<String, String> idMap = IdempotentUtils.getRequestId();
-
+			Map<String, String> idMap = IdempotentUtil.getRequestId();
 			// 检查是否已经为这个键生成了ID
 			String idempotentKey = idMap.get(uniqueKey);
 			if (idempotentKey == null) {
 				// 如果没有，生成一个新的幂等性ID
-				idempotentKey = idempotentUtils.getIdempotentKey();
+				idempotentKey = idempotentUtil.getIdempotentKey();
 				idMap.put(uniqueKey, idempotentKey);
 			}
 			template.header(IdempotentAspect.REQUEST_ID, idempotentKey);
