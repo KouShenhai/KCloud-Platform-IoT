@@ -22,15 +22,11 @@ import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
-import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @author laokou
@@ -45,12 +41,7 @@ public class UserListQryExe {
 		User user = new User(qry.getUsername(), UserUtil.getTenantId());
 		Datas<User> newPage = userGateway.list(user, qry);
 		Datas<UserCO> datas = new Datas<>();
-		List<User> records = newPage.getRecords();
-		if (CollectionUtil.isNotEmpty(records)) {
-			List<UserCO> coList = ConvertUtil.sourceToTarget(records, UserCO.class);
-			coList.forEach(item -> item.setUsername(AesUtil.decrypt(item.getUsername())));
-			datas.setRecords(coList);
-		}
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), UserCO.class));
 		datas.setTotal(newPage.getTotal());
 		return Result.of(datas);
 	}

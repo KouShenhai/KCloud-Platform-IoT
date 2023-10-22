@@ -22,6 +22,8 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+
 /**
  * @author laokou
  */
@@ -31,7 +33,7 @@ public class UserListQry extends PageQuery {
 	private String username;
 
 	public void setUsername(String username) {
-		String encryptName = "";
+		String encryptName = EMPTY;
 		if (StringUtil.isNotEmpty(username)) {
 			encryptName = AesUtil.encrypt(username);
 		}

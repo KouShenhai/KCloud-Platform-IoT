@@ -28,7 +28,6 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.springframework.stereotype.Component;
 
@@ -61,8 +60,8 @@ public class UserOptionListQryExe {
 		List<OptionCO> options = new ArrayList<>(list.size());
 		for (UserDO userDO : list) {
 			OptionCO oc = new OptionCO();
-			oc.setLabel(AesUtil.decrypt(userDO.getUsername()));
-			oc.setValue(String.valueOf(userDO.getId()));
+			oc.setLabel(userDO.getUsername());
+			oc.setValue(userDO.getId().toString());
 			options.add(oc);
 		}
 		return Result.of(options);
