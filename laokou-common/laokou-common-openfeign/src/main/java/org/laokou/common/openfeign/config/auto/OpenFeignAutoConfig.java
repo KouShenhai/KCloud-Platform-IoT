@@ -35,6 +35,7 @@ import java.util.Map;
 
 import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
 import static org.laokou.common.core.constant.BizConstant.TRACE_ID;
+import static org.laokou.common.i18n.common.Constant.UNDER;
 
 /**
  * openfeign关闭ssl {@link FeignAutoConfiguration}
@@ -58,7 +59,6 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		template.header(TRACE_ID, request.getHeader(TRACE_ID));
 		template.header(AUTHORIZATION, request.getHeader(AUTHORIZATION));
-
 		final boolean idempotent = IdempotentUtil.isIdempotent();
 		if (idempotent) {
 			// 获取当前Feign客户端的接口名称
@@ -67,11 +67,11 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 			String url = template.url();
 			String method = template.method();
 			// 将接口名称+URL+请求方式组合成一个key
-			String uniqueKey = clientName + "_" + url + "_" + method;
+			String uniqueKey = clientName + UNDER + url + UNDER + method;
 			Map<String, String> idMap = IdempotentUtil.getRequestId();
 			// 检查是否已经为这个键生成了ID
 			String idempotentKey = idMap.get(uniqueKey);
-			if (idempotentKey == null) {
+			if (!idMap.containsKey(uniqueKey)) {
 				// 如果没有，生成一个新的幂等性ID
 				idempotentKey = idempotentUtil.getIdempotentKey();
 				idMap.put(uniqueKey, idempotentKey);

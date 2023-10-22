@@ -75,7 +75,7 @@ public class IdempotentAspect {
 		if (!result) {
 			throw new GlobalException("不可重复提交请求");
 		}
-		IdempotentUtil.setIdempotent();
+		IdempotentUtil.openIdempotent();
 	}
 
 	@After("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")

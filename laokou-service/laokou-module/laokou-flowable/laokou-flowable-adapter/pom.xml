@@ -17,6 +17,20 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-idempotent</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.laokou</groupId>
+                    <artifactId>laokou-common-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.laokou</groupId>
+                    <artifactId>laokou-common-redis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-flowable-app</artifactId>
         </dependency>
         <dependency>

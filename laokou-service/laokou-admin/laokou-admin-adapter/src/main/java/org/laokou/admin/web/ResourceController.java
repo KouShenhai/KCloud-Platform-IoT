@@ -29,6 +29,7 @@ import org.laokou.admin.dto.resource.clientobject.TaskCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
@@ -143,6 +144,7 @@ public class ResourceController {
 		return resourceServiceI.taskList(qry);
 	}
 
+	@Idempotent
 	@TraceLog
 	@PostMapping(value = "audit-task")
 	@Operation(summary = "资源管理", description = "审批任务")
