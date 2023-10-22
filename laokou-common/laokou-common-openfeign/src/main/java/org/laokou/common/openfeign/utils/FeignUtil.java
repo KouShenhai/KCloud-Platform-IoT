@@ -15,25 +15,31 @@
  *
  */
 
-package org.laokou.admin.command.definition;
+package org.laokou.common.openfeign.utils;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.definition.DefinitionInsertCmd;
-import org.laokou.admin.gatewayimpl.feign.DefinitionsFeignClient;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class DefinitionInsertCmdExe {
+@Slf4j
+public class FeignUtil {
 
-	private final DefinitionsFeignClient definitionsFeignClient;
+    public static <T> void resultVoid(Result<T> result) {
+        resultThrow(result);
+    }
 
-	public Result<Boolean> execute(DefinitionInsertCmd cmd) {
-		return definitionsFeignClient.insert(cmd.getFile());
-	}
+    public static <T> T result(Result<T> result) {
+        resultThrow(result);
+        return result.getData();
+    }
+
+    private static <T> void resultThrow(Result<T> result) {
+        if (result.fail()) {
+            throw new GlobalException(result.getMsg());
+        }
+    }
 
 }

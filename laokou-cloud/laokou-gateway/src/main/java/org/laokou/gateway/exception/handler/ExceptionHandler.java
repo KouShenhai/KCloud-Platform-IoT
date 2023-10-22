@@ -47,8 +47,8 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 			log.error("服务正在维护，请联系管理员");
 			return ResponseUtil.response(exchange, Result.fail(SERVICE_UNAVAILABLE));
 		}
-		if (e instanceof ResponseStatusException) {
-			int statusCode = ((ResponseStatusException) e).getStatusCode().value();
+		if (e instanceof ResponseStatusException responseStatusException) {
+			int statusCode = responseStatusException.getStatusCode().value();
 			log.info("状态码：{}", statusCode);
 			if (statusCode == NOT_FOUND) {
 				log.error("无法找到请求的资源");
