@@ -20,13 +20,9 @@ package org.laokou.admin.command.token.qry;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.token.TokenGetQry;
 import org.laokou.admin.dto.token.clientobject.TokenCO;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.redis.utils.RedisKeyUtil;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.idempotent.utils.IdempotentUtils;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.Constant.DEFAULT;
 
 /**
  * @author laokou
@@ -35,13 +31,10 @@ import static org.laokou.common.i18n.common.Constant.DEFAULT;
 @RequiredArgsConstructor
 public class TokenGetQryExe {
 
-	private final RedisUtil redisUtil;
+	private final IdempotentUtils idempotentUtils;
 
 	public Result<TokenCO> execute(TokenGetQry qry) {
-		String token = String.valueOf(IdGenerator.defaultSnowflakeId());
-		String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(token);
-		redisUtil.set(apiIdempotentKey, DEFAULT, RedisUtil.HOUR_ONE_EXPIRE);
-		return Result.of(new TokenCO(token));
+		return Result.of(new TokenCO(idempotentUtils.getIdempotentKey()));
 	}
 
 }
