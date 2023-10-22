@@ -162,6 +162,11 @@ public interface Constant {
 	int FAIL_STATUS = 1;
 
 	/**
+	 * 默认
+	 */
+	Long DEFAULT_TENANT = 0L;
+
+	/**
 	 * RSA
 	 */
 	String ALGORITHM_RSA = "RSA";
