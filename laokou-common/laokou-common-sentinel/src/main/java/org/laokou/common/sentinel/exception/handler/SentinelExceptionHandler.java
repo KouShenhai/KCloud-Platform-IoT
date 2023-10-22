@@ -43,7 +43,7 @@ import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
  */
 @AutoConfiguration
 @Slf4j
-public class GlobalBlockExceptionHandler implements BlockExceptionHandler {
+public class SentinelExceptionHandler implements BlockExceptionHandler {
 
 	@Override
 	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, BlockException e) {
