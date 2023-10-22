@@ -20,6 +20,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.UserMapper">
 
+    <resultMap id="user" type="org.laokou.admin.gatewayimpl.database.dataobject.UserDO" >
+        <id column="id" property="id" />
+        <result column="username" property="username" typeHandler="org.laokou.common.mybatisplus.handler.JasyptTypeHandler" />
+        <result column="avatar" property="avatar" />
+        <result column="superAdmin" property="superAdmin" />
+        <result column="status" property="status" />
+        <result column="create_date" property="createDate" />
+    </resultMap>
+
     <update id="updateUser">
         update ${tableName}
         <set>
@@ -59,7 +68,7 @@
             </if>
         </where>
     </update>
-    <select id="getOptionListByTenantId" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
+    <select id="getOptionListByTenantId" resultMap="user">
         <if test="tables != null and tables.size() > 0">
         select * from (<foreach collection="tables" item="table" separator=" union all ">
             select id
@@ -74,7 +83,7 @@
         order by id desc
         </if>
     </select>
-    <select id="getUserListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.UserDO">
+    <select id="getUserListFilter" resultMap="user">
         <if test="tables != null and tables.size() > 0">
         select * from (<foreach collection="tables" item="table" separator=" union all ">
                 select id
