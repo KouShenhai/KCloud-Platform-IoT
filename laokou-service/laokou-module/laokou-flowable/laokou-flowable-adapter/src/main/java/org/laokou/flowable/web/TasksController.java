@@ -22,6 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.flowable.api.TasksServiceI;
 import org.laokou.flowable.dto.task.*;
 import org.laokou.flowable.dto.task.clientobject.AssigneeCO;
@@ -47,6 +48,7 @@ public class TasksController {
 		return tasksServiceI.list(qry);
 	}
 
+	@Idempotent
 	@PostMapping(value = "audit")
 	@Operation(summary = "流程任务", description = "审批任务")
 	public Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd) {

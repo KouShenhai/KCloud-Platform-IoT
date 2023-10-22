@@ -20,6 +20,7 @@ package org.laokou.admin.command.definition;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.definition.DefinitionInsertCmd;
 import org.laokou.admin.gatewayimpl.feign.DefinitionsFeignClient;
+import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +34,11 @@ public class DefinitionInsertCmdExe {
 	private final DefinitionsFeignClient definitionsFeignClient;
 
 	public Result<Boolean> execute(DefinitionInsertCmd cmd) {
-		return definitionsFeignClient.insert(cmd.getFile());
+		Result<Boolean> result = definitionsFeignClient.insert(cmd.getFile());
+		if (result.fail()) {
+			throw new GlobalException(result.getMsg());
+		}
+		return result;
 	}
 
 }

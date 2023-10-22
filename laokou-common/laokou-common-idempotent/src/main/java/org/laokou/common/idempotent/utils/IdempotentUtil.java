@@ -48,14 +48,14 @@ public class IdempotentUtil {
 	 */
 	public static boolean isIdempotent() {
 		Boolean status = IS_IDEMPOTENT.get();
-		return (status != null && status.equals(Boolean.TRUE));
+		return status != null && status;
 	}
 
 	/**
 	 * 设置接口幂等 扩展方法: 用于开启子线程后设置子线程的幂等性状态, 以及定时任务等
 	 */
-	public static void setIdempotent() {
-		IS_IDEMPOTENT.set(Boolean.TRUE);
+	public static void openIdempotent() {
+		IS_IDEMPOTENT.set(true);
 	}
 
 	/**

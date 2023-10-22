@@ -22,6 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.flowable.api.DefinitionsServiceI;
 import org.laokou.flowable.dto.definition.*;
 import org.laokou.flowable.dto.definition.clientobject.DefinitionCO;
@@ -40,6 +41,7 @@ public class DefinitionsController {
 
 	private final DefinitionsServiceI definitionsServiceI;
 
+	@Idempotent
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Operation(summary = "流程定义", description = "新增流程")
 	public Result<Boolean> insert(@RequestPart("file") MultipartFile file) {
