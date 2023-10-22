@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  * <p>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
