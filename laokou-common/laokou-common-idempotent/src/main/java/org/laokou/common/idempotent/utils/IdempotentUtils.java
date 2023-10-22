@@ -6,6 +6,9 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
 
 /**
@@ -20,6 +23,7 @@ import static org.laokou.common.i18n.common.Constant.DEFAULT;
 public class IdempotentUtils {
     private final RedisUtil redisUtil;
     private static final ThreadLocal<Boolean> IS_IDEMPOTENT = new ThreadLocal<>();
+    private static final ThreadLocal<Map<String, String>> REQUEST_ID = ThreadLocal.withInitial(HashMap::new);
 
     /**
      * 得到幂等键
@@ -31,6 +35,10 @@ public class IdempotentUtils {
         String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(idempotentKey);
         redisUtil.set(apiIdempotentKey, DEFAULT, RedisUtil.HOUR_ONE_EXPIRE);
         return idempotentKey;
+    }
+
+    public static Map<String, String> getRequestId() {
+        return REQUEST_ID.get();
     }
 
     /**
@@ -55,5 +63,6 @@ public class IdempotentUtils {
      */
     public static void cleanIdempotent() {
         IS_IDEMPOTENT.remove();
+        REQUEST_ID.remove();
     }
 }

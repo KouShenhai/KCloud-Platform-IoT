@@ -31,7 +31,6 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
@@ -48,7 +47,6 @@ import static org.laokou.common.core.constant.BizConstant.TRACE_ID;
 public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
 
 	private final IdempotentUtils idempotentUtils;
-	private static final ThreadLocal<Map<String, String>> REQUEST_ID = ThreadLocal.withInitial(HashMap::new);
 
 	@Bean
 	public feign.Logger.Level loggerLevel() {
@@ -70,7 +68,7 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 			String method = template.method();
 			// 将接口名称+URL+请求方式组合成一个key
 			String uniqueKey = clientName + "_" + url + "_" + method;
-			Map<String, String> idMap = REQUEST_ID.get();
+			Map<String, String> idMap = IdempotentUtils.getRequestId();
 
 			// 检查是否已经为这个键生成了ID
 			String idempotentKey = idMap.get(uniqueKey);
