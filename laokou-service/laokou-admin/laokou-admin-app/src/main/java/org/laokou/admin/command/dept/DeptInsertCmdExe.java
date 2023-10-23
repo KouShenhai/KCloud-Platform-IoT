@@ -25,7 +25,7 @@ import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;

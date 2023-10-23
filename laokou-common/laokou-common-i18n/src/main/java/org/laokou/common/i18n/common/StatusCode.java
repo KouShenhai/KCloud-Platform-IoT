@@ -39,11 +39,14 @@ public interface StatusCode {
 	@Schema(name = "NOT_FOUND", description = "无法找到请求的资源")
 	int NOT_FOUND = 404;
 
-	@Schema(name = "TOO_MANY_REQUESTS", description = "请求太多，已被限流，请稍后再试")
+	@Schema(name = "TOO_MANY_REQUESTS", description = "请求太频繁，请稍后再试")
 	int TOO_MANY_REQUESTS = 429;
 
 	@Schema(name = "INTERNAL_SERVER_ERROR", description = "服务器内部错误，无法完成请求")
 	int INTERNAL_SERVER_ERROR = 500;
+
+	@Schema(name = "BAD_GATEWAY", description = "错误网关")
+	int BAD_GATEWAY = 502;
 
 	@Schema(name = "SERVICE_UNAVAILABLE", description = "服务正在维护，请联系管理员")
 	int SERVICE_UNAVAILABLE = 503;

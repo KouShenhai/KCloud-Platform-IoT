@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.MessageUtil;

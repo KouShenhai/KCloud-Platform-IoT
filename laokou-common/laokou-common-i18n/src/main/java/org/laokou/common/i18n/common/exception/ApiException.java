@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.i18n.common.exception;
 
 /**
  * @author laokou

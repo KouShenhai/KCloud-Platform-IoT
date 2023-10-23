@@ -27,7 +27,7 @@ import org.laokou.common.algorithm.template.select.AbstractSelectAlgorithm;
 import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;

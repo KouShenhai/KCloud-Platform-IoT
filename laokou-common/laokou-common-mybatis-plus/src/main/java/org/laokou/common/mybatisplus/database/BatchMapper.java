@@ -20,17 +20,14 @@ package org.laokou.common.mybatisplus.database;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

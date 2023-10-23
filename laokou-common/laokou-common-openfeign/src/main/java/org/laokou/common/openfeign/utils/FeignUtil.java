@@ -18,7 +18,7 @@
 package org.laokou.common.openfeign.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 
 /**

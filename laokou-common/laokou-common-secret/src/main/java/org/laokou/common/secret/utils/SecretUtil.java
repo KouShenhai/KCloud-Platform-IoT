@@ -18,7 +18,7 @@ package org.laokou.common.secret.utils;
 
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
