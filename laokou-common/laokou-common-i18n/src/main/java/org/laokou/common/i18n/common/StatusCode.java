@@ -51,4 +51,7 @@ public interface StatusCode {
 	@Schema(name = "SERVICE_UNAVAILABLE", description = "服务正在维护，请联系管理员")
 	int SERVICE_UNAVAILABLE = 503;
 
+	@Schema(name = "CUSTOM_SERVER_ERROR", description = "自定义服务器错误")
+	int CUSTOM_SERVER_ERROR = 512;
+
 }

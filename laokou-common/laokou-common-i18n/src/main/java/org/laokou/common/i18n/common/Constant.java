@@ -77,11 +77,6 @@ public interface Constant {
 	String SPACE = " ";
 
 	/**
-	 * 换行
-	 */
-	String WRAP = "\n";
-
-	/**
 	 * 等于
 	 */
 	String EQUAL = "=";
@@ -162,7 +157,7 @@ public interface Constant {
 	int FAIL_STATUS = 1;
 
 	/**
-	 * 默认
+	 * 默认租户
 	 */
 	Long DEFAULT_TENANT = 0L;
 

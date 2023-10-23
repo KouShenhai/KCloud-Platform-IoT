@@ -47,7 +47,7 @@ public class GlobalException extends RuntimeException {
 
 	public GlobalException(String msg) {
 		super(msg);
-		this.code = StatusCode.INTERNAL_SERVER_ERROR;
+		this.code = StatusCode.CUSTOM_SERVER_ERROR;
 		this.msg = msg;
 	}
 
