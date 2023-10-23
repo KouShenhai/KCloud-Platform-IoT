@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ package org.laokou.admin.command.definition;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.definition.DefinitionInsertCmd;
 import org.laokou.admin.gatewayimpl.feign.DefinitionsFeignClient;
-import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -34,11 +33,7 @@ public class DefinitionInsertCmdExe {
 	private final DefinitionsFeignClient definitionsFeignClient;
 
 	public Result<Boolean> execute(DefinitionInsertCmd cmd) {
-		Result<Boolean> result = definitionsFeignClient.insert(cmd.getFile());
-		if (result.fail()) {
-			throw new GlobalException(result.getMsg());
-		}
-		return result;
+		return definitionsFeignClient.insert(cmd.getFile());
 	}
 
 }

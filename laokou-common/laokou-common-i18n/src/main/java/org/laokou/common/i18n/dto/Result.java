@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import java.io.Serial;
  */
 @Data
 @Schema(name = "Result", description = "响应")
-public class Result<T> extends DTO {
+public final class Result<T> extends DTO {
 
 	@Serial
 	private static final long serialVersionUID = -1286769110881865369L;

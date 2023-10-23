@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,8 +47,8 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 			log.error("服务正在维护，请联系管理员");
 			return ResponseUtil.response(exchange, Result.fail(SERVICE_UNAVAILABLE));
 		}
-		if (e instanceof ResponseStatusException) {
-			int statusCode = ((ResponseStatusException) e).getStatusCode().value();
+		if (e instanceof ResponseStatusException responseStatusException) {
+			int statusCode = responseStatusException.getStatusCode().value();
 			log.info("状态码：{}", statusCode);
 			if (statusCode == NOT_FOUND) {
 				log.error("无法找到请求的资源");

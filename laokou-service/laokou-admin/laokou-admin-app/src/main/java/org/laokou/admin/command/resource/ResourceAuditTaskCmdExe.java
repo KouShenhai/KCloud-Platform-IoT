@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,9 +34,9 @@ import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.common.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.openfeign.utils.FeignUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,12 +67,9 @@ public class ResourceAuditTaskCmdExe {
 	public Result<Boolean> execute(ResourceAuditTaskCmd cmd) {
 		log.info("审批任务分布式事务 XID:{}", RootContext.getXID());
 		TaskAuditCmd taskAuditCmd = ConvertUtil.sourceToTarget(cmd, TaskAuditCmd.class);
-		Result<AuditCO> result = tasksFeignClient.audit(taskAuditCmd);
-		if (result.fail()) {
-			throw new GlobalException(result.getMsg());
-		}
+		AuditCO co = FeignUtil.result(tasksFeignClient.audit(taskAuditCmd));
 		// 下一个审批人
-		String assignee = result.getData().getAssignee();
+		String assignee = co.getAssignee();
 		// 审批状态
 		int auditStatus = Integer.parseInt(cmd.getValues().get(AUDIT_STATUS).toString());
 		// 还有审批人，就是审批中，没有审批人就结束审批

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,11 +69,8 @@ import static org.laokou.gateway.filter.AuthFilter.PREFIX;
 @Data
 @ConfigurationProperties(prefix = PREFIX)
 public class AuthFilter implements GlobalFilter, Ordered {
-
-	public static final String PREFIX = "spring.cloud.gateway.ignore";
-
 	private Set<String> uris;
-
+	public static final String PREFIX = "spring.cloud.gateway.ignore";
 	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
 	@Override

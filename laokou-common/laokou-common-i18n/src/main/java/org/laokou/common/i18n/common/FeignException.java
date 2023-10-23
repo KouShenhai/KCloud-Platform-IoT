@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,24 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.core.vo;
 
-import lombok.Data;
-
-import java.io.Serial;
-import java.io.Serializable;
+package org.laokou.common.i18n.common;
 
 /**
  * @author laokou
  */
-@Data
-public class OptionVO implements Serializable {
+public final class FeignException extends GlobalException {
 
-	@Serial
-	private static final long serialVersionUID = -4146348495335527374L;
+    public FeignException(int code) {
+        super(code);
+    }
 
-	private String label;
+    public FeignException(int code, String msg) {
+        super(code, msg);
+    }
 
-	private String value;
+    public FeignException(String msg) {
+        super(msg);
+    }
 
 }
