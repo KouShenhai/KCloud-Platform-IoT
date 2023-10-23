@@ -35,7 +35,7 @@ import java.util.Map;
 import static org.laokou.auth.common.BizCode.TENANT_ID_NOT_NULL;
 import static org.laokou.auth.common.Constant.TENANT_ID;
 import static org.laokou.auth.common.exception.ErrorCode.INVALID_SCOPE;
-import static org.laokou.common.core.constant.BizConstant.TRACE_ID;
+import static org.laokou.common.core.constant.Constant.TRACE_ID;
 
 /**
  * @author laokou

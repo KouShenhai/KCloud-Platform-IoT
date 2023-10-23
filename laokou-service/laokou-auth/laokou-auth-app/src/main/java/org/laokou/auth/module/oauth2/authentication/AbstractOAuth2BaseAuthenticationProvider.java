@@ -26,9 +26,9 @@ import org.laokou.auth.domain.gateway.*;
 import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -60,11 +60,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.laokou.auth.common.BizCode.LOGIN_SUCCEEDED;
 import static org.laokou.auth.common.Constant.*;
 import static org.laokou.auth.common.exception.ErrorCode.*;
 import static org.laokou.common.i18n.common.Constant.FAIL_STATUS;
-import static org.laokou.common.i18n.common.Constant.SUCCESS_STATUS;
 
 /**
  * @author laokou
@@ -282,8 +280,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 登录时间
 		user.setLoginDate(DateUtil.now());
 		// 登录成功
-		loginLogGateway.publish(new LoginLog(userId, username, type, tenantId, SUCCESS_STATUS,
-				MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
+		//loginLogGateway.publish(new LoginLog(userId, username, type, tenantId, SUCCESS_STATUS,
+		//		MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
 		return new UsernamePasswordAuthenticationToken(user, encryptName, user.getAuthorities());
 	}
 

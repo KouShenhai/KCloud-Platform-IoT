@@ -18,12 +18,13 @@
 package org.laokou.common.trace.interceptor;
 
 import io.micrometer.common.lang.NonNullApi;
+import io.micrometer.common.lang.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.MDC;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import static org.laokou.common.core.constant.BizConstant.*;
+import static org.laokou.common.core.constant.Constant.*;
 
 /**
  * @author laokou
@@ -46,7 +47,7 @@ public class TraceInterceptor implements HandlerInterceptor {
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
-			Exception ex) {
+								@Nullable Exception ex) {
 		MDC.clear();
 	}
 

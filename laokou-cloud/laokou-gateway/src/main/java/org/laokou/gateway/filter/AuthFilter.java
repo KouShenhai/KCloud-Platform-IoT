@@ -54,7 +54,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-import static org.laokou.common.core.constant.BizConstant.*;
+import static org.laokou.common.core.constant.Constant.*;
+import static org.laokou.common.i18n.common.Constant.EMPTY;
 import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
 import static org.laokou.gateway.filter.AuthFilter.PREFIX;
 
@@ -82,7 +83,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		// 请求放行，无需验证权限
 		if (pathMatcher(requestUri, uris)) {
 			// 无需验证权限的URL，需要将令牌置空
-			return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, "").build()).build());
+			return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
 		}
 		// 表单提交
 		MediaType mediaType = request.getHeaders().getContentType();

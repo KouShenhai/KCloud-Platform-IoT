@@ -20,10 +20,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.StatusCode;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.gateway.constant.Constant;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -48,7 +47,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
-import static org.laokou.gateway.exception.ErrorCode.INVALID_CLIENT;
 
 /**
  * @author laokou
@@ -128,23 +126,11 @@ public class RespFilter implements GlobalFilter, Ordered {
 	}
 
 	private GlobalException getException(String code) {
-		ExceptionEnum instance = ExceptionEnum.getInstance(code.toUpperCase());
-		return switch (instance) {
-			case INVALID_CLIENT -> new GlobalException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
-		};
-	}
-
-	enum ExceptionEnum {
-
-		/**
-		 * 无效客户端
-		 */
-		INVALID_CLIENT;
-
-		public static ExceptionEnum getInstance(String code) {
-			return ExceptionEnum.valueOf(code);
-		}
-
+		return null;
+//		ExceptionEnum instance = ExceptionEnum.getInstance(code.toUpperCase());
+//		return switch (instance) {
+//			case INVALID_CLIENT -> new GlobalException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
+//		};
 	}
 
 }

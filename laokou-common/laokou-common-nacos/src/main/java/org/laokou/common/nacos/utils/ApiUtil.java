@@ -31,7 +31,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.laokou.common.core.constant.BizConstant.*;
+import static org.laokou.common.core.constant.Constant.*;
 
 /**
  * @author laokou

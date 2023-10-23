@@ -56,6 +56,8 @@
         <lombok.version>1.18.30</lombok.version>
         <!--mqtt版本-->
         <mqtt.version>6.1.4</mqtt.version>
+        <!--log4j2-ttl-thread-context-map版本-->
+        <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
         <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
         <docker.registry.name>koushenhai</docker.registry.name>
         <docker.version>1.2.2</docker.version>
@@ -68,6 +70,14 @@
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!-- 定义 log4j2-ttl-thread-context-map 版本 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>log4j2-ttl-thread-context-map</artifactId>
+                <version>${log4j2-ttl-thread-context-map.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
             <!-- 定义 mqtt 版本 -->
             <dependency>
                 <groupId>org.springframework.integration</groupId>

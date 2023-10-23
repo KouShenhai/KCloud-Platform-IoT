@@ -25,7 +25,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.core.constant.BizConstant.TRACE_ID;
+import static org.laokou.common.core.constant.Constant.TRACE_ID;
 
 /**
  * @author laokou

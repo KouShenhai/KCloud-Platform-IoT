@@ -49,7 +49,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
+import static org.laokou.common.core.constant.Constant.AUTHORIZATION;
 import static org.laokou.common.i18n.common.Constant.EMPTY;
 import static org.laokou.common.i18n.common.Constant.MARK;
 

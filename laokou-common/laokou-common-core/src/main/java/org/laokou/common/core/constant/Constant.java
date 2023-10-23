@@ -20,7 +20,7 @@ package org.laokou.common.core.constant;
 /**
  * @author laokou
  */
-public interface BizConstant {
+public interface Constant {
 
 	/**
 	 * 认证
