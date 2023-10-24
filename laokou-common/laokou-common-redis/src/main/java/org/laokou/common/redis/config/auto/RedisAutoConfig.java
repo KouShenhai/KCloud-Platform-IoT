@@ -67,7 +67,7 @@ public class RedisAutoConfig {
 
 	private Jackson2JsonRedisSerializer<Object> getJsonRedisSerializer() {
 		// Json序列化配置
-		ObjectMapper objectMapper = GlobalJsonJacksonCodec.getObjectMapper();
+		ObjectMapper objectMapper = GlobalJsonJacksonCodec.objectMapper();
 		return new Jackson2JsonRedisSerializer<>(objectMapper, Object.class);
 	}
 

@@ -167,7 +167,7 @@ public class IpUtil {
 			}
 		}
 		catch (NumberFormatException e) {
-			return null;
+			return new byte[0];
 		}
 		return bytes;
 	}

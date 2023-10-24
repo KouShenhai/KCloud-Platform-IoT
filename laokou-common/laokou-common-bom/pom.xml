@@ -87,7 +87,7 @@
         <!--ip2region版本-->
         <ip2region.version>2.7.0</ip2region.version>
         <!--jackson-module-kotlin版本-->
-        <jackson-module-kotlin.version>2.15.1</jackson-module-kotlin.version>
+        <jackson-module-kotlin.version>2.16.0-rc1</jackson-module-kotlin.version>
         <!--xxl-job版本-->
         <xxl-job.version>2.4.0</xxl-job.version>
         <!--shardingsphere版本-->

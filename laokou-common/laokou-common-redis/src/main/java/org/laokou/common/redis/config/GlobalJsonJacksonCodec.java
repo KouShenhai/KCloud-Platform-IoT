@@ -26,57 +26,26 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import io.netty.buffer.*;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.redisson.client.codec.BaseCodec;
-import org.redisson.client.protocol.Decoder;
-import org.redisson.client.protocol.Encoder;
+import org.redisson.codec.JsonJacksonCodec;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import static com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping.NON_FINAL;
 
 /**
  * @author laokou
  */
-public class GlobalJsonJacksonCodec extends BaseCodec {
+public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 
 	public static final GlobalJsonJacksonCodec INSTANCE = new GlobalJsonJacksonCodec();
 
-	private final ObjectMapper mapObjectMapper;
-
 	public GlobalJsonJacksonCodec() {
-		this.mapObjectMapper = GlobalJsonJacksonCodec.getObjectMapper();
+		super(objectMapper());
 	}
 
-	@Override
-	public Decoder<Object> getValueDecoder() {
-		return (buf, state) -> mapObjectMapper.readValue((InputStream) new ByteBufInputStream(buf), Object.class);
-	}
-
-	@Override
-	public Encoder getValueEncoder() {
-		return in -> {
-			ByteBuf out = ByteBufAllocator.DEFAULT.buffer();
-			try {
-				ByteBufOutputStream os = new ByteBufOutputStream(out);
-				mapObjectMapper.writeValue((OutputStream) os, in);
-				return os.buffer();
-			}
-			catch (IOException e) {
-				out.release();
-				throw e;
-			}
-			catch (Exception e) {
-				out.release();
-				throw new IOException(e);
-			}
-		};
-	}
-
-	public static ObjectMapper getObjectMapper() {
+	public static ObjectMapper objectMapper() {
 		// 解决查询缓存转换异常的问题
 		ObjectMapper objectMapper = JsonMapper.builder().build();
 		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_MM_DD_HH_MM_SS);
@@ -89,8 +58,7 @@ public class GlobalJsonJacksonCodec extends BaseCodec {
 		javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
 		objectMapper.registerModule(javaTimeModule);
 		objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-		objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL,
-				JsonTypeInfo.As.PROPERTY);
+		objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, NON_FINAL, JsonTypeInfo.As.PROPERTY);
 		return objectMapper;
 	}
 

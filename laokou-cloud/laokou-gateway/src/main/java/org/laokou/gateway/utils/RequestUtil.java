@@ -19,6 +19,8 @@ package org.laokou.gateway.utils;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+
 /**
  * @author laokou
  */
@@ -31,7 +33,7 @@ public class RequestUtil {
 		if (StringUtil.isEmpty(paramValue)) {
 			paramValue = request.getQueryParams().getFirst(paramName);
 		}
-		return StringUtil.isEmpty(paramValue) ? "" : paramValue.trim();
+		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
 	}
 
 }

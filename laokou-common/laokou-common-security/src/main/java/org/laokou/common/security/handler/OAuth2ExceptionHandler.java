@@ -20,10 +20,10 @@ public class OAuth2ExceptionHandler {
 	public static final String ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
 	public static void response(HttpServletResponse response, int code, String message) throws IOException {
+		response.setStatus(HttpStatus.OK.value());
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
 		try (PrintWriter writer = response.getWriter()) {
-			response.setStatus(HttpStatus.OK.value());
-			response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-			response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
 			writer.write(JacksonUtil.toJsonStr(Result.fail(code, message)));
 			writer.flush();
 		}

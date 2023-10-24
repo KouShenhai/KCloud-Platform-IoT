@@ -28,7 +28,7 @@ import java.io.Serial;
  */
 @Data
 @Schema(name = "Result", description = "响应")
-public final class Result<T> extends DTO {
+public class Result<T> extends DTO {
 
 	@Serial
 	private static final long serialVersionUID = -1286769110881865369L;

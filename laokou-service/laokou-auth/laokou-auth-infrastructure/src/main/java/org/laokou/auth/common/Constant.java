@@ -23,6 +23,6 @@ public interface Constant {
 	/**
 	 * 租户ID
 	 */
-	String TENANT_ID = "tenantId";
+	String TENANT_ID = "tenant_id";
 
 }

@@ -36,9 +36,4 @@ public interface Constant {
 	 */
 	String ERROR = "error";
 
-	/**
-	 * 认证模式
-	 */
-	String GRANT_TYPE = "grant_type";
-
 }

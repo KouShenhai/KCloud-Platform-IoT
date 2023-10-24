@@ -18,7 +18,6 @@ package org.laokou.gateway.utils;
 
 import org.laokou.common.core.utils.JacksonUtil;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -34,20 +33,13 @@ import java.nio.charset.StandardCharsets;
 public class ResponseUtil {
 
 	public static Mono<Void> response(ServerWebExchange exchange, Object data) {
-		DataBuffer buffer = null;
-		try {
-			 buffer = exchange.getResponse()
-					.bufferFactory()
-					.wrap(JacksonUtil.toJsonStr(data).getBytes(StandardCharsets.UTF_8));
-			ServerHttpResponse response = exchange.getResponse();
-			response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-			response.setStatusCode(HttpStatus.OK);
-			return response.writeWith(Flux.just(buffer));
-		} finally {
-			if (buffer != null) {
-				DataBufferUtils.release(buffer);
-			}
-		}
+		DataBuffer buffer = exchange.getResponse()
+				.bufferFactory()
+				.wrap(JacksonUtil.toJsonStr(data).getBytes(StandardCharsets.UTF_8));
+		ServerHttpResponse response = exchange.getResponse();
+		response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+		response.setStatusCode(HttpStatus.OK);
+		return response.writeWith(Flux.just(buffer));
 	}
 
 }
