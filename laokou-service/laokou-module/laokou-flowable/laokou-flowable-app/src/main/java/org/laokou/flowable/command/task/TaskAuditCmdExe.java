@@ -25,7 +25,7 @@ import org.flowable.engine.TaskService;
 import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.dto.task.TaskAuditCmd;
 import org.laokou.flowable.dto.task.clientobject.AuditCO;
@@ -57,10 +57,10 @@ public class TaskAuditCmdExe {
 		String instanceId = cmd.getInstanceId();
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		if (task == null) {
-			throw new GlobalException("任务不存在");
+			throw new FlowException("任务不存在");
 		}
 		if (DelegationState.PENDING.equals(task.getDelegationState())) {
-			throw new GlobalException("非审批任务，请处理任务");
+			throw new FlowException("非审批任务，请处理任务");
 		}
 		return Result.of(audit(taskId, instanceId, values));
 	}

@@ -77,7 +77,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String ip = IpUtil.getIpAddr(request);
 		if (user == null) {
-			throw usernameNotFoundException(USERNAME_PASSWORD_ERROR, new User(username,tenantId), type, ip);
+			throw usernameNotFoundException(USERNAME_PASSWORD_ERROR, new User(username, tenantId), type, ip);
 		}
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 		String clientPassword = user.getPassword();
@@ -86,7 +86,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw usernameNotFoundException(USERNAME_DISABLE,user, type, ip);
+			throw usernameNotFoundException(USERNAME_DISABLE, user, type, ip);
 		}
 		// 权限标识列表
 		List<String> permissionsList = menuGateway.getPermissions(user);
@@ -103,14 +103,16 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 默认数据库
 		user.setSourceName(MASTER);
 		// 登录成功
-		loginLogGateway.publish(new LoginLog(user.getId(), username, type, tenantId, SUCCESS, MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
+		loginLogGateway.publish(new LoginLog(user.getId(), username, type, tenantId, SUCCESS,
+				MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
 		return user;
 	}
 
 	private UsernameNotFoundException usernameNotFoundException(int code, User user, String type, String ip) {
 		String message = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
-		loginLogGateway.publish(new LoginLog(user.getId(), user.getUsername(), type, user.getTenantId(), FAIL, message, ip, user.getDeptId(), user.getDeptPath()));
+		loginLogGateway.publish(new LoginLog(user.getId(), user.getUsername(), type, user.getTenantId(), FAIL, message,
+				ip, user.getDeptId(), user.getDeptPath()));
 		throw new UsernameNotFoundException(message);
 	}
 

@@ -10,7 +10,7 @@ import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
@@ -44,7 +44,7 @@ public class UserInsertCmdExe {
 				DateUtil.format(DateUtil.now(), DateUtil.YYYY_MM_DD_HH_MM_SS), BOOT_SYS_USER);
 		int count = userMapper.getUserCount(dynamicTables, toUserDO(co));
 		if (count > 0) {
-			throw new GlobalException("用户名已存在，请重新输入");
+			throw new SystemException("用户名已存在，请重新输入");
 		}
 		return Result.of(userGateway.insert(toUser(co)));
 	}

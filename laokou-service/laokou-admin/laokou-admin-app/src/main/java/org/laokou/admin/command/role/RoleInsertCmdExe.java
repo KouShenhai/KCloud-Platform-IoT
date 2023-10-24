@@ -27,7 +27,7 @@ import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -44,12 +44,12 @@ public class RoleInsertCmdExe {
 	private final RoleMapper roleMapper;
 
 	public Result<Boolean> execute(RoleInsertCmd cmd) {
-		RoleCO roleCO = cmd.getRoleCO();
-		Long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, roleCO.getName()));
+		RoleCO co = cmd.getRoleCO();
+		Long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, co.getName()));
 		if (count > 0) {
-			throw new GlobalException("角色已存在，请重新填写");
+			throw new SystemException("角色已存在，请重新填写");
 		}
-		return Result.of(roleGateway.insert(RoleConvertor.toEntity(roleCO), toUser()));
+		return Result.of(roleGateway.insert(RoleConvertor.toEntity(co), toUser()));
 	}
 
 	private User toUser() {

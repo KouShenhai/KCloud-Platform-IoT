@@ -24,11 +24,11 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.exception.GlobalException;
-import org.laokou.common.lock.annotation.Lock4j;
-import org.laokou.common.lock.enums.LockType;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.lock.Locks;
 import org.laokou.common.lock.RedissonLock;
+import org.laokou.common.lock.annotation.Lock4j;
+import org.laokou.common.lock.enums.LockType;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
@@ -67,7 +67,7 @@ public class LockAspect {
 				obj = joinPoint.proceed();
 			}
 			else {
-				throw new GlobalException("请求太频繁，请稍后再试");
+				throw new SystemException("请求太频繁，请稍后再试");
 			}
 		}
 		catch (Throwable throwable) {

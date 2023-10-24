@@ -23,7 +23,6 @@ import org.laokou.admin.dto.resource.TaskListQry;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
 import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
@@ -44,9 +43,6 @@ public class ResourceTaskListQryExe {
 
 	public Result<Datas<TaskCO>> execute(ResourceTaskListQry qry) {
 		Result<Datas<TaskCO>> result = tasksFeignClient.list(toQry(qry));
-		if (result.fail()) {
-			throw new GlobalException(result.getMsg());
-		}
 		List<TaskCO> records = result.getData().getRecords();
 		String userName = UserUtil.getUserName();
 		if (CollectionUtil.isNotEmpty(records)) {

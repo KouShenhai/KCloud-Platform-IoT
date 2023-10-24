@@ -26,7 +26,7 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-public class GlobalException extends RuntimeException {
+public abstract class GlobalException extends RuntimeException {
 
 	@Serial
 	private static final long serialVersionUID = 4102669900127613541L;

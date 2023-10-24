@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,17 +20,17 @@ package org.laokou.common.i18n.common.exception;
 /**
  * @author laokou
  */
-public final class SystemException extends GlobalException {
+public final class FlowException extends GlobalException {
 
-	public SystemException(int code) {
+	public FlowException(int code) {
 		super(code);
 	}
 
-	public SystemException(int code, String msg) {
+	public FlowException(int code, String msg) {
 		super(code, msg);
 	}
 
-	public SystemException(String msg) {
+	public FlowException(String msg) {
 		super(msg);
 	}
 

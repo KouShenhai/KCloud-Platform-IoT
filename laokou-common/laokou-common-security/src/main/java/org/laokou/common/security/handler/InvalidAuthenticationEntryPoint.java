@@ -19,6 +19,7 @@ package org.laokou.common.security.handler;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -42,13 +43,12 @@ public class InvalidAuthenticationEntryPoint implements AuthenticationEntryPoint
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException {
 		if (authException instanceof InsufficientAuthenticationException) {
-			OAuth2ExceptionHandler.response(response, StatusCode.UNAUTHORIZED,
-					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
+			ResponseUtil.response(response, StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
 		if (authException instanceof OAuth2AuthenticationException oAuth2AuthenticationException) {
 			String message = oAuth2AuthenticationException.getError().getDescription();
 			int errorCode = Integer.parseInt(oAuth2AuthenticationException.getError().getErrorCode());
-			OAuth2ExceptionHandler.response(response, errorCode, message);
+			ResponseUtil.response(response, errorCode, message);
 		}
 	}
 

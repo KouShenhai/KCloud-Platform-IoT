@@ -18,10 +18,13 @@ package org.laokou.common.seata.handler;
 
 import io.seata.core.exception.RmTransactionException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import static org.laokou.common.i18n.common.ErrorCode.TRANSACTION_TIMEOUT;
 
 /**
  * @author laokou
@@ -32,8 +35,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class SeataExceptionHandler {
 
 	@ExceptionHandler({ RmTransactionException.class })
-	public Result<Boolean> handle() {
-		return Result.fail(500, "事务超时，请重新提交");
+	public Result<?> handle() {
+		return Result.fail(TRANSACTION_TIMEOUT, MessageUtil.getMessage(TRANSACTION_TIMEOUT));
 	}
 
 }

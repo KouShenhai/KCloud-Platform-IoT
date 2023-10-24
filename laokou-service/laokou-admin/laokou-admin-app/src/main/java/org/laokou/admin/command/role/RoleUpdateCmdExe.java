@@ -27,7 +27,6 @@ import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -56,7 +55,7 @@ public class RoleUpdateCmdExe {
 		Long count = roleMapper.selectCount(
 				Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, roleCO.getName()).ne(RoleDO::getId, id));
 		if (count > 0) {
-			throw new GlobalException("角色已存在，请重新填写");
+			throw new SystemException("角色已存在，请重新填写");
 		}
 		return Result.of(roleGateway.update(RoleConvertor.toEntity(roleCO), toUser()));
 	}

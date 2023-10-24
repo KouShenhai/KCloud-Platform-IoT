@@ -19,13 +19,13 @@ package org.laokou.admin.command.dept;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.dept.DeptInsertCmd;
 import org.laokou.admin.convertor.DeptConvertor;
 import org.laokou.admin.domain.gateway.DeptGateway;
+import org.laokou.admin.dto.dept.DeptInsertCmd;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -42,14 +42,14 @@ public class DeptInsertCmdExe {
 	private final DeptMapper deptMapper;
 
 	public Result<Boolean> execute(DeptInsertCmd cmd) {
-		DeptCO deptCO = cmd.getDeptCO();
+		DeptCO co = cmd.getDeptCO();
 		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class)
 			.eq(DeptDO::getTenantId, UserUtil.getTenantId())
-			.eq(DeptDO::getName, deptCO.getName()));
+			.eq(DeptDO::getName, co.getName()));
 		if (count > 0) {
-			throw new GlobalException("部门已存在，请重新填写");
+			throw new SystemException("部门已存在，请重新填写");
 		}
-		return Result.of(deptGateway.insert(DeptConvertor.toEntity(deptCO)));
+		return Result.of(deptGateway.insert(DeptConvertor.toEntity(co)));
 	}
 
 }

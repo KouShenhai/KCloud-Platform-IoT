@@ -39,7 +39,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
@@ -112,9 +111,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		cmd.setDefinitionKey(KEY);
 		cmd.setInstanceName(resource.getTitle());
 		Result<StartCO> result = tasksFeignClient.start(cmd);
-		if (result.fail()) {
-			throw new GlobalException(result.getMsg());
-		}
 		return result.getData();
 	}
 

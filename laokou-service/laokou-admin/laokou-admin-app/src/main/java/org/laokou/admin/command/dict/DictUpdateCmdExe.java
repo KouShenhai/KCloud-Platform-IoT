@@ -26,7 +26,6 @@ import org.laokou.admin.dto.dict.DictUpdateCmd;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -60,7 +59,7 @@ public class DictUpdateCmdExe {
 			.eq(DictDO::getType, type)
 			.ne(DictDO::getId, dictCO.getId()));
 		if (count > 0) {
-			throw new GlobalException(String.format("类型为%s，值为%s的字典已存在，请重新填写", type, value));
+			throw new SystemException(String.format("类型为%s，值为%s的字典已存在，请重新填写", type, value));
 		}
 		return Result.of(dictGateway.update(DictConvertor.toEntity(dictCO)));
 	}

@@ -25,7 +25,7 @@ import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.Process;
 import org.flowable.common.engine.impl.util.io.InputStreamSource;
 import org.flowable.engine.RepositoryService;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.dto.definition.DefinitionInsertCmd;
 import org.springframework.stereotype.Component;
@@ -55,7 +55,7 @@ public class DefinitionInsertCmdExe {
 		String name = process.getName() + BPMN_FILE_SUFFIX;
 		long count = repositoryService.createDeploymentQuery().deploymentKey(key).count();
 		if (count > 0) {
-			throw new GlobalException("流程已存在，请更换流程图并上传");
+			throw new FlowException("流程已存在，请更换流程图并上传");
 		}
 		return Result.of(deploy(key, name, bpmnModel));
 	}

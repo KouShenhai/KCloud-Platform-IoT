@@ -35,6 +35,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.auth.common.Constant.CAPTCHA;
 import static org.laokou.auth.common.Constant.UUID;
 import static org.laokou.common.i18n.common.Constant.PASSWORD;
+import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
 import static org.laokou.common.i18n.common.ValCode.*;
 
 /**
@@ -63,25 +64,29 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 		String uuid = request.getParameter(UUID);
 		log.info("唯一标识：{}", uuid);
 		if (StringUtil.isEmpty(uuid)) {
-			throw OAuth2ExceptionHandler.getException(OAUTH2_UUID_REQUIRE, ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
+			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
+					ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
 		}
 		// 判断验证码是否为空
 		String captcha = request.getParameter(CAPTCHA);
 		log.info("验证码：{}", captcha);
 		if (StringUtil.isEmpty(captcha)) {
-			throw OAuth2ExceptionHandler.getException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
+			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
+					ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 		// 验证账号是否为空
 		String username = request.getParameter(OAuth2ParameterNames.USERNAME);
 		log.info("账号：{}", username);
 		if (StringUtil.isEmpty(username)) {
-			throw OAuth2ExceptionHandler.getException(OAUTH2_USERNAME_REQUIRE, ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
+			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
+					ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
 		}
 		// 验证密码是否为空
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 		log.info("密码：{}", password);
 		if (StringUtil.isEmpty(password)) {
-			throw OAuth2ExceptionHandler.getException(OAUTH2_PASSWORD_REQUIRE, ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
+			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
+					ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
 		}
 		// 获取用户信息,并认证信息
 		return super.authenticationToken(username, password, request, captcha, uuid);

@@ -21,8 +21,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.DateUtil;
+
 import java.io.Serial;
 import java.time.LocalDateTime;
 
@@ -79,10 +80,10 @@ public class PageQuery extends Query {
 
 	public PageQuery time() {
 		if (this.startTime == null) {
-			throw new GlobalException("开始时间不为空");
+			throw new SystemException("开始时间不为空");
 		}
 		if (this.endTime == null) {
-			throw new GlobalException("结束时间不为空");
+			throw new SystemException("结束时间不为空");
 		}
 		int twoYearOfDays = 730;
 		LocalDateTime startDate = DateUtil.parseTime(startTime, DateUtil.YYYY_MM_DD_HH_MM_SS);
@@ -90,13 +91,13 @@ public class PageQuery extends Query {
 		LocalDateTime minDate = LocalDateTime.of(2021, 12, 31, 23, 59, 59);
 		LocalDateTime maxDate = LocalDateTime.of(2100, 1, 1, 0, 0, 0);
 		if (DateUtil.isAfter(startDate, endDate)) {
-			throw new GlobalException("结束时间必须大于开始时间");
+			throw new SystemException("结束时间必须大于开始时间");
 		}
 		if (DateUtil.getDays(startDate, endDate) > twoYearOfDays) {
-			throw new GlobalException("开始时间和结束时间间隔不能超过两年");
+			throw new SystemException("开始时间和结束时间间隔不能超过两年");
 		}
 		if (DateUtil.isBefore(startDate, minDate) || DateUtil.isAfter(endDate, maxDate)) {
-			throw new GlobalException("开始时间和结束时间只允许在2022-01-01 ~ 2099-12-31范围之内");
+			throw new SystemException("开始时间和结束时间只允许在2022-01-01 ~ 2099-12-31范围之内");
 		}
 		return this;
 	}

@@ -30,6 +30,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import static org.laokou.common.i18n.common.StatusCode.*;
+
 /**
  * @author laokou
  */
@@ -40,6 +41,7 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 
 	@Override
 	public Mono<Void> handle(ServerWebExchange exchange, Throwable e) {
+		e.printStackTrace();
 		log.error("网关全局处理异常，异常信息:{}", e.getMessage());
 		if (e instanceof NotFoundException) {
 			log.error("服务正在维护，请联系管理员");

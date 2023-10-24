@@ -25,7 +25,6 @@ import org.laokou.admin.dto.menu.MenuUpdateCmd;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -53,7 +52,7 @@ public class MenuUpdateCmdExe {
 		Long count = menuMapper.selectCount(
 				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menuCO.getName()).ne(MenuDO::getId, id));
 		if (count > 0) {
-			throw new GlobalException("菜单已存在，请重新填写");
+			throw new SystemException("菜单已存在，请重新填写");
 		}
 		return Result.of(menuGateway.update(MenuConvertor.toEntity(cmd.getMenuCO())));
 	}

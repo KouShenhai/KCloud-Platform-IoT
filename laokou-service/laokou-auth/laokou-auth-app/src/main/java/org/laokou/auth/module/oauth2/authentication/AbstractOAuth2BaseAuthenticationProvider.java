@@ -234,17 +234,17 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 验证验证码
 		Boolean validate = captchaGateway.validate(uuid, captcha);
 		if (validate == null) {
-			throw authenticationException(CAPTCHA_EXPIRED, new User(username,tenantId), type, ip);
+			throw authenticationException(CAPTCHA_EXPIRED, new User(username, tenantId), type, ip);
 		}
 		if (Boolean.FALSE.equals(validate)) {
-			throw authenticationException(CAPTCHA_ERROR, new User(username,tenantId), type, ip);
+			throw authenticationException(CAPTCHA_ERROR, new User(username, tenantId), type, ip);
 		}
 		// 加密
 		String encryptName = AesUtil.encrypt(username);
 		// 多租户查询
 		User user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, type));
 		if (user == null) {
-			throw authenticationException(USERNAME_PASSWORD_ERROR, new User(username,tenantId), type, ip);
+			throw authenticationException(USERNAME_PASSWORD_ERROR, new User(username, tenantId), type, ip);
 		}
 		if (PASSWORD.equals(type)) {
 			// 验证密码
@@ -280,7 +280,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 登录时间
 		user.setLoginDate(DateUtil.now());
 		// 登录成功
-		loginLogGateway.publish(new LoginLog(user.getId(), username, type, tenantId, SUCCESS, MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
+		loginLogGateway.publish(new LoginLog(user.getId(), username, type, tenantId, SUCCESS,
+				MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
 		return new UsernamePasswordAuthenticationToken(user, encryptName, user.getAuthorities());
 	}
 
@@ -299,7 +300,8 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 	private OAuth2AuthenticationException authenticationException(int code, User user, String type, String ip) {
 		String message = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
-		loginLogGateway.publish(new LoginLog(user.getId(), user.getUsername(), type, user.getTenantId(), FAIL, message, ip, user.getDeptId(), user.getDeptPath()));
+		loginLogGateway.publish(new LoginLog(user.getId(), user.getUsername(), type, user.getTenantId(), FAIL, message,
+				ip, user.getDeptId(), user.getDeptPath()));
 		throw OAuth2ExceptionHandler.getException(code, message);
 	}
 

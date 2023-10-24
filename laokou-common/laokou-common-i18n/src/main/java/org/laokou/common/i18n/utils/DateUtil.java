@@ -16,7 +16,8 @@
  */
 package org.laokou.common.i18n.utils;
 
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
+
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
@@ -78,14 +79,14 @@ public class DateUtil {
 
 	public static String getTimePattern(int index) {
 		if (index >= TIME_PATTERNS.length || index < 0) {
-			throw new GlobalException("时间格式不存在，请重新输入");
+			throw new SystemException("时间格式不存在");
 		}
 		return TIME_PATTERNS[index];
 	}
 
 	public static DayOfWeek getWeekPattern(int index) {
 		if (index >= WEEK_PATTERNS.length || index < 0) {
-			throw new GlobalException("星期格式不存在，请重新输入");
+			throw new SystemException("星期格式不存在");
 		}
 		return WEEK_PATTERNS[index];
 	}

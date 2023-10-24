@@ -39,6 +39,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.Constant.EMPTY;
 import static org.laokou.common.i18n.common.Constant.MAIL;
 import static org.laokou.common.i18n.common.ErrorCode.MAIL_ERROR;
+import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
 import static org.laokou.common.i18n.common.ValCode.OAUTH2_CAPTCHA_REQUIRE;
 import static org.laokou.common.i18n.common.ValCode.OAUTH2_MAIL_REQUIRE;
 
@@ -68,12 +69,14 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
-			throw OAuth2ExceptionHandler.getException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
+			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
+					ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 		String mail = request.getParameter(MAIL);
 		log.info("邮箱：{}", SensitiveUtil.format(Type.MAIL, mail));
 		if (StringUtil.isEmpty(mail)) {
-			throw OAuth2ExceptionHandler.getException(OAUTH2_MAIL_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
+			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
+					ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
 		}
 		boolean isMail = RegexUtil.mailRegex(mail);
 		if (!isMail) {

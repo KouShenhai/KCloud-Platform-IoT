@@ -24,7 +24,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
@@ -64,7 +64,7 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 	default int getVersion(Long id, Class<T> clazz) {
 		T value = this.selectOne(Wrappers.query(clazz).eq("id", id).select("version"));
 		if (value == null) {
-			throw new GlobalException("数据不存在");
+			throw new SystemException("数据不存在");
 		}
 		return value.getVersion();
 	}

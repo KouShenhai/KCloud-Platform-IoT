@@ -28,7 +28,6 @@ import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
 import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.context.ApplicationListener;
@@ -54,9 +53,6 @@ public class MessageHandler implements ApplicationListener<MessageEvent> {
 		Message message = ConvertUtil.sourceToTarget(event, Message.class);
 		if (CollectionUtil.isEmpty(message.getReceiver())) {
 			Result<AssigneeCO> result = tasksFeignClient.assignee(event.getInstanceId());
-			if (result.fail()) {
-				throw new GlobalException(result.getMsg());
-			}
 			message.setReceiver(Collections.singleton(result.getData().getAssignee()));
 		}
 		messageGateway.insert(message, ConvertUtil.sourceToTarget(UserUtil.user(), User.class));
