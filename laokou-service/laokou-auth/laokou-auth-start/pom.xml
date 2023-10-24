@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-auth</artifactId>
-        <version>${laokou.version}</version>
+        <version>3.1.5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-auth-start</artifactId>
@@ -145,6 +145,8 @@
                 </executions>
                 <configuration>
                     <fallback>false</fallback>
+                    <!-- 快速构建 -->
+                    <quickBuild>true</quickBuild>
                 </configuration>
             </plugin>
             <plugin>

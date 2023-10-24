@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-Alibaba</artifactId>
-    <version>${laokou.version}</version>
+    <version>3.1.5</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-common</module>

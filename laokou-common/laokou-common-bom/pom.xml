@@ -22,7 +22,7 @@
 
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common-bom</artifactId>
-    <version>${laokou.version}</version>
+    <version>3.1.5</version>
     <packaging>pom</packaging>
     <properties>
         <laokou.version>3.1.5</laokou.version>

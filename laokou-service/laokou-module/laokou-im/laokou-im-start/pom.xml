@@ -5,7 +5,7 @@
     <parent>
         <artifactId>laokou-im</artifactId>
         <groupId>org.laokou</groupId>
-        <version>${laokou.version}</version>
+        <version>3.1.5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-im-start</artifactId>
@@ -105,6 +105,27 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <version>${native-maven-plugin.version}</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <id>build-native</id>
+                        <phase>package</phase>
+                    </execution>
+                    <execution>
+                        <id>test-native</id>
+                        <phase>test</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <fallback>false</fallback>
+                    <!-- 快速构建 -->
+                    <quickBuild>true</quickBuild>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.spotify</groupId>
