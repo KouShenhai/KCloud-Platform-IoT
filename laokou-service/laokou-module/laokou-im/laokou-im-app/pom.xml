@@ -22,7 +22,7 @@
     <parent>
         <artifactId>laokou-im</artifactId>
         <groupId>org.laokou</groupId>
-        <version>${laokou.version}</version>
+        <version>3.1.5</version>
     </parent>
     <artifactId>laokou-im-app</artifactId>
     <dependencies>
