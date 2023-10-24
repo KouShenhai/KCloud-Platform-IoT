@@ -34,8 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.Constant.COMMA;
-import static org.laokou.common.i18n.common.Constant.DEFAULT_STRING;
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * @author laokou
@@ -133,7 +132,7 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	private String getPath(Long pid, Long id) {
 		String path = deptMapper.getDeptPathByPid(pid);
-		return StringUtil.isNotEmpty(path) ? path + COMMA + id : DEFAULT_STRING + COMMA + id;
+		return StringUtil.isNotEmpty(path) ? path + COMMA + id : DEFAULT + COMMA + id;
 	}
 
 }

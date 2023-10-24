@@ -21,7 +21,8 @@ import org.springframework.security.core.Authentication;
 
 import java.util.Map;
 
-import static org.laokou.auth.common.Constant.AUTH_MAIL;
+import static org.laokou.common.i18n.common.Constant.MAIL;
+
 
 /**
  * @author laokou
@@ -30,7 +31,7 @@ public class OAuth2MailAuthenticationConverter extends AbstractOAuth2BaseAuthent
 
 	@Override
 	String getGrantType() {
-		return AUTH_MAIL;
+		return MAIL;
 	}
 
 	@Override

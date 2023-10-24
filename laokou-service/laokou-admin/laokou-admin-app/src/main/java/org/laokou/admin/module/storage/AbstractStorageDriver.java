@@ -19,7 +19,7 @@ package org.laokou.admin.module.storage;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.common.core.utils.FileUtil;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 
 import java.io.InputStream;
 

@@ -31,7 +31,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.laokou.common.core.constant.BizConstant.*;
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * @author laokou
@@ -57,7 +57,7 @@ public class ApiUtil {
 		params.put(PASSWORD, password);
 		String result = HttpUtil.doPost(tokenUri, params, new HashMap<>(0), protocolProxy.sslEnabled());
 		if (StringUtil.isEmpty(result)) {
-			return "";
+			return EMPTY;
 		}
 		return JacksonUtil.readTree(result).get(ACCESS_TOKEN).asText();
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,22 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.i18n.common.exception;
 
 /**
  * @author laokou
  */
-public final class FeignException extends GlobalException {
+public final class OAuth2Exception extends GlobalException {
 
-    public FeignException(int code) {
+    public OAuth2Exception(int code) {
         super(code);
     }
 
-    public FeignException(int code, String msg) {
+    public OAuth2Exception(int code, String msg) {
         super(code, msg);
     }
 
-    public FeignException(String msg) {
+    public OAuth2Exception(String msg) {
         super(msg);
     }
 

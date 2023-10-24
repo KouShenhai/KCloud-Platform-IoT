@@ -16,9 +16,9 @@
  */
 package org.laokou.common.core.handler;
 
-import org.laokou.common.i18n.common.FeignException;
-import org.laokou.common.i18n.common.GlobalException;
-import org.laokou.common.i18n.common.SystemException;
+import org.laokou.common.i18n.common.exception.FeignException;
+import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;

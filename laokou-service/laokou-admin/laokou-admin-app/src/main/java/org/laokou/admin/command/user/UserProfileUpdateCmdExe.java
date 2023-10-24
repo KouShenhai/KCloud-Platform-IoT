@@ -25,15 +25,16 @@ import org.laokou.admin.dto.user.UserProfileUpdateCmd;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.admin.common.BizCode.ID_NOT_NULL;
-import static org.laokou.admin.common.Constant.USER;
+import static org.laokou.common.i18n.common.Constant.USER;
+import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 
 /**
  * @author laokou
@@ -67,7 +68,7 @@ public class UserProfileUpdateCmdExe {
 
 	private void validate(UserProfileCO co) {
 		if (co.getId() == null) {
-			throw new GlobalException(ID_NOT_NULL);
+			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		if (StringUtil.isNotEmpty(co.getMobile())) {
 			// Long count = userMapper.selectCount(Wrappers.query(UserDO.class)

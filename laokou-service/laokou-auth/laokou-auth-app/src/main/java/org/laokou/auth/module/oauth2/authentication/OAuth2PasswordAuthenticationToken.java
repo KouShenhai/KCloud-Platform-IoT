@@ -22,7 +22,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Map;
 
-import static org.laokou.auth.common.Constant.AUTH_PASSWORD;
+import static org.laokou.common.i18n.common.Constant.PASSWORD;
 
 /**
  * @author laokou
@@ -36,7 +36,7 @@ public class OAuth2PasswordAuthenticationToken extends AbstractOAuth2BaseAuthent
 	 */
 	protected OAuth2PasswordAuthenticationToken(Authentication clientPrincipal,
 			Map<String, Object> additionalParameters) {
-		super(new AuthorizationGrantType(AUTH_PASSWORD), clientPrincipal, additionalParameters);
+		super(new AuthorizationGrantType(PASSWORD), clientPrincipal, additionalParameters);
 	}
 
 }

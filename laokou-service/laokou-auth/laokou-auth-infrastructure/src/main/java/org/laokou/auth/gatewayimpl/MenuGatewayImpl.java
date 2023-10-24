@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.auth.common.Constant.*;
+import static org.laokou.common.i18n.common.Constant.DEFAULT_TENANT;
 
 /**
  * @author laokou

@@ -10,7 +10,7 @@ import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.admin.common.Constant.USER;
+import static org.laokou.common.i18n.common.Constant.USER;
 import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_USER;
 import static org.laokou.common.mybatisplus.template.TableTemplate.MIN_TIME;
 

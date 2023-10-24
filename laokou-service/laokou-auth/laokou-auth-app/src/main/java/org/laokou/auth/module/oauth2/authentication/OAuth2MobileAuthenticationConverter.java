@@ -21,7 +21,7 @@ import org.springframework.security.core.Authentication;
 
 import java.util.Map;
 
-import static org.laokou.auth.common.Constant.AUTH_MOBILE;
+import static org.laokou.common.i18n.common.Constant.MOBILE;
 
 /**
  * @author laokou
@@ -30,7 +30,7 @@ public class OAuth2MobileAuthenticationConverter extends AbstractOAuth2BaseAuthe
 
 	@Override
 	String getGrantType() {
-		return AUTH_MOBILE;
+		return MOBILE;
 	}
 
 	@Override

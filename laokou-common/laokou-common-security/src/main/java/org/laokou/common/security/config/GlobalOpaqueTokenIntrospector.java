@@ -29,7 +29,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.security.exception.handler.OAuth2ExceptionHandler;
+import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
@@ -43,7 +43,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-import static org.laokou.common.security.exception.ErrorCode.FORCE_KILL;
+import static org.laokou.common.i18n.common.BizCode.FORCE_KILL;
 
 /**
  * @author laokou

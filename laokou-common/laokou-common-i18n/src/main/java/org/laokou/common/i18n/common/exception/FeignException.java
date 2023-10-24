@@ -14,40 +14,24 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.i18n.common;
 
-import lombok.Data;
-import org.laokou.common.i18n.utils.MessageUtil;
-
-import java.io.Serial;
+package org.laokou.common.i18n.common.exception;
 
 /**
  * @author laokou
  */
-@Data
-public class GlobalException extends RuntimeException {
+public final class FeignException extends GlobalException {
 
-	@Serial
-	private static final long serialVersionUID = 4102669900127613541L;
+    public FeignException(int code) {
+        super(code);
+    }
 
-	private int code;
+    public FeignException(int code, String msg) {
+        super(code, msg);
+    }
 
-	private String msg;
-
-	public GlobalException(int code) {
-		this.code = code;
-		this.msg = MessageUtil.getMessage(code);
-	}
-
-	public GlobalException(int code, String msg) {
-		this.code = code;
-		this.msg = msg;
-	}
-
-	public GlobalException(String msg) {
-		super(msg);
-		this.code = StatusCode.INTERNAL_SERVER_ERROR;
-		this.msg = msg;
-	}
+    public FeignException(String msg) {
+        super(msg);
+    }
 
 }

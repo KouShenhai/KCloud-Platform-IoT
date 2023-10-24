@@ -19,16 +19,19 @@ package org.laokou.admin.command.menu;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.menu.MenuUpdateCmd;
-import org.laokou.admin.dto.menu.clientobject.MenuCO;
-import org.laokou.admin.common.BizCode;
 import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
+import org.laokou.admin.dto.menu.MenuUpdateCmd;
+import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 
 /**
  * @author laokou
@@ -45,7 +48,7 @@ public class MenuUpdateCmdExe {
 		MenuCO menuCO = cmd.getMenuCO();
 		Long id = menuCO.getId();
 		if (id == null) {
-			throw new GlobalException(BizCode.ID_NOT_NULL);
+			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		Long count = menuMapper.selectCount(
 				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menuCO.getName()).ne(MenuDO::getId, id));

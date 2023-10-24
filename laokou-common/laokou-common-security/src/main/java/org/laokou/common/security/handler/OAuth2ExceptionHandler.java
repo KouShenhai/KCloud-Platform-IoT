@@ -1,4 +1,4 @@
-package org.laokou.common.security.exception.handler;
+package org.laokou.common.security.handler;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.utils.JacksonUtil;
@@ -23,15 +23,14 @@ public class OAuth2ExceptionHandler {
 		response.setStatus(HttpStatus.OK.value());
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
-		PrintWriter writer = response.getWriter();
-		writer.write(JacksonUtil.toJsonStr(Result.fail(code, message)));
-		writer.flush();
-		writer.close();
+		try (PrintWriter writer = response.getWriter()) {
+			writer.write(JacksonUtil.toJsonStr(Result.fail(code, message)));
+			writer.flush();
+		}
 	}
 
 	public static OAuth2AuthenticationException getException(String errorCode, String description, String uri) {
-		OAuth2Error error = new OAuth2Error(errorCode, description, uri);
-		return new OAuth2AuthenticationException(error);
+		return new OAuth2AuthenticationException(new OAuth2Error(errorCode, description, uri));
 	}
 
 	public static OAuth2AuthenticationException getException(int errorCode, String description) {

@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.admin.common.Constant.DEFAULT_TENANT;
+import static org.laokou.common.i18n.common.Constant.DEFAULT_TENANT;
 
 /**
  * @author laokou

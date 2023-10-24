@@ -19,7 +19,6 @@ package org.laokou.admin.command.role;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.common.BizCode;
 import org.laokou.admin.convertor.RoleConvertor;
 import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.domain.user.User;
@@ -28,10 +27,14 @@ import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 
 /**
  * @author laokou
@@ -48,7 +51,7 @@ public class RoleUpdateCmdExe {
 		RoleCO roleCO = cmd.getRoleCO();
 		Long id = roleCO.getId();
 		if (id == null) {
-			throw new GlobalException(BizCode.ID_NOT_NULL);
+			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		Long count = roleMapper.selectCount(
 				Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, roleCO.getName()).ne(RoleDO::getId, id));

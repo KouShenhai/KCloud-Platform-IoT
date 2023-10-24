@@ -41,7 +41,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import static org.laokou.admin.common.Constant.LOGIN_LOG;
+import static org.laokou.common.i18n.common.Constant.LOGIN_LOG;
 import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_LOGIN_LOG;
 import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_OPERATE_LOG;
 

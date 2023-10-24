@@ -30,8 +30,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import static org.laokou.common.i18n.common.StatusCode.*;
-import static org.laokou.gateway.exception.ErrorCode.*;
-
 /**
  * @author laokou
  */
@@ -58,20 +56,18 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 				log.error("错误请求");
 				return ResponseUtil.response(exchange, Result.fail(BAD_REQUEST));
 			}
-			else {
+			else if (statusCode == INTERNAL_SERVER_ERROR) {
 				log.error("服务器内部错误，无法完成请求");
 				return ResponseUtil.response(exchange, Result.fail(INTERNAL_SERVER_ERROR));
 			}
 		}
 		if (BlockException.isBlockException(e)) {
 			// 思路来源于SentinelGatewayBlockExceptionHandler
-			log.error("请求过于频繁，请稍后再试");
-			return ResponseUtil.response(exchange, Result.fail(SERVICE_BLOCK_REQUEST));
+			log.error("请求太频繁，请稍后再试");
+			return ResponseUtil.response(exchange, Result.fail(TOO_MANY_REQUESTS));
 		}
-		else {
-			log.error("请求已中断，请刷新页面");
-			return ResponseUtil.response(exchange, Result.fail(SERVICE_REQUEST_CLOSE));
-		}
+		log.error("错误网关");
+		return ResponseUtil.response(exchange, Result.fail(BAD_GATEWAY));
 	}
 
 	@Override

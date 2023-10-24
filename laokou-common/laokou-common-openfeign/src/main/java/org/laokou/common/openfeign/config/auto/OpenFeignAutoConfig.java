@@ -33,8 +33,8 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.Map;
 
-import static org.laokou.common.core.constant.BizConstant.AUTHORIZATION;
-import static org.laokou.common.core.constant.BizConstant.TRACE_ID;
+import static org.laokou.common.i18n.common.Constant.AUTHORIZATION;
+import static org.laokou.common.i18n.common.Constant.TRACE_ID;
 import static org.laokou.common.i18n.common.Constant.UNDER;
 
 /**

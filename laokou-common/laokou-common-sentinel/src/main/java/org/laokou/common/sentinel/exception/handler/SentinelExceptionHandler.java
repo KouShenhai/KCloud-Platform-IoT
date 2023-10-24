@@ -81,10 +81,10 @@ public class SentinelExceptionHandler implements BlockExceptionHandler {
 
 	@SneakyThrows
 	private void response(HttpServletResponse response) {
+		response.setStatus(HttpStatus.OK.value());
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
 		try (PrintWriter writer = response.getWriter()) {
-			response.setStatus(HttpStatus.OK.value());
-			response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-			response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
 			writer.write(JacksonUtil.toJsonStr(Result.fail(TOO_MANY_REQUESTS)));
 			writer.flush();
 		}

@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.admin.common.Constant.USER;
+import static org.laokou.common.i18n.common.Constant.USER;
 import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_USER;
 import static org.laokou.common.mybatisplus.template.TableTemplate.MIN_TIME;
 

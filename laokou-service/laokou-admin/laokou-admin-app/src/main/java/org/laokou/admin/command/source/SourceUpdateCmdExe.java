@@ -26,11 +26,13 @@ import org.laokou.admin.dto.source.SourceUpdateCmd;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.admin.common.BizCode.ID_NOT_NULL;
+import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 
 /**
  * @author laokou
@@ -53,7 +55,7 @@ public class SourceUpdateCmdExe {
 		Long id = source.getId();
 		String name = source.getName();
 		if (id == null) {
-			throw new GlobalException(ID_NOT_NULL);
+			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		boolean sourceRegex = RegexUtil.sourceRegex(name);
 		if (!sourceRegex) {

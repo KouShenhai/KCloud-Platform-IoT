@@ -22,8 +22,8 @@ import lombok.Data;
 import org.laokou.common.i18n.common.Constant;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.gateway.utils.RuleUtil;
 import org.laokou.gateway.utils.ResponseUtil;
+import org.laokou.gateway.utils.RuleUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
@@ -33,7 +33,7 @@ import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.laokou.gateway.exception.ErrorCode.IP_BLACK;
+import static org.laokou.common.i18n.common.BizCode.IP_BLACK;
 
 /**
  * 仿照 RemoteAddrRoutePredicateFactory IP黑名单

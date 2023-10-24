@@ -23,6 +23,7 @@ import org.laokou.auth.domain.gateway.*;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.sensitive.enums.Type;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
@@ -35,12 +36,11 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.common.BizCode.CAPTCHA_NOT_NULL;
-import static org.laokou.auth.common.BizCode.MOBILE_NOT_NULL;
-import static org.laokou.auth.common.Constant.AUTH_MOBILE;
-import static org.laokou.auth.common.Constant.MOBILE;
-import static org.laokou.auth.common.exception.ErrorCode.MOBILE_ERROR;
 import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.Constant.MOBILE;
+import static org.laokou.common.i18n.common.ErrorCode.MOBILE_ERROR;
+import static org.laokou.common.i18n.common.ValCode.OAUTH2_CAPTCHA_REQUIRE;
+import static org.laokou.common.i18n.common.ValCode.OAUTH2_MOBILE_REQUIRE;
 
 /**
  * @author laokou
@@ -67,12 +67,12 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
-			throw OAuth2ExceptionHandler.getException(CAPTCHA_NOT_NULL, MessageUtil.getMessage(CAPTCHA_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 		String mobile = request.getParameter(MOBILE);
 		log.info("手机：{}", SensitiveUtil.format(Type.MOBILE, mobile));
 		if (StringUtil.isEmpty(mobile)) {
-			throw OAuth2ExceptionHandler.getException(MOBILE_NOT_NULL, MessageUtil.getMessage(MOBILE_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(OAUTH2_MOBILE_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
 		}
 		boolean isMobile = RegexUtil.mobileRegex(mobile);
 		if (!isMobile) {
@@ -84,7 +84,7 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return new AuthorizationGrantType(AUTH_MOBILE);
+		return new AuthorizationGrantType(MOBILE);
 	}
 
 }

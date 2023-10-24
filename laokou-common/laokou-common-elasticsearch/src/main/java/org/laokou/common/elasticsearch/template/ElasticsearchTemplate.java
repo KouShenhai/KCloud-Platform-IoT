@@ -67,7 +67,7 @@ import org.laokou.common.elasticsearch.qo.SearchQo;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
 import org.laokou.common.elasticsearch.vo.SearchVO;
-import org.laokou.common.i18n.common.GlobalException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.springframework.stereotype.Component;
 import java.io.IOException;

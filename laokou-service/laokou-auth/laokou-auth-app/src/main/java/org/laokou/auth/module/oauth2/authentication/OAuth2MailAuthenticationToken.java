@@ -22,7 +22,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Map;
 
-import static org.laokou.auth.common.Constant.AUTH_MAIL;
+import static org.laokou.common.i18n.common.Constant.MAIL;
 
 /**
  * @author laokou
@@ -35,7 +35,7 @@ public class OAuth2MailAuthenticationToken extends AbstractOAuth2BaseAuthenticat
 	 * @param additionalParameters the additional parameters
 	 */
 	protected OAuth2MailAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		super(new AuthorizationGrantType(AUTH_MAIL), clientPrincipal, additionalParameters);
+		super(new AuthorizationGrantType(MAIL), clientPrincipal, additionalParameters);
 	}
 
 }
