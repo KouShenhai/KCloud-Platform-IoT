@@ -20,6 +20,8 @@ import org.laokou.common.elasticsearch.enums.FieldTypeEnum;
 
 import java.lang.annotation.*;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+
 /**
  * @author laokou
  */
@@ -32,8 +34,8 @@ public @interface EsField {
 
 	FieldTypeEnum type() default FieldTypeEnum.KEYWORD;
 
-	String searchAnalyzer() default "";
+	String searchAnalyzer() default EMPTY;
 
-	String analyzer() default "";
+	String analyzer() default EMPTY;
 
 }
