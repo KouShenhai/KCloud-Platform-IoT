@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.dto.task.TaskTransferCmd;
 import org.springframework.stereotype.Component;
@@ -49,10 +49,10 @@ public class TaskTransferCmdExe {
 		String assignee = cmd.getToUserId().toString();
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		if (task == null) {
-			throw new GlobalException("任务不存在");
+			throw new FlowException("任务不存在");
 		}
 		if (!owner.equals(task.getAssignee())) {
-			throw new GlobalException("用户无权操作任务");
+			throw new FlowException("用户无权操作任务");
 		}
 		return Result.of(transfer(taskId, owner, assignee));
 	}

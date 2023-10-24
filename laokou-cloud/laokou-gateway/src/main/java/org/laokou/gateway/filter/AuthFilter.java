@@ -69,8 +69,11 @@ import static org.laokou.gateway.filter.AuthFilter.PREFIX;
 @Data
 @ConfigurationProperties(prefix = PREFIX)
 public class AuthFilter implements GlobalFilter, Ordered {
+
 	private Set<String> uris;
+
 	public static final String PREFIX = "spring.cloud.gateway.ignore";
+
 	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
 	@Override
@@ -82,7 +85,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		// 请求放行，无需验证权限
 		if (pathMatcher(requestUri, uris)) {
 			// 无需验证权限的URL，需要将令牌置空
-			return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
+			return chain
+				.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
 		}
 		// 表单提交
 		MediaType mediaType = request.getHeaders().getContentType();

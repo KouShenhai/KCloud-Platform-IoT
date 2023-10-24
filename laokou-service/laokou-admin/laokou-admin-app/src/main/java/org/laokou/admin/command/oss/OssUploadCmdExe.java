@@ -29,7 +29,7 @@ import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.gatewayimpl.database.OssLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.admin.module.storage.factory.StorageFactory;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -93,11 +93,11 @@ public class OssUploadCmdExe {
 
 	private void before(MultipartFile file, long fileSize) {
 		if (file.isEmpty()) {
-			throw new GlobalException("文件不能为空");
+			throw new SystemException("文件不能为空");
 		}
 		log.info("文件上传前，校验文件大小");
 		if (fileSize > MAX_FILE_SIZE) {
-			throw new GlobalException("单个文件上传不能超过100M，请重新选择文件并上传");
+			throw new SystemException("单个文件上传不能超过100M，请重新选择文件并上传");
 		}
 	}
 

@@ -27,16 +27,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MimeTypeUtils;
 
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-
-import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
+import static org.laokou.common.i18n.common.ErrorCode.*;
 
 /**
  * @author laokou
@@ -46,47 +41,41 @@ import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
 public class SentinelExceptionHandler implements BlockExceptionHandler {
 
 	@Override
+	@SneakyThrows
 	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, BlockException e) {
 		// 限流
 		if (e instanceof FlowException flowException) {
-			log.error("请求太多，已被限流，请稍后再试");
-			log.error("限流 FlowException，错误信息：{}",flowException.getMessage());
-			response(response);
+			log.error("请求已限流");
+			log.error("限流 FlowException，错误信息：{}", flowException.getMessage());
+			ResponseUtil.response(response, REQUEST_FLOW, MessageUtil.getMessage(REQUEST_FLOW));
 			return;
 		}
 		// 降级
 		if (e instanceof DegradeException degradeException) {
-			log.error("降级 DegradeException，错误信息：{}",degradeException.getMessage());
-			response(response);
+			log.error("已降级");
+			log.error("降级 DegradeException，错误信息：{}", degradeException.getMessage());
+			ResponseUtil.response(response, DEGRADE, MessageUtil.getMessage(DEGRADE));
 			return;
 		}
 		// 热点参数限流
 		if (e instanceof ParamFlowException paramFlowException) {
-			log.error("热点参数限流 ParamFlowException，错误信息：{}",paramFlowException.getMessage());
-			response(response);
+			log.error("热点参数已限流");
+			log.error("热点参数限流 ParamFlowException，错误信息：{}", paramFlowException.getMessage());
+			ResponseUtil.response(response, PARAM_FLOW, MessageUtil.getMessage(PARAM_FLOW));
 			return;
 		}
 		// 系统规则
 		if (e instanceof SystemBlockException systemBlockException) {
-			log.error("系统规则 SystemBlockException，错误信息：{}",systemBlockException.getMessage());
-			response(response);
+			log.error("系统规则错误");
+			log.error("系统规则 SystemBlockException，错误信息：{}", systemBlockException.getMessage());
+			ResponseUtil.response(response, SYSTEM_BLOCK, MessageUtil.getMessage(SYSTEM_BLOCK));
 			return;
 		}
 		// 授权规则
 		if (e instanceof AuthorityException authorityException) {
-			log.error("授权规则 AuthorityException，错误信息：{}",authorityException.getMessage());
-			response(response);
-		}
-	}
-
-	@SneakyThrows
-	private void response(HttpServletResponse response) {
-		response.setStatus(HttpStatus.OK.value());
-		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
-		try (PrintWriter writer = response.getWriter()) {
-			writer.write(JacksonUtil.toJsonStr(Result.fail(TOO_MANY_REQUESTS)));
-			writer.flush();
+			log.error("授权规则错误");
+			log.error("授权规则 AuthorityException，错误信息：{}", authorityException.getMessage());
+			ResponseUtil.response(response, AUTHORITY, MessageUtil.getMessage(AUTHORITY));
 		}
 	}
 

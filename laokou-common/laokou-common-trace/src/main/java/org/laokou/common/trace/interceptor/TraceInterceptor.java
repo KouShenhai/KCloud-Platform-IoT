@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.trace.interceptor;
@@ -47,7 +47,7 @@ public class TraceInterceptor implements HandlerInterceptor {
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
-								@Nullable Exception ex) {
+			@Nullable Exception ex) {
 		MDC.clear();
 	}
 

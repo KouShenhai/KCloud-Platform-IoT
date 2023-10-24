@@ -26,7 +26,6 @@ import org.laokou.admin.dto.source.SourceUpdateCmd;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -59,11 +58,11 @@ public class SourceUpdateCmdExe {
 		}
 		boolean sourceRegex = RegexUtil.sourceRegex(name);
 		if (!sourceRegex) {
-			throw new GlobalException("数据源名称必须包含字母、下划线和数字");
+			throw new SystemException("数据源名称必须包含字母、下划线和数字");
 		}
 		Long count = sourceMapper.selectCount(Wrappers.query(SourceDO.class).eq("name", name).ne("id", source.getId()));
 		if (count > 0) {
-			throw new GlobalException("数据源名称已存在，请重新填写");
+			throw new SystemException("数据源名称已存在，请重新填写");
 		}
 	}
 

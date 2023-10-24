@@ -21,7 +21,7 @@ import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.DataSourceException;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -75,7 +75,7 @@ public class BatchUtil {
 		// 阻塞主线程
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
-			throw new GlobalException("批量插入数据异常，数据已回滚");
+			throw new DataSourceException("批量插入数据异常，数据已回滚");
 		}
 	}
 

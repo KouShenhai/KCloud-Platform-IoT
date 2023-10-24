@@ -25,28 +25,28 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "ValCode", description = "校验码")
 public interface ValCode {
 
-    @Schema(name = "OAUTH2_UUID_REQUIRE", description = "UUID不能为空")
-    String OAUTH2_UUID_REQUIRE = "oauth2.uuid.require";
+	@Schema(name = "OAUTH2_UUID_REQUIRE", description = "UUID不能为空")
+	String OAUTH2_UUID_REQUIRE = "oauth2.uuid.require";
 
-    @Schema(name = "OAUTH2_CAPTCHA_REQUIRE", description = "验证码不能为空")
-    String OAUTH2_CAPTCHA_REQUIRE = "oauth2.captcha.require";
+	@Schema(name = "OAUTH2_CAPTCHA_REQUIRE", description = "验证码不能为空")
+	String OAUTH2_CAPTCHA_REQUIRE = "oauth2.captcha.require";
 
-    @Schema(name = "OAUTH2_USERNAME_REQUIRE", description = "账号不能为空")
-    String OAUTH2_USERNAME_REQUIRE = "oauth2.username.require";
+	@Schema(name = "OAUTH2_USERNAME_REQUIRE", description = "账号不能为空")
+	String OAUTH2_USERNAME_REQUIRE = "oauth2.username.require";
 
-    @Schema(name = "OAUTH2_PASSWORD_REQUIRE", description = "密码不能为空")
-    String OAUTH2_PASSWORD_REQUIRE = "oauth2.password.require";
+	@Schema(name = "OAUTH2_PASSWORD_REQUIRE", description = "密码不能为空")
+	String OAUTH2_PASSWORD_REQUIRE = "oauth2.password.require";
 
-    @Schema(name = "OAUTH2_MOBILE_REQUIRE", description = "手机号不能为空")
-    String OAUTH2_MOBILE_REQUIRE = "oauth2.mobile.require";
+	@Schema(name = "OAUTH2_MOBILE_REQUIRE", description = "手机号不能为空")
+	String OAUTH2_MOBILE_REQUIRE = "oauth2.mobile.require";
 
-    @Schema(name = "OAUTH2_MAIL_REQUIRE", description = "邮箱不能为空")
-    String OAUTH2_MAIL_REQUIRE = "oauth2.mail.require";
+	@Schema(name = "OAUTH2_MAIL_REQUIRE", description = "邮箱不能为空")
+	String OAUTH2_MAIL_REQUIRE = "oauth2.mail.require";
 
-    @Schema(name = "OAUTH2_TENANT_ID_REQUIRE", description = "租户ID不能为空")
-    String OAUTH2_TENANT_ID_REQUIRE = "oauth2.tenant-id.require";
+	@Schema(name = "OAUTH2_TENANT_ID_REQUIRE", description = "租户ID不能为空")
+	String OAUTH2_TENANT_ID_REQUIRE = "oauth2.tenant-id.require";
 
-    @Schema(name = "SYSTEM_ID_REQUIRE", description = "ID不能为空")
-    String SYSTEM_ID_REQUIRE = "system.id.require";
+	@Schema(name = "SYSTEM_ID_REQUIRE", description = "ID不能为空")
+	String SYSTEM_ID_REQUIRE = "system.id.require";
 
 }

@@ -22,16 +22,16 @@ package org.laokou.common.i18n.common.exception;
  */
 public final class FeignException extends GlobalException {
 
-    public FeignException(int code) {
-        super(code);
-    }
+	public FeignException(int code) {
+		super(code);
+	}
 
-    public FeignException(int code, String msg) {
-        super(code, msg);
-    }
+	public FeignException(int code, String msg) {
+		super(code, msg);
+	}
 
-    public FeignException(String msg) {
-        super(msg);
-    }
+	public FeignException(String msg) {
+		super(msg);
+	}
 
 }

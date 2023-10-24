@@ -25,7 +25,7 @@ import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.dto.task.TaskStartCmd;
 import org.laokou.flowable.dto.task.clientobject.StartCO;
@@ -57,10 +57,10 @@ public class TaskStartCmdExe {
 			.latestVersion()
 			.singleResult();
 		if (processDefinition == null) {
-			throw new GlobalException("流程未定义");
+			throw new FlowException("流程未定义");
 		}
 		if (processDefinition.isSuspended()) {
-			throw new GlobalException("流程已被挂起，请激活流程");
+			throw new FlowException("流程已被挂起");
 		}
 		return Result.of(start(definitionKey, businessKey, instanceName));
 	}
@@ -69,7 +69,7 @@ public class TaskStartCmdExe {
 	public StartCO start(String definitionKey, String businessKey, String instanceName) {
 		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionKey, businessKey);
 		if (processInstance == null) {
-			throw new GlobalException("流程不存在");
+			throw new FlowException("流程不存在");
 		}
 		String instanceId = processInstance.getId();
 		runtimeService.setProcessInstanceName(instanceId, instanceName);

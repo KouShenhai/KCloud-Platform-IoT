@@ -37,13 +37,13 @@ import java.net.URL;
  */
 public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 
-	public AmazonS3StorageDriver(OssCO ossCO) {
-		this.ossCO = ossCO;
+	public AmazonS3StorageDriver(OssCO co) {
+		this.co = co;
 	}
 
 	@Override
 	public void createBucket(AmazonS3 amazonS3) {
-		String bucketName = ossCO.getBucketName();
+		String bucketName = co.getBucketName();
 		// bucketName不存在则新建
 		if (!amazonS3.doesBucketExistV2(bucketName)) {
 			amazonS3.createBucket(bucketName);
@@ -54,7 +54,7 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 	public void putObject(AmazonS3 amazonS3, int readLimit, long fileSize, String fileName, InputStream inputStream,
 			String contentType) {
 		// 上传文件
-		String bucketName = ossCO.getBucketName();
+		String bucketName = co.getBucketName();
 		ObjectMetadata objectMetadata = new ObjectMetadata();
 		objectMetadata.setContentLength(fileSize);
 		objectMetadata.setContentType(contentType);
@@ -65,7 +65,7 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 
 	@Override
 	public String getUrl(AmazonS3 amazonS3, String fileName) {
-		String bucketName = ossCO.getBucketName();
+		String bucketName = co.getBucketName();
 		URL url = amazonS3.getUrl(bucketName, fileName);
 		return url.toString();
 	}
@@ -77,11 +77,11 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 
 	@Override
 	protected AmazonS3 getObj() {
-		String accessKey = ossCO.getAccessKey();
-		String secretKey = ossCO.getSecretKey();
-		String region = ossCO.getRegion();
-		String endpoint = ossCO.getEndpoint();
-		Boolean pathStyleAccessEnabled = ossCO.getPathStyleAccessEnabled() == 1;
+		String accessKey = co.getAccessKey();
+		String secretKey = co.getSecretKey();
+		String region = co.getRegion();
+		String endpoint = co.getEndpoint();
+		Boolean pathStyleAccessEnabled = co.getPathStyleAccessEnabled() == 1;
 		ClientConfiguration clientConfiguration = new ClientConfiguration();
 		AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(
 				endpoint, region);

@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class TreeUtil {
 
 	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode) {
 		if (null == rootNode) {
-			throw new GlobalException("请构造根节点");
+			throw new SystemException("请构造根节点");
 		}
 		List<T> nodes = new ArrayList<>(treeNodes);
 		nodes.add(rootNode);

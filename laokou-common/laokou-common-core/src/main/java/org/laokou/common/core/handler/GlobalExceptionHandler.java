@@ -16,9 +16,7 @@
  */
 package org.laokou.common.core.handler;
 
-import org.laokou.common.i18n.common.exception.FeignException;
-import org.laokou.common.i18n.common.exception.GlobalException;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.*;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,7 +31,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Component
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler({ GlobalException.class, FeignException.class, SystemException.class })
+	@ExceptionHandler({ FeignException.class, SystemException.class, ApiException.class, FlowException.class,
+			DataSourceException.class })
 	public Result<?> handle(GlobalException ex) {
 		return Result.fail(ex.getCode(), ex.getMsg());
 	}

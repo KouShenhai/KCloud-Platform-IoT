@@ -23,7 +23,7 @@ import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.DataSourceException;
 
 /**
  * @author laokou
@@ -38,7 +38,7 @@ public class SqlUtil {
 		}
 		catch (Exception e) {
 			log.error("SQL解析失败");
-			throw new GlobalException("SQL解析失败");
+			throw new DataSourceException("SQL解析失败");
 		}
 	}
 

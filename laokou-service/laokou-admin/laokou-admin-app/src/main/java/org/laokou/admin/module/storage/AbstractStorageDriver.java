@@ -16,10 +16,11 @@
  */
 package org.laokou.admin.module.storage;
 
+import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.common.core.utils.FileUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 
 import java.io.InputStream;
 
@@ -27,9 +28,10 @@ import java.io.InputStream;
  * @author laokou
  */
 @Slf4j
+@NonNullApi
 public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 
-	protected OssCO ossCO;
+	protected OssCO co;
 
 	public String upload(int limitRead, long fileSize, String fileName, InputStream inputStream, String contentType) {
 		try {
@@ -46,7 +48,7 @@ public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 		}
 		catch (Exception ex) {
 			log.error("文件上传失败，错误信息：{}", ex.getMessage());
-			throw new GlobalException(String.format("文件上传失败，错误信息：%s", ex.getMessage()));
+			throw new SystemException(String.format("文件上传失败，错误信息：%s", ex.getMessage()));
 		}
 	}
 

@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.dto.task.TaskResolveCmd;
 import org.springframework.stereotype.Component;
@@ -48,10 +48,10 @@ public class TaskResolveCmdExe {
 		String taskId = cmd.getTaskId();
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		if (task == null) {
-			throw new GlobalException("任务不存在");
+			throw new FlowException("任务不存在");
 		}
 		if (DelegationState.RESOLVED.equals(task.getDelegationState())) {
-			throw new GlobalException("非处理任务，请审批任务");
+			throw new FlowException("非处理任务，请审批任务");
 		}
 		return Result.of(resolve(taskId));
 	}

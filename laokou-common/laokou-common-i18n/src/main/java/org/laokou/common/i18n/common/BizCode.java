@@ -23,16 +23,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "BizCode", description = "业务码")
 public interface BizCode {
 
-    @Schema(name = "IP_BLACK", description = "IP已列入黑名单")
-    int IP_BLACK = 100001;
+	@Schema(name = "IP_BLACK", description = "IP已列入黑名单")
+	int IP_BLACK = 100001;
 
-    @Schema(name = "IP_WHITE", description = "IP被限制")
-    int IP_WHITE = 100002;
+	@Schema(name = "IP_WHITE", description = "IP被限制")
+	int IP_WHITE = 100002;
 
-    @Schema(name = "LOGIN_SUCCEEDED", description = "登录成功")
-    int LOGIN_SUCCEEDED = 200001;
+	@Schema(name = "LOGIN_SUCCEEDED", description = "登录成功")
+	int LOGIN_SUCCEEDED = 200001;
 
-    @Schema(name = "FORCE_KILL", description = "已被强制踢出")
-    int FORCE_KILL = 300001;
+	@Schema(name = "FORCE_KILL", description = "已被强制踢出")
+	int FORCE_KILL = 300001;
 
 }

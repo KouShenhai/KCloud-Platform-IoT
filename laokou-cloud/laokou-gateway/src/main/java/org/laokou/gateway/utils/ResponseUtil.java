@@ -34,8 +34,8 @@ public class ResponseUtil {
 
 	public static Mono<Void> response(ServerWebExchange exchange, Object data) {
 		DataBuffer buffer = exchange.getResponse()
-				.bufferFactory()
-				.wrap(JacksonUtil.toJsonStr(data).getBytes(StandardCharsets.UTF_8));
+			.bufferFactory()
+			.wrap(JacksonUtil.toJsonStr(data).getBytes(StandardCharsets.UTF_8));
 		ServerHttpResponse response = exchange.getResponse();
 		response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 		response.setStatusCode(HttpStatus.OK);

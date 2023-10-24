@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.definition.DefinitionListQry;
 import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
 import org.laokou.admin.gatewayimpl.feign.DefinitionsFeignClient;
+import org.laokou.common.i18n.common.exception.FeignException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +36,7 @@ public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 
 	@Override
 	public Result<Boolean> insert(MultipartFile file) {
-		return Result.fail("新增流程失败，请联系管理员");
+		throw new FeignException("新增流程失败，请联系管理员");
 	}
 
 	@Override
@@ -45,22 +46,22 @@ public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 
 	@Override
 	public Result<Boolean> suspend(String definitionId) {
-		return Result.fail("挂起流程失败，请联系管理员");
+		throw new FeignException("挂起流程失败，请联系管理员");
 	}
 
 	@Override
 	public Result<Boolean> activate(String definitionId) {
-		return Result.fail("激活流程失败，请联系管理员");
+		throw new FeignException("激活流程失败，请联系管理员");
 	}
 
 	@Override
 	public Result<String> diagram(String definitionId) {
-		return Result.fail("查看流程图失败，请联系管理员");
+		throw new FeignException("查看流程图失败，请联系管理员");
 	}
 
 	@Override
 	public Result<Boolean> delete(String deploymentId) {
-		return Result.fail("删除流程失败，请联系管理员");
+		throw new FeignException("删除流程失败，请联系管理员");
 	}
 
 }

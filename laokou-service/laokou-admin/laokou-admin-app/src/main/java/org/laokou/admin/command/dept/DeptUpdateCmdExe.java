@@ -25,7 +25,6 @@ import org.laokou.admin.dto.dept.DeptUpdateCmd;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -53,10 +52,10 @@ public class DeptUpdateCmdExe {
 		long count = deptMapper.selectCount(
 				Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, deptCO.getName()).ne(DeptDO::getId, id));
 		if (count > 0) {
-			throw new GlobalException("部门已存在，请重新填写");
+			throw new SystemException("部门已存在，请重新填写");
 		}
 		if (deptCO.getId().equals(deptCO.getPid())) {
-			throw new GlobalException("上级部门不能为当前部门");
+			throw new SystemException("上级部门不能为当前部门");
 		}
 		return Result.of(deptGateway.update(DeptConvertor.toEntity(deptCO)));
 	}

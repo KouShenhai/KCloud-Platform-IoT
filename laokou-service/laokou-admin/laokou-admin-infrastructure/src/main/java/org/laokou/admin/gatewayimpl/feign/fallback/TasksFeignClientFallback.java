@@ -25,6 +25,7 @@ import org.laokou.admin.dto.resource.clientobject.AuditCO;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
 import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
+import org.laokou.common.i18n.common.exception.FeignException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 
@@ -44,17 +45,17 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 
 	@Override
 	public Result<AuditCO> audit(TaskAuditCmd cmd) {
-		return Result.fail("流程审批失败，请联系管理员");
+		throw new FeignException("流程审批失败，请联系管理员");
 	}
 
 	@Override
 	public Result<Boolean> resolve(TaskResolveCmd cmd) {
-		return Result.fail("流程处理失败，请联系管理员");
+		throw new FeignException("流程处理失败，请联系管理员");
 	}
 
 	@Override
 	public Result<StartCO> start(TaskStartCmd cmd) {
-		return Result.fail("流程启动失败，请联系管理员");
+		throw new FeignException("流程启动失败，请联系管理员");
 	}
 
 	@Override
@@ -64,17 +65,17 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 
 	@Override
 	public Result<Boolean> transfer(TaskTransferCmd cmd) {
-		return Result.fail("流程转办失败，请联系管理员");
+		throw new FeignException("流程转办失败，请联系管理员");
 	}
 
 	@Override
 	public Result<Boolean> delegate(TaskDelegateCmd cmd) {
-		return Result.fail("流程委派失败，请联系管理员");
+		throw new FeignException("流程委派失败，请联系管理员");
 	}
 
 	@Override
 	public Result<AssigneeCO> assignee(String instanceId) {
-		return Result.fail("获取流程人员失败，请联系管理员");
+		throw new FeignException("获取流程人员失败，请联系管理员");
 	}
 
 }

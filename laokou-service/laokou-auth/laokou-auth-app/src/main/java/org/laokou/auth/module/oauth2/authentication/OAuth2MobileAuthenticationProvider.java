@@ -39,6 +39,7 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.Constant.EMPTY;
 import static org.laokou.common.i18n.common.Constant.MOBILE;
 import static org.laokou.common.i18n.common.ErrorCode.MOBILE_ERROR;
+import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
 import static org.laokou.common.i18n.common.ValCode.OAUTH2_CAPTCHA_REQUIRE;
 import static org.laokou.common.i18n.common.ValCode.OAUTH2_MOBILE_REQUIRE;
 
@@ -67,12 +68,14 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
-			throw OAuth2ExceptionHandler.getException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
+			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
+					ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 		String mobile = request.getParameter(MOBILE);
 		log.info("手机：{}", SensitiveUtil.format(Type.MOBILE, mobile));
 		if (StringUtil.isEmpty(mobile)) {
-			throw OAuth2ExceptionHandler.getException(OAUTH2_MOBILE_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
+			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
+					ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
 		}
 		boolean isMobile = RegexUtil.mobileRegex(mobile);
 		if (!isMobile) {

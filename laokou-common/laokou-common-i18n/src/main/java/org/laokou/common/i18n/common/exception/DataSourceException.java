@@ -20,18 +20,18 @@ package org.laokou.common.i18n.common.exception;
 /**
  * @author laokou
  */
-public final class OAuth2Exception extends GlobalException {
+public final class DataSourceException extends GlobalException {
 
-    public OAuth2Exception(int code) {
-        super(code);
-    }
+	public DataSourceException(int code) {
+		super(code);
+	}
 
-    public OAuth2Exception(int code, String msg) {
-        super(code, msg);
-    }
+	public DataSourceException(int code, String msg) {
+		super(code, msg);
+	}
 
-    public OAuth2Exception(String msg) {
-        super(msg);
-    }
+	public DataSourceException(String msg) {
+		super(msg);
+	}
 
 }

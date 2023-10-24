@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.DataSourceException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
@@ -59,7 +59,7 @@ public class DsUtil {
 
 	public String loadDs(String sourceName) {
 		if (StringUtil.isEmpty(sourceName)) {
-			throw new GlobalException("数据源名称不能为空");
+			throw new DataSourceException("数据源名称不能为空");
 		}
 		if (!validateDs(sourceName)) {
 			addDs(sourceName);
@@ -98,7 +98,7 @@ public class DsUtil {
 		}
 		catch (Exception e) {
 			log.error("数据源驱动加载失败，错误信息：{}", e.getMessage());
-			throw new GlobalException("数据源驱动加载失败，请检查相关配置");
+			throw new DataSourceException("数据源驱动加载失败，请检查相关配置");
 		}
 		try {
 			// 5秒后连接超时
@@ -108,7 +108,7 @@ public class DsUtil {
 		}
 		catch (Exception e) {
 			log.error("数据源连接超时，错误信息：{}", e.getMessage());
-			throw new GlobalException("数据源连接超时，请检查相关配置");
+			throw new DataSourceException("数据源连接超时，请检查相关配置");
 		}
 		try {
 			ResultSet rs = connection.prepareStatement(SHOW_TABLES).executeQuery();
@@ -120,11 +120,11 @@ public class DsUtil {
 				}
 			}
 			if (CollectionUtil.isEmpty(tables)) {
-				throw new GlobalException("未初始化表结构");
+				throw new DataSourceException("未初始化表结构");
 			}
 			List<String> list = TABLES.stream().filter(i -> !tables.contains(i)).toList();
 			if (CollectionUtil.isNotEmpty(list)) {
-				throw new GlobalException(String.format("%s不存在，请检查数据表", String.join("、", list)));
+				throw new DataSourceException(String.format("%s不存在，请检查数据表", String.join("、", list)));
 			}
 		}
 		finally {

@@ -21,7 +21,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.ProcessDefinition;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.dto.definition.DefinitionActivateCmd;
 import org.springframework.stereotype.Component;
@@ -48,7 +48,7 @@ public class DefinitionActiveCmdExe {
 			return Result.of(activate(definitionId));
 		}
 		else {
-			throw new GlobalException("激活失败，流程已激活");
+			throw new FlowException("激活失败，流程已激活");
 		}
 	}
 

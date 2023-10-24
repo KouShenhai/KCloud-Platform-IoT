@@ -19,13 +19,13 @@ package org.laokou.admin.command.menu;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.menu.MenuInsertCmd;
-import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
+import org.laokou.admin.dto.menu.MenuInsertCmd;
+import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -41,12 +41,12 @@ public class MenuInsertCmdExe {
 	private final MenuMapper menuMapper;
 
 	public Result<Boolean> execute(MenuInsertCmd cmd) {
-		MenuCO menuCO = cmd.getMenuCO();
-		Long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, menuCO.getName()));
+		MenuCO co = cmd.getMenuCO();
+		Long count = menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, co.getName()));
 		if (count > 0) {
-			throw new GlobalException("菜单已存在，请重新填写");
+			throw new SystemException("菜单已存在，请重新填写");
 		}
-		return Result.of(menuGateway.insert(MenuConvertor.toEntity(menuCO)));
+		return Result.of(menuGateway.insert(MenuConvertor.toEntity(co)));
 	}
 
 }

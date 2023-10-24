@@ -21,9 +21,9 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.StatusCode;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.gateway.constant.Constant;
+import org.laokou.gateway.exception.ExceptionEnum;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -46,6 +46,7 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
+import static org.laokou.common.i18n.common.Constant.DEFAULT;
 import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
 
 /**
@@ -105,10 +106,10 @@ public class RespFilter implements GlobalFilter, Ordered {
 						}
 						String msg = msgNode.asText();
 						int code = codeNode.asInt();
-						if (code == 0) {
-							GlobalException ex = getException(codeNode.asText());
-							code = ex.getCode();
-							msg = ex.getMsg();
+						if (code == DEFAULT) {
+							ExceptionEnum ee = getException(codeNode.asText());
+							code = ee.getCode();
+							msg = ee.getMsg();
 						}
 						byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(code, msg)).getBytes();
 						return dataBufferFactory.wrap(uppedContent);
@@ -125,12 +126,8 @@ public class RespFilter implements GlobalFilter, Ordered {
 		return Ordered.HIGHEST_PRECEDENCE + 1500;
 	}
 
-	private GlobalException getException(String code) {
-		return null;
-//		ExceptionEnum instance = ExceptionEnum.getInstance(code.toUpperCase());
-//		return switch (instance) {
-//			case INVALID_CLIENT -> new GlobalException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
-//		};
+	private ExceptionEnum getException(String code) {
+		return Objects.requireNonNull(ExceptionEnum.getInstance(code.toUpperCase()));
 	}
 
 }

@@ -36,6 +36,7 @@ import java.util.Map;
 import static org.laokou.auth.common.Constant.TENANT_ID;
 import static org.laokou.common.i18n.common.Constant.TRACE_ID;
 import static org.laokou.common.i18n.common.ErrorCode.INVALID_SCOPE;
+import static org.laokou.common.i18n.common.StatusCode.CUSTOM_SERVER_ERROR;
 import static org.laokou.common.i18n.common.ValCode.OAUTH2_TENANT_ID_REQUIRE;
 
 /**
@@ -72,7 +73,8 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		String tenantId = request.getParameter(TENANT_ID);
 		log.info("租户ID：{}", tenantId);
 		if (StringUtil.isEmpty(tenantId)) {
-			throw OAuth2ExceptionHandler.getException(OAUTH2_TENANT_ID_REQUIRE, ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
+			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
+					ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
 		}
 		// 构建请求参数集合
 		MultiValueMap<String, String> parameters = MapUtil.getParameters(request);

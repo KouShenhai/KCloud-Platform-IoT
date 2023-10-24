@@ -22,16 +22,16 @@ package org.laokou.common.i18n.common.exception;
  */
 public final class ApiException extends GlobalException {
 
-    public ApiException(int code) {
-        super(code);
-    }
+	public ApiException(int code) {
+		super(code);
+	}
 
-    public ApiException(int code, String msg) {
-        super(code, msg);
-    }
+	public ApiException(int code, String msg) {
+		super(code, msg);
+	}
 
-    public ApiException(String msg) {
-        super(msg);
-    }
+	public ApiException(String msg) {
+		super(msg);
+	}
 
 }

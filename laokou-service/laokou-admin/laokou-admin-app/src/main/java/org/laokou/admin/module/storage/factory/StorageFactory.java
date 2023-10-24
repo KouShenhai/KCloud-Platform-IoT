@@ -27,7 +27,7 @@ import org.laokou.common.algorithm.template.select.AbstractSelectAlgorithm;
 import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
@@ -64,7 +64,7 @@ public class StorageFactory {
 		}
 		List<OssDO> list = ossMapper.getOssListByFilter(null);
 		if (CollectionUtil.isEmpty(list)) {
-			throw new GlobalException("请配置OSS");
+			throw new SystemException("请配置OSS");
 		}
 		List<Object> objs = new ArrayList<>(list.size());
 		objs.addAll(list);
