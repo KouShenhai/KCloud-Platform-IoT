@@ -142,24 +142,19 @@ public interface Constant {
 	int DEFAULT = 0;
 
 	/**
-	 * 默认值
-	 */
-	String DEFAULT_STRING = "0";
-
-	/**
 	 * 成功
 	 */
-	int SUCCESS_STATUS = 0;
+	int SUCCESS = 0;
 
 	/**
 	 * 失败
 	 */
-	int FAIL_STATUS = 1;
+	int FAIL = 1;
 
 	/**
 	 * 默认租户
 	 */
-	Long DEFAULT_TENANT = 0L;
+	long DEFAULT_TENANT = 0;
 
 	/**
 	 * RSA
@@ -195,5 +190,60 @@ public interface Constant {
 	 * 开启
 	 */
 	String ENABLED = "enabled";
+
+	/**
+	 * 认证
+	 */
+	String AUTHORIZATION = "Authorization";
+
+	/**
+	 * 用户名
+	 */
+	String USERNAME = "username";
+
+	/**
+	 * 密码
+	 */
+	String PASSWORD = "password";
+
+	/**
+	 * 用户名
+	 */
+	String USER_NAME = "user-name";
+
+	/**
+	 * 链路ID
+	 */
+	String TRACE_ID = "trace-id";
+
+	/**
+	 * 用户ID
+	 */
+	String USER_ID = "user-id";
+
+	/**
+	 * 租户ID
+	 */
+	String TENANT_ID = "tenant-id";
+
+	/**
+	 * 用户
+	 */
+	String USER = "user";
+
+	/**
+	 * 登录日志
+	 */
+	String LOGIN_LOG = "login_log";
+
+	/**
+	 * 邮箱
+	 */
+	String MAIL = "mail";
+
+	/**
+	 * 手机
+	 */
+	String MOBILE = "mobile";
 
 }

@@ -60,9 +60,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.laokou.auth.common.Constant.*;
-import static org.laokou.auth.common.exception.ErrorCode.*;
-import static org.laokou.common.i18n.common.Constant.FAIL_STATUS;
+import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
+import static org.laokou.auth.common.Constant.TENANT_ID;
+import static org.laokou.common.i18n.common.BizCode.LOGIN_SUCCEEDED;
+import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.ErrorCode.*;
+import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
 
 /**
  * @author laokou
@@ -231,44 +234,41 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 验证验证码
 		Boolean validate = captchaGateway.validate(uuid, captcha);
 		if (validate == null) {
-			throw getException(CAPTCHA_EXPIRED, username, type, tenantId, ip, null);
+			throw authenticationException(CAPTCHA_EXPIRED, new User(username,tenantId), type, ip);
 		}
 		if (Boolean.FALSE.equals(validate)) {
-			throw getException(CAPTCHA_ERROR, username, type, tenantId, ip, null);
+			throw authenticationException(CAPTCHA_ERROR, new User(username,tenantId), type, ip);
 		}
 		// 加密
 		String encryptName = AesUtil.encrypt(username);
 		// 多租户查询
 		User user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, type));
 		if (user == null) {
-			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip, null);
+			throw authenticationException(USERNAME_PASSWORD_ERROR, new User(username,tenantId), type, ip);
 		}
-		if (AUTH_PASSWORD.equals(type)) {
+		if (PASSWORD.equals(type)) {
 			// 验证密码
 			String clientPassword = user.getPassword();
 			if (!passwordEncoder.matches(password, clientPassword)) {
-				throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip, user);
+				throw authenticationException(USERNAME_PASSWORD_ERROR, user, type, ip);
 			}
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw getException(USERNAME_DISABLE, username, type, tenantId, ip, user);
+			throw authenticationException(USERNAME_DISABLE, user, type, ip);
 		}
-		Long userId = user.getId();
-		Integer superAdmin = user.getSuperAdmin();
 		// 权限标识列表
-		User u = new User(userId, superAdmin, tenantId);
-		List<String> permissionsList = menuGateway.getPermissions(u);
+		List<String> permissionsList = menuGateway.getPermissions(user);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			throw getException(USERNAME_NOT_PERMISSION, username, type, tenantId, ip, user);
+			throw authenticationException(FORBIDDEN, user, type, ip);
 		}
 		// 部门列表
-		List<String> deptPaths = deptGateway.getDeptPaths(u);
+		List<String> deptPaths = deptGateway.getDeptPaths(user);
 		user.setDeptPaths(deptPaths);
 		user.setPermissionList(permissionsList);
 		if (tenantId == DEFAULT_TENANT) {
 			// 默认数据源
-			user.setSourceName(DEFAULT_SOURCE);
+			user.setSourceName(MASTER);
 		}
 		else {
 			// 租户数据源
@@ -280,8 +280,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 登录时间
 		user.setLoginDate(DateUtil.now());
 		// 登录成功
-		//loginLogGateway.publish(new LoginLog(userId, username, type, tenantId, SUCCESS_STATUS,
-		//		MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
+		loginLogGateway.publish(new LoginLog(user.getId(), username, type, tenantId, SUCCESS, MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
 		return new UsernamePasswordAuthenticationToken(user, encryptName, user.getAuthorities());
 	}
 
@@ -297,20 +296,10 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
 	}
 
-	private OAuth2AuthenticationException getException(int code, String username, String type, Long tenantId, String ip,
-			User user) {
+	private OAuth2AuthenticationException authenticationException(int code, User user, String type, String ip) {
 		String message = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
-		Long userId = null;
-		Long deptId = null;
-		String deptPath = null;
-		if (user != null) {
-			userId = user.getId();
-			deptId = user.getDeptId();
-			deptPath = user.getDeptPath();
-		}
-		loginLogGateway
-			.publish(new LoginLog(userId, username, type, tenantId, FAIL_STATUS, message, ip, deptId, deptPath));
+		loginLogGateway.publish(new LoginLog(user.getId(), user.getUsername(), type, user.getTenantId(), FAIL, message, ip, user.getDeptId(), user.getDeptPath()));
 		throw OAuth2ExceptionHandler.getException(code, message);
 	}
 

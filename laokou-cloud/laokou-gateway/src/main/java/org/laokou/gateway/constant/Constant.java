@@ -22,7 +22,7 @@ package org.laokou.gateway.constant;
 public interface Constant {
 
 	/**
-	 * 密码模式-请求地址
+	 * 认证授权地址
 	 */
 	String OAUTH2_URI = "/auth/oauth2/token";
 
@@ -35,5 +35,10 @@ public interface Constant {
 	 * OAuth2错误码
 	 */
 	String ERROR = "error";
+
+	/**
+	 * 认证模式
+	 */
+	String GRANT_TYPE = "grant_type";
 
 }

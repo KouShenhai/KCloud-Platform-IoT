@@ -20,6 +20,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.laokou.common.i18n.common.exception.GlobalException;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
@@ -38,6 +39,10 @@ public class ValidatorUtil {
 		VALIDATE_BUNDLE_MESSAGE_SOURCE = new ReloadableResourceBundleMessageSource();
 		VALIDATE_BUNDLE_MESSAGE_SOURCE.setDefaultEncoding(StandardCharsets.UTF_8.name());
 		VALIDATE_BUNDLE_MESSAGE_SOURCE.setBasename("classpath:i18n/validation");
+	}
+
+	public static String getMessage(String code) {
+		return VALIDATE_BUNDLE_MESSAGE_SOURCE.getMessage(code, null, LocaleContextHolder.getLocale());
 	}
 
 	/**

@@ -26,10 +26,12 @@ import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.admin.common.BizCode.ID_NOT_NULL;
+import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 
 /**
  * @author laokou
@@ -46,7 +48,7 @@ public class DeptUpdateCmdExe {
 		DeptCO deptCO = cmd.getDeptCO();
 		Long id = deptCO.getId();
 		if (id == null) {
-			throw new GlobalException(ID_NOT_NULL);
+			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		long count = deptMapper.selectCount(
 				Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, deptCO.getName()).ne(DeptDO::getId, id));

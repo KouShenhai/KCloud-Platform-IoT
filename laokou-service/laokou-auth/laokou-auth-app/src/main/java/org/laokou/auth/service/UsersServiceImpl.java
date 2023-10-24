@@ -28,9 +28,9 @@ import org.laokou.auth.domain.gateway.UserGateway;
 import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,12 +43,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.auth.common.BizCode.LOGIN_SUCCEEDED;
-import static org.laokou.auth.common.Constant.DEFAULT_SOURCE;
-import static org.laokou.auth.common.Constant.DEFAULT_TENANT;
-import static org.laokou.auth.common.exception.ErrorCode.*;
-import static org.laokou.common.i18n.common.Constant.FAIL_STATUS;
-import static org.laokou.common.i18n.common.Constant.SUCCESS_STATUS;
+import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
+import static org.laokou.common.i18n.common.BizCode.LOGIN_SUCCEEDED;
+import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.ErrorCode.USERNAME_DISABLE;
+import static org.laokou.common.i18n.common.ErrorCode.USERNAME_PASSWORD_ERROR;
+import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
 
 /**
  * @author laokou
@@ -72,33 +72,28 @@ public class UsersServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// 默认租户查询
 		Long tenantId = DEFAULT_TENANT;
-		String encryptName = AesUtil.encrypt(username);
 		String type = AuthorizationGrantType.AUTHORIZATION_CODE.getValue();
-		User user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, type));
+		User user = userGateway.getUserByUsername(new Auth(AesUtil.encrypt(username), tenantId, type));
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String ip = IpUtil.getIpAddr(request);
 		if (user == null) {
-			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip, null);
+			throw usernameNotFoundException(USERNAME_PASSWORD_ERROR, new User(username,tenantId), type, ip);
 		}
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 		String clientPassword = user.getPassword();
 		if (!passwordEncoder.matches(password, clientPassword)) {
-			throw getException(USERNAME_PASSWORD_ERROR, username, type, tenantId, ip, user);
+			throw usernameNotFoundException(USERNAME_PASSWORD_ERROR, user, type, ip);
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw getException(USERNAME_DISABLE, username, type, tenantId, ip, user);
+			throw usernameNotFoundException(USERNAME_DISABLE,user, type, ip);
 		}
-		// 用户ID
-		Long userId = user.getId();
-		Integer superAdmin = user.getSuperAdmin();
 		// 权限标识列表
-		User u = new User(userId, superAdmin, tenantId);
-		List<String> permissionsList = menuGateway.getPermissions(u);
+		List<String> permissionsList = menuGateway.getPermissions(user);
 		if (CollectionUtil.isEmpty(permissionsList)) {
-			throw getException(USERNAME_NOT_PERMISSION, username, type, tenantId, ip, user);
+			throw usernameNotFoundException(FORBIDDEN, user, type, ip);
 		}
-		List<String> deptPaths = deptGateway.getDeptPaths(u);
+		List<String> deptPaths = deptGateway.getDeptPaths(user);
 		user.setDeptPaths(deptPaths);
 		user.setPermissionList(permissionsList);
 		// 登录IP
@@ -106,27 +101,16 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 登录时间
 		user.setLoginDate(DateUtil.now());
 		// 默认数据库
-		user.setSourceName(DEFAULT_SOURCE);
+		user.setSourceName(MASTER);
 		// 登录成功
-		loginLogGateway.publish(new LoginLog(userId, username, type, tenantId, SUCCESS_STATUS,
-				MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
+		loginLogGateway.publish(new LoginLog(user.getId(), username, type, tenantId, SUCCESS, MessageUtil.getMessage(LOGIN_SUCCEEDED), ip, user.getDeptId(), user.getDeptPath()));
 		return user;
 	}
 
-	private UsernameNotFoundException getException(int code, String username, String type, Long tenantId, String ip,
-			User user) {
+	private UsernameNotFoundException usernameNotFoundException(int code, User user, String type, String ip) {
 		String message = MessageUtil.getMessage(code);
 		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
-		Long userId = null;
-		Long deptId = null;
-		String deptPath = null;
-		if (user != null) {
-			userId = user.getId();
-			deptId = user.getDeptId();
-			deptPath = user.getDeptPath();
-		}
-		loginLogGateway
-			.publish(new LoginLog(userId, username, type, tenantId, FAIL_STATUS, message, ip, deptId, deptPath));
+		loginLogGateway.publish(new LoginLog(user.getId(), user.getUsername(), type, user.getTenantId(), FAIL, message, ip, user.getDeptId(), user.getDeptPath()));
 		throw new UsernameNotFoundException(message);
 	}
 

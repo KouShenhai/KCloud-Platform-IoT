@@ -26,21 +26,6 @@ public interface Constant {
 	String TENANT = "#tenant";
 
 	/**
-	 * 用户
-	 */
-	String USER = "user";
-
-	/**
-	 * 登录日志
-	 */
-	String LOGIN_LOG = "login_log";
-
-	/**
-	 * 默认数据源
-	 */
-	long DEFAULT_TENANT = 0;
-
-	/**
 	 * 最大文件大小
 	 */
 	long MAX_FILE_SIZE = 100 * 1024 * 1024;

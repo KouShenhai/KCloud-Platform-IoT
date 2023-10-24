@@ -107,11 +107,11 @@ public class OperateLogAspect {
 			event.setAddress(AddressUtil.getRealAddress(ip));
 			event.setOperator(UserUtil.getUserName());
 			if (null != e) {
-				event.setStatus(FAIL_STATUS);
+				event.setStatus(FAIL);
 				event.setErrorMessage(e.getMessage());
 			}
 			else {
-				event.setStatus(SUCCESS_STATUS);
+				event.setStatus(SUCCESS);
 			}
 			event.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
 			event.setMethodName(className + DOT + methodName + LEFT + RIGHT);

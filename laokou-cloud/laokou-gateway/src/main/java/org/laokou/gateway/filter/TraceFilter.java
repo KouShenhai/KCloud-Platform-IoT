@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import static org.laokou.common.core.constant.Constant.*;
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * 请求链路

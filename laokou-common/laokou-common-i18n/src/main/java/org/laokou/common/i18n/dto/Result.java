@@ -73,7 +73,7 @@ public final class Result<T> extends DTO {
 
 	public static <T> Result<T> fail(String msg) {
 		Result<T> result = new Result<>();
-		result.setCode(StatusCode.INTERNAL_SERVER_ERROR);
+		result.setCode(StatusCode.CUSTOM_SERVER_ERROR);
 		result.setMsg(msg);
 		return result;
 	}

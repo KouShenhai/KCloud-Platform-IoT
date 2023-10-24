@@ -33,7 +33,7 @@ import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.laokou.gateway.exception.BizCode.IP_WHITE;
+import static org.laokou.common.i18n.common.BizCode.IP_WHITE;
 
 /**
  * 仿照 RemoteAddrRoutePredicateFactory IP白名单

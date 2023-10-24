@@ -51,8 +51,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
-import static org.laokou.admin.common.Constant.USER;
 import static org.laokou.common.i18n.common.Constant.UNDER;
+import static org.laokou.common.i18n.common.Constant.USER;
 import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_USER;
 
 /**

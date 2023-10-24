@@ -23,6 +23,7 @@ import org.laokou.auth.domain.gateway.*;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.sensitive.enums.Type;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
@@ -35,12 +36,11 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.common.BizCode.CAPTCHA_NOT_NULL;
-import static org.laokou.auth.common.BizCode.MAIL_NOT_NULL;
-import static org.laokou.auth.common.Constant.AUTH_MAIL;
-import static org.laokou.auth.common.Constant.MAIL;
-import static org.laokou.auth.common.exception.ErrorCode.MAIL_ERROR;
 import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.Constant.MAIL;
+import static org.laokou.common.i18n.common.ErrorCode.MAIL_ERROR;
+import static org.laokou.common.i18n.common.ValCode.OAUTH2_CAPTCHA_REQUIRE;
+import static org.laokou.common.i18n.common.ValCode.OAUTH2_MAIL_REQUIRE;
 
 /**
  * @author laokou
@@ -68,12 +68,12 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
 		log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
-			throw OAuth2ExceptionHandler.getException(CAPTCHA_NOT_NULL, MessageUtil.getMessage(CAPTCHA_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 		String mail = request.getParameter(MAIL);
 		log.info("邮箱：{}", SensitiveUtil.format(Type.MAIL, mail));
 		if (StringUtil.isEmpty(mail)) {
-			throw OAuth2ExceptionHandler.getException(MAIL_NOT_NULL, MessageUtil.getMessage(MAIL_NOT_NULL));
+			throw OAuth2ExceptionHandler.getException(OAUTH2_MAIL_REQUIRE, ValidatorUtil.getMessage(OAUTH2_MAIL_REQUIRE));
 		}
 		boolean isMail = RegexUtil.mailRegex(mail);
 		if (!isMail) {
@@ -85,7 +85,7 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2BaseAuthenti
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return new AuthorizationGrantType(AUTH_MAIL);
+		return new AuthorizationGrantType(MAIL);
 	}
 
 }

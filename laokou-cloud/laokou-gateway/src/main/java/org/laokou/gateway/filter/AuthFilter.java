@@ -54,8 +54,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-import static org.laokou.common.core.constant.Constant.*;
-import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.gateway.constant.Constant.GRANT_TYPE;
 import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
 import static org.laokou.gateway.filter.AuthFilter.PREFIX;
 
@@ -87,7 +87,10 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		}
 		// 表单提交
 		MediaType mediaType = request.getHeaders().getContentType();
+		String grantType = RequestUtil.getParamValue(request, GRANT_TYPE);
+		log.info("OAuth2认证模式为：{}", grantType);
 		if (OAUTH2_URI.contains(requestUri) && HttpMethod.POST.matches(request.getMethod().name())
+				&& PASSWORD.equals(grantType)
 				&& MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
 			return decode(exchange, chain);
 		}
@@ -147,9 +150,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
 				catch (Exception e) {
 					log.error("错误信息：{}", e.getMessage());
 				}
-			}
-			else {
-				log.info("非密码模式:{}", s);
 			}
 			return Mono.just(MapUtil.parseParams(inParamsMap));
 		};

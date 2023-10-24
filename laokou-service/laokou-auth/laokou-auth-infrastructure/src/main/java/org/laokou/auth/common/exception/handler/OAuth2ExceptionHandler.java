@@ -19,4 +19,8 @@ public class OAuth2ExceptionHandler {
 		return getException(String.valueOf(errorCode), description, ERROR_URI);
 	}
 
+	public static OAuth2AuthenticationException getException(String errorCode, String description) {
+		return getException(errorCode, description, ERROR_URI);
+	}
+
 }

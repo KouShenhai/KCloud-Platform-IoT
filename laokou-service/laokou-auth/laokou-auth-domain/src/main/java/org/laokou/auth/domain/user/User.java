@@ -80,9 +80,8 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 
 	private LocalDateTime expireDate;
 
-	public User(Long id, Integer superAdmin, Long tenantId) {
-		this.id = id;
-		this.superAdmin = superAdmin;
+	public User(String username, Long tenantId) {
+		this.username = username;
 		this.tenantId = tenantId;
 	}
 
