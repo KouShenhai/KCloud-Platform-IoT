@@ -38,11 +38,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  */
 public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 
-	/**
-	 * 批量插入
-	 * @param list 数据集
-	 */
-	void insertBatch(@Param("list") List<T> list);
+	int save(T entity);
 
 	/**
 	 * 批量插入

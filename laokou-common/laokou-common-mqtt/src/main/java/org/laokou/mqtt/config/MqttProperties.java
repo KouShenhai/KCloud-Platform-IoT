@@ -30,8 +30,13 @@ import static org.laokou.mqtt.config.MqttProperties.PREFIX;
 @Data
 @ConfigurationProperties(prefix = PREFIX)
 public class MqttProperties {
-    public static final String PREFIX = "spring.mqtt";
-    private String username;
-    private String password;
-    private String host;
+
+	public static final String PREFIX = "spring.mqtt";
+
+	private String username;
+
+	private String password;
+
+	private String host;
+
 }

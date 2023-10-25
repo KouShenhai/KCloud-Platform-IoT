@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.core.utils;
@@ -41,14 +41,14 @@ public class CollectionUtil {
 		return CollectionUtils.isEmpty(collection);
 	}
 
-	public static String toStr(List<String> list,String on) {
+	public static String toStr(List<String> list, String on) {
 		if (list.isEmpty()) {
 			return EMPTY;
 		}
 		return Joiner.on(on).skipNulls().join(list);
 	}
 
-	public static List<String> toList(String str,String on) {
+	public static List<String> toList(String str, String on) {
 		if (StringUtil.isEmpty(str)) {
 			return new ArrayList<>(0);
 		}

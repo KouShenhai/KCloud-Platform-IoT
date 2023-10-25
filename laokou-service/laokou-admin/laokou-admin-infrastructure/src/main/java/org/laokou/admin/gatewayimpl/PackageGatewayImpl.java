@@ -62,12 +62,14 @@ public class PackageGatewayImpl implements PackageGateway {
 	private final BatchUtil batchUtil;
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean insert(Package pack, User user) {
 		PackageDO packageDO = PackageConvertor.toDataObject(pack);
 		return insertPackage(packageDO, pack, user);
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean update(Package pack, User user) {
 		Long id = pack.getId();
 		PackageDO packageDO = PackageConvertor.toDataObject(pack);
@@ -109,14 +111,12 @@ public class PackageGatewayImpl implements PackageGateway {
 		});
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean insertPackage(PackageDO packageDO, Package pack, User user) {
+	private Boolean insertPackage(PackageDO packageDO, Package pack, User user) {
 		boolean flag = packageMapper.insertTable(packageDO);
 		return flag && insertPackageMenu(packageDO.getId(), pack.getMenuIds(), user);
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean updatePackage(PackageDO packageDO, Package pack, List<Long> ids, User user) {
+	private Boolean updatePackage(PackageDO packageDO, Package pack, List<Long> ids, User user) {
 		boolean flag = packageMapper.updateById(packageDO) > 0;
 		return flag && updatePackageMenu(packageDO.getId(), pack.getMenuIds(), ids, user);
 	}
@@ -137,7 +137,7 @@ public class PackageGatewayImpl implements PackageGateway {
 		for (Long menuId : menuIds) {
 			list.add(toPackageMenuDO(packageId, menuId, user));
 		}
-		batchUtil.insertBatch(list, packageMenuMapper::insertBatch);
+		batchUtil.insertBatch(list, PackageMenuMapper.class);
 		return true;
 	}
 

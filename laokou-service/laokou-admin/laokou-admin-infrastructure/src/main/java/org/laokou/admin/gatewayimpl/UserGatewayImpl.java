@@ -79,6 +79,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	@DS(USER)
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean insert(User user) {
 		UserDO userDO = getInsertUserDO(user);
 		return insertUser(userDO, user);
@@ -86,6 +87,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	@DS(USER)
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean update(User user) {
 		UserDO userDO = getUpdateUserDO(user);
 		List<Long> ids = userRoleMapper.getIdsByUserId(userDO.getId());
@@ -171,15 +173,13 @@ public class UserGatewayImpl implements UserGateway {
 		return datas;
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean insertUser(UserDO userDO, User user) {
+	private Boolean insertUser(UserDO userDO, User user) {
 		boolean flag = userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),
 				UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
 		return flag && insertUserRole(userDO.getId(), user.getRoleIds(), user);
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean updateUser(UserDO userDO, User user, List<Long> ids) {
+	private Boolean updateUser(UserDO userDO, User user, List<Long> ids) {
 		boolean flag = userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER)) > 0;
 		flag = flag && deleteUserRole(ids);
 		return flag && insertUserRole(userDO.getId(), user.getRoleIds(), user);
@@ -228,7 +228,7 @@ public class UserGatewayImpl implements UserGateway {
 			userRoleDO.setDeptPath(user.getDeptPath());
 			list.add(userRoleDO);
 		}
-		batchUtil.insertBatch(list, userRoleMapper::insertBatch);
+		batchUtil.insertBatch(list, UserRoleMapper.class);
 		return true;
 	}
 
