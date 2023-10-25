@@ -29,15 +29,15 @@ import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 @Configuration
 public class MqttConfig {
 
-    @Bean
-    public MqttPahoClientFactory mqttPahoClientFactory(MqttProperties mqttProperties) {
-        DefaultMqttPahoClientFactory clientFactory = new DefaultMqttPahoClientFactory();
-        MqttConnectOptions options =  new MqttConnectOptions();
-        options.setUserName(mqttProperties.getUsername());
-        options.setPassword(mqttProperties.getPassword().toCharArray());
-        options.setServerURIs(new String[]{mqttProperties.getHost()});
-        clientFactory.setConnectionOptions(options);
-        return clientFactory;
-    }
+	@Bean
+	public MqttPahoClientFactory mqttPahoClientFactory(MqttProperties mqttProperties) {
+		DefaultMqttPahoClientFactory clientFactory = new DefaultMqttPahoClientFactory();
+		MqttConnectOptions options = new MqttConnectOptions();
+		options.setUserName(mqttProperties.getUsername());
+		options.setPassword(mqttProperties.getPassword().toCharArray());
+		options.setServerURIs(new String[] { mqttProperties.getHost() });
+		clientFactory.setConnectionOptions(options);
+		return clientFactory;
+	}
 
 }

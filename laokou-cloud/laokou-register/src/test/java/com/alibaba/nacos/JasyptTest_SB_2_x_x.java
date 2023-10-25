@@ -22,9 +22,8 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
 
 /**
- * 只针对 spring-boot 2.x.x
- * 只针对 spring-boot 2.x.x
- * 只针对 spring-boot 2.x.x
+ * 只针对 spring-boot 2.x.x 只针对 spring-boot 2.x.x 只针对 spring-boot 2.x.x
+ *
  * @author laokou
  */
 @Slf4j

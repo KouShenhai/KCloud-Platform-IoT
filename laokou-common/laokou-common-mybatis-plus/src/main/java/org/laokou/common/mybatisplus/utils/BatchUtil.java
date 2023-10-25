@@ -52,11 +52,11 @@ public class BatchUtil {
 
 	private static final int DEFAULT_BATCH_NUM = 1000;
 
-	public <T extends BaseDO,M extends BatchMapper<T>> void insertBatch(List<T> dataList,Class<M> clazz) {
+	public <T extends BaseDO, M extends BatchMapper<T>> void insertBatch(List<T> dataList, Class<M> clazz) {
 		insertBatch(dataList, DEFAULT_BATCH_NUM, clazz, MASTER);
 	}
 
-	public <T extends BaseDO,M extends BatchMapper<T>> void insertBatch(List<T> dataList,Class<M> clazz, String ds) {
+	public <T extends BaseDO, M extends BatchMapper<T>> void insertBatch(List<T> dataList, Class<M> clazz, String ds) {
 		insertBatch(dataList, DEFAULT_BATCH_NUM, clazz, ds);
 	}
 
@@ -67,15 +67,16 @@ public class BatchUtil {
 	 * @param clazz 类型
 	 */
 	@SneakyThrows
-	public <T extends BaseDO,M extends BatchMapper<T>> void insertBatch(List<T> dataList, int batchNum, Class<M> clazz, String ds) {
+	public <T extends BaseDO, M extends BatchMapper<T>> void insertBatch(List<T> dataList, int batchNum, Class<M> clazz,
+			String ds) {
 		// 数据分组
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
 		CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
 		List<CompletableFuture<Void>> futures = partition.parallelStream()
-				.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, cyclicBarrier, rollback, ds),
-						taskExecutor))
-				.toList();
+			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, cyclicBarrier, rollback, ds),
+					taskExecutor))
+			.toList();
 		// 阻塞主线程
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
@@ -83,9 +84,9 @@ public class BatchUtil {
 		}
 	}
 
-	private <T extends BaseDO,M extends BatchMapper<T>> void handleBatch(List<T> item, Class<M> clazz, CyclicBarrier cyclicBarrier,
-			AtomicBoolean rollback, String ds) {
-		try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH,false)) {
+	private <T extends BaseDO, M extends BatchMapper<T>> void handleBatch(List<T> item, Class<M> clazz,
+			CyclicBarrier cyclicBarrier, AtomicBoolean rollback, String ds) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false)) {
 			M mapper = sqlSession.getMapper(clazz);
 			DynamicDataSourceContextHolder.push(ds);
 			try {

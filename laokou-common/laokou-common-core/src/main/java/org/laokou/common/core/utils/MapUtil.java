@@ -47,14 +47,14 @@ public class MapUtil {
 		return MapUtils.isEmpty(map);
 	}
 
-	public static String toStr(Map<String, String> map,String on,String separator) {
+	public static String toStr(Map<String, String> map, String on, String separator) {
 		if (map.isEmpty()) {
 			return EMPTY;
 		}
 		return Joiner.on(on).withKeyValueSeparator(separator).join(map);
 	}
 
-	public static Map<String,String> toMap(String str,String on,String separator) {
+	public static Map<String, String> toMap(String str, String on, String separator) {
 		if (StringUtil.isEmpty(str)) {
 			return new HashMap<>(0);
 		}
@@ -107,7 +107,7 @@ public class MapUtil {
 	public static MultiValueMap<String, String> getParameters(HttpServletRequest request) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>(parameterMap.size());
-		parameterMap.forEach((k,v) -> parameters.addAll(k, Arrays.asList(v)));
+		parameterMap.forEach((k, v) -> parameters.addAll(k, Arrays.asList(v)));
 		return parameters;
 	}
 
