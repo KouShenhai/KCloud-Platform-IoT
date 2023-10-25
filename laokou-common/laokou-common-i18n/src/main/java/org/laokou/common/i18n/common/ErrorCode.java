@@ -25,8 +25,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "ErrorCode", description = "错误码")
 public interface ErrorCode {
 
-	@Schema(name = "USERNAME_PASSWORD_ERROR", description = "账号或密码错误")
-	int USERNAME_PASSWORD_ERROR = 200999;
+	@Schema(name = "ACCOUNT_PASSWORD_ERROR", description = "账号或密码错误")
+	int ACCOUNT_PASSWORD_ERROR = 200999;
 
 	@Schema(name = "CAPTCHA_ERROR", description = "验证码错误")
 	int CAPTCHA_ERROR = 200998;
@@ -34,8 +34,8 @@ public interface ErrorCode {
 	@Schema(name = "CAPTCHA_EXPIRED", description = "验证码已过期")
 	int CAPTCHA_EXPIRED = 200997;
 
-	@Schema(name = "USERNAME_DISABLE", description = "账号已锁定")
-	int USERNAME_DISABLE = 200996;
+	@Schema(name = "ACCOUNT_DISABLE", description = "账号已锁定")
+	int ACCOUNT_DISABLE = 200996;
 
 	@Schema(name = "MOBILE_ERROR", description = "手机号错误")
 	int MOBILE_ERROR = 200995;

@@ -117,6 +117,8 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <imageName>${parent.artifactId}</imageName>
+                    <mainClass>org.laokou.flowable.FlowableApp</mainClass>
                     <fallback>false</fallback>
                     <!-- 快速构建 -->
                     <quickBuild>true</quickBuild>

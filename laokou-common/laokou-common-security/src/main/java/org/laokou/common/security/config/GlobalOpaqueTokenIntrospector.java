@@ -43,7 +43,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-import static org.laokou.common.i18n.common.BizCode.FORCE_KILL;
+import static org.laokou.common.i18n.common.BizCode.ACCOUNT_FORCE_KILL;
 
 /**
  * @author laokou
@@ -65,7 +65,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
 		Object obj = redisUtil.get(userKillKey);
 		if (obj != null) {
-			throw OAuth2ExceptionHandler.getException(FORCE_KILL, MessageUtil.getMessage(FORCE_KILL));
+			throw OAuth2ExceptionHandler.getException(ACCOUNT_FORCE_KILL, MessageUtil.getMessage(ACCOUNT_FORCE_KILL));
 		}
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		obj = caffeineCache.getIfPresent(userInfoKey);
