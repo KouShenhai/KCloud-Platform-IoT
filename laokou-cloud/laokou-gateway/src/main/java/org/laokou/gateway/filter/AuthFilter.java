@@ -133,25 +133,25 @@ public class AuthFilter implements GlobalFilter, Ordered {
 	private Function<String, Mono<String>> decrypt() {
 		return s -> {
 			// 获取请求密码并解密
-			Map<String, String> inParamsMap = MapUtil.parseParamMap(s);
-			if (inParamsMap.containsKey(PASSWORD) && inParamsMap.containsKey(USERNAME)) {
+			Map<String, String> paramMap = MapUtil.parseParamMap(s);
+			if (paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
 				log.info("密码模式认证...");
 				try {
-					String password = inParamsMap.get(PASSWORD);
-					String username = inParamsMap.get(USERNAME);
+					String password = paramMap.get(PASSWORD);
+					String username = paramMap.get(USERNAME);
 					// 返回修改后报文字符
 					if (StringUtil.isNotEmpty(password)) {
-						inParamsMap.put(PASSWORD, RsaUtil.decryptByPrivateKey(password));
+						paramMap.put(PASSWORD, RsaUtil.decryptByPrivateKey(password));
 					}
 					if (StringUtil.isNotEmpty(username)) {
-						inParamsMap.put(USERNAME, RsaUtil.decryptByPrivateKey(username));
+						paramMap.put(USERNAME, RsaUtil.decryptByPrivateKey(username));
 					}
 				}
 				catch (Exception e) {
 					log.error("错误信息：{}", e.getMessage());
 				}
 			}
-			return Mono.just(MapUtil.parseParams(inParamsMap));
+			return Mono.just(MapUtil.parseParams(paramMap));
 		};
 	}
 

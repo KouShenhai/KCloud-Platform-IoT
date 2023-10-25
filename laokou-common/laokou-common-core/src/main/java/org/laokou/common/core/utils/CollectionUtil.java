@@ -17,9 +17,16 @@
 
 package org.laokou.common.core.utils;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
+import static org.laokou.common.i18n.common.Constant.EMPTY;
 
 /**
  * @author laokou
@@ -32,6 +39,20 @@ public class CollectionUtil {
 
 	public static boolean isEmpty(Collection<?> collection) {
 		return CollectionUtils.isEmpty(collection);
+	}
+
+	public static String toStr(List<String> list,String on) {
+		if (list.isEmpty()) {
+			return EMPTY;
+		}
+		return Joiner.on(on).skipNulls().join(list);
+	}
+
+	public static List<String> toList(String str,String on) {
+		if (StringUtil.isEmpty(str)) {
+			return new ArrayList<>(0);
+		}
+		return Splitter.on(on).trimResults().splitToList(str);
 	}
 
 }

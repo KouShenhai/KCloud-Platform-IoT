@@ -118,11 +118,18 @@
         <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
         <!--transmittable-thread-local版本-->
         <transmittable-thread-local.version>2.14.3</transmittable-thread-local.version>
+        <!--reactor-core版本-->
+        <reactor-core.version>3.5.11</reactor-core.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <version>${reactor-core.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>log4j2-ttl-thread-context-map</artifactId>

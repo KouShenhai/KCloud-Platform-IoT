@@ -16,19 +16,23 @@
  */
 package org.laokou.common.core.utils;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.collections4.MapUtils;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.yaml.snakeyaml.util.UriEncoder;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.AND;
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * @author laokou
@@ -43,6 +47,20 @@ public class MapUtil {
 		return MapUtils.isEmpty(map);
 	}
 
+	public static String toStr(Map<String, String> map,String on,String separator) {
+		if (map.isEmpty()) {
+			return EMPTY;
+		}
+		return Joiner.on(on).withKeyValueSeparator(separator).join(map);
+	}
+
+	public static Map<String,String> toMap(String str,String on,String separator) {
+		if (StringUtil.isEmpty(str)) {
+			return new HashMap<>(0);
+		}
+		return Splitter.on(on).trimResults().withKeyValueSeparator(separator).split(str);
+	}
+
 	public static Map<String, String> parseParamMap(String params) {
 		String[] strings = params.split(AND);
 		int length = strings.length;
@@ -51,11 +69,13 @@ public class MapUtil {
 		}
 		Map<String, String> paramMap = new HashMap<>(strings.length);
 		for (String string : strings) {
-			int index = string.indexOf("=");
+			int index = string.indexOf(EQUAL);
 			if (index > -1) {
 				String key = string.substring(0, index);
-				String value = UriEncoder.decode(string.substring(index + 1));
-				paramMap.put(key, value);
+				if (!paramMap.containsKey(key)) {
+					String value = UriEncoder.decode(string.substring(index + 1));
+					paramMap.put(key, value);
+				}
 			}
 		}
 		return paramMap;
@@ -63,7 +83,7 @@ public class MapUtil {
 
 	public static String parseParams(Map<String, String> paramMap, boolean isEncode) {
 		if (paramMap.isEmpty()) {
-			return "";
+			return EMPTY;
 		}
 		Iterator<Map.Entry<String, String>> iterator = paramMap.entrySet().iterator();
 		StringBuilder stringBuilder = new StringBuilder();
@@ -72,7 +92,7 @@ public class MapUtil {
 			String key = entry.getKey();
 			String value = entry.getValue();
 			stringBuilder.append(key)
-				.append("=")
+				.append(EQUAL)
 				.append(isEncode ? URLEncoder.encode(value, StandardCharsets.UTF_8) : value)
 				.append(AND);
 		}
@@ -87,11 +107,7 @@ public class MapUtil {
 	public static MultiValueMap<String, String> getParameters(HttpServletRequest request) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>(parameterMap.size());
-		parameterMap.forEach((key, values) -> {
-			for (String value : values) {
-				parameters.add(key, value);
-			}
-		});
+		parameterMap.forEach((k,v) -> parameters.addAll(k, Arrays.asList(v)));
 		return parameters;
 	}
 

@@ -31,12 +31,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
 import static org.laokou.common.i18n.common.Constant.AUTHORIZATION;
+import static org.laokou.common.i18n.common.Constant.TRUE;
 
 /**
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnProperty(prefix = OpenApiDocAutoConfig.PREFIX, name = "enabled", havingValue = "true",
+@ConditionalOnProperty(prefix = OpenApiDocAutoConfig.PREFIX, name = "enabled", havingValue = TRUE,
 		matchIfMissing = true)
 public class OpenApiDocAutoConfig {
 

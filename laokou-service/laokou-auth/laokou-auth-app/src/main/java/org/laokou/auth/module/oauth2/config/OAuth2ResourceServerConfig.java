@@ -35,6 +35,7 @@ import java.util.Set;
 
 import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties.PREFIX;
 import static org.laokou.common.i18n.common.Constant.ENABLED;
+import static org.laokou.common.i18n.common.Constant.TRUE;
 
 /**
  * @author laokou
@@ -42,9 +43,9 @@ import static org.laokou.common.i18n.common.Constant.ENABLED;
 @Data
 @Configuration
 @RefreshScope
-@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = PREFIX, name = ENABLED)
+@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = PREFIX, name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class OAuth2ResourceServerConfig {
+class OAuth2ResourceServerConfig {
 
 	/**
 	 * 不拦截拦截静态资源 如果您不想要警告消息并且需要性能优化，则可以为静态资源引入第二个过滤器链
