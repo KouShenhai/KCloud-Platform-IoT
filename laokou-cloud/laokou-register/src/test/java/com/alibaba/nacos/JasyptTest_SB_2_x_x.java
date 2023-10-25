@@ -22,10 +22,13 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
 
 /**
+ * 只针对 spring-boot 2.x.x
+ * 只针对 spring-boot 2.x.x
+ * 只针对 spring-boot 2.x.x
  * @author laokou
  */
 @Slf4j
-public class JasyptTest {
+public class JasyptTest_SB_2_x_x {
 
 	private static final String PBEWITHMD5ANDDES = "PBEWithMD5AndDES";
 

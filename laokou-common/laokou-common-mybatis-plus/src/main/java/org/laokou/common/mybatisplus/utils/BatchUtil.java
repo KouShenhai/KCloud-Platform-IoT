@@ -68,27 +68,25 @@ public class BatchUtil {
 	 */
 	@SneakyThrows
 	public <T extends BaseDO,M extends BatchMapper<T>> void insertBatch(List<T> dataList, int batchNum, Class<M> clazz, String ds) {
-		try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH,false)) {
-			// 数据分组
-			List<List<T>> partition = Lists.partition(dataList, batchNum);
-			AtomicBoolean rollback = new AtomicBoolean(false);
-			CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
-			M mapper = sqlSession.getMapper(clazz);
-			List<CompletableFuture<Void>> futures = partition.parallelStream()
-					.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, mapper, cyclicBarrier, rollback, ds, sqlSession),
-							taskExecutor))
-					.toList();
-			// 阻塞主线程
-			CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-			if (rollback.get()) {
-				throw new DataSourceException("批量插入数据异常，数据已回滚");
-			}
+		// 数据分组
+		List<List<T>> partition = Lists.partition(dataList, batchNum);
+		AtomicBoolean rollback = new AtomicBoolean(false);
+		CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
+		List<CompletableFuture<Void>> futures = partition.parallelStream()
+				.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, cyclicBarrier, rollback, ds),
+						taskExecutor))
+				.toList();
+		// 阻塞主线程
+		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+		if (rollback.get()) {
+			throw new DataSourceException("批量插入数据异常，数据已回滚");
 		}
 	}
 
-	private <T extends BaseDO,M extends BatchMapper<T>> void handleBatch(List<T> item, M mapper, CyclicBarrier cyclicBarrier,
-			AtomicBoolean rollback, String ds,SqlSession sqlSession) {
-		try {
+	private <T extends BaseDO,M extends BatchMapper<T>> void handleBatch(List<T> item, Class<M> clazz, CyclicBarrier cyclicBarrier,
+			AtomicBoolean rollback, String ds) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH,false)) {
+			M mapper = sqlSession.getMapper(clazz);
 			DynamicDataSourceContextHolder.push(ds);
 			try {
 				item.parallelStream().forEachOrdered(mapper::save);
