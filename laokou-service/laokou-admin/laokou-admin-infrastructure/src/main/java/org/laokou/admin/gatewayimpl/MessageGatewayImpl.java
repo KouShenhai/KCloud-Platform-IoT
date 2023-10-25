@@ -33,7 +33,10 @@ import org.laokou.admin.gatewayimpl.database.MessageDetailMapper;
 import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
-import org.laokou.common.core.utils.*;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
@@ -84,6 +87,7 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	@Override
 	@DS(TENANT)
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean insert(Message message, User user) {
 		MessageDO messageDO = MessageConvertor.toDataObject(message);
 		Boolean flag = insertMessage(messageDO, message, user);
@@ -112,8 +116,7 @@ public class MessageGatewayImpl implements MessageGateway {
 				new MqCO(JacksonUtil.toJsonStr(co)));
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean insertMessage(MessageDO messageDO, Message message, User user) {
+	private Boolean insertMessage(MessageDO messageDO, Message message, User user) {
 		boolean flag = messageMapper.insertTable(messageDO);
 		return flag && insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
 	}
