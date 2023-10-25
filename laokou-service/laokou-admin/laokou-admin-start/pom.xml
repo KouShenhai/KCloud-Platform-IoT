@@ -124,6 +124,8 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <imageName>${parent.artifactId}</imageName>
+                    <mainClass>org.laokou.admin.AdminApp</mainClass>
                     <fallback>false</fallback>
                     <!-- 快速构建 -->
                     <quickBuild>true</quickBuild>

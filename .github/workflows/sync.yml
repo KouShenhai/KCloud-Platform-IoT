@@ -13,11 +13,11 @@ jobs:
       - name: Sync Github Repository To Gitee  # 名称
         uses: Yikun/hub-mirror-action@master  # 使用Yikun/hub-mirror-action
         with:
-          src: github/KouShenhai  # 源端账户名(github)
-          dst: gitee/laokouyun  # 目的端账户名(gitee)
+          src: github/KouShenhai  # 源端账号(github)
+          dst: gitee/laokouyun  # 目的端账号(gitee)
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}  # SSH密钥对中的私钥
-          dst_token: ${{ secrets.GITEE_TOKEN }} # Gitee账户的私人令牌
-          account_type: user  # 账户类型
+          dst_token: ${{ secrets.GITEE_TOKEN }} # Gitee账号的私人令牌
+          account_type: user  # 账号类型
           clone_style: "https"  # 使用https方式进行clone，也可以使用ssh
           debug: true  # 启用后会显示所有执行命令
           force_update: true  # 启用后，强制同步，即强制覆盖目的端仓库

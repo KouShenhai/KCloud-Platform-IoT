@@ -32,7 +32,7 @@ public interface BizCode {
 	@Schema(name = "LOGIN_SUCCEEDED", description = "登录成功")
 	int LOGIN_SUCCEEDED = 200001;
 
-	@Schema(name = "FORCE_KILL", description = "已被强制踢出")
-	int FORCE_KILL = 300001;
+	@Schema(name = "ACCOUNT_FORCE_KILL", description = "账号已强制踢出")
+	int ACCOUNT_FORCE_KILL = 300001;
 
 }

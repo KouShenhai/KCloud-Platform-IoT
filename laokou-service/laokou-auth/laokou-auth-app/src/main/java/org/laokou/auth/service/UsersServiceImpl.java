@@ -46,8 +46,8 @@ import java.util.List;
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.common.i18n.common.BizCode.LOGIN_SUCCEEDED;
 import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.i18n.common.ErrorCode.USERNAME_DISABLE;
-import static org.laokou.common.i18n.common.ErrorCode.USERNAME_PASSWORD_ERROR;
+import static org.laokou.common.i18n.common.ErrorCode.ACCOUNT_DISABLE;
+import static org.laokou.common.i18n.common.ErrorCode.ACCOUNT_PASSWORD_ERROR;
 import static org.laokou.common.i18n.common.StatusCode.FORBIDDEN;
 
 /**
@@ -77,16 +77,16 @@ public class UsersServiceImpl implements UserDetailsService {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String ip = IpUtil.getIpAddr(request);
 		if (user == null) {
-			throw usernameNotFoundException(USERNAME_PASSWORD_ERROR, new User(username, tenantId), type, ip);
+			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, new User(username, tenantId), type, ip);
 		}
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);
 		String clientPassword = user.getPassword();
 		if (!passwordEncoder.matches(password, clientPassword)) {
-			throw usernameNotFoundException(USERNAME_PASSWORD_ERROR, user, type, ip);
+			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, user, type, ip);
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw usernameNotFoundException(USERNAME_DISABLE, user, type, ip);
+			throw usernameNotFoundException(ACCOUNT_DISABLE, user, type, ip);
 		}
 		// 权限标识列表
 		List<String> permissionsList = menuGateway.getPermissions(user);

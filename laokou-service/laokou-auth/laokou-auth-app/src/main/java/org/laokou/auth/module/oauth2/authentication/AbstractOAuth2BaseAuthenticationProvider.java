@@ -244,18 +244,18 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		// 多租户查询
 		User user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, type));
 		if (user == null) {
-			throw authenticationException(USERNAME_PASSWORD_ERROR, new User(username, tenantId), type, ip);
+			throw authenticationException(ACCOUNT_PASSWORD_ERROR, new User(username, tenantId), type, ip);
 		}
 		if (PASSWORD.equals(type)) {
 			// 验证密码
 			String clientPassword = user.getPassword();
 			if (!passwordEncoder.matches(password, clientPassword)) {
-				throw authenticationException(USERNAME_PASSWORD_ERROR, user, type, ip);
+				throw authenticationException(ACCOUNT_PASSWORD_ERROR, user, type, ip);
 			}
 		}
 		// 是否锁定
 		if (!user.isEnabled()) {
-			throw authenticationException(USERNAME_DISABLE, user, type, ip);
+			throw authenticationException(ACCOUNT_DISABLE, user, type, ip);
 		}
 		// 权限标识列表
 		List<String> permissionsList = menuGateway.getPermissions(user);
