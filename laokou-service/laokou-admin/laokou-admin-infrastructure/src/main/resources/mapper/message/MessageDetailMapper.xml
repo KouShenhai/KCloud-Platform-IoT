@@ -23,7 +23,6 @@
         insert into boot_sys_message_detail(id,message_id,user_id,creator,dept_id,dept_path,tenant_id,del_flag,version)
         values (#{id},#{messageId},#{userId},#{creator},#{deptId},#{deptPath},#{tenantId},'0','0')
     </insert>
-
     <select id="getUnreadMessageCountByUserId" resultType="integer">
         SELECT count(1)
         from boot_sys_message_detail

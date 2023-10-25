@@ -66,12 +66,14 @@ public class RoleGatewayImpl implements RoleGateway {
 	private final TransactionalUtil transactionalUtil;
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean insert(Role role, User user) {
 		RoleDO roleDO = RoleConvertor.toDataObject(role);
 		return insertRole(roleDO, role, user);
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean update(Role role, User user) {
 		Long id = role.getId();
 		RoleDO roleDO = RoleConvertor.toDataObject(role);
@@ -112,16 +114,14 @@ public class RoleGatewayImpl implements RoleGateway {
 		return datas;
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean insertRole(RoleDO roleDO, Role role, User user) {
+	private Boolean insertRole(RoleDO roleDO, Role role, User user) {
 		boolean flag = roleMapper.insertTable(roleDO);
 		flag = flag && insertRoleMenu(roleDO.getId(), role.getMenuIds(), user);
 		flag = flag && insertRoleDept(roleDO.getId(), role.getDeptIds(), user);
 		return flag;
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean updateRole(RoleDO roleDO, Role role, List<Long> ids1, List<Long> ids2, User user) {
+	private Boolean updateRole(RoleDO roleDO, Role role, List<Long> ids1, List<Long> ids2, User user) {
 		boolean flag = roleMapper.updateById(roleDO) > 0;
 		flag = flag && updateRoleMenu(roleDO.getId(), role.getMenuIds(), ids1, user);
 		flag = flag && updateRoleDept(roleDO.getId(), role.getDeptIds(), ids2, user);
