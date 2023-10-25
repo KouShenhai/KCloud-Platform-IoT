@@ -436,6 +436,12 @@
                 <excludes>
                     <exclude>application*.yml</exclude>
                     <exclude>bootstrap*.yml</exclude>
+                    <exclude>scg-keystore.p12</exclude>
+                    <exclude>log4j2*.xml</exclude>
+                    <exclude>**/*.woff</exclude>
+                    <exclude>**/*.woff2</exclude>
+                    <exclude>**/*.ttf</exclude>
+                    <exclude>**/*.eot</exclude>
                 </excludes>
             </resource>
             <!-- 添加需要包含的文件 -->
@@ -451,6 +457,15 @@
                     <include>bootstrap.yml</include>
                     <!--suppress UnresolvedMavenProperty -->
                     <include>bootstrap-${profile.active}.yml</include>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <include>log4j2.xml</include>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <include>log4j2-${profile.active}.xml</include>
+                    <include>scg-keystore.p12</include>
+                    <include>**/*.woff</include>
+                    <include>**/*.woff2</include>
+                    <include>**/*.ttf</include>
+                    <include>**/*.eot</include>
                 </includes>
             </resource>
         </resources>
