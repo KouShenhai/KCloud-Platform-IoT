@@ -150,7 +150,7 @@ public class RoleGatewayImpl implements RoleGateway {
 			for (Long menuId : menuIds) {
 				list.add(toRoleMenuDO(roleId, menuId, user));
 			}
-			batchUtil.insertBatch(list, roleMenuMapper::insertBatch);
+			batchUtil.insertBatch(list, RoleMenuMapper.class);
 			return true;
 		}
 		return false;
@@ -162,7 +162,7 @@ public class RoleGatewayImpl implements RoleGateway {
 			for (Long deptId : deptIds) {
 				list.add(toRoleDeptDO(roleId, deptId, user));
 			}
-			batchUtil.insertBatch(list, roleDeptMapper::insertBatch);
+			batchUtil.insertBatch(list, RoleDeptMapper.class);
 			return true;
 		}
 		return false;

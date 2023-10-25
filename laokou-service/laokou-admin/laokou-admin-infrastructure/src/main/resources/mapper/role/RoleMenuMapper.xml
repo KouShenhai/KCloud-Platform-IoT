@@ -19,12 +19,9 @@
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.gatewayimpl.database.RoleMenuMapper">
-    <insert id="insertBatch" useGeneratedKeys="false">
-      insert into boot_sys_role_menu(id,role_id,menu_id,dept_id,dept_path,tenant_id,creator,del_flag,version)
-      values
-          <foreach collection="list" item="item" separator=",">
-               (#{item.id}, #{item.roleId}, #{item.menuId},#{item.deptId},#{item.deptPath},#{item.tenantId},#{item.creator},'0','0')
-          </foreach>
+    <insert id="save" useGeneratedKeys="false">
+        insert into boot_sys_role_menu(id,role_id,menu_id,dept_id,dept_path,tenant_id,creator,del_flag,version)
+        values (#{id}, #{roleId}, #{menuId},#{deptId},#{deptPath},#{tenantId},#{creator},'0','0')
     </insert>
     <delete id="deleteRoleMenuByIds">
         delete from boot_sys_role_menu

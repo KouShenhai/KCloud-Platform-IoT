@@ -1,2 +1,10 @@
 server:
   port: 10004
+
+spring:
+  application:
+    name: @pom.parent.artifactId@
+  mqtt:
+    username: admin
+    password: laokou123
+    host: tcp://127.0.0.1:18083

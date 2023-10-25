@@ -21,7 +21,12 @@ import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.laokou.common.i18n.common.exception.DataSourceException;
+import org.laokou.common.mybatisplus.database.BatchMapper;
+import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +35,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Consumer;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 
@@ -42,61 +46,64 @@ import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 @Component
 public class BatchUtil {
 
-	private final TransactionalUtil transactionalUtil;
-
 	private final ThreadPoolTaskExecutor taskExecutor;
+
+	private final SqlSessionFactory sqlSessionFactory;
 
 	private static final int DEFAULT_BATCH_NUM = 1000;
 
-	public <T> void insertBatch(List<T> dataList, Consumer<List<T>> batchOps) {
-		insertBatch(dataList, DEFAULT_BATCH_NUM, batchOps, MASTER);
+	public <T extends BaseDO,M extends BatchMapper<T>> void insertBatch(List<T> dataList,Class<M> clazz) {
+		insertBatch(dataList, DEFAULT_BATCH_NUM, clazz, MASTER);
 	}
 
-	public <T> void insertBatch(List<T> dataList, Consumer<List<T>> batchOps, String ds) {
-		insertBatch(dataList, DEFAULT_BATCH_NUM, batchOps, ds);
+	public <T extends BaseDO,M extends BatchMapper<T>> void insertBatch(List<T> dataList,Class<M> clazz, String ds) {
+		insertBatch(dataList, DEFAULT_BATCH_NUM, clazz, ds);
 	}
 
 	/**
 	 * 批量新增
 	 * @param dataList 集合
 	 * @param batchNum 每组多少条数据
-	 * @param batchOps 函数
+	 * @param clazz 类型
 	 */
 	@SneakyThrows
-	public <T> void insertBatch(List<T> dataList, int batchNum, Consumer<List<T>> batchOps, String ds) {
-		// 数据分组
-		List<List<T>> partition = Lists.partition(dataList, batchNum);
-		AtomicBoolean rollback = new AtomicBoolean(false);
-		CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
-		List<CompletableFuture<Void>> futures = partition.parallelStream()
-			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, batchOps, cyclicBarrier, rollback, ds),
-					taskExecutor))
-			.toList();
-		// 阻塞主线程
-		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-		if (rollback.get()) {
-			throw new DataSourceException("批量插入数据异常，数据已回滚");
+	public <T extends BaseDO,M extends BatchMapper<T>> void insertBatch(List<T> dataList, int batchNum, Class<M> clazz, String ds) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH,false)) {
+			// 数据分组
+			List<List<T>> partition = Lists.partition(dataList, batchNum);
+			AtomicBoolean rollback = new AtomicBoolean(false);
+			CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
+			M mapper = sqlSession.getMapper(clazz);
+			List<CompletableFuture<Void>> futures = partition.parallelStream()
+					.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, mapper, cyclicBarrier, rollback, ds, sqlSession),
+							taskExecutor))
+					.toList();
+			// 阻塞主线程
+			CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+			if (rollback.get()) {
+				throw new DataSourceException("批量插入数据异常，数据已回滚");
+			}
 		}
 	}
 
-	private <T> void handleBatch(List<T> item, Consumer<List<T>> batchOps, CyclicBarrier cyclicBarrier,
-			AtomicBoolean rollback, String ds) {
+	private <T extends BaseDO,M extends BatchMapper<T>> void handleBatch(List<T> item, M mapper, CyclicBarrier cyclicBarrier,
+			AtomicBoolean rollback, String ds,SqlSession sqlSession) {
 		try {
 			DynamicDataSourceContextHolder.push(ds);
-			transactionalUtil.executeWithoutResult(callback -> {
-				try {
-					batchOps.accept(item);
-					cyclicBarrier.await(60, TimeUnit.SECONDS);
+			try {
+				item.parallelStream().forEachOrdered(mapper::save);
+				cyclicBarrier.await(30, TimeUnit.SECONDS);
+				sqlSession.commit();
+				sqlSession.clearCache();
+			}
+			catch (Exception e) {
+				handleException(cyclicBarrier, rollback, e.getMessage());
+			}
+			finally {
+				if (rollback.get()) {
+					sqlSession.rollback();
 				}
-				catch (Exception e) {
-					handleException(cyclicBarrier, rollback, e.getMessage());
-				}
-				finally {
-					if (rollback.get()) {
-						callback.setRollbackOnly();
-					}
-				}
-			});
+			}
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

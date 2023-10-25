@@ -228,7 +228,7 @@ public class UserGatewayImpl implements UserGateway {
 			userRoleDO.setDeptPath(user.getDeptPath());
 			list.add(userRoleDO);
 		}
-		batchUtil.insertBatch(list, userRoleMapper::insertBatch);
+		batchUtil.insertBatch(list, UserRoleMapper.class);
 		return true;
 	}
 

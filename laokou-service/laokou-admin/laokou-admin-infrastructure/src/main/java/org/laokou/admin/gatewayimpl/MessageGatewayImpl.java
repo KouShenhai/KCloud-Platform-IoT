@@ -126,7 +126,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		for (String userId : receiver) {
 			list.add(toMessageDetailDO(messageId, userId, user));
 		}
-		batchUtil.insertBatch(list, messageDetailMapper::insertBatch, DynamicDataSourceContextHolder.peek());
+		batchUtil.insertBatch(list, MessageDetailMapper.class, DynamicDataSourceContextHolder.peek());
 		return true;
 	}
 

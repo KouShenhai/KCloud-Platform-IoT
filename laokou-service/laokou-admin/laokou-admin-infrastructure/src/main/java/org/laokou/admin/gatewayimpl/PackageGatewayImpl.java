@@ -137,7 +137,7 @@ public class PackageGatewayImpl implements PackageGateway {
 		for (Long menuId : menuIds) {
 			list.add(toPackageMenuDO(packageId, menuId, user));
 		}
-		batchUtil.insertBatch(list, packageMenuMapper::insertBatch);
+		batchUtil.insertBatch(list, PackageMenuMapper.class);
 		return true;
 	}
 
