@@ -453,6 +453,7 @@
                     <include>bootstrap-${PROFILE-ACTIVE}.yml</include>
                     <include>log4j2.xml</include>
                     <include>log4j2-${PROFILE-ACTIVE}.xml</include>
+                    <include>init_router.json</include>
                 </includes>
             </resource>
         </resources>

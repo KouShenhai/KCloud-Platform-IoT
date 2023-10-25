@@ -32,6 +32,8 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
+import static org.laokou.common.i18n.common.Constant.TRUE;
+
 /**
  * 跨域配置
  *
@@ -68,7 +70,7 @@ public class CorsConfig {
 				responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, requestMethod.name());
 			}
 			// 允许证书
-			responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+			responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, TRUE);
 			// 暴露响应头
 			responseHeaders.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, CorsConfiguration.ALL);
 			// 每1个小时发送一次预请求

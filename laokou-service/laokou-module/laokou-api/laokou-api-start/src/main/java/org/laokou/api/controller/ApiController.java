@@ -12,21 +12,30 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
-package org.laokou.api.server;
+package org.laokou.api.controller;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.secret.annotation.ApiSecret;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author laokou
  */
-@SpringBootApplication
-public class ApiApp {
+@RestController
+@Slf4j
+public class ApiController {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ApiApp.class, args);
+	@ApiSecret
+	@GetMapping("/test")
+	public void test() {
+		log.info("测试验签，验签通过");
 	}
+
+	/**
+	 * 增加邮箱，验证码 API调用
+	 */
 
 }

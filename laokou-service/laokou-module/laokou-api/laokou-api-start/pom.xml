@@ -7,7 +7,7 @@
         <groupId>org.laokou</groupId>
         <version>3.1.5</version>
     </parent>
-    <artifactId>laokou-api-server</artifactId>
+    <artifactId>laokou-api-start</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -16,6 +16,10 @@
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-secret</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-mqtt</artifactId>
         </dependency>
     </dependencies>
 
@@ -28,7 +32,7 @@
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
                     <!-- main方法的地址 只需要修改这个地址-->
-                    <mainClass>org.laokou.api.server.ApiApp</mainClass>
+                    <mainClass>org.laokou.api.ApiApp</mainClass>
                 </configuration>
                 <executions>
                     <execution>

@@ -89,5 +89,9 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
   </dependencies>
 </project>

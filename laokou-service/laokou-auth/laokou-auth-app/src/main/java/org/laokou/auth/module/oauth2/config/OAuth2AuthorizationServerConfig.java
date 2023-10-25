@@ -72,8 +72,7 @@ import java.util.UUID;
 
 import static org.laokou.auth.common.Constant.LOGIN_PATTERN;
 import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties.PREFIX;
-import static org.laokou.common.i18n.common.Constant.ALGORITHM_RSA;
-import static org.laokou.common.i18n.common.Constant.ENABLED;
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}
@@ -81,7 +80,7 @@ import static org.laokou.common.i18n.common.Constant.ENABLED;
  * @author laokou
  */
 @Configuration
-@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = PREFIX, name = ENABLED)
+@ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = PREFIX, name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2AuthorizationServerConfig {
 
