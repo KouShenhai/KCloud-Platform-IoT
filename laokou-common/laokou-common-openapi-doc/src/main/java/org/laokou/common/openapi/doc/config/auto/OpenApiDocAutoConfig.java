@@ -30,8 +30,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
-import static org.laokou.common.i18n.common.Constant.AUTHORIZATION;
-import static org.laokou.common.i18n.common.Constant.TRUE;
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * @author laokou
@@ -49,7 +48,7 @@ public class OpenApiDocAutoConfig {
 		return new OpenAPI()
 			.info(new Info().title("API文档")
 				.description("API文档")
-				.version("3.1.5")
+				.version(VERSION)
 				.contact(new Contact().name("laokou").url("https://github.com/KouShenhai").email("2413176044@qq.com"))
 				.license(new License().name("Apache 2.0").url("https://www.apache.org/licenses/LICENSE-2.0.html")))
 			.externalDocs(new ExternalDocumentation().description("老寇云平台").url("https://github.com/KouShenhai"))
