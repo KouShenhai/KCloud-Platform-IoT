@@ -33,8 +33,8 @@ import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.Constant.USER;
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
+import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
 
 /**
  * @author laokou

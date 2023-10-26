@@ -45,7 +45,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_TENANT;
+import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_TENANT;
+import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
 
 /**
  * @author laokou

@@ -31,8 +31,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.admin.common.Constant.TENANT;
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou

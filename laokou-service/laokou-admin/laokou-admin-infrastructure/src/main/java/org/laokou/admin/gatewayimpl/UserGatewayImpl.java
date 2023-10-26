@@ -52,8 +52,8 @@ import java.util.concurrent.CompletableFuture;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.common.i18n.common.Constant.UNDER;
-import static org.laokou.common.i18n.common.Constant.USER;
-import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_USER;
+import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
+import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
 
 /**
  * @author laokou
@@ -145,7 +145,7 @@ public class UserGatewayImpl implements UserGateway {
 	@SneakyThrows
 	public Datas<User> list(User user, PageQuery pageQuery) {
 		UserDO userDO = userConvertor.toDataObject(user);
-		final PageQuery page = pageQuery.time().page().ignore(true);
+		final PageQuery page = pageQuery.time().page().ignore();
 		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
 				BOOT_SYS_USER);
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture.supplyAsync(() -> {

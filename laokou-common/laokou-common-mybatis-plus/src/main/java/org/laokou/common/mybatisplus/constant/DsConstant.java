@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.laokou.common.mybatisplus.template;
+package org.laokou.common.mybatisplus.constant;
 
 /**
  * @author laokou
@@ -47,5 +47,20 @@ public interface DsConstant {
 	String BOOT_SYS_RESOURCE = "boot_sys_resource";
 
 	String BOOT_SYS_SQL_LOG = "boot_sys_sql_log";
+
+	/**
+	 * 用户
+	 */
+	String USER = "user";
+
+	/**
+	 * 登录日志
+	 */
+	String LOGIN_LOG = "login_log";
+
+	/**
+	 * 租户
+	 */
+	String TENANT = "#tenant";
 
 }

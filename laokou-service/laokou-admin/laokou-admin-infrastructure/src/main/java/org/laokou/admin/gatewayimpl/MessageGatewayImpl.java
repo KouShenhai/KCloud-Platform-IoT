@@ -51,8 +51,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.laokou.admin.common.Constant.TENANT;
-import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_MESSAGE;
+import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_MESSAGE;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 import static org.laokou.common.rocketmq.constant.MqConstant.*;
 
 /**

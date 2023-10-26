@@ -21,11 +21,6 @@ package org.laokou.admin.common;
 public interface Constant {
 
 	/**
-	 * 租户
-	 */
-	String TENANT = "#tenant";
-
-	/**
 	 * 最大文件大小
 	 */
 	long MAX_FILE_SIZE = 100 * 1024 * 1024;

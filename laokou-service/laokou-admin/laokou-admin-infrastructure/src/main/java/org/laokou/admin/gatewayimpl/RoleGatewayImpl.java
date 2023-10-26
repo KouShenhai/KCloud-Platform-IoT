@@ -45,7 +45,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_ROLE;
+import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_ROLE;
 
 /**
  * @author laokou

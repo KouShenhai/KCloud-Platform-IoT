@@ -34,8 +34,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
 
-import static org.laokou.common.i18n.common.Constant.LOGIN_LOG;
 import static org.laokou.common.i18n.common.Constant.UNDER;
+import static org.laokou.common.mybatisplus.constant.DsConstant.LOGIN_LOG;
 
 /**
  * @author laokou

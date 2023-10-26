@@ -33,7 +33,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_SOURCE;
+import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_SOURCE;
 
 /**
  * @author laokou

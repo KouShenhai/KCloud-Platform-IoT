@@ -34,8 +34,8 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.admin.common.Constant.TENANT;
-import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_DICT;
+import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_DICT;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
