@@ -42,7 +42,6 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_ROLE;
@@ -73,14 +72,14 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public Boolean update(Role role, User user) {
 		Long id = role.getId();
 		RoleDO roleDO = RoleConvertor.toDataObject(role);
 		roleDO.setVersion(roleMapper.getVersion(id, RoleDO.class));
 		List<Long> ids1 = roleMenuMapper.getIdsByRoleId(id);
 		List<Long> ids2 = roleDeptMapper.getIdsByRoleId(id);
-		return updateRole(roleDO, role, ids1, ids2, user);
+		updateRole(roleDO, role, ids1, ids2, user);
+		return true;
 	}
 
 	@Override
@@ -122,10 +121,17 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	private Boolean updateRole(RoleDO roleDO, Role role, List<Long> ids1, List<Long> ids2, User user) {
-		boolean flag = roleMapper.updateById(roleDO) > 0;
-		flag = flag && updateRoleMenu(roleDO.getId(), role.getMenuIds(), ids1, user);
-		flag = flag && updateRoleDept(roleDO.getId(), role.getDeptIds(), ids2, user);
-		return flag;
+		return transactionalUtil.execute(rollback -> {
+			try {
+				roleMapper.updateById(roleDO);
+				updateRoleDept(roleDO.getId(), role.getDeptIds(), ids2, user);
+				updateRoleMenu(roleDO.getId(), role.getMenuIds(), ids1, user);
+				return true;
+			} catch (Exception e) {
+				rollback.setRollbackOnly();
+				return false;
+			}
+		});
 	}
 
 	private Boolean updateRoleMenu(Long roleId, List<Long> menuIds, List<Long> ids, User user) {
@@ -146,10 +152,7 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private Boolean insertRoleMenu(Long roleId, List<Long> menuIds, User user) {
 		if (CollectionUtil.isNotEmpty(menuIds)) {
-			List<RoleMenuDO> list = new ArrayList<>(menuIds.size());
-			for (Long menuId : menuIds) {
-				list.add(toRoleMenuDO(roleId, menuId, user));
-			}
+			List<RoleMenuDO> list = menuIds.parallelStream().map(menuId -> toRoleMenuDO(roleId, menuId, user)).toList();
 			batchUtil.insertBatch(list, RoleMenuMapper.class);
 			return true;
 		}
@@ -158,10 +161,7 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private Boolean insertRoleDept(Long roleId, List<Long> deptIds, User user) {
 		if (CollectionUtil.isNotEmpty(deptIds)) {
-			List<RoleDeptDO> list = new ArrayList<>(deptIds.size());
-			for (Long deptId : deptIds) {
-				list.add(toRoleDeptDO(roleId, deptId, user));
-			}
+			List<RoleDeptDO> list = deptIds.parallelStream().map(deptId -> toRoleDeptDO(roleId, deptId, user)).toList();
 			batchUtil.insertBatch(list, RoleDeptMapper.class);
 			return true;
 		}
