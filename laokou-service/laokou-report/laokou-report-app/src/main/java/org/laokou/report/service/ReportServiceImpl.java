@@ -22,12 +22,14 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.laokou.report.api.ReportServiceI;
 import org.springframework.stereotype.Service;
 
+import static org.laokou.common.i18n.common.Constant.VERSION;
+
 /**
  * @author laokou
  */
 @Slf4j
 @Service
-@DubboService(version = "1.0.0")
+@DubboService(version = VERSION)
 public class ReportServiceImpl implements ReportServiceI {
 
 	@Override

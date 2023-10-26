@@ -107,7 +107,7 @@
         <!--disruptor版本-->
         <disruptor.version>3.4.4</disruptor.version>
         <!--dubbo版本-->
-        <dubbo.version>3.2.6</dubbo.version>
+        <dubbo.version>3.2.7</dubbo.version>
         <!--lombok-mapstruct-binding版本-->
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!--mapstruct版本-->
@@ -187,6 +187,8 @@
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-registry-nacos</artifactId>
                 <version>${dubbo.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>com.lmax</groupId>

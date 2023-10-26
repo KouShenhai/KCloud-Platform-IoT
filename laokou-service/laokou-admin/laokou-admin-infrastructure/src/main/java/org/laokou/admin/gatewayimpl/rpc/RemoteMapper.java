@@ -21,13 +21,15 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.laokou.report.api.ReportServiceI;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.i18n.common.Constant.VERSION;
+
 /**
  * @author laokou
  */
 @Component
 public class RemoteMapper {
 
-	@DubboReference(version = "1.0.0")
+	@DubboReference(version = VERSION)
 	private ReportServiceI reportServiceI;
 
 	public void test() {

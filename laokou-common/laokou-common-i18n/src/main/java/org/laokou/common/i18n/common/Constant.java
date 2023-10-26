@@ -246,4 +246,9 @@ public interface Constant {
 	 */
 	String MOBILE = "mobile";
 
+	/**
+	 * 版本
+	 */
+	String VERSION = "3.1.5";
+
 }

@@ -43,7 +43,7 @@
         <!--spring-cloud版本-->
         <spring-cloud.version>2022.0.4</spring-cloud.version>
         <!--spring-framework版本-->
-        <spring-framework.version>6.0.12</spring-framework.version>
+        <spring-framework.version>6.0.13</spring-framework.version>
         <!--cloud-alibaba版本-->
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
         <!--spring-doc版本-->
@@ -54,10 +54,6 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!--lombok版本-->
         <lombok.version>1.18.30</lombok.version>
-        <!--mqtt版本-->
-        <mqtt.version>6.1.4</mqtt.version>
-        <!--log4j2-ttl-thread-context-map版本-->
-        <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
         <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
         <docker.registry.name>koushenhai</docker.registry.name>
         <docker.version>1.2.2</docker.version>
@@ -70,22 +66,6 @@
     </properties>
     <dependencyManagement>
         <dependencies>
-            <!-- 定义 log4j2-ttl-thread-context-map 版本 -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>log4j2-ttl-thread-context-map</artifactId>
-                <version>${log4j2-ttl-thread-context-map.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-            <!-- 定义 mqtt 版本 -->
-            <dependency>
-                <groupId>org.springframework.integration</groupId>
-                <artifactId>spring-integration-mqtt</artifactId>
-                <version>${mqtt.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <!-- 定义 mapstruct 版本 -->
             <dependency>
                 <groupId>org.mapstruct</groupId>
@@ -145,6 +125,16 @@
         </dependencies>
     </dependencyManagement>
     <repositories>
+        <repository>
+            <id>central-repo</id>
+            <url>https://repo1.maven.org/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
         <repository>
             <id>snapshots-repo</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
