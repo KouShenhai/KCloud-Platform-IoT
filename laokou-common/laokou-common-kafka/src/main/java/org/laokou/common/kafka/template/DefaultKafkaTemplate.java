@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,24 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.rocketmq.constant;
+
+package org.laokou.common.kafka.template;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
 
 /**
- * 队列常量值
- *
  * @author laokou
  */
-public interface MqConstant {
+@Component
+@RequiredArgsConstructor
+public class DefaultKafkaTemplate {
 
-	String LAOKOU_MESSAGE_TOPIC = "laokou_message_topic";
+    private final KafkaTemplate<String,String> kafkaTemplate;
 
-	String LAOKOU_NOTICE_MESSAGE_TAG = "notice";
-
-	String LAOKOU_REMIND_MESSAGE_TAG = "remind";
-
-	String LAOKOU_REMIND_MESSAGE_CONSUMER_GROUP = "laokou_remind_message_consumer_group";
-
-	String LAOKOU_NOTICE_MESSAGE_CONSUMER_GROUP = "laokou_notice_message_consumer_group";
-
-	String TOPIC_TAG = "%s:%s";
+    public void send(String topic, String body) {
+        kafkaTemplate.send(topic, body);
+    }
 
 }
