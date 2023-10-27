@@ -28,7 +28,7 @@ import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
 import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.openfeign.utils.FeignUtil;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
@@ -51,8 +51,8 @@ public class MessageHandler implements ApplicationListener<MessageEvent> {
 	public void onApplicationEvent(MessageEvent event) {
 		MessageCO co = ConvertUtil.sourceToTarget(event, MessageCO.class);
 		if (CollectionUtil.isEmpty(co.getReceiver())) {
-			Result<AssigneeCO> result = tasksFeignClient.assignee(event.getInstanceId());
-			co.setReceiver(Collections.singleton(result.getData().getAssignee()));
+			AssigneeCO result = FeignUtil.result(tasksFeignClient.assignee(event.getInstanceId()));
+			co.setReceiver(Collections.singleton(result.getAssignee()));
 		}
 		messageInsertCmdExe.execute(new MessageInsertCmd(co));
 	}

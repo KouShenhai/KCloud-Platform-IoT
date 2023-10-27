@@ -17,17 +17,18 @@
 
 package org.laokou.flowable.command.task;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
 import org.laokou.common.i18n.common.exception.FlowException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.flowable.dto.task.TaskDelegateCmd;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.laokou.flowable.common.Constant.FLOWABLE;
 
@@ -40,28 +41,40 @@ import static org.laokou.flowable.common.Constant.FLOWABLE;
 public class TaskDelegateCmdExe {
 
 	private final TaskService taskService;
+	private final TransactionalUtil transactionalUtil;
 
-	@DS(FLOWABLE)
 	public Result<Boolean> execute(TaskDelegateCmd cmd) {
-		log.info("委派流程分布式事务 XID:{}", RootContext.getXID());
-		String taskId = cmd.getTaskId();
-		String owner = cmd.getUserId().toString();
-		String deleteReason = cmd.getToUserId().toString();
-		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-		if (task == null) {
-			throw new FlowException("任务不存在");
+		try {
+			log.info("委派流程分布式事务 XID:{}", RootContext.getXID());
+			String taskId = cmd.getTaskId();
+			String owner = cmd.getUserId().toString();
+			String deleteReason = cmd.getToUserId().toString();
+			DynamicDataSourceContextHolder.push(FLOWABLE);
+			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+			if (task == null) {
+				throw new FlowException("任务不存在");
+			}
+			if (!owner.equals(task.getAssignee())) {
+				throw new FlowException("用户无权操作任务");
+			}
+			return Result.of(delegate(taskId, owner, deleteReason));
+		} finally {
+			DynamicDataSourceContextHolder.clear();
 		}
-		if (!owner.equals(task.getAssignee())) {
-			throw new FlowException("用户无权操作任务");
-		}
-		return Result.of(delegate(taskId, owner, deleteReason));
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean delegate(String taskId, String owner, String deleteReason) {
-		taskService.setOwner(taskId, owner);
-		taskService.deleteTask(taskId, deleteReason);
-		return true;
+	private Boolean delegate(String taskId, String owner, String deleteReason) {
+		return transactionalUtil.execute(r -> {
+			try {
+				taskService.setOwner(taskId, owner);
+				taskService.deleteTask(taskId, deleteReason);
+				return true;
+			} catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
 }

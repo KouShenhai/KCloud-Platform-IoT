@@ -25,6 +25,7 @@ import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.openfeign.utils.FeignUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
@@ -42,13 +43,13 @@ public class ResourceTaskListQryExe {
 	private final TasksFeignClient tasksFeignClient;
 
 	public Result<Datas<TaskCO>> execute(ResourceTaskListQry qry) {
-		Result<Datas<TaskCO>> result = tasksFeignClient.list(toQry(qry));
-		List<TaskCO> records = result.getData().getRecords();
+		Datas<TaskCO> result = FeignUtil.result(tasksFeignClient.list(toQry(qry)));
+		List<TaskCO> records = result.getRecords();
 		String userName = UserUtil.getUserName();
 		if (CollectionUtil.isNotEmpty(records)) {
 			records.parallelStream().forEach(item -> item.setUsername(userName));
 		}
-		return result;
+		return Result.of(result);
 	}
 
 	private TaskListQry toQry(ResourceTaskListQry qry) {

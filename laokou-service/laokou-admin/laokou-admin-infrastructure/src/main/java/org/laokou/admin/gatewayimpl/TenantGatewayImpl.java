@@ -109,7 +109,7 @@ public class TenantGatewayImpl implements TenantGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
-				return false;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}
@@ -128,7 +128,7 @@ public class TenantGatewayImpl implements TenantGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
-				return false;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}

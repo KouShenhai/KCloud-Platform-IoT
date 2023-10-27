@@ -17,25 +17,28 @@
 
 package org.laokou.flowable.command.definition;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.converter.BpmnXMLConverter;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.Process;
 import org.flowable.common.engine.impl.util.io.InputStreamSource;
 import org.flowable.engine.RepositoryService;
 import org.laokou.common.i18n.common.exception.FlowException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.flowable.dto.definition.DefinitionInsertCmd;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.laokou.flowable.common.Constant.FLOWABLE;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DefinitionInsertCmdExe {
@@ -43,26 +46,38 @@ public class DefinitionInsertCmdExe {
 	private static final String BPMN_FILE_SUFFIX = ".bpmn";
 
 	private final RepositoryService repositoryService;
+	private final TransactionalUtil transactionalUtil;
 
 	@SneakyThrows
-	@DS(FLOWABLE)
 	public Result<Boolean> execute(DefinitionInsertCmd cmd) {
-		BpmnXMLConverter converter = new BpmnXMLConverter();
-		InputStreamSource inputStreamSource = new InputStreamSource(cmd.getFile().getInputStream());
-		BpmnModel bpmnModel = converter.convertToBpmnModel(inputStreamSource, true, true);
-		Process process = bpmnModel.getProcesses().stream().findFirst().orElse(new Process());
-		String key = process.getId();
-		String name = process.getName() + BPMN_FILE_SUFFIX;
-		long count = repositoryService.createDeploymentQuery().deploymentKey(key).count();
-		if (count > 0) {
-			throw new FlowException("流程已存在，请更换流程图并上传");
+		try {
+			BpmnXMLConverter converter = new BpmnXMLConverter();
+			DynamicDataSourceContextHolder.push(FLOWABLE);
+			InputStreamSource inputStreamSource = new InputStreamSource(cmd.getFile().getInputStream());
+			BpmnModel bpmnModel = converter.convertToBpmnModel(inputStreamSource, true, true);
+			Process process = bpmnModel.getProcesses().stream().findFirst().orElse(new Process());
+			String key = process.getId();
+			String name = process.getName() + BPMN_FILE_SUFFIX;
+			long count = repositoryService.createDeploymentQuery().deploymentKey(key).count();
+			if (count > 0) {
+				throw new FlowException("流程已存在，请更换流程图并上传");
+			}
+			return Result.of(deploy(key, name, bpmnModel));
+		} finally {
+			DynamicDataSourceContextHolder.clear();
 		}
-		return Result.of(deploy(key, name, bpmnModel));
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean deploy(String key, String name, BpmnModel bpmnModel) {
-		return repositoryService.createDeployment().name(name).key(key).addBpmnModel(name, bpmnModel).deploy().isNew();
+	private Boolean deploy(String key, String name, BpmnModel bpmnModel) {
+		return transactionalUtil.execute(r -> {
+			try {
+				return repositoryService.createDeployment().name(name).key(key).addBpmnModel(name, bpmnModel).deploy().isNew();
+			} catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
 }

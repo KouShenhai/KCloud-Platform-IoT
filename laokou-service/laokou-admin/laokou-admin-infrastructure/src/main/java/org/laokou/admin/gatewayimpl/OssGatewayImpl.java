@@ -32,6 +32,7 @@ import org.laokou.admin.dto.log.domainevent.OssLogEvent;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -96,7 +97,7 @@ public class OssGatewayImpl implements OssGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
-				return false;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}
@@ -123,7 +124,7 @@ public class OssGatewayImpl implements OssGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
-				return false;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}
@@ -136,7 +137,7 @@ public class OssGatewayImpl implements OssGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
-				return false;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}

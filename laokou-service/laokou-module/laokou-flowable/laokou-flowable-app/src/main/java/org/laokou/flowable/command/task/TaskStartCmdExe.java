@@ -17,7 +17,7 @@
 
 package org.laokou.flowable.command.task;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,11 +26,12 @@ import org.flowable.engine.RuntimeService;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.laokou.common.i18n.common.exception.FlowException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.flowable.dto.task.TaskStartCmd;
 import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.laokou.flowable.common.Constant.FLOWABLE;
 
@@ -45,35 +46,47 @@ public class TaskStartCmdExe {
 	private final RuntimeService runtimeService;
 
 	private final RepositoryService repositoryService;
+	private final TransactionalUtil transactionalUtil;
 
-	@DS(FLOWABLE)
 	public Result<StartCO> execute(TaskStartCmd cmd) {
-		log.info("开始流程分布式事务 XID:{}", RootContext.getXID());
-		String definitionKey = cmd.getDefinitionKey();
-		String instanceName = cmd.getInstanceName();
-		String businessKey = cmd.getBusinessKey();
-		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-			.processDefinitionKey(definitionKey)
-			.latestVersion()
-			.singleResult();
-		if (processDefinition == null) {
-			throw new FlowException("流程未定义");
+		try {
+			log.info("开始流程分布式事务 XID:{}", RootContext.getXID());
+			String definitionKey = cmd.getDefinitionKey();
+			String instanceName = cmd.getInstanceName();
+			String businessKey = cmd.getBusinessKey();
+			DynamicDataSourceContextHolder.push(FLOWABLE);
+			ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+					.processDefinitionKey(definitionKey)
+					.latestVersion()
+					.singleResult();
+			if (processDefinition == null) {
+				throw new FlowException("流程未定义");
+			}
+			if (processDefinition.isSuspended()) {
+				throw new FlowException("流程已被挂起");
+			}
+			return Result.of(start(definitionKey, businessKey, instanceName));
+		} finally {
+			DynamicDataSourceContextHolder.clear();
 		}
-		if (processDefinition.isSuspended()) {
-			throw new FlowException("流程已被挂起");
-		}
-		return Result.of(start(definitionKey, businessKey, instanceName));
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public StartCO start(String definitionKey, String businessKey, String instanceName) {
-		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionKey, businessKey);
-		if (processInstance == null) {
-			throw new FlowException("流程不存在");
-		}
-		String instanceId = processInstance.getId();
-		runtimeService.setProcessInstanceName(instanceId, instanceName);
-		return new StartCO(instanceId);
+	private StartCO start(String definitionKey, String businessKey, String instanceName) {
+		return transactionalUtil.execute(r -> {
+			try {
+				ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionKey, businessKey);
+				if (processInstance == null) {
+					throw new FlowException("流程不存在");
+				}
+				String instanceId = processInstance.getId();
+				runtimeService.setProcessInstanceName(instanceId, instanceName);
+				return new StartCO(instanceId);
+			} catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
 }

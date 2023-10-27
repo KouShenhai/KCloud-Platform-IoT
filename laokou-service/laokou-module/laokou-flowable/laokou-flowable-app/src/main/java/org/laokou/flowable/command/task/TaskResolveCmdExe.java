@@ -17,7 +17,7 @@
 
 package org.laokou.flowable.command.task;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.seata.core.context.RootContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +25,11 @@ import org.flowable.engine.TaskService;
 import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
 import org.laokou.common.i18n.common.exception.FlowException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.flowable.dto.task.TaskResolveCmd;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.laokou.flowable.common.Constant.FLOWABLE;
 
@@ -41,25 +42,37 @@ import static org.laokou.flowable.common.Constant.FLOWABLE;
 public class TaskResolveCmdExe {
 
 	private final TaskService taskService;
+	private final TransactionalUtil transactionalUtil;
 
-	@DS(FLOWABLE)
 	public Result<Boolean> execute(TaskResolveCmd cmd) {
-		log.info("处理流程分布式事务 XID:{}", RootContext.getXID());
-		String taskId = cmd.getTaskId();
-		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-		if (task == null) {
-			throw new FlowException("任务不存在");
+		try {
+			log.info("处理流程分布式事务 XID:{}", RootContext.getXID());
+			String taskId = cmd.getTaskId();
+			DynamicDataSourceContextHolder.push(FLOWABLE);
+			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+			if (task == null) {
+				throw new FlowException("任务不存在");
+			}
+			if (DelegationState.RESOLVED.equals(task.getDelegationState())) {
+				throw new FlowException("非处理任务，请审批任务");
+			}
+			return Result.of(resolve(taskId));
+		} finally {
+			DynamicDataSourceContextHolder.clear();
 		}
-		if (DelegationState.RESOLVED.equals(task.getDelegationState())) {
-			throw new FlowException("非处理任务，请审批任务");
-		}
-		return Result.of(resolve(taskId));
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean resolve(String taskId) {
-		taskService.resolveTask(taskId);
-		return true;
+	private Boolean resolve(String taskId) {
+		return transactionalUtil.execute(r -> {
+			try {
+				taskService.resolveTask(taskId);
+				return true;
+			} catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
 }

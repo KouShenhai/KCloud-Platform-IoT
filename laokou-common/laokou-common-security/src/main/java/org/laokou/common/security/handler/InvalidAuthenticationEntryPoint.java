@@ -44,12 +44,12 @@ public class InvalidAuthenticationEntryPoint implements AuthenticationEntryPoint
 			AuthenticationException authException) throws IOException {
 		if (authException instanceof InsufficientAuthenticationException) {
 			ResponseUtil.response(response, StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
+			return;
 		}
 		if (authException instanceof OAuth2AuthenticationException oAuth2AuthenticationException) {
 			String message = oAuth2AuthenticationException.getError().getDescription();
 			int errorCode = Integer.parseInt(oAuth2AuthenticationException.getError().getErrorCode());
 			ResponseUtil.response(response, errorCode, message);
-			return;
 		}
 	}
 

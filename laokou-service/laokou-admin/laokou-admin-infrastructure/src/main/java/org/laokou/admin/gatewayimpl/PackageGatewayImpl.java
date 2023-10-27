@@ -33,14 +33,13 @@ import org.laokou.admin.gatewayimpl.database.dataobject.PackageMenuDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_PACKAGE;
@@ -62,20 +61,15 @@ public class PackageGatewayImpl implements PackageGateway {
 	private final BatchUtil batchUtil;
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public Boolean insert(Package pack, User user) {
-		PackageDO packageDO = PackageConvertor.toDataObject(pack);
-		return insertPackage(packageDO, pack, user);
+		return insertPackage(PackageConvertor.toDataObject(pack), pack, user);
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public Boolean update(Package pack, User user) {
-		Long id = pack.getId();
 		PackageDO packageDO = PackageConvertor.toDataObject(pack);
-		packageDO.setVersion(packageMapper.getVersion(id, PackageDO.class));
-		List<Long> ids = packageMenuMapper.getIdsByPackageId(id);
-		return updatePackage(packageDO, pack, ids, user);
+		packageDO.setVersion(packageMapper.getVersion(pack.getId(), PackageDO.class));
+		return updatePackage(packageDO, pack, user);
 	}
 
 	@Override
@@ -106,39 +100,51 @@ public class PackageGatewayImpl implements PackageGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
-				return false;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}
 
 	private Boolean insertPackage(PackageDO packageDO, Package pack, User user) {
-		boolean flag = packageMapper.insertTable(packageDO);
-		return flag && insertPackageMenu(packageDO.getId(), pack.getMenuIds(), user);
+		return transactionalUtil.execute(r -> {
+			try {
+				packageMapper.insertTable(packageDO);
+				insertPackageMenu(packageDO.getId(), pack.getMenuIds(), user);
+				return true;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
-	private Boolean updatePackage(PackageDO packageDO, Package pack, List<Long> ids, User user) {
-		boolean flag = packageMapper.updateById(packageDO) > 0;
-		return flag && updatePackageMenu(packageDO.getId(), pack.getMenuIds(), ids, user);
+	private Boolean updatePackage(PackageDO packageDO, Package pack, User user) {
+		return transactionalUtil.execute(r -> {
+			try {
+				packageMapper.updateById(packageDO);
+				updatePackageMenu(packageDO.getId(), pack.getMenuIds(), user);
+				return true;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
-	private Boolean updatePackageMenu(Long packageId, List<Long> menuIds, List<Long> ids, User user) {
-		boolean flag = true;
-		if (CollectionUtil.isNotEmpty(ids)) {
-			flag = packageMenuMapper.deletePackageMenuByIds(ids) > 0;
-		}
-		return flag && insertPackageMenu(packageId, menuIds, user);
+	private void updatePackageMenu(Long packageId, List<Long> menuIds, User user) {
+		packageMenuMapper.deletePackageMenuByPackageId(packageId);
+		insertPackageMenu(packageId, menuIds, user);
 	}
 
-	private Boolean insertPackageMenu(Long packageId, List<Long> menuIds, User user) {
-		if (CollectionUtil.isEmpty(menuIds)) {
-			return false;
+	private void insertPackageMenu(Long packageId, List<Long> menuIds, User user) {
+		if (CollectionUtil.isNotEmpty(menuIds)) {
+			List<PackageMenuDO> list = menuIds.parallelStream().map(menuId -> toPackageMenuDO(packageId, menuId, user)).toList();
+			batchUtil.insertBatch(list, PackageMenuMapper.class);
 		}
-		List<PackageMenuDO> list = new ArrayList<>(menuIds.size());
-		for (Long menuId : menuIds) {
-			list.add(toPackageMenuDO(packageId, menuId, user));
-		}
-		batchUtil.insertBatch(list, PackageMenuMapper.class);
-		return true;
 	}
 
 	private PackageMenuDO toPackageMenuDO(Long packageId, Long menuId, User user) {

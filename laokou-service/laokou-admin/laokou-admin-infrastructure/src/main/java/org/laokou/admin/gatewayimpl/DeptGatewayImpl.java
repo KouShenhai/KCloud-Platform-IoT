@@ -27,10 +27,10 @@ import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -90,7 +90,7 @@ public class DeptGatewayImpl implements DeptGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
-				return false;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}
@@ -101,9 +101,19 @@ public class DeptGatewayImpl implements DeptGateway {
 		return ConvertUtil.sourceToTarget(deptDO, Dept.class);
 	}
 
-	@Transactional(rollbackFor = Exception.class)
 	public Boolean updateDept(DeptDO deptDO, String oldPath, String newPath, List<DeptDO> deptChildrenList) {
-		return deptMapper.updateById(deptDO) > 0 && updateDeptChildren(oldPath, newPath, deptChildrenList);
+		return transactionalUtil.execute(r -> {
+			try {
+				deptMapper.updateById(deptDO);
+				updateDeptChildren(oldPath, newPath, deptChildrenList);
+				return true;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
 	private Boolean insertDept(DeptDO deptDO) {
@@ -114,21 +124,18 @@ public class DeptGatewayImpl implements DeptGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
-				return false;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}
 
-	private Boolean updateDeptChildren(String oldPath, String newPath, List<DeptDO> deptChildrenList) {
-		if (CollectionUtil.isEmpty(deptChildrenList)) {
-			return false;
+	private void updateDeptChildren(String oldPath, String newPath, List<DeptDO> deptChildrenList) {
+		if (CollectionUtil.isNotEmpty(deptChildrenList)) {
+			deptChildrenList.forEach(deptChild -> {
+				deptChild.setPath(deptChild.getPath().replace(oldPath, newPath));
+				deptMapper.updateById(deptChild);
+			});
 		}
-		boolean flag = true;
-		for (DeptDO deptChild : deptChildrenList) {
-			deptChild.setPath(deptChild.getPath().replace(oldPath, newPath));
-			flag = flag && deptMapper.updateById(deptChild) > 0;
-		}
-		return flag;
 	}
 
 	private String getPath(Long pid, Long id) {

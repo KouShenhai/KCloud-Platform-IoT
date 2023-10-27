@@ -14,27 +14,32 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.gatewayimpl.database;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.admin.gatewayimpl.database.dataobject.PackageMenuDO;
-import org.laokou.common.mybatisplus.database.BatchMapper;
-import org.springframework.stereotype.Repository;
+package org.laokou.common.openfeign.utils;
 
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.FeignException;
+import org.laokou.common.i18n.dto.Result;
 
 /**
  * @author laokou
  */
-@Mapper
-@Repository
-public interface PackageMenuMapper extends BatchMapper<PackageMenuDO> {
+@Slf4j
+public class FeignUtil {
 
-	List<Long> getIdsByPackageId(@Param("packageId") Long packageId);
+    public static <T> void resultVoid(Result<T> result) {
+        resultThrow(result);
+    }
 
-	List<Long> getMenuIdsByPackageId(@Param("packageId") Long packageId);
+    public static <T> T result(Result<T> result) {
+        resultThrow(result);
+        return result.getData();
+    }
 
-	Integer deletePackageMenuByPackageId(@Param("packageId") Long packageId);
+    private static <T> void resultThrow(Result<T> result) {
+        if (result.fail()) {
+            throw new FeignException(result.getMsg());
+        }
+    }
 
 }

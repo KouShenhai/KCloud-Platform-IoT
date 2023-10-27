@@ -80,13 +80,13 @@ public class UserGatewayImpl implements UserGateway {
 	private final ThreadPoolTaskExecutor taskExecutor;
 
 	@Override
-	@GlobalTransactional
+	@GlobalTransactional(rollbackFor = Exception.class)
 	public Boolean insert(User user) {
 		return insertUser(getInsertUserDO(user), user);
 	}
 
 	@Override
-	@GlobalTransactional
+	@GlobalTransactional(rollbackFor = Exception.class)
 	public Boolean update(User user) {
 		return updateUser(getUpdateUserDO(user),user);
 	}

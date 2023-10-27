@@ -17,7 +17,7 @@
 
 package org.laokou.flowable.command.definition.query;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.ProcessDefinition;
@@ -43,26 +43,30 @@ public class DefinitionListQryExe {
 
 	private final RepositoryService repositoryService;
 
-	@DS(FLOWABLE)
 	public Result<Datas<DefinitionCO>> execute(DefinitionListQry qry) {
-		String name = qry.getName();
-		ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery()
-			.latestVersion()
-			.orderByProcessDefinitionKey()
-			.asc();
-		if (StringUtil.isNotEmpty(name)) {
-			query.processDefinitionNameLike(StringUtil.like(name));
+		try {
+			String name = qry.getName();
+			DynamicDataSourceContextHolder.push(FLOWABLE);
+			ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery()
+					.latestVersion()
+					.orderByProcessDefinitionKey()
+					.asc();
+			if (StringUtil.isNotEmpty(name)) {
+				query.processDefinitionNameLike(StringUtil.like(name));
+			}
+			long total = query.count();
+			int pageNum = qry.getPageNum();
+			int pageSize = qry.getPageSize();
+			int pageIndex = pageSize * (pageNum - 1);
+			List<ProcessDefinition> definitionList = query.listPage(pageIndex, pageSize);
+			List<DefinitionCO> list = new ArrayList<>(definitionList.size());
+			for (ProcessDefinition definition : definitionList) {
+				list.add(toDefinitionCO(definition));
+			}
+			return Result.of(new Datas<>(total, list));
+		} finally {
+			DynamicDataSourceContextHolder.clear();
 		}
-		long total = query.count();
-		int pageNum = qry.getPageNum();
-		int pageSize = qry.getPageSize();
-		int pageIndex = pageSize * (pageNum - 1);
-		List<ProcessDefinition> definitionList = query.listPage(pageIndex, pageSize);
-		List<DefinitionCO> list = new ArrayList<>(definitionList.size());
-		for (ProcessDefinition definition : definitionList) {
-			list.add(toDefinitionCO(definition));
-		}
-		return Result.of(new Datas<>(total, list));
 	}
 
 	private DefinitionCO toDefinitionCO(ProcessDefinition definition) {
