@@ -23,8 +23,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * @author laokou
  */
@@ -32,8 +30,6 @@ import java.util.List;
 @Mapper
 public interface RoleMenuMapper extends BatchMapper<RoleMenuDO> {
 
-	List<Long> getIdsByRoleId(@Param("roleId") Long roleId);
-
-	Integer deleteRoleMenuByIds(@Param("list") List<Long> list);
+	void deleteRoleMenuByRoleId(@Param("roleId") Long roleId);
 
 }

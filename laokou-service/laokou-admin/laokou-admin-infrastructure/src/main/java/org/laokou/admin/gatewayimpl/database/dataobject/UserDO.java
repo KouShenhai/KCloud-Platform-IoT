@@ -27,7 +27,7 @@ import org.laokou.common.mybatisplus.handler.JasyptTypeHandler;
 import java.io.Serial;
 
 import static org.laokou.common.mybatisplus.config.DynamicTableNameHandler.PLACE_HOLDER;
-import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_USER;
+import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
 
 /**
  * @author laokou

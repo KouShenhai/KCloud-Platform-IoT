@@ -86,14 +86,14 @@ public class BatchUtil {
 
 	private <T extends BaseDO, M extends BatchMapper<T>> void handleBatch(List<T> item, Class<M> clazz,
 			CyclicBarrier cyclicBarrier, AtomicBoolean rollback, String ds) {
-		try (SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false)) {
-			M mapper = sqlSession.getMapper(clazz);
+		try {
 			DynamicDataSourceContextHolder.push(ds);
+			SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
+			M mapper = sqlSession.getMapper(clazz);
 			try {
 				item.parallelStream().forEachOrdered(mapper::save);
 				cyclicBarrier.await(30, TimeUnit.SECONDS);
 				sqlSession.commit();
-				sqlSession.clearCache();
 			}
 			catch (Exception e) {
 				handleException(cyclicBarrier, rollback, e.getMessage());
@@ -102,6 +102,8 @@ public class BatchUtil {
 				if (rollback.get()) {
 					sqlSession.rollback();
 				}
+				sqlSession.clearCache();
+				sqlSession.close();
 			}
 		}
 		finally {

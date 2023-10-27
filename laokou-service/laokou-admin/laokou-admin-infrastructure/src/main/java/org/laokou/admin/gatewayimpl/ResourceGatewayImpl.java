@@ -47,7 +47,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.laokou.admin.common.Constant.KEY;
-import static org.laokou.common.mybatisplus.template.DsConstant.BOOT_SYS_RESOURCE;
+import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_RESOURCE;
 
 /**
  * @author laokou

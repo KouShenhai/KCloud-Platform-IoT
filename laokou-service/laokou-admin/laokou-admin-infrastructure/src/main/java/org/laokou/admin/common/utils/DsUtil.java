@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.mybatisplus.template.DsConstant.*;
+import static org.laokou.common.mybatisplus.constant.DsConstant.*;
 
 /**
  * @author laokou
@@ -122,7 +122,7 @@ public class DsUtil {
 			if (CollectionUtil.isEmpty(tables)) {
 				throw new DataSourceException("未初始化表结构");
 			}
-			List<String> list = TABLES.stream().filter(i -> !tables.contains(i)).toList();
+			List<String> list = TABLES.stream().filter(table -> !tables.contains(table)).toList();
 			if (CollectionUtil.isNotEmpty(list)) {
 				throw new DataSourceException(String.format("%s不存在，请检查数据表", String.join("、", list)));
 			}

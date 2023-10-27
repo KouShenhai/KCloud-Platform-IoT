@@ -41,7 +41,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import static org.laokou.admin.common.Constant.MAX_FILE_SIZE;
-import static org.laokou.admin.common.Constant.TENANT;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou

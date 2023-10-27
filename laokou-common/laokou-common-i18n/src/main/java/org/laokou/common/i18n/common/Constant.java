@@ -227,16 +227,6 @@ public interface Constant {
 	String TENANT_ID = "tenant-id";
 
 	/**
-	 * 用户
-	 */
-	String USER = "user";
-
-	/**
-	 * 登录日志
-	 */
-	String LOGIN_LOG = "login_log";
-
-	/**
 	 * 邮箱
 	 */
 	String MAIL = "mail";

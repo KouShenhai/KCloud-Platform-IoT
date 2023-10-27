@@ -12,3 +12,18 @@ INSERT INTO `kcloud_platform_alibaba_user`.`boot_sys_user_202305` (`id`, `creato
 INSERT INTO `kcloud_platform_alibaba_user`.`boot_sys_user_202305` (`id`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `version`, `dept_id`, `dept_path`, `tenant_id`, `username`, `password`, `super_admin`, `mail`, `status`, `avatar`, `mobile`) VALUES (1707428077144997889, 1341620898007281665, 1707428076142559234, '2022-06-16 00:48:28', '2023-10-10 04:25:05', 0, 72, 1535887940687765505, '0,1535887940687765505', 0, 'JSB4EWKd5aI/aISsDw0ODA==', '{bcrypt}$2a$10$cF89J1QesYz2sYghWbw6d./ly/zWK4yH8ehr2/l33UvtD3sCNHh.i', 0, '', 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', '');
 INSERT INTO `kcloud_platform_alibaba_user`.`boot_sys_user_202305` (`id`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `version`, `dept_id`, `dept_path`, `tenant_id`, `username`, `password`, `super_admin`, `mail`, `status`, `avatar`, `mobile`) VALUES (1707428077199523842, 1341620898007281665, 1341620898007281665, '2023-02-09 22:59:04', '2023-02-09 22:59:04', 0, 0, 0, '0', 1, '5/Pqo/yVzE72YyPDE5RKAw==', '{bcrypt}$2a$10$ToBq5JB191IUkAfnqfeV5OFLOFDvhr9wWaRm1LhTn5sbL8uyJ0Gre', 1, '', 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', '');
 INSERT INTO `kcloud_platform_alibaba_user`.`boot_sys_user_202305` (`id`, `creator`, `editor`, `create_date`, `update_date`, `del_flag`, `version`, `dept_id`, `dept_path`, `tenant_id`, `username`, `password`, `super_admin`, `mail`, `status`, `avatar`, `mobile`) VALUES (1707428077488930817, 1537114827246292998, 1537114827246292998, '2023-02-15 13:18:39', '2023-02-15 13:18:39', 0, 0, 1584488411756171278, '0', 1, 'cmV6CFYc1NUWgni0E8xpdg==', '{bcrypt}$2a$10$nbLXUQeCfuiw.7wZwuOT.e0r1mr.ZQcLIlFbil28PCrPBNAnPLRT.', 0, '', 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', '');
+
+DROP TABLE IF EXISTS `undo_log`;
+CREATE TABLE `undo_log`  (
+                             `id` bigint NOT NULL AUTO_INCREMENT,
+                             `branch_id` bigint NOT NULL,
+                             `xid` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+                             `context` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+                             `rollback_info` longblob NOT NULL,
+                             `log_status` int NOT NULL,
+                             `log_created` datetime NOT NULL,
+                             `log_modified` datetime NOT NULL,
+                             `ext` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+                             PRIMARY KEY (`id`) USING BTREE,
+                             UNIQUE INDEX `ux_undo_log`(`xid` ASC, `branch_id` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;

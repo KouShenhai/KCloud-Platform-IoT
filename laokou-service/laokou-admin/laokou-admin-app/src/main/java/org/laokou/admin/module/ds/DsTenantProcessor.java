@@ -24,7 +24,7 @@ import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.admin.common.Constant.TENANT;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou

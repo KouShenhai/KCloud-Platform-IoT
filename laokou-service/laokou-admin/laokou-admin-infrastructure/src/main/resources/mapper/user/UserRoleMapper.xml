@@ -23,12 +23,9 @@
         insert into boot_sys_user_role(id,role_id,user_id,dept_id,dept_path,tenant_id,creator,del_flag,version)
         values (#{id},#{roleId},#{userId},#{deptId},#{deptPath},#{tenantId},#{creator},'0','0')
     </insert>
-    <delete id="deleteUserRoleByIds">
+    <delete id="deleteUserRoleByUserId">
         delete from boot_sys_user_role
-        where id in
-        <foreach collection="list" item="item" separator="," close=")" open="(">
-            #{item}
-        </foreach>
+        where user_id = #{userId}
     </delete>
     <select id="getIdsByUserId" resultType="java.lang.Long">
         select id

@@ -73,8 +73,8 @@ public class PageQuery extends Query {
 		this.pageSize = pageSize;
 	}
 
-	public PageQuery ignore(boolean ignore) {
-		this.ignore = ignore;
+	public PageQuery ignore() {
+		this.ignore = true;
 		return this;
 	}
 
