@@ -47,17 +47,17 @@ public class RoleUpdateCmdExe {
 	private final RoleMapper roleMapper;
 
 	public Result<Boolean> execute(RoleUpdateCmd cmd) {
-		RoleCO roleCO = cmd.getRoleCO();
-		Long id = roleCO.getId();
+		RoleCO co = cmd.getRoleCO();
+		Long id = co.getId();
 		if (id == null) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		Long count = roleMapper.selectCount(
-				Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, roleCO.getName()).ne(RoleDO::getId, id));
+				Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, co.getName()).ne(RoleDO::getId, id));
 		if (count > 0) {
 			throw new SystemException("角色已存在，请重新填写");
 		}
-		return Result.of(roleGateway.update(RoleConvertor.toEntity(roleCO), toUser()));
+		return Result.of(roleGateway.update(RoleConvertor.toEntity(co), toUser()));
 	}
 
 	private User toUser() {

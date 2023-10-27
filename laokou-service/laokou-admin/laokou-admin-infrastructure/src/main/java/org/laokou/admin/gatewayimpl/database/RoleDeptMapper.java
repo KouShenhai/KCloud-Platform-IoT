@@ -21,8 +21,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * @author laokou
  */
@@ -30,8 +28,6 @@ import java.util.List;
 @Mapper
 public interface RoleDeptMapper extends BatchMapper<RoleDeptDO> {
 
-	List<Long> getIdsByRoleId(@Param("roleId") Long roleId);
-
-	Integer deleteRoleDeptByIds(@Param("list") List<Long> list);
+	void deleteRoleDeptByRoleId(@Param("roleId") Long roleId);
 
 }

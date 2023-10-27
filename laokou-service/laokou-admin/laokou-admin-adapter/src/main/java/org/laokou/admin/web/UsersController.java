@@ -26,8 +26,6 @@ import org.laokou.admin.dto.user.*;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.dto.user.clientobject.UserOnlineCO;
 import org.laokou.admin.dto.user.clientobject.UserProfileCO;
-import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.aspect.Type;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -53,7 +51,6 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "修改用户")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@PreAuthorize("hasAuthority('users:update')")
-	@DataCache(name = "users", key = "#cmd.userCO.id", type = Type.DEL)
 	public Result<Boolean> update(@RequestBody UserUpdateCmd cmd) {
 		return usersServiceI.update(cmd);
 	}
@@ -134,7 +131,6 @@ public class UsersController {
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "用户管理", description = "查看用户")
-	@DataCache(name = "users", key = "#id")
 	public Result<UserCO> getById(@PathVariable("id") Long id) {
 		return usersServiceI.getById(new UserGetQry(id));
 	}
@@ -144,7 +140,6 @@ public class UsersController {
 	@Operation(summary = "用户管理", description = "删除用户")
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@PreAuthorize("hasAuthority('users:delete')")
-	@DataCache(name = "users", key = "#id", type = Type.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return usersServiceI.deleteById(new UserDeleteCmd(id));
 	}

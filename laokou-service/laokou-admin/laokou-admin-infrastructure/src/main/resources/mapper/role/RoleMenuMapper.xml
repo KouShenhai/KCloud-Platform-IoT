@@ -23,16 +23,8 @@
         insert into boot_sys_role_menu(id,role_id,menu_id,dept_id,dept_path,tenant_id,creator,del_flag,version)
         values (#{id}, #{roleId}, #{menuId},#{deptId},#{deptPath},#{tenantId},#{creator},'0','0')
     </insert>
-    <delete id="deleteRoleMenuByIds">
+    <delete id="deleteRoleMenuByRoleId">
         delete from boot_sys_role_menu
-        where id in
-        <foreach collection="list" item="item" separator="," close=")" open="(">
-            #{item}
-        </foreach>
-    </delete>
-    <select id="getIdsByRoleId" resultType="java.lang.Long">
-        select id
-        from boot_sys_role_menu
         where role_id = #{roleId}
-    </select>
+    </delete>
 </mapper>

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.annotation.Master;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.DeptConvertor;
@@ -49,6 +50,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	private final TransactionalUtil transactionalUtil;
 
 	@Override
+	@Master
 	public List<Dept> list(Dept dept, Long tenantId) {
 		DeptDO deptDO = DeptConvertor.toDataObject(dept);
 		deptDO.setTenantId(tenantId);
