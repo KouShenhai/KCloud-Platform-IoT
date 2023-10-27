@@ -23,12 +23,9 @@
         insert into boot_sys_package_menu(id,package_id,menu_id,dept_id,tenant_id,creator,del_flag,version)
         values (#{id},#{packageId},#{menuId},#{deptId},#{tenantId},#{creator},'0','0')
     </insert>
-    <delete id="deletePackageMenuByIds">
+    <delete id="deletePackageMenuByPackageId">
         delete from boot_sys_package_menu
-        where id in
-        <foreach collection="list" item="item" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        where package_id = #{packageId}
     </delete>
     <select id="getIdsByPackageId" resultType="java.lang.Long">
         select id

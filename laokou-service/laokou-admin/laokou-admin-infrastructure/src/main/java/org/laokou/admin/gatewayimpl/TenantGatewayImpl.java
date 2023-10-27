@@ -36,6 +36,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
@@ -108,7 +109,7 @@ public class TenantGatewayImpl implements TenantGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
-				return false;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}
@@ -127,7 +128,7 @@ public class TenantGatewayImpl implements TenantGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
-				return false;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}
@@ -157,7 +158,7 @@ public class TenantGatewayImpl implements TenantGateway {
 				catch (Exception e) {
 					log.error("错误信息：{}", e.getMessage());
 					rollback.setRollbackOnly();
-					throw  e;
+					throw new SystemException(e.getMessage());
 				}
 			});
 		}

@@ -17,7 +17,7 @@
 
 package org.laokou.flowable.command.task;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.dto.Result;
@@ -38,9 +38,12 @@ public class TaskAssigneeGetQryExe {
 
 	private final TaskMapper taskMapper;
 
-	@DS(FLOWABLE)
 	public Result<AssigneeCO> execute(TaskAssigneeGetQry qry) {
-		return Result.of(new AssigneeCO(taskMapper.getAssigneeByInstanceId(qry.getInstanceId())));
+		try {
+			DynamicDataSourceContextHolder.push(FLOWABLE);
+			return Result.of(new AssigneeCO(taskMapper.getAssigneeByInstanceId(qry.getInstanceId())));
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
-
 }

@@ -17,46 +17,61 @@
 
 package org.laokou.flowable.command.definition;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.laokou.common.i18n.common.exception.FlowException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.flowable.dto.definition.DefinitionSuspendCmd;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.laokou.flowable.common.Constant.FLOWABLE;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DefinitionSuspendCmdExe {
 
 	private final RepositoryService repositoryService;
+	private final TransactionalUtil transactionalUtil;
 
-	@DS(FLOWABLE)
 	public Result<Boolean> execute(DefinitionSuspendCmd cmd) {
-		String definitionId = cmd.getDefinitionId();
-		final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-			.processDefinitionId(definitionId)
-			.singleResult();
-		if (!processDefinition.isSuspended()) {
-			return Result.of(suspend(definitionId));
-		}
-		else {
-			throw new FlowException("挂起失败，流程已挂起");
+		try {
+			DynamicDataSourceContextHolder.push(FLOWABLE);
+			String definitionId = cmd.getDefinitionId();
+			final ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+					.processDefinitionId(definitionId)
+					.singleResult();
+			if (!processDefinition.isSuspended()) {
+				return Result.of(suspend(definitionId));
+			} else {
+				throw new FlowException("挂起失败，流程已挂起");
+			}
+		} finally {
+			DynamicDataSourceContextHolder.clear();
 		}
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean suspend(String definitionId) {
-		// 挂起
-		repositoryService.suspendProcessDefinitionById(definitionId, true, null);
-		return true;
+	private Boolean suspend(String definitionId) {
+		return transactionalUtil.execute(r -> {
+			try {
+				// 挂起
+				repositoryService.suspendProcessDefinitionById(definitionId, true, null);
+				return true;
+			}
+			catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
 }

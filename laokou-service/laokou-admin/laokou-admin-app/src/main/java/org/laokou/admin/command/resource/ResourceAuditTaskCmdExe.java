@@ -36,12 +36,13 @@ import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.openfeign.utils.FeignUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 
+import static org.laokou.admin.common.Constant.AUDIT_STATUS;
 import static org.laokou.admin.domain.resource.Status.*;
 
 /**
@@ -51,8 +52,6 @@ import static org.laokou.admin.domain.resource.Status.*;
 @Component
 @RequiredArgsConstructor
 public class ResourceAuditTaskCmdExe {
-
-	private static final String AUDIT_STATUS = "auditStatus";
 
 	private final TasksFeignClient tasksFeignClient;
 
@@ -66,7 +65,7 @@ public class ResourceAuditTaskCmdExe {
 	public Result<Boolean> execute(ResourceAuditTaskCmd cmd) {
 		log.info("审批任务分布式事务 XID:{}", RootContext.getXID());
 		TaskAuditCmd taskAuditCmd = ConvertUtil.sourceToTarget(cmd, TaskAuditCmd.class);
-		AuditCO co = tasksFeignClient.audit(taskAuditCmd).getData();
+		AuditCO co = FeignUtil.result(tasksFeignClient.audit(taskAuditCmd));
 		// 下一个审批人
 		String assignee = co.getAssignee();
 		// 审批状态
@@ -92,8 +91,7 @@ public class ResourceAuditTaskCmdExe {
 		return Result.of(flag);
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean updateResource(Long id, int version, int status, ResourceAuditDO resourceAuditDO) {
+	private Boolean updateResource(Long id, int version, int status, ResourceAuditDO resourceAuditDO) {
 		ResourceDO resourceDO;
 		if (resourceAuditDO != null) {
 			resourceDO = ConvertUtil.sourceToTarget(resourceAuditDO, ResourceDO.class);

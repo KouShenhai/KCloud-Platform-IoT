@@ -41,10 +41,9 @@ import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.openfeign.utils.FeignUtil;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.laokou.admin.common.Constant.KEY;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_RESOURCE;
@@ -89,15 +88,14 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		return updateResource(resource, resourceMapper.getVersion(resource.getId(), ResourceDO.class));
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean updateResource(Resource resource, Integer version) {
+	private Boolean updateResource(Resource resource, Integer version) {
 		log.info("开始任务分布式事务 XID:{}", RootContext.getXID());
-		Boolean flag = insertResourceAudit(resource);
+		insertResourceAudit(resource);
 		StartCO co = startTask(resource);
 		int status = Status.PENDING_APPROVAL;
-		flag = flag && updateResourceStatus(resource, status, version, co.getInstanceId());
+		updateResourceStatus(resource, status, version, co.getInstanceId());
 		publishMessage(resource, co.getInstanceId());
-		return flag;
+		return true;
 	}
 
 	@Async
@@ -110,27 +108,22 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		cmd.setBusinessKey(resource.getId().toString());
 		cmd.setDefinitionKey(KEY);
 		cmd.setInstanceName(resource.getTitle());
-		Result<StartCO> result = tasksFeignClient.start(cmd);
-		return result.getData();
+		return FeignUtil.result(tasksFeignClient.start(cmd));
 	}
 
-	private Boolean updateResource(ResourceDO resourceDO) {
-		return resourceMapper.updateById(resourceDO) > 0;
-	}
-
-	private Boolean updateResourceStatus(Resource resource, int status, Integer version, String instanceId) {
+	private void updateResourceStatus(Resource resource, int status, Integer version, String instanceId) {
 		ResourceDO resourceDO = new ResourceDO();
 		resourceDO.setId(resource.getId());
 		resourceDO.setStatus(status);
 		resourceDO.setInstanceId(instanceId);
 		resourceDO.setVersion(version);
-		return updateResource(resourceDO);
+		resourceMapper.updateById(resourceDO);
 	}
 
-	private Boolean insertResourceAudit(Resource resource) {
+	private void insertResourceAudit(Resource resource) {
 		ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
 		resourceAuditDO.setResourceId(resource.getId());
-		return resourceAuditMapper.insertTable(resourceAuditDO);
+		resourceAuditMapper.insertTable(resourceAuditDO);
 	}
 
 	private MessageEvent toMessageEvent(Resource resource, String instanceId) {

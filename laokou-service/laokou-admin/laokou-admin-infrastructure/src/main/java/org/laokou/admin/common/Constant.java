@@ -30,4 +30,9 @@ public interface Constant {
 	 */
 	String KEY = "Process_88888888";
 
+	/**
+	 * 审批状态
+	 */
+	String AUDIT_STATUS = "auditStatus";
+
 }
