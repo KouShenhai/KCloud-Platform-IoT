@@ -17,7 +17,7 @@
 
 package org.laokou.admin.command.user.query;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
@@ -47,24 +47,28 @@ public class UserOptionListQryExe {
 
 	private final UserMapper userMapper;
 
-	@DS(USER)
 	@DataFilter(alias = BOOT_SYS_USER)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
-		PageQuery pageQuery = qry.ignore();
-		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME,
-				DateUtil.format(DateUtil.now(), DateUtil.YYYY_MM_DD_HH_MM_SS), BOOT_SYS_USER);
-		List<UserDO> list = userMapper.getOptionListByTenantId(dynamicTables, pageQuery);
-		if (CollectionUtil.isEmpty(list)) {
-			return Result.of(new ArrayList<>(0));
+		try {
+			DynamicDataSourceContextHolder.push(USER);
+			PageQuery pageQuery = qry.ignore();
+			List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME,
+					DateUtil.format(DateUtil.now(), DateUtil.YYYY_MM_DD_HH_MM_SS), BOOT_SYS_USER);
+			List<UserDO> list = userMapper.getOptionListByTenantId(dynamicTables, pageQuery);
+			if (CollectionUtil.isEmpty(list)) {
+				return Result.of(new ArrayList<>(0));
+			}
+			List<OptionCO> options = new ArrayList<>(list.size());
+			for (UserDO userDO : list) {
+				OptionCO oc = new OptionCO();
+				oc.setLabel(userDO.getUsername());
+				oc.setValue(userDO.getId().toString());
+				options.add(oc);
+			}
+			return Result.of(options);
+		} finally {
+			DynamicDataSourceContextHolder.clear();
 		}
-		List<OptionCO> options = new ArrayList<>(list.size());
-		for (UserDO userDO : list) {
-			OptionCO oc = new OptionCO();
-			oc.setLabel(userDO.getUsername());
-			oc.setValue(userDO.getId().toString());
-			options.add(oc);
-		}
-		return Result.of(options);
 	}
 
 }
