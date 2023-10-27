@@ -17,7 +17,7 @@
 
 package org.laokou.admin.command.user;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
@@ -47,23 +47,23 @@ public class UserProfileUpdateCmdExe {
 
 	private final UserMapper userMapper;
 
-	@DS(USER)
 	public Result<Boolean> execute(UserProfileUpdateCmd cmd) {
-		UserProfileCO userProfileCO = cmd.getUserProfileCO();
-		validate(userProfileCO);
-		encrypt(userProfileCO);
-		return Result.of(userGateway.updateInfo(toUser(userProfileCO)));
+		UserProfileCO co = cmd.getUserProfileCO();
+		DynamicDataSourceContextHolder.push(USER);
+		validate(co);
+		encrypt(co);
+		return Result.of(userGateway.updateInfo(toUser(co)));
 	}
 
-	private User toUser(UserProfileCO userProfileCO) {
-		User user = ConvertUtil.sourceToTarget(userProfileCO, User.class);
+	private User toUser(UserProfileCO co) {
+		User user = ConvertUtil.sourceToTarget(co, User.class);
 		user.setEditor(UserUtil.getUserId());
 		return user;
 	}
 
-	private void encrypt(UserProfileCO userProfileCO) {
-		userProfileCO.setMobile(AesUtil.encrypt(userProfileCO.getMobile()));
-		userProfileCO.setMail(AesUtil.encrypt(userProfileCO.getMail()));
+	private void encrypt(UserProfileCO co) {
+		co.setMobile(AesUtil.encrypt(co.getMobile()));
+		co.setMail(AesUtil.encrypt(co.getMail()));
 	}
 
 	private void validate(UserProfileCO co) {

@@ -1,6 +1,6 @@
 package org.laokou.admin.command.user;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
@@ -37,11 +37,11 @@ public class UserInsertCmdExe {
 
 	private final UserConvertor userConvertor;
 
-	@DS(USER)
 	public Result<Boolean> execute(UserInsertCmd cmd) {
 		UserCO co = cmd.getUserCO();
 		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME,
 				DateUtil.format(DateUtil.now(), DateUtil.YYYY_MM_DD_HH_MM_SS), BOOT_SYS_USER);
+		DynamicDataSourceContextHolder.push(USER);
 		int count = userMapper.getUserCount(dynamicTables, toUserDO(co));
 		if (count > 0) {
 			throw new SystemException("用户名已存在，请重新输入");

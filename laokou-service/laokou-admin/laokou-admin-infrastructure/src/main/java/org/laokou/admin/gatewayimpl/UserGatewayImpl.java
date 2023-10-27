@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +44,6 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -81,52 +79,41 @@ public class UserGatewayImpl implements UserGateway {
 	private final ThreadPoolTaskExecutor taskExecutor;
 
 	@Override
-	@DS(USER)
-	@Transactional(rollbackFor = Exception.class)
+	@GlobalTransactional
 	public Boolean insert(User user) {
-		UserDO userDO = getInsertUserDO(user);
-		return insertUser(userDO, user);
+		return insertUser(getInsertUserDO(user), user);
 	}
 
 	@Override
 	@GlobalTransactional
 	public Boolean update(User user) {
-		updateUser(getUpdateUserDO(user),user);
-		return true;
+		return updateUser(getUpdateUserDO(user),user);
 	}
 
 	@Override
-	@DS(USER)
 	public Boolean deleteById(Long id) {
 		return deleteUserById(id);
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean deleteUserById(Long id) {
-		return userMapper.deleteDynamicTableById(id, getUserTableSuffix(id)) > 0;
-	}
-
 	@Override
-	@DS(USER)
 	public Boolean resetPassword(User user) {
 		return updateUser(getResetPasswordDO(user));
 	}
 
 	@Override
-	@DS(USER)
 	public Boolean updateInfo(User user) {
 		return updateUser(getUpdateUserDO(user));
 	}
 
 	@Override
-	@DS(USER)
 	public User getById(Long id, Long tenantId) {
-		LocalDateTime localDateTime = IdGenerator.getLocalDateTime(id);
-		UserDO userDO = userMapper.getDynamicTableById(UserDO.class, id,
-				UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM)), "id", "username", "status", "dept_id",
-				"dept_path", "super_admin");
-		User user = userConvertor.convertEntity(userDO);
 		try {
+			LocalDateTime localDateTime = IdGenerator.getLocalDateTime(id);
+			DynamicDataSourceContextHolder.push(USER);
+			UserDO userDO = userMapper.getDynamicTableById(UserDO.class, id,
+					UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM)), "id", "username", "status", "dept_id",
+					"dept_path", "super_admin");
+			User user = userConvertor.convertEntity(userDO);
 			DynamicDataSourceContextHolder.push(MASTER);
 			if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
 				user.setRoleIds(roleMapper.getRoleIds());
@@ -134,11 +121,11 @@ public class UserGatewayImpl implements UserGateway {
 			else {
 				user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
 			}
+			return user;
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
-		return user;
 	}
 
 	@Override
@@ -174,11 +161,11 @@ public class UserGatewayImpl implements UserGateway {
 		return datas;
 	}
 
-	public void updateUser(UserDO userDO,User user) {
+	private Boolean updateUser(UserDO userDO,User user) {
 		userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER));
 		deleteUserRole(user);
 		insertUserRole(user.getRoleIds(), user);
-		int s = 0/0;
+		return true;
 	}
 
 	private void deleteUserRole(User user) {
@@ -208,6 +195,8 @@ public class UserGatewayImpl implements UserGateway {
 				log.error("错误信息：{}", e.getMessage());
 				rollback.setRollbackOnly();
 				throw e;
+			} finally {
+				DynamicDataSourceContextHolder.clear();
 			}
 		});
 	}
@@ -239,9 +228,38 @@ public class UserGatewayImpl implements UserGateway {
 		}
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean updateUser(UserDO userDO) {
-		return userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER)) > 0;
+	private Boolean updateUser(UserDO userDO) {
+		try {
+			DynamicDataSourceContextHolder.push(USER);
+			return transactionalUtil.execute(rollback -> {
+				try {
+					return userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER)) > 0;
+				} catch (Exception e) {
+					log.error("错误信息：{}", e.getMessage());
+					rollback.setRollbackOnly();
+					throw e;
+				}
+			});
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
+	}
+
+	private Boolean deleteUserById(Long id) {
+		try {
+			DynamicDataSourceContextHolder.push(USER);
+			return transactionalUtil.execute(rollback -> {
+				try {
+					return userMapper.deleteDynamicTableById(id, getUserTableSuffix(id)) > 0;
+				} catch (Exception e) {
+					log.error("错误信息：{}", e.getMessage());
+					rollback.setRollbackOnly();
+					throw e;
+				}
+			});
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 	private String getUserTableSuffix(Long id) {

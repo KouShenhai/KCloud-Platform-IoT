@@ -40,7 +40,6 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -65,7 +64,6 @@ public class RoleGatewayImpl implements RoleGateway {
 	private final TransactionalUtil transactionalUtil;
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
 	public Boolean insert(Role role, User user) {
 		RoleDO roleDO = RoleConvertor.toDataObject(role);
 		return insertRole(roleDO, role, user);
@@ -94,7 +92,7 @@ public class RoleGatewayImpl implements RoleGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
-				return false;
+				throw e;
 			}
 		});
 	}

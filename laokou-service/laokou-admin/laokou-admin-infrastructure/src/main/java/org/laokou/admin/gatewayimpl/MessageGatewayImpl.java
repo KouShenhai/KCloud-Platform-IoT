@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -41,13 +40,12 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.rocketmq.clientobject.MqCO;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.im.dto.message.clientobject.WsMsgCO;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -65,44 +63,47 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	private final MessageMapper messageMapper;
 
-	private final MessageDetailMapper messageDetailMapper;
-
 	private static final String DEFAULT_MESSAGE = "您有一条未读消息，请注意查收";
 
 	private final RocketMqTemplate rocketMqTemplate;
+
+	private final TransactionalUtil transactionalUtil;
 
 	private final BatchUtil batchUtil;
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_MESSAGE)
-	@DS(TENANT)
 	public Datas<Message> list(Message message, PageQuery pageQuery) {
-		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		IPage<MessageDO> newPage = messageMapper.getMessageListFilter(page, message.getTitle(), pageQuery);
-		Datas<Message> datas = new Datas<>();
-		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Message.class));
-		return datas;
-	}
-
-	@Override
-	@DS(TENANT)
-	@Transactional(rollbackFor = Exception.class)
-	public Boolean insert(Message message, User user) {
-		MessageDO messageDO = MessageConvertor.toDataObject(message);
-		Boolean flag = insertMessage(messageDO, message, user);
-		// 插入成功发送消息
-		if (flag) {
-			pushMessage(message.getReceiver(), message.getType());
+		try {
+			DynamicDataSourceContextHolder.push(TENANT);
+			IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+			IPage<MessageDO> newPage = messageMapper.getMessageListFilter(page, message.getTitle(), pageQuery);
+			Datas<Message> datas = new Datas<>();
+			datas.setTotal(newPage.getTotal());
+			datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Message.class));
+			return datas;
+		} finally {
+			DynamicDataSourceContextHolder.clear();
 		}
-		return flag;
 	}
 
 	@Override
-	@DS(TENANT)
+	public Boolean insert(Message message, User user) {
+		insertMessage(MessageConvertor.toDataObject(message), message, user);
+		// 插入成功发送消息
+		pushMessage(message.getReceiver(), message.getType());
+		return true;
+	}
+
+	@Override
 	public Message getById(Long id) {
-		MessageDO messageDO = messageMapper.selectById(id);
-		return ConvertUtil.sourceToTarget(messageDO, Message.class);
+		try {
+			DynamicDataSourceContextHolder.push(TENANT);
+			MessageDO messageDO = messageMapper.selectById(id);
+			return ConvertUtil.sourceToTarget(messageDO, Message.class);
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 	private void pushMessage(Set<String> receiver, Integer type) {
@@ -116,21 +117,30 @@ public class MessageGatewayImpl implements MessageGateway {
 				new MqCO(JacksonUtil.toJsonStr(co)));
 	}
 
-	private Boolean insertMessage(MessageDO messageDO, Message message, User user) {
-		boolean flag = messageMapper.insertTable(messageDO);
-		return flag && insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
+	private void insertMessage(MessageDO messageDO, Message message, User user) {
+		try {
+			DynamicDataSourceContextHolder.push(TENANT);
+			transactionalUtil.executeWithoutResult(rollback -> {
+				try {
+					DynamicDataSourceContextHolder.push(TENANT);
+					messageMapper.insertTable(messageDO);
+					insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
+				} catch (Exception e) {
+					log.error("错误信息：{}", e.getMessage());
+					rollback.setRollbackOnly();
+					throw e;
+				}
+			});
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
-	private Boolean insertMessageDetail(Long messageId, Set<String> receiver, User user) {
-		if (CollectionUtil.isEmpty(receiver)) {
-			return false;
+	private void insertMessageDetail(Long messageId, Set<String> receiver, User user) {
+		if (CollectionUtil.isNotEmpty(receiver)) {
+			List<MessageDetailDO> list = receiver.parallelStream().map(userId -> toMessageDetailDO(messageId, userId, user)).toList();
+			batchUtil.insertBatch(list, MessageDetailMapper.class, DynamicDataSourceContextHolder.peek());
 		}
-		List<MessageDetailDO> list = new ArrayList<>(receiver.size());
-		for (String userId : receiver) {
-			list.add(toMessageDetailDO(messageId, userId, user));
-		}
-		batchUtil.insertBatch(list, MessageDetailMapper.class, DynamicDataSourceContextHolder.peek());
-		return true;
 	}
 
 	private String getMessageTag(Integer type) {
