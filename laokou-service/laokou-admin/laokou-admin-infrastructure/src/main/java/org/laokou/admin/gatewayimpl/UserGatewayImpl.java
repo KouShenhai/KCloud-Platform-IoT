@@ -164,7 +164,7 @@ public class UserGatewayImpl implements UserGateway {
 	private Boolean updateUser(UserDO userDO,User user) {
 		userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER));
 		deleteUserRole(user);
-		insertUserRole(user.getRoleIds(), user);
+		insertUserRole(user.getRoleIds(), userDO);
 		return true;
 	}
 
@@ -189,7 +189,7 @@ public class UserGatewayImpl implements UserGateway {
 		return transactionalUtil.execute(rollback -> {
 			try {
 				userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()), UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
-				insertUserRole(user.getRoleIds(), user);
+				insertUserRole(user.getRoleIds(), userDO);
 				return true;
 			} catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
@@ -221,9 +221,9 @@ public class UserGatewayImpl implements UserGateway {
 		return updateUserDO;
 	}
 
-	private void insertUserRole(List<Long> roleIds, User user) {
+	private void insertUserRole(List<Long> roleIds, UserDO userDO) {
 		if (CollectionUtil.isNotEmpty(roleIds)) {
-			List<UserRoleDO> list = roleIds.parallelStream().map(roleId -> toUserRoleDO(user, roleId)).toList();
+			List<UserRoleDO> list = roleIds.parallelStream().map(roleId -> toUserRoleDO(userDO, roleId)).toList();
 			batchUtil.insertBatch(list, UserRoleMapper.class);
 		}
 	}
@@ -267,15 +267,15 @@ public class UserGatewayImpl implements UserGateway {
 		return UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM));
 	}
 
-	private UserRoleDO toUserRoleDO(User user,Long roleId) {
+	private UserRoleDO toUserRoleDO(UserDO userDO,Long roleId) {
 		UserRoleDO userRoleDO = new UserRoleDO();
 		userRoleDO.setId(IdGenerator.defaultSnowflakeId());
-		userRoleDO.setDeptId(user.getDeptId());
-		userRoleDO.setTenantId(user.getTenantId());
-		userRoleDO.setCreator(user.getCreator());
-		userRoleDO.setUserId(user.getId());
+		userRoleDO.setDeptId(userDO.getDeptId());
+		userRoleDO.setTenantId(userDO.getTenantId());
+		userRoleDO.setCreator(userDO.getCreator());
+		userRoleDO.setUserId(userDO.getId());
 		userRoleDO.setRoleId(roleId);
-		userRoleDO.setDeptPath(user.getDeptPath());
+		userRoleDO.setDeptPath(userDO.getDeptPath());
 		return userRoleDO;
 	}
 

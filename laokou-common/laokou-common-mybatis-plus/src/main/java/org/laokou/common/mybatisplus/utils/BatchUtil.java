@@ -84,6 +84,7 @@ public class BatchUtil {
 		}
 	}
 
+	@SneakyThrows
 	private <T extends BaseDO, M extends BatchMapper<T>> void handleBatch(List<T> item, Class<M> clazz,
 			CyclicBarrier cyclicBarrier, AtomicBoolean rollback, String ds) {
 		try {
