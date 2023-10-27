@@ -35,6 +35,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
@@ -177,7 +178,7 @@ public class UserGatewayImpl implements UserGateway {
 				} catch (Exception e) {
 					log.error("错误信息：{}", e.getMessage());
 					rollback.setRollbackOnly();
-					throw e;
+					throw new SystemException(e.getMessage());
 				}
 			});
 		} finally {
@@ -194,7 +195,7 @@ public class UserGatewayImpl implements UserGateway {
 			} catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				rollback.setRollbackOnly();
-				throw e;
+				throw new SystemException(e.getMessage());
 			} finally {
 				DynamicDataSourceContextHolder.clear();
 			}
@@ -237,7 +238,7 @@ public class UserGatewayImpl implements UserGateway {
 				} catch (Exception e) {
 					log.error("错误信息：{}", e.getMessage());
 					rollback.setRollbackOnly();
-					throw e;
+					throw new SystemException(e.getMessage());
 				}
 			});
 		} finally {
@@ -254,7 +255,7 @@ public class UserGatewayImpl implements UserGateway {
 				} catch (Exception e) {
 					log.error("错误信息：{}", e.getMessage());
 					rollback.setRollbackOnly();
-					throw e;
+					throw new SystemException(e.getMessage());
 				}
 			});
 		} finally {

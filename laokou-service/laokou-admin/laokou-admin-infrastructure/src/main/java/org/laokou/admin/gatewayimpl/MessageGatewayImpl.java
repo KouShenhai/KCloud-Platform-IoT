@@ -37,6 +37,7 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
@@ -119,7 +120,7 @@ public class MessageGatewayImpl implements MessageGateway {
 			} catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				rollback.setRollbackOnly();
-				throw e;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}

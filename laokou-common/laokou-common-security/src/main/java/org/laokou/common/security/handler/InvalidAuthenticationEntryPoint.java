@@ -49,6 +49,7 @@ public class InvalidAuthenticationEntryPoint implements AuthenticationEntryPoint
 			String message = oAuth2AuthenticationException.getError().getDescription();
 			int errorCode = Integer.parseInt(oAuth2AuthenticationException.getError().getErrorCode());
 			ResponseUtil.response(response, errorCode, message);
+			return;
 		}
 	}
 

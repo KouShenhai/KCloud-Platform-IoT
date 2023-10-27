@@ -35,6 +35,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
@@ -92,7 +93,7 @@ public class RoleGatewayImpl implements RoleGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
-				throw e;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}
@@ -118,7 +119,7 @@ public class RoleGatewayImpl implements RoleGateway {
 			} catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				rollback.setRollbackOnly();
-				throw e;
+				throw new SystemException(e.getMessage());
 			}
 		});
 
@@ -134,7 +135,7 @@ public class RoleGatewayImpl implements RoleGateway {
 			} catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				rollback.setRollbackOnly();
-				throw e;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}

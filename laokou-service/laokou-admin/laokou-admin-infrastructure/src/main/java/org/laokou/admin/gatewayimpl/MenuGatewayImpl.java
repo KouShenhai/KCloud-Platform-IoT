@@ -27,6 +27,7 @@ import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -74,7 +75,7 @@ public class MenuGatewayImpl implements MenuGateway {
 			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				rollback.setRollbackOnly();
-				return false;
+				throw new SystemException(e.getMessage());
 			}
 		});
 	}
