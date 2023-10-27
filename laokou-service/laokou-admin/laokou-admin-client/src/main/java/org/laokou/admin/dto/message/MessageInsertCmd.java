@@ -17,7 +17,9 @@
 
 package org.laokou.admin.dto.message;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.common.i18n.dto.CommonCommand;
 
@@ -25,6 +27,8 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MessageInsertCmd extends CommonCommand {
 
 	private MessageCO messageCO;

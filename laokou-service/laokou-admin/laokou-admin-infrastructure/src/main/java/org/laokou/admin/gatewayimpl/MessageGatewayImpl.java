@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -73,21 +74,18 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_MESSAGE)
+	@DS(TENANT)
 	public Datas<Message> list(Message message, PageQuery pageQuery) {
-		try {
-			DynamicDataSourceContextHolder.push(TENANT);
-			IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-			IPage<MessageDO> newPage = messageMapper.getMessageListFilter(page, message.getTitle(), pageQuery);
-			Datas<Message> datas = new Datas<>();
-			datas.setTotal(newPage.getTotal());
-			datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Message.class));
-			return datas;
-		} finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+		IPage<MessageDO> newPage = messageMapper.getMessageListFilter(page, message.getTitle(), pageQuery);
+		Datas<Message> datas = new Datas<>();
+		datas.setTotal(newPage.getTotal());
+		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Message.class));
+		return datas;
 	}
 
 	@Override
+	@DS(TENANT)
 	public Boolean insert(Message message, User user) {
 		insertMessage(MessageConvertor.toDataObject(message), message, user);
 		// 插入成功发送消息
@@ -96,14 +94,10 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	@Override
+	@DS(TENANT)
 	public Message getById(Long id) {
-		try {
-			DynamicDataSourceContextHolder.push(TENANT);
-			MessageDO messageDO = messageMapper.selectById(id);
-			return ConvertUtil.sourceToTarget(messageDO, Message.class);
-		} finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		MessageDO messageDO = messageMapper.selectById(id);
+		return ConvertUtil.sourceToTarget(messageDO, Message.class);
 	}
 
 	private void pushMessage(Set<String> receiver, Integer type) {
@@ -118,22 +112,16 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	private void insertMessage(MessageDO messageDO, Message message, User user) {
-		try {
-			DynamicDataSourceContextHolder.push(TENANT);
-			transactionalUtil.executeWithoutResult(rollback -> {
-				try {
-					DynamicDataSourceContextHolder.push(TENANT);
-					messageMapper.insertTable(messageDO);
-					insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
-				} catch (Exception e) {
-					log.error("错误信息：{}", e.getMessage());
-					rollback.setRollbackOnly();
-					throw e;
-				}
-			});
-		} finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		transactionalUtil.executeWithoutResult(rollback -> {
+			try {
+				messageMapper.insertTable(messageDO);
+				insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
+			} catch (Exception e) {
+				log.error("错误信息：{}", e.getMessage());
+				rollback.setRollbackOnly();
+				throw e;
+			}
+		});
 	}
 
 	private void insertMessageDetail(Long messageId, Set<String> receiver, User user) {
