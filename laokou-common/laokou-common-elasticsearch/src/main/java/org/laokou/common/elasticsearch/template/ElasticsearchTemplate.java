@@ -61,14 +61,12 @@ import org.elasticsearch.xcontent.XContentFactory;
 import org.elasticsearch.xcontent.XContentType;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.elasticsearch.clientobject.SearchCO;
 import org.laokou.common.elasticsearch.constant.EsConstant;
-import org.laokou.common.elasticsearch.dto.AggregationDTO;
-import org.laokou.common.elasticsearch.dto.SearchDTO;
-import org.laokou.common.elasticsearch.qo.SearchQo;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
-import org.laokou.common.elasticsearch.vo.SearchVO;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
@@ -830,16 +828,16 @@ public class ElasticsearchTemplate {
 
 	/**
 	 * 关键字高亮显示
-	 * @param searchQo 查询实体类
+	 * @param searchCO 查询实体类
 	 * @return SearchVO
 	 */
-	public SearchVO<Map<String, Object>> highlightSearchIndex(SearchQo searchQo) {
+	public Datas<Map<String, Object>> highlightSearchIndex(SearchCO searchCO) {
 		try {
-			final String[] indexNames = searchQo.getIndexNames();
+			final String[] indexNames = searchCO.getIndexNames();
 			// 用于搜索文档，聚合，定制查询有关操作
 			SearchRequest searchRequest = new SearchRequest();
 			searchRequest.indices(indexNames);
-			searchRequest.source(buildSearchSource(searchQo, true, null));
+			searchRequest.source(buildSearchSource(searchCO, true, null));
 			SearchHits hits = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT).getHits();
 			List<Map<String, Object>> data = new ArrayList<>();
 			for (SearchHit hit : hits) {
@@ -850,13 +848,11 @@ public class ElasticsearchTemplate {
 				}
 				data.add(sourceData);
 			}
-			SearchVO<Map<String, Object>> vo = new SearchVO<>();
+			Datas<Map<String, Object>> datas = new Datas<>();
 			final long total = hits.getTotalHits().value;
-			vo.setRecords(data);
-			vo.setTotal(total);
-			vo.setPageNum(searchQo.getPageNum());
-			vo.setPageSize(searchQo.getPageSize());
-			return vo;
+			datas.setRecords(data);
+			datas.setTotal(total);
+			return datas;
 		}
 		catch (Exception e) {
 			throw new SystemException("搜索失败");
@@ -865,30 +861,30 @@ public class ElasticsearchTemplate {
 
 	/**
 	 * 构建query
-	 * @param searchQo 查询参数
+	 * @param searchCO 查询参数
 	 * @return BoolQueryBuilder
 	 */
-	private BoolQueryBuilder buildBoolQuery(SearchQo searchQo) {
+	private BoolQueryBuilder buildBoolQuery(SearchCO searchCO) {
 		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 		// 分词查询
-		final List<SearchDTO> queryStringList = searchQo.getQueryStringList();
+		final List<SearchCO.Search> queryStringList = searchCO.getQueryStringList();
 		// or查询
-		final List<SearchDTO> orSearchList = searchQo.getOrSearchList();
+		final List<SearchCO.Search> orSearchList = searchCO.getOrSearchList();
 		if (CollectionUtil.isNotEmpty(orSearchList)) {
 			// or查询
 			BoolQueryBuilder orQuery = QueryBuilders.boolQuery();
-			for (SearchDTO dto : orSearchList) {
-				orQuery.should(QueryBuilders.termQuery(dto.getField(), dto.getValue()));
+			for (SearchCO.Search search : orSearchList) {
+				orQuery.should(QueryBuilders.termQuery(search.getField(), search.getValue()));
 			}
 			boolQueryBuilder.must(orQuery);
 		}
 		if (CollectionUtil.isNotEmpty(queryStringList)) {
 			// 分词查询
 			BoolQueryBuilder analysisQuery = QueryBuilders.boolQuery();
-			for (SearchDTO dto : queryStringList) {
-				final String field = dto.getField();
+			for (SearchCO.Search search : queryStringList) {
+				final String field = search.getField();
 				// 清除左右空格并处理特殊字符
-				final String keyword = QueryParser.escape(dto.getValue().trim());
+				final String keyword = QueryParser.escape(search.getValue().trim());
 				analysisQuery.should(QueryBuilders.queryStringQuery(keyword).field(field));
 			}
 			boolQueryBuilder.must(analysisQuery);
@@ -898,19 +894,19 @@ public class ElasticsearchTemplate {
 
 	/**
 	 * 构建搜索
-	 * @param searchQo 查询参数
+	 * @param searchCO 查询参数
 	 * @param isHighlightSearchFlag 是否高亮搜索
 	 * @param aggregationBuilder 聚合参数
 	 * @return SearchSourceBuilder
 	 */
-	private SearchSourceBuilder buildSearchSource(SearchQo searchQo, boolean isHighlightSearchFlag,
-			TermsAggregationBuilder aggregationBuilder) {
+	private SearchSourceBuilder buildSearchSource(SearchCO searchCO, boolean isHighlightSearchFlag,
+												  TermsAggregationBuilder aggregationBuilder) {
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		final Integer pageNum = searchQo.getPageNum();
-		final Integer pageSize = searchQo.getPageSize();
-		final List<SearchDTO> sortFieldList = searchQo.getSortFieldList();
+		final Integer pageNum = searchCO.getPageNum();
+		final Integer pageSize = searchCO.getPageSize();
+		final List<SearchCO.Search> sortFieldList = searchCO.getSortFieldList();
 		if (isHighlightSearchFlag) {
-			final List<String> highlightFieldList = searchQo.getHighlightFieldList();
+			final List<String> highlightFieldList = searchCO.getHighlightFieldList();
 			// 高亮显示数据
 			HighlightBuilder highlightBuilder = new HighlightBuilder();
 			// 设置关键字显示颜色
@@ -926,7 +922,7 @@ public class ElasticsearchTemplate {
 			searchSourceBuilder.highlighter(highlightBuilder);
 		}
 		// 分页
-		if (searchQo.isNeedPage()) {
+		if (searchCO.isNeedPage()) {
 			final int pageIndex = (pageNum - 1) * pageSize;
 			searchSourceBuilder.from(pageIndex);
 			searchSourceBuilder.size(pageSize);
@@ -939,11 +935,11 @@ public class ElasticsearchTemplate {
 		searchSourceBuilder.sort("_score", SortOrder.DESC);
 		// 排序
 		if (CollectionUtil.isNotEmpty(sortFieldList)) {
-			for (SearchDTO dto : sortFieldList) {
+			for (SearchCO.Search search : sortFieldList) {
 				SortOrder sortOrder;
 				final String desc = "desc";
-				final String value = dto.getValue();
-				final String field = dto.getField();
+				final String value = search.getValue();
+				final String field = search.getField();
 				if (desc.equalsIgnoreCase(value)) {
 					sortOrder = SortOrder.DESC;
 				}
@@ -953,7 +949,7 @@ public class ElasticsearchTemplate {
 				searchSourceBuilder.sort(field, sortOrder);
 			}
 		}
-		searchSourceBuilder.query(buildBoolQuery(searchQo));
+		searchSourceBuilder.query(buildBoolQuery(searchCO));
 		// 获取真实总数
 		searchSourceBuilder.trackTotalHits(true);
 		// 聚合对象
@@ -965,15 +961,15 @@ public class ElasticsearchTemplate {
 
 	/**
 	 * 聚合查询
-	 * @param searchQo 搜索
+	 * @param searchCO 搜索
 	 * @return SearchVO
 	 * @throws IOException IOException
 	 */
-	public SearchVO<Map<String, Long>> aggregationSearchIndex(SearchQo searchQo) throws IOException {
-		SearchVO<Map<String, Long>> vo = new SearchVO();
+	public Datas<Map<String, Long>> aggregationSearchIndex(SearchCO searchCO) throws IOException {
+		Datas<Map<String, Long>> datas = new Datas<>();
 		List<Map<String, Long>> list = new ArrayList<>(5);
-		String[] indexNames = searchQo.getIndexNames();
-		AggregationDTO aggregationKey = searchQo.getAggregationKey();
+		String[] indexNames = searchCO.getIndexNames();
+		SearchCO.Aggregation aggregationKey = searchCO.getAggregationKey();
 		String field = aggregationKey.getField();
 		String groupKey = aggregationKey.getGroupKey();
 		String script = aggregationKey.getScript();
@@ -987,7 +983,7 @@ public class ElasticsearchTemplate {
 		// 用于搜索文档，聚合，定制查询有关操作
 		SearchRequest searchRequest = new SearchRequest();
 		searchRequest.indices(indexNames);
-		searchRequest.source(buildSearchSource(searchQo, false, aggregationBuilder));
+		searchRequest.source(buildSearchSource(searchCO, false, aggregationBuilder));
 		SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 		Aggregations aggregations = searchResponse.getAggregations();
 		Terms aggregation = aggregations.get(groupKey);
@@ -997,11 +993,9 @@ public class ElasticsearchTemplate {
 			dataMap.put(bucket.getKeyAsString(), bucket.getDocCount());
 			list.add(dataMap);
 		}
-		vo.setRecords(list);
-		vo.setPageNum(searchQo.getPageNum());
-		vo.setPageSize(searchQo.getPageSize());
-		vo.setTotal((long) list.size());
-		return vo;
+		datas.setRecords(list);
+		datas.setTotal(list.size());
+		return datas;
 	}
 
 }

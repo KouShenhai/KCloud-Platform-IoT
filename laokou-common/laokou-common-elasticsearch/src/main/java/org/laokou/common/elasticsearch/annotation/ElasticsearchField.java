@@ -31,13 +31,11 @@ public @interface ElasticsearchField {
 
 	/**
 	 * 默认 keyword
-	 * @return
 	 */
 	String type() default "keyword";
 
 	/**
 	 * 0 not_analyzed 1 ik_smart 2.ik_max_word 3.ik-index(自定义分词器)
-	 * @return
 	 */
 	int participle() default 0;
 

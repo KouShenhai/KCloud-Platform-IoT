@@ -12,28 +12,55 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ * 
  */
-package org.laokou.common.elasticsearch.dto;
 
-import lombok.Data;
-
-import java.io.Serial;
-import java.io.Serializable;
+package org.laokou.common.elasticsearch.enums;
 
 /**
- * 搜索DTO
- *
  * @author laokou
  */
-@Data
-public class SearchDTO implements Serializable {
+public enum FieldType {
 
-	@Serial
-	private static final long serialVersionUID = 3570397340773143088L;
-
-	private String field;
-
-	private String value;
+	/**
+	 * 文本
+	 */
+	TEXT,
+	/**
+	 * 文本
+	 */
+	KEYWORD,
+	/**
+	 * 长整型
+	 */
+	LONG,
+	/**
+	 * 整型
+	 */
+	INTEGER,
+	/**
+	 * 整型
+	 */
+	SHORT,
+	/**
+	 * 字节
+	 */
+	BYTE,
+	/**
+	 * 双浮点
+	 */
+	DOUBLE,
+	/**
+	 * 双浮点
+	 */
+	FLOAT,
+	/**
+	 * 日期
+	 */
+	DATE,
+	/**
+	 * 布尔
+	 */
+	BOOLEAN,
 
 }

@@ -14,12 +14,10 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.elasticsearch.qo;
+package org.laokou.common.elasticsearch.clientobject;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.laokou.common.elasticsearch.dto.AggregationDTO;
-import org.laokou.common.elasticsearch.dto.SearchDTO;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -31,7 +29,7 @@ import java.util.List;
  * @author laokou
  */
 @Data
-public class SearchQo implements Serializable {
+public class SearchCO implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 8362710467533113506L;
@@ -63,12 +61,12 @@ public class SearchQo implements Serializable {
 	/**
 	 * 分词搜索
 	 */
-	private List<SearchDTO> queryStringList;
+	private List<Search> queryStringList;
 
 	/**
 	 * 排序
 	 */
-	private List<SearchDTO> sortFieldList;
+	private List<Search> sortFieldList;
 
 	/**
 	 * 高亮搜索字段
@@ -78,11 +76,28 @@ public class SearchQo implements Serializable {
 	/**
 	 * or搜索-精准匹配
 	 */
-	private List<SearchDTO> orSearchList;
+	private List<Search> orSearchList;
 
 	/**
 	 * 聚合字段
 	 */
-	private AggregationDTO aggregationKey;
+	private Aggregation aggregationKey;
+
+	@Data
+	public static class Aggregation {
+
+		private String groupKey;
+		private String field;
+		private String script;
+
+	}
+
+	@Data
+	public static class Search {
+
+		private String field;
+		private String value;
+
+	}
 
 }
