@@ -20,8 +20,8 @@ package org.laokou.common.kafka.constant;
  */
 public interface MqConstant {
 
-    String LAOKOU_TRACE_TOPIC = "laokou_trace_topic";
+	String LAOKOU_TRACE_TOPIC = "laokou_trace_topic";
 
-    String LAOKOU_LOGSTASH_CONSUMER_GROUP = "laokou_logstash_consumer_group";
+	String LAOKOU_LOGSTASH_CONSUMER_GROUP = "laokou_logstash_consumer_group";
 
 }

@@ -137,10 +137,10 @@ public class TenantGatewayImpl implements TenantGateway {
 		DeptDO deptDO = new DeptDO();
 		deptDO.setTenantId(tenantId);
 		insertDept(deptDO);
-		insertUser(deptDO,tenantId);
+		insertUser(deptDO, tenantId);
 	}
 
-	private void insertUser(DeptDO deptDO,Long tenantId) {
+	private void insertUser(DeptDO deptDO, Long tenantId) {
 		try {
 			DynamicDataSourceContextHolder.push(USER);
 			transactionalUtil.executeWithoutResult(rollback -> {
@@ -153,7 +153,8 @@ public class TenantGatewayImpl implements TenantGateway {
 					userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
 					userDO.setDeptId(deptDO.getId());
 					userDO.setDeptPath(deptDO.getPath());
-					userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()), UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
+					userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),
+							UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
 				}
 				catch (Exception e) {
 					log.error("错误信息：{}", e.getMessage());

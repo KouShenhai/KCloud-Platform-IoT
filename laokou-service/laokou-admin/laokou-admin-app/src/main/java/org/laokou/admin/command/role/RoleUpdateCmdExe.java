@@ -52,8 +52,8 @@ public class RoleUpdateCmdExe {
 		if (id == null) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
-		Long count = roleMapper.selectCount(
-				Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, co.getName()).ne(RoleDO::getId, id));
+		Long count = roleMapper
+			.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, co.getName()).ne(RoleDO::getId, id));
 		if (count > 0) {
 			throw new SystemException("角色已存在，请重新填写");
 		}

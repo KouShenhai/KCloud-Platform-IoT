@@ -42,6 +42,7 @@ import static org.laokou.flowable.common.Constant.FLOWABLE;
 public class TaskResolveCmdExe {
 
 	private final TaskService taskService;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public Result<Boolean> execute(TaskResolveCmd cmd) {
@@ -57,7 +58,8 @@ public class TaskResolveCmdExe {
 				throw new FlowException("非处理任务，请审批任务");
 			}
 			return Result.of(resolve(taskId));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
@@ -67,7 +69,8 @@ public class TaskResolveCmdExe {
 			try {
 				taskService.resolveTask(taskId);
 				return true;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());

@@ -64,11 +64,13 @@ public class DefinitionDiagramGetQryExe {
 					ImageIO.write(image, "png", outputStream);
 				}
 				return Result.of(Base64.encodeBase64String(outputStream.toByteArray()));
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				log.error("错误信息：{}", e.getMessage());
 				return Result.of(EMPTY);
 			}
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

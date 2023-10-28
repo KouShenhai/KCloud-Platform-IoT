@@ -66,7 +66,8 @@ public class UserOptionListQryExe {
 				options.add(oc);
 			}
 			return Result.of(options);
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

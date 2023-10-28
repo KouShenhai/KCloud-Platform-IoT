@@ -48,9 +48,9 @@ public class DefinitionListQryExe {
 			String name = qry.getName();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery()
-					.latestVersion()
-					.orderByProcessDefinitionKey()
-					.asc();
+				.latestVersion()
+				.orderByProcessDefinitionKey()
+				.asc();
 			if (StringUtil.isNotEmpty(name)) {
 				query.processDefinitionNameLike(StringUtil.like(name));
 			}
@@ -64,7 +64,8 @@ public class DefinitionListQryExe {
 				list.add(toDefinitionCO(definition));
 			}
 			return Result.of(new Datas<>(total, list));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

@@ -41,6 +41,7 @@ import static org.laokou.flowable.common.Constant.FLOWABLE;
 public class TaskTransferCmdExe {
 
 	private final TaskService taskService;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public Result<Boolean> execute(TaskTransferCmd cmd) {
@@ -58,7 +59,8 @@ public class TaskTransferCmdExe {
 				throw new FlowException("用户无权操作任务");
 			}
 			return Result.of(transfer(taskId, owner, assignee));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
@@ -69,7 +71,8 @@ public class TaskTransferCmdExe {
 				taskService.setOwner(taskId, owner);
 				taskService.setAssignee(taskId, assignee);
 				return true;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());

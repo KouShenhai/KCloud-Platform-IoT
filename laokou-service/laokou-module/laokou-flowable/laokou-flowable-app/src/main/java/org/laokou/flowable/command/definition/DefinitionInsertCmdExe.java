@@ -46,6 +46,7 @@ public class DefinitionInsertCmdExe {
 	private static final String BPMN_FILE_SUFFIX = ".bpmn";
 
 	private final RepositoryService repositoryService;
+
 	private final TransactionalUtil transactionalUtil;
 
 	@SneakyThrows
@@ -63,7 +64,8 @@ public class DefinitionInsertCmdExe {
 				throw new FlowException("流程已存在，请更换流程图并上传");
 			}
 			return Result.of(deploy(key, name, bpmnModel));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
@@ -71,8 +73,14 @@ public class DefinitionInsertCmdExe {
 	private Boolean deploy(String key, String name, BpmnModel bpmnModel) {
 		return transactionalUtil.execute(r -> {
 			try {
-				return repositoryService.createDeployment().name(name).key(key).addBpmnModel(name, bpmnModel).deploy().isNew();
-			} catch (Exception e) {
+				return repositoryService.createDeployment()
+					.name(name)
+					.key(key)
+					.addBpmnModel(name, bpmnModel)
+					.deploy()
+					.isNew();
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());

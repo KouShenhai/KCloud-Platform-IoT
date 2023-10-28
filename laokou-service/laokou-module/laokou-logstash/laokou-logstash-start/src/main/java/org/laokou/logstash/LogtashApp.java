@@ -33,11 +33,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableEncryptableProperties
 public class LogtashApp {
 
-    public static void main(String[] args) {
-        // System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
-        // System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
-        // System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
-        new SpringApplicationBuilder(LogtashApp.class).web(WebApplicationType.SERVLET).run(args);
-    }
+	public static void main(String[] args) {
+		// System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		new SpringApplicationBuilder(LogtashApp.class).web(WebApplicationType.SERVLET).run(args);
+	}
 
 }

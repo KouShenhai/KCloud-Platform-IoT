@@ -49,11 +49,12 @@ public class LoginLogExportCmdExe {
 			DynamicDataSourceContextHolder.push(LOGIN_LOG);
 			LoginLogMapper loginLogMapper = SpringContextUtil.getBean(LoginLogMapper.class);
 			PageQuery pageQuery = cmd.time().ignore();
-			List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
-					BOOT_SYS_LOGIN_LOG);
+			List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(),
+					pageQuery.getEndTime(), BOOT_SYS_LOGIN_LOG);
 			ExcelUtil.export(dynamicTables, cmd.getResponse(), buildLoginLog(cmd), pageQuery, loginLogMapper,
 					LoginLogExcel.class);
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

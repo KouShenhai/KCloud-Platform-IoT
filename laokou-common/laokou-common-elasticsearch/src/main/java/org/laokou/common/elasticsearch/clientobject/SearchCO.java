@@ -87,7 +87,9 @@ public class SearchCO implements Serializable {
 	public static class Aggregation {
 
 		private String groupKey;
+
 		private String field;
+
 		private String script;
 
 	}
@@ -96,6 +98,7 @@ public class SearchCO implements Serializable {
 	public static class Search {
 
 		private String field;
+
 		private String value;
 
 	}

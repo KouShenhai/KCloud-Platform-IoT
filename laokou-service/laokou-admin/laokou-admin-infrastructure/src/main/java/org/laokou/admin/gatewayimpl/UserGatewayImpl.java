@@ -88,7 +88,7 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Boolean update(User user) {
-		return updateUser(getUpdateUserDO(user),user);
+		return updateUser(getUpdateUserDO(user), user);
 	}
 
 	@Override
@@ -112,8 +112,8 @@ public class UserGatewayImpl implements UserGateway {
 			LocalDateTime localDateTime = IdGenerator.getLocalDateTime(id);
 			DynamicDataSourceContextHolder.push(USER);
 			UserDO userDO = userMapper.getDynamicTableById(UserDO.class, id,
-					UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM)), "id", "username", "status", "dept_id",
-					"dept_path", "super_admin");
+					UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM)), "id", "username", "status",
+					"dept_id", "dept_path", "super_admin");
 			User user = userConvertor.convertEntity(userDO);
 			DynamicDataSourceContextHolder.push(MASTER);
 			if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
@@ -162,7 +162,7 @@ public class UserGatewayImpl implements UserGateway {
 		return datas;
 	}
 
-	private Boolean updateUser(UserDO userDO,User user) {
+	private Boolean updateUser(UserDO userDO, User user) {
 		userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER));
 		deleteUserRole(user);
 		insertUserRole(user.getRoleIds(), userDO);
@@ -175,13 +175,15 @@ public class UserGatewayImpl implements UserGateway {
 			transactionalUtil.executeWithoutResult(rollback -> {
 				try {
 					userRoleMapper.deleteUserRoleByUserId(user.getId());
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					log.error("错误信息：{}", e.getMessage());
 					rollback.setRollbackOnly();
 					throw new SystemException(e.getMessage());
 				}
 			});
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
@@ -189,14 +191,17 @@ public class UserGatewayImpl implements UserGateway {
 	private Boolean insertUser(UserDO userDO, User user) {
 		return transactionalUtil.execute(rollback -> {
 			try {
-				userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()), UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
+				userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),
+						UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
 				insertUserRole(user.getRoleIds(), userDO);
 				return true;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				rollback.setRollbackOnly();
 				throw new SystemException(e.getMessage());
-			} finally {
+			}
+			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
 		});
@@ -234,14 +239,17 @@ public class UserGatewayImpl implements UserGateway {
 			DynamicDataSourceContextHolder.push(USER);
 			return transactionalUtil.execute(rollback -> {
 				try {
-					return userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER)) > 0;
-				} catch (Exception e) {
+					return userMapper.updateUser(userDO,
+							TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER)) > 0;
+				}
+				catch (Exception e) {
 					log.error("错误信息：{}", e.getMessage());
 					rollback.setRollbackOnly();
 					throw new SystemException(e.getMessage());
 				}
 			});
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
@@ -252,13 +260,15 @@ public class UserGatewayImpl implements UserGateway {
 			return transactionalUtil.execute(rollback -> {
 				try {
 					return userMapper.deleteDynamicTableById(id, getUserTableSuffix(id)) > 0;
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					log.error("错误信息：{}", e.getMessage());
 					rollback.setRollbackOnly();
 					throw new SystemException(e.getMessage());
 				}
 			});
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
@@ -268,7 +278,7 @@ public class UserGatewayImpl implements UserGateway {
 		return UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM));
 	}
 
-	private UserRoleDO toUserRoleDO(UserDO userDO,Long roleId) {
+	private UserRoleDO toUserRoleDO(UserDO userDO, Long roleId) {
 		UserRoleDO userRoleDO = new UserRoleDO();
 		userRoleDO.setId(IdGenerator.defaultSnowflakeId());
 		userRoleDO.setDeptId(userDO.getDeptId());
