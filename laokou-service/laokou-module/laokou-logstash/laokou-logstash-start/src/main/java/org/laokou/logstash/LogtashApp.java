@@ -18,11 +18,16 @@
 package org.laokou.logstash;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import lombok.SneakyThrows;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+import java.net.InetAddress;
+
+import static org.laokou.common.i18n.common.Constant.IP;
 
 /**
  * @author laokou
@@ -33,10 +38,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableEncryptableProperties
 public class LogtashApp {
 
+	@SneakyThrows
 	public static void main(String[] args) {
 		// System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
 		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
 		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
 		new SpringApplicationBuilder(LogtashApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

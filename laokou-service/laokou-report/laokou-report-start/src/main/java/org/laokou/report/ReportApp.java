@@ -18,6 +18,7 @@
  */
 package org.laokou.report;
 
+import lombok.SneakyThrows;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +26,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.EnableAsync;
+
+import java.net.InetAddress;
+
+import static org.laokou.common.i18n.common.Constant.IP;
 
 /**
  * @author laokou
@@ -36,10 +41,12 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 public class ReportApp {
 
+	@SneakyThrows
 	public static void main(String[] args) {
 		// System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
 		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
 		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
 		new SpringApplicationBuilder(ReportApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
