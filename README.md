@@ -274,6 +274,8 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
     </tr>
 </table>
 <img src="doc/image/wx.png" width="300" height="300" alt="暂无图片">
+<img src="doc/image/wxq.png" width="300" height="300" alt="暂无图片">
+<img src="doc/image/qqq.png" width="300" height="300" alt="暂无图片">
 
 ### 🐭 鸣谢组织
 [Spring社区](https://spring.io)  
