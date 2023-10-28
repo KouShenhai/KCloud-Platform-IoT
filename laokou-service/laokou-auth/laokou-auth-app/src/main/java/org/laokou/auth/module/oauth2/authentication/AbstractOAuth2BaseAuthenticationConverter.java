@@ -18,12 +18,12 @@ package org.laokou.auth.module.oauth2.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.ThreadContext;
 import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
-import org.slf4j.MDC;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
@@ -67,7 +67,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		}
 		String traceId = request.getHeader(TRACE_ID);
 		if (StringUtil.isNotEmpty(traceId)) {
-			MDC.put(TRACE_ID, traceId);
+			ThreadContext.put(TRACE_ID, traceId);
 		}
 		// 判断租户ID是否为空
 		String tenantId = request.getParameter(TENANT_ID);

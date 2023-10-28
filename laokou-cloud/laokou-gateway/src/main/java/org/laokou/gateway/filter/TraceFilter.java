@@ -19,9 +19,9 @@ package org.laokou.gateway.filter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.ThreadContext;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.gateway.utils.RequestUtil;
-import org.slf4j.MDC;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -49,15 +49,15 @@ public class TraceFilter implements GlobalFilter, Ordered {
 		String tenantId = RequestUtil.getParamValue(request, TENANT_ID);
 		String username = RequestUtil.getParamValue(request, USER_NAME);
 		String traceId = userId + IdGenerator.defaultSnowflakeId();
-		MDC.put(TRACE_ID, traceId);
-		MDC.put(USER_ID, userId);
-		MDC.put(TENANT_ID, tenantId);
-		MDC.put(USER_NAME, username);
+		ThreadContext.put(TRACE_ID, traceId);
+		ThreadContext.put(USER_ID, userId);
+		ThreadContext.put(TENANT_ID, tenantId);
+		ThreadContext.put(USER_NAME, username);
 		// 获取uri
 		String requestUri = request.getPath().pathWithinApplication().value();
 		log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}", requestUri, userId, username, tenantId, traceId);
 		// 清除
-		MDC.clear();
+		ThreadContext.clearMap();
 		return chain.filter(exchange.mutate()
 			.request(request.mutate()
 				.header(USER_NAME, username)

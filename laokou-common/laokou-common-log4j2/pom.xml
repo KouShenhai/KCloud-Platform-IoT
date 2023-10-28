@@ -11,6 +11,10 @@
     <artifactId>laokou-common-log4j2</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-kafka</artifactId>
+        </dependency>
         <!-- log4j2的AsyncLogger时需要包含disruptor -->
         <dependency>
             <groupId>com.lmax</groupId>
