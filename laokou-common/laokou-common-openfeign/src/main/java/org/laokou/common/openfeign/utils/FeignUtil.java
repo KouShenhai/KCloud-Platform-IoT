@@ -27,19 +27,19 @@ import org.laokou.common.i18n.dto.Result;
 @Slf4j
 public class FeignUtil {
 
-    public static <T> void resultVoid(Result<T> result) {
-        resultThrow(result);
-    }
+	public static <T> void resultVoid(Result<T> result) {
+		resultThrow(result);
+	}
 
-    public static <T> T result(Result<T> result) {
-        resultThrow(result);
-        return result.getData();
-    }
+	public static <T> T result(Result<T> result) {
+		resultThrow(result);
+		return result.getData();
+	}
 
-    private static <T> void resultThrow(Result<T> result) {
-        if (result.fail()) {
-            throw new FeignException(result.getMsg());
-        }
-    }
+	private static <T> void resultThrow(Result<T> result) {
+		if (result.fail()) {
+			throw new FeignException(result.getMsg());
+		}
+	}
 
 }

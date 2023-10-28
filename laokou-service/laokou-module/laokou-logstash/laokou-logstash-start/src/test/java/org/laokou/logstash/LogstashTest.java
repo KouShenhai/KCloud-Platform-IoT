@@ -35,11 +35,11 @@ import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class LogstashTest {
 
-    private final DefaultKafkaTemplate defaultKafkaTemplate;
+	private final DefaultKafkaTemplate defaultKafkaTemplate;
 
-    @Test
-    public void kafkaProducerTest() {
-        defaultKafkaTemplate.send(LAOKOU_TRACE_TOPIC,"2222");
-    }
+	@Test
+	public void kafkaProducerTest() {
+		defaultKafkaTemplate.send(LAOKOU_TRACE_TOPIC, "2222");
+	}
 
 }

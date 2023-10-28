@@ -41,6 +41,7 @@ import static org.laokou.flowable.common.Constant.FLOWABLE;
 public class TaskDelegateCmdExe {
 
 	private final TaskService taskService;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public Result<Boolean> execute(TaskDelegateCmd cmd) {
@@ -58,7 +59,8 @@ public class TaskDelegateCmdExe {
 				throw new FlowException("用户无权操作任务");
 			}
 			return Result.of(delegate(taskId, owner, deleteReason));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
@@ -69,7 +71,8 @@ public class TaskDelegateCmdExe {
 				taskService.setOwner(taskId, owner);
 				taskService.deleteTask(taskId, deleteReason);
 				return true;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());

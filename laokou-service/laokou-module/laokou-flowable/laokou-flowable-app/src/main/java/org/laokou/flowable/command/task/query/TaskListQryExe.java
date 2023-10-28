@@ -53,7 +53,8 @@ public class TaskListQryExe {
 			datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), TaskCO.class));
 			datas.setTotal(newPage.getTotal());
 			return Result.of(datas);
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

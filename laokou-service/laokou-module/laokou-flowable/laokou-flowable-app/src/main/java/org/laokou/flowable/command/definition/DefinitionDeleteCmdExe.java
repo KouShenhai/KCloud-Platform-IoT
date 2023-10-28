@@ -38,6 +38,7 @@ import static org.laokou.flowable.common.Constant.FLOWABLE;
 public class DefinitionDeleteCmdExe {
 
 	private final RepositoryService repositoryService;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public Result<Boolean> execute(DefinitionDeleteCmd cmd) {
@@ -48,13 +49,15 @@ public class DefinitionDeleteCmdExe {
 					// true允许级联删除 不设置会导致数据库关联异常
 					repositoryService.deleteDeployment(cmd.getDeploymentId(), true);
 					return Result.of(true);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					log.error("错误信息：{}", e.getMessage());
 					r.setRollbackOnly();
 					throw new SystemException(e.getMessage());
 				}
 			});
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

@@ -116,7 +116,8 @@ public class RoleGatewayImpl implements RoleGateway {
 				insertRoleMenu(roleDO.getId(), role.getMenuIds(), user);
 				insertRoleDept(roleDO.getId(), role.getDeptIds(), user);
 				return true;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				rollback.setRollbackOnly();
 				throw new SystemException(e.getMessage());
@@ -132,7 +133,8 @@ public class RoleGatewayImpl implements RoleGateway {
 				updateRoleDept(roleDO.getId(), role.getDeptIds(), user);
 				updateRoleMenu(roleDO.getId(), role.getMenuIds(), user);
 				return true;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				rollback.setRollbackOnly();
 				throw new SystemException(e.getMessage());

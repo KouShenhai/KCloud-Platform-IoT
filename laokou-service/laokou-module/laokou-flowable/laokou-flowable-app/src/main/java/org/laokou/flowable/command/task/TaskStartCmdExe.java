@@ -46,6 +46,7 @@ public class TaskStartCmdExe {
 	private final RuntimeService runtimeService;
 
 	private final RepositoryService repositoryService;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public Result<StartCO> execute(TaskStartCmd cmd) {
@@ -56,9 +57,9 @@ public class TaskStartCmdExe {
 			String businessKey = cmd.getBusinessKey();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-					.processDefinitionKey(definitionKey)
-					.latestVersion()
-					.singleResult();
+				.processDefinitionKey(definitionKey)
+				.latestVersion()
+				.singleResult();
 			if (processDefinition == null) {
 				throw new FlowException("流程未定义");
 			}
@@ -66,7 +67,8 @@ public class TaskStartCmdExe {
 				throw new FlowException("流程已被挂起");
 			}
 			return Result.of(start(definitionKey, businessKey, instanceName));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
@@ -81,7 +83,8 @@ public class TaskStartCmdExe {
 				String instanceId = processInstance.getId();
 				runtimeService.setProcessInstanceName(instanceId, instanceName);
 				return new StartCO(instanceId);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());

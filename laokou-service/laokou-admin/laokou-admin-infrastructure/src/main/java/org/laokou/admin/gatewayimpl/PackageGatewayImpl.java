@@ -142,7 +142,9 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	private void insertPackageMenu(Long packageId, List<Long> menuIds, User user) {
 		if (CollectionUtil.isNotEmpty(menuIds)) {
-			List<PackageMenuDO> list = menuIds.parallelStream().map(menuId -> toPackageMenuDO(packageId, menuId, user)).toList();
+			List<PackageMenuDO> list = menuIds.parallelStream()
+				.map(menuId -> toPackageMenuDO(packageId, menuId, user))
+				.toList();
 			batchUtil.insertBatch(list, PackageMenuMapper.class);
 		}
 	}

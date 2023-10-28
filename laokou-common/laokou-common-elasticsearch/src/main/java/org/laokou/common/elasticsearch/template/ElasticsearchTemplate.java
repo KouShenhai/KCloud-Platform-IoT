@@ -900,7 +900,7 @@ public class ElasticsearchTemplate {
 	 * @return SearchSourceBuilder
 	 */
 	private SearchSourceBuilder buildSearchSource(SearchCO searchCO, boolean isHighlightSearchFlag,
-												  TermsAggregationBuilder aggregationBuilder) {
+			TermsAggregationBuilder aggregationBuilder) {
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		final Integer pageNum = searchCO.getPageNum();
 		final Integer pageSize = searchCO.getPageSize();

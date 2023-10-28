@@ -49,6 +49,7 @@ public class TaskAuditCmdExe {
 	private final TaskService taskService;
 
 	private final TaskMapper taskMapper;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public Result<AuditCO> execute(TaskAuditCmd cmd) {
@@ -68,7 +69,8 @@ public class TaskAuditCmdExe {
 			// 审批
 			audit(taskId, values);
 			return Result.of(new AuditCO(taskMapper.getAssigneeByInstanceId(instanceId)));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
@@ -82,7 +84,8 @@ public class TaskAuditCmdExe {
 				else {
 					taskService.complete(taskId);
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());

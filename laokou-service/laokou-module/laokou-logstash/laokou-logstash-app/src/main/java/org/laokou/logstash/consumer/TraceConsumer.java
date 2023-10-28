@@ -37,10 +37,10 @@ import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 @RequiredArgsConstructor
 public class TraceConsumer {
 
-    @KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
-    public void kafkaConsumerTest(List<String> message, Acknowledgment ack) {
-        log.info("接收到消息：{}", JacksonUtil.toJsonStr(message));
-        ack.acknowledge();
-    }
+	@KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
+	public void kafkaConsumerTest(List<String> message, Acknowledgment ack) {
+		log.info("接收到消息：{}", JacksonUtil.toJsonStr(message));
+		ack.acknowledge();
+	}
 
 }

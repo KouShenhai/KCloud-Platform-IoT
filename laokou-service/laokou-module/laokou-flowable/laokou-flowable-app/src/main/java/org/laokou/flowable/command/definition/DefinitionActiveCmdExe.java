@@ -40,6 +40,7 @@ import static org.laokou.flowable.common.Constant.FLOWABLE;
 public class DefinitionActiveCmdExe {
 
 	private final RepositoryService repositoryService;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public Result<Boolean> execute(DefinitionActivateCmd cmd) {
@@ -47,14 +48,16 @@ public class DefinitionActiveCmdExe {
 			String definitionId = cmd.getDefinitionId();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			ProcessDefinition definition = repositoryService.createProcessDefinitionQuery()
-					.processDefinitionId(definitionId)
-					.singleResult();
+				.processDefinitionId(definitionId)
+				.singleResult();
 			if (definition.isSuspended()) {
 				return Result.of(activate(definitionId));
-			} else {
+			}
+			else {
 				throw new FlowException("激活失败，流程已激活");
 			}
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

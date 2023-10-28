@@ -117,7 +117,8 @@ public class MessageGatewayImpl implements MessageGateway {
 			try {
 				messageMapper.insertTable(messageDO);
 				insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息：{}", e.getMessage());
 				rollback.setRollbackOnly();
 				throw new SystemException(e.getMessage());
@@ -127,7 +128,9 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	private void insertMessageDetail(Long messageId, Set<String> receiver, User user) {
 		if (CollectionUtil.isNotEmpty(receiver)) {
-			List<MessageDetailDO> list = receiver.parallelStream().map(userId -> toMessageDetailDO(messageId, userId, user)).toList();
+			List<MessageDetailDO> list = receiver.parallelStream()
+				.map(userId -> toMessageDetailDO(messageId, userId, user))
+				.toList();
 			batchUtil.insertBatch(list, MessageDetailMapper.class, DynamicDataSourceContextHolder.peek());
 		}
 	}
