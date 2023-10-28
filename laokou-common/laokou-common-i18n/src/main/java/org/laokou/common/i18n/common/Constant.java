@@ -241,4 +241,14 @@ public interface Constant {
 	 */
 	String VERSION = "3.1.5";
 
+	/**
+	 * IP
+	 */
+	String IP = "ip";
+
+	/**
+	 * 端口
+	 */
+	String PORT = "port";
+
 }

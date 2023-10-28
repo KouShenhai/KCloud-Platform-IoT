@@ -21,7 +21,7 @@ import io.micrometer.common.lang.NonNullApi;
 import io.micrometer.common.lang.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.MDC;
+import org.apache.logging.log4j.ThreadContext;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import static org.laokou.common.i18n.common.Constant.*;
@@ -38,17 +38,17 @@ public class TraceInterceptor implements HandlerInterceptor {
 		String userId = request.getHeader(USER_ID);
 		String username = request.getHeader(USER_NAME);
 		String tenantId = request.getHeader(TENANT_ID);
-		MDC.put(TRACE_ID, traceId);
-		MDC.put(USER_ID, userId);
-		MDC.put(TENANT_ID, tenantId);
-		MDC.put(USER_NAME, username);
+		ThreadContext.put(TRACE_ID, traceId);
+		ThreadContext.put(USER_ID, userId);
+		ThreadContext.put(TENANT_ID, tenantId);
+		ThreadContext.put(USER_NAME, username);
 		return true;
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
 			@Nullable Exception ex) {
-		MDC.clear();
+		ThreadContext.clearMap();
 	}
 
 }

@@ -18,11 +18,11 @@
 package org.laokou.common.trace.aspect;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.ThreadContext;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.i18n.dto.Result;
-import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.Constant.TRACE_ID;
@@ -39,7 +39,7 @@ public class TraceLogAspect {
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {
 		Object proceed = point.proceed();
 		if (proceed instanceof Result<?> result) {
-			result.setTraceId(MDC.get(TRACE_ID));
+			result.setTraceId(ThreadContext.get(TRACE_ID));
 			return result;
 		}
 		return proceed;

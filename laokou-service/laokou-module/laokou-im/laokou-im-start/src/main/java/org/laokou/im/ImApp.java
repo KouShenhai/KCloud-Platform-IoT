@@ -17,6 +17,7 @@
 package org.laokou.im;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import lombok.SneakyThrows;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +26,10 @@ import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDeta
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+import java.net.InetAddress;
+
+import static org.laokou.common.i18n.common.Constant.IP;
 
 /**
  * @author laokou
@@ -37,14 +42,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 public class ImApp {
 
-	/**
-	 * 启动.
-	 * @param args args
-	 */
+	@SneakyThrows
 	public static void main(final String[] args) {
 		// System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
 		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
 		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
 		new SpringApplicationBuilder(ImApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 

@@ -17,6 +17,7 @@
 package org.laokou.auth;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import lombok.SneakyThrows;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
@@ -26,6 +27,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.net.InetAddress;
+
+import static org.laokou.common.i18n.common.Constant.IP;
 
 /**
  * @author laokou
@@ -39,6 +44,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @EnableAsync
 public class AuthApp {
 
+	@SneakyThrows
 	public static void main(String[] args) {
 		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
@@ -47,6 +53,7 @@ public class AuthApp {
 		// System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
 		// System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
 		// System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+		System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

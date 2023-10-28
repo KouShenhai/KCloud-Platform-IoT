@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-kafka</artifactId>
+            <artifactId>laokou-common-log4j2</artifactId>
         </dependency>
     </dependencies>
 
