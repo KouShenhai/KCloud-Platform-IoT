@@ -16,7 +16,7 @@
  */
 package org.laokou.common.elasticsearch.annotation;
 
-import org.laokou.common.elasticsearch.enums.FieldTypeEnum;
+import org.laokou.common.elasticsearch.enums.FieldType;
 
 import java.lang.annotation.*;
 
@@ -32,7 +32,7 @@ public @interface EsField {
 
 	String value();
 
-	FieldTypeEnum type() default FieldTypeEnum.KEYWORD;
+	FieldType type() default FieldType.KEYWORD;
 
 	String searchAnalyzer() default EMPTY;
 

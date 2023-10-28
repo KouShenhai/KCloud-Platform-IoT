@@ -14,26 +14,6 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.elasticsearch.dto;
-
-import lombok.Data;
-
-import java.io.Serial;
-import java.io.Serializable;
-
-/**
- * @author laokou
- */
-@Data
-public class AggregationDTO implements Serializable {
-
-	@Serial
-	private static final long serialVersionUID = -1778556690148647870L;
-
-	private String groupKey;
-
-	private String field;
-
-	private String script;
-
-}
+1、先对原项目进行一次package打包：mvn clean package -DskipTests
+2、运行aot提前处理命令：mvn spring-boot:process-aot
+3、运行native打包：mvn -Pnative native:build

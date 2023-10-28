@@ -17,7 +17,7 @@
 
 package org.laokou.admin.command.log;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.common.utils.ExcelUtil;
 import org.laokou.admin.domain.annotation.DataFilter;
@@ -44,14 +44,18 @@ import static org.laokou.common.mybatisplus.constant.DsConstant.LOGIN_LOG;
 public class LoginLogExportCmdExe {
 
 	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
-	@DS(LOGIN_LOG)
 	public void executeVoid(LoginLogExportCmd cmd) {
-		LoginLogMapper loginLogMapper = SpringContextUtil.getBean(LoginLogMapper.class);
-		PageQuery pageQuery = cmd.time().ignore();
-		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
-				BOOT_SYS_LOGIN_LOG);
-		ExcelUtil.export(dynamicTables, cmd.getResponse(), buildLoginLog(cmd), pageQuery, loginLogMapper,
-				LoginLogExcel.class);
+		try {
+			DynamicDataSourceContextHolder.push(LOGIN_LOG);
+			LoginLogMapper loginLogMapper = SpringContextUtil.getBean(LoginLogMapper.class);
+			PageQuery pageQuery = cmd.time().ignore();
+			List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
+					BOOT_SYS_LOGIN_LOG);
+			ExcelUtil.export(dynamicTables, cmd.getResponse(), buildLoginLog(cmd), pageQuery, loginLogMapper,
+					LoginLogExcel.class);
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 	private LoginLogDO buildLoginLog(LoginLogExportCmd cmd) {

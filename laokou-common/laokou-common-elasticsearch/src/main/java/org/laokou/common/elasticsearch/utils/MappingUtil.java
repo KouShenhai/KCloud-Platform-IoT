@@ -17,7 +17,7 @@
 package org.laokou.common.elasticsearch.utils;
 
 import org.laokou.common.elasticsearch.annotation.EsField;
-import org.laokou.common.elasticsearch.enums.FieldTypeEnum;
+import org.laokou.common.elasticsearch.enums.FieldType;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class MappingUtil {
 			if (annotationPresent) {
 				EsField esField = field.getAnnotation(EsField.class);
 				String fieldName = esField.value();
-				FieldTypeEnum fieldType = esField.type();
+				FieldType fieldType = esField.type();
 				String analyzer = esField.analyzer();
 				String searchAnalyzer = esField.searchAnalyzer();
 				mappingList.add(new Mapping(fieldName, fieldType, searchAnalyzer, analyzer));
