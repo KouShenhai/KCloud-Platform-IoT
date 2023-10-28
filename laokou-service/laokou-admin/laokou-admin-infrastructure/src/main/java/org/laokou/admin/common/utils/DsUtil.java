@@ -17,7 +17,6 @@
 
 package org.laokou.admin.common.utils;
 
-import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
 import com.baomidou.dynamic.datasource.creator.hikaricp.HikariDataSourceCreator;
 import lombok.RequiredArgsConstructor;
@@ -70,18 +69,21 @@ public class DsUtil {
 	}
 
 	private void addDs(String sourceName) {
+		DataSource dataSource = dataSource(sourceName);
+		// 连接数据源
+		validateDs(dataSource);
+		dynamicUtil.getDataSource().addDataSource(sourceName, dataSource);
+	}
+
+	private DataSource dataSource(String sourceName) {
 		SourceDO source = sourceMapper.getSourceByName(sourceName);
 		DataSourceProperty properties = new DataSourceProperty();
 		properties.setUsername(source.getUsername());
 		properties.setPassword(source.getPassword());
 		properties.setUrl(source.getUrl());
 		properties.setDriverClassName(source.getDriverClassName());
-		DynamicRoutingDataSource dynamicRoutingDataSource = dynamicUtil.getDataSource();
 		HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
-		DataSource dataSource = hikariDataSourceCreator.createDataSource(properties);
-		// 连接数据源
-		validateDs(dataSource);
-		dynamicRoutingDataSource.addDataSource(sourceName, dataSource);
+		return hikariDataSourceCreator.createDataSource(properties);
 	}
 
 	private boolean validateDs(String sourceName) {
