@@ -17,7 +17,6 @@
 
 package org.laokou.admin.common.utils;
 
-import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
 import com.baomidou.dynamic.datasource.creator.hikaricp.HikariDataSourceCreator;
 import lombok.RequiredArgsConstructor;
@@ -28,16 +27,18 @@ import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.DataSourceException;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+import static org.laokou.common.i18n.common.Constant.DROP;
 import static org.laokou.common.mybatisplus.constant.DsConstant.*;
 
 /**
@@ -68,50 +69,38 @@ public class DsUtil {
 	}
 
 	private void addDs(String sourceName) {
+		DataSource dataSource = dataSource(sourceName);
+		// 连接数据源
+		validateDs(dataSource);
+		dynamicUtil.getDataSource().addDataSource(sourceName, dataSource);
+	}
+
+	private DataSource dataSource(String sourceName) {
 		SourceDO source = sourceMapper.getSourceByName(sourceName);
 		DataSourceProperty properties = new DataSourceProperty();
 		properties.setUsername(source.getUsername());
 		properties.setPassword(source.getPassword());
 		properties.setUrl(source.getUrl());
 		properties.setDriverClassName(source.getDriverClassName());
-		// 连接数据源
-		connectDs(properties);
-		DynamicRoutingDataSource dynamicRoutingDataSource = dynamicUtil.getDataSource();
 		HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
-		DataSource dataSource = hikariDataSourceCreator.createDataSource(properties);
-		dynamicRoutingDataSource.addDataSource(sourceName, dataSource);
+		return hikariDataSourceCreator.createDataSource(properties);
 	}
 
 	private boolean validateDs(String sourceName) {
-		Map<String, DataSource> dataSources = dynamicUtil.getDataSources();
-		return dataSources.containsKey(sourceName);
+		return dynamicUtil.getDataSources().containsKey(sourceName);
 	}
 
 	/**
 	 * 连接数据库
 	 */
 	@SneakyThrows
-	private void connectDs(DataSourceProperty properties) {
-		Connection connection;
+	private void validateDs(DataSource dataSource) {
+		Connection connection = null;
+		PreparedStatement ps = null;
 		try {
-			Class.forName(properties.getDriverClassName());
-		}
-		catch (Exception e) {
-			log.error("数据源驱动加载失败，错误信息：{}", e.getMessage());
-			throw new DataSourceException("数据源驱动加载失败，请检查相关配置");
-		}
-		try {
-			// 5秒后连接超时
-			DriverManager.setLoginTimeout(5);
-			connection = DriverManager.getConnection(properties.getUrl(), properties.getUsername(),
-					properties.getPassword());
-		}
-		catch (Exception e) {
-			log.error("数据源连接超时，错误信息：{}", e.getMessage());
-			throw new DataSourceException("数据源连接超时，请检查相关配置");
-		}
-		try {
-			ResultSet rs = connection.prepareStatement(SHOW_TABLES).executeQuery();
+			connection = DataSourceUtils.getConnection(dataSource);
+			ps = connection.prepareStatement(SHOW_TABLES);
+			ResultSet rs = ps.executeQuery();
 			List<String> tables = new ArrayList<>(TABLES.size());
 			while (rs.next()) {
 				String tableName = rs.getString(1);
@@ -119,18 +108,22 @@ public class DsUtil {
 					tables.add(tableName);
 				}
 			}
-			if (CollectionUtil.isEmpty(tables)) {
-				throw new DataSourceException("未初始化表结构");
+			List<String> list;
+			if (CollectionUtil.isNotEmpty(tables)) {
+				list = TABLES.parallelStream().filter(table -> !tables.contains(table)).toList();
+			} else {
+				list = TABLES;
 			}
-			List<String> list = TABLES.stream().filter(table -> !tables.contains(table)).toList();
 			if (CollectionUtil.isNotEmpty(list)) {
-				throw new DataSourceException(String.format("%s不存在，请检查数据表", String.join("、", list)));
+				throw new DataSourceException(String.format("%s不存在", String.join(DROP, list)));
 			}
 		}
-		finally {
-			if (connection != null) {
-				connection.close();
-			}
+		catch (Exception e) {
+			log.error("数据源连接超时，错误信息：{}", e.getMessage());
+			throw new DataSourceException("数据源连接超时");
+		} finally {
+			JdbcUtils.closeStatement(ps);
+			DataSourceUtils.releaseConnection(connection, dataSource);
 		}
 	}
 

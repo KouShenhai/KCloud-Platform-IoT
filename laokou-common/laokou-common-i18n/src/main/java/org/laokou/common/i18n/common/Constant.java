@@ -34,6 +34,11 @@ public interface Constant {
 	/**
 	 * 分割参数
 	 */
+	String DROP = "、";
+
+	/**
+	 * 分割参数
+	 */
 	String BACKSLASH = "\\";
 
 	/**
@@ -245,10 +250,5 @@ public interface Constant {
 	 * IP
 	 */
 	String IP = "ip";
-
-	/**
-	 * 端口
-	 */
-	String PORT = "port";
 
 }
