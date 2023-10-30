@@ -279,7 +279,7 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 <img src="doc/image/qqq.png" width="250" height="300" alt="暂无图片">
 </div>
 
-### ⬆ 升级交流
+### ⬆ 升级
 <table>
     <tr>
         <th>套餐</th>
@@ -289,12 +289,12 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
     <tr>
         <td>Spring Boot 3.x.x</td>
         <td>￥ 99</td>
-        <td>远程升级 + 解决问题 + 一对一售后群 + 持续升级</td>
+        <td>远程升级 + 解决问题 + 一对一售后群</td>
     </tr>
     <tr>
         <td>Spring Cloud 202x.x.x</td>
         <td>￥ 199</td>
-        <td>远程升级 + 解决问题 + 一对一售后群 + 持续升级</td>
+        <td>远程升级 + 解决问题 + 一对一售后群</td>
     </tr>
 </table>
 <img src="doc/image/wx.png" width="250" height="300" alt="暂无图片">
