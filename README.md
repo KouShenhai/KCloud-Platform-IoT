@@ -279,6 +279,26 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 <img src="doc/image/qqq.png" width="250" height="300" alt="暂无图片">
 </div>
 
+### ⬆ 项目升级
+<table>
+    <tr>
+        <th>套餐</th>
+        <th>金额</th>
+        <th>权益（永久）</th>
+    </tr>
+    <tr>
+        <td>Spring Boot 3.x.x</td>
+        <td>￥ 99</td>
+        <td>远程升级 + 解决问题 + 一对一售后群 + 持续升级</td>
+    </tr>
+    <tr>
+        <td>Spring Cloud 202x.x.x</td>
+        <td>￥ 199</td>
+        <td>远程升级 + 解决问题 + 一对一售后群 + 持续升级</td>
+    </tr>
+</table>
+<img src="doc/image/wx.png" width="250" height="300" alt="暂无图片">
+
 ### 🐭 鸣谢组织
 [Spring社区](https://spring.io)  
 [Jetbrains社区](https://www.jetbrains.com/community)  
