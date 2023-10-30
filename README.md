@@ -279,7 +279,7 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 <img src="doc/image/qqq.png" width="250" height="300" alt="暂无图片">
 </div>
 
-### ⬆ 项目升级
+### ⬆ 升级交流
 <table>
     <tr>
         <th>套餐</th>
