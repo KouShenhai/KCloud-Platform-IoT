@@ -428,6 +428,7 @@
                     <exclude>bootstrap*.yml</exclude>
                     <exclude>log4j2*.xml</exclude>
                     <exclude>*.json</exclude>
+                    <exclude>*.</exclude>
                 </excludes>
             </resource>
             <!-- 添加需要包含的文件 -->

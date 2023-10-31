@@ -65,7 +65,7 @@
         <Async name="async_kafka" bufferSize="2000" blocking="false">
             <AppenderRef ref="kafka"/>
         </Async>
-        <Kafka name="kafka" topic="laokou_trace_topic" syncSend="true">
+        <Kafka name="kafka" topic="laokou_trace_topic" syncSend="false"  ignoreExceptions="true">
             <PatternLayout>
                 <pattern>
                     {
