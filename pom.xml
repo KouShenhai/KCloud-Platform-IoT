@@ -428,7 +428,7 @@
                     <exclude>bootstrap*.yml</exclude>
                     <exclude>log4j2*.xml</exclude>
                     <exclude>*.json</exclude>
-                    <exclude>*.</exclude>
+                    <exclude>*.properties</exclude>
                 </excludes>
             </resource>
             <!-- 添加需要包含的文件 -->
@@ -445,6 +445,7 @@
                     <include>log4j2.xml</include>
                     <include>log4j2-${PROFILE-ACTIVE}.xml</include>
                     <include>init_router.json</include>
+                    <include>log4j2.component.properties</include>
                 </includes>
             </resource>
         </resources>
