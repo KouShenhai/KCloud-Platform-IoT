@@ -48,7 +48,7 @@
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
         </Console>
-        <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${APP_NAME}.log" filePattern="${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}-%d{yyyy-MM-dd}.%i.log.gz" immediateFlush="false">
+        <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${APP_NAME}.log" filePattern="${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}_%d{yyyy-MM-dd}.%i.log.gz" immediateFlush="false">
             <Filters>
                 <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>

@@ -59,6 +59,17 @@
             </Policies>
             <DefaultRolloverStrategy max="${LOG_DAYS}"/>
         </RollingRandomAccessFile>
+        <RollingRandomAccessFile name="failover_kafka" fileName="${LOG_PATH}/${APP_NAME}_kafka.log" filePattern="${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}_kafka_%d{yyyy-MM-dd}.%i.log.gz" immediateFlush="false">
+            <Filters>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="${LOG_FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
+                <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${LOG_DAYS}"/>
+        </RollingRandomAccessFile>
         <Async name="async_file" bufferSize="2000" blocking="false">
             <AppenderRef ref="file"/>
         </Async>
