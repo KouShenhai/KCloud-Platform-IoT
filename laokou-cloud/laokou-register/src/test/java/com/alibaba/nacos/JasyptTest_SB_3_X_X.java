@@ -31,7 +31,7 @@ public class JasyptTest_SB_3_X_X {
 
 	public static void main(String[] args) {
 		String factor = "slat";
-		String plainText = "111";
+		String plainText = "laokou";
 		String encryptWithMD5Str = encryptWithHMACSHA512ANDAES(plainText, factor);
 		String decryptWithMD5Str = decryptWithHMACSHA512ANDAES(encryptWithMD5Str, factor);
 		log.info("采用HMACSHA512ANDAES加密前原文密文：" + encryptWithMD5Str);
