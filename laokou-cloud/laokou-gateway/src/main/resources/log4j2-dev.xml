@@ -70,13 +70,19 @@
             </Policies>
             <DefaultRolloverStrategy max="${LOG_DAYS}"/>
         </RollingRandomAccessFile>
+        <Failover name="failover" primary="kafka" retryIntervalSeconds="600">
+            <Failovers>
+                <AppenderRef ref="failover_kafka"/>
+            </Failovers>
+        </Failover>
         <Async name="async_file" bufferSize="2000" blocking="false">
             <AppenderRef ref="file"/>
         </Async>
-        <Async name="async_kafka" bufferSize="30000" blocking="false">
-            <AppenderRef ref="kafka"/>
+        <Async name="async_kafka" bufferSize="2000" blocking="false">
+            <AppenderRef ref="failover"/>
         </Async>
-        <Kafka name="kafka" topic="laokou_trace_topic" syncSend="true">
+        <!-- ignoreExceptions=false 触发Failover -->
+        <Kafka name="kafka" topic="laokou_trace_topic" syncSend="true" ignoreExceptions="false">
             <PatternLayout>
                 <pattern>
                     {
@@ -94,6 +100,7 @@
                     }
                 </pattern>
             </PatternLayout>
+            <Property name="max.block.ms">2000</Property>
             <Property name="bootstrap.servers">laokou.org:9092</Property>
         </Kafka>
     </Appenders>
