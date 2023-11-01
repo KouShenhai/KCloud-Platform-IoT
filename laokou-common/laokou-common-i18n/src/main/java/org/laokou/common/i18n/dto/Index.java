@@ -17,11 +17,15 @@
 
 package org.laokou.common.i18n.dto;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
  * @author laokou
  */
 public abstract class Index implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -4314847178115273665L;
 
 }

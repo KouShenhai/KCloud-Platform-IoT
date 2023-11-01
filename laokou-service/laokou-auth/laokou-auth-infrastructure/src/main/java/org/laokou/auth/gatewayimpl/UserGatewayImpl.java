@@ -49,7 +49,7 @@ public class UserGatewayImpl implements UserGateway {
 		try {
 			DynamicDataSourceContextHolder.push(USER);
 			List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME,
-					DateUtil.format(DateUtil.now(), DateUtil.YYYY_MM_DD_HH_MM_SS), BOOT_SYS_USER);
+					DateUtil.format(DateUtil.now(), DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS), BOOT_SYS_USER);
 			UserDO userDO = userMapper.getUserByUsernameAndTenantId(dynamicTables, auth.getUsername(),
 					auth.getTenantId(), auth.getType());
 			return ConvertUtil.sourceToTarget(userDO, User.class);

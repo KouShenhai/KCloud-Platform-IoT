@@ -34,7 +34,7 @@ public class DateUtil {
 	/**
 	 * yyyy-MM-dd HH:mm:ss
 	 */
-	public static final int YYYY_MM_DD_HH_MM_SS = 0;
+	public static final int YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS = 0;
 
 	/**
 	 * yyyyMMddHHmmss
@@ -69,8 +69,8 @@ public class DateUtil {
 	/**
 	 * 时间格式
 	 */
-	private static final String[] TIME_PATTERNS = { "yyyy-MM-dd HH:mm:ss", "yyyyMMddHHmmss", "yyyyMM", "yyyy-MM-dd",
-			"yyyy年MM月dd日", "yyyy.MM.dd" };
+	private static final String[] TIME_PATTERNS = { Constant.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS, Constant.YYYYMMDDHHMMSS, Constant.YYYYMM, Constant.YYYY_MM_DD,
+			Constant.YYYY_MM_DD_TEXT,  Constant.YYYY_DOT_MM_DOT_DD};
 
 	/**
 	 * 星期数组
@@ -247,6 +247,16 @@ public class DateUtil {
 
 	public static String getDayOfWeekText(LocalDate localDate) {
 		return localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
+	}
+
+	public interface Constant {
+		String YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS = "yyyy-MM-dd HH:mm:ss";
+		String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+		String YYYYMM = "yyyyMM";
+		String YYYY_MM_DD = "yyyy-MM-dd";
+		String YYYY_MM_DD_TEXT = "yyyy年MM月dd日";
+		String YYYY_DOT_MM_DOT_DD = "yyyy.MM.dd";
+		String DEFAULT_TIMEZONE = "GMT+8";
 	}
 
 }

@@ -101,7 +101,7 @@
         <!--swagger版本-->
         <swagger.version>2.2.18</swagger.version>
         <!--disruptor版本-->
-        <disruptor.version>4.0.0</disruptor.version>
+        <disruptor.version>3.4.4</disruptor.version>
         <!--dubbo版本-->
         <dubbo.version>3.3.0-beta.1</dubbo.version>
         <!--lombok-mapstruct-binding版本-->
@@ -121,7 +121,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.laokou</groupId>
-                <artifactId>laokou-logstash-client</artifactId>
+                <artifactId>laokou-logstash-infrastructure</artifactId>
                 <version>${laokou.version}</version>
             </dependency>
             <dependency>

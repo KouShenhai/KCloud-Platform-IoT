@@ -92,9 +92,14 @@ public interface Constant {
 	String LIKE = "like";
 
 	/**
-	 * 下划线
+	 * 分割参数
 	 */
 	String UNDER = "_";
+
+	/**
+	 * 分割参数
+	 */
+	String BAR = "-";
 
 	/**
 	 * 双引号

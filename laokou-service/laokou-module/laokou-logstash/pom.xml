@@ -13,7 +13,7 @@
     <modules>
         <module>laokou-logstash-start</module>
         <module>laokou-logstash-app</module>
-        <module>laokou-logstash-client</module>
+        <module>laokou-logstash-infrastructure</module>
     </modules>
 
 

@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
+import static org.laokou.common.i18n.utils.DateUtil.Constant.DEFAULT_TIMEZONE;
+
 /**
  * @author laokou
  */
@@ -54,9 +56,9 @@ public class HttpMessageConverterConfig {
 		ObjectMapper mapper = JsonMapper.builder().build();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		// 时区
-		TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
-		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_MM_DD_HH_MM_SS);
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_MM_DD_HH_MM_SS));
+		TimeZone timeZone = TimeZone.getTimeZone(DEFAULT_TIMEZONE);
+		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS));
 		simpleDateFormat.setTimeZone(timeZone);
 		mapper.setDateFormat(simpleDateFormat);
 		mapper.setTimeZone(timeZone);
