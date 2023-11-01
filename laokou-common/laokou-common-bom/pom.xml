@@ -39,15 +39,15 @@
         <!--mybatis-plus版本 -->
         <mybatis-plus.version>3.5.4</mybatis-plus.version>
         <!--redisson版本-->
-        <redisson.version>3.24.1</redisson.version>
+        <redisson.version>3.24.3</redisson.version>
         <!--UserAgentUtils版本-->
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
         <!--jsoup版本-->
-        <jsoup.version>1.15.4</jsoup.version>
+        <jsoup.version>1.16.2</jsoup.version>
         <!--commons-collections4版本-->
         <commons-collections4.version>4.4</commons-collections4.version>
         <!--commons-lang3版本-->
-        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <commons-lang3.version>3.13.0</commons-lang3.version>
         <!--jasypt版本-->
         <jasypt.version>3.0.5</jasypt.version>
         <!--captcha版本-->
@@ -77,13 +77,11 @@
         <!--dynamic-datasource版本-->
         <dynamic-datasource.version>4.2.0</dynamic-datasource.version>
         <!--httpclient5版本-->
-        <httpclient5.version>5.2.1</httpclient5.version>
+        <httpclient5.version>5.3-alpha1</httpclient5.version>
         <!--jna版本-->
         <jna.version>5.13.0</jna.version>
         <!--hibernate-validator版本-->
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
-        <!--hbase版本-->
-        <hbase.version>2.5.3</hbase.version>
         <!--ip2region版本-->
         <ip2region.version>2.7.0</ip2region.version>
         <!--jackson-module-kotlin版本-->
@@ -94,8 +92,6 @@
         <shardingsphere.version>5.3.2</shardingsphere.version>
         <!--p6spy版本-->
         <p6spy.version>3.9.1</p6spy.version>
-        <!--rocketmq-logappender版本-->
-        <rocketmq-logappender.version>5.0.0-PREVIEW</rocketmq-logappender.version>
         <!--kafka版本-->
         <kafka.version>3.0.12</kafka.version>
         <!--netty版本-->
@@ -103,11 +99,11 @@
         <!--gson版本-->
         <gson.version>2.10.1</gson.version>
         <!--swagger版本-->
-        <swagger.version>2.2.15</swagger.version>
+        <swagger.version>2.2.18</swagger.version>
         <!--disruptor版本-->
-        <disruptor.version>3.4.4</disruptor.version>
+        <disruptor.version>4.0.0</disruptor.version>
         <!--dubbo版本-->
-        <dubbo.version>3.2.7</dubbo.version>
+        <dubbo.version>3.3.0-beta.1</dubbo.version>
         <!--lombok-mapstruct-binding版本-->
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!--mapstruct版本-->
@@ -123,6 +119,11 @@
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-logstash-client</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-logstash-app</artifactId>
@@ -336,11 +337,6 @@
                 <version>${spring-boot.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-logappender</artifactId>
-                <version>${rocketmq-logappender.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.springframework.kafka</groupId>
                 <artifactId>spring-kafka</artifactId>
                 <version>${kafka.version}</version>
@@ -404,11 +400,6 @@
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-jasypt</artifactId>
                 <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.hbase</groupId>
-                <artifactId>hbase-shaded-client</artifactId>
-                <version>${hbase.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
