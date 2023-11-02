@@ -97,7 +97,7 @@ public class BatchUtil {
 				sqlSession.commit();
 			}
 			catch (Exception e) {
-				handleException(cyclicBarrier, rollback, e.getMessage());
+				handleException(cyclicBarrier, rollback, e);
 			}
 			finally {
 				if (rollback.get()) {
@@ -112,10 +112,10 @@ public class BatchUtil {
 		}
 	}
 
-	private void handleException(CyclicBarrier cyclicBarrier, AtomicBoolean rollback, String msg) {
+	private void handleException(CyclicBarrier cyclicBarrier, AtomicBoolean rollback, Exception e) {
 		// 回滚标识
 		rollback.compareAndSet(false, true);
-		log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", msg);
+		log.error("批量插入数据异常，已设置回滚标识，错误信息", e);
 		cyclicBarrier.reset();
 	}
 

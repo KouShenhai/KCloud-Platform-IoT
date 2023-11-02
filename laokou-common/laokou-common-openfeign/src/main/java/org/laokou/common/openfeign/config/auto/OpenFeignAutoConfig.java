@@ -90,7 +90,7 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 	@Override
 	public Exception decode(String methodKey, Response response) {
 		Exception exception = super.decode(methodKey, response);
-		log.error("拦截Feign报错信息：{}", exception.getMessage());
+		log.error("拦截Feign报错信息", exception);
 		return exception;
 	}
 

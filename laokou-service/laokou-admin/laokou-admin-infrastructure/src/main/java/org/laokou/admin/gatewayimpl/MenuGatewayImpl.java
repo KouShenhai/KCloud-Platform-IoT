@@ -73,7 +73,7 @@ public class MenuGatewayImpl implements MenuGateway {
 				return menuMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				rollback.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -130,7 +130,7 @@ public class MenuGatewayImpl implements MenuGateway {
 				return menuMapper.updateById(menuDO) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -143,7 +143,7 @@ public class MenuGatewayImpl implements MenuGateway {
 				return menuMapper.insertTable(menuDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

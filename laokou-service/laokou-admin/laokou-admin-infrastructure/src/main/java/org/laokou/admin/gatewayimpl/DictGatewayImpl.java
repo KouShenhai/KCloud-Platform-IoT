@@ -78,7 +78,7 @@ public class DictGatewayImpl implements DictGateway {
 				return dictMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -103,7 +103,7 @@ public class DictGatewayImpl implements DictGateway {
 				return dictMapper.insertTable(dictDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -116,7 +116,7 @@ public class DictGatewayImpl implements DictGateway {
 				return dictMapper.updateById(dictDO) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

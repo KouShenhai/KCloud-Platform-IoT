@@ -87,7 +87,7 @@ public class DsUtil {
 			return hikariDataSourceCreator.createDataSource(properties);
 		}
 		catch (Exception e) {
-			log.error("加载数据源驱动失败，错误信息：{}", e.getMessage());
+			log.error("加载数据源驱动失败，错误信息", e);
 			throw new DataSourceException("加载数据源驱动失败");
 		}
 	}
@@ -126,7 +126,7 @@ public class DsUtil {
 			}
 		}
 		catch (Exception e) {
-			log.error("数据源连接超时，错误信息：{}", e.getMessage());
+			log.error("数据源连接超时，错误信息", e);
 			throw new DataSourceException("数据源连接超时");
 		}
 		finally {

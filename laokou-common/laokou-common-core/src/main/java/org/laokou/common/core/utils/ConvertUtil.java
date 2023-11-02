@@ -38,7 +38,7 @@ public class ConvertUtil extends BeanUtils {
 			copyProperties(source, targetObject);
 		}
 		catch (Exception e) {
-			log.error("convert error :{}", e.getMessage());
+			log.error("转换失败", e);
 		}
 		return targetObject;
 	}

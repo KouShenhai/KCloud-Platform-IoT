@@ -68,7 +68,7 @@ public class MessageReadCmdExe {
 				messageDetailMapper.updateById(messageDetailDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				rollback.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

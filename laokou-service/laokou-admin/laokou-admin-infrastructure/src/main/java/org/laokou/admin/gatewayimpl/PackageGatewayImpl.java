@@ -98,7 +98,7 @@ public class PackageGatewayImpl implements PackageGateway {
 				return packageMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -113,7 +113,7 @@ public class PackageGatewayImpl implements PackageGateway {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -128,7 +128,7 @@ public class PackageGatewayImpl implements PackageGateway {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

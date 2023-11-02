@@ -117,7 +117,7 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 			}
 		}
 		catch (IOException e) {
-			log.error("错误信息：{}", e.getMessage());
+			log.error("错误信息", e);
 		}
 		return list;
 	}
@@ -133,7 +133,7 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 					return CryptoUtil.decrypt(publicKey, matcher.group(1));
 				}
 				catch (Exception e) {
-					log.error("ShardingSphere decrypt error ", e);
+					log.error("ShardingSphere decrypt error", e);
 				}
 			}
 		}

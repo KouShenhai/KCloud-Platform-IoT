@@ -85,7 +85,7 @@ public class SourceGatewayImpl implements SourceGateway {
 				return sourceMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -98,7 +98,7 @@ public class SourceGatewayImpl implements SourceGateway {
 				return sourceMapper.updateById(sourceDO) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -111,7 +111,7 @@ public class SourceGatewayImpl implements SourceGateway {
 				return sourceMapper.insertTable(sourceDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

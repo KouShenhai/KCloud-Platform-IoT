@@ -23,6 +23,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 
+import static org.laokou.mqtt.constant.Constant.WILL_DATA;
+import static org.laokou.mqtt.constant.Constant.WILL_TOPIC;
+
 /**
  * @author laokou
  */
@@ -32,12 +35,24 @@ public class MqttConfig {
 	@Bean
 	public MqttPahoClientFactory mqttPahoClientFactory(MqttProperties mqttProperties) {
 		DefaultMqttPahoClientFactory clientFactory = new DefaultMqttPahoClientFactory();
+		clientFactory.setConnectionOptions(mqttConnectOptions(mqttProperties));
+		return clientFactory;
+	}
+
+	private MqttConnectOptions mqttConnectOptions(MqttProperties mqttProperties) {
 		MqttConnectOptions options = new MqttConnectOptions();
+		// 超时时间
+		options.setConnectionTimeout(10);
+		// 会话心跳
+		options.setKeepAliveInterval(15);
 		options.setUserName(mqttProperties.getUsername());
+		// 开启重连
+		options.setAutomaticReconnect(true);
 		options.setPassword(mqttProperties.getPassword().toCharArray());
 		options.setServerURIs(new String[] { mqttProperties.getHost() });
-		clientFactory.setConnectionOptions(options);
-		return clientFactory;
+		// 客户端与服务器意外中断,服务器发送`遗嘱`消息(只有一次)
+		options.setWill(WILL_TOPIC, WILL_DATA,2,false);
+		return options;
 	}
 
 }

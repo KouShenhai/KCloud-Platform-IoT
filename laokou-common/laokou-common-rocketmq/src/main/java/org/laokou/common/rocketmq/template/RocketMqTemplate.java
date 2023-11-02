@@ -95,7 +95,7 @@ public class RocketMqTemplate implements InitializingBean {
 
 			@Override
 			public void onException(Throwable throwable) {
-				log.error("报错信息：{}", throwable.getMessage());
+				log.error("报错信息", throwable);
 			}
 		});
 	}
