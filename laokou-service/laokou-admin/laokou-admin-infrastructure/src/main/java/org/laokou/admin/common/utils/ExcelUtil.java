@@ -84,8 +84,7 @@ public class ExcelUtil {
 			excelWriter.finish();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
-			log.error("错误信息：{}", e.getMessage());
+			log.error("错误信息", e);
 			fail(response);
 		}
 	}

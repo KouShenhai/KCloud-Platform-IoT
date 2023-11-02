@@ -59,7 +59,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 				execute(event);
 			}
 			catch (Exception e) {
-				log.error("数据插入失败，错误信息：{}", e.getMessage());
+				log.error("数据插入失败，错误信息", e);
 			}
 			finally {
 				DynamicDataSourceContextHolder.clear();

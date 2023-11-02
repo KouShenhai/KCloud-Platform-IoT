@@ -95,7 +95,7 @@ public class OssGatewayImpl implements OssGateway {
 				return ossMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -122,7 +122,7 @@ public class OssGatewayImpl implements OssGateway {
 				return ossMapper.insertTable(ossDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -135,7 +135,7 @@ public class OssGatewayImpl implements OssGateway {
 				return ossMapper.updateById(ossDO) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

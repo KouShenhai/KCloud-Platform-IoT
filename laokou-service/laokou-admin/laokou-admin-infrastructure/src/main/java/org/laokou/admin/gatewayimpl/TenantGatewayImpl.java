@@ -107,7 +107,7 @@ public class TenantGatewayImpl implements TenantGateway {
 				return tenantMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -126,7 +126,7 @@ public class TenantGatewayImpl implements TenantGateway {
 				return tenantMapper.updateById(tenantDO) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -157,7 +157,7 @@ public class TenantGatewayImpl implements TenantGateway {
 							UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
 				}
 				catch (Exception e) {
-					log.error("错误信息：{}", e.getMessage());
+					log.error("错误信息", e);
 					rollback.setRollbackOnly();
 					throw new SystemException(e.getMessage());
 				}

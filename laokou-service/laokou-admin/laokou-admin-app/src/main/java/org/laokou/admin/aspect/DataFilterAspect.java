@@ -61,7 +61,7 @@ public class DataFilterAspect {
 				pageQuery.setSqlFilter(getSqlFilter(user, point));
 			}
 			catch (Exception ex) {
-				log.error("错误信息:{}", ex.getMessage());
+				log.error("错误信息", ex);
 			}
 		}
 	}

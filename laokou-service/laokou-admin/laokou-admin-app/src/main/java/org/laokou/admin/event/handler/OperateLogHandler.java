@@ -52,7 +52,7 @@ public class OperateLogHandler implements ApplicationListener<OperateLogEvent> {
 				execute(event);
 			}
 			catch (Exception e) {
-				log.error("数据插入失败，错误信息：{}", e.getMessage());
+				log.error("数据插入失败，错误信息", e);
 			}
 		}, taskExecutor);
 	}

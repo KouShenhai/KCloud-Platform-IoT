@@ -17,10 +17,6 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-secret</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-mqtt</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

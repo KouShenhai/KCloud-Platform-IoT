@@ -43,7 +43,7 @@ public abstract class AbstractTransactionListener implements RocketMQLocalTransa
 			return RocketMQLocalTransactionState.COMMIT;
 		}
 		catch (Exception e) {
-			log.error("事务回滚：{}", e.getMessage());
+			log.error("事务回滚", e);
 			return RocketMQLocalTransactionState.ROLLBACK;
 		}
 	}

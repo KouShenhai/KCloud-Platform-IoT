@@ -67,14 +67,14 @@ public class RouterUtil {
 			return;
 		}
 		// 拉取所有的路由配置
-		ConfigCO configCO = apiUtil.getConfigInfo(token);
-		if (configCO == null) {
+		ConfigCO co = apiUtil.getConfigInfo(token);
+		if (co == null) {
 			return;
 		}
-		List<RouteDefinition> routeDefinitions = JacksonUtil.toList(configCO.getContent(), RouteDefinition.class);
+		List<RouteDefinition> routeDefinitions = JacksonUtil.toList(co.getContent(), RouteDefinition.class);
 		// 判断是否已经配置
 		if (CollectionUtil.isEmpty(routeDefinitions)) {
-			log.error("请配置动态路由");
+			log.error("动态路由为空");
 			return;
 		}
 		boolean isExist = routeDefinitions.stream().anyMatch(r -> r.getId().equals(routeDefinition.getId()));
@@ -82,8 +82,8 @@ public class RouterUtil {
 		if (!isExist) {
 			routeDefinitions.add(routeDefinition);
 			String toPrettyFormat = GsonUtil.toPrettyFormat(routeDefinitions);
-			configCO.setContent(toPrettyFormat);
-			apiUtil.doConfigInfo(configCO, token);
+			co.setContent(toPrettyFormat);
+			apiUtil.doConfigInfo(co, token);
 			log.info("服务路由已添加并发布");
 		}
 		else {

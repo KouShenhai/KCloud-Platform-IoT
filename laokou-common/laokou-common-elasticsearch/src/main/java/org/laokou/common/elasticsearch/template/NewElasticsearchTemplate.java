@@ -18,10 +18,8 @@ package org.laokou.common.elasticsearch.template;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.mapping.DynamicMapping;
-import co.elastic.clients.elasticsearch._types.mapping.Property;
 import co.elastic.clients.elasticsearch._types.mapping.TypeMapping;
 import co.elastic.clients.elasticsearch.indices.ExistsRequest;
-import co.elastic.clients.util.ObjectBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -30,10 +28,7 @@ import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 /**
  * @author laokou
@@ -624,7 +619,7 @@ public class NewElasticsearchTemplate {
 			return elasticsearchClient.indices().exists(existsRequest).value();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			log.error("错误信息",e);
 			return false;
 		}
 	}

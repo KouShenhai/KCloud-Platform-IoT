@@ -186,8 +186,7 @@ public class ElasticsearchTemplate {
 			log.info("索引【{}】批量修改更新成功，共新增[{}]个，修改[{}]个", indexName, createCount, updateCount);
 		}
 		catch (IOException e) {
-			e.printStackTrace();
-			log.error("索引【{}】批量修改更新出现异常", indexName);
+			log.error("索引【{}】批量修改更新出现异常", indexName,e);
 			return false;
 		}
 		return true;
@@ -229,8 +228,7 @@ public class ElasticsearchTemplate {
 			}
 		}
 		catch (IOException e) {
-			e.printStackTrace();
-			log.error("索引[{}]主键【{}】，更新异常:[{}]", indexName, id, e);
+			log.error("索引[{}]主键【{}】，更新异常", indexName, id, e);
 		}
 		return true;
 	}
@@ -260,8 +258,7 @@ public class ElasticsearchTemplate {
 			}
 		}
 		catch (IOException e) {
-			e.printStackTrace();
-			log.error("删除索引【{}】出现异常[{}]", indexName, e);
+			log.error("删除索引【{}】失败", indexName, e);
 		}
 		return true;
 	}
@@ -302,7 +299,6 @@ public class ElasticsearchTemplate {
 			log.info("批量删除索引[{}]成功，共删除[{}]个", indexName, deleteCount);
 		}
 		catch (IOException e) {
-			e.printStackTrace();
 			log.error("删除索引：【{}】出现异常:{}", indexName, e);
 		}
 		return true;
@@ -371,7 +367,6 @@ public class ElasticsearchTemplate {
 			return resultJson;
 		}
 		catch (IOException e) {
-			e.printStackTrace();
 			log.error("索引【{}】主键[{}]，查询异常：{}", indexName, id, e);
 			return null;
 		}
@@ -399,7 +394,6 @@ public class ElasticsearchTemplate {
 			log.info("索引【{}】删除成功", indexName);
 		}
 		catch (IOException e) {
-			e.printStackTrace();
 			log.error("删除索引[{}]，出现异常[{}]", indexName, e);
 		}
 		return true;
@@ -695,7 +689,7 @@ public class ElasticsearchTemplate {
 			return restHighLevelClient.indices().exists(getIndexRequest, RequestOptions.DEFAULT);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			log.info("错误信息",e);
 		}
 		return false;
 	}

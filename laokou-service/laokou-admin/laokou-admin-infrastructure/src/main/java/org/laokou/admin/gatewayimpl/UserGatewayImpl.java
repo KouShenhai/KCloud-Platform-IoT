@@ -177,7 +177,7 @@ public class UserGatewayImpl implements UserGateway {
 					userRoleMapper.deleteUserRoleByUserId(user.getId());
 				}
 				catch (Exception e) {
-					log.error("错误信息：{}", e.getMessage());
+					log.error("错误信息", e);
 					rollback.setRollbackOnly();
 					throw new SystemException(e.getMessage());
 				}
@@ -197,7 +197,7 @@ public class UserGatewayImpl implements UserGateway {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				rollback.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -243,7 +243,7 @@ public class UserGatewayImpl implements UserGateway {
 							TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER)) > 0;
 				}
 				catch (Exception e) {
-					log.error("错误信息：{}", e.getMessage());
+					log.error("错误信息", e);
 					rollback.setRollbackOnly();
 					throw new SystemException(e.getMessage());
 				}
@@ -262,7 +262,7 @@ public class UserGatewayImpl implements UserGateway {
 					return userMapper.deleteDynamicTableById(id, getUserTableSuffix(id)) > 0;
 				}
 				catch (Exception e) {
-					log.error("错误信息：{}", e.getMessage());
+					log.error("错误信息", e);
 					rollback.setRollbackOnly();
 					throw new SystemException(e.getMessage());
 				}

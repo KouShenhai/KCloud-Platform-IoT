@@ -120,7 +120,7 @@ public class MessageGatewayImpl implements MessageGateway {
 				insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息", e);
 				rollback.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

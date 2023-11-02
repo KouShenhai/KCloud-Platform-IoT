@@ -71,7 +71,7 @@ public class LockAspect {
 			}
 		}
 		catch (Throwable throwable) {
-			log.error("异常信息：{}", throwable.getMessage());
+			log.error("异常信息", throwable);
 			throw throwable;
 		}
 		finally {
