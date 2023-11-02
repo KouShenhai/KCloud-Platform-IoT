@@ -18,6 +18,7 @@
 package org.laokou.common.trace.config.auto;
 
 import io.micrometer.common.lang.NonNullApi;
+import org.apache.logging.log4j.ThreadContext;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -27,7 +28,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * @author laokou
@@ -36,12 +37,23 @@ import static org.laokou.common.i18n.common.Constant.EMPTY;
 @AutoConfiguration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
 public class ReactiveTraceAutoConfig implements WebFilter {
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        return null;
+        ServerHttpRequest request = exchange.getRequest();
+        String userId = getParamValue(request, USER_ID);
+        String tenantId = getParamValue(request, TENANT_ID);
+        String username = getParamValue(request, USER_NAME);
+        String traceId = getParamValue(request, TRACE_ID);
+        ThreadContext.clearMap();
+        ThreadContext.put(TRACE_ID, traceId);
+        ThreadContext.put(USER_ID, userId);
+        ThreadContext.put(TENANT_ID, tenantId);
+        ThreadContext.put(USER_NAME, username);
+        return chain.filter(exchange);
     }
 
-    private String getHeaderValue(ServerHttpRequest request, String paramName) {
+    private String getParamValue(ServerHttpRequest request, String paramName) {
         // 从header中获取
         String paramValue = request.getHeaders().getFirst(paramName);
         // 从参数中获取

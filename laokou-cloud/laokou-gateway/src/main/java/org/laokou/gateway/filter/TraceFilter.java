@@ -50,13 +50,14 @@ public class TraceFilter implements GlobalFilter, Ordered {
 		String tenantId = RequestUtil.getParamValue(request, TENANT_ID);
 		String username = RequestUtil.getParamValue(request, USER_NAME);
 		String traceId = RequestUtil.getParamValue(request, TRACE_ID);
-		ThreadContext.put(TRACE_ID, StringUtil.isEmpty(traceId) ? userId + IdGenerator.defaultSnowflakeId() : traceId);
+		traceId = StringUtil.isEmpty(traceId) ? userId + IdGenerator.defaultSnowflakeId() : traceId;
+		ThreadContext.put(TRACE_ID, traceId);
 		ThreadContext.put(USER_ID, userId);
 		ThreadContext.put(TENANT_ID, tenantId);
 		ThreadContext.put(USER_NAME, username);
 		// 获取uri
 		String requestUri = request.getPath().pathWithinApplication().value();
-		log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}", requestUri, userId, username, tenantId, ThreadContext.get(TRACE_ID));
+		log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}", requestUri, userId, username, tenantId, traceId);
 		// 清除
 		ThreadContext.clearMap();
 		return chain.filter(exchange.mutate()
