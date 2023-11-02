@@ -85,7 +85,8 @@ public class DsUtil {
 			properties.setDriverClassName(source.getDriverClassName());
 			HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
 			return hikariDataSourceCreator.createDataSource(properties);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("加载数据源驱动失败，错误信息：{}", e.getMessage());
 			throw new DataSourceException("加载数据源驱动失败");
 		}
