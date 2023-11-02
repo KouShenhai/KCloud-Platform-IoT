@@ -31,6 +31,8 @@ public class RegexUtil {
 
 	private static final String TIME_REGEX = "([0-1]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])";
 
+	private static final String NUMBER_REGEX = "^[0-9]*$";
+
 	/**
 	 * 邮箱验证
 	 * @param mail
@@ -38,6 +40,15 @@ public class RegexUtil {
 	 */
 	public static boolean mailRegex(String mail) {
 		return Pattern.matches(MAIL_REGEX, mail);
+	}
+
+	/**
+	 * 数字验证
+	 * @param number
+	 * @return
+	 */
+	public static boolean numberRegex(String number) {
+		return Pattern.matches(NUMBER_REGEX, number);
 	}
 
 	/**
