@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,14 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.rocketmq.clientobject;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.ClientObject;
-
-import java.io.Serial;
+package org.laokou.common.trace.constant;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class MqCO extends ClientObject {
+public interface Constant {
 
-	@Serial
-	private static final long serialVersionUID = -6328542667576164499L;
-
-	private String body;
+    String ALL_PATTERNS = "/**";
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,29 +12,27 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.trace.config.auto;
 
-import org.laokou.common.trace.interceptor.TraceInterceptor;
+import org.laokou.common.trace.interceptor.ReactiveTraceInterceptor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import static org.laokou.common.trace.constant.Constant.ALL_PATTERNS;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.server.WebFilter;
 
 /**
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class TraceAutoConfig implements WebMvcConfigurer {
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
+public class ReactiveTraceAutoConfig {
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new TraceInterceptor()).addPathPatterns(ALL_PATTERNS);
-	}
+    @Bean
+    public WebFilter webFilter() {
+        return new ReactiveTraceInterceptor();
+    }
 
 }

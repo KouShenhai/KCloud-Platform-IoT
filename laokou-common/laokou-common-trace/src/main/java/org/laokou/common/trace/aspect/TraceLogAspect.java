@@ -23,6 +23,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.i18n.dto.Result;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.Constant.TRACE_ID;
@@ -33,6 +34,7 @@ import static org.laokou.common.i18n.common.Constant.TRACE_ID;
 @Component
 @Aspect
 @Slf4j
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class TraceLogAspect {
 
 	@Around("@annotation(org.laokou.common.trace.annotation.TraceLog)")

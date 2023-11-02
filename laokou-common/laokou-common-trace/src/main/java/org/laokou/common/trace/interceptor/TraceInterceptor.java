@@ -22,6 +22,7 @@ import io.micrometer.common.lang.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.ThreadContext;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import static org.laokou.common.i18n.common.Constant.*;
@@ -34,10 +35,10 @@ public class TraceInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		String traceId = request.getHeader(TRACE_ID);
-		String userId = request.getHeader(USER_ID);
-		String username = request.getHeader(USER_NAME);
-		String tenantId = request.getHeader(TENANT_ID);
+		String traceId = getParamValue(request,TRACE_ID);
+		String userId = getParamValue(request,USER_ID);
+		String username = getParamValue(request,USER_NAME);
+		String tenantId = getParamValue(request,TENANT_ID);
 		ThreadContext.put(TRACE_ID, traceId);
 		ThreadContext.put(USER_ID, userId);
 		ThreadContext.put(TENANT_ID, tenantId);
@@ -49,6 +50,15 @@ public class TraceInterceptor implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
 			@Nullable Exception ex) {
 		ThreadContext.clearMap();
+	}
+
+	private String getParamValue(HttpServletRequest request, String paramName) {
+		String paramValue = request.getHeader(paramName);
+		// 从参数中获取
+		if (StringUtil.isEmpty(paramValue)) {
+			paramValue = request.getParameter(paramName);
+		}
+		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
 	}
 
 }

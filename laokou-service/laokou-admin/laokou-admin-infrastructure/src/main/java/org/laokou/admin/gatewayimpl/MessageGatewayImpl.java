@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.ThreadContext;
 import org.laokou.admin.convertor.MessageConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.MessageGateway;
@@ -43,7 +44,6 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.mybatisplus.utils.BatchUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.laokou.common.rocketmq.clientobject.MqCO;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.im.dto.message.clientobject.WsMsgCO;
 import org.springframework.stereotype.Component;
@@ -51,6 +51,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Set;
 
+import static org.laokou.common.i18n.common.Constant.TRACE_ID;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_MESSAGE;
 import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 import static org.laokou.common.rocketmq.constant.MqConstant.*;
@@ -109,7 +110,7 @@ public class MessageGatewayImpl implements MessageGateway {
 		co.setMsg(DEFAULT_MESSAGE);
 		co.setReceiver(receiver);
 		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(type),
-				new MqCO(JacksonUtil.toJsonStr(co)));
+				JacksonUtil.toJsonStr(co), ThreadContext.get(TRACE_ID));
 	}
 
 	private void insertMessage(MessageDO messageDO, Message message, User user) {
