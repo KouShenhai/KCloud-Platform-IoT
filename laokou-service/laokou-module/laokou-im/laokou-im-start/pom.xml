@@ -52,16 +52,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-log4j2</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
@@ -73,16 +63,6 @@
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-cors</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-trace</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>

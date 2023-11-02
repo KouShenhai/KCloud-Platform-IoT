@@ -17,50 +17,22 @@
 
 package org.laokou.common.trace.config.auto;
 
-import io.micrometer.common.lang.NonNullApi;
-import org.apache.logging.log4j.ThreadContext;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.trace.interceptor.ReactiveTraceInterceptor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.web.server.ServerWebExchange;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.server.WebFilter;
-import org.springframework.web.server.WebFilterChain;
-import reactor.core.publisher.Mono;
-
-import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * @author laokou
  */
-@NonNullApi
 @AutoConfiguration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
-public class ReactiveTraceAutoConfig implements WebFilter {
+public class ReactiveTraceAutoConfig {
 
-    @Override
-    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        ServerHttpRequest request = exchange.getRequest();
-        String userId = getParamValue(request, USER_ID);
-        String tenantId = getParamValue(request, TENANT_ID);
-        String username = getParamValue(request, USER_NAME);
-        String traceId = getParamValue(request, TRACE_ID);
-        ThreadContext.clearMap();
-        ThreadContext.put(TRACE_ID, traceId);
-        ThreadContext.put(USER_ID, userId);
-        ThreadContext.put(TENANT_ID, tenantId);
-        ThreadContext.put(USER_NAME, username);
-        return chain.filter(exchange);
-    }
-
-    private String getParamValue(ServerHttpRequest request, String paramName) {
-        // 从header中获取
-        String paramValue = request.getHeaders().getFirst(paramName);
-        // 从参数中获取
-        if (StringUtil.isEmpty(paramValue)) {
-            paramValue = request.getQueryParams().getFirst(paramName);
-        }
-        return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
+    @Bean
+    public WebFilter webFilter() {
+        return new ReactiveTraceInterceptor();
     }
 
 }

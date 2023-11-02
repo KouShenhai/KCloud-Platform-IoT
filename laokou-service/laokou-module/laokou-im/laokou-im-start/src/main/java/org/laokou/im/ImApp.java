@@ -26,7 +26,6 @@ import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDeta
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.web.reactive.config.EnableWebFlux;
 
 import java.net.InetAddress;
 
@@ -41,7 +40,6 @@ import static org.laokou.common.i18n.common.Constant.IP;
 				ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableEncryptableProperties
 @EnableDiscoveryClient
-@EnableWebFlux
 public class ImApp {
 
 	@SneakyThrows

@@ -19,6 +19,7 @@ package org.laokou.im.common.listener;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.ThreadContext;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.MessageModel;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 
+import static org.laokou.common.i18n.common.Constant.TRACE_ID;
 import static org.laokou.common.rocketmq.constant.MqConstant.*;
 
 /**
@@ -47,7 +49,10 @@ public class NoticeMessageListener implements RocketMQListener<MessageExt> {
 	@Override
 	public void onMessage(MessageExt messageExt) {
 		String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
+		String traceId = messageExt.getProperty(TRACE_ID);
+		ThreadContext.put(TRACE_ID,traceId);
 		log.info("接收到通知消息：{}", message);
+		ThreadContext.clearMap();
 		messageUtil.send(message);
 	}
 

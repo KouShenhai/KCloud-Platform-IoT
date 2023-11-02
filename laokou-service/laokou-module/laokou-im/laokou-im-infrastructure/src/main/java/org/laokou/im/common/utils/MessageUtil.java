@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.netty.config.Server;
-import org.laokou.common.rocketmq.clientobject.MqCO;
 import org.laokou.im.dto.message.clientobject.WsMsgCO;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -45,15 +44,11 @@ public class MessageUtil {
 		if (StringUtil.isEmpty(message)) {
 			return;
 		}
-		MqCO dto = JacksonUtil.toBean(message, MqCO.class);
-		String body = dto.getBody();
-		WsMsgCO msgDTO = JacksonUtil.toBean(body, WsMsgCO.class);
+		WsMsgCO msgDTO = JacksonUtil.toBean(message, WsMsgCO.class);
 		String msg = msgDTO.getMsg();
 		Set<String> receiver = msgDTO.getReceiver();
 		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(msg);
-		for (String clientId : receiver) {
-			CompletableFuture.runAsync(() -> websocketServer.send(clientId, webSocketFrame), taskExecutor);
-		}
+		receiver.parallelStream().forEach(clientId -> CompletableFuture.runAsync(() -> websocketServer.send(clientId, webSocketFrame), taskExecutor));
 	}
 
 }
