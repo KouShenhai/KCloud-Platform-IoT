@@ -65,7 +65,7 @@
         <Async name="async_kafka" bufferSize="2000" blocking="false">
             <AppenderRef ref="kafka"/>
         </Async>
-        <Kafka name="kafka" topic="laokou_trace_topic" syncSend="false" ignoreExceptions="true">
+        <Kafka name="kafka" topic="laokou_trace_topic" syncSend="true" ignoreExceptions="true">
             <PatternLayout>
                 <pattern>
                     {
@@ -83,6 +83,8 @@
                     }
                 </pattern>
             </PatternLayout>
+            <Property name="max.block.ms">2000</Property>
+            <Property name="request.timeout.ms">2000</Property>
             <Property name="bootstrap.servers">laokou.org:9092</Property>
         </Kafka>
     </Appenders>
