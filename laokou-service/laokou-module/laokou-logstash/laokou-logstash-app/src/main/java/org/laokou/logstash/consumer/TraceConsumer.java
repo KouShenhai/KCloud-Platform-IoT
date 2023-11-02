@@ -48,6 +48,7 @@ import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 public class TraceConsumer {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
+
 	private static final String TRACE_INDEX = "laokou_trace";
 
 	@KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
@@ -71,11 +72,14 @@ public class TraceConsumer {
 				try {
 					String indexName = getIndexName(DateUtil.now());
 					elasticsearchTemplate.syncIndexAsync(EMPTY, indexName, s);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					log.error("同步数据报错：{}", e.getMessage());
 				}
 			}
-		} catch (Exception ignored){}
+		}
+		catch (Exception ignored) {
+		}
 	}
 
 	@PostConstruct

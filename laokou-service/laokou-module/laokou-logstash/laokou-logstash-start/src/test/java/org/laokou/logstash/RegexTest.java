@@ -33,12 +33,12 @@ import org.springframework.test.context.TestConstructor;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class RegexTest {
 
-    @Test
-    public void numberTest() {
-        boolean b = RegexUtil.numberRegex("111111111122x");
-        boolean c = RegexUtil.numberRegex("111111111122");
-        log.info("正则表达式验证结果:{}",b);
-        log.info("正则表达式验证结果:{}",c);
-    }
+	@Test
+	public void numberTest() {
+		boolean b = RegexUtil.numberRegex("111111111122x");
+		boolean c = RegexUtil.numberRegex("111111111122");
+		log.info("正则表达式验证结果:{}", b);
+		log.info("正则表达式验证结果:{}", c);
+	}
 
 }

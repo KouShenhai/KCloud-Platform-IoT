@@ -109,8 +109,8 @@ public class MessageGatewayImpl implements MessageGateway {
 		WsMsgCO co = new WsMsgCO();
 		co.setMsg(DEFAULT_MESSAGE);
 		co.setReceiver(receiver);
-		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(type),
-				JacksonUtil.toJsonStr(co), ThreadContext.get(TRACE_ID));
+		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, getMessageTag(type), JacksonUtil.toJsonStr(co),
+				ThreadContext.get(TRACE_ID));
 	}
 
 	private void insertMessage(MessageDO messageDO, Message message, User user) {

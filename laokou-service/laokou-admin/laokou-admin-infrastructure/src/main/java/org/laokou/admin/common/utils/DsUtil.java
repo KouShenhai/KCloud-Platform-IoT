@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.admin.common.utils;
@@ -111,7 +111,8 @@ public class DsUtil {
 			List<String> list;
 			if (CollectionUtil.isNotEmpty(tables)) {
 				list = TABLES.parallelStream().filter(table -> !tables.contains(table)).toList();
-			} else {
+			}
+			else {
 				list = TABLES;
 			}
 			if (CollectionUtil.isNotEmpty(list)) {
@@ -121,7 +122,8 @@ public class DsUtil {
 		catch (Exception e) {
 			log.error("数据源连接超时，错误信息：{}", e.getMessage());
 			throw new DataSourceException("数据源连接超时");
-		} finally {
+		}
+		finally {
 			JdbcUtils.closeStatement(ps);
 			DataSourceUtils.releaseConnection(connection, dataSource);
 		}

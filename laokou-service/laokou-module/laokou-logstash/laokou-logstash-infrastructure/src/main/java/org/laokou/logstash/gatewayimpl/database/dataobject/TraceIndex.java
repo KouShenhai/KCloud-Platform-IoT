@@ -33,39 +33,39 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.*;
 @Data
 public class TraceIndex extends Index {
 
-    @ElasticsearchField
-    private String appName;
+	@ElasticsearchField
+	private String appName;
 
-    @ElasticsearchField
-    private String profile;
+	@ElasticsearchField
+	private String profile;
 
-    @ElasticsearchField
-    @DateTimeFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS)
-    @JsonFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
-    private LocalDateTime timestamp;
+	@ElasticsearchField
+	@DateTimeFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS)
+	@JsonFormat(pattern = YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS, timezone = DEFAULT_TIMEZONE)
+	private LocalDateTime timestamp;
 
-    @ElasticsearchField
-    private String userId;
+	@ElasticsearchField
+	private String userId;
 
-    @ElasticsearchField
-    private String username;
+	@ElasticsearchField
+	private String username;
 
-    @ElasticsearchField
-    private String tenantId;
+	@ElasticsearchField
+	private String tenantId;
 
-    @ElasticsearchField
-    private String traceId;
+	@ElasticsearchField
+	private String traceId;
 
-    @ElasticsearchField
-    private String ip;
+	@ElasticsearchField
+	private String ip;
 
-    @ElasticsearchField
-    private String thread;
+	@ElasticsearchField
+	private String thread;
 
-    @ElasticsearchField
-    private String logger;
+	@ElasticsearchField
+	private String logger;
 
-    @ElasticsearchField
-    private String msg;
+	@ElasticsearchField
+	private String msg;
 
 }

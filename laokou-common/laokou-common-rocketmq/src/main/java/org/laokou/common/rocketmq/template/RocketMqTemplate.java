@@ -108,7 +108,7 @@ public class RocketMqTemplate implements InitializingBean {
 	 */
 	public <T> void sendAsyncMessage(String topic, String tag, T payload) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
-		sendAsyncMessage(topic,tag,message);
+		sendAsyncMessage(topic, tag, message);
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class RocketMqTemplate implements InitializingBean {
 	 */
 	public <T> void sendAsyncMessage(String topic, String tag, T payload, String traceId) {
 		Message<T> message = MessageBuilder.withPayload(payload).setHeader(TRACE_ID, traceId).build();
-		sendAsyncMessage(topic,tag,message);
+		sendAsyncMessage(topic, tag, message);
 	}
 
 	/**
@@ -163,7 +163,9 @@ public class RocketMqTemplate implements InitializingBean {
 	 */
 	public <T> boolean sendDelayMessage(String topic, long delay, T payload) {
 		Message<T> message = MessageBuilder.withPayload(payload).build();
-		return rocketMQTemplate.syncSendDelayTimeSeconds(topic, payload, delay).getSendStatus().equals(SendStatus.SEND_OK);
+		return rocketMQTemplate.syncSendDelayTimeSeconds(topic, payload, delay)
+			.getSendStatus()
+			.equals(SendStatus.SEND_OK);
 	}
 
 	/**
@@ -247,7 +249,7 @@ public class RocketMqTemplate implements InitializingBean {
 		rocketMQTemplate.setAsyncSenderExecutor(taskExecutor.getThreadPoolExecutor());
 	}
 
-	private  <T> void sendAsyncMessage(String topic, String tag, Message<T> message) {
+	private <T> void sendAsyncMessage(String topic, String tag, Message<T> message) {
 		rocketMQTemplate.asyncSend(String.format(MqConstant.TOPIC_TAG, topic, tag), message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {

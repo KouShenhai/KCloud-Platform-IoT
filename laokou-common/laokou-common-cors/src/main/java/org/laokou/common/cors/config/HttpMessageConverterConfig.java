@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.cors.config;
@@ -57,8 +57,10 @@ public class HttpMessageConverterConfig {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		// 时区
 		TimeZone timeZone = TimeZone.getTimeZone(DEFAULT_TIMEZONE);
-		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS));
+		DateTimeFormatter dateTimeFormatter = DateUtil
+			.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+				DateUtil.getTimePattern(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS));
 		simpleDateFormat.setTimeZone(timeZone);
 		mapper.setDateFormat(simpleDateFormat);
 		mapper.setTimeZone(timeZone);

@@ -35,10 +35,10 @@ public class TraceInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		String traceId = getParamValue(request,TRACE_ID);
-		String userId = getParamValue(request,USER_ID);
-		String username = getParamValue(request,USER_NAME);
-		String tenantId = getParamValue(request,TENANT_ID);
+		String traceId = getParamValue(request, TRACE_ID);
+		String userId = getParamValue(request, USER_ID);
+		String username = getParamValue(request, USER_NAME);
+		String tenantId = getParamValue(request, TENANT_ID);
 		ThreadContext.put(TRACE_ID, traceId);
 		ThreadContext.put(USER_ID, userId);
 		ThreadContext.put(TENANT_ID, tenantId);

@@ -34,29 +34,29 @@ import static org.laokou.common.i18n.common.Constant.*;
 @NonNullApi
 public class ReactiveTraceInterceptor implements WebFilter {
 
-    @Override
-    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        ServerHttpRequest request = exchange.getRequest();
-        String userId = getParamValue(request, USER_ID);
-        String tenantId = getParamValue(request, TENANT_ID);
-        String username = getParamValue(request, USER_NAME);
-        String traceId = getParamValue(request, TRACE_ID);
-        ThreadContext.clearMap();
-        ThreadContext.put(TRACE_ID, traceId);
-        ThreadContext.put(USER_ID, userId);
-        ThreadContext.put(TENANT_ID, tenantId);
-        ThreadContext.put(USER_NAME, username);
-        return chain.filter(exchange);
-    }
+	@Override
+	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+		ServerHttpRequest request = exchange.getRequest();
+		String userId = getParamValue(request, USER_ID);
+		String tenantId = getParamValue(request, TENANT_ID);
+		String username = getParamValue(request, USER_NAME);
+		String traceId = getParamValue(request, TRACE_ID);
+		ThreadContext.clearMap();
+		ThreadContext.put(TRACE_ID, traceId);
+		ThreadContext.put(USER_ID, userId);
+		ThreadContext.put(TENANT_ID, tenantId);
+		ThreadContext.put(USER_NAME, username);
+		return chain.filter(exchange);
+	}
 
-    private String getParamValue(ServerHttpRequest request, String paramName) {
-        // 从header中获取
-        String paramValue = request.getHeaders().getFirst(paramName);
-        // 从参数中获取
-        if (StringUtil.isEmpty(paramValue)) {
-            paramValue = request.getQueryParams().getFirst(paramName);
-        }
-        return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
-    }
+	private String getParamValue(ServerHttpRequest request, String paramName) {
+		// 从header中获取
+		String paramValue = request.getHeaders().getFirst(paramName);
+		// 从参数中获取
+		if (StringUtil.isEmpty(paramValue)) {
+			paramValue = request.getQueryParams().getFirst(paramName);
+		}
+		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
+	}
 
 }
