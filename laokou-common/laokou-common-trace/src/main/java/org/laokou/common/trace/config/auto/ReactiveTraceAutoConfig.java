@@ -18,12 +18,16 @@
 package org.laokou.common.trace.config.auto;
 
 import io.micrometer.common.lang.NonNullApi;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
+
+import static org.laokou.common.i18n.common.Constant.EMPTY;
 
 /**
  * @author laokou
@@ -36,4 +40,15 @@ public class ReactiveTraceAutoConfig implements WebFilter {
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         return null;
     }
+
+    private String getHeaderValue(ServerHttpRequest request, String paramName) {
+        // 从header中获取
+        String paramValue = request.getHeaders().getFirst(paramName);
+        // 从参数中获取
+        if (StringUtil.isEmpty(paramValue)) {
+            paramValue = request.getQueryParams().getFirst(paramName);
+        }
+        return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
+    }
+
 }

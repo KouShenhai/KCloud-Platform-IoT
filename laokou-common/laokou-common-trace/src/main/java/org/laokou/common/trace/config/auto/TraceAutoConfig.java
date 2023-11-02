@@ -23,6 +23,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import static org.laokou.common.trace.constant.Constant.ALL_PATTERNS;
+
 /**
  * @author laokou
  */
@@ -32,7 +34,7 @@ public class TraceAutoConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new TraceInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(new TraceInterceptor()).addPathPatterns(ALL_PATTERNS);
 	}
 
 }
