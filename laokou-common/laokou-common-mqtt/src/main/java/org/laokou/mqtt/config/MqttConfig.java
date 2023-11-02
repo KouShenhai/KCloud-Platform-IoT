@@ -51,7 +51,7 @@ public class MqttConfig {
 		options.setPassword(mqttProperties.getPassword().toCharArray());
 		options.setServerURIs(new String[] { mqttProperties.getHost() });
 		// 客户端与服务器意外中断,服务器发送`遗嘱`消息(只有一次)
-		options.setWill(WILL_TOPIC, WILL_DATA,2,false);
+		options.setWill(WILL_TOPIC, WILL_DATA, 2, false);
 		return options;
 	}
 
