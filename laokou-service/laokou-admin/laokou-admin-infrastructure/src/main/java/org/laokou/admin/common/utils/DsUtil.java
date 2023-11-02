@@ -76,14 +76,19 @@ public class DsUtil {
 	}
 
 	private DataSource dataSource(String sourceName) {
-		SourceDO source = sourceMapper.getSourceByName(sourceName);
-		DataSourceProperty properties = new DataSourceProperty();
-		properties.setUsername(source.getUsername());
-		properties.setPassword(source.getPassword());
-		properties.setUrl(source.getUrl());
-		properties.setDriverClassName(source.getDriverClassName());
-		HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
-		return hikariDataSourceCreator.createDataSource(properties);
+		try {
+			SourceDO source = sourceMapper.getSourceByName(sourceName);
+			DataSourceProperty properties = new DataSourceProperty();
+			properties.setUsername(source.getUsername());
+			properties.setPassword(source.getPassword());
+			properties.setUrl(source.getUrl());
+			properties.setDriverClassName(source.getDriverClassName());
+			HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
+			return hikariDataSourceCreator.createDataSource(properties);
+		} catch (Exception e) {
+			log.error("加载数据源驱动失败，错误信息：{}", e.getMessage());
+			throw new DataSourceException("加载数据源驱动失败");
+		}
 	}
 
 	private boolean validateDs(String sourceName) {
