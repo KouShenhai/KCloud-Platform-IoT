@@ -94,7 +94,7 @@ public class HttpUtil {
 					handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 		}
 		catch (Exception e) {
-			log.error("调用失败，错误信息",e);
+			log.error("调用失败，错误信息", e);
 		}
 		finally {
 			httpClient.close();

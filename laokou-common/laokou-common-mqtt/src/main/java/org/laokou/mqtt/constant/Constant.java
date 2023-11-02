@@ -22,6 +22,8 @@ import java.nio.charset.StandardCharsets;
  */
 public interface Constant {
 
-    String WILL_TOPIC = "will_topic";
-    byte[] WILL_DATA = "offline".getBytes(StandardCharsets.UTF_8);
+	String WILL_TOPIC = "will_topic";
+
+	byte[] WILL_DATA = "offline".getBytes(StandardCharsets.UTF_8);
+
 }

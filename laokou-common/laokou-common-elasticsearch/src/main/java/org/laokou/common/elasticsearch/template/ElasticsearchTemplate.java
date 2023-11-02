@@ -186,7 +186,7 @@ public class ElasticsearchTemplate {
 			log.info("索引【{}】批量修改更新成功，共新增[{}]个，修改[{}]个", indexName, createCount, updateCount);
 		}
 		catch (IOException e) {
-			log.error("索引【{}】批量修改更新出现异常", indexName,e);
+			log.error("索引【{}】批量修改更新出现异常", indexName, e);
 			return false;
 		}
 		return true;
@@ -689,7 +689,7 @@ public class ElasticsearchTemplate {
 			return restHighLevelClient.indices().exists(getIndexRequest, RequestOptions.DEFAULT);
 		}
 		catch (Exception e) {
-			log.info("错误信息",e);
+			log.info("错误信息", e);
 		}
 		return false;
 	}

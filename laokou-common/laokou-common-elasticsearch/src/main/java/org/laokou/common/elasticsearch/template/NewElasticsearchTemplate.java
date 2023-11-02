@@ -619,7 +619,7 @@ public class NewElasticsearchTemplate {
 			return elasticsearchClient.indices().exists(existsRequest).value();
 		}
 		catch (Exception e) {
-			log.error("错误信息",e);
+			log.error("错误信息", e);
 			return false;
 		}
 	}
