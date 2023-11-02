@@ -22,6 +22,6 @@ package org.laokou.common.trace.constant;
  */
 public interface Constant {
 
-    String ALL_PATTERNS = "/**";
+	String ALL_PATTERNS = "/**";
 
 }

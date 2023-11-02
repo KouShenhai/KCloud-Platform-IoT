@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.admin.common.utils;
@@ -76,14 +76,20 @@ public class DsUtil {
 	}
 
 	private DataSource dataSource(String sourceName) {
-		SourceDO source = sourceMapper.getSourceByName(sourceName);
-		DataSourceProperty properties = new DataSourceProperty();
-		properties.setUsername(source.getUsername());
-		properties.setPassword(source.getPassword());
-		properties.setUrl(source.getUrl());
-		properties.setDriverClassName(source.getDriverClassName());
-		HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
-		return hikariDataSourceCreator.createDataSource(properties);
+		try {
+			SourceDO source = sourceMapper.getSourceByName(sourceName);
+			DataSourceProperty properties = new DataSourceProperty();
+			properties.setUsername(source.getUsername());
+			properties.setPassword(source.getPassword());
+			properties.setUrl(source.getUrl());
+			properties.setDriverClassName(source.getDriverClassName());
+			HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
+			return hikariDataSourceCreator.createDataSource(properties);
+		}
+		catch (Exception e) {
+			log.error("加载数据源驱动失败，错误信息：{}", e.getMessage());
+			throw new DataSourceException("加载数据源驱动失败");
+		}
 	}
 
 	private boolean validateDs(String sourceName) {
@@ -111,7 +117,8 @@ public class DsUtil {
 			List<String> list;
 			if (CollectionUtil.isNotEmpty(tables)) {
 				list = TABLES.parallelStream().filter(table -> !tables.contains(table)).toList();
-			} else {
+			}
+			else {
 				list = TABLES;
 			}
 			if (CollectionUtil.isNotEmpty(list)) {
@@ -121,7 +128,8 @@ public class DsUtil {
 		catch (Exception e) {
 			log.error("数据源连接超时，错误信息：{}", e.getMessage());
 			throw new DataSourceException("数据源连接超时");
-		} finally {
+		}
+		finally {
 			JdbcUtils.closeStatement(ps);
 			DataSourceUtils.releaseConnection(connection, dataSource);
 		}

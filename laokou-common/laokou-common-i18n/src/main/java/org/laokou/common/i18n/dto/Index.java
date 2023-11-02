@@ -25,7 +25,7 @@ import java.io.Serializable;
  */
 public abstract class Index implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = -4314847178115273665L;
+	@Serial
+	private static final long serialVersionUID = -4314847178115273665L;
 
 }

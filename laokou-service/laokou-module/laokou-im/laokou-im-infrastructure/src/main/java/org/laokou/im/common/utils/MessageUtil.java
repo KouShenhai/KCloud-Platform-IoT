@@ -48,7 +48,9 @@ public class MessageUtil {
 		String msg = msgDTO.getMsg();
 		Set<String> receiver = msgDTO.getReceiver();
 		TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(msg);
-		receiver.parallelStream().forEach(clientId -> CompletableFuture.runAsync(() -> websocketServer.send(clientId, webSocketFrame), taskExecutor));
+		receiver.parallelStream()
+			.forEach(clientId -> CompletableFuture.runAsync(() -> websocketServer.send(clientId, webSocketFrame),
+					taskExecutor));
 	}
 
 }

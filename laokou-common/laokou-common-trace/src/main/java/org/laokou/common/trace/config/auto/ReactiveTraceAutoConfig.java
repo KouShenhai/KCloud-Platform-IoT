@@ -30,9 +30,9 @@ import org.springframework.web.server.WebFilter;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
 public class ReactiveTraceAutoConfig {
 
-    @Bean
-    public WebFilter webFilter() {
-        return new ReactiveTraceInterceptor();
-    }
+	@Bean
+	public WebFilter webFilter() {
+		return new ReactiveTraceInterceptor();
+	}
 
 }

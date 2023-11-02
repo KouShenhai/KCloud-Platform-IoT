@@ -53,7 +53,8 @@ public class UserOptionListQryExe {
 			DynamicDataSourceContextHolder.push(USER);
 			PageQuery pageQuery = qry.ignore();
 			List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME,
-					DateUtil.format(DateUtil.now(), DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS), BOOT_SYS_USER);
+					DateUtil.format(DateUtil.now(), DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS),
+					BOOT_SYS_USER);
 			List<UserDO> list = userMapper.getOptionListByTenantId(dynamicTables, pageQuery);
 			if (CollectionUtil.isEmpty(list)) {
 				return Result.of(new ArrayList<>(0));
