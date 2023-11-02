@@ -40,7 +40,7 @@ public class UserInsertCmdExe {
 	public Result<Boolean> execute(UserInsertCmd cmd) {
 		UserCO co = cmd.getUserCO();
 		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME,
-				DateUtil.format(DateUtil.now(), DateUtil.YYYY_MM_DD_HH_MM_SS), BOOT_SYS_USER);
+				DateUtil.format(DateUtil.now(), DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS), BOOT_SYS_USER);
 		DynamicDataSourceContextHolder.push(USER);
 		int count = userMapper.getUserCount(dynamicTables, toUserDO(co));
 		if (count > 0) {

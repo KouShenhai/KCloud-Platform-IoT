@@ -76,7 +76,7 @@
                     "username":"${ctx:user-name}",
                     "tenantId":"${ctx:tenant-id}",
                     "traceId":"${ctx:trace-id}",
-                    "ip":"${sys:ip}"
+                    "ip":"${sys:ip}",
                     "thread":"%thread",
                     "logger":"%logger",
                     "msg":"%m"

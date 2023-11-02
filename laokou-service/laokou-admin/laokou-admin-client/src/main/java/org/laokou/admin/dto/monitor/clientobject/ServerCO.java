@@ -306,7 +306,7 @@ class Jvm implements Serializable {
 	public String getStartTime() {
 		long timestamp = ManagementFactory.getRuntimeMXBean().getStartTime();
 		LocalDateTime localDateTime = DateUtil.getLocalDateTimeOfTimestamp(timestamp);
-		return DateUtil.format(localDateTime, DateUtil.YYYY_MM_DD_HH_MM_SS);
+		return DateUtil.format(localDateTime, DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
 	}
 
 	/**

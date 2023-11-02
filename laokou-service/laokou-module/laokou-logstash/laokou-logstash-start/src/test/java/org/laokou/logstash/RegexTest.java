@@ -20,11 +20,9 @@ package org.laokou.logstash;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.kafka.template.DefaultKafkaTemplate;
+import org.laokou.common.core.utils.RegexUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
-
-import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 
 /**
  * @author laokou
@@ -33,13 +31,14 @@ import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class LogstashTest {
+public class RegexTest {
 
-	private final DefaultKafkaTemplate defaultKafkaTemplate;
-
-	@Test
-	public void kafkaProducerTest() {
-		defaultKafkaTemplate.send(LAOKOU_TRACE_TOPIC, "2222");
-	}
+    @Test
+    public void numberTest() {
+        boolean b = RegexUtil.numberRegex("111111111122x");
+        boolean c = RegexUtil.numberRegex("111111111122");
+        log.info("正则表达式验证结果:{}",b);
+        log.info("正则表达式验证结果:{}",c);
+    }
 
 }
