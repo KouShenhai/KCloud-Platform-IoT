@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,27 +12,28 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.trace.config.auto;
 
-import org.laokou.common.trace.interceptor.TraceInterceptor;
+import io.micrometer.common.lang.NonNullApi;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
+import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
  */
+@NonNullApi
 @AutoConfiguration
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class TraceAutoConfig implements WebMvcConfigurer {
-
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new TraceInterceptor()).addPathPatterns("/**");
-	}
-
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
+public class ReactiveTraceAutoConfig implements WebFilter {
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        return null;
+    }
 }
