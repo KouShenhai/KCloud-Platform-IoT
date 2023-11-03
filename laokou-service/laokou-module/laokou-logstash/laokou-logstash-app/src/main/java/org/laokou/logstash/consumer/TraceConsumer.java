@@ -67,14 +67,16 @@ public class TraceConsumer {
 		// 单个参数
 		String param = XxlJobHelper.getJobParam();
 		log.info("接收调度中心参数：{}", param);
-		LocalDate localDate = StringUtil.isEmpty(param) ? DateUtil.nowDate() : DateUtil.parseDate(param,DateUtil.YYYY_MM_DD);
+		LocalDate localDate = StringUtil.isEmpty(param) ? DateUtil.nowDate()
+				: DateUtil.parseDate(param, DateUtil.YYYY_MM_DD);
 		localDate = DateUtil.plusDays(DateUtil.getFirstDayOfMonth(localDate), 1);
 		try {
-			log(createIndex(localDate),localDate);
+			log(createIndex(localDate), localDate);
 			XxlJobHelper.handleSuccess("创建索引【{" + getIndexName(localDate) + "}】执行成功");
 			XxlJobHelper.log("创建索引【{" + getIndexName(localDate) + "}】执行成功");
-		} catch (Exception e) {
-			log.error("错误信息",e);
+		}
+		catch (Exception e) {
+			log.error("错误信息", e);
 			XxlJobHelper.log("创建索引【{" + getIndexName(localDate) + "}】执行失败");
 			XxlJobHelper.handleFail("创建索引【{" + getIndexName(localDate) + "}】执行失败");
 		}
@@ -93,13 +95,14 @@ public class TraceConsumer {
 				}
 			}
 		}
-		catch (Exception ignored) {}
+		catch (Exception ignored) {
+		}
 	}
 
 	@PostConstruct
 	private void createTraceIndex() {
 		LocalDate localDate = DateUtil.nowDate();
-		log(createIndex(localDate),localDate);
+		log(createIndex(localDate), localDate);
 	}
 
 	private String getIndexName(LocalDate localDate) {
@@ -107,9 +110,9 @@ public class TraceConsumer {
 		return TRACE_INDEX + UNDER + ym;
 	}
 
-	private void log(boolean flag,LocalDate localDate) {
+	private void log(boolean flag, LocalDate localDate) {
 		if (flag) {
-			log.info("索引【{}】创建成功",getIndexName(localDate));
+			log.info("索引【{}】创建成功", getIndexName(localDate));
 		}
 	}
 
@@ -120,12 +123,14 @@ public class TraceConsumer {
 			if (!elasticsearchTemplate.isIndexExists(indexName)) {
 				elasticsearchTemplate.createAsyncIndex(indexName, TRACE_INDEX, TraceIndex.class);
 				return true;
-			} else {
-				log.info("索引【{}】已存在",indexName);
+			}
+			else {
+				log.info("索引【{}】已存在", indexName);
 				return false;
 			}
-		} catch (Exception e) {
-			log.error("创建索引【{}】失败,错误信息",indexName,e);
+		}
+		catch (Exception e) {
+			log.error("创建索引【{}】失败,错误信息", indexName, e);
 			return false;
 		}
 	}
