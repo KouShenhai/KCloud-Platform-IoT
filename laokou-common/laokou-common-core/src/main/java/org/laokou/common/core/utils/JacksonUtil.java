@@ -110,7 +110,7 @@ public class JacksonUtil {
 	}
 
 	/**
-	 * json反序列化Map
+	 * Json反序列化Map
 	 * @param json json字符串
 	 * @param keyClass K Class
 	 * @param valueClass V Class
@@ -125,6 +125,13 @@ public class JacksonUtil {
 		return MAPPER.getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
 	}
 
+	/**
+	 * Map转对象
+	 * @param obj
+	 * @param clazz
+	 * @return
+	 * @param <T>
+	 */
 	public <T> T toValue(Object obj, Class<T> clazz) {
 		return MAPPER.convertValue(obj, clazz);
 	}

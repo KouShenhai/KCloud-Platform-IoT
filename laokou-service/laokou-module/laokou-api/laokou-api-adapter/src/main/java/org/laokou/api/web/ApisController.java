@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022 KCloud-Platform-Alibaba Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,20 @@
  * limitations under the License.
  *
  */
-1、mvn package     ->   mvn clean package -DskipTests
-2、aot process     ->   mvn spring-boot:process-aot
-3、native build    ->   mvn -Pnative native:build
+
+package org.laokou.api.web;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author laokou
+ */
+@RestController
+@Tag(name = "ApisController", description = "API管理")
+@RequiredArgsConstructor
+@RequestMapping("v1/apis")
+public class ApisController {
+}
