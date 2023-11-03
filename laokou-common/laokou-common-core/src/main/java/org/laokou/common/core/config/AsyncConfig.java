@@ -18,7 +18,6 @@
 package org.laokou.common.core.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -30,7 +29,6 @@ import java.util.concurrent.Executor;
  */
 @Configuration
 @RequiredArgsConstructor
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class AsyncConfig implements AsyncConfigurer {
 
 	private final ThreadPoolTaskExecutor taskExecutor;

@@ -45,29 +45,33 @@ public class TraceFilter implements GlobalFilter, Ordered {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		ServerHttpRequest request = exchange.getRequest();
-		String userId = RequestUtil.getParamValue(request, USER_ID);
-		String tenantId = RequestUtil.getParamValue(request, TENANT_ID);
-		String username = RequestUtil.getParamValue(request, USER_NAME);
-		String traceId = RequestUtil.getParamValue(request, TRACE_ID);
-		traceId = StringUtil.isEmpty(traceId) ? userId + IdGenerator.defaultSnowflakeId() : traceId;
-		ThreadContext.put(TRACE_ID, traceId);
-		ThreadContext.put(USER_ID, userId);
-		ThreadContext.put(TENANT_ID, tenantId);
-		ThreadContext.put(USER_NAME, username);
-		// 获取uri
-		String requestUri = request.getPath().pathWithinApplication().value();
-		log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}", requestUri, userId, username, tenantId, traceId);
-		// 清除
-		ThreadContext.clearMap();
-		return chain.filter(exchange.mutate()
-			.request(request.mutate()
-				.header(USER_NAME, username)
-				.header(TENANT_ID, tenantId)
-				.header(USER_ID, userId)
-				.header(TRACE_ID, traceId)
-				.build())
-			.build());
+		try {
+			ServerHttpRequest request = exchange.getRequest();
+			String userId = RequestUtil.getParamValue(request, USER_ID);
+			String tenantId = RequestUtil.getParamValue(request, TENANT_ID);
+			String username = RequestUtil.getParamValue(request, USER_NAME);
+			String traceId = RequestUtil.getParamValue(request, TRACE_ID);
+			traceId = StringUtil.isEmpty(traceId) ? userId + IdGenerator.defaultSnowflakeId() : traceId;
+			ThreadContext.put(TRACE_ID, traceId);
+			ThreadContext.put(USER_ID, userId);
+			ThreadContext.put(TENANT_ID, tenantId);
+			ThreadContext.put(USER_NAME, username);
+			// 获取uri
+			String requestUri = request.getPath().pathWithinApplication().value();
+			log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}", requestUri, userId, username, tenantId, traceId);
+			return chain.filter(exchange.mutate()
+				.request(request.mutate()
+					.header(USER_NAME, username)
+					.header(TENANT_ID, tenantId)
+					.header(USER_ID, userId)
+					.header(TRACE_ID, traceId)
+					.build())
+				.build());
+		}
+		finally {
+			// 清除
+			ThreadContext.clearMap();
+		}
 	}
 
 	@Override

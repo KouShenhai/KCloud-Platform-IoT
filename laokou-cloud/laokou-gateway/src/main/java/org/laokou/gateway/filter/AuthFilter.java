@@ -19,12 +19,9 @@ package org.laokou.gateway.filter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.i18n.common.StatusCode;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
 import org.laokou.gateway.utils.RequestUtil;
-import org.laokou.gateway.utils.ResponseUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -96,9 +93,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		}
 		// 获取token
 		String token = RequestUtil.getParamValue(request, AUTHORIZATION);
-		if (StringUtil.isEmpty(token)) {
-			return ResponseUtil.response(exchange, Result.fail(StatusCode.UNAUTHORIZED));
-		}
 		// 增加令牌
 		return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());
 	}
