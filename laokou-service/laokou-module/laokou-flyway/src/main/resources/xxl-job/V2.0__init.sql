@@ -209,3 +209,6 @@ INSERT INTO `xxl_job_log_report` VALUES (8, '2023-09-15 00:00:00', 0, 0, 0, NULL
 -- Records of xxl_job_user
 -- ----------------------------
 INSERT INTO `xxl_job_user` VALUES (1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 1, NULL);
+
+INSERT INTO `kcloud_platform_alibaba_xxl_job`.`xxl_job_group` (`id`, `app_name`, `title`, `address_type`, `address_list`, `update_time`) VALUES (4, 'laokou-logstash', '分布式链路', 0, 'http://192.168.30.1:9999/', '2023-11-03 16:23:23');
+INSERT INTO `kcloud_platform_alibaba_xxl_job`.`xxl_job_info` (`id`, `job_group`, `job_desc`, `add_time`, `update_time`, `author`, `alarm_email`, `schedule_type`, `schedule_conf`, `misfire_strategy`, `executor_route_strategy`, `executor_handler`, `executor_param`, `executor_block_strategy`, `executor_timeout`, `executor_fail_retry_count`, `glue_type`, `glue_source`, `glue_remark`, `glue_updatetime`, `child_jobid`, `trigger_status`, `trigger_last_time`, `trigger_next_time`) VALUES (3, 4, '分布式链路', '2023-11-03 15:45:55', '2023-11-03 15:45:55', 'laokou', '2413176044@qq.com', 'CRON', '0 50 23 L * ?', 'DO_NOTHING', 'FIRST', 'traceJobHandler', '', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化', '2023-11-03 15:45:55', '', 0, 0, 0);

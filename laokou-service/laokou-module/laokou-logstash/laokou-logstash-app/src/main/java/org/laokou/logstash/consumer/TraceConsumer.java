@@ -17,6 +17,8 @@
 
 package org.laokou.logstash.consumer;
 
+import com.xxl.job.core.context.XxlJobHelper;
+import com.xxl.job.core.handler.annotation.XxlJob;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -25,13 +27,13 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceIndex;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY;
@@ -52,7 +54,7 @@ public class TraceConsumer {
 	private static final String TRACE_INDEX = "laokou_trace";
 
 	@KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
-	public void kafkaConsumerTest(List<String> messages, Acknowledgment ack) {
+	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
 		messages.parallelStream().forEach(this::saveIndex);
 		ack.acknowledge();
 	}
@@ -60,9 +62,21 @@ public class TraceConsumer {
 	/**
 	 * 每个月最后一天的23：50：00创建下一个月的索引
 	 */
-	@Scheduled(cron = "0 50 23 L * ?")
+	@XxlJob(value = "traceJobHandler")
 	public void scheduleCreateIndex() {
-		createIndex(DateUtil.plusDays(DateUtil.now(), 1));
+		String param = XxlJobHelper.getJobParam();
+		log.info("接收调度中心参数：{}", param);
+		LocalDate localDate = StringUtil.isEmpty(param) ? DateUtil.nowDate() : DateUtil.parseDate(param,DateUtil.YYYY_MM_DD);
+		localDate = DateUtil.plusDays(DateUtil.getFirstDayOfMonth(localDate), 1);
+		try {
+			log(createIndex(localDate),localDate);
+			XxlJobHelper.handleSuccess("创建索引【{" + getIndexName(localDate) + "}】执行成功");
+			XxlJobHelper.log("创建索引【{" + getIndexName(localDate) + "}】执行成功");
+		} catch (Exception e) {
+			log.error("错误信息",e);
+			XxlJobHelper.log("创建索引【{" + getIndexName(localDate) + "}】执行失败");
+			XxlJobHelper.handleFail("创建索引【{" + getIndexName(localDate) + "}】执行失败");
+		}
 	}
 
 	private void saveIndex(String s) {
@@ -70,33 +84,48 @@ public class TraceConsumer {
 			TraceIndex traceIndex = JacksonUtil.toBean(s, TraceIndex.class);
 			if (RegexUtil.numberRegex(traceIndex.getTraceId())) {
 				try {
-					String indexName = getIndexName(DateUtil.now());
+					String indexName = getIndexName(DateUtil.nowDate());
 					elasticsearchTemplate.syncIndexAsync(EMPTY, indexName, s);
 				}
 				catch (Exception e) {
-					log.error("同步数据报错：{}", e.getMessage());
+					log.error("同步数据报错", e);
 				}
 			}
 		}
-		catch (Exception ignored) {
-		}
+		catch (Exception ignored) {}
 	}
 
 	@PostConstruct
 	private void createTraceIndex() {
-		createIndex(DateUtil.now());
+		LocalDate localDate = DateUtil.nowDate();
+		log(createIndex(localDate),localDate);
 	}
 
-	private String getIndexName(LocalDateTime localDateTime) {
-		String ym = DateUtil.format(localDateTime, DateUtil.YYYYMM);
+	private String getIndexName(LocalDate localDate) {
+		String ym = DateUtil.format(localDate, DateUtil.YYYYMM);
 		return TRACE_INDEX + UNDER + ym;
 	}
 
+	private void log(boolean flag,LocalDate localDate) {
+		if (flag) {
+			log.info("索引【{}】创建成功",getIndexName(localDate));
+		}
+	}
+
 	@SneakyThrows
-	private void createIndex(LocalDateTime localDateTime) {
-		String indexName = getIndexName(localDateTime);
-		if (!elasticsearchTemplate.isIndexExists(indexName)) {
-			elasticsearchTemplate.createAsyncIndex(indexName, TRACE_INDEX, TraceIndex.class);
+	private boolean createIndex(LocalDate localDate) {
+		String indexName = getIndexName(localDate);
+		try {
+			if (!elasticsearchTemplate.isIndexExists(indexName)) {
+				elasticsearchTemplate.createAsyncIndex(indexName, TRACE_INDEX, TraceIndex.class);
+				return true;
+			} else {
+				log.info("索引【{}】已存在",indexName);
+				return false;
+			}
+		} catch (Exception e) {
+			log.error("创建索引【{}】失败,错误信息",indexName,e);
+			return false;
 		}
 	}
 
