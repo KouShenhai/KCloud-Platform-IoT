@@ -23,6 +23,9 @@ import org.laokou.common.sensitive.enums.Type;
 
 import java.lang.reflect.Field;
 
+import static org.laokou.common.i18n.common.Constant.AT;
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+
 /**
  * @author laokou
  */
@@ -59,9 +62,9 @@ public class SensitiveUtil {
 
 	private static String formatMail(String mail) {
 		if (StringUtil.isEmpty(mail)) {
-			return "";
+			return EMPTY;
 		}
-		int index = mail.indexOf("@");
+		int index = mail.indexOf(AT);
 		if (index == -1) {
 			return mail;
 		}
@@ -72,9 +75,10 @@ public class SensitiveUtil {
 
 	private static String formatMobile(String mobile) {
 		if (StringUtil.isEmpty(mobile)) {
-			return "";
+			return EMPTY;
 		}
-		if (mobile.length() != 11) {
+		int mobileLen = 11;
+		if (mobile.length() != mobileLen) {
 			return mobile;
 		}
 		String begin = mobile.substring(0, 3);

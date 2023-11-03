@@ -19,7 +19,9 @@ package org.laokou.common.core.utils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.xdb.Searcher;
+
 import java.io.IOException;
+import java.util.Arrays;
 
 import static org.laokou.common.i18n.common.Constant.*;
 
@@ -54,10 +56,7 @@ public class AddressUtil {
 	private static String addressFormat(String address) {
 		StringBuilder stringBuilder = new StringBuilder(address.length());
 		String[] info = address.split(BACKSLASH + ERECT);
-		for (String str : info) {
-			str = IGNORE.equals(str) ? EMPTY : str + SPACE;
-			stringBuilder.append(str);
-		}
+		Arrays.stream(info).parallel().forEach(str -> stringBuilder.append(IGNORE.equals(str) ? EMPTY : str + SPACE));
 		return stringBuilder.toString().trim();
 	}
 
