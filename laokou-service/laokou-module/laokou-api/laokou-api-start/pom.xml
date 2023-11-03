@@ -10,12 +10,8 @@
     <artifactId>laokou-api-start</artifactId>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-secret</artifactId>
+            <artifactId>laokou-api-adapter</artifactId>
         </dependency>
     </dependencies>
 

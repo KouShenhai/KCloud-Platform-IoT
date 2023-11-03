@@ -121,6 +121,16 @@
         <dependencies>
             <dependency>
                 <groupId>org.laokou</groupId>
+                <artifactId>laokou-iot-app</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
+                <artifactId>laokou-api-adapter</artifactId>
+                <version>${laokou.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.laokou</groupId>
                 <artifactId>laokou-logstash-infrastructure</artifactId>
                 <version>${laokou.version}</version>
             </dependency>

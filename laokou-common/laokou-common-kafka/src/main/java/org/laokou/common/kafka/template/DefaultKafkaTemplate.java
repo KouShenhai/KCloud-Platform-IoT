@@ -30,8 +30,8 @@ public class DefaultKafkaTemplate {
 
 	private final KafkaTemplate<String, String> kafkaTemplate;
 
-	public void send(String topic, String body) {
-		kafkaTemplate.send(topic, body);
+	public void send(String topic, String payload) {
+		kafkaTemplate.send(topic, payload);
 	}
 
 }
