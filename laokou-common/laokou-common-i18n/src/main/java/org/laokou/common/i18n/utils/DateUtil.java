@@ -153,6 +153,10 @@ public class DateUtil {
 		return localDateTime.plusDays(days);
 	}
 
+	public static LocalDate plusDays(LocalDate localDate, long days) {
+		return localDate.plusDays(days);
+	}
+
 	/**
 	 * 获取 前/后 x秒 的时间
 	 * @param localDateTime 时间
@@ -189,6 +193,10 @@ public class DateUtil {
 
 	public static LocalDateTime now() {
 		return LocalDateTime.now();
+	}
+
+	public static LocalDate nowDate() {
+		return LocalDate.now();
 	}
 
 	public static LocalDateTime getLocalDateTimeOfTimestamp(long timestamp) {
