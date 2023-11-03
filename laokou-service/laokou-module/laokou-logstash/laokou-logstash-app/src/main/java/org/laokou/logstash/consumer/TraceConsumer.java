@@ -63,7 +63,8 @@ public class TraceConsumer {
 	 * 每个月最后一天的23：50：00创建下一个月的索引
 	 */
 	@XxlJob(value = "traceJobHandler")
-	public void scheduleCreateIndex() {
+	public void createTraceIndexJob() {
+		// 单个参数
 		String param = XxlJobHelper.getJobParam();
 		log.info("接收调度中心参数：{}", param);
 		LocalDate localDate = StringUtil.isEmpty(param) ? DateUtil.nowDate() : DateUtil.parseDate(param,DateUtil.YYYY_MM_DD);
