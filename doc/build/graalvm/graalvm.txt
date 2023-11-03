@@ -14,6 +14,6 @@
  * limitations under the License.
  *
  */
-1、先对原项目进行一次package打包：mvn clean package -DskipTests
-2、运行aot提前处理命令：mvn spring-boot:process-aot
-3、运行native打包：mvn -Pnative native:build
+1、mvn package     ->   mvn clean package -DskipTests
+2、aot process     ->   mvn spring-boot:process-aot
+3、native build    ->   mvn -Pnative native:build
