@@ -18,8 +18,10 @@
 package org.laokou.common.i18n.utils;
 
 import org.springframework.context.i18n.LocaleContextHolder;
+
 import java.util.Locale;
 
+import static org.laokou.common.i18n.common.Constant.COMMA;
 import static org.laokou.common.i18n.common.Constant.ROD;
 
 /**
@@ -28,12 +30,22 @@ import static org.laokou.common.i18n.common.Constant.ROD;
 public class LocaleUtil {
 
 	public static Locale toLocale(String language) {
-		if (StringUtil.isEmpty(language)) {
+		try {
+			if (StringUtil.isEmpty(language)) {
+				return LocaleContextHolder.getLocale();
+			}
+			String[] str = getLanguage(language).split(ROD);
+			// 国家 地区
+			return new Locale(str[0], str[1]);
+		}
+		catch (Exception e) {
 			return LocaleContextHolder.getLocale();
 		}
-		String[] str = language.split(ROD);
-		// 国家 地区
-		return new Locale(str[0], str[1]);
+	}
+
+	private static String getLanguage(String language) {
+		int index = language.indexOf(COMMA);
+		return index > 0 ? language.substring(0, index + 1) : language;
 	}
 
 }

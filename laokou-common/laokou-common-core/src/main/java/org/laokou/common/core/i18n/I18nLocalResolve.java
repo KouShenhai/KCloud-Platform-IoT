@@ -31,6 +31,7 @@ import java.util.Locale;
 /**
  * @author livk
  */
+@Deprecated
 @NonNullApi
 public class I18nLocalResolve extends AbstractLocaleContextResolver {
 
