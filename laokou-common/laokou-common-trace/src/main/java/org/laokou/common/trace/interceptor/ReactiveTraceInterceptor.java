@@ -36,17 +36,21 @@ public class ReactiveTraceInterceptor implements WebFilter {
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-		ServerHttpRequest request = exchange.getRequest();
-		String userId = getParamValue(request, USER_ID);
-		String tenantId = getParamValue(request, TENANT_ID);
-		String username = getParamValue(request, USER_NAME);
-		String traceId = getParamValue(request, TRACE_ID);
-		ThreadContext.clearMap();
-		ThreadContext.put(TRACE_ID, traceId);
-		ThreadContext.put(USER_ID, userId);
-		ThreadContext.put(TENANT_ID, tenantId);
-		ThreadContext.put(USER_NAME, username);
-		return chain.filter(exchange);
+		try {
+			ServerHttpRequest request = exchange.getRequest();
+			String userId = getParamValue(request, USER_ID);
+			String tenantId = getParamValue(request, TENANT_ID);
+			String username = getParamValue(request, USER_NAME);
+			String traceId = getParamValue(request, TRACE_ID);
+			ThreadContext.put(TRACE_ID, traceId);
+			ThreadContext.put(USER_ID, userId);
+			ThreadContext.put(TENANT_ID, tenantId);
+			ThreadContext.put(USER_NAME, username);
+			return chain.filter(exchange);
+		}
+		finally {
+			ThreadContext.clearMap();
+		}
 	}
 
 	private String getParamValue(ServerHttpRequest request, String paramName) {
