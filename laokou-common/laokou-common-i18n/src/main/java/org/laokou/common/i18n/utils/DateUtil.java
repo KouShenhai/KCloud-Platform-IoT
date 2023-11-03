@@ -49,12 +49,12 @@ public class DateUtil {
 	/**
 	 * yyyy-MM-dd
 	 */
-	public static final int YYYY_MM_DD = 3;
+	public static final int YYYY_BAR_MM_BAR_DD = 3;
 
 	/**
 	 * yyyy年MM月dd日
 	 */
-	public static final int YYYY_MM_DD_TEXT = 4;
+	public static final int YYYY_TEXT_MM_TEXT_DD_TEXT = 4;
 
 	/**
 	 * yyyy.MM.dd
@@ -70,7 +70,7 @@ public class DateUtil {
 	 * 时间格式
 	 */
 	private static final String[] TIME_PATTERNS = { Constant.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS,
-			Constant.YYYYMMDDHHMMSS, Constant.YYYYMM, Constant.YYYY_MM_DD, Constant.YYYY_MM_DD_TEXT,
+			Constant.YYYYMMDDHHMMSS, Constant.YYYYMM, Constant.YYYY_BAR_MM_BAR_DD, Constant.YYYY_TEXT_MM_TEXT_DD_TEXT,
 			Constant.YYYY_DOT_MM_DOT_DD };
 
 	/**
@@ -260,18 +260,39 @@ public class DateUtil {
 
 	public interface Constant {
 
+		/**
+		 * yyyy-MM-dd HH:mm:ss
+		 */
 		String YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS = "yyyy-MM-dd HH:mm:ss";
 
+		/**
+		 * yyyyMMddHHmmss
+		 */
 		String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
+		/**
+		 * yyyyMM
+		 */
 		String YYYYMM = "yyyyMM";
 
-		String YYYY_MM_DD = "yyyy-MM-dd";
+		/**
+		 * yyyy-MM-dd
+		 */
+		String YYYY_BAR_MM_BAR_DD = "yyyy-MM-dd";
 
-		String YYYY_MM_DD_TEXT = "yyyy年MM月dd日";
+		/**
+		 * yyyy年MM月dd日
+		 */
+		String YYYY_TEXT_MM_TEXT_DD_TEXT = "yyyy年MM月dd日";
 
+		/**
+		 * yyyy.MM.dd
+		 */
 		String YYYY_DOT_MM_DOT_DD = "yyyy.MM.dd";
 
+		/**
+		 * GMT+8
+		 */
 		String DEFAULT_TIMEZONE = "GMT+8";
 
 	}

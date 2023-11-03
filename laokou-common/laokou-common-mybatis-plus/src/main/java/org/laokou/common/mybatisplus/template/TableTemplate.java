@@ -24,6 +24,7 @@ import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -69,10 +70,12 @@ public class TableTemplate {
 
 	@SneakyThrows
 	private static String getContent(LocalDateTime localDateTime, String location) {
-		Map<String, Object> params = new HashMap<>(1);
-		params.put("suffix", DateUtil.format(localDateTime, DateUtil.YYYYMM));
-		String template = new String(ResourceUtil.getResource(location).getInputStream().readAllBytes());
-		return TemplateUtil.getContent(template, params);
+		try (InputStream inputStream = ResourceUtil.getResource(location).getInputStream()) {
+			String template = new String(inputStream.readAllBytes());
+			Map<String, Object> params = new HashMap<>(1);
+			params.put("suffix", DateUtil.format(localDateTime, DateUtil.YYYYMM));
+			return TemplateUtil.getContent(template, params);
+		}
 	}
 
 	private static LocalDate toDate(String dateStr) {
