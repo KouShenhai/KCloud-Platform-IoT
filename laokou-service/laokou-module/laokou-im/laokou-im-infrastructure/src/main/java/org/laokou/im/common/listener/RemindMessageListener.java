@@ -49,12 +49,16 @@ public class RemindMessageListener implements RocketMQListener<MessageExt> {
 
 	@Override
 	public void onMessage(MessageExt messageExt) {
-		String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-		String traceId = messageExt.getProperty(TRACE_ID);
-		ThreadContext.put(TENANT_ID, traceId);
-		log.info("接收到提醒消息：{}", message);
-		ThreadContext.clearMap();
-		messageUtil.send(message);
+		try {
+			String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
+			String traceId = messageExt.getProperty(TRACE_ID);
+			ThreadContext.put(TENANT_ID, traceId);
+			log.info("接收到提醒消息：{}", message);
+			messageUtil.send(message);
+		}
+		finally {
+			ThreadContext.clearMap();
+		}
 	}
 
 }

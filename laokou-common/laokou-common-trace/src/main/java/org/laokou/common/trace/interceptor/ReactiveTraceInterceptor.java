@@ -47,7 +47,8 @@ public class ReactiveTraceInterceptor implements WebFilter {
 			ThreadContext.put(TENANT_ID, tenantId);
 			ThreadContext.put(USER_NAME, username);
 			return chain.filter(exchange);
-		} finally {
+		}
+		finally {
 			ThreadContext.clearMap();
 		}
 	}
