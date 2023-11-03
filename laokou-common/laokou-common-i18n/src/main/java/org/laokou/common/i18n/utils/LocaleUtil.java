@@ -19,10 +19,10 @@ package org.laokou.common.i18n.utils;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 
+import java.util.Arrays;
 import java.util.Locale;
 
-import static org.laokou.common.i18n.common.Constant.COMMA;
-import static org.laokou.common.i18n.common.Constant.ROD;
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * @author laokou
@@ -44,8 +44,8 @@ public class LocaleUtil {
 	}
 
 	private static String getLanguage(String language) {
-		int index = language.indexOf(COMMA);
-		return index > 0 ? language.substring(0, index + 1) : language;
+		String[] array = language.split(COMMA);
+		return Arrays.stream(array).filter(i -> i.contains(BAR)).findFirst().orElse(EMPTY);
 	}
 
 }
