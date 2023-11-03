@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.core.config;
+package org.laokou.common.core.i18n;
 
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.FilterChain;
@@ -23,7 +23,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.i18n.utils.LocaleUtil;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -36,8 +35,7 @@ import java.io.IOException;
  * @author laokou
  */
 @NonNullApi
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class I18nConfig extends RequestContextFilter {
+public class I18nRequestContextFilter extends RequestContextFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

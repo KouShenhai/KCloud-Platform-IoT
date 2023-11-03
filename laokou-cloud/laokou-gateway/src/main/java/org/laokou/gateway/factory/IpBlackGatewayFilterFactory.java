@@ -21,12 +21,16 @@ import io.netty.handler.ipfilter.IpSubnetFilterRule;
 import lombok.Data;
 import org.laokou.common.i18n.common.Constant;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.LocaleUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.gateway.utils.RequestUtil;
 import org.laokou.gateway.utils.ResponseUtil;
 import org.laokou.gateway.utils.RuleUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
@@ -45,19 +49,26 @@ public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<Ip
 
 	@Override
 	public GatewayFilter apply(Config config) {
-		List<IpSubnetFilterRule> sources = RuleUtil.convert(Arrays.asList(config.sources.split(Constant.COMMA)));
-		return (exchange, chain) -> {
-			if (StringUtil.isEmpty(config.sources)) {
-				return chain.filter(exchange);
-			}
-			InetSocketAddress remoteAddress = config.remoteAddressResolver.resolve(exchange);
-			for (IpSubnetFilterRule source : sources) {
-				if (source.matches(remoteAddress)) {
-					return ResponseUtil.response(exchange, Result.fail(IP_BLACK));
+		try {
+			List<IpSubnetFilterRule> sources = RuleUtil.convert(Arrays.asList(config.sources.split(Constant.COMMA)));
+			return (exchange, chain) -> {
+				if (StringUtil.isEmpty(config.sources)) {
+					return chain.filter(exchange);
 				}
-			}
-			return chain.filter(exchange);
-		};
+				InetSocketAddress remoteAddress = config.remoteAddressResolver.resolve(exchange);
+				for (IpSubnetFilterRule source : sources) {
+					if (source.matches(remoteAddress)) {
+						String language = RequestUtil.getParamValue(exchange.getRequest(), HttpHeaders.ACCEPT_LANGUAGE);
+						LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
+						return ResponseUtil.response(exchange, Result.fail(IP_BLACK));
+					}
+				}
+				return chain.filter(exchange);
+			};
+		}
+		finally {
+			LocaleContextHolder.resetLocaleContext();
+		}
 	}
 
 	public IpBlackGatewayFilterFactory() {
