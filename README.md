@@ -84,6 +84,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Netty                       | 4.1.100.Final |
 | Dubbo                       | 3.2.7         |
 | Kafka                       | 3.6.0         |
+| EMQX                        | 5.3.0         |
 
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
