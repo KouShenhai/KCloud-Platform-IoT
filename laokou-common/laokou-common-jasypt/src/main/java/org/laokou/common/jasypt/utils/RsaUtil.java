@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.utils.Base64;
 import org.laokou.common.core.utils.ResourceUtil;
 import javax.crypto.Cipher;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -63,14 +64,16 @@ public class RsaUtil {
 
 	@SneakyThrows
 	public static String getPrivateKey() {
-		byte[] bytes = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream().readAllBytes();
-		return new String(Objects.requireNonNull(bytes), StandardCharsets.UTF_8);
+		try (InputStream inputStream = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream()) {
+			return new String(Objects.requireNonNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
+		}
 	}
 
 	@SneakyThrows
 	public static String getPublicKey() {
-		byte[] bytes = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream().readAllBytes();
-		return new String(Objects.requireNonNull(bytes), StandardCharsets.UTF_8);
+		try (InputStream inputStream = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream()) {
+			return new String(Objects.requireNonNull(inputStream.readAllBytes()), StandardCharsets.UTF_8);
+		}
 	}
 
 }

@@ -30,11 +30,11 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.springframework.core.io.Resource;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
@@ -54,10 +54,9 @@ public class IdempotentAspect {
 	public static final String REQUEST_ID = "request-id";
 
 	static {
-		try {
-			Resource resource = ResourceUtil.getResource("idempotent.lua");
-			REDIS_SCRIPT = new DefaultRedisScript<>(
-					new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8), Boolean.class);
+		try (InputStream inputStream = ResourceUtil.getResource("idempotent.lua").getInputStream()) {
+			REDIS_SCRIPT = new DefaultRedisScript<>(new String(inputStream.readAllBytes(), StandardCharsets.UTF_8),
+					Boolean.class);
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);

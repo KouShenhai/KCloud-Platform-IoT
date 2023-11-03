@@ -42,12 +42,3 @@ services:
     ports:
       - "1111:1111"
     restart: on-failure
-  laokou-monitor-service:
-    tty: true
-    image: registry.cn-hangzhou.aliyuncs.com/koushenhai/laokou-monitor:3.1.5
-    container_name: laokou-monitor
-    environment:
-      - TZ="Asia/Shanghai"
-    ports:
-      - "5000:5000"
-    restart: on-failure

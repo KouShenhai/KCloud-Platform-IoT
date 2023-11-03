@@ -24,6 +24,7 @@ import org.springframework.util.Assert;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 
@@ -41,8 +42,9 @@ public class AesUtil {
 
 	@SneakyThrows
 	private static String getKey() {
-		byte[] bytes = ResourceUtil.getResource("conf/secretKey.b16").getInputStream().readAllBytes();
-		return new String(bytes, StandardCharsets.UTF_8);
+		try (InputStream inputStream = ResourceUtil.getResource("conf/secretKey.b16").getInputStream()) {
+			return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+		}
 	}
 
 	@SneakyThrows

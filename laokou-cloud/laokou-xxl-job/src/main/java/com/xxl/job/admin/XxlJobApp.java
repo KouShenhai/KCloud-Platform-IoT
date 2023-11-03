@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class XxlJobApp {
 
 	public static void main(String[] args) {
-		// 账号/密码 => admin/123456
+		// 账号/密码 => admin/laokou123
 		SpringApplication.run(XxlJobApp.class, args);
 	}
 

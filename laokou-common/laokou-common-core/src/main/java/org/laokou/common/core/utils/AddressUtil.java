@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package org.laokou.common.core.utils;
 
@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.xdb.Searcher;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 import static org.laokou.common.i18n.common.Constant.*;
@@ -36,9 +37,8 @@ public class AddressUtil {
 	private static final String IGNORE = "0";
 
 	static {
-		try {
-			byte[] bytes = ResourceUtil.getResource("ip2region.xdb").getInputStream().readAllBytes();
-			SEARCHER = Searcher.newWithBuffer(bytes);
+		try (InputStream inputStream = ResourceUtil.getResource("ip2region.xdb").getInputStream()) {
+			SEARCHER = Searcher.newWithBuffer(inputStream.readAllBytes());
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);
@@ -47,16 +47,13 @@ public class AddressUtil {
 
 	@SneakyThrows
 	public static String getRealAddress(String ip) {
-		if (IpUtil.internalIp(ip)) {
-			return LOCAL_NETWORK_LABEL;
-		}
-		return addressFormat(SEARCHER.search(ip));
+		return IpUtil.internalIp(ip) ? LOCAL_NETWORK_LABEL : addressFormat(SEARCHER.search(ip));
 	}
 
 	private static String addressFormat(String address) {
 		StringBuilder stringBuilder = new StringBuilder(address.length());
 		String[] info = address.split(BACKSLASH + ERECT);
-		Arrays.stream(info).parallel().forEach(str -> stringBuilder.append(IGNORE.equals(str) ? EMPTY : str + SPACE));
+		Arrays.stream(info).forEach(str -> stringBuilder.append(IGNORE.equals(str) ? EMPTY : str + SPACE));
 		return stringBuilder.toString().trim();
 	}
 

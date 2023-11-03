@@ -92,10 +92,11 @@ public class RouterUtil {
 	}
 
 	private String getRouter(Map<String, Object> dataMap) throws IOException, TemplateException {
-		InputStream inputStream = ResourceUtil.getResource("init_router.json").getInputStream();
-		byte[] bytes = inputStream.readAllBytes();
-		String template = new String(bytes, StandardCharsets.UTF_8);
-		return TemplateUtil.getContent(template, dataMap);
+		try (InputStream inputStream = ResourceUtil.getResource("init_router.json").getInputStream()) {
+			byte[] bytes = inputStream.readAllBytes();
+			String template = new String(bytes, StandardCharsets.UTF_8);
+			return TemplateUtil.getContent(template, dataMap);
+		}
 	}
 
 }
