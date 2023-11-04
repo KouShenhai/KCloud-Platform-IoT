@@ -26,7 +26,7 @@ public class AbstractMqttServer implements MqttServer {
 
     private final AtomicBoolean RUNNING = new AtomicBoolean(false);
 
-    private final
+    private final String string = "";
 
     @Override
     public void start() {
