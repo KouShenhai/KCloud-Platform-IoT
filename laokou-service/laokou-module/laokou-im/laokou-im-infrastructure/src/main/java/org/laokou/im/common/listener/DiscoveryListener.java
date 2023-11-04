@@ -17,6 +17,7 @@
 
 package org.laokou.im.common.listener;
 
+import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PreDestroy;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ import java.net.InetAddress;
  */
 @Data
 @Component
+@NonNullApi
 @RequiredArgsConstructor
 public class DiscoveryListener implements ApplicationListener<ApplicationReadyEvent> {
 
