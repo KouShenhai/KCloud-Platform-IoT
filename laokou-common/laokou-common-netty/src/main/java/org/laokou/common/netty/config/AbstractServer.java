@@ -37,9 +37,15 @@ public abstract class AbstractServer implements Server {
 	 */
 	private final AtomicBoolean RUNNING = new AtomicBoolean(false);
 
-	protected EventLoopGroup boss;
+	/**
+	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源
+	 */
+	protected volatile EventLoopGroup boss;
 
-	protected EventLoopGroup work;
+	/**
+	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源
+	 */
+	protected volatile EventLoopGroup work;
 
 	protected final int port;
 
@@ -93,23 +99,25 @@ public abstract class AbstractServer implements Server {
 	 * 关闭
 	 */
 	public void stop() {
-		if (RUNNING.compareAndSet(true, false)) {
-			// 释放资源
-			if (boss != null) {
-				boss.shutdownGracefully();
-			}
-			if (work != null) {
-				work.shutdownGracefully();
-			}
-			log.info("优雅关闭，释放资源");
+		// 修改状态
+		if (RUNNING.get()) {
+			RUNNING.compareAndSet(true, false);
 		}
-		else {
-			log.error("关闭失败，请启动服务");
+		// 释放资源
+		if (boss != null) {
+			boss.shutdownGracefully();
 		}
+		if (work != null) {
+			work.shutdownGracefully();
+		}
+		log.info("优雅关闭，释放资源");
 	}
 
 	/**
 	 * 绑定
+	 * @param bootstrap
+	 * @param port
+	 * @return
 	 */
 	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap, final int port) {
 		return bootstrap.bind(port).awaitUninterruptibly().addListener(future -> {
