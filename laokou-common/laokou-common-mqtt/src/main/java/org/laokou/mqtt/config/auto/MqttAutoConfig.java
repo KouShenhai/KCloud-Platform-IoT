@@ -15,27 +15,23 @@
  *
  */
 
-package org.laokou.mqtt.config;
+package org.laokou.mqtt.config.auto;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import org.laokou.mqtt.config.MqttServer;
+import org.laokou.mqtt.config.Server;
+import org.laokou.mqtt.config.SpringMqttProperties;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author laokou
  */
-public class AbstractMqttServer implements MqttServer {
+@AutoConfiguration
+public class MqttAutoConfig {
 
-    private final AtomicBoolean RUNNING = new AtomicBoolean(false);
-
-    private final String string = "";
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
+    @Bean(name = "mqttServer",initMethod = "start",destroyMethod = "stop")
+    public Server mqttServer(SpringMqttProperties springMqttProperties) {
+        return new MqttServer(springMqttProperties);
     }
 
 }
