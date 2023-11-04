@@ -21,7 +21,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.mqtt.config.MqttProperties.PREFIX;
+import static org.laokou.mqtt.config.SpringMqttProperties.PREFIX;
 
 /**
  * @author laokou
@@ -29,7 +29,7 @@ import static org.laokou.mqtt.config.MqttProperties.PREFIX;
 @Component
 @Data
 @ConfigurationProperties(prefix = PREFIX)
-public class MqttProperties {
+public class SpringMqttProperties {
 
 	public static final String PREFIX = "spring.mqtt";
 

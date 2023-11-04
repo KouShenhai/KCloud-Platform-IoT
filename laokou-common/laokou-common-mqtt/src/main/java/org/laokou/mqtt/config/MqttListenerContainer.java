@@ -33,7 +33,7 @@ import java.util.Map;
  */
 @Component
 @NonNullApi
-public class MqttListenerContainer implements ApplicationListener<ApplicationReadyEvent>, MqttStrategy {
+public final class MqttListenerContainer implements ApplicationListener<ApplicationReadyEvent>, MqttStrategy {
 
     private final Map<String,MqttListener> MAP = new HashMap<>();
 
