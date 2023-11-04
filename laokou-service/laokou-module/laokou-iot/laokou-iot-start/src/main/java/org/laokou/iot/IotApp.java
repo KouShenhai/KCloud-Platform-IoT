@@ -17,9 +17,27 @@
 
 package org.laokou.iot;
 
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import static org.laokou.common.i18n.common.Constant.IP;
+
 /**
  * @author laokou
  */
+@SpringBootApplication(scanBasePackages = "org.laokou")
 public class IotApp {
+
+    public static void main(String[] args) throws UnknownHostException {
+        // System.setProperty(TlsSystemConfig.TLS_ENABLE, TRUE);
+        // System.setProperty(TlsSystemConfig.CLIENT_AUTH, TRUE);
+        // System.setProperty(TlsSystemConfig.CLIENT_TRUST_CERT, "tls/nacos.cer");
+        System.setProperty(IP, InetAddress.getLocalHost().getHostAddress());
+        new SpringApplicationBuilder(IotApp.class).web(WebApplicationType.SERVLET).run(args);
+    }
 
 }

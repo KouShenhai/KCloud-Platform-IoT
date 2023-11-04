@@ -9,4 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-iot-app</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-mqtt</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

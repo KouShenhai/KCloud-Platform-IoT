@@ -114,11 +114,18 @@
         <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
         <!--transmittable-thread-local版本-->
         <transmittable-thread-local.version>2.14.3</transmittable-thread-local.version>
+        <!--mqttv5-client版本-->
+        <mqttv5-client.version>1.2.5</mqttv5-client.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.eclipse.paho</groupId>
+                <artifactId>org.eclipse.paho.mqttv5.client</artifactId>
+                <version>${mqttv5-client.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-iot-app</artifactId>

@@ -17,11 +17,16 @@
 
 package org.laokou.mqtt.config;
 
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import lombok.SneakyThrows;
+import org.eclipse.paho.mqttv5.client.MqttClient;
+import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
+import org.eclipse.paho.mqttv5.client.persist.MemoryPersistence;
+import org.eclipse.paho.mqttv5.common.MqttMessage;
+import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
-import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
+
+import java.nio.charset.StandardCharsets;
 
 import static org.laokou.mqtt.constant.Constant.WILL_DATA;
 import static org.laokou.mqtt.constant.Constant.WILL_TOPIC;
@@ -33,25 +38,30 @@ import static org.laokou.mqtt.constant.Constant.WILL_TOPIC;
 public class MqttConfig {
 
 	@Bean
-	public MqttPahoClientFactory mqttPahoClientFactory(MqttProperties mqttProperties) {
-		DefaultMqttPahoClientFactory clientFactory = new DefaultMqttPahoClientFactory();
-		clientFactory.setConnectionOptions(mqttConnectOptions(mqttProperties));
-		return clientFactory;
+	@SneakyThrows
+	public MqttClient mqttClient(SpringMqttProperties springMqttProperties) {
+		MemoryPersistence persistence = new MemoryPersistence();
+		MqttClient client = new MqttClient(springMqttProperties.getHost(), "123",persistence);
+		// 手动ack接收确认
+		client.setManualAcks(true);
+		client.connect(mqttConnectionOptions(springMqttProperties));
+		return client;
 	}
 
-	private MqttConnectOptions mqttConnectOptions(MqttProperties mqttProperties) {
-		MqttConnectOptions options = new MqttConnectOptions();
+	@Bean
+	public MqttConnectionOptions mqttConnectionOptions(SpringMqttProperties springMqttProperties) {
+		MqttConnectionOptions options = new MqttConnectionOptions();
 		// 超时时间
 		options.setConnectionTimeout(10);
 		// 会话心跳
 		options.setKeepAliveInterval(15);
-		options.setUserName(mqttProperties.getUsername());
+		options.setUserName(springMqttProperties.getUsername());
 		// 开启重连
 		options.setAutomaticReconnect(true);
-		options.setPassword(mqttProperties.getPassword().toCharArray());
-		options.setServerURIs(new String[] { mqttProperties.getHost() });
+		options.setPassword(springMqttProperties.getPassword().getBytes(StandardCharsets.UTF_8));
+		options.setServerURIs(new String[] { springMqttProperties.getHost() });
 		// 客户端与服务器意外中断,服务器发送`遗嘱`消息(只有一次)
-		options.setWill(WILL_TOPIC, WILL_DATA, 2, false);
+		options.setWill(WILL_TOPIC, new MqttMessage(WILL_DATA,2,false,new MqttProperties()));
 		return options;
 	}
 
