@@ -27,6 +27,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -70,6 +71,10 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 
 	public static Class<?> getType(String name) {
 		return Objects.requireNonNull(applicationContext.getType(name));
+	}
+
+	public static <T> Map<String, T> getType(Class<T> requiredType) {
+		return applicationContext.getBeansOfType(requiredType);
 	}
 
 	public static <T> void registerBean(Class<T> clazz, String beanName) {
