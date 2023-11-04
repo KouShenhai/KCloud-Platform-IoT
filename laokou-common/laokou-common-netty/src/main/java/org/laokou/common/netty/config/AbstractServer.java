@@ -38,12 +38,12 @@ public abstract class AbstractServer implements Server {
 	private final AtomicBoolean RUNNING = new AtomicBoolean(false);
 
 	/**
-	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源
+	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）
 	 */
 	protected volatile EventLoopGroup boss;
 
 	/**
-	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源
+	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）
 	 */
 	protected volatile EventLoopGroup work;
 
@@ -70,9 +70,10 @@ public abstract class AbstractServer implements Server {
 	protected abstract AbstractBootstrap<?, ?> init();
 
 	/**
-	 * 启动
+	 * 启动(Bean单例存在资源竞争)
 	 */
-	public void start() {
+	@Override
+	public synchronized void start() {
 		if (RUNNING.get()) {
 			log.error("已启动监听，端口：{}", port);
 			return;
@@ -96,9 +97,10 @@ public abstract class AbstractServer implements Server {
 	}
 
 	/**
-	 * 关闭
+	 * 关闭(Bean单例存在资源竞争)
 	 */
-	public void stop() {
+	@Override
+	public synchronized void stop() {
 		// 修改状态
 		if (RUNNING.get()) {
 			RUNNING.compareAndSet(true, false);
@@ -115,9 +117,6 @@ public abstract class AbstractServer implements Server {
 
 	/**
 	 * 绑定
-	 * @param bootstrap
-	 * @param port
-	 * @return
 	 */
 	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap, final int port) {
 		return bootstrap.bind(port).awaitUninterruptibly().addListener(future -> {
