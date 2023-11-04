@@ -17,19 +17,14 @@
 
 package org.laokou.mqtt.config;
 
-import lombok.SneakyThrows;
 import org.eclipse.paho.mqttv5.client.MqttClient;
 import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
 import org.eclipse.paho.mqttv5.client.persist.MemoryPersistence;
-import org.eclipse.paho.mqttv5.common.MqttMessage;
-import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
+import org.eclipse.paho.mqttv5.common.MqttException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.nio.charset.StandardCharsets;
-
-import static org.laokou.mqtt.constant.Constant.WILL_DATA;
-import static org.laokou.mqtt.constant.Constant.WILL_TOPIC;
 
 /**
  * @author laokou
@@ -38,10 +33,9 @@ import static org.laokou.mqtt.constant.Constant.WILL_TOPIC;
 public class MqttConfig {
 
 	@Bean
-	@SneakyThrows
-	public MqttClient mqttClient(SpringMqttProperties springMqttProperties) {
+	public MqttClient mqttClient(SpringMqttProperties springMqttProperties) throws MqttException {
 		MemoryPersistence persistence = new MemoryPersistence();
-		MqttClient client = new MqttClient(springMqttProperties.getHost(), "123",persistence);
+		MqttClient client = new MqttClient(springMqttProperties.getHost(), "1234",persistence);
 		// 手动ack接收确认
 		client.setManualAcks(true);
 		client.connect(mqttConnectionOptions(springMqttProperties));
@@ -61,7 +55,7 @@ public class MqttConfig {
 		options.setPassword(springMqttProperties.getPassword().getBytes(StandardCharsets.UTF_8));
 		options.setServerURIs(new String[] { springMqttProperties.getHost() });
 		// 客户端与服务器意外中断,服务器发送`遗嘱`消息(只有一次)
-		options.setWill(WILL_TOPIC, new MqttMessage(WILL_DATA,2,false,new MqttProperties()));
+		//options.setWill(WILL_TOPIC, new MqttMessage(WILL_DATA,2,false,new MqttProperties()));
 		return options;
 	}
 
