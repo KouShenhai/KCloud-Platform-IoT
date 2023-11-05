@@ -15,11 +15,8 @@
 #  */
 FROM docker.io/sunrdocker/jdk17-jre-font-openssl-alpine:latest
 LABEL maintainer="laokou"
-LABEL description="laokou-auth"
-COPY laokou-auth.jar app.jar
-RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime  \
-    && echo 'Asia/Shanghai' >/etc/timezone
-EXPOSE 1111
-ENTRYPOINT java -Xms512m -Xmx512m -Dlog4j.skipJansi=false \
-                                -jar \
-                                app.jar > /dev/null
+LABEL description="laokou-register"
+COPY laokou-register.jar app.jar
+EXPOSE 8848
+# >/dev/null 2>&1 标准输出和错误输出重定向空文件
+ENTRYPOINT java -Xmx512m -Xms512m -Dnacos.standalone=true -jar app.jar

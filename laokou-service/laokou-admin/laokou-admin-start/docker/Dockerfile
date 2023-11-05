@@ -14,9 +14,9 @@
 #  * limitations under the License.
 #  */
 FROM docker.io/sunrdocker/jdk17-jre-font-openssl-alpine:latest
-LABEL maintainer="koushenhai"
-LABEL description="laokou-admin-server"
-COPY laokou-admin-server.jar app.jar
+LABEL maintainer="laokou"
+LABEL description="laokou-admin"
+COPY laokou-admin.jar app.jar
 RUN ln -snf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 EXPOSE 9999
 ENTRYPOINT java -Xms512m -Xmx512m --add-opens=java.base/java.lang=ALL-UNNAMED \

@@ -54,7 +54,7 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!--lombok版本-->
         <lombok.version>1.18.30</lombok.version>
-        <docker.repostory>registry.cn-hangzhou.aliyuncs.com</docker.repostory>
+        <docker.repostory>registry.cn-shenzhen.aliyuncs.com</docker.repostory>
         <docker.registry.name>koushenhai</docker.registry.name>
         <docker.version>1.2.2</docker.version>
         <maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
@@ -244,7 +244,6 @@
                 <MYSQL-DB-NACOS>kcloud_platform_alibaba_nacos</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>kcloud_platform_alibaba_seata</MYSQL-DB-SEATA>
                 <MYSQL-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</MYSQL-DB-XXL-JOB>
-                <MYSQL-DB-POWER-JOB>kcloud_platform_alibaba_power_job</MYSQL-DB-POWER-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
@@ -277,7 +276,6 @@
                 <MYSQL-DB-NACOS>kcloud_platform_alibaba_nacos</MYSQL-DB-NACOS>
                 <MYSQL-DB-SEATA>kcloud_platform_alibaba_seata</MYSQL-DB-SEATA>
                 <MYSQL-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</MYSQL-DB-XXL-JOB>
-                <MYSQL-DB-POWER-JOB>kcloud_platform_alibaba_power_job</MYSQL-DB-POWER-JOB>
                 <MYSQL-PORT>3306</MYSQL-PORT>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
@@ -302,51 +300,49 @@
             <id>prod</id>
             <properties>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-USERNAME>${MYSQL-USERNAME:ENC(aEwhK+oj5wQ/pJfRcfwXAw==)}</MYSQL-USERNAME>
+                <MYSQL-USERNAME>${MYSQL_USERNAME:ENC(aEwhK+oj5wQ/pJfRcfwXAw==)}</MYSQL-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-PASSWORD>${MYSQL-PASSWORD:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</MYSQL-PASSWORD>
+                <MYSQL-PASSWORD>${MYSQL_PASSWORD:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</MYSQL-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-HOST>${MYSQL-HOST:127.0.0.1}</MYSQL-HOST>
+                <MYSQL-HOST>${MYSQL_HOST:127.0.0.1}</MYSQL-HOST>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-DB-NACOS>${MYSQL-DB-NACOS:kcloud_platform_alibaba_nacos}</MYSQL-DB-NACOS>
+                <MYSQL-DB-NACOS>${MYSQL_DB_NACOS:kcloud_platform_alibaba_nacos}</MYSQL-DB-NACOS>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-DB-SEATA>${MYSQL-DB-SEATA:kcloud_platform_alibaba_seata}</MYSQL-DB-SEATA>
+                <MYSQL-DB-SEATA>${MYSQL_DB_SEATA:kcloud_platform_alibaba_seata}</MYSQL-DB-SEATA>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-DB-XXL-JOB>${MYSQL-DB-XXL-JOB:kcloud_platform_alibaba_xxl_job}</MYSQL-DB-XXL-JOB>
+                <MYSQL-DB-XXL-JOB>${MYSQL_DB_XXL_JOB:kcloud_platform_alibaba_xxl_job}</MYSQL-DB-XXL-JOB>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-DB-POWER-JOB>${MYSQL-DB-POWER-JOB:kcloud_platform_alibaba_power_job}</MYSQL-DB-POWER-JOB>
+                <MYSQL-PORT>${MYSQL_PORT:3306}</MYSQL-PORT>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-PORT>${MYSQL-PORT:3306}</MYSQL-PORT>
+                <NACOS-NAMESPACE>${NACOS_NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-NAMESPACE>${NACOS-NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
+                <NACOS-DISCOVERY-ADDRESS>${NACOS_DISCOVERY_ADDRESS:127.0.0.1:8848}</NACOS-DISCOVERY-ADDRESS>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-DISCOVERY-ADDRESS>${NACOS-DISCOVERY-ADDRESS:127.0.0.1:8848}</NACOS-DISCOVERY-ADDRESS>
+                <NACOS-CONFIG-ADDRESS>${NACOS_CONFIG_ADDRESS:127.0.0.1:8848}</NACOS-CONFIG-ADDRESS>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-CONFIG-ADDRESS>${NACOS-CONFIG-ADDRESS:127.0.0.1:8848}</NACOS-CONFIG-ADDRESS>
+                <NACOS-GROUP>${NACOS_GROUP:LAOKOU_GROUP}</NACOS-GROUP>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-GROUP>${NACOS-GROUP:LAOKOU_GROUP}</NACOS-GROUP>
+                <NACOS-USERNAME>${NACOS_USERNAME:nacos}</NACOS-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-USERNAME>${NACOS-USERNAME:nacos}</NACOS-USERNAME>
+                <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-PASSWORD>${NACOS-PASSWORD:nacos}</NACOS-PASSWORD>
+                <SEATA-GROUP>${SEATA_GROUP:SEATA_GROUP}</SEATA-GROUP>
                 <!--suppress UnresolvedMavenProperty -->
-                <SEATA-GROUP>${SEATA-GROUP:SEATA_GROUP}</SEATA-GROUP>
+                <SEATA-USERNAME>${SEATA_USERNAME:seata}</SEATA-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
-                <SEATA-USERNAME>${SEATA-USERNAME:seata}</SEATA-USERNAME>
+                <SEATA-PASSWORD>${SEATA_PASSWORD:seata}</SEATA-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
-                <SEATA-PASSWORD>${SEATA-PASSWORD:seata}</SEATA-PASSWORD>
+                <SENTINEL-USERNAME>${SENTINEL_USERNAME:sentinel}</SENTINEL-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
-                <SENTINEL-USERNAME>${SENTINEL-USERNAME:sentinel}</SENTINEL-USERNAME>
-                <!--suppress UnresolvedMavenProperty -->
-                <SENTINEL-PASSWORD>${SENTINEL-PASSWORD:sentinel}</SENTINEL-PASSWORD>
+                <SENTINEL-PASSWORD>${SENTINEL_PASSWORD:sentinel}</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
                 <SSL-ENABLED>true</SSL-ENABLED>
                 <!--suppress UnresolvedMavenProperty -->
-                <MAIL-PASSWORD>${MAIL-PASSWORD:ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)}</MAIL-PASSWORD>
+                <MAIL-PASSWORD>${MAIL_PASSWORD:ENC(rasxLuU0mvx9DIto2sRiah7GgE3gmKhEzlL1swSAP2Y=)}</MAIL-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
-                <MAIL-USERNAME>${MAIL-USERNAME:2413176044@qq.com}</MAIL-USERNAME>
+                <MAIL-USERNAME>${MAIL_USERNAME:2413176044@qq.com}</MAIL-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
-                <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT-ENCRYPTOR-PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
+                <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
             </properties>
         </profile>
     </profiles>
@@ -407,7 +403,7 @@
                     <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
                     <!-- 指定 Dockerfile 路径 , 根据实际情况改动! ${project.basedir}：项目根路径-->
                     <dockerDirectory>${project.basedir}/docker</dockerDirectory>
-                    <dockerHost>http://192.168.62.137:2375</dockerHost>
+                    <dockerHost>http://192.168.30.130:2375</dockerHost>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>

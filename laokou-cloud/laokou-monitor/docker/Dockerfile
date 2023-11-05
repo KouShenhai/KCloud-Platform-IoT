@@ -16,7 +16,7 @@
 # 基础镜像
 FROM docker.io/sunrdocker/jdk17-jre-font-openssl-alpine:latest
 # 信息
-LABEL maintainer="koushenhai"
+LABEL maintainer="laokou"
 LABEL description="laokou-monitor"
 # 开放端口
 EXPOSE 5000
