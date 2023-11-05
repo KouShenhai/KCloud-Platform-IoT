@@ -54,13 +54,11 @@ public class MqttMessageCallback implements MqttCallback {
     @Override
     public void deliveryComplete(IMqttToken token) {
         log.info("777");
-
     }
 
     @Override
     public void connectComplete(boolean reconnect, String uri) {
-        log.info("888");
-
+        log.info("MQTT建立连接");
     }
 
     @Override
