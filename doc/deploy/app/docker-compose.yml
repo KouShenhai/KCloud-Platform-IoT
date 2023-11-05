@@ -13,38 +13,28 @@
 #  * See the License for the specific language governing permissions and
 #  * limitations under the License.
 #  */
-version: '3.2'
+version: '3.3'
 services:
-  laokou-gateway:
+  laokou-register:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.1.5
+    container_name: laokou-register
+    # 保持容器在没有守护程序的情况下运行
     tty: true
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.1.5
-    container_name: laokou-gateway
-    environment:
-      - TZ=Asia/Shanghai
-    ports:
-      - "5555:5555"
     restart: on-failure
-    networks:
-      - bridge
-  laokou-admin:
-    tty: true
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin:3.1.5
-    container_name: laokou-admin
-    environment:
-      - TZ=Asia/Shanghai
+    privileged: true
     ports:
-      - "9999:9999"
-    restart: on-failure
-    networks:
-      - bridge
-  laokou-auth:
-    tty: true
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth:3.1.5
-    container_name: laokou-auth
+      - "8848:8848"
+      - "9848:9848"
+    volumes:
+      - ./logs:/home/nacos/logs
     environment:
+      - MYSQL_HOST=mysql.laokou.org
+      - MYSQL_PORT=3306
+      - MYSQL_DB_NACOS=kcloud_platform_alibaba_nacos
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=laokou123
+      - JASYPT_ENCRYPTOR_PASSWORD=5201314wumeihua
       - TZ=Asia/Shanghai
-    ports:
-      - "1111:1111"
-    restart: on-failure
-    networks:
-      - bridge
+      - LANG=zh_CN.UTF-8
+      - JAVA_OPTS="-Xmx512m -Xms512m -XX:+UseG1GC"
+    network_mode: host

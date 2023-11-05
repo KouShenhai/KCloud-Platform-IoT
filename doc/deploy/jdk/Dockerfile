@@ -16,7 +16,7 @@
 # 基础镜像，必须第一个写
 FROM centos:7
 # 作者
-LABEL maintainer="koushenhai"
+LABEL maintainer="laokou"
 # 介绍
 LABEL description="jdk 17"
 # 在当前目录的文件，拷贝过去会自动解压到指定的目录
