@@ -29,28 +29,30 @@ import java.util.Map;
 
 /**
  * 可参考 RocketMQ 实现
+ *
  * @author laokou
  */
 @Component
 @NonNullApi
 public final class MqttListenerContainer implements ApplicationListener<ApplicationReadyEvent>, MqttStrategy {
 
-    private final Map<String,MqttListener> MAP = new HashMap<>();
+	private final Map<String, MqttListener> MAP = new HashMap<>();
 
-    @Override
-    public void onApplicationEvent(ApplicationReadyEvent event) {
-        Map<String, MqttListener> types = SpringContextUtil.getType(MqttListener.class);
-        types.values().forEach(item -> {
-            boolean annotationPresent = item.getClass().isAnnotationPresent(MqttMessageListener.class);
-            if (annotationPresent) {
-                String topic = item.getClass().getAnnotation(MqttMessageListener.class).topic();
-                MAP.put(topic, item);
-            }
-        });
-    }
+	@Override
+	public void onApplicationEvent(ApplicationReadyEvent event) {
+		Map<String, MqttListener> types = SpringContextUtil.getType(MqttListener.class);
+		types.values().forEach(item -> {
+			boolean annotationPresent = item.getClass().isAnnotationPresent(MqttMessageListener.class);
+			if (annotationPresent) {
+				String topic = item.getClass().getAnnotation(MqttMessageListener.class).topic();
+				MAP.put(topic, item);
+			}
+		});
+	}
 
-    @Override
-    public MqttListener get(String topic) {
-        return MAP.get(topic);
-    }
+	@Override
+	public MqttListener get(String topic) {
+		return MAP.get(topic);
+	}
+
 }

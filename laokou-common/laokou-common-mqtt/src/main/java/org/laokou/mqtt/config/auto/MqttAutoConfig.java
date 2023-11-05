@@ -29,9 +29,9 @@ import org.springframework.context.annotation.Bean;
 @AutoConfiguration
 public class MqttAutoConfig {
 
-    @Bean(name = "mqttServer",initMethod = "start",destroyMethod = "stop")
-    public Server mqttServer(SpringMqttProperties springMqttProperties) {
-        return new MqttServer(springMqttProperties);
-    }
+	@Bean(name = "mqttServer", initMethod = "start", destroyMethod = "stop")
+	public Server mqttServer(SpringMqttProperties springMqttProperties) {
+		return new MqttServer(springMqttProperties);
+	}
 
 }

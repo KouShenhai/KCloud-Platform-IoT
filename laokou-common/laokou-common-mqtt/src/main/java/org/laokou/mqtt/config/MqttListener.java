@@ -22,10 +22,10 @@ package org.laokou.mqtt.config;
  */
 public interface MqttListener {
 
-    /**
-     * 消息
-     * @param message
-     */
-    void onMessage(String message);
+	/**
+	 * 消息
+	 * @param message
+	 */
+	void onMessage(String message);
 
 }

@@ -22,6 +22,6 @@ package org.laokou.mqtt.config;
  */
 public interface MqttStrategy {
 
-    MqttListener get(String topic);
+	MqttListener get(String topic);
 
 }

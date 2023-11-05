@@ -22,10 +22,10 @@ package org.laokou.mqtt.config;
  */
 public interface Server {
 
-    void start();
+	void start();
 
-    void stop();
+	void stop();
 
-    void send(String topic,String payload);
+	void send(String topic, String payload);
 
 }
