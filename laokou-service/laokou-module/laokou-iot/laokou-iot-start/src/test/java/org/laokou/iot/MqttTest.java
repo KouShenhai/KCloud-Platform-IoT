@@ -15,17 +15,29 @@
  *
  */
 
-package org.laokou.mqtt.config;
+package org.laokou.iot;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.laokou.mqtt.config.Server;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
 
 /**
  * @author laokou
  */
-public interface Server {
+@Slf4j
+@SpringBootTest
+@RequiredArgsConstructor
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+public class MqttTest {
 
-    void start();
+    private final Server mqttServer;
 
-    void stop();
-
-    void send(String topic,String payload);
+    @Test
+    public void mqttSenderTest() {
+        mqttServer.send("test", "123");
+    }
 
 }

@@ -21,6 +21,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 import static org.laokou.mqtt.config.SpringMqttProperties.PREFIX;
 
 /**
@@ -38,5 +40,21 @@ public class SpringMqttProperties {
 	private String password;
 
 	private String host;
+
+	private boolean clearStart = true;
+
+	private int receiveMaximum = 5;
+
+	private long maximumPacketSize = 1024;
+
+	private int connectionTimeout = 10;
+
+	private int keepAliveInterval = 15;
+
+	private boolean automaticReconnect = true;
+
+	private boolean manualAcks = true;
+
+	private Set<String> topics;
 
 }

@@ -5,6 +5,8 @@ spring:
   application:
     name: @pom.parent.artifactId@
   mqtt:
-    username: admin
+    username: mqtt
     password: laokou123
-    host: tcp://127.0.0.1:18083
+    host: tcp://127.0.0.1:1883
+    topics:
+      - test

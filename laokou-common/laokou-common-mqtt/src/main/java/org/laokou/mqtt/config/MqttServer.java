@@ -24,6 +24,7 @@ import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
 import org.eclipse.paho.mqttv5.client.persist.MemoryPersistence;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
+import org.laokou.common.core.utils.IdGenerator;
 
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -40,6 +41,7 @@ public class MqttServer implements Server {
     private final AtomicBoolean RUNNING = new AtomicBoolean(false);
 
     private volatile MqttClient client;
+    public static final Long CLIENT_ID = IdGenerator.defaultSnowflakeId();
     private final SpringMqttProperties springMqttProperties;
 
     public MqttServer(SpringMqttProperties springMqttProperties) {
@@ -53,11 +55,14 @@ public class MqttServer implements Server {
             log.error("MQTT已启动");
             return;
         }
-        client = new MqttClient("tcp://127.0.0.1:1883", "123", new MemoryPersistence());
+        client = new MqttClient(springMqttProperties.getHost(), CLIENT_ID.toString(), new MemoryPersistence());
         // 手动ack接收确认
-        client.setManualAcks(true);
+        client.setManualAcks(springMqttProperties.isManualAcks());
+        client.setCallback(new MqttMessageCallback(client));
         client.connect(options());
+        client.subscribe(springMqttProperties.getTopics().toArray(new String[0]),new int[]{2});
         RUNNING.compareAndSet(false,true);
+        log.info("MQTT启动成功");
     }
 
     @Override
@@ -72,20 +77,26 @@ public class MqttServer implements Server {
         log.info("关闭MQTT");
     }
 
+    @Override
+    @SneakyThrows
+    public void send(String topic,String payload) {
+        client.publish(topic, payload.getBytes(StandardCharsets.UTF_8),2,false);
+    }
+
     private MqttConnectionOptions options() {
         MqttConnectionOptions options = new MqttConnectionOptions();
-        options.setCleanStart(true);
-        options.setUserName("mqtt");
-        options.setPassword("laokou123".getBytes(StandardCharsets.UTF_8));
-        options.setReceiveMaximum(5);
-        options.setMaximumPacketSize(1024L);
+        options.setCleanStart(springMqttProperties.isClearStart());
+        options.setUserName(springMqttProperties.getUsername());
+        options.setPassword(springMqttProperties.getPassword().getBytes(StandardCharsets.UTF_8));
+        options.setReceiveMaximum(springMqttProperties.getReceiveMaximum());
+        options.setMaximumPacketSize(springMqttProperties.getMaximumPacketSize());
         options.setWill(WILL_TOPIC, new MqttMessage(WILL_DATA,2,false,new MqttProperties()));
         // 超时时间
-        options.setConnectionTimeout(10);
+        options.setConnectionTimeout(springMqttProperties.getConnectionTimeout());
         // 会话心跳
-        options.setKeepAliveInterval(15);
+        options.setKeepAliveInterval(springMqttProperties.getKeepAliveInterval());
         // 开启重连
-        options.setAutomaticReconnect(true);
+        options.setAutomaticReconnect(springMqttProperties.isAutomaticReconnect());
         return options;
     }
 
