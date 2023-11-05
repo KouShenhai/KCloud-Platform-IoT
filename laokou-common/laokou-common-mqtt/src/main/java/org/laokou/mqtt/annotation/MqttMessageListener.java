@@ -29,6 +29,6 @@ import java.lang.annotation.*;
 @Component
 public @interface MqttMessageListener {
 
-    String topic();
+	String topic();
 
 }

@@ -34,36 +34,37 @@ import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 @RequiredArgsConstructor
 public class MqttMessageCallback implements MqttCallback {
 
-    private final MqttClient client;
+	private final MqttClient client;
 
-    @Override
-    public void disconnected(MqttDisconnectResponse disconnectResponse) {
-        log.info("222");
-    }
+	@Override
+	public void disconnected(MqttDisconnectResponse disconnectResponse) {
+		log.info("222");
+	}
 
-    @Override
-    public void mqttErrorOccurred(MqttException exception) {
-        log.info("333");
-    }
+	@Override
+	public void mqttErrorOccurred(MqttException exception) {
+		log.info("333");
+	}
 
-    @Override
-    public void messageArrived(String topic, MqttMessage message) {
-        log.info("topic：{}，message：{}",topic,new String(message.getPayload()));
-    }
+	@Override
+	public void messageArrived(String topic, MqttMessage message) {
+		log.info("topic：{}，message：{}", topic, new String(message.getPayload()));
+	}
 
-    @Override
-    public void deliveryComplete(IMqttToken token) {
-        log.info("777");
-    }
+	@Override
+	public void deliveryComplete(IMqttToken token) {
+		log.info("777");
+	}
 
-    @Override
-    public void connectComplete(boolean reconnect, String uri) {
-        log.info("MQTT建立连接");
-    }
+	@Override
+	public void connectComplete(boolean reconnect, String uri) {
+		log.info("MQTT建立连接");
+	}
 
-    @Override
-    public void authPacketArrived(int reasonCode, MqttProperties properties) {
-        log.info("999");
+	@Override
+	public void authPacketArrived(int reasonCode, MqttProperties properties) {
+		log.info("999");
 
-    }
+	}
+
 }

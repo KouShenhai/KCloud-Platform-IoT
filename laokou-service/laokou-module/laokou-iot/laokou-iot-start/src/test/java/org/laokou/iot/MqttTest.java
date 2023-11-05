@@ -33,11 +33,11 @@ import org.springframework.test.context.TestConstructor;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class MqttTest {
 
-    private final Server mqttServer;
+	private final Server mqttServer;
 
-    @Test
-    public void mqttSenderTest() {
-        mqttServer.send("test", "123");
-    }
+	@Test
+	public void mqttSenderTest() {
+		mqttServer.send("test", "123");
+	}
 
 }
