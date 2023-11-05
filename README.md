@@ -82,7 +82,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | ShardingSphere              | 5.3.2         |
 | OpenResty                   | 1.21.4.1      |
 | Netty                       | 4.1.100.Final |
-| Dubbo                       | 3.2.7         |
+| Dubbo                       | 3.3.0-beta.1  |
 | Kafka                       | 3.6.0         |
 | EMQX                        | 5.3.0         |
 
