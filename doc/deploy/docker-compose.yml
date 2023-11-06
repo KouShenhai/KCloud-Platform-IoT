@@ -15,17 +15,6 @@
 #  */
 version: '3.2'
 services:
-  laokou-gateway:
-    tty: true
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.1.5
-    container_name: laokou-gateway
-    environment:
-      - TZ=Asia/Shanghai
-    ports:
-      - "5555:5555"
-    restart: on-failure
-    networks:
-      - bridge
   laokou-admin:
     tty: true
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin:3.1.5
