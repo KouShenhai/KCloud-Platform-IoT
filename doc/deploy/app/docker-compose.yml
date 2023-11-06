@@ -25,6 +25,7 @@ services:
     ports:
       - "8848:8848"
       - "9848:9848"
+      - "9849:9849"
     volumes:
       - ./nacos/logs:/opt
     env_file:
@@ -32,3 +33,22 @@ services:
     extra_hosts:
       - "mysql.laokou.org:192.168.30.133"
     network_mode: host
+  laokou-gateway:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.1.5
+    container_name: laokou-gateway
+    tty: true
+    env_file:
+      - env/common.env
+      - env/gateway.env
+    ports:
+      - "5555:5555"
+    volumes:
+      - ./gateway/logs:/opt
+    extra_hosts:
+      - "nacos.laokou.org:192.168.30.130"
+      - "kafka.laokou.org:192.168.209.1"
+    restart: on-failure
+    privileged: true
+    network_mode: host
+    depends_on:
+      - laokou-register
