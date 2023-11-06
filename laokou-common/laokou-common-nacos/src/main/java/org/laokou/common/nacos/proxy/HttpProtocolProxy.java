@@ -17,27 +17,46 @@
 
 package org.laokou.common.nacos.proxy;
 
+import org.laokou.common.core.utils.RegexUtil;
+
+import static org.laokou.common.i18n.common.Constant.RISK;
+
 /**
  * @author laokou
  */
 public class HttpProtocolProxy extends AbstractProtocolProxy {
 
 	private static final int PORT = 8848;
+
 	private static final String HTTP_PROTOCOL = "http://";
 
 	@Override
 	public String getTokenUri(String serverAddr) {
-		return String.format("%s%s:%s",HTTP_PROTOCOL,serverAddr,PORT).concat(TOKEN_URI_SUFFIX);
+		if (internalIp(serverAddr)) {
+			return HTTP_PROTOCOL.concat(serverAddr).concat(TOKEN_URI_SUFFIX);
+		}
+		return String.format("%s%s:%s", HTTP_PROTOCOL, serverAddr, PORT).concat(TOKEN_URI_SUFFIX);
 	}
 
 	@Override
 	public String getConfigUri(String serverAddr) {
-		return String.format("%s%s:%s",HTTP_PROTOCOL,serverAddr,PORT).concat(CONFIG_URI_SUFFIX);
+		if (internalIp(serverAddr)) {
+			return HTTP_PROTOCOL.concat(serverAddr).concat(CONFIG_URI_SUFFIX);
+		}
+		return String.format("%s%s:%s", HTTP_PROTOCOL, serverAddr, PORT).concat(CONFIG_URI_SUFFIX);
 	}
 
 	@Override
 	public boolean sslEnabled() {
 		return false;
+	}
+
+	private boolean internalIp(String serverAddr) {
+		int index = serverAddr.indexOf(RISK);
+		if (index < 0) {
+			return false;
+		}
+		return RegexUtil.ipRegex(serverAddr.substring(0, index));
 	}
 
 }
