@@ -57,7 +57,7 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 				int statusCode = responseStatusException.getStatusCode().value();
 				log.info("状态码：{}", statusCode);
 				if (statusCode == NOT_FOUND) {
-					log.error("无法找到请求的资源");
+					log.error("无法找到请求URL为{}的资源", exchange.getRequest().getPath().pathWithinApplication().value());
 					return ResponseUtil.response(exchange, Result.fail(NOT_FOUND));
 				}
 				else if (statusCode == BAD_REQUEST) {

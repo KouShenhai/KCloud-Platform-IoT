@@ -33,6 +33,26 @@ services:
     extra_hosts:
       - "mysql.laokou.org:192.168.30.133"
     network_mode: host
+  laokou-seata:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-seata:3.1.5
+    container_name: laokou-seata
+    tty: true
+    env_file:
+      - env/common.env
+      - env/seata.env
+    ports:
+      - "7091:7091"
+      - "8091:8091"
+    volumes:
+      - ./seata/logs:/opt
+    extra_hosts:
+      - "mysql.laokou.org:192.168.30.133"
+      - "nacos.laokou.org:127.0.0.1"
+    restart: on-failure
+    privileged: true
+    network_mode: host
+    depends_on:
+      - laokou-register
   laokou-gateway:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.1.5
     container_name: laokou-gateway
@@ -47,6 +67,27 @@ services:
     extra_hosts:
       - "nacos.laokou.org:127.0.0.1"
       - "kafka.laokou.org:192.168.209.1"
+    restart: on-failure
+    privileged: true
+    network_mode: host
+    depends_on:
+      - laokou-register
+  laokou-im:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-im-start:3.1.5
+    container_name: laokou-im
+    tty: true
+    env_file:
+      - env/common.env
+      - env/im.env
+    ports:
+      - "10001:10001"
+    volumes:
+      - ./im/logs:/opt
+    extra_hosts:
+      - "nacos.laokou.org:127.0.0.1"
+      - "kafka.laokou.org:192.168.209.1"
+      - "redis.laokou.org:192.168.30.133"
+      - "rocketmq.laokou.org:192.168.30.133"
     restart: on-failure
     privileged: true
     network_mode: host

@@ -255,6 +255,7 @@
                 <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
                 <SEATA-USERNAME>seata</SEATA-USERNAME>
                 <SEATA-PASSWORD>seata</SEATA-PASSWORD>
+                <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
@@ -288,6 +289,7 @@
                 <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
                 <SEATA-USERNAME>seata</SEATA-USERNAME>
                 <SEATA-PASSWORD>seata</SEATA-PASSWORD>
+                <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
                 <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
                 <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
                 <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
@@ -335,6 +337,8 @@
                 <SEATA-USERNAME>${SEATA_USERNAME:seata}</SEATA-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
                 <SEATA-PASSWORD>${SEATA_PASSWORD:seata}</SEATA-PASSWORD>
+                <!--suppress UnresolvedMavenProperty -->
+                <SEATA-LOG-PATH>${SEATA_LOG_PATH:}</SEATA-LOG-PATH>
                 <!--suppress UnresolvedMavenProperty -->
                 <SENTINEL-USERNAME>${SENTINEL_USERNAME:sentinel}</SENTINEL-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
