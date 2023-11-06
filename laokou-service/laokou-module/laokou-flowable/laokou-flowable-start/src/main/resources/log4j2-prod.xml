@@ -25,7 +25,7 @@
     <!-- 变量配置 -->
     <Properties>
         <!-- 存放目录 -->
-        <property name="LOG_PATH" value="./logs"/>
+        <property name="LOG_PATH" value="/opt"/>
         <!-- 日志文件大小 -->
         <property name="LOG_ROLL_SIZE" value="500 MB"/>
         <!-- 服务名称 -->
@@ -101,7 +101,7 @@
             </PatternLayout>
             <Property name="max.block.ms">2000</Property>
             <Property name="request.timeout.ms">2000</Property>
-            <Property name="bootstrap.servers">laokou.org:9092</Property>
+            <Property name="bootstrap.servers">kafka.laokou.org:9092</Property>
         </Kafka>
     </Appenders>
     <Loggers>
