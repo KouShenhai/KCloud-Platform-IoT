@@ -22,16 +22,17 @@ package org.laokou.common.nacos.proxy;
  */
 public class HttpProtocolProxy extends AbstractProtocolProxy {
 
+	private static final int PORT = 8848;
 	private static final String HTTP_PROTOCOL = "http://";
 
 	@Override
 	public String getTokenUri(String serverAddr) {
-		return HTTP_PROTOCOL.concat(serverAddr).concat(TOKEN_URI_SUFFIX);
+		return String.format("%s%s:%s",HTTP_PROTOCOL,serverAddr,PORT).concat(TOKEN_URI_SUFFIX);
 	}
 
 	@Override
 	public String getConfigUri(String serverAddr) {
-		return HTTP_PROTOCOL.concat(serverAddr).concat(CONFIG_URI_SUFFIX);
+		return String.format("%s%s:%s",HTTP_PROTOCOL,serverAddr,PORT).concat(CONFIG_URI_SUFFIX);
 	}
 
 	@Override

@@ -93,6 +93,7 @@
                     "tenantId":"${ctx:tenant-id}",
                     "traceId":"${ctx:trace-id}",
                     "ip":"${sys:ip}",
+                    "level":"%-5level",
                     "thread":"%thread",
                     "logger":"%logger",
                     "msg":"%m"

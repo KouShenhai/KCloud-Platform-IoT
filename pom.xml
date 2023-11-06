@@ -306,7 +306,7 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <MYSQL-PASSWORD>${MYSQL_PASSWORD:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</MYSQL-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-HOST>${MYSQL_HOST:127.0.0.1}</MYSQL-HOST>
+                <MYSQL-HOST>${MYSQL_HOST:mysql.laokou.org}</MYSQL-HOST>
                 <!--suppress UnresolvedMavenProperty -->
                 <MYSQL-PARAM>${MYSQL_PARAM:}</MYSQL-PARAM>
                 <!--suppress UnresolvedMavenProperty -->
@@ -320,9 +320,9 @@
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-NAMESPACE>${NACOS_NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-DISCOVERY-ADDRESS>${NACOS_DISCOVERY_ADDRESS:127.0.0.1:8848}</NACOS-DISCOVERY-ADDRESS>
+                <NACOS-DISCOVERY-ADDRESS>${NACOS_DISCOVERY_ADDRESS:nacos.laokou.org}</NACOS-DISCOVERY-ADDRESS>
                 <!--suppress UnresolvedMavenProperty -->
-                <NACOS-CONFIG-ADDRESS>${NACOS_CONFIG_ADDRESS:127.0.0.1:8848}</NACOS-CONFIG-ADDRESS>
+                <NACOS-CONFIG-ADDRESS>${NACOS_CONFIG_ADDRESS:nacos.laokou.org}</NACOS-CONFIG-ADDRESS>
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-GROUP>${NACOS_GROUP:LAOKOU_GROUP}</NACOS-GROUP>
                 <!--suppress UnresolvedMavenProperty -->

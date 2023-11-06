@@ -60,6 +60,9 @@ public class TraceIndex extends Index {
 	private String ip;
 
 	@ElasticsearchField
+	private String level;
+
+	@ElasticsearchField
 	private String thread;
 
 	@ElasticsearchField

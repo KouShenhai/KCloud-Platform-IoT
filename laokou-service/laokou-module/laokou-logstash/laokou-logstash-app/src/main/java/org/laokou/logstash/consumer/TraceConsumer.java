@@ -52,6 +52,7 @@ public class TraceConsumer {
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	private static final String TRACE_INDEX = "laokou_trace";
+	private static final String ERROR = "ERROR";
 
 	@KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
@@ -85,7 +86,7 @@ public class TraceConsumer {
 	private void saveIndex(String s) {
 		try {
 			TraceIndex traceIndex = JacksonUtil.toBean(s, TraceIndex.class);
-			if (RegexUtil.numberRegex(traceIndex.getTraceId())) {
+			if (RegexUtil.numberRegex(traceIndex.getTraceId()) || ERROR.equals(traceIndex.getLevel())) {
 				try {
 					String indexName = getIndexName(DateUtil.nowDate());
 					elasticsearchTemplate.syncIndexAsync(EMPTY, indexName, s);
