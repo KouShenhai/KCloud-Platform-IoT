@@ -13,7 +13,7 @@
 #  * See the License for the specific language governing permissions and
 #  * limitations under the License.
 #  */
-version: '3.3'
+version: '3.8'
 services:
   laokou-register:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.1.5
@@ -26,15 +26,9 @@ services:
       - "8848:8848"
       - "9848:9848"
     volumes:
-      - ./logs:/home/nacos/logs
-    environment:
-      - MYSQL_HOST=mysql.laokou.org
-      - MYSQL_PORT=3306
-      - MYSQL_DB_NACOS=kcloud_platform_alibaba_nacos
-      - MYSQL_USERNAME=root
-      - MYSQL_PASSWORD=laokou123
-      - JASYPT_ENCRYPTOR_PASSWORD=5201314wumeihua
-      - TZ=Asia/Shanghai
-      - LANG=zh_CN.UTF-8
-      - JAVA_OPTS="-Xmx512m -Xms512m -XX:+UseG1GC"
+      - ./nacos/logs:/opt
+    env_file:
+      - env/nacos.env
+    extra_hosts:
+      - "mysql.laokou.org:192.168.30.133"
     network_mode: host
