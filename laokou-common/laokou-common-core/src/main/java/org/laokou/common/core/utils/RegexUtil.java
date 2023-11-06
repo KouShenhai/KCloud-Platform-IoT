@@ -33,6 +33,8 @@ public class RegexUtil {
 
 	private static final String NUMBER_REGEX = "^[0-9]*$";
 
+	private static final String IP_REGEX = "((25[0-5])|(2[0-4]\\d)|(1\\d\\d)|([1-9]\\d)|\\d)(\\.((25[0-5])|(2[0-4]\\d)|(1\\d\\d)|([1-9]\\d)|\\d)){3}";
+
 	/**
 	 * 邮箱验证
 	 * @param mail
@@ -40,6 +42,10 @@ public class RegexUtil {
 	 */
 	public static boolean mailRegex(String mail) {
 		return Pattern.matches(MAIL_REGEX, mail);
+	}
+
+	public static boolean ipRegex(String ip) {
+		return Pattern.matches(IP_REGEX, ip);
 	}
 
 	/**

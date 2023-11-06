@@ -52,6 +52,7 @@ public class TraceConsumer {
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	private static final String TRACE_INDEX = "laokou_trace";
+
 	private static final String ERROR = "ERROR";
 
 	@KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
