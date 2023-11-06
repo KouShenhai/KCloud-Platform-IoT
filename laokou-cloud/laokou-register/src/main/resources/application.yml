@@ -23,7 +23,7 @@ jasypt:
 db:
   num: 1
   url:
-    '0': jdbc:mysql://@MYSQL-HOST@:@MYSQL-PORT@/@MYSQL-DB-NACOS@?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+    '0': jdbc:mysql://@MYSQL-HOST@:@MYSQL-PORT@/@MYSQL-DB-NACOS@?@MYSQL-PARAM@
   user: @MYSQL-USERNAME@
   password: @MYSQL-PASSWORD@
 management:
