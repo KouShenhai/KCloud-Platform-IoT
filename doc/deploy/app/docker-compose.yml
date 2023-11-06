@@ -45,6 +45,7 @@ services:
     volumes:
       - ./gateway/logs:/opt
     extra_hosts:
+      - "nacos.laokou.org:192.168.30.130"
       - "kafka.laokou.org:192.168.209.1"
     restart: on-failure
     privileged: true
