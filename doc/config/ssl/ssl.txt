@@ -24,3 +24,5 @@
 导入证书命令：keytool -import -alias gateway -keystore trust-scg-keystore.p12 -file gateway.cer
 
 证书导入JDK：keytool -import -v -trustcacerts -alias laokou-gateway -file gateway.cer -storepass changeit -keystore cacerts
+
+nginx证书：openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /opt/key.pem -out /opt/cert.pem
