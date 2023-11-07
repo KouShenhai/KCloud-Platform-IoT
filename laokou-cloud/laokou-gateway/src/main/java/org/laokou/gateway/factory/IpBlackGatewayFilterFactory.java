@@ -62,7 +62,7 @@ public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<Ip
 				if (count > 0) {
 					String language = RequestUtil.getParamValue(exchange.getRequest(), HttpHeaders.ACCEPT_LANGUAGE);
 					LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
-					log.error("IP为{}已列入黑名单",remoteAddress.getAddress().getHostAddress());
+					log.error("IP为{}已列入黑名单", remoteAddress.getAddress().getHostAddress());
 					return ResponseUtil.response(exchange, Result.fail(IP_BLACK));
 				}
 				return chain.filter(exchange);

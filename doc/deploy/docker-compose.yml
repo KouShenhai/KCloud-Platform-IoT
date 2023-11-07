@@ -181,10 +181,12 @@ services:
     restart: always
     privileged: true
     ports:
+      - "443:443"
       - "80:80"
     volumes:
       - ./nginx/dist:/usr/share/nginx/dist
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
     extra_hosts:
       - "vue.laokou.org:172.10.1.9"
       - "gateway.laokou.org:172.10.1.4"
