@@ -13,27 +13,149 @@
 #  * See the License for the specific language governing permissions and
 #  * limitations under the License.
 #  */
-version: '3.2'
+version: '3.8'
 services:
-  laokou-admin:
+  laokou-register:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.1.5
+    container_name: laokou-register
+    # 保持容器在没有守护程序的情况下运行
     tty: true
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin:3.1.5
-    container_name: laokou-admin
-    environment:
-      - TZ=Asia/Shanghai
-    ports:
-      - "9999:9999"
     restart: on-failure
-    networks:
-      - bridge
-  laokou-auth:
+    privileged: true
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    volumes:
+      - ./nacos/logs:/opt
+    env_file:
+      - env/nacos.env
+    extra_hosts:
+      - "mysql.laokou.org:192.168.30.133"
+    network_mode: host
+  laokou-seata:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-seata:3.1.5
+    container_name: laokou-seata
     tty: true
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth:3.1.5
+    env_file:
+      - env/common.env
+      - env/seata.env
+    ports:
+      - "7091:7091"
+      - "8091:8091"
+    volumes:
+      - ./seata/logs:/opt
+    extra_hosts:
+      - "mysql.laokou.org:192.168.30.133"
+      - "nacos.laokou.org:127.0.0.1"
+    restart: on-failure
+    privileged: true
+    network_mode: host
+    depends_on:
+      - laokou-register
+  laokou-gateway:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.1.5
+    container_name: laokou-gateway
+    tty: true
+    env_file:
+      - env/common.env
+      - env/gateway.env
+    ports:
+      - "5555:5555"
+    volumes:
+      - ./gateway/logs:/opt
+    extra_hosts:
+      - "nacos.laokou.org:127.0.0.1"
+      - "kafka.laokou.org:192.168.209.1"
+    restart: on-failure
+    privileged: true
+    network_mode: host
+    depends_on:
+      - laokou-register
+  laokou-im:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-im-start:3.1.5
+    container_name: laokou-im
+    tty: true
+    env_file:
+      - env/common.env
+      - env/im.env
+    ports:
+      - "10001:10001"
+    volumes:
+      - ./im/logs:/opt
+    extra_hosts:
+      - "nacos.laokou.org:127.0.0.1"
+      - "kafka.laokou.org:192.168.209.1"
+      - "redis.laokou.org:192.168.30.133"
+      - "rocketmq.laokou.org:192.168.30.133"
+    restart: on-failure
+    privileged: true
+    network_mode: host
+    depends_on:
+      - laokou-register
+  laokou-auth:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.1.5
     container_name: laokou-auth
-    environment:
-      - TZ=Asia/Shanghai
+    tty: true
+    env_file:
+      - env/common.env
+      - env/auth.env
     ports:
       - "1111:1111"
+    volumes:
+      - ./auth/logs:/opt
+    extra_hosts:
+      - "nacos.laokou.org:127.0.0.1"
+      - "kafka.laokou.org:192.168.209.1"
+      - "redis.laokou.org:192.168.30.133"
+      - "mysql.laokou.org:192.168.30.133"
     restart: on-failure
-    networks:
-      - bridge
+    privileged: true
+    network_mode: host
+    depends_on:
+      - laokou-register
+  laokou-admin:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.1.5
+    container_name: laokou-admin
+    tty: true
+    env_file:
+      - env/common.env
+      - env/admin.env
+    ports:
+      - "9990:9990"
+    volumes:
+      - ./admin/logs:/opt
+    extra_hosts:
+      - "nacos.laokou.org:127.0.0.1"
+      - "kafka.laokou.org:192.168.209.1"
+      - "redis.laokou.org:192.168.30.133"
+      - "mysql.laokou.org:192.168.30.133"
+      - "rocketmq.laokou.org:192.168.30.133"
+    restart: on-failure
+    privileged: true
+    network_mode: host
+    depends_on:
+      - laokou-register
+      - laokou-seata
+  laokou-flowable:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-flowable-start:3.1.5
+    container_name: laokou-flowable
+    tty: true
+    env_file:
+      - env/common.env
+      - env/flowable.env
+    ports:
+      - "10000:10000"
+    volumes:
+      - ./flowable/logs:/opt
+    extra_hosts:
+      - "nacos.laokou.org:127.0.0.1"
+      - "kafka.laokou.org:192.168.209.1"
+      - "redis.laokou.org:192.168.30.133"
+      - "mysql.laokou.org:192.168.30.133"
+    restart: on-failure
+    privileged: true
+    network_mode: host
+    depends_on:
+      - laokou-register
+      - laokou-seata
