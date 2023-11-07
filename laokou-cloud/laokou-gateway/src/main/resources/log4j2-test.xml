@@ -107,8 +107,6 @@
     </Appenders>
     <Loggers>
         <AsyncLogger name="org.laokou" additivity="FALSE" includeLocation="TRUE" level="INFO">
-            <AppenderRef ref="console"/>
-            <AppenderRef ref="async_file"/>
             <AppenderRef ref="async_kafka"/>
         </AsyncLogger>
         <AsyncRoot level="INFO" additivity="FALSE" includeLocation="TRUE">

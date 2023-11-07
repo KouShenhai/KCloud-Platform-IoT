@@ -17,6 +17,8 @@
 
 package org.laokou.admin.domain.resource;
 
+import java.util.Map;
+
 /**
  * @author laokou
  */
@@ -43,13 +45,19 @@ public interface Status {
 	int APPROVED = 2;
 
 	/**
-	 * 通过
+	 * 同意
 	 */
 	int PASS = 1;
 
 	/**
-	 * 拒绝
+	 * 驳回
 	 */
-	int REFUSE = -1;
+	int REFUSE = 0;
+
+	/**
+	 * 说明
+	 */
+	Map<Integer, String> DESC_MAP = Map.of(REFUSE + 100, "驳回", PASS + 100, "同意", PENDING_APPROVAL, "待审批", IN_APPROVAL,
+			"审批中", APPROVED, "审批通过", REJECT_APPROVAL, "驳回审批");
 
 }

@@ -137,6 +137,11 @@ public interface Constant {
 	String ROD = "-";
 
 	/**
+	 * 分割参数
+	 */
+	String DOLLAR = "$";
+
+	/**
 	 * true
 	 */
 	String TRUE = "true";

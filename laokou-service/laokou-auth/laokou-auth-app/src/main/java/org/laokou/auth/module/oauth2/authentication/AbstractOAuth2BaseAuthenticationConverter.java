@@ -60,14 +60,16 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 
 	@Override
 	public Authentication convert(HttpServletRequest request) {
+		// 清空
+		ThreadContext.clearMap();
+		String traceId = request.getHeader(TRACE_ID);
+		if (StringUtil.isNotEmpty(traceId)) {
+			ThreadContext.put(TRACE_ID, traceId);
+		}
 		// 请求链 FilterOrderRegistration
 		String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
 		if (!getGrantType().equals(grantType)) {
 			return null;
-		}
-		String traceId = request.getHeader(TRACE_ID);
-		if (StringUtil.isNotEmpty(traceId)) {
-			ThreadContext.put(TRACE_ID, traceId);
 		}
 		// 判断租户ID是否为空
 		String tenantId = request.getParameter(TENANT_ID);

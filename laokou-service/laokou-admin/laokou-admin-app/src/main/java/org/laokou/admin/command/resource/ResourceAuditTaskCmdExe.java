@@ -88,6 +88,7 @@ public class ResourceAuditTaskCmdExe {
 		if (status == IN_APPROVAL) {
 			domainEventPublisher.publish(toMessageEvent(assignee, cmd));
 		}
+		log.info("审批状态：{}，状态：{}，审批意见：{}", DESC_MAP.get(auditStatus + 100), DESC_MAP.get(status), cmd.getComment());
 		return Result.of(flag);
 	}
 

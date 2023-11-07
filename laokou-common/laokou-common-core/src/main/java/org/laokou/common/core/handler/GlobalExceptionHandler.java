@@ -16,6 +16,7 @@
  */
 package org.laokou.common.core.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.*;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * @author laokou
  */
+@Slf4j
 @RestControllerAdvice
 @ResponseBody
 @Component
@@ -34,6 +36,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({ FeignException.class, SystemException.class, ApiException.class, FlowException.class,
 			DataSourceException.class })
 	public Result<?> handle(GlobalException ex) {
+		log.error("错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
 		return Result.fail(ex.getCode(), ex.getMsg());
 	}
 
