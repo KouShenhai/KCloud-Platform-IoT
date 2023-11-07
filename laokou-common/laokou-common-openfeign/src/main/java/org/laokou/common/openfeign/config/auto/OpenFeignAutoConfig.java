@@ -16,10 +16,7 @@
  */
 package org.laokou.common.openfeign.config.auto;
 
-import feign.RequestInterceptor;
-import feign.RequestTemplate;
-import feign.Response;
-import feign.Retryer;
+import feign.*;
 import feign.codec.ErrorDecoder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -51,14 +48,16 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 
 	@Bean
 	public feign.Logger.Level loggerLevel() {
-		return feign.Logger.Level.FULL;
+		return Logger.Level.NONE;
 	}
 
 	@Override
 	public void apply(RequestTemplate template) {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		template.header(TRACE_ID, request.getHeader(TRACE_ID));
-		template.header(AUTHORIZATION, request.getHeader(AUTHORIZATION));
+		String authorization = request.getHeader(AUTHORIZATION);
+		String traceId = request.getHeader(TRACE_ID);
+		template.header(TRACE_ID, traceId);
+		template.header(AUTHORIZATION, authorization);
 		final boolean idempotent = IdempotentUtil.isIdempotent();
 		if (idempotent) {
 			// 获取当前Feign客户端的接口名称
@@ -77,7 +76,9 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 				idMap.put(uniqueKey, idempotentKey);
 			}
 			template.header(IdempotentAspect.REQUEST_ID, idempotentKey);
+			log.info("OpenFeign分布式调用，Request-Id：{}", idMap.get(uniqueKey));
 		}
+		log.info("OpenFeign分布式调用，Authorization：{}", authorization);
 	}
 
 	@Bean

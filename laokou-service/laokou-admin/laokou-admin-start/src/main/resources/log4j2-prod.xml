@@ -61,7 +61,7 @@
         </RollingRandomAccessFile>
         <RollingRandomAccessFile name="failover_kafka" fileName="${LOG_PATH}/${APP_NAME}_kafka.log" filePattern="${LOG_PATH}/%d{yyyyMMdd}/${APP_NAME}_kafka_%d{yyyy-MM-dd}.%i.log.gz" immediateFlush="false">
             <Filters>
-                <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
             <PatternLayout pattern="${LOG_FILE_PATTERN}"/>
             <Policies>
@@ -106,9 +106,7 @@
         </Kafka>
     </Appenders>
     <Loggers>
-        <AsyncLogger name="org.laokou" additivity="FALSE" includeLocation="TRUE" level="ERROR">
-            <AppenderRef ref="console"/>
-            <AppenderRef ref="async_file"/>
+        <AsyncLogger name="org.laokou" additivity="FALSE" includeLocation="TRUE" level="INFO">
             <AppenderRef ref="async_kafka"/>
         </AsyncLogger>
         <AsyncRoot level="ERROR" additivity="FALSE" includeLocation="TRUE">

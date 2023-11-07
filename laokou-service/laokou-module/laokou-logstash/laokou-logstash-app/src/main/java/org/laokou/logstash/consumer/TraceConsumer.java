@@ -36,8 +36,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.Constant.EMPTY;
-import static org.laokou.common.i18n.common.Constant.UNDER;
+import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_LOGSTASH_CONSUMER_GROUP;
 import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 
@@ -52,8 +51,6 @@ public class TraceConsumer {
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	private static final String TRACE_INDEX = "laokou_trace";
-
-	private static final String ERROR = "ERROR";
 
 	@KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
@@ -87,10 +84,13 @@ public class TraceConsumer {
 	private void saveIndex(String s) {
 		try {
 			TraceIndex traceIndex = JacksonUtil.toBean(s, TraceIndex.class);
-			if (RegexUtil.numberRegex(traceIndex.getTraceId()) || ERROR.equals(traceIndex.getLevel())) {
+			if (StringUtil.isNotEmpty(traceIndex.getTraceId()) && RegexUtil.numberRegex(traceIndex.getTraceId())) {
 				try {
+					traceIndex.setTenantId(replaceValue(traceIndex.getTraceId()));
+					traceIndex.setUserId(replaceValue(traceIndex.getUserId()));
+					traceIndex.setUsername(replaceValue(traceIndex.getUsername()));
 					String indexName = getIndexName(DateUtil.nowDate());
-					elasticsearchTemplate.syncIndexAsync(EMPTY, indexName, s);
+					elasticsearchTemplate.syncIndexAsync(EMPTY, indexName, JacksonUtil.toJsonStr(traceIndex));
 				}
 				catch (Exception e) {
 					log.error("同步数据报错", e);
@@ -116,6 +116,13 @@ public class TraceConsumer {
 		if (flag) {
 			log.info("索引【{}】创建成功", getIndexName(localDate));
 		}
+	}
+
+	private String replaceValue(String value) {
+		if (value.startsWith(DOLLAR)) {
+			return EMPTY;
+		}
+		return value;
 	}
 
 	@SneakyThrows

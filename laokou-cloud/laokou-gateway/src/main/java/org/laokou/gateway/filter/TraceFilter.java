@@ -20,8 +20,6 @@ package org.laokou.gateway.filter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.gateway.utils.RequestUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -51,7 +49,6 @@ public class TraceFilter implements GlobalFilter, Ordered {
 			String tenantId = RequestUtil.getParamValue(request, TENANT_ID);
 			String username = RequestUtil.getParamValue(request, USER_NAME);
 			String traceId = RequestUtil.getParamValue(request, TRACE_ID);
-			traceId = StringUtil.isEmpty(traceId) ? userId + IdGenerator.defaultSnowflakeId() : traceId;
 			ThreadContext.put(TRACE_ID, traceId);
 			ThreadContext.put(USER_ID, userId);
 			ThreadContext.put(TENANT_ID, tenantId);
