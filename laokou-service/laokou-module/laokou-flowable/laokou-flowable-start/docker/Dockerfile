@@ -15,7 +15,7 @@
 #  */
 FROM docker.io/sunrdocker/jdk17-jre-font-openssl-alpine:latest
 LABEL maintainer="laokou"
-LABEL description="laokou-admin"
-COPY laokou-admin-start.jar app.jar
-EXPOSE 9990
+LABEL description="laokou-flowable"
+COPY laokou-flowable-start.jar app.jar
+EXPOSE 10000
 CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1
