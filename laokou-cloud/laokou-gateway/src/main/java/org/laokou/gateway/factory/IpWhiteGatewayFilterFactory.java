@@ -19,6 +19,7 @@ package org.laokou.gateway.factory;
 
 import io.netty.handler.ipfilter.IpSubnetFilterRule;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.Constant;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LocaleUtil;
@@ -44,6 +45,7 @@ import static org.laokou.common.i18n.common.BizCode.IP_WHITE;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 public class IpWhiteGatewayFilterFactory extends AbstractGatewayFilterFactory<IpWhiteGatewayFilterFactory.Config> {
 
@@ -56,12 +58,12 @@ public class IpWhiteGatewayFilterFactory extends AbstractGatewayFilterFactory<Ip
 					return chain.filter(exchange);
 				}
 				InetSocketAddress remoteAddress = config.remoteAddressResolver.resolve(exchange);
-				for (IpSubnetFilterRule source : sources) {
-					if (!source.matches(remoteAddress)) {
-						String language = RequestUtil.getParamValue(exchange.getRequest(), HttpHeaders.ACCEPT_LANGUAGE);
-						LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
-						return ResponseUtil.response(exchange, Result.fail(IP_WHITE));
-					}
+				long count = sources.parallelStream().filter(source -> source.matches(remoteAddress)).count();
+				if (count == 0) {
+					String language = RequestUtil.getParamValue(exchange.getRequest(), HttpHeaders.ACCEPT_LANGUAGE);
+					LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
+					log.error("IP为{}被限制",remoteAddress.getAddress().getHostAddress());
+					return ResponseUtil.response(exchange, Result.fail(IP_WHITE));
 				}
 				return chain.filter(exchange);
 			};
