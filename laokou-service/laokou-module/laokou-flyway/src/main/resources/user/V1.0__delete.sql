@@ -1,2 +1,0 @@
-DROP DATABASE IF EXISTS kcloud_platform_alibaba_user_0;
-DROP DATABASE IF EXISTS kcloud_platform_alibaba_user_1;
