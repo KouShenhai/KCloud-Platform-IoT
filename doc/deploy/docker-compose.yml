@@ -15,6 +15,107 @@
 #  */
 version: '3.8'
 services:
+  mysql:
+    image: mysql:8.0.33
+    container_name: mysql
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "3306:3306"
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --lower-case-table-names=1
+    volumes:
+      - ./mysql8/data:/var/lib/mysql
+      - ./mysql8/conf/my.cnf:/etc/mysql/my.cnf
+      - ./mysql8/logs:/var/log/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=laokou123
+      - TZ=Asia/Shanghai
+    network_mode: bridge
+  redis:
+    image: redis:7.0.11
+    container_name: redis
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis7/conf/redis.conf:/etc/redis/redis.conf
+      - ./redis7/data:/data:rw
+    command: redis-server --appendonly yes --requirepass 'laokou123'
+    environment:
+      - TZ=Asia/Shanghai
+    network_mode: bridge
+  zookeeper:
+    image: bitnami/zookeeper:3.9.1
+    container_name: zookeeper
+    tty: true
+    ports:
+      - '2181:2181'
+    environment:
+      # 允许匿名登录
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    restart: always
+    privileged: true
+    network_mode: bridge
+  kafka:
+    image: bitnami/kafka:3.6.0
+    container_name: kafka
+    tty: true
+    ports:
+      - '9092:9092'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://192.168.30.130:9092
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=192.168.30.130:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    restart: always
+    privileged: true
+    network_mode: bridge
+    depends_on:
+      - zookeeper
+  rocketmq-namesrv:
+    image: apache/rocketmq:5.1.1
+    container_name: rocketmq-namesrv
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "9876:9876"
+    command: sh mqnamesrv
+    environment:
+      - JAVA_OPT_EXT=-server -Xmx256m -Xms256m
+      - TZ=Asia/Shanghai
+    network_mode: bridge
+  rocketmq-broker:
+    image: apache/rocketmq:5.1.1
+    container_name: rocketmq-broker
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "8081:8081"
+      - "10911:10911"
+      - "10909:10909"
+      - "10912:10912"
+    command: sh mqbroker -n 192.168.30.130:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
+    environment:
+      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./rocketmq5/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
+    network_mode: bridge
+    depends_on:
+      - rocketmq-namesrv
   laokou-register:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.1.5
     container_name: laokou-register
@@ -31,10 +132,10 @@ services:
     env_file:
       - env/nacos.env
     extra_hosts:
-      - "mysql.laokou.org:192.168.30.133"
-    networks:
-      laokou-network:
-        ipv4_address: 172.10.1.2
+      - "mysql.laokou.org:192.168.30.130"
+    network_mode: bridge
+    depends_on:
+      - mysql
   laokou-seata:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-seata:3.1.5
     container_name: laokou-seata
@@ -48,15 +149,13 @@ services:
     volumes:
       - ./seata/logs:/opt
     extra_hosts:
-      - "mysql.laokou.org:192.168.30.133"
-      - "nacos.laokou.org:172.10.1.2"
+      - "mysql.laokou.org:192.168.30.130"
+      - "nacos.laokou.org:192.168.30.130"
     restart: always
     privileged: true
     depends_on:
       - laokou-register
-    networks:
-      laokou-network:
-        ipv4_address: 172.10.1.3
+    network_mode: bridge
   laokou-gateway:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.1.5
     container_name: laokou-gateway
@@ -69,13 +168,11 @@ services:
     volumes:
       - ./gateway/logs:/opt
     extra_hosts:
-      - "nacos.laokou.org:172.10.1.2"
-      - "kafka.laokou.org:192.168.209.1"
+      - "nacos.laokou.org:192.168.30.130"
+      - "kafka.laokou.org:192.168.30.130"
     restart: always
     privileged: true
-    networks:
-      laokou-network:
-        ipv4_address: 172.10.1.4
+    network_mode: bridge
     depends_on:
       - laokou-register
   laokou-im:
@@ -90,15 +187,13 @@ services:
     volumes:
       - ./im/logs:/opt
     extra_hosts:
-      - "nacos.laokou.org:172.10.1.2"
-      - "kafka.laokou.org:192.168.209.1"
-      - "redis.laokou.org:192.168.30.133"
-      - "rocketmq.laokou.org:192.168.30.133"
+      - "nacos.laokou.org:192.168.30.130"
+      - "kafka.laokou.org:192.168.30.130"
+      - "redis.laokou.org:192.168.30.130"
+      - "rocketmq.laokou.org:192.168.30.130"
     restart: always
     privileged: true
-    networks:
-      laokou-network:
-        ipv4_address: 172.10.1.5
+    network_mode: bridge
     depends_on:
       - laokou-register
   laokou-auth:
@@ -113,15 +208,13 @@ services:
     volumes:
       - ./auth/logs:/opt
     extra_hosts:
-      - "nacos.laokou.org:172.10.1.2"
-      - "kafka.laokou.org:192.168.209.1"
-      - "redis.laokou.org:192.168.30.133"
-      - "mysql.laokou.org:192.168.30.133"
+      - "nacos.laokou.org:192.168.30.130"
+      - "kafka.laokou.org:192.168.30.130"
+      - "redis.laokou.org:192.168.30.130"
+      - "mysql.laokou.org:192.168.30.130"
     restart: always
     privileged: true
-    networks:
-      laokou-network:
-        ipv4_address: 172.10.1.6
+    network_mode: bridge
     depends_on:
       - laokou-register
   laokou-admin:
@@ -136,16 +229,14 @@ services:
     volumes:
       - ./admin/logs:/opt
     extra_hosts:
-      - "nacos.laokou.org:172.10.1.2"
-      - "kafka.laokou.org:192.168.209.1"
-      - "redis.laokou.org:192.168.30.133"
-      - "mysql.laokou.org:192.168.30.133"
-      - "rocketmq.laokou.org:192.168.30.133"
+      - "nacos.laokou.org:192.168.30.130"
+      - "kafka.laokou.org:192.168.30.130"
+      - "redis.laokou.org:192.168.30.130"
+      - "mysql.laokou.org:192.168.30.130"
+      - "rocketmq.laokou.org:192.168.30.130"
     restart: always
     privileged: true
-    networks:
-      laokou-network:
-        ipv4_address: 172.10.1.7
+    network_mode: bridge
     depends_on:
       - laokou-register
       - laokou-seata
@@ -161,15 +252,13 @@ services:
     volumes:
       - ./flowable/logs:/opt
     extra_hosts:
-      - "nacos.laokou.org:172.10.1.2"
-      - "kafka.laokou.org:192.168.209.1"
-      - "redis.laokou.org:192.168.30.133"
-      - "mysql.laokou.org:192.168.30.133"
+      - "nacos.laokou.org:192.168.30.130"
+      - "kafka.laokou.org:192.168.30.130"
+      - "redis.laokou.org:192.168.30.130"
+      - "mysql.laokou.org:192.168.30.130"
     restart: always
     privileged: true
-    networks:
-      laokou-network:
-        ipv4_address: 172.10.1.8
+    network_mode: bridge
     depends_on:
       - laokou-register
       - laokou-seata
@@ -188,17 +277,9 @@ services:
       - ./nginx/ssl:/etc/nginx/ssl
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
     extra_hosts:
-      - "vue.laokou.org:172.10.1.9"
-      - "gateway.laokou.org:172.10.1.4"
-    networks:
-      laokou-network:
-        ipv4_address: 172.10.1.9
+      - "vue.laokou.org:192.168.30.130"
+      - "gateway.laokou.org:192.168.30.130"
+    network_mode: bridge
     depends_on:
       - laokou-admin
       - laokou-flowable
-networks:
-  laokou-network:
-    ipam:
-      config:
-        # 指定网段
-        - subnet: 172.10.1.0/24
