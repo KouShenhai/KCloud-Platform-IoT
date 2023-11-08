@@ -16,6 +16,15 @@
 FROM docker.io/sunrdocker/jdk17-jre-font-openssl-alpine:latest
 LABEL maintainer="laokou"
 LABEL description="laokou-flowable"
+RUN echo "http://mirrors.aliyun.com/alpine/v3.6/main" > /etc/apk/repositories \
+    && echo "http://mirrors.aliyun.com/alpine/v3.6/community" >> /etc/apk/repositories \
+    && set -xe \
+    && apk update upgrade \
+    && apk add --no-cache procps unzip curl bash tzdata \
+    && apk --no-cache add ttf-dejavu fontconfig \
+    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo "Asia/Shanghai" > /etc/timezone
 COPY laokou-flowable-start.jar app.jar
+COPY ./windows-fonts /usr/share/fonts/ttf-dejavu
 EXPOSE 10000
 CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1
