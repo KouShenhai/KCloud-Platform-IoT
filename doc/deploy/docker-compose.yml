@@ -35,6 +35,13 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=laokou123
       - TZ=Asia/Shanghai
+    extra_hosts:
+      - "mysql.laokou.org:192.168.30.130"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "mysql.laokou.org" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
     network_mode: bridge
   redis:
     image: redis:7.0.11
@@ -135,7 +142,8 @@ services:
       - "mysql.laokou.org:192.168.30.130"
     network_mode: bridge
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
   laokou-seata:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-seata:3.1.5
     container_name: laokou-seata
@@ -282,4 +290,3 @@ services:
     network_mode: bridge
     depends_on:
       - laokou-admin
-      - laokou-flowable
