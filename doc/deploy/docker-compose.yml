@@ -31,6 +31,7 @@ services:
     volumes:
       - ./mysql8/data:/var/lib/mysql
       - ./mysql8/conf/my.cnf:/etc/mysql/my.cnf
+      - ./mysql8/logs:/var/log/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=laokou123
       - TZ=Asia/Shanghai
@@ -47,7 +48,7 @@ services:
     volumes:
       - ./redis7/conf/redis.conf:/etc/redis/redis.conf
       - ./redis7/data:/data:rw
-    command: redis-server --appendonly yes
+    command: redis-server --appendonly yes --requirepass 'laokou123'
     environment:
       - TZ=Asia/Shanghai
     network_mode: bridge
