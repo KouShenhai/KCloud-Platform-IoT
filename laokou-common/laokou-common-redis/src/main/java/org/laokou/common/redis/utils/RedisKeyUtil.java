@@ -98,4 +98,11 @@ public final class RedisKeyUtil {
 		return "api:idempotent:" + token;
 	}
 
+	/**
+	 * 动态路由Key
+	 */
+	public static String getRouteDefinitionHashKey() {
+		return "route:definition";
+	}
+
 }
