@@ -106,10 +106,14 @@
         </Kafka>
     </Appenders>
     <Loggers>
-        <AsyncLogger name="org.laokou" additivity="FALSE" includeLocation="TRUE" level="INFO">
+        <!--自定义异步 logger 对象
+            includeLocation="false" 关闭行号
+            additivity="false"      不继承root
+        -->
+        <AsyncLogger name="org.laokou" additivity="FALSE" includeLocation="FALSE" level="INFO">
             <AppenderRef ref="async_kafka"/>
         </AsyncLogger>
-        <AsyncRoot level="ERROR" additivity="FALSE" includeLocation="TRUE">
+        <AsyncRoot level="ERROR" additivity="FALSE" includeLocation="FALSE">
             <AppenderRef ref="console"/>
             <AppenderRef ref="async_file"/>
         </AsyncRoot>
