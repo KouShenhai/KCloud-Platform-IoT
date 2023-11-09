@@ -64,7 +64,7 @@
         </Async>
     </Appenders>
     <Loggers>
-        <AsyncRoot level="INFO" additivity="FALSE" includeLocation="TRUE">
+        <AsyncRoot level="INFO" additivity="FALSE" includeLocation="FALSE">
             <AppenderRef ref="console"/>
             <AppenderRef ref="async_file"/>
         </AsyncRoot>
