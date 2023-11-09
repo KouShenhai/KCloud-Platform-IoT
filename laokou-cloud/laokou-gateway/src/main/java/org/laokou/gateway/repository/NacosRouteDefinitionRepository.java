@@ -26,6 +26,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
@@ -40,12 +41,12 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import static org.laokou.common.i18n.common.ErrorCode.ROUTE_NOT_EXIST;
 import static org.laokou.common.nacos.utils.ConfigUtil.ROUTER_DATA_ID;
 
 /**
@@ -106,7 +107,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		if (CollectionUtil.isEmpty(definitions)) {
 			return reactiveHashOperations.entries(RedisKeyUtil.getRouteDefinitionHashKey())
 				.map(Map.Entry::getValue)
-				.switchIfEmpty(routeDefinition())
+				.switchIfEmpty(routeDefinitions())
 				.doOnNext(d -> caffeineCache.put(d.getId(), d));
 		}
 		return Flux.fromIterable(definitions);
@@ -127,7 +128,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		this.applicationEventPublisher = applicationEventPublisher;
 	}
 
-	private Flux<RouteDefinition> routeDefinition() {
+	private Flux<RouteDefinition> routeDefinitions() {
 		try {
 			// pull nacos config info
 			String group = configUtil.getGroup();
@@ -142,7 +143,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		}
 		catch (Exception e) {
 			log.error("错误信息", e);
-			return Flux.fromIterable(new ArrayList<>(0));
+			return Flux.error(new SystemException(ROUTE_NOT_EXIST));
 		}
 	}
 

@@ -20,6 +20,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.SneakyThrows;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
@@ -30,7 +31,7 @@ import static org.laokou.common.i18n.common.Constant.IP;
 /**
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = "org.laokou")
+@SpringBootApplication(scanBasePackages = "org.laokou",exclude = {RedisReactiveAutoConfiguration.class})
 @EnableEncryptableProperties
 @EnableDiscoveryClient
 public class GatewayApp {
