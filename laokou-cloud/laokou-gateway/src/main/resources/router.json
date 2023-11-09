@@ -34,14 +34,14 @@
       {
         "name": "IpWhite",
         "args": {
-          "sources": "127.0.0.1"
+          "sources": "127.0.0.1,192.168.30.1"
         }
       }
     ],
     "metadata": {
       "version": "2.0"
     },
-    "order": 999
+    "order": 1
   },
   {
     "id": "laokou-admin",
@@ -78,14 +78,14 @@
       {
         "name": "IpWhite",
         "args": {
-          "sources": "127.0.0.1"
+          "sources": "127.0.0.1,192.168.30.1"
         }
       }
     ],
     "metadata": {
       "version": "2.0"
     },
-    "order": 999
+    "order": 1
   },
   {
     "id": "open-api",
@@ -115,7 +115,7 @@
       }
     ],
     "metadata": {},
-    "order": 999
+    "order": 1
   },
   {
     "id": "laokou-im",
@@ -152,13 +152,13 @@
       {
         "name": "IpWhite",
         "args": {
-          "sources": "127.0.0.1"
+          "sources": "127.0.0.1,192.168.30.1"
         }
       }
     ],
     "metadata": {
       "version": "2.0"
     },
-    "order": 999
+    "order": 1
   }
 ]

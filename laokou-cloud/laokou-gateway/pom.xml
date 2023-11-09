@@ -48,6 +48,10 @@
         </dependency>
         <dependency>
             <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.laokou</groupId>
             <artifactId>laokou-common-i18n</artifactId>
         </dependency>
         <dependency>

@@ -26,21 +26,27 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.nacos.utils.ConfigUtil;
+import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
+import org.springframework.data.redis.core.ReactiveHashOperations;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import static org.laokou.common.i18n.common.ErrorCode.ROUTE_NOT_EXIST;
 import static org.laokou.common.nacos.utils.ConfigUtil.ROUTER_DATA_ID;
 
 /**
@@ -58,15 +64,21 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	private final ConfigUtil configUtil;
 
+	private final ReactiveHashOperations<String, String, RouteDefinition> reactiveHashOperations;
+
 	private ApplicationEventPublisher applicationEventPublisher;
 
-	public NacosRouteDefinitionRepository(ConfigUtil configUtil) {
+	public NacosRouteDefinitionRepository(ConfigUtil configUtil,
+			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
 		this.configUtil = configUtil;
 		this.caffeineCache = Caffeine.newBuilder().initialCapacity(30).build();
+		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
 	}
 
 	@PostConstruct
 	public void init() throws NacosException {
+		// Spring Cloud Gateway 动态路由的 order 是路由匹配的顺序，值越小，优先级越高。当多个路由匹配同一个请求时
+		// Spring Cloud Gateway 会按照 order 的值从小到大进行匹配，找到第一个匹配成功的路由进行处理。
 		log.info("初始化路由配置");
 		String group = configUtil.getGroup();
 		ConfigService configService = configUtil.getConfigService();
@@ -81,6 +93,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 				log.info("收到配置变动通知");
 				// 清除缓存
 				caffeineCache.invalidateAll();
+				reactiveHashOperations.delete(RedisKeyUtil.getRouteDefinitionHashKey())
+					.subscribe(success -> log.info("删除成功"), error -> log.error("删除失败，错误信息", error));
 				// 刷新事件
 				applicationEventPublisher.publishEvent(new RefreshRoutesEvent(this));
 			}
@@ -91,17 +105,10 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	public Flux<RouteDefinition> getRouteDefinitions() {
 		Collection<RouteDefinition> definitions = caffeineCache.asMap().values();
 		if (CollectionUtil.isEmpty(definitions)) {
-			try {
-				// pull nacos config info
-				String group = configUtil.getGroup();
-				ConfigService configService = configUtil.getConfigService();
-				String configInfo = configService.getConfig(ROUTER_DATA_ID, group, 5000);
-				definitions = JacksonUtil.toList(configInfo, RouteDefinition.class);
-				return Flux.fromIterable(definitions).doOnNext(route -> caffeineCache.put(route.getId(), route));
-			}
-			catch (Exception e) {
-				return Flux.fromIterable(new ArrayList<>(0));
-			}
+			return reactiveHashOperations.entries(RedisKeyUtil.getRouteDefinitionHashKey())
+				.map(Map.Entry::getValue)
+				.switchIfEmpty(routeDefinitions())
+				.doOnNext(d -> caffeineCache.put(d.getId(), d));
 		}
 		return Flux.fromIterable(definitions);
 	}
@@ -119,6 +126,25 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	@Override
 	public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
 		this.applicationEventPublisher = applicationEventPublisher;
+	}
+
+	private Flux<RouteDefinition> routeDefinitions() {
+		try {
+			// pull nacos config info
+			String group = configUtil.getGroup();
+			ConfigService configService = configUtil.getConfigService();
+			String configInfo = configService.getConfig(ROUTER_DATA_ID, group, 5000);
+			Collection<RouteDefinition> routeDefinitions = JacksonUtil.toList(configInfo, RouteDefinition.class);
+			return Flux.fromIterable(routeDefinitions)
+				.publishOn(Schedulers.boundedElastic())
+				.doOnNext(route -> reactiveHashOperations
+					.put(RedisKeyUtil.getRouteDefinitionHashKey(), route.getId(), route)
+					.subscribe(success -> log.info("新增成功"), error -> log.error("新增失败,错误信息", error)));
+		}
+		catch (Exception e) {
+			log.error("错误信息", e);
+			return Flux.error(new SystemException(ROUTE_NOT_EXIST));
+		}
 	}
 
 }
