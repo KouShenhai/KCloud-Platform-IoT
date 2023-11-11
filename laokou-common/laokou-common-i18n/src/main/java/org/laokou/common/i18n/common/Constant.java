@@ -254,7 +254,7 @@ public interface Constant {
 	/**
 	 * 版本
 	 */
-	String VERSION = "3.1.5";
+	String VERSION = "3.2.0";
 
 	/**
 	 * IP

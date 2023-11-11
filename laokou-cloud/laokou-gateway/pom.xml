@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-cloud</artifactId>
-        <version>3.1.5</version>
+        <version>3.2.0</version>
     </parent>
     <artifactId>laokou-gateway</artifactId>
     <description>API网关</description>
@@ -153,7 +153,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>3.1.5</version>
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
                     <!-- main方法的地址 只需要修改这个地址-->

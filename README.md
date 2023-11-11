@@ -6,7 +6,7 @@
 
 ### 📣 项目介绍
 <p align="center"><img src="doc/image/logo.png" width="625" height="205" alt="图标"/></p>
-KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的云服务平台。基于Spring Boot 3.1.5、Spring Cloud 2022.0.4、Spring Cloud Alibaba 2022.0.0.0 最新版本开发的多租户SaaS系统。
+KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的云服务平台。基于Spring Boot 3.2.0、Spring Cloud 2023.0.0、Spring Cloud Alibaba 2022.0.0.0 最新版本开发的多租户SaaS系统。
 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、服务限流、熔断降级、监控报警、多数据源、工作流、高亮搜索、定时任务、分布式链路、分布式缓存、分布式事务、分布式存储等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，并且支持GraalVM。实现RBAC权限、其中包含系统管理、系统监控、工作流程、数据分析等几大模块。
 遵循阿里代码规范，采用RESTful设计风格，代码简洁、架构清晰，非常适合作为基础框架使用。
 <p align="center">
@@ -16,11 +16,11 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
     <a target="_blank" href="https://github.com/KouShenhai/KCloud-Platform-Alibaba"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-Alibaba"></a>
 	<a target="_blank" href="https://gitee.com/laokouyun/KCloud-Platform-Alibaba/stargazers"><img src="https://gitee.com/laokouyun/KCloud-Platform-Alibaba/badge/star.svg?theme=dark" alt="Gitee Star"></a>
     <a target="_blank" href="https://gitee.com/laokouyun/KCloud-Platform-Alibaba"><img src="https://gitee.com/laokouyun/KCloud-Platform-Alibaba/badge/fork.svg?theme=dark"  alt="Gitee Fork"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/static/v1?label=Spring Boot&message=3.1.5&color=green" alt="SpringBoot"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2022.0.4&color=green"></a>
+    <a target="_blank" href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/static/v1?label=Spring Boot&message=3.2.0&color=green" alt="SpringBoot"></a>
+    <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2023.0.0&color=green"></a>
     <a target="_blank" href="https://github.com/alibaba/spring-cloud-alibaba"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud Alibaba&message=2022.0.0.0&color=orange"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.1.3&color=blue"></a>
-    <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/JDK-17.0.4.1-blue.svg"/></a>
+    <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.2.0&color=blue"></a>
+    <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/GraalVM-21.0.1-blue.svg"/></a>
     <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流"></a>
 </p>
 
@@ -65,11 +65,11 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 #### 🎯 Spring全家桶及核心技术版本
 | 组件                          | 版本            |
 |:----------------------------|:--------------|
-| Spring Boot                 | 3.1.5         |
-| Spring Cloud                | 2022.0.4      |
+| Spring Boot                 | 3.2.0         |
+| Spring Cloud                | 2023.0.0      |
 | Spring Cloud Alibaba        | 2022.0.0.0    |
 | Spring Boot Admin           | 3.1.7         |
-| Spring Authorization Server | 1.1.3         |
+| Spring Authorization Server | 1.2.0         |
 | Mybatis Plus                | 3.5.4         |
 | Nacos                       | 2.2.4-OEM     |
 | Seata                       | 1.7.1         |
@@ -261,19 +261,12 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 ### 🙋 培训交流
 <table>
     <tr>
-        <th>套餐</th>
         <th>金额</th>
         <th>权益（永久）</th>
     </tr>
     <tr>
-        <td>学生</td>
-        <td>￥ 199</td>
-        <td>项目演示 + 视频教程（筹划中） + 解决问题（优先） + 一对一售后群 + 个性功能增强</td>
-    </tr>
-    <tr>
-        <td>个人</td>
         <td>￥ 399</td>
-        <td>项目演示 + 视频教程（筹划中） + 解决问题（优先） + 一对一售后群 + 个性功能增强</td>
+        <td>视频教程（技术文档+视频讲解+问题答疑） + 一对一售后群</td>
     </tr>
 </table>
 <div>
