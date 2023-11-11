@@ -28,8 +28,6 @@ import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 import org.laokou.common.core.utils.SpringContextUtil;
 
-import java.nio.charset.StandardCharsets;
-
 /**
  * @author laokou
  */
@@ -51,8 +49,7 @@ public class MqttMessageCallback implements MqttCallback {
 
 	@Override
 	public void messageArrived(String topic, MqttMessage message) {
-		String msg = new String(message.getPayload(), StandardCharsets.UTF_8);
-		SpringContextUtil.getBean(MqttStrategy.class).get(topic).onMessage(msg);
+		SpringContextUtil.getBean(MqttStrategy.class).get(topic).onMessage(message);
 	}
 
 	@Override
