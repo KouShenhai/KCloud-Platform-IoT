@@ -27,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
@@ -68,11 +69,14 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	private ApplicationEventPublisher applicationEventPublisher;
 
+	private final String ROUTER_ERROR;
+
 	public NacosRouteDefinitionRepository(ConfigUtil configUtil,
 			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
 		this.configUtil = configUtil;
 		this.caffeineCache = Caffeine.newBuilder().initialCapacity(30).build();
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
+		this.ROUTER_ERROR = MessageUtil.getMessage(ROUTE_NOT_EXIST);
 	}
 
 	@PostConstruct
@@ -129,21 +133,24 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	}
 
 	private Flux<RouteDefinition> routeDefinitions() {
+		return Flux.fromIterable(pullRouterInfo())
+			.publishOn(Schedulers.boundedElastic())
+			.doOnNext(
+					route -> reactiveHashOperations.put(RedisKeyUtil.getRouteDefinitionHashKey(), route.getId(), route)
+						.subscribe(success -> log.info("新增成功"), error -> log.error("新增失败,错误信息", error)));
+	}
+
+	private Collection<RouteDefinition> pullRouterInfo() {
 		try {
 			// pull nacos config info
 			String group = configUtil.getGroup();
 			ConfigService configService = configUtil.getConfigService();
 			String configInfo = configService.getConfig(ROUTER_DATA_ID, group, 5000);
-			Collection<RouteDefinition> routeDefinitions = JacksonUtil.toList(configInfo, RouteDefinition.class);
-			return Flux.fromIterable(routeDefinitions)
-				.publishOn(Schedulers.boundedElastic())
-				.doOnNext(route -> reactiveHashOperations
-					.put(RedisKeyUtil.getRouteDefinitionHashKey(), route.getId(), route)
-					.subscribe(success -> log.info("新增成功"), error -> log.error("新增失败,错误信息", error)));
+			return JacksonUtil.toList(configInfo, RouteDefinition.class);
 		}
 		catch (Exception e) {
 			log.error("错误信息", e);
-			return Flux.error(new SystemException(ROUTE_NOT_EXIST));
+			throw new SystemException(ROUTER_ERROR);
 		}
 	}
 
