@@ -27,7 +27,7 @@
     <properties>
         <laokou.version>3.2.0</laokou.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.2.0-RC2</spring-boot.version>
+        <spring-boot.version>3.2.0</spring-boot.version>
         <!--lombok版本-->
         <lombok.version>1.18.30</lombok.version>
         <!--mysql版本-->
@@ -69,9 +69,9 @@
         <!--junit版本-->
         <junit.version>4.13.2</junit.version>
         <!--spring-security-oauth2-authorization-server版本-->
-        <spring-security-oauth2-authorization-server.version>1.2.0-RC1</spring-security-oauth2-authorization-server.version>
+        <spring-security-oauth2-authorization-server.version>1.2.0</spring-security-oauth2-authorization-server.version>
         <!--spring-boot-starter-oauth2-resource-server版本-->
-        <spring-boot-starter-oauth2-resource-server.version>3.2.0-RC2</spring-boot-starter-oauth2-resource-server.version>
+        <spring-boot-starter-oauth2-resource-server.version>3.2.0</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
         <aws-java-sdk-s3.version>1.12.267</aws-java-sdk-s3.version>
         <!--dynamic-datasource版本-->

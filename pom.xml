@@ -39,9 +39,9 @@
         <maven.compiler.target>21</maven.compiler.target>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.2.0-RC2</spring-boot.version>
+        <spring-boot.version>3.2.0</spring-boot.version>
         <!--spring-cloud版本-->
-        <spring-cloud.version>2023.0.0-RC1</spring-cloud.version>
+        <spring-cloud.version>2023.0.0</spring-cloud.version>
         <!--spring-framework版本-->
         <spring-framework.version>6.0.13</spring-framework.version>
         <!--cloud-alibaba版本-->
