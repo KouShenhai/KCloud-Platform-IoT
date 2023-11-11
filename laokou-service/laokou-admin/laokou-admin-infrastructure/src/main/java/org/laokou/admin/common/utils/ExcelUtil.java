@@ -19,17 +19,23 @@ package org.laokou.admin.common.utils;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.alibaba.excel.annotation.write.style.ContentStyle;
+import com.alibaba.excel.enums.BooleanEnum;
+import com.alibaba.excel.enums.poi.HorizontalAlignmentEnum;
+import com.alibaba.excel.enums.poi.VerticalAlignmentEnum;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.hc.core5.http.ContentType;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
@@ -67,34 +73,31 @@ public class ExcelUtil {
 			PageQuery pageQuery, BatchMapper<T> batchMapper, Class<?> clazz) {
 		try (ServletOutputStream out = response.getOutputStream();
 				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
-			// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
 			// 设置请求头
 			header(response);
-			List<T> list = Collections.synchronizedList(new ArrayList<>(size));
-			batchMapper.resultListFilter(tables, param, resultContext -> {
-				list.add(resultContext.getResultObject());
-				if (list.size() % size == 0) {
+			if (batchMapper.resultCountFilter(tables, param, pageQuery) > 0) {
+				// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
+				List<T> list = Collections.synchronizedList(new ArrayList<>(size));
+				batchMapper.resultListFilter(tables, param, resultContext -> {
+					list.add(resultContext.getResultObject());
+					if (list.size() % size == 0) {
+						writeSheet(list, clazz, excelWriter);
+					}
+				}, pageQuery);
+				if (list.size() % size != 0) {
 					writeSheet(list, clazz, excelWriter);
 				}
-			}, pageQuery);
-			if (list.size() % size != 0) {
-				writeSheet(list, clazz, excelWriter);
+			}
+			else {
+				excelWriter.write(Collections.singletonList(new Error("数据为空，导出失败")),
+						EasyExcel.writerSheet().head(Error.class).build());
 			}
 			// 刷新数据
 			excelWriter.finish();
 		}
 		catch (Exception e) {
 			log.error("错误信息", e);
-			fail(response);
 		}
-	}
-
-	@SneakyThrows
-	private static void fail(HttpServletResponse response) {
-		response.reset();
-		response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
-		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-		response.getWriter().println(JacksonUtil.toJsonStr(Result.fail("导出失败")));
 	}
 
 	private static void header(HttpServletResponse response) {
@@ -111,6 +114,19 @@ public class ExcelUtil {
 		// 写数据
 		excelWriter.write(ConvertUtil.sourceToTarget(list, clazz), writeSheet);
 		list.clear();
+	}
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	private static class Error {
+
+		@ColumnWidth(30)
+		@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
+				verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
+		@ExcelProperty(value = "错误信息", index = 0)
+		private String msg;
+
 	}
 
 }
