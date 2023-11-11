@@ -26,6 +26,9 @@ import org.eclipse.paho.mqttv5.client.MqttDisconnectResponse;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
+import org.laokou.common.core.utils.SpringContextUtil;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author laokou
@@ -38,22 +41,24 @@ public class MqttMessageCallback implements MqttCallback {
 
 	@Override
 	public void disconnected(MqttDisconnectResponse disconnectResponse) {
-		log.info("222");
+		log.info("MQTT关闭连接");
 	}
 
 	@Override
-	public void mqttErrorOccurred(MqttException exception) {
-		log.info("333");
+	public void mqttErrorOccurred(MqttException ex) {
+		log.error("MQTT报错",ex);
 	}
 
 	@Override
 	public void messageArrived(String topic, MqttMessage message) {
-		log.info("topic：{}，message：{}", topic, new String(message.getPayload()));
+		String msg = new String(message.getPayload(), StandardCharsets.UTF_8);
+		log.info("接收到消息主题：{}，消息内容：{}", topic, msg);
+		SpringContextUtil.getBean(MqttStrategy.class).get(topic).onMessage(msg);
 	}
 
 	@Override
 	public void deliveryComplete(IMqttToken token) {
-		log.info("777");
+		log.info("MQTT消息发送成功");
 	}
 
 	@Override
@@ -63,8 +68,7 @@ public class MqttMessageCallback implements MqttCallback {
 
 	@Override
 	public void authPacketArrived(int reasonCode, MqttProperties properties) {
-		log.info("999");
-
+		log.info("接收到身份验证数据包");
 	}
 
 }
