@@ -52,7 +52,6 @@ public class MqttMessageCallback implements MqttCallback {
 	@Override
 	public void messageArrived(String topic, MqttMessage message) {
 		String msg = new String(message.getPayload(), StandardCharsets.UTF_8);
-		log.info("接收到消息主题：{}，消息内容：{}", topic, msg);
 		SpringContextUtil.getBean(MqttStrategy.class).get(topic).onMessage(msg);
 	}
 
