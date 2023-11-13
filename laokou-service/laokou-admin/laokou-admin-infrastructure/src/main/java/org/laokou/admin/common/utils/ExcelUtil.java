@@ -74,7 +74,7 @@ public class ExcelUtil {
 
 	private static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
-	public static <T> void doRead(InputStream inputStream, HttpServletResponse response, Consumer<List<T>> consumer) {
+	public static <T> void doImport(InputStream inputStream, HttpServletResponse response, Consumer<List<T>> consumer) {
 		EasyExcel.read(inputStream, new DataListener<>(consumer, response)).sheet().doRead();
 	}
 

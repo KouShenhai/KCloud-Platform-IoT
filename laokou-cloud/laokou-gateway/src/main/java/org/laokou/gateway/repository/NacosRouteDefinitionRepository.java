@@ -74,7 +74,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	public NacosRouteDefinitionRepository(ConfigUtil configUtil,
 			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
 		this.configUtil = configUtil;
-		this.caffeineCache = Caffeine.newBuilder().initialCapacity(30).build();
+		this.caffeineCache = Caffeine.newBuilder().initialCapacity(300).build();
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
 		this.ROUTER_ERROR = MessageUtil.getMessage(ROUTE_NOT_EXIST);
 	}
