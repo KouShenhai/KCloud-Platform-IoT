@@ -74,7 +74,7 @@ public class ExcelUtil {
 
 	private static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
-	public static <T> void doRead(InputStream inputStream,HttpServletResponse response,Consumer<List<T>> consumer) {
+	public static <T> void doRead(InputStream inputStream, HttpServletResponse response, Consumer<List<T>> consumer) {
 		EasyExcel.read(inputStream, new DataListener<>(consumer, response)).sheet().doRead();
 	}
 
@@ -134,14 +134,17 @@ public class ExcelUtil {
 	private static class DataListener<T> implements ReadListener<T> {
 
 		public static final int BATCH_COUNT = 1000;
+
 		/**
 		 * Temporary storage of data
 		 */
 		private final List<T> CACHED_DATA_LIST;
+
 		/**
-		 *  错误信息
+		 * 错误信息
 		 */
 		private final List<String> ERRORS;
+
 		/**
 		 * consumer
 		 */
@@ -156,14 +159,14 @@ public class ExcelUtil {
 
 		private int index;
 
-		public DataListener(Consumer<List<T>> consumer,HttpServletResponse response) {
+		public DataListener(Consumer<List<T>> consumer, HttpServletResponse response) {
 			this(consumer, BATCH_COUNT, response);
 		}
 
-		public DataListener(Consumer<List<T>> consumer, int batchCount,HttpServletResponse response) {
+		public DataListener(Consumer<List<T>> consumer, int batchCount, HttpServletResponse response) {
 			this.consumer = consumer;
 			this.batchCount = batchCount;
-			this.response =response;
+			this.response = response;
 			this.ERRORS = new ArrayList<>();
 			this.CACHED_DATA_LIST = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
 			this.index = DEFAULT;
@@ -174,7 +177,7 @@ public class ExcelUtil {
 			// 校验数据
 			Set<String> set = ValidatorUtil.validateEntity(data);
 			if (CollectionUtil.isNotEmpty(set)) {
-				ERRORS.add(template(index,String.join(DROP,set)));
+				ERRORS.add(template(index, String.join(DROP, set)));
 			}
 			CACHED_DATA_LIST.add(data);
 			if (CACHED_DATA_LIST.size() % batchCount == 0) {
@@ -193,12 +196,14 @@ public class ExcelUtil {
 			}
 			// 写入excel
 			try (ServletOutputStream out = response.getOutputStream();
-				 ExcelWriter excelWriter = EasyExcel.write(out, Error.class).build()) {
+					ExcelWriter excelWriter = EasyExcel.write(out, Error.class).build()) {
 				// 设置请求头
 				header(response);
 				if (CollectionUtil.isEmpty(ERRORS)) {
-					excelWriter.write(Collections.singletonList(new Error(EMPTY)), EasyExcel.writerSheet().head(Error.class).build());
-				} else {
+					excelWriter.write(Collections.singletonList(new Error(EMPTY)),
+							EasyExcel.writerSheet().head(Error.class).build());
+				}
+				else {
 					List<List<String>> partition = Lists.partition(ERRORS, BATCH_COUNT);
 					partition.forEach(item -> writeSheet(item, Error.class, excelWriter));
 				}
@@ -207,9 +212,10 @@ public class ExcelUtil {
 			}
 		}
 
-		private String template(int index,String msg) {
-			return String.format("第%s行，%s",index,msg);
+		private String template(int index, String msg) {
+			return String.format("第%s行，%s", index, msg);
 		}
+
 	}
 
 	@Data
