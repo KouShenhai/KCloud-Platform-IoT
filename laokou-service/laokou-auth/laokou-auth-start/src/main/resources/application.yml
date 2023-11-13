@@ -102,15 +102,14 @@ spring:
                 - http://127.0.0.1:8001
             # 客户端请求访问时需要授权同意
             require-authorization-consent: true
-        request-matcher:
-          ignore-patterns:
-            - /v1/captchas/{uuid}
-            - /v1/secrets
-            - /v3/api-docs/**
-            - /swagger-ui.html
-            - /swagger-ui/**
-            - /actuator/**
-            - /error
+        ignore-patterns:
+          - /v1/captchas/{uuid}
+          - /v1/secrets
+          - /v3/api-docs/**
+          - /swagger-ui.html
+          - /swagger-ui/**
+          - /actuator/**
+          - /error
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
