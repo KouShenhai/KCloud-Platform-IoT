@@ -179,7 +179,8 @@ public class ExcelUtil {
 			if (CollectionUtil.isNotEmpty(set)) {
 				ERRORS.add(template(index, String.join(DROP, set)));
 				index++;
-			} else {
+			}
+			else {
 				CACHED_DATA_LIST.add(data);
 				if (CACHED_DATA_LIST.size() % batchCount == 0) {
 					consumer.accept(CACHED_DATA_LIST);
