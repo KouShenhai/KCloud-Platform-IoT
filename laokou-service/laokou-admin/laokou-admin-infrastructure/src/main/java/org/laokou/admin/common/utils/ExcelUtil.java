@@ -22,9 +22,12 @@ import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentStyle;
+import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.enums.BooleanEnum;
 import com.alibaba.excel.enums.poi.HorizontalAlignmentEnum;
 import com.alibaba.excel.enums.poi.VerticalAlignmentEnum;
+import com.alibaba.excel.read.listener.PageReadListener;
+import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,6 +42,7 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 
+import java.io.File;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -62,6 +66,10 @@ public class ExcelUtil {
 	private static final String CONTENT_DISPOSITION_VALUE = "attachment;filename=";
 
 	private static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
+
+	public static void read(BatchMapper batchMapper) {
+		EasyExcel.read((File) null, null, new PageReadListener(batchMapper::insert)).sheet().doRead();
+	}
 
 	public static <T extends BaseDO> void export(List<String> tables, HttpServletResponse response, T param,
 			PageQuery pageQuery, BatchMapper<T> batchMapper, Class<?> clazz) {
@@ -114,6 +122,20 @@ public class ExcelUtil {
 		// 写数据
 		excelWriter.write(ConvertUtil.sourceToTarget(list, clazz), writeSheet);
 		list.clear();
+	}
+
+	private static class DataListener<T> implements ReadListener<T> {
+
+		@Override
+		public void invoke(T t, AnalysisContext analysisContext) {
+
+		}
+
+		@Override
+		public void doAfterAllAnalysed(AnalysisContext analysisContext) {
+			log.info("完成数据解析");
+		}
+
 	}
 
 	@Data

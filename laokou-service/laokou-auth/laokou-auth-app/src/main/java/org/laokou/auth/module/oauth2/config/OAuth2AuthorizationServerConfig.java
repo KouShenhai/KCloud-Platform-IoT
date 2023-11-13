@@ -26,7 +26,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerJwtAutoConfiguration;
-import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -38,8 +37,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -49,15 +46,12 @@ import org.springframework.security.oauth2.server.authorization.JdbcOAuth2Author
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.oidc.web.authentication.OidcClientRegistrationAuthenticationConverter;
 import org.springframework.security.oauth2.server.authorization.oidc.web.authentication.OidcLogoutAuthenticationConverter;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
-import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
-import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.oauth2.server.authorization.token.*;
 import org.springframework.security.oauth2.server.authorization.web.authentication.*;
 import org.springframework.security.web.SecurityFilterChain;
@@ -76,7 +70,6 @@ import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}
- *
  * @author laokou
  */
 @Configuration
@@ -139,52 +132,15 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 注册信息
-	 * @param properties 配置
+	 * @param propertiesMapper 配置
 	 * @param jdbcTemplate JDBC模板
 	 * @return RegisteredClientRepository
 	 */
 	@Bean
 	@ConditionalOnMissingBean(RegisteredClientRepository.class)
-	RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate,
-			OAuth2AuthorizationServerProperties properties) {
-		OAuth2AuthorizationServerProperties.Client client = properties.getClient();
-		OAuth2AuthorizationServerProperties.Token token = properties.getToken();
-		OAuth2AuthorizationServerProperties.Registration registration = properties.getRegistration();
-		RegisteredClient.Builder registrationBuilder = RegisteredClient.withId(registration.getId());
-		TokenSettings.Builder tokenBuilder = TokenSettings.builder();
-		ClientSettings.Builder clientBuilder = ClientSettings.builder();
-		PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
-		// 令牌 => JWT配置
-		map.from(token::getAccessTokenTimeToLive).to(tokenBuilder::accessTokenTimeToLive);
-		map.from(token::getRefreshTokenTimeToLive).to(tokenBuilder::refreshTokenTimeToLive);
-		map.from(token::getAuthorizationCodeTimeToLive).to(tokenBuilder::authorizationCodeTimeToLive);
-		// 客户端配置，包括验证密钥或需要授权页面
-		map.from(client::isRequireAuthorizationConsent).to(clientBuilder::requireAuthorizationConsent);
-		// 注册
-		// Base64编码
-		// ClientAuthenticationMethod.CLIENT_SECRET_BASIC => client_id:client_secret
-		map.from(registration::getClientId).to(registrationBuilder::clientId);
-		map.from(registration::getClientName).to(registrationBuilder::clientName);
-		map.from(registration::getClientSecret).to(registrationBuilder::clientSecret);
-		registration.getClientAuthenticationMethods()
-			.forEach(clientAuthenticationMethod -> map.from(clientAuthenticationMethod)
-				.whenNonNull()
-				.as(ClientAuthenticationMethod::new)
-				.to(registrationBuilder::clientAuthenticationMethod));
-		registration.getAuthorizationGrantTypes()
-			.forEach(authorizationGrantType -> map.from(authorizationGrantType)
-				.whenNonNull()
-				.as(AuthorizationGrantType::new)
-				.to(registrationBuilder::authorizationGrantType));
-		registration.getScopes().forEach(scope -> map.from(scope).whenNonNull().to(registrationBuilder::scope));
-		registration.getRedirectUris()
-			.forEach(redirectUri -> map.from(redirectUri).whenNonNull().to(registrationBuilder::redirectUri));
-		registration.getPostLogoutRedirectUris()
-			.forEach(redirectUri -> map.from(redirectUri).whenNonNull().to(registrationBuilder::postLogoutRedirectUri));
-		registrationBuilder.tokenSettings(tokenBuilder.build());
-		registrationBuilder.clientSettings(clientBuilder.build());
+	RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate, OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
 		JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
-		registeredClientRepository.save(registrationBuilder.build());
+		propertiesMapper.asRegisteredClients().parallelStream().forEachOrdered(registeredClientRepository::save);
 		return registeredClientRepository;
 	}
 
@@ -228,8 +184,8 @@ class OAuth2AuthorizationServerConfig {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(AuthorizationServerSettings.class)
-	AuthorizationServerSettings authorizationServerSettings() {
-		return AuthorizationServerSettings.builder().build();
+	AuthorizationServerSettings authorizationServerSettings(OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
+		return propertiesMapper.asAuthorizationServerSettings();
 	}
 
 	/**
