@@ -57,11 +57,16 @@ class OAuth2ResourceServerConfig {
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
 					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
 			.authorizeHttpRequests(request -> request
-				.requestMatchers(properties.getIgnorePatterns().stream().map(AntPathRequestMatcher::new).toArray(AntPathRequestMatcher[]::new))
+				.requestMatchers(properties.getIgnorePatterns()
+					.stream()
+					.map(AntPathRequestMatcher::new)
+					.toArray(AntPathRequestMatcher[]::new))
 				.permitAll()
 				.anyRequest()
 				.authenticated())
 			.cors(AbstractHttpConfigurer::disable)
+			.csrf(AbstractHttpConfigurer::disable)
+			.httpBasic(AbstractHttpConfigurer::disable)
 			// 自定义登录页面
 			// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
 			// 登录页面 -> DefaultLoginPageGeneratingFilter

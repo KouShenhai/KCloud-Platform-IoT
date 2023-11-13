@@ -40,9 +40,9 @@ Content-Disposition: form-data; name="captcha"
 
 {{captcha}}
 --WebAppBoundary
-Content-Disposition: form-data; name="tenantId"
+Content-Disposition: form-data; name="tenant_id"
 
-0
+{{tenant_id}}
 --WebAppBoundary
 
 ###
@@ -65,9 +65,9 @@ Content-Disposition: form-data; name="code"
 
 {{mobile_code}}
 --WebAppBoundary
-Content-Disposition: form-data; name="tenantId"
+Content-Disposition: form-data; name="tenant_id"
 
-0
+{{tenant_id}}
 --WebAppBoundary
 
 
@@ -91,9 +91,9 @@ Content-Disposition: form-data; name="code"
 
 {{mail_code}}
 --WebAppBoundary
-Content-Disposition: form-data; name="tenantId"
+Content-Disposition: form-data; name="tenant_id"
 
-0
+{{tenant_id}}
 --WebAppBoundary
 
 ###

@@ -78,6 +78,7 @@ public class OAuth2ResourceServerAutoConfig {
 			.securityContext(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.cors(AbstractHttpConfigurer::disable)
+			.httpBasic(AbstractHttpConfigurer::disable)
 			// 基于token，关闭session
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(request -> request.requestMatchers(patterns.toArray(String[]::new))

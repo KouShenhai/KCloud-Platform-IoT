@@ -38,6 +38,7 @@ import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProp
  * OAuth 2.0 Authorization Server properties.
  * {@link org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerProperties}
  * {@link ConfigurationSettingNames}
+ *
  * @author Steve Riesenberg
  * @author laokou
  */
