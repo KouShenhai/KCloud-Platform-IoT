@@ -51,7 +51,7 @@ public class LoginLogExportCmdExe {
 			PageQuery pageQuery = cmd.time().ignore();
 			List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(),
 					pageQuery.getEndTime(), BOOT_SYS_LOGIN_LOG);
-			ExcelUtil.export(dynamicTables, cmd.getResponse(), buildLoginLog(cmd), pageQuery, loginLogMapper,
+			ExcelUtil.doExport(dynamicTables, cmd.getResponse(), buildLoginLog(cmd), pageQuery, loginLogMapper,
 					LoginLogExcel.class);
 		}
 		finally {
