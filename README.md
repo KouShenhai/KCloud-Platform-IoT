@@ -259,7 +259,7 @@ Gtiee 后端地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KClou
 Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-Antdv-Alibaba)  
 
 ### 🙋 培训交流
-[扫码支付￥399 或 项目赞助￥399 ==> 技术文档 + 视频讲解 + 问题答疑（永久），详情请点击](视频教程.md)
+[扫码支付￥399 或 项目赞助￥399 => 技术文档 + 视频讲解 + 问题答疑  -> 永久有效，详情请点击](视频教程.md)
 <div>
     <img src="doc/image/pay.png" width="250" height="300" alt="暂无图片">
     <img src="doc/image/wx.png" width="250" height="300" alt="暂无图片">
