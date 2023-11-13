@@ -70,6 +70,7 @@ import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}
+ *
  * @author laokou
  */
 @Configuration
@@ -138,7 +139,8 @@ class OAuth2AuthorizationServerConfig {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(RegisteredClientRepository.class)
-	RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate, OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
+	RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate,
+			OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
 		JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
 		propertiesMapper.asRegisteredClients().parallelStream().forEachOrdered(registeredClientRepository::save);
 		return registeredClientRepository;
@@ -184,7 +186,8 @@ class OAuth2AuthorizationServerConfig {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(AuthorizationServerSettings.class)
-	AuthorizationServerSettings authorizationServerSettings(OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
+	AuthorizationServerSettings authorizationServerSettings(
+			OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
 		return propertiesMapper.asAuthorizationServerSettings();
 	}
 

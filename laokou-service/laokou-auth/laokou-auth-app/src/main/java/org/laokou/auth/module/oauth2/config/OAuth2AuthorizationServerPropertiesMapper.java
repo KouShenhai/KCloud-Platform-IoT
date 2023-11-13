@@ -35,7 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Maps {@link org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerProperties} to Authorization Server types.
+ * Maps
+ * {@link org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerProperties}
+ * to Authorization Server types.
  *
  * @author Steve Riesenberg
  * @author laokou
@@ -72,7 +74,8 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 		return registeredClients;
 	}
 
-	private RegisteredClient getRegisteredClient(String registrationId, OAuth2AuthorizationServerProperties.Client client) {
+	private RegisteredClient getRegisteredClient(String registrationId,
+			OAuth2AuthorizationServerProperties.Client client) {
 		OAuth2AuthorizationServerProperties.Registration registration = client.getRegistration();
 		PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
 		RegisteredClient.Builder builder = RegisteredClient.withId(registrationId);

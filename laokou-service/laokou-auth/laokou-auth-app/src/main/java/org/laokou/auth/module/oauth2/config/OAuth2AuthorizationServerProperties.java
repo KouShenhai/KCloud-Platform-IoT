@@ -38,6 +38,7 @@ import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProp
  * OAuth 2.0 Authorization Server properties.
  * {@link org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerProperties}
  * {@link ConfigurationSettingNames}
+ *
  * @author Steve Riesenberg
  * @author laokou
  */
@@ -72,9 +73,9 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 	private final Endpoint endpoint = new Endpoint();
 
 	/**
-	 * Request matcher
+	 * Ignore URL matching
 	 */
-	private final RequestMatcher requestMatcher = new RequestMatcher();
+	private Set<String> ignorePatterns = new HashSet<>();
 
 	@Override
 	public void afterPropertiesSet() {
@@ -306,19 +307,6 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 		 * JWS algorithm for signing the ID Token.
 		 */
 		private String idTokenSignatureAlgorithm = "RS256";
-
-	}
-
-	/**
-	 * Request matcher
-	 */
-	@Data
-	public static class RequestMatcher {
-
-		/**
-		 * Ignore URL matching
-		 */
-		private Set<String> ignorePatterns = new HashSet<>();
 
 	}
 
