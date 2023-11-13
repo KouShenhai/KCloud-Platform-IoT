@@ -19,12 +19,13 @@ package org.laokou.common.i18n.utils;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <a href=
@@ -50,13 +51,13 @@ public class ValidatorUtil {
 	 * 校验对象
 	 * @param obj 待校验对象
 	 */
-	public static void validateEntity(Object obj) {
+	public static Set<String> validateEntity(Object obj) {
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 		Set<ConstraintViolation<Object>> violationSet = validator.validate(obj);
 		if (!violationSet.isEmpty()) {
-			String message = violationSet.iterator().next().getMessage();
-			throw new SystemException(message);
+			return violationSet.stream().map(ConstraintViolation::getMessage).collect(Collectors.toSet());
 		}
+		return new HashSet<>(0);
 	}
 
 }
