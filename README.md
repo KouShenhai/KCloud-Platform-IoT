@@ -259,27 +259,11 @@ Gtiee 后端地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KClou
 Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-Antdv-Alibaba)  
 
 ### 🙋 培训交流
-<table>
-    <tr>
-        <th>套餐</th>
-        <th>金额</th>
-        <th>权益（永久）</th>
-    </tr>
-    <tr>
-        <td>学生</td>
-        <td>￥ 199</td>
-        <td>项目演示 + 视频教程（筹划中） + 解决问题（优先） + 一对一售后群 + 个性功能增强</td>
-    </tr>
-    <tr>
-        <td>个人</td>
-        <td>￥ 399</td>
-        <td>项目演示 + 视频教程（筹划中） + 解决问题（优先） + 一对一售后群 + 个性功能增强</td>
-    </tr>
-</table>
+[扫码支付￥399 或 项目赞助￥399 ==> 技术文档 + 视频讲解 + 问题答疑（永久），详情请点击](视频教程.md)
 <div>
-<img src="doc/image/wx.png" width="250" height="300" alt="暂无图片">
-<img src="doc/image/wxq.png" width="250" height="300" alt="暂无图片">
-<img src="doc/image/qqq.png" width="250" height="300" alt="暂无图片">
+    <img src="doc/image/pay.png" width="250" height="300" alt="暂无图片">
+    <img src="doc/image/wx.png" width="250" height="300" alt="暂无图片">
+    <img src="doc/image/qqq.png" width="250" height="300" alt="暂无图片">
 </div>
 
 ### 🐭 鸣谢组织
