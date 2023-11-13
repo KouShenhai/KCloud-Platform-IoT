@@ -22,116 +22,303 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.security.oauth2.server.authorization.settings.ConfigurationSettingNames;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties.PREFIX;
 
 /**
+ * OAuth 2.0 Authorization Server properties.
  * {@link org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerProperties}
  * {@link ConfigurationSettingNames}
+ * @author Steve Riesenberg
  * @author laokou
  */
 @Data
 @Component
 @ConfigurationProperties(prefix = PREFIX)
-public class OAuth2AuthorizationServerProperties implements InitializingBean {
+public final class OAuth2AuthorizationServerProperties implements InitializingBean {
 
+	/**
+	 * OAuth2 configuration prefix
+	 */
 	public static final String PREFIX = "spring.security.oauth2.authorization-server";
 
+	/**
+	 * Open or close
+	 */
 	private boolean enabled = true;
 
-	private Token token;
+	/**
+	 * URL of the Authorization Server's Issuer Identifier.
+	 */
+	private String issuer;
 
-	private Client client;
+	/**
+	 * Registered clients of the Authorization Server.
+	 */
+	private final Map<String, Client> client = new HashMap<>();
 
-	private Registration registration;
+	/**
+	 * Authorization Server endpoints.
+	 */
+	private final Endpoint endpoint = new Endpoint();
 
-	private RequestMatcher requestMatcher;
+	/**
+	 * Request matcher
+	 */
+	private final RequestMatcher requestMatcher = new RequestMatcher();
 
 	@Override
 	public void afterPropertiesSet() {
-		validateRegistration(getRegistration());
+		validate();
 	}
 
-	private void validateRegistration(Registration registration) {
-		if (StringUtil.isEmpty(registration.clientId)) {
-			throw new IllegalStateException("客户端ID不能为空");
+	public void validate() {
+		getClient().values().forEach(this::validateClient);
+	}
+
+	private void validateClient(Client client) {
+		if (StringUtil.isEmpty(client.getRegistration().getClientId())) {
+			throw new IllegalStateException("Client id must not be empty.");
 		}
-		if (CollectionUtil.isEmpty(registration.clientAuthenticationMethods)) {
-			throw new IllegalStateException("客户端身份验证方法不能为空");
+		if (CollectionUtil.isEmpty(client.getRegistration().getClientAuthenticationMethods())) {
+			throw new IllegalStateException("Client authentication methods must not be empty.");
 		}
-		if (CollectionUtil.isEmpty(registration.authorizationGrantTypes)) {
-			throw new IllegalStateException("授权认证类型不能为空");
+		if (CollectionUtil.isEmpty(client.getRegistration().getAuthorizationGrantTypes())) {
+			throw new IllegalStateException("Authorization grant types must not be empty.");
 		}
 	}
 
+	/**
+	 * Authorization Server endpoints.
+	 */
 	@Data
-	public static class Token {
+	public static class Endpoint {
 
 		/**
-		 * Set the time-to-live for a refresh token.
+		 * Authorization Server's OAuth 2.0 Authorization Endpoint.
 		 */
-		private Duration refreshTokenTimeToLive;
+		private String authorizationUri = "/oauth2/authorize";
 
 		/**
-		 * Set the time-to-live for an access token.
+		 * Authorization Server's OAuth 2.0 Device Authorization Endpoint.
 		 */
-		private Duration accessTokenTimeToLive;
+		private String deviceAuthorizationUri = "/oauth2/device_authorization";
 
 		/**
-		 * Set the time-to-live for an authorization code.
+		 * Authorization Server's OAuth 2.0 Device Verification Endpoint.
 		 */
-		private Duration authorizationCodeTimeToLive;
-
-	}
-
-	@Data
-	public static class Client {
+		private String deviceVerificationUri = "/oauth2/device_verification";
 
 		/**
-		 * Set to {@code true} if authorization consent is required when the client
-		 * requests access. This applies to all interactive flows (e.g.
-		 * {@code authorization_code} and {@code device_code}).
+		 * Authorization Server's OAuth 2.0 Token Endpoint.
 		 */
-		private boolean requireAuthorizationConsent;
+		private String tokenUri = "/oauth2/token";
+
+		/**
+		 * Authorization Server's JWK Set Endpoint.
+		 */
+		private String jwkSetUri = "/oauth2/jwks";
+
+		/**
+		 * Authorization Server's OAuth 2.0 Token Revocation Endpoint.
+		 */
+		private String tokenRevocationUri = "/oauth2/revoke";
+
+		/**
+		 * Authorization Server's OAuth 2.0 Token Introspection Endpoint.
+		 */
+		private String tokenIntrospectionUri = "/oauth2/introspect";
+
+		/**
+		 * OpenID Connect 1.0 endpoints.
+		 */
+		@NestedConfigurationProperty
+		private final OidcEndpoint oidc = new OidcEndpoint();
 
 	}
 
 	/**
-	 * {@link RegisteredClient}
+	 * OpenID Connect 1.0 endpoints.
+	 */
+	@Data
+	public static class OidcEndpoint {
+
+		/**
+		 * Authorization Server's OpenID Connect 1.0 Logout Endpoint.
+		 */
+		private String logoutUri = "/connect/logout";
+
+		/**
+		 * Authorization Server's OpenID Connect 1.0 Client Registration Endpoint.
+		 */
+		private String clientRegistrationUri = "/connect/register";
+
+		/**
+		 * Authorization Server's OpenID Connect 1.0 UserInfo Endpoint.
+		 */
+		private String userInfoUri = "/userinfo";
+
+	}
+
+	/**
+	 * A registered client of the Authorization Server.
+	 */
+	@Data
+	public static class Client {
+
+		/**
+		 * Client registration information.
+		 */
+		@NestedConfigurationProperty
+		private final Registration registration = new Registration();
+
+		/**
+		 * Whether the client is required to provide a proof key challenge and verifier
+		 * when performing the Authorization Code Grant flow.
+		 */
+		private boolean requireProofKey = false;
+
+		/**
+		 * Whether authorization consent is required when the client requests access.
+		 */
+		private boolean requireAuthorizationConsent = false;
+
+		/**
+		 * URL for the client's JSON Web Key Set.
+		 */
+		private String jwkSetUri;
+
+		/**
+		 * JWS algorithm that must be used for signing the JWT used to authenticate the
+		 * client at the Token Endpoint for the {@code private_key_jwt} and
+		 * {@code client_secret_jwt} authentication methods.
+		 */
+		private String tokenEndpointAuthenticationSigningAlgorithm;
+
+		/**
+		 * Token settings of the registered client.
+		 */
+		@NestedConfigurationProperty
+		private final Token token = new Token();
+
+	}
+
+	/**
+	 * Client registration information.
 	 */
 	@Data
 	public static class Registration {
 
+		/**
+		 * ID
+		 */
 		private String id;
 
+		/**
+		 * Client ID of the registration.
+		 */
 		private String clientId;
 
-		private String clientName;
-
+		/**
+		 * Client secret of the registration. May be left blank for a public client.
+		 */
 		private String clientSecret;
 
-		private Set<String> clientAuthenticationMethods;
+		/**
+		 * Name of the client.
+		 */
+		private String clientName;
 
-		private Set<String> authorizationGrantTypes;
+		/**
+		 * Client authentication method(s) that the client may use.
+		 */
+		private Set<String> clientAuthenticationMethods = new HashSet<>();
 
-		private Set<String> scopes;
+		/**
+		 * Authorization grant type(s) that the client may use.
+		 */
+		private Set<String> authorizationGrantTypes = new HashSet<>();
 
-		private Set<String> redirectUris;
+		/**
+		 * Redirect URI(s) that the client may use in redirect-based flows.
+		 */
+		private Set<String> redirectUris = new HashSet<>();
 
-		private Set<String> postLogoutRedirectUris;
+		/**
+		 * Redirect URI(s) that the client may use for logout.
+		 */
+		private Set<String> postLogoutRedirectUris = new HashSet<>();
+
+		/**
+		 * Scope(s) that the client may use.
+		 */
+		private Set<String> scopes = new HashSet<>();
 
 	}
 
+	/**
+	 * Token settings of the registered client.
+	 */
+	@Data
+	public static class Token {
+
+		/**
+		 * Time-to-live for an authorization code.
+		 */
+		private Duration authorizationCodeTimeToLive = Duration.ofMinutes(5);
+
+		/**
+		 * Time-to-live for an access token.
+		 */
+		private Duration accessTokenTimeToLive = Duration.ofMinutes(5);
+
+		/**
+		 * Token format for an access token.
+		 */
+		private String accessTokenFormat = "self-contained";
+
+		/**
+		 * Time-to-live for a device code.
+		 */
+		private Duration deviceCodeTimeToLive = Duration.ofMinutes(5);
+
+		/**
+		 * Whether refresh tokens are reused or a new refresh token is issued when
+		 * returning the access token response.
+		 */
+		private boolean reuseRefreshTokens = true;
+
+		/**
+		 * Time-to-live for a refresh token.
+		 */
+		private Duration refreshTokenTimeToLive = Duration.ofMinutes(60);
+
+		/**
+		 * JWS algorithm for signing the ID Token.
+		 */
+		private String idTokenSignatureAlgorithm = "RS256";
+
+	}
+
+	/**
+	 * Request matcher
+	 */
 	@Data
 	public static class RequestMatcher {
 
-		private Set<String> patterns;
+		/**
+		 * Ignore URL matching
+		 */
+		private Set<String> ignorePatterns = new HashSet<>();
 
 	}
 
