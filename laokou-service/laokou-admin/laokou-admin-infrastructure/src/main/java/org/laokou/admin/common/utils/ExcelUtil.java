@@ -178,13 +178,15 @@ public class ExcelUtil {
 			Set<String> set = ValidatorUtil.validateEntity(data);
 			if (CollectionUtil.isNotEmpty(set)) {
 				ERRORS.add(template(index, String.join(DROP, set)));
+				index++;
 			}
-			CACHED_DATA_LIST.add(data);
-			if (CACHED_DATA_LIST.size() % batchCount == 0) {
-				consumer.accept(CACHED_DATA_LIST);
-				CACHED_DATA_LIST.clear();
+			else {
+				CACHED_DATA_LIST.add(data);
+				if (CACHED_DATA_LIST.size() % batchCount == 0) {
+					consumer.accept(CACHED_DATA_LIST);
+					CACHED_DATA_LIST.clear();
+				}
 			}
-			index++;
 		}
 
 		@SneakyThrows
