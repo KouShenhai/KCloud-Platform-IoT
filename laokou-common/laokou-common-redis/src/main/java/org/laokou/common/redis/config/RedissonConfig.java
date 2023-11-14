@@ -32,6 +32,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.laokou.common.i18n.common.Constant.RISK;
+
 /**
  * @author livk
  * @author laokou
@@ -99,7 +101,7 @@ public class RedissonConfig {
 	}
 
 	private String convertAddress(boolean isSsl, String host, int port) {
-		return getProtocolPrefix(isSsl) + host + ":" + port;
+		return getProtocolPrefix(isSsl) + host + RISK + port;
 	}
 
 	private String[] convertNodes(boolean isSsl, List<String> nodeList) {
