@@ -24,10 +24,13 @@ import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
+
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static org.laokou.common.i18n.common.Constant.DEFAULT;
 
 /**
  * Redis工具类
@@ -195,7 +198,7 @@ public class RedisUtil {
 	}
 
 	public Set<String> keys(String pattern) {
-		return redisTemplate.keys(pattern);
+		return redissonClient.getKeys().getKeysStreamByPattern(pattern).collect(Collectors.toSet());
 	}
 
 	public Set<String> keys() {
@@ -222,7 +225,7 @@ public class RedisUtil {
 
 	public long getKeysSize() {
 		final Object obj = redisTemplate.execute(RedisServerCommands::dbSize);
-		return obj == null ? 0 : Long.parseLong(obj.toString());
+		return Objects.isNull(obj) ? DEFAULT : Long.parseLong(obj.toString());
 	}
 
 	public List<Map<String, String>> getCommandStatus() {
