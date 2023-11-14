@@ -90,12 +90,12 @@ public class RocketMqTemplate implements InitializingBean {
 		rocketMQTemplate.asyncSend(topic, message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
-				log.info("发送成功");
+				log.info("RocketMQ消息发送成功");
 			}
 
 			@Override
 			public void onException(Throwable throwable) {
-				log.error("报错信息", throwable);
+				log.error("RocketMQ消息发送失败，报错信息", throwable);
 			}
 		});
 	}
@@ -133,12 +133,12 @@ public class RocketMqTemplate implements InitializingBean {
 		rocketMQTemplate.asyncSend(topic, message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
-				log.info("发送成功");
+				log.info("RocketMQ消息发送成功");
 			}
 
 			@Override
 			public void onException(Throwable throwable) {
-				log.error("报错信息", throwable);
+				log.error("RocketMQ消息发送失败，报错信息", throwable);
 			}
 		}, timeout);
 	}
@@ -188,12 +188,12 @@ public class RocketMqTemplate implements InitializingBean {
 		rocketMQTemplate.asyncSendOrderly(topic, message, id, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
-				log.info("发送成功");
+				log.info("RocketMQ消息发送成功");
 			}
 
 			@Override
 			public void onException(Throwable throwable) {
-				log.error("报错信息", throwable);
+				log.error("RocketMQ消息发送失败，报错信息", throwable);
 			}
 		});
 	}
@@ -253,12 +253,12 @@ public class RocketMqTemplate implements InitializingBean {
 		rocketMQTemplate.asyncSend(String.format(MqConstant.TOPIC_TAG, topic, tag), message, new SendCallback() {
 			@Override
 			public void onSuccess(SendResult sendResult) {
-				log.info("发送成功");
+				log.info("RocketMQ消息发送成功");
 			}
 
 			@Override
 			public void onException(Throwable throwable) {
-				log.error("报错信息", throwable);
+				log.error("RocketMQ消息失败，报错信息", throwable);
 			}
 		});
 	}
