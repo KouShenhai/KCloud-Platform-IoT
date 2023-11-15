@@ -34,6 +34,7 @@ import org.springframework.stereotype.Component;
 public class MenuGetQryExe {
 
 	private final MenuGateway menuGateway;
+
 	private final MenuConvertor menuConvertor;
 
 	public Result<MenuCO> execute(MenuGetQry qry) {

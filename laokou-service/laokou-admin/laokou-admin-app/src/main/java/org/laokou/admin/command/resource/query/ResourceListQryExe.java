@@ -36,6 +36,7 @@ import org.springframework.stereotype.Component;
 public class ResourceListQryExe {
 
 	private final ResourceGateway resourceGateway;
+
 	private final ResourceConvertor resourceConvertor;
 
 	public Result<Datas<ResourceCO>> execute(ResourceListQry qry) {

@@ -51,8 +51,8 @@ public class MenuUpdateCmdExe {
 		if (id == null) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
-		Long count = menuMapper.selectCount(
-				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, co.getName()).ne(MenuDO::getId, id));
+		Long count = menuMapper
+			.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, co.getName()).ne(MenuDO::getId, id));
 		if (count > 0) {
 			throw new SystemException("菜单已存在，请重新填写");
 		}

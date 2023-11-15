@@ -29,4 +29,5 @@ import static org.laokou.common.i18n.common.Constant.SPRING;
  */
 @Mapper(componentModel = SPRING)
 public interface LoginLogConvertor extends Convertor<LoginLogCO, LoginLog, LoginLogDO> {
+
 }

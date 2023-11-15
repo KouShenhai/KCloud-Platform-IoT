@@ -36,6 +36,7 @@ import org.springframework.stereotype.Component;
 public class SourceListQryExe {
 
 	private final SourceGateway sourceGateway;
+
 	private final SourceConvertor sourceConvertor;
 
 	public Result<Datas<SourceCO>> execute(SourceListQry qry) {

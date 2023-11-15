@@ -35,6 +35,7 @@ import org.springframework.stereotype.Component;
 public class UserGetQryExe {
 
 	private final UserGateway userGateway;
+
 	private final UserConvertor userConvertor;
 
 	public Result<UserCO> execute(UserGetQry qry) {

@@ -20,6 +20,7 @@ package org.laokou.gateway.factory;
 import io.netty.handler.ipfilter.IpSubnetFilterRule;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.i18n.common.Constant;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LocaleUtil;
@@ -50,7 +51,7 @@ import static org.laokou.common.i18n.common.BizCode.IP_BLACK;
 public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<IpBlackGatewayFilterFactory.Config> {
 
 	@Override
-	public GatewayFilter apply(Config config) {
+	public GatewayFilter apply(IpBlackGatewayFilterFactory.Config config) {
 		try {
 			List<IpSubnetFilterRule> sources = RuleUtil.convert(Arrays.asList(config.sources.split(Constant.COMMA)));
 			return (exchange, chain) -> {
@@ -58,11 +59,15 @@ public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<Ip
 					return chain.filter(exchange);
 				}
 				InetSocketAddress remoteAddress = config.remoteAddressResolver.resolve(exchange);
+				String hostAddress = remoteAddress.getAddress().getHostAddress();
+				if (IpUtil.localIp(hostAddress)) {
+					return chain.filter(exchange);
+				}
 				long count = sources.parallelStream().filter(source -> source.matches(remoteAddress)).count();
 				if (count > 0) {
 					String language = RequestUtil.getParamValue(exchange.getRequest(), HttpHeaders.ACCEPT_LANGUAGE);
 					LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
-					log.error("IP为{}已列入黑名单", remoteAddress.getAddress().getHostAddress());
+					log.error("IP为{}已列入黑名单", hostAddress);
 					return ResponseUtil.response(exchange, Result.fail(IP_BLACK));
 				}
 				return chain.filter(exchange);

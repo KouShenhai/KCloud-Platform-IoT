@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 public class DictGetQryExe {
 
 	private final DictGateway dictGateway;
+
 	private final DictConvertor dictConvertor;
 
 	public Result<DictCO> execute(DictGetQry qry) {

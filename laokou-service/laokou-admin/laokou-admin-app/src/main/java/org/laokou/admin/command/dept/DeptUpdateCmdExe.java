@@ -51,8 +51,8 @@ public class DeptUpdateCmdExe {
 		if (id == null) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
-		long count = deptMapper.selectCount(
-				Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, co.getName()).ne(DeptDO::getId, id));
+		long count = deptMapper
+			.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, co.getName()).ne(DeptDO::getId, id));
 		if (count > 0) {
 			throw new SystemException("部门已存在，请重新填写");
 		}

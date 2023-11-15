@@ -37,6 +37,7 @@ import java.util.List;
 public class MenuListQryExe {
 
 	private final MenuGateway menuGateway;
+
 	private final MenuConvertor menuConvertor;
 
 	public Result<List<MenuCO>> execute(MenuListQry qry) {

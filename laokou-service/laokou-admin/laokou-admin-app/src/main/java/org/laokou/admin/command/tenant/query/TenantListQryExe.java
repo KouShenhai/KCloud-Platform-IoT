@@ -36,6 +36,7 @@ import org.springframework.stereotype.Component;
 public class TenantListQryExe {
 
 	private final TenantGateway tenantGateway;
+
 	private final TenantConvertor tenantConvertor;
 
 	public Result<Datas<TenantCO>> execute(TenantListQry qry) {
