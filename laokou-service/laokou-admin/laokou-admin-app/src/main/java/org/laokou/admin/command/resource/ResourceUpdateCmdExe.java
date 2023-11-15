@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component;
 public class ResourceUpdateCmdExe {
 
 	private final ResourceGateway resourceGateway;
+
 	private final ResourceConvertor resourceConvertor;
 
 	public Result<Boolean> execute(ResourceUpdateCmd cmd) {

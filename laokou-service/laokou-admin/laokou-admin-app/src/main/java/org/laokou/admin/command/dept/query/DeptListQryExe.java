@@ -37,6 +37,7 @@ import java.util.List;
 public class DeptListQryExe {
 
 	private final DeptGateway deptGateway;
+
 	private final DeptConvertor deptConvertor;
 
 	public Result<List<DeptCO>> execute(DeptListQry qry) {

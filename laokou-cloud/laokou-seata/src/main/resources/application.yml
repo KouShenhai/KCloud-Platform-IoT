@@ -25,7 +25,7 @@ server:
     # 证书密码
     key-store-password: laokou
   http2:
-    enabled: true
+    enabled: false
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES

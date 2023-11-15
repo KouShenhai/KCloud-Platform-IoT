@@ -38,6 +38,7 @@ import org.springframework.stereotype.Component;
 public class LoginLogListQryExe {
 
 	private final LogGateway logGateway;
+
 	private final LoginLogConvertor loginLogConvertor;
 
 	public Result<Datas<LoginLogCO>> execute(LoginLogListQry qry) {

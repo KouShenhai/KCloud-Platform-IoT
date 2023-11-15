@@ -38,6 +38,7 @@ import java.util.List;
 public class DeptTreeGetQryExe {
 
 	private final DeptGateway deptGateway;
+
 	private final DeptConvertor deptConvertor;
 
 	public Result<DeptCO> execute(DeptTreeGetQry qry) {

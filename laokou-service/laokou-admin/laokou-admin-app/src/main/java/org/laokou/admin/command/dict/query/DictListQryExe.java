@@ -36,6 +36,7 @@ import org.springframework.stereotype.Component;
 public class DictListQryExe {
 
 	private final DictGateway dictGateway;
+
 	private final DictConvertor dictConvertor;
 
 	public Result<Datas<DictCO>> execute(DictListQry qry) {

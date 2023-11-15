@@ -37,6 +37,7 @@ import org.springframework.stereotype.Component;
 public class MessageInsertCmdExe {
 
 	private final MessageGateway messageGateway;
+
 	private final MessageConvertor messageConvertor;
 
 	public Result<Boolean> execute(MessageInsertCmd cmd) {

@@ -56,7 +56,9 @@ public class LogGatewayImpl implements LogGateway {
 	private final LoginLogMapper loginLogMapper;
 
 	private final ThreadPoolTaskExecutor taskExecutor;
+
 	private final LoginLogConvertor loginLogConvertor;
+
 	private final OperateLogConvertor operateLogConvertor;
 
 	@Override

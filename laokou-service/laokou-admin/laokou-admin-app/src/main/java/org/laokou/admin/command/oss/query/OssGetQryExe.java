@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 public class OssGetQryExe {
 
 	private final OssGateway ossGateway;
+
 	private final OssConvertor ossConvertor;
 
 	public Result<OssCO> execute(OssGetQry qry) {

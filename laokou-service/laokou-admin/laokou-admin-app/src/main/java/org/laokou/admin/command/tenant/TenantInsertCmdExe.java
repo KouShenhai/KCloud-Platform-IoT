@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component;
 public class TenantInsertCmdExe {
 
 	private final TenantGateway tenantGateway;
+
 	private final TenantConvertor tenantConvertor;
 
 	public Result<Boolean> execute(TenantInsertCmd cmd) {

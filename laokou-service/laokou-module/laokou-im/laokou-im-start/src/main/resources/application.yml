@@ -12,7 +12,7 @@ server:
     # 证书密码
     key-store-password: laokou
   http2:
-    enabled: false
+    enabled: @SSL-ENABLED@
 #spring
 spring:
   websocket:

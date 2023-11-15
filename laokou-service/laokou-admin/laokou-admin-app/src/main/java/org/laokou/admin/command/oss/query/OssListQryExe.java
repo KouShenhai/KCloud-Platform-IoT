@@ -36,6 +36,7 @@ import org.springframework.stereotype.Component;
 public class OssListQryExe {
 
 	private final OssGateway ossGateway;
+
 	private final OssConvertor ossConvertor;
 
 	public Result<Datas<OssCO>> execute(OssListQry qry) {

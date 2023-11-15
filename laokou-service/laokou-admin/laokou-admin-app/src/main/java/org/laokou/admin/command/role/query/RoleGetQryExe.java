@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 public class RoleGetQryExe {
 
 	private final RoleGateway roleGateway;
+
 	private final RoleConvertor roleConvertor;
 
 	public Result<RoleCO> execute(RoleGetQry qry) {

@@ -32,6 +32,7 @@ import org.springframework.stereotype.Component;
 public class OssInsertCmdExe {
 
 	private final OssGateway ossGateway;
+
 	private final OssConvertor ossConvertor;
 
 	public Result<Boolean> execute(OssInsertCmd cmd) {

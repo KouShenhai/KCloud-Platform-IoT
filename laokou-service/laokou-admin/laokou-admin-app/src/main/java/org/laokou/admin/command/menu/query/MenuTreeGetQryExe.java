@@ -40,6 +40,7 @@ import java.util.List;
 public class MenuTreeGetQryExe {
 
 	private final MenuGateway menuGateway;
+
 	private final MenuConvertor menuConvertor;
 
 	public Result<MenuCO> execute(MenuTreeGetQry qry) {

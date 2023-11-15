@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 public class DeptGetQryExe {
 
 	private final DeptGateway deptGateway;
+
 	private final DeptConvertor deptConvertor;
 
 	public Result<DeptCO> execute(DeptGetQry qry) {

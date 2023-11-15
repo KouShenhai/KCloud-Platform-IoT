@@ -101,7 +101,7 @@ server:
     # 证书密码
     key-store-password: laokou
   http2:
-    enabled: true
+    enabled: false
 spring:
   application:
     name: @pom.artifactId@

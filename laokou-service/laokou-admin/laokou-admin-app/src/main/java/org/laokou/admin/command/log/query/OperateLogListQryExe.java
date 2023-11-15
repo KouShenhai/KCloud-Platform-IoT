@@ -36,6 +36,7 @@ import org.springframework.stereotype.Component;
 public class OperateLogListQryExe {
 
 	private final LogGateway logGateway;
+
 	private final OperateLogConvertor operateLogConvertor;
 
 	public Result<Datas<OperateLogCO>> execute(OperateLogListQry qry) {

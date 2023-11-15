@@ -40,6 +40,7 @@ import java.util.List;
 public class DictOptionListQryExe {
 
 	private final DictMapper dictMapper;
+
 	private final DictConvertor dictConvertor;
 
 	public Result<List<OptionCO>> execute(DictOptionListQry qry) {
