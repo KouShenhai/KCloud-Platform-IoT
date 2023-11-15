@@ -18,11 +18,11 @@
 package org.laokou.admin.command.menu.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.menu.MenuListQry;
-import org.laokou.admin.dto.menu.clientobject.MenuCO;
+import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.dto.menu.MenuListQry;
+import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -37,12 +37,13 @@ import java.util.List;
 public class MenuListQryExe {
 
 	private final MenuGateway menuGateway;
+	private final MenuConvertor menuConvertor;
 
 	public Result<List<MenuCO>> execute(MenuListQry qry) {
 		Menu menu = new Menu();
 		menu.setName(qry.getName());
 		List<Menu> list = menuGateway.list(menu, UserUtil.getTenantId());
-		return Result.of(ConvertUtil.sourceToTarget(list, MenuCO.class));
+		return Result.of(menuConvertor.convertClientObjectList(list));
 	}
 
 }

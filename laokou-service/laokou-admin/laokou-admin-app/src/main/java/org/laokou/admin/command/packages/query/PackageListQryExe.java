@@ -18,6 +18,7 @@
 package org.laokou.admin.command.packages.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.PackageConvertor;
 import org.laokou.admin.domain.gateway.PackageGateway;
 import org.laokou.admin.domain.packages.Package;
 import org.laokou.admin.dto.packages.PackageListQry;
@@ -35,13 +36,14 @@ import org.springframework.stereotype.Component;
 public class PackageListQryExe {
 
 	private final PackageGateway packageGateway;
+	private final PackageConvertor packageConvertor;
 
 	public Result<Datas<PackageCO>> execute(PackageListQry qry) {
 		Package pack = ConvertUtil.sourceToTarget(qry, Package.class);
 		Datas<Package> newPage = packageGateway.list(pack, qry);
 		Datas<PackageCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), PackageCO.class));
+		datas.setRecords(packageConvertor.convertClientObjectList(newPage.getRecords()));
 		return Result.of(datas);
 	}
 

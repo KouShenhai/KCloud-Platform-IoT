@@ -33,9 +33,10 @@ import org.springframework.stereotype.Component;
 public class TenantUpdateCmdExe {
 
 	private final TenantGateway tenantGateway;
+	private final TenantConvertor tenantConvertor;
 
 	public Result<Boolean> execute(TenantUpdateCmd cmd) {
-		Tenant tenant = TenantConvertor.toEntity(cmd.getTenantCO());
+		Tenant tenant = tenantConvertor.toEntity(cmd.getTenantCO());
 		return Result.of(tenantGateway.update(tenant));
 	}
 

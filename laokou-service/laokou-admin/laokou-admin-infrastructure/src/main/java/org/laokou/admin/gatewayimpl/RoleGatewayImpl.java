@@ -33,7 +33,6 @@ import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
@@ -64,24 +63,25 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final RoleConvertor roleConvertor;
+
 	@Override
 	public Boolean insert(Role role, User user) {
-		RoleDO roleDO = RoleConvertor.toDataObject(role);
+		RoleDO roleDO = roleConvertor.toDataObject(role);
 		return insertRole(roleDO, role, user);
 	}
 
 	@Override
 	public Boolean update(Role role, User user) {
 		Long id = role.getId();
-		RoleDO roleDO = RoleConvertor.toDataObject(role);
+		RoleDO roleDO = roleConvertor.toDataObject(role);
 		roleDO.setVersion(roleMapper.getVersion(id, RoleDO.class));
 		return updateRole(roleDO, role, user);
 	}
 
 	@Override
 	public Role getById(Long id) {
-		RoleDO roleDO = roleMapper.selectById(id);
-		return ConvertUtil.sourceToTarget(roleDO, Role.class);
+		return roleConvertor.convertEntity(roleMapper.selectById(id));
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class RoleGatewayImpl implements RoleGateway {
 		IPage<RoleDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<RoleDO> newPage = roleMapper.getRoleListFilter(page, role.getName(), pageQuery);
 		Datas<Role> datas = new Datas<>();
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Role.class));
+		datas.setRecords(roleConvertor.convertEntityList(newPage.getRecords()));
 		datas.setTotal(newPage.getTotal());
 		return datas;
 	}

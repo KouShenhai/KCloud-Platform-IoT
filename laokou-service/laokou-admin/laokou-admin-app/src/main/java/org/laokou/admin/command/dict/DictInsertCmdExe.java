@@ -21,7 +21,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.DictConvertor;
-import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.dto.dict.DictInsertCmd;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
@@ -44,6 +43,8 @@ public class DictInsertCmdExe {
 
 	private final DictMapper dictMapper;
 
+	private final DictConvertor dictConvertor;
+
 	@DS(TENANT)
 	public Result<Boolean> execute(DictInsertCmd cmd) {
 		DictCO co = cmd.getDictCO();
@@ -54,8 +55,7 @@ public class DictInsertCmdExe {
 		if (count > 0) {
 			throw new SystemException(String.format("类型为%s，值为%s的字典已存在，请重新填写", type, value));
 		}
-		Dict dict = DictConvertor.toEntity(co);
-		return Result.of(dictGateway.insert(dict));
+		return Result.of(dictGateway.insert(dictConvertor.toEntity(co)));
 	}
 
 }

@@ -18,6 +18,7 @@ package org.laokou.admin.module.storage.factory;
 
 import com.amazonaws.services.s3.AmazonS3;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
@@ -35,6 +36,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+
 /**
  * @author laokou
  */
@@ -46,14 +49,16 @@ public class StorageFactory {
 
 	private final RedisUtil redisUtil;
 
+	private final OssConvertor ossConvertor;
+
 	public StorageDriver<AmazonS3> build(Long tenantId) {
 		return new AmazonS3StorageDriver(getOssConfig(tenantId));
 	}
 
 	private OssCO getOssConfig(Long tenantId) {
 		AbstractSelectAlgorithm<OssDO> algorithm = new PollSelectAlgorithm<>();
-		OssDO ossDO = algorithm.select(getOssCache(tenantId), null);
-		return ConvertUtil.sourceToTarget(ossDO, OssCO.class);
+		OssDO ossDO = algorithm.select(getOssCache(tenantId), EMPTY);
+		return ossConvertor.convertClientObj(ossDO);
 	}
 
 	private List<OssDO> getOssCache(Long tenantId) {
@@ -62,7 +67,7 @@ public class StorageFactory {
 		if (CollectionUtil.isNotEmpty(objList)) {
 			return ConvertUtil.sourceToTarget(objList, OssDO.class);
 		}
-		List<OssDO> list = ossMapper.getOssListByFilter(null);
+		List<OssDO> list = ossMapper.getOssListByFilter(EMPTY);
 		if (CollectionUtil.isEmpty(list)) {
 			throw new SystemException("请配置OSS");
 		}

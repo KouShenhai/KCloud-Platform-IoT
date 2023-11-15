@@ -20,19 +20,15 @@ package org.laokou.admin.convertor;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Convertor;
+import org.mapstruct.Mapper;
+
+import static org.laokou.common.i18n.common.Constant.SPRING;
 
 /**
  * @author laokou
  */
-public class TenantConvertor {
-
-	public static Tenant toEntity(TenantCO co) {
-		return ConvertUtil.sourceToTarget(co, Tenant.class);
-	}
-
-	public static TenantDO toDataObject(Tenant tenant) {
-		return ConvertUtil.sourceToTarget(tenant, TenantDO.class);
-	}
+@Mapper(componentModel = SPRING)
+public interface TenantConvertor extends Convertor<TenantCO, Tenant, TenantDO> {
 
 }

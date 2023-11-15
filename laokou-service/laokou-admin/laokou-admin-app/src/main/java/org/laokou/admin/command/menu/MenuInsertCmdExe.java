@@ -38,6 +38,8 @@ public class MenuInsertCmdExe {
 
 	private final MenuGateway menuGateway;
 
+	private final MenuConvertor menuConvertor;
+
 	private final MenuMapper menuMapper;
 
 	public Result<Boolean> execute(MenuInsertCmd cmd) {
@@ -46,7 +48,7 @@ public class MenuInsertCmdExe {
 		if (count > 0) {
 			throw new SystemException("菜单已存在，请重新填写");
 		}
-		return Result.of(menuGateway.insert(MenuConvertor.toEntity(co)));
+		return Result.of(menuGateway.insert(menuConvertor.toEntity(co)));
 	}
 
 }

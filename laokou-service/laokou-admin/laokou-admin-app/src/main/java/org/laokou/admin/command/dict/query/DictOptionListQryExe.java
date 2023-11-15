@@ -19,6 +19,7 @@ package org.laokou.admin.command.dict.query;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.DictConvertor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.dict.DictOptionListQry;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
@@ -39,6 +40,7 @@ import java.util.List;
 public class DictOptionListQryExe {
 
 	private final DictMapper dictMapper;
+	private final DictConvertor dictConvertor;
 
 	public Result<List<OptionCO>> execute(DictOptionListQry qry) {
 		List<DictDO> list = dictMapper.selectList(Wrappers.query(DictDO.class)

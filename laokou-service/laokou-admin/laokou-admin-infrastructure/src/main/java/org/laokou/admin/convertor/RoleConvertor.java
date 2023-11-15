@@ -17,22 +17,18 @@
 
 package org.laokou.admin.convertor;
 
-import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.domain.role.Role;
+import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Convertor;
+import org.mapstruct.Mapper;
+
+import static org.laokou.common.i18n.common.Constant.SPRING;
 
 /**
  * @author laokou
  */
-public class RoleConvertor {
-
-	public static Role toEntity(RoleCO co) {
-		return ConvertUtil.sourceToTarget(co, Role.class);
-	}
-
-	public static RoleDO toDataObject(Role role) {
-		return ConvertUtil.sourceToTarget(role, RoleDO.class);
-	}
+@Mapper(componentModel = SPRING)
+public interface RoleConvertor extends Convertor<RoleCO, Role, RoleDO> {
 
 }

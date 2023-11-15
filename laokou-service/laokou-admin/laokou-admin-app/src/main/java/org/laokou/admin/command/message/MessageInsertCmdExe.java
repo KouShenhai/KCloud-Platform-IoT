@@ -37,6 +37,7 @@ import org.springframework.stereotype.Component;
 public class MessageInsertCmdExe {
 
 	private final MessageGateway messageGateway;
+	private final MessageConvertor messageConvertor;
 
 	public Result<Boolean> execute(MessageInsertCmd cmd) {
 		return Result.of(messageGateway.insert(toMessage(cmd.getMessageCO()), toUser()));
@@ -47,7 +48,7 @@ public class MessageInsertCmdExe {
 	}
 
 	private Message toMessage(MessageCO co) {
-		return MessageConvertor.toEntity(co);
+		return messageConvertor.toEntity(co);
 	}
 
 }

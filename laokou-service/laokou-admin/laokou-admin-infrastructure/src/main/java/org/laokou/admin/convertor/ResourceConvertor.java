@@ -20,19 +20,15 @@ package org.laokou.admin.convertor;
 import org.laokou.admin.domain.resource.Resource;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Convertor;
+import org.mapstruct.Mapper;
+
+import static org.laokou.common.i18n.common.Constant.SPRING;
 
 /**
  * @author laokou
  */
-public class ResourceConvertor {
-
-	public static Resource toEntity(ResourceCO co) {
-		return ConvertUtil.sourceToTarget(co, Resource.class);
-	}
-
-	public static ResourceDO toDataObject(Resource resource) {
-		return ConvertUtil.sourceToTarget(resource, ResourceDO.class);
-	}
+@Mapper(componentModel = SPRING)
+public interface ResourceConvertor extends Convertor<ResourceCO, Resource, ResourceDO> {
 
 }
