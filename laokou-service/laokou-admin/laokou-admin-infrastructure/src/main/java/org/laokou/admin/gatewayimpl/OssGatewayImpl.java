@@ -31,7 +31,6 @@ import org.laokou.admin.domain.oss.OssLog;
 import org.laokou.admin.dto.log.domainevent.OssLogEvent;
 import org.laokou.admin.gatewayimpl.database.OssMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -55,6 +54,8 @@ public class OssGatewayImpl implements OssGateway {
 
 	private final DomainEventPublisher domainEventPublisher;
 
+	private final OssConvertor ossConvertor;
+
 	@Override
 	@DataFilter(alias = BOOT_SYS_OSS)
 	@DS(TENANT)
@@ -62,7 +63,7 @@ public class OssGatewayImpl implements OssGateway {
 		IPage<OssDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<OssDO> newPage = ossMapper.getOssListByFilter(page, oss.getName(), pageQuery);
 		Datas<Oss> datas = new Datas<>();
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Oss.class));
+		datas.setRecords(ossConvertor.convertEntityList(newPage.getRecords()));
 		datas.setTotal(newPage.getTotal());
 		return datas;
 	}
@@ -70,19 +71,19 @@ public class OssGatewayImpl implements OssGateway {
 	@Override
 	@DS(TENANT)
 	public Oss getById(Long id) {
-		return ConvertUtil.sourceToTarget(ossMapper.selectById(id), Oss.class);
+		return ossConvertor.convertEntity(ossMapper.selectById(id));
 	}
 
 	@Override
 	@DS(TENANT)
 	public Boolean insert(Oss oss) {
-		OssDO ossDO = OssConvertor.toDataObject(oss);
+		OssDO ossDO = ossConvertor.toDataObject(oss);
 		return insertOss(ossDO);
 	}
 
 	@Override
 	public Boolean update(Oss oss) {
-		OssDO ossDO = OssConvertor.toDataObject(oss);
+		OssDO ossDO = ossConvertor.toDataObject(oss);
 		ossDO.setVersion(ossMapper.getVersion(ossDO.getId(), OssDO.class));
 		return updateOss(ossDO);
 	}

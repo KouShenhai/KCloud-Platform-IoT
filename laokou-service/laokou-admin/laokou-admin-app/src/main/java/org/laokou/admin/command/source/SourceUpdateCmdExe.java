@@ -44,8 +44,10 @@ public class SourceUpdateCmdExe {
 
 	private final SourceMapper sourceMapper;
 
+	private final SourceConvertor sourceConvertor;
+
 	public Result<Boolean> execute(SourceUpdateCmd cmd) {
-		Source source = SourceConvertor.toEntity(cmd.getSourceCO());
+		Source source = sourceConvertor.toEntity(cmd.getSourceCO());
 		validate(source);
 		return Result.of(sourceGateway.update(source));
 	}

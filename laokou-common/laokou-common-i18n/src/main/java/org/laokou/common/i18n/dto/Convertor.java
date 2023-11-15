@@ -15,6 +15,8 @@
  */
 package org.laokou.common.i18n.dto;
 
+import java.util.List;
+
 /**
  * @author laokou
  */
@@ -24,6 +26,18 @@ public interface Convertor<C, E, D> {
 
 	D toDataObject(E e);
 
+	D toDataObj(C c);
+
 	E convertEntity(D d);
+
+	List<E> convertEntityList(List<D> list);
+
+	C convertClientObj(D d);
+
+	List<C> convertClientObjList(List<D> list);
+
+	C convertClientObject(E e);
+
+	List<C> convertClientObjectList(List<E> list);
 
 }

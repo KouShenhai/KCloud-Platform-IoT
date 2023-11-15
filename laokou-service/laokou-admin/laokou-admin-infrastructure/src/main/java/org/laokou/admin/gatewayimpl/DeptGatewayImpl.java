@@ -25,7 +25,6 @@ import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -49,17 +48,18 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final DeptConvertor deptConvertor;
+
 	@Override
 	public List<Dept> list(Dept dept, Long tenantId) {
-		DeptDO deptDO = DeptConvertor.toDataObject(dept);
+		DeptDO deptDO = deptConvertor.toDataObject(dept);
 		deptDO.setTenantId(tenantId);
-		List<DeptDO> list = deptMapper.getDeptList(deptDO);
-		return ConvertUtil.sourceToTarget(list, Dept.class);
+		return deptConvertor.convertEntityList(deptMapper.getDeptList(deptDO));
 	}
 
 	@Override
 	public Boolean insert(Dept dept) {
-		DeptDO deptDO = DeptConvertor.toDataObject(dept);
+		DeptDO deptDO = deptConvertor.toDataObject(dept);
 		deptDO.setId(IdGenerator.defaultSnowflakeId());
 		deptDO.setPath(getPath(deptDO.getPid(), deptDO.getId()));
 		return insertDept(deptDO);
@@ -67,7 +67,7 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	@Override
 	public Boolean update(Dept dept) {
-		DeptDO deptDO = DeptConvertor.toDataObject(dept);
+		DeptDO deptDO = deptConvertor.toDataObject(dept);
 		DeptDO dep = deptMapper.selectById(deptDO.getId());
 		deptDO.setVersion(dep.getVersion());
 		deptDO.setPath(getPath(deptDO.getPid(), deptDO.getId()));
@@ -97,8 +97,7 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	@Override
 	public Dept getById(Long id) {
-		DeptDO deptDO = deptMapper.selectById(id);
-		return ConvertUtil.sourceToTarget(deptDO, Dept.class);
+		return deptConvertor.convertEntity(deptMapper.selectById(id));
 	}
 
 	public Boolean updateDept(DeptDO deptDO, String oldPath, String newPath, List<DeptDO> deptChildrenList) {

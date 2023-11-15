@@ -43,13 +43,15 @@ public class RoleInsertCmdExe {
 
 	private final RoleMapper roleMapper;
 
+	private final RoleConvertor roleConvertor;
+
 	public Result<Boolean> execute(RoleInsertCmd cmd) {
 		RoleCO co = cmd.getRoleCO();
 		Long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, co.getName()));
 		if (count > 0) {
 			throw new SystemException("角色已存在，请重新填写");
 		}
-		return Result.of(roleGateway.insert(RoleConvertor.toEntity(co), toUser()));
+		return Result.of(roleGateway.insert(roleConvertor.toEntity(co), toUser()));
 	}
 
 	private User toUser() {

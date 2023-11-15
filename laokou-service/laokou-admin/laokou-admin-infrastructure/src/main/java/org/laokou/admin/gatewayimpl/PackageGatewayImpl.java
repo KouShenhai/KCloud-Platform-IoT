@@ -31,7 +31,6 @@ import org.laokou.admin.gatewayimpl.database.PackageMenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.PackageMenuDO;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
@@ -58,16 +57,18 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final PackageConvertor packageConvertor;
+
 	private final BatchUtil batchUtil;
 
 	@Override
 	public Boolean insert(Package pack, User user) {
-		return insertPackage(PackageConvertor.toDataObject(pack), pack, user);
+		return insertPackage(packageConvertor.toDataObject(pack), pack, user);
 	}
 
 	@Override
 	public Boolean update(Package pack, User user) {
-		PackageDO packageDO = PackageConvertor.toDataObject(pack);
+		PackageDO packageDO = packageConvertor.toDataObject(pack);
 		packageDO.setVersion(packageMapper.getVersion(pack.getId(), PackageDO.class));
 		return updatePackage(packageDO, pack, user);
 	}
@@ -79,14 +80,13 @@ public class PackageGatewayImpl implements PackageGateway {
 		IPage<PackageDO> newPage = packageMapper.getPackageListFilter(page, pack.getName(), pageQuery);
 		Datas<Package> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Package.class));
+		datas.setRecords(packageConvertor.convertEntityList(newPage.getRecords()));
 		return datas;
 	}
 
 	@Override
 	public Package getById(Long id) {
-		PackageDO packageDO = packageMapper.selectById(id);
-		Package pack = ConvertUtil.sourceToTarget(packageDO, Package.class);
+		Package pack = packageConvertor.convertEntity(packageMapper.selectById(id));
 		pack.setMenuIds(packageMenuMapper.getMenuIdsByPackageId(id));
 		return pack;
 	}

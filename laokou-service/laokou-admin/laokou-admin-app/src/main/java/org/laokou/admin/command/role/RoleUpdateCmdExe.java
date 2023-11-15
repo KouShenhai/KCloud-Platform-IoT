@@ -46,6 +46,8 @@ public class RoleUpdateCmdExe {
 
 	private final RoleMapper roleMapper;
 
+	private final RoleConvertor roleConvertor;
+
 	public Result<Boolean> execute(RoleUpdateCmd cmd) {
 		RoleCO co = cmd.getRoleCO();
 		Long id = co.getId();
@@ -57,7 +59,7 @@ public class RoleUpdateCmdExe {
 		if (count > 0) {
 			throw new SystemException("角色已存在，请重新填写");
 		}
-		return Result.of(roleGateway.update(RoleConvertor.toEntity(co), toUser()));
+		return Result.of(roleGateway.update(roleConvertor.toEntity(co), toUser()));
 	}
 
 	private User toUser() {

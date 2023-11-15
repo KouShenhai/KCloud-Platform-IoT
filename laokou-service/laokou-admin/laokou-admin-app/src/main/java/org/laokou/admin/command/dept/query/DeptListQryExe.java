@@ -18,11 +18,11 @@
 package org.laokou.admin.command.dept.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.dept.DeptListQry;
-import org.laokou.admin.dto.dept.clientobject.DeptCO;
+import org.laokou.admin.convertor.DeptConvertor;
 import org.laokou.admin.domain.dept.Dept;
 import org.laokou.admin.domain.gateway.DeptGateway;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.admin.dto.dept.DeptListQry;
+import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
@@ -37,12 +37,13 @@ import java.util.List;
 public class DeptListQryExe {
 
 	private final DeptGateway deptGateway;
+	private final DeptConvertor deptConvertor;
 
 	public Result<List<DeptCO>> execute(DeptListQry qry) {
 		Dept dept = new Dept();
 		dept.setName(qry.getName());
 		List<Dept> list = deptGateway.list(dept, UserUtil.getTenantId());
-		return Result.of(ConvertUtil.sourceToTarget(list, DeptCO.class));
+		return Result.of(deptConvertor.convertClientObjectList(list));
 	}
 
 }

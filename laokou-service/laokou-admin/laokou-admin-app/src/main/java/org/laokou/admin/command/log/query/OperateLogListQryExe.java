@@ -18,6 +18,7 @@
 package org.laokou.admin.command.log.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.OperateLogConvertor;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.admin.domain.log.OperateLog;
 import org.laokou.admin.dto.log.OperateLogListQry;
@@ -35,13 +36,14 @@ import org.springframework.stereotype.Component;
 public class OperateLogListQryExe {
 
 	private final LogGateway logGateway;
+	private final OperateLogConvertor operateLogConvertor;
 
 	public Result<Datas<OperateLogCO>> execute(OperateLogListQry qry) {
 		OperateLog operateLog = ConvertUtil.sourceToTarget(qry, OperateLog.class);
 		Datas<OperateLog> newPage = logGateway.operateList(operateLog, qry);
 		Datas<OperateLogCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), OperateLogCO.class));
+		datas.setRecords(operateLogConvertor.convertClientObjectList(newPage.getRecords()));
 		return Result.of(datas);
 	}
 

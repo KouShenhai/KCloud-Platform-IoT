@@ -64,22 +64,23 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private final DomainEventPublisher domainEventPublisher;
 
+	private final ResourceConvertor resourceConvertor;
+
 	@Override
 	@DataFilter(alias = BOOT_SYS_RESOURCE)
 	public Datas<Resource> list(Resource resource, PageQuery pageQuery) {
 		IPage<ResourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		ResourceDO resourceDO = ResourceConvertor.toDataObject(resource);
+		ResourceDO resourceDO = resourceConvertor.toDataObject(resource);
 		IPage<ResourceDO> newPage = resourceMapper.getResourceListFilter(page, resourceDO, pageQuery);
 		Datas<Resource> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Resource.class));
+		datas.setRecords(resourceConvertor.convertEntityList(newPage.getRecords()));
 		return datas;
 	}
 
 	@Override
 	public Resource getById(Long id) {
-		ResourceDO resourceDO = resourceMapper.selectById(id);
-		return ConvertUtil.sourceToTarget(resourceDO, Resource.class);
+		return resourceConvertor.convertEntity(resourceMapper.selectById(id));
 	}
 
 	@Override

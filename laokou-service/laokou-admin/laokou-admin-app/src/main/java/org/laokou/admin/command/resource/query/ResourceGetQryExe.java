@@ -18,10 +18,10 @@
 package org.laokou.admin.command.resource.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.dto.resource.ResourceGetQry;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -33,9 +33,10 @@ import org.springframework.stereotype.Component;
 public class ResourceGetQryExe {
 
 	private final ResourceGateway resourceGateway;
+	private final ResourceConvertor resourceConvertor;
 
 	public Result<ResourceCO> execute(ResourceGetQry qry) {
-		return Result.of(ConvertUtil.sourceToTarget(resourceGateway.getById(qry.getId()), ResourceCO.class));
+		return Result.of(resourceConvertor.convertClientObject(resourceGateway.getById(qry.getId())));
 	}
 
 }

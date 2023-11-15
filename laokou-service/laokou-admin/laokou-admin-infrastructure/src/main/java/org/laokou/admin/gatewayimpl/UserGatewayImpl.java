@@ -33,7 +33,6 @@ import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
@@ -158,7 +157,7 @@ public class UserGatewayImpl implements UserGateway {
 		CompletableFuture.allOf(c1, c2).join();
 		Datas<User> datas = new Datas<>();
 		datas.setTotal(c2.get());
-		datas.setRecords(ConvertUtil.sourceToTarget(c1.get(), User.class));
+		datas.setRecords(userConvertor.convertEntityList(c1.get()));
 		return datas;
 	}
 

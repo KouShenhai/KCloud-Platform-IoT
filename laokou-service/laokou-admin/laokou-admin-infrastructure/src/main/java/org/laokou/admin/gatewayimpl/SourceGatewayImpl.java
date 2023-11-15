@@ -27,7 +27,6 @@ import org.laokou.admin.domain.gateway.SourceGateway;
 import org.laokou.admin.domain.source.Source;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -48,6 +47,8 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final SourceConvertor sourceConvertor;
+
 	@Override
 	@DataFilter(alias = BOOT_SYS_SOURCE)
 	public Datas<Source> list(Source source, PageQuery pageQuery) {
@@ -55,25 +56,24 @@ public class SourceGatewayImpl implements SourceGateway {
 		IPage<SourceDO> newPage = sourceMapper.getSourceListFilter(page, source.getName(), pageQuery);
 		Datas<Source> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Source.class));
+		datas.setRecords(sourceConvertor.convertEntityList(newPage.getRecords()));
 		return datas;
 	}
 
 	@Override
 	public Source getById(Long id) {
-		SourceDO sourceDO = sourceMapper.selectById(id);
-		return ConvertUtil.sourceToTarget(sourceDO, Source.class);
+		return sourceConvertor.convertEntity(sourceMapper.selectById(id));
 	}
 
 	@Override
 	public Boolean insert(Source source) {
-		SourceDO sourceDO = SourceConvertor.toDataObject(source);
+		SourceDO sourceDO = sourceConvertor.toDataObject(source);
 		return insertSource(sourceDO);
 	}
 
 	@Override
 	public Boolean update(Source source) {
-		SourceDO sourceDO = SourceConvertor.toDataObject(source);
+		SourceDO sourceDO = sourceConvertor.toDataObject(source);
 		sourceDO.setVersion(sourceMapper.getVersion(sourceDO.getId(), SourceDO.class));
 		return updateSource(sourceDO);
 	}

@@ -20,19 +20,15 @@ package org.laokou.admin.convertor;
 import org.laokou.admin.domain.message.Message;
 import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Convertor;
+import org.mapstruct.Mapper;
+
+import static org.laokou.common.i18n.common.Constant.SPRING;
 
 /**
  * @author laokou
  */
-public class MessageConvertor {
-
-	public static Message toEntity(MessageCO co) {
-		return ConvertUtil.sourceToTarget(co, Message.class);
-	}
-
-	public static MessageDO toDataObject(Message message) {
-		return ConvertUtil.sourceToTarget(message, MessageDO.class);
-	}
+@Mapper(componentModel = SPRING)
+public interface MessageConvertor extends Convertor<MessageCO, Message, MessageDO> {
 
 }

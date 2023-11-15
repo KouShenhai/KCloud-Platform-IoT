@@ -18,11 +18,10 @@
 package org.laokou.admin.command.dept.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.DeptConvertor;
+import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.admin.dto.dept.DeptGetQry;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
-import org.laokou.admin.domain.dept.Dept;
-import org.laokou.admin.domain.gateway.DeptGateway;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -34,10 +33,10 @@ import org.springframework.stereotype.Component;
 public class DeptGetQryExe {
 
 	private final DeptGateway deptGateway;
+	private final DeptConvertor deptConvertor;
 
 	public Result<DeptCO> execute(DeptGetQry qry) {
-		Dept dept = deptGateway.getById(qry.getId());
-		return Result.of(ConvertUtil.sourceToTarget(dept, DeptCO.class));
+		return Result.of(deptConvertor.convertClientObject(deptGateway.getById(qry.getId())));
 	}
 
 }

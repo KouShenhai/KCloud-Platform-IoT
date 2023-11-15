@@ -28,7 +28,6 @@ import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.gatewayimpl.database.DictMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -50,15 +49,17 @@ public class DictGatewayImpl implements DictGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final DictConvertor dictConvertor;
+
 	@Override
 	public Boolean insert(Dict dict) {
-		DictDO dictDO = DictConvertor.toDataObject(dict);
+		DictDO dictDO = dictConvertor.toDataObject(dict);
 		return insertDict(dictDO);
 	}
 
 	@Override
 	public Boolean update(Dict dict) {
-		DictDO dictDO = DictConvertor.toDataObject(dict);
+		DictDO dictDO = dictConvertor.toDataObject(dict);
 		dictDO.setVersion(dictMapper.getVersion(dictDO.getId(), DictDO.class));
 		return updateDict(dictDO);
 	}
@@ -66,8 +67,7 @@ public class DictGatewayImpl implements DictGateway {
 	@Override
 	@DS(TENANT)
 	public Dict getById(Long id) {
-		DictDO dictDO = dictMapper.selectById(id);
-		return ConvertUtil.sourceToTarget(dictDO, Dict.class);
+		return dictConvertor.convertEntity(dictMapper.selectById(id));
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class DictGatewayImpl implements DictGateway {
 		IPage<DictDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<DictDO> newPage = dictMapper.getDictListFilter(page, dict.getType(), dict.getLabel(), pageQuery);
 		Datas<Dict> datas = new Datas<>();
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Dict.class));
+		datas.setRecords(dictConvertor.convertEntityList(newPage.getRecords()));
 		datas.setTotal(newPage.getTotal());
 		return datas;
 	}

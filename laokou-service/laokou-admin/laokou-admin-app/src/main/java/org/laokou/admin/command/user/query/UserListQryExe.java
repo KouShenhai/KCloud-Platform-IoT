@@ -18,11 +18,11 @@
 package org.laokou.admin.command.user.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
@@ -36,12 +36,13 @@ import org.springframework.stereotype.Component;
 public class UserListQryExe {
 
 	private final UserGateway userGateway;
+	private final UserConvertor userConvertor;
 
 	public Result<Datas<UserCO>> execute(UserListQry qry) {
 		User user = new User(qry.getUsername(), UserUtil.getTenantId());
 		Datas<User> newPage = userGateway.list(user, qry);
 		Datas<UserCO> datas = new Datas<>();
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), UserCO.class));
+		datas.setRecords(userConvertor.convertClientObjectList(newPage.getRecords()));
 		datas.setTotal(newPage.getTotal());
 		return Result.of(datas);
 	}

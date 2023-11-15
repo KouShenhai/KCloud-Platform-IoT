@@ -9,7 +9,6 @@ import org.laokou.admin.dto.user.UserInsertCmd;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.DateUtil;
@@ -50,7 +49,7 @@ public class UserInsertCmdExe {
 	}
 
 	private UserDO toUserDO(UserCO co) {
-		UserDO userDO = ConvertUtil.sourceToTarget(co, UserDO.class);
+		UserDO userDO = userConvertor.toDataObj(co);
 		userDO.setTenantId(UserUtil.getTenantId());
 		userDO.setUsername(AesUtil.encrypt(userDO.getUsername()));
 		return userDO;
