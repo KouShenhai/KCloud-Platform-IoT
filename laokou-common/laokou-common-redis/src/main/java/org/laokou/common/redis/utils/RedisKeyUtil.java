@@ -64,13 +64,6 @@ public final class RedisKeyUtil {
 	}
 
 	/**
-	 * 全量同步索引Key
-	 */
-	public static String getSyncIndexKey(String code) {
-		return "sync:index:" + code;
-	}
-
-	/**
 	 * 手机验证码Key
 	 */
 	public static String getMobileCodeKey(String mobile) {
@@ -103,6 +96,13 @@ public final class RedisKeyUtil {
 	 */
 	public static String getRouteDefinitionHashKey() {
 		return "route:definition";
+	}
+
+	/**
+	 * 数据缓存Key
+	 */
+	public static String getDataCacheHashKey(String name) {
+		return name + ":cache";
 	}
 
 }

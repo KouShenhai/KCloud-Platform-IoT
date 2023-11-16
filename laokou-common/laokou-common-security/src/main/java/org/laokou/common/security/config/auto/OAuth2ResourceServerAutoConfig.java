@@ -19,8 +19,7 @@ package org.laokou.common.security.config.auto;
 import lombok.Data;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.laokou.common.security.config.OAuth2ResourceServerProperties;
-import org.laokou.common.security.handler.ForbiddenExceptionHandler;
-import org.laokou.common.security.handler.InvalidAuthenticationEntryPoint;
+import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -50,11 +49,11 @@ import static org.laokou.common.security.config.OAuth2ResourceServerProperties.P
  *
  * @author laokou
  */
-@EnableWebSecurity
+@Data
 @Configuration
+@EnableWebSecurity
 @EnableMethodSecurity
 @AutoConfigureAfter({ OAuth2AuthorizationAutoConfig.class })
-@Data
 @ConditionalOnProperty(havingValue = TRUE, matchIfMissing = true, prefix = PREFIX, name = ENABLED)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2ResourceServerAutoConfig {
@@ -63,8 +62,7 @@ public class OAuth2ResourceServerAutoConfig {
 	@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityFilterChain resourceFilterChain(GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector,
-			InvalidAuthenticationEntryPoint invalidAuthenticationEntryPoint,
-			ForbiddenExceptionHandler forbiddenExceptionHandler, OAuth2ResourceServerProperties properties,
+											OAuth2ResourceServerProperties properties,
 			HttpSecurity http) throws Exception {
 		OAuth2ResourceServerProperties.RequestMatcher requestMatcher = Optional
 			.ofNullable(properties.getRequestMatcher())
@@ -88,9 +86,9 @@ public class OAuth2ResourceServerAutoConfig {
 			// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
 			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 			.oauth2ResourceServer(
-					oauth2 -> oauth2.opaqueToken(token -> token.introspector(globalOpaqueTokenIntrospector))
-						.accessDeniedHandler(forbiddenExceptionHandler)
-						.authenticationEntryPoint(invalidAuthenticationEntryPoint))
+					resource -> resource.opaqueToken(token -> token.introspector(globalOpaqueTokenIntrospector))
+						.accessDeniedHandler(OAuth2ExceptionHandler::handle)
+						.authenticationEntryPoint(OAuth2ExceptionHandler::handle))
 			.build();
 	}
 
