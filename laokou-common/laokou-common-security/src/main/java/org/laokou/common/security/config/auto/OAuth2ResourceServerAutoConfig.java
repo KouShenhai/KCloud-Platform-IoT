@@ -86,7 +86,7 @@ public class OAuth2ResourceServerAutoConfig {
 			// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
 			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 			.oauth2ResourceServer(
-					oauth2 -> oauth2.opaqueToken(token -> token.introspector(globalOpaqueTokenIntrospector))
+					resource -> resource.opaqueToken(token -> token.introspector(globalOpaqueTokenIntrospector))
 						.accessDeniedHandler(OAuth2ExceptionHandler::handle)
 						.authenticationEntryPoint(OAuth2ExceptionHandler::handle))
 			.build();
