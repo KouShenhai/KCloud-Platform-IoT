@@ -17,6 +17,8 @@
 
 package org.laokou.gateway.factory;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
 
@@ -26,13 +28,9 @@ import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolve
 @Data
 public class Config {
 
-	private String sources;
+	private @NotEmpty String sources;
 
-	private volatile RemoteAddressResolver remoteAddressResolver;
-
-	public Config() {
-		remoteAddressResolver = new RemoteAddressResolver() {
-		};
-	}
+	private @NotNull RemoteAddressResolver remoteAddressResolver = new RemoteAddressResolver() {
+	};
 
 }
