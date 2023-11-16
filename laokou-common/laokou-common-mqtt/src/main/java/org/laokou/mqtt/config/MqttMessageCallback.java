@@ -37,6 +37,8 @@ public class MqttMessageCallback implements MqttCallback {
 
 	private final MqttClient client;
 
+	private static final MqttStrategy MQTT_STRATEGY = SpringContextUtil.getBean(MqttStrategy.class);
+
 	@Override
 	public void disconnected(MqttDisconnectResponse disconnectResponse) {
 		log.info("MQTT关闭连接");
@@ -49,7 +51,7 @@ public class MqttMessageCallback implements MqttCallback {
 
 	@Override
 	public void messageArrived(String topic, MqttMessage message) {
-		SpringContextUtil.getBean(MqttStrategy.class).get(topic).onMessage(message);
+		MQTT_STRATEGY.get(topic).onMessage(message);
 	}
 
 	@Override
