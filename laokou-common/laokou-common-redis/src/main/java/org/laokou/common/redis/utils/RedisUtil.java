@@ -166,7 +166,7 @@ public class RedisUtil {
 		return redissonClient.getBucket(key).get();
 	}
 
-	public boolean delete(String key) {
+	public boolean delete(String...key) {
 		return redissonClient.getKeys().delete(key) > 0;
 	}
 

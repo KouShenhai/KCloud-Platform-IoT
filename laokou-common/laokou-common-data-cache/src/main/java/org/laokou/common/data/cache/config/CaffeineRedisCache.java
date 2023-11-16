@@ -19,8 +19,10 @@ package org.laokou.common.data.cache.config;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import io.micrometer.common.lang.NonNullApi;
+import io.micrometer.common.lang.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.redisson.spring.cache.CacheConfig;
 import org.springframework.cache.support.AbstractValueAdaptingCache;
 
 import java.util.concurrent.Callable;
@@ -38,11 +40,15 @@ public class CaffeineRedisCache extends AbstractValueAdaptingCache {
 
 	private final RedisUtil redisUtil;
 
+	private final CacheConfig config;
+
 	protected CaffeineRedisCache(Cache<String, Object> caffeineCache, RedisUtil redisUtil, String key,
-			boolean allowNullValues) {
+								 CacheConfig config,
+								 boolean allowNullValues) {
 		super(allowNullValues);
 		this.redisUtil = redisUtil;
 		this.caffeineCache = caffeineCache;
+		this.config = config;
 		this.key = key;
 	}
 
@@ -63,22 +69,26 @@ public class CaffeineRedisCache extends AbstractValueAdaptingCache {
 
 	@Override
 	public <T> T get(Object name, Callable<T> valueLoader) {
+		// 分布式锁
 		return null;
 	}
 
 	@Override
-	public void put(Object name, Object value) {
+	public void put(Object name,@Nullable Object value) {
 
 	}
 
 	@Override
 	public void evict(Object name) {
-
+		String k = name.toString();
+		redisUtil.delete(k);
+		caffeineCache.invalidate(k);
 	}
 
 	@Override
 	public void clear() {
-
+		redisUtil.delete(key);
+		caffeineCache.invalidateAll();
 	}
 
 }
