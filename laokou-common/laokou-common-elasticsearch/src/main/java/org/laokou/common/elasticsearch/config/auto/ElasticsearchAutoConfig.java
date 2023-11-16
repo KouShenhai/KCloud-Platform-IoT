@@ -204,6 +204,7 @@ public class ElasticsearchAutoConfig {
 	@Bean(name = "restHighLevelClient")
 	@ConditionalOnMissingBean(RestHighLevelClient.class)
 	@ConditionalOnClass(RestClientBuilder.class)
+	@Deprecated
 	public RestHighLevelClient restHighLevelClient(RestClientBuilder elasticsearchRestClientBuilder) {
 		return new RestHighLevelClientBuilder(elasticsearchRestClientBuilder.build()).setApiCompatibilityMode(true)
 			.build();
