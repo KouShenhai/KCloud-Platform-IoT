@@ -49,6 +49,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
 
+import static org.laokou.common.i18n.common.Constant.RISK;
+
 /**
  * es配置文件
  *
@@ -180,13 +182,13 @@ public class ElasticsearchAutoConfig {
 			setCredentials(authScope, credentials);
 		}
 
-		private Credentials createUserInfoCredentials(String userInfo) {
-			int delimiter = userInfo.indexOf(":");
+		private Credentials createUserInfoCredentials(String info) {
+			int delimiter = info.indexOf(RISK);
 			if (delimiter == -1) {
-				return new UsernamePasswordCredentials(userInfo, null);
+				return new UsernamePasswordCredentials(info, null);
 			}
-			String username = userInfo.substring(0, delimiter);
-			String password = userInfo.substring(delimiter + 1);
+			String username = info.substring(0, delimiter);
+			String password = info.substring(delimiter + 1);
 			return new UsernamePasswordCredentials(username, password);
 		}
 
