@@ -63,7 +63,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (Objects.nonNull(redisUtil.get(userKillKey))) {
 			throw OAuth2ExceptionHandler.getException(ACCOUNT_FORCE_KILL, MessageUtil.getMessage(ACCOUNT_FORCE_KILL));
 		}
-		// 用户相关数据，低命中率放redis稳妥，分布式集群需要通过redis实现数据共享
+		// 用户相关数据，低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		Object obj = redisUtil.get(userInfoKey);
 		if (Objects.nonNull(obj)) {

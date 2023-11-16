@@ -33,6 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.i18n.common.Constant.STAR;
+
 /**
  * @author laokou
  */
@@ -47,7 +50,7 @@ public class OnlineUserListQryExe {
 	}
 
 	private String getUserInfoPatternKey() {
-		return RedisKeyUtil.getUserInfoKey("*");
+		return RedisKeyUtil.getUserInfoKey(STAR);
 	}
 
 	private Set<String> getKeys() {
@@ -55,7 +58,7 @@ public class OnlineUserListQryExe {
 	}
 
 	private String getUserKeyPrefix() {
-		return RedisKeyUtil.getUserInfoKey("");
+		return RedisKeyUtil.getUserInfoKey(EMPTY);
 	}
 
 	private Datas<UserOnlineCO> getDatas(OnlineUserListQry qry) {

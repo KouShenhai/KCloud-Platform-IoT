@@ -44,6 +44,11 @@ public interface Constant {
 	/**
 	 * 分割参数
 	 */
+	String STAR = "*";
+
+	/**
+	 * 分割参数
+	 */
 	String AT = "@";
 
 	/**
