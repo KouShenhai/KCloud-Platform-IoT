@@ -40,7 +40,7 @@ public class OAuth2ExceptionHandler {
 			String message = authenticationException.getError().getDescription();
 			int errorCode = Integer.parseInt(authenticationException.getError().getErrorCode());
 			ResponseUtil.response(response, errorCode, message);
-        }
+		}
 	}
 
 }

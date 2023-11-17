@@ -43,8 +43,7 @@ public class CaffeineRedisCache extends AbstractValueAdaptingCache {
 	private final CacheConfig config;
 
 	protected CaffeineRedisCache(Cache<String, Object> caffeineCache, RedisUtil redisUtil, String key,
-								 CacheConfig config,
-								 boolean allowNullValues) {
+			CacheConfig config, boolean allowNullValues) {
 		super(allowNullValues);
 		this.redisUtil = redisUtil;
 		this.caffeineCache = caffeineCache;
@@ -74,7 +73,7 @@ public class CaffeineRedisCache extends AbstractValueAdaptingCache {
 	}
 
 	@Override
-	public void put(Object name,@Nullable Object value) {
+	public void put(Object name, @Nullable Object value) {
 
 	}
 

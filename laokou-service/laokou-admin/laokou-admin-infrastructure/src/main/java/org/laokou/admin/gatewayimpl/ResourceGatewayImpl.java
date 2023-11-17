@@ -144,11 +144,11 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	private void syncBefore() {
- 		log.info("开始同步数据");
- 	}
+		log.info("开始同步数据");
+	}
 
- 	private void syncAfter() {
- 		log.info("结束同步数据");
- 	}
+	private void syncAfter() {
+		log.info("结束同步数据");
+	}
 
 }

@@ -190,14 +190,16 @@ public class ElasticsearchAutoConfig {
 
 	}
 
-//	@Bean(name = "elasticsearchClient")
-//	@ConditionalOnMissingBean(ElasticsearchClient.class)
-//	@ConditionalOnClass(RestClientBuilder.class)
-//	public ElasticsearchClient elasticsearchClient(RestClientBuilder elasticsearchRestClientBuilder) {
-//		ElasticsearchTransport transport = new RestClientTransport(elasticsearchRestClientBuilder.build(),
-//				new JacksonJsonpMapper());
-//		return new ElasticsearchClient(transport);
-//	}
+	// @Bean(name = "elasticsearchClient")
+	// @ConditionalOnMissingBean(ElasticsearchClient.class)
+	// @ConditionalOnClass(RestClientBuilder.class)
+	// public ElasticsearchClient elasticsearchClient(RestClientBuilder
+	// elasticsearchRestClientBuilder) {
+	// ElasticsearchTransport transport = new
+	// RestClientTransport(elasticsearchRestClientBuilder.build(),
+	// new JacksonJsonpMapper());
+	// return new ElasticsearchClient(transport);
+	// }
 
 	@Bean(name = "restHighLevelClient")
 	@ConditionalOnMissingBean(RestHighLevelClient.class)

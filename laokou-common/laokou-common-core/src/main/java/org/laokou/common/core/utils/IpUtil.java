@@ -81,12 +81,12 @@ public class IpUtil {
 		// 192.168.x.x/16
 		final byte section5 = (byte) 0xC0;
 		final byte section6 = (byte) 0xA8;
-        return switch (b0) {
-            case section1 -> true;
-            case section2 -> b1 >= section3 && b1 <= section4;
-            case section5 -> b1 == section6;
-            default -> false;
-        };
+		return switch (b0) {
+			case section1 -> true;
+			case section2 -> b1 >= section3 && b1 <= section4;
+			case section5 -> b1 == section6;
+			default -> false;
+		};
 	}
 
 	/**

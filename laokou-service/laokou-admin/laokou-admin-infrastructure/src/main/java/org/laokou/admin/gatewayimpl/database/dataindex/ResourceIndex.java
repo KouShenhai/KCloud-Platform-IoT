@@ -31,23 +31,23 @@ import java.io.Serial;
 @Data
 public class ResourceIndex extends Index {
 
-    @Serial
-    private static final long serialVersionUID = -3715061850731611381L;
+	@Serial
+	private static final long serialVersionUID = -3715061850731611381L;
 
-    @ElasticsearchField(type = "long")
-    @JsonSerialize(using = ToStringSerializer.class)
-    private Long id;
+	@ElasticsearchField(type = "long")
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long id;
 
-    @ElasticsearchField(type = "text", participle = 3)
-    private String title;
+	@ElasticsearchField(type = "text", participle = 3)
+	private String title;
 
-    @ElasticsearchField
-    private String code;
+	@ElasticsearchField
+	private String code;
 
-    @ElasticsearchField(type = "text", participle = 3)
-    private String remark;
+	@ElasticsearchField(type = "text", participle = 3)
+	private String remark;
 
-    @ElasticsearchField
-    private String ym;
+	@ElasticsearchField
+	private String ym;
 
 }

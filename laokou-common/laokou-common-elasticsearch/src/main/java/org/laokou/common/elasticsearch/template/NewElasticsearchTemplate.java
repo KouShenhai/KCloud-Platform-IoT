@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class NewElasticsearchTemplate {
 
-	//private final ElasticsearchClient elasticsearchClient;
+	// private final ElasticsearchClient elasticsearchClient;
 
 	private static final String PRIMARY_KEY_NAME = "id";
 
@@ -603,25 +603,25 @@ public class NewElasticsearchTemplate {
 	 * @param indexNames 索引集合名称
 	 * @return boolean
 	 */
-//	public boolean isIndexExists(List<String> indexNames) {
-//		try {
-//			ExistsRequest existsRequest = ExistsRequest.of(exists -> exists.index(indexNames));
-//			return elasticsearchClient.indices().exists(existsRequest).value();
-//		}
-//		catch (Exception e) {
-//			log.error("错误信息", e);
-//			return false;
-//		}
-//	}
+	// public boolean isIndexExists(List<String> indexNames) {
+	// try {
+	// ExistsRequest existsRequest = ExistsRequest.of(exists -> exists.index(indexNames));
+	// return elasticsearchClient.indices().exists(existsRequest).value();
+	// }
+	// catch (Exception e) {
+	// log.error("错误信息", e);
+	// return false;
+	// }
+	// }
 
 	/**
 	 * 索引是否存在
 	 * @param indexName 索引名称
 	 * @return boolean
 	 */
-//	public boolean isIndexExists(String indexName) {
-//		return isIndexExists(List.of(indexName));
-//	}
+	// public boolean isIndexExists(String indexName) {
+	// return isIndexExists(List.of(indexName));
+	// }
 
 	/**
 	 * <a href=
@@ -629,39 +629,41 @@ public class NewElasticsearchTemplate {
 	 * 创建ES索引
 	 * @param indexName 索引名称
 	 */
-//	@SneakyThrows
-//	public <TDocument> void createIndex(String indexName, String indexAlias, Class<TDocument> clazz) {
-//		// 判断索引是否存在
-//		boolean indexExists = isIndexExists(indexName);
-//		if (indexExists) {
-//			log.error("索引【{}】已存在，创建失败", indexName);
-//			return;
-//		}
-//		elasticsearchClient.indices()
-//			.create(request -> request.index(indexName)
-//				.aliases(indexAlias, fn -> fn.isWriteIndex(true))
-//				.mappings(getMapping(clazz)));
-//	}
-//
-//	private <TDocument> TypeMapping getMapping(Class<TDocument> clazz) {
-//		List<FieldMapping> fieldInfo = FieldMappingUtil.getFieldInfo(clazz);
-//		TypeMapping.Builder builder = new TypeMapping.Builder();
-//		builder.dynamic(DynamicMapping.True);
-//		fieldInfo.forEach(item -> properties(builder, item));
-//		return builder.build();
-//	}
-//
-//	private void properties(TypeMapping.Builder builder, FieldMapping mapping) {
-//		String field = mapping.getField();
-//		String type = mapping.getType();
-//		Integer participle = mapping.getParticiple();
-//		if (EsConstant.IK_INDEX.equals(participle)) {
-//			builder.properties(field, fn -> fn.text(t -> t.searchAnalyzer("ik_smart").analyzer("ik_max_word")));
-//		}
-//		else {
-//			builder.properties(field, fn -> fn.keyword(k -> k));
-//		}
-//	}
+	// @SneakyThrows
+	// public <TDocument> void createIndex(String indexName, String indexAlias,
+	// Class<TDocument> clazz) {
+	// // 判断索引是否存在
+	// boolean indexExists = isIndexExists(indexName);
+	// if (indexExists) {
+	// log.error("索引【{}】已存在，创建失败", indexName);
+	// return;
+	// }
+	// elasticsearchClient.indices()
+	// .create(request -> request.index(indexName)
+	// .aliases(indexAlias, fn -> fn.isWriteIndex(true))
+	// .mappings(getMapping(clazz)));
+	// }
+	//
+	// private <TDocument> TypeMapping getMapping(Class<TDocument> clazz) {
+	// List<FieldMapping> fieldInfo = FieldMappingUtil.getFieldInfo(clazz);
+	// TypeMapping.Builder builder = new TypeMapping.Builder();
+	// builder.dynamic(DynamicMapping.True);
+	// fieldInfo.forEach(item -> properties(builder, item));
+	// return builder.build();
+	// }
+	//
+	// private void properties(TypeMapping.Builder builder, FieldMapping mapping) {
+	// String field = mapping.getField();
+	// String type = mapping.getType();
+	// Integer participle = mapping.getParticiple();
+	// if (EsConstant.IK_INDEX.equals(participle)) {
+	// builder.properties(field, fn -> fn.text(t ->
+	// t.searchAnalyzer("ik_smart").analyzer("ik_max_word")));
+	// }
+	// else {
+	// builder.properties(field, fn -> fn.keyword(k -> k));
+	// }
+	// }
 
 	// /**
 	// * 创建索引设置相关配置信息
