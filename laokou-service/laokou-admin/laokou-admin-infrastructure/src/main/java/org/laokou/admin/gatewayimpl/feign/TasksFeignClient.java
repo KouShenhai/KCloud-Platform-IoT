@@ -25,7 +25,6 @@ import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.openfeign.config.RequestFeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -34,7 +33,7 @@ import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWAB
 /**
  * @author laokou
  */
-@FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE, path = "v1/tasks", configuration = RequestFeignConfig.class)
+@FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE, path = "v1/tasks")
 public interface TasksFeignClient {
 
 	/**

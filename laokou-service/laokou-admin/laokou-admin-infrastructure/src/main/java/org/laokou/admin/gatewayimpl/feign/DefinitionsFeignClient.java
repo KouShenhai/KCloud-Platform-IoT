@@ -24,7 +24,6 @@ import org.laokou.admin.dto.definition.DefinitionListQry;
 import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.openfeign.config.RequestFeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -35,7 +34,7 @@ import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWAB
 /**
  * @author laokou
  */
-@FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE, path = "v1/definitions", configuration = RequestFeignConfig.class)
+@FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE, path = "v1/definitions")
 public interface DefinitionsFeignClient {
 
 	/**
