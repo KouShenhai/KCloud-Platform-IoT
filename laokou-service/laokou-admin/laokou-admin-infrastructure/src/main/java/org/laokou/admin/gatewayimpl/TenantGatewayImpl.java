@@ -34,7 +34,6 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
@@ -67,6 +66,8 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final DeptMapper deptMapper;
 
+	private final TenantConvertor tenantConvertor;
+
 	private static final String TENANT_USERNAME = "tenant";
 
 	private static final String TENANT_PASSWORD = "tenant123";
@@ -74,7 +75,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	@Override
 	@DSTransactional(rollbackFor = Exception.class)
 	public Boolean insert(Tenant tenant) {
-		TenantDO tenantDO = TenantConvertor.toDataObject(tenant);
+		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
 		return insertTenant(tenantDO);
 	}
 
@@ -85,18 +86,18 @@ public class TenantGatewayImpl implements TenantGateway {
 		IPage<TenantDO> newPage = tenantMapper.getTenantListFilter(page, tenant.getName(), pageQuery);
 		Datas<Tenant> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Tenant.class));
+		datas.setRecords(tenantConvertor.convertEntityList(newPage.getRecords()));
 		return datas;
 	}
 
 	@Override
 	public Tenant getById(Long id) {
-		return ConvertUtil.sourceToTarget(tenantMapper.selectById(id), Tenant.class);
+		return tenantConvertor.convertEntity(tenantMapper.selectById(id));
 	}
 
 	@Override
 	public Boolean update(Tenant tenant) {
-		TenantDO tenantDO = TenantConvertor.toDataObject(tenant);
+		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
 		return updateTenant(tenantDO);
 	}
 

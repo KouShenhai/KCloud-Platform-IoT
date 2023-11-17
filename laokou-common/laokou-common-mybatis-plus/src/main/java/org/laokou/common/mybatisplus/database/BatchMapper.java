@@ -28,6 +28,8 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -37,6 +39,8 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
  * @author laokou
  */
 public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
+
+	Logger log = LoggerFactory.getLogger(BatchMapper.class);
 
 	int save(T entity);
 
@@ -68,6 +72,9 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 	void resultListFilter(@Param("tables") List<String> tables, @Param("param") T param, ResultHandler<T> handler,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
+	Integer resultCountFilter(@Param("tables") List<String> tables, @Param("param") T param,
+			@Param(PAGE_QUERY) PageQuery pageQuery);
+
 	@Update("${sql}")
 	void execute(@Param("sql") String sql);
 
@@ -81,7 +88,7 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 			return this.insert(t) > 0;
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			log.error("错误信息", e);
 			this.execute(sql);
 			return this.insert(t) > 0;
 		}
@@ -126,7 +133,7 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 			return this.insert(t) > 0;
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			log.error("错误信息", e);
 			return false;
 		}
 	}

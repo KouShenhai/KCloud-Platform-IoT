@@ -78,8 +78,6 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 
 	private LocalDateTime loginDate;
 
-	private LocalDateTime expireDate;
-
 	public User(String username, Long tenantId) {
 		this.username = username;
 		this.tenantId = tenantId;
@@ -136,10 +134,7 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 		if (!mobile.equals(that.mobile)) {
 			return false;
 		}
-		if (!mail.equals(that.mail)) {
-			return false;
-		}
-		return expireDate.equals(that.expireDate);
+		return mail.equals(that.mail);
 	}
 
 	@Override
@@ -157,7 +152,6 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 		result = 31 * result + sourceName.hashCode();
 		result = 31 * result + loginIp.hashCode();
 		result = 31 * result + loginDate.hashCode();
-		result = 31 * result + expireDate.hashCode();
 		result = 31 * result + mail.hashCode();
 		result = 31 * result + mobile.hashCode();
 		return result;

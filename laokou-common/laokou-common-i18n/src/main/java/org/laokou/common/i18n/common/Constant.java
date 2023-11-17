@@ -44,6 +44,11 @@ public interface Constant {
 	/**
 	 * 分割参数
 	 */
+	String STAR = "*";
+
+	/**
+	 * 分割参数
+	 */
 	String AT = "@";
 
 	/**
@@ -260,5 +265,15 @@ public interface Constant {
 	 * IP
 	 */
 	String IP = "ip";
+
+	/**
+	 * HTTP协议
+	 */
+	String HTTP_SCHEME = "http";
+
+	/**
+	 * https协议
+	 */
+	String HTTPS_SCHEME = "https";
 
 }

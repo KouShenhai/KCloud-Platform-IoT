@@ -64,28 +64,34 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private final DomainEventPublisher domainEventPublisher;
 
+	private final ResourceConvertor resourceConvertor;
+
 	@Override
 	@DataFilter(alias = BOOT_SYS_RESOURCE)
 	public Datas<Resource> list(Resource resource, PageQuery pageQuery) {
 		IPage<ResourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-		ResourceDO resourceDO = ResourceConvertor.toDataObject(resource);
+		ResourceDO resourceDO = resourceConvertor.toDataObject(resource);
 		IPage<ResourceDO> newPage = resourceMapper.getResourceListFilter(page, resourceDO, pageQuery);
 		Datas<Resource> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Resource.class));
+		datas.setRecords(resourceConvertor.convertEntityList(newPage.getRecords()));
 		return datas;
 	}
 
 	@Override
 	public Resource getById(Long id) {
-		ResourceDO resourceDO = resourceMapper.selectById(id);
-		return ConvertUtil.sourceToTarget(resourceDO, Resource.class);
+		return resourceConvertor.convertEntity(resourceMapper.selectById(id));
 	}
 
 	@Override
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Boolean update(Resource resource) {
 		return updateResource(resource, resourceMapper.getVersion(resource.getId(), ResourceDO.class));
+	}
+
+	@Override
+	public Boolean sync() {
+		return null;
 	}
 
 	private Boolean updateResource(Resource resource, Integer version) {
@@ -136,5 +142,13 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		event.setType(Type.REMIND.ordinal());
 		return event;
 	}
+
+	private void syncBefore() {
+ 		log.info("开始同步数据");
+ 	}
+
+ 	private void syncAfter() {
+ 		log.info("结束同步数据");
+ 	}
 
 }

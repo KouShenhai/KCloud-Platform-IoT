@@ -41,6 +41,8 @@ public class DeptInsertCmdExe {
 
 	private final DeptMapper deptMapper;
 
+	private final DeptConvertor deptConvertor;
+
 	public Result<Boolean> execute(DeptInsertCmd cmd) {
 		DeptCO co = cmd.getDeptCO();
 		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class)
@@ -49,7 +51,7 @@ public class DeptInsertCmdExe {
 		if (count > 0) {
 			throw new SystemException("部门已存在，请重新填写");
 		}
-		return Result.of(deptGateway.insert(DeptConvertor.toEntity(co)));
+		return Result.of(deptGateway.insert(deptConvertor.toEntity(co)));
 	}
 
 }

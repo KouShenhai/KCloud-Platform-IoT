@@ -16,13 +16,18 @@
  */
 package org.laokou.gateway.config;
 
+import lombok.SneakyThrows;
 import org.springdoc.core.models.GroupedOpenApi;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.laokou.common.i18n.common.Constant.HTTPS_SCHEME;
 
 /**
  * @author laokou
@@ -32,14 +37,19 @@ public class OpenApiDocConfig {
 
 	@Bean
 	@Lazy(value = false)
-	public List<GroupedOpenApi> openApis(RouteDefinitionLocator locator) {
+	@SneakyThrows
+	public List<GroupedOpenApi> openApis(RouteDefinitionLocator locator, ServerProperties serverProperties) {
 		List<GroupedOpenApi> groups = new ArrayList<>();
-		locator.getRouteDefinitions()
-			.filter(routeDefinition -> routeDefinition.getId().matches("laokou-.*"))
-			.subscribe(routeDefinition -> {
-				String name = routeDefinition.getId().substring(7);
-				GroupedOpenApi.builder().pathsToMatch("/".concat(name).concat("/**")).group(name).build();
-			});
+		locator.getRouteDefinitions().filter(routeDefinition -> {
+			if (!serverProperties.getSsl().isEnabled() && HTTPS_SCHEME.equals(routeDefinition.getUri().getScheme())) {
+				throw new RuntimeException(
+						String.format("HTTP不允许开启SSL，请检查URL为%s的路由", routeDefinition.getUri().toString()));
+			}
+			return routeDefinition.getId().matches("laokou-.*");
+		}).subscribe(routeDefinition -> {
+			String name = routeDefinition.getId().substring(7);
+			GroupedOpenApi.builder().pathsToMatch("/".concat(name).concat("/**")).group(name).build();
+		});
 		return groups;
 	}
 

@@ -18,6 +18,7 @@
 package org.laokou.admin.command.tenant.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.dto.tenant.TenantListQry;
@@ -36,12 +37,14 @@ public class TenantListQryExe {
 
 	private final TenantGateway tenantGateway;
 
+	private final TenantConvertor tenantConvertor;
+
 	public Result<Datas<TenantCO>> execute(TenantListQry qry) {
 		Tenant tenant = ConvertUtil.sourceToTarget(qry, Tenant.class);
 		Datas<Tenant> newPage = tenantGateway.list(tenant, qry);
 		Datas<TenantCO> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), TenantCO.class));
+		datas.setRecords(tenantConvertor.convertClientObjectList(newPage.getRecords()));
 		return Result.of(datas);
 	}
 

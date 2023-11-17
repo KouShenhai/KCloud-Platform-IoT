@@ -26,7 +26,6 @@ import org.laokou.admin.domain.user.SuperAdmin;
 import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
@@ -47,22 +46,23 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final MenuConvertor menuConvertor;
+
 	@Override
 	public List<Menu> list(User user, Integer type) {
-		List<MenuDO> menuList = getMenuList(type, user);
-		return ConvertUtil.sourceToTarget(menuList, Menu.class);
+		return menuConvertor.convertEntityList(getMenuList(type, user));
 	}
 
 	@Override
 	public Boolean update(Menu menu) {
-		MenuDO menuDO = MenuConvertor.toDataObject(menu);
+		MenuDO menuDO = menuConvertor.toDataObject(menu);
 		menuDO.setVersion(menuMapper.getVersion(menuDO.getId(), MenuDO.class));
 		return updateMenu(menuDO);
 	}
 
 	@Override
 	public Boolean insert(Menu menu) {
-		MenuDO menuDO = MenuConvertor.toDataObject(menu);
+		MenuDO menuDO = menuConvertor.toDataObject(menu);
 		return insertMenu(menuDO);
 	}
 
@@ -82,8 +82,7 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	@Override
 	public Menu getById(Long id) {
-		MenuDO menuDO = menuMapper.selectById(id);
-		return ConvertUtil.sourceToTarget(menuDO, Menu.class);
+		return menuConvertor.convertEntity(menuMapper.selectById(id));
 	}
 
 	@Override
@@ -100,13 +99,12 @@ public class MenuGatewayImpl implements MenuGateway {
 		else {
 			list = menuMapper.getMenuListByTenantIdAndLikeName(null, tenantId, menu.getName());
 		}
-		return ConvertUtil.sourceToTarget(list, Menu.class);
+		return menuConvertor.convertEntityList(list);
 	}
 
 	@Override
 	public List<Menu> getTenantMenuList() {
-		List<MenuDO> list = menuMapper.getTenantMenuList();
-		return ConvertUtil.sourceToTarget(list, Menu.class);
+		return menuConvertor.convertEntityList(menuMapper.getTenantMenuList());
 	}
 
 	private List<MenuDO> getMenuList(Integer type, User user) {

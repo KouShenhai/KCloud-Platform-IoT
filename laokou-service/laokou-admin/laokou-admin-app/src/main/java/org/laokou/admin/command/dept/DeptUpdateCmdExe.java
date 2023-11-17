@@ -43,21 +43,23 @@ public class DeptUpdateCmdExe {
 
 	private final DeptMapper deptMapper;
 
+	private final DeptConvertor deptConvertor;
+
 	public Result<Boolean> execute(DeptUpdateCmd cmd) {
-		DeptCO deptCO = cmd.getDeptCO();
-		Long id = deptCO.getId();
+		DeptCO co = cmd.getDeptCO();
+		Long id = co.getId();
 		if (id == null) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
-		long count = deptMapper.selectCount(
-				Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, deptCO.getName()).ne(DeptDO::getId, id));
+		long count = deptMapper
+			.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, co.getName()).ne(DeptDO::getId, id));
 		if (count > 0) {
 			throw new SystemException("部门已存在，请重新填写");
 		}
-		if (deptCO.getId().equals(deptCO.getPid())) {
+		if (co.getId().equals(co.getPid())) {
 			throw new SystemException("上级部门不能为当前部门");
 		}
-		return Result.of(deptGateway.update(DeptConvertor.toEntity(deptCO)));
+		return Result.of(deptGateway.update(deptConvertor.toEntity(co)));
 	}
 
 }

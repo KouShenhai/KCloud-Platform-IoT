@@ -22,6 +22,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.admin.convertor.LoginLogConvertor;
+import org.laokou.admin.convertor.OperateLogConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.admin.domain.log.LoginLog;
@@ -31,7 +33,6 @@ import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.template.TableTemplate;
@@ -56,12 +57,16 @@ public class LogGatewayImpl implements LogGateway {
 
 	private final ThreadPoolTaskExecutor taskExecutor;
 
+	private final LoginLogConvertor loginLogConvertor;
+
+	private final OperateLogConvertor operateLogConvertor;
+
 	@Override
 	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
 	@SneakyThrows
 	public Datas<LoginLog> loginList(LoginLog loginLog, User user, PageQuery pageQuery) {
 		final PageQuery page = pageQuery.time().page().ignore();
-		LoginLogDO loginLogDO = ConvertUtil.sourceToTarget(loginLog, LoginLogDO.class);
+		LoginLogDO loginLogDO = loginLogConvertor.toDataObject(loginLog);
 		loginLogDO.setTenantId(user.getTenantId());
 		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
 				BOOT_SYS_LOGIN_LOG);
@@ -86,7 +91,7 @@ public class LogGatewayImpl implements LogGateway {
 		CompletableFuture.allOf(c1, c2).join();
 		Datas<LoginLog> datas = new Datas<>();
 		datas.setTotal(c2.get());
-		datas.setRecords(ConvertUtil.sourceToTarget(c1.get(), LoginLog.class));
+		datas.setRecords(loginLogConvertor.convertEntityList(c1.get()));
 		return datas;
 	}
 
@@ -97,7 +102,7 @@ public class LogGatewayImpl implements LogGateway {
 		IPage<OperateLogDO> newPage = operateLogMapper.getOperateListFilter(page, operateLog.getModuleName(),
 				operateLog.getStatus(), pageQuery);
 		Datas<OperateLog> datas = new Datas<>();
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), OperateLog.class));
+		datas.setRecords(operateLogConvertor.convertEntityList(newPage.getRecords()));
 		datas.setTotal(newPage.getTotal());
 		return datas;
 	}

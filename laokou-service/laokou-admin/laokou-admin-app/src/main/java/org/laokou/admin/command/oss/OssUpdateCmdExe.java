@@ -33,8 +33,10 @@ public class OssUpdateCmdExe {
 
 	private final OssGateway ossGateway;
 
+	private final OssConvertor ossConvertor;
+
 	public Result<Boolean> execute(OssUpdateCmd cmd) {
-		return Result.of(ossGateway.update(OssConvertor.toEntity(cmd.getOssCO())));
+		return Result.of(ossGateway.update(ossConvertor.toEntity(cmd.getOssCO())));
 	}
 
 }

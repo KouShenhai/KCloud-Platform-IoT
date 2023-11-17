@@ -18,6 +18,7 @@
 package org.laokou.admin.command.dict.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.DictConvertor;
 import org.laokou.admin.domain.dict.Dict;
 import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.dto.dict.DictListQry;
@@ -36,11 +37,13 @@ public class DictListQryExe {
 
 	private final DictGateway dictGateway;
 
+	private final DictConvertor dictConvertor;
+
 	public Result<Datas<DictCO>> execute(DictListQry qry) {
 		Dict dict = ConvertUtil.sourceToTarget(qry, Dict.class);
 		Datas<Dict> datas = dictGateway.list(dict, qry);
 		Datas<DictCO> da = new Datas<>();
-		da.setRecords(ConvertUtil.sourceToTarget(datas.getRecords(), DictCO.class));
+		da.setRecords(dictConvertor.convertClientObjectList(datas.getRecords()));
 		da.setTotal(datas.getTotal());
 		return Result.of(da);
 	}

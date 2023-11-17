@@ -18,6 +18,7 @@
 package org.laokou.admin.command.resource.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.laokou.admin.domain.resource.Resource;
 import org.laokou.admin.dto.resource.ResourceListQry;
@@ -36,11 +37,13 @@ public class ResourceListQryExe {
 
 	private final ResourceGateway resourceGateway;
 
+	private final ResourceConvertor resourceConvertor;
+
 	public Result<Datas<ResourceCO>> execute(ResourceListQry qry) {
 		Resource resource = ConvertUtil.sourceToTarget(qry, Resource.class);
 		Datas<Resource> newPage = resourceGateway.list(resource, qry);
 		Datas<ResourceCO> datas = new Datas<>();
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), ResourceCO.class));
+		datas.setRecords(resourceConvertor.convertClientObjectList(newPage.getRecords()));
 		datas.setTotal(newPage.getTotal());
 		return Result.of(datas);
 	}

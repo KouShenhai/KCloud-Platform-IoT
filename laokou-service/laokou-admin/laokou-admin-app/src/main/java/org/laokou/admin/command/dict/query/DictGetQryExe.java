@@ -18,11 +18,10 @@
 package org.laokou.admin.command.dict.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.DictConvertor;
+import org.laokou.admin.domain.gateway.DictGateway;
 import org.laokou.admin.dto.dict.DictGetQry;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
-import org.laokou.admin.domain.dict.Dict;
-import org.laokou.admin.domain.gateway.DictGateway;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -35,9 +34,10 @@ public class DictGetQryExe {
 
 	private final DictGateway dictGateway;
 
+	private final DictConvertor dictConvertor;
+
 	public Result<DictCO> execute(DictGetQry qry) {
-		Dict dict = dictGateway.getById(qry.getId());
-		return Result.of(ConvertUtil.sourceToTarget(dict, DictCO.class));
+		return Result.of(dictConvertor.convertClientObject(dictGateway.getById(qry.getId())));
 	}
 
 }

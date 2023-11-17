@@ -8,27 +8,15 @@
       "defaultValue": true
     },
     {
-      "name": "spring.security.oauth2.authorization-server.token",
-      "type": "org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties$Token",
-      "description": "Token配置.",
-      "sourceType": "org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties"
-    },
-    {
       "name": "spring.security.oauth2.authorization-server.client",
-      "type": "org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties$Client",
+      "type": "java.util.Map<java.lang.String,org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties.Client>",
       "description": "Client配置.",
       "sourceType": "org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties"
     },
     {
-      "name": "spring.security.oauth2.authorization-server.registration",
-      "type": "org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties$Registration",
-      "description": "Registration配置.",
-      "sourceType": "org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties"
-    },
-    {
-      "name": "spring.security.oauth2.authorization-server.request-matcher",
-      "type": "org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties$RequestMatcher",
-      "description": "RequestMatcher配置.",
+      "name": "spring.security.oauth2.authorization-server.ignore-patterns",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "忽略匹配URL.",
       "sourceType": "org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties"
     }
   ]

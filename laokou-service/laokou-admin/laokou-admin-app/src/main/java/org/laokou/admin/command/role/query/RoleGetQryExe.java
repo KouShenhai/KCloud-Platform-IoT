@@ -18,11 +18,10 @@
 package org.laokou.admin.command.role.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.RoleConvertor;
+import org.laokou.admin.domain.gateway.RoleGateway;
 import org.laokou.admin.dto.role.RoleGetQry;
 import org.laokou.admin.dto.role.clientobject.RoleCO;
-import org.laokou.admin.domain.gateway.RoleGateway;
-import org.laokou.admin.domain.role.Role;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -35,9 +34,10 @@ public class RoleGetQryExe {
 
 	private final RoleGateway roleGateway;
 
+	private final RoleConvertor roleConvertor;
+
 	public Result<RoleCO> execute(RoleGetQry qry) {
-		Role role = roleGateway.getById(qry.getId());
-		return Result.of(ConvertUtil.sourceToTarget(role, RoleCO.class));
+		return Result.of(roleConvertor.convertClientObject(roleGateway.getById(qry.getId())));
 	}
 
 }

@@ -21,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.Constant;
 import org.laokou.common.i18n.utils.StringUtil;
 
+import java.util.Objects;
+
 import static org.laokou.common.i18n.common.Constant.*;
 
 /**
@@ -54,12 +56,13 @@ public class IpUtil {
 		return LOCAL_NETWORK_SEGMENT.equals(ip) ? LOCAL_IP : ip.split(Constant.COMMA)[0];
 	}
 
+	public static boolean localIp(String ip) {
+		return LOCAL_NETWORK_SEGMENT.equals(ip) || LOCAL_IP.equals(ip);
+	}
+
 	public static boolean internalIp(String ip) {
-		byte[] addr = textToNumericFormatV4(ip);
-		if (null != addr) {
-			return internalIp(addr) || LOCAL_IP.equals(ip);
-		}
-		return false;
+		byte[] bytes = textToNumericFormatV4(ip);
+		return Objects.nonNull(bytes) && (internalIp(bytes) || LOCAL_IP.equals(ip));
 	}
 
 	private static boolean conditionNull(String ip) {
@@ -78,18 +81,12 @@ public class IpUtil {
 		// 192.168.x.x/16
 		final byte section5 = (byte) 0xC0;
 		final byte section6 = (byte) 0xA8;
-		switch (b0) {
-			case section1:
-				return true;
-			case section2:
-				if (b1 >= section3 && b1 <= section4) {
-					return true;
-				}
-			case section5:
-				return b1 == section6;
-			default:
-				return false;
-		}
+        return switch (b0) {
+            case section1 -> true;
+            case section2 -> b1 >= section3 && b1 <= section4;
+            case section5 -> b1 == section6;
+            default -> false;
+        };
 	}
 
 	/**
@@ -98,76 +95,76 @@ public class IpUtil {
 	 * @return byte 字节
 	 */
 	public static byte[] textToNumericFormatV4(String text) {
-		if (text.length() == 0) {
+		if (text.isEmpty()) {
 			return null;
 		}
+
 		byte[] bytes = new byte[4];
 		String[] elements = text.split("\\.", -1);
 		try {
-			long l;
-			int i;
+			long l, j;
 			switch (elements.length) {
-				case 1 -> {
-					long max = 4294967295L;
+				case 1:
 					l = Long.parseLong(elements[0]);
-					if ((l < 0L) || (l > max)) {
-						return new byte[0];
+					j = 4294967295L;
+					if ((l < 0L) || (l > j)) {
+						return null;
 					}
 					bytes[0] = (byte) (int) (l >> 24 & 0xFF);
 					bytes[1] = (byte) (int) ((l & 0xFFFFFF) >> 16 & 0xFF);
 					bytes[2] = (byte) (int) ((l & 0xFFFF) >> 8 & 0xFF);
 					bytes[3] = (byte) (int) (l & 0xFF);
-				}
-				case 2 -> {
-					long len3 = 255L;
+					break;
+				case 2:
 					l = Integer.parseInt(elements[0]);
-					if ((l < 0L) || (l > len3)) {
-						return new byte[0];
+					j = 255;
+					if (l < 0L || l > j) {
+						return null;
 					}
 					bytes[0] = (byte) (int) (l & 0xFF);
 					l = Integer.parseInt(elements[1]);
-					long max2 = 16777215L;
-					if ((l < 0L) || (l > max2)) {
-						return new byte[0];
+					j = 16777215;
+					if (l < 0L || l > j) {
+						return null;
 					}
 					bytes[1] = (byte) (int) (l >> 16 & 0xFF);
 					bytes[2] = (byte) (int) ((l & 0xFFFF) >> 8 & 0xFF);
 					bytes[3] = (byte) (int) (l & 0xFF);
-				}
-				case 3 -> {
-					int len1 = 2;
-					for (i = 0; i < len1; ++i) {
+					break;
+				case 3:
+					j = 2;
+					for (int i = 0; i < j; i++) {
 						l = Integer.parseInt(elements[i]);
 						if ((l < 0L) || (l > 255L)) {
-							return new byte[0];
+							return null;
 						}
 						bytes[i] = (byte) (int) (l & 0xFF);
 					}
 					l = Integer.parseInt(elements[2]);
-					long max3 = 65535L;
-					if ((l < 0L) || (l > max3)) {
-						return new byte[0];
+					j = 65535L;
+					if ((l < 0L) || (l > j)) {
+						return null;
 					}
 					bytes[2] = (byte) (int) (l >> 8 & 0xFF);
 					bytes[3] = (byte) (int) (l & 0xFF);
-				}
-				case 4 -> {
-					int len2 = 4;
-					for (i = 0; i < len2; ++i) {
+					break;
+				case 4:
+					j = 4;
+					for (int i = 0; i < j; i++) {
 						l = Integer.parseInt(elements[i]);
 						if ((l < 0L) || (l > 255L)) {
-							return new byte[0];
+							return null;
 						}
 						bytes[i] = (byte) (int) (l & 0xFF);
 					}
-				}
-				default -> {
-					return new byte[0];
-				}
+					break;
+				default:
+					return null;
 			}
 		}
 		catch (NumberFormatException e) {
-			return new byte[0];
+			log.error("格式化失败，错误信息", e);
+			return null;
 		}
 		return bytes;
 	}

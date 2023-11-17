@@ -54,6 +54,7 @@ public abstract class AbstractStorageDriver<O> implements StorageDriver<O> {
 
 	/**
 	 * 获取连接对象
+	 * @return O
 	 */
 	protected abstract O getObj();
 

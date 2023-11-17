@@ -17,6 +17,8 @@
 
 package org.laokou.mqtt.config;
 
+import org.eclipse.paho.mqttv5.common.MqttMessage;
+
 /**
  * @author laokou
  */
@@ -26,6 +28,6 @@ public interface MqttListener {
 	 * 消息
 	 * @param message
 	 */
-	void onMessage(String message);
+	void onMessage(MqttMessage message);
 
 }

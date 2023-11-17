@@ -29,10 +29,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
 import static org.laokou.auth.module.oauth2.config.OAuth2AuthorizationServerProperties.PREFIX;
 import static org.laokou.common.i18n.common.Constant.ENABLED;
 import static org.laokou.common.i18n.common.Constant.TRUE;
@@ -57,18 +53,20 @@ class OAuth2ResourceServerConfig {
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, OAuth2AuthorizationServerProperties properties)
 			throws Exception {
-		Set<String> patterns = Optional.ofNullable(properties.getRequestMatcher().getPatterns())
-			.orElseGet(HashSet::new);
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
 					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
 			.authorizeHttpRequests(request -> request
-				.requestMatchers(
-						patterns.stream().map(AntPathRequestMatcher::new).toArray(AntPathRequestMatcher[]::new))
+				.requestMatchers(properties.getIgnorePatterns()
+					.stream()
+					.map(AntPathRequestMatcher::new)
+					.toArray(AntPathRequestMatcher[]::new))
 				.permitAll()
 				.anyRequest()
 				.authenticated())
 			.cors(AbstractHttpConfigurer::disable)
+			.csrf(AbstractHttpConfigurer::disable)
+			.httpBasic(AbstractHttpConfigurer::disable)
 			// 自定义登录页面
 			// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
 			// 登录页面 -> DefaultLoginPageGeneratingFilter

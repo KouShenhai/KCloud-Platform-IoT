@@ -258,23 +258,6 @@ Github 前端地址：[KCloud-Antdv-Alibaba](https://github.com/KouShenhai/KClou
 Gtiee 后端地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KCloud-Platform-Alibaba)  
 Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-Antdv-Alibaba)  
 
-### 🙋 培训交流
-<table>
-    <tr>
-        <th>金额</th>
-        <th>权益（永久）</th>
-    </tr>
-    <tr>
-        <td>￥ 399</td>
-        <td>视频教程（技术文档+视频讲解+问题答疑） + 一对一售后群</td>
-    </tr>
-</table>
-<div>
-<img src="doc/image/wx.png" width="250" height="300" alt="暂无图片">
-<img src="doc/image/wxq.png" width="250" height="300" alt="暂无图片">
-<img src="doc/image/qqq.png" width="250" height="300" alt="暂无图片">
-</div>
-
 ### 🐭 鸣谢组织
 [Spring社区](https://spring.io)  
 [Jetbrains社区](https://www.jetbrains.com/community)  

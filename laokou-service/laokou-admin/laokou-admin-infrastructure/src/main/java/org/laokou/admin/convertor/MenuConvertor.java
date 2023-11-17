@@ -17,22 +17,18 @@
 
 package org.laokou.admin.convertor;
 
-import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.domain.menu.Menu;
+import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Convertor;
+import org.mapstruct.Mapper;
+
+import static org.laokou.common.i18n.common.Constant.SPRING;
 
 /**
  * @author laokou
  */
-public class MenuConvertor {
-
-	public static Menu toEntity(MenuCO co) {
-		return ConvertUtil.sourceToTarget(co, Menu.class);
-	}
-
-	public static MenuDO toDataObject(Menu menu) {
-		return ConvertUtil.sourceToTarget(menu, MenuDO.class);
-	}
+@Mapper(componentModel = SPRING)
+public interface MenuConvertor extends Convertor<MenuCO, Menu, MenuDO> {
 
 }

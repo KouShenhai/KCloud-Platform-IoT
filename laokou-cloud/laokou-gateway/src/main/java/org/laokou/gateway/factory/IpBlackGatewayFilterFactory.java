@@ -18,8 +18,8 @@
 package org.laokou.gateway.factory;
 
 import io.netty.handler.ipfilter.IpSubnetFilterRule;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.i18n.common.Constant;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LocaleUtil;
@@ -29,7 +29,6 @@ import org.laokou.gateway.utils.ResponseUtil;
 import org.laokou.gateway.utils.RuleUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -47,22 +46,27 @@ import static org.laokou.common.i18n.common.BizCode.IP_BLACK;
  */
 @Slf4j
 @Component
-public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<IpBlackGatewayFilterFactory.Config> {
+public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<Config> {
 
 	@Override
 	public GatewayFilter apply(Config config) {
 		try {
-			List<IpSubnetFilterRule> sources = RuleUtil.convert(Arrays.asList(config.sources.split(Constant.COMMA)));
+			String source = config.getSources();
+			List<IpSubnetFilterRule> sources = RuleUtil.convert(Arrays.asList(source.split(Constant.COMMA)));
 			return (exchange, chain) -> {
-				if (StringUtil.isEmpty(config.sources)) {
+				if (StringUtil.isEmpty(source)) {
 					return chain.filter(exchange);
 				}
-				InetSocketAddress remoteAddress = config.remoteAddressResolver.resolve(exchange);
-				long count = sources.parallelStream().filter(source -> source.matches(remoteAddress)).count();
+				InetSocketAddress remoteAddress = config.getRemoteAddressResolver().resolve(exchange);
+				String hostAddress = remoteAddress.getAddress().getHostAddress();
+				if (IpUtil.localIp(hostAddress)) {
+					return chain.filter(exchange);
+				}
+				long count = sources.parallelStream().filter(s -> s.matches(remoteAddress)).count();
 				if (count > 0) {
 					String language = RequestUtil.getParamValue(exchange.getRequest(), HttpHeaders.ACCEPT_LANGUAGE);
 					LocaleContextHolder.setLocale(LocaleUtil.toLocale(language), true);
-					log.error("IP为{}已列入黑名单", remoteAddress.getAddress().getHostAddress());
+					log.error("IP为{}已列入黑名单", hostAddress);
 					return ResponseUtil.response(exchange, Result.fail(IP_BLACK));
 				}
 				return chain.filter(exchange);
@@ -75,20 +79,6 @@ public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<Ip
 
 	public IpBlackGatewayFilterFactory() {
 		super(Config.class);
-	}
-
-	@Data
-	static class Config {
-
-		private String sources;
-
-		private volatile RemoteAddressResolver remoteAddressResolver;
-
-		public Config() {
-			remoteAddressResolver = new RemoteAddressResolver() {
-			};
-		}
-
 	}
 
 }

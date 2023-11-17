@@ -35,7 +35,6 @@ import org.laokou.admin.gatewayimpl.database.MessageMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.MessageDetailDO;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -72,6 +71,8 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final MessageConvertor messageConvertor;
+
 	private final BatchUtil batchUtil;
 
 	@Override
@@ -82,14 +83,14 @@ public class MessageGatewayImpl implements MessageGateway {
 		IPage<MessageDO> newPage = messageMapper.getMessageListFilter(page, message.getTitle(), pageQuery);
 		Datas<Message> datas = new Datas<>();
 		datas.setTotal(newPage.getTotal());
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), Message.class));
+		datas.setRecords(messageConvertor.convertEntityList(newPage.getRecords()));
 		return datas;
 	}
 
 	@Override
 	@DS(TENANT)
 	public Boolean insert(Message message, User user) {
-		insertMessage(MessageConvertor.toDataObject(message), message, user);
+		insertMessage(messageConvertor.toDataObject(message), message, user);
 		// 插入成功发送消息
 		pushMessage(message.getReceiver(), message.getType());
 		return true;
@@ -98,8 +99,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	@Override
 	@DS(TENANT)
 	public Message getById(Long id) {
-		MessageDO messageDO = messageMapper.selectById(id);
-		return ConvertUtil.sourceToTarget(messageDO, Message.class);
+		return messageConvertor.convertEntity(messageMapper.selectById(id));
 	}
 
 	private void pushMessage(Set<String> receiver, Integer type) {

@@ -18,6 +18,7 @@
 package org.laokou.admin.command.source.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.SourceConvertor;
 import org.laokou.admin.domain.gateway.SourceGateway;
 import org.laokou.admin.domain.source.Source;
 import org.laokou.admin.dto.source.SourceListQry;
@@ -36,11 +37,13 @@ public class SourceListQryExe {
 
 	private final SourceGateway sourceGateway;
 
+	private final SourceConvertor sourceConvertor;
+
 	public Result<Datas<SourceCO>> execute(SourceListQry qry) {
 		Source source = ConvertUtil.sourceToTarget(qry, Source.class);
 		Datas<Source> newPage = sourceGateway.list(source, qry);
 		Datas<SourceCO> datas = new Datas<>();
-		datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), SourceCO.class));
+		datas.setRecords(sourceConvertor.convertClientObjectList(newPage.getRecords()));
 		datas.setTotal(newPage.getTotal());
 		return Result.of(datas);
 	}

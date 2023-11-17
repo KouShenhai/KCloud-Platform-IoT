@@ -17,22 +17,18 @@
 
 package org.laokou.admin.convertor;
 
-import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.domain.dict.Dict;
+import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.admin.gatewayimpl.database.dataobject.DictDO;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.dto.Convertor;
+import org.mapstruct.Mapper;
+
+import static org.laokou.common.i18n.common.Constant.SPRING;
 
 /**
  * @author laokou
  */
-public class DictConvertor {
-
-	public static Dict toEntity(DictCO co) {
-		return ConvertUtil.sourceToTarget(co, Dict.class);
-	}
-
-	public static DictDO toDataObject(Dict dict) {
-		return ConvertUtil.sourceToTarget(dict, DictDO.class);
-	}
+@Mapper(componentModel = SPRING)
+public interface DictConvertor extends Convertor<DictCO, Dict, DictDO> {
 
 }

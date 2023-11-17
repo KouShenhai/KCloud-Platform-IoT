@@ -28,7 +28,7 @@ public class HttpProtocolProxy extends AbstractProtocolProxy {
 
 	private static final int PORT = 8848;
 
-	private static final String HTTP_PROTOCOL = "http://";
+	public static final String HTTP_PROTOCOL = "http://";
 
 	@Override
 	public String getTokenUri(String serverAddr) {
