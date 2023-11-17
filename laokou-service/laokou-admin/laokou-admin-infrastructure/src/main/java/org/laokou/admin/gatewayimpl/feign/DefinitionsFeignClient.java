@@ -17,23 +17,24 @@
 
 package org.laokou.admin.gatewayimpl.feign;
 
-import io.swagger.v3.oas.annotations.Operation;
+import feign.Headers;
+import feign.RequestLine;
 import org.laokou.admin.dto.definition.DefinitionListQry;
 import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
-import org.laokou.admin.gatewayimpl.feign.factory.DefinitionsFeignClientFallbackFactory;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.openfeign.constant.ServiceConstant;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+
+import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWABLE;
 
 /**
  * @author laokou
  */
-@FeignClient(contextId = "definitions", value = ServiceConstant.LAOKOU_FLOWABLE, path = "v1/definitions",
-		fallbackFactory = DefinitionsFeignClientFallbackFactory.class)
+@FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE, path = "v1/definitions")
 public interface DefinitionsFeignClient {
 
 	/**
@@ -41,8 +42,8 @@ public interface DefinitionsFeignClient {
 	 * @param file 文件
 	 * @return Result<Boolean>
 	 */
-	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@Operation(summary = "流程定义", description = "新增流程")
+	@RequestLine("POST")
+	@Headers("Content-Type: multipart/form-data")
 	Result<Boolean> insert(@RequestPart("file") MultipartFile file);
 
 	/**
@@ -50,8 +51,8 @@ public interface DefinitionsFeignClient {
 	 * @param qry 查询参数
 	 * @return Result<Datas<DefinitionCO>>
 	 */
-	@PostMapping(value = "list")
-	@Operation(summary = "流程定义", description = "查询流程列表")
+	@RequestLine("POST list")
+	@Headers("Content-Type: application/json")
 	Result<Datas<DefinitionCO>> list(@RequestBody DefinitionListQry qry);
 
 	/**
@@ -59,8 +60,8 @@ public interface DefinitionsFeignClient {
 	 * @param definitionId 定义ID
 	 * @return Result<Boolean>
 	 */
-	@PutMapping(value = "{definitionId}/suspend")
-	@Operation(summary = "流程定义", description = "挂起流程")
+	@RequestLine("PUT {definitionId}/suspend")
+	@Headers("Content-Type: application/json")
 	Result<Boolean> suspend(@PathVariable("definitionId") String definitionId);
 
 	/**
@@ -68,8 +69,8 @@ public interface DefinitionsFeignClient {
 	 * @param definitionId 定义ID
 	 * @return Result<Boolean>
 	 */
-	@PutMapping(value = "{definitionId}/activate")
-	@Operation(summary = "流程定义", description = "激活流程")
+	@RequestLine("PUT {definitionId}/activate")
+	@Headers("Content-Type: application/json")
 	Result<Boolean> activate(@PathVariable("definitionId") String definitionId);
 
 	/**
@@ -77,8 +78,7 @@ public interface DefinitionsFeignClient {
 	 * @param definitionId 定义ID
 	 * @return Result<String>
 	 */
-	@GetMapping(value = "{definitionId}/diagram")
-	@Operation(summary = "流程定义", description = "流程图")
+	@RequestLine("GET {definitionId}/diagram")
 	Result<String> diagram(@PathVariable("definitionId") String definitionId);
 
 	/**
@@ -86,8 +86,8 @@ public interface DefinitionsFeignClient {
 	 * @param deploymentId 定义ID
 	 * @return Result<Boolean>
 	 */
-	@DeleteMapping(value = "{deploymentId}")
-	@Operation(summary = "流程定义", description = "删除流程")
+	@RequestLine("DELETE {deploymentId}")
+	@Headers("Content-Type: application/json")
 	Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId);
 
 }

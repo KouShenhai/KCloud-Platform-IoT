@@ -131,7 +131,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
+                <version>${spring-boot-maven-plugin.version}</version>
                 <configuration>
                     <finalName>${project.artifactId}</finalName>
                     <!-- main方法的地址 只需要修改这个地址-->

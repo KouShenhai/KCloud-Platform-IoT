@@ -15,59 +15,95 @@
  */
 package org.laokou.admin.gatewayimpl.feign;
 
-import io.swagger.v3.oas.annotations.Operation;
+import feign.Headers;
+import feign.RequestLine;
 import org.laokou.admin.dto.resource.*;
 import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
 import org.laokou.admin.dto.resource.clientobject.AuditCO;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
-import org.laokou.admin.gatewayimpl.feign.factory.TasksFeignClientFallbackFactory;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.openfeign.constant.ServiceConstant;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWABLE;
 
 /**
  * @author laokou
  */
-@FeignClient(contextId = "tasks", value = ServiceConstant.LAOKOU_FLOWABLE, path = "v1/tasks",
-		fallbackFactory = TasksFeignClientFallbackFactory.class)
+@FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE, path = "v1/tasks")
 public interface TasksFeignClient {
 
-	@PostMapping(value = "list")
-	@Operation(summary = "流程任务", description = "查询任务列表")
+	/**
+	 * 查询任务列表
+	 * @param qry
+	 * @return
+	 */
+	@RequestLine("POST /list")
+	@Headers("Content-Type: application/json")
 	Result<Datas<TaskCO>> list(@RequestBody TaskListQry qry);
 
-	@PostMapping(value = "audit")
-	@Operation(summary = "流程任务", description = "审批任务")
+	/**
+	 * 审批任务
+	 * @param cmd
+	 * @return
+	 */
+	@RequestLine("POST /audit")
+	@Headers("Content-Type: application/json")
 	Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd);
 
-	@PostMapping(value = "resolve")
-	@Operation(summary = "流程任务", description = "处理任务")
+	/**
+	 * 处理任务
+	 * @param cmd
+	 * @return
+	 */
+	@RequestLine("POST /resolve")
+	@Headers("Content-Type: application/json")
 	Result<Boolean> resolve(@RequestBody TaskResolveCmd cmd);
 
-	@PostMapping(value = "start")
-	@Operation(summary = "流程任务", description = "开始任务")
+	/**
+	 * 开始任务
+	 * @param cmd
+	 * @return
+	 */
+	@RequestLine("POST /start")
+	@Headers("Content-Type: application/json")
 	Result<StartCO> start(@RequestBody TaskStartCmd cmd);
 
-	@GetMapping(value = "{instanceId}/diagram")
-	@Operation(summary = "流程任务", description = "流程图")
+	/**
+	 * 流程图
+	 * @param instanceId
+	 * @return
+	 */
+	@RequestLine("GET /{instanceId}/diagram")
 	Result<String> diagram(@PathVariable("instanceId") String instanceId);
 
-	@PostMapping("transfer")
-	@Operation(summary = "流程任务", description = "转办任务")
+	/**
+	 * 转办任务
+	 * @param cmd
+	 * @return
+	 */
+	@RequestLine("POST /transfer")
+	@Headers("Content-Type: application/json")
 	Result<Boolean> transfer(@RequestBody TaskTransferCmd cmd);
 
-	@PostMapping("delegate")
-	@Operation(summary = "流程任务", description = "委派任务")
+	/**
+	 * 委派任务
+	 * @param cmd
+	 * @return
+	 */
+	@RequestLine("POST /delegate")
+	@Headers("Content-Type: application/json")
 	Result<Boolean> delegate(@RequestBody TaskDelegateCmd cmd);
 
-	@GetMapping("{instanceId}/assignee")
-	@Operation(summary = "流程任务", description = "流程人员")
+	/**
+	 * 流程人员
+	 * @param instanceId
+	 * @return
+	 */
+	@RequestLine("GET /{instanceId}/assignee?instanceId={instanceId}")
 	Result<AssigneeCO> assignee(@PathVariable("instanceId") String instanceId);
 
 }

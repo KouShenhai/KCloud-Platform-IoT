@@ -17,8 +17,6 @@
 
 package org.laokou.admin.gatewayimpl.feign.fallback;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.resource.*;
 import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
 import org.laokou.admin.dto.resource.clientobject.AuditCO;
@@ -28,14 +26,14 @@ import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.i18n.common.exception.FeignException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY;
 
 /**
  * @author laokou
  */
-@Slf4j
-@RequiredArgsConstructor
+@Component
 public class TasksFeignClientFallback implements TasksFeignClient {
 
 	@Override
