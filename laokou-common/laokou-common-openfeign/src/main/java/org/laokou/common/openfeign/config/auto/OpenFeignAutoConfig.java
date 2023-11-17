@@ -88,11 +88,6 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 		return new Retryer.Default();
 	}
 
-	@Bean
-	public Contract feignContract() {
-		return new feign.Contract.Default();
-	}
-
 	@Override
 	public Exception decode(String methodKey, Response response) {
 		Exception exception = super.decode(methodKey, response);

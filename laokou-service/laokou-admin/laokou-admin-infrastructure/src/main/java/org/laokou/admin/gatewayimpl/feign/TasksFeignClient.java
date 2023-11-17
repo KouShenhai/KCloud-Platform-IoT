@@ -16,6 +16,7 @@
 package org.laokou.admin.gatewayimpl.feign;
 
 import feign.Headers;
+import feign.Param;
 import feign.RequestLine;
 import org.laokou.admin.dto.resource.*;
 import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
@@ -24,8 +25,8 @@ import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.openfeign.config.RequestFeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWABLE;
@@ -33,7 +34,7 @@ import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWAB
 /**
  * @author laokou
  */
-@FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE, path = "v1/tasks")
+@FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE, path = "v1/tasks", configuration = RequestFeignConfig.class)
 public interface TasksFeignClient {
 
 	/**
@@ -78,7 +79,7 @@ public interface TasksFeignClient {
 	 * @return
 	 */
 	@RequestLine("GET /{instanceId}/diagram")
-	Result<String> diagram(@PathVariable("instanceId") String instanceId);
+	Result<String> diagram(@Param("instanceId") String instanceId);
 
 	/**
 	 * 转办任务
@@ -104,6 +105,6 @@ public interface TasksFeignClient {
 	 * @return
 	 */
 	@RequestLine("GET /{instanceId}/assignee?instanceId={instanceId}")
-	Result<AssigneeCO> assignee(@PathVariable("instanceId") String instanceId);
+	Result<AssigneeCO> assignee(@Param("instanceId") String instanceId);
 
 }

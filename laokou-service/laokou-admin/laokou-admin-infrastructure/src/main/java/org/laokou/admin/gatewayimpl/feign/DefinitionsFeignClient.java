@@ -18,13 +18,14 @@
 package org.laokou.admin.gatewayimpl.feign;
 
 import feign.Headers;
+import feign.Param;
 import feign.RequestLine;
 import org.laokou.admin.dto.definition.DefinitionListQry;
 import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.openfeign.config.RequestFeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +35,7 @@ import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWAB
 /**
  * @author laokou
  */
-@FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE, path = "v1/definitions")
+@FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE, path = "v1/definitions", configuration = RequestFeignConfig.class)
 public interface DefinitionsFeignClient {
 
 	/**
@@ -51,7 +52,7 @@ public interface DefinitionsFeignClient {
 	 * @param qry 查询参数
 	 * @return Result<Datas<DefinitionCO>>
 	 */
-	@RequestLine("POST list")
+	@RequestLine("POST /list")
 	@Headers("Content-Type: application/json")
 	Result<Datas<DefinitionCO>> list(@RequestBody DefinitionListQry qry);
 
@@ -60,34 +61,35 @@ public interface DefinitionsFeignClient {
 	 * @param definitionId 定义ID
 	 * @return Result<Boolean>
 	 */
-	@RequestLine("PUT {definitionId}/suspend")
+	@RequestLine("PUT /{definitionId}/suspend")
 	@Headers("Content-Type: application/json")
-	Result<Boolean> suspend(@PathVariable("definitionId") String definitionId);
+	Result<Boolean> suspend(@Param("definitionId") String definitionId);
 
 	/**
 	 * 激活流程
 	 * @param definitionId 定义ID
 	 * @return Result<Boolean>
 	 */
-	@RequestLine("PUT {definitionId}/activate")
+	@RequestLine("PUT /{definitionId}/activate")
 	@Headers("Content-Type: application/json")
-	Result<Boolean> activate(@PathVariable("definitionId") String definitionId);
+	Result<Boolean> activate(@Param("definitionId") String definitionId);
 
 	/**
 	 * 流程图
 	 * @param definitionId 定义ID
 	 * @return Result<String>
 	 */
-	@RequestLine("GET {definitionId}/diagram")
-	Result<String> diagram(@PathVariable("definitionId") String definitionId);
+	@RequestLine("GET /{definitionId}/diagram")
+	@Headers("Content-Type: application/json")
+	Result<String> diagram(@Param("definitionId") String definitionId);
 
 	/**
 	 * 删除流程
 	 * @param deploymentId 定义ID
 	 * @return Result<Boolean>
 	 */
-	@RequestLine("DELETE {deploymentId}")
+	@RequestLine("DELETE /{deploymentId}")
 	@Headers("Content-Type: application/json")
-	Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId);
+	Result<Boolean> delete(@Param("deploymentId") String deploymentId);
 
 }
