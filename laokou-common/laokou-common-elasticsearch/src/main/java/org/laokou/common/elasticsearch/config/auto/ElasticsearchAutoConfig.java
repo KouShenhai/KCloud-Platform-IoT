@@ -16,10 +16,6 @@
  */
 package org.laokou.common.elasticsearch.config.auto;
 
-import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.json.jackson.JacksonJsonpMapper;
-import co.elastic.clients.transport.ElasticsearchTransport;
-import co.elastic.clients.transport.rest_client.RestClientTransport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
@@ -194,14 +190,14 @@ public class ElasticsearchAutoConfig {
 
 	}
 
-	@Bean(name = "elasticsearchClient")
-	@ConditionalOnMissingBean(ElasticsearchClient.class)
-	@ConditionalOnClass(RestClientBuilder.class)
-	public ElasticsearchClient elasticsearchClient(RestClientBuilder elasticsearchRestClientBuilder) {
-		ElasticsearchTransport transport = new RestClientTransport(elasticsearchRestClientBuilder.build(),
-				new JacksonJsonpMapper());
-		return new ElasticsearchClient(transport);
-	}
+//	@Bean(name = "elasticsearchClient")
+//	@ConditionalOnMissingBean(ElasticsearchClient.class)
+//	@ConditionalOnClass(RestClientBuilder.class)
+//	public ElasticsearchClient elasticsearchClient(RestClientBuilder elasticsearchRestClientBuilder) {
+//		ElasticsearchTransport transport = new RestClientTransport(elasticsearchRestClientBuilder.build(),
+//				new JacksonJsonpMapper());
+//		return new ElasticsearchClient(transport);
+//	}
 
 	@Bean(name = "restHighLevelClient")
 	@ConditionalOnMissingBean(RestHighLevelClient.class)

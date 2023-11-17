@@ -15,21 +15,21 @@
  *
  */
 
-package org.laokou.admin.gatewayimpl.feign.factory;
+package org.laokou.common.openfeign.config;
 
-import org.laokou.admin.gatewayimpl.feign.fallback.TasksFeignClientFallback;
-import org.springframework.cloud.openfeign.FallbackFactory;
-import org.springframework.stereotype.Component;
+import feign.Contract;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author laokou
  */
-@Component
-public class TasksFeignClientFallbackFactory implements FallbackFactory<TasksFeignClientFallback> {
+@Configuration
+public class RequestFeignConfig {
 
-	@Override
-	public TasksFeignClientFallback create(Throwable throwable) {
-		return new TasksFeignClientFallback();
-	}
+    @Bean
+    public Contract feignContract() {
+        return new feign.Contract.Default();
+    }
 
 }

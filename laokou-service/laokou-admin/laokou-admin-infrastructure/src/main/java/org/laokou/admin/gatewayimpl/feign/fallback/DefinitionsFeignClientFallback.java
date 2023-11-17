@@ -17,21 +17,19 @@
 
 package org.laokou.admin.gatewayimpl.feign.fallback;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.definition.DefinitionListQry;
 import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
 import org.laokou.admin.gatewayimpl.feign.DefinitionsFeignClient;
 import org.laokou.common.i18n.common.exception.FeignException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
  */
-@Slf4j
-@RequiredArgsConstructor
+@Component
 public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 
 	@Override
