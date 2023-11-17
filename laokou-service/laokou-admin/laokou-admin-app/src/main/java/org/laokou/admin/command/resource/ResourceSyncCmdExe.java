@@ -18,6 +18,7 @@
 package org.laokou.admin.command.resource;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.ResourceGateway;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +27,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ResourceSyncCmdExe {
+
+    private final ResourceGateway resourceGateway;
 
 }

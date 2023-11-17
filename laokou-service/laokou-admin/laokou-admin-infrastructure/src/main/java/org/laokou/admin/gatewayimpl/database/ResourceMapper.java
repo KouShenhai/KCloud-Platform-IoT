@@ -20,6 +20,8 @@ package org.laokou.admin.gatewayimpl.database;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.ResultHandler;
+import org.laokou.admin.gatewayimpl.database.dataindex.ResourceIndex;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.database.BatchMapper;
@@ -36,5 +38,7 @@ public interface ResourceMapper extends BatchMapper<ResourceDO> {
 
 	IPage<ResourceDO> getResourceListFilter(IPage<ResourceDO> page, @Param("resource") ResourceDO resourceDO,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
+
+	void handleResourceIndex(ResultHandler<ResourceIndex> handler);
 
 }
