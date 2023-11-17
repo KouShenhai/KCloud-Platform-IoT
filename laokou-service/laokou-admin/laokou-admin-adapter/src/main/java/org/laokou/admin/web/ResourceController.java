@@ -63,7 +63,7 @@ public class ResourceController {
 	@TraceLog
 	@Operation(summary = "资源管理", description = "同步资源")
 	@OperateLog(module = "资源管理", operation = "同步资源")
-	@Lock4j(key = "resource_sync_lock_")
+	@Lock4j(key = "resource_sync_lock")
 	@PreAuthorize("hasAuthority('resource:sync')")
 	public Result<Boolean> sync() {
 		return resourceServiceI.sync(new ResourceSyncCmd());

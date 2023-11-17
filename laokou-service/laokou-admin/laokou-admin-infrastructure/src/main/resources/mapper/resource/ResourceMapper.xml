@@ -47,4 +47,15 @@
         order by id desc
     </select>
 
+    <select id="handleResourceIndex" fetchSize="10000" resultSetType="FORWARD_ONLY" resultType="org.laokou.admin.gatewayimpl.database.dataindex.ResourceIndex">
+        select id
+            , title
+            , code
+            , remark
+            , date_format(create_date,'%Y%m')
+        from boot_sys_resource
+        where  `status` = 2
+            and del_flag = 0
+    </select>
+
 </mapper>
