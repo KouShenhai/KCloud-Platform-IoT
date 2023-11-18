@@ -26,14 +26,12 @@ import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.i18n.common.exception.FeignException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY;
 
 /**
  * @author laokou
  */
-@Component
 public class TasksFeignClientFallback implements TasksFeignClient {
 
 	@Override
