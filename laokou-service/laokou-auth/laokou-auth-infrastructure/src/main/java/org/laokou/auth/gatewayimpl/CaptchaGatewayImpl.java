@@ -27,6 +27,8 @@ import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+
 /**
  * @author laokou
  */
@@ -45,7 +47,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	@Override
 	public Boolean validate(String uuid, String code) {
 		// 获取验证码
-		String captcha = getCaptcha(uuid);
+		String captcha = get(uuid);
 		if (StringUtil.isEmpty(captcha)) {
 			return null;
 		}
@@ -61,13 +63,13 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 		return key;
 	}
 
-	private String getCaptcha(String uuid) {
+	private String get(String uuid) {
 		String key = key(uuid);
 		Object captcha = redisUtil.get(key);
 		if (captcha != null) {
 			redisUtil.delete(key);
 		}
-		return captcha != null ? captcha.toString() : "";
+		return captcha != null ? captcha.toString() : EMPTY;
 	}
 
 	private void setValue(String uuid, String code) {

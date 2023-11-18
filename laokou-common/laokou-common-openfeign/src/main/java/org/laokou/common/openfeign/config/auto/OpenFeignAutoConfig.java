@@ -30,9 +30,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.AUTHORIZATION;
-import static org.laokou.common.i18n.common.Constant.TRACE_ID;
-import static org.laokou.common.i18n.common.Constant.UNDER;
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * openfeign关闭ssl {@link FeignAutoConfiguration}
@@ -86,11 +84,6 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 		// 最大请求次数为5，初始间隔时间为100ms
 		// 下次间隔时间1.5倍递增，重试间最大间隔时间为1s
 		return new Retryer.Default();
-	}
-
-	@Bean
-	public Contract feignContract() {
-		return new feign.Contract.Default();
 	}
 
 	@Override

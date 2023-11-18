@@ -23,6 +23,7 @@ import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
 import org.laokou.admin.dto.resource.clientobject.AuditCO;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
+import org.laokou.admin.gatewayimpl.feign.factory.TasksFeignClientFallbackFactory;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -33,7 +34,8 @@ import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWAB
 /**
  * @author laokou
  */
-@FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE, path = "v1/tasks")
+@FeignClient(contextId = "tasks", name = LAOKOU_FLOWABLE, path = "v1/tasks",
+		fallbackFactory = TasksFeignClientFallbackFactory.class)
 public interface TasksFeignClient {
 
 	/**

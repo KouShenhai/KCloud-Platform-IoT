@@ -22,6 +22,7 @@ import feign.Param;
 import feign.RequestLine;
 import org.laokou.admin.dto.definition.DefinitionListQry;
 import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
+import org.laokou.admin.gatewayimpl.feign.factory.DefinitionsFeignClientFallbackFactory;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -34,7 +35,8 @@ import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWAB
 /**
  * @author laokou
  */
-@FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE, path = "v1/definitions")
+@FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE, path = "v1/definitions",
+		fallbackFactory = DefinitionsFeignClientFallbackFactory.class)
 public interface DefinitionsFeignClient {
 
 	/**

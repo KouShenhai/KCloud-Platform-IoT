@@ -31,6 +31,8 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import java.util.Objects;
+
 import static org.laokou.common.i18n.common.Constant.EMPTY;
 
 /**
@@ -55,7 +57,7 @@ public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
 		if (body instanceof Result<?> result) {
 			return result;
 		}
-		if (body == null) {
+		if (Objects.isNull(body)) {
 			return Result.of(EMPTY);
 		}
 		return body;

@@ -131,14 +131,15 @@ public class AuthFilter implements GlobalFilter, Ordered {
 			if (paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
 				log.info("密码模式认证...");
 				try {
+					String privateKey = RsaUtil.getPrivateKey();
 					String password = paramMap.get(PASSWORD);
 					String username = paramMap.get(USERNAME);
 					// 返回修改后报文字符
 					if (StringUtil.isNotEmpty(password)) {
-						paramMap.put(PASSWORD, RsaUtil.decryptByPrivateKey(password));
+						paramMap.put(PASSWORD, RsaUtil.decryptByPrivateKey(password, privateKey));
 					}
 					if (StringUtil.isNotEmpty(username)) {
-						paramMap.put(USERNAME, RsaUtil.decryptByPrivateKey(username));
+						paramMap.put(USERNAME, RsaUtil.decryptByPrivateKey(username, privateKey));
 					}
 				}
 				catch (Exception e) {
