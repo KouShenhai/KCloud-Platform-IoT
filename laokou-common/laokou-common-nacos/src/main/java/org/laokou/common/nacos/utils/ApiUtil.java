@@ -55,7 +55,7 @@ public class ApiUtil {
 		String password = nacosConfigProperties.getPassword();
 		params.put(USERNAME, username);
 		params.put(PASSWORD, password);
-		String result = HttpUtil.doPost(tokenUri, params, new HashMap<>(0), protocolProxy.sslEnabled());
+		String result = HttpUtil.doFormUrlencodedPost(tokenUri, params, new HashMap<>(0), protocolProxy.sslEnabled());
 		if (StringUtil.isEmpty(result)) {
 			return EMPTY;
 		}
@@ -84,7 +84,7 @@ public class ApiUtil {
 
 	public void doConfigInfo(ConfigCO co, String token) {
 		String configUri = protocolProxy.getConfigUri(nacosConfigProperties.getServerAddr());
-		HttpUtil.doPost(configUri, getMap(co, token), new HashMap<>(0), protocolProxy.sslEnabled());
+		HttpUtil.doFormUrlencodedPost(configUri, getMap(co, token), new HashMap<>(0), protocolProxy.sslEnabled());
 	}
 
 	@SneakyThrows

@@ -35,8 +35,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.HashMap;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -76,24 +77,30 @@ public class OAuth2ApiTest {
 		String encryptPassword = RsaUtil.encryptByPublicKey(PASSWORD, publicKey);
 		String decryptUsername = RsaUtil.decryptByPrivateKey(encryptUsername, privateKey);
 		String decryptPassword = RsaUtil.decryptByPrivateKey(encryptPassword, privateKey);
-		String token = "";// getUsernamePasswordAuthApi(SNOWFLAKE_ID, captcha,
-							// decryptUsername, decryptPassword);
+		String usernamePasswordAuthApi = getUsernamePasswordAuthApi(SNOWFLAKE_ID, captcha, decryptUsername, decryptPassword);
 		log.info("验证码：{}", captcha);
 		log.info("加密用户名：{}", encryptUsername);
 		log.info("加密密码：{}", encryptPassword);
 		log.info("解密用户名：{}", decryptUsername);
 		log.info("解密密码：{}", decryptPassword);
 		log.info("uuid：{}", SNOWFLAKE_ID);
-		log.info("token：{}", token);
+		log.info("token：{}", usernamePasswordAuthApi);
 	}
 
 	@SneakyThrows
 	private String getUsernamePasswordAuthApi(long uuid, String captcha, String username, String password) {
-		String apiUrl = "/oauth2/token";
-		MvcResult mvcResult = mockMvc.perform(post(apiUrl).contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
-			.andExpect(status().isOk())
-			.andReturn();
-		return mvcResult.getResponse().getContentAsString();
+		String apiUrl = "http://127.0.0.1:1111/oauth2/token";
+		HashMap<String, String> params = new HashMap<>();
+		HashMap<String, String> headers = new HashMap<>(1);
+		params.put("uuid", String.valueOf(uuid));
+		params.put("username", username);
+		params.put("password", password);
+		params.put("tenant_id", "0");
+		params.put("grant_type", "password");
+		params.put("captcha", captcha);
+		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+		return null;
+		//return HttpUtil.doPost(apiUrl,params,headers, false, false);
 	}
 
 	@SneakyThrows
