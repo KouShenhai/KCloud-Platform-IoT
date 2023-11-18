@@ -22,12 +22,14 @@ import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactoryBuilder;
+import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
@@ -96,6 +98,38 @@ public class HttpUtil {
 		}
 	}
 
+	@SneakyThrows
+	public static String doFormDataPost(String url, Map<String, String> params, Map<String, String> headers,boolean disableSsl) {
+		// 创建HttpClient对象
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+		if (disableSsl) {
+			disableSsl(httpClientBuilder);
+		}
+		try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
+			HttpPost httpPost = new HttpPost(url);
+			if (MapUtil.isNotEmpty(headers)) {
+				headers.forEach(httpPost::addHeader);
+			}
+			MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+			if (MapUtil.isNotEmpty(params)) {
+				params.forEach(entityBuilder::addTextBody);
+			}
+			HttpEntity httpEntity = entityBuilder.build();
+			httpPost.setEntity(httpEntity);
+			String resultString = EMPTY;
+			try {
+				// 执行请求
+				resultString = httpClient.execute(httpPost,
+						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
+			}
+			catch (IOException e) {
+				log.error("调用失败，错误信息", e);
+			}
+			log.info("打印：{}", resultString);
+			return resultString;
+		}
+	}
+
 	public static String doFormUrlencodedPost(String url, Map<String, String> params, Map<String, String> headers) {
 		return doFormUrlencodedPost(url, params, headers, false);
 	}
@@ -149,12 +183,11 @@ public class HttpUtil {
 			disableSsl(httpClientBuilder);
 		}
 		try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
-			RequestConfig requestConfig = RequestConfig.custom().build();
 			HttpPost httpPost = new HttpPost(url);
+			headers.forEach(httpPost::setHeader);
+			httpPost.setConfig(RequestConfig.custom().build());
 			httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
 			httpPost.setHeader("Accept", "*/*;charset=utf-8");
-			headers.forEach(httpPost::setHeader);
-			httpPost.setConfig(requestConfig);
 			String parameter = JacksonUtil.toJsonStr(param);
 			httpPost.setEntity(new StringEntity(parameter));
 			String resultString = EMPTY;
@@ -175,8 +208,7 @@ public class HttpUtil {
 	 * 转换为驼峰json字符串
 	 */
 	public static String transformerUnderHumpData(String data) {
-		data = data.toLowerCase();
-		Matcher matcher = LINE_PATTERN.matcher(data);
+		Matcher matcher = LINE_PATTERN.matcher(data.toLowerCase());
 		StringBuilder sb = new StringBuilder();
 		while (matcher.find()) {
 			matcher.appendReplacement(sb, matcher.group(1).toUpperCase());

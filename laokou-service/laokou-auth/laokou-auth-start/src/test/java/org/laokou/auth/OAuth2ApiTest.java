@@ -23,10 +23,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.domain.gateway.CaptchaGateway;
+import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestConstructor;
@@ -37,6 +39,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.HashMap;
 
+import static org.laokou.common.i18n.common.Constant.LOCAL_IP;
+import static org.laokou.common.i18n.common.Constant.RISK;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -60,6 +64,8 @@ public class OAuth2ApiTest {
 	private final RedisUtil redisUtil;
 
 	private final WebApplicationContext webApplicationContext;
+
+	private final ServerProperties serverProperties;
 
 	private MockMvc mockMvc;
 
@@ -89,7 +95,7 @@ public class OAuth2ApiTest {
 
 	@SneakyThrows
 	private String getUsernamePasswordAuthApi(long uuid, String captcha, String username, String password) {
-		String apiUrl = "http://127.0.0.1:1111/oauth2/token";
+		String apiUrl = getOAuthApiUrl();
 		HashMap<String, String> params = new HashMap<>();
 		HashMap<String, String> headers = new HashMap<>(1);
 		params.put("uuid", String.valueOf(uuid));
@@ -99,8 +105,8 @@ public class OAuth2ApiTest {
 		params.put("grant_type", "password");
 		params.put("captcha", captcha);
 		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-		return null;
-		//return HttpUtil.doPost(apiUrl,params,headers, false, false);
+		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+		return JacksonUtil.readTree(json).get("access_token").asText();
 	}
 
 	@SneakyThrows
@@ -118,6 +124,18 @@ public class OAuth2ApiTest {
 			.andExpect(status().isOk())
 			.andReturn();
 		return JacksonUtil.readTree(mvcResult.getResponse().getContentAsString()).get("data").asText();
+	}
+
+	private String getOAuthApiUrl() {
+		return getSchema(disabledSsl()) + LOCAL_IP + RISK + serverProperties.getPort() + "/oauth2/token";
+	}
+
+	private String getSchema(boolean disabled) {
+		return disabled ? "https://" : "http://";
+	}
+
+	private boolean disabledSsl() {
+		return serverProperties.getSsl().isEnabled();
 	}
 
 }
