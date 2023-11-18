@@ -23,10 +23,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.domain.gateway.CaptchaGateway;
+import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestConstructor;
@@ -35,8 +37,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.HashMap;
+
+import static org.laokou.common.i18n.common.Constant.LOCAL_IP;
+import static org.laokou.common.i18n.common.Constant.RISK;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -60,6 +65,8 @@ public class OAuth2ApiTest {
 
 	private final WebApplicationContext webApplicationContext;
 
+	private final ServerProperties serverProperties;
+
 	private MockMvc mockMvc;
 
 	@BeforeEach
@@ -76,24 +83,31 @@ public class OAuth2ApiTest {
 		String encryptPassword = RsaUtil.encryptByPublicKey(PASSWORD, publicKey);
 		String decryptUsername = RsaUtil.decryptByPrivateKey(encryptUsername, privateKey);
 		String decryptPassword = RsaUtil.decryptByPrivateKey(encryptPassword, privateKey);
-		String token = "";// getUsernamePasswordAuthApi(SNOWFLAKE_ID, captcha,
-							// decryptUsername, decryptPassword);
+		String usernamePasswordAuthApi = getUsernamePasswordAuthApi(SNOWFLAKE_ID, captcha, decryptUsername,
+				decryptPassword);
 		log.info("验证码：{}", captcha);
 		log.info("加密用户名：{}", encryptUsername);
 		log.info("加密密码：{}", encryptPassword);
 		log.info("解密用户名：{}", decryptUsername);
 		log.info("解密密码：{}", decryptPassword);
 		log.info("uuid：{}", SNOWFLAKE_ID);
-		log.info("token：{}", token);
+		log.info("token：{}", usernamePasswordAuthApi);
 	}
 
 	@SneakyThrows
 	private String getUsernamePasswordAuthApi(long uuid, String captcha, String username, String password) {
-		String apiUrl = "/oauth2/token";
-		MvcResult mvcResult = mockMvc.perform(post(apiUrl).contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
-			.andExpect(status().isOk())
-			.andReturn();
-		return mvcResult.getResponse().getContentAsString();
+		String apiUrl = getOAuthApiUrl();
+		HashMap<String, String> params = new HashMap<>();
+		HashMap<String, String> headers = new HashMap<>(1);
+		params.put("uuid", String.valueOf(uuid));
+		params.put("username", username);
+		params.put("password", password);
+		params.put("tenant_id", "0");
+		params.put("grant_type", "password");
+		params.put("captcha", captcha);
+		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+		return JacksonUtil.readTree(json).get("access_token").asText();
 	}
 
 	@SneakyThrows
@@ -111,6 +125,18 @@ public class OAuth2ApiTest {
 			.andExpect(status().isOk())
 			.andReturn();
 		return JacksonUtil.readTree(mvcResult.getResponse().getContentAsString()).get("data").asText();
+	}
+
+	private String getOAuthApiUrl() {
+		return getSchema(disabledSsl()) + LOCAL_IP + RISK + serverProperties.getPort() + "/oauth2/token";
+	}
+
+	private String getSchema(boolean disabled) {
+		return disabled ? "https://" : "http://";
+	}
+
+	private boolean disabledSsl() {
+		return serverProperties.getSsl().isEnabled();
 	}
 
 }
