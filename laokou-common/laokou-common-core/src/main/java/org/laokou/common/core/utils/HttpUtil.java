@@ -99,7 +99,8 @@ public class HttpUtil {
 	}
 
 	@SneakyThrows
-	public static String doFormDataPost(String url, Map<String, String> params, Map<String, String> headers,boolean disableSsl) {
+	public static String doFormDataPost(String url, Map<String, String> params, Map<String, String> headers,
+			boolean disableSsl) {
 		// 创建HttpClient对象
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 		if (disableSsl) {
@@ -150,7 +151,10 @@ public class HttpUtil {
 			}
 			// 创建参数列表
 			if (MapUtil.isNotEmpty(params)) {
-				List<BasicNameValuePair> list = params.entrySet().stream().map(entry -> new BasicNameValuePair(entry.getKey(), entry.getValue())).toList();
+				List<BasicNameValuePair> list = params.entrySet()
+					.stream()
+					.map(entry -> new BasicNameValuePair(entry.getKey(), entry.getValue()))
+					.toList();
 				// 模拟表单
 				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(list, StandardCharsets.UTF_8);
 				httpPost.setEntity(entity);
