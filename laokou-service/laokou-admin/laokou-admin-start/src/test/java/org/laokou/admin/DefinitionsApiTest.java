@@ -17,15 +17,20 @@
 
 package org.laokou.admin;
 
-import org.laokou.common.jasypt.utils.AesUtil;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
 
 /**
  * @author laokou
  */
-public class Test {
+@Slf4j
+@SpringBootTest
+@RequiredArgsConstructor
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+public class DefinitionsApiTest {
 
-	public static void main(String[] args) {
-		System.out.println(AesUtil.decrypt("cmV6CFYc1NUWgni0E8xpdg=="));
-	}
+    private static final String API_PREFIX = "/v1/definitions";
 
 }
