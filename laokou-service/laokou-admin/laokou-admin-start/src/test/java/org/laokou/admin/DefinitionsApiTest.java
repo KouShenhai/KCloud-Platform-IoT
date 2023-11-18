@@ -31,6 +31,6 @@ import org.springframework.test.context.TestConstructor;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class DefinitionsApiTest {
 
-    private static final String API_PREFIX = "/v1/definitions";
+	private static final String API_PREFIX = "/v1/definitions";
 
 }

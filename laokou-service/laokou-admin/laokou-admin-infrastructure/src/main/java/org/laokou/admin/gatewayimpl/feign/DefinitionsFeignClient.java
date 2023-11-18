@@ -35,7 +35,8 @@ import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWAB
 /**
  * @author laokou
  */
-@FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE, path = "v1/definitions", fallbackFactory = DefinitionsFeignClientFallbackFactory.class)
+@FeignClient(contextId = "definitions", name = LAOKOU_FLOWABLE, path = "v1/definitions",
+		fallbackFactory = DefinitionsFeignClientFallbackFactory.class)
 public interface DefinitionsFeignClient {
 
 	/**
