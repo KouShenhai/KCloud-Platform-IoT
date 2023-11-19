@@ -27,19 +27,22 @@ public class OAuth2ExceptionHandler {
 	}
 
 	@SneakyThrows
-	public static void handle(HttpServletRequest request, HttpServletResponse response, Throwable ex) {
-		if (ex instanceof InsufficientAuthenticationException) {
-			ResponseUtil.response(response, StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
-			return;
-		}
+	public static void handleAccessDenied(HttpServletRequest request, HttpServletResponse response, Throwable ex) {
 		if (ex instanceof AccessDeniedException) {
 			ResponseUtil.response(response, StatusCode.FORBIDDEN, MessageUtil.getMessage(StatusCode.FORBIDDEN));
-			return;
 		}
+	}
+
+	@SneakyThrows
+	public static void handleAuthentication(HttpServletRequest request, HttpServletResponse response, Throwable ex) {
 		if (ex instanceof OAuth2AuthenticationException authenticationException) {
 			String message = authenticationException.getError().getDescription();
 			int errorCode = Integer.parseInt(authenticationException.getError().getErrorCode());
 			ResponseUtil.response(response, errorCode, message);
+			return;
+		}
+		if (ex instanceof InsufficientAuthenticationException) {
+			ResponseUtil.response(response, StatusCode.UNAUTHORIZED, MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
 	}
 
