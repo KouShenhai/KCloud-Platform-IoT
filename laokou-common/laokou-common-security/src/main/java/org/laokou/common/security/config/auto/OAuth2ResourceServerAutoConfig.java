@@ -86,8 +86,8 @@ public class OAuth2ResourceServerAutoConfig {
 			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 			.oauth2ResourceServer(
 					resource -> resource.opaqueToken(token -> token.introspector(globalOpaqueTokenIntrospector))
-						.accessDeniedHandler(OAuth2ExceptionHandler::handle)
-						.authenticationEntryPoint(OAuth2ExceptionHandler::handle))
+						.accessDeniedHandler(OAuth2ExceptionHandler::handleAccessDenied)
+						.authenticationEntryPoint(OAuth2ExceptionHandler::handleAuthentication))
 			.build();
 	}
 
