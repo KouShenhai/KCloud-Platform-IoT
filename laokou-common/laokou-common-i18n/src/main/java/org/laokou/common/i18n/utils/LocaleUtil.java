@@ -35,8 +35,8 @@ public class LocaleUtil {
 				return LocaleContextHolder.getLocale();
 			}
 			String[] str = getLanguage(language).split(ROD);
-			// 国家 地区
-			return new Locale(str[0], str[1]);
+			// 语言 国家
+			return Locale.of(str[0], str[1]);
 		}
 		catch (Exception e) {
 			return LocaleContextHolder.getLocale();
