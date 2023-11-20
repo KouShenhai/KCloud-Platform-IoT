@@ -35,7 +35,7 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.utils.BatchUtil;
+import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -59,7 +59,7 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	private final PackageConvertor packageConvertor;
 
-	private final BatchUtil batchUtil;
+	private final MybatisUtil mybatisUtil;
 
 	@Override
 	public Boolean insert(Package pack, User user) {
@@ -145,7 +145,7 @@ public class PackageGatewayImpl implements PackageGateway {
 			List<PackageMenuDO> list = menuIds.parallelStream()
 				.map(menuId -> toPackageMenuDO(packageId, menuId, user))
 				.toList();
-			batchUtil.insertBatch(list, PackageMenuMapper.class);
+			mybatisUtil.batch(list, PackageMenuMapper.class, PackageMenuMapper::save);
 		}
 	}
 

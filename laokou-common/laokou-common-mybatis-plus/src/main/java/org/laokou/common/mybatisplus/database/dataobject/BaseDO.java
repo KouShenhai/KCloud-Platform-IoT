@@ -19,7 +19,7 @@ package org.laokou.common.mybatisplus.database.dataobject;
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.laokou.common.i18n.dto.DTO;
+import org.laokou.common.i18n.dto.AbstractDO;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -29,7 +29,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Schema(name = "BaseDO", description = "映射基类")
-public abstract class BaseDO extends DTO {
+public class BaseDO extends AbstractDO {
 
 	public static final String ID = "id";
 

@@ -68,21 +68,22 @@ public class DsUtil {
 		return sourceName;
 	}
 
-	private void addDs(String sourceName) {
-		DataSource dataSource = dataSource(sourceName);
-		// 连接数据源
-		validateDs(dataSource);
+	public void addDs(String sourceName, DataSourceProperty properties, boolean disabledTenant) {
+		DataSource dataSource = dataSource(properties);
+		if (disabledTenant) {
+			// 校验数据源
+			validateDs(dataSource);
+		}
 		dynamicUtil.getDataSource().addDataSource(sourceName, dataSource);
 	}
 
-	private DataSource dataSource(String sourceName) {
+	private void addDs(String sourceName) {
+		SourceDO source = sourceMapper.getSourceByName(sourceName);
+		addDs(sourceName, properties(source), true);
+	}
+
+	private DataSource dataSource(DataSourceProperty properties) {
 		try {
-			SourceDO source = sourceMapper.getSourceByName(sourceName);
-			DataSourceProperty properties = new DataSourceProperty();
-			properties.setUsername(source.getUsername());
-			properties.setPassword(source.getPassword());
-			properties.setUrl(source.getUrl());
-			properties.setDriverClassName(source.getDriverClassName());
 			HikariDataSourceCreator hikariDataSourceCreator = dynamicUtil.getHikariDataSourceCreator();
 			return hikariDataSourceCreator.createDataSource(properties);
 		}
@@ -94,6 +95,15 @@ public class DsUtil {
 
 	private boolean validateDs(String sourceName) {
 		return dynamicUtil.getDataSources().containsKey(sourceName);
+	}
+
+	private DataSourceProperty properties(SourceDO source) {
+		DataSourceProperty properties = new DataSourceProperty();
+		properties.setUsername(source.getUsername());
+		properties.setPassword(source.getPassword());
+		properties.setUrl(source.getUrl());
+		properties.setDriverClassName(source.getDriverClassName());
+		return properties;
 	}
 
 	/**

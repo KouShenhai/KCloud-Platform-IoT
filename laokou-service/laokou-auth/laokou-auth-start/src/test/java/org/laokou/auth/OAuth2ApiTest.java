@@ -86,8 +86,7 @@ public class OAuth2ApiTest {
 		String encryptPassword = RsaUtil.encryptByPublicKey(PASSWORD, publicKey);
 		String decryptUsername = RsaUtil.decryptByPrivateKey(encryptUsername, privateKey);
 		String decryptPassword = RsaUtil.decryptByPrivateKey(encryptPassword, privateKey);
-		String token = getUsernamePasswordAuthApi(SNOWFLAKE_ID, captcha, decryptUsername,
-				decryptPassword);
+		String token = getUsernamePasswordAuthApi(SNOWFLAKE_ID, captcha, decryptUsername, decryptPassword);
 		log.info("验证码：{}", captcha);
 		log.info("加密用户名：{}", encryptUsername);
 		log.info("加密密码：{}", encryptPassword);
@@ -111,7 +110,7 @@ public class OAuth2ApiTest {
 		headers.put("Authorization", "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 		String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
 		String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
-		Assert.isTrue(StringUtil.isNotEmpty(accessToken),"access token is not empty");
+		Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is not empty");
 		return accessToken;
 	}
 
@@ -121,7 +120,7 @@ public class OAuth2ApiTest {
 		mockMvc.perform(get(apiUrl + SNOWFLAKE_ID).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 		String key = captchaGateway.key(SNOWFLAKE_ID.toString());
 		String captcha = redisUtil.get(key).toString();
-		Assert.isTrue(StringUtil.isNotEmpty(captcha),"captcha is not empty");
+		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is not empty");
 		return captcha;
 	}
 
@@ -130,11 +129,11 @@ public class OAuth2ApiTest {
 		String apiUrl = "/v1/secrets";
 		MvcResult mvcResult = mockMvc.perform(get(apiUrl).contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
-				// 打印到控制台
-				.andDo(print())
+			// 打印到控制台
+			.andDo(print())
 			.andReturn();
 		String secret = JacksonUtil.readTree(mvcResult.getResponse().getContentAsString()).get("data").asText();
-		Assert.isTrue(StringUtil.isNotEmpty(secret),"secret is not empty");
+		Assert.isTrue(StringUtil.isNotEmpty(secret), "secret is not empty");
 		return secret;
 	}
 

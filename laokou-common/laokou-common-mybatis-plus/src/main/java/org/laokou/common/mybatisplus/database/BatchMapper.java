@@ -25,9 +25,9 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.ResultHandler;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.AbstractDO;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
-import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +38,7 @@ import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 /**
  * @author laokou
  */
-public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
+public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 
 	Logger log = LoggerFactory.getLogger(BatchMapper.class);
 
@@ -81,16 +81,16 @@ public interface BatchMapper<T extends BaseDO> extends BaseMapper<T> {
 	/**
 	 * 新增动态分表
 	 */
-	default Boolean insertDynamicTable(T t, String sql, String suffix) {
+	default void insertDynamicTable(T t, String sql, String suffix) {
 		try {
 			DynamicTableSuffixContextHolder.set(suffix);
 			t.setId(IdGenerator.defaultSnowflakeId());
-			return this.insert(t) > 0;
+			this.insert(t);
 		}
 		catch (Exception e) {
 			log.error("错误信息", e);
 			this.execute(sql);
-			return this.insert(t) > 0;
+			this.insert(t);
 		}
 		finally {
 			DynamicTableSuffixContextHolder.clear();

@@ -37,7 +37,7 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.mybatisplus.utils.BatchUtil;
+import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -59,7 +59,7 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private final RoleDeptMapper roleDeptMapper;
 
-	private final BatchUtil batchUtil;
+	private final MybatisUtil mybatisUtil;
 
 	private final TransactionalUtil transactionalUtil;
 
@@ -155,14 +155,14 @@ public class RoleGatewayImpl implements RoleGateway {
 	private void insertRoleMenu(Long roleId, List<Long> menuIds, User user) {
 		if (CollectionUtil.isNotEmpty(menuIds)) {
 			List<RoleMenuDO> list = menuIds.parallelStream().map(menuId -> toRoleMenuDO(roleId, menuId, user)).toList();
-			batchUtil.insertBatch(list, RoleMenuMapper.class);
+			mybatisUtil.batch(list, RoleMenuMapper.class, RoleMenuMapper::save);
 		}
 	}
 
 	private void insertRoleDept(Long roleId, List<Long> deptIds, User user) {
 		if (CollectionUtil.isNotEmpty(deptIds)) {
 			List<RoleDeptDO> list = deptIds.parallelStream().map(deptId -> toRoleDeptDO(roleId, deptId, user)).toList();
-			batchUtil.insertBatch(list, RoleDeptMapper.class);
+			mybatisUtil.batch(list, RoleDeptMapper.class, RoleDeptMapper::save);
 		}
 	}
 

@@ -41,7 +41,7 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.mybatisplus.utils.BatchUtil;
+import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.im.dto.message.clientobject.WsMsgCO;
@@ -73,7 +73,7 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	private final MessageConvertor messageConvertor;
 
-	private final BatchUtil batchUtil;
+	private final MybatisUtil mybatisUtil;
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_MESSAGE)
@@ -132,7 +132,8 @@ public class MessageGatewayImpl implements MessageGateway {
 			List<MessageDetailDO> list = receiver.parallelStream()
 				.map(userId -> toMessageDetailDO(messageId, userId, user))
 				.toList();
-			batchUtil.insertBatch(list, MessageDetailMapper.class, DynamicDataSourceContextHolder.peek());
+			mybatisUtil.batch(list, MessageDetailMapper.class, DynamicDataSourceContextHolder.peek(),
+					MessageDetailMapper::save);
 		}
 	}
 

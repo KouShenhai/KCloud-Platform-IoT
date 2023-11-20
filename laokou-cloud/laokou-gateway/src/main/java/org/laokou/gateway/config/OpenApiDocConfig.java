@@ -30,6 +30,8 @@ import java.util.List;
 import static org.laokou.common.i18n.common.Constant.HTTPS_SCHEME;
 
 /**
+ * API文档配置
+ *
  * @author laokou
  */
 @Configuration
