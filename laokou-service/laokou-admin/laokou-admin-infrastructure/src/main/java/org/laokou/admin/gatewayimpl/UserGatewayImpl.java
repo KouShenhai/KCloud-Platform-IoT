@@ -39,7 +39,7 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
-import org.laokou.common.mybatisplus.utils.BatchUtil;
+import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -70,7 +70,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final PasswordEncoder passwordEncoder;
 
-	private final BatchUtil batchUtil;
+	private final MybatisUtil mybatisUtil;
 
 	private final UserRoleMapper userRoleMapper;
 
@@ -229,7 +229,7 @@ public class UserGatewayImpl implements UserGateway {
 	private void insertUserRole(List<Long> roleIds, UserDO userDO) {
 		if (CollectionUtil.isNotEmpty(roleIds)) {
 			List<UserRoleDO> list = roleIds.parallelStream().map(roleId -> toUserRoleDO(userDO, roleId)).toList();
-			batchUtil.insertBatch(list, UserRoleMapper.class);
+			mybatisUtil.batch(list, UserRoleMapper.class, UserRoleMapper::save);
 		}
 	}
 

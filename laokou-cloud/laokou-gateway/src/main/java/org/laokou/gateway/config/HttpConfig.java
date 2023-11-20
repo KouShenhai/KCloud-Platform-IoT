@@ -24,14 +24,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 
 /**
+ * 消息转换器配置
+ *
  * @author laokou
  */
 @Configuration
 public class HttpConfig {
 
-	/**
-	 * 消息转换器配置
-	 */
 	@Bean
 	@ConditionalOnMissingBean(HttpMessageConverters.class)
 	public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {

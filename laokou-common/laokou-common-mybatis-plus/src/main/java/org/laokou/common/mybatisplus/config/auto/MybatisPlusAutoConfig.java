@@ -112,7 +112,7 @@ public class MybatisPlusAutoConfig {
 		// 默认数据库隔离级别
 		transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
 		// 事务超时时间,单位s
-		transactionTemplate.setTimeout(30);
+		transactionTemplate.setTimeout(180);
 		// 事务名称
 		transactionTemplate.setName("laokou-transaction-template");
 		return transactionTemplate;
