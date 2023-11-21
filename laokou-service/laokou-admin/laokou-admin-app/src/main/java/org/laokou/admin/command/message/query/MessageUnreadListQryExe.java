@@ -43,13 +43,15 @@ import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 public class MessageUnreadListQryExe {
 
 	private final MessageMapper messageMapper;
+
 	private final TransactionalUtil transactionalUtil;
 
 	@DS(TENANT)
 	public Result<Datas<MessageCO>> execute(MessageUnreadListQry qry) {
 		IPage<MessageDO> page = new Page<>(qry.getPageNum(), qry.getPageSize());
-		IPage<MessageDO> newPage = transactionalUtil.defaultExecute(r -> messageMapper.getUnreadMessageListByUserIdAndType(page, UserUtil.getUserId(),
-				qry.getType()), TransactionDefinition.ISOLATION_READ_UNCOMMITTED, true);
+		IPage<MessageDO> newPage = transactionalUtil.defaultExecute(
+				r -> messageMapper.getUnreadMessageListByUserIdAndType(page, UserUtil.getUserId(), qry.getType()),
+				TransactionDefinition.ISOLATION_READ_UNCOMMITTED, true);
 		long total = newPage.getTotal();
 		Datas<MessageCO> datas = new Datas<>();
 		datas.setTotal(total);
