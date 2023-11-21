@@ -76,12 +76,13 @@ public class MybatisUtil {
 		CyclicBarrier cyclicBarrier;
 		if (size > 10) {
 			cyclicBarrier = null;
-		} else {
+		}
+		else {
 			cyclicBarrier = new CyclicBarrier(partition.size());
 		}
 		List<CompletableFuture<Void>> futures = partition.stream()
-			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds, cyclicBarrier),
-					taskExecutor))
+			.map(item -> CompletableFuture
+				.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds, cyclicBarrier), taskExecutor))
 			.toList();
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 		if (rollback.get()) {
@@ -119,7 +120,7 @@ public class MybatisUtil {
 		}
 	}
 
-	private void handleException(AtomicBoolean rollback, Exception e,CyclicBarrier cyclicBarrier) {
+	private void handleException(AtomicBoolean rollback, Exception e, CyclicBarrier cyclicBarrier) {
 		// 回滚标识
 		rollback.compareAndSet(false, true);
 		log.error("批量插入数据异常，已设置回滚标识，错误信息", e);

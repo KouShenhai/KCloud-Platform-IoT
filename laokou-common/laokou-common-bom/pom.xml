@@ -69,7 +69,7 @@
         <!--junit版本-->
         <junit.version>4.13.2</junit.version>
         <!--spring-security-oauth2-authorization-server版本-->
-        <spring-security-oauth2-authorization-server.version>1.2.0-RC1</spring-security-oauth2-authorization-server.version>
+        <spring-security-oauth2-authorization-server.version>1.2.0</spring-security-oauth2-authorization-server.version>
         <!--spring-boot-starter-oauth2-resource-server版本-->
         <spring-boot-starter-oauth2-resource-server.version>3.2.0-RC2</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
@@ -95,7 +95,7 @@
         <!--kafka版本-->
         <kafka.version>3.0.12</kafka.version>
         <!--netty版本-->
-        <netty.version>4.1.100.Final</netty.version>
+        <netty.version>4.1.101.Final</netty.version>
         <!--gson版本-->
         <gson.version>2.10.1</gson.version>
         <!--swagger版本-->
