@@ -188,7 +188,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	private Boolean insertUser(UserDO userDO, User user) {
-		return transactionalUtil.execute(rollback -> {
+		return transactionalUtil.execute(r -> {
 			try {
 				userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),
 						UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
@@ -197,7 +197,7 @@ public class UserGatewayImpl implements UserGateway {
 			}
 			catch (Exception e) {
 				log.error("错误信息", e);
-				rollback.setRollbackOnly();
+				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
 			finally {
@@ -236,14 +236,14 @@ public class UserGatewayImpl implements UserGateway {
 	private Boolean updateUser(UserDO userDO) {
 		try {
 			DynamicDataSourceContextHolder.push(USER);
-			return transactionalUtil.execute(rollback -> {
+			return transactionalUtil.execute(r -> {
 				try {
 					return userMapper.updateUser(userDO,
 							TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER)) > 0;
 				}
 				catch (Exception e) {
 					log.error("错误信息", e);
-					rollback.setRollbackOnly();
+					r.setRollbackOnly();
 					throw new SystemException(e.getMessage());
 				}
 			});
@@ -256,13 +256,13 @@ public class UserGatewayImpl implements UserGateway {
 	private Boolean deleteUserById(Long id) {
 		try {
 			DynamicDataSourceContextHolder.push(USER);
-			return transactionalUtil.execute(rollback -> {
+			return transactionalUtil.execute(r -> {
 				try {
 					return userMapper.deleteDynamicTableById(id, getUserTableSuffix(id)) > 0;
 				}
 				catch (Exception e) {
 					log.error("错误信息", e);
-					rollback.setRollbackOnly();
+					r.setRollbackOnly();
 					throw new SystemException(e.getMessage());
 				}
 			});

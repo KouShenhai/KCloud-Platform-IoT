@@ -29,7 +29,10 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 
@@ -68,8 +71,16 @@ public class MybatisUtil {
 		// 数据分组
 		List<List<T>> partition = Lists.partition(dataList, batchNum);
 		AtomicBoolean rollback = new AtomicBoolean(false);
+		int size = partition.size();
+		// 经测试，10个任务可以支持多线程事务回滚，超过则被阻塞
+		CyclicBarrier cyclicBarrier;
+		if (size > 10) {
+			cyclicBarrier = null;
+		} else {
+			cyclicBarrier = new CyclicBarrier(partition.size());
+		}
 		List<CompletableFuture<Void>> futures = partition.stream()
-			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds),
+			.map(item -> CompletableFuture.runAsync(() -> handleBatch(item, clazz, consumer, rollback, ds, cyclicBarrier),
 					taskExecutor))
 			.toList();
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
@@ -80,17 +91,20 @@ public class MybatisUtil {
 
 	@SneakyThrows
 	private <T, M> void handleBatch(List<T> item, Class<M> clazz, BiConsumer<M, T> consumer, AtomicBoolean rollback,
-			String ds) {
+			String ds, CyclicBarrier cyclicBarrier) {
 		try {
 			DynamicDataSourceContextHolder.push(ds);
 			SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
 			M mapper = sqlSession.getMapper(clazz);
 			try {
 				item.forEach(i -> consumer.accept(mapper, i));
+				if (Objects.nonNull(cyclicBarrier)) {
+					cyclicBarrier.await(180, TimeUnit.SECONDS);
+				}
 				sqlSession.commit();
 			}
 			catch (Exception e) {
-				handleException(rollback, e);
+				handleException(rollback, e, cyclicBarrier);
 			}
 			finally {
 				if (rollback.get()) {
@@ -105,10 +119,13 @@ public class MybatisUtil {
 		}
 	}
 
-	private void handleException(AtomicBoolean rollback, Exception e) {
+	private void handleException(AtomicBoolean rollback, Exception e,CyclicBarrier cyclicBarrier) {
 		// 回滚标识
 		rollback.compareAndSet(false, true);
 		log.error("批量插入数据异常，已设置回滚标识，错误信息", e);
+		if (Objects.nonNull(cyclicBarrier)) {
+			cyclicBarrier.reset();
+		}
 	}
 
 }

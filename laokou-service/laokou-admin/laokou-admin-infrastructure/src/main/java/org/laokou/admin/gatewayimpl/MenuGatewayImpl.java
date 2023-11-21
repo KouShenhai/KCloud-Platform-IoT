@@ -68,13 +68,13 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	@Override
 	public Boolean deleteById(Long id) {
-		return transactionalUtil.execute(rollback -> {
+		return transactionalUtil.execute(r -> {
 			try {
 				return menuMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
 				log.error("错误信息", e);
-				rollback.setRollbackOnly();
+				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
 		});

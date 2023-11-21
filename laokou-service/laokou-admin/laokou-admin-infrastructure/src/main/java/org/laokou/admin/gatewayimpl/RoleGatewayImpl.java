@@ -110,7 +110,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	private Boolean insertRole(RoleDO roleDO, Role role, User user) {
-		return transactionalUtil.execute(rollback -> {
+		return transactionalUtil.execute(r -> {
 			try {
 				roleMapper.insertTable(roleDO);
 				insertRoleMenu(roleDO.getId(), role.getMenuIds(), user);
@@ -119,7 +119,7 @@ public class RoleGatewayImpl implements RoleGateway {
 			}
 			catch (Exception e) {
 				log.error("错误信息", e);
-				rollback.setRollbackOnly();
+				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
 		});
@@ -127,7 +127,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	private Boolean updateRole(RoleDO roleDO, Role role, User user) {
-		return transactionalUtil.execute(rollback -> {
+		return transactionalUtil.execute(r -> {
 			try {
 				roleMapper.updateById(roleDO);
 				updateRoleDept(roleDO.getId(), role.getDeptIds(), user);
@@ -136,7 +136,7 @@ public class RoleGatewayImpl implements RoleGateway {
 			}
 			catch (Exception e) {
 				log.error("错误信息", e);
-				rollback.setRollbackOnly();
+				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
 		});
