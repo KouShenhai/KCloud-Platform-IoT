@@ -86,7 +86,7 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	@Override
 	public Boolean deleteById(Long id) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return roleMapper.deleteById(id) > 0;
 			}
@@ -110,7 +110,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	private Boolean insertRole(RoleDO roleDO, Role role, User user) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				roleMapper.insertTable(roleDO);
 				insertRoleMenu(roleDO.getId(), role.getMenuIds(), user);
@@ -127,7 +127,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	private Boolean updateRole(RoleDO roleDO, Role role, User user) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				roleMapper.updateById(roleDO);
 				updateRoleDept(roleDO.getId(), role.getDeptIds(), user);

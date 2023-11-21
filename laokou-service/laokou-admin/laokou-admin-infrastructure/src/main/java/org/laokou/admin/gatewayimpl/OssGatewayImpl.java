@@ -82,6 +82,7 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	@Override
+	@DS(TENANT)
 	public Boolean update(Oss oss) {
 		OssDO ossDO = ossConvertor.toDataObject(oss);
 		ossDO.setVersion(ossMapper.getVersion(ossDO.getId(), OssDO.class));
@@ -91,7 +92,7 @@ public class OssGatewayImpl implements OssGateway {
 	@Override
 	@DS(TENANT)
 	public Boolean deleteById(Long id) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return ossMapper.deleteById(id) > 0;
 			}
@@ -118,7 +119,7 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	private Boolean insertOss(OssDO ossDO) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return ossMapper.insertTable(ossDO);
 			}
@@ -131,7 +132,7 @@ public class OssGatewayImpl implements OssGateway {
 	}
 
 	private Boolean updateOss(OssDO ossDO) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return ossMapper.updateById(ossDO) > 0;
 			}

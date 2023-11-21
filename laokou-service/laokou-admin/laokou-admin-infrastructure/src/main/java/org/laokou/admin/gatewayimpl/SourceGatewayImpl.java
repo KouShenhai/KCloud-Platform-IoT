@@ -80,7 +80,7 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	@Override
 	public Boolean deleteById(Long id) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return sourceMapper.deleteById(id) > 0;
 			}
@@ -93,7 +93,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	}
 
 	private Boolean updateSource(SourceDO sourceDO) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return sourceMapper.updateById(sourceDO) > 0;
 			}
@@ -106,7 +106,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	}
 
 	private Boolean insertSource(SourceDO sourceDO) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return sourceMapper.insertTable(sourceDO);
 			}

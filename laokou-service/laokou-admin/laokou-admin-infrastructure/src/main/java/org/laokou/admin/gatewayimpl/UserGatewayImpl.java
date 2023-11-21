@@ -171,7 +171,7 @@ public class UserGatewayImpl implements UserGateway {
 	private void deleteUserRole(User user) {
 		try {
 			DynamicDataSourceContextHolder.push(MASTER);
-			transactionalUtil.executeWithoutResult(rollback -> {
+			transactionalUtil.defaultExecuteWithoutResult(rollback -> {
 				try {
 					userRoleMapper.deleteUserRoleByUserId(user.getId());
 				}
@@ -188,7 +188,7 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	private Boolean insertUser(UserDO userDO, User user) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),
 						UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
@@ -236,7 +236,7 @@ public class UserGatewayImpl implements UserGateway {
 	private Boolean updateUser(UserDO userDO) {
 		try {
 			DynamicDataSourceContextHolder.push(USER);
-			return transactionalUtil.execute(r -> {
+			return transactionalUtil.defaultExecute(r -> {
 				try {
 					return userMapper.updateUser(userDO,
 							TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER)) > 0;
@@ -256,7 +256,7 @@ public class UserGatewayImpl implements UserGateway {
 	private Boolean deleteUserById(Long id) {
 		try {
 			DynamicDataSourceContextHolder.push(USER);
-			return transactionalUtil.execute(r -> {
+			return transactionalUtil.defaultExecute(r -> {
 				try {
 					return userMapper.deleteDynamicTableById(id, getUserTableSuffix(id)) > 0;
 				}

@@ -63,7 +63,7 @@ public class DefinitionActiveCmdExe {
 	}
 
 	private Boolean activate(String definitionId) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				// 激活
 				repositoryService.activateProcessDefinitionById(definitionId, true, null);

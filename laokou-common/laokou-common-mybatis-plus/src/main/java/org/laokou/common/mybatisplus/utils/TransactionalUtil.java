@@ -34,24 +34,51 @@ public class TransactionalUtil {
 
 	private final TransactionTemplate transactionTemplate;
 
+	public <T> T execute(TransactionCallback<T> action, int propagationBehavior, int isolationLevel, boolean readOnly) {
+		return build(propagationBehavior, isolationLevel, readOnly).execute(action);
+	}
+
+	public <T> T defaultExecute(TransactionCallback<T> action, int isolationLevel, boolean readOnly) {
+		return execute(action, TransactionDefinition.PROPAGATION_REQUIRED, isolationLevel, readOnly);
+	}
+
 	public <T> T defaultExecute(TransactionCallback<T> action) {
-		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		return transactionTemplate.execute(action);
+		return execute(action, TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+	}
+
+	public <T> T newExecute(TransactionCallback<T> action, int isolationLevel, boolean readOnly) {
+		return execute(action, TransactionDefinition.PROPAGATION_REQUIRES_NEW, isolationLevel, readOnly);
+	}
+
+	public <T> T newExecute(TransactionCallback<T> action) {
+		return execute(action, TransactionDefinition.PROPAGATION_REQUIRES_NEW, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+	}
+
+	public void executeWithoutResult(Consumer<TransactionStatus> action, int propagationBehavior, int isolationLevel, boolean readOnly) {
+		build(propagationBehavior, isolationLevel, readOnly).executeWithoutResult(action);
+	}
+
+	public void defaultExecuteWithoutResult(Consumer<TransactionStatus> action, int isolationLevel, boolean readOnly) {
+		executeWithoutResult(action,TransactionDefinition.PROPAGATION_REQUIRED , isolationLevel, readOnly);
 	}
 
 	public void defaultExecuteWithoutResult(Consumer<TransactionStatus> action) {
-		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		transactionTemplate.executeWithoutResult(action);
+		executeWithoutResult(action,TransactionDefinition.PROPAGATION_REQUIRED , TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 	}
 
-	public <T> T execute(TransactionCallback<T> action) {
-		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-		return transactionTemplate.execute(action);
+	public void newExecuteWithoutResult(Consumer<TransactionStatus> action) {
+		executeWithoutResult(action,TransactionDefinition.PROPAGATION_REQUIRES_NEW , TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 	}
 
-	public void executeWithoutResult(Consumer<TransactionStatus> action) {
-		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-		transactionTemplate.executeWithoutResult(action);
+	public void newExecuteWithoutResult(Consumer<TransactionStatus> action, int isolationLevel, boolean readOnly) {
+		executeWithoutResult(action,TransactionDefinition.PROPAGATION_REQUIRES_NEW , isolationLevel, readOnly);
+	}
+
+	private TransactionTemplate build(int propagationBehavior, int isolationLevel, boolean readOnly) {
+		transactionTemplate.setPropagationBehavior(propagationBehavior);
+		transactionTemplate.setIsolationLevel(isolationLevel);
+		transactionTemplate.setReadOnly(readOnly);
+		return transactionTemplate;
 	}
 
 }

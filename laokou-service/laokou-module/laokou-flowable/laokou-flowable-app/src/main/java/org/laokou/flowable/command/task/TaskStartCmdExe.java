@@ -74,7 +74,7 @@ public class TaskStartCmdExe {
 	}
 
 	private StartCO start(String definitionKey, String businessKey, String instanceName) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionKey, businessKey);
 				if (processInstance == null) {

@@ -44,7 +44,7 @@ public class DefinitionDeleteCmdExe {
 	public Result<Boolean> execute(DefinitionDeleteCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(FLOWABLE);
-			return transactionalUtil.execute(r -> {
+			return transactionalUtil.defaultExecute(r -> {
 				try {
 					// true允许级联删除 不设置会导致数据库关联异常
 					repositoryService.deleteDeployment(cmd.getDeploymentId(), true);

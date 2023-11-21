@@ -65,7 +65,7 @@ public class TaskResolveCmdExe {
 	}
 
 	private Boolean resolve(String taskId) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				taskService.resolveTask(taskId);
 				return true;

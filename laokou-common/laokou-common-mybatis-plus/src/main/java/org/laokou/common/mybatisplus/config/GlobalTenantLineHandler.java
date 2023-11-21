@@ -37,7 +37,7 @@ public class GlobalTenantLineHandler implements TenantLineHandler {
 
 	@Override
 	public boolean ignoreTable(String tableName) {
-		return ignoreTables.contains(tableName);
+		return ignoreTables.contains(tableName) || ignoreTables.stream().anyMatch(tableName::contains);
 	}
 
 	@Override

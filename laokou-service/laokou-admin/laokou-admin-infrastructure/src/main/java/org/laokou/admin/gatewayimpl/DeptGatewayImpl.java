@@ -83,7 +83,7 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	@Override
 	public Boolean deleteById(Long id) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return deptMapper.deleteById(id) > 0;
 			}
@@ -101,7 +101,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	public Boolean updateDept(DeptDO deptDO, String oldPath, String newPath, List<DeptDO> deptChildrenList) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				deptMapper.updateById(deptDO);
 				updateDeptChildren(oldPath, newPath, deptChildrenList);
@@ -116,7 +116,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	private Boolean insertDept(DeptDO deptDO) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return deptMapper.insertTable(deptDO);
 			}

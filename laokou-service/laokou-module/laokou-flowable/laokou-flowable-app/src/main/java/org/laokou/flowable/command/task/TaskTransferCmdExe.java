@@ -66,7 +66,7 @@ public class TaskTransferCmdExe {
 	}
 
 	private Boolean transfer(String taskId, String owner, String assignee) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				taskService.setOwner(taskId, owner);
 				taskService.setAssignee(taskId, assignee);

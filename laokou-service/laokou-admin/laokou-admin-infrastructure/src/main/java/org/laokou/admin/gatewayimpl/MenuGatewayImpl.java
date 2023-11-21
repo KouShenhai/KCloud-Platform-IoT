@@ -68,7 +68,7 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	@Override
 	public Boolean deleteById(Long id) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return menuMapper.deleteById(id) > 0;
 			}
@@ -123,7 +123,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	private Boolean updateMenu(MenuDO menuDO) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return menuMapper.updateById(menuDO) > 0;
 			}
@@ -136,7 +136,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	}
 
 	private Boolean insertMenu(MenuDO menuDO) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return menuMapper.insertTable(menuDO);
 			}

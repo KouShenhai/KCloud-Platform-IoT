@@ -35,6 +35,7 @@
             , message
             from ${table} as boot_sys_login_log
             where boot_sys_login_log.del_flag = 0
+            and boot_sys_login_log.tenant_id = #{log.tenantId}
             and boot_sys_login_log.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
             <if test="log.username != null and log.username != ''">
                 and boot_sys_login_log.`username` like #{log.username}
@@ -66,6 +67,7 @@
                 , message
                 from ${table} as boot_sys_login_log
                 where boot_sys_login_log.del_flag = 0
+                and boot_sys_login_log.tenant_id = #{param.tenantId}
                 and boot_sys_login_log.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
                 <if test="param.username != null and param.username != ''">
                     and boot_sys_login_log.`username` like #{param.username}
@@ -86,6 +88,7 @@
             select 1 as n
             from ${table} as boot_sys_login_log
             where boot_sys_login_log.del_flag = 0
+            and boot_sys_login_log.tenant_id = #{param.tenantId}
             and boot_sys_login_log.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
             <if test="param.username != null and param.username != ''">
                 and boot_sys_login_log.`username` like #{param.username}
@@ -105,6 +108,7 @@
             select count(1) as n
             from ${table} as boot_sys_login_log
             where boot_sys_login_log.del_flag = 0
+            and boot_sys_login_log.tenant_id = #{log.tenantId}
             and boot_sys_login_log.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
             <if test="log.username != null and log.username != ''">
                 and boot_sys_login_log.`username` like #{log.username}

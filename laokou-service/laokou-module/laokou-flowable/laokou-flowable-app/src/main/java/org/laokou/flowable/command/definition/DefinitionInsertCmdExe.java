@@ -71,7 +71,7 @@ public class DefinitionInsertCmdExe {
 	}
 
 	private Boolean deploy(String key, String name, BpmnModel bpmnModel) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return repositoryService.createDeployment()
 					.name(name)
