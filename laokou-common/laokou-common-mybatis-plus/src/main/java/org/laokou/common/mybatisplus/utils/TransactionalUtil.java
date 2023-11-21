@@ -18,6 +18,7 @@ package org.laokou.common.mybatisplus.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -33,11 +34,23 @@ public class TransactionalUtil {
 
 	private final TransactionTemplate transactionTemplate;
 
+	public <T> T defaultExecute(TransactionCallback<T> action) {
+		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		return transactionTemplate.execute(action);
+	}
+
+	public void defaultExecuteWithoutResult(Consumer<TransactionStatus> action) {
+		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		transactionTemplate.executeWithoutResult(action);
+	}
+
 	public <T> T execute(TransactionCallback<T> action) {
+		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		return transactionTemplate.execute(action);
 	}
 
 	public void executeWithoutResult(Consumer<TransactionStatus> action) {
+		transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		transactionTemplate.executeWithoutResult(action);
 	}
 
