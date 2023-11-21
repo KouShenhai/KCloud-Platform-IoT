@@ -76,7 +76,7 @@ public class TaskAuditCmdExe {
 	}
 
 	private void audit(String taskId, Map<String, Object> values) {
-		transactionalUtil.executeWithoutResult(r -> {
+		transactionalUtil.defaultExecuteWithoutResult(r -> {
 			try {
 				if (MapUtil.isNotEmpty(values)) {
 					taskService.complete(taskId, values);

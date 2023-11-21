@@ -93,7 +93,7 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	@Override
 	public Boolean deleteById(Long id) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return packageMapper.deleteById(id) > 0;
 			}
@@ -106,7 +106,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	private Boolean insertPackage(PackageDO packageDO, Package pack, User user) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				packageMapper.insertTable(packageDO);
 				insertPackageMenu(packageDO.getId(), pack.getMenuIds(), user);
@@ -121,7 +121,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	private Boolean updatePackage(PackageDO packageDO, Package pack, User user) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				packageMapper.updateById(packageDO);
 				updatePackageMenu(packageDO.getId(), pack.getMenuIds(), user);

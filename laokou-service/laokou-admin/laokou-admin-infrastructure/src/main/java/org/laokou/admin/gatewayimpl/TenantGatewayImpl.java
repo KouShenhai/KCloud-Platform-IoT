@@ -103,7 +103,7 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	@Override
 	public Boolean deleteById(Long id) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return tenantMapper.deleteById(id) > 0;
 			}
@@ -122,7 +122,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	private Boolean updateTenant(TenantDO tenantDO) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return tenantMapper.updateById(tenantDO) > 0;
 			}
@@ -144,7 +144,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	private void insertUser(DeptDO deptDO, Long tenantId) {
 		try {
 			DynamicDataSourceContextHolder.push(USER);
-			transactionalUtil.executeWithoutResult(rollback -> {
+			transactionalUtil.defaultExecuteWithoutResult(rollback -> {
 				try {
 					// 初始化超级管理员
 					UserDO userDO = new UserDO();

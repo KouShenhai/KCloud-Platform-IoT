@@ -75,6 +75,7 @@
                 ,username
             from ${table} as boot_sys_user
             where boot_sys_user.del_flag = 0
+            and boot_sys_user.tenant_id = #{tenantId}
             and boot_sys_user.`status` = 0
             <if test="pageQuery.sqlFilter != null and pageQuery.sqlFilter != ''">
                 and ${pageQuery.sqlFilter}
@@ -94,6 +95,7 @@
                 ,`status`
             FROM ${table} as boot_sys_user
             where boot_sys_user.del_flag = 0
+            and boot_sys_user.tenant_id = #{user.tenantId}
             and boot_sys_user.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
             <if test="user.username != null and user.username != ''">
                 and boot_sys_user.`username` = #{user.username}
@@ -112,6 +114,7 @@
             select count(1) as num
             FROM ${table} as boot_sys_user
             where boot_sys_user.del_flag = 0
+            and boot_sys_user.tenant_id = #{user.tenantId}
             and boot_sys_user.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
             <if test="user.username != null and user.username != ''">
                 and boot_sys_user.`username` = #{user.username}
@@ -128,6 +131,7 @@
                 select 1
                 from ${table} as boot_sys_user
                 where boot_sys_user.del_flag = 0
+                and boot_sys_user.tenant_id = #{user.tenantId}
                 and boot_sys_user.username = #{user.username}
                 <if test="user.id != null">
                     and boot_sys_user.id <![CDATA[ <> ]]> #{user.id}

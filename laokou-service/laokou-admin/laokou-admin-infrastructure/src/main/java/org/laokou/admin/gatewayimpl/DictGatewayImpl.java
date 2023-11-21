@@ -73,7 +73,7 @@ public class DictGatewayImpl implements DictGateway {
 	@Override
 	@DS(TENANT)
 	public Boolean deleteById(Long id) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return dictMapper.deleteById(id) > 0;
 			}
@@ -98,7 +98,7 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	private Boolean insertDict(DictDO dictDO) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return dictMapper.insertTable(dictDO);
 			}
@@ -111,7 +111,7 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	private Boolean updateDict(DictDO dictDO) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return dictMapper.updateById(dictDO) > 0;
 			}

@@ -29,6 +29,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
+import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class UserOptionListQryExe {
 			List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME,
 					DateUtil.format(DateUtil.now(), DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS),
 					BOOT_SYS_USER);
-			List<UserDO> list = userMapper.getOptionListByTenantId(dynamicTables, pageQuery);
+			List<UserDO> list = userMapper.getOptionListByTenantId(dynamicTables, UserUtil.getTenantId(), pageQuery);
 			if (CollectionUtil.isEmpty(list)) {
 				return Result.of(new ArrayList<>(0));
 			}

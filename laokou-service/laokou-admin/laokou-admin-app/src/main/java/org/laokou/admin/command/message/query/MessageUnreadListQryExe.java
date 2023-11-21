@@ -28,11 +28,10 @@ import org.laokou.admin.gatewayimpl.database.dataobject.MessageDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.TransactionDefinition;
 
 import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
@@ -44,14 +43,13 @@ import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 public class MessageUnreadListQryExe {
 
 	private final MessageMapper messageMapper;
+	private final TransactionalUtil transactionalUtil;
 
 	@DS(TENANT)
-	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW,
-			isolation = Isolation.READ_UNCOMMITTED, readOnly = true)
 	public Result<Datas<MessageCO>> execute(MessageUnreadListQry qry) {
 		IPage<MessageDO> page = new Page<>(qry.getPageNum(), qry.getPageSize());
-		IPage<MessageDO> newPage = messageMapper.getUnreadMessageListByUserIdAndType(page, UserUtil.getUserId(),
-				qry.getType());
+		IPage<MessageDO> newPage = transactionalUtil.defaultExecute(r -> messageMapper.getUnreadMessageListByUserIdAndType(page, UserUtil.getUserId(),
+				qry.getType()), TransactionDefinition.ISOLATION_READ_UNCOMMITTED, true);
 		long total = newPage.getTotal();
 		Datas<MessageCO> datas = new Datas<>();
 		datas.setTotal(total);

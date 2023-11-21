@@ -27,6 +27,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
+import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
 
 /**
  * @author laokou
@@ -46,7 +47,7 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 * 根据租户ID查询下拉列表
 	 * @return
 	 */
-	List<UserDO> getOptionListByTenantId(@Param("tables") List<String> tables, @Param(PAGE_QUERY) PageQuery pageQuery);
+	List<UserDO> getOptionListByTenantId(@Param("tables") List<String> tables, @Param(TENANT_ID) Long tenantId, @Param(PAGE_QUERY) PageQuery pageQuery);
 
 	/**
 	 * 查询用户列表

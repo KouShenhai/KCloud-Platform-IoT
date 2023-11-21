@@ -66,7 +66,7 @@ public class TaskDelegateCmdExe {
 	}
 
 	private Boolean delegate(String taskId, String owner, String deleteReason) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				taskService.setOwner(taskId, owner);
 				taskService.deleteTask(taskId, deleteReason);

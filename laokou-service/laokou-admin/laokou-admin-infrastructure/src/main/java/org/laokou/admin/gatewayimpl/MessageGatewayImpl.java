@@ -114,7 +114,7 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	private void insertMessage(MessageDO messageDO, Message message, User user) {
-		transactionalUtil.executeWithoutResult(rollback -> {
+		transactionalUtil.defaultExecuteWithoutResult(rollback -> {
 			try {
 				messageMapper.insertTable(messageDO);
 				insertMessageDetail(messageDO.getId(), message.getReceiver(), user);

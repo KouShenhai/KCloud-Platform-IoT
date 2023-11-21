@@ -63,7 +63,7 @@ public class MessageReadCmdExe {
 		// 0未读 1已读
 		messageDetailDO.setReadFlag(Read.YES.ordinal());
 		messageDetailDO.setVersion(messageDetailMapper.getVersion(id, MessageDetailDO.class));
-		transactionalUtil.executeWithoutResult(rollback -> {
+		transactionalUtil.defaultExecuteWithoutResult(rollback -> {
 			try {
 				messageDetailMapper.updateById(messageDetailDO);
 			}

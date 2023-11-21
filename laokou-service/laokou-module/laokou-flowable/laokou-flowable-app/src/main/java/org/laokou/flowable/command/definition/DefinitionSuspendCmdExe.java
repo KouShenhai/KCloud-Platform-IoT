@@ -63,7 +63,7 @@ public class DefinitionSuspendCmdExe {
 	}
 
 	private Boolean suspend(String definitionId) {
-		return transactionalUtil.execute(r -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
 				// 挂起
 				repositoryService.suspendProcessDefinitionById(definitionId, true, null);
