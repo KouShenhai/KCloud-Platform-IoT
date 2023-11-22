@@ -156,7 +156,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	@Override
 	public Result<Datas<Map<String, Object>>> search(ResourceSearchGetQry qry) {
-		return null;
+		return resourceSearchGetQryExe.execute(qry);
 	}
 
 }

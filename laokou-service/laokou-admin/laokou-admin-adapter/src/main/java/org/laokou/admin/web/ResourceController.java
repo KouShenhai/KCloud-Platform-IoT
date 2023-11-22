@@ -21,12 +21,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.ResourceServiceI;
+import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.oss.OssUploadCmd;
 import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.dto.resource.*;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
-import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -34,6 +34,7 @@ import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -192,7 +193,7 @@ public class ResourceController {
 	@PostMapping("search")
 	@Operation(summary = "资源管理", description = "搜索资源")
 	@PreAuthorize("hasAuthority('resource:search')")
-	public Result<Datas<Map<String, Object>>> search(@RequestBody ResourceSearchGetQry qry) {
+	public Result<Datas<Map<String, Object>>> search(@Validated @RequestBody ResourceSearchGetQry qry) {
 		return resourceServiceI.search(qry);
 	}
 

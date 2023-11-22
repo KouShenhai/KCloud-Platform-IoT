@@ -17,13 +17,18 @@
 
 package org.laokou.admin.dto.resource;
 
+import jakarta.validation.Valid;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.SearchIndex;
 
 /**
  * @author laokou
  */
 @Data
 public class ResourceSearchGetQry extends CommonCommand {
+
+    @Valid
+    private SearchIndex searchIndex;
 
 }
