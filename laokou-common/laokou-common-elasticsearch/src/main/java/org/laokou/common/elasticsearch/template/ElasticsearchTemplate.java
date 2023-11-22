@@ -71,10 +71,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author laokou
@@ -86,7 +83,7 @@ public class ElasticsearchTemplate {
 
 	private final RestHighLevelClient restHighLevelClient;
 
-	private static final String PRIMARY_KEY_NAME = "id";
+	private static final String PRIMARY_KEY = "id";
 
 	private static final String HIGHLIGHT_PRE_TAGS = "<span style='color:red;'>";
 
@@ -101,25 +98,25 @@ public class ElasticsearchTemplate {
 	public Boolean syncBatchIndex(String indexName, String jsonDataList) throws IOException {
 		// 判空
 		if (StringUtil.isEmpty(jsonDataList)) {
-			log.error("数据为空，无法批量同步数据");
+			log.error("数据不能为空，批量同步索引失败");
 			return false;
 		}
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
-			log.error("索引【{}】不存在，批量同步失败", indexName);
+			log.error("索引：{} -> 索引不存在，批量同步索引失败", indexName);
 			return false;
 		}
 		// 批量操作Request
 		BulkRequest bulkRequest = packBulkIndexRequest(indexName, jsonDataList);
 		if (bulkRequest.requests().isEmpty()) {
-			log.error("组件的数据为空，无法批量同步数据");
+			log.error("批量同步索引失败");
 			return false;
 		}
 		final BulkResponse bulk = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
 		if (bulk.hasFailures()) {
 			for (BulkItemResponse item : bulk.getItems()) {
-				log.error("索引[{}],主键[{}]更新操作失败，状态为:[{}],错误信息:{}", indexName, item.getId(), item.status(),
+				log.error("索引：{}，主键：{}，状态为：{}，错误信息：{} -> 批量同步索引失败", indexName, item.getId(), item.status(),
 						item.getFailureMessage());
 			}
 			return false;
@@ -135,7 +132,7 @@ public class ElasticsearchTemplate {
 				updatedCount++;
 			}
 		}
-		log.info("索引[{}]批量同步更新成功，共新增[{}]个，修改[{}]个", indexName, createdCount, updatedCount);
+		log.info("索引：{}，新增{}个，修改{}个 -> 批量同步索引成功", indexName, createdCount, updatedCount);
 		return true;
 	}
 
@@ -148,18 +145,18 @@ public class ElasticsearchTemplate {
 	public Boolean updateBatchIndex(String indexName, String jsonDataList, Class<?> clazz) {
 		// 判空
 		if (StringUtil.isEmpty(jsonDataList)) {
-			log.error("数据为空，无法批量修改数据");
+			log.error("数据不能为空，批量修改索引失败");
 			return false;
 		}
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
-			log.error("索引【{}】不存在，批量修改失败", indexName);
+			log.error("索引：{} -> 索引不存在，批量修改索引失败", indexName);
 			return false;
 		}
 		BulkRequest bulkRequest = packBulkUpdateRequest(indexName, jsonDataList);
 		if (bulkRequest.requests().isEmpty()) {
-			log.error("组件的数据为空，无法批量修改数据");
+			log.error("批量修改索引失败");
 			return false;
 		}
 		try {
@@ -167,7 +164,7 @@ public class ElasticsearchTemplate {
 			BulkResponse bulk = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
 			if (bulk.hasFailures()) {
 				for (BulkItemResponse item : bulk.getItems()) {
-					log.error("索引【{}】,主键[{}]修改操作失败，状态为【{}】,错误信息：{}", indexName, item.getId(), item.status(),
+					log.error("索引：{}，主键：{}，状态：{}，错误信息：{} -> 批量修改索引失败", indexName, item.getId(), item.status(),
 							item.getFailureMessage());
 				}
 				return false;
@@ -183,10 +180,10 @@ public class ElasticsearchTemplate {
 					updateCount++;
 				}
 			}
-			log.info("索引【{}】批量修改更新成功，共新增[{}]个，修改[{}]个", indexName, createCount, updateCount);
+			log.info("索引：{}，新增{}个，修改{}个 -> 批量修改索引成功", indexName, createCount, updateCount);
 		}
 		catch (IOException e) {
-			log.error("索引【{}】批量修改更新出现异常", indexName, e);
+			log.error("索引：{} -> 批量修改索引更新，错误信息", indexName, e);
 			return false;
 		}
 		return true;
@@ -202,7 +199,7 @@ public class ElasticsearchTemplate {
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
-			log.error("索引【{}】不存在，修改失败", indexName);
+			log.error("索引：{} -> 索引不存在，修改索引失败", indexName);
 			return false;
 		}
 		UpdateRequest updateRequest = new UpdateRequest(indexName, id);
@@ -213,22 +210,22 @@ public class ElasticsearchTemplate {
 		updateRequest.doc(paramJson, XContentType.JSON);
 		try {
 			UpdateResponse updateResponse = restHighLevelClient.update(updateRequest, RequestOptions.DEFAULT);
-			log.info("索引[{}]主键【{}】，操作结果:[{}]", indexName, id, updateResponse.getResult());
+			log.info("索引：{}，主键：{}，状态：{}", indexName, id, updateResponse.getResult());
 			if (DocWriteResponse.Result.CREATED.equals(updateResponse.getResult())) {
 				// 新增
-				log.info("索引【{}】主键【{}】，新增成功", indexName, id);
+				log.info("索引{}，主键：{} -> 新增索引成功", indexName, id);
 			}
 			else if (DocWriteResponse.Result.UPDATED.equals(updateResponse.getResult())) {
 				// 修改
-				log.info("索引【{}】主键【{}】，修改成功", indexName, id);
+				log.info("索引：{}，主键：{} -> 修改索引成功", indexName, id);
 			}
 			else if (DocWriteResponse.Result.NOOP.equals(updateResponse.getResult())) {
 				// 无变化
-				log.info("索引[{}]主键[{}]，无变化", indexName, id);
+				log.info("索引：{}，主键：{} -> 索引无变化", indexName, id);
 			}
 		}
 		catch (IOException e) {
-			log.error("索引[{}]主键【{}】，更新异常", indexName, id, e);
+			log.error("索引：{}，主键：{} -> 修改索引失败，错误信息", indexName, id, e);
 		}
 		return true;
 	}
@@ -242,7 +239,7 @@ public class ElasticsearchTemplate {
 	public Boolean deleteById(String indexName, String id) {
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
-			log.error("索引【{}】不存在，删除失败", indexName);
+			log.error("索引：{}，索引不存在，删除索引失败", indexName);
 			return false;
 		}
 		DeleteRequest deleteRequest = new DeleteRequest(indexName);
@@ -251,14 +248,14 @@ public class ElasticsearchTemplate {
 		try {
 			DeleteResponse deleteResponse = restHighLevelClient.delete(deleteRequest, RequestOptions.DEFAULT);
 			if (DocWriteResponse.Result.NOT_FOUND.equals(deleteResponse.getResult())) {
-				log.error("索引【{}】主键【{}】删除失败", indexName, id);
+				log.error("索引：{}，主键：{} -> 删除索引失败", indexName, id);
 			}
 			else {
-				log.info("索引【{}】主键【{}】删除成功", indexName, id);
+				log.info("索引：{}，主键：{} -> 删除索引成功", indexName, id);
 			}
 		}
 		catch (IOException e) {
-			log.error("删除索引【{}】失败", indexName, e);
+			log.error("索引：{} -> 删除索引失败，错误信息", indexName, e);
 		}
 		return true;
 	}
@@ -271,13 +268,13 @@ public class ElasticsearchTemplate {
 	 */
 	public Boolean deleteBatchIndex(String indexName, List<String> ids) {
 		if (CollectionUtil.isEmpty(ids)) {
-			log.error("ids为空，不能批量删除数据");
+			log.error("IDS不能为空，批量删除索引失败");
 			return false;
 		}
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
-			log.error("索引【{}】不存在，批量删除失败", indexName);
+			log.error("索引：{}，索引不存在，批量删除索引失败", indexName);
 			return false;
 		}
 		BulkRequest bulkRequest = packBulkDeleteRequest(indexName, ids);
@@ -285,7 +282,7 @@ public class ElasticsearchTemplate {
 			BulkResponse bulk = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
 			if (bulk.hasFailures()) {
 				for (BulkItemResponse item : bulk.getItems()) {
-					log.error("删除索引:[{}],主键：{}失败，信息：{}", indexName, item.getId(), item.getFailureMessage());
+					log.error("索引：{}，主键：{}，错误信息：{} -> 批量删除索引失败", indexName, item.getId(), item.getFailureMessage());
 				}
 				return false;
 			}
@@ -296,10 +293,10 @@ public class ElasticsearchTemplate {
 					deleteCount++;
 				}
 			}
-			log.info("批量删除索引[{}]成功，共删除[{}]个", indexName, deleteCount);
+			log.info("索引：{}，删除{}个 -> 批量删除索引成功", indexName, deleteCount);
 		}
 		catch (IOException e) {
-			log.error("删除索引：【{}】出现异常:{}", indexName, e);
+			log.error("索引：{} -> 批量删除索引失败，错误信息", indexName, e);
 		}
 		return true;
 	}
@@ -337,7 +334,7 @@ public class ElasticsearchTemplate {
 		// 循环数据封装bulkRequest
 		jsonList.forEach(obj -> {
 			Map<String, Object> map = (Map<String, Object>) obj;
-			UpdateRequest updateRequest = new UpdateRequest(indexName, map.get(PRIMARY_KEY_NAME).toString());
+			UpdateRequest updateRequest = new UpdateRequest(indexName, map.get(PRIMARY_KEY).toString());
 			// 修改索引中不存在就新增
 			updateRequest.docAsUpsert(true);
 			updateRequest.doc(JacksonUtil.toJsonStr(obj), XContentType.JSON);
@@ -356,18 +353,18 @@ public class ElasticsearchTemplate {
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
-			log.error("索引【{}】不存在，查询失败", indexName);
+			log.error("索引：{} -> 索引不存在，查询索引失败", indexName);
 			return null;
 		}
 		GetRequest getRequest = new GetRequest(indexName, id);
 		try {
 			GetResponse getResponse = restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);
 			String resultJson = getResponse.getSourceAsString();
-			log.info("索引【{}】主键【{}】，查询结果：【{}】", indexName, id, resultJson);
+			log.info("索引：{}，主键：{}，查询结果：{}", indexName, id, resultJson);
 			return resultJson;
 		}
 		catch (IOException e) {
-			log.error("索引【{}】主键[{}]，查询异常：{}", indexName, id, e);
+			log.error("索引：{}，主键：{} -> 查询索引失败，错误信息", indexName, id, e);
 			return null;
 		}
 	}
@@ -380,7 +377,7 @@ public class ElasticsearchTemplate {
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
-			log.error("索引【{}】不存在，删除失败", indexName);
+			log.error("索引：{} -> 索引不存在，删除索引失败", indexName);
 			return false;
 		}
 		DeleteRequest deleteRequest = new DeleteRequest(indexName);
@@ -388,13 +385,13 @@ public class ElasticsearchTemplate {
 		try {
 			DeleteResponse deleteResponse = restHighLevelClient.delete(deleteRequest, RequestOptions.DEFAULT);
 			if (DocWriteResponse.Result.NOT_FOUND.equals(deleteResponse.getResult())) {
-				log.error("索引【{}】删除失败", indexName);
+				log.error("索引:：{} -> 删除索引失败", indexName);
 				return false;
 			}
-			log.info("索引【{}】删除成功", indexName);
+			log.info("索引：{} -> 删除索引成功", indexName);
 		}
 		catch (IOException e) {
-			log.error("删除索引[{}]，出现异常[{}]", indexName, e);
+			log.error("索引：{} -> 删除索引失败，错误信息", indexName, e);
 		}
 		return true;
 	}
@@ -407,19 +404,19 @@ public class ElasticsearchTemplate {
 	public void syncAsyncBatchIndex(String indexName, String jsonDataList) {
 		// 判空
 		if (StringUtil.isEmpty(jsonDataList)) {
-			log.error("数据为空，无法批量异步同步数据");
+			log.error("数据不能为空，批量异步同步索引失败");
 			return;
 		}
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
-			log.error("索引【{}】不存在，批量异步同步失败", indexName);
+			log.error("索引：{} -> 索引不存在，批量异步同步索引失败", indexName);
 			return;
 		}
 		// 批量操作Request
 		BulkRequest bulkRequest = packBulkIndexRequest(indexName, jsonDataList);
 		if (bulkRequest.requests().isEmpty()) {
-			log.error("组装数据为空，无法批量异步同步数据");
+			log.error("批量异步同步索引失败");
 			return;
 		}
 		// 异步执行
@@ -428,7 +425,7 @@ public class ElasticsearchTemplate {
 			public void onResponse(BulkResponse bulkItemResponses) {
 				if (bulkItemResponses.hasFailures()) {
 					for (BulkItemResponse item : bulkItemResponses.getItems()) {
-						log.error("索引【{}】,主键【{}】更新失败，状态【{}】，错误信息：{}", indexName, item.getId(), item.status(),
+						log.error("索引：{}，主键：{}，状态：{}，错误信息：{} -> 批量异步同步索引失败", indexName, item.getId(), item.status(),
 								item.getFailureMessage());
 					}
 				}
@@ -437,11 +434,11 @@ public class ElasticsearchTemplate {
 			// 失败操作
 			@Override
 			public void onFailure(Exception e) {
-				log.error("索引【{}】批量异步更新出现异常:{}", indexName, e);
+				log.error("索引：{} -> 批量异步同步索引成功，错误信息", indexName, e);
 			}
 		};
 		restHighLevelClient.bulkAsync(bulkRequest, RequestOptions.DEFAULT, listener);
-		log.info("索引批量更新索引【{}】中", indexName);
+		log.info("索引：{} -> 批量异步同步索引成功", indexName);
 	}
 
 	/**
@@ -454,7 +451,7 @@ public class ElasticsearchTemplate {
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
-			log.error("索引【{}】不存在，删除失败", indexName);
+			log.error("索引：{} -> 索引不存在，删除索引失败", indexName);
 			return false;
 		}
 		// 删除操作Request
@@ -463,10 +460,10 @@ public class ElasticsearchTemplate {
 		AcknowledgedResponse acknowledgedResponse = restHighLevelClient.indices()
 			.delete(deleteIndexRequest, RequestOptions.DEFAULT);
 		if (!acknowledgedResponse.isAcknowledged()) {
-			log.error("索引【{}】删除失败", indexName);
+			log.error("索引：{} -> 删除索引失败", indexName);
 			return false;
 		}
-		log.info("索引【{}】删除成功", indexName);
+		log.info("索引：{} -> 删除索引成功", indexName);
 		return true;
 	}
 
@@ -477,7 +474,7 @@ public class ElasticsearchTemplate {
 	public void deleteAsyncIndex(String indexName) {
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
-			log.error("索引【{}】不存在，异步删除失败", indexName);
+			log.error("索引：{} -> 索引不存在，异步删除索引失败", indexName);
 			return;
 		}
 		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(indexName);
@@ -486,16 +483,16 @@ public class ElasticsearchTemplate {
 			@Override
 			public void onResponse(AcknowledgedResponse acknowledgedResponse) {
 				if (acknowledgedResponse.isAcknowledged()) {
-					log.info("索引【{}】删除成功", indexName);
+					log.info("索引：{} -> 异步删除索引成功", indexName);
 				}
 				else {
-					log.error("索引【{}】删除失败", indexName);
+					log.error("索引：{} -> 异步删除索引失败", indexName);
 				}
 			}
 
 			@Override
 			public void onFailure(Exception e) {
-				log.error("索引【{}】删除失败，失败信息:{}", indexName, e);
+				log.error("索引：{} -> 异步删除索引失败，错误信息", indexName, e);
 			}
 		};
 		restHighLevelClient.indices().deleteAsync(deleteIndexRequest, RequestOptions.DEFAULT, listener);
@@ -522,7 +519,7 @@ public class ElasticsearchTemplate {
 			Map<String, Object> map = (Map<String, Object>) obj;
 			IndexRequest indexRequest = new IndexRequest(indexName);
 			indexRequest.source(JacksonUtil.toJsonStr(obj), XContentType.JSON);
-			indexRequest.id(map.get(PRIMARY_KEY_NAME).toString());
+			indexRequest.id(map.get(PRIMARY_KEY).toString());
 			bulkRequest.add(indexRequest);
 		});
 		return bulkRequest;
@@ -540,16 +537,16 @@ public class ElasticsearchTemplate {
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (indexExists) {
-			log.error("索引【{}】已存在，创建失败", indexName);
+			log.error("索引：{} -> 索引已存在，创建索引失败", indexName);
 			return false;
 		}
 		// 创建索引
 		boolean createResult = createIndexAndCreateMapping(indexName, indexAlias, FieldMappingUtil.getFieldInfo(clazz));
 		if (!createResult) {
-			log.info("索引【{}】创建失败", indexName);
+			log.info("索引：{} -> 创建索引失败", indexName);
 			return false;
 		}
-		log.info("索引：[{}]创建成功", indexName);
+		log.info("索引：{} -> 创建索引成功", indexName);
 		return true;
 	}
 
@@ -563,7 +560,7 @@ public class ElasticsearchTemplate {
 	public void createAsyncIndex(String indexName, String indexAlias, Class<?> clazz) throws IOException {
 		boolean indexExists = isIndexExists(indexName);
 		if (indexExists) {
-			log.error("索引【{}】已存在，异步创建失败", indexName);
+			log.error("索引：{} -> 索引已存在，异步创建索引失败", indexName);
 			return;
 		}
 		CreateIndexRequest createIndexRequest = getCreateIndexRequest(indexName, indexAlias,
@@ -574,16 +571,16 @@ public class ElasticsearchTemplate {
 			public void onResponse(CreateIndexResponse createIndexResponse) {
 				boolean acknowledged = createIndexResponse.isAcknowledged();
 				if (acknowledged) {
-					log.info("索引【{}】创建成功", indexName);
+					log.info("索引：{} -> 异步创建索引成功", indexName);
 				}
 				else {
-					log.error("索引【{}】创建失败", indexName);
+					log.error("索引：{} -> 异步创建索引失败", indexName);
 				}
 			}
 
 			@Override
 			public void onFailure(Exception e) {
-				log.error("索引【{}】创建失败，错误信息:{}", indexName, e);
+				log.error("索引：{} -> 异步创建索引失败，错误信息", indexName, e);
 			}
 		};
 		// 异步执行
@@ -618,7 +615,7 @@ public class ElasticsearchTemplate {
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
-			log.error("索引【{}】不存在，同步失败", indexName);
+			log.error("索引：{} -> 索引不存在，同步索引失败", indexName);
 			return false;
 		}
 		// 创建操作Request
@@ -631,10 +628,10 @@ public class ElasticsearchTemplate {
 		IndexResponse response = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
 		// 判断索引是新增还是修改
 		if (IndexResponse.Result.CREATED.equals(response.getResult())) {
-			log.info("索引【{}】保存成功", indexName);
+			log.info("索引：{} -> 同步索引成功（新增）", indexName);
 		}
 		else if (IndexResponse.Result.UPDATED.equals(response.getResult())) {
-			log.info("索引【{}】修改成功", indexName);
+			log.info("索引：{} -> 同步索引成功（修改）", indexName);
 		}
 		return true;
 	}
@@ -649,7 +646,7 @@ public class ElasticsearchTemplate {
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
-			log.error("索引【{}】不存在，异步同步失败", indexName);
+			log.error("索引：{} -> 索引不存在，异步同步索引失败", indexName);
 			return;
 		}
 		// 创建操作Request
@@ -663,16 +660,16 @@ public class ElasticsearchTemplate {
 			@Override
 			public void onResponse(IndexResponse indexResponse) {
 				if (indexResponse.getResult() == DocWriteResponse.Result.CREATED) {
-					log.info("索引【{}】异步同步成功", indexName);
+					log.info("索引：{} -> 异步同步索引成功（新增）", indexName);
 				}
-				else {
-					log.error("索引【{}】异步同步失败", indexName);
+				else if (indexResponse.getResult() == DocWriteResponse.Result.UPDATED) {
+					log.error("索引：{} -> 异步同步索引成功（修改）", indexName);
 				}
 			}
 
 			@Override
 			public void onFailure(Exception e) {
-				log.error("索引【{}】异步同步出现异常:{}", indexName, e);
+				log.error("索引：{} -> 异步同步索引失败，错误信息", indexName, e);
 			}
 		};
 		restHighLevelClient.indexAsync(indexRequest, RequestOptions.DEFAULT, actionListener);
@@ -711,11 +708,11 @@ public class ElasticsearchTemplate {
 			.create(createIndexRequest, RequestOptions.DEFAULT);
 		boolean acknowledged = createIndexResponse.isAcknowledged();
 		if (acknowledged) {
-			log.info("索引:{}创建成功", indexName);
+			log.info("索引：{} -> 创建索引成功", indexName);
 			return true;
 		}
 		else {
-			log.error("索引:{}创建失败", indexName);
+			log.error("索引：{} -> 创建索引失败", indexName);
 			return false;
 		}
 	}
@@ -861,9 +858,9 @@ public class ElasticsearchTemplate {
 	private BoolQueryBuilder buildBoolQuery(SearchCO searchCO) {
 		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 		// 分词查询
-		final List<SearchCO.Search> queryStringList = searchCO.getQueryStringList();
+		List<SearchCO.Search> queryStringList = searchCO.getQueryStringList();
 		// or查询
-		final List<SearchCO.Search> orSearchList = searchCO.getOrSearchList();
+		List<SearchCO.Search> orSearchList = searchCO.getOrSearchList();
 		if (CollectionUtil.isNotEmpty(orSearchList)) {
 			// or查询
 			BoolQueryBuilder orQuery = QueryBuilders.boolQuery();
@@ -876,9 +873,9 @@ public class ElasticsearchTemplate {
 			// 分词查询
 			BoolQueryBuilder analysisQuery = QueryBuilders.boolQuery();
 			for (SearchCO.Search search : queryStringList) {
-				final String field = search.getField();
+				String field = search.getField();
 				// 清除左右空格并处理特殊字符
-				final String keyword = QueryParser.escape(search.getValue().trim());
+				String keyword = QueryParser.escape(search.getValue().trim());
 				analysisQuery.should(QueryBuilders.queryStringQuery(keyword).field(field));
 			}
 			boolQueryBuilder.must(analysisQuery);
@@ -896,11 +893,11 @@ public class ElasticsearchTemplate {
 	private SearchSourceBuilder buildSearchSource(SearchCO searchCO, boolean isHighlightSearchFlag,
 			TermsAggregationBuilder aggregationBuilder) {
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		final Integer pageNum = searchCO.getPageNum();
-		final Integer pageSize = searchCO.getPageSize();
-		final List<SearchCO.Search> sortFieldList = searchCO.getSortFieldList();
+		Integer pageNum = searchCO.getPageNum();
+		Integer pageSize = searchCO.getPageSize();
+		List<SearchCO.Search> sortFieldList = searchCO.getSortFieldList();
 		if (isHighlightSearchFlag) {
-			final List<String> highlightFieldList = searchCO.getHighlightFieldList();
+			List<String> highlightFieldList = searchCO.getHighlightFieldList();
 			// 高亮显示数据
 			HighlightBuilder highlightBuilder = new HighlightBuilder();
 			// 设置关键字显示颜色
@@ -917,7 +914,7 @@ public class ElasticsearchTemplate {
 		}
 		// 分页
 		if (searchCO.isNeedPage()) {
-			final int pageIndex = (pageNum - 1) * pageSize;
+			int pageIndex = (pageNum - 1) * pageSize;
 			searchSourceBuilder.from(pageIndex);
 			searchSourceBuilder.size(pageSize);
 		}
@@ -931,9 +928,9 @@ public class ElasticsearchTemplate {
 		if (CollectionUtil.isNotEmpty(sortFieldList)) {
 			for (SearchCO.Search search : sortFieldList) {
 				SortOrder sortOrder;
-				final String desc = "desc";
-				final String value = search.getValue();
-				final String field = search.getField();
+				String desc = "desc";
+				String value = search.getValue();
+				String field = search.getField();
 				if (desc.equalsIgnoreCase(value)) {
 					sortOrder = SortOrder.DESC;
 				}
@@ -947,7 +944,7 @@ public class ElasticsearchTemplate {
 		// 获取真实总数
 		searchSourceBuilder.trackTotalHits(true);
 		// 聚合对象
-		if (null != aggregationBuilder) {
+		if (Objects.nonNull(aggregationBuilder)) {
 			searchSourceBuilder.aggregation(aggregationBuilder);
 		}
 		return searchSourceBuilder;

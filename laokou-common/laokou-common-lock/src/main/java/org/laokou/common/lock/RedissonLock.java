@@ -46,19 +46,17 @@ public class RedissonLock extends AbstractLock<RLock> {
 	 * @param lock 锁
 	 * @param expire 过期时间
 	 * @param timeout 超时时间
-	 * @return
-	 * @throws InterruptedException
-	 */
+     */
 	@Override
 	public Boolean tryLock(RLock lock, long expire, long timeout) throws InterruptedException {
 		// 线程名称
 		String threadName = Thread.currentThread().getName();
 		if (redisUtil.tryLock(lock, expire, timeout)) {
-			log.info("加锁成功...");
+			log.info("线程：{}，加锁成功", threadName);
 			return true;
 		}
 		else {
-			log.info("线程{}获取锁失败", threadName);
+			log.info("线程：{}，获取锁失败", threadName);
 			return false;
 		}
 	}
@@ -73,15 +71,15 @@ public class RedissonLock extends AbstractLock<RLock> {
 			// 线程名称
 			String threadName = Thread.currentThread().getName();
 			if (redisUtil.isLocked(lock)) {
-				log.info("{}对应的锁被持有，线程{}", lock, threadName);
+				log.info("锁名：{}，线程：{}，该锁被线程持有", lock, threadName);
 				if (redisUtil.isHeldByCurrentThread(lock)) {
-					log.info("当前线程{}持有锁", threadName);
+					log.info("线程：{}，开始解锁", threadName);
 					redisUtil.unlock(lock);
-					log.info("解锁成功...");
+					log.info("解锁成功");
 				}
 			}
 			else {
-				log.info("无线程持有，无需解锁...");
+				log.info("无线程持有，无需解锁");
 			}
 		}
 	}

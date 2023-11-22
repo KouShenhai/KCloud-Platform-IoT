@@ -19,6 +19,8 @@ package org.laokou.admin.command.resource;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.ResourceGateway;
+import org.laokou.admin.dto.resource.ResourceSyncCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,5 +31,9 @@ import org.springframework.stereotype.Component;
 public class ResourceSyncCmdExe {
 
 	private final ResourceGateway resourceGateway;
+
+	public Result<Boolean> execute(ResourceSyncCmd cmd) {
+		return Result.of(resourceGateway.sync());
+	}
 
 }

@@ -27,6 +27,8 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
@@ -40,5 +42,7 @@ public interface ResourceMapper extends BatchMapper<ResourceDO> {
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
 	void handleResourceIndex(ResultHandler<ResourceIndex> handler);
+
+	List<String> getResourceTime();
 
 }

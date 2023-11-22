@@ -81,7 +81,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	@Override
 	public Result<Boolean> sync(ResourceSyncCmd cmd) {
-		return null;
+		return resourceSyncCmdExe.execute(cmd);
 	}
 
 	@Override
