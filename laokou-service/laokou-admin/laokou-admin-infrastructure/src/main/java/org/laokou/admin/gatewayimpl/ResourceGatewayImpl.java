@@ -22,6 +22,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.event.DomainEventPublisher;
 import org.laokou.admin.convertor.ResourceConvertor;
@@ -35,17 +36,27 @@ import org.laokou.admin.dto.resource.TaskStartCmd;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
 import org.laokou.admin.gatewayimpl.database.ResourceMapper;
+import org.laokou.admin.gatewayimpl.database.dataindex.ResourceIndex;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceAuditDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.openfeign.utils.FeignUtil;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+
 import static org.laokou.admin.common.Constant.KEY;
+import static org.laokou.common.i18n.common.Constant.UNDER;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_RESOURCE;
 
 /**
@@ -65,6 +76,10 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private final DomainEventPublisher domainEventPublisher;
 
 	private final ResourceConvertor resourceConvertor;
+
+	private final ElasticsearchTemplate elasticsearchTemplate;
+
+	private static final String RESOURCE_INDEX = "laokou_resource";
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_RESOURCE)
@@ -90,8 +105,23 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	@Override
+	@SneakyThrows
 	public Boolean sync() {
-		return null;
+		List<String> resourceTime = resourceMapper.getResourceTime();
+		if (CollectionUtil.isEmpty(resourceTime)) {
+			throw new SystemException("同步失败，数据不能为空");
+		}
+		// 同步前
+		syncBefore();
+		// 删除索引
+		deleteIndex(resourceTime);
+		// 创建索引
+		createIndex(resourceTime);
+		// 同步索引
+		syncIndex();
+		// 同步后
+		syncAfter();
+		return true;
 	}
 
 	private Boolean updateResource(Resource resource, Integer version) {
@@ -141,6 +171,58 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		event.setInstanceId(instanceId);
 		event.setType(Type.REMIND.ordinal());
 		return event;
+	}
+
+	private void createIndex(List<String> list) {
+		list.forEach(ym -> {
+			try {
+				elasticsearchTemplate.createIndex(index(ym), RESOURCE_INDEX, ResourceIndex.class);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		});
+	}
+
+	private void deleteIndex(List<String> list) {
+		list.forEach(ym -> {
+			try {
+				elasticsearchTemplate.deleteIndex(index(ym));
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		});
+	}
+
+	private void syncIndex() {
+		int chunkSize = 500;
+		List<ResourceIndex> list = Collections.synchronizedList(new ArrayList<>(chunkSize));
+		resourceMapper.handleResourceIndex(result -> {
+			ResourceIndex index = result.getResultObject();
+			list.add(index);
+			if (list.size() % chunkSize == 0) {
+				syncIndex(list);
+			}
+		});
+		if (list.size() % chunkSize != 0) {
+			syncIndex(list);
+		}
+	}
+
+	private void syncIndex(List<ResourceIndex> list) {
+		Map<String, List<ResourceIndex>> listMap = list.stream().collect(Collectors.groupingBy(ResourceIndex::getYm));
+		listMap.forEach((k,v) -> {
+			try {
+				elasticsearchTemplate.syncBatchIndex(index(k), JacksonUtil.toJsonStr(v));
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		});
+		// 清除list
+		list.clear();
+	}
+
+	private String index(String ym) {
+		return RESOURCE_INDEX + UNDER + ym;
 	}
 
 	private void syncBefore() {

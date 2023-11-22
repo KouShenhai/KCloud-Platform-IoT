@@ -52,10 +52,17 @@
             , title
             , code
             , remark
-            , date_format(create_date,'%Y%m')
+            , date_format(create_date,'%Y%m') as ym
         from boot_sys_resource
         where  `status` = 2
             and del_flag = 0
+    </select>
+    <select id="getResourceTime" resultType="java.lang.String">
+        select date_format(create_date,'%Y%m') as ym
+        from boot_sys_resource
+        where  `status` = 2
+          and del_flag = 0
+        group by ym
     </select>
 
 </mapper>

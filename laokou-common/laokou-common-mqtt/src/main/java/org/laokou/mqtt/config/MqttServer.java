@@ -46,8 +46,11 @@ public class MqttServer implements Server {
 
 	private final SpringMqttProperties springMqttProperties;
 
-	public MqttServer(SpringMqttProperties springMqttProperties) {
+	private final MqttStrategy mqttStrategy;
+
+	public MqttServer(SpringMqttProperties springMqttProperties, MqttStrategy mqttStrategy) {
 		this.springMqttProperties = springMqttProperties;
+		this.mqttStrategy = mqttStrategy;
 	}
 
 	@Override
@@ -60,7 +63,7 @@ public class MqttServer implements Server {
 		client = new MqttClient(springMqttProperties.getHost(), CLIENT_ID.toString(), new MemoryPersistence());
 		// 手动ack接收确认
 		client.setManualAcks(springMqttProperties.isManualAcks());
-		client.setCallback(new MqttMessageCallback(client));
+		client.setCallback(new MqttMessageCallback(client, mqttStrategy));
 		client.connect(options());
 		client.subscribe(springMqttProperties.getTopics().toArray(new String[0]), new int[] { 2 });
 		RUNNING.compareAndSet(false, true);
