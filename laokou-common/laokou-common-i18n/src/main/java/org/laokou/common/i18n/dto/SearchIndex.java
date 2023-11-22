@@ -14,13 +14,13 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.elasticsearch.clientobject;
+package org.laokou.common.i18n.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -29,33 +29,21 @@ import java.util.List;
  * @author laokou
  */
 @Data
-public class SearchCO implements Serializable {
+public class SearchIndex extends DTO {
 
 	@Serial
 	private static final long serialVersionUID = 8362710467533113506L;
 
-	/**
-	 * 页码
-	 */
-	@NotNull(message = "显示页码不为空")
-	private Integer pageNum;
+	@Min(value = 1)
+	@Schema(name = "pageNum", description = "页码")
+	private Integer pageNum = 1;
 
-	/**
-	 * 条数
-	 */
-	@NotNull(message = "显示条数不为空")
-	private Integer pageSize;
+	@Schema(name = "pageSize", description = "条数")
+	@Min(value = 1)
+	private Integer pageSize = 10;
 
-	/**
-	 * 是否分页
-	 */
-	@NotNull(message = "分页标识不为空")
-	private boolean needPage;
-
-	/**
-	 * 查询索引名称
-	 */
-	@NotNull(message = "索引名称不为空")
+	@NotNull(message = "索引名称不能为空")
+	@Schema(name = "indexNames", description = "索引名称")
 	private String[] indexNames;
 
 	/**

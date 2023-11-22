@@ -20,6 +20,9 @@ package org.laokou.admin;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.laokou.admin.dto.resource.ResourceSearchGetQry;
+import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.dto.SearchIndex;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -30,7 +33,9 @@ import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
+import static org.laokou.admin.gatewayimpl.ResourceGatewayImpl.RESOURCE_INDEX;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -54,6 +59,21 @@ public class ResourceApiTest extends CommonTest {
     public void resourceSyncApiTest() {
         String apiUrl = API_PREFIX + "sync";
         MvcResult mvcResult = super.mockMvc.perform(post(apiUrl).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print()).andReturn();
+        String body = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        Assert.isTrue(StringUtil.isNotEmpty(body), "response body is not empty");
+        log.info("返回值：{}", body);
+    }
+
+    @Test
+    @SneakyThrows
+    public void resourceSearchApiTest() {
+        String apiUrl = API_PREFIX + "search";
+        ResourceSearchGetQry qry = new ResourceSearchGetQry();
+        SearchIndex searchIndex = new SearchIndex();
+        searchIndex.setIndexNames(new String[]{RESOURCE_INDEX});
+        searchIndex.setHighlightFieldList(List.of("title","remark"));
+        qry.setSearchIndex(searchIndex);
+        MvcResult mvcResult = super.mockMvc.perform(post(apiUrl).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(JacksonUtil.toJsonStr(qry))).andExpect(status().isOk()).andDo(print()).andReturn();
         String body = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
         Assert.isTrue(StringUtil.isNotEmpty(body), "response body is not empty");
         log.info("返回值：{}", body);

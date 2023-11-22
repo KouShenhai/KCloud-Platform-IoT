@@ -79,7 +79,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
-	private static final String RESOURCE_INDEX = "laokou_resource";
+	public static final String RESOURCE_INDEX = "laokou_resource";
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_RESOURCE)

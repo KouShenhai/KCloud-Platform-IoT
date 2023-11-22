@@ -61,7 +61,7 @@ import org.elasticsearch.xcontent.XContentFactory;
 import org.elasticsearch.xcontent.XContentType;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.elasticsearch.clientobject.SearchCO;
+import org.laokou.common.i18n.dto.SearchIndex;
 import org.laokou.common.elasticsearch.constant.EsConstant;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
@@ -819,16 +819,16 @@ public class ElasticsearchTemplate {
 
 	/**
 	 * 关键字高亮显示
-	 * @param searchCO 查询实体类
+	 * @param searchIndex 查询实体类
 	 * @return SearchVO
 	 */
-	public Datas<Map<String, Object>> highlightSearchIndex(SearchCO searchCO) {
+	public Datas<Map<String, Object>> highlightSearchIndex(SearchIndex searchIndex) {
 		try {
-			final String[] indexNames = searchCO.getIndexNames();
+			final String[] indexNames = searchIndex.getIndexNames();
 			// 用于搜索文档，聚合，定制查询有关操作
 			SearchRequest searchRequest = new SearchRequest();
 			searchRequest.indices(indexNames);
-			searchRequest.source(buildSearchSource(searchCO, true, null));
+			searchRequest.source(buildSearchSource(searchIndex, true, null));
 			SearchHits hits = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT).getHits();
 			List<Map<String, Object>> data = new ArrayList<>();
 			for (SearchHit hit : hits) {
@@ -852,19 +852,19 @@ public class ElasticsearchTemplate {
 
 	/**
 	 * 构建query
-	 * @param searchCO 查询参数
+	 * @param searchIndex 查询参数
 	 * @return BoolQueryBuilder
 	 */
-	private BoolQueryBuilder buildBoolQuery(SearchCO searchCO) {
+	private BoolQueryBuilder buildBoolQuery(SearchIndex searchIndex) {
 		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 		// 分词查询
-		List<SearchCO.Search> queryStringList = searchCO.getQueryStringList();
+		List<SearchIndex.Search> queryStringList = searchIndex.getQueryStringList();
 		// or查询
-		List<SearchCO.Search> orSearchList = searchCO.getOrSearchList();
+		List<SearchIndex.Search> orSearchList = searchIndex.getOrSearchList();
 		if (CollectionUtil.isNotEmpty(orSearchList)) {
 			// or查询
 			BoolQueryBuilder orQuery = QueryBuilders.boolQuery();
-			for (SearchCO.Search search : orSearchList) {
+			for (SearchIndex.Search search : orSearchList) {
 				orQuery.should(QueryBuilders.termQuery(search.getField(), search.getValue()));
 			}
 			boolQueryBuilder.must(orQuery);
@@ -872,7 +872,7 @@ public class ElasticsearchTemplate {
 		if (CollectionUtil.isNotEmpty(queryStringList)) {
 			// 分词查询
 			BoolQueryBuilder analysisQuery = QueryBuilders.boolQuery();
-			for (SearchCO.Search search : queryStringList) {
+			for (SearchIndex.Search search : queryStringList) {
 				String field = search.getField();
 				// 清除左右空格并处理特殊字符
 				String keyword = QueryParser.escape(search.getValue().trim());
@@ -885,19 +885,19 @@ public class ElasticsearchTemplate {
 
 	/**
 	 * 构建搜索
-	 * @param searchCO 查询参数
+	 * @param searchIndex 查询参数
 	 * @param isHighlightSearchFlag 是否高亮搜索
 	 * @param aggregationBuilder 聚合参数
 	 * @return SearchSourceBuilder
 	 */
-	private SearchSourceBuilder buildSearchSource(SearchCO searchCO, boolean isHighlightSearchFlag,
-			TermsAggregationBuilder aggregationBuilder) {
+	private SearchSourceBuilder buildSearchSource(SearchIndex searchIndex, boolean isHighlightSearchFlag,
+												  TermsAggregationBuilder aggregationBuilder) {
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		Integer pageNum = searchCO.getPageNum();
-		Integer pageSize = searchCO.getPageSize();
-		List<SearchCO.Search> sortFieldList = searchCO.getSortFieldList();
+		Integer pageNum = searchIndex.getPageNum();
+		Integer pageSize = searchIndex.getPageSize();
+		List<SearchIndex.Search> sortFieldList = searchIndex.getSortFieldList();
 		if (isHighlightSearchFlag) {
-			List<String> highlightFieldList = searchCO.getHighlightFieldList();
+			List<String> highlightFieldList = searchIndex.getHighlightFieldList();
 			// 高亮显示数据
 			HighlightBuilder highlightBuilder = new HighlightBuilder();
 			// 设置关键字显示颜色
@@ -913,11 +913,9 @@ public class ElasticsearchTemplate {
 			searchSourceBuilder.highlighter(highlightBuilder);
 		}
 		// 分页
-		if (searchCO.isNeedPage()) {
-			int pageIndex = (pageNum - 1) * pageSize;
-			searchSourceBuilder.from(pageIndex);
-			searchSourceBuilder.size(pageSize);
-		}
+		int pageIndex = (pageNum - 1) * pageSize;
+		searchSourceBuilder.from(pageIndex);
+		searchSourceBuilder.size(pageSize);
 		// 追踪分数开启
 		searchSourceBuilder.trackScores(true);
 		// 注解
@@ -926,7 +924,7 @@ public class ElasticsearchTemplate {
 		searchSourceBuilder.sort("_score", SortOrder.DESC);
 		// 排序
 		if (CollectionUtil.isNotEmpty(sortFieldList)) {
-			for (SearchCO.Search search : sortFieldList) {
+			for (SearchIndex.Search search : sortFieldList) {
 				SortOrder sortOrder;
 				String desc = "desc";
 				String value = search.getValue();
@@ -940,7 +938,7 @@ public class ElasticsearchTemplate {
 				searchSourceBuilder.sort(field, sortOrder);
 			}
 		}
-		searchSourceBuilder.query(buildBoolQuery(searchCO));
+		searchSourceBuilder.query(buildBoolQuery(searchIndex));
 		// 获取真实总数
 		searchSourceBuilder.trackTotalHits(true);
 		// 聚合对象
@@ -952,15 +950,15 @@ public class ElasticsearchTemplate {
 
 	/**
 	 * 聚合查询
-	 * @param searchCO 搜索
+	 * @param searchIndex 搜索
 	 * @return SearchVO
 	 * @throws IOException IOException
 	 */
-	public Datas<Map<String, Long>> aggregationSearchIndex(SearchCO searchCO) throws IOException {
+	public Datas<Map<String, Long>> aggregationSearchIndex(SearchIndex searchIndex) throws IOException {
 		Datas<Map<String, Long>> datas = new Datas<>();
 		List<Map<String, Long>> list = new ArrayList<>(5);
-		String[] indexNames = searchCO.getIndexNames();
-		SearchCO.Aggregation aggregationKey = searchCO.getAggregationKey();
+		String[] indexNames = searchIndex.getIndexNames();
+		SearchIndex.Aggregation aggregationKey = searchIndex.getAggregationKey();
 		String field = aggregationKey.getField();
 		String groupKey = aggregationKey.getGroupKey();
 		String script = aggregationKey.getScript();
@@ -974,7 +972,7 @@ public class ElasticsearchTemplate {
 		// 用于搜索文档，聚合，定制查询有关操作
 		SearchRequest searchRequest = new SearchRequest();
 		searchRequest.indices(indexNames);
-		searchRequest.source(buildSearchSource(searchCO, false, aggregationBuilder));
+		searchRequest.source(buildSearchSource(searchIndex, false, aggregationBuilder));
 		SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 		Aggregations aggregations = searchResponse.getAggregations();
 		Terms aggregation = aggregations.get(groupKey);

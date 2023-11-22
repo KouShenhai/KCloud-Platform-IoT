@@ -18,7 +18,13 @@
 package org.laokou.admin.command.resource.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dto.resource.ResourceSearchGetQry;
+import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
  * @author laokou
@@ -26,5 +32,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ResourceSearchGetQryExe {
+
+    private final ElasticsearchTemplate elasticsearchTemplate;
+
+    public Result<Datas<Map<String, Object>>> execute(ResourceSearchGetQry qry) {
+        return Result.of(elasticsearchTemplate.highlightSearchIndex(qry.getSearchIndex()));
+    }
 
 }
