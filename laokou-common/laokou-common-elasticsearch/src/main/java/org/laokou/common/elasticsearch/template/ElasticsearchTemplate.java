@@ -663,7 +663,7 @@ public class ElasticsearchTemplate {
 					log.info("索引：{} -> 异步同步索引成功（新增）", indexName);
 				}
 				else if (indexResponse.getResult() == DocWriteResponse.Result.UPDATED) {
-					log.error("索引：{} -> 异步同步索引成功（修改）", indexName);
+					log.info("索引：{} -> 异步同步索引成功（修改）", indexName);
 				}
 			}
 
