@@ -31,6 +31,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.RISK;
 
@@ -66,7 +67,7 @@ public class RedissonConfig {
 		int timeout = (int) properties.getTimeout().toMillis();
 		int connectTimeout = (int) properties.getConnectTimeout().toMillis();
 		boolean isSsl = properties.getSsl().isEnabled();
-		if (properties.getSentinel() != null) {
+		if (Objects.nonNull(properties.getSentinel())) {
 			config.useSentinelServers()
 				.setMasterName(properties.getSentinel().getMaster())
 				.addSentinelAddress(convertNodes(isSsl, properties.getSentinel().getNodes()))
@@ -75,7 +76,7 @@ public class RedissonConfig {
 				.setConnectTimeout(connectTimeout)
 				.setPassword(properties.getPassword());
 		}
-		else if (properties.getCluster() != null) {
+		else if (Objects.nonNull(properties.getCluster())) {
 			config.useClusterServers()
 				.addNodeAddress(convertNodes(isSsl, properties.getCluster().getNodes()))
 				.setPassword(properties.getPassword())

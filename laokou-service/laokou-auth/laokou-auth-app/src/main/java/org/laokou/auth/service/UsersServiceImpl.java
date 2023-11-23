@@ -42,6 +42,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.common.i18n.common.BizCode.LOGIN_SUCCEEDED;
@@ -76,7 +77,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		User user = userGateway.getUserByUsername(new Auth(AesUtil.encrypt(username), tenantId, type));
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String ip = IpUtil.getIpAddr(request);
-		if (user == null) {
+		if (Objects.isNull(user)) {
 			throw usernameNotFoundException(ACCOUNT_PASSWORD_ERROR, new User(username, tenantId), type, ip);
 		}
 		String password = request.getParameter(OAuth2ParameterNames.PASSWORD);

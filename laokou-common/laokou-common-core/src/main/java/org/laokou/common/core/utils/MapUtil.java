@@ -26,10 +26,7 @@ import org.yaml.snakeyaml.util.UriEncoder;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import static org.laokou.common.i18n.common.Constant.*;
 
@@ -43,7 +40,7 @@ public class MapUtil {
 	}
 
 	public static boolean isEmpty(Map<?, ?> map) {
-		return map == null || map.isEmpty();
+		return Objects.isNull(map) || map.isEmpty();
 	}
 
 	public static String toStr(Map<String, String> map, String on, String separator) {

@@ -60,6 +60,7 @@ import reactor.netty.http.client.HttpClient;
 import javax.net.ssl.SSLException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import static org.springframework.web.reactive.function.client.ExchangeFilterFunctions.basicAuthentication;
 
@@ -147,7 +148,7 @@ public class SpringBootAdminClientAutoConfig {
 		public RegistrationClient registrationClient(ClientProperties client) {
 			RestTemplateBuilder builder = new RestTemplateBuilder().setConnectTimeout(client.getConnectTimeout());
 			builder.setReadTimeout(client.getReadTimeout());
-			if (client.getUsername() != null && client.getPassword() != null) {
+			if (Objects.nonNull(client.getUsername()) && Objects.nonNull(client.getPassword())) {
 				builder = builder.basicAuthentication(client.getUsername(), client.getPassword());
 			}
 			RestTemplate build = builder.build();
@@ -171,7 +172,7 @@ public class SpringBootAdminClientAutoConfig {
 		@ConditionalOnMissingBean
 		public RegistrationClient registrationClient(ClientProperties client, WebClient.Builder webClient)
 				throws SSLException {
-			if (client.getUsername() != null && client.getPassword() != null) {
+			if (Objects.nonNull(client.getUsername()) && Objects.nonNull(client.getPassword())) {
 				webClient = webClient.filter(basicAuthentication(client.getUsername(), client.getPassword()));
 			}
 			SslContext context = SslContextBuilder.forClient()

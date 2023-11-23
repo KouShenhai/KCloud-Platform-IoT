@@ -27,6 +27,7 @@ import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 import org.laokou.common.core.utils.IdGenerator;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.laokou.mqtt.constant.Constant.WILL_DATA;
@@ -76,7 +77,7 @@ public class MqttServer implements Server {
 		if (RUNNING.get()) {
 			RUNNING.compareAndSet(true, false);
 		}
-		if (client != null) {
+		if (Objects.nonNull(client)) {
 			client.disconnectForcibly();
 		}
 		log.info("关闭MQTT");

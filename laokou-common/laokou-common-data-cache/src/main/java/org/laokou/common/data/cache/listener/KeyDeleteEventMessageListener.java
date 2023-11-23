@@ -27,6 +27,8 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.Topic;
 import org.springframework.lang.Nullable;
 
+import java.util.Objects;
+
 /**
  * @author laokou
  */
@@ -50,7 +52,7 @@ public class KeyDeleteEventMessageListener extends KeyspaceEventMessageListener 
 	}
 
 	protected void publishEvent(RedisKeyspaceEvent event) {
-		if (this.publisher != null) {
+		if (Objects.nonNull(this.publisher)) {
 			this.publisher.publishEvent(event);
 		}
 

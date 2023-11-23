@@ -27,6 +27,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 /**
  * @author laokou
@@ -73,7 +74,7 @@ public class AesUtil {
 				// 私有属性
 				field.setAccessible(true);
 				Object o = field.get(obj);
-				if (o == null) {
+				if (Objects.isNull(o)) {
 					continue;
 				}
 				String data = o.toString();

@@ -38,6 +38,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author laokou
@@ -54,7 +55,7 @@ public class RouterUtil {
 	@SneakyThrows
 	public void initRouter() {
 		String appId = env.getProperty("spring.application.name");
-		assert appId != null;
+		assert Objects.nonNull(appId);
 		Map<String, Object> dataMap = new HashMap<>(2);
 		String name = appId.substring(7);
 		dataMap.put("appId", appId);
@@ -68,7 +69,7 @@ public class RouterUtil {
 		}
 		// 拉取所有的路由配置
 		ConfigCO co = apiUtil.getConfigInfo(token);
-		if (co == null) {
+		if (Objects.isNull(co)) {
 			return;
 		}
 		List<RouteDefinition> routeDefinitions = JacksonUtil.toList(co.getContent(), RouteDefinition.class);

@@ -30,6 +30,7 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * @author laokou
@@ -49,7 +50,7 @@ public class CacheAspect {
 		Method method = signature.getMethod();
 		String[] parameterNames = signature.getParameterNames();
 		DataCache dataCache = AnnotationUtils.findAnnotation(method, DataCache.class);
-		assert dataCache != null;
+		assert Objects.nonNull(dataCache);
 		long expire = dataCache.expire();
 		Type type = dataCache.type();
 		String key = dataCache.key();
@@ -72,7 +73,7 @@ public class CacheAspect {
 
 	private Object get(String key, ProceedingJoinPoint point, long expire) throws Throwable {
 		Object obj = caffeineCache.get(key, t -> redisUtil.get(key));
-		if (obj != null) {
+		if (Objects.nonNull(obj)) {
 			return obj;
 		}
 		Object value = point.proceed();

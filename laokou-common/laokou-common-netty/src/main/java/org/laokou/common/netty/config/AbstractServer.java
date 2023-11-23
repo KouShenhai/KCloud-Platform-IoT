@@ -24,6 +24,7 @@ import io.netty.channel.EventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -106,10 +107,10 @@ public abstract class AbstractServer implements Server {
 			RUNNING.compareAndSet(true, false);
 		}
 		// 释放资源
-		if (boss != null) {
+		if (Objects.nonNull(boss)) {
 			boss.shutdownGracefully();
 		}
-		if (work != null) {
+		if (Objects.nonNull(work)) {
 			work.shutdownGracefully();
 		}
 		log.info("优雅关闭，释放资源");

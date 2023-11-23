@@ -232,7 +232,7 @@ public class RedisUtil {
 		Properties commandStats = (Properties) redisTemplate
 			.execute((RedisCallback<Object>) connection -> connection.serverCommands().info("commandstats"));
 		List<Map<String, String>> pieList = new ArrayList<>();
-		assert commandStats != null;
+		assert Objects.nonNull(commandStats);
 		commandStats.stringPropertyNames().forEach(key -> {
 			Map<String, String> data = new HashMap<>(2);
 			String property = commandStats.getProperty(key);
@@ -246,7 +246,7 @@ public class RedisUtil {
 	public Map<String, String> getInfo() {
 		final Properties properties = redisTemplate.execute(RedisServerCommands::info,
 				redisTemplate.isExposeConnection());
-		assert properties != null;
+		assert Objects.nonNull(properties);
 		final Set<String> set = properties.stringPropertyNames();
 		final Iterator<String> iterator = set.iterator();
 		Map<String, String> dataMap = new HashMap<>(set.size());

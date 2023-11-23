@@ -55,10 +55,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.auth.common.Constant.TENANT_ID;
@@ -287,7 +284,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		if (OAuth2ClientAuthenticationToken.class.isAssignableFrom(authentication.getPrincipal().getClass())) {
 			clientPrincipal = (OAuth2ClientAuthenticationToken) authentication.getPrincipal();
 		}
-		if (clientPrincipal != null && clientPrincipal.isAuthenticated()) {
+		if (Objects.nonNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
 			return clientPrincipal;
 		}
 		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));

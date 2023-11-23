@@ -43,6 +43,7 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static org.laokou.common.i18n.common.Constant.*;
@@ -122,7 +123,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			}
 			String userInfoKey = RedisKeyUtil.getUserInfoKey(Authorization);
 			reactiveRedisUtil.get(userInfoKey).subscribe(obj -> {
-				if (obj == null) {
+				if (Objects.isNull(obj)) {
 					handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
 					return;
 				}

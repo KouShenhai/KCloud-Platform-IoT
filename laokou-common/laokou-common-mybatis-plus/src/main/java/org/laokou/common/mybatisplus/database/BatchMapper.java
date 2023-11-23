@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
@@ -63,7 +64,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	 */
 	default int getVersion(Long id, Class<T> clazz) {
 		T value = this.selectOne(Wrappers.query(clazz).eq("id", id).select("version"));
-		if (value == null) {
+		if (Objects.isNull(value)) {
 			throw new SystemException("数据不存在");
 		}
 		return value.getVersion();

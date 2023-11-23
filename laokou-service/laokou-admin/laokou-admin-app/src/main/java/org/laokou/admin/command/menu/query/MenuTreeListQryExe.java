@@ -31,6 +31,7 @@ import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author laokou
@@ -46,7 +47,7 @@ public class MenuTreeListQryExe {
 	public Result<MenuCO> execute(MenuTreeListQry qry) {
 		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserUtil.getUserId());
 		Object obj = redisUtil.get(menuTreeKey);
-		if (obj != null) {
+		if (Objects.nonNull(obj)) {
 			return Result.of((MenuCO) obj);
 		}
 		User user = ConvertUtil.sourceToTarget(UserUtil.user(), User.class);

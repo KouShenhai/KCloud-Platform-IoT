@@ -19,6 +19,8 @@ package org.laokou.common.i18n.utils;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
+import java.util.Objects;
+
 import static org.laokou.common.i18n.common.Constant.PERCENT;
 
 /**
@@ -59,12 +61,12 @@ public class StringUtil {
 	}
 
 	public static boolean allNotNull(Object... values) {
-		if (values == null) {
+		if (Objects.isNull(values)) {
 			return false;
 		}
 		else {
 			for (Object val : values) {
-				if (val == null) {
+				if (Objects.isNull(val)) {
 					return false;
 				}
 			}

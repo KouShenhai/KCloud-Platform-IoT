@@ -22,6 +22,8 @@ import org.laokou.common.lock.enums.LockType;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.redisson.api.RLock;
 
+import java.util.Objects;
+
 /**
  * @author laokou
  */
@@ -67,7 +69,7 @@ public class RedissonLock extends AbstractLock<RLock> {
 	 */
 	@Override
 	public void unlock(RLock lock) {
-		if (lock != null) {
+		if (Objects.nonNull(lock)) {
 			// 线程名称
 			String threadName = Thread.currentThread().getName();
 			if (redisUtil.isLocked(lock)) {

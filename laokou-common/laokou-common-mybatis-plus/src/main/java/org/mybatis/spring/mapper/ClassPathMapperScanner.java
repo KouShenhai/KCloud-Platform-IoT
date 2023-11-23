@@ -41,6 +41,7 @@ import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -153,8 +154,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 	 */
 	@Deprecated
 	public void setMapperFactoryBean(MapperFactoryBean<?> mapperFactoryBean) {
-		this.mapperFactoryBeanClass = mapperFactoryBean == null ? MapperFactoryBean.class
-				: mapperFactoryBean.getClass();
+		this.mapperFactoryBeanClass = mapperFactoryBean.getClass();
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 	 * @since 2.0.1
 	 */
 	public void setMapperFactoryBeanClass(Class<? extends MapperFactoryBean> mapperFactoryBeanClass) {
-		this.mapperFactoryBeanClass = mapperFactoryBeanClass == null ? MapperFactoryBean.class : mapperFactoryBeanClass;
+		this.mapperFactoryBeanClass = mapperFactoryBeanClass;
 	}
 
 	/**
@@ -189,13 +189,13 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 		boolean acceptAllInterfaces = true;
 
 		// if specified, use the given annotation and / or marker interface
-		if (this.annotationClass != null) {
+		if (Objects.nonNull(this.annotationClass)) {
 			addIncludeFilter(new AnnotationTypeFilter(this.annotationClass));
 			acceptAllInterfaces = false;
 		}
 
 		// override AssignableTypeFilter to ignore matches on the actual marker interface
-		if (this.markerInterface != null) {
+		if (Objects.nonNull(this.markerInterface)) {
 			addIncludeFilter(new AssignableTypeFilter(this.markerInterface) {
 				@Override
 				protected boolean matchClassName(String className) {
@@ -283,7 +283,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 					.add("sqlSessionFactory", new RuntimeBeanReference(this.sqlSessionFactoryBeanName));
 				explicitFactoryUsed = true;
 			}
-			else if (this.sqlSessionFactory != null) {
+			else if (Objects.nonNull(this.sqlSessionFactory)) {
 				definition.getPropertyValues().add("sqlSessionFactory", this.sqlSessionFactory);
 				explicitFactoryUsed = true;
 			}
@@ -297,7 +297,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 					.add("sqlSessionTemplate", new RuntimeBeanReference(this.sqlSessionTemplateBeanName));
 				explicitFactoryUsed = true;
 			}
-			else if (this.sqlSessionTemplate != null) {
+			else if (Objects.nonNull(this.sqlSessionTemplate)) {
 				if (explicitFactoryUsed) {
 					LOGGER.warn(
 							() -> "Cannot use both: sqlSessionTemplate and sqlSessionFactory together. sqlSessionFactory is ignored.");
@@ -318,7 +318,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 				continue;
 			}
 
-			if (ConfigurableBeanFactory.SCOPE_SINGLETON.equals(definition.getScope()) && defaultScope != null) {
+			if (ConfigurableBeanFactory.SCOPE_SINGLETON.equals(definition.getScope()) && Objects.nonNull(defaultScope)) {
 				definition.setScope(defaultScope);
 			}
 

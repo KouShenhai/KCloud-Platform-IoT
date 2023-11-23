@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Maps
@@ -134,7 +135,7 @@ public final class OAuth2AuthorizationServerPropertiesMapper {
 	private JwsAlgorithm jwsAlgorithm(String signingAlgorithm) {
 		String name = signingAlgorithm.toUpperCase();
 		JwsAlgorithm jwsAlgorithm = SignatureAlgorithm.from(name);
-		if (jwsAlgorithm == null) {
+		if (Objects.isNull(jwsAlgorithm)) {
 			jwsAlgorithm = MacAlgorithm.from(name);
 		}
 		return jwsAlgorithm;
