@@ -32,8 +32,10 @@ import org.laokou.common.lock.enums.LockType;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 /**
  * @author laokou
@@ -53,7 +55,7 @@ public class LockAspect {
 		MethodSignature methodSignature = (MethodSignature) signature;
 		Method method = methodSignature.getMethod();
 		Lock4j lock4j = AnnotationUtils.findAnnotation(method, Lock4j.class);
-		assert lock4j != null;
+		Assert.isTrue(Objects.nonNull(lock4j), "@Lock4j is not empty");
 		// 时间戳
 		String key = lock4j.key() + IdGenerator.SystemClock.now();
 		long expire = lock4j.expire();

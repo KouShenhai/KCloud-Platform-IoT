@@ -31,6 +31,7 @@ import org.laokou.common.nacos.clientobject.ConfigCO;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,6 +39,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author laokou
@@ -54,7 +56,7 @@ public class RouterUtil {
 	@SneakyThrows
 	public void initRouter() {
 		String appId = env.getProperty("spring.application.name");
-		assert appId != null;
+		Assert.isTrue(Objects.nonNull(appId), " app id is not empty");
 		Map<String, Object> dataMap = new HashMap<>(2);
 		String name = appId.substring(7);
 		dataMap.put("appId", appId);
@@ -68,7 +70,7 @@ public class RouterUtil {
 		}
 		// 拉取所有的路由配置
 		ConfigCO co = apiUtil.getConfigInfo(token);
-		if (co == null) {
+		if (Objects.isNull(co)) {
 			return;
 		}
 		List<RouteDefinition> routeDefinitions = JacksonUtil.toList(co.getContent(), RouteDefinition.class);

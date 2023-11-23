@@ -35,6 +35,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
+import java.util.Objects;
 
 /**
  * @author laokou
@@ -212,7 +213,7 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 		float interline = 1.0f;
 
 		// text
-		if (text != null && text.length() > 0) {
+		if (Objects.nonNull(text) && !text.isEmpty()) {
 			Paint originalPaint = g.getPaint();
 			Font originalFont = g.getFont();
 			g.setPaint(LABEL_COLOR);
@@ -333,7 +334,7 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 		}
 		g.setPaint(originalPaint);
 		// text
-		if (BigDecimalUtil.compareTo(1.0, scaleFactor) == 0 && name != null && name.length() > 0) {
+		if (BigDecimalUtil.compareTo(1.0, scaleFactor) == 0 && Objects.nonNull(name) && !name.isEmpty()) {
 			int boxWidth = width - (1 << TEXT_PADDING);
 			int boxHeight = height - 16 - ICON_PADDING - ICON_PADDING - MARKER_WIDTH - 2 - 2;
 			int boxX = x + width / 2 - boxWidth / 2;
@@ -360,7 +361,7 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 		g.setPaint(EVENT_BORDER_COLOR);
 		g.draw(circle);
 		g.setPaint(originalPaint);
-		if (image != null) {
+		if (Objects.nonNull(image)) {
 			// calculate coordinates to center image
 			int imageX = (int) Math
 				.round(graphicInfo.getX() + (graphicInfo.getWidth() / 2) - (image.getWidth() / (2 * scaleFactor)));

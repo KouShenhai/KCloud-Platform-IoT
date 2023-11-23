@@ -41,6 +41,7 @@ import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import static org.laokou.admin.common.Constant.AUDIT_STATUS;
 import static org.laokou.admin.domain.resource.Status.*;
@@ -94,7 +95,7 @@ public class ResourceAuditTaskCmdExe {
 
 	private Boolean updateResource(Long id, int version, int status, ResourceAuditDO resourceAuditDO) {
 		ResourceDO resourceDO;
-		if (resourceAuditDO != null) {
+		if (Objects.nonNull(resourceAuditDO)) {
 			resourceDO = ConvertUtil.sourceToTarget(resourceAuditDO, ResourceDO.class);
 		}
 		else {

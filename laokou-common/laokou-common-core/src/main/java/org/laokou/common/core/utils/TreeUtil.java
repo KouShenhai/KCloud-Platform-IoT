@@ -23,10 +23,7 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.ClientObject;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.laokou.common.i18n.common.Constant.COMMA;
 
@@ -61,7 +58,7 @@ public class TreeUtil {
 		}
 		for (T treeNo : nodes) {
 			T parent = nodeMap.get(treeNo.getPid());
-			if (parent != null && treeNo.getPid().equals(parent.getId())) {
+			if (Objects.nonNull(parent) && treeNo.getPid().equals(parent.getId())) {
 				treeNo.setPath(parent.getPath() + COMMA + treeNo.getId());
 				parent.getChildren().add(treeNo);
 			}
@@ -78,7 +75,7 @@ public class TreeUtil {
 		}
 		for (T treeNo : treeNodes) {
 			T parent = nodeMap.get(treeNo.getPid());
-			if (parent != null && treeNo.getPid().equals(parent.getId())) {
+			if (Objects.nonNull(parent) && treeNo.getPid().equals(parent.getId())) {
 				treeNo.setPath(parent.getPath() + COMMA + treeNo.getId());
 				parent.getChildren().add(treeNo);
 				continue;

@@ -17,6 +17,9 @@
 
 package org.laokou.common.shardingsphere.utils;
 
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.StringUtil;
+
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -31,6 +34,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.ALGORITHM_RSA;
 
@@ -49,6 +53,7 @@ import static org.laokou.common.i18n.common.Constant.ALGORITHM_RSA;
  *
  * @author alibaba
  */
+@Slf4j
 public class CryptoUtil {
 
 	public static final String DEFAULT_PUBLIC_KEY_STRING = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ4o6sn4WoPmbs7DR9mGQzuuUQM9erQTVPpwxIzB0ETYkyKffO097qXVRLA6KPmaV+/siWewR7vpfYYjWajw5KkCAwEAAQ==";
@@ -71,13 +76,10 @@ public class CryptoUtil {
 	}
 
 	public static PublicKey getPublicKeyByX509(String x509File) {
-		if (x509File == null || x509File.length() == 0) {
+		if (Objects.isNull(x509File) || x509File.isEmpty()) {
 			return getPublicKey(null);
 		}
-
-		FileInputStream in = null;
-		try {
-			in = new FileInputStream(x509File);
+		try (FileInputStream in = new FileInputStream(x509File)) {
 			CertificateFactory factory = CertificateFactory.getInstance("X.509");
 			Certificate cer = factory.generateCertificate(in);
 			return cer.getPublicKey();
@@ -85,20 +87,10 @@ public class CryptoUtil {
 		catch (Exception e) {
 			throw new IllegalArgumentException("Failed to get public key", e);
 		}
-		finally {
-			if (in != null) {
-				try {
-					in.close();
-				}
-				catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 
 	public static PublicKey getPublicKey(String publicKeyText) {
-		if (publicKeyText == null || publicKeyText.length() == 0) {
+		if (Objects.isNull(publicKeyText) || publicKeyText.isEmpty()) {
 			publicKeyText = DEFAULT_PUBLIC_KEY_STRING;
 		}
 
@@ -115,15 +107,12 @@ public class CryptoUtil {
 	}
 
 	public static PublicKey getPublicKeyByPublicKeyFile(String publicKeyFile) {
-		if (publicKeyFile == null || publicKeyFile.length() == 0) {
+		if (Objects.isNull(publicKeyFile) || publicKeyFile.isEmpty()) {
 			return getPublicKey(null);
 		}
-
-		FileInputStream in = null;
-		try {
-			in = new FileInputStream(publicKeyFile);
+		try (FileInputStream in = new FileInputStream(publicKeyFile)) {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			int len = 0;
+			int len;
 			byte[] b = new byte[512 / 8];
 			while ((len = in.read(b)) != -1) {
 				out.write(b, 0, len);
@@ -136,16 +125,6 @@ public class CryptoUtil {
 		}
 		catch (Exception e) {
 			throw new IllegalArgumentException("Failed to get public key", e);
-		}
-		finally {
-			if (in != null) {
-				try {
-					in.close();
-				}
-				catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 	}
 
@@ -165,7 +144,7 @@ public class CryptoUtil {
 			cipher.init(Cipher.DECRYPT_MODE, fakePrivateKey);
 		}
 
-		if (cipherText == null || cipherText.length() == 0) {
+		if (Objects.isNull(cipherText) || cipherText.isEmpty()) {
 			return cipherText;
 		}
 
@@ -180,7 +159,7 @@ public class CryptoUtil {
 	}
 
 	public static String encrypt(String key, String plainText) throws Exception {
-		if (key == null) {
+		if (StringUtil.isEmpty(key)) {
 			key = DEFAULT_PRIVATE_KEY_STRING;
 		}
 

@@ -33,6 +33,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.SqlUtil;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY;
 import static org.laokou.common.i18n.common.Constant.SINGLE_QUOT;
@@ -50,7 +51,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 		if (parameter instanceof Map<?, ?> map) {
 			try {
 				Object obj = map.get(PAGE_QUERY);
-				if (obj != null) {
+				if (Objects.nonNull(obj)) {
 					// 获取aop拼接的sql
 					PageQuery pageQuery = (PageQuery) obj;
 					if (pageQuery.isIgnore()) {

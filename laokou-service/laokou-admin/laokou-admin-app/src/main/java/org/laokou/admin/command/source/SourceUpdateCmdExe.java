@@ -31,6 +31,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 
 /**
@@ -55,7 +57,7 @@ public class SourceUpdateCmdExe {
 	private void validate(Source source) {
 		Long id = source.getId();
 		String name = source.getName();
-		if (id == null) {
+		if (Objects.isNull(id)) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		boolean sourceRegex = RegexUtil.sourceRegex(name);

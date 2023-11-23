@@ -22,6 +22,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author laokou
@@ -75,7 +76,7 @@ public class CreateTable {
 				}
 			}
 			finally {
-				if (connection != null) {
+				if (Objects.nonNull(connection)) {
 					try {
 						connection.close();
 					}

@@ -31,6 +31,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.netty.config.AbstractServer;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 
+import java.util.Objects;
+
 import static org.laokou.im.module.websocket.WebsocketHandler.USER_CACHE;
 
 /**
@@ -73,7 +75,7 @@ public class WebSocketServer extends AbstractServer {
 	@Override
 	public void send(String clientId, Object obj) {
 		Channel channel = USER_CACHE.getIfPresent(clientId);
-		if (channel != null) {
+		if (Objects.nonNull(channel)) {
 			channel.writeAndFlush(obj);
 		}
 	}

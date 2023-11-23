@@ -55,10 +55,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.auth.common.Constant.TENANT_ID;
@@ -136,7 +133,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
 				auth2BaseAuthenticationToken);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
-		if (registeredClient == null) {
+		if (Objects.isNull(registeredClient)) {
 			throw OAuth2ExceptionHandler.getException(REGISTERED_CLIENT_NOT_EXIST,
 					MessageUtil.getMessage(REGISTERED_CLIENT_NOT_EXIST));
 		}
@@ -167,11 +164,11 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			.principalName(loginName)
 			.authorizedScopes(scopes)
 			.authorizationGrantType(grantType);
-		if (generatedAccessToken instanceof ClaimAccessor) {
+		if (generatedAccessToken instanceof ClaimAccessor claimAccessor) {
 			authorizationBuilder
 				.token(accessToken,
 						(metadata) -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME,
-								((ClaimAccessor) generatedAccessToken).getClaims()))
+								claimAccessor.getClaims()))
 				.authorizedScopes(scopes)
 				// admin后台管理需要token，解析token获取用户信息，因此将用户信息存在数据库，下次直接查询数据库就可以获取用户信息
 				.attribute(Principal.class.getName(), principal);
@@ -225,21 +222,21 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			HttpServletRequest request, String captcha, String uuid) {
 		AuthorizationGrantType grantType = getGrantType();
 		String type = grantType.getValue();
-		Long tenantId = Long.valueOf(request.getParameter(TENANT_ID));
+		long tenantId = Long.parseLong(request.getParameter(TENANT_ID));
 		String ip = IpUtil.getIpAddr(request);
 		// 验证验证码
 		Boolean validate = captchaGateway.validate(uuid, captcha);
-		if (validate == null) {
+		if (Objects.isNull(validate)) {
 			throw authenticationException(CAPTCHA_EXPIRED, new User(username, tenantId), type, ip);
 		}
-		if (Boolean.FALSE.equals(validate)) {
+		if (!validate) {
 			throw authenticationException(CAPTCHA_ERROR, new User(username, tenantId), type, ip);
 		}
 		// 加密
 		String encryptName = AesUtil.encrypt(username);
 		// 多租户查询
 		User user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, type));
-		if (user == null) {
+		if (Objects.isNull(user)) {
 			throw authenticationException(ACCOUNT_PASSWORD_ERROR, new User(username, tenantId), type, ip);
 		}
 		if (PASSWORD.equals(type)) {
@@ -287,7 +284,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		if (OAuth2ClientAuthenticationToken.class.isAssignableFrom(authentication.getPrincipal().getClass())) {
 			clientPrincipal = (OAuth2ClientAuthenticationToken) authentication.getPrincipal();
 		}
-		if (clientPrincipal != null && clientPrincipal.isAuthenticated()) {
+		if (Objects.nonNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
 			return clientPrincipal;
 		}
 		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));

@@ -24,6 +24,7 @@ import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
+import org.springframework.util.Assert;
 
 import java.time.Duration;
 import java.util.*;
@@ -231,9 +232,10 @@ public class RedisUtil {
 	public List<Map<String, String>> getCommandStatus() {
 		Properties commandStats = (Properties) redisTemplate
 			.execute((RedisCallback<Object>) connection -> connection.serverCommands().info("commandstats"));
-		List<Map<String, String>> pieList = new ArrayList<>();
-		assert commandStats != null;
-		commandStats.stringPropertyNames().forEach(key -> {
+		Assert.isTrue(Objects.nonNull(commandStats), "command states is not empty");
+		Set<String> set = commandStats.stringPropertyNames();
+		List<Map<String, String>> pieList = new ArrayList<>(set.size());
+		set.forEach(key -> {
 			Map<String, String> data = new HashMap<>(2);
 			String property = commandStats.getProperty(key);
 			data.put("name", StringUtil.removeStart(key, "cmdstat_"));
@@ -246,15 +248,10 @@ public class RedisUtil {
 	public Map<String, String> getInfo() {
 		final Properties properties = redisTemplate.execute(RedisServerCommands::info,
 				redisTemplate.isExposeConnection());
-		assert properties != null;
+		Assert.isTrue(Objects.nonNull(properties), "properties is not empty");
 		final Set<String> set = properties.stringPropertyNames();
-		final Iterator<String> iterator = set.iterator();
 		Map<String, String> dataMap = new HashMap<>(set.size());
-		while (iterator.hasNext()) {
-			final String key = iterator.next();
-			final String value = properties.getProperty(key);
-			dataMap.put(key, value);
-		}
+		set.forEach(key -> dataMap.put(key, properties.getProperty(key)));
 		return dataMap;
 	}
 

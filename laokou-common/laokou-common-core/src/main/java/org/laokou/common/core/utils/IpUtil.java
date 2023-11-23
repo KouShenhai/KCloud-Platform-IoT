@@ -34,7 +34,7 @@ import static org.laokou.common.i18n.common.Constant.*;
 public class IpUtil {
 
 	public static String getIpAddr(HttpServletRequest request) {
-		if (request == null) {
+		if (Objects.isNull(request)) {
 			return IP_UNKNOWN;
 		}
 		String ip = request.getHeader("x-forwarded-for");

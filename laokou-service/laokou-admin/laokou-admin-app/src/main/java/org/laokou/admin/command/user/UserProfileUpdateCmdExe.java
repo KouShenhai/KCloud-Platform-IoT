@@ -33,6 +33,8 @@ import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
 
@@ -67,7 +69,7 @@ public class UserProfileUpdateCmdExe {
 	}
 
 	private void validate(UserProfileCO co) {
-		if (co.getId() == null) {
+		if (Objects.isNull(co.getId())) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		if (StringUtil.isNotEmpty(co.getMobile())) {

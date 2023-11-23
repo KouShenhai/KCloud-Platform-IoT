@@ -95,7 +95,7 @@ public class SpringContextUtil implements ApplicationContextAware, DisposableBea
 	}
 
 	public static void publishEvent(ApplicationEvent event) {
-		if (applicationContext != null) {
+		if (Objects.nonNull(applicationContext)) {
 			log.info("发布Spring事件");
 			applicationContext.publishEvent(event);
 		}

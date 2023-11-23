@@ -21,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author laokou
@@ -29,7 +30,7 @@ import java.util.List;
 public class ConvertUtil extends BeanUtils {
 
 	public static <T> T sourceToTarget(Object source, Class<T> target) {
-		if (source == null) {
+		if (Objects.isNull(source)) {
 			return null;
 		}
 		T targetObject = null;

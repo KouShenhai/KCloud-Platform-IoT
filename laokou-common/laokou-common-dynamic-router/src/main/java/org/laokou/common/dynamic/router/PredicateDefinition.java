@@ -18,6 +18,7 @@ package org.laokou.common.dynamic.router;
 
 import jakarta.validation.ValidationException;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 import org.laokou.common.dynamic.router.utils.NameUtil;
 import org.springframework.validation.annotation.Validated;
 
@@ -30,6 +31,7 @@ import static org.springframework.util.StringUtils.tokenizeToStringArray;
 /**
  * @author Spencer Gibb
  */
+@Getter
 @Validated
 public class PredicateDefinition {
 
@@ -56,16 +58,8 @@ public class PredicateDefinition {
 		}
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Map<String, String> getArgs() {
-		return args;
 	}
 
 	public void setArgs(Map<String, String> args) {
@@ -81,7 +75,7 @@ public class PredicateDefinition {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (Objects.isNull(o) || getClass() != o.getClass()) {
 			return false;
 		}
 		PredicateDefinition that = (PredicateDefinition) o;
@@ -95,11 +89,7 @@ public class PredicateDefinition {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder("PredicateDefinition{");
-		sb.append("name='").append(name).append('\'');
-		sb.append(", args=").append(args);
-		sb.append('}');
-		return sb.toString();
+		return "PredicateDefinition{" + "name='" + name + '\'' + ", args=" + args + '}';
 	}
 
 }

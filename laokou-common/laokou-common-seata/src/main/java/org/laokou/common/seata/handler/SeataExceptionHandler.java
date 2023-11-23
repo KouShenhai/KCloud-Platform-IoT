@@ -16,6 +16,7 @@
  */
 package org.laokou.common.seata.handler;
 
+import io.seata.common.exception.FrameworkException;
 import io.seata.core.exception.RmTransactionException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -24,7 +25,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static org.laokou.common.i18n.common.ErrorCode.TRANSACTION_TIMEOUT;
+import static org.laokou.common.i18n.common.ErrorCode.DISTRIBUTED_TRANSACTION_DOWNTIME;
+import static org.laokou.common.i18n.common.ErrorCode.DISTRIBUTED_TRANSACTION_TIMEOUT;
+import static org.laokou.common.i18n.common.StatusCode.INTERNAL_SERVER_ERROR;
 
 /**
  * @author laokou
@@ -34,9 +37,17 @@ import static org.laokou.common.i18n.common.ErrorCode.TRANSACTION_TIMEOUT;
 @Component
 public class SeataExceptionHandler {
 
-	@ExceptionHandler({ RmTransactionException.class })
-	public Result<?> handle() {
-		return Result.fail(TRANSACTION_TIMEOUT, MessageUtil.getMessage(TRANSACTION_TIMEOUT));
+	@ExceptionHandler({ RmTransactionException.class, FrameworkException.class })
+	public Result<?> handle(Exception ex) {
+		if (ex instanceof RmTransactionException) {
+			return Result.fail(DISTRIBUTED_TRANSACTION_TIMEOUT,
+					MessageUtil.getMessage(DISTRIBUTED_TRANSACTION_TIMEOUT));
+		}
+		else if (ex instanceof FrameworkException) {
+			return Result.fail(DISTRIBUTED_TRANSACTION_DOWNTIME,
+					MessageUtil.getMessage(DISTRIBUTED_TRANSACTION_DOWNTIME));
+		}
+		return Result.fail(INTERNAL_SERVER_ERROR);
 	}
 
 }

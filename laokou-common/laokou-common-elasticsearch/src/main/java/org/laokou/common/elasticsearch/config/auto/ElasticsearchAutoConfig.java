@@ -44,6 +44,7 @@ import org.springframework.context.annotation.Bean;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
+import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.RISK;
 
@@ -78,7 +79,7 @@ public class ElasticsearchAutoConfig {
 			builderCustomizers.orderedStream().forEach((customizer) -> customizer.customize(requestConfigBuilder));
 			return requestConfigBuilder;
 		});
-		if (properties.getPathPrefix() != null) {
+		if (Objects.nonNull(properties.getPathPrefix())) {
 			builder.setPathPrefix(properties.getPathPrefix());
 		}
 		builderCustomizers.orderedStream().forEach((customizer) -> customizer.customize(builder));
@@ -169,7 +170,7 @@ public class ElasticsearchAutoConfig {
 		}
 
 		private boolean hasUserInfo(URI uri) {
-			return uri != null && StringUtil.isNotEmpty(uri.getUserInfo());
+			return Objects.nonNull(uri) && StringUtil.isNotEmpty(uri.getUserInfo());
 		}
 
 		private void addUserInfoCredentials(URI uri) {

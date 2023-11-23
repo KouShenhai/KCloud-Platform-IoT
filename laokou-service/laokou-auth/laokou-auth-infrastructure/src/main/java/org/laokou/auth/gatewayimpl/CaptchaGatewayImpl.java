@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY;
 
@@ -66,10 +67,10 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	private String get(String uuid) {
 		String key = key(uuid);
 		Object captcha = redisUtil.get(key);
-		if (captcha != null) {
+		if (Objects.nonNull(captcha)) {
 			redisUtil.delete(key);
 		}
-		return captcha != null ? captcha.toString() : EMPTY;
+		return Objects.nonNull(captcha) ? captcha.toString() : EMPTY;
 	}
 
 	private void setValue(String uuid, String code) {

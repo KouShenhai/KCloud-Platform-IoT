@@ -37,6 +37,7 @@ import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -112,7 +113,7 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(
 				new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8))) {
 			String str;
-			while ((str = reader.readLine()) != null) {
+			while (Objects.nonNull((str = reader.readLine()))) {
 				list.add(str);
 			}
 		}

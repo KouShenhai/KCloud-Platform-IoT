@@ -30,6 +30,8 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.flowable.dto.task.TaskTransferCmd;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 import static org.laokou.flowable.common.Constant.FLOWABLE;
 
 /**
@@ -52,7 +54,7 @@ public class TaskTransferCmdExe {
 			String assignee = cmd.getToUserId().toString();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-			if (task == null) {
+			if (Objects.isNull(task)) {
 				throw new FlowException("任务不存在");
 			}
 			if (!owner.equals(task.getAssignee())) {

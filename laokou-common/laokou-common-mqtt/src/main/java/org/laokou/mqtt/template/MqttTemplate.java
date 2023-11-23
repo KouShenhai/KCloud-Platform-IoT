@@ -28,10 +28,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MqttTemplate {
 
-    private final Server mqttServer;
+	private final Server mqttServer;
 
-    public void send(String topic, String payload) {
-        mqttServer.send(topic, payload);
-    }
+	public void send(String topic, String payload) {
+		mqttServer.send(topic, payload);
+	}
 
 }

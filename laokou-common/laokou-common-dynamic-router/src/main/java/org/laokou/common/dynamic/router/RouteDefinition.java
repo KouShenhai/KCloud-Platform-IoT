@@ -16,25 +16,22 @@
 
 package org.laokou.common.dynamic.router;
 
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-
+import lombok.Getter;
 import org.springframework.validation.annotation.Validated;
+
+import java.net.URI;
+import java.util.*;
 
 import static org.springframework.util.StringUtils.tokenizeToStringArray;
 
 /**
  * @author Spencer Gibb
  */
+@Getter
 @Validated
 public class RouteDefinition {
 
@@ -75,48 +72,24 @@ public class RouteDefinition {
 		}
 	}
 
-	public String getId() {
-		return id;
-	}
-
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public List<PredicateDefinition> getPredicates() {
-		return predicates;
 	}
 
 	public void setPredicates(List<PredicateDefinition> predicates) {
 		this.predicates = predicates;
 	}
 
-	public List<FilterDefinition> getFilters() {
-		return filters;
-	}
-
 	public void setFilters(List<FilterDefinition> filters) {
 		this.filters = filters;
-	}
-
-	public URI getUri() {
-		return uri;
 	}
 
 	public void setUri(URI uri) {
 		this.uri = uri;
 	}
 
-	public int getOrder() {
-		return order;
-	}
-
 	public void setOrder(int order) {
 		this.order = order;
-	}
-
-	public Map<String, Object> getMetadata() {
-		return metadata;
 	}
 
 	public void setMetadata(Map<String, Object> metadata) {
@@ -128,7 +101,7 @@ public class RouteDefinition {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (Objects.isNull(o) || getClass() != o.getClass()) {
 			return false;
 		}
 		RouteDefinition that = (RouteDefinition) o;

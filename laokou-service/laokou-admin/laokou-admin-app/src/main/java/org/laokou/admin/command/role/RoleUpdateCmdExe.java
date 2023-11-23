@@ -33,6 +33,8 @@ import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 
 /**
@@ -51,7 +53,7 @@ public class RoleUpdateCmdExe {
 	public Result<Boolean> execute(RoleUpdateCmd cmd) {
 		RoleCO co = cmd.getRoleCO();
 		Long id = co.getId();
-		if (id == null) {
+		if (Objects.isNull(id)) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		Long count = roleMapper

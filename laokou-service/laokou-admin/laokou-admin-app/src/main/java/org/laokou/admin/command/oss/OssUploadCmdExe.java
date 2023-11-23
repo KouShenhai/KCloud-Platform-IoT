@@ -39,6 +39,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.Objects;
 
 import static org.laokou.admin.common.Constant.MAX_FILE_SIZE;
 import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
@@ -74,7 +75,7 @@ public class OssUploadCmdExe {
 		ByteArrayOutputStream bos = getCacheStream(inputStream);
 		String md5 = DigestUtils.md5DigestAsHex(new ByteArrayInputStream(bos.toByteArray()));
 		OssLogDO ossLogDO = ossLogMapper.selectOne(Wrappers.query(OssLogDO.class).eq("md5", md5).select("url"));
-		if (ossLogDO != null) {
+		if (Objects.nonNull(ossLogDO)) {
 			return new FileCO(ossLogDO.getUrl(), md5);
 		}
 		String url = storageFactory.build(UserUtil.getTenantId())

@@ -31,10 +31,12 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.*;
 
@@ -73,7 +75,7 @@ public class DataFilterAspect {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
 		DataFilter dataFilter = AnnotationUtils.findAnnotation(method, DataFilter.class);
-		assert dataFilter != null;
+		Assert.isTrue(Objects.nonNull(dataFilter), "@DataFilter is not empty");
 		String alias = dataFilter.alias();
 		String deptPathColumn = dataFilter.deptPath();
 		String userIdColumn = dataFilter.userId();

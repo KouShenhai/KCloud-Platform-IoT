@@ -60,9 +60,9 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 
 	@Override
 	Authentication principal(HttpServletRequest request) {
-		// 判断唯一标识是否为空
+		// 判断UUID是否为空
 		String uuid = request.getParameter(UUID);
-		log.info("唯一标识：{}", uuid);
+		log.info("UUID：{}", uuid);
 		if (StringUtil.isEmpty(uuid)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));

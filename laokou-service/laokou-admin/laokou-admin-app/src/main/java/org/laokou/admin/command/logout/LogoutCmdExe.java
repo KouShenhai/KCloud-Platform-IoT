@@ -50,12 +50,12 @@ public class LogoutCmdExe {
 			return Result.of(true);
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
-		if (authorization == null) {
+		if (Objects.isNull(authorization)) {
 			return Result.of(true);
 		}
 		User user = (User) ((UsernamePasswordAuthenticationToken) Objects
 			.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
-		if (user == null) {
+		if (Objects.isNull(user)) {
 			return Result.of(true);
 		}
 		Long userId = user.getId();

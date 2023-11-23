@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
 
@@ -64,7 +65,7 @@ public class IdempotentUtil {
 	 */
 	public static boolean isIdempotent() {
 		Boolean status = IS_IDEMPOTENT.get();
-		return status != null && status;
+		return Objects.nonNull(status) && status;
 	}
 
 	/**

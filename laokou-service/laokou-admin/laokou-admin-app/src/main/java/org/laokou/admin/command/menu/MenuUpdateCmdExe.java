@@ -30,6 +30,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 
 /**
@@ -48,7 +50,7 @@ public class MenuUpdateCmdExe {
 	public Result<Boolean> execute(MenuUpdateCmd cmd) {
 		MenuCO co = cmd.getMenuCO();
 		Long id = co.getId();
-		if (id == null) {
+		if (Objects.isNull(id)) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		Long count = menuMapper
