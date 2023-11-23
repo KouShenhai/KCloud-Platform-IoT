@@ -318,7 +318,8 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 				continue;
 			}
 
-			if (ConfigurableBeanFactory.SCOPE_SINGLETON.equals(definition.getScope()) && Objects.nonNull(defaultScope)) {
+			if (ConfigurableBeanFactory.SCOPE_SINGLETON.equals(definition.getScope())
+					&& Objects.nonNull(defaultScope)) {
 				definition.setScope(defaultScope);
 			}
 

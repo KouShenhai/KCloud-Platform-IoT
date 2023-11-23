@@ -89,9 +89,7 @@ public class PredicateDefinition {
 
 	@Override
 	public String toString() {
-        return "PredicateDefinition{" + "name='" + name + '\'' +
-				", args=" + args +
-				'}';
+		return "PredicateDefinition{" + "name='" + name + '\'' + ", args=" + args + '}';
 	}
 
 }

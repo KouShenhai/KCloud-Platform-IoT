@@ -102,7 +102,8 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 						subProcess1 = (SubProcess) artifact3.next();
 						graphicInfo = bpmnModel.getGraphicInfo(subProcess1.getId());
 					}
-					while (Objects.nonNull(graphicInfo) && Objects.nonNull(graphicInfo.getExpanded()) && !graphicInfo.getExpanded());
+					while (Objects.nonNull(graphicInfo) && Objects.nonNull(graphicInfo.getExpanded())
+							&& !graphicInfo.getExpanded());
 				}
 				while (this.isPartOfCollapsedSubProcess(subProcess1, bpmnModel));
 				for (Artifact subProcessArtifact : subProcess1.getArtifacts()) {
@@ -185,7 +186,8 @@ public class ProcessDiagramGeneratorConfig extends DefaultProcessDiagramGenerato
 		return processNum;
 	}
 
-	private static ProcessNum getProcessNum2(double minX, double maxX, double minY, double maxY, BpmnModel bpmnModel, List<FlowNode> var23) {
+	private static ProcessNum getProcessNum2(double minX, double maxX, double minY, double maxY, BpmnModel bpmnModel,
+			List<FlowNode> var23) {
 		List<Artifact> var25 = gatherAllArtifacts(bpmnModel);
 		Iterator<Artifact> var27 = var25.iterator();
 		GraphicInfo var37;

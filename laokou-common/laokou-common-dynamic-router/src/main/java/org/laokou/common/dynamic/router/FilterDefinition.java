@@ -88,9 +88,7 @@ public class FilterDefinition {
 
 	@Override
 	public String toString() {
-        return "FilterDefinition{" + "name='" + name + '\'' +
-				", args=" + args +
-				'}';
+		return "FilterDefinition{" + "name='" + name + '\'' + ", args=" + args + '}';
 	}
 
 }
