@@ -75,7 +75,7 @@
         <!--hibernate-validator版本-->
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <!--ip2region版本-->
-        <ip2region.version>2.12.2</ip2region.version>
+        <ip2region.version>2.7.0</ip2region.version>
         <!--jackson-module-kotlin版本-->
         <jackson-module-kotlin.version>2.16.0</jackson-module-kotlin.version>
         <!--xxl-job版本-->
