@@ -70,7 +70,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Spring Cloud Alibaba        | 2022.0.0.0    |
 | Spring Boot Admin           | 3.1.8         |
 | Spring Authorization Server | 1.2.0         |
-| Mybatis Plus                | 3.5.4         |
+| Mybatis Plus                | 3.5.4.1       |
 | Nacos                       | 2.2.4-OEM     |
 | Seata                       | 1.7.1         |
 | Sentinel                    | 1.8.6         |
