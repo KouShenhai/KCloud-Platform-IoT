@@ -190,8 +190,6 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			refreshToken = (OAuth2RefreshToken) generatedRefreshToken;
 			authorizationBuilder.refreshToken(refreshToken);
 		}
-		// 生成id_token
-		OidcIdToken idToken;
 		if (scopes.contains(OidcScopes.OPENID)) {
 			tokenContext = tokenContextBuilder.tokenType(ID_TOKEN_TOKEN_TYPE)
 				// ID令牌定制器可能需要访问访问令牌、刷新令牌
@@ -200,13 +198,11 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			OAuth2Token generatedIdToken = Optional.ofNullable(this.tokenGenerator.generate(tokenContext))
 				.orElseThrow(() -> OAuth2ExceptionHandler.getException(GENERATE_ID_TOKEN_FAIL,
 						MessageUtil.getMessage(GENERATE_ID_TOKEN_FAIL)));
-			idToken = new OidcIdToken(generatedIdToken.getTokenValue(), generatedIdToken.getIssuedAt(),
+			// 生成id_token
+			OidcIdToken idToken = new OidcIdToken(generatedIdToken.getTokenValue(), generatedIdToken.getIssuedAt(),
 					generatedIdToken.getExpiresAt(), ((Jwt) generatedIdToken).getClaims());
 			authorizationBuilder.token(idToken,
 					(metadata) -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, idToken.getClaims()));
-		}
-		else {
-			idToken = null;
 		}
 		OAuth2Authorization authorization = authorizationBuilder.build();
 		authorizationService.save(authorization);
