@@ -27,7 +27,7 @@
     <properties>
         <laokou.version>3.2.0</laokou.version>
         <!--spring-boot版本-->
-        <spring-boot.version>3.2.0-RC2</spring-boot.version>
+        <spring-boot.version>3.2.0</spring-boot.version>
         <!--lombok版本-->
         <lombok.version>1.18.30</lombok.version>
         <!--mysql版本-->
@@ -37,7 +37,7 @@
         <!--flowable版本-->
         <flowable.version>7.0.0</flowable.version>
         <!--mybatis-plus版本 -->
-        <mybatis-plus.version>3.5.4</mybatis-plus.version>
+        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
         <!--redisson版本-->
         <redisson.version>3.24.3</redisson.version>
         <!--UserAgentUtils版本-->
@@ -53,19 +53,19 @@
         <!--freemarker模板引擎依赖-->
         <freemarker.version>2.3.32</freemarker.version>
         <!--oshi版本-->
-        <oshi.version>6.4.0</oshi.version>
+        <oshi.version>6.4.7</oshi.version>
         <!--elasticsearch版本-->
         <elasticsearch.version>8.6.2</elasticsearch.version>
         <!--rocketmq版本-->
         <rocketmq.version>2.2.3</rocketmq.version>
         <!--jakarta.servlet-api版本-->
-        <jakarta-servlet-api.version>6.0.0</jakarta-servlet-api.version>
+        <jakarta-servlet-api.version>6.1.0-M1</jakarta-servlet-api.version>
         <!--easyexcel版本-->
         <easyexcel.version>3.3.2</easyexcel.version>
         <!--spring-security-oauth2-authorization-server版本-->
         <spring-security-oauth2-authorization-server.version>1.2.0</spring-security-oauth2-authorization-server.version>
         <!--spring-boot-starter-oauth2-resource-server版本-->
-        <spring-boot-starter-oauth2-resource-server.version>3.2.0-RC2</spring-boot-starter-oauth2-resource-server.version>
+        <spring-boot-starter-oauth2-resource-server.version>3.2.0</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
         <aws-java-sdk-s3.version>1.12.267</aws-java-sdk-s3.version>
         <!--dynamic-datasource版本-->
@@ -75,9 +75,9 @@
         <!--hibernate-validator版本-->
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <!--ip2region版本-->
-        <ip2region.version>2.7.0</ip2region.version>
+        <ip2region.version>2.12.2</ip2region.version>
         <!--jackson-module-kotlin版本-->
-        <jackson-module-kotlin.version>2.16.0-rc1</jackson-module-kotlin.version>
+        <jackson-module-kotlin.version>2.16.0</jackson-module-kotlin.version>
         <!--xxl-job版本-->
         <xxl-job.version>2.4.0</xxl-job.version>
         <!--shardingsphere版本-->
@@ -85,7 +85,7 @@
         <!--p6spy版本-->
         <p6spy.version>3.9.1</p6spy.version>
         <!--kafka版本-->
-        <kafka.version>3.0.12</kafka.version>
+        <kafka.version>3.1.0</kafka.version>
         <!--netty版本-->
         <netty.version>4.1.101.Final</netty.version>
         <!--gson版本-->
@@ -99,9 +99,9 @@
         <!--lombok-mapstruct-binding版本-->
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!--mapstruct版本-->
-        <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <mapstruct.version>1.6.0.Beta1</mapstruct.version>
         <!--mqtt版本-->
-        <mqtt.version>6.1.4</mqtt.version>
+        <mqtt.version>6.2.0</mqtt.version>
         <!--log4j2-ttl-thread-context-map版本-->
         <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
         <!--transmittable-thread-local版本-->
