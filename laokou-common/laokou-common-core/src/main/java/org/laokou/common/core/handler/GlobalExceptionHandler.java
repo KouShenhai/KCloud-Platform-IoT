@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
 		return Result.fail(ex.getCode(), ex.getMsg());
 	}
 
-	@ExceptionHandler({MethodArgumentNotValidException.class, ValidationException.class})
+	@ExceptionHandler({ MethodArgumentNotValidException.class, ValidationException.class })
 	public Result<?> handle(Exception ex) {
 		if (ex instanceof MethodArgumentNotValidException mane) {
 			FieldError fieldError = mane.getFieldError();

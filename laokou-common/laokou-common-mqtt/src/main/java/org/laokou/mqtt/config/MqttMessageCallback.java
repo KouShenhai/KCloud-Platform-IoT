@@ -35,6 +35,7 @@ import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 public class MqttMessageCallback implements MqttCallback {
 
 	private final MqttClient client;
+
 	private final MqttStrategy mqttStrategy;
 
 	@Override

@@ -29,7 +29,7 @@ import java.util.List;
  * @author laokou
  */
 @Data
-public class SearchIndex extends DTO {
+public class Search extends DTO {
 
 	@Serial
 	private static final long serialVersionUID = 8362710467533113506L;
@@ -49,12 +49,12 @@ public class SearchIndex extends DTO {
 	/**
 	 * 分词搜索
 	 */
-	private List<Search> queryStringList;
+	private List<Query> queryStringList;
 
 	/**
 	 * 排序
 	 */
-	private List<Search> sortFieldList;
+	private List<Query> sortFieldList;
 
 	/**
 	 * 高亮搜索字段
@@ -64,7 +64,7 @@ public class SearchIndex extends DTO {
 	/**
 	 * or搜索-精准匹配
 	 */
-	private List<Search> orSearchList;
+	private List<Query> orQueryList;
 
 	/**
 	 * 聚合字段
@@ -83,7 +83,7 @@ public class SearchIndex extends DTO {
 	}
 
 	@Data
-	public static class Search {
+	public static class Query {
 
 		private String field;
 

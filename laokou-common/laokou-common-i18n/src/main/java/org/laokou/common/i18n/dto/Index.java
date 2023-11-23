@@ -22,7 +22,7 @@ import java.io.Serial;
 /**
  * @author laokou
  */
-public abstract class BaseIndex extends DTO {
+public abstract class Index extends DTO {
 
 	@Serial
 	private static final long serialVersionUID = -4314847178115273665L;
