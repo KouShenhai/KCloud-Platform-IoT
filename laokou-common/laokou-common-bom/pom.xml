@@ -62,8 +62,6 @@
         <jakarta-servlet-api.version>6.0.0</jakarta-servlet-api.version>
         <!--easyexcel版本-->
         <easyexcel.version>3.3.2</easyexcel.version>
-        <!--junit版本-->
-        <junit.version>4.13.2</junit.version>
         <!--spring-security-oauth2-authorization-server版本-->
         <spring-security-oauth2-authorization-server.version>1.2.0</spring-security-oauth2-authorization-server.version>
         <!--spring-boot-starter-oauth2-resource-server版本-->
@@ -74,8 +72,6 @@
         <dynamic-datasource.version>4.2.0</dynamic-datasource.version>
         <!--httpclient5版本-->
         <httpclient5.version>5.3-alpha1</httpclient5.version>
-        <!--jna版本-->
-        <jna.version>5.13.0</jna.version>
         <!--hibernate-validator版本-->
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <!--ip2region版本-->
@@ -582,16 +578,6 @@
                 <version>${oshi.version}</version>
             </dependency>
             <dependency>
-                <groupId>net.java.dev.jna</groupId>
-                <artifactId>jna</artifactId>
-                <version>${jna.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.java.dev.jna</groupId>
-                <artifactId>jna-platform</artifactId>
-                <version>${jna.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-client</artifactId>
                 <version>${spring-boot-admin.version}</version>
@@ -680,11 +666,6 @@
                 <groupId>com.github.whvcse</groupId>
                 <artifactId>easy-captcha</artifactId>
                 <version>${easy-captcha.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>

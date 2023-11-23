@@ -194,7 +194,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	private void syncIndex() {
-		int chunkSize = 500;
+		int chunkSize = 5000;
 		List<ResourceIndex> list = Collections.synchronizedList(new ArrayList<>(chunkSize));
 		resourceMapper.handleResourceIndex(result -> {
 			ResourceIndex index = result.getResultObject();

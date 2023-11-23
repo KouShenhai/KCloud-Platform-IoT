@@ -91,27 +91,28 @@ public class ElasticsearchTemplate {
 
 	/**
 	 * 批量同步数据到ES
-	 * @param indexName 索引名称
+	 *
+	 * @param indexName    索引名称
 	 * @param jsonDataList 数据列表
 	 * @throws IOException IOException
 	 */
-	public Boolean syncBatchIndex(String indexName, String jsonDataList) throws IOException {
+	public void syncBatchIndex(String indexName, String jsonDataList) throws IOException {
 		// 判空
 		if (StringUtil.isEmpty(jsonDataList)) {
 			log.error("数据不能为空，批量同步索引失败");
-			return false;
+			return;
 		}
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
 			log.error("索引：{} -> 索引不存在，批量同步索引失败", indexName);
-			return false;
+			return;
 		}
 		// 批量操作Request
 		BulkRequest bulkRequest = packBulkIndexRequest(indexName, jsonDataList);
 		if (bulkRequest.requests().isEmpty()) {
 			log.error("批量同步索引失败");
-			return false;
+			return;
 		}
 		final BulkResponse bulk = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
 		if (bulk.hasFailures()) {
@@ -119,7 +120,7 @@ public class ElasticsearchTemplate {
 				log.error("索引：{}，主键：{}，状态为：{}，错误信息：{} -> 批量同步索引失败", indexName, item.getId(), item.status(),
 						item.getFailureMessage());
 			}
-			return false;
+			return;
 		}
 		// 记录索引新增与修改数量
 		Integer createdCount = 0;
@@ -133,7 +134,6 @@ public class ElasticsearchTemplate {
 			}
 		}
 		log.info("索引：{}，新增{}个，修改{}个 -> 批量同步索引成功", indexName, createdCount, updatedCount);
-		return true;
 	}
 
 	/**
@@ -846,7 +846,7 @@ public class ElasticsearchTemplate {
 			return datas;
 		}
 		catch (Exception e) {
-			throw new SystemException("搜索失败");
+			throw new SystemException("高亮搜索查询失败");
 		}
 	}
 
@@ -926,7 +926,7 @@ public class ElasticsearchTemplate {
 		if (CollectionUtil.isNotEmpty(sortFieldList)) {
 			for (SearchIndex.Search search : sortFieldList) {
 				SortOrder sortOrder;
-				String desc = "desc";
+				String desc = SortOrder.DESC.toString();
 				String value = search.getValue();
 				String field = search.getField();
 				if (desc.equalsIgnoreCase(value)) {
@@ -956,7 +956,6 @@ public class ElasticsearchTemplate {
 	 */
 	public Datas<Map<String, Long>> aggregationSearchIndex(SearchIndex searchIndex) throws IOException {
 		Datas<Map<String, Long>> datas = new Datas<>();
-		List<Map<String, Long>> list = new ArrayList<>(5);
 		String[] indexNames = searchIndex.getIndexNames();
 		SearchIndex.Aggregation aggregationKey = searchIndex.getAggregationKey();
 		String field = aggregationKey.getField();
@@ -977,10 +976,9 @@ public class ElasticsearchTemplate {
 		Aggregations aggregations = searchResponse.getAggregations();
 		Terms aggregation = aggregations.get(groupKey);
 		List<? extends Terms.Bucket> buckets = aggregation.getBuckets();
+		List<Map<String, Long>> list = new ArrayList<>(buckets.size());
 		for (Terms.Bucket bucket : buckets) {
-			Map<String, Long> dataMap = new HashMap<>(1);
-			dataMap.put(bucket.getKeyAsString(), bucket.getDocCount());
-			list.add(dataMap);
+			list.add(Map.of(bucket.getKeyAsString(), bucket.getDocCount()));
 		}
 		datas.setRecords(list);
 		datas.setTotal(list.size());
