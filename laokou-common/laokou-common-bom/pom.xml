@@ -44,10 +44,6 @@
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
         <!--jsoup版本-->
         <jsoup.version>1.16.2</jsoup.version>
-        <!--commons-collections4版本-->
-        <commons-collections4.version>4.4</commons-collections4.version>
-        <!--commons-lang3版本-->
-        <commons-lang3.version>3.13.0</commons-lang3.version>
         <!--jasypt版本-->
         <jasypt.version>3.0.5</jasypt.version>
         <!--captcha版本-->
@@ -530,11 +526,6 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-sentinel</artifactId>
                 <version>${laokou.version}</version>
@@ -548,11 +539,6 @@
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-seata</artifactId>
                 <version>${laokou.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-collections4</artifactId>
-                <version>${commons-collections4.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
