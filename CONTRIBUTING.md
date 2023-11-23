@@ -14,7 +14,7 @@
 
 ## 提交规范
 - fix：修补bug
-- test：增加测试
+- test：添加或修改测试用例
 - feat：新功能(feature)
 - docs：文档(documentation)
 - chore：构建过程或辅助工具的变动
