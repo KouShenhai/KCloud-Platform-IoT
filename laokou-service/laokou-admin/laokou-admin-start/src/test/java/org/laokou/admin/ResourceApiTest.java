@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.admin.dto.resource.ResourceSearchGetQry;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.dto.SearchIndex;
+import org.laokou.common.i18n.dto.Search;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -48,35 +48,45 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class ResourceApiTest extends CommonTest {
 
-    private static final String API_PREFIX = "/v1/resource/";
+	private static final String API_PREFIX = "/v1/resource/";
 
-    public ResourceApiTest(WebApplicationContext webApplicationContext, OAuth2AuthorizationService oAuth2AuthorizationService) {
-        super(webApplicationContext, oAuth2AuthorizationService);
-    }
+	public ResourceApiTest(WebApplicationContext webApplicationContext,
+			OAuth2AuthorizationService oAuth2AuthorizationService) {
+		super(webApplicationContext, oAuth2AuthorizationService);
+	}
 
-    @Test
-    @SneakyThrows
-    public void resourceSyncApiTest() {
-        String apiUrl = API_PREFIX + "sync";
-        MvcResult mvcResult = super.mockMvc.perform(post(apiUrl).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print()).andReturn();
-        String body = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
-        Assert.isTrue(StringUtil.isNotEmpty(body), "response body is not empty");
-        log.info("返回值：{}", body);
-    }
+	@Test
+	@SneakyThrows
+	public void resourceSyncApiTest() {
+		String apiUrl = API_PREFIX + "sync";
+		MvcResult mvcResult = super.mockMvc.perform(post(apiUrl).contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andDo(print())
+			.andReturn();
+		String body = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+		Assert.isTrue(StringUtil.isNotEmpty(body), "response body is not empty");
+		log.info("返回值：{}", body);
+	}
 
-    @Test
-    @SneakyThrows
-    public void resourceSearchApiTest() {
-        String apiUrl = API_PREFIX + "search";
-        ResourceSearchGetQry qry = new ResourceSearchGetQry();
-        SearchIndex searchIndex = new SearchIndex();
-        searchIndex.setIndexNames(new String[]{RESOURCE_INDEX});
-        searchIndex.setHighlightFieldList(List.of("title","remark"));
-        qry.setSearchIndex(searchIndex);
-        MvcResult mvcResult = super.mockMvc.perform(post(apiUrl).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(JacksonUtil.toJsonStr(qry))).andExpect(status().isOk()).andDo(print()).andReturn();
-        String body = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
-        Assert.isTrue(StringUtil.isNotEmpty(body), "response body is not empty");
-        log.info("返回值：{}", body);
-    }
+	@Test
+	@SneakyThrows
+	public void resourceSearchApiTest() {
+		String apiUrl = API_PREFIX + "search";
+		ResourceSearchGetQry qry = new ResourceSearchGetQry();
+		Search search = new Search();
+		search.setIndexNames(new String[] { RESOURCE_INDEX });
+		search.setHighlightFieldList(List.of("title", "remark"));
+		qry.setSearch(search);
+		MvcResult mvcResult = super.mockMvc
+			.perform(post(apiUrl).contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content(JacksonUtil.toJsonStr(qry)))
+			.andExpect(status().isOk())
+			.andDo(print())
+			.andReturn();
+		String body = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+		Assert.isTrue(StringUtil.isNotEmpty(body), "response body is not empty");
+		log.info("返回值：{}", body);
+	}
 
 }

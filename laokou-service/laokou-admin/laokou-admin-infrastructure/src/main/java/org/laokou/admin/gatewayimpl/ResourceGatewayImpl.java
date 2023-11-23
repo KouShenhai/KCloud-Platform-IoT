@@ -177,7 +177,8 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		list.forEach(ym -> {
 			try {
 				elasticsearchTemplate.createIndex(index(ym), RESOURCE_INDEX, ResourceIndex.class);
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		});
@@ -187,7 +188,8 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		list.forEach(ym -> {
 			try {
 				elasticsearchTemplate.deleteIndex(index(ym));
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		});
@@ -210,10 +212,11 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private void syncIndex(List<ResourceIndex> list) {
 		Map<String, List<ResourceIndex>> listMap = list.stream().collect(Collectors.groupingBy(ResourceIndex::getYm));
-		listMap.forEach((k,v) -> {
+		listMap.forEach((k, v) -> {
 			try {
 				elasticsearchTemplate.syncBatchIndex(index(k), JacksonUtil.toJsonStr(v));
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		});

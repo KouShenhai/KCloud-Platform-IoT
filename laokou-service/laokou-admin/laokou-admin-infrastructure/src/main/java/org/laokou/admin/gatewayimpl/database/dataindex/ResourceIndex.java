@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import org.laokou.common.elasticsearch.annotation.ElasticsearchField;
-import org.laokou.common.i18n.dto.BaseIndex;
+import org.laokou.common.i18n.dto.Index;
 
 import java.io.Serial;
 
@@ -29,7 +29,7 @@ import java.io.Serial;
  * @author laokou
  */
 @Data
-public class ResourceIndex extends BaseIndex {
+public class ResourceIndex extends Index {
 
 	@Serial
 	private static final long serialVersionUID = -3715061850731611381L;

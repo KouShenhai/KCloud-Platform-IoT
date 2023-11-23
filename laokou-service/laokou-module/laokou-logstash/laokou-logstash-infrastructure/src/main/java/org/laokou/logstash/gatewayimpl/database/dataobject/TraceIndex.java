@@ -20,7 +20,7 @@ package org.laokou.logstash.gatewayimpl.database.dataobject;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.laokou.common.elasticsearch.annotation.ElasticsearchField;
-import org.laokou.common.i18n.dto.BaseIndex;
+import org.laokou.common.i18n.dto.Index;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -31,7 +31,7 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.*;
  * @author laokou
  */
 @Data
-public class TraceIndex extends BaseIndex {
+public class TraceIndex extends Index {
 
 	@ElasticsearchField
 	private String appName;

@@ -33,10 +33,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ResourceSearchGetQryExe {
 
-    private final ElasticsearchTemplate elasticsearchTemplate;
+	private final ElasticsearchTemplate elasticsearchTemplate;
 
-    public Result<Datas<Map<String, Object>>> execute(ResourceSearchGetQry qry) {
-        return Result.of(elasticsearchTemplate.highlightSearchIndex(qry.getSearchIndex()));
-    }
+	public Result<Datas<Map<String, Object>>> execute(ResourceSearchGetQry qry) {
+		return Result.of(elasticsearchTemplate.highlightSearchIndex(qry.getSearch()));
+	}
 
 }
