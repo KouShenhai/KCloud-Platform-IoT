@@ -35,6 +35,7 @@ import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Method;
@@ -82,7 +83,7 @@ public class OperateLogAspect {
 		Method method = methodSignature.getMethod();
 		OperateLog operateLog = AnnotationUtils.findAnnotation(method, OperateLog.class);
 		// 构建事件对象
-		assert Objects.nonNull(operateLog);
+		Assert.isTrue(Objects.nonNull(operateLog), "@OperateLog is not empty");
 		OperateLogEvent event = buildEvent(operateLog, request, joinPoint, e);
 		domainEventPublisher.publish(event);
 	}
@@ -96,7 +97,7 @@ public class OperateLogAspect {
 			Object[] args = joinPoint.getArgs();
 			List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
 			OperateLogEvent event = new OperateLogEvent(this);
-			assert Objects.nonNull(operateLog);
+			Assert.isTrue(Objects.nonNull(operateLog), "@OperateLog is not empty");
 			event.setModuleName(operateLog.module());
 			event.setName(operateLog.operation());
 			event.setUri(request.getRequestURI());

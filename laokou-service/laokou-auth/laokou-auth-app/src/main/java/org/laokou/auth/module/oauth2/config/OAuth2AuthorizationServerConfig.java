@@ -91,28 +91,32 @@ class OAuth2AuthorizationServerConfig {
 	 */
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
+	// @formatter:off
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
 			OAuth2PasswordAuthenticationProvider passwordAuthenticationProvider,
 			OAuth2MailAuthenticationProvider mailAuthenticationProvider,
 			OAuth2MobileAuthenticationProvider mobileAuthenticationProvider,
-			AuthorizationServerSettings authorizationServerSettings, OAuth2AuthorizationService authorizationService)
-			throws Exception {
+			AuthorizationServerSettings authorizationServerSettings,
+			OAuth2AuthorizationService authorizationService) throws Exception {
 		// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html
 		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-		OAuth2AuthorizationServerConfigurer oAuth2AuthorizationServerConfigurer = http
-			.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
 			// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
-			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint
-				.accessTokenRequestConverter(new DelegatingAuthenticationConverter(List.of(
-						new OAuth2MailAuthenticationConverter(), new OAuth2PasswordAuthenticationConverter(),
-						new OAuth2DeviceCodeAuthenticationConverter(), new OAuth2MobileAuthenticationConverter(),
+			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(List.of(
+						new OAuth2MailAuthenticationConverter(),
+						new OAuth2PasswordAuthenticationConverter(),
+						new OAuth2DeviceCodeAuthenticationConverter(),
+						new OAuth2MobileAuthenticationConverter(),
 						new OAuth2AuthorizationCodeAuthenticationConverter(),
 						new OAuth2ClientCredentialsAuthenticationConverter(),
 						new OAuth2RefreshTokenAuthenticationConverter(),
 						new OAuth2TokenIntrospectionAuthenticationConverter(),
-						new OAuth2TokenRevocationAuthenticationConverter(), new PublicClientAuthenticationConverter(),
-						new OidcLogoutAuthenticationConverter(), new OidcClientRegistrationAuthenticationConverter(),
-						new ClientSecretBasicAuthenticationConverter(), new ClientSecretPostAuthenticationConverter(),
+						new OAuth2TokenRevocationAuthenticationConverter(),
+						new PublicClientAuthenticationConverter(),
+						new OidcLogoutAuthenticationConverter(),
+						new OidcClientRegistrationAuthenticationConverter(),
+						new ClientSecretBasicAuthenticationConverter(),
+						new ClientSecretPostAuthenticationConverter(),
 						new OAuth2AuthorizationConsentAuthenticationConverter(),
 						new OAuth2DeviceAuthorizationConsentAuthenticationConverter(),
 						new OAuth2DeviceAuthorizationRequestAuthenticationConverter(),
@@ -125,11 +129,10 @@ class OAuth2AuthorizationServerConfig {
 			.oidc(Customizer.withDefaults())
 			.authorizationService(authorizationService)
 			.authorizationServerSettings(authorizationServerSettings);
-		http.apply(oAuth2AuthorizationServerConfigurer);
-		return http.exceptionHandling(
-				configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_PATTERN)))
-			.build();
+		http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_PATTERN)));
+		return http.build();
 	}
+	// @formatter:on
 
 	/**
 	 * 注册信息

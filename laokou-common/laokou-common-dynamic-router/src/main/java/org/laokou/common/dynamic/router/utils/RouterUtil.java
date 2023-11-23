@@ -31,6 +31,7 @@ import org.laokou.common.nacos.clientobject.ConfigCO;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,7 +56,7 @@ public class RouterUtil {
 	@SneakyThrows
 	public void initRouter() {
 		String appId = env.getProperty("spring.application.name");
-		assert Objects.nonNull(appId);
+		Assert.isTrue(Objects.nonNull(appId), " app id is not empty");
 		Map<String, Object> dataMap = new HashMap<>(2);
 		String name = appId.substring(7);
 		dataMap.put("appId", appId);

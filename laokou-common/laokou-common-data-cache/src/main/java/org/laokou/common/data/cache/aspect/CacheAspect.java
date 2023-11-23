@@ -28,6 +28,7 @@ import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -50,7 +51,7 @@ public class CacheAspect {
 		Method method = signature.getMethod();
 		String[] parameterNames = signature.getParameterNames();
 		DataCache dataCache = AnnotationUtils.findAnnotation(method, DataCache.class);
-		assert Objects.nonNull(dataCache);
+		Assert.isTrue(Objects.nonNull(dataCache), "@DataCache is not empty");
 		long expire = dataCache.expire();
 		Type type = dataCache.type();
 		String key = dataCache.key();

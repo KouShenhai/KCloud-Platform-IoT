@@ -50,6 +50,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.openfeign.utils.FeignUtil;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.util.*;
@@ -158,6 +159,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private void insertResourceAudit(Resource resource) {
 		ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
+		Assert.isTrue(Objects.nonNull(resourceAuditDO), "resource audit is not empty");
 		resourceAuditDO.setResourceId(resource.getId());
 		resourceAuditMapper.insertTable(resourceAuditDO);
 	}

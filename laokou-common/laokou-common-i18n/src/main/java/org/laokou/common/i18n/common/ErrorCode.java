@@ -79,7 +79,10 @@ public interface ErrorCode {
 	@Schema(name = "REQUEST_FLOW", description = "请求已限流")
 	int REQUEST_FLOW = 998999;
 
-	@Schema(name = "TRANSACTION_TIMEOUT", description = "事务已超时")
-	int TRANSACTION_TIMEOUT = 999999;
+	@Schema(name = "DISTRIBUTED_TRANSACTION_DOWNTIME", description = "分布式事务未启动")
+	int DISTRIBUTED_TRANSACTION_DOWNTIME = 999998;
+
+	@Schema(name = "DISTRIBUTED_TRANSACTION_TIMEOUT", description = "分布式事务已超时")
+	int DISTRIBUTED_TRANSACTION_TIMEOUT = 999999;
 
 }
