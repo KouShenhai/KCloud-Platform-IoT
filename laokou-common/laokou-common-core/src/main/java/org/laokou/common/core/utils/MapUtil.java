@@ -19,7 +19,6 @@ package org.laokou.common.core.utils;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.commons.collections4.MapUtils;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -40,11 +39,11 @@ import static org.laokou.common.i18n.common.Constant.*;
 public class MapUtil {
 
 	public static boolean isNotEmpty(Map<?, ?> map) {
-		return MapUtils.isNotEmpty(map);
+		return !isEmpty(map);
 	}
 
 	public static boolean isEmpty(Map<?, ?> map) {
-		return MapUtils.isEmpty(map);
+		return map == null || map.isEmpty();
 	}
 
 	public static String toStr(Map<String, String> map, String on, String separator) {

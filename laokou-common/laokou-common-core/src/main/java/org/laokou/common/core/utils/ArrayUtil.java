@@ -17,7 +17,7 @@
 
 package org.laokou.common.core.utils;
 
-import org.apache.commons.lang3.ArrayUtils;
+import java.lang.reflect.Array;
 
 /**
  * @author laokou
@@ -25,11 +25,11 @@ import org.apache.commons.lang3.ArrayUtils;
 public class ArrayUtil {
 
 	public static boolean isNotEmpty(Object[] array) {
-		return ArrayUtils.isNotEmpty(array);
+		return !isEmpty(array);
 	}
 
 	public static boolean isEmpty(Object[] array) {
-		return ArrayUtils.isEmpty(array);
+		return (array != null ? Array.getLength(array) : 0) == 0;
 	}
 
 }

@@ -25,6 +25,7 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.redisson.spring.cache.CacheConfig;
 import org.springframework.cache.support.AbstractValueAdaptingCache;
 
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 /**
@@ -53,17 +54,26 @@ public class CaffeineRedisCache extends AbstractValueAdaptingCache {
 
 	@Override
 	protected Object lookup(Object name) {
-		return null;
+		String k = name.toString();
+		Object obj = caffeineCache.getIfPresent(k);
+		if (Objects.nonNull(obj)) {
+			return obj;
+		}
+		obj = redisUtil.get(k);
+		if (Objects.nonNull(obj)) {
+			caffeineCache.put(k, obj);
+		}
+		return obj;
 	}
 
 	@Override
 	public String getName() {
-		return null;
+		return this.key;
 	}
 
 	@Override
 	public Object getNativeCache() {
-		return null;
+		return this;
 	}
 
 	@Override
