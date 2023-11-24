@@ -17,6 +17,7 @@
 package org.laokou.admin.module.storage.factory;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.OssConvertor;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
@@ -29,6 +30,7 @@ import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
@@ -37,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -51,6 +54,8 @@ public class StorageFactory {
 
 	private final OssConvertor ossConvertor;
 
+	@DS(TENANT)
+	@Lock4j(key = "oss_config_lock")
 	public StorageDriver<AmazonS3> build(Long tenantId) {
 		return new AmazonS3StorageDriver(getOssConfig(tenantId));
 	}
@@ -62,19 +67,23 @@ public class StorageFactory {
 	}
 
 	private List<OssDO> getOssCache(Long tenantId) {
+		List<OssDO> result;
 		String ossConfigKey = RedisKeyUtil.getOssConfigKey(tenantId);
 		List<Object> objList = redisUtil.lGetAll(ossConfigKey);
 		if (CollectionUtil.isNotEmpty(objList)) {
-			return ConvertUtil.sourceToTarget(objList, OssDO.class);
+			result = ConvertUtil.sourceToTarget(objList, OssDO.class);
 		}
-		List<OssDO> list = ossMapper.getOssListByFilter(EMPTY);
-		if (CollectionUtil.isEmpty(list)) {
-			throw new SystemException("请配置OSS");
+		else {
+			List<OssDO> list = ossMapper.getOssListByFilter(EMPTY);
+			if (CollectionUtil.isEmpty(list)) {
+				throw new SystemException("请配置OSS");
+			}
+			List<Object> objs = new ArrayList<>(list.size());
+			objs.addAll(list);
+			redisUtil.lSet(ossConfigKey, objs, RedisUtil.HOUR_ONE_EXPIRE);
+			result = list;
 		}
-		List<Object> objs = new ArrayList<>(list.size());
-		objs.addAll(list);
-		redisUtil.lSet(ossConfigKey, objs, RedisUtil.HOUR_ONE_EXPIRE);
-		return list;
+		return result;
 	}
 
 }
