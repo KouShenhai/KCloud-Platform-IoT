@@ -74,13 +74,12 @@ public class StorageFactory {
 			result = ConvertUtil.sourceToTarget(objList, OssDO.class);
 		}
 		else {
-			List<OssDO> list = ossMapper.getOssListByFilter(EMPTY);
-			if (CollectionUtil.isEmpty(list)) {
+			result = ossMapper.getOssListByFilter(EMPTY);
+			if (CollectionUtil.isEmpty(result)) {
 				throw new SystemException("请配置OSS");
 			}
-			List<Object> objs = new ArrayList<>(list);
+			List<Object> objs = new ArrayList<>(result);
 			redisUtil.lSet(ossConfigKey, objs, RedisUtil.HOUR_ONE_EXPIRE);
-			result = list;
 		}
 		return result;
 	}
