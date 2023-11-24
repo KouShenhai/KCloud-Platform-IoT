@@ -124,9 +124,8 @@ public class RedisUtil {
 
 	public void lSet(String key, List<Object> objList, long expire) {
 		RList<Object> rList = redissonClient.getList(key);
-		if (rList.addAll(objList)) {
-			rList.expireIfNotSet(Duration.ofSeconds(expire));
-		}
+		rList.addAll(objList);
+		rList.expireIfNotSet(Duration.ofSeconds(expire));
 	}
 
 	public void lSet(String key, Object obj, long expire) {
