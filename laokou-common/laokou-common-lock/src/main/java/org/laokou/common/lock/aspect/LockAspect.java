@@ -37,6 +37,8 @@ import org.springframework.util.Assert;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
+import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
+
 /**
  * @author laokou
  */
@@ -69,7 +71,7 @@ public class LockAspect {
 				obj = joinPoint.proceed();
 			}
 			else {
-				throw new SystemException("请求太频繁，请稍后再试");
+				throw new SystemException(TOO_MANY_REQUESTS);
 			}
 		}
 		catch (Throwable throwable) {
