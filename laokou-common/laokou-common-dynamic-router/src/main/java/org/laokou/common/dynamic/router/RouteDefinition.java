@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
+import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
 import java.net.URI;
@@ -31,7 +31,7 @@ import static org.springframework.util.StringUtils.tokenizeToStringArray;
 /**
  * @author Spencer Gibb
  */
-@Getter
+@Data
 @Validated
 public class RouteDefinition {
 
@@ -60,40 +60,12 @@ public class RouteDefinition {
 			throw new ValidationException(
 					"Unable to parse RouteDefinition text '" + text + "'" + ", must be of the form name=value");
 		}
-
 		setId(text.substring(0, eqIdx));
-
 		String[] args = tokenizeToStringArray(text.substring(eqIdx + 1), ",");
-
 		setUri(URI.create(args[0]));
-
 		for (int i = 1; i < args.length; i++) {
 			this.predicates.add(new PredicateDefinition(args[i]));
 		}
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public void setPredicates(List<PredicateDefinition> predicates) {
-		this.predicates = predicates;
-	}
-
-	public void setFilters(List<FilterDefinition> filters) {
-		this.filters = filters;
-	}
-
-	public void setUri(URI uri) {
-		this.uri = uri;
-	}
-
-	public void setOrder(int order) {
-		this.order = order;
-	}
-
-	public void setMetadata(Map<String, Object> metadata) {
-		this.metadata = metadata;
 	}
 
 	@Override
