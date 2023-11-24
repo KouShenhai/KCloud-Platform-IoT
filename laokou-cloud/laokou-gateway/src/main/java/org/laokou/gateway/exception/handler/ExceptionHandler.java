@@ -71,7 +71,7 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 			}
 			if (BlockException.isBlockException(e)) {
 				// 思路来源于SentinelGatewayBlockExceptionHandler
-				log.error("请求太频繁，请稍后再试");
+				log.error("请求太频繁");
 				return ResponseUtil.response(exchange, Result.fail(TOO_MANY_REQUESTS));
 			}
 			log.error("错误网关");
