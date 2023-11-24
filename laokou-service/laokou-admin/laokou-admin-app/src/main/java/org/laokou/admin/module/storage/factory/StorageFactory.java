@@ -67,23 +67,20 @@ public class StorageFactory {
 	}
 
 	private List<OssDO> getOssCache(Long tenantId) {
-		List<OssDO> result;
 		String ossConfigKey = RedisKeyUtil.getOssConfigKey(tenantId);
 		List<Object> objList = redisUtil.lGetAll(ossConfigKey);
 		if (CollectionUtil.isNotEmpty(objList)) {
-			result = ConvertUtil.sourceToTarget(objList, OssDO.class);
+			return ConvertUtil.sourceToTarget(objList, OssDO.class);
 		}
 		else {
-			List<OssDO> list = ossMapper.getOssListByFilter(EMPTY);
-			if (CollectionUtil.isEmpty(list)) {
+			List<OssDO> result = ossMapper.getOssListByFilter(EMPTY);
+			if (CollectionUtil.isEmpty(result)) {
 				throw new SystemException("请配置OSS");
 			}
-			List<Object> objs = new ArrayList<>(list.size());
-			objs.addAll(list);
+			List<Object> objs = new ArrayList<>(result);
 			redisUtil.lSet(ossConfigKey, objs, RedisUtil.HOUR_ONE_EXPIRE);
-			result = list;
+			return result;
 		}
-		return result;
 	}
 
 }
