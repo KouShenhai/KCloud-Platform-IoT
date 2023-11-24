@@ -17,7 +17,7 @@
 package org.laokou.common.dynamic.router;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
+import lombok.Data;
 import org.laokou.common.dynamic.router.utils.NameUtil;
 import org.springframework.validation.annotation.Validated;
 
@@ -30,7 +30,7 @@ import static org.springframework.util.StringUtils.tokenizeToStringArray;
 /**
  * @author Spencer Gibb
  */
-@Getter
+@Data
 @Validated
 public class FilterDefinition {
 
@@ -49,24 +49,10 @@ public class FilterDefinition {
 			return;
 		}
 		setName(text.substring(0, eqIdx));
-
 		String[] args = tokenizeToStringArray(text.substring(eqIdx + 1), ",");
-
 		for (int i = 0; i < args.length; i++) {
 			this.args.put(NameUtil.generateName(i), args[i]);
 		}
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setArgs(Map<String, String> args) {
-		this.args = args;
-	}
-
-	public void addArg(String key, String value) {
-		this.args.put(key, value);
 	}
 
 	@Override
