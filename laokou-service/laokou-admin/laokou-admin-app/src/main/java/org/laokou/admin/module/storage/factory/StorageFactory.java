@@ -78,8 +78,7 @@ public class StorageFactory {
 			if (CollectionUtil.isEmpty(list)) {
 				throw new SystemException("请配置OSS");
 			}
-			List<Object> objs = new ArrayList<>(list.size());
-			objs.addAll(list);
+			List<Object> objs = new ArrayList<>(list);
 			redisUtil.lSet(ossConfigKey, objs, RedisUtil.HOUR_ONE_EXPIRE);
 			result = list;
 		}
