@@ -49,7 +49,7 @@ public class TaskResolveCmdExe {
 
 	public Result<Boolean> execute(TaskResolveCmd cmd) {
 		try {
-			log.info("处理流程分布式事务 XID:{}", RootContext.getXID());
+			log.info("处理流程分布式事务 XID：{}", RootContext.getXID());
 			String taskId = cmd.getTaskId();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();

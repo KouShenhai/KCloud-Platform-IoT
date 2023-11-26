@@ -128,7 +128,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	}
 
 	private Boolean updateResource(Resource resource, Integer version) {
-		log.info("开始任务分布式事务 XID:{}", RootContext.getXID());
+		log.info("开始任务分布式事务 XID：{}", RootContext.getXID());
 		insertResourceAudit(resource);
 		StartCO co = startTask(resource);
 		int status = Status.PENDING_APPROVAL;
@@ -161,7 +161,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private void insertResourceAudit(Resource resource) {
 		ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
-		Assert.isTrue(Objects.nonNull(resourceAuditDO), "resource audit is not empty");
+		Assert.isTrue(Objects.nonNull(resourceAuditDO), "resource audit is null");
 		resourceAuditDO.setResourceId(resource.getId());
 		resourceAuditMapper.insertTable(resourceAuditDO);
 	}

@@ -57,7 +57,7 @@ public class LockAspect {
 		MethodSignature methodSignature = (MethodSignature) signature;
 		Method method = methodSignature.getMethod();
 		Lock4j lock4j = AnnotationUtils.findAnnotation(method, Lock4j.class);
-		Assert.isTrue(Objects.nonNull(lock4j), "@Lock4j is not empty");
+		Assert.isTrue(Objects.nonNull(lock4j), "@Lock4j is null");
 		// 时间戳
 		String key = lock4j.key() + IdGenerator.SystemClock.now();
 		long expire = lock4j.expire();

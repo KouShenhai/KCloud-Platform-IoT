@@ -56,7 +56,7 @@ public class RouterUtil {
 	@SneakyThrows
 	public void initRouter() {
 		String appId = env.getProperty("spring.application.name");
-		Assert.isTrue(Objects.nonNull(appId), " app id is not empty");
+		Assert.isTrue(StringUtil.isNotEmpty(appId), " app id is empty");
 		Map<String, Object> dataMap = new HashMap<>(2);
 		String name = appId.substring(7);
 		dataMap.put("appId", appId);

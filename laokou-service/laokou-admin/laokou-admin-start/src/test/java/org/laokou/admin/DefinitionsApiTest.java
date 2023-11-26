@@ -66,7 +66,7 @@ public class DefinitionsApiTest extends CommonTest {
 			.andDo(print())
 			.andReturn();
 		String body = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
-		Assert.isTrue(StringUtil.isNotEmpty(body), "response body is not empty");
+		Assert.isTrue(StringUtil.isNotEmpty(body), "response body is empty");
 		log.info("返回值：{}", body);
 	}
 

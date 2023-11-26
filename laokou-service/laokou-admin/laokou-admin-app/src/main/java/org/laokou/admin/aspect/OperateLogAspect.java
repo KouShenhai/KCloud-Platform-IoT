@@ -83,7 +83,7 @@ public class OperateLogAspect {
 		Method method = methodSignature.getMethod();
 		OperateLog operateLog = AnnotationUtils.findAnnotation(method, OperateLog.class);
 		// 构建事件对象
-		Assert.isTrue(Objects.nonNull(operateLog), "@OperateLog is not empty");
+		Assert.isTrue(Objects.nonNull(operateLog), "@OperateLog is null");
 		OperateLogEvent event = buildEvent(operateLog, request, joinPoint, e);
 		domainEventPublisher.publish(event);
 	}
@@ -97,7 +97,7 @@ public class OperateLogAspect {
 			Object[] args = joinPoint.getArgs();
 			List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
 			OperateLogEvent event = new OperateLogEvent(this);
-			Assert.isTrue(Objects.nonNull(operateLog), "@OperateLog is not empty");
+			Assert.isTrue(Objects.nonNull(operateLog), "@OperateLog is null");
 			event.setModuleName(operateLog.module());
 			event.setName(operateLog.operation());
 			event.setUri(request.getRequestURI());

@@ -75,7 +75,7 @@ public class DataFilterAspect {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
 		DataFilter dataFilter = AnnotationUtils.findAnnotation(method, DataFilter.class);
-		Assert.isTrue(Objects.nonNull(dataFilter), "@DataFilter is not empty");
+		Assert.isTrue(Objects.nonNull(dataFilter), "@DataFilter is null");
 		String alias = dataFilter.alias();
 		String deptPathColumn = dataFilter.deptPath();
 		String userIdColumn = dataFilter.userId();
