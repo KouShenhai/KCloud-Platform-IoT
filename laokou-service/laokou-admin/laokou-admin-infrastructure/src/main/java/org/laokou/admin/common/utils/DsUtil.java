@@ -22,6 +22,7 @@ import com.baomidou.dynamic.datasource.creator.hikaricp.HikariDataSourceCreator;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.CollectionUtil;
@@ -35,11 +36,11 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.Constant.DROP;
-import static org.laokou.common.mybatisplus.constant.DsConstant.*;
 
 /**
  * @author laokou
@@ -53,10 +54,9 @@ public class DsUtil {
 
 	private final DynamicUtil dynamicUtil;
 
-	private static final String SHOW_TABLES = "show tables";
+	private final DefaultConfigProperties defaultConfigProperties;
 
-	private static final List<String> TABLES = List.of(BOOT_SYS_DICT, BOOT_SYS_MESSAGE, BOOT_SYS_MESSAGE_DETAIL,
-			BOOT_SYS_OSS, BOOT_SYS_OSS_LOG);
+	private static final String SHOW_TABLES = "show tables";
 
 	public String loadDs(String sourceName) {
 		if (StringUtil.isEmpty(sourceName)) {
@@ -117,19 +117,20 @@ public class DsUtil {
 			connection = DataSourceUtils.getConnection(dataSource);
 			ps = connection.prepareStatement(SHOW_TABLES);
 			ResultSet rs = ps.executeQuery();
-			List<String> tables = new ArrayList<>(TABLES.size());
+			Set<String> defaultTenantTables = defaultConfigProperties.getDefaultTenantTables();
+			Set<String> tables = new HashSet<>(defaultTenantTables.size());
 			while (rs.next()) {
 				String tableName = rs.getString(1);
-				if (TABLES.contains(tableName)) {
+				if (defaultTenantTables.contains(tableName)) {
 					tables.add(tableName);
 				}
 			}
-			List<String> list;
+			Set<String> list;
 			if (CollectionUtil.isNotEmpty(tables)) {
-				list = TABLES.parallelStream().filter(table -> !tables.contains(table)).toList();
+				list = defaultTenantTables.parallelStream().filter(table -> !tables.contains(table)).collect(Collectors.toSet());
 			}
 			else {
-				list = TABLES;
+				list = defaultTenantTables;
 			}
 			if (CollectionUtil.isNotEmpty(list)) {
 				throw new DataSourceException(String.format("%s不存在", String.join(DROP, list)));

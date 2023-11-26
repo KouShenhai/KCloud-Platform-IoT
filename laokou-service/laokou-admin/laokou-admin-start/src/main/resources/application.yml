@@ -33,6 +33,16 @@ server:
   forward-headers-strategy: framework
 # spring
 spring:
+  default-config:
+    # 流程KEY
+    default-definition-key: "Process_88888888"
+    # 租户表
+    default-tenant-tables:
+      - boot_sys_dict
+      - boot_sys_message
+      - boot_sys_message_detail
+      - boot_sys_oss
+      - boot_sys_oss_log
   application:
     name: @pom.parent.artifactId@
   profiles:
