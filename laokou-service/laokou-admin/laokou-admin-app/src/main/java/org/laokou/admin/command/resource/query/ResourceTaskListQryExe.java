@@ -18,6 +18,7 @@
 package org.laokou.admin.command.resource.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.dto.resource.ResourceTaskListQry;
 import org.laokou.admin.dto.resource.TaskListQry;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
@@ -31,8 +32,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.admin.common.Constant.KEY;
-
 /**
  * @author laokou
  */
@@ -41,6 +40,7 @@ import static org.laokou.admin.common.Constant.KEY;
 public class ResourceTaskListQryExe {
 
 	private final TasksFeignClient tasksFeignClient;
+	private final DefaultConfigProperties defaultConfigProperties;
 
 	public Result<Datas<TaskCO>> execute(ResourceTaskListQry qry) {
 		Datas<TaskCO> result = FeignUtil.result(tasksFeignClient.list(toQry(qry)));
@@ -58,7 +58,7 @@ public class ResourceTaskListQryExe {
 		taskListQry.setPageNum(qry.getPageNum());
 		taskListQry.setPageSize(qry.getPageSize());
 		taskListQry.setUserId(UserUtil.getUserId());
-		taskListQry.setKey(KEY);
+		taskListQry.setKey(defaultConfigProperties.getDefaultDefinitionKey());
 		return taskListQry;
 	}
 

@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.event.DomainEventPublisher;
+import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.ResourceGateway;
@@ -56,7 +57,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.laokou.admin.common.Constant.KEY;
 import static org.laokou.common.i18n.common.Constant.UNDER;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_RESOURCE;
 
@@ -79,6 +79,8 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private final ResourceConvertor resourceConvertor;
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
+
+	private final DefaultConfigProperties defaultConfigProperties;
 
 	public static final String RESOURCE_INDEX = "laokou_resource";
 
@@ -143,7 +145,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private StartCO startTask(Resource resource) {
 		TaskStartCmd cmd = new TaskStartCmd();
 		cmd.setBusinessKey(resource.getId().toString());
-		cmd.setDefinitionKey(KEY);
+		cmd.setDefinitionKey(defaultConfigProperties.getDefaultDefinitionKey());
 		cmd.setInstanceName(resource.getTitle());
 		return FeignUtil.result(tasksFeignClient.start(cmd));
 	}
