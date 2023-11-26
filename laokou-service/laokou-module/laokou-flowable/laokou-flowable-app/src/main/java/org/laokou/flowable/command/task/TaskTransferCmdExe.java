@@ -48,7 +48,7 @@ public class TaskTransferCmdExe {
 
 	public Result<Boolean> execute(TaskTransferCmd cmd) {
 		try {
-			log.info("转办流程分布式事务 XID:{}", RootContext.getXID());
+			log.info("转办流程分布式事务 XID：{}", RootContext.getXID());
 			String taskId = cmd.getTaskId();
 			String owner = cmd.getUserId().toString();
 			String assignee = cmd.getToUserId().toString();

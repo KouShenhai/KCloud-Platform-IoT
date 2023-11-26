@@ -48,7 +48,7 @@ public class TaskDelegateCmdExe {
 
 	public Result<Boolean> execute(TaskDelegateCmd cmd) {
 		try {
-			log.info("委派流程分布式事务 XID:{}", RootContext.getXID());
+			log.info("委派流程分布式事务 XID：{}", RootContext.getXID());
 			String taskId = cmd.getTaskId();
 			String owner = cmd.getUserId().toString();
 			String deleteReason = cmd.getToUserId().toString();

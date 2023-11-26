@@ -64,7 +64,7 @@ public class ResourceAuditTaskCmdExe {
 
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceAuditTaskCmd cmd) {
-		log.info("资源审批任务分布式事务 XID:{}", RootContext.getXID());
+		log.info("资源审批任务分布式事务 XID：{}", RootContext.getXID());
 		TaskAuditCmd taskAuditCmd = ConvertUtil.sourceToTarget(cmd, TaskAuditCmd.class);
 		AuditCO co = FeignUtil.result(tasksFeignClient.audit(taskAuditCmd));
 		// 下一个审批人

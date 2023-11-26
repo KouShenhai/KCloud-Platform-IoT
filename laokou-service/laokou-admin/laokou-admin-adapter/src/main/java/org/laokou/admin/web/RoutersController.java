@@ -17,8 +17,15 @@
 
 package org.laokou.admin.web;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.dynamic.router.RouteDefinition;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.trace.annotation.TraceLog;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,9 +33,18 @@ import org.springframework.web.bind.annotation.RestController;
  * @author laokou
  */
 @RestController
-@Tag(name = "RoutersController", description = "动态路由")
+@Tag(name = "RoutersController", description = "路由管理")
 @RequiredArgsConstructor
 @RequestMapping("v1/routers")
 public class RoutersController {
+
+    @TraceLog
+    @PostMapping("/list")
+    @Operation(summary = "路由管理", description = "查询路由列表")
+    @PreAuthorize("hasAuthority('routers:list')")
+    public Result<Datas<RouteDefinition>> list() {
+        return null;
+    }
+
 
 }

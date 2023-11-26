@@ -85,7 +85,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 			@Override
 			public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
 				String contentType = getDelegate().getHeaders().getFirst(HttpHeaders.CONTENT_TYPE);
-				Assert.isTrue(Objects.nonNull(contentType), "content type is not empty");
+				Assert.isTrue(Objects.nonNull(contentType), "content type is null");
 				if (contentType.contains(MediaType.APPLICATION_JSON_VALUE)
 						&& Objects.requireNonNull(response.getStatusCode()).value() != StatusCode.OK
 						&& body instanceof Flux) {

@@ -51,7 +51,7 @@ public class CacheAspect {
 		Method method = signature.getMethod();
 		String[] parameterNames = signature.getParameterNames();
 		DataCache dataCache = AnnotationUtils.findAnnotation(method, DataCache.class);
-		Assert.isTrue(Objects.nonNull(dataCache), "@DataCache is not empty");
+		Assert.isTrue(Objects.nonNull(dataCache), "@DataCache is null");
 		long expire = dataCache.expire();
 		Type type = dataCache.type();
 		String key = dataCache.key();

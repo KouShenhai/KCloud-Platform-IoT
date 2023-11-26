@@ -55,7 +55,7 @@ public class TaskAuditCmdExe {
 
 	public Result<AuditCO> execute(TaskAuditCmd cmd) {
 		try {
-			log.info("审批流程分布式事务 XID:{}", RootContext.getXID());
+			log.info("审批流程分布式事务 XID：{}", RootContext.getXID());
 			String taskId = cmd.getTaskId();
 			Map<String, Object> values = cmd.getValues();
 			String instanceId = cmd.getInstanceId();
