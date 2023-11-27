@@ -106,7 +106,7 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "解析域名查看ID")
 	public Result<Long> getIdByDomainName(HttpServletRequest request) {
 		System.out.println(RequestUtil.getDomainName(request));
-		return Result.fail(0);
+		return Result.of(null);
 	}
 
 }

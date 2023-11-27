@@ -66,6 +66,7 @@ spring:
             - /error
             - /v1/logouts
             - /v1/tenants/option-list
+            - /v1/tenants/id
   cloud:
     # sentinel
     sentinel:
