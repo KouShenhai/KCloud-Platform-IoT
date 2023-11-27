@@ -7,17 +7,22 @@ import org.laokou.common.i18n.utils.MessageUtil;
 /**
  * @author laokou
  */
+@Getter
 public enum ExceptionEnum {
 
 	/**
 	 * 无效客户端
 	 */
-	INVALID_CLIENT(ErrorCode.INVALID_CLIENT, MessageUtil.getMessage(ErrorCode.INVALID_CLIENT));
+	INVALID_CLIENT(ErrorCode.INVALID_CLIENT, MessageUtil.getMessage(ErrorCode.INVALID_CLIENT)),
 
-	@Getter
+	/**
+	 * 无效请求
+	 */
+	INVALID_REQUEST(ErrorCode.INVALID_REQUEST, MessageUtil.getMessage(ErrorCode.INVALID_REQUEST));
+
+
 	private final int code;
 
-	@Getter
 	private final String msg;
 
 	ExceptionEnum(int code, String msg) {

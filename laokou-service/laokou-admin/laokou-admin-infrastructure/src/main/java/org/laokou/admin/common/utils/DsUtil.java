@@ -117,7 +117,7 @@ public class DsUtil {
 			connection = DataSourceUtils.getConnection(dataSource);
 			ps = connection.prepareStatement(SHOW_TABLES);
 			ResultSet rs = ps.executeQuery();
-			Set<String> defaultTenantTables = defaultConfigProperties.getDefaultTenantTables();
+			Set<String> defaultTenantTables = defaultConfigProperties.getTenantTables();
 			Set<String> tables = new HashSet<>(defaultTenantTables.size());
 			while (rs.next()) {
 				String tableName = rs.getString(1);

@@ -14,7 +14,6 @@
 #    * limitations under the License.
 #    *
 #    */
-# tomcat
 server:
   port: 5555
   compression:

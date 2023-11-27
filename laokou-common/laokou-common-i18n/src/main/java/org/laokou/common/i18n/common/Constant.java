@@ -72,6 +72,11 @@ public interface Constant {
 	String COMMA = ",";
 
 	/**
+	 * 分割参数
+	 */
+	String CHINESE_COMMA = "，";
+
+	/**
 	 * 左括号
 	 */
 	String LEFT = "(";

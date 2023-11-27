@@ -35,9 +35,9 @@ server:
 spring:
   default-config:
     # 流程KEY
-    default-definition-key: "Process_88888888"
+    definition-key: "Process_88888888"
     # 租户表
-    default-tenant-tables:
+    tenant-tables:
       - boot_sys_dict
       - boot_sys_message
       - boot_sys_message_detail

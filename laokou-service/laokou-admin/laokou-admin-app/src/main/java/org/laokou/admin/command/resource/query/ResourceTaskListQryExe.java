@@ -58,7 +58,7 @@ public class ResourceTaskListQryExe {
 		taskListQry.setPageNum(qry.getPageNum());
 		taskListQry.setPageSize(qry.getPageSize());
 		taskListQry.setUserId(UserUtil.getUserId());
-		taskListQry.setKey(defaultConfigProperties.getDefaultDefinitionKey());
+		taskListQry.setKey(defaultConfigProperties.getDefinitionKey());
 		return taskListQry;
 	}
 

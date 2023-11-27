@@ -20,16 +20,21 @@ import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import io.micrometer.common.lang.NonNullApi;
 import jakarta.validation.constraints.NotNull;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.springframework.util.Assert;
 
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+
 /**
  * @author Liukefu
  */
+@NonNullApi
 public final class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEngine {
 
 	@Override
@@ -38,6 +43,7 @@ public final class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEng
 		String entityName = tableInfo.getEntityName();
 		String entityNameTmp = entityName.substring(0, entityName.length() - 2);
 		String dtoPath = this.getPathInfo(OutputFile.entity);
+		Assert.isTrue(StringUtil.isNotEmpty(dtoPath), "dtoPath is empty");
 		String rootPath = subBefore(dtoPath, File.separator, true);
 		customFiles.forEach((customFile) -> {
 			String s = customFile.getFileName();
@@ -49,24 +55,19 @@ public final class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEng
 	}
 
 	public static String subBefore(CharSequence string, CharSequence separator, boolean isLastSeparator) {
-		if (StringUtil.isNotEmpty(string)) {
-			String str = string.toString();
-			String sep = separator.toString();
-			if (sep.isEmpty()) {
-				return "";
-			}
-			else {
-				int pos = isLastSeparator ? str.lastIndexOf(sep) : str.indexOf(sep);
-				if (-1 == pos) {
-					return str;
-				}
-				else {
-					return 0 == pos ? "" : str.substring(0, pos);
-				}
-			}
+		String str = string.toString();
+		String sep = separator.toString();
+		if (sep.isEmpty()) {
+			return EMPTY;
 		}
 		else {
-			return null == string ? null : string.toString();
+			int pos = isLastSeparator ? str.lastIndexOf(sep) : str.indexOf(sep);
+			if (-1 == pos) {
+				return str;
+			}
+			else {
+				return 0 == pos ? "" : str.substring(0, pos);
+			}
 		}
 	}
 

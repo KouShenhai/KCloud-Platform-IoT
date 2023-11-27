@@ -45,56 +45,58 @@ import static java.util.Objects.isNull;
 @ConditionalOnExpression("#{'file'.equals('${sessionMode}')}")
 public class GlobalSessionFileServiceImpl implements GlobalSessionService {
 
-	@Override
-	public PageResult<GlobalSessionVO> query(GlobalSessionParam param) {
-		if (param.getPageSize() <= 0 || param.getPageNum() <= 0) {
-			throw new IllegalArgumentException("wrong pageSize or pageNum");
-		}
+    @Override
+    public PageResult<GlobalSessionVO> query(GlobalSessionParam param) {
+        if (param.getPageSize() <= 0 || param.getPageNum() <= 0) {
+            throw new IllegalArgumentException("wrong pageSize or pageNum");
+        }
 
-		final Collection<GlobalSession> allSessions = SessionHolder.getRootSessionManager().allSessions();
+        final Collection<GlobalSession> allSessions = SessionHolder.getRootSessionManager().allSessions();
 
-		final List<GlobalSession> filteredSessions = allSessions.parallelStream()
-			.filter(obtainPredicate(param))
-			.collect(Collectors.toList());
+        final List<GlobalSession> filteredSessions = allSessions
+                .parallelStream()
+                .filter(obtainPredicate(param))
+                .collect(Collectors.toList());
 
-		return PageResult.build(SessionConverter.convertGlobalSession(filteredSessions), param.getPageNum(),
-				param.getPageSize());
-	}
+        return PageResult.build(SessionConverter.convertGlobalSession(filteredSessions), param.getPageNum(), param.getPageSize());
+    }
 
-	/**
-	 * obtain the condition
-	 * @param param condition for query global session
-	 * @return the filter condition
-	 */
-	private Predicate<? super GlobalSession> obtainPredicate(GlobalSessionParam param) {
 
-		return session -> {
-			return
-			// xid
-			(isBlank(param.getXid()) || session.getXid().contains(param.getXid()))
 
-					&&
-			// applicationId
-					(isBlank(param.getApplicationId()) || session.getApplicationId().contains(param.getApplicationId()))
+    /**
+     * obtain the condition
+     *
+     * @param param condition for query global session
+     * @return the filter condition
+     */
+    private Predicate<? super GlobalSession> obtainPredicate(GlobalSessionParam param) {
 
-					&&
-			// status
-					(isNull(param.getStatus()) || Objects.equals(session.getStatus().getCode(), param.getStatus()))
+        return session -> {
+            return
+                // xid
+                (isBlank(param.getXid()) || session.getXid().contains(param.getXid()))
 
-					&&
-			// transactionName
-					(isBlank(param.getTransactionName())
-							|| session.getTransactionName().contains(param.getTransactionName()))
+                &&
+                // applicationId
+                (isBlank(param.getApplicationId()) || session.getApplicationId().contains(param.getApplicationId()))
 
-					&&
-			// timeStart
-					(isNull(param.getTimeStart()) || param.getTimeStart() <= session.getBeginTime())
+                &&
+                // status
+                (isNull(param.getStatus()) || Objects.equals(session.getStatus().getCode(), param.getStatus()))
 
-					&&
-			// timeEnd
-					(isNull(param.getTimeEnd()) || param.getTimeEnd() >= session.getBeginTime());
+                &&
+                // transactionName
+                (isBlank(param.getTransactionName()) || session.getTransactionName().contains(param.getTransactionName()))
 
-		};
-	}
+                &&
+                // timeStart
+                (isNull(param.getTimeStart()) || param.getTimeStart() <= session.getBeginTime())
+
+                &&
+                // timeEnd
+                (isNull(param.getTimeEnd()) || param.getTimeEnd() >= session.getBeginTime());
+
+        };
+    }
 
 }

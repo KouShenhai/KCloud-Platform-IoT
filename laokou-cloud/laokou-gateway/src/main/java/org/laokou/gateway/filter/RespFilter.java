@@ -47,6 +47,7 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
+import static org.laokou.common.i18n.common.Constant.CHINESE_COMMA;
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
 import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
 
@@ -110,7 +111,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 						if (code == DEFAULT) {
 							ExceptionEnum ee = getException(codeNode.asText());
 							code = ee.getCode();
-							msg = ee.getMsg();
+							msg = ee.getMsg() + CHINESE_COMMA + msg;
 						}
 						byte[] uppedContent = JacksonUtil.toJsonStr(Result.fail(code, msg)).getBytes();
 						return dataBufferFactory.wrap(uppedContent);

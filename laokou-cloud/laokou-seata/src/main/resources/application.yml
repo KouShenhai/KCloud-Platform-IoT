@@ -39,7 +39,7 @@ spring:
     active: @PROFILE-ACTIVE@
 
 logging:
-  config: classpath:logback-spring.xml
+  # config: classpath:logback-spring.xml
   file:
     path: @SEATA-LOG-PATH@
   extend:
@@ -63,6 +63,7 @@ seata:
       group: @SEATA-GROUP@
       username: @NACOS-USERNAME@
       password: @NACOS-PASSWORD@
+      data-id: seataServer.properties
   registry:
     type: nacos
     nacos:

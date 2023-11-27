@@ -145,7 +145,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private StartCO startTask(Resource resource) {
 		TaskStartCmd cmd = new TaskStartCmd();
 		cmd.setBusinessKey(resource.getId().toString());
-		cmd.setDefinitionKey(defaultConfigProperties.getDefaultDefinitionKey());
+		cmd.setDefinitionKey(defaultConfigProperties.getDefinitionKey());
 		cmd.setInstanceName(resource.getTitle());
 		return FeignUtil.result(tasksFeignClient.start(cmd));
 	}

@@ -25,14 +25,13 @@ import io.seata.core.protocol.RegisterTMRequest;
 @LoadLevel(name = "defaultCheckAuthHandler", order = 100)
 public class DefaultCheckAuthHandler extends AbstractCheckAuthHandler {
 
-	@Override
-	public boolean doRegTransactionManagerCheck(RegisterTMRequest request) {
-		return true;
-	}
+    @Override
+    public boolean doRegTransactionManagerCheck(RegisterTMRequest request) {
+        return true;
+    }
 
-	@Override
-	public boolean doRegResourceManagerCheck(RegisterRMRequest request) {
-		return true;
-	}
-
+    @Override
+    public boolean doRegResourceManagerCheck(RegisterRMRequest request) {
+        return true;
+    }
 }

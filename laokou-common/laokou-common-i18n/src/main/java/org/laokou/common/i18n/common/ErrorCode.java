@@ -28,6 +28,9 @@ public interface ErrorCode {
 	@Schema(name = "ROUTE_NOT_EXIST", description = "路由不存在")
 	int ROUTE_NOT_EXIST = 100999;
 
+	@Schema(name = "INVALID_REQUEST", description = "无效请求")
+	int INVALID_REQUEST = 200987;
+
 	@Schema(name = "GENERATE_ID_TOKEN_FAIL", description = "令牌生成器无法生成标识令牌")
 	int GENERATE_ID_TOKEN_FAIL = 200988;
 

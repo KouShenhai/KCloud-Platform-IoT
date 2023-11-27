@@ -18,12 +18,14 @@ package org.laokou.admin.web;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.TenantsServiceI;
+import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.tenant.*;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
-import org.laokou.admin.domain.annotation.OperateLog;
+import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.aspect.Type;
 import org.laokou.common.i18n.dto.Datas;
@@ -97,6 +99,14 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "下拉列表")
 	public Result<List<OptionCO>> optionList() {
 		return tenantsServiceI.optionList(new TenantOptionListQry());
+	}
+
+	@TraceLog
+	@GetMapping("id")
+	@Operation(summary = "租户管理", description = "解析域名查看ID")
+	public Result<Long> getIdByDomainName(HttpServletRequest request) {
+		System.out.println(RequestUtil.getDomainName(request));
+		return Result.fail(0);
 	}
 
 }
