@@ -53,7 +53,7 @@
         <!--freemarker模板引擎依赖-->
         <freemarker.version>2.3.32</freemarker.version>
         <!--oshi版本-->
-        <oshi.version>6.4.7</oshi.version>
+        <oshi.version>6.4.8</oshi.version>
         <!--elasticsearch版本-->
         <elasticsearch.version>8.6.2</elasticsearch.version>
         <!--rocketmq版本-->
