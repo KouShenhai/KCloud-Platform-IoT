@@ -26,6 +26,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
@@ -197,11 +198,11 @@ public class IdGenerator {
 		private long getDatacenterId() {
 			long id = 0L;
 			try {
-				if (null == this.inetAddress) {
+				if (Objects.isNull(this.inetAddress)) {
 					this.inetAddress = InetAddress.getLocalHost();
 				}
 				NetworkInterface network = NetworkInterface.getByInetAddress(this.inetAddress);
-				if (null == network) {
+				if (Objects.isNull(network)) {
 					id = 1L;
 				}
 				else {

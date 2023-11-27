@@ -36,7 +36,7 @@ public class DefaultConfigProperties {
 
     public static final String PREFIX = "spring.default-config";
 
-    private String defaultDefinitionKey;
-    private Set<String> defaultTenantTables = new HashSet<>();
+    private String definitionKey;
+    private Set<String> tenantTables = new HashSet<>();
 
 }

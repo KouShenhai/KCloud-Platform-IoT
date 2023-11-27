@@ -65,7 +65,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 					PlainSelect plainSelect = SqlUtil.plainSelect(boundSql.getSql());
 					// 获取where
 					Expression expression = plainSelect.getWhere();
-					if (null == expression) {
+					if (Objects.isNull(expression)) {
 						plainSelect.setWhere(new StringValue(sqlFilter));
 					}
 					else {

@@ -46,7 +46,7 @@ public class TreeUtil {
 	}
 
 	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode) {
-		if (null == rootNode) {
+		if (Objects.isNull(rootNode)) {
 			throw new SystemException("请构造根节点");
 		}
 		List<T> nodes = new ArrayList<>(treeNodes);

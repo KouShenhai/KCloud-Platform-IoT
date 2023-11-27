@@ -32,9 +32,8 @@ import org.springframework.stereotype.Component;
 @ConditionalOnExpression("#{'file'.equals('${sessionMode}')}")
 public class BranchSessionFileServiceImpl implements BranchSessionService {
 
-	@Override
-	public PageResult<BranchSessionVO> queryByXid(String xid) {
-		throw new NotSupportYetException();
-	}
-
+    @Override
+    public PageResult<BranchSessionVO> queryByXid(String xid) {
+        throw new NotSupportYetException();
+    }
 }

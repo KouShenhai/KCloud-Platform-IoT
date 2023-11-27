@@ -20,7 +20,6 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.dynamic.router.RouteDefinition;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
@@ -42,9 +41,8 @@ public class RoutersController {
     @PostMapping("/list")
     @Operation(summary = "路由管理", description = "查询路由列表")
     @PreAuthorize("hasAuthority('routers:list')")
-    public Result<Datas<RouteDefinition>> list() {
+    public Result<Datas<String>> list() {
         return null;
     }
-
 
 }

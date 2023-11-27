@@ -17,10 +17,10 @@ package io.seata.server.console.controller;
 
 import javax.annotation.Resource;
 
-import io.seata.console.result.PageResult;
 import io.seata.server.console.param.GlobalSessionParam;
-import io.seata.server.console.service.GlobalSessionService;
+import io.seata.console.result.PageResult;
 import io.seata.server.console.vo.GlobalSessionVO;
+import io.seata.server.console.service.GlobalSessionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,24 +28,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Global Session Controller
- *
  * @author zhongxiang.wang
  */
 @RestController
 @RequestMapping("/api/v1/console/globalSession")
 public class GlobalSessionController {
 
-	@Resource(type = GlobalSessionService.class)
-	private GlobalSessionService globalSessionService;
+    @Resource(type = GlobalSessionService.class)
+    private GlobalSessionService globalSessionService;
 
-	/**
-	 * Query all globalSession
-	 * @param param param for query globalSession
-	 * @return the list of GlobalSessionVO
-	 */
-	@GetMapping("query")
-	public PageResult<GlobalSessionVO> query(@ModelAttribute GlobalSessionParam param) {
-		return globalSessionService.query(param);
-	}
+    /**
+     * Query all globalSession
+     * @param param param for query globalSession
+     * @return  the list of GlobalSessionVO
+     */
+    @GetMapping("query")
+    public PageResult<GlobalSessionVO> query(@ModelAttribute GlobalSessionParam param) {
+        return globalSessionService.query(param);
+    }
 
 }

@@ -33,12 +33,12 @@ public class RegexUtil {
 
 	private static final String NUMBER_REGEX = "^[0-9]*$";
 
-	private static final String IP_REGEX = "((25[0-5])|(2[0-4]\\d)|(1\\d\\d)|([1-9]\\d)|\\d)(\\.((25[0-5])|(2[0-4]\\d)|(1\\d\\d)|([1-9]\\d)|\\d)){3}";
+	private static final String IP_REGEX = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
 
 	/**
 	 * 邮箱验证
-	 * @param mail
-	 * @return
+	 * @param mail 邮箱
+	 * @return boolean
 	 */
 	public static boolean mailRegex(String mail) {
 		return Pattern.matches(MAIL_REGEX, mail);
@@ -68,7 +68,7 @@ public class RegexUtil {
 
 	/**
 	 * 资源名验证
-	 * @param sourceName
+	 * @param sourceName 自由名称
 	 * @return
 	 */
 	public static boolean sourceRegex(String sourceName) {
@@ -77,7 +77,7 @@ public class RegexUtil {
 
 	/**
 	 * 手机号验证
-	 * @param mobile
+	 * @param mobile 手机号
 	 * @return
 	 */
 	public static boolean mobileRegex(String mobile) {
