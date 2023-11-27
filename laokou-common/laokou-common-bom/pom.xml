@@ -93,7 +93,7 @@
         <!--swagger版本-->
         <swagger.version>2.2.19</swagger.version>
         <!--disruptor版本-->
-        <disruptor.version>3.4.4</disruptor.version>
+        <disruptor.version>4.0.0</disruptor.version>
         <!--dubbo版本-->
         <dubbo.version>3.3.0-beta.1</dubbo.version>
         <!--lombok-mapstruct-binding版本-->
