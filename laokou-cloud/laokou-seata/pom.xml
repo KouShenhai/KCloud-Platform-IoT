@@ -10,19 +10,19 @@
 
     <properties>
         <!--seata版本-->
-        <seata.version>1.7.1</seata.version>
+        <seata.version>2.0.0</seata.version>
         <!--spring-boot版本-->
         <spring-boot.version>2.7.18</spring-boot.version>
         <!--kafka-appender版本-->
         <kafka-appender.version>0.2.0-RC2</kafka-appender.version>
         <!--jedis版本-->
-        <jedis.version>3.6.3</jedis.version>
+        <jedis.version>5.1.0</jedis.version>
         <!--mock-jedis版本-->
         <mock-jedis.version>0.3.1</mock-jedis.version>
         <!--fastjson版本-->
         <fastjson.version>2.0.32</fastjson.version>
         <!--logback版本-->
-        <logback.version>1.2.11</logback.version>
+        <logback.version>1.4.11</logback.version>
         <!--logstash-logback-encoder版本-->
         <logstash-logback-encoder.version>7.3</logstash-logback-encoder.version>
         <!--druid版本-->
