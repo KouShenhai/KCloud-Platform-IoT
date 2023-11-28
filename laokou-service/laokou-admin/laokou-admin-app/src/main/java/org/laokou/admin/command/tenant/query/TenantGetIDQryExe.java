@@ -64,15 +64,15 @@ public class TenantGetIDQryExe {
     }
 
     private Long getTenantCache(String str) {
-        String tenantDomainNameKey = RedisKeyUtil.getTenantDomainNameKey();
-        Object o = redisUtil.hGet(tenantDomainNameKey, str);
+        String tenantDomainNameHashKey = RedisKeyUtil.getTenantDomainNameHashKey();
+        Object o = redisUtil.hGet(tenantDomainNameHashKey, str);
         if (Objects.nonNull(o)) {
             return Long.valueOf(o.toString());
         }
         TenantDO tenantDO = tenantMapper.selectOne(Wrappers.lambdaQuery(TenantDO.class).eq(TenantDO::getLabel, str).select(TenantDO::getId));
         if (Objects.nonNull(tenantDO)) {
             Long id = tenantDO.getId();
-            redisUtil.hSet(tenantDomainNameKey,str,id,RedisUtil.HOUR_ONE_EXPIRE);
+            redisUtil.hSet(tenantDomainNameHashKey,str,id,RedisUtil.HOUR_ONE_EXPIRE);
             return id;
         }
         return DEFAULT_TENANT;

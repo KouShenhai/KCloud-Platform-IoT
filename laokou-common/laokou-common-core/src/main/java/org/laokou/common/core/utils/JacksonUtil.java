@@ -16,16 +16,21 @@
  */
 package org.laokou.common.core.utils;
 
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+
 import java.io.InputStream;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author livk
@@ -37,7 +42,7 @@ public class JacksonUtil {
 
 	public static final String EMPTY_JSON = "{}";
 
-	private static final ObjectMapper MAPPER = JsonMapper.builder().build().registerModule(new JavaTimeModule());
+	private static final ObjectMapper MAPPER = new Jackson2ObjectMapperBuilder().build().registerModule(new JavaTimeModule());
 
 	/**
 	 * json字符转Bean

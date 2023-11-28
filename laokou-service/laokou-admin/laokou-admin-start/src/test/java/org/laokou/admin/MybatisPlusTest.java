@@ -20,6 +20,7 @@ package org.laokou.admin;
 import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
 import com.baomidou.dynamic.datasource.creator.hikaricp.HikariCpConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 import org.laokou.admin.common.utils.DsUtil;
 import org.laokou.admin.gatewayimpl.database.TestMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.TestDO;
@@ -56,7 +57,7 @@ public class MybatisPlusTest extends CommonTest {
 		this.mybatisUtil = mybatisUtil;
 	}
 
-	@org.junit.jupiter.api.Test
+	@Test
 	public void mybatisPlusBatchSaveTest() {
 		// 新增数据源
 		addDs();
