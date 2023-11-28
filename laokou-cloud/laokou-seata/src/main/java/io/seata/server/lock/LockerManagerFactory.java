@@ -30,47 +30,47 @@ import org.slf4j.LoggerFactory;
  */
 public class LockerManagerFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LockerManagerFactory.class);
-    private static final Configuration CONFIG = ConfigurationFactory.getInstance();
+	private static final Logger LOGGER = LoggerFactory.getLogger(LockerManagerFactory.class);
 
-    /**
-     * the lock manager
-     */
-    private static volatile LockManager LOCK_MANAGER;
+	private static final Configuration CONFIG = ConfigurationFactory.getInstance();
 
-    /**
-     * Get lock manager.
-     *
-     * @return the lock manager
-     */
-    public static LockManager getLockManager() {
-        init();
-        return LOCK_MANAGER;
-    }
+	/**
+	 * the lock manager
+	 */
+	private static volatile LockManager LOCK_MANAGER;
 
-    public static void init() {
-        init(null);
-    }
+	/**
+	 * Get lock manager.
+	 * @return the lock manager
+	 */
+	public static LockManager getLockManager() {
+		init();
+		return LOCK_MANAGER;
+	}
 
-    public static void destroy() {
-        LOCK_MANAGER = null;
-    }
+	public static void init() {
+		init(null);
+	}
 
-    public static void init(LockMode lockMode) {
-        if (LOCK_MANAGER == null) {
-            synchronized (LockerManagerFactory.class) {
-                if (LOCK_MANAGER == null) {
-                    if (null == lockMode) {
-                        lockMode = StoreConfig.getLockMode();
-                    }
-                    LOGGER.info("use lock store mode: {}", lockMode.getName());
-                    //if not exist the lock mode, throw exception
-                    if (null != StoreConfig.StoreMode.get(lockMode.name())) {
-                        LOCK_MANAGER = EnhancedServiceLoader.load(LockManager.class, lockMode.getName());
-                    }
-                }
-            }
-        }
-    }
+	public static void destroy() {
+		LOCK_MANAGER = null;
+	}
+
+	public static void init(LockMode lockMode) {
+		if (LOCK_MANAGER == null) {
+			synchronized (LockerManagerFactory.class) {
+				if (LOCK_MANAGER == null) {
+					if (null == lockMode) {
+						lockMode = StoreConfig.getLockMode();
+					}
+					LOGGER.info("use lock store mode: {}", lockMode.getName());
+					// if not exist the lock mode, throw exception
+					if (null != StoreConfig.StoreMode.get(lockMode.name())) {
+						LOCK_MANAGER = EnhancedServiceLoader.load(LockManager.class, lockMode.getName());
+					}
+				}
+			}
+		}
+	}
 
 }

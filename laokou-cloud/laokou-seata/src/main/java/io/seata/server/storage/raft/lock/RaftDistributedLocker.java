@@ -29,36 +29,34 @@ import static io.seata.common.DefaultValues.DEFAULT_SEATA_GROUP;
 
 /**
  * @description raft distributed lock
- * @author  funkye
+ * @author funkye
  */
 @LoadLevel(name = "raft")
 public class RaftDistributedLocker implements DistributedLocker {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(
-            RedisDistributedLocker.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(RedisDistributedLocker.class);
 
-    private final String group = ConfigurationFactory.getInstance().getConfig(ConfigurationKeys.SERVER_RAFT_GROUP, DEFAULT_SEATA_GROUP);
+	private final String group = ConfigurationFactory.getInstance()
+		.getConfig(ConfigurationKeys.SERVER_RAFT_GROUP, DEFAULT_SEATA_GROUP);
 
-    /**
-     * Acquire the distributed lock
-     *
-     * @param distributedLockDO distributedLockDO
-     * @return boolean
-     */
-    @Override
-    public boolean acquireLock(DistributedLockDO distributedLockDO) {
-        return RaftServerFactory.getInstance().isLeader(group);
-    }
+	/**
+	 * Acquire the distributed lock
+	 * @param distributedLockDO distributedLockDO
+	 * @return boolean
+	 */
+	@Override
+	public boolean acquireLock(DistributedLockDO distributedLockDO) {
+		return RaftServerFactory.getInstance().isLeader(group);
+	}
 
-    /**
-     * Release the distributed lock
-     *
-     * @param distributedLockDO distributedLockDO
-     * @return boolean
-     */
-    @Override
-    public boolean releaseLock(DistributedLockDO distributedLockDO) {
-        return true;
-    }
-    
+	/**
+	 * Release the distributed lock
+	 * @param distributedLockDO distributedLockDO
+	 * @return boolean
+	 */
+	@Override
+	public boolean releaseLock(DistributedLockDO distributedLockDO) {
+		return true;
+	}
+
 }

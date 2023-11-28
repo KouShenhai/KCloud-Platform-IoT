@@ -108,7 +108,7 @@ public final class RedisKeyUtil {
 	/**
 	 * 租户域名Key
 	 */
-	public static String getTenantDomainNameKey() {
+	public static String getTenantDomainNameHashKey() {
 		return "tenant:domain-name";
 	}
 

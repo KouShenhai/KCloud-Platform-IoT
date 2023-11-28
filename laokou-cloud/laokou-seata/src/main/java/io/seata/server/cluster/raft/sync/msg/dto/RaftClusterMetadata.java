@@ -28,66 +28,67 @@ import io.seata.common.util.StringUtils;
  */
 public class RaftClusterMetadata implements Serializable {
 
-    private static final long serialVersionUID = 6208583637662412658L;
+	private static final long serialVersionUID = 6208583637662412658L;
 
-    private Node leader;
+	private Node leader;
 
-    private List<Node> followers;
+	private List<Node> followers;
 
-    private List<Node> learner;
+	private List<Node> learner;
 
-    private long term;
+	private long term;
 
-    public RaftClusterMetadata() {
-    }
+	public RaftClusterMetadata() {
+	}
 
-    public RaftClusterMetadata(long term) {
-        this.term = term;
-    }
+	public RaftClusterMetadata(long term) {
+		this.term = term;
+	}
 
-    public Node createNode(String host, int txPort, int controlPort, String group, Map<String, Object> metadata) {
-        Node node = new Node();
-        node.setTransaction(node.createEndpoint(host, txPort, "seata"));
-        node.setControl(node.createEndpoint(host, controlPort, "http"));
-        node.setGroup(group);
-        Optional.ofNullable(metadata).ifPresent(node::setMetadata);
-        return node;
-    }
+	public Node createNode(String host, int txPort, int controlPort, String group, Map<String, Object> metadata) {
+		Node node = new Node();
+		node.setTransaction(node.createEndpoint(host, txPort, "seata"));
+		node.setControl(node.createEndpoint(host, controlPort, "http"));
+		node.setGroup(group);
+		Optional.ofNullable(metadata).ifPresent(node::setMetadata);
+		return node;
+	}
 
-    public Node getLeader() {
-        return leader;
-    }
+	public Node getLeader() {
+		return leader;
+	}
 
-    public void setLeader(Node leader) {
-        this.leader = leader;
-    }
+	public void setLeader(Node leader) {
+		this.leader = leader;
+	}
 
-    public long getTerm() {
-        return term;
-    }
+	public long getTerm() {
+		return term;
+	}
 
-    public List<Node> getFollowers() {
-        return followers;
-    }
+	public List<Node> getFollowers() {
+		return followers;
+	}
 
-    public void setFollowers(List<Node> followers) {
-        this.followers = followers;
-    }
+	public void setFollowers(List<Node> followers) {
+		this.followers = followers;
+	}
 
-    public List<Node> getLearner() {
-        return learner;
-    }
+	public List<Node> getLearner() {
+		return learner;
+	}
 
-    public void setLearner(List<Node> learner) {
-        this.learner = learner;
-    }
+	public void setLearner(List<Node> learner) {
+		this.learner = learner;
+	}
 
-    public void setTerm(long term) {
-        this.term = term;
-    }
+	public void setTerm(long term) {
+		this.term = term;
+	}
 
-    @Override
-    public String toString() {
-        return StringUtils.toString(this);
-    }
+	@Override
+	public String toString() {
+		return StringUtils.toString(this);
+	}
+
 }

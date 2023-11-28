@@ -21,14 +21,15 @@ import io.seata.core.store.GlobalTransactionDO;
  * @author jianbin.chen
  */
 public class GlobalTransactionDTO extends GlobalTransactionDO {
-    private static final long serialVersionUID = 8402806824435215696L;
 
-    public GlobalTransactionDTO(String xid) {
-        super(xid);
-    }
+	private static final long serialVersionUID = 8402806824435215696L;
 
-    public GlobalTransactionDTO() {
-        super();
-    }
+	public GlobalTransactionDTO(String xid) {
+		super(xid);
+	}
+
+	public GlobalTransactionDTO() {
+		super();
+	}
 
 }

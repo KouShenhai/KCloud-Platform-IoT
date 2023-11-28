@@ -40,6 +40,7 @@ import java.util.List;
 public class ResourceTaskListQryExe {
 
 	private final TasksFeignClient tasksFeignClient;
+
 	private final DefaultConfigProperties defaultConfigProperties;
 
 	public Result<Datas<TaskCO>> execute(ResourceTaskListQry qry) {

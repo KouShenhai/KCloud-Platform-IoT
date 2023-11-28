@@ -19,12 +19,9 @@ package org.laokou.gateway.repository;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -61,8 +58,6 @@ import static org.laokou.common.nacos.utils.ConfigUtil.ROUTER_DATA_ID;
 @NonNullApi
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository, ApplicationEventPublisherAware {
 
-	private final Cache<String, RouteDefinition> caffeineCache;
-
 	private final ConfigUtil configUtil;
 
 	private final ReactiveHashOperations<String, String, RouteDefinition> reactiveHashOperations;
@@ -74,7 +69,6 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	public NacosRouteDefinitionRepository(ConfigUtil configUtil,
 			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
 		this.configUtil = configUtil;
-		this.caffeineCache = Caffeine.newBuilder().initialCapacity(300).build();
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
 		this.ROUTER_ERROR = MessageUtil.getMessage(ROUTE_NOT_EXIST);
 	}
@@ -96,7 +90,6 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			public void receiveConfigInfo(String configInfo) {
 				log.info("收到配置变动通知");
 				// 清除缓存
-				caffeineCache.invalidateAll();
 				reactiveHashOperations.delete(RedisKeyUtil.getRouteDefinitionHashKey())
 					.subscribe(success -> log.info("删除成功"), error -> log.error("删除失败，错误信息", error));
 				// 刷新事件
@@ -107,14 +100,9 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	@Override
 	public Flux<RouteDefinition> getRouteDefinitions() {
-		Collection<RouteDefinition> definitions = caffeineCache.asMap().values();
-		if (CollectionUtil.isEmpty(definitions)) {
-			return reactiveHashOperations.entries(RedisKeyUtil.getRouteDefinitionHashKey())
-				.map(Map.Entry::getValue)
-				.switchIfEmpty(routeDefinitions())
-				.doOnNext(d -> caffeineCache.put(d.getId(), d));
-		}
-		return Flux.fromIterable(definitions);
+		return reactiveHashOperations.entries(RedisKeyUtil.getRouteDefinitionHashKey())
+			.map(Map.Entry::getValue)
+			.switchIfEmpty(routeDefinitions());
 	}
 
 	@Override

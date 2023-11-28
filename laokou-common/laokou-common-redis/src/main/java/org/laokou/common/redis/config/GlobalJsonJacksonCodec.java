@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -28,6 +27,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.redisson.codec.JsonJacksonCodec;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -47,7 +47,7 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 
 	public static ObjectMapper objectMapper() {
 		// 解决查询缓存转换异常的问题
-		ObjectMapper objectMapper = JsonMapper.builder().build();
+		ObjectMapper objectMapper = new ObjectMapper();
 		DateTimeFormatter dateTimeFormatter = DateUtil
 			.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
 		// Long类型转String类型

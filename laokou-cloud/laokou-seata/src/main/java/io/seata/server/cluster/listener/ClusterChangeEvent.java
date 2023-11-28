@@ -23,49 +23,50 @@ import org.springframework.context.ApplicationEvent;
  */
 public class ClusterChangeEvent extends ApplicationEvent {
 
-    private String group;
+	private String group;
 
-    private boolean leader;
+	private boolean leader;
 
-    private long term;
+	private long term;
 
-    public ClusterChangeEvent(Object source, String group, long term, boolean leader) {
-        super(source);
-        this.group = group;
-        this.term = term;
-        this.leader = leader;
-    }
+	public ClusterChangeEvent(Object source, String group, long term, boolean leader) {
+		super(source);
+		this.group = group;
+		this.term = term;
+		this.leader = leader;
+	}
 
-    public ClusterChangeEvent(Object source, String group) {
-        super(source);
-        this.group = group;
-    }
+	public ClusterChangeEvent(Object source, String group) {
+		super(source);
+		this.group = group;
+	}
 
-    public ClusterChangeEvent(Object source, Clock clock) {
-        super(source, clock);
-    }
+	public ClusterChangeEvent(Object source, Clock clock) {
+		super(source, clock);
+	}
 
-    public String getGroup() {
-        return group;
-    }
+	public String getGroup() {
+		return group;
+	}
 
-    public void setGroup(String group) {
-        this.group = group;
-    }
+	public void setGroup(String group) {
+		this.group = group;
+	}
 
-    public long getTerm() {
-        return term;
-    }
+	public long getTerm() {
+		return term;
+	}
 
-    public void setTerm(long term) {
-        this.term = term;
-    }
+	public void setTerm(long term) {
+		this.term = term;
+	}
 
-    public boolean isLeader() {
-        return leader;
-    }
+	public boolean isLeader() {
+		return leader;
+	}
 
-    public void setLeader(boolean leader) {
-        this.leader = leader;
-    }
+	public void setLeader(boolean leader) {
+		this.leader = leader;
+	}
+
 }

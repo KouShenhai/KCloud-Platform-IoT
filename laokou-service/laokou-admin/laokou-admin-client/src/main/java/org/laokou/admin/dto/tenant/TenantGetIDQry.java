@@ -31,6 +31,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class TenantGetIDQry extends CommonCommand {
 
-    private HttpServletRequest request;
+	private HttpServletRequest request;
 
 }
