@@ -42,8 +42,7 @@ public class JacksonUtil {
 
 	public static final String EMPTY_JSON = "{}";
 
-	private static final ObjectMapper MAPPER = new Jackson2ObjectMapperBuilder().build()
-		.registerModule(new JavaTimeModule());
+	private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
 
 	/**
 	 * json字符转Bean

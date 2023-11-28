@@ -47,7 +47,7 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 
 	public static ObjectMapper objectMapper() {
 		// 解决查询缓存转换异常的问题
-		ObjectMapper objectMapper = new Jackson2ObjectMapperBuilder().build();
+		ObjectMapper objectMapper = new ObjectMapper();
 		DateTimeFormatter dateTimeFormatter = DateUtil
 			.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
 		// Long类型转String类型
