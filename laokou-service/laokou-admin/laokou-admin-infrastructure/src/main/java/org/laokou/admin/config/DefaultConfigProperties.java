@@ -38,5 +38,7 @@ public class DefaultConfigProperties {
 
     private String definitionKey;
     private Set<String> tenantTables = new HashSet<>();
+    private String tenantPrefix;
+    private Set<String> domainNames;
 
 }

@@ -38,6 +38,9 @@ public class TenantDO extends BaseDO {
 	@Schema(name = "name", description = "租户名称")
 	private String name;
 
+	@Schema(name = "label", description = "租户标签")
+	private String label;
+
 	@Schema(name = "sourceId", description = "数据源ID")
 	private Long sourceId;
 

@@ -22,7 +22,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import static org.laokou.common.i18n.common.Constant.RISK;
+import static org.laokou.common.i18n.common.Constant.DOMAIN_NAME;
 
 /**
  * @author laokou
@@ -36,15 +36,7 @@ public class RequestUtil {
 	}
 
 	public static String getDomainName(HttpServletRequest request) {
-		String domainName = request.getServerName();
-		if (domainName.contains(RISK)) {
-			// 请求使用反向代理
-			domainName = domainName.split(RISK)[0];
-		}
-		if (domainName.equals(request.getRemoteHost())) {
-			return null;
-		}
-		return domainName;
+        return request.getHeader(DOMAIN_NAME);
 	}
 
 }

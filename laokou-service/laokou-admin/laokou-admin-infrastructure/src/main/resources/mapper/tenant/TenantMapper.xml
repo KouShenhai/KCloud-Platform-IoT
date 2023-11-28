@@ -23,11 +23,16 @@
     <select id="getTenantListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.TenantDO">
         select id
              ,`name`
+             , `label`
         from boot_sys_tenant
         where del_flag = 0
         <if test="name != null and name != ''">
             and `name` like #{name}
         </if>
         order by id desc
+    </select>
+    <select id="maxLabelNum" resultType="java.lang.Integer">
+        SELECT max(CAST( REGEXP_REPLACE ( label, '[^0-9]', '' ) AS SIGNED )) + 1
+        FROM boot_sys_tenant
     </select>
 </mapper>

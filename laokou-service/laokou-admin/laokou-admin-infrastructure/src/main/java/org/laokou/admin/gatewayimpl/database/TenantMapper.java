@@ -36,4 +36,6 @@ public interface TenantMapper extends BatchMapper<TenantDO> {
 	IPage<TenantDO> getTenantListFilter(IPage<TenantDO> page, @Param("name") String name,
 			@Param(PAGE_QUERY) PageQuery pageQuery);
 
+	Integer maxLabelNum();
+
 }

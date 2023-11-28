@@ -252,6 +252,11 @@ public interface Constant {
 	String TENANT_ID = "tenant-id";
 
 	/**
+	 * 域名
+	 */
+	String DOMAIN_NAME = "domain-name";
+
+	/**
 	 * 邮箱
 	 */
 	String MAIL = "mail";
@@ -280,5 +285,10 @@ public interface Constant {
 	 * https协议
 	 */
 	String HTTPS_SCHEME = "https";
+
+	/**
+	 * www
+	 */
+	String WWW = "www";
 
 }

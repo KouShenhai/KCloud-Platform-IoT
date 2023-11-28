@@ -43,6 +43,10 @@ spring:
       - boot_sys_message_detail
       - boot_sys_oss
       - boot_sys_oss_log
+    domain-names:
+      - laokou.org
+      - laokouyun.org
+    tenant-prefix: "tenant"
   application:
     name: @pom.parent.artifactId@
   profiles:

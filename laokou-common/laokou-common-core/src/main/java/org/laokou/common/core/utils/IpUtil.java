@@ -56,10 +56,6 @@ public class IpUtil {
 		return LOCAL_NETWORK_SEGMENT.equals(ip) ? LOCAL_IP : ip.split(Constant.COMMA)[0];
 	}
 
-	public static boolean localIp(String ip) {
-		return LOCAL_NETWORK_SEGMENT.equals(ip) || LOCAL_IP.equals(ip);
-	}
-
 	public static boolean internalIp(String ip) {
 		byte[] bytes = textToNumericFormatV4(ip);
 		return Objects.nonNull(bytes) && (internalIp(bytes) || LOCAL_IP.equals(ip));

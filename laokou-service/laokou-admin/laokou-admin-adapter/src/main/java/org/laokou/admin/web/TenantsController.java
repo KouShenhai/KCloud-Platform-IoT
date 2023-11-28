@@ -25,7 +25,6 @@ import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
 import org.laokou.admin.dto.tenant.*;
 import org.laokou.admin.dto.tenant.clientobject.TenantCO;
-import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.aspect.Type;
 import org.laokou.common.i18n.dto.Datas;
@@ -105,8 +104,7 @@ public class TenantsController {
 	@GetMapping("id")
 	@Operation(summary = "租户管理", description = "解析域名查看ID")
 	public Result<Long> getIdByDomainName(HttpServletRequest request) {
-		System.out.println(RequestUtil.getDomainName(request));
-		return Result.of(null);
+		return tenantsServiceI.getIdByDomainName(new TenantGetIDQry(request));
 	}
 
 }

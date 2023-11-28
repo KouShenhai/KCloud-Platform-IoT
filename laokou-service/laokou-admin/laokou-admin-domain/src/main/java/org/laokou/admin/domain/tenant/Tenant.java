@@ -29,6 +29,8 @@ public class Tenant {
 
 	private String name;
 
+	private String label;
+
 	private Long sourceId;
 
 	private Long packageId;
