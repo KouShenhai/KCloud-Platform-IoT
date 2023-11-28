@@ -45,6 +45,7 @@ public class TraceFilter implements GlobalFilter, Ordered {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		try {
 			ServerHttpRequest request = exchange.getRequest();
+			String host = request.getURI().getHost();
 			String userId = RequestUtil.getParamValue(request, USER_ID);
 			String tenantId = RequestUtil.getParamValue(request, TENANT_ID);
 			String username = RequestUtil.getParamValue(request, USER_NAME);
@@ -55,13 +56,14 @@ public class TraceFilter implements GlobalFilter, Ordered {
 			ThreadContext.put(USER_NAME, username);
 			// 获取uri
 			String requestUri = request.getPath().pathWithinApplication().value();
-			log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}", requestUri, userId, username, tenantId, traceId);
+			log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}，主机：{}", requestUri, userId, username, tenantId, traceId, host);
 			return chain.filter(exchange.mutate()
 				.request(request.mutate()
 					.header(USER_NAME, username)
 					.header(TENANT_ID, tenantId)
 					.header(USER_ID, userId)
 					.header(TRACE_ID, traceId)
+					.header(DOMAIN_NAME, host)
 					.build())
 				.build());
 		}

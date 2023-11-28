@@ -46,4 +46,6 @@ public interface TenantsServiceI {
 
 	Result<TenantCO> getById(TenantGetQry qry);
 
+	Result<Long> getIdByDomainName(TenantGetIDQry qry);
+
 }

@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.TenantGateway;
@@ -68,6 +69,8 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final TenantConvertor tenantConvertor;
 
+	private final DefaultConfigProperties defaultConfigProperties;
+
 	private static final String TENANT_USERNAME = "tenant";
 
 	private static final String TENANT_PASSWORD = "tenant123";
@@ -76,6 +79,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	@DSTransactional(rollbackFor = Exception.class)
 	public Boolean insert(Tenant tenant) {
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
+		tenantDO.setLabel(defaultConfigProperties.getTenantPrefix() + tenantMapper.maxLabelNum());
 		return insertTenant(tenantDO);
 	}
 

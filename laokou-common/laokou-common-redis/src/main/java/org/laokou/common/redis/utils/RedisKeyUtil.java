@@ -105,4 +105,11 @@ public final class RedisKeyUtil {
 		return name + ":cache";
 	}
 
+	/**
+	 * 租户域名Key
+	 */
+	public static String getTenantDomainNameKey() {
+		return "tenant:domain-name";
+	}
+
 }
