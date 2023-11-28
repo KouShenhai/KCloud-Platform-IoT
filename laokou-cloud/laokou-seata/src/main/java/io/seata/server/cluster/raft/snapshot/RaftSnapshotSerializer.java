@@ -35,34 +35,37 @@ import io.seata.core.serializer.SerializerType;
  */
 public class RaftSnapshotSerializer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RaftSnapshotSerializer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RaftSnapshotSerializer.class);
 
-    public static byte[] encode(RaftSnapshot raftSnapshot) throws IOException {
-        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(bos)) {
-            Serializer serializer =
-                EnhancedServiceLoader.load(Serializer.class, SerializerType.getByCode(raftSnapshot.getCodec()).name());
-            Optional.ofNullable(raftSnapshot.getBody()).ifPresent(value -> raftSnapshot.setBody(
-                CompressorFactory.getCompressor(raftSnapshot.getCompressor()).compress(serializer.serialize(value))));
-            oos.writeObject(raftSnapshot);
-            return bos.toByteArray();
-        }
-    }
+	public static byte[] encode(RaftSnapshot raftSnapshot) throws IOException {
+		try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+			Serializer serializer = EnhancedServiceLoader.load(Serializer.class,
+					SerializerType.getByCode(raftSnapshot.getCodec()).name());
+			Optional.ofNullable(raftSnapshot.getBody())
+				.ifPresent(value -> raftSnapshot.setBody(CompressorFactory.getCompressor(raftSnapshot.getCompressor())
+					.compress(serializer.serialize(value))));
+			oos.writeObject(raftSnapshot);
+			return bos.toByteArray();
+		}
+	}
 
-    public static RaftSnapshot decode(byte[] raftSnapshotByte) throws IOException {
-        try (ByteArrayInputStream bin = new ByteArrayInputStream(raftSnapshotByte);
-            ObjectInputStream ois = new ObjectInputStream(bin)) {
-            RaftSnapshot raftSnapshot = (RaftSnapshot)ois.readObject();
-            Serializer serializer =
-                EnhancedServiceLoader.load(Serializer.class, SerializerType.getByCode(raftSnapshot.getCodec()).name());
-            Optional.ofNullable(raftSnapshot.getBody())
-                .ifPresent(value -> raftSnapshot.setBody(serializer.deserialize(CompressorFactory
-                    .getCompressor(raftSnapshot.getCompressor()).decompress((byte[])raftSnapshot.getBody()))));
-            return raftSnapshot;
-        } catch (ClassNotFoundException e) {
-            LOGGER.info("Failed to read raft snapshot: {}", e.getMessage(), e);
-            throw new IOException(e);
-        }
-    }
+	public static RaftSnapshot decode(byte[] raftSnapshotByte) throws IOException {
+		try (ByteArrayInputStream bin = new ByteArrayInputStream(raftSnapshotByte);
+				ObjectInputStream ois = new ObjectInputStream(bin)) {
+			RaftSnapshot raftSnapshot = (RaftSnapshot) ois.readObject();
+			Serializer serializer = EnhancedServiceLoader.load(Serializer.class,
+					SerializerType.getByCode(raftSnapshot.getCodec()).name());
+			Optional.ofNullable(raftSnapshot.getBody())
+				.ifPresent(value -> raftSnapshot
+					.setBody(serializer.deserialize(CompressorFactory.getCompressor(raftSnapshot.getCompressor())
+						.decompress((byte[]) raftSnapshot.getBody()))));
+			return raftSnapshot;
+		}
+		catch (ClassNotFoundException e) {
+			LOGGER.info("Failed to read raft snapshot: {}", e.getMessage(), e);
+			throw new IOException(e);
+		}
+	}
 
 }

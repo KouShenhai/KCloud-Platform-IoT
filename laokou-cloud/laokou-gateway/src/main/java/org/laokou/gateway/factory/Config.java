@@ -52,7 +52,8 @@ public class Config {
 
 	private @NotEmpty String sources;
 
-	private @NotNull RemoteAddressResolver remoteAddressResolver = new RemoteAddressResolver() {};
+	private @NotNull RemoteAddressResolver remoteAddressResolver = new RemoteAddressResolver() {
+	};
 
 	public static GatewayFilter apply(Config config, boolean white) {
 		try {

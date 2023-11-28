@@ -42,40 +42,43 @@ import static org.laokou.common.i18n.common.Constant.*;
 @RequiredArgsConstructor
 public class TenantGetIDQryExe {
 
-    private final DefaultConfigProperties defaultConfigProperties;
-    private final TenantMapper tenantMapper;
-    private final RedisUtil redisUtil;
+	private final DefaultConfigProperties defaultConfigProperties;
 
-    public Result<Long> execute(TenantGetIDQry qry) {
-        String domainName = RequestUtil.getDomainName(qry.getRequest());
-        if (RegexUtil.ipRegex(domainName)) {
-            return Result.of(DEFAULT_TENANT);
-        }
-        String[] split = domainName.split(BACKSLASH + DOT);
-        if (split.length < 3 || WWW.equals(split[0])) {
-            return Result.of(DEFAULT_TENANT);
-        }
-        Set<String> domainNames = defaultConfigProperties.getDomainNames();
-        // 租户域名
-        if (domainNames.parallelStream().anyMatch(domainName::contains)) {
-            return Result.of(getTenantCache(split[0]));
-        }
-        return Result.of(DEFAULT_TENANT);
-    }
+	private final TenantMapper tenantMapper;
 
-    private Long getTenantCache(String str) {
-        String tenantDomainNameHashKey = RedisKeyUtil.getTenantDomainNameHashKey();
-        Object o = redisUtil.hGet(tenantDomainNameHashKey, str);
-        if (Objects.nonNull(o)) {
-            return Long.valueOf(o.toString());
-        }
-        TenantDO tenantDO = tenantMapper.selectOne(Wrappers.lambdaQuery(TenantDO.class).eq(TenantDO::getLabel, str).select(TenantDO::getId));
-        if (Objects.nonNull(tenantDO)) {
-            Long id = tenantDO.getId();
-            redisUtil.hSet(tenantDomainNameHashKey,str,id,RedisUtil.HOUR_ONE_EXPIRE);
-            return id;
-        }
-        return DEFAULT_TENANT;
-    }
+	private final RedisUtil redisUtil;
+
+	public Result<Long> execute(TenantGetIDQry qry) {
+		String domainName = RequestUtil.getDomainName(qry.getRequest());
+		if (RegexUtil.ipRegex(domainName)) {
+			return Result.of(DEFAULT_TENANT);
+		}
+		String[] split = domainName.split(BACKSLASH + DOT);
+		if (split.length < 3 || WWW.equals(split[0])) {
+			return Result.of(DEFAULT_TENANT);
+		}
+		Set<String> domainNames = defaultConfigProperties.getDomainNames();
+		// 租户域名
+		if (domainNames.parallelStream().anyMatch(domainName::contains)) {
+			return Result.of(getTenantCache(split[0]));
+		}
+		return Result.of(DEFAULT_TENANT);
+	}
+
+	private Long getTenantCache(String str) {
+		String tenantDomainNameHashKey = RedisKeyUtil.getTenantDomainNameHashKey();
+		Object o = redisUtil.hGet(tenantDomainNameHashKey, str);
+		if (Objects.nonNull(o)) {
+			return Long.valueOf(o.toString());
+		}
+		TenantDO tenantDO = tenantMapper
+			.selectOne(Wrappers.lambdaQuery(TenantDO.class).eq(TenantDO::getLabel, str).select(TenantDO::getId));
+		if (Objects.nonNull(tenantDO)) {
+			Long id = tenantDO.getId();
+			redisUtil.hSet(tenantDomainNameHashKey, str, id, RedisUtil.HOUR_ONE_EXPIRE);
+			return id;
+		}
+		return DEFAULT_TENANT;
+	}
 
 }

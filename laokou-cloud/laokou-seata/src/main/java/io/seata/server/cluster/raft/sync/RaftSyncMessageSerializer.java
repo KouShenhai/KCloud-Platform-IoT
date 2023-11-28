@@ -34,34 +34,38 @@ import org.slf4j.LoggerFactory;
  */
 public class RaftSyncMessageSerializer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RaftSyncMessageSerializer.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RaftSyncMessageSerializer.class);
 
-    public static byte[] encode(RaftSyncMessage raftSyncMessage) throws IOException {
-        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(bos)) {
-            Serializer serializer =
-                EnhancedServiceLoader.load(Serializer.class, SerializerType.getByCode(raftSyncMessage.getCodec()).name());
-            Optional.ofNullable(raftSyncMessage.getBody()).ifPresent(value -> raftSyncMessage.setBody(
-                CompressorFactory.getCompressor(raftSyncMessage.getCompressor()).compress(serializer.serialize(value))));
-            oos.writeObject(raftSyncMessage);
-            return bos.toByteArray();
-        }
-    }
+	public static byte[] encode(RaftSyncMessage raftSyncMessage) throws IOException {
+		try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+			Serializer serializer = EnhancedServiceLoader.load(Serializer.class,
+					SerializerType.getByCode(raftSyncMessage.getCodec()).name());
+			Optional.ofNullable(raftSyncMessage.getBody())
+				.ifPresent(value -> raftSyncMessage
+					.setBody(CompressorFactory.getCompressor(raftSyncMessage.getCompressor())
+						.compress(serializer.serialize(value))));
+			oos.writeObject(raftSyncMessage);
+			return bos.toByteArray();
+		}
+	}
 
-    public static RaftSyncMessage decode(byte[] raftSyncMsgByte) {
-        try (ByteArrayInputStream bin = new ByteArrayInputStream(raftSyncMsgByte);
-            ObjectInputStream ois = new ObjectInputStream(bin)) {
-            RaftSyncMessage raftSyncMessage = (RaftSyncMessage)ois.readObject();
-            Serializer serializer =
-                EnhancedServiceLoader.load(Serializer.class, SerializerType.getByCode(raftSyncMessage.getCodec()).name());
-            Optional.ofNullable(raftSyncMessage.getBody())
-                .ifPresent(value -> raftSyncMessage.setBody(serializer.deserialize(CompressorFactory
-                    .getCompressor(raftSyncMessage.getCompressor()).decompress((byte[]) raftSyncMessage.getBody()))));
-            return raftSyncMessage;
-        } catch (ClassNotFoundException | IOException e) {
-            LOGGER.info("Failed to read raft synchronization log: {}", e.getMessage(), e);
-            throw new RuntimeException(e);
-        }
-    }
+	public static RaftSyncMessage decode(byte[] raftSyncMsgByte) {
+		try (ByteArrayInputStream bin = new ByteArrayInputStream(raftSyncMsgByte);
+				ObjectInputStream ois = new ObjectInputStream(bin)) {
+			RaftSyncMessage raftSyncMessage = (RaftSyncMessage) ois.readObject();
+			Serializer serializer = EnhancedServiceLoader.load(Serializer.class,
+					SerializerType.getByCode(raftSyncMessage.getCodec()).name());
+			Optional.ofNullable(raftSyncMessage.getBody())
+				.ifPresent(value -> raftSyncMessage
+					.setBody(serializer.deserialize(CompressorFactory.getCompressor(raftSyncMessage.getCompressor())
+						.decompress((byte[]) raftSyncMessage.getBody()))));
+			return raftSyncMessage;
+		}
+		catch (ClassNotFoundException | IOException e) {
+			LOGGER.info("Failed to read raft synchronization log: {}", e.getMessage(), e);
+			throw new RuntimeException(e);
+		}
+	}
 
 }

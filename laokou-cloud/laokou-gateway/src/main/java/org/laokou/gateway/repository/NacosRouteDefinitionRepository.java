@@ -101,8 +101,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	@Override
 	public Flux<RouteDefinition> getRouteDefinitions() {
 		return reactiveHashOperations.entries(RedisKeyUtil.getRouteDefinitionHashKey())
-				.map(Map.Entry::getValue)
-				.switchIfEmpty(routeDefinitions());
+			.map(Map.Entry::getValue)
+			.switchIfEmpty(routeDefinitions());
 	}
 
 	@Override

@@ -20,7 +20,6 @@ public enum ExceptionEnum {
 	 */
 	INVALID_REQUEST(ErrorCode.INVALID_REQUEST, MessageUtil.getMessage(ErrorCode.INVALID_REQUEST));
 
-
 	private final int code;
 
 	private final String msg;

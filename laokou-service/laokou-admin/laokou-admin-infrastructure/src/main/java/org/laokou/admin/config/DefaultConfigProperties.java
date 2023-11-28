@@ -34,11 +34,14 @@ import static org.laokou.admin.config.DefaultConfigProperties.PREFIX;
 @ConfigurationProperties(prefix = PREFIX)
 public class DefaultConfigProperties {
 
-    public static final String PREFIX = "spring.default-config";
+	public static final String PREFIX = "spring.default-config";
 
-    private String definitionKey;
-    private Set<String> tenantTables = new HashSet<>();
-    private String tenantPrefix;
-    private Set<String> domainNames;
+	private String definitionKey;
+
+	private Set<String> tenantTables = new HashSet<>();
+
+	private String tenantPrefix;
+
+	private Set<String> domainNames;
 
 }

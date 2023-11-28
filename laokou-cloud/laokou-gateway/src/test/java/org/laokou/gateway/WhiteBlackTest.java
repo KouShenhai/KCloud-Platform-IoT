@@ -34,15 +34,16 @@ import java.util.List;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class WhiteBlackTest {
 
-    @Test
-    public void test() {
-        List<String> list = List.of("127.0.0.1", "192.168.62.1");
-        String str = "192.168.62.1";
-        // 测试白名单
-        boolean b = list.parallelStream().noneMatch(s -> s.equals(str));
-        log.info("测试结果：{}",b);
-        // 测试黑名单
-        boolean c = list.parallelStream().anyMatch(s -> s.equals(str));
-        log.info("测试结果：{}",c);
-    }
+	@Test
+	public void test() {
+		List<String> list = List.of("127.0.0.1", "192.168.62.1");
+		String str = "192.168.62.1";
+		// 测试白名单
+		boolean b = list.parallelStream().noneMatch(s -> s.equals(str));
+		log.info("测试结果：{}", b);
+		// 测试黑名单
+		boolean c = list.parallelStream().anyMatch(s -> s.equals(str));
+		log.info("测试结果：{}", c);
+	}
+
 }

@@ -36,7 +36,7 @@ public class RequestUtil {
 	}
 
 	public static String getDomainName(HttpServletRequest request) {
-        return request.getHeader(DOMAIN_NAME);
+		return request.getHeader(DOMAIN_NAME);
 	}
 
 }

@@ -127,7 +127,9 @@ public class DsUtil {
 			}
 			Set<String> list;
 			if (CollectionUtil.isNotEmpty(tables)) {
-				list = defaultTenantTables.parallelStream().filter(table -> !tables.contains(table)).collect(Collectors.toSet());
+				list = defaultTenantTables.parallelStream()
+					.filter(table -> !tables.contains(table))
+					.collect(Collectors.toSet());
 			}
 			else {
 				list = defaultTenantTables;

@@ -56,7 +56,8 @@ public class TraceFilter implements GlobalFilter, Ordered {
 			ThreadContext.put(USER_NAME, username);
 			// 获取uri
 			String requestUri = request.getPath().pathWithinApplication().value();
-			log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}，主机：{}", requestUri, userId, username, tenantId, traceId, host);
+			log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}，主机：{}", requestUri, userId, username, tenantId, traceId,
+					host);
 			return chain.filter(exchange.mutate()
 				.request(request.mutate()
 					.header(USER_NAME, username)
