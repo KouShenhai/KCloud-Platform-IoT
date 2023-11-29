@@ -44,6 +44,7 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
+import org.laokou.common.mybatisplus.utils.MybatisUtil;
 
 import java.io.InputStream;
 import java.net.URLEncoder;
@@ -52,7 +53,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 import static org.laokou.common.i18n.common.Constant.*;
 
@@ -74,8 +75,9 @@ public class ExcelUtil {
 
 	private static final String ACCESS_CONTROL_EXPOSE_HEADERS = "Access-Control-Expose-Headers";
 
-	public static <T> void doImport(InputStream inputStream, HttpServletResponse response, Consumer<List<T>> consumer) {
-		EasyExcel.read(inputStream, new DataListener<>(consumer, response)).sheet().doRead();
+	public static <M, T> void doImport(InputStream inputStream, HttpServletResponse response, Class<M> clazz,
+			BiConsumer<M, T> consumer, MybatisUtil mybatisUtil) {
+		EasyExcel.read(inputStream, new DataListener<>(clazz, consumer, response, mybatisUtil)).sheet().doRead();
 	}
 
 	public static <T extends BaseDO> void doExport(List<String> tables, HttpServletResponse response, T param,
@@ -131,7 +133,7 @@ public class ExcelUtil {
 		list.clear();
 	}
 
-	private static class DataListener<T> implements ReadListener<T> {
+	private static class DataListener<M, T> implements ReadListener<T> {
 
 		public static final int BATCH_COUNT = 1000;
 
@@ -146,30 +148,35 @@ public class ExcelUtil {
 		private final List<String> ERRORS;
 
 		/**
-		 * consumer
-		 */
-		private final Consumer<List<T>> consumer;
-
-		/**
 		 * Single handle the amount of data
 		 */
 		private final int batchCount;
 
 		private final HttpServletResponse response;
 
+		private final MybatisUtil mybatisUtil;
+
+		private final Class<M> clazz;
+
+		private final BiConsumer<M, T> consumer;
+
 		private int index;
 
-		public DataListener(Consumer<List<T>> consumer, HttpServletResponse response) {
-			this(consumer, BATCH_COUNT, response);
+		public DataListener(Class<M> clazz, BiConsumer<M, T> consumer, HttpServletResponse response,
+				MybatisUtil mybatisUtil) {
+			this(clazz, consumer, BATCH_COUNT, response, mybatisUtil);
 		}
 
-		public DataListener(Consumer<List<T>> consumer, int batchCount, HttpServletResponse response) {
-			this.consumer = consumer;
+		public DataListener(Class<M> clazz, BiConsumer<M, T> consumer, int batchCount, HttpServletResponse response,
+				MybatisUtil mybatisUtil) {
 			this.batchCount = batchCount;
+			this.clazz = clazz;
 			this.response = response;
 			this.ERRORS = new ArrayList<>();
 			this.CACHED_DATA_LIST = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
 			this.index = DEFAULT;
+			this.mybatisUtil = mybatisUtil;
+			this.consumer = consumer;
 		}
 
 		@Override
@@ -183,7 +190,7 @@ public class ExcelUtil {
 			else {
 				CACHED_DATA_LIST.add(data);
 				if (CACHED_DATA_LIST.size() % batchCount == 0) {
-					consumer.accept(CACHED_DATA_LIST);
+					mybatisUtil.batch(CACHED_DATA_LIST, clazz, consumer);
 					CACHED_DATA_LIST.clear();
 				}
 			}
@@ -194,7 +201,7 @@ public class ExcelUtil {
 		public void doAfterAllAnalysed(AnalysisContext context) {
 			log.info("完成数据解析");
 			if (CollectionUtil.isNotEmpty(CACHED_DATA_LIST)) {
-				consumer.accept(CACHED_DATA_LIST);
+				mybatisUtil.batch(CACHED_DATA_LIST, clazz, consumer);
 			}
 			// 写入excel
 			try (ServletOutputStream out = response.getOutputStream();
