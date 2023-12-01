@@ -28,7 +28,6 @@ import org.laokou.common.core.utils.IdGenerator;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.laokou.mqtt.constant.Constant.WILL_DATA;
 import static org.laokou.mqtt.constant.Constant.WILL_TOPIC;
@@ -39,7 +38,7 @@ import static org.laokou.mqtt.constant.Constant.WILL_TOPIC;
 @Slf4j
 public class MqttServer implements Server {
 
-	private final AtomicBoolean RUNNING = new AtomicBoolean(false);
+	private volatile boolean running;
 
 	private volatile MqttClient client;
 
@@ -57,7 +56,7 @@ public class MqttServer implements Server {
 	@Override
 	@SneakyThrows
 	public synchronized void start() {
-		if (RUNNING.get()) {
+		if (running) {
 			log.error("MQTT已启动");
 			return;
 		}
@@ -67,16 +66,14 @@ public class MqttServer implements Server {
 		client.setCallback(new MqttMessageCallback(client, mqttStrategy));
 		client.connect(options());
 		client.subscribe(springMqttProperties.getTopics().toArray(new String[0]), new int[] { 2 });
-		RUNNING.compareAndSet(false, true);
+		running = true;
 		log.info("MQTT启动成功");
 	}
 
 	@Override
 	@SneakyThrows
 	public synchronized void stop() {
-		if (RUNNING.get()) {
-			RUNNING.compareAndSet(true, false);
-		}
+		running = false;
 		if (Objects.nonNull(client)) {
 			client.disconnectForcibly();
 		}

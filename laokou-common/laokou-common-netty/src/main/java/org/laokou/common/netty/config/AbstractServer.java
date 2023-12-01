@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author laokou
@@ -36,7 +35,7 @@ public abstract class AbstractServer implements Server {
 	/**
 	 * 运行标记
 	 */
-	private final AtomicBoolean RUNNING = new AtomicBoolean(false);
+	private volatile boolean running;
 
 	/**
 	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）
@@ -75,7 +74,7 @@ public abstract class AbstractServer implements Server {
 	 */
 	@Override
 	public synchronized void start() {
-		if (RUNNING.get()) {
+		if (running) {
 			log.error("已启动监听，端口：{}", port);
 			return;
 		}
@@ -87,7 +86,7 @@ public abstract class AbstractServer implements Server {
 			ChannelFuture channelFuture = bind(bootstrap, port);
 			// 监听端口关闭
 			channelFuture.channel().closeFuture().addListener(future -> {
-				if (RUNNING.get()) {
+				if (running) {
 					stop();
 				}
 			});
@@ -103,9 +102,7 @@ public abstract class AbstractServer implements Server {
 	@Override
 	public synchronized void stop() {
 		// 修改状态
-		if (RUNNING.get()) {
-			RUNNING.compareAndSet(true, false);
-		}
+		running = false;
 		// 释放资源
 		if (Objects.nonNull(boss)) {
 			boss.shutdownGracefully();
@@ -127,7 +124,7 @@ public abstract class AbstractServer implements Server {
 			}
 			else {
 				log.info("启动成功，端口{}已绑定", port);
-				RUNNING.compareAndSet(false, true);
+				running = true;
 			}
 		});
 	}

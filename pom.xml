@@ -35,8 +35,8 @@
         <laokou.version>3.2.0</laokou.version>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <spring-boot-maven-plugin.version>3.1.5</spring-boot-maven-plugin.version>
         <!--spring-boot版本-->
@@ -129,12 +129,12 @@
     <repositories>
         <repository>
             <id>spring-release</id>
-            <name>Spring release</name>
+            <name>Spring Release</name>
             <url>https://repo.spring.io/release</url>
         </repository>
         <repository>
             <id>spring-milestone</id>
-            <name>Spring milestone</name>
+            <name>Spring Milestone</name>
             <url>https://repo.spring.io/milestone</url>
         </repository>
     </repositories>
