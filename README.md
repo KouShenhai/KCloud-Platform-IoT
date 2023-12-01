@@ -240,6 +240,9 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
     </tr>
 </table>
 
+### 👊 性能评测
+[请点击我，查看详情](性能测试.md)
+
 ### 😛 用户权益
 - 采用Apache2.0开源协议，免费商用无需授权，请保留作者、Copyright信息（点个star，拜托啦~🙏）
 - 采用Apache2.0开源协议，免费商用无需授权，请保留作者、Copyright信息（点个star，拜托啦~🙏）
