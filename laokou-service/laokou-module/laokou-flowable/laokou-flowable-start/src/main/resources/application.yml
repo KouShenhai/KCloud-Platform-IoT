@@ -30,6 +30,7 @@ server:
   http2:
     enabled: @SSL-ENABLED@
   forward-headers-strategy: framework
+  shutdown: graceful
 #spring
 spring:
   application:

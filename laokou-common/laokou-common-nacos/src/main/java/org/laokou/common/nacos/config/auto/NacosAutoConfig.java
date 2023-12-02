@@ -18,6 +18,7 @@
 package org.laokou.common.nacos.config.auto;
 
 import com.alibaba.nacos.client.naming.remote.NamingClientProxy;
+import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.nacos.proxy.ProtocolProxy;
 import org.laokou.common.nacos.proxy.ProtocolProxyDelegate;
@@ -48,6 +49,14 @@ public class NacosAutoConfig {
 	public void environmentChangeEventListener() {
 		// 请查看 ConfigDataContextRefresher
 		log.info("配置文件更新通知");
+	}
+
+	@PreDestroy
+	public void close() {
+		// 服务下线
+		log.info("服务下线成功");
+
+		log.info("关闭服务执行完毕");
 	}
 
 }

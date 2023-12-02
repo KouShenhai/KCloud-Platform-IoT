@@ -31,6 +31,7 @@ server:
   http2:
     enabled: @SSL-ENABLED@
   forward-headers-strategy: framework
+  shutdown: graceful
 # spring
 spring:
   default-config:
@@ -71,6 +72,7 @@ spring:
             - /v1/logouts
             - /v1/tenants/option-list
             - /v1/tenants/id
+            - /graceful-shutdown
   cloud:
     # sentinel
     sentinel:
