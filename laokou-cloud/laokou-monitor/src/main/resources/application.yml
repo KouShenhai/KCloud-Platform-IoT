@@ -30,7 +30,7 @@ server:
     key-store-password: laokou
   http2:
     enabled: @SSL-ENABLED@
-
+  shutdown: graceful
 # spring
 spring:
   application:

@@ -1,5 +1,6 @@
 server:
   port: 10005
+  shutdown: graceful
 
 spring:
   application:
