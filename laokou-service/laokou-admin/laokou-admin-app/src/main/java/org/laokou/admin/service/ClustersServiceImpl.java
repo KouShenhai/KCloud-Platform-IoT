@@ -14,42 +14,18 @@
  * limitations under the License.
  *
  */
+package org.laokou.admin.service;
 
-package org.laokou.common.nacos.holder;
-
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicLong;
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.api.ClustersServiceI;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-public class ShutdownHolder {
+@Service
+@RequiredArgsConstructor
+public class ClustersServiceImpl implements ClustersServiceI {
 
-	/**
-	 * 请求计数器
-	 */
-	private static final AtomicLong REQUEST_COUNTER = new AtomicLong(0);
-
-	private static final AtomicBoolean BAFFLE = new AtomicBoolean(false);
-
-	public static void add() {
-		REQUEST_COUNTER.incrementAndGet();
-	}
-
-	public static void sub() {
-		REQUEST_COUNTER.decrementAndGet();
-	}
-
-	public static boolean open() {
-		return BAFFLE.compareAndSet(false, true);
-	}
-
-	public static boolean status() {
-		return BAFFLE.get();
-	}
-
-	public static long get() {
-		return REQUEST_COUNTER.get();
-	}
 
 }

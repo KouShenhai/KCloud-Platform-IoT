@@ -18,7 +18,7 @@ package org.laokou.auth;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
-import org.laokou.common.nacos.shutdown.ShutdownFilter;
+import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
