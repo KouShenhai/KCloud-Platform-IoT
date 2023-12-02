@@ -44,7 +44,7 @@ import static org.laokou.common.i18n.common.Constant.IP;
 @EnableEncryptableProperties
 @EnableDiscoveryClient
 @EnableAsync
-@ServletComponentScan(basePackageClasses = {ShutdownFilter.class})
+@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 public class AuthApp {
 
 	@SneakyThrows

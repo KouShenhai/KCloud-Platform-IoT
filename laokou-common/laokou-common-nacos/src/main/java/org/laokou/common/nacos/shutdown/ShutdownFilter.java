@@ -35,37 +35,37 @@ import java.util.concurrent.TimeUnit;
 @WebFilter(filterName = "shutdownFilter", urlPatterns = "/graceful-shutdown")
 public class ShutdownFilter implements Filter {
 
-    private static final ScheduledExecutorService NEWED_SCHEDULED_THREAD_POOL = Executors.newScheduledThreadPool(1);
+	private static final ScheduledExecutorService NEWED_SCHEDULED_THREAD_POOL = Executors.newScheduledThreadPool(1);
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        log.info("加载优雅停机过滤器");
-        Filter.super.init(filterConfig);
-    }
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+		log.info("加载优雅停机过滤器");
+		Filter.super.init(filterConfig);
+	}
 
-    @Override
-    @SneakyThrows
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
-        // 注册关闭钩子函数
-        log.info("已注册钩子函数，请关闭进程");
-        // 打开挡板（直接响应前端 -> 服务正在维护）
-        ShutdownHolder.open();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            int second = 120 * 1000;
-            long start = IdGenerator.SystemClock.now();
-            NEWED_SCHEDULED_THREAD_POOL.scheduleWithFixedDelay(() -> {
-                long end = IdGenerator.SystemClock.now();
-                if (end - start >= second || ShutdownHolder.get() == 0) {
-                    NEWED_SCHEDULED_THREAD_POOL.shutdown();
-                }
-            }, 0, 1, TimeUnit.SECONDS);
-        }));
-    }
+	@Override
+	@SneakyThrows
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
+		// 注册关闭钩子函数
+		log.info("已注册钩子函数，请关闭进程");
+		// 打开挡板（直接响应前端 -> 服务正在维护）
+		ShutdownHolder.open();
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			int second = 120 * 1000;
+			long start = IdGenerator.SystemClock.now();
+			NEWED_SCHEDULED_THREAD_POOL.scheduleWithFixedDelay(() -> {
+				long end = IdGenerator.SystemClock.now();
+				if (end - start >= second || ShutdownHolder.get() == 0) {
+					NEWED_SCHEDULED_THREAD_POOL.shutdown();
+				}
+			}, 0, 1, TimeUnit.SECONDS);
+		}));
+	}
 
-    @Override
-    public void destroy() {
-        log.info("优雅停机执行完毕");
-        Filter.super.destroy();
-    }
+	@Override
+	public void destroy() {
+		log.info("优雅停机执行完毕");
+		Filter.super.destroy();
+	}
 
 }
