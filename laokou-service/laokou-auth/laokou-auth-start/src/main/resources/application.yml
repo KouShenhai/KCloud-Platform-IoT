@@ -31,6 +31,7 @@ server:
   http2:
     enabled: @SSL-ENABLED@
   forward-headers-strategy: framework
+  shutdown: graceful
 # spring
 spring:
   application:
@@ -110,6 +111,7 @@ spring:
           - /swagger-ui/**
           - /actuator/**
           - /error
+          - /graceful-shutdown
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

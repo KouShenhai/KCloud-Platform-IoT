@@ -58,7 +58,7 @@ public class OperateLogAspect {
 
 	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new NamedThreadLocal<>("耗时");
 
-	@Before(value = "@annotation(org.laokou.admin.domain.annotation.OperateLog)")
+	@Before("@annotation(org.laokou.admin.domain.annotation.OperateLog)")
 	public void doBefore() {
 		TASK_TIME_LOCAL.set(IdGenerator.SystemClock.now());
 	}

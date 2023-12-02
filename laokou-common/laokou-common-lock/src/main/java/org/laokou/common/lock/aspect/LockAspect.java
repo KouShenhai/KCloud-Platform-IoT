@@ -50,7 +50,7 @@ public class LockAspect {
 
 	private final RedisUtil redisUtil;
 
-	@Around(value = "@annotation(org.laokou.common.lock.annotation.Lock4j)")
+	@Around("@annotation(org.laokou.common.lock.annotation.Lock4j)")
 	public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
 		// 获取注解
 		Signature signature = joinPoint.getSignature();

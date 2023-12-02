@@ -18,12 +18,14 @@ package org.laokou.auth;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
+import org.laokou.common.nacos.shutdown.ShutdownFilter;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerJwtAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,6 +44,7 @@ import static org.laokou.common.i18n.common.Constant.IP;
 @EnableEncryptableProperties
 @EnableDiscoveryClient
 @EnableAsync
+@ServletComponentScan(basePackageClasses = {ShutdownFilter.class})
 public class AuthApp {
 
 	@SneakyThrows
