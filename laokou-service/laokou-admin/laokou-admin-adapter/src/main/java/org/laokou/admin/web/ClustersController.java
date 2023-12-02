@@ -39,22 +39,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("v1/clusters")
 public class ClustersController {
 
-    private final ClustersServiceI clustersServiceI;
+	private final ClustersServiceI clustersServiceI;
 
-    @TraceLog
-    @PostMapping("list")
-    @Operation(summary = "集群管理", description = "查询节点列表")
-    @PreAuthorize("hasAuthority('clusters:list')")
-    public Result<Datas<String>> list() {
-        return null;
-    }
+	@TraceLog
+	@PostMapping("list")
+	@Operation(summary = "集群管理", description = "查询节点列表")
+	@PreAuthorize("hasAuthority('clusters:list')")
+	public Result<Datas<String>> list() {
+		return null;
+	}
 
-    @TraceLog
-    @PostMapping("{serviceId}/instance-list")
-    @Operation(summary = "集群管理", description = "查询节点列表")
-    @PreAuthorize("hasAuthority('clusters:instance-list')")
-    public Result<Datas<String>> instanceList(@PathVariable("serviceId") String serviceId) {
-        return null;
-    }
+	@TraceLog
+	@PostMapping("{serviceId}/instance-list")
+	@Operation(summary = "集群管理", description = "查询节点列表")
+	@PreAuthorize("hasAuthority('clusters:instance-list')")
+	public Result<Datas<String>> instanceList(@PathVariable("serviceId") String serviceId) {
+		return null;
+	}
 
 }
