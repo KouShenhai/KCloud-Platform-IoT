@@ -19,11 +19,14 @@ package org.laokou.common.nacos.config.auto;
 
 import com.alibaba.nacos.client.naming.remote.NamingClientProxy;
 import jakarta.annotation.PreDestroy;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.nacos.proxy.ProtocolProxy;
 import org.laokou.common.nacos.proxy.ProtocolProxyDelegate;
+import org.laokou.common.nacos.utils.ServiceUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
@@ -33,7 +36,12 @@ import org.springframework.context.event.EventListener;
  */
 @AutoConfiguration
 @Slf4j
+@RequiredArgsConstructor
 public class NacosAutoConfig {
+
+	private final ServiceUtil serviceUtil;
+
+	private final Registration registration;
 
 	/**
 	 * {@link NamingClientProxy}
@@ -54,8 +62,9 @@ public class NacosAutoConfig {
 	@PreDestroy
 	public void close() {
 		// 服务下线
-		log.info("服务下线成功");
-
+		log.info("开始执行服务下线");
+		serviceUtil.deregisterInstance(registration.getServiceId(), registration.getHost(), registration.getPort());
+		log.info("服务下线执行成功");
 		log.info("关闭服务执行完毕");
 	}
 

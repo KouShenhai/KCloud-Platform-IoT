@@ -38,37 +38,43 @@ import static org.laokou.common.i18n.common.StatusCode.SERVICE_UNAVAILABLE;
 @Slf4j
 public class RequestAspect {
 
-    @Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")
-    public void postMapping() {}
+	@Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")
+	public void postMapping() {
+	}
 
-    @Pointcut("@annotation(org.springframework.web.bind.annotation.GetMapping)")
-    public void getMapping() {}
+	@Pointcut("@annotation(org.springframework.web.bind.annotation.GetMapping)")
+	public void getMapping() {
+	}
 
-    @Pointcut("@annotation(org.springframework.web.bind.annotation.PutMapping)")
-    public void putMapping() {}
+	@Pointcut("@annotation(org.springframework.web.bind.annotation.PutMapping)")
+	public void putMapping() {
+	}
 
-    @Pointcut("@annotation(org.springframework.web.bind.annotation.DeleteMapping)")
-    public void deleteMapping() {}
+	@Pointcut("@annotation(org.springframework.web.bind.annotation.DeleteMapping)")
+	public void deleteMapping() {
+	}
 
-    @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
-    public void requestMapping() {}
+	@Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
+	public void requestMapping() {
+	}
 
-    @Before("postMapping() || getMapping() || putMapping() || deleteMapping() || requestMapping()")
-    public void doBefore() {
-        if (ShutdownHolder.status()) {
-            throw new SystemException(SERVICE_UNAVAILABLE);
-        }
-        ShutdownHolder.add();
-    }
+	@Before("postMapping() || getMapping() || putMapping() || deleteMapping() || requestMapping()")
+	public void doBefore() {
+		if (ShutdownHolder.status()) {
+			throw new SystemException(SERVICE_UNAVAILABLE);
+		}
+		ShutdownHolder.add();
+	}
 
-    @SneakyThrows
-    @Around("postMapping() || getMapping() || putMapping() || deleteMapping() || requestMapping()")
-    public Object doAround(ProceedingJoinPoint joinPoint) {
-        try {
-            return joinPoint.proceed();
-        } finally {
-            ShutdownHolder.sub();
-        }
-    }
+	@SneakyThrows
+	@Around("postMapping() || getMapping() || putMapping() || deleteMapping() || requestMapping()")
+	public Object doAround(ProceedingJoinPoint joinPoint) {
+		try {
+			return joinPoint.proceed();
+		}
+		finally {
+			ShutdownHolder.sub();
+		}
+	}
 
 }

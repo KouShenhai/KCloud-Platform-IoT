@@ -25,30 +25,31 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ShutdownHolder {
 
-    /**
-     * 请求计数器
-     */
-    private static final AtomicLong REQUEST_COUNTER = new AtomicLong(0);
-    private static final AtomicBoolean BAFFLE = new AtomicBoolean(false);
+	/**
+	 * 请求计数器
+	 */
+	private static final AtomicLong REQUEST_COUNTER = new AtomicLong(0);
 
-    public static void add() {
-        REQUEST_COUNTER.incrementAndGet();
-    }
+	private static final AtomicBoolean BAFFLE = new AtomicBoolean(false);
 
-    public static void sub() {
-        REQUEST_COUNTER.decrementAndGet();
-    }
+	public static void add() {
+		REQUEST_COUNTER.incrementAndGet();
+	}
 
-    public static void open() {
-        BAFFLE.compareAndSet(false, true);
-    }
+	public static void sub() {
+		REQUEST_COUNTER.decrementAndGet();
+	}
 
-    public static boolean status() {
-        return BAFFLE.get();
-    }
+	public static boolean open() {
+		return BAFFLE.compareAndSet(false, true);
+	}
 
-    public static long get() {
-        return REQUEST_COUNTER.get();
-    }
+	public static boolean status() {
+		return BAFFLE.get();
+	}
+
+	public static long get() {
+		return REQUEST_COUNTER.get();
+	}
 
 }
