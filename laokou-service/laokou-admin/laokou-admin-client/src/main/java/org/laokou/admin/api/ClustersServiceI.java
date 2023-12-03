@@ -16,11 +16,16 @@
  */
 package org.laokou.admin.api;
 
+import org.laokou.admin.dto.cluster.ClusterListQry;
+import org.laokou.admin.dto.cluster.clientobject.ClusterServiceCO;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
+
 /**
  * @author laokou
  */
 public interface ClustersServiceI {
 
-	// Datas<>
+    Result<Datas<ClusterServiceCO>> list(ClusterListQry qry);
 
 }

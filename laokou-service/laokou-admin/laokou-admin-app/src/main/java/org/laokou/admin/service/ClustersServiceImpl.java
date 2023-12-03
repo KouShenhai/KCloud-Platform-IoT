@@ -18,6 +18,11 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.ClustersServiceI;
+import org.laokou.admin.command.cluster.query.ClusterListQryExe;
+import org.laokou.admin.dto.cluster.ClusterListQry;
+import org.laokou.admin.dto.cluster.clientobject.ClusterServiceCO;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,4 +32,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ClustersServiceImpl implements ClustersServiceI {
 
+    private final ClusterListQryExe clusterListQryExe;
+
+    @Override
+    public Result<Datas<ClusterServiceCO>> list(ClusterListQry qry) {
+        return clusterListQryExe.execute(qry);
+    }
 }
