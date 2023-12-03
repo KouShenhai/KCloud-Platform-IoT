@@ -21,14 +21,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.ClustersServiceI;
+import org.laokou.admin.dto.cluster.ClusterListQry;
+import org.laokou.admin.dto.cluster.clientobject.ClusterServiceCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author laokou
@@ -43,15 +42,15 @@ public class ClustersController {
 
 	@TraceLog
 	@PostMapping("list")
-	@Operation(summary = "集群管理", description = "查询节点列表")
+	@Operation(summary = "集群管理", description = "查询服务列表")
 	@PreAuthorize("hasAuthority('clusters:list')")
-	public Result<Datas<String>> list() {
-		return null;
+	public Result<Datas<ClusterServiceCO>> list(@RequestBody ClusterListQry qry) {
+		return clustersServiceI.list(qry);
 	}
 
 	@TraceLog
 	@PostMapping("{serviceId}/instance-list")
-	@Operation(summary = "集群管理", description = "查询节点列表")
+	@Operation(summary = "集群管理", description = "查询实例列表")
 	@PreAuthorize("hasAuthority('clusters:instance-list')")
 	public Result<Datas<String>> instanceList(@PathVariable("serviceId") String serviceId) {
 		return null;
