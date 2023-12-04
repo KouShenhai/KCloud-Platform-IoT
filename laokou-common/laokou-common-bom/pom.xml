@@ -109,7 +109,7 @@
         <!--mqttv5-client版本-->
         <mqttv5-client.version>1.2.5</mqttv5-client.version>
         <!--mockito版本-->
-        <mockito.version>5.7.0</mockito.version>
+        <mockito.version>5.8.0</mockito.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
