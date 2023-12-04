@@ -105,7 +105,7 @@
         <!--log4j2-ttl-thread-context-map版本-->
         <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
         <!--transmittable-thread-local版本-->
-        <transmittable-thread-local.version>2.14.3</transmittable-thread-local.version>
+        <transmittable-thread-local.version>2.14.4</transmittable-thread-local.version>
         <!--mqttv5-client版本-->
         <mqttv5-client.version>1.2.5</mqttv5-client.version>
         <!--mockito版本-->
