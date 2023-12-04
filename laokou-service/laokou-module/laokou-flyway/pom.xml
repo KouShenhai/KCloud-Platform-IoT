@@ -14,7 +14,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
-            <version>9.20.0</version>
+            <version>10.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>

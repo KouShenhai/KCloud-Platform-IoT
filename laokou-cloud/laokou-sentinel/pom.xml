@@ -31,7 +31,7 @@
         <!--apollo-openapi版本-->
         <apollo-openapi.version>2.1.0</apollo-openapi.version>
         <!--httpcore-nio版本-->
-        <httpcore-nio.version>4.4.15</httpcore-nio.version>
+        <httpcore-nio.version>4.4.16</httpcore-nio.version>
         <!--fastjson版本-->
         <fastjson.version>2.0.32</fastjson.version>
     </properties>
