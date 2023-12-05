@@ -252,6 +252,26 @@ public interface Constant {
 	String TENANT_ID = "tenant-id";
 
 	/**
+	 * 服务ID
+	 */
+	String SERVICE_ID = "service-id";
+
+	/**
+	 * 服务IP
+	 */
+	String SERVICE_HOST = "service-host";
+
+	/**
+	 * 服务端口
+	 */
+	String SERVICE_PORT = "service-port";
+
+	/**
+	 * 优雅停机
+	 */
+	String GRACEFUL_SHUTDOWN_URL = "/graceful-shutdown";
+
+	/**
 	 * 域名
 	 */
 	String DOMAIN_NAME = "domain-name";

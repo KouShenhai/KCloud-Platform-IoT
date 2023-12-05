@@ -28,7 +28,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LocaleUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.gateway.utils.RequestUtil;
-import org.laokou.gateway.utils.ResponseUtil;
+import org.laokou.common.nacos.utils.ResponseUtil;
 import org.laokou.gateway.utils.RuleUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;

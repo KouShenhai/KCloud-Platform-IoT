@@ -30,6 +30,6 @@ import org.laokou.common.i18n.dto.ClientObject;
 @NoArgsConstructor
 public class ClusterServiceCO extends ClientObject {
 
-    private String name;
+	private String id;
 
 }

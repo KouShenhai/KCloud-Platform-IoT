@@ -30,6 +30,7 @@ import java.util.Locale;
 
 /**
  * @author livk
+ * @see org.laokou.common.core.i18n.I18nRequestContextFilter
  */
 @Deprecated
 @NonNullApi

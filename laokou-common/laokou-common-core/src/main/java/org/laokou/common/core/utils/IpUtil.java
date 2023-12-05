@@ -57,6 +57,9 @@ public class IpUtil {
 	}
 
 	public static boolean internalIp(String ip) {
+		if (LOCAL_NETWORK_SEGMENT.equals(ip)) {
+			return true;
+		}
 		byte[] bytes = textToNumericFormatV4(ip);
 		return Objects.nonNull(bytes) && (internalIp(bytes) || LOCAL_IP.equals(ip));
 	}

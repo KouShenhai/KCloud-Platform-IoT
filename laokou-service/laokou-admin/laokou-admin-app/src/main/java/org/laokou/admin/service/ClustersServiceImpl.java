@@ -18,8 +18,11 @@ package org.laokou.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.ClustersServiceI;
-import org.laokou.admin.command.cluster.query.ClusterListQryExe;
-import org.laokou.admin.dto.cluster.ClusterListQry;
+import org.laokou.admin.command.cluster.query.ClusterInstanceListQryExe;
+import org.laokou.admin.command.cluster.query.ClusterServiceListQryExe;
+import org.laokou.admin.dto.cluster.ClusterInstanceListQry;
+import org.laokou.admin.dto.cluster.ClusterServiceListQry;
+import org.laokou.admin.dto.cluster.clientobject.ClusterInstanceCO;
 import org.laokou.admin.dto.cluster.clientobject.ClusterServiceCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -32,10 +35,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ClustersServiceImpl implements ClustersServiceI {
 
-    private final ClusterListQryExe clusterListQryExe;
+	private final ClusterServiceListQryExe clusterServiceListQryExe;
 
-    @Override
-    public Result<Datas<ClusterServiceCO>> list(ClusterListQry qry) {
-        return clusterListQryExe.execute(qry);
-    }
+	private final ClusterInstanceListQryExe clusterInstanceListQryExe;
+
+	@Override
+	public Result<Datas<ClusterServiceCO>> serviceList(ClusterServiceListQry qry) {
+		return clusterServiceListQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<Datas<ClusterInstanceCO>> instanceList(ClusterInstanceListQry qry) {
+		return clusterInstanceListQryExe.execute(qry);
+	}
+
 }

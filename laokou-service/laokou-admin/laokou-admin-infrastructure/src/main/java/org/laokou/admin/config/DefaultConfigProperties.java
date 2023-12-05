@@ -40,6 +40,10 @@ public class DefaultConfigProperties {
 
 	private Set<String> tenantTables = new HashSet<>();
 
+	private Set<String> removeParams = new HashSet<>();
+
+	private Set<String> gracefulShutdownServices = new HashSet<>();
+
 	private String tenantPrefix;
 
 	private Set<String> domainNames;

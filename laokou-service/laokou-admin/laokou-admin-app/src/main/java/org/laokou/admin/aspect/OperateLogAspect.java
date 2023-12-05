@@ -28,6 +28,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.admin.common.event.DomainEventPublisher;
+import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
 import org.laokou.common.core.utils.*;
@@ -52,9 +53,9 @@ import static org.laokou.common.i18n.common.Constant.*;
 @RequiredArgsConstructor
 public class OperateLogAspect {
 
-	private final DomainEventPublisher domainEventPublisher;
+	private final DefaultConfigProperties defaultConfigProperties;
 
-	private static final String[] REMOVE_PARAMS = { "username", "password", "mobile", "mail" };
+	private final DomainEventPublisher domainEventPublisher;
 
 	private static final ThreadLocal<Long> TASK_TIME_LOCAL = new NamedThreadLocal<>("耗时");
 
@@ -128,7 +129,7 @@ public class OperateLogAspect {
 				String str = JacksonUtil.toJsonStr(obj);
 				if (RISK.contains(str)) {
 					Map<String, String> map = removeAny(JacksonUtil.toMap(str, String.class, String.class),
-							REMOVE_PARAMS);
+							defaultConfigProperties.getRemoveParams().toArray(new String[0]));
 					event.setRequestParams(JacksonUtil.toJsonStr(map, true));
 				}
 				else {

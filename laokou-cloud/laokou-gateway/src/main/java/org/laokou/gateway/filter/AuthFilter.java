@@ -19,8 +19,10 @@ package org.laokou.gateway.filter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
+import org.laokou.common.nacos.utils.ResponseUtil;
 import org.laokou.gateway.utils.RequestUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -38,7 +40,6 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequestDecorator;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.HandlerStrategies;
@@ -52,8 +53,10 @@ import java.util.Set;
 import java.util.function.Function;
 
 import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
 import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
 import static org.laokou.gateway.filter.AuthFilter.PREFIX;
+import static org.laokou.gateway.utils.RequestUtil.pathMatcher;
 
 /**
  * 认证Filter
@@ -71,8 +74,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
 	public static final String PREFIX = "spring.cloud.gateway.ignore";
 
-	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
-
+	// @formatter:off
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		// 获取request对象
@@ -82,20 +84,28 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		// 请求放行，无需验证权限
 		if (pathMatcher(requestUri, uris)) {
 			// 无需验证权限的URL，需要将令牌置空
-			return chain
-				.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
+			return chain.filter(exchange.mutate()
+					.request(request.mutate().header(AUTHORIZATION, EMPTY).build())
+					.build());
 		}
 		// 表单提交
 		MediaType mediaType = request.getHeaders().getContentType();
-		if (OAUTH2_URI.contains(requestUri) && HttpMethod.POST.matches(request.getMethod().name())
+		if (OAUTH2_URI.contains(requestUri)
+				&& HttpMethod.POST.matches(request.getMethod().name())
 				&& MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
 			return decode(exchange, chain);
 		}
 		// 获取token
 		String token = RequestUtil.getParamValue(request, AUTHORIZATION);
+		if (StringUtil.isEmpty(token)) {
+			return ResponseUtil.response(exchange, Result.fail(UNAUTHORIZED));
+		}
 		// 增加令牌
-		return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());
+		return chain.filter(exchange.mutate()
+				.request(request.mutate().header(AUTHORIZATION, token).build())
+				.build());
 	}
+	// @formatter:on
 
 	@Override
 	public int getOrder() {
@@ -174,15 +184,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
 				return outputMessage.getBody();
 			}
 		};
-	}
-
-	private static boolean pathMatcher(String requestUri, Set<String> uris) {
-		for (String url : uris) {
-			if (ANT_PATH_MATCHER.match(url, requestUri)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 }

@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LocaleUtil;
 import org.laokou.gateway.utils.RequestUtil;
-import org.laokou.gateway.utils.ResponseUtil;
+import org.laokou.common.nacos.utils.ResponseUtil;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.context.i18n.LocaleContextHolder;

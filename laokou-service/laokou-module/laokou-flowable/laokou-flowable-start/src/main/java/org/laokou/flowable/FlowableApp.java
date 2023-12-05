@@ -17,9 +17,11 @@
 package org.laokou.flowable;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -34,6 +36,7 @@ import static org.laokou.common.i18n.common.Constant.IP;
 @SpringBootApplication(scanBasePackages = "org.laokou")
 @EnableDiscoveryClient
 @EnableEncryptableProperties
+@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 public class FlowableApp {
 
 	public static void main(String[] args) throws UnknownHostException {

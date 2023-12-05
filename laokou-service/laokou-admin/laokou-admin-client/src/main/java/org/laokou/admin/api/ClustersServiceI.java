@@ -16,7 +16,9 @@
  */
 package org.laokou.admin.api;
 
-import org.laokou.admin.dto.cluster.ClusterListQry;
+import org.laokou.admin.dto.cluster.ClusterInstanceListQry;
+import org.laokou.admin.dto.cluster.ClusterServiceListQry;
+import org.laokou.admin.dto.cluster.clientobject.ClusterInstanceCO;
 import org.laokou.admin.dto.cluster.clientobject.ClusterServiceCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -26,6 +28,8 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface ClustersServiceI {
 
-    Result<Datas<ClusterServiceCO>> list(ClusterListQry qry);
+	Result<Datas<ClusterServiceCO>> serviceList(ClusterServiceListQry qry);
+
+	Result<Datas<ClusterInstanceCO>> instanceList(ClusterInstanceListQry qry);
 
 }

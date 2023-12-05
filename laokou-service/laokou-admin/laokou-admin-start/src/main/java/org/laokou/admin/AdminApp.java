@@ -21,11 +21,13 @@ package org.laokou.admin;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -47,6 +49,7 @@ import static org.laokou.common.i18n.common.Constant.IP;
 @EnableFeignClients
 @EnableDubbo
 @EnableAsync
+@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 public class AdminApp {
 
 	@SneakyThrows
