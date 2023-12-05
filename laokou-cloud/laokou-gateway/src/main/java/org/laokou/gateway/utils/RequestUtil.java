@@ -18,6 +18,9 @@ package org.laokou.gateway.utils;
 
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.util.AntPathMatcher;
+
+import java.util.Set;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY;
 
@@ -25,6 +28,8 @@ import static org.laokou.common.i18n.common.Constant.EMPTY;
  * @author laokou
  */
 public class RequestUtil {
+
+	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
 	public static String getParamValue(ServerHttpRequest request, String paramName) {
 		// 从header中获取
@@ -34,6 +39,15 @@ public class RequestUtil {
 			paramValue = request.getQueryParams().getFirst(paramName);
 		}
 		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
+	}
+
+	public static boolean pathMatcher(String requestUri, Set<String> uris) {
+		for (String url : uris) {
+			if (ANT_PATH_MATCHER.match(url, requestUri)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

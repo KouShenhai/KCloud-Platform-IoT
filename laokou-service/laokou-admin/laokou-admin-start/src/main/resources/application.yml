@@ -48,6 +48,15 @@ spring:
       - laokou.org
       - laokouyun.org
     tenant-prefix: "tenant"
+    remove-params:
+      - "username"
+      - "password"
+      - "mobile"
+      - "mail"
+    graceful-shutdown-services:
+      - "laokou-flowable"
+      - "laokou-admin"
+      - "laokou-auth"
   application:
     name: @pom.parent.artifactId@
   profiles:
@@ -72,7 +81,6 @@ spring:
             - /v1/logouts
             - /v1/tenants/option-list
             - /v1/tenants/id
-            - /graceful-shutdown
   cloud:
     # sentinel
     sentinel:

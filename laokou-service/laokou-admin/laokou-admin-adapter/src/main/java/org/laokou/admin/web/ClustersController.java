@@ -21,7 +21,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.ClustersServiceI;
-import org.laokou.admin.dto.cluster.ClusterListQry;
+import org.laokou.admin.dto.cluster.ClusterInstanceListQry;
+import org.laokou.admin.dto.cluster.ClusterServiceListQry;
+import org.laokou.admin.dto.cluster.clientobject.ClusterInstanceCO;
 import org.laokou.admin.dto.cluster.clientobject.ClusterServiceCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -41,19 +43,19 @@ public class ClustersController {
 	private final ClustersServiceI clustersServiceI;
 
 	@TraceLog
-	@PostMapping("list")
+	@PostMapping("service-list")
 	@Operation(summary = "集群管理", description = "查询服务列表")
-	@PreAuthorize("hasAuthority('clusters:list')")
-	public Result<Datas<ClusterServiceCO>> list(@RequestBody ClusterListQry qry) {
-		return clustersServiceI.list(qry);
+	@PreAuthorize("hasAuthority('clusters:service-list')")
+	public Result<Datas<ClusterServiceCO>> serviceList(@RequestBody ClusterServiceListQry qry) {
+		return clustersServiceI.serviceList(qry);
 	}
 
 	@TraceLog
-	@PostMapping("{serviceId}/instance-list")
+	@PostMapping("instance-list")
 	@Operation(summary = "集群管理", description = "查询实例列表")
 	@PreAuthorize("hasAuthority('clusters:instance-list')")
-	public Result<Datas<String>> instanceList(@PathVariable("serviceId") String serviceId) {
-		return null;
+	public Result<Datas<ClusterInstanceCO>> instanceList(@RequestBody ClusterInstanceListQry qry) {
+		return clustersServiceI.instanceList(qry);
 	}
 
 }

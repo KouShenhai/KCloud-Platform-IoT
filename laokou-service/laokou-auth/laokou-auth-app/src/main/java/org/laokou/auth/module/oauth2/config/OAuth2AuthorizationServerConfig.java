@@ -21,6 +21,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.laokou.auth.module.oauth2.authentication.*;
+import org.laokou.auth.module.oauth2.filter.OAuth2AuthorizationFilter;
 import org.laokou.auth.service.UsersServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -56,6 +57,7 @@ import org.springframework.security.oauth2.server.authorization.token.*;
 import org.springframework.security.oauth2.server.authorization.web.authentication.*;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -78,6 +80,7 @@ import static org.laokou.common.i18n.common.Constant.*;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2AuthorizationServerConfig {
 
+	// @formatter:off
 	/**
 	 * OAuth2AuthorizationServer核心配置
 	 * @param http http
@@ -91,7 +94,6 @@ class OAuth2AuthorizationServerConfig {
 	 */
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
-	// @formatter:off
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
 			OAuth2PasswordAuthenticationProvider passwordAuthenticationProvider,
 			OAuth2MailAuthenticationProvider mailAuthenticationProvider,
@@ -129,7 +131,8 @@ class OAuth2AuthorizationServerConfig {
 			.oidc(Customizer.withDefaults())
 			.authorizationService(authorizationService)
 			.authorizationServerSettings(authorizationServerSettings);
-		http.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_PATTERN)));
+		http.addFilterBefore(new OAuth2AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+				.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LOGIN_PATTERN)));
 		return http.build();
 	}
 	// @formatter:on

@@ -42,7 +42,7 @@
         <!--spring-boot版本-->
         <spring-boot.version>3.2.0</spring-boot.version>
         <!--spring-cloud版本-->
-        <spring-cloud.version>2023.0.0-RC1</spring-cloud.version>
+        <spring-cloud.version>2023.0.0-SNAPSHOT</spring-cloud.version>
         <!--spring-framework版本-->
         <spring-framework.version>6.1.1</spring-framework.version>
         <!--cloud-alibaba版本-->
@@ -131,11 +131,34 @@
             <id>spring-release</id>
             <name>Spring Release</name>
             <url>https://repo.spring.io/release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
         <repository>
             <id>spring-milestone</id>
             <name>Spring Milestone</name>
             <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
         </repository>
     </repositories>
 

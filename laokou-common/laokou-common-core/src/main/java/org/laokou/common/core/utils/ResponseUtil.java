@@ -32,11 +32,15 @@ import java.nio.charset.StandardCharsets;
 public class ResponseUtil {
 
 	public static void response(HttpServletResponse response, int code, String message) throws IOException {
+		response(response, JacksonUtil.toJsonStr(Result.fail(code, message)));
+	}
+
+	public static void response(HttpServletResponse response, String json) throws IOException {
 		response.setStatus(HttpStatus.OK.value());
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType(MimeTypeUtils.APPLICATION_JSON_VALUE);
 		try (PrintWriter writer = response.getWriter()) {
-			writer.write(JacksonUtil.toJsonStr(Result.fail(code, message)));
+			writer.write(json);
 			writer.flush();
 		}
 	}
