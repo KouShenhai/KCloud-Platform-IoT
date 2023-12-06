@@ -52,6 +52,7 @@ public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
 	public Object beforeBodyWrite(@Nullable Object body, MethodParameter returnType, MediaType selectedContentType,
 			Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request,
 			ServerHttpResponse response) {
+		// log.info("拦截响应信息：{}", JacksonUtil.toJsonStr(body));
 		if (body instanceof Result<?> result) {
 			return result;
 		}

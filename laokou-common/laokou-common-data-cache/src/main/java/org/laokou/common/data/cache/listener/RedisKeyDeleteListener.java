@@ -19,7 +19,6 @@ package org.laokou.common.data.cache.listener;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
@@ -46,10 +45,8 @@ public class RedisKeyDeleteListener extends KeyDeleteEventMessageListener {
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
 		String key = new String(message.getBody(), StandardCharsets.UTF_8);
-		if (key.matches(RedisKeyUtil.getUserInfoKey(ANY_MATCH_VALUE))) {
-			log.info("监听key为{}的删除事件", key);
-			caffeineCache.invalidate(key);
-		}
+		// log.info("监听key为{}的删除事件", key);
+		caffeineCache.invalidate(key);
 	}
 
 }

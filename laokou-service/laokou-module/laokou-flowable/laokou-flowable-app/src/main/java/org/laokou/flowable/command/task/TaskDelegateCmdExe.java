@@ -71,7 +71,7 @@ public class TaskDelegateCmdExe {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
 				taskService.setOwner(taskId, owner);
-				taskService.deleteTask(taskId, deleteReason);
+				taskService.delegateTask(taskId, deleteReason);
 				return true;
 			}
 			catch (Exception e) {

@@ -43,7 +43,7 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
 		String key = new String(message.getBody(), StandardCharsets.UTF_8);
-		log.info("监听key为{}的过期事件", key);
+		// log.info("监听key为{}的过期事件", key);
 		caffeineCache.invalidate(key);
 	}
 

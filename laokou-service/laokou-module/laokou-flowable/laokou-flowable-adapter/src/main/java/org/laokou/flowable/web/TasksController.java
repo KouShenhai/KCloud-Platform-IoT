@@ -55,12 +55,14 @@ public class TasksController {
 		return tasksServiceI.audit(cmd);
 	}
 
+	@Idempotent
 	@PostMapping(value = "resolve")
 	@Operation(summary = "流程任务", description = "处理任务")
 	public Result<Boolean> resolve(@RequestBody TaskResolveCmd cmd) {
 		return tasksServiceI.resolve(cmd);
 	}
 
+	@Idempotent
 	@PostMapping(value = "start")
 	@Operation(summary = "流程任务", description = "开始任务")
 	public Result<StartCO> start(@RequestBody TaskStartCmd cmd) {
@@ -73,12 +75,14 @@ public class TasksController {
 		return null;
 	}
 
+	@Idempotent
 	@PostMapping("transfer")
 	@Operation(summary = "流程任务", description = "转办任务")
 	public Result<Boolean> transfer(@RequestBody TaskTransferCmd cmd) {
 		return tasksServiceI.transfer(cmd);
 	}
 
+	@Idempotent
 	@PostMapping("delegate")
 	@Operation(summary = "流程任务", description = "委派任务")
 	public Result<Boolean> delegate(@RequestBody TaskDelegateCmd cmd) {
