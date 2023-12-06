@@ -17,14 +17,48 @@
 
 package org.laokou.admin.command.resource;
 
+import io.seata.core.context.RootContext;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.common.event.DomainEventPublisher;
+import org.laokou.admin.common.utils.EventUtil;
+import org.laokou.admin.dto.resource.ResourceResolveTaskCmd;
+import org.laokou.admin.dto.resource.TaskResolveCmd;
+import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ResourceResolveTaskCmdExe {
+
+	private final TasksFeignClient tasksFeignClient;
+
+	private final EventUtil eventUtil;
+
+	private final DomainEventPublisher domainEventPublisher;
+
+	@GlobalTransactional(rollbackFor = Exception.class)
+	public Result<Boolean> execute(ResourceResolveTaskCmd cmd) {
+		log.info("资源处理任务分布式事务 XID：{}", RootContext.getXID());
+		Result<Boolean> result = tasksFeignClient.resolve(new TaskResolveCmd(cmd.getTaskId()));
+		// 发送消息
+		if (result.success()) {
+			publishMessage(cmd);
+		}
+		return result;
+	}
+
+	@Async
+	public void publishMessage(ResourceResolveTaskCmd cmd) {
+		domainEventPublisher.publish(
+				eventUtil.toAuditMessageEvent(null, cmd.getBusinessKey(), cmd.getInstanceName(), cmd.getInstanceId()));
+	}
 
 }

@@ -141,17 +141,17 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	@Override
 	public Result<Boolean> resolveTask(ResourceResolveTaskCmd cmd) {
-		return null;
+		return resourceResolveTaskCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> transferTask(ResourceTransferTaskCmd cmd) {
-		return null;
+		return resourceTransferTaskCmdExe.execute(cmd);
 	}
 
 	@Override
 	public Result<Boolean> delegateTask(ResourceDelegateTaskCmd cmd) {
-		return null;
+		return resourceDelegateTaskCmdExe.execute(cmd);
 	}
 
 	@Override

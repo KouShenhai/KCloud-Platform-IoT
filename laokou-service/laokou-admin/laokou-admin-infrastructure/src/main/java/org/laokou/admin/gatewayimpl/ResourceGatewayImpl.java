@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.event.DomainEventPublisher;
+import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
@@ -81,6 +82,8 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	private final DefaultConfigProperties defaultConfigProperties;
+
+	private final EventUtil eventUtil;
 
 	public static final String RESOURCE_INDEX = "laokou_resource";
 
@@ -139,7 +142,8 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	@Async
 	public void publishMessage(Resource resource, String instanceId) {
-		domainEventPublisher.publish(toMessageEvent(resource, instanceId));
+		domainEventPublisher
+			.publish(eventUtil.toAuditMessageEvent(null, resource.getId(), resource.getTitle(), instanceId));
 	}
 
 	private StartCO startTask(Resource resource) {
@@ -183,7 +187,8 @@ public class ResourceGatewayImpl implements ResourceGateway {
 				elasticsearchTemplate.createIndex(index(ym), RESOURCE_INDEX, ResourceIndex.class);
 			}
 			catch (IOException e) {
-				throw new RuntimeException(e);
+				log.info("错误信息", e);
+				throw new SystemException("索引创建失败");
 			}
 		});
 	}
@@ -194,7 +199,8 @@ public class ResourceGatewayImpl implements ResourceGateway {
 				elasticsearchTemplate.deleteIndex(index(ym));
 			}
 			catch (IOException e) {
-				throw new RuntimeException(e);
+				log.info("错误信息", e);
+				throw new SystemException("索引删除失败");
 			}
 		});
 	}
@@ -221,7 +227,8 @@ public class ResourceGatewayImpl implements ResourceGateway {
 				elasticsearchTemplate.syncBatchIndex(index(k), JacksonUtil.toJsonStr(v));
 			}
 			catch (IOException e) {
-				throw new RuntimeException(e);
+				log.info("错误信息", e);
+				throw new SystemException("索引同步失败");
 			}
 		});
 		// 清除list

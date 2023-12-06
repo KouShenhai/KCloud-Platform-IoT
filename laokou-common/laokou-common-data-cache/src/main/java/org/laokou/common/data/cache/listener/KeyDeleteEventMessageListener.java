@@ -55,7 +55,6 @@ public class KeyDeleteEventMessageListener extends KeyspaceEventMessageListener 
 		if (Objects.nonNull(this.publisher)) {
 			this.publisher.publishEvent(event);
 		}
-
 	}
 
 	public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {

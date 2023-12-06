@@ -111,7 +111,7 @@ public class DataFilterAspect {
 			.append(DOUBLE_QUOT);
 		sqlFilter.append(RIGHT);
 		String sql = sqlFilter.toString();
-		after(sql);
+		// after(sql);
 		return sql;
 	}
 

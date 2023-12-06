@@ -45,8 +45,12 @@ public class Result<T> extends DTO {
 	@Schema(name = "traceId", description = "链路ID")
 	private String traceId;
 
+	public boolean success() {
+		return this.code == StatusCode.OK;
+	}
+
 	public boolean fail() {
-		return this.code != StatusCode.OK;
+		return !success();
 	}
 
 	public static <T> Result<T> fail(int code) {

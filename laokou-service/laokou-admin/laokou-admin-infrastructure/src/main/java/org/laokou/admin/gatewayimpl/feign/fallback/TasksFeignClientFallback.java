@@ -41,17 +41,17 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 
 	@Override
 	public Result<AuditCO> audit(TaskAuditCmd cmd) {
-		throw new FeignException("流程审批失败，请联系管理员");
+		throw new FeignException("流程审批失败");
 	}
 
 	@Override
 	public Result<Boolean> resolve(TaskResolveCmd cmd) {
-		throw new FeignException("流程处理失败，请联系管理员");
+		throw new FeignException("流程处理失败");
 	}
 
 	@Override
 	public Result<StartCO> start(TaskStartCmd cmd) {
-		throw new FeignException("流程启动失败，请联系管理员");
+		throw new FeignException("流程启动失败");
 	}
 
 	@Override
@@ -61,17 +61,17 @@ public class TasksFeignClientFallback implements TasksFeignClient {
 
 	@Override
 	public Result<Boolean> transfer(TaskTransferCmd cmd) {
-		throw new FeignException("流程转办失败，请联系管理员");
+		throw new FeignException("流程转办失败");
 	}
 
 	@Override
 	public Result<Boolean> delegate(TaskDelegateCmd cmd) {
-		throw new FeignException("流程委派失败，请联系管理员");
+		throw new FeignException("流程委派失败");
 	}
 
 	@Override
 	public Result<AssigneeCO> assignee(String instanceId) {
-		throw new FeignException("获取流程人员失败，请联系管理员");
+		throw new FeignException("获取流程人员失败");
 	}
 
 }

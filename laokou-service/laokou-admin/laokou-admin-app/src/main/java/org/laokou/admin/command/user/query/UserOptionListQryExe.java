@@ -60,18 +60,19 @@ public class UserOptionListQryExe {
 			if (CollectionUtil.isEmpty(list)) {
 				return Result.of(new ArrayList<>(0));
 			}
-			List<OptionCO> options = new ArrayList<>(list.size());
-			for (UserDO userDO : list) {
-				OptionCO oc = new OptionCO();
-				oc.setLabel(userDO.getUsername());
-				oc.setValue(userDO.getId().toString());
-				options.add(oc);
-			}
+			List<OptionCO> options = list.stream().map(this::option).toList();
 			return Result.of(options);
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
+	}
+
+	private OptionCO option(UserDO userDO) {
+		OptionCO oc = new OptionCO();
+		oc.setLabel(userDO.getUsername());
+		oc.setValue(userDO.getId().toString());
+		return oc;
 	}
 
 }

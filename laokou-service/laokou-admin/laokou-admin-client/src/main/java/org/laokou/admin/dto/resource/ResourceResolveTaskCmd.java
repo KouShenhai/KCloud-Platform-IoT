@@ -26,4 +26,12 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class ResourceResolveTaskCmd extends CommonCommand {
 
+	private Long businessKey;
+
+	private String instanceName;
+
+	private String taskId;
+
+	private String instanceId;
+
 }

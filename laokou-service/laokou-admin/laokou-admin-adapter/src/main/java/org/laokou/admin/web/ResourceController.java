@@ -111,6 +111,7 @@ public class ResourceController {
 		return resourceServiceI.insert(cmd);
 	}
 
+	@Idempotent
 	@PutMapping
 	@TraceLog
 	@Operation(summary = "资源管理", description = "修改资源")
@@ -162,6 +163,7 @@ public class ResourceController {
 		return resourceServiceI.detailTask(new ResourceDetailTaskGetQry(id));
 	}
 
+	@Idempotent
 	@TraceLog
 	@PostMapping(value = "resolve-task")
 	@Operation(summary = "资源管理", description = "处理任务")
@@ -171,6 +173,7 @@ public class ResourceController {
 		return resourceServiceI.resolveTask(cmd);
 	}
 
+	@Idempotent
 	@TraceLog
 	@PostMapping(value = "transfer-task")
 	@Operation(summary = "资源管理", description = "转办任务")
@@ -180,6 +183,7 @@ public class ResourceController {
 		return resourceServiceI.transferTask(cmd);
 	}
 
+	@Idempotent
 	@TraceLog
 	@PostMapping(value = "delegate-task")
 	@Operation(summary = "资源管理", description = "委派任务")

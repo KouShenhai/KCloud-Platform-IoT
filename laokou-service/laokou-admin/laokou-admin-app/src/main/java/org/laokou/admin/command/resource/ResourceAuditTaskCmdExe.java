@@ -22,9 +22,8 @@ import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.common.event.DomainEventPublisher;
-import org.laokou.admin.domain.message.Type;
+import org.laokou.admin.common.utils.EventUtil;
 import org.laokou.admin.dto.log.domainevent.AuditLogEvent;
-import org.laokou.admin.dto.message.domainevent.MessageEvent;
 import org.laokou.admin.dto.resource.ResourceAuditTaskCmd;
 import org.laokou.admin.dto.resource.TaskAuditCmd;
 import org.laokou.admin.dto.resource.clientobject.AuditCO;
@@ -38,9 +37,10 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.openfeign.utils.FeignUtil;
 import org.laokou.common.security.utils.UserUtil;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
-import java.util.Collections;
 import java.util.Objects;
 
 import static org.laokou.admin.common.Constant.AUDIT_STATUS;
@@ -61,6 +61,8 @@ public class ResourceAuditTaskCmdExe {
 	private final ResourceMapper resourceMapper;
 
 	private final DomainEventPublisher domainEventPublisher;
+
+	private final EventUtil eventUtil;
 
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceAuditTaskCmd cmd) {
@@ -87,10 +89,16 @@ public class ResourceAuditTaskCmdExe {
 		domainEventPublisher.publish(toAuditLogEvent(cmd, auditStatus));
 		// 审批中，则发送审批通知消息
 		if (status == IN_APPROVAL) {
-			domainEventPublisher.publish(toMessageEvent(assignee, cmd));
+			publishMessage(assignee, cmd);
 		}
 		log.info("审批状态：{}，状态：{}，审批意见：{}", DESC_MAP.get(auditStatus + 100), DESC_MAP.get(status), cmd.getComment());
 		return Result.of(flag);
+	}
+
+	@Async
+	public void publishMessage(String assignee, ResourceAuditTaskCmd cmd) {
+		domainEventPublisher
+			.publish(eventUtil.toAuditMessageEvent(assignee, cmd.getBusinessKey(), cmd.getInstanceName(), null));
 	}
 
 	private Boolean updateResource(Long id, int version, int status, ResourceAuditDO resourceAuditDO) {
@@ -101,21 +109,11 @@ public class ResourceAuditTaskCmdExe {
 		else {
 			resourceDO = new ResourceDO();
 		}
+		Assert.isTrue(Objects.nonNull(resourceDO), "resourceDO is null");
 		resourceDO.setId(id);
 		resourceDO.setStatus(status);
 		resourceDO.setVersion(version);
 		return resourceMapper.updateById(resourceDO) > 0;
-	}
-
-	private MessageEvent toMessageEvent(String assignee, ResourceAuditTaskCmd cmd) {
-		String title = "资源待审批任务提醒";
-		String content = String.format("编号为%s，名称为%s的资源需要审批，请及时查看并审批", cmd.getBusinessKey(), cmd.getInstanceName());
-		MessageEvent event = new MessageEvent(this);
-		event.setContent(content);
-		event.setTitle(title);
-		event.setType(Type.REMIND.ordinal());
-		event.setReceiver(Collections.singleton(assignee));
-		return event;
 	}
 
 	private AuditLogEvent toAuditLogEvent(ResourceAuditTaskCmd cmd, int auditStatus) {
