@@ -25,7 +25,7 @@ import org.laokou.admin.dto.source.*;
 import org.laokou.admin.dto.source.clientobject.SourceCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.aspect.Type;
+import org.laokou.common.data.cache.enums.Type;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;

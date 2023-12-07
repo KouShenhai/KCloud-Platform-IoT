@@ -16,7 +16,7 @@
  */
 package org.laokou.common.data.cache.annotation;
 
-import org.laokou.common.data.cache.aspect.Type;
+import org.laokou.common.data.cache.enums.Type;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
