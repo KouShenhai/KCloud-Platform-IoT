@@ -24,7 +24,7 @@ import org.laokou.admin.dto.menu.*;
 import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.aspect.Type;
+import org.laokou.common.data.cache.enums.Type;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.trace.annotation.TraceLog;

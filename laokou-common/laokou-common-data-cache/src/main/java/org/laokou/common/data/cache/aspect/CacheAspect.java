@@ -24,6 +24,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.enums.Type;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -60,16 +61,8 @@ public class CacheAspect {
 		key = RedisKeyUtil.getDataCacheKey(name, SpringExpressionUtil.parse(key, parameterNames, args, Long.class));
 		return switch (type) {
 			case GET -> get(key, point, expire);
-			case PUT -> put(key, point, expire);
 			case DEL -> del(key, point);
 		};
-	}
-
-	private Object put(String key, ProceedingJoinPoint point, long expire) throws Throwable {
-		Object value = point.proceed();
-		redisUtil.set(key, value, expire);
-		caffeineCache.put(key, value);
-		return value;
 	}
 
 	private Object get(String key, ProceedingJoinPoint point, long expire) throws Throwable {

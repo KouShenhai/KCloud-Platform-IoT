@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.data.cache.aspect;
+package org.laokou.common.data.cache.enums;
 
 /**
  * @author laokou
@@ -25,10 +25,6 @@ public enum Type {
 	 * 查询
 	 */
 	GET,
-	/**
-	 * 新增
-	 */
-	PUT,
 	/**
 	 * 删除
 	 */

@@ -17,13 +17,11 @@
 
 package org.laokou.common.data.cache.listener;
 
-import com.github.benmanes.caffeine.cache.Cache;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
-
-import java.nio.charset.StandardCharsets;
 
 /**
  * @author laokou
@@ -32,21 +30,14 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class RedisKeyDeleteListener extends KeyDeleteEventMessageListener {
 
-	private final Cache<String, Object> caffeineCache;
-
-	private static final String ANY_MATCH_VALUE = ".*";
-
-	public RedisKeyDeleteListener(RedisMessageListenerContainer listenerContainer,
-			Cache<String, Object> caffeineCache) {
+	public RedisKeyDeleteListener(RedisMessageListenerContainer listenerContainer) {
 		super(listenerContainer);
-		this.caffeineCache = caffeineCache;
 	}
 
 	@Override
-	public void onMessage(Message message, byte[] pattern) {
-		String key = new String(message.getBody(), StandardCharsets.UTF_8);
+	public void onMessage(@NonNull Message message, byte[] pattern) {
+		// String key = new String(message.getBody(), StandardCharsets.UTF_8);
 		// log.info("监听key为{}的删除事件", key);
-		caffeineCache.invalidate(key);
 	}
 
 }
