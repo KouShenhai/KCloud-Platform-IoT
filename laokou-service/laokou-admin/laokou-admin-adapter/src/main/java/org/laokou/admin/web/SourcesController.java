@@ -35,6 +35,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.laokou.common.data.cache.config.CacheConstant.SOURCES;
+
 /**
  * @author laokou
  */
@@ -67,7 +69,7 @@ public class SourcesController {
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "数据源管理", description = "查看数据源")
-	@DataCache(name = "sources", key = "#id")
+	@DataCache(name = SOURCES, key = "#id")
 	public Result<SourceCO> getById(@PathVariable("id") Long id) {
 		return sourcesServiceI.getById(new SourceGetQry(id));
 	}
@@ -77,7 +79,7 @@ public class SourcesController {
 	@Operation(summary = "数据源管理", description = "修改数据源")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@PreAuthorize("hasAuthority('sources:update')")
-	@DataCache(name = "sources", key = "#cmd.sourceCO.id", type = Type.DEL)
+	@DataCache(name = SOURCES, key = "#cmd.sourceCO.id", type = Type.DEL)
 	public Result<Boolean> update(@RequestBody SourceUpdateCmd cmd) {
 		return sourcesServiceI.update(cmd);
 	}
@@ -87,7 +89,7 @@ public class SourcesController {
 	@Operation(summary = "数据源管理", description = "删除数据源")
 	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@PreAuthorize("hasAuthority('sources:delete')")
-	@DataCache(name = "sources", key = "#id", type = Type.DEL)
+	@DataCache(name = SOURCES, key = "#id", type = Type.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return sourcesServiceI.deleteById(new SourceDeleteCmd(id));
 	}

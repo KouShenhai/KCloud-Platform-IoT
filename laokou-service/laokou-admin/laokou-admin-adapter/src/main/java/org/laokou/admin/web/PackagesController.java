@@ -35,6 +35,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.laokou.common.data.cache.config.CacheConstant.PACKAGES;
+
 /**
  * @author laokou
  */
@@ -67,7 +69,7 @@ public class PackagesController {
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "套餐管理", description = "查看套餐")
-	@DataCache(name = "packages", key = "#id")
+	@DataCache(name = PACKAGES, key = "#id")
 	public Result<PackageCO> getById(@PathVariable("id") Long id) {
 		return packagesServiceI.getById(new PackageGetQry(id));
 	}
@@ -77,7 +79,7 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "修改套餐")
 	@OperateLog(module = "套餐管理", operation = "修改套餐")
 	@PreAuthorize("hasAuthority('packages:update')")
-	@DataCache(name = "packages", key = "#cmd.packageCO.id", type = Type.DEL)
+	@DataCache(name = PACKAGES, key = "#cmd.packageCO.id", type = Type.DEL)
 	public Result<Boolean> update(@RequestBody PackageUpdateCmd cmd) {
 		return packagesServiceI.update(cmd);
 	}
@@ -87,7 +89,7 @@ public class PackagesController {
 	@Operation(summary = "套餐管理", description = "删除套餐")
 	@OperateLog(module = "套餐管理", operation = "删除套餐")
 	@PreAuthorize("hasAuthority('packages:delete')")
-	@DataCache(name = "packages", key = "#id", type = Type.DEL)
+	@DataCache(name = PACKAGES, key = "#id", type = Type.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return packagesServiceI.deleteById(new PackageDeleteCmd(id));
 	}

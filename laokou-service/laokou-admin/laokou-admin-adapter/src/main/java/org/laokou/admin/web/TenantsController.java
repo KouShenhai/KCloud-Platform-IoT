@@ -36,6 +36,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.laokou.common.data.cache.config.CacheConstant.TENANTS;
+
 /**
  * @author laokou
  */
@@ -68,7 +70,7 @@ public class TenantsController {
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "租户管理", description = "查看租户")
-	@DataCache(name = "tenants", key = "#id")
+	@DataCache(name = TENANTS, key = "#id")
 	public Result<TenantCO> getById(@PathVariable("id") Long id) {
 		return tenantsServiceI.getById(new TenantGetQry(id));
 	}
@@ -78,7 +80,7 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "修改租户")
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@PreAuthorize("hasAuthority('tenants:update')")
-	@DataCache(name = "tenants", key = "#cmd.tenantCO.id", type = Type.DEL)
+	@DataCache(name = TENANTS, key = "#cmd.tenantCO.id", type = Type.DEL)
 	public Result<Boolean> update(@RequestBody TenantUpdateCmd cmd) {
 		return tenantsServiceI.update(cmd);
 	}
@@ -88,7 +90,7 @@ public class TenantsController {
 	@Operation(summary = "租户管理", description = "删除租户")
 	@OperateLog(module = "租户管理", operation = "删除租户")
 	@PreAuthorize("hasAuthority('tenants:delete')")
-	@DataCache(name = "tenants", key = "#id", type = Type.DEL)
+	@DataCache(name = TENANTS, key = "#id", type = Type.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return tenantsServiceI.deleteById(new TenantDeleteCmd(id));
 	}

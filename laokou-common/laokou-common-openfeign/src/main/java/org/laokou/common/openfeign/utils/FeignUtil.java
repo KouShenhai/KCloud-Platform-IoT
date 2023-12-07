@@ -37,7 +37,7 @@ public class FeignUtil {
 	}
 
 	private static <T> void resultThrow(Result<T> result) {
-		if (result.fail()) {
+		if (result.error()) {
 			throw new FeignException(result.getMsg());
 		}
 	}

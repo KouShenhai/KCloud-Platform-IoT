@@ -43,10 +43,10 @@ public final class RedisKeyUtil {
 	}
 
 	/**
-	 * 二级缓存Key
+	 * 数据缓存Key
 	 */
-	public static String getDataCacheKey(String name, Long id) {
-		return name + ":cache:" + id;
+	public static String getDataCacheKey(String name) {
+		return name + ":cache";
 	}
 
 	/**

@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.aspect;
+package org.laokou.admin.aop;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +47,7 @@ import static org.laokou.common.i18n.common.Constant.*;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DataFilterAspect {
+public class DataFilterAop {
 
 	@Before("@annotation(org.laokou.admin.domain.annotation.DataFilter)")
 	public void doBefore(JoinPoint point) {

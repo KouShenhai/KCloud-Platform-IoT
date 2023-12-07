@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.laokou.common.data.cache.config.CacheConstant.MENUS;
+
 /**
  * @author laokou
  */
@@ -62,7 +64,7 @@ public class MenusController {
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "菜单管理", description = "查看菜单")
-	@DataCache(name = "menus", key = "#id")
+	@DataCache(name = MENUS, key = "#id")
 	public Result<MenuCO> getById(@PathVariable("id") Long id) {
 		return menusServiceI.getById(new MenuGetQry(id));
 	}
@@ -72,7 +74,7 @@ public class MenusController {
 	@Operation(summary = "菜单管理", description = "修改菜单")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('menus:update')")
-	@DataCache(name = "menus", key = "#cmd.menuCO.id", type = Type.DEL)
+	@DataCache(name = MENUS, key = "#cmd.menuCO.id", type = Type.DEL)
 	public Result<Boolean> update(@RequestBody MenuUpdateCmd cmd) {
 		return menusServiceI.update(cmd);
 	}
@@ -92,7 +94,7 @@ public class MenusController {
 	@Operation(summary = "菜单管理", description = "删除菜单")
 	@OperateLog(module = "菜单管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('menus:delete')")
-	@DataCache(name = "menus", key = "#id", type = Type.DEL)
+	@DataCache(name = MENUS, key = "#id", type = Type.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return menusServiceI.deleteById(new MenuDeleteCmd(id));
 	}

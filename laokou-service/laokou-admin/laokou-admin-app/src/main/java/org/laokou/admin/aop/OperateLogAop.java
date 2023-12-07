@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.aspect;
+package org.laokou.admin.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -51,7 +51,7 @@ import static org.laokou.common.i18n.common.Constant.*;
 @Aspect
 @Slf4j
 @RequiredArgsConstructor
-public class OperateLogAspect {
+public class OperateLogAop {
 
 	private final DefaultConfigProperties defaultConfigProperties;
 

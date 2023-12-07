@@ -35,6 +35,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import static org.laokou.common.data.cache.config.CacheConstant.OSS;
+
 /**
  * @author laokou
  */
@@ -75,7 +77,7 @@ public class OssController {
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "存储管理", description = "查看存储")
-	@DataCache(name = "oss", key = "#id")
+	@DataCache(name = OSS, key = "#id")
 	public Result<OssCO> getById(@PathVariable("id") Long id) {
 		return ossServiceI.getById(new OssGetQry(id));
 	}
@@ -85,7 +87,7 @@ public class OssController {
 	@Operation(summary = "存储管理", description = "修改存储")
 	@OperateLog(module = "存储管理", operation = "修改存储")
 	@PreAuthorize("hasAuthority('oss:update')")
-	@DataCache(name = "oss", key = "#cmd.ossCO.id", type = Type.DEL)
+	@DataCache(name = OSS, key = "#cmd.ossCO.id", type = Type.DEL)
 	public Result<Boolean> update(@RequestBody OssUpdateCmd cmd) {
 		return ossServiceI.update(cmd);
 	}
@@ -95,7 +97,7 @@ public class OssController {
 	@Operation(summary = "存储管理", description = "删除存储")
 	@OperateLog(module = "存储管理", operation = "删除存储")
 	@PreAuthorize("hasAuthority('oss:delete')")
-	@DataCache(name = "oss", key = "#id", type = Type.DEL)
+	@DataCache(name = OSS, key = "#id", type = Type.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return ossServiceI.deleteById(new OssDeleteCmd(id));
 	}

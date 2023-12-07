@@ -26,6 +26,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
 import org.laokou.common.i18n.utils.DateUtil;
 
@@ -75,6 +76,7 @@ public class AmazonS3StorageDriver extends AbstractStorageDriver<AmazonS3> {
 		return DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + getFileExt(fileName);
 	}
 
+	@NotNull
 	@Override
 	protected AmazonS3 getObj() {
 		String accessKey = co.getAccessKey();

@@ -31,6 +31,8 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import static org.laokou.common.data.cache.config.CacheConstant.MESSAGES;
+
 /**
  * @author laokou
  */
@@ -72,7 +74,7 @@ public class MessagesController {
 	@GetMapping("{id}")
 	@Operation(summary = "消息管理", description = "查看消息")
 	@PreAuthorize("hasAuthority('messages:detail')")
-	@DataCache(name = "messages", key = "#id")
+	@DataCache(name = MESSAGES, key = "#id")
 	public Result<MessageCO> getById(@PathVariable("id") Long id) {
 		return messagesServiceI.getById(new MessageGetQry(id));
 	}
