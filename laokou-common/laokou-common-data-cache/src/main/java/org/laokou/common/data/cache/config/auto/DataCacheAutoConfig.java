@@ -18,6 +18,7 @@
 package org.laokou.common.data.cache.config.auto;
 
 import org.laokou.common.data.cache.config.RedissonSpringExtCacheManager;
+import org.laokou.common.redis.config.GlobalJsonJacksonCodec;
 import org.laokou.common.redis.config.auto.RedisAutoConfig;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -47,7 +48,7 @@ public class DataCacheAutoConfig {
 
 	@Bean
 	public CacheManager cacheManager(RedissonClient redissonClient) {
-		return new RedissonSpringExtCacheManager(redissonClient, redissonClient.getConfig().getCodec());
+		return new RedissonSpringExtCacheManager(redissonClient, GlobalJsonJacksonCodec.INSTANCE);
 	}
 
 }

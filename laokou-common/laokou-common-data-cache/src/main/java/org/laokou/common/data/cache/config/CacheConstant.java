@@ -16,10 +16,15 @@
  */
 package org.laokou.common.data.cache.config;
 
+// @formatter:off
 /**
- * @author laokou 格式 => name_ttl_maxIdleTime_maxSize name => 缓存名称 ttl => 过期时间，默认为0（不过期）
- * maxIdleTime => 最大空闲时间（保持存活的最长时间），默认为0 maxSize => 最大长度，默认为0（没有长度限制）
+ * @author laokou
+ * 格式 			=> name_ttl_maxIdleTime_maxSize
+ * name 		=> 缓存名称
+ * ttl 			=> 过期时间，默认为0（不过期）
+ * maxIdleTime 	=> 最大空闲时间（保持存活的最长时间），默认为0 maxSize => 最大长度，默认为0（没有长度限制）
  */
+// @formatter:on
 public interface CacheConstant {
 
 	String DEFAULT = "_10m_30m_1024";
