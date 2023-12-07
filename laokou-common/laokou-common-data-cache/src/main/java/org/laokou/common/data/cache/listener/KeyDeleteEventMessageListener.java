@@ -33,12 +33,12 @@ import java.util.Objects;
 /**
  * @author laokou
  */
+@Setter
 public class KeyDeleteEventMessageListener extends KeyspaceEventMessageListener implements MessageListener {
 
 	private static final Topic KEYEVENT_DELETE_TOPIC = new PatternTopic("__keyevent@*__:del");
 
 	@Nullable
-	@Setter
 	private ApplicationEventPublisher publisher;
 
 	public KeyDeleteEventMessageListener(RedisMessageListenerContainer listenerContainer) {

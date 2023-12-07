@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.lock.aspect;
+package org.laokou.common.lock.aop;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +46,7 @@ import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
 @Aspect
 @Slf4j
 @RequiredArgsConstructor
-public class LockAspect {
+public class LockAop {
 
 	private final RedisUtil redisUtil;
 

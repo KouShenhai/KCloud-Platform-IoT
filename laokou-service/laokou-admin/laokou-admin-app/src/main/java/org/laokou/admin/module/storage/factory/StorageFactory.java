@@ -30,7 +30,6 @@ import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
@@ -55,7 +54,6 @@ public class StorageFactory {
 	private final OssConvertor ossConvertor;
 
 	@DS(TENANT)
-	@Lock4j(key = "oss_config_lock")
 	public StorageDriver<AmazonS3> build(Long tenantId) {
 		return new AmazonS3StorageDriver(getOssConfig(tenantId));
 	}
@@ -78,6 +76,9 @@ public class StorageFactory {
 				throw new SystemException("请配置OSS");
 			}
 			List<Object> objs = new ArrayList<>(result);
+			// 防止集群环境，其他节点新增数据
+			redisUtil.delete(ossConfigKey);
+			// 写入最新数据
 			redisUtil.lSet(ossConfigKey, objs, RedisUtil.HOUR_ONE_EXPIRE);
 			return result;
 		}

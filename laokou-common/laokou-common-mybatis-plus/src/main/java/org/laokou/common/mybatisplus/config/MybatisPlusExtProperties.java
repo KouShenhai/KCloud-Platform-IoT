@@ -33,7 +33,7 @@ import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
 @Data
 @Component
 @ConfigurationProperties(prefix = MYBATIS_PLUS)
-public class MybatisPlusExtensionProperties {
+public class MybatisPlusExtProperties {
 
 	public static final String SLOW_SQL = "slow-sql";
 

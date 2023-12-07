@@ -43,7 +43,7 @@ import java.util.Properties;
 
 import static com.baomidou.mybatisplus.core.toolkit.Constants.MYBATIS_PLUS;
 import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.mybatisplus.config.MybatisPlusExtensionProperties.SLOW_SQL;
+import static org.laokou.common.mybatisplus.config.MybatisPlusExtProperties.SLOW_SQL;
 
 /**
  * mybatis-plus配置
@@ -58,23 +58,22 @@ public class MybatisPlusAutoConfig {
 	@Bean
 	@ConditionalOnProperty(havingValue = TRUE, prefix = MYBATIS_PLUS + DOT + SLOW_SQL, name = ENABLED)
 	public ConfigurationCustomizer slowSqlConfigurationCustomizer(ConfigurableEnvironment environment,
-			MybatisPlusExtensionProperties mybatisPlusExtensionProperties) {
+			MybatisPlusExtProperties mybatisPlusExtProperties) {
 		SlowSqlInterceptor slowSqlInterceptor = new SlowSqlInterceptor();
-		slowSqlInterceptor.setProperties(properties(environment, mybatisPlusExtensionProperties));
+		slowSqlInterceptor.setProperties(properties(environment, mybatisPlusExtProperties));
 		return configuration -> configuration.addInterceptor(slowSqlInterceptor);
 	}
 
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-	public MybatisPlusInterceptor mybatisPlusInterceptor(
-			MybatisPlusExtensionProperties mybatisPlusExtensionProperties) {
+	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties) {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 数据权限插件
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
 		// 多租户插件
-		if (mybatisPlusExtensionProperties.getTenant().isEnabled()) {
+		if (mybatisPlusExtProperties.getTenant().isEnabled()) {
 			interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(
-					new GlobalTenantLineHandler(mybatisPlusExtensionProperties.getTenant().getIgnoreTables())));
+					new GlobalTenantLineHandler(mybatisPlusExtProperties.getTenant().getIgnoreTables())));
 		}
 		// 分页插件
 		interceptor.addInnerInterceptor(paginationInnerInterceptor());
@@ -139,9 +138,9 @@ public class MybatisPlusAutoConfig {
 	}
 
 	private Properties properties(ConfigurableEnvironment environment,
-			MybatisPlusExtensionProperties mybatisPlusExtensionProperties) {
+			MybatisPlusExtProperties mybatisPlusExtProperties) {
 		String appName = getApplicationId(environment);
-		long millis = mybatisPlusExtensionProperties.getSlowSql().getMillis().toMillis();
+		long millis = mybatisPlusExtProperties.getSlowSql().getMillis().toMillis();
 		Properties properties = new Properties();
 		properties.setProperty("appName", appName);
 		properties.setProperty("millis", String.valueOf(millis));

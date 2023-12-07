@@ -35,14 +35,6 @@
             <groupId>org.laokou</groupId>
             <artifactId>laokou-common-redis</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.laokou</groupId>
-            <artifactId>laokou-common-lock</artifactId>
-        </dependency>
     </dependencies>
 
 </project>

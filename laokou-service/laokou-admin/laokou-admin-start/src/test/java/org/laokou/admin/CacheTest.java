@@ -14,37 +14,30 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.data.cache.annotation;
 
-import org.laokou.common.data.cache.enums.Type;
+package org.laokou.admin;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.lang.annotation.Documented;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.convert.DurationStyle;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
+
+import java.time.Duration;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface DataCache {
+@Slf4j
+@SpringBootTest
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+public class CacheTest {
 
-	/**
-	 * 缓存名称
-	 */
-	String name();
-
-	/**
-	 * 缓存键
-	 */
-	String key();
-
-	/**
-	 * 操作类型
-	 */
-	Type type() default Type.GET;
+	@Test
+	public void timeTest() {
+		String value = "10s";
+		Duration duration = DurationStyle.detectAndParse(value);
+		log.info("获取值：{}", duration.toMillis());
+	}
 
 }

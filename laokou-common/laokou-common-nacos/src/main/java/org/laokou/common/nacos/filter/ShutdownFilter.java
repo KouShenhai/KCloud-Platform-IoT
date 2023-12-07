@@ -27,6 +27,7 @@ import org.laokou.common.core.holder.ShutdownHolder;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
@@ -94,7 +95,7 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 					long end = IdGenerator.SystemClock.now();
 					// 一分钟内没完成 或 计数器为 -> 结束
 					if (end - start >= second || ShutdownHolder.get() == 0) {
-						NEWED_SCHEDULED_THREAD_POOL.shutdown();
+						ThreadUtil.shutdown(NEWED_SCHEDULED_THREAD_POOL, 10);
 					}
 				}, 0, 1, TimeUnit.SECONDS);
 			}));

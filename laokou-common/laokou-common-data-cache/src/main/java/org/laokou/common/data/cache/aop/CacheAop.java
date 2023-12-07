@@ -14,10 +14,10 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.data.cache.aspect;
+package org.laokou.common.data.cache.aop;
 
-import com.github.benmanes.caffeine.cache.Cache;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -25,13 +25,12 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.Type;
-import org.laokou.common.redis.utils.RedisKeyUtil;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
@@ -40,45 +39,48 @@ import java.util.Objects;
 @Component
 @Aspect
 @RequiredArgsConstructor
-public class CacheAspect {
+public class CacheAop {
 
-	private final RedisUtil redisUtil;
-
-	private final Cache<String, Object> caffeineCache;
+	private final CacheManager cacheManager;
 
 	@Around("@annotation(org.laokou.common.data.cache.annotation.DataCache)")
-	public Object doAround(ProceedingJoinPoint point) throws Throwable {
+	public Object doAround(ProceedingJoinPoint point) {
 		MethodSignature signature = (MethodSignature) point.getSignature();
-		Method method = signature.getMethod();
 		String[] parameterNames = signature.getParameterNames();
-		DataCache dataCache = AnnotationUtils.findAnnotation(method, DataCache.class);
+		DataCache dataCache = AnnotationUtils.findAnnotation(signature.getMethod(), DataCache.class);
 		Assert.isTrue(Objects.nonNull(dataCache), "@DataCache is null");
-		long expire = dataCache.expire();
 		Type type = dataCache.type();
-		String key = dataCache.key();
 		String name = dataCache.name();
-		Object[] args = point.getArgs();
-		key = RedisKeyUtil.getDataCacheKey(name, SpringExpressionUtil.parse(key, parameterNames, args, Long.class));
+		String field = SpringExpressionUtil.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);
 		return switch (type) {
-			case GET -> get(key, point, expire);
-			case DEL -> del(key, point);
+			case GET -> get(name, field, point);
+			case DEL -> del(name, field, point);
 		};
 	}
 
-	private Object get(String key, ProceedingJoinPoint point, long expire) throws Throwable {
-		Object obj = caffeineCache.get(key, t -> redisUtil.get(key));
-		if (Objects.nonNull(obj)) {
-			return obj;
+	@SneakyThrows
+	private Object get(String name, String field, ProceedingJoinPoint point) {
+		Cache cache = cache(name);
+		Cache.ValueWrapper valueWrapper = cache.get(field);
+		if (Objects.nonNull(valueWrapper)) {
+			return valueWrapper.get();
 		}
 		Object value = point.proceed();
-		redisUtil.setIfAbsent(key, value, expire);
+		cache.putIfAbsent(field, value);
 		return value;
 	}
 
-	private Object del(String key, ProceedingJoinPoint point) throws Throwable {
-		redisUtil.delete(key);
-		caffeineCache.invalidate(key);
+	@SneakyThrows
+	private Object del(String name, String field, ProceedingJoinPoint point) {
+		Cache cache = cache(name);
+		cache.evictIfPresent(field);
 		return point.proceed();
+	}
+
+	private Cache cache(String name) {
+		Cache cache = cacheManager.getCache(name);
+		Assert.isTrue(Objects.nonNull(cache), "cache is null");
+		return cache;
 	}
 
 }

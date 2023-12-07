@@ -33,6 +33,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.laokou.common.data.cache.config.CacheConstant.DEPTS;
+
 /**
  * @author laokou
  */
@@ -74,7 +76,7 @@ public class DeptsController {
 	@OperateLog(module = "部门管理", operation = "修改菜单")
 	@PreAuthorize("hasAuthority('depts:update')")
 	@TraceLog
-	@DataCache(name = "depts", key = "#cmd.deptCO.id", type = Type.DEL)
+	@DataCache(name = DEPTS, key = "#cmd.deptCO.id", type = Type.DEL)
 	public Result<Boolean> update(@RequestBody DeptUpdateCmd cmd) {
 		return deptsServiceI.update(cmd);
 	}
@@ -82,7 +84,7 @@ public class DeptsController {
 	@GetMapping("{id}")
 	@TraceLog
 	@Operation(summary = "部门管理", description = "查看菜单")
-	@DataCache(name = "depts", key = "#id")
+	@DataCache(name = DEPTS, key = "#id")
 	public Result<DeptCO> getById(@PathVariable("id") Long id) {
 		return deptsServiceI.getById(new DeptGetQry(id));
 	}
@@ -92,7 +94,7 @@ public class DeptsController {
 	@Operation(summary = "部门管理", description = "删除菜单")
 	@OperateLog(module = "部门管理", operation = "删除菜单")
 	@PreAuthorize("hasAuthority('depts:delete')")
-	@DataCache(name = "depts", key = "#id", type = Type.DEL)
+	@DataCache(name = DEPTS, key = "#id", type = Type.DEL)
 	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
 		return deptsServiceI.deleteById(new DeptDeleteCmd(id));
 	}

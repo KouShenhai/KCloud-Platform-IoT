@@ -17,20 +17,20 @@
 
 package org.laokou.common.data.cache.config.auto;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
+import org.laokou.common.data.cache.config.RedissonSpringExtCacheManager;
+import org.laokou.common.redis.config.auto.RedisAutoConfig;
+import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author laokou
  */
-@AutoConfiguration
+@AutoConfiguration(after = { RedisAutoConfig.class })
 @ConditionalOnClass(LettuceConnectionFactory.class)
 public class DataCacheAutoConfig {
 
@@ -46,8 +46,8 @@ public class DataCacheAutoConfig {
 	}
 
 	@Bean
-	public Cache<String, Object> caffeineCache() {
-		return Caffeine.newBuilder().expireAfterWrite(1, TimeUnit.HOURS).initialCapacity(100).maximumSize(9216).build();
+	public CacheManager cacheManager(RedissonClient redissonClient) {
+		return new RedissonSpringExtCacheManager(redissonClient, redissonClient.getConfig().getCodec());
 	}
 
 }

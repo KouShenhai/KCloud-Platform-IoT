@@ -14,37 +14,31 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.data.cache.annotation;
 
-import org.laokou.common.data.cache.enums.Type;
+package org.laokou.common.core.utils;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.lang.annotation.Documented;
+import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface DataCache {
+public class ThreadUtil {
 
-	/**
-	 * 缓存名称
-	 */
-	String name();
-
-	/**
-	 * 缓存键
-	 */
-	String key();
-
-	/**
-	 * 操作类型
-	 */
-	Type type() default Type.GET;
+	public static void shutdown(ExecutorService executorService, int timeout) {
+		if (Objects.nonNull(executorService) && !executorService.isShutdown()) {
+			executorService.shutdown();
+			try {
+				if (!executorService.awaitTermination(timeout, TimeUnit.SECONDS)) {
+					executorService.shutdownNow();
+				}
+			}
+			catch (InterruptedException e) {
+				executorService.shutdownNow();
+				Thread.currentThread().interrupt();
+			}
+		}
+	}
 
 }
