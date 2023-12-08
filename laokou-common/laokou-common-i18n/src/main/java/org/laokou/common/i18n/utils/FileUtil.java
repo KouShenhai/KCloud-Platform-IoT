@@ -14,22 +14,22 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.core.utils;
+package org.laokou.common.i18n.utils;
 
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.Constant;
 
 import java.io.File;
-import java.io.InputStream;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.laokou.common.i18n.common.Constant.COMMA;
 
 /**
  * @author laokou
  */
-@Slf4j
 public class FileUtil {
 
 	/**
@@ -47,13 +47,10 @@ public class FileUtil {
 		EXT_MAP.put("video", ".mp4,.MP4,.AVI,.mov,.rmvb,.rm,.FLV,.mp4,.3GP,.flv");
 	}
 
-	public static Boolean checkFileExt(String code, String fileExt) {
-		String extValue = EXT_MAP.get(code);
+	public static boolean checkFileExt(String type, String fileExt) {
+		String extValue = EXT_MAP.get(type);
 		List<String> extList = Arrays.asList(extValue.split(COMMA));
 		return extList.contains(fileExt);
-	}
-
-	public static void download(String directory, String fileName, InputStream in, long fileSize, long chunkSize) {
 	}
 
 	@SneakyThrows
@@ -71,8 +68,7 @@ public class FileUtil {
 
 	/**
 	 * 获取文件后缀
-	 * @param fileName
-	 */
+     */
 	public static String getFileExt(String fileName) {
 		return fileName.substring(fileName.lastIndexOf(Constant.DOT));
 	}

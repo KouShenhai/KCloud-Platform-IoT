@@ -18,6 +18,12 @@
 package org.laokou.admin.command.resource;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.common.utils.BusinessUtil;
+import org.laokou.admin.convertor.ResourceConvertor;
+import org.laokou.admin.domain.gateway.ResourceGateway;
+import org.laokou.admin.domain.resource.Resource;
+import org.laokou.admin.dto.resource.ResourceInsertCmd;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +32,15 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ResourceInsertCmdExe {
+
+    private final ResourceGateway resourceGateway;
+
+    private final ResourceConvertor resourceConvertor;
+
+    public Result<Boolean> execute(ResourceInsertCmd cmd) {
+        Resource resource = resourceConvertor.toEntity(cmd.getResourceCO());
+        BusinessUtil.checkResource(resource);
+        return Result.of(resourceGateway.insert(resource));
+    }
 
 }

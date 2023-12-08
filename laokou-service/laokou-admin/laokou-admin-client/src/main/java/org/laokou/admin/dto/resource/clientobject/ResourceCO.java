@@ -17,7 +17,10 @@
 
 package org.laokou.admin.dto.resource.clientobject;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
@@ -28,14 +31,20 @@ public class ResourceCO extends ClientObject {
 
 	private Long id;
 
+	@NotBlank(message = "标题不能为空")
 	private String title;
 
+	@NotBlank(message = "资源地址不能为空")
+	@URL(message = "资源地址错误", regexp = "^(http|https)://([\\w.]+)(:([0-9]+))?(/.*)$")
 	private String url;
 
+	@NotNull(message = "状态不能为空")
 	private Integer status;
 
+	@NotBlank(message = "编码不能为空")
 	private String code;
 
+	@NotBlank(message = "备注不能为空")
 	private String remark;
 
 	private String instanceId;

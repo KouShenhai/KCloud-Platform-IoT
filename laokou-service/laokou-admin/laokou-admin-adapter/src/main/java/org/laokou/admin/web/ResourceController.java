@@ -104,12 +104,13 @@ public class ResourceController {
 		return resourceServiceI.download(new ResourceDownloadCmd(id, response));
 	}
 
+	@Idempotent
 	@PostMapping
 	@TraceLog
 	@Operation(summary = "资源管理", description = "新增资源")
 	@OperateLog(module = "资源管理", operation = "新增资源")
 	@PreAuthorize("hasAuthority('resource:insert')")
-	public Result<Boolean> insert(@RequestBody ResourceInsertCmd cmd) throws IOException {
+	public Result<Boolean> insert(@Validated @RequestBody ResourceInsertCmd cmd) throws IOException {
 		return resourceServiceI.insert(cmd);
 	}
 
@@ -119,7 +120,7 @@ public class ResourceController {
 	@Operation(summary = "资源管理", description = "修改资源")
 	@OperateLog(module = "资源管理", operation = "修改资源")
 	@PreAuthorize("hasAuthority('resource:update')")
-	public Result<Boolean> update(@RequestBody ResourceUpdateCmd cmd) throws IOException {
+	public Result<Boolean> update(@Validated @RequestBody ResourceUpdateCmd cmd) throws IOException {
 		return resourceServiceI.update(cmd);
 	}
 

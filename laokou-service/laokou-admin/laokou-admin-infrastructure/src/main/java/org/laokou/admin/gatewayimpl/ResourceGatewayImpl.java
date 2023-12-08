@@ -57,6 +57,7 @@ import org.springframework.util.Assert;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.laokou.common.i18n.common.Constant.DEFAULT;
 import static org.laokou.common.i18n.common.Constant.UNDER;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_RESOURCE;
 
@@ -105,6 +106,12 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	@Override
 	@GlobalTransactional(rollbackFor = Exception.class)
+	public Boolean insert(Resource resource) {
+		return insertResource(resource);
+	}
+
+	@Override
+	@GlobalTransactional(rollbackFor = Exception.class)
 	public Boolean update(Resource resource) {
 		return updateResource(resource, resourceMapper.getVersion(resource.getId(), ResourceDO.class));
 	}
@@ -127,6 +134,17 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		// 同步后
 		syncAfter();
 		return true;
+	}
+
+	private Boolean insertResource(Resource resource) {
+		return updateResource(insertTable(resource), DEFAULT);
+	}
+
+	private Resource insertTable(Resource resource) {
+		ResourceDO resourceDO = resourceConvertor.toDataObject(resource);
+		resourceMapper.insertTable(resourceDO);
+		resource.setId(resourceDO.getId());
+		return resource;
 	}
 
 	private Boolean updateResource(Resource resource, Integer version) {
