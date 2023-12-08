@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.flyway;
+package org.laokou.flyway.mysql;
 
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.Location;

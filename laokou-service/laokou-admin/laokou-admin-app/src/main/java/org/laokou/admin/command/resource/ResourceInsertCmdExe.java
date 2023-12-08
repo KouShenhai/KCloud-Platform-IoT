@@ -33,14 +33,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceInsertCmdExe {
 
-    private final ResourceGateway resourceGateway;
+	private final ResourceGateway resourceGateway;
 
-    private final ResourceConvertor resourceConvertor;
+	private final ResourceConvertor resourceConvertor;
 
-    public Result<Boolean> execute(ResourceInsertCmd cmd) {
-        Resource resource = resourceConvertor.toEntity(cmd.getResourceCO());
-        BusinessUtil.checkResource(resource);
-        return Result.of(resourceGateway.insert(resource));
-    }
+	public Result<Boolean> execute(ResourceInsertCmd cmd) {
+		Resource resource = resourceConvertor.toEntity(cmd.getResourceCO());
+		BusinessUtil.checkResource(resource);
+		return Result.of(resourceGateway.insert(resource));
+	}
 
 }
