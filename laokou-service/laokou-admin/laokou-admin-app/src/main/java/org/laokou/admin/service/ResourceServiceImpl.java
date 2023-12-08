@@ -106,7 +106,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	@Override
 	public Result<Boolean> insert(ResourceInsertCmd cmd) {
-		return null;
+		return resourceInsertCmdExe.execute(cmd);
 	}
 
 	@Override

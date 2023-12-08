@@ -28,6 +28,8 @@ public interface ResourceGateway {
 
 	Resource getById(Long id);
 
+	Boolean insert(Resource resource);
+
 	Boolean update(Resource resource);
 
 	Boolean sync();

@@ -43,7 +43,7 @@ public enum LockType {
 	WRITE,
 
 	/**
-	 * 强一致性锁
+	 * 强一致性锁 => 主从延迟
 	 */
 	FENCED
 

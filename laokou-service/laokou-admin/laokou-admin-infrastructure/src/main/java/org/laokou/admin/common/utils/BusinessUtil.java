@@ -15,21 +15,22 @@
  *
  */
 
-package org.laokou.admin.dto.remote;
+package org.laokou.admin.common.utils;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.admin.domain.resource.Resource;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.FileUtil;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class RemoteAssigneeGetQry extends CommonCommand {
+public class BusinessUtil {
 
-	private String instanceId;
+    public static void checkResource(Resource resource) {
+        String fileExt = FileUtil.getFileExt(resource.getUrl());
+        if (!FileUtil.checkFileExt(resource.getCode(), fileExt)) {
+            throw new SystemException("资源格式错误");
+        }
+    }
 
 }

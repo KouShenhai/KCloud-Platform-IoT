@@ -18,8 +18,10 @@
 package org.laokou.admin.command.resource;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.common.utils.BusinessUtil;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.gateway.ResourceGateway;
+import org.laokou.admin.domain.resource.Resource;
 import org.laokou.admin.dto.resource.ResourceUpdateCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -36,7 +38,9 @@ public class ResourceUpdateCmdExe {
 	private final ResourceConvertor resourceConvertor;
 
 	public Result<Boolean> execute(ResourceUpdateCmd cmd) {
-		return Result.of(resourceGateway.update(resourceConvertor.toEntity(cmd.getResourceCO())));
+		Resource resource = resourceConvertor.toEntity(cmd.getResourceCO());
+		BusinessUtil.checkResource(resource);
+		return Result.of(resourceGateway.update(resource));
 	}
 
 }

@@ -19,7 +19,7 @@ package org.laokou.admin.module.storage;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.oss.clientobject.OssCO;
-import org.laokou.common.core.utils.FileUtil;
+import org.laokou.common.i18n.utils.FileUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 
 import java.io.InputStream;
