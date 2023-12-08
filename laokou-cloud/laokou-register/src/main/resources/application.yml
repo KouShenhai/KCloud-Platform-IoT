@@ -22,9 +22,13 @@ jasypt:
 
 db:
   num: 1
-  url.'0': jdbc:mysql://@MYSQL-HOST@:@MYSQL-PORT@/@MYSQL-DB-NACOS@?@MYSQL-PARAM@
-  user.'0': @MYSQL-USERNAME@
-  password.'0': @MYSQL-PASSWORD@
+  url.'0': jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/@DATASOURCE-DB-NACOS@?@DATASOURCE-PARAM@
+  user.'0': @DATASOURCE-USERNAME@
+  password.'0': @DATASOURCE-PASSWORD@
+  # see DataSourcePoolProperties 与 ExternalDataSourceProperties
+  pool:
+    config:
+      driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
 management:
   metrics:
     export:
@@ -100,4 +104,4 @@ spring:
     active: @PROFILE-ACTIVE@
   sql:
     init:
-      platform: mysql
+      platform: @DATASOURCE-PLATFORM@

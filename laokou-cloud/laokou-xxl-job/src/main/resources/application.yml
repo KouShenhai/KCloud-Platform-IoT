@@ -21,11 +21,11 @@ spring:
   profiles:
     active: @PROFILE-ACTIVE@
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: @MYSQL-USERNAME@
-    password: @MYSQL-PASSWORD@
+    driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
+    username: @DATASOURCE-USERNAME@
+    password: @DATASOURCE-PASSWORD@
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://@MYSQL-HOST@:@MYSQL-PORT@/@MYSQL-DB-XXL-JOB@?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/@DATASOURCE-DB-XXL-JOB@?@DATASOURCE-PARAM@
     hikari:
       auto-commit: true
       connection-test-query: SELECT 1

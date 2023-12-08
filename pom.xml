@@ -167,14 +167,16 @@
         <profile>
             <id>dev</id>
             <properties>
-                <MYSQL-USERNAME>root</MYSQL-USERNAME>
-                <MYSQL-PASSWORD>laokou123</MYSQL-PASSWORD>
-                <MYSQL-HOST>mysql.laokou.org</MYSQL-HOST>
-                <MYSQL-PARAM>characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</MYSQL-PARAM>
-                <MYSQL-DB-NACOS>kcloud_platform_alibaba_nacos</MYSQL-DB-NACOS>
-                <MYSQL-DB-SEATA>kcloud_platform_alibaba_seata</MYSQL-DB-SEATA>
-                <MYSQL-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</MYSQL-DB-XXL-JOB>
-                <MYSQL-PORT>3306</MYSQL-PORT>
+                <DATASOURCE-USERNAME>root</DATASOURCE-USERNAME>
+                <DATASOURCE-PASSWORD>laokou123</DATASOURCE-PASSWORD>
+                <DATASOURCE-HOST>mysql.laokou.org</DATASOURCE-HOST>
+                <DATASOURCE-PARAM>characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</DATASOURCE-PARAM>
+                <DATASOURCE-PORT>3306</DATASOURCE-PORT>
+                <DATASOURCE-DRIVER-CLASS-NAME>com.mysql.cj.jdbc.Driver</DATASOURCE-DRIVER-CLASS-NAME>
+                <DATASOURCE-PLATFORM>mysql</DATASOURCE-PLATFORM>
+                <DATASOURCE-DB-NACOS>kcloud_platform_alibaba_nacos</DATASOURCE-DB-NACOS>
+                <DATASOURCE-DB-SEATA>kcloud_platform_alibaba_seata</DATASOURCE-DB-SEATA>
+                <DATASOURCE-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</DATASOURCE-DB-XXL-JOB>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
@@ -201,14 +203,16 @@
         <profile>
             <id>test</id>
             <properties>
-                <MYSQL-USERNAME>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</MYSQL-USERNAME>
-                <MYSQL-PASSWORD>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</MYSQL-PASSWORD>
-                <MYSQL-HOST>mysql.laokou.org</MYSQL-HOST>
-                <MYSQL-PARAM>characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</MYSQL-PARAM>
-                <MYSQL-DB-NACOS>kcloud_platform_alibaba_nacos</MYSQL-DB-NACOS>
-                <MYSQL-DB-SEATA>kcloud_platform_alibaba_seata</MYSQL-DB-SEATA>
-                <MYSQL-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</MYSQL-DB-XXL-JOB>
-                <MYSQL-PORT>3306</MYSQL-PORT>
+                <DATASOURCE-USERNAME>ENC(aEwhK+oj5wQ/pJfRcfwXAw==)</DATASOURCE-USERNAME>
+                <DATASOURCE-PASSWORD>ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)</DATASOURCE-PASSWORD>
+                <DATASOURCE-HOST>mysql.laokou.org</DATASOURCE-HOST>
+                <DATASOURCE-PARAM>characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true</DATASOURCE-PARAM>
+                <DATASOURCE-PORT>3306</DATASOURCE-PORT>
+                <DATASOURCE-DRIVER-CLASS-NAME>com.mysql.cj.jdbc.Driver</DATASOURCE-DRIVER-CLASS-NAME>
+                <DATASOURCE-PLATFORM>mysql</DATASOURCE-PLATFORM>
+                <DATASOURCE-DB-NACOS>kcloud_platform_alibaba_nacos</DATASOURCE-DB-NACOS>
+                <DATASOURCE-DB-SEATA>kcloud_platform_alibaba_seata</DATASOURCE-DB-SEATA>
+                <DATASOURCE-DB-XXL-JOB>kcloud_platform_alibaba_xxl_job</DATASOURCE-DB-XXL-JOB>
                 <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
                 <NACOS-DISCOVERY-ADDRESS>127.0.0.1:8848</NACOS-DISCOVERY-ADDRESS>
                 <NACOS-CONFIG-ADDRESS>127.0.0.1:8848</NACOS-CONFIG-ADDRESS>
@@ -233,21 +237,25 @@
             <id>prod</id>
             <properties>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-USERNAME>${MYSQL_USERNAME:ENC(aEwhK+oj5wQ/pJfRcfwXAw==)}</MYSQL-USERNAME>
+                <DATASOURCE-USERNAME>${DATASOURCE_USERNAME:ENC(aEwhK+oj5wQ/pJfRcfwXAw==)}</DATASOURCE-USERNAME>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-PASSWORD>${MYSQL_PASSWORD:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</MYSQL-PASSWORD>
+                <DATASOURCE-PASSWORD>${DATASOURCE_PASSWORD:ENC(gruSGjDZ03lAN3qyE5UisGE2tvN3gS3Y)}</DATASOURCE-PASSWORD>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-HOST>${MYSQL_HOST:mysql.laokou.org}</MYSQL-HOST>
+                <DATASOURCE-HOST>${DATASOURCE_HOST:mysql.laokou.org}</DATASOURCE-HOST>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-PARAM>${MYSQL_PARAM:}</MYSQL-PARAM>
+                <DATASOURCE-PARAM>${DATASOURCE_PARAM:}</DATASOURCE-PARAM>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-DB-NACOS>${MYSQL_DB_NACOS:kcloud_platform_alibaba_nacos}</MYSQL-DB-NACOS>
+                <DATASOURCE-PORT>${DATASOURCE_PORT:3306}</DATASOURCE-PORT>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-DB-SEATA>${MYSQL_DB_SEATA:kcloud_platform_alibaba_seata}</MYSQL-DB-SEATA>
+                <DATASOURCE-DRIVER-CLASS-NAME>${DATASOURCE_DRIVER_CLASS_NAME:com.mysql.cj.jdbc.Driver}</DATASOURCE-DRIVER-CLASS-NAME>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-DB-XXL-JOB>${MYSQL_DB_XXL_JOB:kcloud_platform_alibaba_xxl_job}</MYSQL-DB-XXL-JOB>
+                <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:mysql}</DATASOURCE-PLATFORM>
                 <!--suppress UnresolvedMavenProperty -->
-                <MYSQL-PORT>${MYSQL_PORT:3306}</MYSQL-PORT>
+                <DATASOURCE-DB-NACOS>${DATASOURCE_DB_NACOS:kcloud_platform_alibaba_nacos}</DATASOURCE-DB-NACOS>
+                <!--suppress UnresolvedMavenProperty -->
+                <DATASOURCE-DB-SEATA>${DATASOURCE_DB_SEATA:kcloud_platform_alibaba_seata}</DATASOURCE-DB-SEATA>
+                <!--suppress UnresolvedMavenProperty -->
+                <DATASOURCE-DB-XXL-JOB>${DATASOURCE_DB_XXL_JOB:kcloud_platform_alibaba_xxl_job}</DATASOURCE-DB-XXL-JOB>
                 <!--suppress UnresolvedMavenProperty -->
                 <NACOS-NAMESPACE>${NACOS_NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}</NACOS-NAMESPACE>
                 <!--suppress UnresolvedMavenProperty -->

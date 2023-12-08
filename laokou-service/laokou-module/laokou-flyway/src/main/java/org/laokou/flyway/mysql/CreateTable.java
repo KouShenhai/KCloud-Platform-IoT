@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.flyway;
+package org.laokou.flyway.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
