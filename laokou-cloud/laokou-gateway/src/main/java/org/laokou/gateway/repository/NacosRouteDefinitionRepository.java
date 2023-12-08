@@ -125,14 +125,15 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		return Flux.fromIterable(pullRouterInfo())
 			.publishOn(Schedulers.boundedElastic())
 			.doOnNext(route -> reactiveHashOperations.putIfAbsent(RedisKeyUtil.getRouteDefinitionHashKey(), route.getId(), route)
-				.subscribe(success -> {
-					if (success) {
-						log.info("新增成功");
-					}
-					else {
-						log.error("新增失败，路由已存在");
-					}
-				}, error -> log.error("新增失败，错误信息", error)));
+					.subscribe(success -> {
+						if (success) {
+							log.info("新增成功");
+						}
+						else {
+							log.error("新增失败，路由已存在");
+						}
+					}, error -> log.error("新增失败，错误信息", error))
+			);
 	}
 
 	private Collection<RouteDefinition> pullRouterInfo() {
