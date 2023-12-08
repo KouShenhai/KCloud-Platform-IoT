@@ -47,8 +47,8 @@ public class CacheTest {
 
 	@Test
 	public void mapCacheTest() {
-		redisUtil.hSet("tenantt", "ttt", "333");
-		Object o = redisUtil.hGet("tenantt", "ttt");
+		//redisUtil.hSet("tenantt", "ttt", "333");
+		Object o = redisUtil.hGet("tenantt3", "333");
 		log.info("获取值：{}", o);
 	}
 
