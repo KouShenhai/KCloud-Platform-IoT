@@ -19,18 +19,18 @@ package org.laokou.admin.common.utils;
 
 import org.laokou.admin.domain.resource.Resource;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.FileUtil;
+import org.laokou.common.core.utils.FileUtil;
 
 /**
  * @author laokou
  */
 public class BusinessUtil {
 
-    public static void checkResource(Resource resource) {
-        String fileExt = FileUtil.getFileExt(resource.getUrl());
-        if (!FileUtil.checkFileExt(resource.getCode(), fileExt)) {
-            throw new SystemException("资源格式错误");
-        }
-    }
+	public static void checkResource(Resource resource) {
+		String fileExt = FileUtil.getFileExt(resource.getUrl());
+		if (!FileUtil.checkFileExt(resource.getCode(), fileExt)) {
+			throw new SystemException("资源格式错误");
+		}
+	}
 
 }

@@ -28,7 +28,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class ResourceInsertCmd extends CommonCommand {
 
-    @Valid
-    private ResourceCO resourceCO;
+	@Valid
+	private ResourceCO resourceCO;
 
 }

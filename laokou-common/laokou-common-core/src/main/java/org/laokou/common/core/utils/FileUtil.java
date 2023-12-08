@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.i18n.utils;
+package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
 import org.laokou.common.i18n.common.Constant;
@@ -68,7 +68,7 @@ public class FileUtil {
 
 	/**
 	 * 获取文件后缀
-     */
+	 */
 	public static String getFileExt(String fileName) {
 		return fileName.substring(fileName.lastIndexOf(Constant.DOT));
 	}
