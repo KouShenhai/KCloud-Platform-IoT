@@ -58,7 +58,7 @@ public class ReactiveRedisAutoConfig {
 	}
 
 	@Bean
-	@ConditionalOnMissingBean(name = "reactiveStringRedisTemplate")
+	@ConditionalOnMissingBean(value = ReactiveStringRedisTemplate.class)
 	public ReactiveStringRedisTemplate reactiveStringRedisTemplate(
 			ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
 		return new ReactiveStringRedisTemplate(reactiveRedisConnectionFactory);

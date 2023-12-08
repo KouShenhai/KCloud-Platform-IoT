@@ -529,24 +529,23 @@ public class ElasticsearchTemplate {
 	 * @param indexName 索引名称
 	 * @param indexAlias 别名
 	 * @param clazz 类型
-	 * @return Boolean
 	 * @throws IOException IOException
 	 */
-	public Boolean createIndex(String indexName, String indexAlias, Class<?> clazz) throws IOException {
+	public void createIndex(String indexName, String indexAlias, Class<?> clazz) throws IOException {
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (indexExists) {
 			log.error("索引：{} -> 索引已存在，创建索引失败", indexName);
-			return false;
+			return;
 		}
 		// 创建索引
 		boolean createResult = createIndexAndCreateMapping(indexName, indexAlias, FieldMappingUtil.getFieldInfo(clazz));
 		if (!createResult) {
 			log.info("索引：{} -> 创建索引失败", indexName);
-			return false;
+			return;
 		}
 		log.info("索引：{} -> 创建索引成功", indexName);
-		return true;
+
 	}
 
 	/**

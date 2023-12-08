@@ -20,6 +20,7 @@ package org.laokou.gateway.factory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,13 +32,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class IpWhiteGatewayFilterFactory extends AbstractGatewayFilterFactory<Config> {
 
+	private final ReactiveRedisTemplate<String, Object> reactiveRedisTemplate;
+
 	@Override
 	public GatewayFilter apply(Config config) {
+		reactiveRedisTemplate.opsForHash().put("tenantt3", "333", "n33").subscribe();
+		reactiveRedisTemplate.opsForHash().get("tenantt", "ttt").subscribe(r -> log.info("信息,{}", r));
 		return Config.apply(config, true);
 	}
 
-	public IpWhiteGatewayFilterFactory() {
+	public IpWhiteGatewayFilterFactory(ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
 		super(Config.class);
+		this.reactiveRedisTemplate = reactiveRedisTemplate;
 	}
 
 }

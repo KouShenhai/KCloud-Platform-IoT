@@ -48,18 +48,18 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.DEFAULT_TIMEZONE;
 @Slf4j
 public class HttpMessageConverterConfig {
 
+	// @formatter:off
 	@Bean("jackson2HttpMessageConverter")
 	@Order(Ordered.LOWEST_PRECEDENCE - 10000)
 	public MappingJackson2HttpMessageConverter jackson2HttpMessageConverter() {
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
 		ObjectMapper mapper = new ObjectMapper();
+		// 反序列化时，属性不存在的兼容处理
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		// 时区
 		TimeZone timeZone = TimeZone.getTimeZone(DEFAULT_TIMEZONE);
-		DateTimeFormatter dateTimeFormatter = DateUtil
-			.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-				DateUtil.getTimePattern(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS));
+		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS));
 		simpleDateFormat.setTimeZone(timeZone);
 		mapper.setDateFormat(simpleDateFormat);
 		mapper.setTimeZone(timeZone);
@@ -79,5 +79,6 @@ public class HttpMessageConverterConfig {
 		log.info("jackson配置加载完毕");
 		return converter;
 	}
+	// @formatter:on
 
 }

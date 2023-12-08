@@ -17,8 +17,10 @@
 
 package org.laokou.admin;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.boot.convert.DurationStyle;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
@@ -30,14 +32,24 @@ import java.time.Duration;
  */
 @Slf4j
 @SpringBootTest
+@RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class CacheTest {
+
+	private final RedisUtil redisUtil;
 
 	@Test
 	public void timeTest() {
 		String value = "10s";
 		Duration duration = DurationStyle.detectAndParse(value);
 		log.info("获取值：{}", duration.toMillis());
+	}
+
+	@Test
+	public void mapCacheTest() {
+		redisUtil.hSet("tenantt", "ttt", "333");
+		Object o = redisUtil.hGet("tenantt", "ttt");
+		log.info("获取值：{}", o);
 	}
 
 }

@@ -40,6 +40,11 @@ public enum LockType {
 	/**
 	 * 写锁
 	 */
-	WRITE
+	WRITE,
+
+	/**
+	 * 强一致性锁
+	 */
+	FENCED
 
 }

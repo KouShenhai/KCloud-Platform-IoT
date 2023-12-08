@@ -17,11 +17,11 @@
 
 package org.laokou.gateway;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestConstructor;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
@@ -29,9 +29,8 @@ import java.util.List;
  * @author laokou
  */
 @Slf4j
-@SpringBootTest
-@RequiredArgsConstructor
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+@RunWith(SpringRunner.class)
+@WebFluxTest
 public class WhiteBlackTest {
 
 	@Test

@@ -40,6 +40,7 @@ public class RedissonLock extends AbstractLock<RLock> {
 			case FAIR -> redisUtil.getFairLock(key);
 			case READ -> redisUtil.getReadLock(key);
 			case WRITE -> redisUtil.getWriteLock(key);
+			case FENCED -> redisUtil.getFencedLock(key);
 		};
 	}
 

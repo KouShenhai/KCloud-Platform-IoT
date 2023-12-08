@@ -41,6 +41,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Map;
 
+import static org.laokou.common.lock.enums.LockType.FENCED;
+
 /**
  * @author laokou
  */
@@ -64,7 +66,7 @@ public class ResourceController {
 	@TraceLog
 	@Operation(summary = "资源管理", description = "同步资源")
 	@OperateLog(module = "资源管理", operation = "同步资源")
-	@Lock4j(key = "resource_sync_lock")
+	@Lock4j(key = "resource_sync_lock", type = FENCED)
 	@PreAuthorize("hasAuthority('resource:sync')")
 	public Result<Boolean> sync() {
 		return resourceServiceI.sync(new ResourceSyncCmd());

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.idempotent.aspect;
+package org.laokou.common.idempotent.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +45,7 @@ import java.util.Collections;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class IdempotentAspect {
+public class IdempotentAop {
 
 	private final RedisUtil redisUtil;
 
