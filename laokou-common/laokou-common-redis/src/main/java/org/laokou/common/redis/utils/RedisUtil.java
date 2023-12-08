@@ -62,6 +62,10 @@ public class RedisUtil {
 		return redissonClient.getLock(key);
 	}
 
+	public RLock getFencedLock(String key) {
+		return redissonClient.getFencedLock(key);
+	}
+
 	public RLock getFairLock(String key) {
 		return redissonClient.getFairLock(key);
 	}
@@ -124,14 +128,14 @@ public class RedisUtil {
 
 	public void lSet(String key, List<Object> objList, long expire) {
 		RList<Object> rList = redissonClient.getList(key);
-		rList.addAll(objList);
 		rList.expireIfNotSet(Duration.ofSeconds(expire));
+		rList.addAll(objList);
 	}
 
 	public void lSet(String key, Object obj, long expire) {
 		RList<Object> rList = redissonClient.getList(key);
-		rList.add(obj);
 		rList.expireIfNotSet(Duration.ofSeconds(expire));
+		rList.add(obj);
 	}
 
 	public int lSize(String key) {
@@ -192,9 +196,8 @@ public class RedisUtil {
 
 	public long addAndGet(String key, long value) {
 		RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
-		long newValue = atomicLong.addAndGet(value);
 		atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
-		return newValue;
+		return atomicLong.addAndGet(value);
 	}
 
 	public Set<String> keys(String pattern) {
@@ -210,9 +213,9 @@ public class RedisUtil {
 	}
 
 	public void hSet(String key, String field, Object value, long expire) {
-		RMap<Object, Object> map = redissonClient.getMap(key);
-		map.put(field, value);
+		RMap<String, Object> map = redissonClient.getMap(key);
 		map.expireIfNotSet(Duration.ofSeconds(expire));
+		map.put(field, value);
 	}
 
 	public void hSet(String key, String field, Object value) {

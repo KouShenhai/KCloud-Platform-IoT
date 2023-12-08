@@ -43,13 +43,6 @@ public final class RedisKeyUtil {
 	}
 
 	/**
-	 * 数据缓存Key
-	 */
-	public static String getDataCacheKey(String name) {
-		return name + ":cache";
-	}
-
-	/**
 	 * 布隆过滤器Key
 	 */
 	public static String getBloomFilterKey() {
@@ -96,13 +89,6 @@ public final class RedisKeyUtil {
 	 */
 	public static String getRouteDefinitionHashKey() {
 		return "route:definition";
-	}
-
-	/**
-	 * 数据缓存Key
-	 */
-	public static String getDataCacheHashKey(String name) {
-		return name + ":cache";
 	}
 
 	/**

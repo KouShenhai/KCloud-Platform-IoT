@@ -54,7 +54,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -186,7 +185,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 			try {
 				elasticsearchTemplate.createIndex(index(ym), RESOURCE_INDEX, ResourceIndex.class);
 			}
-			catch (IOException e) {
+			catch (Exception e) {
 				log.info("错误信息", e);
 				throw new SystemException("索引创建失败");
 			}
@@ -198,7 +197,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 			try {
 				elasticsearchTemplate.deleteIndex(index(ym));
 			}
-			catch (IOException e) {
+			catch (Exception e) {
 				log.info("错误信息", e);
 				throw new SystemException("索引删除失败");
 			}
@@ -226,7 +225,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 			try {
 				elasticsearchTemplate.syncBatchIndex(index(k), JacksonUtil.toJsonStr(v));
 			}
-			catch (IOException e) {
+			catch (Exception e) {
 				log.info("错误信息", e);
 				throw new SystemException("索引同步失败");
 			}

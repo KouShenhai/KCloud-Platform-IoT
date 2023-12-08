@@ -19,6 +19,7 @@ package org.laokou.common.redis.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -27,7 +28,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.redisson.codec.JsonJacksonCodec;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,11 +45,14 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 		super(objectMapper());
 	}
 
+	// @formatter:off
+	/**
+	 * 解决查询缓存转换异常的问题
+	 * @return ObjectMapper
+	 */
 	public static ObjectMapper objectMapper() {
-		// 解决查询缓存转换异常的问题
 		ObjectMapper objectMapper = new ObjectMapper();
-		DateTimeFormatter dateTimeFormatter = DateUtil
-			.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
+		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
 		// Long类型转String类型
 		JavaTimeModule javaTimeModule = new JavaTimeModule();
 		javaTimeModule.addSerializer(Long.class, ToStringSerializer.instance);
@@ -58,9 +61,18 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 		javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
 		javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
 		objectMapper.registerModule(javaTimeModule);
-		objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+		// 所有属性访问器（字段、getter和setter）,不自动检测可见属性
+		objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+		// 无论访问级别如何，将自动检测所有字段属性
+		objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+		// 对于所有非final类型，使用LaissezFaire子类型验证器来推断类型
 		objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, NON_FINAL, JsonTypeInfo.As.PROPERTY);
+		// 反序列化时，属性不存在的兼容处理
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		// 自动查找并注册相关模块
+		objectMapper.findAndRegisterModules();
 		return objectMapper;
 	}
+	// @formatter:on
 
 }

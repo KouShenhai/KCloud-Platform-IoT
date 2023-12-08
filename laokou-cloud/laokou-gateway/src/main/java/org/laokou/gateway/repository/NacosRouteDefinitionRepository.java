@@ -73,6 +73,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		this.ROUTER_ERROR = MessageUtil.getMessage(ROUTE_NOT_EXIST);
 	}
 
+	// @formatter:off
 	@PostConstruct
 	public void init() throws NacosException {
 		// Spring Cloud Gateway 动态路由的 order 是路由匹配的顺序，值越小，优先级越高。当多个路由匹配同一个请求时
@@ -123,9 +124,16 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	private Flux<RouteDefinition> routeDefinitions() {
 		return Flux.fromIterable(pullRouterInfo())
 			.publishOn(Schedulers.boundedElastic())
-			.doOnNext(
-					route -> reactiveHashOperations.put(RedisKeyUtil.getRouteDefinitionHashKey(), route.getId(), route)
-						.subscribe(success -> log.info("新增成功"), error -> log.error("新增失败,错误信息", error)));
+			.doOnNext(route -> reactiveHashOperations.putIfAbsent(RedisKeyUtil.getRouteDefinitionHashKey(), route.getId(), route)
+					.subscribe(success -> {
+						if (success) {
+							log.info("新增成功");
+						}
+						else {
+							log.error("新增失败，路由已存在");
+						}
+					}, error -> log.error("新增失败，错误信息", error))
+			);
 	}
 
 	private Collection<RouteDefinition> pullRouterInfo() {
@@ -141,5 +149,6 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			throw new SystemException(ROUTER_ERROR);
 		}
 	}
+	// @formatter:on
 
 }

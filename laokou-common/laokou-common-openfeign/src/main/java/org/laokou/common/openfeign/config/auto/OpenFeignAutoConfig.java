@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.idempotent.aspect.IdempotentAspect;
+import org.laokou.common.idempotent.aop.IdempotentAop;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
@@ -73,7 +73,7 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 				idempotentKey = idempotentUtil.getIdempotentKey();
 				idMap.put(uniqueKey, idempotentKey);
 			}
-			template.header(IdempotentAspect.REQUEST_ID, idempotentKey);
+			template.header(IdempotentAop.REQUEST_ID, idempotentKey);
 			log.info("OpenFeign分布式调用，Request-Id：{}", idMap.get(uniqueKey));
 		}
 		log.info("OpenFeign分布式调用，Authorization：{}", authorization);
