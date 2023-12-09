@@ -325,6 +325,10 @@
                     <target>${maven.compiler.target}</target>
                     <encoding>UTF-8</encoding>
                     <compilerArgs>
+                        <arg>-Xlint:-options</arg>
+                        <arg>-Xlint:varargs</arg>
+                        <arg>-Xlint:rawtypes</arg>
+                        <arg>-Xlint:unchecked</arg>
                         <arg>-Xlint:deprecation</arg>
                         <arg>-parameters</arg>
                     </compilerArgs>
