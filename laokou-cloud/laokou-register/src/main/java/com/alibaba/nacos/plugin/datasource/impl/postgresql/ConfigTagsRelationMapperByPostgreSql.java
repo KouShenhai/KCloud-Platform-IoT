@@ -47,7 +47,7 @@ import java.util.Map;
  * @author laokou
  **/
 
-public class ConfigTagsRelationMapperByMySql extends AbstractMapper implements ConfigTagsRelationMapper {
+public class ConfigTagsRelationMapperByPostgreSql extends AbstractMapper implements ConfigTagsRelationMapper {
     
     @Override
     public String findConfigInfo4PageFetchRows(Map<String, String> params, int tagSize, int startRow, int pageSize) {

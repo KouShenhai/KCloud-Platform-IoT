@@ -35,24 +35,26 @@ package com.alibaba.nacos.plugin.datasource.impl.postgresql;
 
 import com.alibaba.nacos.plugin.datasource.constants.DataSourceConstant;
 import com.alibaba.nacos.plugin.datasource.mapper.AbstractMapper;
-import com.alibaba.nacos.plugin.datasource.mapper.GroupCapacityMapper;
+import com.alibaba.nacos.plugin.datasource.mapper.ConfigInfoTagMapper;
 
 /**
- * The postgresql implementation of {@link GroupCapacityMapper}.
+ * The postgresql implementation of ConfigInfoTagMapper.
  *
- * @author lixiaoshuang
+ * @author hyx
  * @author laokou
- */
-public class GroupCapacityMapperByMysql extends AbstractMapper implements GroupCapacityMapper {
+ **/
+
+public class ConfigInfoTagMapperByPostgreSql extends AbstractMapper implements ConfigInfoTagMapper {
+
+    @Override
+    public String findAllConfigInfoTagForDumpAllFetchRows(int startRow, int pageSize) {
+        return " SELECT t.id,data_id,group_id,tenant_id,tag_id,app_name,content,md5,gmt_modified "
+                + " FROM (  SELECT id FROM config_info_tag  ORDER BY id LIMIT " + startRow + "," + pageSize + " ) "
+                + "g, config_info_tag t  WHERE g.id = t.id  ";
+    }
 
     @Override
     public String getDataSource() {
         return DataSourceConstant.POSTGRESQL;
     }
-
-    @Override
-    public String selectGroupInfoBySize() {
-        return "SELECT id, group_id FROM group_capacity WHERE id > ? LIMIT ?";
-    }
 }
-

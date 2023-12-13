@@ -35,22 +35,22 @@ package com.alibaba.nacos.plugin.datasource.impl.postgresql;
 
 import com.alibaba.nacos.plugin.datasource.constants.DataSourceConstant;
 import com.alibaba.nacos.plugin.datasource.mapper.AbstractMapper;
-import com.alibaba.nacos.plugin.datasource.mapper.ConfigInfoTagMapper;
+import com.alibaba.nacos.plugin.datasource.mapper.ConfigInfoBetaMapper;
 
 /**
- * The postgresql implementation of ConfigInfoTagMapper.
+ * The postgresql implementation of ConfigInfoBetaMapper.
  *
  * @author hyx
  * @author laokou
  **/
 
-public class ConfigInfoTagMapperByMySql extends AbstractMapper implements ConfigInfoTagMapper {
+public class ConfigInfoBetaMapperByPostgreSql extends AbstractMapper implements ConfigInfoBetaMapper {
 
     @Override
-    public String findAllConfigInfoTagForDumpAllFetchRows(int startRow, int pageSize) {
-        return " SELECT t.id,data_id,group_id,tenant_id,tag_id,app_name,content,md5,gmt_modified "
-                + " FROM (  SELECT id FROM config_info_tag  ORDER BY id LIMIT " + startRow + "," + pageSize + " ) "
-                + "g, config_info_tag t  WHERE g.id = t.id  ";
+    public String findAllConfigInfoBetaForDumpAllFetchRows(int startRow, int pageSize) {
+        return " SELECT t.id,data_id,group_id,tenant_id,app_name,content,md5,gmt_modified,beta_ips,encrypted_data_key "
+                + " FROM ( SELECT id FROM config_info_beta  ORDER BY id LIMIT " + startRow + "," + pageSize + " )"
+                + "  g, config_info_beta t WHERE g.id = t.id ";
     }
 
     @Override
