@@ -56,12 +56,13 @@ public class MapUtil {
 		if (uriMap.isEmpty()) {
 			return new HashMap<>(0);
 		}
-		uriMap.forEach((k, v) -> uriMap.put(k,
+		Map<String, Set<String>> maps = new HashMap<>(uriMap.size());
+		uriMap.forEach((k, v) -> maps.put(k,
 				v.stream()
 					.filter(item -> item.contains(serviceId))
 					.map(item -> item.substring(0, item.indexOf(separator)))
 					.collect(Collectors.toSet())));
-		return uriMap;
+		return maps;
 	}
 
 	public static Map<String, Set<String>> toUriMap(Map<String, Set<String>> uriMap, String serviceId) {

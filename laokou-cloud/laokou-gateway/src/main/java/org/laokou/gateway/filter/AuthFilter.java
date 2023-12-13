@@ -27,10 +27,12 @@ import org.laokou.common.nacos.utils.ResponseUtil;
 import org.laokou.gateway.utils.RequestUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutputMessage;
 import org.springframework.cloud.gateway.support.BodyInserterContext;
+import org.springframework.context.event.EventListener;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -187,8 +189,11 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	}
 
 	@Override
-	public void afterPropertiesSet() {
-		uriMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), env.getProperty("spring.application.name"))).orElseGet(HashMap::new);
+	@EventListener(EnvironmentChangeEvent.class)
+	public synchronized void afterPropertiesSet() {
+		// 请查看 ConfigDataContextRefresher
+		log.info("配置文件更新通知");
+		uriMap = MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), env.getProperty("spring.application.name"));
 	}
 
 }
