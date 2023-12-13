@@ -72,6 +72,7 @@ import static org.laokou.gateway.utils.RequestUtil.pathMatcher;
 public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	private final Environment env;
+
 	private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
 
 	private volatile Map<String, Set<String>> uriMap;
@@ -193,7 +194,9 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	public synchronized void afterPropertiesSet() {
 		// 请查看 ConfigDataContextRefresher
 		log.info("配置文件更新通知");
-		uriMap = MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), env.getProperty("spring.application.name"));
+		uriMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
+				env.getProperty("spring.application.name")))
+			.orElseGet(HashMap::new);
 	}
 
 }
