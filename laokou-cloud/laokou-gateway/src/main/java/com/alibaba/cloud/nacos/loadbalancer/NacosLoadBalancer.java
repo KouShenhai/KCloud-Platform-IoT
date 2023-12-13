@@ -51,12 +51,10 @@ import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSuppli
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -155,7 +153,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	private Mono<Response<ServiceInstance>> chooseIp(Request request) {
 		if (request.getContext() instanceof RequestDataContext context) {
 			String path = context.getClientRequest().getUrl().getPath();
-			if (RequestUtil.pathMatcher(path, Collections.singleton(GRACEFUL_SHUTDOWN_URL))) {
+			if (RequestUtil.pathMatcher(HttpMethod.GET.name(), path,
+					Map.of(HttpMethod.GET.name(), Collections.singleton(GRACEFUL_SHUTDOWN_URL)))) {
 				HttpHeaders headers = context.getClientRequest().getHeaders();
 				String serviceId = Objects.requireNonNull(headers.get(SERVICE_ID)).getFirst();
 				List<ServiceInstance> instances = SpringContextUtil.getBean(ServiceUtil.class).getInstances(serviceId);

@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package org.laokou.common.core.config;
@@ -23,12 +23,17 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static org.laokou.common.core.config.OAuth2ResourceServerProperties.PREFIX;
 
+// @formatter:off
 /**
  * @author laokou
+ * 格式 -> 路径=服务（多个服务用逗号,隔开）
+ * 举例 -> /actuator/**=laokou-admin,laokou-gateway
  */
+// @formatter:on
 @Data
 @Component
 @ConfigurationProperties(prefix = PREFIX)
@@ -43,7 +48,7 @@ public class OAuth2ResourceServerProperties {
 	@Data
 	public static class RequestMatcher {
 
-		private Map<String, String> ignorePatterns = new HashMap<>();
+		private Map<String, Set<String>> ignorePatterns = new HashMap<>();
 
 	}
 

@@ -18,6 +18,7 @@ package org.laokou.common.security.config.auto;
 
 import lombok.Data;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
+import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -28,6 +29,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -35,7 +38,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.Optional;
+import java.util.*;
 
 import static org.laokou.common.core.config.OAuth2ResourceServerProperties.PREFIX;
 import static org.laokou.common.i18n.common.Constant.ENABLED;
@@ -60,11 +63,12 @@ public class OAuth2ResourceServerAutoConfig {
 	@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityFilterChain resourceFilterChain(GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector,
-			OAuth2ResourceServerProperties properties, HttpSecurity http) throws Exception {
-		OAuth2ResourceServerProperties.RequestMatcher requestMatcher = Optional
-			.ofNullable(properties.getRequestMatcher())
-			.orElseGet(OAuth2ResourceServerProperties.RequestMatcher::new);
-		//Set<String> patterns = Optional.ofNullable(requestMatcher.getPatterns()).orElseGet(HashSet::new);
+			Environment env, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)
+			throws Exception {
+		Map<String, Set<String>> uriMap = Optional
+			.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
+					env.getProperty("spring.application.name")))
+			.orElseGet(HashMap::new);
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
 					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
@@ -76,10 +80,39 @@ public class OAuth2ResourceServerAutoConfig {
 			.httpBasic(AbstractHttpConfigurer::disable)
 			// 基于token，关闭session
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//			.authorizeHttpRequests(request -> request.requestMatchers(patterns.toArray(String[]::new))
-//				.permitAll()
-//				.anyRequest()
-//				.authenticated())
+			.authorizeHttpRequests(request -> request
+				.requestMatchers(HttpMethod.GET,
+						Optional.ofNullable(uriMap.get(HttpMethod.GET.name()))
+							.orElseGet(HashSet::new)
+							.toArray(String[]::new))
+				.permitAll()
+				.requestMatchers(HttpMethod.POST,
+						Optional.ofNullable(uriMap.get(HttpMethod.POST.name()))
+							.orElseGet(HashSet::new)
+							.toArray(String[]::new))
+				.permitAll()
+				.requestMatchers(HttpMethod.PUT,
+						Optional.ofNullable(uriMap.get(HttpMethod.PUT.name()))
+							.orElseGet(HashSet::new)
+							.toArray(String[]::new))
+				.permitAll()
+				.requestMatchers(HttpMethod.DELETE,
+						Optional.ofNullable(uriMap.get(HttpMethod.DELETE.name()))
+							.orElseGet(HashSet::new)
+							.toArray(String[]::new))
+				.permitAll()
+				.requestMatchers(HttpMethod.HEAD,
+						Optional.ofNullable(uriMap.get(HttpMethod.HEAD.name()))
+							.orElseGet(HashSet::new)
+							.toArray(String[]::new))
+				.permitAll()
+				.requestMatchers(HttpMethod.PATCH,
+						Optional.ofNullable(uriMap.get(HttpMethod.PATCH.name()))
+							.orElseGet(HashSet::new)
+							.toArray(String[]::new))
+				.permitAll()
+				.anyRequest()
+				.authenticated())
 			// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
 			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 			.oauth2ResourceServer(

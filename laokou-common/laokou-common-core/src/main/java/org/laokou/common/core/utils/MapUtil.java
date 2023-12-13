@@ -27,6 +27,7 @@ import org.yaml.snakeyaml.util.UriEncoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.Constant.*;
 
@@ -48,6 +49,23 @@ public class MapUtil {
 			return EMPTY;
 		}
 		return Joiner.on(on).withKeyValueSeparator(separator).join(map);
+	}
+
+	public static Map<String, Set<String>> toUriMap(Map<String, Set<String>> uriMap, String serviceId,
+			String separator) {
+		if (uriMap.isEmpty()) {
+			return new HashMap<>(0);
+		}
+		uriMap.forEach((k, v) -> uriMap.put(k,
+				v.stream()
+					.filter(item -> item.contains(serviceId))
+					.map(item -> item.substring(0, item.indexOf(separator)))
+					.collect(Collectors.toSet())));
+		return uriMap;
+	}
+
+	public static Map<String, Set<String>> toUriMap(Map<String, Set<String>> uriMap, String serviceId) {
+		return toUriMap(uriMap, serviceId, EQUAL);
 	}
 
 	public static Map<String, String> toMap(String str, String on, String separator) {
