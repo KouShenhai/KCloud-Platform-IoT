@@ -27,9 +27,7 @@ import org.laokou.common.nacos.utils.ServiceUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.cloud.client.serviceregistry.Registration;
-import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.event.EventListener;
 
 /**
  * @author laokou
@@ -51,12 +49,6 @@ public class NacosAutoConfig {
 	@Bean
 	public ProtocolProxy protocolProxy(ServerProperties serverProperties) {
 		return new ProtocolProxyDelegate(serverProperties.getSsl().isEnabled());
-	}
-
-	@EventListener(EnvironmentChangeEvent.class)
-	public void environmentChangeEventListener() {
-		// 请查看 ConfigDataContextRefresher
-		log.info("配置文件更新通知");
 	}
 
 	@PreDestroy

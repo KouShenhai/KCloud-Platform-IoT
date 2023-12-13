@@ -16,10 +16,12 @@
  */
 package org.laokou.gateway.utils;
 
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.AntPathMatcher;
 
+import java.util.Map;
 import java.util.Set;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY;
@@ -41,7 +43,11 @@ public class RequestUtil {
 		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
 	}
 
-	public static boolean pathMatcher(String requestUri, Set<String> uris) {
+	public static boolean pathMatcher(String requestMethod, String requestUri, Map<String, Set<String>> uriMap) {
+		Set<String> uris = uriMap.get(requestMethod);
+		if (CollectionUtil.isEmpty(uris)) {
+			return false;
+		}
 		for (String url : uris) {
 			if (ANT_PATH_MATCHER.match(url, requestUri)) {
 				return true;

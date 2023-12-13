@@ -72,11 +72,6 @@ public final class OAuth2AuthorizationServerProperties implements InitializingBe
 	 */
 	private final Endpoint endpoint = new Endpoint();
 
-	/**
-	 * Ignore URL matching
-	 */
-	private Set<String> ignorePatterns = new HashSet<>();
-
 	@Override
 	public void afterPropertiesSet() {
 		validate();

@@ -16,21 +16,25 @@
  */
 package org.laokou.gateway.filter;
 
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
 import org.laokou.common.nacos.utils.ResponseUtil;
 import org.laokou.gateway.utils.RequestUtil;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutputMessage;
 import org.springframework.cloud.gateway.support.BodyInserterContext;
+import org.springframework.context.event.EventListener;
 import org.springframework.core.Ordered;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -48,14 +52,12 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
 import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
-import static org.laokou.gateway.filter.AuthFilter.PREFIX;
 import static org.laokou.gateway.utils.RequestUtil.pathMatcher;
 
 /**
@@ -63,16 +65,17 @@ import static org.laokou.gateway.utils.RequestUtil.pathMatcher;
  *
  * @author laokou
  */
-@Component
 @Slf4j
+@Component
 @RefreshScope
-@Data
-@ConfigurationProperties(prefix = PREFIX)
-public class AuthFilter implements GlobalFilter, Ordered {
+@RequiredArgsConstructor
+public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
-	private Set<String> uris;
+	private final Environment env;
 
-	public static final String PREFIX = "spring.cloud.gateway.ignore";
+	private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
+
+	private volatile Map<String, Set<String>> uriMap;
 
 	// @formatter:off
 	@Override
@@ -82,7 +85,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 		// 获取uri
 		String requestUri = request.getPath().pathWithinApplication().value();
 		// 请求放行，无需验证权限
-		if (pathMatcher(requestUri, uris)) {
+		if (pathMatcher(request.getMethod().name() ,requestUri, uriMap)) {
 			// 无需验证权限的URL，需要将令牌置空
 			return chain.filter(exchange.mutate()
 					.request(request.mutate().header(AUTHORIZATION, EMPTY).build())
@@ -139,7 +142,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 			// 获取请求密码并解密
 			Map<String, String> paramMap = MapUtil.parseParamMap(s);
 			if (paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
-				log.info("密码模式认证...");
+				log.info("密码模式认证");
 				try {
 					String privateKey = RsaUtil.getPrivateKey();
 					String password = paramMap.get(PASSWORD);
@@ -184,6 +187,16 @@ public class AuthFilter implements GlobalFilter, Ordered {
 				return outputMessage.getBody();
 			}
 		};
+	}
+
+	@Override
+	@EventListener(EnvironmentChangeEvent.class)
+	public synchronized void afterPropertiesSet() {
+		// 请查看 ConfigDataContextRefresher
+		log.info("配置文件更新通知");
+		uriMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
+				env.getProperty("spring.application.name")))
+			.orElseGet(HashMap::new);
 	}
 
 }

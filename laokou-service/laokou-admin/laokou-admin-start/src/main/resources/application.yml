@@ -67,21 +67,6 @@ spring:
       enabled: true
       max-file-size: -1
       max-request-size: -1
-  security:
-    oauth2:
-      resource-server:
-        enabled: true
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /v3/api-docs/**=laokou-admin
-              - /swagger-ui.html=laokou-admin
-              - /swagger-ui/**=laokou-admin
-              - /actuator/**=laokou-admin
-              - /error=laokou-admin
-              - /v1/logouts=laokou-admin
-              - /v1/tenants/option-list=laokou-admin
-              - /v1/tenants/id=laokou-admin
   cloud:
     # sentinel
     sentinel:
