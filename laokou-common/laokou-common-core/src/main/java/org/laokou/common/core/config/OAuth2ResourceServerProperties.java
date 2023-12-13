@@ -15,18 +15,18 @@
  * 
  */
 
-package org.laokou.common.security.config;
+package org.laokou.common.core.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.security.oauth2.server.authorization.settings.ConfigurationSettingNames;
 import org.springframework.stereotype.Component;
-import java.util.Set;
 
-import static org.laokou.common.security.config.OAuth2ResourceServerProperties.PREFIX;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.laokou.common.core.config.OAuth2ResourceServerProperties.PREFIX;
 
 /**
- * {@link ConfigurationSettingNames}
  * @author laokou
  */
 @Data
@@ -43,7 +43,7 @@ public class OAuth2ResourceServerProperties {
 	@Data
 	public static class RequestMatcher {
 
-		private Set<String> patterns;
+		private Map<String, String> ignorePatterns = new HashMap<>();
 
 	}
 

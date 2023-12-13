@@ -65,7 +65,7 @@ public class MqttServer implements Server {
 		client.setManualAcks(springMqttProperties.isManualAcks());
 		client.setCallback(new MqttMessageCallback(client, mqttStrategy));
 		client.connect(options());
-		client.subscribe(springMqttProperties.getTopics().toArray(new String[0]), new int[] { 2 });
+		client.subscribe(springMqttProperties.getTopics().toArray(String[]::new), new int[] { 2 });
 		running = true;
 		log.info("MQTT启动成功");
 	}

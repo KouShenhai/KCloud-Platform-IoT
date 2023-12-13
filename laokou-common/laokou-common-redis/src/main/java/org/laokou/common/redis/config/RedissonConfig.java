@@ -115,7 +115,7 @@ public class RedissonConfig {
 				nodes.add(getProtocolPrefix(isSsl) + node);
 			}
 		}
-		return nodes.toArray(new String[0]);
+		return nodes.toArray(String[]::new);
 	}
 
 }

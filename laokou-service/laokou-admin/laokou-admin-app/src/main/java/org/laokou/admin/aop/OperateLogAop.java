@@ -120,7 +120,7 @@ public class OperateLogAop {
 				obj = null;
 			}
 			else {
-				obj = params.get(0);
+				obj = params.getFirst();
 			}
 			if (Objects.isNull(obj)) {
 				event.setRequestParams(JacksonUtil.EMPTY_JSON);
@@ -129,7 +129,7 @@ public class OperateLogAop {
 				String str = JacksonUtil.toJsonStr(obj);
 				if (RISK.contains(str)) {
 					Map<String, String> map = removeAny(JacksonUtil.toMap(str, String.class, String.class),
-							defaultConfigProperties.getRemoveParams().toArray(new String[0]));
+							defaultConfigProperties.getRemoveParams().toArray(String[]::new));
 					event.setRequestParams(JacksonUtil.toJsonStr(map, true));
 				}
 				else {

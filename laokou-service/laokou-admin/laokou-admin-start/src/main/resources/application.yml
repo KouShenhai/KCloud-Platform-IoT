@@ -72,15 +72,16 @@ spring:
       resource-server:
         enabled: true
         request-matcher:
-          patterns:
-            - /v3/api-docs/**
-            - /swagger-ui.html
-            - /swagger-ui/**
-            - /actuator/**
-            - /error
-            - /v1/logouts
-            - /v1/tenants/option-list
-            - /v1/tenants/id
+          ignore-patterns:
+            GET:
+              - /v3/api-docs/**=laokou-admin
+              - /swagger-ui.html=laokou-admin
+              - /swagger-ui/**=laokou-admin
+              - /actuator/**=laokou-admin
+              - /error=laokou-admin
+              - /v1/logouts=laokou-admin
+              - /v1/tenants/option-list=laokou-admin
+              - /v1/tenants/id=laokou-admin
   cloud:
     # sentinel
     sentinel:
