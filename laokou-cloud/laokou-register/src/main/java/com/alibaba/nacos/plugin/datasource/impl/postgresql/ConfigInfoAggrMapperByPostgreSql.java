@@ -35,17 +35,22 @@ package com.alibaba.nacos.plugin.datasource.impl.postgresql;
 
 import com.alibaba.nacos.plugin.datasource.constants.DataSourceConstant;
 import com.alibaba.nacos.plugin.datasource.mapper.AbstractMapper;
-import com.alibaba.nacos.plugin.datasource.mapper.TenantInfoMapper;
+import com.alibaba.nacos.plugin.datasource.mapper.ConfigInfoAggrMapper;
 
 /**
- * The postgresql implementation of TenantInfoMapper.
+ * The postgresql implementation of ConfigInfoAggrMapper.
  *
  * @author hyx
  * @author laokou
  **/
-
-public class TenantInfoMapperByMySql extends AbstractMapper implements TenantInfoMapper {
-
+public class ConfigInfoAggrMapperByPostgreSql extends AbstractMapper implements ConfigInfoAggrMapper {
+    
+    @Override
+    public String findConfigInfoAggrByPageFetchRows(int startRow, int pageSize) {
+        return "SELECT data_id,group_id,tenant_id,datum_id,app_name,content FROM config_info_aggr WHERE data_id= ? AND "
+                + "group_id= ? AND tenant_id= ? ORDER BY datum_id LIMIT " + startRow + "," + pageSize;
+    }
+    
     @Override
     public String getDataSource() {
         return DataSourceConstant.POSTGRESQL;
