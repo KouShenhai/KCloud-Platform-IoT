@@ -17,8 +17,8 @@
 package org.laokou.common.security.config.auto;
 
 import lombok.Data;
+import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
-import org.laokou.common.security.config.OAuth2ResourceServerProperties;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -35,13 +35,11 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
+import static org.laokou.common.core.config.OAuth2ResourceServerProperties.PREFIX;
 import static org.laokou.common.i18n.common.Constant.ENABLED;
 import static org.laokou.common.i18n.common.Constant.TRUE;
-import static org.laokou.common.security.config.OAuth2ResourceServerProperties.PREFIX;
 
 /**
  * 关闭OAuth2,请在yml配置spring.oauth2.resource-server.enabled=false
@@ -66,7 +64,7 @@ public class OAuth2ResourceServerAutoConfig {
 		OAuth2ResourceServerProperties.RequestMatcher requestMatcher = Optional
 			.ofNullable(properties.getRequestMatcher())
 			.orElseGet(OAuth2ResourceServerProperties.RequestMatcher::new);
-		Set<String> patterns = Optional.ofNullable(requestMatcher.getPatterns()).orElseGet(HashSet::new);
+		//Set<String> patterns = Optional.ofNullable(requestMatcher.getPatterns()).orElseGet(HashSet::new);
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
 					hsts -> hsts.includeSubDomains(true).preload(true).maxAgeInSeconds(31536000)))
@@ -78,10 +76,10 @@ public class OAuth2ResourceServerAutoConfig {
 			.httpBasic(AbstractHttpConfigurer::disable)
 			// 基于token，关闭session
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests(request -> request.requestMatchers(patterns.toArray(String[]::new))
-				.permitAll()
-				.anyRequest()
-				.authenticated())
+//			.authorizeHttpRequests(request -> request.requestMatchers(patterns.toArray(String[]::new))
+//				.permitAll()
+//				.anyRequest()
+//				.authenticated())
 			// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
 			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 			.oauth2ResourceServer(

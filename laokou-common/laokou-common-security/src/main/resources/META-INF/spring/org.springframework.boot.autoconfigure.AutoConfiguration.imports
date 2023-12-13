@@ -1,4 +1,4 @@
 org.laokou.common.security.config.auto.OAuth2ResourceServerAutoConfig
 org.laokou.common.security.config.auto.OAuth2AuthorizationAutoConfig
 org.laokou.common.security.config.GlobalOpaqueTokenIntrospector
-org.laokou.common.security.config.OAuth2ResourceServerProperties
+org.laokou.common.core.config.OAuth2ResourceServerProperties
