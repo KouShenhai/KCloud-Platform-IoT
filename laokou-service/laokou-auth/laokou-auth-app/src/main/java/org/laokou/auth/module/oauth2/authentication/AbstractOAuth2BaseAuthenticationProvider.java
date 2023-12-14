@@ -29,6 +29,7 @@ import org.laokou.auth.domain.gateway.*;
 import org.laokou.auth.domain.log.LoginLog;
 import org.laokou.auth.domain.source.Source;
 import org.laokou.auth.domain.user.User;
+import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.RequestUtil;
@@ -252,7 +253,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			User user;
 			try {
 				// 多租户查询（多数据源）
-				user = userGateway.getUserByUsername(new Auth(encryptName, tenantId, type));
+				user = userGateway.getUserByUsername(new Auth(encryptName, type));
 			}
 			catch (BadSqlGrammarException e) {
 				log.error("表 boot_sys_user 不存在，错误信息", e);
@@ -308,6 +309,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
+			UserContextHolder.clear();
 		}
 	}
 
@@ -349,6 +351,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		}
 		finally {
 			DynamicDataSourceContextHolder.push(sourceName);
+			UserContextHolder.set(new UserContextHolder.User(tenantId));
 		}
 		return sourceName;
 	}

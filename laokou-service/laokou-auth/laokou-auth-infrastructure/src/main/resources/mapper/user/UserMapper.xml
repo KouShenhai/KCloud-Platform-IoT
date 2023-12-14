@@ -20,7 +20,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.auth.gatewayimpl.database.UserMapper">
 
-    <select id="getUserByUsernameAndTenantId" resultType="org.laokou.auth.gatewayimpl.database.dataobject.UserDO">
+    <select id="getUserByUsername" resultType="org.laokou.auth.gatewayimpl.database.dataobject.UserDO">
         SELECT a.id as id
         ,a.username as username
         ,a.`password` as `password`
@@ -34,7 +34,6 @@
         ,a.tenant_id as tenantId
         FROM boot_sys_user a
         where a.del_flag = 0
-        and a.tenant_id = #{tenantId}
         <if test="type != null and (type == 'authorization_code' or type == 'password') and (username != null and username != '')">
             and a.username = #{username}
         </if>

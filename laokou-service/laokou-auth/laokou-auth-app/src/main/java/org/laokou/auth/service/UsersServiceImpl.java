@@ -74,7 +74,7 @@ public class UsersServiceImpl implements UserDetailsService {
 		// 默认租户查询
 		Long tenantId = DEFAULT_TENANT;
 		String type = AuthorizationGrantType.AUTHORIZATION_CODE.getValue();
-		User user = userGateway.getUserByUsername(new Auth(AesUtil.encrypt(username), tenantId, type));
+		User user = userGateway.getUserByUsername(new Auth(AesUtil.encrypt(username), type));
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String ip = IpUtil.getIpAddr(request);
 		if (Objects.isNull(user)) {
