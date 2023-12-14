@@ -51,8 +51,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.common.i18n.common.Constant.UNDER;
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
-import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
+import static org.laokou.common.mybatisplus.constant.DsConstant.*;
 
 /**
  * @author laokou
@@ -109,7 +108,7 @@ public class UserGatewayImpl implements UserGateway {
 	public User getById(Long id, Long tenantId) {
 		try {
 			LocalDateTime localDateTime = IdGenerator.getLocalDateTime(id);
-			DynamicDataSourceContextHolder.push(USER);
+			DynamicDataSourceContextHolder.push(TENANT);
 			UserDO userDO = userMapper.getDynamicTableById(UserDO.class, id,
 					UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM)), "id", "username", "status",
 					"dept_id", "dept_path", "super_admin");
@@ -138,7 +137,7 @@ public class UserGatewayImpl implements UserGateway {
 				BOOT_SYS_USER);
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture.supplyAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(USER);
+				DynamicDataSourceContextHolder.push(TENANT);
 				return userMapper.getUserListFilter(dynamicTables, userDO, page);
 			}
 			finally {
@@ -147,7 +146,7 @@ public class UserGatewayImpl implements UserGateway {
 		}, taskExecutor);
 		CompletableFuture<Integer> c2 = CompletableFuture.supplyAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(USER);
+				DynamicDataSourceContextHolder.push(TENANT);
 				return userMapper.getUserListTotalFilter(dynamicTables, userDO, page);
 			}
 			finally {
@@ -255,7 +254,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	private Boolean deleteUserById(Long id) {
 		try {
-			DynamicDataSourceContextHolder.push(USER);
+			DynamicDataSourceContextHolder.push(TENANT);
 			return transactionalUtil.defaultExecute(r -> {
 				try {
 					return userMapper.deleteDynamicTableById(id, getUserTableSuffix(id)) > 0;

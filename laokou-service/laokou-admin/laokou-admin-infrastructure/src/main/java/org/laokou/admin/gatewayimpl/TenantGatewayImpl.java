@@ -18,6 +18,7 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
+import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -46,8 +47,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_TENANT;
-import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
+import static org.laokou.common.mybatisplus.constant.DsConstant.*;
 
 /**
  * @author laokou
@@ -85,6 +85,7 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_TENANT)
+	@Master
 	public Datas<Tenant> list(Tenant tenant, PageQuery pageQuery) {
 		IPage<TenantDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<TenantDO> newPage = tenantMapper.getTenantListFilter(page, tenant.getName(), pageQuery);
@@ -147,7 +148,7 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private void insertUser(DeptDO deptDO, Long tenantId) {
 		try {
-			DynamicDataSourceContextHolder.push(USER);
+			DynamicDataSourceContextHolder.push(TENANT);
 			transactionalUtil.defaultExecuteWithoutResult(rollback -> {
 				try {
 					// 初始化超级管理员

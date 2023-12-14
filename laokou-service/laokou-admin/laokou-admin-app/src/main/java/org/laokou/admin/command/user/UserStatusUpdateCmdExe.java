@@ -26,7 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -38,7 +38,7 @@ public class UserStatusUpdateCmdExe {
 	private final UserGateway userGateway;
 
 	public Result<Boolean> execute(UserStatusUpdateCmd cmd) {
-		DynamicDataSourceContextHolder.push(USER);
+		DynamicDataSourceContextHolder.push(TENANT);
 		return Result.of(userGateway.updateInfo(toUser(cmd)));
 	}
 
