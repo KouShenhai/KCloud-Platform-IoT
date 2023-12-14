@@ -15,27 +15,24 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database;
+package org.laokou.auth.domain.source;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
-import org.springframework.stereotype.Repository;
-
-import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-@Repository
-@Mapper
-public interface SourceMapper {
+@Data
+public class Source {
 
-	/**
-	 * 根据租户ID查询数据源名称
-	 * @param tenantId 租户ID
-	 * @return String
-	 */
-	SourceDO getSourceByTenantId(@Param(TENANT_ID) Long tenantId);
+	private String name;
+
+	private String driverClassName;
+
+	private String username;
+
+	private String password;
+
+	private String url;
 
 }

@@ -45,21 +45,23 @@ import com.alibaba.nacos.plugin.datasource.mapper.HistoryConfigInfoMapper;
  **/
 
 public class HistoryConfigInfoMapperByPostgreSql extends AbstractMapper implements HistoryConfigInfoMapper {
-    
-    @Override
-    public String removeConfigHistory() {
-        return "DELETE FROM his_config_info WHERE gmt_modified < ? LIMIT ?";
-    }
 
-    @Override
-    public String pageFindConfigHistoryFetchRows(int pageNo, int pageSize) {
-        final int offset = (pageNo - 1) * pageSize;
-        return  "SELECT nid,data_id,group_id,tenant_id,app_name,src_ip,src_user,op_type,gmt_create,gmt_modified FROM his_config_info "
-                + "WHERE data_id = ? AND group_id = ? AND tenant_id = ? ORDER BY nid DESC  LIMIT " + offset + "," + pageSize;
-    }
+	@Override
+	public String removeConfigHistory() {
+		return "DELETE FROM his_config_info WHERE gmt_modified < ? LIMIT ?";
+	}
 
-    @Override
-    public String getDataSource() {
-        return DataSourceConstant.POSTGRESQL;
-    }
+	@Override
+	public String pageFindConfigHistoryFetchRows(int pageNo, int pageSize) {
+		final int offset = (pageNo - 1) * pageSize;
+		return "SELECT nid,data_id,group_id,tenant_id,app_name,src_ip,src_user,op_type,gmt_create,gmt_modified FROM his_config_info "
+				+ "WHERE data_id = ? AND group_id = ? AND tenant_id = ? ORDER BY nid DESC  LIMIT " + offset + ","
+				+ pageSize;
+	}
+
+	@Override
+	public String getDataSource() {
+		return DataSourceConstant.POSTGRESQL;
+	}
+
 }

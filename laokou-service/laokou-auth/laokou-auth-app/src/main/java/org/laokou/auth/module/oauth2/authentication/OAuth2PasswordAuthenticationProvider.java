@@ -22,6 +22,7 @@ import org.laokou.auth.common.exception.handler.OAuth2ExceptionHandler;
 import org.laokou.auth.domain.gateway.*;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,9 +49,10 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2BaseAuth
 	public OAuth2PasswordAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway,
 			DeptGateway deptGateway, PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway,
 			OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-			SourceGateway sourceGateway, RedisUtil redisUtil, LoginLogGateway loginLogGateway) {
+			SourceGateway sourceGateway, RedisUtil redisUtil, DynamicUtil dynamicUtil,
+			LoginLogGateway loginLogGateway) {
 		super(userGateway, menuGateway, deptGateway, passwordEncoder, captchaGateway, authorizationService,
-				tokenGenerator, sourceGateway, redisUtil, loginLogGateway);
+				tokenGenerator, sourceGateway, redisUtil, dynamicUtil, loginLogGateway);
 	}
 
 	@Override

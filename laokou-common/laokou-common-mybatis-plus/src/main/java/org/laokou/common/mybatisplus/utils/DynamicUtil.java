@@ -15,7 +15,7 @@
  * 
  */
 
-package org.laokou.admin.common.utils;
+package org.laokou.common.mybatisplus.utils;
 
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.hikaricp.HikariDataSourceCreator;
