@@ -39,11 +39,24 @@ spring:
     definition-key: "Process_88888888"
     # 租户表
     tenant-tables:
+      - boot_sys_audit_log
+      - boot_sys_dept
       - boot_sys_dict
+      - boot_sys_login_log
+      - boot_sys_menu
       - boot_sys_message
       - boot_sys_message_detail
+      - boot_sys_operate_log
       - boot_sys_oss
       - boot_sys_oss_log
+      - boot_sys_resource
+      - boot_sys_resource_audit
+      - boot_sys_role
+      - boot_sys_role_dept
+      - boot_sys_role_menu
+      - boot_sys_user
+      - boot_sys_user_role
+      - undo_log
     domain-names:
       - laokou.org
       - laokouyun.org

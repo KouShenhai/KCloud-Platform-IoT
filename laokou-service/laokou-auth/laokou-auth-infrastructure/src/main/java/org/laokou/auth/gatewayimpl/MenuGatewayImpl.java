@@ -21,12 +21,9 @@ import org.laokou.auth.domain.gateway.MenuGateway;
 import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.auth.domain.user.User;
 import org.laokou.auth.gatewayimpl.database.MenuMapper;
-import org.laokou.auth.gatewayimpl.database.TenantMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.laokou.common.i18n.common.Constant.DEFAULT_TENANT;
 
 /**
  * @author laokou
@@ -37,18 +34,12 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	private final MenuMapper menuMapper;
 
-	private final TenantMapper tenantMapper;
-
 	@Override
 	public List<String> getPermissions(User user) {
 		Long userId = user.getId();
-		Long tenantId = user.getTenantId();
 		Integer superAdmin = user.getSuperAdmin();
 		if (superAdmin == SuperAdmin.YES.ordinal()) {
-			if (tenantId == DEFAULT_TENANT) {
-				return menuMapper.getPermissions();
-			}
-			return tenantMapper.getPermissionsByTenantId(tenantId);
+			return menuMapper.getPermissions();
 		}
 		return menuMapper.getPermissionsByUserId(userId);
 	}

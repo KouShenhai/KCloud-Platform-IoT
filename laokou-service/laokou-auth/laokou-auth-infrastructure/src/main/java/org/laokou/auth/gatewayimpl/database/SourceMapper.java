@@ -19,6 +19,7 @@ package org.laokou.auth.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
 import org.springframework.stereotype.Repository;
 
 import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
@@ -35,6 +36,6 @@ public interface SourceMapper {
 	 * @param tenantId 租户ID
 	 * @return String
 	 */
-	String getSourceNameByTenantId(@Param(TENANT_ID) Long tenantId);
+	SourceDO getSourceByTenantId(@Param(TENANT_ID) Long tenantId);
 
 }

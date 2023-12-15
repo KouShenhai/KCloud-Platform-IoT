@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
-import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 import static org.laokou.common.mybatisplus.template.TableTemplate.MIN_TIME;
 
 /**
@@ -40,7 +40,7 @@ public class UserInsertCmdExe {
 		UserCO co = cmd.getUserCO();
 		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME,
 				DateUtil.format(DateUtil.now(), DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS), BOOT_SYS_USER);
-		DynamicDataSourceContextHolder.push(USER);
+		DynamicDataSourceContextHolder.push(TENANT);
 		int count = userMapper.getUserCount(dynamicTables, toUserDO(co));
 		if (count > 0) {
 			throw new SystemException("用户名已存在，请重新输入");

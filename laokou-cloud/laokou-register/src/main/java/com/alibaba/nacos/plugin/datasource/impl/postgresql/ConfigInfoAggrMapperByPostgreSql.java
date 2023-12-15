@@ -44,15 +44,16 @@ import com.alibaba.nacos.plugin.datasource.mapper.ConfigInfoAggrMapper;
  * @author laokou
  **/
 public class ConfigInfoAggrMapperByPostgreSql extends AbstractMapper implements ConfigInfoAggrMapper {
-    
-    @Override
-    public String findConfigInfoAggrByPageFetchRows(int startRow, int pageSize) {
-        return "SELECT data_id,group_id,tenant_id,datum_id,app_name,content FROM config_info_aggr WHERE data_id= ? AND "
-                + "group_id= ? AND tenant_id= ? ORDER BY datum_id LIMIT " + startRow + "," + pageSize;
-    }
-    
-    @Override
-    public String getDataSource() {
-        return DataSourceConstant.POSTGRESQL;
-    }
+
+	@Override
+	public String findConfigInfoAggrByPageFetchRows(int startRow, int pageSize) {
+		return "SELECT data_id,group_id,tenant_id,datum_id,app_name,content FROM config_info_aggr WHERE data_id= ? AND "
+				+ "group_id= ? AND tenant_id= ? ORDER BY datum_id LIMIT " + startRow + "," + pageSize;
+	}
+
+	@Override
+	public String getDataSource() {
+		return DataSourceConstant.POSTGRESQL;
+	}
+
 }

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /*
+/*
  * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,18 +14,25 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.auth.gatewayimpl.database.TenantMapper">
-    <select id="getPermissionsByTenantId" resultType="string">
-        SELECT a.permission
-        FROM boot_sys_menu a
-        JOIN boot_sys_package_menu b on b.menu_id = a.id
-        JOIN boot_sys_tenant c on c.package_id = b.package_id
-        where a.del_flag = 0
-          and c.id = #{tenantId}
-          and a.type = 1
-        GROUP BY a.permission
-    </select>
 
-</mapper>
+package org.laokou.auth.domain.source;
+
+import lombok.Data;
+
+/**
+ * @author laokou
+ */
+@Data
+public class Source {
+
+	private String name;
+
+	private String driverClassName;
+
+	private String username;
+
+	private String password;
+
+	private String url;
+
+}

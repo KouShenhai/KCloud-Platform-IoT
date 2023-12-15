@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,7 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_SOURCE)
+	@Master
 	public Datas<Source> list(Source source, PageQuery pageQuery) {
 		IPage<SourceDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<SourceDO> newPage = sourceMapper.getSourceListFilter(page, source.getName(), pageQuery);
@@ -61,17 +63,20 @@ public class SourceGatewayImpl implements SourceGateway {
 	}
 
 	@Override
+	@Master
 	public Source getById(Long id) {
 		return sourceConvertor.convertEntity(sourceMapper.selectById(id));
 	}
 
 	@Override
+	@Master
 	public Boolean insert(Source source) {
 		SourceDO sourceDO = sourceConvertor.toDataObject(source);
 		return insertSource(sourceDO);
 	}
 
 	@Override
+	@Master
 	public Boolean update(Source source) {
 		SourceDO sourceDO = sourceConvertor.toDataObject(source);
 		sourceDO.setVersion(sourceMapper.getVersion(sourceDO.getId(), SourceDO.class));
@@ -79,6 +84,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	}
 
 	@Override
+	@Master
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

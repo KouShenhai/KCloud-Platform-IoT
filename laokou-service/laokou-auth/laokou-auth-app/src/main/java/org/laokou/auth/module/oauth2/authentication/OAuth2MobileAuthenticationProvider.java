@@ -24,6 +24,7 @@ import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.sensitive.enums.Type;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
@@ -53,9 +54,10 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 	public OAuth2MobileAuthenticationProvider(UserGateway userGateway, MenuGateway menuGateway, DeptGateway deptGateway,
 			PasswordEncoder passwordEncoder, CaptchaGateway captchaGateway,
 			OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-			SourceGateway sourceGateway, RedisUtil redisUtil, LoginLogGateway loginLogGateway) {
+			SourceGateway sourceGateway, RedisUtil redisUtil, DynamicUtil dynamicUtil,
+			LoginLogGateway loginLogGateway) {
 		super(userGateway, menuGateway, deptGateway, passwordEncoder, captchaGateway, authorizationService,
-				tokenGenerator, sourceGateway, redisUtil, loginLogGateway);
+				tokenGenerator, sourceGateway, redisUtil, dynamicUtil, loginLogGateway);
 	}
 
 	@Override

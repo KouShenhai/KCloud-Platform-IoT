@@ -28,6 +28,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.DataSourceException;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Component;
@@ -135,7 +136,7 @@ public class DsUtil {
 				list = defaultTenantTables;
 			}
 			if (CollectionUtil.isNotEmpty(list)) {
-				throw new DataSourceException(String.format("%s不存在", String.join(DROP, list)));
+				throw new DataSourceException(String.format("表 %s 不存在", String.join(DROP, list)));
 			}
 		}
 		catch (Exception e) {

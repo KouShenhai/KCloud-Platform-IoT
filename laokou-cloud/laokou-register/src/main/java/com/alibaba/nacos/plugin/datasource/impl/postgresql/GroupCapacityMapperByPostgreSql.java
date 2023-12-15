@@ -45,14 +45,14 @@ import com.alibaba.nacos.plugin.datasource.mapper.GroupCapacityMapper;
  */
 public class GroupCapacityMapperByPostgreSql extends AbstractMapper implements GroupCapacityMapper {
 
-    @Override
-    public String getDataSource() {
-        return DataSourceConstant.POSTGRESQL;
-    }
+	@Override
+	public String getDataSource() {
+		return DataSourceConstant.POSTGRESQL;
+	}
 
-    @Override
-    public String selectGroupInfoBySize() {
-        return "SELECT id, group_id FROM group_capacity WHERE id > ? LIMIT ?";
-    }
+	@Override
+	public String selectGroupInfoBySize() {
+		return "SELECT id, group_id FROM group_capacity WHERE id > ? LIMIT ?";
+	}
+
 }
-

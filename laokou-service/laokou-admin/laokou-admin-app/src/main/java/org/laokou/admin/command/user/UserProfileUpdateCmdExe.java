@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
-import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -51,7 +51,7 @@ public class UserProfileUpdateCmdExe {
 
 	public Result<Boolean> execute(UserProfileUpdateCmd cmd) {
 		UserProfileCO co = cmd.getUserProfileCO();
-		DynamicDataSourceContextHolder.push(USER);
+		DynamicDataSourceContextHolder.push(TENANT);
 		validate(co);
 		encrypt(co);
 		return Result.of(userGateway.updateInfo(toUser(co)));

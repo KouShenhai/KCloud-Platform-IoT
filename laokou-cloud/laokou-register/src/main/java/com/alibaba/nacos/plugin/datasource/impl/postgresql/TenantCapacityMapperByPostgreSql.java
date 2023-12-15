@@ -46,14 +46,14 @@ import com.alibaba.nacos.plugin.datasource.mapper.TenantCapacityMapper;
 
 public class TenantCapacityMapperByPostgreSql extends AbstractMapper implements TenantCapacityMapper {
 
-    @Override
-    public String getDataSource() {
-        return DataSourceConstant.POSTGRESQL;
-    }
+	@Override
+	public String getDataSource() {
+		return DataSourceConstant.POSTGRESQL;
+	}
 
-    @Override
-    public String getCapacityList4CorrectUsage() {
-        return "SELECT id, tenant_id FROM tenant_capacity WHERE id>? LIMIT ?";
-    }
+	@Override
+	public String getCapacityList4CorrectUsage() {
+		return "SELECT id, tenant_id FROM tenant_capacity WHERE id>? LIMIT ?";
+	}
 
 }

@@ -35,8 +35,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
-import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
+import static org.laokou.common.mybatisplus.constant.DsConstant.*;
 import static org.laokou.common.mybatisplus.template.TableTemplate.MIN_TIME;
 
 /**
@@ -51,7 +50,7 @@ public class UserOptionListQryExe {
 	@DataFilter(alias = BOOT_SYS_USER)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push(USER);
+			DynamicDataSourceContextHolder.push(TENANT);
 			PageQuery pageQuery = qry.ignore();
 			List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME,
 					DateUtil.format(DateUtil.now(), DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS),

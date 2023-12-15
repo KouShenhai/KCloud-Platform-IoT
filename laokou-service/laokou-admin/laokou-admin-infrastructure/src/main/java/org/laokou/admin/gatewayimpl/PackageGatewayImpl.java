@@ -17,6 +17,7 @@
 
 package org.laokou.admin.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -62,11 +63,13 @@ public class PackageGatewayImpl implements PackageGateway {
 	private final MybatisUtil mybatisUtil;
 
 	@Override
+	@Master
 	public Boolean insert(Package pack, User user) {
 		return insertPackage(packageConvertor.toDataObject(pack), pack, user);
 	}
 
 	@Override
+	@Master
 	public Boolean update(Package pack, User user) {
 		PackageDO packageDO = packageConvertor.toDataObject(pack);
 		packageDO.setVersion(packageMapper.getVersion(pack.getId(), PackageDO.class));
@@ -75,6 +78,7 @@ public class PackageGatewayImpl implements PackageGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_PACKAGE)
+	@Master
 	public Datas<Package> list(Package pack, PageQuery pageQuery) {
 		IPage<PackageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<PackageDO> newPage = packageMapper.getPackageListFilter(page, pack.getName(), pageQuery);
@@ -85,6 +89,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	@Override
+	@Master
 	public Package getById(Long id) {
 		Package pack = packageConvertor.convertEntity(packageMapper.selectById(id));
 		pack.setMenuIds(packageMenuMapper.getMenuIdsByPackageId(id));
@@ -92,6 +97,7 @@ public class PackageGatewayImpl implements PackageGateway {
 	}
 
 	@Override
+	@Master
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

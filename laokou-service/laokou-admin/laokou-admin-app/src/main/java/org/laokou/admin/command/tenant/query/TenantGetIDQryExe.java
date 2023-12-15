@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.tenant.query;
 
+import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.config.DefaultConfigProperties;
@@ -48,6 +49,7 @@ public class TenantGetIDQryExe {
 
 	private final RedisUtil redisUtil;
 
+	@Master
 	public Result<Long> execute(TenantGetIDQry qry) {
 		String domainName = RequestUtil.getDomainName(qry.getRequest());
 		if (RegexUtil.ipRegex(domainName)) {

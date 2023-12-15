@@ -17,10 +17,16 @@
 
 package org.laokou.auth.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.annotation.Master;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.domain.gateway.SourceGateway;
+import org.laokou.auth.domain.source.Source;
 import org.laokou.auth.gatewayimpl.database.SourceMapper;
+import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+
+import java.util.Objects;
 
 /**
  * @author laokou
@@ -32,8 +38,20 @@ public class SourceGatewayImpl implements SourceGateway {
 	private final SourceMapper sourceMapper;
 
 	@Override
-	public String getSourceName(Long tenantId) {
-		return sourceMapper.getSourceNameByTenantId(tenantId);
+	@Master
+	public Source getSourceName(Long tenantId) {
+		return toSource(sourceMapper.getSourceByTenantId(tenantId));
+	}
+
+	private Source toSource(SourceDO sourceDO) {
+		Assert.isTrue(Objects.nonNull(sourceDO), "sourceDO is null");
+		Source source = new Source();
+		source.setName(sourceDO.getName());
+		source.setPassword(sourceDO.getPassword());
+		source.setUsername(sourceDO.getUsername());
+		source.setUrl(sourceDO.getUrl());
+		source.setDriverClassName(sourceDO.getDriverClassName());
+		return source;
 	}
 
 }

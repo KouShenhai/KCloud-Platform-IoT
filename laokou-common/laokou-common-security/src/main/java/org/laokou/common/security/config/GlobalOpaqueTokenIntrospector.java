@@ -103,36 +103,37 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 	 * @return UserDetail
 	 */
 	private User decryptInfo(User user) {
-		String username = user.getUsername();
-		if (StringUtil.isNotEmpty(username)) {
-			try {
-				user.setUsername(AesUtil.decrypt(username));
+		try {
+			String username = user.getUsername();
+			if (StringUtil.isNotEmpty(username)) {
+				try {
+					user.setUsername(AesUtil.decrypt(username));
+				} catch (Exception e) {
+					log.error("用户名解密失败，请使用AES加密");
+				}
 			}
-			catch (Exception e) {
-				log.error("用户名解密失败，请使用AES加密");
+			String mail = user.getMail();
+			if (StringUtil.isNotEmpty(mail)) {
+				try {
+					user.setMail(AesUtil.decrypt(mail));
+				} catch (Exception e) {
+					log.error("邮箱解密失败，请使用AES加密");
+				}
 			}
+			String mobile = user.getMobile();
+			if (StringUtil.isNotEmpty(mail)) {
+				try {
+					user.setMobile(AesUtil.decrypt(mobile));
+				} catch (Exception e) {
+					log.error("手机号解密失败，请使用AES加密");
+				}
+			}
+			// 写入当前线程
+			UserContextHolder.set(convert(user));
+			return user;
+		} finally {
+			UserContextHolder.clear();
 		}
-		String mail = user.getMail();
-		if (StringUtil.isNotEmpty(mail)) {
-			try {
-				user.setMail(AesUtil.decrypt(mail));
-			}
-			catch (Exception e) {
-				log.error("邮箱解密失败，请使用AES加密");
-			}
-		}
-		String mobile = user.getMobile();
-		if (StringUtil.isNotEmpty(mail)) {
-			try {
-				user.setMobile(AesUtil.decrypt(mobile));
-			}
-			catch (Exception e) {
-				log.error("手机号解密失败，请使用AES加密");
-			}
-		}
-		// 写入当前线程
-		UserContextHolder.set(convert(user));
-		return user;
 	}
 
 	private UserContextHolder.User convert(User user) {
