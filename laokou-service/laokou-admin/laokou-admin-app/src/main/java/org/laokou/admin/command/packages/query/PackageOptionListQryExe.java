@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.packages.query;
 
+import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
@@ -38,6 +39,7 @@ public class PackageOptionListQryExe {
 
 	private final PackageMapper packageMapper;
 
+	@Master
 	public Result<List<OptionCO>> execute() {
 		List<PackageDO> list = packageMapper
 			.selectList(Wrappers.query(PackageDO.class).select("id", "name").orderByDesc("create_date"));

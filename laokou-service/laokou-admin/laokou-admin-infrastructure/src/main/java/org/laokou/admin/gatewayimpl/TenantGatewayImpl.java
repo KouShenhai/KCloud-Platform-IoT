@@ -40,14 +40,14 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.mybatisplus.constant.DsConstant.*;
+import static org.laokou.common.i18n.common.Constant.COMMA;
+import static org.laokou.common.i18n.common.Constant.DEFAULT;
+import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_TENANT;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -77,6 +77,7 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	@Override
 	@DSTransactional(rollbackFor = Exception.class)
+	@Master
 	public Boolean insert(Tenant tenant) {
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
 		tenantDO.setLabel(defaultConfigProperties.getTenantPrefix() + tenantMapper.maxLabelNum());
@@ -96,17 +97,20 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	@Override
+	@Master
 	public Tenant getById(Long id) {
 		return tenantConvertor.convertEntity(tenantMapper.selectById(id));
 	}
 
 	@Override
+	@Master
 	public Boolean update(Tenant tenant) {
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
 		return updateTenant(tenantDO);
 	}
 
 	@Override
+	@Master
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -140,37 +144,32 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	private void insertUser(Long tenantId) {
-		DeptDO deptDO = new DeptDO();
-		deptDO.setTenantId(tenantId);
-		insertDept(deptDO);
-		insertUser(deptDO, tenantId);
+		try {
+			DynamicDataSourceContextHolder.push(TENANT);
+			DeptDO deptDO = new DeptDO();
+			deptDO.setTenantId(tenantId);
+			insertDept(deptDO);
+			insertUser(deptDO, tenantId);
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 	private void insertUser(DeptDO deptDO, Long tenantId) {
 		try {
-			DynamicDataSourceContextHolder.push(TENANT);
-			transactionalUtil.defaultExecuteWithoutResult(rollback -> {
-				try {
-					// 初始化超级管理员
-					UserDO userDO = new UserDO();
-					userDO.setUsername(TENANT_USERNAME);
-					userDO.setTenantId(tenantId);
-					userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
-					userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
-					userDO.setDeptId(deptDO.getId());
-					userDO.setDeptPath(deptDO.getPath());
-					userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),
-							UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
-				}
-				catch (Exception e) {
-					log.error("错误信息", e);
-					rollback.setRollbackOnly();
-					throw new SystemException(e.getMessage());
-				}
-			});
+			// 初始化超级管理员
+			UserDO userDO = new UserDO();
+			userDO.setUsername(TENANT_USERNAME);
+			userDO.setTenantId(tenantId);
+			userDO.setPassword(passwordEncoder.encode(TENANT_PASSWORD));
+			userDO.setSuperAdmin(SuperAdmin.YES.ordinal());
+			userDO.setDeptId(deptDO.getId());
+			userDO.setDeptPath(deptDO.getPath());
+			userMapper.insertTable(userDO);
 		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
+		catch (Exception e) {
+			log.error("错误信息", e);
+			throw new SystemException(e.getMessage());
 		}
 	}
 
