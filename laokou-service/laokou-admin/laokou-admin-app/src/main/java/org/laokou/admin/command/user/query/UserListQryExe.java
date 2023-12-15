@@ -40,7 +40,7 @@ public class UserListQryExe {
 	private final UserConvertor userConvertor;
 
 	public Result<Datas<UserCO>> execute(UserListQry qry) {
-		User user = new User(qry.getUsername(), UserUtil.getTenantId());
+		User user = new User(qry.getUsername(), UserUtil.getTenantId(), UserUtil.getSourceName());
 		Datas<User> newPage = userGateway.list(user, qry);
 		Datas<UserCO> datas = new Datas<>();
 		datas.setRecords(userConvertor.convertClientObjectList(newPage.getRecords()));

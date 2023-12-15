@@ -139,6 +139,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 	private UserContextHolder.User convert(User user) {
 		UserContextHolder.User u = new UserContextHolder.User();
 		u.setId(user.getId());
+		u.setSourceName(user.getSourceName());
 		u.setDeptPath(user.getDeptPath());
 		u.setDeptId(user.getDeptId());
 		u.setTenantId(user.getTenantId());

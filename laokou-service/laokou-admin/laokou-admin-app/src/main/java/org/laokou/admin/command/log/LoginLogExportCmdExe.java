@@ -33,8 +33,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_LOGIN_LOG;
-import static org.laokou.common.mybatisplus.constant.DsConstant.LOGIN_LOG;
+import static org.laokou.common.mybatisplus.constant.DsConstant.*;
 
 /**
  * @author laokou
@@ -46,7 +45,7 @@ public class LoginLogExportCmdExe {
 	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
 	public void executeVoid(LoginLogExportCmd cmd) {
 		try {
-			DynamicDataSourceContextHolder.push(LOGIN_LOG);
+			DynamicDataSourceContextHolder.push(TENANT);
 			LoginLogMapper loginLogMapper = SpringContextUtil.getBean(LoginLogMapper.class);
 			PageQuery pageQuery = cmd.time().ignore();
 			List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(),

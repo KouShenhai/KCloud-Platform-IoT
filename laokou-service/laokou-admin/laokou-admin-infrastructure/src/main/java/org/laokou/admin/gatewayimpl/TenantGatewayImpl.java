@@ -19,7 +19,6 @@ package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.baomidou.dynamic.datasource.annotation.Master;
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +46,6 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.Constant.COMMA;
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_TENANT;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -144,15 +142,10 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	private void insertUser(Long tenantId) {
-		try {
-			DynamicDataSourceContextHolder.push(TENANT);
-			DeptDO deptDO = new DeptDO();
-			deptDO.setTenantId(tenantId);
-			insertDept(deptDO);
-			insertUser(deptDO, tenantId);
-		} finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		DeptDO deptDO = new DeptDO();
+		deptDO.setTenantId(tenantId);
+		insertDept(deptDO);
+		insertUser(deptDO, tenantId);
 	}
 
 	private void insertUser(DeptDO deptDO, Long tenantId) {

@@ -27,7 +27,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
-import static org.laokou.common.mybatisplus.database.dataobject.BaseDO.TENANT_ID;
 
 /**
  * @author laokou
@@ -41,28 +40,24 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 * @param userDO 用户
 	 * @return int
 	 */
-	Integer updateUser(@Param("userDO") UserDO userDO, @Param("tableName") String tableName);
+	Integer updateUser(@Param("userDO") UserDO userDO);
 
 	/**
 	 * 根据租户ID查询下拉列表
 	 * @return
 	 */
-	List<UserDO> getOptionListByTenantId(@Param("tables") List<String> tables, @Param(TENANT_ID) Long tenantId,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	List<UserDO> getOptionList(@Param(PAGE_QUERY) PageQuery pageQuery);
 
 	/**
 	 * 查询用户列表
-	 * @param tables
 	 * @param user
 	 * @param pageQuery
 	 * @return
 	 */
-	List<UserDO> getUserListFilter(@Param("tables") List<String> tables, @Param("user") UserDO user,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	List<UserDO> getUserListFilter(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery);
 
-	Integer getUserListTotalFilter(@Param("tables") List<String> tables, @Param("user") UserDO user,
-			@Param(PAGE_QUERY) PageQuery pageQuery);
+	Integer getUserListTotalFilter(@Param("user") UserDO user, @Param(PAGE_QUERY) PageQuery pageQuery);
 
-	int getUserCount(@Param("tables") List<String> tables, @Param("user") UserDO user);
+	int getUserCount(@Param("user") UserDO user);
 
 }

@@ -31,11 +31,12 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 import static org.laokou.common.i18n.common.Constant.UNDER;
-import static org.laokou.common.mybatisplus.constant.DsConstant.LOGIN_LOG;
 
 /**
  * @author laokou
@@ -55,7 +56,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 	public void onApplicationEvent(LoginLogEvent event) {
 		CompletableFuture.runAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(LOGIN_LOG);
+				DynamicDataSourceContextHolder.push(event.getSourceName());
 				execute(event);
 			}
 			catch (Exception e) {
@@ -69,9 +70,9 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 
 	private void execute(LoginLogEvent event) {
 		LoginLogDO logDO = ConvertUtil.sourceToTarget(event, LoginLogDO.class);
+		Assert.isTrue(Objects.nonNull(logDO), "logDO is null");
 		logDO.setCreator(event.getUserId());
-		loginLogMapper.insertDynamicTable(logDO, TableTemplate.getLoginLogSqlScript(DateUtil.now()),
-				UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
+		loginLogMapper.insertDynamicTable(logDO, TableTemplate.getLoginLogSqlScript(DateUtil.now()), UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
 	}
 
 }

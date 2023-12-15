@@ -72,7 +72,7 @@ public class LogGatewayImpl implements LogGateway {
 				BOOT_SYS_LOGIN_LOG);
 		CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture.supplyAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(LOGIN_LOG);
+				DynamicDataSourceContextHolder.push(TENANT);
 				return loginLogMapper.getLoginLogListFilter(dynamicTables, loginLogDO, page);
 			}
 			finally {
@@ -81,7 +81,7 @@ public class LogGatewayImpl implements LogGateway {
 		}, taskExecutor);
 		CompletableFuture<Integer> c2 = CompletableFuture.supplyAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(LOGIN_LOG);
+				DynamicDataSourceContextHolder.push(TENANT);
 				return loginLogMapper.getLoginLogCountFilter(dynamicTables, loginLogDO, page);
 			}
 			finally {

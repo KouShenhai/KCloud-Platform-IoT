@@ -38,6 +38,8 @@ public class UserContextHolder {
 
 		private Long deptId;
 
+		private String sourceName;
+
 		public User(Long tenantId) {
 			this.tenantId = tenantId;
 		}

@@ -17,7 +17,6 @@
 
 package org.laokou.admin.command.user;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
@@ -25,9 +24,6 @@ import org.laokou.admin.dto.user.UserPasswordResetCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.mybatisplus.constant.DsConstant.USER;
-
 /**
  * @author laokou
  */
@@ -38,7 +34,6 @@ public class UserPasswordResetCmdExe {
 	private final UserGateway userGateway;
 
 	public Result<Boolean> execute(UserPasswordResetCmd cmd) {
-		DynamicDataSourceContextHolder.push(USER);
 		return Result.of(userGateway.resetPassword(toUser(cmd)));
 	}
 
