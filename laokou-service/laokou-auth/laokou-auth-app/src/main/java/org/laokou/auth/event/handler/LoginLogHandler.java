@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.dto.log.domainevent.LoginLogEvent;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
+import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
@@ -54,9 +55,10 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 	@Override
 	@Async
 	public void onApplicationEvent(LoginLogEvent event) {
+		String sourceName = UserContextHolder.get().getSourceName();
 		CompletableFuture.runAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(event.getSourceName());
+				DynamicDataSourceContextHolder.push(sourceName);
 				execute(event);
 			}
 			catch (Exception e) {

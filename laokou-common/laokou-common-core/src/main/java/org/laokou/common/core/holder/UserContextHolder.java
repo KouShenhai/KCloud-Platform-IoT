@@ -40,8 +40,9 @@ public class UserContextHolder {
 
 		private String sourceName;
 
-		public User(Long tenantId) {
+		public User(Long tenantId, String sourceName) {
 			this.tenantId = tenantId;
+			this.sourceName = sourceName;
 		}
 
 	}

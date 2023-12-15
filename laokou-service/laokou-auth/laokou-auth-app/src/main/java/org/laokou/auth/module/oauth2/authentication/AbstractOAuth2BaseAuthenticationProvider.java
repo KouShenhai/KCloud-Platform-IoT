@@ -353,7 +353,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		}
 		finally {
 			DynamicDataSourceContextHolder.push(sourceName);
-			UserContextHolder.set(new UserContextHolder.User(tenantId));
+			UserContextHolder.set(new UserContextHolder.User(tenantId, sourceName));
 		}
 		return sourceName;
 	}
