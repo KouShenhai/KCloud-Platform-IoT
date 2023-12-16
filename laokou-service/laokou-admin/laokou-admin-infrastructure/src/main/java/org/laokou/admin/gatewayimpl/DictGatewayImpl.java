@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +34,6 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_DICT;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -65,13 +63,11 @@ public class DictGatewayImpl implements DictGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public Dict getById(Long id) {
 		return dictConvertor.convertEntity(dictMapper.selectById(id));
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -87,7 +83,6 @@ public class DictGatewayImpl implements DictGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_DICT)
-	@DS(TENANT)
 	public Datas<Dict> list(Dict dict, PageQuery pageQuery) {
 		IPage<DictDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<DictDO> newPage = dictMapper.getDictListFilter(page, dict.getType(), dict.getLabel(), pageQuery);

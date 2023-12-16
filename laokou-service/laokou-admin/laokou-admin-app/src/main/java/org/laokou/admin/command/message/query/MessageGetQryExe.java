@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.message.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.MessageGateway;
 import org.laokou.admin.domain.message.Message;
@@ -25,6 +26,8 @@ import org.laokou.admin.dto.message.clientobject.MessageCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -35,6 +38,7 @@ public class MessageGetQryExe {
 
 	private final MessageGateway messageGateway;
 
+	@DS(TENANT)
 	public Result<MessageCO> execute(MessageGetQry qry) {
 		Message message = messageGateway.getById(qry.getId());
 		return Result.of(ConvertUtil.sourceToTarget(message, MessageCO.class));

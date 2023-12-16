@@ -19,7 +19,6 @@ package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.baomidou.dynamic.datasource.annotation.Master;
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +46,6 @@ import org.springframework.stereotype.Component;
 import static org.laokou.common.i18n.common.Constant.COMMA;
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_TENANT;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -77,7 +75,6 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	@Override
 	@DSTransactional(rollbackFor = Exception.class)
-	@Master
 	public Boolean insert(Tenant tenant) {
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
 		tenantDO.setLabel(defaultConfigProperties.getTenantPrefix() + tenantMapper.maxLabelNum());
@@ -86,7 +83,6 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_TENANT)
-	@Master
 	public Datas<Tenant> list(Tenant tenant, PageQuery pageQuery) {
 		IPage<TenantDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<TenantDO> newPage = tenantMapper.getTenantListFilter(page, tenant.getName(), pageQuery);
@@ -97,20 +93,17 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	@Override
-	@Master
 	public Tenant getById(Long id) {
 		return tenantConvertor.convertEntity(tenantMapper.selectById(id));
 	}
 
 	@Override
-	@Master
 	public Boolean update(Tenant tenant) {
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
 		return updateTenant(tenantDO);
 	}
 
 	@Override
-	@Master
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
@@ -144,15 +137,10 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	private void insertUser(Long tenantId) {
-		try {
-			DynamicDataSourceContextHolder.push(TENANT);
-			DeptDO deptDO = new DeptDO();
-			deptDO.setTenantId(tenantId);
-			insertDept(deptDO);
-			insertUser(deptDO, tenantId);
-		} finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		DeptDO deptDO = new DeptDO();
+		deptDO.setTenantId(tenantId);
+		insertDept(deptDO);
+		insertUser(deptDO, tenantId);
 	}
 
 	private void insertUser(DeptDO deptDO, Long tenantId) {

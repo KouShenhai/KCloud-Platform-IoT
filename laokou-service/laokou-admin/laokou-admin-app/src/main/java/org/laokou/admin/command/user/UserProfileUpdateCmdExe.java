@@ -17,7 +17,7 @@
 
 package org.laokou.admin.command.user;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.UserGateway;
 import org.laokou.admin.domain.user.User;
@@ -32,6 +32,7 @@ import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.util.Objects;
 
@@ -49,9 +50,9 @@ public class UserProfileUpdateCmdExe {
 
 	private final UserMapper userMapper;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(UserProfileUpdateCmd cmd) {
 		UserProfileCO co = cmd.getUserProfileCO();
-		DynamicDataSourceContextHolder.push(TENANT);
 		validate(co);
 		encrypt(co);
 		return Result.of(userGateway.updateInfo(toUser(co)));
@@ -59,6 +60,7 @@ public class UserProfileUpdateCmdExe {
 
 	private User toUser(UserProfileCO co) {
 		User user = ConvertUtil.sourceToTarget(co, User.class);
+		Assert.isTrue(Objects.nonNull(user), "user is null");
 		user.setEditor(UserUtil.getUserId());
 		return user;
 	}

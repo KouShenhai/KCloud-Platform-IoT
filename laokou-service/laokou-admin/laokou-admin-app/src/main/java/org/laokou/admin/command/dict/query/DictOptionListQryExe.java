@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.dict.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.DictConvertor;
@@ -32,6 +33,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+
 /**
  * @author laokou
  */
@@ -43,6 +46,7 @@ public class DictOptionListQryExe {
 
 	private final DictConvertor dictConvertor;
 
+	@DS(TENANT)
 	public Result<List<OptionCO>> execute(DictOptionListQry qry) {
 		List<DictDO> list = dictMapper.selectList(Wrappers.query(DictDO.class)
 			.eq("type", qry.getType())

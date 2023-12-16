@@ -18,6 +18,7 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -32,26 +33,23 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
+import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
-import static org.laokou.common.i18n.common.Constant.UNDER;
-import static org.laokou.common.mybatisplus.constant.DsConstant.*;
+import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
 
 /**
  * @author laokou
@@ -106,25 +104,15 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	public User getById(Long id, Long tenantId) {
-		try {
-			LocalDateTime localDateTime = IdGenerator.getLocalDateTime(id);
-			DynamicDataSourceContextHolder.push(TENANT);
-			UserDO userDO = userMapper.getDynamicTableById(UserDO.class, id,
-					UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM)), "id", "username", "status",
-					"dept_id", "dept_path", "super_admin");
-			User user = userConvertor.convertEntity(userDO);
-			DynamicDataSourceContextHolder.push(MASTER);
-			if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
-				user.setRoleIds(roleMapper.getRoleIds());
-			}
-			else {
-				user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
-			}
-			return user;
+		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class).eq("id", id).select("id", "username", "status", "dept_id", "dept_path", "super_admin"));
+		User user = userConvertor.convertEntity(userDO);
+		if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
+			user.setRoleIds(roleMapper.getRoleIds());
 		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
+		else {
+			user.setRoleIds(userRoleMapper.getRoleIdsByUserId(id));
 		}
+		return user;
 	}
 
 	@Override
@@ -132,13 +120,12 @@ public class UserGatewayImpl implements UserGateway {
 	@SneakyThrows
 	public Datas<User> list(User user, PageQuery pageQuery) {
 		UserDO userDO = userConvertor.toDataObject(user);
-		final PageQuery page = pageQuery.time().page().ignore();
-		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
-				BOOT_SYS_USER);
+		final PageQuery page = pageQuery.page();
+		String sourceName = UserContextHolder.get().getSourceName();
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture.supplyAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(TENANT);
-				return userMapper.getUserListFilter(dynamicTables, userDO, page);
+				DynamicDataSourceContextHolder.push(sourceName);
+				return userMapper.getUserListFilter(userDO, page);
 			}
 			finally {
 				DynamicDataSourceContextHolder.clear();
@@ -146,8 +133,8 @@ public class UserGatewayImpl implements UserGateway {
 		}, taskExecutor);
 		CompletableFuture<Integer> c2 = CompletableFuture.supplyAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(TENANT);
-				return userMapper.getUserListTotalFilter(dynamicTables, userDO, page);
+				DynamicDataSourceContextHolder.push(sourceName);
+				return userMapper.getUserListTotalFilter(userDO, page);
 			}
 			finally {
 				DynamicDataSourceContextHolder.clear();
@@ -161,36 +148,29 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	private Boolean updateUser(UserDO userDO, User user) {
-		userMapper.updateUser(userDO, TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER));
+		userMapper.updateUser(userDO);
 		deleteUserRole(user);
 		insertUserRole(user.getRoleIds(), userDO);
 		return true;
 	}
 
 	private void deleteUserRole(User user) {
-		try {
-			DynamicDataSourceContextHolder.push(MASTER);
-			transactionalUtil.defaultExecuteWithoutResult(rollback -> {
-				try {
-					userRoleMapper.deleteUserRoleByUserId(user.getId());
-				}
-				catch (Exception e) {
-					log.error("错误信息", e);
-					rollback.setRollbackOnly();
-					throw new SystemException(e.getMessage());
-				}
-			});
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		transactionalUtil.defaultExecuteWithoutResult(rollback -> {
+			try {
+				userRoleMapper.deleteUserRoleByUserId(user.getId());
+			}
+			catch (Exception e) {
+				log.error("错误信息", e);
+				rollback.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
 	private Boolean insertUser(UserDO userDO, User user) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
-				userMapper.insertDynamicTable(userDO, TableTemplate.getUserSqlScript(DateUtil.now()),
-						UNDER.concat(DateUtil.format(DateUtil.now(), DateUtil.YYYYMM)));
+				userMapper.insertTable(userDO);
 				insertUserRole(user.getRoleIds(), userDO);
 				return true;
 			}
@@ -198,9 +178,6 @@ public class UserGatewayImpl implements UserGateway {
 				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
-			}
-			finally {
-				DynamicDataSourceContextHolder.clear();
 			}
 		});
 	}
@@ -215,7 +192,7 @@ public class UserGatewayImpl implements UserGateway {
 		UserDO userDO = userConvertor.toDataObject(user);
 		userDO.setEditor(user.getEditor());
 		userDO.setUpdateDate(DateUtil.now());
-		userDO.setVersion(userMapper.getDynamicVersion(userDO.getId(), UserDO.class, getUserTableSuffix(user.getId())));
+		userDO.setVersion(userMapper.getVersion(userDO.getId(), UserDO.class));
 		return userDO;
 	}
 
@@ -228,52 +205,33 @@ public class UserGatewayImpl implements UserGateway {
 	private void insertUserRole(List<Long> roleIds, UserDO userDO) {
 		if (CollectionUtil.isNotEmpty(roleIds)) {
 			List<UserRoleDO> list = roleIds.parallelStream().map(roleId -> toUserRoleDO(userDO, roleId)).toList();
-			mybatisUtil.batch(list, UserRoleMapper.class, UserRoleMapper::save);
+			mybatisUtil.batch(list, UserRoleMapper.class, DynamicDataSourceContextHolder.peek(), UserRoleMapper::save);
 		}
 	}
 
 	private Boolean updateUser(UserDO userDO) {
-		try {
-			DynamicDataSourceContextHolder.push(USER);
-			return transactionalUtil.defaultExecute(r -> {
-				try {
-					return userMapper.updateUser(userDO,
-							TableTemplate.getDynamicTable(userDO.getId(), BOOT_SYS_USER)) > 0;
-				}
-				catch (Exception e) {
-					log.error("错误信息", e);
-					r.setRollbackOnly();
-					throw new SystemException(e.getMessage());
-				}
-			});
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		return transactionalUtil.defaultExecute(r -> {
+			try {
+				return userMapper.updateUser(userDO) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息", e);
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
 	private Boolean deleteUserById(Long id) {
-		try {
-			DynamicDataSourceContextHolder.push(TENANT);
-			return transactionalUtil.defaultExecute(r -> {
-				try {
-					return userMapper.deleteDynamicTableById(id, getUserTableSuffix(id)) > 0;
-				}
-				catch (Exception e) {
-					log.error("错误信息", e);
-					r.setRollbackOnly();
-					throw new SystemException(e.getMessage());
-				}
-			});
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
-	}
-
-	private String getUserTableSuffix(Long id) {
-		LocalDateTime localDateTime = IdGenerator.getLocalDateTime(id);
-		return UNDER.concat(DateUtil.format(localDateTime, DateUtil.YYYYMM));
+		return transactionalUtil.defaultExecute(r -> {
+			try {
+				return userMapper.deleteById(id) > 0;
+			} catch (Exception e) {
+				log.error("错误信息", e);
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
 	private UserRoleDO toUserRoleDO(UserDO userDO, Long roleId) {

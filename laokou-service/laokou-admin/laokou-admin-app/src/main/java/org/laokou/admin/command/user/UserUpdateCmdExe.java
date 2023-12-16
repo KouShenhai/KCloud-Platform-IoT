@@ -1,5 +1,6 @@
 package org.laokou.admin.command.user;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.UserConvertor;
@@ -11,16 +12,11 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
-import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
-import static org.laokou.common.mybatisplus.constant.DsConstant.*;
-import static org.laokou.common.mybatisplus.template.TableTemplate.MIN_TIME;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -35,13 +31,12 @@ public class UserUpdateCmdExe {
 
 	private final UserConvertor userConvertor;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(UserUpdateCmd cmd) {
 		UserCO co = cmd.getUserCO();
 		// 用户表
 		DynamicDataSourceContextHolder.push(TENANT);
-		List<String> dynamicTables = TableTemplate.getDynamicTables(MIN_TIME,
-				DateUtil.format(DateUtil.now(), DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS), BOOT_SYS_USER);
-		int count = userMapper.getUserCount(dynamicTables, toUserDO(co));
+		int count = userMapper.getUserCount(toUserDO(co));
 		if (count > 0) {
 			throw new SystemException("用户名已存在，请重新输入");
 		}

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.resource;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,7 @@ import java.util.Objects;
 
 import static org.laokou.admin.common.Constant.AUDIT_STATUS;
 import static org.laokou.admin.domain.resource.Status.*;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -64,6 +66,7 @@ public class ResourceAuditTaskCmdExe {
 
 	private final EventUtil eventUtil;
 
+	@DS(TENANT)
 	@GlobalTransactional(rollbackFor = Exception.class)
 	public Result<Boolean> execute(ResourceAuditTaskCmd cmd) {
 		log.info("资源审批任务分布式事务 XID：{}", RootContext.getXID());

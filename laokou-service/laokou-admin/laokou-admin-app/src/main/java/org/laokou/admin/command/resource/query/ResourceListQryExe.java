@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.resource.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.gateway.ResourceGateway;
@@ -27,6 +28,8 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -39,6 +42,7 @@ public class ResourceListQryExe {
 
 	private final ResourceConvertor resourceConvertor;
 
+	@DS(TENANT)
 	public Result<Datas<ResourceCO>> execute(ResourceListQry qry) {
 		Resource resource = ConvertUtil.sourceToTarget(qry, Resource.class);
 		Datas<Resource> newPage = resourceGateway.list(resource, qry);

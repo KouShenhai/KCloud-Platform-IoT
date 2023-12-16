@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.menu.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.menu.MenuIDSGetQry;
 import org.laokou.admin.domain.gateway.MenuGateway;
@@ -24,6 +25,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -34,6 +37,7 @@ public class MenuIDSGetQryExe {
 
 	private final MenuGateway menuGateway;
 
+	@DS(TENANT)
 	public Result<List<Long>> execute(MenuIDSGetQry qry) {
 		return Result.of(menuGateway.getIdsByRoleId(qry.getRoleId()));
 	}

@@ -17,7 +17,6 @@
 
 package org.laokou.auth.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.Master;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.domain.gateway.SourceGateway;
 import org.laokou.auth.domain.source.Source;
@@ -38,7 +37,6 @@ public class SourceGatewayImpl implements SourceGateway {
 	private final SourceMapper sourceMapper;
 
 	@Override
-	@Master
 	public Source getSourceName(Long tenantId) {
 		return toSource(sourceMapper.getSourceByTenantId(tenantId));
 	}

@@ -40,7 +40,6 @@ public class TenantOptionListQryExe {
 
 	private final TenantMapper tenantMapper;
 
-	@Master
 	public Result<List<OptionCO>> execute(TenantOptionListQry qry) {
 		List<TenantDO> list = tenantMapper
 			.selectList(Wrappers.query(TenantDO.class).select("id", "name").orderByDesc("create_date"));

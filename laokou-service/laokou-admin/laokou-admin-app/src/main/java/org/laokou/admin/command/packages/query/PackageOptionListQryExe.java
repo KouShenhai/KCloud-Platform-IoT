@@ -39,7 +39,6 @@ public class PackageOptionListQryExe {
 
 	private final PackageMapper packageMapper;
 
-	@Master
 	public Result<List<OptionCO>> execute() {
 		List<PackageDO> list = packageMapper
 			.selectList(Wrappers.query(PackageDO.class).select("id", "name").orderByDesc("create_date"));

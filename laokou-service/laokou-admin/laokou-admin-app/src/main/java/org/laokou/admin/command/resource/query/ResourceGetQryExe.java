@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.resource.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.gateway.ResourceGateway;
@@ -24,6 +25,8 @@ import org.laokou.admin.dto.resource.ResourceGetQry;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -36,6 +39,7 @@ public class ResourceGetQryExe {
 
 	private final ResourceConvertor resourceConvertor;
 
+	@DS(TENANT)
 	public Result<ResourceCO> execute(ResourceGetQry qry) {
 		return Result.of(resourceConvertor.convertClientObject(resourceGateway.getById(qry.getId())));
 	}

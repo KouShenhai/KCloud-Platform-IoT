@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -52,7 +51,6 @@ import java.util.Set;
 
 import static org.laokou.common.i18n.common.Constant.TRACE_ID;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_MESSAGE;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 import static org.laokou.common.rocketmq.constant.MqConstant.*;
 
 /**
@@ -77,7 +75,6 @@ public class MessageGatewayImpl implements MessageGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_MESSAGE)
-	@DS(TENANT)
 	public Datas<Message> list(Message message, PageQuery pageQuery) {
 		IPage<MessageDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<MessageDO> newPage = messageMapper.getMessageListFilter(page, message.getTitle(), pageQuery);
@@ -88,7 +85,6 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean insert(Message message, User user) {
 		insertMessage(messageConvertor.toDataObject(message), message, user);
 		// 插入成功发送消息
@@ -97,7 +93,6 @@ public class MessageGatewayImpl implements MessageGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public Message getById(Long id) {
 		return messageConvertor.convertEntity(messageMapper.selectById(id));
 	}

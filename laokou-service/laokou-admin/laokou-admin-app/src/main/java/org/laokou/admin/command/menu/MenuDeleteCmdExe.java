@@ -17,12 +17,15 @@
 
 package org.laokou.admin.command.menu;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.menu.MenuDeleteCmd;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -34,6 +37,7 @@ public class MenuDeleteCmdExe {
 
 	private final MenuGateway menuGateway;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(MenuDeleteCmd cmd) {
 		return Result.of(menuGateway.deleteById(cmd.getId()));
 	}

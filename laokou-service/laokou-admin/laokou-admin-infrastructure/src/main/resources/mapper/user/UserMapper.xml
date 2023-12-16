@@ -30,7 +30,7 @@
     </resultMap>
 
     <update id="updateUser">
-        update ${tableName}
+        update boot_sys_user
         <set>
             version = version + 1,
             update_date = now(),
@@ -68,75 +68,46 @@
             </if>
         </where>
     </update>
-    <select id="getOptionListByTenantId" resultMap="user">
-        <if test="tables != null and tables.size() > 0">
-        select * from (<foreach collection="tables" item="table" separator=" union all ">
-            select id
-                ,username
-            from ${table} as boot_sys_user
-            where boot_sys_user.del_flag = 0
-            and boot_sys_user.tenant_id = #{tenantId}
-            and boot_sys_user.`status` = 0
-            <if test="pageQuery.sqlFilter != null and pageQuery.sqlFilter != ''">
-                and ${pageQuery.sqlFilter}
-            </if>
-        </foreach>)a
+    <select id="getOptionList" resultMap="user">
+        select id
+        ,username
+        from boot_sys_user a
+        where a.del_flag = 0
+        and a.`status` = 0
         order by id desc
-        </if>
     </select>
     <select id="getUserListFilter" resultMap="user">
-        <if test="tables != null and tables.size() > 0">
-        select * from (<foreach collection="tables" item="table" separator=" union all ">
-                select id
-                ,`username`
-                ,super_admin
-                ,create_date
-                ,avatar
-                ,`status`
-            FROM ${table} as boot_sys_user
-            where boot_sys_user.del_flag = 0
-            and boot_sys_user.tenant_id = #{user.tenantId}
-            and boot_sys_user.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
-            <if test="user.username != null and user.username != ''">
-                and boot_sys_user.`username` = #{user.username}
-            </if>
-            <if test="pageQuery.sqlFilter != null and pageQuery.sqlFilter != ''">
-                and ${pageQuery.sqlFilter}
-            </if>
-            </foreach>) a
+        select id
+        ,`username`
+        ,super_admin
+        ,create_date
+        ,avatar
+        ,`status`
+        FROM boot_sys_user a
+        where a.del_flag = 0
+        and a.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
+        <if test="user.username != null and user.username != ''">
+            and a.`username` = #{user.username}
+        </if>
         order by id desc
         limit ${pageQuery.pageIndex},${pageQuery.pageSize}
-        </if>
     </select>
     <select id="getUserListTotalFilter" resultType="java.lang.Integer">
-        <if test="tables != null and tables.size() > 0">
-            select sum(a.num) from (<foreach collection="tables" item="table" separator=" union all ">
-            select count(1) as num
-            FROM ${table} as boot_sys_user
-            where boot_sys_user.del_flag = 0
-            and boot_sys_user.tenant_id = #{user.tenantId}
-            and boot_sys_user.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
-            <if test="user.username != null and user.username != ''">
-                and boot_sys_user.`username` = #{user.username}
-            </if>
-            <if test="pageQuery.sqlFilter != null and pageQuery.sqlFilter != ''">
-                and ${pageQuery.sqlFilter}
-            </if>
-            </foreach>) a
+        select count(1) as num
+        FROM boot_sys_user a
+        where a.del_flag = 0
+        and a.create_date between #{pageQuery.startTime} and #{pageQuery.endTime}
+        <if test="user.username != null and user.username != ''">
+            and a.`username` = #{user.username}
         </if>
     </select>
     <select id="getUserCount" resultType="java.lang.Integer">
-        <if test="tables != null and tables.size() > 0">
-            select count(1) from (<foreach collection="tables" item="table" separator=" union all ">
-                select 1
-                from ${table} as boot_sys_user
-                where boot_sys_user.del_flag = 0
-                and boot_sys_user.tenant_id = #{user.tenantId}
-                and boot_sys_user.username = #{user.username}
-                <if test="user.id != null">
-                    and boot_sys_user.id <![CDATA[ <> ]]> #{user.id}
-                </if>
-            </foreach>)a
+        select 1
+        from ${table} as boot_sys_user
+        where boot_sys_user.del_flag = 0
+        and boot_sys_user.username = #{user.username}
+        <if test="user.id != null">
+            and boot_sys_user.id <![CDATA[ <> ]]> #{user.id}
         </if>
     </select>
 
