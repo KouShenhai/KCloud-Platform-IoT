@@ -75,7 +75,6 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	@Override
 	@DSTransactional(rollbackFor = Exception.class)
-	@Master
 	public Boolean insert(Tenant tenant) {
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
 		tenantDO.setLabel(defaultConfigProperties.getTenantPrefix() + tenantMapper.maxLabelNum());
@@ -84,7 +83,6 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_TENANT)
-	@Master
 	public Datas<Tenant> list(Tenant tenant, PageQuery pageQuery) {
 		IPage<TenantDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<TenantDO> newPage = tenantMapper.getTenantListFilter(page, tenant.getName(), pageQuery);
@@ -95,20 +93,17 @@ public class TenantGatewayImpl implements TenantGateway {
 	}
 
 	@Override
-	@Master
 	public Tenant getById(Long id) {
 		return tenantConvertor.convertEntity(tenantMapper.selectById(id));
 	}
 
 	@Override
-	@Master
 	public Boolean update(Tenant tenant) {
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
 		return updateTenant(tenantDO);
 	}
 
 	@Override
-	@Master
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

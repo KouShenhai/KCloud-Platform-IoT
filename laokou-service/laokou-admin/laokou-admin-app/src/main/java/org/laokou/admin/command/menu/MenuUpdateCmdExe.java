@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.menu;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.MenuConvertor;
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -47,6 +49,7 @@ public class MenuUpdateCmdExe {
 
 	private final MenuMapper menuMapper;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(MenuUpdateCmd cmd) {
 		MenuCO co = cmd.getMenuCO();
 		Long id = co.getId();

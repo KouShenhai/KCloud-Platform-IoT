@@ -16,7 +16,6 @@
  */
 package org.laokou.common.security.config;
 
-import com.baomidou.dynamic.datasource.annotation.Master;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.user.User;
@@ -57,7 +56,6 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 	private final RedisUtil redisUtil;
 
 	@Override
-	@Master
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
 		if (Objects.nonNull(redisUtil.get(userKillKey))) {

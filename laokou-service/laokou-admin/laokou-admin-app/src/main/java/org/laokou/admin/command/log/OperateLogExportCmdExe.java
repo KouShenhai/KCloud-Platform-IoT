@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.log;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.common.utils.ExcelUtil;
 import org.laokou.admin.domain.annotation.DataFilter;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_OPERATE_LOG;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -39,6 +41,7 @@ import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_OPERATE
 @RequiredArgsConstructor
 public class OperateLogExportCmdExe {
 
+	@DS(TENANT)
 	@DataFilter(alias = BOOT_SYS_OPERATE_LOG)
 	public void executeVoid(OperateLogExportCmd cmd) {
 		OperateLogMapper operateLogMapper = SpringContextUtil.getBean(OperateLogMapper.class);

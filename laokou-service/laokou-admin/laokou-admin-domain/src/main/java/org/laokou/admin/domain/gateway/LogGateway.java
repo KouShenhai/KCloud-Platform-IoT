@@ -19,7 +19,6 @@ package org.laokou.admin.domain.gateway;
 
 import org.laokou.admin.domain.log.LoginLog;
 import org.laokou.admin.domain.log.OperateLog;
-import org.laokou.admin.domain.user.User;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 
@@ -28,7 +27,7 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 public interface LogGateway {
 
-	Datas<LoginLog> loginList(LoginLog loginLog, User user, PageQuery pageQuery);
+	Datas<LoginLog> loginList(LoginLog loginLog, PageQuery pageQuery);
 
 	Datas<OperateLog> operateList(OperateLog operateLog, PageQuery pageQuery);
 

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.role;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.RoleConvertor;
@@ -32,6 +33,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+
 /**
  * @author laokou
  */
@@ -45,6 +48,7 @@ public class RoleInsertCmdExe {
 
 	private final RoleConvertor roleConvertor;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(RoleInsertCmd cmd) {
 		RoleCO co = cmd.getRoleCO();
 		Long count = roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, co.getName()));

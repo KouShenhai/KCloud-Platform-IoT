@@ -28,11 +28,11 @@ import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.LogGateway;
 import org.laokou.admin.domain.log.LoginLog;
 import org.laokou.admin.domain.log.OperateLog;
-import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
+import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.template.TableTemplate;
@@ -64,15 +64,16 @@ public class LogGatewayImpl implements LogGateway {
 	@Override
 	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
 	@SneakyThrows
-	public Datas<LoginLog> loginList(LoginLog loginLog, User user, PageQuery pageQuery) {
+	public Datas<LoginLog> loginList(LoginLog loginLog, PageQuery pageQuery) {
 		final PageQuery page = pageQuery.time().page().ignore();
 		LoginLogDO loginLogDO = loginLogConvertor.toDataObject(loginLog);
-		loginLogDO.setTenantId(user.getTenantId());
+		loginLogDO.setTenantId(UserContextHolder.get().getTenantId());
+		String sourceName = UserContextHolder.get().getSourceName();
 		List<String> dynamicTables = TableTemplate.getDynamicTables(pageQuery.getStartTime(), pageQuery.getEndTime(),
 				BOOT_SYS_LOGIN_LOG);
 		CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture.supplyAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(TENANT);
+				DynamicDataSourceContextHolder.push(sourceName);
 				return loginLogMapper.getLoginLogListFilter(dynamicTables, loginLogDO, page);
 			}
 			finally {
@@ -81,7 +82,7 @@ public class LogGatewayImpl implements LogGateway {
 		}, taskExecutor);
 		CompletableFuture<Integer> c2 = CompletableFuture.supplyAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(TENANT);
+				DynamicDataSourceContextHolder.push(sourceName);
 				return loginLogMapper.getLoginLogCountFilter(dynamicTables, loginLogDO, page);
 			}
 			finally {

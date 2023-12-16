@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.menu.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.MenuConvertor;
 import org.laokou.admin.domain.gateway.MenuGateway;
@@ -29,6 +30,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+
 /**
  * @author laokou
  */
@@ -40,6 +43,7 @@ public class MenuTenantTreeGetQryExe {
 
 	private final MenuConvertor menuConvertor;
 
+	@DS(TENANT)
 	public Result<MenuCO> execute(MenuTenantTreeGetQry qry) {
 		List<Menu> list = menuGateway.getTenantMenuList();
 		List<MenuCO> menuList = menuConvertor.convertClientObjectList(list);

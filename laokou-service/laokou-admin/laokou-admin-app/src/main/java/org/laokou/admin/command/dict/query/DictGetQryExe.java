@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.dict.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.DictConvertor;
 import org.laokou.admin.domain.gateway.DictGateway;
@@ -24,6 +25,8 @@ import org.laokou.admin.dto.dict.DictGetQry;
 import org.laokou.admin.dto.dict.clientobject.DictCO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -36,6 +39,7 @@ public class DictGetQryExe {
 
 	private final DictConvertor dictConvertor;
 
+	@DS(TENANT)
 	public Result<DictCO> execute(DictGetQry qry) {
 		return Result.of(dictConvertor.convertClientObject(dictGateway.getById(qry.getId())));
 	}

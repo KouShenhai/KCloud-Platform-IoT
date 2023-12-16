@@ -16,6 +16,7 @@
  */
 package org.laokou.admin.command.menu.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.gateway.MenuGateway;
 import org.laokou.admin.domain.menu.Menu;
@@ -33,6 +34,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Objects;
 
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+
 /**
  * @author laokou
  */
@@ -44,6 +47,7 @@ public class MenuTreeListQryExe {
 
 	private final RedisUtil redisUtil;
 
+	@DS(TENANT)
 	public Result<MenuCO> execute(MenuTreeListQry qry) {
 		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserUtil.getUserId());
 		Object obj = redisUtil.get(menuTreeKey);

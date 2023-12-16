@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.convertor.DeptConvertor;
@@ -36,7 +35,6 @@ import java.util.List;
 
 import static org.laokou.common.i18n.common.Constant.COMMA;
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -53,7 +51,6 @@ public class DeptGatewayImpl implements DeptGateway {
 	private final DeptConvertor deptConvertor;
 
 	@Override
-	@DS(TENANT)
 	public List<Dept> list(Dept dept, Long tenantId) {
 		DeptDO deptDO = deptConvertor.toDataObject(dept);
 		deptDO.setTenantId(tenantId);
@@ -61,7 +58,6 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean insert(Dept dept) {
 		DeptDO deptDO = deptConvertor.toDataObject(dept);
 		deptDO.setId(IdGenerator.defaultSnowflakeId());
@@ -70,7 +66,6 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean update(Dept dept) {
 		DeptDO deptDO = deptConvertor.toDataObject(dept);
 		DeptDO dep = deptMapper.selectById(deptDO.getId());
@@ -82,13 +77,11 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public List<Long> getDeptIds(Long roleId) {
 		return deptMapper.getDeptIdsByRoleId(roleId);
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean deleteById(Long id) {
 		return transactionalUtil.defaultExecute(r -> {
 			try {

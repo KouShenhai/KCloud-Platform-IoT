@@ -40,7 +40,6 @@ public class SourceOptionListQryExe {
 
 	private final SourceMapper sourceMapper;
 
-	@Master
 	public Result<List<OptionCO>> execute(SourceOptionListQry qry) {
 		List<SourceDO> list = sourceMapper.selectList(Wrappers.query(SourceDO.class).select("id", "name"));
 		if (CollectionUtil.isEmpty(list)) {

@@ -17,7 +17,7 @@
 
 package org.laokou.admin.command.user.query;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
@@ -43,20 +43,15 @@ public class UserOptionListQryExe {
 
 	private final UserMapper userMapper;
 
+	@DS(TENANT)
 	@DataFilter(alias = BOOT_SYS_USER)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
-		try {
-			DynamicDataSourceContextHolder.push(TENANT);
-			List<UserDO> list = userMapper.getOptionList(qry);
-			if (CollectionUtil.isEmpty(list)) {
-				return Result.of(new ArrayList<>(0));
-			}
-			List<OptionCO> options = list.stream().map(this::option).toList();
-			return Result.of(options);
+		List<UserDO> list = userMapper.getOptionList(qry);
+		if (CollectionUtil.isEmpty(list)) {
+			return Result.of(new ArrayList<>(0));
 		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
+		List<OptionCO> options = list.stream().map(this::option).toList();
+		return Result.of(options);
 	}
 
 	private OptionCO option(UserDO userDO) {

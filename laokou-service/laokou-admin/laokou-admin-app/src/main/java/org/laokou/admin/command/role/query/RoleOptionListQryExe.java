@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.role.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
@@ -30,6 +31,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
+
 /**
  * @author laokou
  */
@@ -39,6 +42,7 @@ public class RoleOptionListQryExe {
 
 	private final RoleMapper roleMapper;
 
+	@DS(TENANT)
 	public Result<List<OptionCO>> execute(RoleOptionListQry qry) {
 		List<RoleDO> list = roleMapper
 			.selectList(Wrappers.query(RoleDO.class).select("id", "name").orderByDesc("sort"));

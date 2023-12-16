@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.dept.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.dept.DeptIDSGetQry;
 import org.laokou.admin.domain.gateway.DeptGateway;
@@ -24,6 +25,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -34,6 +37,7 @@ public class DeptIDSGetQryExe {
 
 	private final DeptGateway deptGateway;
 
+	@DS(TENANT)
 	public Result<List<Long>> execute(DeptIDSGetQry qry) {
 		return Result.of(deptGateway.getDeptIds(qry.getRoleId()));
 	}

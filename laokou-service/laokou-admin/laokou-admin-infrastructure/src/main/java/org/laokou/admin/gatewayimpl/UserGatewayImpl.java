@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.seata.spring.annotation.GlobalTransactional;
@@ -34,6 +33,7 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserRoleDO;
+import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -49,9 +49,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
-import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -90,13 +88,11 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean deleteById(Long id) {
 		return deleteUserById(id);
 	}
 
 	@Override
-	@DS(TENANT)
 	public Boolean resetPassword(User user) {
 		return updateUser(getResetPasswordDO(user));
 	}
@@ -110,7 +106,6 @@ public class UserGatewayImpl implements UserGateway {
 	public User getById(Long id, Long tenantId) {
 		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class).eq("id", id).select("id", "username", "status", "dept_id", "dept_path", "super_admin"));
 		User user = userConvertor.convertEntity(userDO);
-		DynamicDataSourceContextHolder.push(MASTER);
 		if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
 			user.setRoleIds(roleMapper.getRoleIds());
 		}
@@ -126,9 +121,10 @@ public class UserGatewayImpl implements UserGateway {
 	public Datas<User> list(User user, PageQuery pageQuery) {
 		UserDO userDO = userConvertor.toDataObject(user);
 		final PageQuery page = pageQuery.page();
+		String sourceName = UserContextHolder.get().getSourceName();
 		CompletableFuture<List<UserDO>> c1 = CompletableFuture.supplyAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(user.getSourceName());
+				DynamicDataSourceContextHolder.push(sourceName);
 				return userMapper.getUserListFilter(userDO, page);
 			}
 			finally {
@@ -137,7 +133,7 @@ public class UserGatewayImpl implements UserGateway {
 		}, taskExecutor);
 		CompletableFuture<Integer> c2 = CompletableFuture.supplyAsync(() -> {
 			try {
-				DynamicDataSourceContextHolder.push(user.getSourceName());
+				DynamicDataSourceContextHolder.push(sourceName);
 				return userMapper.getUserListTotalFilter(userDO, page);
 			}
 			finally {

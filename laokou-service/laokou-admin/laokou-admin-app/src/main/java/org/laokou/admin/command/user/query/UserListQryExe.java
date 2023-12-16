@@ -25,7 +25,6 @@ import org.laokou.admin.dto.user.UserListQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -40,7 +39,7 @@ public class UserListQryExe {
 	private final UserConvertor userConvertor;
 
 	public Result<Datas<UserCO>> execute(UserListQry qry) {
-		User user = new User(qry.getUsername(), UserUtil.getTenantId(), UserUtil.getSourceName());
+		User user = new User(qry.getUsername());
 		Datas<User> newPage = userGateway.list(user, qry);
 		Datas<UserCO> datas = new Datas<>();
 		datas.setRecords(userConvertor.convertClientObjectList(newPage.getRecords()));

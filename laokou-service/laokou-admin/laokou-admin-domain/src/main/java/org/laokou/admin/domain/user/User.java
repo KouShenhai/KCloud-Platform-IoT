@@ -60,20 +60,8 @@ public class User {
 
 	private String deptPath;
 
-	private String sourceName;
-
-	public User(Long tenantId) {
-		this.tenantId = tenantId;
-	}
-
-	public User(String username, Long tenantId, String sourceName) {
+	public User(String username) {
 		this.username = username;
-		this.tenantId = tenantId;
-		this.sourceName = sourceName;
-	}
-
-	public User(String sourceName) {
-		this.sourceName = sourceName;
 	}
 
 	public User(Long id, Integer status) {

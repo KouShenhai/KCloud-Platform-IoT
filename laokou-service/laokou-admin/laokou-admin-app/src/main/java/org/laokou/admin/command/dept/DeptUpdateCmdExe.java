@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.dept;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.DeptConvertor;
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -47,6 +49,7 @@ public class DeptUpdateCmdExe {
 
 	private final DeptConvertor deptConvertor;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(DeptUpdateCmd cmd) {
 		DeptCO co = cmd.getDeptCO();
 		Long id = co.getId();

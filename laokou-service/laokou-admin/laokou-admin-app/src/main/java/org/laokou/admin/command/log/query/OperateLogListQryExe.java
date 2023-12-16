@@ -17,6 +17,7 @@
 
 package org.laokou.admin.command.log.query;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.OperateLogConvertor;
 import org.laokou.admin.domain.gateway.LogGateway;
@@ -27,6 +28,8 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -39,6 +42,7 @@ public class OperateLogListQryExe {
 
 	private final OperateLogConvertor operateLogConvertor;
 
+	@DS(TENANT)
 	public Result<Datas<OperateLogCO>> execute(OperateLogListQry qry) {
 		OperateLog operateLog = ConvertUtil.sourceToTarget(qry, OperateLog.class);
 		Datas<OperateLog> newPage = logGateway.operateList(operateLog, qry);

@@ -17,11 +17,14 @@
 
 package org.laokou.admin.command.dept;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.dept.DeptDeleteCmd;
 import org.laokou.admin.domain.gateway.DeptGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
 
 /**
  * @author laokou
@@ -32,6 +35,7 @@ public class DeptDeleteCmdExe {
 
 	private final DeptGateway deptGateway;
 
+	@DS(TENANT)
 	public Result<Boolean> execute(DeptDeleteCmd cmd) {
 		return Result.of(deptGateway.deleteById(cmd.getId()));
 	}
