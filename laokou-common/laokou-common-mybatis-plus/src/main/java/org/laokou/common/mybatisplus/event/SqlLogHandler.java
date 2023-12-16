@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.mybatisplus.event.handler;
+package org.laokou.common.mybatisplus.event;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.micrometer.common.lang.NonNullApi;
@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.mybatisplus.database.SqlLogMapper;
 import org.laokou.common.mybatisplus.database.dataobject.SqlLogDO;
-import org.laokou.common.mybatisplus.event.SqlLogEvent;
+import org.laokou.common.mybatisplus.handler.SqlLogEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;

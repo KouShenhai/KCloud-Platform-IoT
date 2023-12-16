@@ -32,8 +32,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.Constant.DEFAULT_TENANT;
-
 /**
  * @author laokou
  */
@@ -92,13 +90,7 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	@Override
 	public List<Menu> list(Menu menu, Long tenantId) {
-		List<MenuDO> list;
-		if (tenantId == DEFAULT_TENANT) {
-			list = menuMapper.getMenuListLikeName(null, menu.getName());
-		}
-		else {
-			list = menuMapper.getMenuListByTenantIdAndLikeName(null, tenantId, menu.getName());
-		}
+		List<MenuDO> list = menuMapper.getMenuListLikeName(null, menu.getName());
 		return menuConvertor.convertEntityList(list);
 	}
 
@@ -109,17 +101,11 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	private List<MenuDO> getMenuList(Integer type, User user) {
 		Long userId = user.getId();
-		Long tenantId = user.getTenantId();
 		Integer superAdmin = user.getSuperAdmin();
-		if (tenantId == DEFAULT_TENANT) {
-			if (superAdmin == SuperAdmin.YES.ordinal()) {
-				return menuMapper.getMenuListLikeName(type, null);
-			}
-			return menuMapper.getMenuListByUserId(type, userId);
+		if (superAdmin == SuperAdmin.YES.ordinal()) {
+			return menuMapper.getMenuListLikeName(type, null);
 		}
-		else {
-			return menuMapper.getMenuListByTenantIdAndLikeName(type, tenantId, null);
-		}
+		return menuMapper.getMenuListByUserId(type, userId);
 	}
 
 	private Boolean updateMenu(MenuDO menuDO) {

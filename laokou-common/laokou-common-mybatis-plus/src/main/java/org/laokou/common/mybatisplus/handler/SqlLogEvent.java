@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.mybatisplus.event;
+package org.laokou.common.mybatisplus.handler;
 
 import lombok.Getter;
 import lombok.Setter;
