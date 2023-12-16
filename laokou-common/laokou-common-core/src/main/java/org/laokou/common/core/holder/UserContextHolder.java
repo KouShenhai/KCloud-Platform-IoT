@@ -50,6 +50,7 @@ public class UserContextHolder {
 	private static final ThreadLocal<User> USER_CONTEXT_HOLDER = new InheritableThreadLocal<>();
 
 	public static void set(User user) {
+		clear();
 		USER_CONTEXT_HOLDER.set(user);
 	}
 

@@ -17,12 +17,14 @@
 
 package org.laokou.admin.event.handler;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
 import org.laokou.admin.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.OperateLogDO;
+import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
@@ -47,12 +49,16 @@ public class OperateLogHandler implements ApplicationListener<OperateLogEvent> {
 	@Override
 	@Async
 	public void onApplicationEvent(OperateLogEvent event) {
+		String sourceName = UserContextHolder.get().getSourceName();
 		CompletableFuture.runAsync(() -> {
 			try {
+				DynamicDataSourceContextHolder.push(sourceName);
 				execute(event);
 			}
 			catch (Exception e) {
 				log.error("数据插入失败，错误信息", e);
+			} finally {
+				DynamicDataSourceContextHolder.clear();
 			}
 		}, taskExecutor);
 	}

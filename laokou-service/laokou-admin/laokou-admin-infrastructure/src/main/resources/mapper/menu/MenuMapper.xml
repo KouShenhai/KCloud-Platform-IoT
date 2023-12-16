@@ -76,30 +76,6 @@
         </if>
         order by sort desc
     </select>
-    <select id="getMenuListByTenantIdAndLikeName" resultType="org.laokou.admin.gatewayimpl.database.dataobject.MenuDO">
-        select a.id
-             ,a.pid
-             ,a.`name`
-             ,a.icon
-             ,a.url
-             ,a.`type`
-             ,a.permission
-             ,a.visible
-             ,a.sort
-        from boot_sys_menu a
-        join boot_sys_package_menu b on b.menu_id = a.id
-        join boot_sys_tenant c on c.package_id = b.package_id
-        where a.del_flag = 0
-             and c.id = #{tenantId}
-        <if test="type != null">
-             and a.`type` = #{type}
-             and a.visible = 0
-        </if>
-        <if test="name != null and name != ''">
-            and a.`name` like concat('%',#{name},'%')
-        </if>
-        order by a.sort desc
-    </select>
     <select id="getMenuIdsByRoleId" resultType="java.lang.Long">
         SELECT a.id
         FROM boot_sys_menu a

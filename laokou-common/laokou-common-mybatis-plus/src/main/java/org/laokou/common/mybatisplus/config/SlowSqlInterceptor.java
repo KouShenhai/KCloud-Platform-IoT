@@ -26,7 +26,7 @@ import org.apache.ibatis.plugin.Signature;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.mybatisplus.event.SqlLogEvent;
+import org.laokou.common.mybatisplus.handler.SqlLogEvent;
 import org.laokou.common.mybatisplus.utils.SqlUtil;
 
 import java.sql.Connection;
