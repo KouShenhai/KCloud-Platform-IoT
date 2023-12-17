@@ -48,8 +48,7 @@ public class DeptInsertCmdExe {
 	@DS(TENANT)
 	public Result<Boolean> execute(DeptInsertCmd cmd) {
 		DeptCO co = cmd.getDeptCO();
-		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class)
-			.eq(DeptDO::getName, co.getName()));
+		long count = deptMapper.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getName, co.getName()));
 		if (count > 0) {
 			throw new SystemException("部门已存在，请重新填写");
 		}

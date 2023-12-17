@@ -32,4 +32,5 @@ public class DeptListQry extends CommonCommand {
 	public void setName(String name) {
 		this.name = StringUtil.like(name);
 	}
+
 }

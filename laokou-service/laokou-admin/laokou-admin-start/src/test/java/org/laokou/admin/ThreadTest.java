@@ -25,31 +25,36 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author laokou
  */
 public class ThreadTest {
-    public static void main(String[] args) {
-        AtomicInteger atomic = new AtomicInteger(0);
-        int len = 10;
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 2, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
-        for (int i = 0; i < len; i++) {
-            CompletableFuture.runAsync(() -> {
-                int val = atomic.incrementAndGet();
-                System.out.println("子线程运行完毕，" + Thread.currentThread().getName() + "，val = " + val);
-            }, threadPoolExecutor);
-        }
-        System.out.println("主线程运行完毕");
-        System.out.println("执行关闭线程池");
-        shutdown(threadPoolExecutor);
-    }
-    private static void shutdown(ExecutorService executorService) {
-        if (Objects.nonNull(executorService) && !executorService.isShutdown()) {
-            executorService.shutdown();
-            try {
-                if (executorService.awaitTermination(60, TimeUnit.SECONDS)) {
-                    executorService.shutdownNow();
-                }
-            } catch (InterruptedException e) {
-                executorService.shutdownNow();
-                Thread.currentThread().interrupt();
-            }
-        }
-    }
+
+	public static void main(String[] args) {
+		AtomicInteger atomic = new AtomicInteger(0);
+		int len = 10;
+		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 2, 60, TimeUnit.SECONDS,
+				new LinkedBlockingQueue<>());
+		for (int i = 0; i < len; i++) {
+			CompletableFuture.runAsync(() -> {
+				int val = atomic.incrementAndGet();
+				System.out.println("子线程运行完毕，" + Thread.currentThread().getName() + "，val = " + val);
+			}, threadPoolExecutor);
+		}
+		System.out.println("主线程运行完毕");
+		System.out.println("执行关闭线程池");
+		shutdown(threadPoolExecutor);
+	}
+
+	private static void shutdown(ExecutorService executorService) {
+		if (Objects.nonNull(executorService) && !executorService.isShutdown()) {
+			executorService.shutdown();
+			try {
+				if (executorService.awaitTermination(60, TimeUnit.SECONDS)) {
+					executorService.shutdownNow();
+				}
+			}
+			catch (InterruptedException e) {
+				executorService.shutdownNow();
+				Thread.currentThread().interrupt();
+			}
+		}
+	}
+
 }

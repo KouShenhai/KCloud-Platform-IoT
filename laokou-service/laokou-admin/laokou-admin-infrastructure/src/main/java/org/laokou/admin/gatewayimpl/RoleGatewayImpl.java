@@ -156,14 +156,16 @@ public class RoleGatewayImpl implements RoleGateway {
 	private void insertRoleMenu(Long roleId, List<Long> menuIds, User user) {
 		if (CollectionUtil.isNotEmpty(menuIds)) {
 			List<RoleMenuDO> list = menuIds.parallelStream().map(menuId -> toRoleMenuDO(roleId, menuId, user)).toList();
-			mybatisUtil.batch(list, RoleMenuMapper.class, UserContextHolder.get().getSourceName(), RoleMenuMapper::save);
+			mybatisUtil.batch(list, RoleMenuMapper.class, UserContextHolder.get().getSourceName(),
+					RoleMenuMapper::save);
 		}
 	}
 
 	private void insertRoleDept(Long roleId, List<Long> deptIds, User user) {
 		if (CollectionUtil.isNotEmpty(deptIds)) {
 			List<RoleDeptDO> list = deptIds.parallelStream().map(deptId -> toRoleDeptDO(roleId, deptId, user)).toList();
-			mybatisUtil.batch(list, RoleDeptMapper.class, UserContextHolder.get().getSourceName(), RoleDeptMapper::save);
+			mybatisUtil.batch(list, RoleDeptMapper.class, UserContextHolder.get().getSourceName(),
+					RoleDeptMapper::save);
 		}
 	}
 

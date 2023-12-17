@@ -50,134 +50,143 @@ import org.springframework.util.StringUtils;
 @NonNullApi
 @Configuration
 @EnableConfigurationProperties(RocketMQProperties.class)
-@ConditionalOnClass({MQAdmin.class})
+@ConditionalOnClass({ MQAdmin.class })
 @ConditionalOnProperty(prefix = "rocketmq", value = "name-server", matchIfMissing = true)
-@Import({MessageConverterConfiguration.class, ListenerContainerConfiguration.class, ExtProducerResetConfiguration.class,
-        ExtConsumerResetConfiguration.class, RocketMQTransactionConfiguration.class, RocketMQListenerConfiguration.class})
-@AutoConfigureAfter({MessageConverterConfiguration.class})
-@AutoConfigureBefore({RocketMQTransactionConfiguration.class})
+@Import({ MessageConverterConfiguration.class, ListenerContainerConfiguration.class,
+		ExtProducerResetConfiguration.class, ExtConsumerResetConfiguration.class,
+		RocketMQTransactionConfiguration.class, RocketMQListenerConfiguration.class })
+@AutoConfigureAfter({ MessageConverterConfiguration.class })
+@AutoConfigureBefore({ RocketMQTransactionConfiguration.class })
 public class RocketMQAutoConfiguration implements ApplicationContextAware {
-    private static final Logger log = LoggerFactory.getLogger(RocketMQAutoConfiguration.class);
 
-    public static final String ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME =
-        "rocketMQTemplate";
-    public static final String PRODUCER_BEAN_NAME = "defaultMQProducer";
-    public static final String CONSUMER_BEAN_NAME = "defaultLitePullConsumer";
+	private static final Logger log = LoggerFactory.getLogger(RocketMQAutoConfiguration.class);
 
-    @Autowired
-    private Environment environment;
+	public static final String ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME = "rocketMQTemplate";
 
-    private ApplicationContext applicationContext;
+	public static final String PRODUCER_BEAN_NAME = "defaultMQProducer";
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
+	public static final String CONSUMER_BEAN_NAME = "defaultLitePullConsumer";
 
-    @PostConstruct
-    public void checkProperties() {
-        String nameServer = environment.getProperty("rocketmq.name-server", String.class);
-        log.debug("rocketmq.nameServer = {}", nameServer);
-        if (nameServer == null) {
-            log.warn("The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!");
-        }
-    }
+	@Autowired
+	private Environment environment;
 
-    @Bean(PRODUCER_BEAN_NAME)
-    @ConditionalOnMissingBean(DefaultMQProducer.class)
-    @ConditionalOnProperty(prefix = "rocketmq", value = {"name-server", "producer.group"})
-    public DefaultMQProducer defaultMQProducer(RocketMQProperties rocketMQProperties) {
-        RocketMQProperties.Producer producerConfig = rocketMQProperties.getProducer();
-        String nameServer = rocketMQProperties.getNameServer();
-        String groupName = producerConfig.getGroup();
-        Assert.hasText(nameServer, "[rocketmq.name-server] must not be null");
-        Assert.hasText(groupName, "[rocketmq.producer.group] must not be null");
+	private ApplicationContext applicationContext;
 
-        String accessChannel = rocketMQProperties.getAccessChannel();
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.applicationContext = applicationContext;
+	}
 
-        String ak = rocketMQProperties.getProducer().getAccessKey();
-        String sk = rocketMQProperties.getProducer().getSecretKey();
-        boolean isEnableMsgTrace = rocketMQProperties.getProducer().isEnableMsgTrace();
-        String customizedTraceTopic = rocketMQProperties.getProducer().getCustomizedTraceTopic();
+	@PostConstruct
+	public void checkProperties() {
+		String nameServer = environment.getProperty("rocketmq.name-server", String.class);
+		log.debug("rocketmq.nameServer = {}", nameServer);
+		if (nameServer == null) {
+			log.warn(
+					"The necessary spring property 'rocketmq.name-server' is not defined, all rockertmq beans creation are skipped!");
+		}
+	}
 
-        DefaultMQProducer producer = RocketMQUtil.createDefaultMQProducer(groupName, ak, sk, isEnableMsgTrace, customizedTraceTopic);
+	@Bean(PRODUCER_BEAN_NAME)
+	@ConditionalOnMissingBean(DefaultMQProducer.class)
+	@ConditionalOnProperty(prefix = "rocketmq", value = { "name-server", "producer.group" })
+	public DefaultMQProducer defaultMQProducer(RocketMQProperties rocketMQProperties) {
+		RocketMQProperties.Producer producerConfig = rocketMQProperties.getProducer();
+		String nameServer = rocketMQProperties.getNameServer();
+		String groupName = producerConfig.getGroup();
+		Assert.hasText(nameServer, "[rocketmq.name-server] must not be null");
+		Assert.hasText(groupName, "[rocketmq.producer.group] must not be null");
 
-        producer.setNamesrvAddr(nameServer);
-        if (StringUtils.hasLength(accessChannel)) {
-            producer.setAccessChannel(AccessChannel.valueOf(accessChannel));
-        }
-        producer.setSendMsgTimeout(producerConfig.getSendMessageTimeout());
-        producer.setRetryTimesWhenSendFailed(producerConfig.getRetryTimesWhenSendFailed());
-        producer.setRetryTimesWhenSendAsyncFailed(producerConfig.getRetryTimesWhenSendAsyncFailed());
-        producer.setMaxMessageSize(producerConfig.getMaxMessageSize());
-        producer.setCompressMsgBodyOverHowmuch(producerConfig.getCompressMessageBodyThreshold());
-        producer.setRetryAnotherBrokerWhenNotStoreOK(producerConfig.isRetryNextServer());
-        producer.setUseTLS(producerConfig.isTlsEnable());
-        producer.setNamespace(producerConfig.getNamespace());
-        producer.setInstanceName(producerConfig.getInstanceName());
-        log.info(String.format("a producer (%s) init on namesrv %s",  groupName,nameServer));
-        return producer;
-    }
+		String accessChannel = rocketMQProperties.getAccessChannel();
 
-    @Bean(CONSUMER_BEAN_NAME)
-    @ConditionalOnMissingBean(DefaultLitePullConsumer.class)
-    @ConditionalOnProperty(prefix = "rocketmq", value = {"name-server", "pull-consumer.group", "pull-consumer.topic"})
-    public DefaultLitePullConsumer defaultLitePullConsumer(RocketMQProperties rocketMQProperties)
-            throws MQClientException {
-        RocketMQProperties.PullConsumer consumerConfig = rocketMQProperties.getPullConsumer();
-        String nameServer = rocketMQProperties.getNameServer();
-        String groupName = consumerConfig.getGroup();
-        String topicName = consumerConfig.getTopic();
-        Assert.hasText(nameServer, "[rocketmq.name-server] must not be null");
-        Assert.hasText(groupName, "[rocketmq.pull-consumer.group] must not be null");
-        Assert.hasText(topicName, "[rocketmq.pull-consumer.topic] must not be null");
+		String ak = rocketMQProperties.getProducer().getAccessKey();
+		String sk = rocketMQProperties.getProducer().getSecretKey();
+		boolean isEnableMsgTrace = rocketMQProperties.getProducer().isEnableMsgTrace();
+		String customizedTraceTopic = rocketMQProperties.getProducer().getCustomizedTraceTopic();
 
-        String accessChannel = rocketMQProperties.getAccessChannel();
-        MessageModel messageModel = MessageModel.valueOf(consumerConfig.getMessageModel());
-        SelectorType selectorType = SelectorType.valueOf(consumerConfig.getSelectorType());
-        String selectorExpression = consumerConfig.getSelectorExpression();
-        String ak = consumerConfig.getAccessKey();
-        String sk = consumerConfig.getSecretKey();
-        int pullBatchSize = consumerConfig.getPullBatchSize();
-        boolean useTLS = consumerConfig.isTlsEnable();
+		DefaultMQProducer producer = RocketMQUtil.createDefaultMQProducer(groupName, ak, sk, isEnableMsgTrace,
+				customizedTraceTopic);
 
-        DefaultLitePullConsumer litePullConsumer = RocketMQUtil.createDefaultLitePullConsumer(nameServer, accessChannel,
-                groupName, topicName, messageModel, selectorType, selectorExpression, ak, sk, pullBatchSize, useTLS);
-        litePullConsumer.setEnableMsgTrace(consumerConfig.isEnableMsgTrace());
-        litePullConsumer.setCustomizedTraceTopic(consumerConfig.getCustomizedTraceTopic());
-        litePullConsumer.setNamespace(consumerConfig.getNamespace());
-        litePullConsumer.setInstanceName(consumerConfig.getInstanceName());
-        log.info(String.format("a pull consumer(%s sub %s) init on namesrv %s",  groupName, topicName,nameServer));
-        return litePullConsumer;
-    }
+		producer.setNamesrvAddr(nameServer);
+		if (StringUtils.hasLength(accessChannel)) {
+			producer.setAccessChannel(AccessChannel.valueOf(accessChannel));
+		}
+		producer.setSendMsgTimeout(producerConfig.getSendMessageTimeout());
+		producer.setRetryTimesWhenSendFailed(producerConfig.getRetryTimesWhenSendFailed());
+		producer.setRetryTimesWhenSendAsyncFailed(producerConfig.getRetryTimesWhenSendAsyncFailed());
+		producer.setMaxMessageSize(producerConfig.getMaxMessageSize());
+		producer.setCompressMsgBodyOverHowmuch(producerConfig.getCompressMessageBodyThreshold());
+		producer.setRetryAnotherBrokerWhenNotStoreOK(producerConfig.isRetryNextServer());
+		producer.setUseTLS(producerConfig.isTlsEnable());
+		producer.setNamespace(producerConfig.getNamespace());
+		producer.setInstanceName(producerConfig.getInstanceName());
+		log.info(String.format("a producer (%s) init on namesrv %s", groupName, nameServer));
+		return producer;
+	}
 
-    @Bean(destroyMethod = "destroy")
-    @Conditional(ProducerOrConsumerPropertyCondition.class)
-    @ConditionalOnMissingBean(name = ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME)
-    public RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter) {
-        RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
-        if (applicationContext.containsBean(PRODUCER_BEAN_NAME)) {
-            rocketMQTemplate.setProducer((DefaultMQProducer) applicationContext.getBean(PRODUCER_BEAN_NAME));
-        }
-        if (applicationContext.containsBean(CONSUMER_BEAN_NAME)) {
-            rocketMQTemplate.setConsumer((DefaultLitePullConsumer) applicationContext.getBean(CONSUMER_BEAN_NAME));
-        }
-        rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
-        return rocketMQTemplate;
-    }
+	@Bean(CONSUMER_BEAN_NAME)
+	@ConditionalOnMissingBean(DefaultLitePullConsumer.class)
+	@ConditionalOnProperty(prefix = "rocketmq", value = { "name-server", "pull-consumer.group", "pull-consumer.topic" })
+	public DefaultLitePullConsumer defaultLitePullConsumer(RocketMQProperties rocketMQProperties)
+			throws MQClientException {
+		RocketMQProperties.PullConsumer consumerConfig = rocketMQProperties.getPullConsumer();
+		String nameServer = rocketMQProperties.getNameServer();
+		String groupName = consumerConfig.getGroup();
+		String topicName = consumerConfig.getTopic();
+		Assert.hasText(nameServer, "[rocketmq.name-server] must not be null");
+		Assert.hasText(groupName, "[rocketmq.pull-consumer.group] must not be null");
+		Assert.hasText(topicName, "[rocketmq.pull-consumer.topic] must not be null");
 
-    static class ProducerOrConsumerPropertyCondition extends AnyNestedCondition {
+		String accessChannel = rocketMQProperties.getAccessChannel();
+		MessageModel messageModel = MessageModel.valueOf(consumerConfig.getMessageModel());
+		SelectorType selectorType = SelectorType.valueOf(consumerConfig.getSelectorType());
+		String selectorExpression = consumerConfig.getSelectorExpression();
+		String ak = consumerConfig.getAccessKey();
+		String sk = consumerConfig.getSecretKey();
+		int pullBatchSize = consumerConfig.getPullBatchSize();
+		boolean useTLS = consumerConfig.isTlsEnable();
 
-        public ProducerOrConsumerPropertyCondition() {
-            super(ConfigurationPhase.REGISTER_BEAN);
-        }
+		DefaultLitePullConsumer litePullConsumer = RocketMQUtil.createDefaultLitePullConsumer(nameServer, accessChannel,
+				groupName, topicName, messageModel, selectorType, selectorExpression, ak, sk, pullBatchSize, useTLS);
+		litePullConsumer.setEnableMsgTrace(consumerConfig.isEnableMsgTrace());
+		litePullConsumer.setCustomizedTraceTopic(consumerConfig.getCustomizedTraceTopic());
+		litePullConsumer.setNamespace(consumerConfig.getNamespace());
+		litePullConsumer.setInstanceName(consumerConfig.getInstanceName());
+		log.info(String.format("a pull consumer(%s sub %s) init on namesrv %s", groupName, topicName, nameServer));
+		return litePullConsumer;
+	}
 
-        @ConditionalOnBean(DefaultMQProducer.class)
-        static class DefaultMQProducerExistsCondition {
-        }
+	@Bean(destroyMethod = "destroy")
+	@Conditional(ProducerOrConsumerPropertyCondition.class)
+	@ConditionalOnMissingBean(name = ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME)
+	public RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter) {
+		RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
+		if (applicationContext.containsBean(PRODUCER_BEAN_NAME)) {
+			rocketMQTemplate.setProducer((DefaultMQProducer) applicationContext.getBean(PRODUCER_BEAN_NAME));
+		}
+		if (applicationContext.containsBean(CONSUMER_BEAN_NAME)) {
+			rocketMQTemplate.setConsumer((DefaultLitePullConsumer) applicationContext.getBean(CONSUMER_BEAN_NAME));
+		}
+		rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
+		return rocketMQTemplate;
+	}
 
-        @ConditionalOnBean(DefaultLitePullConsumer.class)
-        static class DefaultLitePullConsumerExistsCondition {
-        }
-    }
+	static class ProducerOrConsumerPropertyCondition extends AnyNestedCondition {
+
+		public ProducerOrConsumerPropertyCondition() {
+			super(ConfigurationPhase.REGISTER_BEAN);
+		}
+
+		@ConditionalOnBean(DefaultMQProducer.class)
+		static class DefaultMQProducerExistsCondition {
+
+		}
+
+		@ConditionalOnBean(DefaultLitePullConsumer.class)
+		static class DefaultLitePullConsumerExistsCondition {
+
+		}
+
+	}
+
 }

@@ -57,7 +57,8 @@ public class OperateLogHandler implements ApplicationListener<OperateLogEvent> {
 			}
 			catch (Exception e) {
 				log.error("数据插入失败，错误信息", e);
-			} finally {
+			}
+			finally {
 				DynamicDataSourceContextHolder.clear();
 			}
 		}, taskExecutor);
