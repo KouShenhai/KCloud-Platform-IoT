@@ -19,7 +19,6 @@ package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -76,13 +75,11 @@ public class UserGatewayImpl implements UserGateway {
 	private final ThreadPoolTaskExecutor taskExecutor;
 
 	@Override
-	@GlobalTransactional(rollbackFor = Exception.class)
 	public Boolean insert(User user) {
 		return insertUser(getInsertUserDO(user), user);
 	}
 
 	@Override
-	@GlobalTransactional(rollbackFor = Exception.class)
 	public Boolean update(User user) {
 		return updateUser(getUpdateUserDO(user), user);
 	}
@@ -148,23 +145,23 @@ public class UserGatewayImpl implements UserGateway {
 	}
 
 	private Boolean updateUser(UserDO userDO, User user) {
-		userMapper.updateUser(userDO);
-		deleteUserRole(user);
-		insertUserRole(user.getRoleIds(), userDO);
-		return true;
-	}
-
-	private void deleteUserRole(User user) {
-		transactionalUtil.defaultExecuteWithoutResult(rollback -> {
+		return transactionalUtil.defaultExecute(r -> {
 			try {
-				userRoleMapper.deleteUserRoleByUserId(user.getId());
+				userMapper.updateUser(userDO);
+				deleteUserRole(user);
+				insertUserRole(user.getRoleIds(), userDO);
+				return true;
 			}
 			catch (Exception e) {
 				log.error("错误信息", e);
-				rollback.setRollbackOnly();
+				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
 		});
+	}
+
+	private void deleteUserRole(User user) {
+		userRoleMapper.deleteUserRoleByUserId(user.getId());
 	}
 
 	private Boolean insertUser(UserDO userDO, User user) {

@@ -17,7 +17,6 @@
 
 package org.laokou.admin.command.tenant.query;
 
-import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
@@ -46,13 +45,7 @@ public class TenantOptionListQryExe {
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}
-		List<OptionCO> options = new ArrayList<>(list.size());
-		for (TenantDO tenantDO : list) {
-			OptionCO oc = new OptionCO();
-			oc.setLabel(tenantDO.getName());
-			oc.setValue(String.valueOf(tenantDO.getId()));
-			options.add(oc);
-		}
+		List<OptionCO> options = list.stream().map(item -> new OptionCO(item.getName(), String.valueOf(item.getId()))).toList();
 		return Result.of(options);
 	}
 

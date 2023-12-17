@@ -54,8 +54,8 @@ public class UserUpdateCmdExe {
 		user.setTenantId(UserUtil.getTenantId());
 		user.setCreator(UserUtil.getUserId());
 		user.setEditor(UserUtil.getUserId());
-		user.setDeptId(UserUtil.getDeptId());
-		user.setDeptPath(UserUtil.getDeptPath());
+		user.setDeptId(co.getDeptId());
+		user.setDeptPath(co.getDeptPath());
 		return user;
 	}
 

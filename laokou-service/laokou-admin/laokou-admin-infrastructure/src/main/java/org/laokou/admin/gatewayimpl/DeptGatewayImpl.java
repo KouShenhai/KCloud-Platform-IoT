@@ -51,9 +51,8 @@ public class DeptGatewayImpl implements DeptGateway {
 	private final DeptConvertor deptConvertor;
 
 	@Override
-	public List<Dept> list(Dept dept, Long tenantId) {
+	public List<Dept> list(Dept dept) {
 		DeptDO deptDO = deptConvertor.toDataObject(dept);
-		deptDO.setTenantId(tenantId);
 		return deptConvertor.convertEntityList(deptMapper.getDeptList(deptDO));
 	}
 

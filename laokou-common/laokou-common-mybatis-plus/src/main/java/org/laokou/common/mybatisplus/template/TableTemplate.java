@@ -19,7 +19,6 @@ package org.laokou.common.mybatisplus.template;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.i18n.utils.DateUtil;
@@ -52,10 +51,6 @@ public class TableTemplate {
 			date1 = DateUtil.plusMonths(date1, 1);
 		}
 		return list;
-	}
-
-	public static String getDynamicTable(Long snowflakeId, String tableName) {
-		return tableName + UNDER + DateUtil.format(IdGenerator.getLocalDateTime(snowflakeId), DateUtil.YYYYMM);
 	}
 
 	@SneakyThrows

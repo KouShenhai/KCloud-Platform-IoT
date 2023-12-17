@@ -6,7 +6,7 @@
 
 ### 📣 项目介绍
 <p align="center"><img src="doc/image/logo.png" width="625" height="205" alt="图标"/></p>
-KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的云服务平台。基于Spring Boot 3.2.0、Spring Cloud 2022.0.4、Spring Cloud Alibaba 2022.0.0.0 最新版本开发的多租户SaaS系统。
+KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的云服务平台。基于Spring Boot 3.2.0、Spring Cloud 2023.0.0、Spring Cloud Alibaba 2022.0.0.0 最新版本开发的多租户SaaS系统。
 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、服务限流、熔断降级、监控报警、多数据源、工作流、高亮搜索、定时任务、分布式链路、分布式缓存、分布式事务、分布式存储等功能，用于快速构建微服务项目。目前支持Shell、Docker等多种部署方式，并且支持GraalVM。实现RBAC权限、其中包含系统管理、系统监控、工作流程、数据分析等几大模块。
 遵循阿里代码规范，采用RESTful设计风格，代码简洁、架构清晰，非常适合作为基础框架使用。
 <p align="center">
@@ -17,7 +17,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 	<a target="_blank" href="https://gitee.com/laokouyun/KCloud-Platform-Alibaba/stargazers"><img src="https://gitee.com/laokouyun/KCloud-Platform-Alibaba/badge/star.svg?theme=dark" alt="Gitee Star"></a>
     <a target="_blank" href="https://gitee.com/laokouyun/KCloud-Platform-Alibaba"><img src="https://gitee.com/laokouyun/KCloud-Platform-Alibaba/badge/fork.svg?theme=dark"  alt="Gitee Fork"></a>
     <a target="_blank" href="https://spring.io/projects/spring-boot"><img src="https://img.shields.io/static/v1?label=Spring Boot&message=3.2.0&color=green" alt="SpringBoot"></a>
-    <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2022.0.4&color=green"></a>
+    <a target="_blank" href="https://spring.io/projects/spring-cloud"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2023.0.0&color=green"></a>
     <a target="_blank" href="https://github.com/alibaba/spring-cloud-alibaba"><img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud Alibaba&message=2022.0.0.0&color=orange"></a>
     <a target="_blank" href="https://spring.io/projects/spring-authorization-server"><img alt="OAuth 2.1" src="https://img.shields.io/static/v1?label=OAuth 2.1&message=1.2.0&color=blue"></a>
     <a target="_blank" href="https://www.oracle.com/java/technologies/downloads/#java17"><img alt="JDK" src="https://img.shields.io/badge/GraalVM-21.0.1-blue.svg"/></a>
@@ -37,11 +37,11 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 
 ### 🔎 功能介绍
 🚀 在线用户：强制踢出在线用户    
-🚀 用户管理：用户信息增删改查（字段隔离&分库分表）（可重置密码）   
-🚀 角色管理：角色信息增删改查，基于部门的数据权限、角色权限（字段隔离）     
-🚀 菜单管理：菜单信息增删改查（字段隔离）（自定义菜单图标）   
-🚀 部门管理：部门信息增删改查（字段隔离）    
-🚀 日志管理：操作日志、登录日志查询、导出（字段隔离）       
+🚀 用户管理：用户信息增删改查（数据库隔离）（可重置密码）   
+🚀 角色管理：角色信息增删改查，基于部门的数据权限、角色权限（数据库隔离）     
+🚀 菜单管理：菜单信息增删改查（数据库隔离）（自定义菜单图标）   
+🚀 部门管理：部门信息增删改查（数据库隔离）    
+🚀 日志管理：操作日志、登录日志查询、导出（数据库隔离）       
 🚀 字典管理：字典信息管理（数据库隔离）    
 🚀 消息管理：消息提醒和消息通知（数据库隔离）（分布式消息）      
 🚀 流程定义：流程定义、挂起、激活、查看、删除（默认数据库）    
@@ -55,7 +55,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 🚀 集群管理：服务实例查看与优雅停机（服务自动下线）  
 🚀 数据源管理：数据源信息增删改查（默认数据库）      
 🚀 代码生成器：自定义模板生成代码  
-🚀 资源管理：资源信息管理增删改查，（审批 + 处理 + 转办 + 委派 => Seata AT模式），审批日志（默认数据库），同步（批量同步到ES），通过关键字搜索并高亮显示（默认ES）          
+🚀 资源管理：资源信息管理增删改查，（审批 + 处理 + 转办 + 委派 => Seata AT模式），审批日志（数据库隔离），同步（批量同步到ES），通过关键字搜索并高亮显示（默认ES）          
 🚀 用户登录：账号密码登录（多租户）、授权码登录（默认数据库）、手机号或邮件登录、设备授权码登录（请运行认证模式测试脚本.http）
 
 ### 💡 系统架构
@@ -66,7 +66,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | 组件                          | 版本            |
 |:----------------------------|:--------------|
 | Spring Boot                 | 3.2.0         |
-| Spring Cloud                | 2022.0.4      |
+| Spring Cloud                | 2023.0.0      |
 | Spring Cloud Alibaba        | 2022.0.0.0    |
 | Spring Boot Admin           | 3.1.8         |
 | Spring Authorization Server | 1.2.0         |

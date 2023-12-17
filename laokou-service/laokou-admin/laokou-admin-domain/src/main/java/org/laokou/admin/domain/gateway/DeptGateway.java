@@ -26,7 +26,7 @@ import java.util.List;
  */
 public interface DeptGateway {
 
-	List<Dept> list(Dept dept, Long tenantId);
+	List<Dept> list(Dept dept);
 
 	Boolean insert(Dept dept);
 
