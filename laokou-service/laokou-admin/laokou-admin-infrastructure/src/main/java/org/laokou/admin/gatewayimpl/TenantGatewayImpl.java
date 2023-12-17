@@ -18,7 +18,6 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
-import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -100,6 +99,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	@Override
 	public Boolean update(Tenant tenant) {
 		TenantDO tenantDO = tenantConvertor.toDataObject(tenant);
+		tenantDO.setVersion(tenantMapper.getVersion(tenant.getId(), TenantDO.class));
 		return updateTenant(tenantDO);
 	}
 

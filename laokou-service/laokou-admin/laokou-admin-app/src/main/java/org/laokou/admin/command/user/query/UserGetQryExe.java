@@ -25,7 +25,6 @@ import org.laokou.admin.domain.user.User;
 import org.laokou.admin.dto.user.UserGetQry;
 import org.laokou.admin.dto.user.clientobject.UserCO;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
@@ -43,7 +42,7 @@ public class UserGetQryExe {
 
 	@DS(TENANT)
 	public Result<UserCO> execute(UserGetQry qry) {
-		User user = userGateway.getById(qry.getId(), UserUtil.getTenantId());
+		User user = userGateway.getById(qry.getId());
 		return Result.of(userConvertor.convertClientObject(user));
 	}
 

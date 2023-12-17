@@ -106,10 +106,3 @@ spring:
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
-
-mybatis-plus:
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant

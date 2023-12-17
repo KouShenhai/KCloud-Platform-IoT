@@ -33,7 +33,7 @@ import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_USER;
  * @author laokou
  */
 @Data
-@TableName(value = BOOT_SYS_USER + PLACE_HOLDER, autoResultMap = true)
+@TableName(value = BOOT_SYS_USER, autoResultMap = true)
 @Schema(name = "UserDO", description = "用户")
 public class UserDO extends BaseDO {
 

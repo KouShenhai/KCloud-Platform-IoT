@@ -22,8 +22,8 @@
     <select id="getDeptList" resultType="org.laokou.admin.gatewayimpl.database.dataobject.DeptDO">
         select id,pid,`name`,sort from boot_sys_dept
         where del_flag = 0
-        <if test="deptDO.name != null and deptDOname != ''">
-            and `name` like concat('%',#{deptDO.name},'%')
+        <if test="deptDO.name != null and deptDO.name != ''">
+            and `name` like #{deptDO.name}
         </if>
         order by sort desc
     </select>

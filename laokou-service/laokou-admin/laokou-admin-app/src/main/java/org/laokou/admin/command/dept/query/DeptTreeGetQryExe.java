@@ -26,7 +26,6 @@ import org.laokou.admin.dto.dept.DeptTreeGetQry;
 import org.laokou.admin.dto.dept.clientobject.DeptCO;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -46,7 +45,7 @@ public class DeptTreeGetQryExe {
 
 	@DS(TENANT)
 	public Result<DeptCO> execute(DeptTreeGetQry qry) {
-		List<Dept> list = deptGateway.list(new Dept(), UserUtil.getTenantId());
+		List<Dept> list = deptGateway.list(new Dept());
 		List<DeptCO> deptList = deptConvertor.convertClientObjectList(list);
 		return Result.of(TreeUtil.buildTreeNode(deptList, DeptCO.class));
 	}

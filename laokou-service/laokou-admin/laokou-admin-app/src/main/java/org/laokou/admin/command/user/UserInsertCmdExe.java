@@ -51,8 +51,8 @@ public class UserInsertCmdExe {
 		User user = userConvertor.toEntity(co);
 		user.setTenantId(UserUtil.getTenantId());
 		user.setCreator(UserUtil.getUserId());
-		user.setDeptId(UserUtil.getDeptId());
-		user.setDeptPath(UserUtil.getDeptPath());
+		user.setDeptId(co.getDeptId());
+		user.setDeptPath(co.getDeptPath());
 		return user;
 	}
 
