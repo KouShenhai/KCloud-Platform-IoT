@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 192.168.30.133(老寇）
+ Source Server         : 192.168.30.135(老寇）
  Source Server Type    : MySQL
  Source Server Version : 80033 (8.0.33)
- Source Host           : 192.168.30.133:3306
+ Source Host           : 192.168.30.135:3306
  Source Schema         : kcloud_platform_alibaba_seata
 
  Target Server Type    : MySQL
  Target Server Version : 80033 (8.0.33)
  File Encoding         : 65001
 
- Date: 08/11/2023 14:16:51
+ Date: 17/12/2023 22:28:05
 */
 
 SET NAMES utf8mb4;
@@ -35,11 +35,7 @@ CREATE TABLE `branch_table`  (
                                  `gmt_modified` datetime(6) NULL DEFAULT NULL,
                                  PRIMARY KEY (`branch_id`) USING BTREE,
                                  INDEX `idx_xid`(`xid` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of branch_table
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for distributed_lock
@@ -50,16 +46,7 @@ CREATE TABLE `distributed_lock`  (
                                      `lock_value` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
                                      `expire` bigint NULL DEFAULT NULL,
                                      PRIMARY KEY (`lock_key`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of distributed_lock
--- ----------------------------
-INSERT INTO `distributed_lock` VALUES ('AsyncCommitting', ' ', 0);
-INSERT INTO `distributed_lock` VALUES ('RetryCommitting', ' ', 0);
-INSERT INTO `distributed_lock` VALUES ('RetryRollbacking', ' ', 0);
-INSERT INTO `distributed_lock` VALUES ('TxTimeoutCheck', ' ', 0);
-INSERT INTO `distributed_lock` VALUES ('UndologDelete', ' ', 0);
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for flyway_schema_history
@@ -81,10 +68,6 @@ CREATE TABLE `flyway_schema_history`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of flyway_schema_history
--- ----------------------------
-
--- ----------------------------
 -- Table structure for global_table
 -- ----------------------------
 DROP TABLE IF EXISTS `global_table`;
@@ -103,11 +86,7 @@ CREATE TABLE `global_table`  (
                                  PRIMARY KEY (`xid`) USING BTREE,
                                  INDEX `idx_status_gmt_modified`(`status` ASC, `gmt_modified` ASC) USING BTREE,
                                  INDEX `idx_transaction_id`(`transaction_id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of global_table
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for lock_table
@@ -128,10 +107,6 @@ CREATE TABLE `lock_table`  (
                                INDEX `idx_status`(`status` ASC) USING BTREE,
                                INDEX `idx_branch_id`(`branch_id` ASC) USING BTREE,
                                INDEX `idx_xid`(`xid` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of lock_table
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;

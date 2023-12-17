@@ -139,9 +139,11 @@ public class DsUtil {
 				throw new DataSourceException(String.format("表 %s 不存在", String.join(DROP, list)));
 			}
 		}
-		catch (Exception e) {
+		catch (DataSourceException e) {
 			log.error("数据源连接超时，错误信息", e);
 			throw new DataSourceException("数据源连接超时");
+		} catch (Exception e) {
+			throw e;
 		}
 		finally {
 			JdbcUtils.closeStatement(ps);

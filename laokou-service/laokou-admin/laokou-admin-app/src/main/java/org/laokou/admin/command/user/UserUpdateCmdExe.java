@@ -1,7 +1,6 @@
 package org.laokou.admin.command.user;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.UserConvertor;
 import org.laokou.admin.domain.gateway.UserGateway;
@@ -35,7 +34,6 @@ public class UserUpdateCmdExe {
 	public Result<Boolean> execute(UserUpdateCmd cmd) {
 		UserCO co = cmd.getUserCO();
 		// 用户表
-		DynamicDataSourceContextHolder.push(TENANT);
 		int count = userMapper.getUserCount(toUserDO(co));
 		if (count > 0) {
 			throw new SystemException("用户名已存在，请重新输入");
