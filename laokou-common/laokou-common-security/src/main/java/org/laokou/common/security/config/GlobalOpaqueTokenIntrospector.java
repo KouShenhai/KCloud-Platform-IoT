@@ -107,7 +107,8 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (StringUtil.isNotEmpty(username)) {
 			try {
 				user.setUsername(AesUtil.decrypt(username));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("用户名解密失败，请使用AES加密");
 			}
 		}
@@ -115,7 +116,8 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (StringUtil.isNotEmpty(mail)) {
 			try {
 				user.setMail(AesUtil.decrypt(mail));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("邮箱解密失败，请使用AES加密");
 			}
 		}
@@ -123,7 +125,8 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (StringUtil.isNotEmpty(mail)) {
 			try {
 				user.setMobile(AesUtil.decrypt(mobile));
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("手机号解密失败，请使用AES加密");
 			}
 		}

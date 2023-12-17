@@ -45,7 +45,9 @@ public class TenantOptionListQryExe {
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}
-		List<OptionCO> options = list.stream().map(item -> new OptionCO(item.getName(), String.valueOf(item.getId()))).toList();
+		List<OptionCO> options = list.stream()
+			.map(item -> new OptionCO(item.getName(), String.valueOf(item.getId())))
+			.toList();
 		return Result.of(options);
 	}
 

@@ -101,7 +101,9 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	public User getById(Long id) {
-		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class).eq("id", id).select("id", "username", "status", "dept_id", "dept_path", "super_admin"));
+		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class)
+			.eq("id", id)
+			.select("id", "username", "status", "dept_id", "dept_path", "super_admin"));
 		User user = userConvertor.convertEntity(userDO);
 		if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
 			user.setRoleIds(roleMapper.getRoleIds());
@@ -223,7 +225,8 @@ public class UserGatewayImpl implements UserGateway {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return userMapper.deleteById(id) > 0;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("错误信息", e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
