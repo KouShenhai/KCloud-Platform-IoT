@@ -72,7 +72,7 @@ public class TasksController {
 	@GetMapping(value = "{instanceId}/diagram")
 	@Operation(summary = "流程任务", description = "流程图")
 	public Result<String> diagram(@PathVariable("instanceId") String instanceId) {
-		return null;
+		return tasksServiceI.diagram(new TaskDiagramGetQry(instanceId));
 	}
 
 	@Idempotent

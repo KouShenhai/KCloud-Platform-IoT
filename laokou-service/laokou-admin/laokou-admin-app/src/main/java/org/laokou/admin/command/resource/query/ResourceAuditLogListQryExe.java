@@ -17,8 +17,17 @@
 
 package org.laokou.admin.command.resource.query;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.AuditLogConvertor;
+import org.laokou.admin.dto.resource.ResourceAuditLogListQry;
+import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
+import org.laokou.admin.gatewayimpl.database.AuditLogMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.AuditLogDO;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -26,5 +35,16 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ResourceAuditLogListQryExe {
+
+	private final AuditLogMapper auditLogMapper;
+
+	private final AuditLogConvertor auditLogConvertor;
+
+	public Result<List<AuditLogCO>> execute(ResourceAuditLogListQry qry) {
+		List<AuditLogDO> list = auditLogMapper.selectList(Wrappers.lambdaQuery(AuditLogDO.class)
+						.eq(AuditLogDO::getBusinessId, qry.getId())
+				.select(AuditLogDO::getId, AuditLogDO::getStatus, AuditLogDO::getComment, AuditLogDO::getCreateDate, AuditLogDO::getApprover).orderByDesc(AuditLogDO::getId));
+		return Result.of(auditLogConvertor.convertClientObjList(list));
+	}
 
 }

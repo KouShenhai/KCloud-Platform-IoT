@@ -64,7 +64,8 @@ public class SourceUpdateCmdExe {
 		if (!sourceRegex) {
 			throw new SystemException("数据源名称必须包含字母、下划线和数字");
 		}
-		Long count = sourceMapper.selectCount(Wrappers.query(SourceDO.class).eq("name", name).ne("id", source.getId()));
+		Long count = sourceMapper.selectCount(
+				Wrappers.lambdaQuery(SourceDO.class).eq(SourceDO::getName, name).ne(SourceDO::getId, source.getId()));
 		if (count > 0) {
 			throw new SystemException("数据源名称已存在，请重新填写");
 		}

@@ -25,6 +25,7 @@ import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.oss.OssUploadCmd;
 import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.dto.resource.*;
+import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
 import org.laokou.common.i18n.dto.Datas;
@@ -39,6 +40,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import static org.laokou.common.lock.enums.LockType.FENCED;
@@ -58,7 +60,7 @@ public class ResourceController {
 	@TraceLog
 	@Operation(summary = "资源管理", description = "查询审批日志列表")
 	@PreAuthorize("hasAuthority('resource:audit-log')")
-	public Result<Datas<?>> auditLog(@PathVariable("id") Long id) {
+	public Result<List<AuditLogCO>> auditLog(@PathVariable("id") Long id) {
 		return resourceServiceI.auditLog(new ResourceAuditLogListQry(id));
 	}
 
@@ -97,11 +99,10 @@ public class ResourceController {
 	}
 
 	@GetMapping(value = "{id}/download")
-	@TraceLog
 	@Operation(summary = "资源管理", description = "下载资源")
 	@PreAuthorize("hasAuthority('resource:download')")
-	public Result<Boolean> download(@PathVariable("id") Long id, HttpServletResponse response) {
-		return resourceServiceI.download(new ResourceDownloadCmd(id, response));
+	public void download(@PathVariable("id") Long id, HttpServletResponse response) {
+		resourceServiceI.download(new ResourceDownloadCmd(id, response));
 	}
 
 	@Idempotent

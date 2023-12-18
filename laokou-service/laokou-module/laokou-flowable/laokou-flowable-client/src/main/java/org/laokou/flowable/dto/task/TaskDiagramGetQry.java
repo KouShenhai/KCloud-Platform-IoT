@@ -17,13 +17,19 @@
 
 package org.laokou.flowable.dto.task;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TaskDiagramGetQry extends CommonCommand {
+
+    private String instanceId;
 
 }

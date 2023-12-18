@@ -17,7 +17,6 @@
 
 package org.laokou.admin.command.source.query;
 
-import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.common.clientobject.OptionCO;
@@ -41,17 +40,15 @@ public class SourceOptionListQryExe {
 	private final SourceMapper sourceMapper;
 
 	public Result<List<OptionCO>> execute(SourceOptionListQry qry) {
-		List<SourceDO> list = sourceMapper.selectList(Wrappers.query(SourceDO.class).select("id", "name"));
+		List<SourceDO> list = sourceMapper.selectList(Wrappers.lambdaQuery(SourceDO.class)
+			.select(SourceDO::getId, SourceDO::getName)
+			.orderByDesc(SourceDO::getId));
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}
-		List<OptionCO> options = new ArrayList<>(list.size());
-		for (SourceDO sourceDO : list) {
-			OptionCO optionCO = new OptionCO();
-			optionCO.setValue(String.valueOf(sourceDO.getId()));
-			optionCO.setLabel(sourceDO.getName());
-			options.add(optionCO);
-		}
+		List<OptionCO> options = list.stream()
+			.map(item -> new OptionCO(item.getName(), String.valueOf(item.getId())))
+			.toList();
 		return Result.of(options);
 	}
 

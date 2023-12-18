@@ -22,6 +22,7 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.flowable.api.TasksServiceI;
 import org.laokou.flowable.command.task.*;
+import org.laokou.flowable.command.task.query.TaskDiagramGetQryExe;
 import org.laokou.flowable.command.task.query.TaskListQryExe;
 import org.laokou.flowable.dto.task.*;
 import org.laokou.flowable.dto.task.clientobject.AssigneeCO;
@@ -51,6 +52,8 @@ public class TasksServiceImpl implements TasksServiceI {
 
 	private final TaskAssigneeGetQryExe taskAssigneeGetQryExe;
 
+	private final TaskDiagramGetQryExe taskDiagramGetQryExe;
+
 	@Override
 	public Result<Datas<TaskCO>> list(TaskListQry qry) {
 		return taskListQryExe.execute(qry);
@@ -72,8 +75,8 @@ public class TasksServiceImpl implements TasksServiceI {
 	}
 
 	@Override
-	public Result<String> diagram() {
-		return null;
+	public Result<String> diagram(TaskDiagramGetQry qry) {
+		return taskDiagramGetQryExe.execute(qry);
 	}
 
 	@Override

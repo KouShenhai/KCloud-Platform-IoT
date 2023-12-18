@@ -15,25 +15,27 @@
  *
  */
 
-package org.laokou.admin.command.resource.query;
+package org.laokou.admin.dto.resource.clientobject;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.resource.ResourceDiagramGetQry;
-import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
+
+import java.time.LocalDateTime;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class ResourceDiagramGetQryExe {
+@Data
+public class AuditLogCO extends ClientObject {
 
-    private final TasksFeignClient tasksFeignClient;
+	private Long id;
 
-    public Result<String> execute(ResourceDiagramGetQry qry) {
-        return tasksFeignClient.diagram(qry.getInstanceId());
-    }
+	private Integer status;
+
+	private String approver;
+
+	private String comment;
+
+	private LocalDateTime createDate;
 
 }

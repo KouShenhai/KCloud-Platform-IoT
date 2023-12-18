@@ -18,7 +18,6 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -101,10 +100,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	public User getById(Long id) {
-		UserDO userDO = userMapper.selectOne(Wrappers.query(UserDO.class)
-			.eq("id", id)
-			.select("id", "username", "status", "dept_id", "dept_path", "super_admin"));
-		User user = userConvertor.convertEntity(userDO);
+		User user = userConvertor.convertEntity(userMapper.selectById(id));
 		if (user.getSuperAdmin() == SuperAdmin.YES.ordinal()) {
 			user.setRoleIds(roleMapper.getRoleIds());
 		}

@@ -14,26 +14,20 @@
  * limitations under the License.
  *
  */
+package org.laokou.admin.convertor;
 
-package org.laokou.admin.command.resource.query;
+import org.laokou.admin.domain.resource.AuditLog;
+import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
+import org.laokou.admin.gatewayimpl.database.dataobject.AuditLogDO;
+import org.laokou.common.i18n.dto.Convertor;
+import org.mapstruct.Mapper;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.resource.ResourceDiagramGetQry;
-import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
+import static org.laokou.common.i18n.common.Constant.SPRING;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class ResourceDiagramGetQryExe {
-
-    private final TasksFeignClient tasksFeignClient;
-
-    public Result<String> execute(ResourceDiagramGetQry qry) {
-        return tasksFeignClient.diagram(qry.getInstanceId());
-    }
+@Mapper(componentModel = SPRING)
+public interface AuditLogConvertor extends Convertor<AuditLogCO, AuditLog, AuditLogDO> {
 
 }
