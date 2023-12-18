@@ -62,9 +62,7 @@ public class MybatisPlusAutoConfig {
 	static {
 		// 默认支持序列化 FstSerialCaffeineJsqlParseCache，JdkSerialCaffeineJsqlParseCache
 		JsqlParserGlobal.setJsqlParseCache(new JdkSerialCaffeineJsqlParseCache(
-				cache -> cache.maximumSize(1024)
-						.expireAfterWrite(5, TimeUnit.SECONDS)
-		));
+				cache -> cache.maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS)));
 	}
 
 	@Bean
@@ -77,12 +75,8 @@ public class MybatisPlusAutoConfig {
 	}
 
 	/**
-	 * 注意:
-	 * 使用多个功能需要注意顺序关系,建议使用如下顺序
-	 * - 多租户,动态表名
-	 * - 分页,乐观锁
-	 * - sql 性能规范,防止全表更新与删除
-	 * 总结: 对 sql 进行单次改造的优先放入,不对 sql 进行改造的最后放入
+	 * 注意: 使用多个功能需要注意顺序关系,建议使用如下顺序 - 多租户,动态表名 - 分页,乐观锁 - sql 性能规范,防止全表更新与删除 总结: 对 sql
+	 * 进行单次改造的优先放入,不对 sql 进行改造的最后放入
 	 */
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)

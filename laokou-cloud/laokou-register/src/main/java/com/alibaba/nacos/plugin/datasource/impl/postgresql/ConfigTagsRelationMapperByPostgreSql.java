@@ -81,7 +81,7 @@ public class ConfigTagsRelationMapperByPostgreSql extends AbstractMapper impleme
 			where.append('?');
 		}
 		where.append(") ");
-		return sql + where + " LIMIT " + startRow + "," + pageSize;
+		return sql + where + " LIMIT " + pageSize + " OFFSET " + startRow;
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class ConfigTagsRelationMapperByPostgreSql extends AbstractMapper impleme
 			where.append('?');
 		}
 		where.append(") ");
-		return sqlFetchRows + where + " LIMIT " + startRow + "," + pageSize;
+		return sqlFetchRows + where + " LIMIT " + pageSize + " OFFSET " + startRow;
 	}
 
 	@Override
