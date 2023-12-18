@@ -21,7 +21,7 @@
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."config_info";
 CREATE TABLE "public"."config_info" (
-                                        "id" int8 NOT NULL,
+                                        "id" bigserial  NOT NULL,
                                         "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
                                         "group_id" varchar(128) COLLATE "pg_catalog"."default",
                                         "content" text COLLATE "pg_catalog"."default" NOT NULL,
@@ -57,7 +57,7 @@ COMMENT ON TABLE "public"."config_info" IS 'config_info';
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."config_info_aggr";
 CREATE TABLE "public"."config_info_aggr" (
-                                             "id" int8 NOT NULL,
+                                             "id" bigserial  NOT NULL,
                                              "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
                                              "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
                                              "datum_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
@@ -81,7 +81,7 @@ COMMENT ON TABLE "public"."config_info_aggr" IS '增加租户字段';
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."config_info_beta";
 CREATE TABLE "public"."config_info_beta" (
-                                             "id" int8 NOT NULL,
+                                             "id" bigserial  NOT NULL,
                                              "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
                                              "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
                                              "app_name" varchar(128) COLLATE "pg_catalog"."default",
@@ -116,7 +116,7 @@ COMMENT ON TABLE "public"."config_info_beta" IS 'config_info_beta';
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."config_info_tag";
 CREATE TABLE "public"."config_info_tag" (
-                                            "id" int8 NOT NULL,
+                                            "id" bigserial  NOT NULL,
                                             "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
                                             "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
                                             "tenant_id" varchar(128) COLLATE "pg_catalog"."default",
@@ -149,13 +149,13 @@ COMMENT ON TABLE "public"."config_info_tag" IS 'config_info_tag';
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."config_tags_relation";
 CREATE TABLE "public"."config_tags_relation" (
-                                                 "id" int8 NOT NULL,
+                                                 "id" bigserial  NOT NULL,
                                                  "tag_name" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
                                                  "tag_type" varchar(64) COLLATE "pg_catalog"."default",
                                                  "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
                                                  "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
                                                  "tenant_id" varchar(128) COLLATE "pg_catalog"."default",
-                                                 "nid" int8 NOT NULL
+                                                 "nid" bigserial NOT NULL
 )
 ;
 COMMENT ON COLUMN "public"."config_tags_relation"."id" IS 'id';
@@ -218,15 +218,15 @@ COMMENT ON TABLE "public"."group_capacity" IS '集群、各Group容量信息表'
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."his_config_info";
 CREATE TABLE "public"."his_config_info" (
-                                            "id" numeric(20,0) NOT NULL,
-                                            "nid" numeric(20,0) NOT NULL,
+                                            "id" bigserial NOT NULL,
+                                            "nid" bigserial NOT NULL,
                                             "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
                                             "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
                                             "app_name" varchar(128) COLLATE "pg_catalog"."default",
                                             "content" text COLLATE "pg_catalog"."default" NOT NULL,
                                             "md5" varchar(32) COLLATE "pg_catalog"."default",
-                                            "gmt_create" timestamp(6) NOT NULL,
-                                            "gmt_modified" timestamp(6) NOT NULL,
+                                            "gmt_create" timestamp(6),
+                                            "gmt_modified" timestamp(6),
                                             "src_user" text COLLATE "pg_catalog"."default",
                                             "src_ip" varchar(50) COLLATE "pg_catalog"."default",
                                             "op_type" char(10) COLLATE "pg_catalog"."default",
@@ -294,7 +294,7 @@ COMMENT ON TABLE "public"."tenant_capacity" IS '租户容量信息表';
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."tenant_info";
 CREATE TABLE "public"."tenant_info" (
-                                        "id" int8 NOT NULL,
+                                        "id" bigserial  NOT NULL,
                                         "kp" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
                                         "tenant_id" varchar(128) COLLATE "pg_catalog"."default",
                                         "tenant_name" varchar(128) COLLATE "pg_catalog"."default",
@@ -2736,3 +2736,4 @@ INSERT INTO "public"."tenant_info" VALUES (2, '1', 'a61abd4c-ef96-42a5-99a1-616a
 -- ----------------------------
 INSERT INTO "public"."users" VALUES ('laokou', '$2a$10$75WIn2J5FoX9F5wEBdFsL.0cKdv5h8QqBMKMWBABhWAxKB4TO8WZq', 1);
 INSERT INTO "public"."users" VALUES ('nacos', '$2a$10$oVX1zRtaql9Jbsyzaaovx.TU2M6Bw0ZpCbPYWOIED58d1ougzaFRm', 1);
+
