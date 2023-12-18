@@ -17,7 +17,16 @@
 
 package org.laokou.admin.command.resource.query;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.convertor.AuditLogConvertor;
+import org.laokou.admin.dto.resource.ResourceAuditLogListQry;
+import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
+import org.laokou.admin.gatewayimpl.database.AuditLogMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.AuditLogDO;
+import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,5 +35,16 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ResourceAuditLogListQryExe {
+
+	private final AuditLogMapper auditLogMapper;
+
+	private final AuditLogConvertor auditLogConvertor;
+
+	public Result<Datas<AuditLogCO>> execute(ResourceAuditLogListQry qry) {
+		Page<AuditLogDO> page = new Page<>(qry.getPageNum(), qry.getPageSize());
+		page = auditLogMapper.selectPage(page, Wrappers.lambdaQuery(AuditLogDO.class)
+			.select(AuditLogDO::getStatus, AuditLogDO::getComment, AuditLogDO::getApprover));
+		return null;
+	}
 
 }

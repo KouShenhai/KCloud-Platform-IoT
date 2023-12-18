@@ -14,22 +14,20 @@
  * limitations under the License.
  *
  */
+package org.laokou.admin.convertor;
 
-package org.laokou.admin.dto.resource;
+import org.laokou.admin.domain.resource.AuditLog;
+import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
+import org.laokou.admin.gatewayimpl.database.dataobject.AuditLogDO;
+import org.laokou.common.i18n.dto.Convertor;
+import org.mapstruct.Mapper;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.PageQuery;
+import static org.laokou.common.i18n.common.Constant.SPRING;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class ResourceAuditLogListQry extends PageQuery {
-
-	private Long id;
+@Mapper(componentModel = SPRING)
+public interface AuditLogConvertor extends Convertor<AuditLogCO, AuditLog, AuditLogDO> {
 
 }

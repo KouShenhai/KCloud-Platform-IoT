@@ -23,6 +23,7 @@ import org.laokou.admin.command.oss.OssUploadCmdExe;
 import org.laokou.admin.dto.oss.OssUploadCmd;
 import org.laokou.admin.dto.oss.clientobject.FileCO;
 import org.laokou.admin.dto.resource.*;
+import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
 import org.laokou.admin.command.resource.*;
@@ -75,7 +76,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	private final ResourceSearchGetQryExe resourceSearchGetQryExe;
 
 	@Override
-	public Result<Datas<?>> auditLog(ResourceAuditLogListQry qry) {
+	public Result<Datas<AuditLogCO>> auditLog(ResourceAuditLogListQry qry) {
 		return null;
 	}
 
@@ -116,7 +117,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	@Override
 	public Result<Boolean> deleteById(ResourceDeleteCmd cmd) {
-		return null;
+		return resourceDeleteCmdExe.execute(cmd);
 	}
 
 	@Override

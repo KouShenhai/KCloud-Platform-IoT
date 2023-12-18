@@ -15,21 +15,20 @@
  *
  */
 
-package org.laokou.admin.dto.resource;
+package org.laokou.admin.domain.resource;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class ResourceAuditLogListQry extends PageQuery {
+public class AuditLog {
 
-	private Long id;
+	private Integer status;
+
+	private String approver;
+
+	private String comment;
 
 }

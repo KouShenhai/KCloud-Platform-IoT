@@ -18,6 +18,7 @@ package org.laokou.admin.api;
 
 import org.laokou.admin.dto.oss.OssUploadCmd;
 import org.laokou.admin.dto.oss.clientobject.FileCO;
+import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
 import org.laokou.admin.dto.resource.clientobject.ResourceCO;
 import org.laokou.admin.dto.resource.clientobject.TaskCO;
 import org.laokou.admin.dto.resource.*;
@@ -31,7 +32,7 @@ import java.util.Map;
  */
 public interface ResourceServiceI {
 
-	Result<Datas<?>> auditLog(ResourceAuditLogListQry qry);
+	Result<Datas<AuditLogCO>> auditLog(ResourceAuditLogListQry qry);
 
 	Result<Boolean> sync(ResourceSyncCmd cmd);
 

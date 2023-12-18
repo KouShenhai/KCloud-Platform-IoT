@@ -49,6 +49,7 @@ import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.openfeign.utils.FeignUtil;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -82,6 +83,8 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	private final DefaultConfigProperties defaultConfigProperties;
+
+	private final TransactionalUtil transactionalUtil;
 
 	private final EventUtil eventUtil;
 
@@ -134,6 +137,20 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		// 同步后
 		syncAfter();
 		return true;
+	}
+
+	@Override
+	public Boolean deleteById(Long id) {
+		return transactionalUtil.defaultExecute(rollback -> {
+			try {
+				return resourceMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息", e);
+				rollback.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
 	}
 
 	private Boolean insertResource(Resource resource) {

@@ -34,4 +34,6 @@ public interface ResourceGateway {
 
 	Boolean sync();
 
+	Boolean deleteById(Long id);
+
 }

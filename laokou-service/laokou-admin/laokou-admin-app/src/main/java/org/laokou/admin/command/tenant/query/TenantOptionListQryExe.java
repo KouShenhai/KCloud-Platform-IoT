@@ -40,8 +40,9 @@ public class TenantOptionListQryExe {
 	private final TenantMapper tenantMapper;
 
 	public Result<List<OptionCO>> execute(TenantOptionListQry qry) {
-		List<TenantDO> list = tenantMapper
-			.selectList(Wrappers.query(TenantDO.class).select("id", "name").orderByDesc("create_date"));
+		List<TenantDO> list = tenantMapper.selectList(Wrappers.lambdaQuery(TenantDO.class)
+			.select(TenantDO::getId, TenantDO::getName)
+			.orderByDesc(TenantDO::getId));
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}
