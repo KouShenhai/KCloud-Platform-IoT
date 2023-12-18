@@ -18,16 +18,16 @@
 package org.laokou.admin.command.resource.query;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.convertor.AuditLogConvertor;
 import org.laokou.admin.dto.resource.ResourceAuditLogListQry;
 import org.laokou.admin.dto.resource.clientobject.AuditLogCO;
 import org.laokou.admin.gatewayimpl.database.AuditLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.AuditLogDO;
-import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -40,11 +40,11 @@ public class ResourceAuditLogListQryExe {
 
 	private final AuditLogConvertor auditLogConvertor;
 
-	public Result<Datas<AuditLogCO>> execute(ResourceAuditLogListQry qry) {
-		Page<AuditLogDO> page = new Page<>(qry.getPageNum(), qry.getPageSize());
-		page = auditLogMapper.selectPage(page, Wrappers.lambdaQuery(AuditLogDO.class)
-			.select(AuditLogDO::getStatus, AuditLogDO::getComment, AuditLogDO::getApprover));
-		return null;
+	public Result<List<AuditLogCO>> execute(ResourceAuditLogListQry qry) {
+		List<AuditLogDO> list = auditLogMapper.selectList(Wrappers.lambdaQuery(AuditLogDO.class)
+						.eq(AuditLogDO::getBusinessId, qry.getId())
+				.select(AuditLogDO::getId, AuditLogDO::getStatus, AuditLogDO::getComment, AuditLogDO::getCreateDate, AuditLogDO::getApprover).orderByDesc(AuditLogDO::getId));
+		return Result.of(auditLogConvertor.convertClientObjList(list));
 	}
 
 }

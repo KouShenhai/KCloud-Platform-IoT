@@ -25,6 +25,7 @@ import org.laokou.admin.dto.resource.*;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +33,7 @@ import java.util.Map;
  */
 public interface ResourceServiceI {
 
-	Result<Datas<AuditLogCO>> auditLog(ResourceAuditLogListQry qry);
+	Result<List<AuditLogCO>> auditLog(ResourceAuditLogListQry qry);
 
 	Result<Boolean> sync(ResourceSyncCmd cmd);
 
@@ -42,7 +43,7 @@ public interface ResourceServiceI {
 
 	Result<ResourceCO> getById(ResourceGetQry qry);
 
-	Result<Boolean> download(ResourceDownloadCmd cmd);
+	void download(ResourceDownloadCmd cmd);
 
 	Result<Boolean> insert(ResourceInsertCmd cmd);
 

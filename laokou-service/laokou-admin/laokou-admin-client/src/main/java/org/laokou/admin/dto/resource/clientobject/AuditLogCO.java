@@ -20,16 +20,22 @@ package org.laokou.admin.dto.resource.clientobject;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.time.LocalDateTime;
+
 /**
  * @author laokou
  */
 @Data
 public class AuditLogCO extends ClientObject {
 
+	private Long id;
+
 	private Integer status;
 
 	private String approver;
 
 	private String comment;
+
+	private LocalDateTime createDate;
 
 }

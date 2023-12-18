@@ -17,8 +17,21 @@
 
 package org.laokou.admin.command.resource;
 
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.apache.commons.io.IOUtils;
+import org.laokou.admin.dto.resource.ResourceDownloadCmd;
+import org.laokou.admin.gatewayimpl.database.ResourceMapper;
+import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
+
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author laokou
@@ -26,5 +39,25 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ResourceDownloadCmdExe {
+
+    private final ResourceMapper resourceMapper;
+
+    @SneakyThrows
+    public void executeVoid(ResourceDownloadCmd cmd) {
+        ResourceDO resourceDO = resourceMapper.selectById(cmd.getId());
+        HttpServletResponse response = cmd.getResponse();
+        response.setContentType("application/octet-stream");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + StandardCharsets.UTF_8.encode(resourceDO.getTitle()));
+        try (ServletOutputStream outputStream = response.getOutputStream()) {
+            URL u = URI.create(resourceDO.getUrl()).toURL();
+            HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+            conn.setDoInput(true);
+            conn.setRequestMethod(HttpMethod.GET.name());
+            conn.setConnectTimeout(6000);
+            IOUtils.copy(conn.getInputStream(), outputStream);
+            conn.disconnect();
+        }
+    }
 
 }

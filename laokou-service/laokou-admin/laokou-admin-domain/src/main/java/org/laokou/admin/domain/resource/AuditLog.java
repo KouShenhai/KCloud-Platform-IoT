@@ -19,16 +19,22 @@ package org.laokou.admin.domain.resource;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * @author laokou
  */
 @Data
 public class AuditLog {
 
+	private Long id;
+
 	private Integer status;
 
 	private String approver;
 
 	private String comment;
+
+	private LocalDateTime createDate;
 
 }

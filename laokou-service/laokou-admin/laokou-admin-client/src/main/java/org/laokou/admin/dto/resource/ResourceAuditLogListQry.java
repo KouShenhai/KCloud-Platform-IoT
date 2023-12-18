@@ -20,7 +20,6 @@ package org.laokou.admin.dto.resource;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
@@ -28,7 +27,7 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResourceAuditLogListQry extends PageQuery {
+public class ResourceAuditLogListQry {
 
 	private Long id;
 

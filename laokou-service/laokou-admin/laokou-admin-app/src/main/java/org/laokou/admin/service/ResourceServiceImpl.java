@@ -32,6 +32,7 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -76,8 +77,8 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	private final ResourceSearchGetQryExe resourceSearchGetQryExe;
 
 	@Override
-	public Result<Datas<AuditLogCO>> auditLog(ResourceAuditLogListQry qry) {
-		return null;
+	public Result<List<AuditLogCO>> auditLog(ResourceAuditLogListQry qry) {
+		return resourceAuditLogListQryExe.execute(qry);
 	}
 
 	@Override
@@ -101,8 +102,8 @@ public class ResourceServiceImpl implements ResourceServiceI {
 	}
 
 	@Override
-	public Result<Boolean> download(ResourceDownloadCmd cmd) {
-		return null;
+	public void download(ResourceDownloadCmd cmd) {
+		resourceDownloadCmdExe.executeVoid(cmd);
 	}
 
 	@Override
@@ -122,7 +123,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
 	@Override
 	public Result<String> diagram(ResourceDiagramGetQry qry) {
-		return null;
+		return resourceDiagramGetQryExe.execute(qry);
 	}
 
 	@Override
