@@ -40,24 +40,25 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public class ResourceDownloadCmdExe {
 
-    private final ResourceMapper resourceMapper;
+	private final ResourceMapper resourceMapper;
 
-    @SneakyThrows
-    public void executeVoid(ResourceDownloadCmd cmd) {
-        ResourceDO resourceDO = resourceMapper.selectById(cmd.getId());
-        HttpServletResponse response = cmd.getResponse();
-        response.setContentType("application/octet-stream");
-        response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + StandardCharsets.UTF_8.encode(resourceDO.getTitle()));
-        try (ServletOutputStream outputStream = response.getOutputStream()) {
-            URL u = URI.create(resourceDO.getUrl()).toURL();
-            HttpURLConnection conn = (HttpURLConnection) u.openConnection();
-            conn.setDoInput(true);
-            conn.setRequestMethod(HttpMethod.GET.name());
-            conn.setConnectTimeout(6000);
-            IOUtils.copy(conn.getInputStream(), outputStream);
-            conn.disconnect();
-        }
-    }
+	@SneakyThrows
+	public void executeVoid(ResourceDownloadCmd cmd) {
+		ResourceDO resourceDO = resourceMapper.selectById(cmd.getId());
+		HttpServletResponse response = cmd.getResponse();
+		response.setContentType("application/octet-stream");
+		response.setCharacterEncoding("utf-8");
+		response.setHeader("Content-disposition",
+				"attachment;filename=" + StandardCharsets.UTF_8.encode(resourceDO.getTitle()));
+		try (ServletOutputStream outputStream = response.getOutputStream()) {
+			URL u = URI.create(resourceDO.getUrl()).toURL();
+			HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+			conn.setDoInput(true);
+			conn.setRequestMethod(HttpMethod.GET.name());
+			conn.setConnectTimeout(6000);
+			IOUtils.copy(conn.getInputStream(), outputStream);
+			conn.disconnect();
+		}
+	}
 
 }

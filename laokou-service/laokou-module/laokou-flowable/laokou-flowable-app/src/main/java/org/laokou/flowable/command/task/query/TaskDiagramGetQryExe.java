@@ -45,77 +45,78 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TaskDiagramGetQryExe {
 
-    private static final String PNG = "png";
+	private static final String PNG = "png";
 
-    private static final String SEQUENCE_FLOW = "sequenceFlow";
+	private static final String SEQUENCE_FLOW = "sequenceFlow";
 
-    private final RuntimeService runtimeService;
+	private final RuntimeService runtimeService;
 
-    private final HistoryService historyService;
+	private final HistoryService historyService;
 
-    private final RepositoryService repositoryService;
+	private final RepositoryService repositoryService;
 
-    private final ProcessEngine processEngine;
+	private final ProcessEngine processEngine;
 
-    @SneakyThrows
-    public Result<String> execute(TaskDiagramGetQry qry) {
-        try (InputStream inputStream = getInputStream(qry.getInstanceId());
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-            BufferedImage image = ImageIO.read(inputStream);
-            if (null != image) {
-                ImageIO.write(image, PNG, outputStream);
-            }
-            return Result.of(Base64.encodeBase64String(outputStream.toByteArray()));
-        }
-    }
+	@SneakyThrows
+	public Result<String> execute(TaskDiagramGetQry qry) {
+		try (InputStream inputStream = getInputStream(qry.getInstanceId());
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			BufferedImage image = ImageIO.read(inputStream);
+			if (null != image) {
+				ImageIO.write(image, PNG, outputStream);
+			}
+			return Result.of(Base64.encodeBase64String(outputStream.toByteArray()));
+		}
+	}
 
-
-    private InputStream getInputStream(String processInstanceId) {
-        String processDefinitionId;
-        // 获取当前的流程实例
-        final ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
-                .processInstanceId(processInstanceId)
-                .singleResult();
-        // 如果流程已结束，则得到结束节点
-        if (null == processInstance) {
-            final HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery()
-                    .processInstanceId(processInstanceId)
-                    .singleResult();
-            processDefinitionId = hpi.getProcessDefinitionId();
-        }
-        else {
-            // 没有结束，获取当前活动节点
-            // 根据流程实例id获取当前处于ActivityId集合
-            final ProcessInstance pi = runtimeService.createProcessInstanceQuery()
-                    .processInstanceId(processInstanceId)
-                    .singleResult();
-            processDefinitionId = pi.getProcessDefinitionId();
-        }
-        // 获取活动节点
-        final List<HistoricActivityInstance> highLightedFlowList = historyService.createHistoricActivityInstanceQuery()
-                .processInstanceId(processInstanceId)
-                .orderByHistoricActivityInstanceStartTime()
-                .asc()
-                .list();
-        List<String> highLightedFlows = new ArrayList<>(5);
-        List<String> highLightedNodes = new ArrayList<>(5);
-        // 高亮线
-        for (HistoricActivityInstance temActivityInstance : highLightedFlowList) {
-            if (SEQUENCE_FLOW.equals(temActivityInstance.getActivityType())) {
-                // 高亮线
-                highLightedFlows.add(temActivityInstance.getActivityId());
-            }
-            else {
-                // 高亮节点
-                highLightedNodes.add(temActivityInstance.getActivityId());
-            }
-        }
-        // 获取流程图
-        final BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
-        final ProcessEngineConfiguration configuration = processEngine.getProcessEngineConfiguration();
-        // 获取自定义图片生成器
-        ProcessDiagramGenerator diagramGenerator = new ProcessDiagramGeneratorConfig();
-        return diagramGenerator.generateDiagram(bpmnModel, PNG, highLightedNodes, highLightedFlows, configuration.getActivityFontName(), configuration.getLabelFontName(), configuration.getAnnotationFontName(), configuration.getClassLoader(), 1.0, true);
-    }
+	private InputStream getInputStream(String processInstanceId) {
+		String processDefinitionId;
+		// 获取当前的流程实例
+		final ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+			.processInstanceId(processInstanceId)
+			.singleResult();
+		// 如果流程已结束，则得到结束节点
+		if (null == processInstance) {
+			final HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery()
+				.processInstanceId(processInstanceId)
+				.singleResult();
+			processDefinitionId = hpi.getProcessDefinitionId();
+		}
+		else {
+			// 没有结束，获取当前活动节点
+			// 根据流程实例id获取当前处于ActivityId集合
+			final ProcessInstance pi = runtimeService.createProcessInstanceQuery()
+				.processInstanceId(processInstanceId)
+				.singleResult();
+			processDefinitionId = pi.getProcessDefinitionId();
+		}
+		// 获取活动节点
+		final List<HistoricActivityInstance> highLightedFlowList = historyService.createHistoricActivityInstanceQuery()
+			.processInstanceId(processInstanceId)
+			.orderByHistoricActivityInstanceStartTime()
+			.asc()
+			.list();
+		List<String> highLightedFlows = new ArrayList<>(5);
+		List<String> highLightedNodes = new ArrayList<>(5);
+		// 高亮线
+		for (HistoricActivityInstance temActivityInstance : highLightedFlowList) {
+			if (SEQUENCE_FLOW.equals(temActivityInstance.getActivityType())) {
+				// 高亮线
+				highLightedFlows.add(temActivityInstance.getActivityId());
+			}
+			else {
+				// 高亮节点
+				highLightedNodes.add(temActivityInstance.getActivityId());
+			}
+		}
+		// 获取流程图
+		final BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
+		final ProcessEngineConfiguration configuration = processEngine.getProcessEngineConfiguration();
+		// 获取自定义图片生成器
+		ProcessDiagramGenerator diagramGenerator = new ProcessDiagramGeneratorConfig();
+		return diagramGenerator.generateDiagram(bpmnModel, PNG, highLightedNodes, highLightedFlows,
+				configuration.getActivityFontName(), configuration.getLabelFontName(),
+				configuration.getAnnotationFontName(), configuration.getClassLoader(), 1.0, true);
+	}
 
 }
