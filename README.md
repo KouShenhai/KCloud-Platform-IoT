@@ -85,6 +85,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 | Dubbo                       | 3.3.0-beta.1  |
 | Kafka                       | 3.6.0         |
 | EMQX                        | 5.3.0         |
+| Postgresql                  | 16.1          |
 
 #### 🍺 相关技术
 - 配置中心&服务注册&发现：Nacos
@@ -109,7 +110,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 - 持久层框架：Mybatis Plus
 - JSON序列化：Jackson
 - 对象转换：MapStruct
-- 数据库：Mysql
+- 数据库：Mysql & Postgresql
 - 工作流：Flowable
 
 #### 🌴 项目结构
