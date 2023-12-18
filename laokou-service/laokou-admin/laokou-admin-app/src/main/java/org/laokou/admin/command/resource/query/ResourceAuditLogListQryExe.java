@@ -42,8 +42,10 @@ public class ResourceAuditLogListQryExe {
 
 	public Result<List<AuditLogCO>> execute(ResourceAuditLogListQry qry) {
 		List<AuditLogDO> list = auditLogMapper.selectList(Wrappers.lambdaQuery(AuditLogDO.class)
-						.eq(AuditLogDO::getBusinessId, qry.getId())
-				.select(AuditLogDO::getId, AuditLogDO::getStatus, AuditLogDO::getComment, AuditLogDO::getCreateDate, AuditLogDO::getApprover).orderByDesc(AuditLogDO::getId));
+			.eq(AuditLogDO::getBusinessId, qry.getId())
+			.select(AuditLogDO::getId, AuditLogDO::getStatus, AuditLogDO::getComment, AuditLogDO::getCreateDate,
+					AuditLogDO::getApprover)
+			.orderByDesc(AuditLogDO::getId));
 		return Result.of(auditLogConvertor.convertClientObjList(list));
 	}
 

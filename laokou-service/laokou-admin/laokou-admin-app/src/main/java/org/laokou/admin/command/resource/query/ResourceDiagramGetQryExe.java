@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ResourceDiagramGetQryExe {
 
-    private final TasksFeignClient tasksFeignClient;
+	private final TasksFeignClient tasksFeignClient;
 
-    public Result<String> execute(ResourceDiagramGetQry qry) {
-        return tasksFeignClient.diagram(qry.getInstanceId());
-    }
+	public Result<String> execute(ResourceDiagramGetQry qry) {
+		return tasksFeignClient.diagram(qry.getInstanceId());
+	}
 
 }
