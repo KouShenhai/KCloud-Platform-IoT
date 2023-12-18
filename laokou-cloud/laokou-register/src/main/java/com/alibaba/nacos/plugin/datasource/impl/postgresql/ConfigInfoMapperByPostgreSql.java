@@ -64,39 +64,39 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 	@Override
 	public String findConfigInfoByAppFetchRows(int startRow, int pageSize) {
 		return "SELECT id,data_id,group_id,tenant_id,app_name,content FROM config_info"
-				+ " WHERE tenant_id LIKE ? AND app_name= ?" + " LIMIT " + startRow + "," + pageSize;
+				+ " WHERE tenant_id LIKE ? AND app_name= ?" + " LIMIT " + pageSize + " OFFSET " + startRow;
 	}
 
 	@Override
 	public String getTenantIdList(int startRow, int pageSize) {
 		return "SELECT tenant_id FROM config_info WHERE tenant_id != '" + NamespaceUtil.getNamespaceDefaultId()
-				+ "' GROUP BY tenant_id LIMIT " + startRow + "," + pageSize;
+				+ "' GROUP BY tenant_id LIMIT " + pageSize + " OFFSET " + startRow;
 	}
 
 	@Override
 	public String getGroupIdList(int startRow, int pageSize) {
 		return "SELECT group_id FROM config_info WHERE tenant_id ='" + NamespaceUtil.getNamespaceDefaultId()
-				+ "' GROUP BY group_id LIMIT " + startRow + "," + pageSize;
+				+ "' GROUP BY group_id LIMIT " + pageSize + " OFFSET " + startRow;
 	}
 
 	@Override
 	public String findAllConfigKey(int startRow, int pageSize) {
 		return " SELECT data_id,group_id,app_name  FROM ( "
-				+ " SELECT id FROM config_info WHERE tenant_id LIKE ? ORDER BY id LIMIT " + startRow + "," + pageSize
+				+ " SELECT id FROM config_info WHERE tenant_id LIKE ? ORDER BY id LIMIT " + pageSize + " OFFSET " + startRow
 				+ " )" + " g, config_info t WHERE g.id = t.id  ";
 	}
 
 	@Override
 	public String findAllConfigInfoBaseFetchRows(int startRow, int pageSize) {
 		return "SELECT t.id,data_id,group_id,content,md5"
-				+ " FROM ( SELECT id FROM config_info ORDER BY id LIMIT ?,?  ) "
+				+ " FROM ( SELECT id FROM config_info ORDER BY id LIMIT ? OFFSET ?  ) "
 				+ " g, config_info t  WHERE g.id = t.id ";
 	}
 
 	@Override
 	public String findAllConfigInfoFragment(int startRow, int pageSize) {
 		return "SELECT id,data_id,group_id,tenant_id,app_name,content,md5,gmt_modified,type,encrypted_data_key "
-				+ "FROM config_info WHERE id > ? ORDER BY id ASC LIMIT " + startRow + "," + pageSize;
+				+ "FROM config_info WHERE id > ? ORDER BY id ASC LIMIT " + pageSize + " OFFSET " + startRow;
 	}
 
 	@Override
@@ -129,13 +129,13 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 		if (endTime != null) {
 			where += " AND gmt_modified <=? ";
 		}
-		return sqlFetchRows + where + " AND id > " + lastMaxId + " ORDER BY id ASC" + " LIMIT " + 0 + "," + pageSize;
+		return sqlFetchRows + where + " AND id > " + lastMaxId + " ORDER BY id ASC" + " LIMIT " + pageSize + " OFFSET " + 0;
 	}
 
 	@Override
 	public String listGroupKeyMd5ByPageFetchRows(int startRow, int pageSize) {
 		return "SELECT t.id,data_id,group_id,tenant_id,app_name,md5,type,gmt_modified,encrypted_data_key FROM "
-				+ "( SELECT id FROM config_info ORDER BY id LIMIT " + startRow + "," + pageSize
+				+ "( SELECT id FROM config_info ORDER BY id LIMIT " + pageSize + " OFFSET " + startRow
 				+ " ) g, config_info t WHERE g.id = t.id";
 	}
 
@@ -152,7 +152,7 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 		if (!StringUtils.isBlank(params.get(CONTENT))) {
 			where += " AND content LIKE ? ";
 		}
-		return sqlFetchRows + where + " LIMIT " + startRow + "," + pageSize;
+		return sqlFetchRows + where + " LIMIT " + pageSize + " OFFSET " + startRow;
 	}
 
 	@Override
@@ -176,13 +176,13 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 		if (!StringUtils.isBlank(content)) {
 			where.append(" AND content LIKE ? ");
 		}
-		return sql + where + " LIMIT " + startRow + "," + pageSize;
+		return sql + where + " LIMIT " + pageSize + " OFFSET " + startRow;
 	}
 
 	@Override
 	public String findConfigInfoBaseByGroupFetchRows(int startRow, int pageSize) {
 		return "SELECT id,data_id,group_id,content FROM config_info WHERE group_id=? AND tenant_id=?" + " LIMIT "
-				+ startRow + "," + pageSize;
+				+ pageSize + " OFFSET " + startRow;
 	}
 
 	@Override
@@ -206,13 +206,13 @@ public class ConfigInfoMapperByPostgreSql extends AbstractMapper implements Conf
 		if (!StringUtils.isBlank(content)) {
 			where.append(" AND content LIKE ? ");
 		}
-		return sqlFetchRows + where + " LIMIT " + startRow + "," + pageSize;
+        return sqlFetchRows + where + " LIMIT " + pageSize + " OFFSET " + startRow;
 	}
 
 	@Override
 	public String findAllConfigInfoFetchRows(int startRow, int pageSize) {
 		return "SELECT t.id,data_id,group_id,tenant_id,app_name,content,md5 "
-				+ " FROM (  SELECT id FROM config_info WHERE tenant_id LIKE ? ORDER BY id LIMIT ?,? )"
+				+ " FROM (  SELECT id FROM config_info WHERE tenant_id LIKE ? ORDER BY id LIMIT ? OFFSET ? )"
 				+ " g, config_info t  WHERE g.id = t.id ";
 	}
 

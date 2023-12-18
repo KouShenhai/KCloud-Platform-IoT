@@ -31,6 +31,8 @@
         <nacos.version>2.2.4</nacos.version>
         <!--spring-boot版本-->
         <spring-boot.version>2.7.18</spring-boot.version>
+        <!--postgresql版本-->
+        <postgresql.version>42.7.1</postgresql.version>
     </properties>
 
     <dependencies>
@@ -48,6 +50,11 @@
             <groupId>io.springboot.nacos</groupId>
             <artifactId>nacos-config</artifactId>
             <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springboot.nacos</groupId>
