@@ -43,7 +43,7 @@
         <!--UserAgentUtils版本-->
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
         <!--jsoup版本-->
-        <jsoup.version>1.16.2</jsoup.version>
+        <jsoup.version>1.17.1</jsoup.version>
         <!--jasypt版本-->
         <jasypt.version>3.0.5</jasypt.version>
         <!--captcha版本-->
@@ -53,7 +53,7 @@
         <!--freemarker模板引擎依赖-->
         <freemarker.version>2.3.32</freemarker.version>
         <!--oshi版本-->
-        <oshi.version>6.4.8</oshi.version>
+        <oshi.version>6.4.9</oshi.version>
         <!--elasticsearch版本-->
         <elasticsearch.version>8.6.2</elasticsearch.version>
         <!--rocketmq版本-->
@@ -61,7 +61,7 @@
         <!--jakarta.servlet-api版本-->
         <jakarta-servlet-api.version>6.1.0-M1</jakarta-servlet-api.version>
         <!--easyexcel版本-->
-        <easyexcel.version>3.3.2</easyexcel.version>
+        <easyexcel.version>3.3.3</easyexcel.version>
         <!--spring-security-oauth2-authorization-server版本-->
         <spring-security-oauth2-authorization-server.version>1.2.0</spring-security-oauth2-authorization-server.version>
         <!--spring-boot-starter-oauth2-resource-server版本-->
@@ -71,7 +71,7 @@
         <!--dynamic-datasource版本-->
         <dynamic-datasource.version>4.2.0</dynamic-datasource.version>
         <!--httpclient5版本-->
-        <httpclient5.version>5.3-alpha1</httpclient5.version>
+        <httpclient5.version>5.3</httpclient5.version>
         <!--hibernate-validator版本-->
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <!--ip2region版本-->
@@ -87,7 +87,7 @@
         <!--kafka版本-->
         <kafka.version>3.1.0</kafka.version>
         <!--netty版本-->
-        <netty.version>4.1.101.Final</netty.version>
+        <netty.version>4.1.104.Final</netty.version>
         <!--gson版本-->
         <gson.version>2.10.1</gson.version>
         <!--swagger版本-->

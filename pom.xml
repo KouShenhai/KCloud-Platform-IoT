@@ -49,7 +49,7 @@
         <!--cloud-alibaba版本-->
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
         <!--spring-doc版本-->
-        <spring-doc.version>2.2.0</spring-doc.version>
+        <spring-doc.version>2.3.0</spring-doc.version>
         <!--mapstruct版本-->
         <mapstruct.version>1.6.0.Beta1</mapstruct.version>
         <!--lombok-mapstruct-binding版本-->
