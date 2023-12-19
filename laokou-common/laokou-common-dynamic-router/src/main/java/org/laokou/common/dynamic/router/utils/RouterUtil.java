@@ -41,6 +41,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static org.laokou.common.i18n.common.Constant.SPRING_APPLICATION_NAME;
+
 /**
  * @author laokou
  */
@@ -55,7 +57,7 @@ public class RouterUtil {
 
 	@SneakyThrows
 	public void initRouter() {
-		String appId = env.getProperty("spring.application.name");
+		String appId = env.getProperty(SPRING_APPLICATION_NAME);
 		Assert.isTrue(StringUtil.isNotEmpty(appId), " app id is empty");
 		Map<String, Object> dataMap = new HashMap<>(2);
 		String name = appId.substring(7);

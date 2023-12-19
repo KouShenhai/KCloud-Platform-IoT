@@ -162,7 +162,7 @@ public class MybatisPlusAutoConfig {
 	}
 
 	private String getApplicationId(ConfigurableEnvironment environment) {
-		String name = environment.getProperty("spring.application.name");
+		String name = environment.getProperty(SPRING_APPLICATION_NAME);
 		return StringUtils.hasText(name) ? name : "application";
 	}
 

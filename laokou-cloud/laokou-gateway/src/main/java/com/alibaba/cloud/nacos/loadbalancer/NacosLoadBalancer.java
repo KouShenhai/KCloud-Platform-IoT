@@ -144,13 +144,13 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		return chooseDefault(request);
 	}
 
-	private Mono<Response<ServiceInstance>> chooseDefault(Request request) {
+	private Mono<Response<ServiceInstance>> chooseDefault(Request<?> request) {
 		ServiceInstanceListSupplier supplier = serviceInstanceListSupplierProvider
 			.getIfAvailable(NoopServiceInstanceListSupplier::new);
 		return supplier.get(request).next().mapNotNull(this::getInstanceResponse);
 	}
 
-	private Mono<Response<ServiceInstance>> chooseIp(Request request) {
+	private Mono<Response<ServiceInstance>> chooseIp(Request<?> request) {
 		if (request.getContext() instanceof RequestDataContext context) {
 			String path = context.getClientRequest().getUrl().getPath();
 			if (RequestUtil.pathMatcher(HttpMethod.GET.name(), path,

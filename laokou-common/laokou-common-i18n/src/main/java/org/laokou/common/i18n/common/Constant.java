@@ -311,4 +311,9 @@ public interface Constant {
 	 */
 	String WWW = "www";
 
+	/**
+	 * 应用名称
+	 */
+	String SPRING_APPLICATION_NAME = "spring.application.name";
+
 }
