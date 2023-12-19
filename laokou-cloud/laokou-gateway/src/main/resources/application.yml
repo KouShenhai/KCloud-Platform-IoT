@@ -108,9 +108,9 @@ spring:
           # fixed     固定数量线程池
           # disabled  不使用线程池（只有一个线程）
           type: fixed
-          # 线程池获取连接最大等待时间（毫秒）
+          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
           acquire-timeout: 60000
-        # 连接超时时间
+        # 连接超时时间（毫秒），默认30s
         connect-timeout: 60000
       httpserver:
         # 关闭netty日志
