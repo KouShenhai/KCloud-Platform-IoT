@@ -16,6 +16,7 @@
 #    */
 server:
   port: 5555
+  # 开启请求压缩
   compression:
     enabled: true
   ssl:
@@ -34,8 +35,10 @@ server:
   http2:
     enabled: @SSL-ENABLED@
   forward-headers-strategy: native
+  # 优雅停机
   shutdown: graceful
   netty:
+    # 请求的最大初始行长度
     max-initial-line-length: 4096
 # spring
 spring:
@@ -66,11 +69,14 @@ spring:
             data-type: json
     # loadbalancer
     loadbalancer:
+      # 开启缓存，从本地内存里面取
+      # 关闭缓存，从redis里面取
       cache:
         caffeine:
           spec: initialCapacity=4096,expireAfterWrite=30s
         enabled: true
       nacos:
+        # 开启Nacos路由负载均衡
         enabled: true
     # network
     inetutils:
@@ -81,16 +87,16 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true
+          # 关闭动态生成路由
+          enabled: false
+          # 开启服务ID强制小写
           lower-case-service-id: true
       httpclient:
         ssl:
           # 信任所有下游证书
           use-insecure-trust-manager: true
-        # netty日志
+        # 关闭netty日志
         wiretap: false
-        websocket:
-          max-frame-payload-length: -1
         pool:
           max-idle-time: 60s
           # 最大连接数
@@ -105,7 +111,7 @@ spring:
         # 连接超时时间
         connect-timeout: 60000
       httpserver:
-        # netty日志
+        # 关闭netty日志
         wiretap: false
 
 logging:
