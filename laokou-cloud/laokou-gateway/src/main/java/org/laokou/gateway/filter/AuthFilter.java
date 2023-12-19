@@ -57,6 +57,7 @@ import java.util.function.Function;
 
 import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
+import static org.laokou.gateway.constant.Constant.CHUNKED;
 import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
 import static org.laokou.gateway.utils.RequestUtil.pathMatcher;
 
@@ -176,7 +177,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					httpHeaders.setContentLength(contentLength);
 				}
 				else {
-					httpHeaders.set(HttpHeaders.TRANSFER_ENCODING, "chunked");
+					httpHeaders.set(HttpHeaders.TRANSFER_ENCODING, CHUNKED);
 				}
 				return httpHeaders;
 			}
@@ -195,7 +196,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		// 请查看 ConfigDataContextRefresher
 		log.info("配置文件更新通知");
 		uriMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
-				env.getProperty("spring.application.name")))
+				env.getProperty(SPRING_APPLICATION_NAME)))
 			.orElseGet(HashMap::new);
 	}
 

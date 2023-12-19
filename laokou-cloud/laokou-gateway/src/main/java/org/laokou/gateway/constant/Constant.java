@@ -36,4 +36,9 @@ public interface Constant {
 	 */
 	String ERROR = "error";
 
+	/**
+	 * 分块
+	 */
+	String CHUNKED = "chunked";
+
 }

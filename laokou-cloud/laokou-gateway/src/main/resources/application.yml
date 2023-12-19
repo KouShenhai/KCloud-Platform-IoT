@@ -35,6 +35,8 @@ server:
     enabled: @SSL-ENABLED@
   forward-headers-strategy: native
   shutdown: graceful
+  netty:
+    max-initial-line-length: 4096
 # spring
 spring:
   application:
@@ -46,8 +48,7 @@ spring:
     multipart:
       max-parts: -1
       max-disk-usage-per-part: -1
-      max-headers-size: 20
-      max-in-memory-size: 512
+      max-in-memory-size: 4096
   cloud:
     # sentinel
     sentinel:
@@ -67,7 +68,7 @@ spring:
     loadbalancer:
       cache:
         caffeine:
-          spec: initialCapacity=256,expireAfterWrite=35s
+          spec: initialCapacity=4096,expireAfterWrite=30s
         enabled: true
       nacos:
         enabled: true
@@ -88,6 +89,21 @@ spring:
           use-insecure-trust-manager: true
         # netty日志
         wiretap: false
+        websocket:
+          max-frame-payload-length: -1
+        pool:
+          max-idle-time: 60s
+          # 最大连接数
+          max-connections: 10000
+          max-life-time: 60s
+          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
+          # fixed     固定数量线程池
+          # disabled  不使用线程池（只有一个线程）
+          type: fixed
+          # 线程池获取连接最大等待时间（毫秒）
+          acquire-timeout: 60000
+        # 连接超时时间
+        connect-timeout: 60000
       httpserver:
         # netty日志
         wiretap: false

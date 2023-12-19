@@ -41,8 +41,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.util.*;
 
 import static org.laokou.common.core.config.OAuth2ResourceServerProperties.PREFIX;
-import static org.laokou.common.i18n.common.Constant.ENABLED;
-import static org.laokou.common.i18n.common.Constant.TRUE;
+import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * 关闭OAuth2,请在yml配置spring.oauth2.resource-server.enabled=false
@@ -67,7 +66,7 @@ public class OAuth2ResourceServerAutoConfig {
 			throws Exception {
 		Map<String, Set<String>> uriMap = Optional
 			.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
-					env.getProperty("spring.application.name")))
+					env.getProperty(SPRING_APPLICATION_NAME)))
 			.orElseGet(HashMap::new);
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.httpStrictTransportSecurity(
