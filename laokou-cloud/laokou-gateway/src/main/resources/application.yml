@@ -73,7 +73,10 @@ spring:
       # 关闭缓存，从redis里面取
       cache:
         caffeine:
-          spec: initialCapacity=4096,expireAfterWrite=30s
+          # 初始容量 => 30
+          # 最大容量 => 4096
+          # 淘汰规则 => 最后一次写操作后经过30s过期
+          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
         enabled: true
       nacos:
         # 开启Nacos路由负载均衡
