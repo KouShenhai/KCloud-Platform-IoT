@@ -33,7 +33,7 @@
 
 -- User Request Rate Limiter filter
 -- See https://stripe.com/blog/rate-limiters
--- See https://gist.github.com/ptarjan/e38f45f2dfe601419ca3af937fff574d#file-1-check_request_rate_limiter-rb-L11-L34.
+-- See https://gist.github.com/ptarjan/e38f45f2dfe601419ca3af937fff574d#file-1-check_request_rate_limiter-rb-L11-L34
 
 -- 令牌桶算法工作原理
 -- 1.系统以恒定速率往桶里面放入令牌
