@@ -27,6 +27,7 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AbstractDO;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +65,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 	 */
 	default int getVersion(Long id, Class<T> clazz) {
 		T value = this.selectOne(Wrappers.query(clazz).eq("id", id).select("version"));
-		if (Objects.isNull(value)) {
+		if (ObjectUtil.isNull(value)) {
 			throw new SystemException("数据不存在");
 		}
 		return value.getVersion();

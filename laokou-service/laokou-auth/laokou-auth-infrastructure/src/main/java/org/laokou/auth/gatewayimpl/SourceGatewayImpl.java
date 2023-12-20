@@ -22,6 +22,7 @@ import org.laokou.auth.domain.gateway.SourceGateway;
 import org.laokou.auth.domain.source.Source;
 import org.laokou.auth.gatewayimpl.database.SourceMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -42,7 +43,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	}
 
 	private Source toSource(SourceDO sourceDO) {
-		Assert.isTrue(Objects.nonNull(sourceDO), "sourceDO is null");
+		Assert.isTrue(ObjectUtil.isNotNull(sourceDO), "sourceDO is null");
 		Source source = new Source();
 		source.setName(sourceDO.getName());
 		source.setPassword(sourceDO.getPassword());

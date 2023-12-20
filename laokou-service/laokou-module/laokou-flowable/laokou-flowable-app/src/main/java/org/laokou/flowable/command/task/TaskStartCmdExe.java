@@ -25,6 +25,7 @@ import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
@@ -32,8 +33,6 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.flowable.dto.task.TaskStartCmd;
 import org.laokou.flowable.dto.task.clientobject.StartCO;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 import static org.laokou.flowable.common.Constant.FLOWABLE;
 
@@ -62,7 +61,7 @@ public class TaskStartCmdExe {
 				.processDefinitionKey(definitionKey)
 				.latestVersion()
 				.singleResult();
-			if (Objects.isNull(processDefinition)) {
+			if (ObjectUtil.isNull(processDefinition)) {
 				throw new FlowException("流程未定义");
 			}
 			if (processDefinition.isSuspended()) {
@@ -79,7 +78,7 @@ public class TaskStartCmdExe {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
 				ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionKey, businessKey);
-				if (Objects.isNull(processInstance)) {
+				if (ObjectUtil.isNull(processInstance)) {
 					throw new FlowException("流程不存在");
 				}
 				String instanceId = processInstance.getId();

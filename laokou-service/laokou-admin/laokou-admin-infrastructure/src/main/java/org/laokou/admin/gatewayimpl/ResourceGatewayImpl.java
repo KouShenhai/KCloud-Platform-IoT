@@ -49,6 +49,7 @@ import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.common.openfeign.utils.FeignUtil;
 import org.springframework.scheduling.annotation.Async;
@@ -199,7 +200,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 
 	private void insertResourceAudit(Resource resource) {
 		ResourceAuditDO resourceAuditDO = ConvertUtil.sourceToTarget(resource, ResourceAuditDO.class);
-		Assert.isTrue(Objects.nonNull(resourceAuditDO), "resource audit is null");
+		Assert.isTrue(ObjectUtil.isNotNull(resourceAuditDO), "resource audit is null");
 		resourceAuditDO.setResourceId(resource.getId());
 		resourceAuditMapper.insertTable(resourceAuditDO);
 	}

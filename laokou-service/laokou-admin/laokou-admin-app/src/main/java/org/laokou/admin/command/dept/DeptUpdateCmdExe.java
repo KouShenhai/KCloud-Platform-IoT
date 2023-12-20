@@ -28,6 +28,7 @@ import org.laokou.admin.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.springframework.stereotype.Component;
 
@@ -53,7 +54,7 @@ public class DeptUpdateCmdExe {
 	public Result<Boolean> execute(DeptUpdateCmd cmd) {
 		DeptCO co = cmd.getDeptCO();
 		Long id = co.getId();
-		if (Objects.isNull(id)) {
+		if (ObjectUtil.isNull(id)) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		long count = deptMapper

@@ -35,6 +35,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.ResourceDO;
 import org.laokou.admin.gatewayimpl.feign.TasksFeignClient;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.openfeign.utils.FeignUtil;
 import org.laokou.common.security.utils.UserUtil;
@@ -106,13 +107,13 @@ public class ResourceAuditTaskCmdExe {
 
 	private Boolean updateResource(Long id, int version, int status, ResourceAuditDO resourceAuditDO) {
 		ResourceDO resourceDO;
-		if (Objects.nonNull(resourceAuditDO)) {
+		if (ObjectUtil.isNotNull(resourceAuditDO)) {
 			resourceDO = ConvertUtil.sourceToTarget(resourceAuditDO, ResourceDO.class);
 		}
 		else {
 			resourceDO = new ResourceDO();
 		}
-		Assert.isTrue(Objects.nonNull(resourceDO), "resourceDO is null");
+		Assert.isTrue(ObjectUtil.isNotNull(resourceDO), "resourceDO is null");
 		resourceDO.setId(id);
 		resourceDO.setStatus(status);
 		resourceDO.setVersion(version);

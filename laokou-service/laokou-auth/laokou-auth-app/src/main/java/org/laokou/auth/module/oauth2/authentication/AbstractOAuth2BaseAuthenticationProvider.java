@@ -32,6 +32,7 @@ import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IpUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -147,7 +148,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
 					auth2BaseAuthenticationToken);
 			RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
-			if (Objects.isNull(registeredClient)) {
+			if (ObjectUtil.isNull(registeredClient)) {
 				throw OAuth2ExceptionHandler.getException(REGISTERED_CLIENT_NOT_EXIST,
 						MessageUtil.getMessage(REGISTERED_CLIENT_NOT_EXIST));
 			}
@@ -246,7 +247,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			String ip = IpUtil.getIpAddr(request);
 			// 验证验证码
 			Boolean validate = captchaGateway.validate(uuid, captcha);
-			if (Objects.isNull(validate)) {
+			if (ObjectUtil.isNull(validate)) {
 				throw authenticationException(CAPTCHA_EXPIRED, new User(username, tenantId), type, ip);
 			}
 			if (!validate) {
@@ -265,7 +266,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				log.error("表 boot_sys_user 不存在，错误信息", e);
 				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_user 不存在");
 			}
-			if (Objects.isNull(user)) {
+			if (ObjectUtil.isNull(user)) {
 				throw authenticationException(ACCOUNT_PASSWORD_ERROR, new User(username, tenantId), type, ip);
 			}
 			if (PASSWORD.equals(type)) {
@@ -325,7 +326,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 		if (OAuth2ClientAuthenticationToken.class.isAssignableFrom(authentication.getPrincipal().getClass())) {
 			clientPrincipal = (OAuth2ClientAuthenticationToken) authentication.getPrincipal();
 		}
-		if (Objects.nonNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
+		if (ObjectUtil.isNotNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
 			return clientPrincipal;
 		}
 		throw OAuth2ExceptionHandler.getException(INVALID_CLIENT, MessageUtil.getMessage(INVALID_CLIENT));
@@ -397,7 +398,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "数据源连接超时");
 		}
 		finally {
-			if (Objects.nonNull(connection)) {
+			if (ObjectUtil.isNotNull(connection)) {
 				connection.close();
 			}
 		}

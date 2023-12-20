@@ -61,12 +61,12 @@ public class StringUtil {
 	}
 
 	public static boolean allNotNull(Object... values) {
-		if (Objects.isNull(values)) {
+		if (ObjectUtil.isNull(values)) {
 			return false;
 		}
 		else {
 			for (Object val : values) {
-				if (Objects.isNull(val)) {
+				if (ObjectUtil.isNull(val)) {
 					return false;
 				}
 			}

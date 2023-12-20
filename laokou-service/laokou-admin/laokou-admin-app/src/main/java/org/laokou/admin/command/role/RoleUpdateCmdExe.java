@@ -28,13 +28,12 @@ import org.laokou.admin.dto.role.clientobject.RoleCO;
 import org.laokou.admin.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
@@ -56,7 +55,7 @@ public class RoleUpdateCmdExe {
 	public Result<Boolean> execute(RoleUpdateCmd cmd) {
 		RoleCO co = cmd.getRoleCO();
 		Long id = co.getId();
-		if (Objects.isNull(id)) {
+		if (ObjectUtil.isNull(id)) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		Long count = roleMapper

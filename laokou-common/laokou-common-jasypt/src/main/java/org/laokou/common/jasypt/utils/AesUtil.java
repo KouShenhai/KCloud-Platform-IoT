@@ -19,6 +19,7 @@ package org.laokou.common.jasypt.utils;
 import lombok.SneakyThrows;
 import org.apache.hc.client5.http.utils.Base64;
 import org.laokou.common.core.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.jasypt.annotation.Aes;
 import org.springframework.util.Assert;
 import javax.crypto.Cipher;
@@ -74,7 +75,7 @@ public class AesUtil {
 				// 私有属性
 				field.setAccessible(true);
 				Object o = field.get(obj);
-				if (Objects.isNull(o)) {
+				if (ObjectUtil.isNull(o)) {
 					continue;
 				}
 				String data = o.toString();

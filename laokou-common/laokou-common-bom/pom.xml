@@ -63,7 +63,7 @@
         <!--easyexcel版本-->
         <easyexcel.version>3.3.3</easyexcel.version>
         <!--spring-security-oauth2-authorization-server版本-->
-        <spring-security-oauth2-authorization-server.version>1.2.0</spring-security-oauth2-authorization-server.version>
+        <spring-security-oauth2-authorization-server.version>1.2.1</spring-security-oauth2-authorization-server.version>
         <!--spring-boot-starter-oauth2-resource-server版本-->
         <spring-boot-starter-oauth2-resource-server.version>3.2.0</spring-boot-starter-oauth2-resource-server.version>
         <!--aws-java-sdk-s3版本-->
@@ -101,7 +101,7 @@
         <!--mapstruct版本-->
         <mapstruct.version>1.6.0.Beta1</mapstruct.version>
         <!--mqtt版本-->
-        <mqtt.version>6.2.0</mqtt.version>
+        <mqtt.version>6.2.1</mqtt.version>
         <!--log4j2-ttl-thread-context-map版本-->
         <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
         <!--transmittable-thread-local版本-->

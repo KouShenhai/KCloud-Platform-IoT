@@ -21,6 +21,7 @@ import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 import org.laokou.common.core.holder.UserContextHolder;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.Objects;
 import java.util.Set;
@@ -49,7 +50,7 @@ public class GlobalTenantLineHandler implements TenantLineHandler {
 
 	private Long tenantId() {
 		Long tenantId = UserContextHolder.get().getTenantId();
-		if (Objects.isNull(tenantId)) {
+		if (ObjectUtil.isNull(tenantId)) {
 			return DEFAULT_TENANT;
 		}
 		return tenantId;

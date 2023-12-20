@@ -18,6 +18,7 @@ package org.laokou.common.redis.utils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.redisson.api.*;
 import org.springframework.data.redis.connection.RedisServerCommands;
@@ -228,13 +229,13 @@ public class RedisUtil {
 
 	public long getKeysSize() {
 		final Object obj = redisTemplate.execute(RedisServerCommands::dbSize);
-		return Objects.isNull(obj) ? DEFAULT : Long.parseLong(obj.toString());
+		return ObjectUtil.isNull(obj) ? DEFAULT : Long.parseLong(obj.toString());
 	}
 
 	public List<Map<String, String>> getCommandStatus() {
 		Properties commandStats = (Properties) redisTemplate
 			.execute((RedisCallback<Object>) connection -> connection.serverCommands().info("commandstats"));
-		Assert.isTrue(Objects.nonNull(commandStats), "command states is null");
+		Assert.isTrue(ObjectUtil.isNotNull(commandStats), "command states is null");
 		Set<String> set = commandStats.stringPropertyNames();
 		List<Map<String, String>> pieList = new ArrayList<>(set.size());
 		set.forEach(key -> {
@@ -250,7 +251,7 @@ public class RedisUtil {
 	public Map<String, String> getInfo() {
 		final Properties properties = redisTemplate.execute(RedisServerCommands::info,
 				redisTemplate.isExposeConnection());
-		Assert.isTrue(Objects.nonNull(properties), "properties is null");
+		Assert.isTrue(ObjectUtil.isNotNull(properties), "properties is null");
 		final Set<String> set = properties.stringPropertyNames();
 		Map<String, String> dataMap = new HashMap<>(set.size());
 		set.forEach(key -> dataMap.put(key, properties.getProperty(key)));

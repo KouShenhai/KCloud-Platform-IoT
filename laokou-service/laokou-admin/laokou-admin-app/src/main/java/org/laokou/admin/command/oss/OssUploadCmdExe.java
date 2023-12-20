@@ -31,6 +31,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.admin.module.storage.factory.StorageFactory;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
@@ -75,7 +76,7 @@ public class OssUploadCmdExe {
 		ByteArrayOutputStream bos = getCacheStream(inputStream);
 		String md5 = DigestUtils.md5DigestAsHex(new ByteArrayInputStream(bos.toByteArray()));
 		OssLogDO ossLogDO = ossLogMapper.selectOne(Wrappers.query(OssLogDO.class).eq("md5", md5).select("url"));
-		if (Objects.nonNull(ossLogDO)) {
+		if (ObjectUtil.isNotNull(ossLogDO)) {
 			return new FileCO(ossLogDO.getUrl(), md5);
 		}
 		String url = storageFactory.build(UserUtil.getTenantId())

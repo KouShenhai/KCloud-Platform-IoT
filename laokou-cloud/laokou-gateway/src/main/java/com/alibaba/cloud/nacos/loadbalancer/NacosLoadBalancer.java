@@ -39,6 +39,7 @@ import com.alibaba.cloud.nacos.balancer.NacosBalancer;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import jakarta.annotation.PostConstruct;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.nacos.utils.ServiceUtil;
 import org.laokou.gateway.utils.RequestUtil;
@@ -140,7 +141,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	public Mono<Response<ServiceInstance>> choose(Request request) {
 		// IP优先
 		Mono<Response<ServiceInstance>> chooseIp = chooseIp(request);
-		if (Objects.nonNull(chooseIp)) {
+		if (ObjectUtil.isNotNull(chooseIp)) {
 			return chooseIp;
 		}
 		return chooseDefault(request);
@@ -158,13 +159,13 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			if (RequestUtil.pathMatcher(HttpMethod.GET.name(), path,
 					Map.of(HttpMethod.GET.name(), Collections.singleton(GRACEFUL_SHUTDOWN_URL)))) {
 				HttpHeaders headers = context.getClientRequest().getHeaders();
-				String serviceId = Objects.requireNonNull(headers.get(SERVICE_ID)).getFirst();
+				String serviceId = ObjectUtil.requireNotNull(headers.get(SERVICE_ID)).getFirst();
 				List<ServiceInstance> instances = SpringContextUtil.getBean(ServiceUtil.class).getInstances(serviceId);
 				ServiceInstance serviceInstance = instances.stream()
 					.filter(instance -> match(instance, headers))
 					.findFirst()
 					.orElse(null);
-				if (Objects.nonNull(serviceInstance)) {
+				if (ObjectUtil.isNotNull(serviceInstance)) {
 					return Mono.just(new DefaultResponse(serviceInstance));
 				}
 			}
@@ -208,8 +209,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	}
 
 	private boolean match(ServiceInstance instance, HttpHeaders headers) {
-		String host = Objects.requireNonNull(headers.get(SERVICE_HOST)).getFirst();
-		String port = Objects.requireNonNull(headers.get(SERVICE_PORT)).getFirst();
+		String host = ObjectUtil.requireNotNull(headers.get(SERVICE_HOST)).getFirst();
+		String port = ObjectUtil.requireNotNull(headers.get(SERVICE_PORT)).getFirst();
 		return host.equals(instance.getHost()) && Integer.parseInt(port) == instance.getPort();
 	}
 

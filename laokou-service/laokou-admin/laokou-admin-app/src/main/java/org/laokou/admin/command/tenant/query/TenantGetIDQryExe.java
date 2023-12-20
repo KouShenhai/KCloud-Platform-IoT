@@ -27,6 +27,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
@@ -69,12 +70,12 @@ public class TenantGetIDQryExe {
 	private Long getTenantCache(String str) {
 		String tenantDomainNameHashKey = RedisKeyUtil.getTenantDomainNameHashKey();
 		Object o = redisUtil.hGet(tenantDomainNameHashKey, str);
-		if (Objects.nonNull(o)) {
+		if (ObjectUtil.isNotNull(o)) {
 			return Long.valueOf(o.toString());
 		}
 		TenantDO tenantDO = tenantMapper
 			.selectOne(Wrappers.lambdaQuery(TenantDO.class).eq(TenantDO::getLabel, str).select(TenantDO::getId));
-		if (Objects.nonNull(tenantDO)) {
+		if (ObjectUtil.isNotNull(tenantDO)) {
 			Long id = tenantDO.getId();
 			redisUtil.hSet(tenantDomainNameHashKey, str, id, RedisUtil.HOUR_ONE_EXPIRE);
 			return id;

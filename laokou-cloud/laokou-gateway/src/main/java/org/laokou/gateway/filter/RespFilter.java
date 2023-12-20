@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.gateway.constant.Constant;
@@ -45,7 +46,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.CHINESE_COMMA;
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
@@ -86,9 +86,9 @@ public class RespFilter implements GlobalFilter, Ordered {
 			@Override
 			public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
 				String contentType = getDelegate().getHeaders().getFirst(HttpHeaders.CONTENT_TYPE);
-				Assert.isTrue(Objects.nonNull(contentType), "content type is null");
+				Assert.isTrue(ObjectUtil.isNotNull(contentType), "content type is null");
 				if (contentType.contains(MediaType.APPLICATION_JSON_VALUE)
-						&& Objects.requireNonNull(response.getStatusCode()).value() != StatusCode.OK
+						&& ObjectUtil.requireNotNull(response.getStatusCode()).value() != StatusCode.OK
 						&& body instanceof Flux) {
 					Flux<? extends DataBuffer> flux = Flux.from(body);
 					return super.writeWith(flux.map(dataBuffer -> {
@@ -129,7 +129,7 @@ public class RespFilter implements GlobalFilter, Ordered {
 	}
 
 	private ExceptionEnum getException(String code) {
-		return Objects.requireNonNull(ExceptionEnum.getInstance(code.toUpperCase()));
+		return ObjectUtil.requireNotNull(ExceptionEnum.getInstance(code.toUpperCase()));
 	}
 
 }

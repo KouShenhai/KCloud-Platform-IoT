@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.driver.jdbc.core.driver.ShardingSphereDriverURLProvider;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.PropertyUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.shardingsphere.utils.CryptoUtil;
 import org.springframework.util.StringUtils;
@@ -113,7 +114,7 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(
 				new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8))) {
 			String str;
-			while (Objects.nonNull((str = reader.readLine()))) {
+			while (ObjectUtil.isNotNull((str = reader.readLine()))) {
 				list.add(str);
 			}
 		}

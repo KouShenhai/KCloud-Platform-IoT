@@ -18,6 +18,7 @@ package org.laokou.common.core.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
 
@@ -198,11 +199,11 @@ public class IdGenerator {
 		private long getDatacenterId() {
 			long id = 0L;
 			try {
-				if (Objects.isNull(this.inetAddress)) {
+				if (ObjectUtil.isNull(this.inetAddress)) {
 					this.inetAddress = InetAddress.getLocalHost();
 				}
 				NetworkInterface network = NetworkInterface.getByInetAddress(this.inetAddress);
-				if (Objects.isNull(network)) {
+				if (ObjectUtil.isNull(network)) {
 					id = 1L;
 				}
 				else {

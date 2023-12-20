@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -88,7 +89,7 @@ public class User implements UserDetails, OAuth2AuthenticatedPrincipal, Serializ
 		if (this == o) {
 			return true;
 		}
-		if (Objects.isNull(o) || getClass() != o.getClass()) {
+		if (ObjectUtil.isNull(o) || getClass() != o.getClass()) {
 			return false;
 		}
 		User that = (User) o;

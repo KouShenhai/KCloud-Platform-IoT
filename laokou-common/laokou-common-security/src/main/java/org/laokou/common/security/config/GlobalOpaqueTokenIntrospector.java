@@ -23,6 +23,7 @@ import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.i18n.common.StatusCode;
 import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -60,24 +61,24 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 	@Master
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
-		if (Objects.nonNull(redisUtil.get(userKillKey))) {
+		if (ObjectUtil.isNotNull(redisUtil.get(userKillKey))) {
 			throw OAuth2ExceptionHandler.getException(ACCOUNT_FORCE_KILL, MessageUtil.getMessage(ACCOUNT_FORCE_KILL));
 		}
 		// 用户相关数据，低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
 		String userInfoKey = RedisKeyUtil.getUserInfoKey(token);
 		Object obj = redisUtil.get(userInfoKey);
-		if (Objects.nonNull(obj)) {
+		if (ObjectUtil.isNotNull(obj)) {
 			// 解密
 			return decryptInfo((User) obj);
 		}
 		OAuth2Authorization oAuth2Authorization = oAuth2AuthorizationService.findByToken(token,
 				OAuth2TokenType.ACCESS_TOKEN);
-		if (Objects.isNull(oAuth2Authorization)) {
+		if (ObjectUtil.isNull(oAuth2Authorization)) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = oAuth2Authorization.getAccessToken();
-		if (Objects.isNull(accessToken) || !accessToken.isActive()) {
+		if (ObjectUtil.isNull(accessToken) || !accessToken.isActive()) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}

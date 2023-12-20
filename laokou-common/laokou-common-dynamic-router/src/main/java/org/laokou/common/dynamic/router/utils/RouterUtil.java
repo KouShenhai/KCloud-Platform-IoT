@@ -26,6 +26,7 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.ResourceUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.dynamic.router.RouteDefinition;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.clientobject.ConfigCO;
 import org.laokou.common.nacos.utils.ApiUtil;
@@ -72,7 +73,7 @@ public class RouterUtil {
 		}
 		// 拉取所有的路由配置
 		ConfigCO co = apiUtil.getConfigInfo(token);
-		if (Objects.isNull(co)) {
+		if (ObjectUtil.isNull(co)) {
 			return;
 		}
 		List<RouteDefinition> routeDefinitions = JacksonUtil.toList(co.getContent(), RouteDefinition.class);

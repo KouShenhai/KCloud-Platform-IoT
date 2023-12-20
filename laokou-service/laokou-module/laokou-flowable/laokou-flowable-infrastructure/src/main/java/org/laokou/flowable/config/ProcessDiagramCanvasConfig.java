@@ -21,6 +21,7 @@ import org.flowable.bpmn.model.GraphicInfo;
 import org.flowable.image.impl.DefaultProcessDiagramCanvas;
 import org.flowable.image.util.ReflectUtil;
 import org.laokou.common.core.utils.BigDecimalUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -35,7 +36,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
-import java.util.Objects;
 
 /**
  * @author laokou
@@ -213,7 +213,7 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 		float interline = 1.0f;
 
 		// text
-		if (Objects.nonNull(text) && !text.isEmpty()) {
+		if (ObjectUtil.isNotNull(text) && !text.isEmpty()) {
 			Paint originalPaint = g.getPaint();
 			Font originalFont = g.getFont();
 			g.setPaint(LABEL_COLOR);
@@ -228,7 +228,7 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 			LineBreakMeasurer lbm = new LineBreakMeasurer(aci, frc);
 			while (lbm.getPosition() < text.length()) {
 				TextLayout tl = lbm.nextLayout(wrapWidth);
-				textY += tl.getAscent();
+				textY += (int) tl.getAscent();
 				Rectangle2D bb = tl.getBounds();
 				double tX = graphicInfo.getX();
 				if (centered) {
@@ -334,7 +334,7 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 		}
 		g.setPaint(originalPaint);
 		// text
-		if (BigDecimalUtil.compareTo(1.0, scaleFactor) == 0 && Objects.nonNull(name) && !name.isEmpty()) {
+		if (BigDecimalUtil.compareTo(1.0, scaleFactor) == 0 && ObjectUtil.isNotNull(name) && !name.isEmpty()) {
 			int boxWidth = width - (1 << TEXT_PADDING);
 			int boxHeight = height - 16 - ICON_PADDING - ICON_PADDING - MARKER_WIDTH - 2 - 2;
 			int boxX = x + width / 2 - boxWidth / 2;
@@ -361,7 +361,7 @@ public class ProcessDiagramCanvasConfig extends DefaultProcessDiagramCanvas {
 		g.setPaint(EVENT_BORDER_COLOR);
 		g.draw(circle);
 		g.setPaint(originalPaint);
-		if (Objects.nonNull(image)) {
+		if (ObjectUtil.isNotNull(image)) {
 			// calculate coordinates to center image
 			int imageX = (int) Math
 				.round(graphicInfo.getX() + (graphicInfo.getWidth() / 2) - (image.getWidth() / (2 * scaleFactor)));
