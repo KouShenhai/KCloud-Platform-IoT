@@ -24,26 +24,26 @@ import java.util.Objects;
  */
 public class ObjectUtil {
 
-    public static boolean isNotNull(Object o) {
-        return Objects.nonNull(o);
-    }
+	public static boolean isNotNull(Object o) {
+		return Objects.nonNull(o);
+	}
 
-    public static boolean isNull(Object o) {
-        return Objects.isNull(o);
-    }
+	public static boolean isNull(Object o) {
+		return Objects.isNull(o);
+	}
 
-    public static boolean equals(Object o1, Object o2) {
-        return Objects.equals(o1, o2);
-    }
+	public static boolean equals(Object o1, Object o2) {
+		return Objects.equals(o1, o2);
+	}
 
-    public static int hash(Object... args) {
-        return Objects.hash(args);
-    }
+	public static int hash(Object... args) {
+		return Objects.hash(args);
+	}
 
-    public static <T> T requireNotNull(T obj) {
-        if (obj == null)
-            throw new NullPointerException();
-        return obj;
-    }
+	public static <T> T requireNotNull(T obj) {
+		if (obj == null)
+			throw new NullPointerException();
+		return obj;
+	}
 
 }

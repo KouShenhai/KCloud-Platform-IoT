@@ -62,8 +62,7 @@ import java.util.stream.Collectors;
 import static org.laokou.common.i18n.common.Constant.*;
 
 /**
- * Nacos路由负载均衡
- * see original.
+ * Nacos路由负载均衡 see original.
  * {@link com.alibaba.cloud.nacos.loadbalancer.NacosLoadBalancerClientConfiguration}
  * {@link org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer}
  *

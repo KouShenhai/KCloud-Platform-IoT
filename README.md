@@ -127,6 +127,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
         └── laokou-common-algorithm                --- 算法组件  
         └── laokou-common-prometheus               --- 监控组件  
         └── laokou-common-openapi-doc              --- 文档组件  
+        └── laokou-common-rate-limiter             --- 限流组件  
         └── laokou-common-elasticsearch            --- 搜索组件  
         └── laokou-common-bom                      --- 依赖版本库  
         └── laokou-common-i18n                     --- 国际化组件  

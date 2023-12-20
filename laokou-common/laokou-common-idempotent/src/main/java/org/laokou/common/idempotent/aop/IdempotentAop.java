@@ -54,7 +54,7 @@ public class IdempotentAop {
 	public static final String REQUEST_ID = "request-id";
 
 	static {
-		try (InputStream inputStream = ResourceUtil.getResource("idempotent.lua").getInputStream()) {
+		try (InputStream inputStream = ResourceUtil.getResource("META-INF/scripts/idempotent.lua").getInputStream()) {
 			REDIS_SCRIPT = new DefaultRedisScript<>(new String(inputStream.readAllBytes(), StandardCharsets.UTF_8),
 					Boolean.class);
 		}
