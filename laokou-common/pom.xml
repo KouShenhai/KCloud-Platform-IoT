@@ -63,6 +63,7 @@
         <module>laokou-common-sensitive</module>
         <module>laokou-common-dubbo</module>
         <module>laokou-common-mqtt</module>
+        <module>laokou-common-rate-limiter</module>
     </modules>
 
 </project>
