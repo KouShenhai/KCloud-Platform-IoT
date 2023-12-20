@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.sensitive.aspect;
+package org.laokou.common.sensitive.aop;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 @Slf4j
-public class SensitiveAspect {
+public class SensitiveAop {
 
 	@Around("@annotation(org.laokou.common.sensitive.annotation.Sensitive)")
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {

@@ -14,18 +14,18 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.mongodb.form;
+package org.laokou.common.mongodb.clientobject;
 
 import lombok.Data;
-import org.laokou.common.mongodb.dto.SearchDTO;
-import java.io.Serializable;
+import org.laokou.common.i18n.dto.Query;
+
 import java.util.List;
 
 /**
  * @author laokou
  */
 @Data
-public class QueryForm implements Serializable {
+public class SearchCO extends Query {
 
 	/**
 	 * 页码
@@ -40,7 +40,7 @@ public class QueryForm implements Serializable {
 	/**
 	 * 模糊条件查询
 	 */
-	private List<SearchDTO> likeSearchList;
+	private List<Search> likeSearchList;
 
 	/**
 	 * 表名
@@ -51,5 +51,14 @@ public class QueryForm implements Serializable {
 	 * 是否分页
 	 */
 	private boolean needPage = false;
+
+	@Data
+	public static class Search {
+
+		private String field;
+
+		private String value;
+
+	}
 
 }
