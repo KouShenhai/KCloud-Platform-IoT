@@ -25,6 +25,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.lock.Locks;
 import org.laokou.common.lock.RedissonLock;
 import org.laokou.common.lock.annotation.Lock4j;
@@ -57,7 +58,7 @@ public class LockAop {
 		MethodSignature methodSignature = (MethodSignature) signature;
 		Method method = methodSignature.getMethod();
 		Lock4j lock4j = AnnotationUtils.findAnnotation(method, Lock4j.class);
-		Assert.isTrue(Objects.nonNull(lock4j), "@Lock4j is null");
+		Assert.isTrue(ObjectUtil.isNotNull(lock4j), "@Lock4j is null");
 		// 时间戳
 		String key = lock4j.key() + IdGenerator.SystemClock.now();
 		long expire = lock4j.expire();

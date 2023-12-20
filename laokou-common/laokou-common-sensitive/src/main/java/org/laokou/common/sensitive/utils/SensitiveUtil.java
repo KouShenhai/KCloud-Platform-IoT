@@ -17,12 +17,12 @@
 
 package org.laokou.common.sensitive.utils;
 
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.sensitive.annotation.SensitiveField;
 import org.laokou.common.sensitive.enums.Type;
 
 import java.lang.reflect.Field;
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.AT;
 import static org.laokou.common.i18n.common.Constant.EMPTY;
@@ -42,7 +42,7 @@ public class SensitiveUtil {
 				// 私有属性
 				field.setAccessible(true);
 				Object o = field.get(obj);
-				if (Objects.isNull(o)) {
+				if (ObjectUtil.isNull(o)) {
 					continue;
 				}
 				String data = o.toString();

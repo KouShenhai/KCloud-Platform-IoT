@@ -16,6 +16,7 @@
  */
 package org.laokou.common.redis.config;
 
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RBloomFilter;
@@ -67,7 +68,7 @@ public class RedissonConfig {
 		int timeout = (int) properties.getTimeout().toMillis();
 		int connectTimeout = (int) properties.getConnectTimeout().toMillis();
 		boolean isSsl = properties.getSsl().isEnabled();
-		if (Objects.nonNull(properties.getSentinel())) {
+		if (ObjectUtil.isNotNull(properties.getSentinel())) {
 			config.useSentinelServers()
 				.setMasterName(properties.getSentinel().getMaster())
 				.addSentinelAddress(convertNodes(isSsl, properties.getSentinel().getNodes()))
@@ -76,7 +77,7 @@ public class RedissonConfig {
 				.setConnectTimeout(connectTimeout)
 				.setPassword(properties.getPassword());
 		}
-		else if (Objects.nonNull(properties.getCluster())) {
+		else if (ObjectUtil.isNotNull(properties.getCluster())) {
 			config.useClusterServers()
 				.addNodeAddress(convertNodes(isSsl, properties.getCluster().getNodes()))
 				.setPassword(properties.getPassword())

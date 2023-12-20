@@ -297,11 +297,6 @@ public interface Constant {
 	String IP = "ip";
 
 	/**
-	 * HTTP协议
-	 */
-	String HTTP_SCHEME = "http";
-
-	/**
 	 * https协议
 	 */
 	String HTTPS_SCHEME = "https";

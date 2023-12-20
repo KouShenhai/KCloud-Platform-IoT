@@ -25,6 +25,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.enums.Type;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -48,7 +49,7 @@ public class CacheAop {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		String[] parameterNames = signature.getParameterNames();
 		DataCache dataCache = AnnotationUtils.findAnnotation(signature.getMethod(), DataCache.class);
-		Assert.isTrue(Objects.nonNull(dataCache), "@DataCache is null");
+		Assert.isTrue(ObjectUtil.isNotNull(dataCache), "@DataCache is null");
 		Type type = dataCache.type();
 		String name = dataCache.name();
 		String field = SpringExpressionUtil.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);
@@ -62,7 +63,7 @@ public class CacheAop {
 	private Object get(String name, String field, ProceedingJoinPoint point) {
 		Cache cache = cache(name);
 		Cache.ValueWrapper valueWrapper = cache.get(field);
-		if (Objects.nonNull(valueWrapper)) {
+		if (ObjectUtil.isNotNull(valueWrapper)) {
 			return valueWrapper.get();
 		}
 		Object value = point.proceed();
@@ -79,7 +80,7 @@ public class CacheAop {
 
 	private Cache cache(String name) {
 		Cache cache = cacheManager.getCache(name);
-		Assert.isTrue(Objects.nonNull(cache), "cache is null");
+		Assert.isTrue(ObjectUtil.isNotNull(cache), "cache is null");
 		return cache;
 	}
 

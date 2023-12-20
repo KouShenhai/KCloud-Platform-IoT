@@ -27,6 +27,7 @@ import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
@@ -72,7 +73,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 
 	private void execute(LoginLogEvent event) {
 		LoginLogDO logDO = ConvertUtil.sourceToTarget(event, LoginLogDO.class);
-		Assert.isTrue(Objects.nonNull(logDO), "logDO is null");
+		Assert.isTrue(ObjectUtil.isNotNull(logDO), "logDO is null");
 		logDO.setCreator(event.getUserId());
 		logDO.setEditor(event.getUserId());
 		loginLogMapper.insertDynamicTable(logDO, TableTemplate.getLoginLogSqlScript(DateUtil.now()),

@@ -17,7 +17,8 @@
 
 package org.laokou.admin;
 
-import java.util.Objects;
+import org.laokou.common.i18n.utils.ObjectUtil;
+
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -43,7 +44,7 @@ public class ThreadTest {
 	}
 
 	private static void shutdown(ExecutorService executorService) {
-		if (Objects.nonNull(executorService) && !executorService.isShutdown()) {
+		if (ObjectUtil.isNotNull(executorService) && !executorService.isShutdown()) {
 			executorService.shutdown();
 			try {
 				if (executorService.awaitTermination(60, TimeUnit.SECONDS)) {

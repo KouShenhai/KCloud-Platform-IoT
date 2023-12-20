@@ -31,6 +31,7 @@ import jakarta.servlet.ServletContext;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.laokou.common.core.utils.HttpUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
@@ -148,7 +149,7 @@ public class SpringBootAdminClientAutoConfig {
 		public RegistrationClient registrationClient(ClientProperties client) {
 			RestTemplateBuilder builder = new RestTemplateBuilder().setConnectTimeout(client.getConnectTimeout());
 			builder.setReadTimeout(client.getReadTimeout());
-			if (Objects.nonNull(client.getUsername()) && Objects.nonNull(client.getPassword())) {
+			if (ObjectUtil.isNotNull(client.getUsername()) && ObjectUtil.isNotNull(client.getPassword())) {
 				builder = builder.basicAuthentication(client.getUsername(), client.getPassword());
 			}
 			RestTemplate build = builder.build();
@@ -172,7 +173,7 @@ public class SpringBootAdminClientAutoConfig {
 		@ConditionalOnMissingBean
 		public RegistrationClient registrationClient(ClientProperties client, WebClient.Builder webClient)
 				throws SSLException {
-			if (Objects.nonNull(client.getUsername()) && Objects.nonNull(client.getPassword())) {
+			if (ObjectUtil.isNotNull(client.getUsername()) && ObjectUtil.isNotNull(client.getPassword())) {
 				webClient = webClient.filter(basicAuthentication(client.getUsername(), client.getPassword()));
 			}
 			SslContext context = SslContextBuilder.forClient()

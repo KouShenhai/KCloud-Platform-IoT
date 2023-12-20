@@ -28,10 +28,9 @@ import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.netty.config.AbstractServer;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
-
-import java.util.Objects;
 
 import static org.laokou.im.module.websocket.WebsocketHandler.USER_CACHE;
 
@@ -75,7 +74,7 @@ public class WebSocketServer extends AbstractServer {
 	@Override
 	public void send(String clientId, Object obj) {
 		Channel channel = USER_CACHE.getIfPresent(clientId);
-		if (Objects.nonNull(channel)) {
+		if (ObjectUtil.isNotNull(channel)) {
 			channel.writeAndFlush(obj);
 		}
 	}

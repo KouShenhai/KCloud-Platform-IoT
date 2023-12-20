@@ -22,6 +22,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.ClientObject;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.*;
 
@@ -46,7 +47,7 @@ public class TreeUtil {
 	}
 
 	public static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode) {
-		if (Objects.isNull(rootNode)) {
+		if (ObjectUtil.isNull(rootNode)) {
 			throw new SystemException("请构造根节点");
 		}
 		List<T> nodes = new ArrayList<>(treeNodes);
@@ -58,7 +59,7 @@ public class TreeUtil {
 		}
 		for (T treeNo : nodes) {
 			T parent = nodeMap.get(treeNo.getPid());
-			if (Objects.nonNull(parent) && treeNo.getPid().equals(parent.getId())) {
+			if (ObjectUtil.isNotNull(parent) && treeNo.getPid().equals(parent.getId())) {
 				treeNo.setPath(parent.getPath() + COMMA + treeNo.getId());
 				parent.getChildren().add(treeNo);
 			}
@@ -75,7 +76,7 @@ public class TreeUtil {
 		}
 		for (T treeNo : treeNodes) {
 			T parent = nodeMap.get(treeNo.getPid());
-			if (Objects.nonNull(parent) && treeNo.getPid().equals(parent.getId())) {
+			if (ObjectUtil.isNotNull(parent) && treeNo.getPid().equals(parent.getId())) {
 				treeNo.setPath(parent.getPath() + COMMA + treeNo.getId());
 				parent.getChildren().add(treeNo);
 				continue;

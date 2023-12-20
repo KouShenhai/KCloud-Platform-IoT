@@ -18,6 +18,7 @@ package org.laokou.common.idempotent.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
@@ -61,11 +62,11 @@ public class IdempotentUtil {
 	}
 
 	/**
-	 * 是否是幂等接口
+	 * 判断幂等接口
 	 */
 	public static boolean isIdempotent() {
 		Boolean status = IS_IDEMPOTENT.get();
-		return Objects.nonNull(status) && status;
+		return ObjectUtil.isNotNull(status) && status;
 	}
 
 	/**

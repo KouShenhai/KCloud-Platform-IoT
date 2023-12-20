@@ -25,6 +25,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.laokou.common.i18n.common.exception.DataSourceException;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -99,7 +100,7 @@ public class MybatisUtil {
 			M mapper = sqlSession.getMapper(clazz);
 			try {
 				item.forEach(i -> consumer.accept(mapper, i));
-				if (Objects.nonNull(cyclicBarrier)) {
+				if (ObjectUtil.isNotNull(cyclicBarrier)) {
 					cyclicBarrier.await(180, TimeUnit.SECONDS);
 				}
 				sqlSession.commit();
@@ -124,7 +125,7 @@ public class MybatisUtil {
 		// 回滚标识
 		rollback.compareAndSet(false, true);
 		log.error("批量插入数据异常，已设置回滚标识，错误信息", e);
-		if (Objects.nonNull(cyclicBarrier)) {
+		if (ObjectUtil.isNotNull(cyclicBarrier)) {
 			cyclicBarrier.reset();
 		}
 	}

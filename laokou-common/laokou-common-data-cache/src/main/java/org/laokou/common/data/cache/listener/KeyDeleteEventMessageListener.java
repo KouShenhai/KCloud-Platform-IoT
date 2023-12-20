@@ -18,6 +18,7 @@
 package org.laokou.common.data.cache.listener;
 
 import lombok.Setter;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
@@ -27,8 +28,6 @@ import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.Topic;
 import org.springframework.lang.Nullable;
-
-import java.util.Objects;
 
 /**
  * @author laokou
@@ -54,7 +53,7 @@ public class KeyDeleteEventMessageListener extends KeyspaceEventMessageListener 
 	}
 
 	protected void publishEvent(RedisKeyspaceEvent event) {
-		if (Objects.nonNull(this.publisher)) {
+		if (ObjectUtil.isNotNull(this.publisher)) {
 			this.publisher.publishEvent(event);
 		}
 	}

@@ -26,6 +26,7 @@ import org.laokou.admin.dto.menu.clientobject.MenuCO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.utils.UserUtil;
@@ -51,7 +52,7 @@ public class MenuTreeListQryExe {
 	public Result<MenuCO> execute(MenuTreeListQry qry) {
 		String menuTreeKey = RedisKeyUtil.getMenuTreeKey(UserUtil.getUserId());
 		Object obj = redisUtil.get(menuTreeKey);
-		if (Objects.nonNull(obj)) {
+		if (ObjectUtil.isNotNull(obj)) {
 			return Result.of((MenuCO) obj);
 		}
 		User user = ConvertUtil.sourceToTarget(UserUtil.user(), User.class);

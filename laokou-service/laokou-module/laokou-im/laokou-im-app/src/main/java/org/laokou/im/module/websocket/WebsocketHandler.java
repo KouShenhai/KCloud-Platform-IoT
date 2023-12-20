@@ -35,6 +35,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -43,7 +44,6 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static org.laokou.common.i18n.common.Constant.*;
@@ -123,7 +123,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			}
 			String userInfoKey = RedisKeyUtil.getUserInfoKey(Authorization);
 			reactiveRedisUtil.get(userInfoKey).subscribe(obj -> {
-				if (Objects.isNull(obj)) {
+				if (ObjectUtil.isNull(obj)) {
 					handleRequestError(ctx, HttpResponseStatus.UNAUTHORIZED);
 					return;
 				}

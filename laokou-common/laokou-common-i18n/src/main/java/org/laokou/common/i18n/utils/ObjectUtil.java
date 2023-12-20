@@ -15,21 +15,35 @@
  *
  */
 
-package org.laokou.common.core.utils;
+package org.laokou.common.i18n.utils;
 
-import org.springframework.util.ObjectUtils;
+import java.util.Objects;
 
 /**
  * @author laokou
  */
-public class ArrayUtil {
+public class ObjectUtil {
 
-	public static boolean isNotEmpty(Object[] array) {
-		return !isEmpty(array);
-	}
+    public static boolean isNotNull(Object o) {
+        return Objects.nonNull(o);
+    }
 
-	public static boolean isEmpty(Object[] array) {
-		return ObjectUtils.isEmpty(array);
-	}
+    public static boolean isNull(Object o) {
+        return Objects.isNull(o);
+    }
+
+    public static boolean equals(Object o1, Object o2) {
+        return Objects.equals(o1, o2);
+    }
+
+    public static int hash(Object... args) {
+        return Objects.hash(args);
+    }
+
+    public static <T> T requireNotNull(T obj) {
+        if (obj == null)
+            throw new NullPointerException();
+        return obj;
+    }
 
 }

@@ -21,6 +21,7 @@ import jakarta.validation.ValidationException;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.validation.annotation.Validated;
 
 import java.net.URI;
@@ -73,18 +74,18 @@ public class RouteDefinition {
 		if (this == o) {
 			return true;
 		}
-		if (Objects.isNull(o) || getClass() != o.getClass()) {
+		if (ObjectUtil.isNull(o) || getClass() != o.getClass()) {
 			return false;
 		}
 		RouteDefinition that = (RouteDefinition) o;
-		return this.order == that.order && Objects.equals(this.id, that.id)
-				&& Objects.equals(this.predicates, that.predicates) && Objects.equals(this.filters, that.filters)
-				&& Objects.equals(this.uri, that.uri) && Objects.equals(this.metadata, that.metadata);
+		return this.order == that.order && ObjectUtil.equals(this.id, that.id)
+				&& ObjectUtil.equals(this.predicates, that.predicates) && ObjectUtil.equals(this.filters, that.filters)
+				&& ObjectUtil.equals(this.uri, that.uri) && ObjectUtil.equals(this.metadata, that.metadata);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.id, this.predicates, this.filters, this.uri, this.metadata, this.order);
+		return ObjectUtil.hash(this.id, this.predicates, this.filters, this.uri, this.metadata, this.order);
 	}
 
 	@Override

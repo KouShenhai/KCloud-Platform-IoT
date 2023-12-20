@@ -19,11 +19,11 @@ package org.laokou.common.dynamic.router;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.laokou.common.dynamic.router.utils.NameUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import static org.springframework.util.StringUtils.tokenizeToStringArray;
 
@@ -60,16 +60,16 @@ public class FilterDefinition {
 		if (this == o) {
 			return true;
 		}
-		if (Objects.isNull(o) || getClass() != o.getClass()) {
+		if (ObjectUtil.isNull(o) || getClass() != o.getClass()) {
 			return false;
 		}
 		FilterDefinition that = (FilterDefinition) o;
-		return Objects.equals(name, that.name) && Objects.equals(args, that.args);
+		return ObjectUtil.equals(name, that.name) && ObjectUtil.equals(args, that.args);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, args);
+		return ObjectUtil.hash(name, args);
 	}
 
 	@Override

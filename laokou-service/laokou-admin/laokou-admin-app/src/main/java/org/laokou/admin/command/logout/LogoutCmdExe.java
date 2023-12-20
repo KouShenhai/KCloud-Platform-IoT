@@ -20,6 +20,7 @@ package org.laokou.admin.command.logout;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dto.logout.LogoutCmd;
 import org.laokou.auth.domain.user.User;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -31,7 +32,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
-import java.util.Objects;
 
 /**
  * @author laokou
@@ -50,12 +50,12 @@ public class LogoutCmdExe {
 			return Result.of(true);
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
-		if (Objects.isNull(authorization)) {
+		if (ObjectUtil.isNull(authorization)) {
 			return Result.of(true);
 		}
-		User user = (User) ((UsernamePasswordAuthenticationToken) Objects
-			.requireNonNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
-		if (Objects.isNull(user)) {
+		User user = (User) ((UsernamePasswordAuthenticationToken) ObjectUtil
+			.requireNotNull(authorization.getAttribute(Principal.class.getName()))).getPrincipal();
+		if (ObjectUtil.isNull(user)) {
 			return Result.of(true);
 		}
 		Long userId = user.getId();

@@ -61,6 +61,7 @@ import org.elasticsearch.xcontent.XContentFactory;
 import org.elasticsearch.xcontent.XContentType;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.dto.Search;
 import org.laokou.common.elasticsearch.constant.EsConstant;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
@@ -940,7 +941,7 @@ public class ElasticsearchTemplate {
 		// 获取真实总数
 		searchSourceBuilder.trackTotalHits(true);
 		// 聚合对象
-		if (Objects.nonNull(aggregationBuilder)) {
+		if (ObjectUtil.isNotNull(aggregationBuilder)) {
 			searchSourceBuilder.aggregation(aggregationBuilder);
 		}
 		return searchSourceBuilder;

@@ -27,6 +27,7 @@ import org.laokou.admin.dto.user.clientobject.UserProfileCO;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -35,8 +36,6 @@ import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.ValCode.SYSTEM_ID_REQUIRE;
 import static org.laokou.common.mybatisplus.constant.DsConstant.TENANT;
@@ -62,7 +61,7 @@ public class UserProfileUpdateCmdExe {
 
 	private User toUser(UserProfileCO co) {
 		User user = ConvertUtil.sourceToTarget(co, User.class);
-		Assert.isTrue(Objects.nonNull(user), "user is null");
+		Assert.isTrue(ObjectUtil.isNotNull(user), "user is null");
 		user.setEditor(UserUtil.getUserId());
 		return user;
 	}
@@ -73,7 +72,7 @@ public class UserProfileUpdateCmdExe {
 	}
 
 	private void validate(UserProfileCO co) {
-		if (Objects.isNull(co.getId())) {
+		if (ObjectUtil.isNull(co.getId())) {
 			throw new SystemException(ValidatorUtil.getMessage(SYSTEM_ID_REQUIRE));
 		}
 		if (StringUtil.isNotEmpty(co.getMobile())) {

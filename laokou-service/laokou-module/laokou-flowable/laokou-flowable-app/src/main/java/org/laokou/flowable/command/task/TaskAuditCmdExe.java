@@ -25,6 +25,7 @@ import org.flowable.engine.TaskService;
 import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
@@ -35,7 +36,6 @@ import org.laokou.flowable.gatewayimpl.database.TaskMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import java.util.Objects;
 
 import static org.laokou.flowable.common.Constant.FLOWABLE;
 
@@ -61,7 +61,7 @@ public class TaskAuditCmdExe {
 			String instanceId = cmd.getInstanceId();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-			if (Objects.isNull(task)) {
+			if (ObjectUtil.isNull(task)) {
 				throw new FlowException("任务不存在");
 			}
 			if (DelegationState.PENDING.equals(task.getDelegationState())) {

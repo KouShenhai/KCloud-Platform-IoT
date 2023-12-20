@@ -18,12 +18,12 @@
 package org.laokou.common.shardingsphere.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.cert.Certificate;
@@ -34,7 +34,6 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.ALGORITHM_RSA;
 
@@ -76,7 +75,7 @@ public class CryptoUtil {
 	}
 
 	public static PublicKey getPublicKeyByX509(String x509File) {
-		if (Objects.isNull(x509File) || x509File.isEmpty()) {
+		if (ObjectUtil.isNull(x509File) || x509File.isEmpty()) {
 			return getPublicKey(null);
 		}
 		try (FileInputStream in = new FileInputStream(x509File)) {
@@ -90,7 +89,7 @@ public class CryptoUtil {
 	}
 
 	public static PublicKey getPublicKey(String publicKeyText) {
-		if (Objects.isNull(publicKeyText) || publicKeyText.isEmpty()) {
+		if (ObjectUtil.isNull(publicKeyText) || publicKeyText.isEmpty()) {
 			publicKeyText = DEFAULT_PUBLIC_KEY_STRING;
 		}
 
@@ -107,7 +106,7 @@ public class CryptoUtil {
 	}
 
 	public static PublicKey getPublicKeyByPublicKeyFile(String publicKeyFile) {
-		if (Objects.isNull(publicKeyFile) || publicKeyFile.isEmpty()) {
+		if (ObjectUtil.isNull(publicKeyFile) || publicKeyFile.isEmpty()) {
 			return getPublicKey(null);
 		}
 		try (FileInputStream in = new FileInputStream(publicKeyFile)) {
@@ -144,7 +143,7 @@ public class CryptoUtil {
 			cipher.init(Cipher.DECRYPT_MODE, fakePrivateKey);
 		}
 
-		if (Objects.isNull(cipherText) || cipherText.isEmpty()) {
+		if (ObjectUtil.isNull(cipherText) || cipherText.isEmpty()) {
 			return cipherText;
 		}
 
