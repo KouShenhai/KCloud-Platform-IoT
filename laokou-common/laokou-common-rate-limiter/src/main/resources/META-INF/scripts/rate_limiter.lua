@@ -98,7 +98,7 @@ end
 -- 计算距离上一次调用的时间间隔
 local delta = math.max(0, now - last_refreshed)
 
--- 当前的令牌数量（剩余 + 填充）
+-- 当前的令牌数量（剩余 + 填充 <= 桶容量）
 local now_tokens = math.min(capacity, last_refreshed + (rate * delta))
 
 -- 判断是否有足够多的令牌满足请求
@@ -115,7 +115,7 @@ if allowed then
     allowed_num = 1
 end
 
--- ttl> 0，将当前令牌的剩余数量和当前时间戳存入redis
+-- ttl > 0，将当前令牌的剩余数量和当前时间戳存入redis
 if ttl > 0 then
     redis.call('setex', tokens_key, ttl, new_tokens)
     redis.call('setex', timestamp_key, ttl, now)
