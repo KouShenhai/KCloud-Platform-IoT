@@ -36,6 +36,7 @@ import org.springframework.util.Assert;
 
 import java.lang.reflect.Method;
 
+import static org.laokou.common.i18n.common.Constant.UNDER;
 import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
 
 /**
@@ -58,7 +59,7 @@ public class RateLimiterAop {
         Method method = signature.getMethod();
         RateLimiter rateLimiter = AnnotationUtils.findAnnotation(method, RateLimiter.class);
         Assert.isTrue(ObjectUtil.isNotNull(rateLimiter), "@RateLimiter is null");
-        String key = getKey(rateLimiter.id().concat(KeyManager.key(rateLimiter.type())));
+        String key = getKey(rateLimiter.id().concat(UNDER).concat(KeyManager.key(rateLimiter.type())));
         long rate = rateLimiter.rate();
         long interval = rateLimiter.interval();
         RateIntervalUnit unit = rateLimiter.unit();
