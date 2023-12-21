@@ -41,6 +41,7 @@ import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
 
 /**
  * 请查看 RequestRateLimiterGatewayFilterFactory
+ *
  * @author laokou
  */
 @Component
@@ -49,28 +50,28 @@ import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
 @RequiredArgsConstructor
 public class RateLimiterAop {
 
-    private static final String KEY = "___%s_KEY___";
+	private static final String KEY = "___%s_KEY___";
 
-    private final RedisUtil redisUtil;
+	private final RedisUtil redisUtil;
 
-    @Before("@annotation(org.laokou.common.ratelimiter.annotation.RateLimiter)")
-    public void doBefore(JoinPoint point) {
-        MethodSignature signature = (MethodSignature) point.getSignature();
-        Method method = signature.getMethod();
-        RateLimiter rateLimiter = AnnotationUtils.findAnnotation(method, RateLimiter.class);
-        Assert.isTrue(ObjectUtil.isNotNull(rateLimiter), "@RateLimiter is null");
-        String key = getKey(rateLimiter.id().concat(UNDER).concat(KeyManager.key(rateLimiter.type())));
-        long rate = rateLimiter.rate();
-        long interval = rateLimiter.interval();
-        RateIntervalUnit unit = rateLimiter.unit();
-        RateType mode = rateLimiter.mode();
-        if (!redisUtil.rateLimiter(key, mode, rate, interval, unit)) {
-            throw new ApiException(TOO_MANY_REQUESTS);
-        }
-    }
+	@Before("@annotation(org.laokou.common.ratelimiter.annotation.RateLimiter)")
+	public void doBefore(JoinPoint point) {
+		MethodSignature signature = (MethodSignature) point.getSignature();
+		Method method = signature.getMethod();
+		RateLimiter rateLimiter = AnnotationUtils.findAnnotation(method, RateLimiter.class);
+		Assert.isTrue(ObjectUtil.isNotNull(rateLimiter), "@RateLimiter is null");
+		String key = getKey(rateLimiter.id().concat(UNDER).concat(KeyManager.key(rateLimiter.type())));
+		long rate = rateLimiter.rate();
+		long interval = rateLimiter.interval();
+		RateIntervalUnit unit = rateLimiter.unit();
+		RateType mode = rateLimiter.mode();
+		if (!redisUtil.rateLimiter(key, mode, rate, interval, unit)) {
+			throw new ApiException(TOO_MANY_REQUESTS);
+		}
+	}
 
-    private String getKey(String id) {
-        return  "rate_limiter.{" + String.format(KEY, id) + "}.tokens";
-    }
+	private String getKey(String id) {
+		return "rate_limiter.{" + String.format(KEY, id) + "}.tokens";
+	}
 
 }

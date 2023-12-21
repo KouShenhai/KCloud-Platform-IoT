@@ -28,14 +28,14 @@ import static org.laokou.common.ratelimiter.enums.Type.DEFAULT;
  */
 public class DefaultKeyProvider implements org.laokou.common.ratelimiter.driver.spi.KeyProvider {
 
-    @Override
-    public String resolve(HttpServletRequest request) {
-        return EMPTY;
-    }
+	@Override
+	public String resolve(HttpServletRequest request) {
+		return EMPTY;
+	}
 
-    @Override
-    public Type accept() {
-        return DEFAULT;
-    }
+	@Override
+	public Type accept() {
+		return DEFAULT;
+	}
 
 }

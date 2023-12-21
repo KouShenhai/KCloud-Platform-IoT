@@ -27,14 +27,15 @@ import static org.laokou.common.ratelimiter.enums.Type.TENANT;
  * @author laokou
  */
 public class TenantKeyProvider implements org.laokou.common.ratelimiter.driver.spi.KeyProvider {
-    @Override
-    public String resolve(HttpServletRequest request) {
-        return request.getHeader(TENANT_ID);
-    }
 
-    @Override
-    public Type accept() {
-        return TENANT;
-    }
+	@Override
+	public String resolve(HttpServletRequest request) {
+		return request.getHeader(TENANT_ID);
+	}
+
+	@Override
+	public Type accept() {
+		return TENANT;
+	}
 
 }

@@ -30,14 +30,14 @@ import static org.laokou.common.i18n.common.Constant.EMPTY;
  */
 public class KeyManager {
 
-    public static String key(Type type) {
-        ServiceLoader<KeyProvider> keyProviders = ServiceLoader.load(KeyProvider.class);
-        for (KeyProvider keyProvider : keyProviders) {
-            if (type.equals(keyProvider.accept())) {
-                return keyProvider.resolve(RequestUtil.getHttpServletRequest());
-            }
-        }
-        return EMPTY;
-    }
+	public static String key(Type type) {
+		ServiceLoader<KeyProvider> keyProviders = ServiceLoader.load(KeyProvider.class);
+		for (KeyProvider keyProvider : keyProviders) {
+			if (type.equals(keyProvider.accept())) {
+				return keyProvider.resolve(RequestUtil.getHttpServletRequest());
+			}
+		}
+		return EMPTY;
+	}
 
 }

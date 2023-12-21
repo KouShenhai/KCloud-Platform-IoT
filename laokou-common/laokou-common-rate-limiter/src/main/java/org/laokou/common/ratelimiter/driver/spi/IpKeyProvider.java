@@ -28,14 +28,14 @@ import static org.laokou.common.ratelimiter.enums.Type.IP;
  */
 public class IpKeyProvider implements org.laokou.common.ratelimiter.driver.spi.KeyProvider {
 
-    @Override
-    public String resolve(HttpServletRequest request) {
-        return IpUtil.getIpAddr(request);
-    }
+	@Override
+	public String resolve(HttpServletRequest request) {
+		return IpUtil.getIpAddr(request);
+	}
 
-    @Override
-    public Type accept() {
-        return IP;
-    }
+	@Override
+	public Type accept() {
+		return IP;
+	}
 
 }

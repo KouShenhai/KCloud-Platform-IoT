@@ -24,8 +24,8 @@ import org.laokou.common.ratelimiter.enums.Type;
  */
 public interface KeyProvider {
 
-    String resolve(HttpServletRequest request);
+	String resolve(HttpServletRequest request);
 
-    Type accept();
+	Type accept();
 
 }

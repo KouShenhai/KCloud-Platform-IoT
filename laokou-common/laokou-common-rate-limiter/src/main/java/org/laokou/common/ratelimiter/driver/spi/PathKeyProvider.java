@@ -26,14 +26,15 @@ import static org.laokou.common.ratelimiter.enums.Type.PATH;
  * @author laokou
  */
 public class PathKeyProvider implements org.laokou.common.ratelimiter.driver.spi.KeyProvider {
-    @Override
-    public String resolve(HttpServletRequest request) {
-        return request.getContextPath();
-    }
 
-    @Override
-    public Type accept() {
-        return PATH;
-    }
+	@Override
+	public String resolve(HttpServletRequest request) {
+		return request.getContextPath();
+	}
+
+	@Override
+	public Type accept() {
+		return PATH;
+	}
 
 }
