@@ -35,6 +35,10 @@ public class ReactiveRedisUtil {
 		return redissonReactiveClient.getBucket(key).get();
 	}
 
+	public Mono<Object> hGet(String key, String field) {
+		return redissonReactiveClient.getMap(key).get(field);
+	}
+
 	public Mono<Void> set(String key, Object obj, long expire) {
 		return redissonReactiveClient.getBucket(key).set(obj, expire, TimeUnit.SECONDS);
 	}

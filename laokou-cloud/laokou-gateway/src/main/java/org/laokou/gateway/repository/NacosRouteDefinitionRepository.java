@@ -78,7 +78,6 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	public void init() throws NacosException {
 		// Spring Cloud Gateway 动态路由的 order 是路由匹配的顺序，值越小，优先级越高。当多个路由匹配同一个请求时
 		// Spring Cloud Gateway 会按照 order 的值从小到大进行匹配，找到第一个匹配成功的路由进行处理。
-		log.info("初始化路由配置");
 		String group = configUtil.getGroup();
 		ConfigService configService = configUtil.getConfigService();
 		configService.addListener(ROUTER_DATA_ID, group, new Listener() {
@@ -89,7 +88,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 			@Override
 			public void receiveConfigInfo(String configInfo) {
-				log.info("收到配置变动通知");
+				log.info("接收到配置变动通知");
 				// 清除缓存
 				reactiveHashOperations.delete(RedisKeyUtil.getRouteDefinitionHashKey())
 					.subscribe(success -> log.info("删除成功"), error -> log.error("删除失败，错误信息", error));

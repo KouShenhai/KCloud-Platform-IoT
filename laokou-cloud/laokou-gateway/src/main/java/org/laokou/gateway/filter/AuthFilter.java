@@ -16,23 +16,27 @@
  */
 package org.laokou.gateway.filter;
 
+import com.alibaba.nacos.api.config.ConfigService;
+import com.alibaba.nacos.api.config.listener.Listener;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.jasypt.utils.RsaUtil;
+import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.nacos.utils.ResponseUtil;
+import org.laokou.gateway.utils.I18nUtil;
 import org.laokou.gateway.utils.RequestUtil;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.cloud.context.environment.EnvironmentChangeEvent;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.CachedBodyOutputMessage;
 import org.springframework.cloud.gateway.support.BodyInserterContext;
-import org.springframework.context.event.EventListener;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -52,11 +56,17 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.function.Function;
 
 import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.i18n.common.StatusCode.UNAUTHORIZED;
+import static org.laokou.common.nacos.utils.ConfigUtil.URL_DATA_ID;
 import static org.laokou.gateway.constant.Constant.CHUNKED;
 import static org.laokou.gateway.constant.Constant.OAUTH2_URI;
 import static org.laokou.gateway.utils.RequestUtil.pathMatcher;
@@ -78,38 +88,42 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	private volatile Map<String, Set<String>> uriMap;
 
-	// @formatter:off
+	private final ConfigUtil configUtil;
+
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		// 获取request对象
-		ServerHttpRequest request = exchange.getRequest();
-		// 获取uri
-		String requestUri = request.getPath().pathWithinApplication().value();
-		// 请求放行，无需验证权限
-		if (pathMatcher(request.getMethod().name() ,requestUri, uriMap)) {
-			// 无需验证权限的URL，需要将令牌置空
-			return chain.filter(exchange.mutate()
-					.request(request.mutate().header(AUTHORIZATION, EMPTY).build())
-					.build());
+		try {
+			// 国际化
+			I18nUtil.set(exchange);
+			// 获取request对象
+			ServerHttpRequest request = exchange.getRequest();
+			// 获取uri
+			String requestUri = request.getPath().pathWithinApplication().value();
+			// 请求放行，无需验证权限
+			if (pathMatcher(request.getMethod().name(), requestUri, uriMap)) {
+				// 无需验证权限的URL，需要将令牌置空
+				return chain
+					.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
+			}
+			// 表单提交
+			MediaType mediaType = request.getHeaders().getContentType();
+			if (OAUTH2_URI.contains(requestUri) && HttpMethod.POST.matches(request.getMethod().name())
+					&& MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
+				return decode(exchange, chain);
+			}
+			// 获取token
+			String token = RequestUtil.getParamValue(request, AUTHORIZATION);
+			if (StringUtil.isEmpty(token)) {
+				return ResponseUtil.response(exchange, Result.fail(UNAUTHORIZED));
+			}
+			// 增加令牌
+			return chain
+				.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());
 		}
-		// 表单提交
-		MediaType mediaType = request.getHeaders().getContentType();
-		if (OAUTH2_URI.contains(requestUri)
-				&& HttpMethod.POST.matches(request.getMethod().name())
-				&& MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(mediaType)) {
-			return decode(exchange, chain);
+		finally {
+			I18nUtil.reset();
 		}
-		// 获取token
-		String token = RequestUtil.getParamValue(request, AUTHORIZATION);
-		if (StringUtil.isEmpty(token)) {
-			return ResponseUtil.response(exchange, Result.fail(UNAUTHORIZED));
-		}
-		// 增加令牌
-		return chain.filter(exchange.mutate()
-				.request(request.mutate().header(AUTHORIZATION, token).build())
-				.build());
 	}
-	// @formatter:on
 
 	@Override
 	public int getOrder() {
@@ -190,11 +204,31 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		};
 	}
 
+	@PostConstruct
+	@SneakyThrows
+	public void init() {
+		String group = configUtil.getGroup();
+		ConfigService configService = configUtil.getConfigService();
+		configService.addListener(URL_DATA_ID, group, new Listener() {
+			@Override
+			public Executor getExecutor() {
+				return Executors.newSingleThreadExecutor();
+			}
+
+			@Override
+			public void receiveConfigInfo(String configInfo) {
+				log.info("接收到URL变动通知");
+				initMap();
+			}
+		});
+	}
+
 	@Override
-	@EventListener(EnvironmentChangeEvent.class)
-	public synchronized void afterPropertiesSet() {
-		// 请查看 ConfigDataContextRefresher
-		log.info("配置文件更新通知");
+	public void afterPropertiesSet() {
+		initMap();
+	}
+
+	private void initMap() {
 		uriMap = Optional.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
 				env.getProperty(SPRING_APPLICATION_NAME)))
 			.orElseGet(HashMap::new);
