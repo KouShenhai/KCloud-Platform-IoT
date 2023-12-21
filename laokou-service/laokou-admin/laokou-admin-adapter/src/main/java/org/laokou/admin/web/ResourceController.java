@@ -34,6 +34,7 @@ import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.redisson.api.RateIntervalUnit;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -64,7 +65,7 @@ public class ResourceController {
 	}
 
 	@PostMapping("sync")
-	@RateLimiter(id = "RESOURCE_SYNC", burstCapacity = 60, requestedTokens = 60)
+	@RateLimiter(id = "RESOURCE_SYNC", unit = RateIntervalUnit.MINUTES)
 	@TraceLog
 	@Operation(summary = "资源管理", description = "同步资源")
 	@OperateLog(module = "资源管理", operation = "同步资源")

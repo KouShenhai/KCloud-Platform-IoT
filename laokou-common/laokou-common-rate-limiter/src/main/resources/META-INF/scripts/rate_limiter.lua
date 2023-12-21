@@ -1,36 +1,3 @@
---/*
--- * Copyright (c) 2022 KCloud-Platform-Alibaba Author or Authors. All Rights Reserved.
--- *
--- * Licensed under the Apache License, Version 2.0 (the "License");
--- * you may not use this file except in compliance with the License.
--- * You may obtain a copy of the License at
--- *
--- *   http://www.apache.org/licenses/LICENSE-2.0
--- *
--- * Unless required by applicable law or agreed to in writing, software
--- * distributed under the License is distributed on an "AS IS" BASIS,
--- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- * See the License for the specific language governing permissions and
--- * limitations under the License.
--- *
--- */
-
---/*
--- * Copyright 2013-2020 the original author or authors.
--- *
--- * Licensed under the Apache License, Version 2.0 (the "License");
--- * you may not use this file except in compliance with the License.
--- * You may obtain a copy of the License at
--- *
--- *      https://www.apache.org/licenses/LICENSE-2.0
--- *
--- * Unless required by applicable law or agreed to in writing, software
--- * distributed under the License is distributed on an "AS IS" BASIS,
--- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- * See the License for the specific language governing permissions and
--- * limitations under the License.
--- */
-
 -- User Request Rate Limiter filter
 -- See https://stripe.com/blog/rate-limiters
 -- See https://gist.github.com/ptarjan/e38f45f2dfe601419ca3af937fff574d#file-1-check_request_rate_limiter-rb-L11-L34
@@ -51,6 +18,9 @@
 -- 8.如果TTL为正，则更新Redis键中的令牌和时间戳
 -- 9.返回true/false
 
+-- 随机写入
+redis.replicate_commands()
+
 -- 令牌桶Key -> 存储当前可用令牌的数量（剩余令牌数量）
 local tokens_key = KEYS[1]
 
@@ -58,16 +28,16 @@ local tokens_key = KEYS[1]
 local timestamp_key = KEYS[2]
 
 -- 令牌填充速率
-local rate = 1
+local rate = tonumber(ARGV[1])
 
 -- 令牌桶容量
-local capacity = 60
+local capacity = tonumber(ARGV[2])
 
 -- 当前时间
 local now = tonumber(ARGV[3])
 
 -- 请求数量
-local requested = 60
+local requested = tonumber(ARGV[4])
 
 -- 填满令牌桶所需要的时间
 local fill_time = capacity / rate
