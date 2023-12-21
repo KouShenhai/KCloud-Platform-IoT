@@ -18,9 +18,9 @@
 package org.laokou.gateway.factory;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.redis.utils.ReactiveRedisUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.stereotype.Component;
 
 /**
  * 仿照 RemoteAddrRoutePredicateFactory IP黑名单
@@ -28,16 +28,18 @@ import org.springframework.stereotype.Component;
  * @author laokou
  */
 @Slf4j
-@Component
 public class IpBlackGatewayFilterFactory extends AbstractGatewayFilterFactory<Config> {
+
+	private final ReactiveRedisUtil reactiveRedisUtil;
 
 	@Override
 	public GatewayFilter apply(Config config) {
-		return Config.apply(config, false);
+		return Config.apply(config, false, reactiveRedisUtil);
 	}
 
-	public IpBlackGatewayFilterFactory() {
+	public IpBlackGatewayFilterFactory(ReactiveRedisUtil reactiveRedisUtil) {
 		super(Config.class);
+		this.reactiveRedisUtil = reactiveRedisUtil;
 	}
 
 }

@@ -32,6 +32,8 @@ public class ConfigUtil {
 
 	public static final String ROUTER_DATA_ID = "router.json";
 
+	public static final String URL_DATA_ID = "application-common.yaml";
+
 	private final NacosConfigManager nacosConfigManager;
 
 	private final NacosConfigProperties nacosConfigProperties;
