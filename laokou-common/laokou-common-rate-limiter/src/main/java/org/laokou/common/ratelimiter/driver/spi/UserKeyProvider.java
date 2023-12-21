@@ -28,14 +28,14 @@ import static org.laokou.common.ratelimiter.enums.Type.USER;
  */
 public class UserKeyProvider implements org.laokou.common.ratelimiter.driver.spi.KeyProvider {
 
-    @Override
-    public String resolve(HttpServletRequest request) {
-        return request.getHeader(USER_ID);
-    }
+	@Override
+	public String resolve(HttpServletRequest request) {
+		return request.getHeader(USER_ID);
+	}
 
-    @Override
-    public Type accept() {
-        return USER;
-    }
+	@Override
+	public Type accept() {
+		return USER;
+	}
 
 }

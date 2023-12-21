@@ -22,29 +22,29 @@ package org.laokou.common.ratelimiter.enums;
  */
 public enum Type {
 
-    /**
-     * 默认
-     */
-    DEFAULT,
+	/**
+	 * 默认
+	 */
+	DEFAULT,
 
-    /**
-     * IP
-     */
-    IP,
+	/**
+	 * IP
+	 */
+	IP,
 
-    /**
-     * 用户
-     */
-    USER,
+	/**
+	 * 用户
+	 */
+	USER,
 
-    /**
-     * 租户
-     */
-    TENANT,
+	/**
+	 * 租户
+	 */
+	TENANT,
 
-    /**
-     * 路径
-     */
-    PATH
+	/**
+	 * 路径
+	 */
+	PATH
 
 }

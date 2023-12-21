@@ -34,36 +34,34 @@ import static org.redisson.api.RateType.OVERALL;
 @Documented
 public @interface RateLimiter {
 
-    /**
-     * 标识
-     */
-    String id();
+	/**
+	 * 标识
+	 */
+	String id();
 
-    /**
-     * 令牌速率
-     */
-    long rate() default 1;
+	/**
+	 * 令牌速率
+	 */
+	long rate() default 1;
 
-    /**
-     * 过期时间
-     */
-    long interval() default 1;
+	/**
+	 * 过期时间
+	 */
+	long interval() default 1;
 
-    /**
-     * 类型
-     */
-    Type type() default DEFAULT;
+	/**
+	 * 类型
+	 */
+	Type type() default DEFAULT;
 
-    /**
-     * 单位
-     */
-    RateIntervalUnit unit() default SECONDS;
+	/**
+	 * 单位
+	 */
+	RateIntervalUnit unit() default SECONDS;
 
-    /**
-     * 样式
-     * OVERALL      -> 所有实例共享
-     * PER_CLIENT   -> 单个实例共享
-     */
-    RateType mode() default OVERALL;
+	/**
+	 * 样式 OVERALL -> 所有实例共享 PER_CLIENT -> 单个实例共享
+	 */
+	RateType mode() default OVERALL;
 
 }
