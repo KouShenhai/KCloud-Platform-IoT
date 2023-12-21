@@ -15,36 +15,25 @@
  *
  */
 
-package org.laokou.common.redis.utils;
+package org.laokou.admin.command.ip;
 
 import lombok.RequiredArgsConstructor;
-import org.redisson.api.RedissonReactiveClient;
-import reactor.core.publisher.Mono;
-
-import java.time.Duration;
+import org.laokou.admin.domain.gateway.IpGateway;
+import org.laokou.admin.dto.ip.IpDeleteCmd;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
+@Component
 @RequiredArgsConstructor
-public class ReactiveRedisUtil {
+public class IpDeleteCmdExe {
 
-	private final RedissonReactiveClient redissonReactiveClient;
+    private final IpGateway ipGateway;
 
-	public Mono<Object> get(String key) {
-		return redissonReactiveClient.getBucket(key).get();
-	}
-
-	public Mono<Object> hGet(String key, String field) {
-		return redissonReactiveClient.getMap(key).get(field);
-	}
-
-	public Mono<Void> set(String key, Object obj, long expire) {
-		return redissonReactiveClient.getBucket(key).set(obj, Duration.ofSeconds(expire));
-	}
-
-	public Mono<Long> delete(String key) {
-		return redissonReactiveClient.getKeys().delete(key);
-	}
+    public Result<Boolean> execute(IpDeleteCmd cmd) {
+        return Result.of(ipGateway.deleteById(cmd.getId()));
+    }
 
 }

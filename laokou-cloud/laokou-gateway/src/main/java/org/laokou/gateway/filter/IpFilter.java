@@ -41,7 +41,6 @@ import reactor.core.publisher.Mono;
 public class IpFilter implements GlobalFilter, Ordered {
 
 	private final ReactiveRedisUtil reactiveRedisUtil;
-
 	private final static RemoteAddressResolver REMOTE_ADDRESS_RESOLVER = new RemoteAddressResolver() {
 	};
 

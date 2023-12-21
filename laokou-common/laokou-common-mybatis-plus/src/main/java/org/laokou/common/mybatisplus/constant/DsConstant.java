@@ -44,6 +44,8 @@ public interface DsConstant {
 
 	String BOOT_SYS_SQL_LOG = "boot_sys_sql_log";
 
+	String BOOT_SYS_IP = "boot_sys_ip";
+
 	/**
 	 * 租户
 	 */
