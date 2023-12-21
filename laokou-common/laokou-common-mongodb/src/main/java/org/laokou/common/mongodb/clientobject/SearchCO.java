@@ -14,31 +14,51 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.lock;
+package org.laokou.common.mongodb.clientobject;
 
-import org.laokou.common.lock.enums.LockType;
+import lombok.Data;
+import org.laokou.common.i18n.dto.Query;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-public interface Locks {
+@Data
+public class SearchCO extends Query {
 
 	/**
-	 * 获取锁
-	 * @param type
-	 * @param key
-	 * @param expire
-	 * @param timeout
-	 * @return
-	 * @throws InterruptedException
+	 * 页码
 	 */
-	Boolean tryLock(LockType type, String key, long expire, long timeout) throws InterruptedException;
+	private Integer pageNum = 1;
 
 	/**
-	 * 释放锁
-	 * @param type
-	 * @param key
+	 * 条数
 	 */
-	void unlock(LockType type, String key);
+	private Integer pageSize = 10;
+
+	/**
+	 * 模糊条件查询
+	 */
+	private List<Search> likeSearchList;
+
+	/**
+	 * 表名
+	 */
+	private String collectionName;
+
+	/**
+	 * 是否分页
+	 */
+	private boolean needPage = false;
+
+	@Data
+	public static class Search {
+
+		private String field;
+
+		private String value;
+
+	}
 
 }

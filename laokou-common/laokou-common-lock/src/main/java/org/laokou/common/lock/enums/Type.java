@@ -20,7 +20,7 @@ package org.laokou.common.lock.enums;
  * @author laokou
  */
 
-public enum LockType {
+public enum Type {
 
 	/**
 	 * 普通锁

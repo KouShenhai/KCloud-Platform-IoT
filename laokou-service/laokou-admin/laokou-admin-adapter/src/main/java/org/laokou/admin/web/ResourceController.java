@@ -32,7 +32,9 @@ import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.lock.annotation.Lock4j;
+import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.redisson.api.RateIntervalUnit;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -42,8 +44,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
-import static org.laokou.common.lock.enums.LockType.FENCED;
 
 /**
  * @author laokou
@@ -65,10 +65,11 @@ public class ResourceController {
 	}
 
 	@PostMapping("sync")
+	@RateLimiter(id = "RESOURCE_SYNC", unit = RateIntervalUnit.MINUTES)
 	@TraceLog
 	@Operation(summary = "资源管理", description = "同步资源")
 	@OperateLog(module = "资源管理", operation = "同步资源")
-	@Lock4j(key = "resource_sync_lock", type = FENCED)
+	@Lock4j(key = "resource_sync_lock", expire = 60000)
 	@PreAuthorize("hasAuthority('resource:sync')")
 	public Result<Boolean> sync() {
 		return resourceServiceI.sync(new ResourceSyncCmd());

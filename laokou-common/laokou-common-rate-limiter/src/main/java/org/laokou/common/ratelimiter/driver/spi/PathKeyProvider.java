@@ -14,24 +14,26 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.mongodb.dto;
 
-import lombok.Data;
+package org.laokou.common.ratelimiter.driver.spi;
 
-import java.io.Serial;
-import java.io.Serializable;
+import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.common.ratelimiter.enums.Type;
+
+import static org.laokou.common.ratelimiter.enums.Type.PATH;
 
 /**
  * @author laokou
  */
-@Data
-public class SearchDTO implements Serializable {
+public class PathKeyProvider implements org.laokou.common.ratelimiter.driver.spi.KeyProvider {
+    @Override
+    public String resolve(HttpServletRequest request) {
+        return request.getContextPath();
+    }
 
-	@Serial
-	private static final long serialVersionUID = 1894680310541017681L;
-
-	private String field;
-
-	private String value;
+    @Override
+    public Type accept() {
+        return PATH;
+    }
 
 }

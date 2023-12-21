@@ -83,6 +83,12 @@ public class RedisUtil {
 		return lock.tryLock(timeout, expire, TimeUnit.MILLISECONDS);
 	}
 
+	public boolean rateLimiter(String key,RateType mode, long replenishRate, long rateInterval, RateIntervalUnit rateIntervalUnit) {
+		RRateLimiter rateLimiter = redissonClient.getRateLimiter(key);
+		rateLimiter.trySetRate(mode, replenishRate, rateInterval, rateIntervalUnit);
+		return rateLimiter.tryAcquire();
+	}
+
 	public boolean tryLock(String key, long expire, long timeout) throws InterruptedException {
 		return tryLock(getLock(key), expire, timeout);
 	}

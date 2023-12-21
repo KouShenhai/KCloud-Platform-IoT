@@ -14,32 +14,37 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.mongodb.vo;
 
-import lombok.Data;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.List;
+package org.laokou.common.ratelimiter.enums;
 
 /**
  * @author laokou
  */
-@Data
-public class SearchVO<T> implements Serializable {
+public enum Type {
 
-	@Serial
-	private static final long serialVersionUID = -1053263147714785496L;
+    /**
+     * 默认
+     */
+    DEFAULT,
 
-	private List<T> records;
+    /**
+     * IP
+     */
+    IP,
 
-	/**
-	 * 数据总条数
-	 */
-	private Long total;
+    /**
+     * 用户
+     */
+    USER,
 
-	private Integer pageNum;
+    /**
+     * 租户
+     */
+    TENANT,
 
-	private Integer pageSize;
+    /**
+     * 路径
+     */
+    PATH
 
 }

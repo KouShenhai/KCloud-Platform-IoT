@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.nacos.aspect;
+package org.laokou.common.nacos.aop;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ import static org.laokou.common.i18n.common.StatusCode.SERVICE_UNAVAILABLE;
 @Component
 @Aspect
 @Slf4j
-public class RequestAspect {
+public class RequestAop {
 
 	@Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")
 	public void postMapping() {

@@ -14,42 +14,28 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.mongodb.form;
 
-import lombok.Data;
-import org.laokou.common.mongodb.dto.SearchDTO;
-import java.io.Serializable;
-import java.util.List;
+package org.laokou.common.ratelimiter.driver.spi;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.common.ratelimiter.enums.Type;
+
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.ratelimiter.enums.Type.DEFAULT;
 
 /**
  * @author laokou
  */
-@Data
-public class QueryForm implements Serializable {
+public class DefaultKeyProvider implements org.laokou.common.ratelimiter.driver.spi.KeyProvider {
 
-	/**
-	 * 页码
-	 */
-	private Integer pageNum = 1;
+    @Override
+    public String resolve(HttpServletRequest request) {
+        return EMPTY;
+    }
 
-	/**
-	 * 条数
-	 */
-	private Integer pageSize = 10;
-
-	/**
-	 * 模糊条件查询
-	 */
-	private List<SearchDTO> likeSearchList;
-
-	/**
-	 * 表名
-	 */
-	private String collectionName;
-
-	/**
-	 * 是否分页
-	 */
-	private boolean needPage = false;
+    @Override
+    public Type accept() {
+        return DEFAULT;
+    }
 
 }
