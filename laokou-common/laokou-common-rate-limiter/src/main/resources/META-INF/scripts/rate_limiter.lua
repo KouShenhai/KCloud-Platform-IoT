@@ -16,7 +16,7 @@
 -- 6.判断是否有足够多的令牌满足请求【 (填充令牌数量 + 剩余令牌数量) >= 请求数量 && (填充令牌数量 + 剩余令牌数量) <= 桶容量 】
 -- 7.如果请求被允许，则从桶里面取出相应数据的令牌
 -- 8.如果TTL为正，则更新Redis键中的令牌和时间戳
--- 9.返回true/false
+-- 9.返回两个两个参数（allowed_num：请求被允许标志。1允许，0不允许）、（new_tokens：填充令牌后剩余的令牌数据）
 
 -- 随机写入
 redis.replicate_commands()
@@ -89,4 +89,4 @@ if ttl > 0 then
 end
 
 -- 返回参数
-return { allowed_num == 1 }
+return { allowed_num, new_tokens }
