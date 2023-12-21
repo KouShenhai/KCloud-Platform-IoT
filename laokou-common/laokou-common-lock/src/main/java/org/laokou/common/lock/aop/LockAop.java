@@ -14,10 +14,12 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.lock.aop;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -40,6 +42,8 @@ import java.lang.reflect.Method;
 import static org.laokou.common.i18n.common.StatusCode.TOO_MANY_REQUESTS;
 
 /**
+ * 分布式锁切面.
+ *
  * @author laokou
  */
 @Component

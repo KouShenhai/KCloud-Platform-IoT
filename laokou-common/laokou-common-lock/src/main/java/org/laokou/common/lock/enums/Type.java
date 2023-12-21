@@ -14,36 +14,39 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.lock.enums;
 
 /**
+ * 分布式锁类型枚举.
+ *
  * @author laokou
  */
 
 public enum Type {
 
 	/**
-	 * 普通锁
+	 * 普通锁.
 	 */
 	LOCK,
 
 	/**
-	 * 公平锁
+	 * 公平锁.
 	 */
 	FAIR,
 
 	/**
-	 * 读锁
+	 * 读锁.
 	 */
 	READ,
 
 	/**
-	 * 写锁
+	 * 写锁.
 	 */
 	WRITE,
 
 	/**
-	 * 强一致性锁 => 主从延迟
+	 * 强一致性锁 => 主从延迟.
 	 */
 	FENCED
 

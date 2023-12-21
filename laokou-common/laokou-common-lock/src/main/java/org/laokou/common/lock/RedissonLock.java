@@ -14,16 +14,20 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.common.lock;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.lock.enums.Type;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.redisson.api.RLock;
 
 /**
+ * 分布式锁实现类.
+ *
  * @author laokou
  */
 @RequiredArgsConstructor
@@ -32,6 +36,12 @@ public class RedissonLock extends AbstractLock<RLock> {
 
 	private final RedisUtil redisUtil;
 
+	/**
+	 * 获取锁.
+	 * @param type 锁类型
+	 * @param key 键
+	 * @return RLock
+	 */
 	@Override
 	public RLock getLock(Type type, String key) {
 		return switch (type) {
@@ -44,7 +54,7 @@ public class RedissonLock extends AbstractLock<RLock> {
 	}
 
 	/**
-	 * 获取锁
+	 * 尝试加锁.
 	 * @param lock 锁
 	 * @param expire 过期时间
 	 * @param timeout 超时时间
@@ -64,7 +74,7 @@ public class RedissonLock extends AbstractLock<RLock> {
 	}
 
 	/**
-	 * 释放锁
+	 * 释放锁.
 	 * @param lock 锁
 	 */
 	@Override

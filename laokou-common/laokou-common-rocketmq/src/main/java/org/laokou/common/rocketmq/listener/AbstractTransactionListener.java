@@ -18,6 +18,7 @@
 package org.laokou.common.rocketmq.listener;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
@@ -64,14 +65,14 @@ public abstract class AbstractTransactionListener implements RocketMQLocalTransa
 	}
 
 	/**
-	 * 本地事务实现
+	 * 本地事务实现.
 	 * @param transactionId transactionId
 	 * @param obj obj
 	 */
 	protected abstract void executeLocalTransaction(Object obj, String transactionId);
 
 	/**
-	 * 本地事务检查
+	 * 本地事务检查.
 	 * @param transactionId transactionId
 	 * @return boolean
 	 */

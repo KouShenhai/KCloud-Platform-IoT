@@ -40,7 +40,6 @@ public class Config {
 
 	private @NotEmpty String sources;
 
-
 	public static GatewayFilter apply(Config config, boolean white, ReactiveRedisUtil reactiveRedisUtil) {
 		try {
 			String source = config.getSources();
@@ -49,21 +48,24 @@ public class Config {
 				if (StringUtil.isEmpty(source)) {
 					return chain.filter(exchange);
 				}
-				//InetSocketAddress remoteAddress = config.getRemoteAddressResolver().resolve(exchange);
-				//String hostAddress = remoteAddress.getAddress().getHostAddress();
-				//if (IpUtil.internalIp(hostAddress)) {
-				//	return chain.filter(exchange);
-				//}
-				//if (white && sources.parallelStream().noneMatch(s -> s.matches(remoteAddress))) {
-				//	local(exchange);
-				//	log.error("IP为{}被限制", hostAddress);
-				//	return ResponseUtil.response(exchange, Result.fail(IP_WHITE));
-				//}
-				//if (!white && sources.parallelStream().anyMatch(s -> s.matches(remoteAddress))) {
-				//	local(exchange);
-				//	log.error("IP为{}已列入黑名单", hostAddress);
-				//	return ResponseUtil.response(exchange, Result.fail(IP_BLACK));
-				//}
+				// InetSocketAddress remoteAddress =
+				// config.getRemoteAddressResolver().resolve(exchange);
+				// String hostAddress = remoteAddress.getAddress().getHostAddress();
+				// if (IpUtil.internalIp(hostAddress)) {
+				// return chain.filter(exchange);
+				// }
+				// if (white && sources.parallelStream().noneMatch(s ->
+				// s.matches(remoteAddress))) {
+				// local(exchange);
+				// log.error("IP为{}被限制", hostAddress);
+				// return ResponseUtil.response(exchange, Result.fail(IP_WHITE));
+				// }
+				// if (!white && sources.parallelStream().anyMatch(s ->
+				// s.matches(remoteAddress))) {
+				// local(exchange);
+				// log.error("IP为{}已列入黑名单", hostAddress);
+				// return ResponseUtil.response(exchange, Result.fail(IP_BLACK));
+				// }
 				return chain.filter(exchange);
 			};
 		}
