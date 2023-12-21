@@ -19,7 +19,7 @@ package org.laokou.common.lock;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.lock.enums.LockType;
+import org.laokou.common.lock.enums.Type;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.redisson.api.RLock;
 
@@ -33,7 +33,7 @@ public class RedissonLock extends AbstractLock<RLock> {
 	private final RedisUtil redisUtil;
 
 	@Override
-	public RLock getLock(LockType type, String key) {
+	public RLock getLock(Type type, String key) {
 		return switch (type) {
 			case LOCK -> redisUtil.getLock(key);
 			case FAIR -> redisUtil.getFairLock(key);

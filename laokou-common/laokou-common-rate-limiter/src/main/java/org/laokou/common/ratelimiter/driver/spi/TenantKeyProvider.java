@@ -14,38 +14,27 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.lock.annotation;
 
-import org.laokou.common.lock.enums.Type;
+package org.laokou.common.ratelimiter.driver.spi;
 
-import java.lang.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.common.ratelimiter.enums.Type;
+
+import static org.laokou.common.i18n.common.Constant.TENANT_ID;
+import static org.laokou.common.ratelimiter.enums.Type.TENANT;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Lock4j {
+public class TenantKeyProvider implements org.laokou.common.ratelimiter.driver.spi.KeyProvider {
+    @Override
+    public String resolve(HttpServletRequest request) {
+        return request.getHeader(TENANT_ID);
+    }
 
-	/**
-	 * 键
-	 */
-	String key();
-
-	/**
-	 * 过期时间 单位：毫秒 过期时间一定是要长于业务的执行时间.
-	 */
-	long expire() default 5000;
-
-	/**
-	 * 获取锁超时时间 单位：毫秒 结合业务,建议该时间不宜设置过长,特别在并发高的情况下.
-	 */
-	long timeout() default 50;
-
-	/**
-	 * 类似
-	 */
-	Type type() default Type.LOCK;
+    @Override
+    public Type accept() {
+        return TENANT;
+    }
 
 }

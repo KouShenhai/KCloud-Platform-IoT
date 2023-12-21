@@ -21,40 +21,24 @@ import org.laokou.common.lock.enums.Type;
 /**
  * @author laokou
  */
-public abstract class AbstractLock<T> implements Lock {
-
-	@Override
-	public Boolean tryLock(Type type, String key, long expire, long timeout) throws InterruptedException {
-		return tryLock(getLock(type, key), expire, timeout);
-	}
-
-	@Override
-	public void unlock(Type type, String key) {
-		unlock(getLock(type, key));
-	}
+public interface Lock {
 
 	/**
 	 * 获取锁
 	 * @param type
 	 * @param key
-	 * @return
-	 */
-	public abstract T getLock(Type type, String key);
-
-	/**
-	 * 获取锁
-	 * @param lock
 	 * @param expire
 	 * @param timeout
 	 * @return
 	 * @throws InterruptedException
 	 */
-	public abstract Boolean tryLock(T lock, long expire, long timeout) throws InterruptedException;
+	Boolean tryLock(Type type, String key, long expire, long timeout) throws InterruptedException;
 
 	/**
 	 * 释放锁
-	 * @param lock
+	 * @param type
+	 * @param key
 	 */
-	public abstract void unlock(T lock);
+	void unlock(Type type, String key);
 
 }

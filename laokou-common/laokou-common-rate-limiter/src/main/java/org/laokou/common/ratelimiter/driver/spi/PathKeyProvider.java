@@ -14,31 +14,26 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.lock;
 
-import org.laokou.common.lock.enums.LockType;
+package org.laokou.common.ratelimiter.driver.spi;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.common.ratelimiter.enums.Type;
+
+import static org.laokou.common.ratelimiter.enums.Type.PATH;
 
 /**
  * @author laokou
  */
-public interface Locks {
+public class PathKeyProvider implements org.laokou.common.ratelimiter.driver.spi.KeyProvider {
+    @Override
+    public String resolve(HttpServletRequest request) {
+        return request.getContextPath();
+    }
 
-	/**
-	 * 获取锁
-	 * @param type
-	 * @param key
-	 * @param expire
-	 * @param timeout
-	 * @return
-	 * @throws InterruptedException
-	 */
-	Boolean tryLock(LockType type, String key, long expire, long timeout) throws InterruptedException;
-
-	/**
-	 * 释放锁
-	 * @param type
-	 * @param key
-	 */
-	void unlock(LockType type, String key);
+    @Override
+    public Type accept() {
+        return PATH;
+    }
 
 }

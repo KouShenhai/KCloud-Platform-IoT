@@ -70,7 +70,6 @@ public class HttpMessageConverterConfig {
 		// LocalDateTime
 		javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
 		javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
-		// 中文转换
 		List<MediaType> list = new ArrayList<>(1);
 		list.add(MediaType.APPLICATION_JSON);
 		converter.setSupportedMediaTypes(list);

@@ -14,11 +14,13 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.lock.annotation;
+package org.laokou.common.ratelimiter.annotation;
 
-import org.laokou.common.lock.enums.Type;
+import org.laokou.common.ratelimiter.enums.Type;
 
 import java.lang.annotation.*;
+
+import static org.laokou.common.ratelimiter.enums.Type.DEFAULT;
 
 /**
  * @author laokou
@@ -26,26 +28,31 @@ import java.lang.annotation.*;
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Lock4j {
+public @interface RateLimiter {
 
-	/**
-	 * 键
-	 */
-	String key();
+    /**
+     * 标识
+     */
+    String id();
 
-	/**
-	 * 过期时间 单位：毫秒 过期时间一定是要长于业务的执行时间.
-	 */
-	long expire() default 5000;
+    /**
+     * 令牌桶每秒填充平均速率
+     */
+    int replenishRate() default 1;
 
-	/**
-	 * 获取锁超时时间 单位：毫秒 结合业务,建议该时间不宜设置过长,特别在并发高的情况下.
-	 */
-	long timeout() default 50;
+    /**
+     * 令牌桶的桶容量
+     */
+    int burstCapacity() default 1;
 
-	/**
-	 * 类似
-	 */
-	Type type() default Type.LOCK;
+    /**
+     * 每次请求消耗令牌数
+     */
+    int requestedTokens() default 1;
+
+    /**
+     * 类型
+     */
+    Type type() default DEFAULT;
 
 }

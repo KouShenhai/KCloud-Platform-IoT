@@ -49,10 +49,7 @@
 -- 6.判断是否有足够多的令牌满足请求【 (填充令牌数量 + 剩余令牌数量) >= 请求数量 && (填充令牌数量 + 剩余令牌数量) <= 桶容量 】
 -- 7.如果请求被允许，则从桶里面取出相应数据的令牌
 -- 8.如果TTL为正，则更新Redis键中的令牌和时间戳
--- 9.返回两个两个参数（allowed_num：请求被允许标志。1允许，0不允许）、（new_tokens：填充令牌后剩余的令牌数据）
-
--- 允许随机写入
-redis.replicate_commands()
+-- 9.返回true/false
 
 -- 令牌桶Key -> 存储当前可用令牌的数量（剩余令牌数量）
 local tokens_key = KEYS[1]
@@ -61,16 +58,16 @@ local tokens_key = KEYS[1]
 local timestamp_key = KEYS[2]
 
 -- 令牌填充速率
-local rate = tonumber(ARGV[1])
+local rate = 1
 
 -- 令牌桶容量
-local capacity = tonumber(ARGV[2])
+local capacity = 60
 
 -- 当前时间
 local now = tonumber(ARGV[3])
 
 -- 请求数量
-local requested = tonumber(ARGV[4])
+local requested = 60
 
 -- 填满令牌桶所需要的时间
 local fill_time = capacity / rate
@@ -122,4 +119,4 @@ if ttl > 0 then
 end
 
 -- 返回参数
-return { allowed_num, new_tokens }
+return { allowed_num == 1 }

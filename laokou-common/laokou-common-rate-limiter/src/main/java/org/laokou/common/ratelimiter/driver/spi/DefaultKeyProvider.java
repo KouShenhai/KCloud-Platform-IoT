@@ -14,37 +14,28 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.lock.enums;
+
+package org.laokou.common.ratelimiter.driver.spi;
+
+import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.common.ratelimiter.enums.Type;
+
+import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.ratelimiter.enums.Type.DEFAULT;
 
 /**
  * @author laokou
  */
+public class DefaultKeyProvider implements org.laokou.common.ratelimiter.driver.spi.KeyProvider {
 
-public enum LockType {
+    @Override
+    public String resolve(HttpServletRequest request) {
+        return EMPTY;
+    }
 
-	/**
-	 * 普通锁
-	 */
-	LOCK,
-
-	/**
-	 * 公平锁
-	 */
-	FAIR,
-
-	/**
-	 * 读锁
-	 */
-	READ,
-
-	/**
-	 * 写锁
-	 */
-	WRITE,
-
-	/**
-	 * 强一致性锁 => 主从延迟
-	 */
-	FENCED
+    @Override
+    public Type accept() {
+        return DEFAULT;
+    }
 
 }

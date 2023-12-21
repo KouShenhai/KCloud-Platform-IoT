@@ -14,38 +14,37 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.lock.annotation;
-
-import org.laokou.common.lock.enums.Type;
-
-import java.lang.annotation.*;
+package org.laokou.common.lock.enums;
 
 /**
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Lock4j {
+
+public enum Type {
 
 	/**
-	 * 键
+	 * 普通锁
 	 */
-	String key();
+	LOCK,
 
 	/**
-	 * 过期时间 单位：毫秒 过期时间一定是要长于业务的执行时间.
+	 * 公平锁
 	 */
-	long expire() default 5000;
+	FAIR,
 
 	/**
-	 * 获取锁超时时间 单位：毫秒 结合业务,建议该时间不宜设置过长,特别在并发高的情况下.
+	 * 读锁
 	 */
-	long timeout() default 50;
+	READ,
 
 	/**
-	 * 类似
+	 * 写锁
 	 */
-	Type type() default Type.LOCK;
+	WRITE,
+
+	/**
+	 * 强一致性锁 => 主从延迟
+	 */
+	FENCED
 
 }
