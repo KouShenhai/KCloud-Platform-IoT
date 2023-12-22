@@ -31,6 +31,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -44,30 +45,57 @@ public class IpsController {
 
 	private final IpsServiceI ipsServiceI;
 
-	@PostMapping(value = "list")
+	@PostMapping(value = "black/list")
 	@TraceLog
-	@Operation(summary = "IP管理", description = "查询IP列表")
-	@PreAuthorize("hasAuthority('ips:list')")
-	public Result<Datas<IpCO>> list(@RequestBody IpListQry qry) {
+	@Operation(summary = "黑名单", description = "查询IP列表")
+	@PreAuthorize("hasAuthority('ips:black:list')")
+	public Result<Datas<IpCO>> blacklist(@RequestBody IpListQry qry) {
 		return ipsServiceI.list(qry);
 	}
 
 	@Idempotent
 	@TraceLog
-	@PostMapping
-	@Operation(summary = "IP管理", description = "新增IP")
-	@OperateLog(module = "IP管理", operation = "新增IP")
-	@PreAuthorize("hasAuthority('ips:insert')")
-	public Result<Boolean> insert(@RequestBody IpInsertCmd cmd) {
+	@PostMapping("black")
+	@Operation(summary = "黑名单", description = "新增IP")
+	@OperateLog(module = "黑名单", operation = "新增IP")
+	@PreAuthorize("hasAuthority('ips:black:insert')")
+	public Result<Boolean> insertBlack(@Validated @RequestBody IpInsertCmd cmd) {
 		return ipsServiceI.insert(cmd);
 	}
 
 	@TraceLog
-	@DeleteMapping(value = "{id}")
-	@Operation(summary = "IP管理", description = "删除IP")
-	@OperateLog(module = "IP管理", operation = "删除IP")
-	@PreAuthorize("hasAuthority('ips:delete')")
-	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+	@DeleteMapping(value = "black/{id}")
+	@Operation(summary = "黑名单", description = "删除IP")
+	@OperateLog(module = "黑名单", operation = "删除IP")
+	@PreAuthorize("hasAuthority('ips:black:delete')")
+	public Result<Boolean> deleteBlackById(@PathVariable("id") Long id) {
+		return ipsServiceI.deleteById(new IpDeleteCmd(id));
+	}
+
+	@PostMapping(value = "white/list")
+	@TraceLog
+	@Operation(summary = "白名单", description = "查询IP列表")
+	@PreAuthorize("hasAuthority('ips:white:list')")
+	public Result<Datas<IpCO>> whitelist(@RequestBody IpListQry qry) {
+		return ipsServiceI.list(qry);
+	}
+
+	@Idempotent
+	@TraceLog
+	@PostMapping("white")
+	@Operation(summary = "白名单", description = "新增IP")
+	@OperateLog(module = "白名单", operation = "新增IP")
+	@PreAuthorize("hasAuthority('ips:white:insert')")
+	public Result<Boolean> insertWhite(@Validated @RequestBody IpInsertCmd cmd) {
+		return ipsServiceI.insert(cmd);
+	}
+
+	@TraceLog
+	@DeleteMapping(value = "white/{id}")
+	@Operation(summary = "白名单", description = "删除IP")
+	@OperateLog(module = "白名单", operation = "删除IP")
+	@PreAuthorize("hasAuthority('ips:white:delete')")
+	public Result<Boolean> deleteWhiteById(@PathVariable("id") Long id) {
 		return ipsServiceI.deleteById(new IpDeleteCmd(id));
 	}
 

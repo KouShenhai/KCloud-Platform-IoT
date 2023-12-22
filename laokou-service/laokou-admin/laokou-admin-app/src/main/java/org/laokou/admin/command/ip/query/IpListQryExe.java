@@ -39,7 +39,7 @@ public class IpListQryExe {
 	private final IpConvertor ipConvertor;
 
 	public Result<Datas<IpCO>> execute(IpListQry qry) {
-		Datas<Ip> page = ipGateway.list(new Ip(), qry);
+		Datas<Ip> page = ipGateway.list(new Ip(qry.getLabel()), qry);
 		Datas<IpCO> datas = new Datas<>();
 		datas.setRecords(ipConvertor.convertClientObjectList(page.getRecords()));
 		datas.setTotal(page.getTotal());

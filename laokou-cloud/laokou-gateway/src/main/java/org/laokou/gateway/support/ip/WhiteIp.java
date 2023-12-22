@@ -17,6 +17,10 @@
 
 package org.laokou.gateway.support.ip;
 
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.redis.utils.ReactiveRedisUtil;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -25,11 +29,15 @@ import reactor.core.publisher.Mono;
  * @author laokou
  */
 @Component
+@RequiredArgsConstructor
 public class WhiteIp implements Ip {
 
+    private final ReactiveRedisUtil reactiveRedisUtil;
+    private final RemoteAddressResolver remoteAddressResolver;
+
     @Override
-    public Mono<Void> validate(ServerWebExchange exchange) {
-        return null;
+    public Mono<Void> validate(ServerWebExchange exchange, GatewayFilterChain chain) {
+        return chain.filter(exchange);
     }
 
 }

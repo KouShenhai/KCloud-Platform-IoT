@@ -287,7 +287,7 @@ public interface Constant {
 	String VERSION = "3.2.0";
 
 	/**
-	 * IP
+	 * IP参数
 	 */
 	String IP = "ip";
 
@@ -297,13 +297,18 @@ public interface Constant {
 	String HTTPS_SCHEME = "https";
 
 	/**
-	 * www
+	 * www域名前缀
 	 */
 	String WWW = "www";
 
 	/**
-	 * 应用名称
+	 * 应用名称YAML配置
 	 */
 	String SPRING_APPLICATION_NAME = "spring.application.name";
+
+	/**
+	 * IPV4正则表达式
+	 */
+	String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
 
 }

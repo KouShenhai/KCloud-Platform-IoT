@@ -25,9 +25,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
+import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**
  * 类名称：IdempotentUtils
@@ -53,7 +53,7 @@ public class IdempotentUtil {
 	public String getIdempotentKey() {
 		String idempotentKey = String.valueOf(IdGenerator.defaultSnowflakeId());
 		String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(idempotentKey);
-		redisUtil.set(apiIdempotentKey, DEFAULT, RedisUtil.HOUR_ONE_EXPIRE);
+		redisUtil.set(apiIdempotentKey, DEFAULT, MINUTE_FIVE_EXPIRE);
 		return idempotentKey;
 	}
 

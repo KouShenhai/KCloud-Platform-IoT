@@ -17,12 +17,16 @@
 
 package org.laokou.admin.domain.ip;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author laokou
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Ip {
 
 	private Long id;
@@ -30,5 +34,9 @@ public class Ip {
 	private String value;
 
 	private String label;
+
+	public Ip(String label) {
+		this.label = label;
+	}
 
 }

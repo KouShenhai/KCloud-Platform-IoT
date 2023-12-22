@@ -16,6 +16,7 @@
  */
 package org.laokou.gateway.support.ip;
 
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -24,6 +25,6 @@ import reactor.core.publisher.Mono;
  */
 public interface Ip {
 
-    Mono<Void> validate(ServerWebExchange exchange);
+    Mono<Void> validate(ServerWebExchange exchange, GatewayFilterChain chain);
 
 }

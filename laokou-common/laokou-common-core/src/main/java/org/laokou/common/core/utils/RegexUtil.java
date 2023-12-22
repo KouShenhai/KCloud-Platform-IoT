@@ -18,6 +18,8 @@ package org.laokou.common.core.utils;
 
 import java.util.regex.Pattern;
 
+import static org.laokou.common.i18n.common.Constant.IPV4_REGEX;
+
 /**
  * @author laokou
  */
@@ -29,11 +31,7 @@ public class RegexUtil {
 
 	private static final String SOURCE_REGEX = "^[a-zA-Z]+_+([0-9]+)+$";
 
-	private static final String TIME_REGEX = "([0-1]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])";
-
 	private static final String NUMBER_REGEX = "^[0-9]*$";
-
-	private static final String IP_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
 
 	/**
 	 * 邮箱验证
@@ -45,7 +43,7 @@ public class RegexUtil {
 	}
 
 	public static boolean ipRegex(String ip) {
-		return Pattern.matches(IP_REGEX, ip);
+		return Pattern.matches(IPV4_REGEX, ip);
 	}
 
 	/**
@@ -55,15 +53,6 @@ public class RegexUtil {
 	 */
 	public static boolean numberRegex(String number) {
 		return Pattern.matches(NUMBER_REGEX, number);
-	}
-
-	/**
-	 * 时间验证
-	 * @param time
-	 * @return
-	 */
-	public static boolean timeRegex(String time) {
-		return Pattern.matches(TIME_REGEX, time);
 	}
 
 	/**

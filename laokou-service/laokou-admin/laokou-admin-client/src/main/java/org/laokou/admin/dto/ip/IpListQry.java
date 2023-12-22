@@ -26,4 +26,6 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class IpListQry extends PageQuery {
 
+    private String label;
+
 }

@@ -17,8 +17,12 @@
 
 package org.laokou.admin.dto.ip.clientobject;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
+
+import static org.laokou.common.i18n.common.Constant.IPV4_REGEX;
 
 /**
  * @author laokou
@@ -28,8 +32,11 @@ public class IpCO extends ClientObject {
 
 	private Long id;
 
+	@NotBlank(message = "IP不能为空")
+	@Pattern(regexp = IPV4_REGEX, message = "IP错误")
 	private String value;
 
+	@NotBlank(message = "标签不能为空")
 	private String label;
 
 }

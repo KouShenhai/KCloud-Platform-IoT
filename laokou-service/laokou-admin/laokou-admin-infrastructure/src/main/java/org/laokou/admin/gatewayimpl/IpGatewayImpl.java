@@ -70,7 +70,7 @@ public class IpGatewayImpl implements IpGateway {
 	public Datas<Ip> list(Ip ip, PageQuery pageQuery) {
 		IPage<IpDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
 		IPage<IpDO> newPage = ipMapper.selectPage(page,
-				Wrappers.lambdaQuery(IpDO.class).select(IpDO::getId, IpDO::getValue));
+				Wrappers.lambdaQuery(IpDO.class).eq(IpDO::getLabel, ip.getLabel()).select(IpDO::getId, IpDO::getValue));
 		Datas<Ip> datas = new Datas<>();
 		datas.setRecords(ipConvertor.convertEntityList(newPage.getRecords()));
 		datas.setTotal(newPage.getTotal());

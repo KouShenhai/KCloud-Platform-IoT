@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
 
 /**
- * Redis工具类
+ * Redis工具类.
  *
  * @author laokou
  */
@@ -47,16 +47,29 @@ public class RedisUtil {
 
 	private final RedissonClient redissonClient;
 
-	/** 默认过期时长为24小时，单位：秒 */
+	/**
+	 * 24小时过期，单位：秒.
+	 */
 	public final static long DEFAULT_EXPIRE = 60 * 60 * 24;
 
-	/** 过期时长为1小时，单位：秒 */
+	/**
+	 * 1小时过期，单位：秒.
+	 */
 	public final static long HOUR_ONE_EXPIRE = 60 * 60;
 
-	/** 过期时长为6小时，单位：秒 */
+	/**
+	 * 6小时过期，单位：秒.
+	 */
 	public final static long HOUR_SIX_EXPIRE = 60 * 60 * 6;
 
-	/** 不设置过期时长 */
+	/**
+	 * 5分钟过期，单位：秒.
+	 */
+	public final static long MINUTE_FIVE_EXPIRE = 5 * 60;
+
+	/**
+	 * 永不过期.
+	 */
 	public final static long NOT_EXPIRE = -1L;
 
 	public RLock getLock(String key) {
