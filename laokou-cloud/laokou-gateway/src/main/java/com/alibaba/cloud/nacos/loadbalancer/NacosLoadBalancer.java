@@ -39,11 +39,10 @@ import com.alibaba.cloud.nacos.balancer.NacosBalancer;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.gateway.utils.RequestUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.*;
@@ -72,9 +71,8 @@ import static org.laokou.common.i18n.common.Constant.*;
  * @author laokou
  * @since 2021.1
  */
+@Slf4j
 public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
-
-	private static final Logger log = LoggerFactory.getLogger(NacosLoadBalancer.class);
 
 	private final String serviceId;
 
