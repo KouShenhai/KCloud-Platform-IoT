@@ -28,10 +28,10 @@ import org.laokou.common.i18n.dto.Result;
  */
 public interface IpsServiceI {
 
-    Result<Boolean> insert(IpInsertCmd cmd);
+	Result<Boolean> insert(IpInsertCmd cmd);
 
-    Result<Boolean> deleteById(IpDeleteCmd cmd);
+	Result<Boolean> deleteById(IpDeleteCmd cmd);
 
-    Result<Datas<IpCO>> list(IpListQry qry);
+	Result<Datas<IpCO>> list(IpListQry qry);
 
 }

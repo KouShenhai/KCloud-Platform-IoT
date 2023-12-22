@@ -42,33 +42,33 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("v1/ips")
 public class IpsController {
 
-    private final IpsServiceI ipsServiceI;
+	private final IpsServiceI ipsServiceI;
 
-    @PostMapping(value = "list")
-    @TraceLog
-    @Operation(summary = "IP管理", description = "查询IP列表")
-    @PreAuthorize("hasAuthority('ips:list')")
-    public Result<Datas<IpCO>> list(@RequestBody IpListQry qry) {
-        return ipsServiceI.list(qry);
-    }
+	@PostMapping(value = "list")
+	@TraceLog
+	@Operation(summary = "IP管理", description = "查询IP列表")
+	@PreAuthorize("hasAuthority('ips:list')")
+	public Result<Datas<IpCO>> list(@RequestBody IpListQry qry) {
+		return ipsServiceI.list(qry);
+	}
 
-    @Idempotent
-    @TraceLog
-    @PostMapping
-    @Operation(summary = "IP管理", description = "新增IP")
-    @OperateLog(module = "IP管理", operation = "新增IP")
-    @PreAuthorize("hasAuthority('ips:insert')")
-    public Result<Boolean> insert(@RequestBody IpInsertCmd cmd) {
-        return ipsServiceI.insert(cmd);
-    }
+	@Idempotent
+	@TraceLog
+	@PostMapping
+	@Operation(summary = "IP管理", description = "新增IP")
+	@OperateLog(module = "IP管理", operation = "新增IP")
+	@PreAuthorize("hasAuthority('ips:insert')")
+	public Result<Boolean> insert(@RequestBody IpInsertCmd cmd) {
+		return ipsServiceI.insert(cmd);
+	}
 
-    @TraceLog
-    @DeleteMapping(value = "{id}")
-    @Operation(summary = "IP管理", description = "删除IP")
-    @OperateLog(module = "IP管理", operation = "删除IP")
-    @PreAuthorize("hasAuthority('ips:delete')")
-    public Result<Boolean> deleteById(@PathVariable("id") Long id) {
-        return ipsServiceI.deleteById(new IpDeleteCmd(id));
-    }
+	@TraceLog
+	@DeleteMapping(value = "{id}")
+	@Operation(summary = "IP管理", description = "删除IP")
+	@OperateLog(module = "IP管理", operation = "删除IP")
+	@PreAuthorize("hasAuthority('ips:delete')")
+	public Result<Boolean> deleteById(@PathVariable("id") Long id) {
+		return ipsServiceI.deleteById(new IpDeleteCmd(id));
+	}
 
 }

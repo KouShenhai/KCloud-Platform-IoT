@@ -26,10 +26,10 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 public interface IpGateway {
 
-    Boolean insert(Ip ip);
+	Boolean insert(Ip ip);
 
-    Boolean deleteById(Long id);
+	Boolean deleteById(Long id);
 
-    Datas<Ip> list(Ip ip, PageQuery pageQuery);
+	Datas<Ip> list(Ip ip, PageQuery pageQuery);
 
 }

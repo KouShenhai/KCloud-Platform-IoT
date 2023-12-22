@@ -34,15 +34,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class IpListQryExe {
 
-    private final IpGateway ipGateway;
-    private final IpConvertor ipConvertor;
+	private final IpGateway ipGateway;
 
-    public Result<Datas<IpCO>> execute(IpListQry qry) {
-        Datas<Ip> page = ipGateway.list(new Ip(), qry);
-        Datas<IpCO> datas = new Datas<>();
-        datas.setRecords(ipConvertor.convertClientObjectList(page.getRecords()));
-        datas.setTotal(page.getTotal());
-        return Result.of(datas);
-    }
+	private final IpConvertor ipConvertor;
+
+	public Result<Datas<IpCO>> execute(IpListQry qry) {
+		Datas<Ip> page = ipGateway.list(new Ip(), qry);
+		Datas<IpCO> datas = new Datas<>();
+		datas.setRecords(ipConvertor.convertClientObjectList(page.getRecords()));
+		datas.setTotal(page.getTotal());
+		return Result.of(datas);
+	}
 
 }

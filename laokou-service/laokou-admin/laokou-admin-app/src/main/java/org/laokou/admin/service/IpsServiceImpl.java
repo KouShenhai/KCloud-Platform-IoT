@@ -37,23 +37,25 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class IpsServiceImpl implements IpsServiceI {
 
-    private final IpInsertCmdExe ipInsertCmdExe;
-    private final IpDeleteCmdExe ipDeleteCmdExe;
-    private final IpListQryExe ipListQryExe;
+	private final IpInsertCmdExe ipInsertCmdExe;
 
-    @Override
-    public Result<Boolean> insert(IpInsertCmd cmd) {
-        return ipInsertCmdExe.execute(cmd);
-    }
+	private final IpDeleteCmdExe ipDeleteCmdExe;
 
-    @Override
-    public Result<Boolean> deleteById(IpDeleteCmd cmd) {
-        return ipDeleteCmdExe.execute(cmd);
-    }
+	private final IpListQryExe ipListQryExe;
 
-    @Override
-    public Result<Datas<IpCO>> list(IpListQry qry) {
-        return ipListQryExe.execute(qry);
-    }
+	@Override
+	public Result<Boolean> insert(IpInsertCmd cmd) {
+		return ipInsertCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<Boolean> deleteById(IpDeleteCmd cmd) {
+		return ipDeleteCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<Datas<IpCO>> list(IpListQry qry) {
+		return ipListQryExe.execute(qry);
+	}
 
 }

@@ -39,9 +39,8 @@ import com.alibaba.cloud.nacos.balancer.NacosBalancer;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import jakarta.annotation.PostConstruct;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.nacos.utils.ServiceUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.gateway.utils.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +54,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import reactor.core.publisher.Mono;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -138,38 +140,29 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	@Override
 	public Mono<Response<ServiceInstance>> choose(Request request) {
+		return serviceInstanceListSupplierProvider.getIfAvailable(NoopServiceInstanceListSupplier::new)
+			.get(request)
+			.next()
+			.mapNotNull(instances -> choose(instances, request));
+	}
+
+	private Response<ServiceInstance> choose(List<ServiceInstance> instances, Request<?> request) {
 		// IP优先
-		Mono<Response<ServiceInstance>> chooseIp = chooseIp(request);
-		if (ObjectUtil.isNotNull(chooseIp)) {
-			return chooseIp;
-		}
-		return chooseDefault(request);
-	}
-
-	private Mono<Response<ServiceInstance>> chooseDefault(Request<?> request) {
-		ServiceInstanceListSupplier supplier = serviceInstanceListSupplierProvider
-			.getIfAvailable(NoopServiceInstanceListSupplier::new);
-		return supplier.get(request).next().mapNotNull(this::getInstanceResponse);
-	}
-
-	private Mono<Response<ServiceInstance>> chooseIp(Request<?> request) {
 		if (request.getContext() instanceof RequestDataContext context) {
 			String path = context.getClientRequest().getUrl().getPath();
 			if (RequestUtil.pathMatcher(HttpMethod.GET.name(), path,
 					Map.of(HttpMethod.GET.name(), Collections.singleton(GRACEFUL_SHUTDOWN_URL)))) {
 				HttpHeaders headers = context.getClientRequest().getHeaders();
-				String serviceId = ObjectUtil.requireNotNull(headers.get(SERVICE_ID)).getFirst();
-				List<ServiceInstance> instances = SpringContextUtil.getBean(ServiceUtil.class).getInstances(serviceId);
 				ServiceInstance serviceInstance = instances.stream()
 					.filter(instance -> match(instance, headers))
 					.findFirst()
 					.orElse(null);
 				if (ObjectUtil.isNotNull(serviceInstance)) {
-					return Mono.just(new DefaultResponse(serviceInstance));
+					return new DefaultResponse(serviceInstance);
 				}
 			}
 		}
-		return null;
+		return getInstanceResponse(instances);
 	}
 
 	private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> serviceInstances) {
@@ -177,10 +170,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			log.warn("No servers available for service: " + this.serviceId);
 			return new EmptyResponse();
 		}
-
 		try {
 			String clusterName = this.nacosDiscoveryProperties.getClusterName();
-
 			List<ServiceInstance> instancesToChoose = serviceInstances;
 			if (StringUtils.isNotBlank(clusterName)) {
 				List<ServiceInstance> sameClusterInstances = serviceInstances.stream().filter(serviceInstance -> {
@@ -196,9 +187,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 						clusterName, serviceInstances);
 			}
 			instancesToChoose = this.filterInstanceByIpType(instancesToChoose);
-
+			// 路由权重
 			ServiceInstance instance = NacosBalancer.getHostByRandomWeight3(instancesToChoose);
-
 			return new DefaultResponse(instance);
 		}
 		catch (Exception e) {

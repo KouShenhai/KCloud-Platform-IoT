@@ -252,11 +252,6 @@ public interface Constant {
 	String TENANT_ID = "tenant-id";
 
 	/**
-	 * 服务ID
-	 */
-	String SERVICE_ID = "service-id";
-
-	/**
 	 * 服务IP
 	 */
 	String SERVICE_HOST = "service-host";

@@ -41,50 +41,53 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class IpGatewayImpl implements IpGateway {
 
-    private final IpMapper ipMapper;
-    private final IpConvertor ipConvertor;
-    private final TransactionalUtil transactionalUtil;
+	private final IpMapper ipMapper;
 
-    @Override
-    public Boolean insert(Ip ip) {
-        return insertIp(ipConvertor.toDataObject(ip));
-    }
+	private final IpConvertor ipConvertor;
 
-    @Override
-    public Boolean deleteById(Long id) {
-        return transactionalUtil.defaultExecute(r -> {
-            try {
-                return ipMapper.deleteById(id) > 0;
-            }
-            catch (Exception e) {
-                log.error("错误信息", e);
-                r.setRollbackOnly();
-                throw new SystemException(e.getMessage());
-            }
-        });
-    }
+	private final TransactionalUtil transactionalUtil;
 
-    @Override
-    public Datas<Ip> list(Ip ip, PageQuery pageQuery) {
-        IPage<IpDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
-        IPage<IpDO> newPage = ipMapper.selectPage(page, Wrappers.lambdaQuery(IpDO.class).select(IpDO::getId, IpDO::getValue));
-        Datas<Ip> datas = new Datas<>();
-        datas.setRecords(ipConvertor.convertEntityList(newPage.getRecords()));
-        datas.setTotal(newPage.getTotal());
-        return datas;
-    }
+	@Override
+	public Boolean insert(Ip ip) {
+		return insertIp(ipConvertor.toDataObject(ip));
+	}
 
-    private Boolean insertIp(IpDO ipDO) {
-        return transactionalUtil.defaultExecute(r -> {
-            try {
-                return ipMapper.insertTable(ipDO);
-            }
-            catch (Exception e) {
-                log.error("错误信息", e);
-                r.setRollbackOnly();
-                throw new SystemException(e.getMessage());
-            }
-        });
-    }
+	@Override
+	public Boolean deleteById(Long id) {
+		return transactionalUtil.defaultExecute(r -> {
+			try {
+				return ipMapper.deleteById(id) > 0;
+			}
+			catch (Exception e) {
+				log.error("错误信息", e);
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
+	}
+
+	@Override
+	public Datas<Ip> list(Ip ip, PageQuery pageQuery) {
+		IPage<IpDO> page = new Page<>(pageQuery.getPageNum(), pageQuery.getPageSize());
+		IPage<IpDO> newPage = ipMapper.selectPage(page,
+				Wrappers.lambdaQuery(IpDO.class).select(IpDO::getId, IpDO::getValue));
+		Datas<Ip> datas = new Datas<>();
+		datas.setRecords(ipConvertor.convertEntityList(newPage.getRecords()));
+		datas.setTotal(newPage.getTotal());
+		return datas;
+	}
+
+	private Boolean insertIp(IpDO ipDO) {
+		return transactionalUtil.defaultExecute(r -> {
+			try {
+				return ipMapper.insertTable(ipDO);
+			}
+			catch (Exception e) {
+				log.error("错误信息", e);
+				r.setRollbackOnly();
+				throw new SystemException(e.getMessage());
+			}
+		});
+	}
 
 }

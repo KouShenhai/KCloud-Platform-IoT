@@ -31,11 +31,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class IpInsertCmdExe {
 
-    private final IpGateway ipGateway;
-    private final IpConvertor ipConvertor;
+	private final IpGateway ipGateway;
 
-    public Result<Boolean> execute(IpInsertCmd cmd) {
-        return Result.of(ipGateway.insert(ipConvertor.toEntity(cmd.getIpCO())));
-    }
+	private final IpConvertor ipConvertor;
+
+	public Result<Boolean> execute(IpInsertCmd cmd) {
+		return Result.of(ipGateway.insert(ipConvertor.toEntity(cmd.getIpCO())));
+	}
 
 }

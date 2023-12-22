@@ -20,6 +20,8 @@ package org.laokou.gateway.filter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
+import org.laokou.gateway.support.ip.Ip;
+import org.laokou.gateway.support.ip.Label;
 import org.laokou.gateway.utils.I18nUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -40,7 +42,11 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class IpFilter implements GlobalFilter, Ordered {
 
+	private final Ip whiteIp;
+	private final Ip blackIp;
+
 	private final ReactiveRedisUtil reactiveRedisUtil;
+
 	private final static RemoteAddressResolver REMOTE_ADDRESS_RESOLVER = new RemoteAddressResolver() {
 	};
 
@@ -48,16 +54,24 @@ public class IpFilter implements GlobalFilter, Ordered {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		try {
 			I18nUtil.set(exchange);
+			return validate(exchange, "");
 		}
 		finally {
 			I18nUtil.reset();
 		}
-		return null;
 	}
 
 	@Override
 	public int getOrder() {
 		return Ordered.HIGHEST_PRECEDENCE + 1000;
+	}
+
+	private Mono<Void> validate(ServerWebExchange exchange, String label) {
+		Label instance = Label.getInstance(label);
+		return switch (instance) {
+			case WHITE -> whiteIp.validate(exchange);
+			case BLACK -> blackIp.validate(exchange);
+		};
 	}
 
 }

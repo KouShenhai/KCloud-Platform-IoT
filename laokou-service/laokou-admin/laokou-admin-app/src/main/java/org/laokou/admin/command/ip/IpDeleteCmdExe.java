@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class IpDeleteCmdExe {
 
-    private final IpGateway ipGateway;
+	private final IpGateway ipGateway;
 
-    public Result<Boolean> execute(IpDeleteCmd cmd) {
-        return Result.of(ipGateway.deleteById(cmd.getId()));
-    }
+	public Result<Boolean> execute(IpDeleteCmd cmd) {
+		return Result.of(ipGateway.deleteById(cmd.getId()));
+	}
 
 }

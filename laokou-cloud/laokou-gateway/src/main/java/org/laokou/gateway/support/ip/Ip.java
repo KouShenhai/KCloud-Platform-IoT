@@ -14,21 +14,16 @@
  * limitations under the License.
  *
  */
+package org.laokou.gateway.support.ip;
 
-package org.laokou.admin.convertor;
-
-import org.laokou.admin.domain.ip.Ip;
-import org.laokou.admin.dto.ip.clientobject.IpCO;
-import org.laokou.admin.gatewayimpl.database.dataobject.IpDO;
-import org.laokou.common.i18n.dto.Convertor;
-import org.mapstruct.Mapper;
-
-import static org.laokou.common.i18n.common.Constant.SPRING;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
  */
-@Mapper(componentModel = SPRING)
-public interface IpConvertor extends Convertor<IpCO, Ip, IpDO> {
+public interface Ip {
+
+    Mono<Void> validate(ServerWebExchange exchange);
 
 }
