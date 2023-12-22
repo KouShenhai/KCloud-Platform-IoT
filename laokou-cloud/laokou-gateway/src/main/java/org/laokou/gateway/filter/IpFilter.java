@@ -20,7 +20,10 @@ package org.laokou.gateway.filter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.gateway.support.ip.Ip;
+import org.laokou.gateway.support.ip.IpProperties;
+import org.laokou.gateway.support.ip.Label;
 import org.laokou.gateway.utils.I18nUtil;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.handler.predicate.RemoteAddrRoutePredicateFactory;
@@ -36,17 +39,26 @@ import reactor.core.publisher.Mono;
  */
 @Component
 @Slf4j
+@RefreshScope
 @RequiredArgsConstructor
 public class IpFilter implements GlobalFilter, Ordered {
 
 	private final Ip whiteIp;
+
 	private final Ip blackIp;
+
+	private final IpProperties ipProperties;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		try {
 			I18nUtil.set(exchange);
-			return validate(exchange, "", chain);
+			if (ipProperties.isEnabled()) {
+				return validate(exchange, ipProperties.getLabel(), chain);
+			}
+			else {
+				return chain.filter(exchange);
+			}
 		}
 		finally {
 			I18nUtil.reset();
@@ -59,12 +71,11 @@ public class IpFilter implements GlobalFilter, Ordered {
 	}
 
 	private Mono<Void> validate(ServerWebExchange exchange, String label, GatewayFilterChain chain) {
-		//Label instance = Label.getInstance(label);
-		return chain.filter(exchange);
-//		return switch (instance) {
-//			case WHITE -> whiteIp.validate(exchange, chain);
-//			case BLACK -> blackIp.validate(exchange, chain);
-//		};
+		Label instance = Label.getInstance(label.toUpperCase());
+		return switch (instance) {
+			case WHITE -> whiteIp.validate(exchange, chain);
+			case BLACK -> blackIp.validate(exchange, chain);
+		};
 	}
 
 }

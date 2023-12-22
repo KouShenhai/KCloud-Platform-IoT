@@ -72,8 +72,9 @@ public class ReactiveRedisAutoConfig {
 
 	@Bean
 	@ConditionalOnMissingBean(ReactiveRedisUtil.class)
-	public ReactiveRedisUtil reactiveRedisUtil(RedissonReactiveClient redissonReactiveClient) {
-		return new ReactiveRedisUtil(redissonReactiveClient);
+	public ReactiveRedisUtil reactiveRedisUtil(RedissonReactiveClient redissonReactiveClient,
+			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
+		return new ReactiveRedisUtil(reactiveRedisTemplate, redissonReactiveClient);
 	}
 
 }

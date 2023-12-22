@@ -15,23 +15,26 @@
  *
  */
 
-package org.laokou.admin.domain.gateway;
+package org.laokou.gateway.support.ip;
 
-import org.laokou.admin.domain.ip.Ip;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+import static org.laokou.gateway.support.ip.IpProperties.PREFIX;
 
 /**
  * @author laokou
  */
-public interface IpGateway {
+@Data
+@Component
+@ConfigurationProperties(prefix = PREFIX)
+public class IpProperties {
 
-	Boolean insert(Ip ip);
+	public static final String PREFIX = "spring.cloud.gateway.ip";
 
-	Boolean deleteById(Long id);
+	private String label = Label.BLACK.getName();
 
-	Datas<Ip> list(Ip ip, PageQuery pageQuery);
-
-	Boolean refresh(Ip ip);
+	private boolean enabled = false;
 
 }

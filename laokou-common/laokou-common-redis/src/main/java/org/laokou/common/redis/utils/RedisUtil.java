@@ -144,7 +144,12 @@ public class RedisUtil {
 	}
 
 	public void set(String key, Object value, long expire) {
-		redissonClient.getBucket(key).set(value, Duration.ofSeconds(expire));
+		if (expire == NOT_EXPIRE) {
+			redissonClient.getBucket(key).set(value);
+		}
+		else {
+			redissonClient.getBucket(key).set(value, Duration.ofSeconds(expire));
+		}
 	}
 
 	public void lSet(String key, List<Object> objList, long expire) {

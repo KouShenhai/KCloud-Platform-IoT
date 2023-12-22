@@ -15,23 +15,21 @@
  *
  */
 
-package org.laokou.admin.domain.gateway;
+package org.laokou.admin.dto.ip;
 
-import org.laokou.admin.domain.ip.Ip;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-public interface IpGateway {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class IpRefreshCmd extends CommonCommand {
 
-	Boolean insert(Ip ip);
-
-	Boolean deleteById(Long id);
-
-	Datas<Ip> list(Ip ip, PageQuery pageQuery);
-
-	Boolean refresh(Ip ip);
+	private String label;
 
 }

@@ -27,11 +27,21 @@ import org.laokou.admin.domain.gateway.IpGateway;
 import org.laokou.admin.domain.ip.Ip;
 import org.laokou.admin.gatewayimpl.database.IpMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.IpDO;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Set;
+
+import static org.laokou.common.i18n.common.Constant.DEFAULT;
+import static org.laokou.common.i18n.common.Constant.STAR;
+import static org.laokou.common.redis.utils.RedisUtil.NOT_EXPIRE;
 
 /**
  * @author laokou
@@ -46,6 +56,8 @@ public class IpGatewayImpl implements IpGateway {
 	private final IpConvertor ipConvertor;
 
 	private final TransactionalUtil transactionalUtil;
+
+	private final RedisUtil redisUtil;
 
 	@Override
 	public Boolean insert(Ip ip) {
@@ -75,6 +87,25 @@ public class IpGatewayImpl implements IpGateway {
 		datas.setRecords(ipConvertor.convertEntityList(newPage.getRecords()));
 		datas.setTotal(newPage.getTotal());
 		return datas;
+	}
+
+	@Override
+	public Boolean refresh(Ip ip) {
+		String label = ip.getLabel();
+		List<IpDO> list = ipMapper
+			.selectList(Wrappers.lambdaQuery(IpDO.class).eq(IpDO::getLabel, label).select(IpDO::getValue));
+		if (CollectionUtil.isEmpty(list)) {
+			return false;
+		}
+		Set<String> keys = redisUtil.keys(RedisKeyUtil.getIpCacheKey(label, STAR));
+		if (CollectionUtil.isNotEmpty(keys)) {
+			redisUtil.delete(keys.toArray(String[]::new));
+		}
+		list.forEach(item -> {
+			String ipCacheKey = RedisKeyUtil.getIpCacheKey(label, item.getValue());
+			redisUtil.set(ipCacheKey, DEFAULT, NOT_EXPIRE);
+		});
+		return true;
 	}
 
 	private Boolean insertIp(IpDO ipDO) {

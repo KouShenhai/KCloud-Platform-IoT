@@ -22,6 +22,7 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import java.net.InetAddress;
@@ -32,6 +33,7 @@ import static org.laokou.common.i18n.common.Constant.IP;
  * @author laokou
  */
 @SpringBootApplication(scanBasePackages = "org.laokou", exclude = { RedisReactiveAutoConfiguration.class })
+@EnableConfigurationProperties
 @EnableEncryptableProperties
 @EnableDiscoveryClient
 public class GatewayApp {

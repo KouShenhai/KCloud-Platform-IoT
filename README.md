@@ -209,6 +209,10 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
         <td><img alt="暂无图片" src="doc/image/18.png"/></td>
     </tr>
     <tr>
+        <td><img alt="暂无图片" src="doc/image/35.png"/></td>
+        <td><img alt="暂无图片" src="doc/image/35.png"/></td>
+    </tr>
+    <tr>
         <td><img alt="暂无图片" src="doc/image/19.png"/></td>
         <td><img alt="暂无图片" src="doc/image/20.png"/></td>
     </tr>

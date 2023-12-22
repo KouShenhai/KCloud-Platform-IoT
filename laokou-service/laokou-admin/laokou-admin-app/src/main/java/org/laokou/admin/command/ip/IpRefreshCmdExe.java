@@ -15,23 +15,26 @@
  *
  */
 
-package org.laokou.admin.domain.gateway;
+package org.laokou.admin.command.ip;
 
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.domain.gateway.IpGateway;
 import org.laokou.admin.domain.ip.Ip;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.admin.dto.ip.IpRefreshCmd;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface IpGateway {
+@Component
+@RequiredArgsConstructor
+public class IpRefreshCmdExe {
 
-	Boolean insert(Ip ip);
+	private final IpGateway ipGateway;
 
-	Boolean deleteById(Long id);
-
-	Datas<Ip> list(Ip ip, PageQuery pageQuery);
-
-	Boolean refresh(Ip ip);
+	public Result<Boolean> execute(IpRefreshCmd cmd) {
+		return Result.of(ipGateway.refresh(new Ip(cmd.getLabel())));
+	}
 
 }

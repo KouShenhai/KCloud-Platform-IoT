@@ -40,7 +40,8 @@ public class HttpConfig {
 
 	@Bean
 	public RemoteAddressResolver remoteAddressResolver() {
-		return new RemoteAddressResolver() {};
+		return new RemoteAddressResolver() {
+		};
 	}
 
 }
