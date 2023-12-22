@@ -27,9 +27,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY;
+import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
 
 /**
  * @author laokou
@@ -77,7 +77,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	private void setValue(String uuid, String code) {
 		String key = key(uuid);
 		// 保存五分钟
-		redisUtil.set(key, code, 60 * 5);
+		redisUtil.set(key, code, MINUTE_FIVE_EXPIRE);
 	}
 
 	private void before(String key) {

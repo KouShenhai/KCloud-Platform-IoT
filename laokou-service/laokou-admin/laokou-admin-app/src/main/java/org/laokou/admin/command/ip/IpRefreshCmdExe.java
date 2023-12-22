@@ -15,15 +15,12 @@
  *
  */
 
-package org.laokou.admin.command.ip.query;
+package org.laokou.admin.command.ip;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.convertor.IpConvertor;
 import org.laokou.admin.domain.gateway.IpGateway;
 import org.laokou.admin.domain.ip.Ip;
-import org.laokou.admin.dto.ip.IpListQry;
-import org.laokou.admin.dto.ip.clientobject.IpCO;
-import org.laokou.common.i18n.dto.Datas;
+import org.laokou.admin.dto.ip.IpRefreshCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -32,18 +29,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class IpListQryExe {
+public class IpRefreshCmdExe {
 
 	private final IpGateway ipGateway;
 
-	private final IpConvertor ipConvertor;
-
-	public Result<Datas<IpCO>> execute(IpListQry qry) {
-		Datas<Ip> page = ipGateway.list(new Ip(qry.getLabel()), qry);
-		Datas<IpCO> datas = new Datas<>();
-		datas.setRecords(ipConvertor.convertClientObjectList(page.getRecords()));
-		datas.setTotal(page.getTotal());
-		return Result.of(datas);
+	public Result<Boolean> execute(IpRefreshCmd cmd) {
+		return Result.of(ipGateway.refresh(new Ip(cmd.getLabel())));
 	}
 
 }

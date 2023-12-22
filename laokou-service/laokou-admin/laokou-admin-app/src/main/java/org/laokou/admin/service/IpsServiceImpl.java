@@ -21,10 +21,12 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.IpsServiceI;
 import org.laokou.admin.command.ip.IpDeleteCmdExe;
 import org.laokou.admin.command.ip.IpInsertCmdExe;
+import org.laokou.admin.command.ip.IpRefreshCmdExe;
 import org.laokou.admin.command.ip.query.IpListQryExe;
 import org.laokou.admin.dto.ip.IpDeleteCmd;
 import org.laokou.admin.dto.ip.IpInsertCmd;
 import org.laokou.admin.dto.ip.IpListQry;
+import org.laokou.admin.dto.ip.IpRefreshCmd;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -43,6 +45,8 @@ public class IpsServiceImpl implements IpsServiceI {
 
 	private final IpListQryExe ipListQryExe;
 
+	private final IpRefreshCmdExe ipRefreshCmdExe;
+
 	@Override
 	public Result<Boolean> insert(IpInsertCmd cmd) {
 		return ipInsertCmdExe.execute(cmd);
@@ -56,6 +60,11 @@ public class IpsServiceImpl implements IpsServiceI {
 	@Override
 	public Result<Datas<IpCO>> list(IpListQry qry) {
 		return ipListQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<Boolean> refresh(IpRefreshCmd cmd) {
+		return ipRefreshCmdExe.execute(cmd);
 	}
 
 }

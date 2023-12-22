@@ -19,6 +19,7 @@ package org.laokou.admin.api;
 import org.laokou.admin.dto.ip.IpDeleteCmd;
 import org.laokou.admin.dto.ip.IpInsertCmd;
 import org.laokou.admin.dto.ip.IpListQry;
+import org.laokou.admin.dto.ip.IpRefreshCmd;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -33,5 +34,7 @@ public interface IpsServiceI {
 	Result<Boolean> deleteById(IpDeleteCmd cmd);
 
 	Result<Datas<IpCO>> list(IpListQry qry);
+
+	Result<Boolean> refresh(IpRefreshCmd cmd);
 
 }

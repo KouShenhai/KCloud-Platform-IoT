@@ -19,6 +19,7 @@ package org.laokou.common.redis.utils;
 
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RedissonReactiveClient;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
@@ -28,6 +29,8 @@ import java.time.Duration;
  */
 @RequiredArgsConstructor
 public class ReactiveRedisUtil {
+
+	private final ReactiveRedisTemplate<String, Object> reactiveRedisTemplate;
 
 	private final RedissonReactiveClient redissonReactiveClient;
 
@@ -39,8 +42,17 @@ public class ReactiveRedisUtil {
 		return redissonReactiveClient.getMap(key).get(field);
 	}
 
+	public Mono<Boolean> hasKey(String key) {
+		return reactiveRedisTemplate.hasKey(key);
+	}
+
 	public Mono<Void> set(String key, Object obj, long expire) {
-		return redissonReactiveClient.getBucket(key).set(obj, Duration.ofSeconds(expire));
+		if (expire == -1) {
+			return redissonReactiveClient.getBucket(key).set(obj);
+		}
+		else {
+			return redissonReactiveClient.getBucket(key).set(obj, Duration.ofSeconds(expire));
+		}
 	}
 
 	public Mono<Long> delete(String key) {

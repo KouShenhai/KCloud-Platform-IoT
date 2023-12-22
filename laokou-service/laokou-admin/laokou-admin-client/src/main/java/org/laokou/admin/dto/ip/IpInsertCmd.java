@@ -17,6 +17,7 @@
 
 package org.laokou.admin.dto.ip;
 
+import jakarta.validation.Valid;
 import lombok.Data;
 import org.laokou.admin.dto.ip.clientobject.IpCO;
 import org.laokou.common.i18n.dto.CommonCommand;
@@ -27,6 +28,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class IpInsertCmd extends CommonCommand {
 
+	@Valid
 	private IpCO ipCO;
 
 }

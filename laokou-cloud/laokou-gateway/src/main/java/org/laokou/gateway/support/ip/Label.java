@@ -16,12 +16,21 @@
  */
 package org.laokou.gateway.support.ip;
 
+import lombok.Getter;
+
+@Getter
 public enum Label {
 
-    WHITE,
-    BLACK;
+	WHITE("white"), BLACK("black");
 
-    public static Label getInstance(String code) {
-        return Label.valueOf(code);
-    }
+	private final String name;
+
+	Label(String name) {
+		this.name = name;
+	}
+
+	public static Label getInstance(String code) {
+		return Label.valueOf(code);
+	}
+
 }

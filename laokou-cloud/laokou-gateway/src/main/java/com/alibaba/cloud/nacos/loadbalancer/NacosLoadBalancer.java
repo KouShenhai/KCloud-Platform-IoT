@@ -82,8 +82,6 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	private final NacosDiscoveryProperties nacosDiscoveryProperties;
 
-	private static final String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
-
 	private static final String IPV6_KEY = "IPv6";
 
 	/**

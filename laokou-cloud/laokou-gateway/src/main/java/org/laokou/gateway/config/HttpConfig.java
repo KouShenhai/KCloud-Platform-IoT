@@ -19,6 +19,7 @@ package org.laokou.gateway.config;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -35,6 +36,12 @@ public class HttpConfig {
 	@ConditionalOnMissingBean(HttpMessageConverters.class)
 	public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
 		return new HttpMessageConverters(converters.orderedStream().toList());
+	}
+
+	@Bean
+	public RemoteAddressResolver remoteAddressResolver() {
+		return new RemoteAddressResolver() {
+		};
 	}
 
 }
