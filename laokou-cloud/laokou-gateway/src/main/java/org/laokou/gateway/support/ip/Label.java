@@ -14,21 +14,14 @@
  * limitations under the License.
  *
  */
+package org.laokou.gateway.support.ip;
 
-package org.laokou.admin.convertor;
+public enum Label {
 
-import org.laokou.admin.domain.ip.Ip;
-import org.laokou.admin.dto.ip.clientobject.IpCO;
-import org.laokou.admin.gatewayimpl.database.dataobject.IpDO;
-import org.laokou.common.i18n.dto.Convertor;
-import org.mapstruct.Mapper;
+    WHITE,
+    BLACK;
 
-import static org.laokou.common.i18n.common.Constant.SPRING;
-
-/**
- * @author laokou
- */
-@Mapper(componentModel = SPRING)
-public interface IpConvertor extends Convertor<IpCO, Ip, IpDO> {
-
+    public static Label getInstance(String code) {
+        return Label.valueOf(code);
+    }
 }

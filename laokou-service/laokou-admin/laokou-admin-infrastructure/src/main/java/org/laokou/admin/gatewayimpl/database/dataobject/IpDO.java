@@ -32,10 +32,10 @@ import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_IP;
 @Schema(name = "IpDO", description = "IP")
 public class IpDO extends BaseDO {
 
-    @Schema(name = "value", description = "值")
-    private String value;
+	@Schema(name = "value", description = "值")
+	private String value;
 
-    @Schema(name = "label", description = "标签")
-    private String label;
+	@Schema(name = "label", description = "标签")
+	private String label;
 
 }

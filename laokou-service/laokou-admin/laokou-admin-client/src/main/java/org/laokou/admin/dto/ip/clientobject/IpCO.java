@@ -26,8 +26,10 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 public class IpCO extends ClientObject {
 
-    private Long id;
-    private String value;
-    private String label;
+	private Long id;
+
+	private String value;
+
+	private String label;
 
 }

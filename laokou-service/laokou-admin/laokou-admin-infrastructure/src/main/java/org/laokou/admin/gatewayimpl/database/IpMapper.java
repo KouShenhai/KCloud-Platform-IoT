@@ -27,4 +27,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface IpMapper extends BatchMapper<IpDO> {
+
 }

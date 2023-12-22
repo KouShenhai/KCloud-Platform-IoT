@@ -27,6 +27,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @Data
 public class IpInsertCmd extends CommonCommand {
 
-    private IpCO ipCO;
+	private IpCO ipCO;
 
 }
