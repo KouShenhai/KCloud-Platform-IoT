@@ -67,11 +67,11 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@DeleteMapping("online-kill")
+	@DeleteMapping("kill-online")
 	@Operation(summary = "在线用户", description = "强踢在线用户")
 	@OperateLog(module = "用户管理", operation = "强踢在线用户")
-	@PreAuthorize("hasAuthority('users:online-kill')")
-	public Result<Boolean> onlineKill(@RequestBody OnlineUserKillCmd cmd) {
+	@PreAuthorize("hasAuthority('users:kill-online')")
+	public Result<Boolean> killOnline(@RequestBody OnlineUserKillCmd cmd) {
 		return usersServiceI.onlineKill(cmd);
 	}
 
