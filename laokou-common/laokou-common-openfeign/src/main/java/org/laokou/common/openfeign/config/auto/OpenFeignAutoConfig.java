@@ -52,7 +52,8 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 	}
 
 	/**
-	 * 开启MVC 请查看 {@link FeignClientsConfiguration}
+	 * 如果开启MVC 请查看 {@link FeignClientsConfiguration}
+	 * 开启支持@RequestLine @Header @RequestPart
 	 */
 	@Bean
 	public Contract feignContract() {
