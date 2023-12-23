@@ -59,6 +59,8 @@ spring:
             data-id: admin-flow.json
             data-type: json
             rule-type: flow
+            username: @NACOS-USERNAME@
+            password: @NACOS-PASSWORD@
         db1:
           nacos:
             server-addr: @NACOS-CONFIG-ADDRESS@
@@ -67,6 +69,8 @@ spring:
             data-id: admin-degrade.json
             data-type: json
             rule-type: degrade
+            username: @NACOS-USERNAME@
+            password: @NACOS-PASSWORD@
     # loadbalancer
     loadbalancer:
       nacos:

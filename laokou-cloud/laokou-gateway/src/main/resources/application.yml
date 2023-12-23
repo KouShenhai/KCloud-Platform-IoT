@@ -67,6 +67,8 @@ spring:
             rule-type: gw_flow # 网关规则
             group-id: @NACOS-GROUP@
             data-type: json
+            username: @NACOS-USERNAME@
+            password: @NACOS-PASSWORD@
     # loadbalancer
     loadbalancer:
       cache:
