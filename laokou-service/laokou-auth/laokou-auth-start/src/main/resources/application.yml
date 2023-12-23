@@ -54,6 +54,8 @@ spring:
             data-type: json
             group-id: @NACOS-GROUP@
             rule-type: flow
+            username: @NACOS-USERNAME@
+            password: @NACOS-PASSWORD@
     # loadbalancer
     loadbalancer:
       nacos:
