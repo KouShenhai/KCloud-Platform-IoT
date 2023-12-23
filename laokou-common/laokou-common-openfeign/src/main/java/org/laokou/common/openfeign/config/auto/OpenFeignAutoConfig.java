@@ -16,6 +16,7 @@
  */
 package org.laokou.common.openfeign.config.auto;
 
+import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
 import feign.*;
 import feign.codec.ErrorDecoder;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import org.laokou.common.idempotent.aop.IdempotentAop;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
+import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Map;
@@ -38,7 +40,7 @@ import static org.laokou.common.i18n.common.Constant.*;
  * @author laokou
  */
 @Slf4j
-@AutoConfiguration
+@AutoConfiguration(before = SentinelFeignAutoConfiguration.class)
 @RequiredArgsConstructor
 public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
 
@@ -47,6 +49,14 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 	@Bean
 	public feign.Logger.Level loggerLevel() {
 		return Logger.Level.NONE;
+	}
+
+	/**
+	 * 开启MVC 请查看 {@link FeignClientsConfiguration}
+	 */
+	@Bean
+	public Contract feignContract() {
+		return new feign.Contract.Default();
 	}
 
 	@Override
@@ -63,7 +73,7 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 			// 获取请求的URL
 			String url = template.url();
 			String method = template.method();
-			// 将接口名称+URL+请求方式组合成一个key
+			// 将接口名称 + URL + 请求方式组合成一个key
 			String uniqueKey = clientName + UNDER + url + UNDER + method;
 			Map<String, String> idMap = IdempotentUtil.getRequestId();
 			// 检查是否已经为这个键生成了ID
