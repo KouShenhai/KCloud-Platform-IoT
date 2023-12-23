@@ -97,6 +97,7 @@ server:
     key-store-password: laokou
   http2:
     enabled: false
+  shutdown: graceful
 spring:
   application:
     name: @pom.artifactId@
