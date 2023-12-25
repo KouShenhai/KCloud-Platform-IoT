@@ -15,6 +15,7 @@ server:
   port: 9090
   servlet:
     context-path: /xxl-job-admin
+  shutdown: graceful
 spring:
   application:
     name: @pom.artifactId@

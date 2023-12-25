@@ -80,6 +80,7 @@ import java.util.*;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@SuppressWarnings("unchecked")
 public class ElasticsearchTemplate {
 
 	private final RestHighLevelClient restHighLevelClient;
@@ -443,16 +444,16 @@ public class ElasticsearchTemplate {
 
 	/**
 	 * 删除索引
+	 *
 	 * @param indexName 索引名称
-	 * @return Boolean
 	 * @throws IOException IOException
 	 */
-	public Boolean deleteIndex(String indexName) throws IOException {
+	public void deleteIndex(String indexName) throws IOException {
 		// 判断索引是否存在
 		boolean indexExists = isIndexExists(indexName);
 		if (!indexExists) {
 			log.error("索引：{} -> 索引不存在，删除索引失败", indexName);
-			return false;
+			return;
 		}
 		// 删除操作Request
 		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(indexName);
@@ -461,10 +462,9 @@ public class ElasticsearchTemplate {
 			.delete(deleteIndexRequest, RequestOptions.DEFAULT);
 		if (!acknowledgedResponse.isAcknowledged()) {
 			log.error("索引：{} -> 删除索引失败", indexName);
-			return false;
+			return;
 		}
 		log.info("索引：{} -> 删除索引成功", indexName);
-		return true;
 	}
 
 	/**

@@ -37,7 +37,9 @@
         <!--flowable版本-->
         <flowable.version>7.0.0</flowable.version>
         <!--mybatis-plus版本 -->
-        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <!--mybatis-spring版本-->
+        <mybatis-spring.version>3.0.3</mybatis-spring.version>
         <!--redisson版本-->
         <redisson.version>3.25.0</redisson.version>
         <!--UserAgentUtils版本-->
@@ -508,6 +510,11 @@
                 <groupId>org.jsoup</groupId>
                 <artifactId>jsoup</artifactId>
                 <version>${jsoup.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis-spring.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>

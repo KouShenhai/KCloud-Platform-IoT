@@ -26,7 +26,7 @@ server:
     session:
       cookie:
         name: sentinel_dashboard_cookie
-
+  shutdown: graceful
 spring:
   application:
     name: @pom.artifactId@
