@@ -45,6 +45,7 @@ import org.springframework.context.annotation.Bean;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
+import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.RISK;
 
@@ -157,6 +158,7 @@ public class ElasticsearchAutoConfig {
 				.stream()
 				.map(this::toUri)
 				.filter(this::hasUserInfo)
+				.filter(Objects::nonNull)
 				.forEach(this::addUserInfoCredentials);
 		}
 
@@ -202,7 +204,7 @@ public class ElasticsearchAutoConfig {
 	// return new ElasticsearchClient(transport);
 	// }
 
-	@Bean(name = "restHighLevelClient")
+	@Bean(name = "restHighLevelClient", destroyMethod = "close")
 	@ConditionalOnMissingBean(RestHighLevelClient.class)
 	@ConditionalOnClass(RestClientBuilder.class)
 	@Deprecated

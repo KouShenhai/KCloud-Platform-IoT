@@ -19,10 +19,13 @@ package org.laokou.admin;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.Map;
 
 /**
  * @author laokou
@@ -32,14 +35,20 @@ import org.springframework.web.context.WebApplicationContext;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class ElasticsearchTest extends CommonTest {
 
-    public ElasticsearchTest(WebApplicationContext webApplicationContext,
-                              OAuth2AuthorizationService oAuth2AuthorizationService) {
-        super(webApplicationContext, oAuth2AuthorizationService);
-    }
+	private final ElasticsearchTemplate elasticsearchTemplate;
 
-    @Test
-    public void searchProperties() {
+	public ElasticsearchTest(WebApplicationContext webApplicationContext,
+			OAuth2AuthorizationService oAuth2AuthorizationService, ElasticsearchTemplate elasticsearchTemplate) {
+		super(webApplicationContext, oAuth2AuthorizationService);
+		this.elasticsearchTemplate = elasticsearchTemplate;
+	}
 
-    }
+	@Test
+	public void searchProperties() {
+		Map<String, String> stringStringMap = elasticsearchTemplate.getIndexNames(new String[] { "laokou_resource" });
+		stringStringMap.forEach((k, v) -> log.info("key：{}，value：{}", k, v));
+		Map<String, Object> map = elasticsearchTemplate.getIndexProperties("laokou_resource_202110");
+		log.info("获取索引属性：{}", map);
+	}
 
 }
