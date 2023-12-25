@@ -76,8 +76,7 @@ public final class SentinelFeign {
 		return new Builder();
 	}
 
-	public static final class Builder extends Feign.Builder
-			implements ApplicationContextAware {
+	public static final class Builder extends Feign.Builder implements ApplicationContextAware {
 
 		private Contract contract = new Contract.Default();
 
@@ -86,8 +85,7 @@ public final class SentinelFeign {
 		private FeignClientFactory feignClientFactory;
 
 		@Override
-		public Feign.Builder invocationHandlerFactory(
-				InvocationHandlerFactory invocationHandlerFactory) {
+		public Feign.Builder invocationHandlerFactory(InvocationHandlerFactory invocationHandlerFactory) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -101,15 +99,15 @@ public final class SentinelFeign {
 		public Feign internalBuild() {
 			super.invocationHandlerFactory(new InvocationHandlerFactory() {
 				@Override
-				public InvocationHandler create(Target target,
-						Map<Method, MethodHandler> dispatch) {
+				public InvocationHandler create(Target target, Map<Method, MethodHandler> dispatch) {
 					GenericApplicationContext gctx = (GenericApplicationContext) Builder.this.applicationContext;
 					BeanDefinition def = gctx.getBeanDefinition(target.type().getName());
 					FeignClientFactoryBean feignClientFactoryBean;
 
-					// If you need the attributes to be resolved lazily, set the property value to true.
+					// If you need the attributes to be resolved lazily, set the property
+					// value to true.
 					Boolean isLazyInit = applicationContext.getEnvironment()
-							.getProperty(FEIGN_LAZY_ATTR_RESOLUTION, Boolean.class, false);
+						.getProperty(FEIGN_LAZY_ATTR_RESOLUTION, Boolean.class, false);
 					if (isLazyInit) {
 						/*
 						 * Due to the change of the initialization sequence,
@@ -117,11 +115,11 @@ public final class SentinelFeign {
 						 * FeignClientFactoryBean can only be obtained from BeanDefinition
 						 */
 						feignClientFactoryBean = (FeignClientFactoryBean) def
-								.getAttribute("feignClientsRegistrarFactoryBean");
+							.getAttribute("feignClientsRegistrarFactoryBean");
 					}
 					else {
 						feignClientFactoryBean = (FeignClientFactoryBean) applicationContext
-								.getBean("&" + target.type().getName());
+							.getBean("&" + target.type().getName());
 					}
 					Assert.isTrue(ObjectUtil.isNotNull(feignClientFactoryBean), "feignClientFactoryBean is null");
 					Class<?> fallback = feignClientFactoryBean.getFallback();
@@ -135,32 +133,27 @@ public final class SentinelFeign {
 					FallbackFactory<?> fallbackFactoryInstance;
 					// check fallback and fallbackFactory properties
 					if (void.class != fallback) {
-						fallbackInstance = getFromContext(beanName, "fallback", fallback,
-								target.type());
+						fallbackInstance = getFromContext(beanName, "fallback", fallback, target.type());
 						return new SentinelInvocationHandler(target, dispatch,
 								new FallbackFactory.Default<>(fallbackInstance));
 					}
 					if (void.class != fallbackFactory) {
-						fallbackFactoryInstance = (FallbackFactory<?>) getFromContext(
-								beanName, "fallbackFactory", fallbackFactory,
-								FallbackFactory.class);
-						return new SentinelInvocationHandler(target, dispatch,
-								fallbackFactoryInstance);
+						fallbackFactoryInstance = (FallbackFactory<?>) getFromContext(beanName, "fallbackFactory",
+								fallbackFactory, FallbackFactory.class);
+						return new SentinelInvocationHandler(target, dispatch, fallbackFactoryInstance);
 					}
 
 					return new SentinelInvocationHandler(target, dispatch);
 				}
 
-				private Object getFromContext(String name, String type,
-						Class<?> fallbackType, Class<?> targetType) {
-					Object fallbackInstance = feignClientFactory.getInstance(name,
-							fallbackType);
+				private Object getFromContext(String name, String type, Class<?> fallbackType, Class<?> targetType) {
+					Object fallbackInstance = feignClientFactory.getInstance(name, fallbackType);
 					if (fallbackInstance == null) {
-						throw new IllegalStateException(String.format(
-								"No %s instance of type %s found for feign client %s",
-								type, fallbackType, name));
+						throw new IllegalStateException(String
+							.format("No %s instance of type %s found for feign client %s", type, fallbackType, name));
 					}
-					// when fallback is a FactoryBean, should determine the type of instance
+					// when fallback is a FactoryBean, should determine the type of
+					// instance
 					if (fallbackInstance instanceof FactoryBean<?> factoryBean) {
 						try {
 							fallbackInstance = factoryBean.getObject();
@@ -198,8 +191,7 @@ public final class SentinelFeign {
 		}
 
 		@Override
-		public void setApplicationContext(@NotNull ApplicationContext applicationContext)
-				throws BeansException {
+		public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
 			this.applicationContext = applicationContext;
 			feignClientFactory = this.applicationContext.getBean(FeignClientFactory.class);
 		}

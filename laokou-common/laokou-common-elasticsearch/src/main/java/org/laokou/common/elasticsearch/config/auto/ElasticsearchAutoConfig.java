@@ -155,9 +155,10 @@ public class ElasticsearchAutoConfig {
 				setCredentials(AuthScope.ANY, credentials);
 			}
 			properties.getUris()
-                    .stream()
-                    .map(this::toUri)
-                    .filter(this::hasUserInfo).filter(Objects::nonNull)
+				.stream()
+				.map(this::toUri)
+				.filter(this::hasUserInfo)
+				.filter(Objects::nonNull)
 				.forEach(this::addUserInfoCredentials);
 		}
 

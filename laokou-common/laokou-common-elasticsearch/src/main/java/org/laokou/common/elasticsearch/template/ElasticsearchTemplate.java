@@ -451,7 +451,6 @@ public class ElasticsearchTemplate {
 
 	/**
 	 * 删除索引
-	 *
 	 * @param indexName 索引名称
 	 * @throws IOException IOException
 	 */
@@ -992,30 +991,36 @@ public class ElasticsearchTemplate {
 	}
 
 	public Map<String, String> getIndexNames(String[] indexAliasNames) {
-        try {
+		try {
 			GetAliasesRequest getAliasesRequest = new GetAliasesRequest(indexAliasNames);
-			Map<String, Set<AliasMetadata>> aliases = restHighLevelClient.indices().getAlias(getAliasesRequest, RequestOptions.DEFAULT).getAliases();
+			Map<String, Set<AliasMetadata>> aliases = restHighLevelClient.indices()
+				.getAlias(getAliasesRequest, RequestOptions.DEFAULT)
+				.getAliases();
 			Map<String, String> indexMap = new HashMap<>(aliases.size());
-			aliases.forEach((k,v) -> indexMap.put(k, v.stream().map(AliasMetadata::getAlias).findFirst().orElse(EMPTY)));
+			aliases
+				.forEach((k, v) -> indexMap.put(k, v.stream().map(AliasMetadata::getAlias).findFirst().orElse(EMPTY)));
 			return indexMap;
-		} catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+		}
+		catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	public Map<String, Object> getIndexProperties(String indexName) {
-        try {
+		try {
 			GetIndexRequest getIndexRequest = new GetIndexRequest(indexName);
-			GetIndexResponse getIndexResponse = restHighLevelClient.indices().get(getIndexRequest, RequestOptions.DEFAULT);
+			GetIndexResponse getIndexResponse = restHighLevelClient.indices()
+				.get(getIndexRequest, RequestOptions.DEFAULT);
 			Map<String, Object> indexPropertiesMap = new HashMap<>(2);
 			Map<String, Settings> settings = getIndexResponse.getSettings();
 			Map<String, MappingMetadata> mappings = getIndexResponse.getMappings();
 			indexPropertiesMap.put("mappings", mappings.get(indexName).getSourceAsMap());
 			indexPropertiesMap.put("settings", settings.get(indexName).getAsGroups());
 			return indexPropertiesMap;
-		} catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+		}
+		catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
