@@ -60,7 +60,7 @@ public class MybatisPlusAutoConfig {
 
 	// 静态注入缓存处理类
 	static {
-		// 默认支持序列化 FstSerialCaffeineJsqlParseCache，JdkSerialCaffeineJsqlParseCache
+		// 默认支持序列化 FstSerialCaffeineJsqlParseCache、JdkSerialCaffeineJsqlParseCache
 		JsqlParserGlobal.setJsqlParseCache(new JdkSerialCaffeineJsqlParseCache(
 				cache -> cache.maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS)));
 	}
