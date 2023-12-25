@@ -91,7 +91,7 @@
         <!--gson版本-->
         <gson.version>2.10.1</gson.version>
         <!--swagger版本-->
-        <swagger.version>2.2.19</swagger.version>
+        <swagger.version>2.2.20</swagger.version>
         <!--disruptor版本-->
         <disruptor.version>3.4.4</disruptor.version>
         <!--dubbo版本-->
