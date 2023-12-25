@@ -77,7 +77,7 @@
         <!--ip2region版本-->
         <ip2region.version>2.7.0</ip2region.version>
         <!--jackson-module-kotlin版本-->
-        <jackson-module-kotlin.version>2.16.0</jackson-module-kotlin.version>
+        <jackson-module-kotlin.version>2.16.1</jackson-module-kotlin.version>
         <!--xxl-job版本-->
         <xxl-job.version>2.4.0</xxl-job.version>
         <!--shardingsphere版本-->
@@ -85,7 +85,7 @@
         <!--p6spy版本-->
         <p6spy.version>3.9.1</p6spy.version>
         <!--kafka版本-->
-        <kafka.version>3.1.0</kafka.version>
+        <kafka.version>3.1.1</kafka.version>
         <!--netty版本-->
         <netty.version>4.1.104.Final</netty.version>
         <!--gson版本-->
