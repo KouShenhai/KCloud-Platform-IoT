@@ -12,7 +12,7 @@
         <!--xxl-job版本-->
         <xxl-job.version>2.4.0</xxl-job.version>
         <!--mybatis版本-->
-        <mybatis.version>3.0.2</mybatis.version>
+        <mybatis.version>3.0.3</mybatis.version>
     </properties>
 
     <dependencies>

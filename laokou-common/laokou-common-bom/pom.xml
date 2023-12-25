@@ -37,7 +37,7 @@
         <!--flowable版本-->
         <flowable.version>7.0.0</flowable.version>
         <!--mybatis-plus版本 -->
-        <mybatis-plus.version>3.5.4.1</mybatis-plus.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
         <!--redisson版本-->
         <redisson.version>3.25.0</redisson.version>
         <!--UserAgentUtils版本-->

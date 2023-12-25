@@ -30,10 +30,8 @@ import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.ResourceConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
 import org.laokou.admin.domain.gateway.ResourceGateway;
-import org.laokou.admin.domain.message.Type;
 import org.laokou.admin.domain.resource.Resource;
 import org.laokou.admin.domain.resource.Status;
-import org.laokou.admin.dto.message.domainevent.MessageEvent;
 import org.laokou.admin.dto.resource.TaskStartCmd;
 import org.laokou.admin.dto.resource.clientobject.StartCO;
 import org.laokou.admin.gatewayimpl.database.ResourceAuditMapper;
@@ -56,7 +54,10 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.Constant.DEFAULT;
@@ -203,17 +204,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 		Assert.isTrue(ObjectUtil.isNotNull(resourceAuditDO), "resource audit is null");
 		resourceAuditDO.setResourceId(resource.getId());
 		resourceAuditMapper.insertTable(resourceAuditDO);
-	}
-
-	private MessageEvent toMessageEvent(Resource resource, String instanceId) {
-		String title = "资源待审批任务提醒";
-		String content = String.format("编号为%s，名称为%s的资源需要审批，请及时查看并审批", resource.getId(), resource.getTitle());
-		MessageEvent event = new MessageEvent(this);
-		event.setContent(content);
-		event.setTitle(title);
-		event.setInstanceId(instanceId);
-		event.setType(Type.REMIND.ordinal());
-		return event;
 	}
 
 	private void createIndex(List<String> list) {
