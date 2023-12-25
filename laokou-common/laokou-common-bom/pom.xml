@@ -85,7 +85,7 @@
         <!--p6spy版本-->
         <p6spy.version>3.9.1</p6spy.version>
         <!--kafka版本-->
-        <kafka.version>3.1.0</kafka.version>
+        <kafka.version>3.1.1</kafka.version>
         <!--netty版本-->
         <netty.version>4.1.104.Final</netty.version>
         <!--gson版本-->
