@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.DocWriteResponse;
+import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -43,6 +44,10 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
+import org.elasticsearch.client.indices.GetIndexResponse;
+import org.elasticsearch.cluster.metadata.AliasMetadata;
+import org.elasticsearch.cluster.metadata.MappingMetadata;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.script.Script;
@@ -61,18 +66,20 @@ import org.elasticsearch.xcontent.XContentFactory;
 import org.elasticsearch.xcontent.XContentType;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.dto.Search;
 import org.laokou.common.elasticsearch.constant.EsConstant;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
+import org.laokou.common.i18n.dto.Search;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.*;
+
+import static org.laokou.common.i18n.common.Constant.EMPTY;
 
 /**
  * @author laokou
@@ -982,6 +989,33 @@ public class ElasticsearchTemplate {
 		datas.setRecords(list);
 		datas.setTotal(list.size());
 		return datas;
+	}
+
+	public Map<String, String> getIndexNames(String[] indexAliasNames) {
+        try {
+			GetAliasesRequest getAliasesRequest = new GetAliasesRequest(indexAliasNames);
+			Map<String, Set<AliasMetadata>> aliases = restHighLevelClient.indices().getAlias(getAliasesRequest, RequestOptions.DEFAULT).getAliases();
+			Map<String, String> indexMap = new HashMap<>(aliases.size());
+			aliases.forEach((k,v) -> indexMap.put(k, v.stream().map(AliasMetadata::getAlias).findFirst().orElse(EMPTY)));
+			return indexMap;
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+	public Map<String, Object> getIndexProperties(String indexName) {
+        try {
+			GetIndexRequest getIndexRequest = new GetIndexRequest(indexName);
+			GetIndexResponse getIndexResponse = restHighLevelClient.indices().get(getIndexRequest, RequestOptions.DEFAULT);
+			Map<String, Object> indexPropertiesMap = new HashMap<>(2);
+			Map<String, Settings> settings = getIndexResponse.getSettings();
+			Map<String, MappingMetadata> mappings = getIndexResponse.getMappings();
+			indexPropertiesMap.put("mappings", mappings.get(indexName).getSourceAsMap());
+			indexPropertiesMap.put("settings", settings.get(indexName).getAsGroups());
+			return indexPropertiesMap;
+		} catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 	}
 
 }
