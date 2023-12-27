@@ -18,20 +18,16 @@
 package org.laokou.admin.command.index.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dto.index.IndexListQry;
-import org.laokou.admin.dto.index.clientobject.IndexCO;
-import org.laokou.common.core.utils.MapUtil;
+import org.laokou.admin.dto.index.IndexTraceListQry;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.dto.Search;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.Constant.RESOURCE_INDEX;
 import static org.laokou.common.i18n.common.Constant.TRACE_INDEX;
 
 /**
@@ -39,28 +35,19 @@ import static org.laokou.common.i18n.common.Constant.TRACE_INDEX;
  */
 @Component
 @RequiredArgsConstructor
-public class IndexListQryExe {
+public class IndexTraceListQryExe {
+
+	private static final String TRACE_ID = "traceId";
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
-	public Result<Datas<IndexCO>> execute(IndexListQry qry) {
-		Map<String, String> indexNames = elasticsearchTemplate
-			.getIndexNames(new String[] { RESOURCE_INDEX, TRACE_INDEX });
-		if (MapUtil.isEmpty(indexNames)) {
-			return Result.of(Datas.of());
-		}
-		Integer pageNum = qry.getPageNum();
-		Integer pageSize = qry.getPageSize();
-		String idxName = qry.getIndexName();
-		List<IndexCO> list = new ArrayList<>(indexNames.size());
-		indexNames.forEach((indexName, indexAlias) -> {
-			if (StringUtil.isEmpty(idxName) || indexName.contains(idxName.trim())) {
-				list.add(new IndexCO(indexName, indexAlias));
-			}
-		});
-		Datas<IndexCO> datas = new Datas<>(list.size(),
-				list.stream().skip((long) (pageNum - 1) * pageSize).limit(pageSize).toList());
-		return Result.of(datas);
+	public Result<Datas<Map<String, Object>>> execute(IndexTraceListQry qry) {
+		Search search = new Search();
+		search.setIndexNames(new String[] { TRACE_INDEX });
+		search.setPageSize(qry.getPageSize());
+		search.setPageNum(qry.getPageNum());
+		search.setOrQueryList(Collections.singletonList(new Search.Query(TRACE_ID, qry.getTraceId())));
+		return Result.of(elasticsearchTemplate.highlightSearchIndex(search));
 	}
 
 }

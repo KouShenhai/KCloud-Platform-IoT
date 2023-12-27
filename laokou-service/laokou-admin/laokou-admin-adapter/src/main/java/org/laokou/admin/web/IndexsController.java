@@ -23,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.IndexsServiceI;
 import org.laokou.admin.dto.index.IndexGetQry;
 import org.laokou.admin.dto.index.IndexListQry;
+import org.laokou.admin.dto.index.IndexTraceGetQry;
+import org.laokou.admin.dto.index.IndexTraceListQry;
 import org.laokou.admin.dto.index.clientobject.IndexCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -41,32 +43,38 @@ import java.util.Map;
 @RequestMapping("v1/indexs")
 public class IndexsController {
 
-    private final IndexsServiceI indexsServiceI;
+	private final IndexsServiceI indexsServiceI;
 
-    @PostMapping("list")
-    @TraceLog
-    @Operation(summary = "索引管理", description = "查询索引列表")
-    @PreAuthorize("hasAuthority('indexs:list')")
-    public Result<Datas<IndexCO>> list(@RequestBody IndexListQry qry) {
-        return indexsServiceI.list(qry);
-    }
+	@PostMapping("list")
+	@TraceLog
+	@Operation(summary = "索引管理", description = "查询索引列表")
+	@PreAuthorize("hasAuthority('indexs:list')")
+	public Result<Datas<IndexCO>> list(@RequestBody IndexListQry qry) {
+		return indexsServiceI.list(qry);
+	}
 
-    @GetMapping("{indexName}")
-    @TraceLog
-    @Operation(summary = "索引管理", description = "查看索引")
-    @PreAuthorize("hasAuthority('indexs:info')")
-    public Result<Map<String, Object>> info(@PathVariable("indexName")String indexName) {
-        return indexsServiceI.info(new IndexGetQry(indexName));
-    }
+	@GetMapping("{indexName}")
+	@TraceLog
+	@Operation(summary = "索引管理", description = "查看索引")
+	@PreAuthorize("hasAuthority('indexs:info')")
+	public Result<Map<String, Object>> info(@PathVariable("indexName") String indexName) {
+		return indexsServiceI.info(new IndexGetQry(indexName));
+	}
 
-    @PostMapping("trace/list")
-    public String traceList() {
-        return null;
-    }
+	@PostMapping("trace/list")
+	@TraceLog
+	@Operation(summary = "索引管理", description = "查询分布式链路索引列表")
+	@PreAuthorize("hasAuthority('indexs:trace-list')")
+	public Result<Datas<Map<String, Object>>> traceList(@RequestBody IndexTraceListQry qry) {
+		return indexsServiceI.traceList(qry);
+	}
 
-    @GetMapping("trace/{id}")
-    public String getTraceById(@PathVariable("id") Long id) {
-        return null;
-    }
+	@GetMapping("trace/{id}")
+	@TraceLog
+	@Operation(summary = "索引管理", description = "查看分布式链路索引")
+	@PreAuthorize("hasAuthority('indexs:trace-info')")
+	public Result<Map<String, Object>> getTraceById(@PathVariable("id") String id) {
+		return indexsServiceI.getTraceById(new IndexTraceGetQry(id));
+	}
 
 }

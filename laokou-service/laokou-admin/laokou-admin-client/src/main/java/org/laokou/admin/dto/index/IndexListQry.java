@@ -25,4 +25,7 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 @Data
 public class IndexListQry extends PageQuery {
+
+	private String indexName;
+
 }
