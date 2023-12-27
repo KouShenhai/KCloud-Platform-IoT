@@ -4,10 +4,10 @@ network.host: 0.0.0.0
 cluster.name: laokou-elasticsearch #可自定义
 node.name: node-elasticsearch #可自定义
 http.port: 9200
+discovery.type: single-node
+# 内存交换的选项，官网建议为true
+bootstrap.memory_lock: true
 xpack.security.enabled: true
-xpack.license.self_generated.type: basic
-xpack.security.transport.ssl.enabled: true
-xpack.security.transport.ssl.verification_mode: certificate
-xpack.security.transport.ssl.keystore.path: certs/elastic-certificates.p12
-xpack.security.transport.ssl.truststore.path: certs/elastic-certificates.p12
+xpack.security.http.ssl.enabled: false
+xpack.security.transport.ssl.enabled: false
 http.cors.allow-headers: Authorization

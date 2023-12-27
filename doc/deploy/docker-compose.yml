@@ -29,8 +29,10 @@ services:
       --collation-server=utf8mb4_general_ci
       --lower-case-table-names=1
     volumes:
+      # 请手动授予rw权限，不然写入文件
       - ./mysql8/data:/var/lib/mysql
       - ./mysql8/conf/my.cnf:/etc/mysql/my.cnf
+      # 请手动授予rw权限，不然写入文件
       - ./mysql8/logs:/var/log/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=laokou123
@@ -54,7 +56,8 @@ services:
       - "6379:6379"
     volumes:
       - ./redis7/conf/redis.conf:/etc/redis/redis.conf
-      - ./redis7/data:/data:rw
+      # 请手动授予rw权限，不然写入文件
+      - ./redis7/data:/data
     command: redis-server --appendonly yes --requirepass 'laokou123'
     environment:
       - TZ=Asia/Shanghai
@@ -123,8 +126,33 @@ services:
     network_mode: bridge
     depends_on:
       - rocketmq-namesrv
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+    container_name: elasticsearch
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - ./elasticsearch8/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      # 请手动授予rw权限，不然写入文件
+      - ./elasticsearch8/data:/usr/share/elasticsearch/data
+      - ./elasticsearch8/logs:/usr/share/elasticsearch/logs
+      - ./elasticsearch8/plugins:/usr/share/elasticsearch/plugins
+    environment:
+      - TZ=Asia/Shanghai
+      - ES_JAVA_OPTS=-Xmx512m -Xms512m
+      - ELASTIC_PASSWORD=laokou123
+    network_mode: bridge
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
   laokou-register:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.1.5
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.2.0
     container_name: laokou-register
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -145,7 +173,7 @@ services:
       mysql:
         condition: service_healthy
   laokou-seata:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-seata:3.1.5
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-seata:3.2.0
     container_name: laokou-seata
     tty: true
     env_file:
@@ -165,7 +193,7 @@ services:
       - laokou-register
     network_mode: bridge
   laokou-gateway:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.1.5
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.2.0
     container_name: laokou-gateway
     tty: true
     env_file:
@@ -184,7 +212,7 @@ services:
     depends_on:
       - laokou-register
   laokou-im:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-im-start:3.1.5
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-im-start:3.2.0
     container_name: laokou-im
     tty: true
     env_file:
@@ -205,7 +233,7 @@ services:
     depends_on:
       - laokou-register
   laokou-auth:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.1.5
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.2.0
     container_name: laokou-auth
     tty: true
     env_file:
@@ -226,7 +254,7 @@ services:
     depends_on:
       - laokou-register
   laokou-admin:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.1.5
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.2.0
     container_name: laokou-admin
     tty: true
     env_file:
@@ -242,14 +270,16 @@ services:
       - "redis.laokou.org:192.168.30.130"
       - "mysql.laokou.org:192.168.30.130"
       - "rocketmq.laokou.org:192.168.30.130"
+      - "elasticsearch.laokou.org:192.168.30.130"
     restart: always
     privileged: true
     network_mode: bridge
     depends_on:
       - laokou-register
       - laokou-seata
+      - elasticsearch
   laokou-flowable:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-flowable-start:3.1.5
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-flowable-start:3.2.0
     container_name: laokou-flowable
     tty: true
     env_file:
