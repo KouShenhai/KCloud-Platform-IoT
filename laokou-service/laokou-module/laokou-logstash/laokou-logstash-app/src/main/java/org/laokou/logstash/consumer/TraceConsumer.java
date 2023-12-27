@@ -50,8 +50,6 @@ public class TraceConsumer {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
-	private static final String TRACE_INDEX = "laokou_trace";
-
 	@KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
 		messages.parallelStream().forEach(this::saveIndex);

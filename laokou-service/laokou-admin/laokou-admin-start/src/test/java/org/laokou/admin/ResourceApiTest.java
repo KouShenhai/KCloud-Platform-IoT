@@ -35,7 +35,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import static org.laokou.admin.gatewayimpl.ResourceGatewayImpl.RESOURCE_INDEX;
+import static org.laokou.common.i18n.common.Constant.RESOURCE_INDEX;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
