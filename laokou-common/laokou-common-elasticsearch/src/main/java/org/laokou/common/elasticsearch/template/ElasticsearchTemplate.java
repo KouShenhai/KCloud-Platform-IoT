@@ -777,7 +777,7 @@ public class ElasticsearchTemplate {
 					// fielddata=true 用来解决text字段不能进行聚合操作
 					.field("fielddata", true)
 					.field("analyzer", "ik_pinyin")
-					.field("search_analyzer", "ik_max_word")
+					.field("search_analyzer", "ik_smart")
 					.endObject();
 			}
 		}
@@ -872,7 +872,11 @@ public class ElasticsearchTemplate {
 			// or查询
 			BoolQueryBuilder orQuery = QueryBuilders.boolQuery();
 			for (Search.Query query : orQueryList) {
-				orQuery.should(QueryBuilders.termQuery(query.getField(), query.getValue()));
+				String value = query.getValue();
+				if (StringUtil.isEmpty(value)) {
+					continue;
+				}
+				orQuery.should(QueryBuilders.termQuery(query.getField(), value));
 			}
 			boolQueryBuilder.must(orQuery);
 		}
@@ -881,8 +885,12 @@ public class ElasticsearchTemplate {
 			BoolQueryBuilder analysisQuery = QueryBuilders.boolQuery();
 			for (Search.Query query : queryStringList) {
 				String field = query.getField();
+				String value = query.getValue();
+				if (StringUtil.isEmpty(value)) {
+					continue;
+				}
 				// 清除左右空格并处理特殊字符
-				String keyword = QueryParser.escape(query.getValue().trim());
+				String keyword = QueryParser.escape(value.trim());
 				analysisQuery.should(QueryBuilders.queryStringQuery(keyword).field(field));
 			}
 			boolQueryBuilder.must(analysisQuery);
@@ -903,8 +911,9 @@ public class ElasticsearchTemplate {
 		Integer pageNum = searchIndex.getPageNum();
 		Integer pageSize = searchIndex.getPageSize();
 		List<Search.Query> sortFieldList = searchIndex.getSortFieldList();
-		if (isHighlightSearchFlag) {
-			List<String> highlightFieldList = searchIndex.getHighlightFieldList();
+		List<Search.Query> queryStringList = searchIndex.getQueryStringList();
+		if (isHighlightSearchFlag && CollectionUtil.isNotEmpty(queryStringList)) {
+			List<String> highlightFieldList = queryStringList.stream().map(Search.Query::getField).toList();
 			// 高亮显示数据
 			HighlightBuilder highlightBuilder = new HighlightBuilder();
 			// 设置关键字显示颜色
@@ -1017,7 +1026,7 @@ public class ElasticsearchTemplate {
 			Map<String, Settings> settings = getIndexResponse.getSettings();
 			Map<String, MappingMetadata> mappings = getIndexResponse.getMappings();
 			indexPropertiesMap.put("mappings", JacksonUtil.toJsonStr(mappings.get(indexName).getSourceAsMap(), true));
-			indexPropertiesMap.put("settings", JacksonUtil.toJsonStr(toCO(indexName, settings),true));
+			indexPropertiesMap.put("settings", JacksonUtil.toJsonStr(toCO(indexName, settings), true));
 			return indexPropertiesMap;
 		}
 		catch (IOException e) {
@@ -1043,7 +1052,8 @@ public class ElasticsearchTemplate {
 		SettingsCO.Include include = new SettingsCO.Include(_tier_preference);
 		SettingsCO.Allocation allocation = new SettingsCO.Allocation(include);
 		SettingsCO.Routing routing = new SettingsCO.Routing(allocation);
-		SettingsCO.Index index = new SettingsCO.Index(uuid, creation_date, number_of_replicas, number_of_shards, provided_name, refresh_interval, version, routing, analysis);
+		SettingsCO.Index index = new SettingsCO.Index(uuid, creation_date, number_of_replicas, number_of_shards,
+				provided_name, refresh_interval, version, routing, analysis);
 		co.setIndex(index);
 		return co;
 	}
@@ -1054,7 +1064,7 @@ public class ElasticsearchTemplate {
 			return new HashMap<>(0);
 		}
 		Map<String, Object> map = new HashMap<>(settingsMap.size());
-		settingsMap.forEach((k,v) -> map.put(k, JacksonUtil.toMap(v.toString(),String.class, String.class)));
+		settingsMap.forEach((k, v) -> map.put(k, JacksonUtil.toMap(v.toString(), String.class, String.class)));
 		return map;
 	}
 

@@ -14,29 +14,18 @@
  * limitations under the License.
  *
  */
-package org.laokou.admin.api;
 
-import org.laokou.admin.dto.index.IndexGetQry;
-import org.laokou.admin.dto.index.IndexListQry;
-import org.laokou.admin.dto.index.IndexTraceGetQry;
-import org.laokou.admin.dto.index.IndexTraceListQry;
-import org.laokou.admin.dto.index.clientobject.IndexCO;
-import org.laokou.common.i18n.dto.Datas;
-import org.laokou.common.i18n.dto.Result;
+package org.laokou.admin.dto.index;
 
-import java.util.Map;
+import lombok.Data;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * @author laokou
  */
-public interface IndexsServiceI {
+@Data
+public class IndexTraceListQry extends PageQuery {
 
-	Result<Datas<IndexCO>> list(IndexListQry qry);
-
-	Result<Map<String, Object>> info(IndexGetQry qry);
-
-	Result<Datas<Map<String, Object>>> traceList(IndexTraceListQry qry);
-
-	Result<Map<String, Object>> getTraceById(IndexTraceGetQry qry);
+	private String traceId;
 
 }

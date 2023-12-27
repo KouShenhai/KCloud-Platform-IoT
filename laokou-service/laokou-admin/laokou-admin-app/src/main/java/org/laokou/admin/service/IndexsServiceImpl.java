@@ -21,8 +21,12 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.api.IndexsServiceI;
 import org.laokou.admin.command.index.query.IndexGetQryExe;
 import org.laokou.admin.command.index.query.IndexListQryExe;
+import org.laokou.admin.command.index.query.IndexTraceGetQryExe;
+import org.laokou.admin.command.index.query.IndexTraceListQryExe;
 import org.laokou.admin.dto.index.IndexGetQry;
 import org.laokou.admin.dto.index.IndexListQry;
+import org.laokou.admin.dto.index.IndexTraceGetQry;
+import org.laokou.admin.dto.index.IndexTraceListQry;
 import org.laokou.admin.dto.index.clientobject.IndexCO;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
@@ -37,16 +41,32 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class IndexsServiceImpl implements IndexsServiceI {
 
-    private final IndexListQryExe indexListQryExe;
-    private final IndexGetQryExe indexGetQryExe;
+	private final IndexListQryExe indexListQryExe;
 
-    @Override
-    public Result<Datas<IndexCO>> list(IndexListQry qry) {
-        return indexListQryExe.execute(qry);
-    }
+	private final IndexGetQryExe indexGetQryExe;
 
-    @Override
-    public Result<Map<String, Object>> info(IndexGetQry qry) {
-        return indexGetQryExe.execute(qry);
-    }
+	private final IndexTraceListQryExe indexTraceListQryExe;
+
+	private final IndexTraceGetQryExe indexTraceGetQryExe;
+
+	@Override
+	public Result<Datas<IndexCO>> list(IndexListQry qry) {
+		return indexListQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<Map<String, Object>> info(IndexGetQry qry) {
+		return indexGetQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<Datas<Map<String, Object>>> traceList(IndexTraceListQry qry) {
+		return indexTraceListQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<Map<String, Object>> getTraceById(IndexTraceGetQry qry) {
+		return indexTraceGetQryExe.execute(qry);
+	}
+
 }

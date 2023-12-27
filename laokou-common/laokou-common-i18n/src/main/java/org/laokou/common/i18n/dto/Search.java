@@ -19,7 +19,10 @@ package org.laokou.common.i18n.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serial;
 import java.util.List;
 
@@ -57,11 +60,6 @@ public class Search extends DTO {
 	private List<Query> sortFieldList;
 
 	/**
-	 * 高亮搜索字段
-	 */
-	private List<String> highlightFieldList;
-
-	/**
 	 * or搜索-精准匹配
 	 */
 	private List<Query> orQueryList;
@@ -72,6 +70,8 @@ public class Search extends DTO {
 	private Aggregation aggregationKey;
 
 	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
 	public static class Aggregation {
 
 		private String groupKey;
@@ -83,6 +83,8 @@ public class Search extends DTO {
 	}
 
 	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
 	public static class Query {
 
 		private String field;
