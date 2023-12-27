@@ -32,57 +32,78 @@ import java.util.Map;
 @NoArgsConstructor
 public class SettingsCO extends ClientObject {
 
-    private Index index;
+	private Index index;
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Index {
-        private String uuid;
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class Index {
+
+		private String uuid;
+
 		private String creation_date;
+
 		private String number_of_replicas;
+
 		private String number_of_shards;
+
 		private String provided_name;
+
 		private String refresh_interval;
+
 		private Version version;
-        private Routing routing;
-        private Analysis analysis;
-    }
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Version {
-        private String created;
-    }
+		private Routing routing;
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Routing {
-        private Allocation allocation;
-    }
+		private Analysis analysis;
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Allocation {
-        private Include include;
-    }
+	}
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Include {
-        private String _tier_preference;
-    }
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class Version {
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Analysis {
-        private Map<String, Object> analyzer;
-        private Map<String, Object> filter;
-    }
+		private String created;
+
+	}
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class Routing {
+
+		private Allocation allocation;
+
+	}
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class Allocation {
+
+		private Include include;
+
+	}
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class Include {
+
+		private String _tier_preference;
+
+	}
+
+	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class Analysis {
+
+		private Map<String, Object> analyzer;
+
+		private Map<String, Object> filter;
+
+	}
 
 }

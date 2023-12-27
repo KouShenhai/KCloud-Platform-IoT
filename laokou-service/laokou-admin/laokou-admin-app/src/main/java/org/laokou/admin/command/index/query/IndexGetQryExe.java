@@ -32,10 +32,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class IndexGetQryExe {
 
-    private final ElasticsearchTemplate elasticsearchTemplate;
+	private final ElasticsearchTemplate elasticsearchTemplate;
 
-    public Result<Map<String, Object>> execute(IndexGetQry qry) {
-        return Result.of(elasticsearchTemplate.getIndexProperties(qry.getIndexName()));
-    }
+	public Result<Map<String, Object>> execute(IndexGetQry qry) {
+		return Result.of(elasticsearchTemplate.getIndexProperties(qry.getIndexName()));
+	}
 
 }
