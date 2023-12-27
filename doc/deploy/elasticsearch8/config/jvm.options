@@ -1,0 +1,16 @@
+-Xms512m
+-Xmx512m
+
+-XX:+UseG1GC
+
+-Djava.io.tmpdir=${ES_TMPDIR}
+
+-XX:+HeapDumpOnOutOfMemoryError
+
+-XX:+ExitOnOutOfMemoryError
+
+-XX:HeapDumpPath=data
+
+-XX:ErrorFile=logs/hs_err_pid%p.log
+
+-Xlog:gc*,gc+age=trace,safepoint:file=logs/gc.log:utctime,pid,tags:filecount=32,filesize=64m

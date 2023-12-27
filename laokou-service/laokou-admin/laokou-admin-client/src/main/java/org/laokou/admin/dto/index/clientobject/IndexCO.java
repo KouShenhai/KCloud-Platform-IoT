@@ -30,7 +30,8 @@ import org.laokou.common.i18n.dto.ClientObject;
 @NoArgsConstructor
 public class IndexCO extends ClientObject {
 
-    private String indexName;
-    private String indexAlias;
+	private String indexName;
+
+	private String indexAlias;
 
 }

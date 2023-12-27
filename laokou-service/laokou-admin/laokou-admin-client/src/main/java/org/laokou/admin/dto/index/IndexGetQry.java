@@ -30,6 +30,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @NoArgsConstructor
 public class IndexGetQry extends CommonCommand {
 
-    private String indexName;
+	private String indexName;
 
 }
