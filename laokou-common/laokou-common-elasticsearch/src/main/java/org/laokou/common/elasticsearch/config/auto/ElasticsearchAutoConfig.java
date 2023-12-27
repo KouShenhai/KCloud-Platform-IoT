@@ -50,7 +50,7 @@ import java.util.Objects;
 import static org.laokou.common.i18n.common.Constant.RISK;
 
 /**
- * es配置文件
+ * ES自动装配
  *
  * @author laokou
  */

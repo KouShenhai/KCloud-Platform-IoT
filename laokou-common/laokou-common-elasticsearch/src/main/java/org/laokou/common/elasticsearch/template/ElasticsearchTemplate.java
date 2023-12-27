@@ -66,6 +66,8 @@ import org.elasticsearch.xcontent.XContentFactory;
 import org.elasticsearch.xcontent.XContentType;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.elasticsearch.clientobject.SettingsCO;
 import org.laokou.common.elasticsearch.constant.EsConstant;
 import org.laokou.common.elasticsearch.utils.FieldMapping;
 import org.laokou.common.elasticsearch.utils.FieldMappingUtil;
@@ -1014,13 +1016,46 @@ public class ElasticsearchTemplate {
 			Map<String, Object> indexPropertiesMap = new HashMap<>(2);
 			Map<String, Settings> settings = getIndexResponse.getSettings();
 			Map<String, MappingMetadata> mappings = getIndexResponse.getMappings();
-			indexPropertiesMap.put("mappings", mappings.get(indexName).getSourceAsMap());
-			indexPropertiesMap.put("settings", settings.get(indexName).getAsGroups());
+			indexPropertiesMap.put("mappings", JacksonUtil.toJsonStr(mappings.get(indexName).getSourceAsMap(), true));
+			indexPropertiesMap.put("settings", JacksonUtil.toJsonStr(toCO(indexName, settings),true));
 			return indexPropertiesMap;
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private SettingsCO toCO(String indexName, Map<String, Settings> settings) {
+		SettingsCO co = new SettingsCO();
+		Settings indexSetting = settings.get(indexName).getAsGroups().get("index");
+		String uuid = indexSetting.get("uuid");
+		String creation_date = indexSetting.get("creation_date");
+		String number_of_replicas = indexSetting.get("number_of_replicas");
+		String number_of_shards = indexSetting.get("number_of_shards");
+		String provided_name = indexSetting.get("provided_name");
+		String refresh_interval = indexSetting.get("refresh_interval");
+		String created = indexSetting.get("version.created");
+		String _tier_preference = indexSetting.get("routing.allocation.include._tier_preference");
+		Map<String, Object> map1 = toMap(indexSetting, "analysis.analyzer");
+		Map<String, Object> map2 = toMap(indexSetting, "analysis.filter");
+		SettingsCO.Analysis analysis = new SettingsCO.Analysis(map1, map2);
+		SettingsCO.Version version = new SettingsCO.Version(created);
+		SettingsCO.Include include = new SettingsCO.Include(_tier_preference);
+		SettingsCO.Allocation allocation = new SettingsCO.Allocation(include);
+		SettingsCO.Routing routing = new SettingsCO.Routing(allocation);
+		SettingsCO.Index index = new SettingsCO.Index(uuid, creation_date, number_of_replicas, number_of_shards, provided_name, refresh_interval, version, routing, analysis);
+		co.setIndex(index);
+		return co;
+	}
+
+	private Map<String, Object> toMap(Settings indexSetting, String key) {
+		Map<String, Settings> settingsMap = indexSetting.getAsSettings(key).getAsGroups();
+		if (MapUtil.isEmpty(settingsMap)) {
+			return new HashMap<>(0);
+		}
+		Map<String, Object> map = new HashMap<>(settingsMap.size());
+		settingsMap.forEach((k,v) -> map.put(k, JacksonUtil.toMap(v.toString(),String.class, String.class)));
+		return map;
 	}
 
 }

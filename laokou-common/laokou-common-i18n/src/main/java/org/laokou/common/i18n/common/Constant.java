@@ -311,4 +311,14 @@ public interface Constant {
 	 */
 	String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
 
+	/**
+	 * 资源索引
+	 */
+	String RESOURCE_INDEX = "laokou_resource";
+
+	/**
+	 * 分布式链路索引
+	 */
+	String TRACE_INDEX = "laokou_trace";
+
 }

@@ -60,8 +60,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.Constant.DEFAULT;
-import static org.laokou.common.i18n.common.Constant.UNDER;
+import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_RESOURCE;
 
 /**
@@ -89,8 +88,6 @@ public class ResourceGatewayImpl implements ResourceGateway {
 	private final TransactionalUtil transactionalUtil;
 
 	private final EventUtil eventUtil;
-
-	public static final String RESOURCE_INDEX = "laokou_resource";
 
 	@Override
 	@DataFilter(alias = BOOT_SYS_RESOURCE)
