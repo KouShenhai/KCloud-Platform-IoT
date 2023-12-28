@@ -76,6 +76,7 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 		template.header(USER_NAME, username);
 		template.header(TRACE_ID, tenantId);
 		final boolean idempotent = IdempotentUtil.isIdempotent();
+		String msg = EMPTY;
 		if (idempotent) {
 			// 获取当前Feign客户端的接口名称
 			String clientName = template.feignTarget().type().getName();
@@ -93,10 +94,10 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 				idMap.put(uniqueKey, idempotentKey);
 			}
 			template.header(IdempotentAop.REQUEST_ID, idempotentKey);
-			log.info("OpenFeign分布式调用，Request-Id：{}", idMap.get(uniqueKey));
+			msg = String.format("，Request-Id：%s", idMap.get(uniqueKey));
 		}
-		log.info("OpenFeign分布式调用，Authorization：{}，User-Id：{}，User-Name：{}，Tenant-Id：{}，Trace-Id：{}", authorization,
-				userId, username, tenantId, traceId);
+		log.info("OpenFeign分布式调用，Authorization：{}，User-Id：{}，User-Name：{}，Tenant-Id：{}，Trace-Id：{}" + msg,
+				authorization, userId, username, tenantId, traceId);
 	}
 
 	@Bean

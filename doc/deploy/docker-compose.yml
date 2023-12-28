@@ -152,7 +152,7 @@ services:
         soft: -1
         hard: -1
   laokou-register:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.2.0
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-register:3.2.1
     container_name: laokou-register
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -173,7 +173,7 @@ services:
       mysql:
         condition: service_healthy
   laokou-seata:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-seata:3.2.0
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-seata:3.2.1
     container_name: laokou-seata
     tty: true
     env_file:
@@ -194,7 +194,7 @@ services:
       - laokou-register
     network_mode: bridge
   laokou-xxl-job:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-xxl-job:3.2.0
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-xxl-job:3.2.1
     container_name: laokou-xxl-job
     tty: true
     env_file:
@@ -209,7 +209,7 @@ services:
     privileged: true
     network_mode: bridge
   laokou-gateway:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.2.0
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.2.1
     container_name: laokou-gateway
     tty: true
     env_file:
@@ -229,7 +229,7 @@ services:
     depends_on:
       - laokou-register
   laokou-im:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-im-start:3.2.0
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-im-start:3.2.1
     container_name: laokou-im
     tty: true
     env_file:
@@ -250,7 +250,7 @@ services:
     depends_on:
       - laokou-register
   laokou-auth:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.2.0
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.2.1
     container_name: laokou-auth
     tty: true
     env_file:
@@ -271,7 +271,7 @@ services:
     depends_on:
       - laokou-register
   laokou-admin:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.2.0
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.2.1
     container_name: laokou-admin
     tty: true
     env_file:
@@ -296,7 +296,7 @@ services:
       - laokou-seata
       - elasticsearch
   laokou-flowable:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-flowable-start:3.2.0
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-flowable-start:3.2.1
     container_name: laokou-flowable
     tty: true
     env_file:
@@ -318,7 +318,7 @@ services:
       - laokou-register
       - laokou-seata
   laokou-logstash:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.2.0
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.2.1
     container_name: laokou-logstash
     tty: true
     env_file:

@@ -21,12 +21,12 @@
     <parent>
         <groupId>org.laokou</groupId>
         <artifactId>KCloud-Platform-Alibaba</artifactId>
-        <version>3.2.0</version>
+        <version>3.2.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>laokou-cloud</artifactId>
-    <version>3.2.0</version>
+    <version>3.2.1</version>
     <packaging>pom</packaging>
     <modules>
         <module>laokou-gateway</module>
