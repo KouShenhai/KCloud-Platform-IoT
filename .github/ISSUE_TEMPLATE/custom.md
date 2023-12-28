@@ -1,10 +1,10 @@
 ---
-name: Custom issue template
-about: Describe this issue template's purpose here.
+name: 系统提问
+about: 自定义提问
 title: ''
-labels: ''
-assignees: ''
-
+labels: '问题'
+assignees: 'KouShenhai'
 ---
 
+**问题描述（写清楚并附图）**
 
