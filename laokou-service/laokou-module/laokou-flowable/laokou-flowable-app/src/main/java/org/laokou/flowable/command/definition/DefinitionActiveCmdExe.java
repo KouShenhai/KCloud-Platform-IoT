@@ -73,7 +73,7 @@ public class DefinitionActiveCmdExe {
 			catch (Exception e) {
 				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
-				throw new SystemException(e.getMessage());
+				throw new SystemException(LogUtil.fail(e.getMessage()));
 			}
 		});
 	}
