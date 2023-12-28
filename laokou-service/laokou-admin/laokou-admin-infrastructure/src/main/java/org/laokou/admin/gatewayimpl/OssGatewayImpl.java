@@ -33,6 +33,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -90,7 +91,7 @@ public class OssGatewayImpl implements OssGateway {
 				return ossMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -117,7 +118,7 @@ public class OssGatewayImpl implements OssGateway {
 				return ossMapper.insertTable(ossDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

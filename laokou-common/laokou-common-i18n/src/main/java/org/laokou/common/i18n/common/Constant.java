@@ -321,4 +321,9 @@ public interface Constant {
 	 */
 	String TRACE_INDEX = "laokou_trace";
 
+	/**
+	 * undefined.
+	 */
+	String UNDEFINED = "undefined";
+
 }

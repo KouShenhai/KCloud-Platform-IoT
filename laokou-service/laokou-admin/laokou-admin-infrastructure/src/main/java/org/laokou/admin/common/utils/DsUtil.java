@@ -27,6 +27,7 @@ import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.DataSourceException;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -89,7 +90,7 @@ public class DsUtil {
 			return hikariDataSourceCreator.createDataSource(properties);
 		}
 		catch (Exception e) {
-			log.error("加载数据源驱动失败，错误信息", e);
+			log.error("加载数据源驱动失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 			throw new DataSourceException("加载数据源驱动失败");
 		}
 	}
@@ -140,7 +141,7 @@ public class DsUtil {
 			}
 		}
 		catch (DataSourceException e) {
-			log.error("数据源连接超时，错误信息", e);
+			log.error("数据源连接超时，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 			throw new DataSourceException("数据源连接超时");
 		}
 		catch (Exception e) {

@@ -27,6 +27,7 @@ import org.laokou.admin.domain.user.User;
 import org.laokou.admin.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -71,7 +72,7 @@ public class MenuGatewayImpl implements MenuGateway {
 				return menuMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -114,7 +115,7 @@ public class MenuGatewayImpl implements MenuGateway {
 				return menuMapper.updateById(menuDO) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -127,7 +128,7 @@ public class MenuGatewayImpl implements MenuGateway {
 				return menuMapper.insertTable(menuDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

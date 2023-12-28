@@ -67,8 +67,14 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		String authorization = request.getHeader(AUTHORIZATION);
 		String traceId = request.getHeader(TRACE_ID);
+		String userId = request.getHeader(USER_ID);
+		String username = request.getHeader(USER_NAME);
+		String tenantId = request.getHeader(TENANT_ID);
 		template.header(TRACE_ID, traceId);
 		template.header(AUTHORIZATION, authorization);
+		template.header(USER_ID, userId);
+		template.header(USER_NAME, username);
+		template.header(TRACE_ID, tenantId);
 		final boolean idempotent = IdempotentUtil.isIdempotent();
 		if (idempotent) {
 			// 获取当前Feign客户端的接口名称
@@ -89,7 +95,8 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 			template.header(IdempotentAop.REQUEST_ID, idempotentKey);
 			log.info("OpenFeign分布式调用，Request-Id：{}", idMap.get(uniqueKey));
 		}
-		log.info("OpenFeign分布式调用，Authorization：{}", authorization);
+		log.info("OpenFeign分布式调用，Authorization：{}，User-Id：{}，User-Name：{}，Tenant-Id：{}，Trace-Id：{}", authorization,
+				userId, username, tenantId, traceId);
 	}
 
 	@Bean
@@ -101,9 +108,7 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 
 	@Override
 	public Exception decode(String methodKey, Response response) {
-		Exception exception = super.decode(methodKey, response);
-		log.error("拦截Feign报错信息", exception);
-		return exception;
+		return super.decode(methodKey, response);
 	}
 
 }

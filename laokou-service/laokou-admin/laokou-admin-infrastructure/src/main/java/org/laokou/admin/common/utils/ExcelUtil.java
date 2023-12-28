@@ -41,6 +41,7 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.database.BatchMapper;
 import org.laokou.common.mybatisplus.database.dataobject.BaseDO;
@@ -113,7 +114,7 @@ public class ExcelUtil {
 			excelWriter.finish();
 		}
 		catch (Exception e) {
-			log.error("错误信息", e);
+			log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 		}
 	}
 

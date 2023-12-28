@@ -18,6 +18,8 @@
 package org.laokou.logstash.gatewayimpl.database.dataobject;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import org.laokou.common.elasticsearch.annotation.ElasticsearchField;
 import org.laokou.common.i18n.dto.Index;
@@ -32,6 +34,10 @@ import static org.laokou.common.i18n.utils.DateUtil.Constant.*;
  */
 @Data
 public class TraceIndex extends Index {
+
+	@ElasticsearchField(type = "long")
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long id;
 
 	@ElasticsearchField
 	private String appName;

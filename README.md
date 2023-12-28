@@ -50,6 +50,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 🚀 服务监控：服务监控及报警     
 🚀 缓存监控：Redis内存监控    
 🚀 主机监控：服务器监控    
+🚀 索引管理：索引属性及分布式链路索引查看（默认ES）   
 🚀 存储管理：存储信息增删改查，兼容Amazon S3（数据库隔离）    
 🚀 租户管理：租户信息增删改查增删改查（默认数据库）       
 🚀 套餐管理：自定义租户菜单增删改查（默认数据库）    
@@ -211,7 +212,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
     </tr>
     <tr>
         <td><img alt="暂无图片" src="doc/image/35.png"/></td>
-        <td><img alt="暂无图片" src="doc/image/35.png"/></td>
+        <td><img alt="暂无图片" src="doc/image/36.png"/></td>
     </tr>
     <tr>
         <td><img alt="暂无图片" src="doc/image/19.png"/></td>

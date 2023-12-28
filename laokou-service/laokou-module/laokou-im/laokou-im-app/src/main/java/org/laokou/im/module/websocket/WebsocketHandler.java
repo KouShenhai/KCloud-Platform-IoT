@@ -35,6 +35,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
@@ -134,7 +135,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 			});
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}", e.getMessage());
+			log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 		}
 	}
 

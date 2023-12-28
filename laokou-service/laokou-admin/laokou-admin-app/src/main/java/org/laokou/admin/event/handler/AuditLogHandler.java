@@ -26,6 +26,7 @@ import org.laokou.admin.gatewayimpl.database.AuditLogMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.AuditLogDO;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -56,7 +57,7 @@ public class AuditLogHandler implements ApplicationListener<AuditLogEvent> {
 				execute(event);
 			}
 			catch (Exception e) {
-				log.error("数据插入失败，错误信息：{}", e.getMessage());
+				log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 			}
 			finally {
 				DynamicDataSourceContextHolder.clear();

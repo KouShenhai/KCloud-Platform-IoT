@@ -27,6 +27,7 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AbstractDO;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.context.DynamicTableSuffixContextHolder;
 import org.slf4j.Logger;
@@ -90,7 +91,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 			this.insert(t);
 		}
 		catch (Exception e) {
-			log.error("错误信息", e);
+			log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 			this.execute(sql);
 			this.insert(t);
 		}

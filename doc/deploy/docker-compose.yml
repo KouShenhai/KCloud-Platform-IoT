@@ -102,7 +102,7 @@ services:
       - "9876:9876"
     command: sh mqnamesrv
     environment:
-      - JAVA_OPT_EXT=-server -Xmx256m -Xms256m
+      - JAVA_OPT_EXT=-server -Xmx256m -Xms256m -Xmn128m
       - TZ=Asia/Shanghai
     network_mode: bridge
   rocketmq-broker:
@@ -119,7 +119,7 @@ services:
       - "10912:10912"
     command: sh mqbroker -n 192.168.30.130:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
     environment:
-      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m
+      - JAVA_OPT_EXT=-server -Xmx256m -Xms256m -Xmn128m
       - TZ=Asia/Shanghai
     volumes:
       - ./rocketmq5/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
@@ -187,10 +187,26 @@ services:
     extra_hosts:
       - "mysql.laokou.org:192.168.30.130"
       - "nacos.laokou.org:192.168.30.130"
+      - "redis.laokou.org:192.168.30.130"
     restart: always
     privileged: true
     depends_on:
       - laokou-register
+    network_mode: bridge
+  laokou-xxl-job:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-xxl-job:3.2.0
+    container_name: laokou-xxl-job
+    tty: true
+    env_file:
+      - env/xxl-job.env
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./xxl-job/logs:/opt
+    extra_hosts:
+      - "mysql.laokou.org:192.168.30.130"
+    restart: always
+    privileged: true
     network_mode: bridge
   laokou-gateway:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.2.0
@@ -301,6 +317,28 @@ services:
     depends_on:
       - laokou-register
       - laokou-seata
+  laokou-logstash:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.2.0
+    container_name: laokou-logstash
+    tty: true
+    env_file:
+      - env/common.env
+      - env/logstash.env
+    ports:
+      - "10003:10003"
+    volumes:
+      - ./logstash/logs:/opt
+    extra_hosts:
+      - "nacos.laokou.org:192.168.30.130"
+      - "kafka.laokou.org:192.168.30.130"
+      - "elasticsearch.laokou.org:192.168.30.130"
+      - "xxl.job.laokou.org:192.168.30.130"
+    restart: always
+    privileged: true
+    network_mode: bridge
+    depends_on:
+      - laokou-register
+      - elasticsearch
   nginx:
     image: nginx:latest
     container_name: nginx

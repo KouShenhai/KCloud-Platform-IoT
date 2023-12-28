@@ -22,6 +22,7 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
 
@@ -91,7 +92,7 @@ public abstract class AbstractServer implements Server {
 			});
 		}
 		catch (Exception e) {
-			log.error("启动失败，端口：{}，错误信息", port, e);
+			log.error("启动失败，端口：{}，错误信息：{}，详情见日志", port, LogUtil.error(e.getMessage()), e);
 		}
 	}
 
