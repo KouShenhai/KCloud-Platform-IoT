@@ -87,7 +87,7 @@ public class SourceGatewayImpl implements SourceGateway {
 				return sourceMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -100,7 +100,7 @@ public class SourceGatewayImpl implements SourceGateway {
 				return sourceMapper.updateById(sourceDO) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -113,7 +113,7 @@ public class SourceGatewayImpl implements SourceGateway {
 				return sourceMapper.insertTable(sourceDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

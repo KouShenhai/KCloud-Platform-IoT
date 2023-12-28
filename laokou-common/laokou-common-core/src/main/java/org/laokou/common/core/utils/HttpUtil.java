@@ -92,7 +92,7 @@ public class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (Exception e) {
-				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
 			log.info("打印：{}", resultString);
 			return resultString;
@@ -125,7 +125,7 @@ public class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (IOException e) {
-				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
 			log.info("打印：{}", resultString);
 			return resultString;
@@ -169,7 +169,7 @@ public class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (IOException e) {
-				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
 			log.info("打印：{}", resultString);
 			return resultString;
@@ -202,7 +202,7 @@ public class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (IOException e) {
-				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("调用失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
 			log.info("打印：{}", resultString);
 			return resultString;

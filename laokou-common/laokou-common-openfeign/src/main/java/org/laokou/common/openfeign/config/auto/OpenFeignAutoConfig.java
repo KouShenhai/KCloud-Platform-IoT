@@ -23,6 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.idempotent.aop.IdempotentAop;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -97,7 +98,8 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 			msg = String.format("，Request-Id：%s", idMap.get(uniqueKey));
 		}
 		log.info("OpenFeign分布式调用，Authorization：{}，User-Id：{}，User-Name：{}，Tenant-Id：{}，Trace-Id：{}" + msg,
-				authorization, userId, username, tenantId, traceId);
+				authorization, LogUtil.result(userId), LogUtil.result(username), LogUtil.result(tenantId),
+				LogUtil.result(traceId));
 	}
 
 	@Bean

@@ -142,7 +142,7 @@ public class OperateLogAop {
 			return event;
 		}
 		catch (Exception ex) {
-			log.error("错误信息：{}，详情见日志", LogUtil.error(ex.getMessage()), ex);
+			log.error("错误信息：{}，详情见日志", LogUtil.result(ex.getMessage()), ex);
 			throw ex;
 		}
 		finally {

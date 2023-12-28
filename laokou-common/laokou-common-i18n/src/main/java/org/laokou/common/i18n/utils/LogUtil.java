@@ -22,8 +22,10 @@ package org.laokou.common.i18n.utils;
  */
 public class LogUtil {
 
-	public static String error(String msg) {
-		return StringUtil.isEmpty(msg) ? "无" : msg;
+	public static final String EMPTY_LOG_MSG = "暂无信息";
+
+	public static String result(String msg) {
+		return StringUtil.isEmpty(msg) ? EMPTY_LOG_MSG : msg;
 	}
 
 }

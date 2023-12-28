@@ -92,7 +92,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 				log.info("接收到配置变动通知");
 				// 清除缓存
 				reactiveHashOperations.delete(RedisKeyUtil.getRouteDefinitionHashKey())
-					.subscribe(success -> log.info("删除成功"), error -> log.error("删除失败，错误信息：{}，详情见日志", LogUtil.error(error.getMessage()), error));
+					.subscribe(success -> log.info("删除成功"), error -> log.error("删除失败，错误信息：{}，详情见日志", LogUtil.result(error.getMessage()), error));
 				// 刷新事件
 				applicationEventPublisher.publishEvent(new RefreshRoutesEvent(this));
 			}
@@ -132,7 +132,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 						else {
 							log.error("新增失败，路由已存在");
 						}
-					}, error -> log.error("新增失败，错误信息：{}，详情见日志", LogUtil.error(error.getMessage()), error))
+					}, error -> log.error("新增失败，错误信息：{}，详情见日志", LogUtil.result(error.getMessage()), error))
 			);
 	}
 
@@ -145,7 +145,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			return JacksonUtil.toList(configInfo, RouteDefinition.class);
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			throw new SystemException(ROUTER_ERROR);
 		}
 	}

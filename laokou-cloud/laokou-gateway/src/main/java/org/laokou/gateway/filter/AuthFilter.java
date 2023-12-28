@@ -172,7 +172,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					}
 				}
 				catch (Exception e) {
-					log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+					log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				}
 			}
 			return Mono.just(MapUtil.parseParams(paramMap));

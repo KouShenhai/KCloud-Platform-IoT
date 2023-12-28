@@ -88,7 +88,7 @@ public class DeptGatewayImpl implements DeptGateway {
 				return deptMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -108,7 +108,7 @@ public class DeptGatewayImpl implements DeptGateway {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -121,7 +121,7 @@ public class DeptGatewayImpl implements DeptGateway {
 				return deptMapper.insertTable(deptDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

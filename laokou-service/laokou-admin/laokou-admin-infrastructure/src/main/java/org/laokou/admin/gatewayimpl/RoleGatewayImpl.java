@@ -93,7 +93,7 @@ public class RoleGatewayImpl implements RoleGateway {
 				return roleMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -120,7 +120,7 @@ public class RoleGatewayImpl implements RoleGateway {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

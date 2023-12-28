@@ -194,7 +194,7 @@ public class ElasticsearchTemplate {
 			log.info("索引：{}，新增{}个，修改{}个 -> 批量修改索引成功", indexName, createCount, updateCount);
 		}
 		catch (IOException e) {
-			log.error("索引：{} -> 批量修改索引更新，错误信息：{}，详情见日志", indexName, LogUtil.error(e.getMessage()), e);
+			log.error("索引：{} -> 批量修改索引更新，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 			return false;
 		}
 		return true;
@@ -236,7 +236,7 @@ public class ElasticsearchTemplate {
 			}
 		}
 		catch (IOException e) {
-			log.error("索引：{}，主键：{} -> 修改索引失败，错误信息：{}，详情见日志", indexName, id, LogUtil.error(e.getMessage()), e);
+			log.error("索引：{}，主键：{} -> 修改索引失败，错误信息：{}，详情见日志", indexName, id, LogUtil.result(e.getMessage()), e);
 		}
 		return true;
 	}
@@ -266,7 +266,7 @@ public class ElasticsearchTemplate {
 			}
 		}
 		catch (IOException e) {
-			log.error("索引：{} -> 删除索引失败，错误信息：{}，详情见日志", indexName, LogUtil.error(e.getMessage()), e);
+			log.error("索引：{} -> 删除索引失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 		}
 		return true;
 	}
@@ -307,7 +307,7 @@ public class ElasticsearchTemplate {
 			log.info("索引：{}，删除{}个 -> 批量删除索引成功", indexName, deleteCount);
 		}
 		catch (IOException e) {
-			log.error("索引：{} -> 批量删除索引失败，错误信息：{}，详情见日志", indexName, LogUtil.error(e.getMessage()), e);
+			log.error("索引：{} -> 批量删除索引失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 		}
 		return true;
 	}
@@ -375,7 +375,7 @@ public class ElasticsearchTemplate {
 			return resultJson;
 		}
 		catch (IOException e) {
-			log.error("索引：{}，主键：{} -> 查询索引失败，错误信息：{}，详情见日志", indexName, id, LogUtil.error(e.getMessage()), e);
+			log.error("索引：{}，主键：{} -> 查询索引失败，错误信息：{}，详情见日志", indexName, id, LogUtil.result(e.getMessage()), e);
 			return null;
 		}
 	}
@@ -402,7 +402,7 @@ public class ElasticsearchTemplate {
 			log.info("索引：{} -> 删除索引成功", indexName);
 		}
 		catch (IOException e) {
-			log.error("索引：{} -> 删除索引失败，错误信息：{}，详情见日志", indexName, LogUtil.error(e.getMessage()), e);
+			log.error("索引：{} -> 删除索引失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 		}
 		return true;
 	}
@@ -445,7 +445,7 @@ public class ElasticsearchTemplate {
 			// 失败操作
 			@Override
 			public void onFailure(Exception e) {
-				log.error("索引：{} -> 批量异步同步索引成功，错误信息：{}，详情见日志", indexName, LogUtil.error(e.getMessage()), e);
+				log.error("索引：{} -> 批量异步同步索引成功，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 			}
 		};
 		restHighLevelClient.bulkAsync(bulkRequest, RequestOptions.DEFAULT, listener);
@@ -501,7 +501,7 @@ public class ElasticsearchTemplate {
 
 			@Override
 			public void onFailure(Exception e) {
-				log.error("索引：{} -> 异步删除索引失败，错误信息：{}，详情见日志", indexName, LogUtil.error(e.getMessage()), e);
+				log.error("索引：{} -> 异步删除索引失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 			}
 		};
 		restHighLevelClient.indices().deleteAsync(deleteIndexRequest, RequestOptions.DEFAULT, listener);
@@ -588,7 +588,7 @@ public class ElasticsearchTemplate {
 
 			@Override
 			public void onFailure(Exception e) {
-				log.error("索引：{} -> 异步创建索引失败，错误信息：{}，详情见日志", indexName, LogUtil.error(e.getMessage()), e);
+				log.error("索引：{} -> 异步创建索引失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 			}
 		};
 		// 异步执行
@@ -677,7 +677,7 @@ public class ElasticsearchTemplate {
 
 			@Override
 			public void onFailure(Exception e) {
-				log.error("索引：{} -> 异步同步索引失败，错误信息：{}，详情见日志", indexName, LogUtil.error(e.getMessage()), e);
+				log.error("索引：{} -> 异步同步索引失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 			}
 		};
 		restHighLevelClient.indexAsync(indexRequest, RequestOptions.DEFAULT, actionListener);
@@ -694,7 +694,7 @@ public class ElasticsearchTemplate {
 			return restHighLevelClient.indices().exists(getIndexRequest, RequestOptions.DEFAULT);
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 		}
 		return false;
 	}

@@ -25,10 +25,10 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceIndex;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -39,6 +39,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.Constant.*;
+import static org.laokou.common.i18n.utils.LogUtil.EMPTY_LOG_MSG;
 import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_LOGSTASH_CONSUMER_GROUP;
 import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 
@@ -75,7 +76,7 @@ public class TraceConsumer {
 			XxlJobHelper.log("创建索引【{" + getIndexName(localDate) + "}】执行成功");
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			XxlJobHelper.log("创建索引【{" + getIndexName(localDate) + "}】执行失败");
 			XxlJobHelper.handleFail("创建索引【{" + getIndexName(localDate) + "}】执行失败");
 		}
@@ -121,7 +122,7 @@ public class TraceConsumer {
 
 	private String replaceValue(String value) {
 		if (value.startsWith(DOLLAR) || UNDEFINED.equals(value)) {
-			return EMPTY;
+			return EMPTY_LOG_MSG;
 		}
 		return value;
 	}
@@ -140,7 +141,7 @@ public class TraceConsumer {
 			}
 		}
 		catch (Exception e) {
-			log.error("创建索引【{}】失败，错误信息：{}，详情见日志", indexName, LogUtil.error(e.getMessage()), e);
+			log.error("创建索引【{}】失败，错误信息：{}，详情见日志", indexName, LogUtil.result(e.getMessage()), e);
 			return false;
 		}
 	}
