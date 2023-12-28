@@ -206,6 +206,7 @@ services:
     extra_hosts:
       - "nacos.laokou.org:192.168.30.130"
       - "kafka.laokou.org:192.168.30.130"
+      - "redis.laokou.org:192.168.30.130"
     restart: always
     privileged: true
     network_mode: bridge
