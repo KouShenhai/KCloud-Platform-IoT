@@ -13,7 +13,7 @@
 #  * See the License for the specific language governing permissions and
 #  * limitations under the License.
 #  */
-FROM docker.io/sunrdocker/jdk21-jre-font-openssl-alpine:latest
+FROM docker.io/tabatad/jdk21
 LABEL maintainer="laokou"
 LABEL description="laokou-admin"
 COPY laokou-admin-start.jar app.jar
