@@ -18,6 +18,7 @@
 package org.laokou.common.i18n.utils;
 
 import static org.laokou.common.i18n.common.Constant.EMPTY_LOG_MSG;
+import static org.laokou.common.i18n.common.StatusCode.INTERNAL_SERVER_ERROR;
 
 /**
  * @author laokou
@@ -26,6 +27,10 @@ public class LogUtil {
 
 	public static String result(String msg) {
 		return StringUtil.isEmpty(msg) ? EMPTY_LOG_MSG : msg;
+	}
+
+	public static String fail(String msg) {
+		return StringUtil.isEmpty(msg) ? MessageUtil.getMessage(INTERNAL_SERVER_ERROR) : msg;
 	}
 
 }
