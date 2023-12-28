@@ -98,9 +98,8 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 			template.header(IdempotentAop.REQUEST_ID, idempotentKey);
 			msg = String.format("，请求ID：%s", idMap.get(uniqueKey));
 		}
-		log.info("OpenFeign分布式调用，令牌：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}" + msg,
-				authorization, LogUtil.result(userId), LogUtil.result(username), LogUtil.result(tenantId),
-				LogUtil.result(traceId));
+		log.info("OpenFeign分布式调用，令牌：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}" + msg, authorization, LogUtil.result(userId),
+				LogUtil.result(username), LogUtil.result(tenantId), LogUtil.result(traceId));
 	}
 
 	@Bean
