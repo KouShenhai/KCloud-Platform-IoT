@@ -33,6 +33,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.Map;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.laokou.common.i18n.common.Constant.*;
 
 /**
@@ -95,18 +96,18 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 				idMap.put(uniqueKey, idempotentKey);
 			}
 			template.header(IdempotentAop.REQUEST_ID, idempotentKey);
-			msg = String.format("，Request-Id：%s", idMap.get(uniqueKey));
+			msg = String.format("，请求ID：%s", idMap.get(uniqueKey));
 		}
-		log.info("OpenFeign分布式调用，Authorization：{}，User-Id：{}，User-Name：{}，Tenant-Id：{}，Trace-Id：{}" + msg,
+		log.info("OpenFeign分布式调用，令牌：{}，用户ID：{}，用户名：{}，租户ID：{}，链路ID：{}" + msg,
 				authorization, LogUtil.result(userId), LogUtil.result(username), LogUtil.result(tenantId),
 				LogUtil.result(traceId));
 	}
 
 	@Bean
 	public Retryer retryer() {
-		// 最大请求次数为5，初始间隔时间为100ms
+		// 最大请求次数为3，初始间隔时间为100ms
 		// 下次间隔时间1.5倍递增，重试间最大间隔时间为1s
-		return new Retryer.Default();
+		return new Retryer.Default(100, SECONDS.toMillis(1), 3);
 	}
 
 	@Override
