@@ -65,7 +65,7 @@ public class DataFilterAop {
 				pageQuery.setSqlFilter(getSqlFilter(user, point));
 			}
 			catch (Exception ex) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(ex.getMessage()), ex);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(ex.getMessage()), ex);
 			}
 		}
 	}

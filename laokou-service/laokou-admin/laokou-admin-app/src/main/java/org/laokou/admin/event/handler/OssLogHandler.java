@@ -57,7 +57,7 @@ public class OssLogHandler implements ApplicationListener<OssLogEvent> {
 				execute(event);
 			}
 			catch (Exception e) {
-				log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			}
 			finally {
 				DynamicDataSourceContextHolder.clear();

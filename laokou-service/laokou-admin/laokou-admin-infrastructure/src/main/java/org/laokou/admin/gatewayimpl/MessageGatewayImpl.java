@@ -116,7 +116,7 @@ public class MessageGatewayImpl implements MessageGateway {
 				insertMessageDetail(messageDO.getId(), message.getReceiver(), user);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				rollback.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

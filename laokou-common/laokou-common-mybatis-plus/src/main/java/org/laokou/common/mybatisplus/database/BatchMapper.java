@@ -91,7 +91,7 @@ public interface BatchMapper<T extends AbstractDO> extends BaseMapper<T> {
 			this.insert(t);
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			this.execute(sql);
 			this.insert(t);
 		}

@@ -152,7 +152,7 @@ public class UserGatewayImpl implements UserGateway {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -171,7 +171,7 @@ public class UserGatewayImpl implements UserGateway {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -211,7 +211,7 @@ public class UserGatewayImpl implements UserGateway {
 				return userMapper.updateUser(userDO) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -224,7 +224,7 @@ public class UserGatewayImpl implements UserGateway {
 				return userMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

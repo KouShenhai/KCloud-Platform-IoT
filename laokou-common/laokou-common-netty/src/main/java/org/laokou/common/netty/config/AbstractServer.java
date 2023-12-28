@@ -92,7 +92,7 @@ public abstract class AbstractServer implements Server {
 			});
 		}
 		catch (Exception e) {
-			log.error("启动失败，端口：{}，错误信息：{}，详情见日志", port, LogUtil.error(e.getMessage()), e);
+			log.error("启动失败，端口：{}，错误信息：{}，详情见日志", port, LogUtil.result(e.getMessage()), e);
 		}
 	}
 

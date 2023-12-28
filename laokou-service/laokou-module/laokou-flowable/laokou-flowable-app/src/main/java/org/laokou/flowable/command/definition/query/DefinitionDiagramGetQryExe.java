@@ -67,7 +67,7 @@ public class DefinitionDiagramGetQryExe {
 				return Result.of(Base64.encodeBase64String(outputStream.toByteArray()));
 			}
 			catch (IOException e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				return Result.of(EMPTY);
 			}
 		}

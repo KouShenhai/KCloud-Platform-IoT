@@ -20,6 +20,7 @@ package org.laokou.gateway.filter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.gateway.utils.RequestUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -56,8 +57,8 @@ public class TraceFilter implements GlobalFilter, Ordered {
 			ThreadContext.put(USER_NAME, username);
 			// 获取uri
 			String requestUri = request.getPath().pathWithinApplication().value();
-			log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}，主机：{}", requestUri, userId, username, tenantId, traceId,
-					host);
+			log.info("请求路径：{}， 用户ID：{}， 用户名：{}，租户ID：{}，链路ID：{}，主机：{}", requestUri, LogUtil.result(userId),
+					LogUtil.result(username), LogUtil.result(tenantId), LogUtil.result(traceId), host);
 			return chain.filter(exchange.mutate()
 				.request(request.mutate()
 					.header(USER_NAME, username)

@@ -146,7 +146,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 				return resourceMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				rollback.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -210,7 +210,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 				elasticsearchTemplate.createIndex(index(ym), RESOURCE_INDEX, ResourceIndex.class);
 			}
 			catch (Exception e) {
-				log.error("索引创建失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("索引创建失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw new SystemException("索引创建失败");
 			}
 		});
@@ -222,7 +222,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 				elasticsearchTemplate.deleteIndex(index(ym));
 			}
 			catch (Exception e) {
-				log.error("索引删除失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("索引删除失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw new SystemException("索引删除失败");
 			}
 		});
@@ -250,7 +250,7 @@ public class ResourceGatewayImpl implements ResourceGateway {
 				elasticsearchTemplate.syncBatchIndex(index(k), JacksonUtil.toJsonStr(v));
 			}
 			catch (Exception e) {
-				log.error("索引同步失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
+				log.error("索引同步失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw new SystemException("索引同步失败");
 			}
 		});
