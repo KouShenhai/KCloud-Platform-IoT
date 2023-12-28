@@ -1,20 +1,16 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
+name: 功能请求
+about: 提出一个想法
 title: ''
-labels: ''
-assignees: ''
-
+labels: '功能'
+assignees: 'KouShenhai'
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**功能描述（简洁描述）**
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**解决方案（简洁描述）**
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+
+**补充内容**
+
