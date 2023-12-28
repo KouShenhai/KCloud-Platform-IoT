@@ -41,7 +41,7 @@
         <!--mybatis-spring版本-->
         <mybatis-spring.version>3.0.3</mybatis-spring.version>
         <!--redisson版本-->
-        <redisson.version>3.25.0</redisson.version>
+        <redisson.version>3.25.2</redisson.version>
         <!--UserAgentUtils版本-->
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
         <!--jsoup版本-->
@@ -51,11 +51,11 @@
         <!--captcha版本-->
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <!--guava版本-->
-        <guava.version>32.1.3-jre</guava.version>
+        <guava.version>33.0.0-jre</guava.version>
         <!--freemarker模板引擎依赖-->
         <freemarker.version>2.3.32</freemarker.version>
         <!--oshi版本-->
-        <oshi.version>6.4.9</oshi.version>
+        <oshi.version>6.4.10</oshi.version>
         <!--elasticsearch版本-->
         <elasticsearch.version>8.6.2</elasticsearch.version>
         <!--rocketmq版本-->
@@ -86,14 +86,14 @@
         <shardingsphere.version>5.3.2</shardingsphere.version>
         <!--p6spy版本-->
         <p6spy.version>3.9.1</p6spy.version>
-        <!--kafka版本-->
-        <kafka.version>3.1.1</kafka.version>
+        <!--spring-kafka版本-->
+        <spring-kafka.version>3.1.1</spring-kafka.version>
         <!--netty版本-->
         <netty.version>4.1.104.Final</netty.version>
         <!--gson版本-->
         <gson.version>2.10.1</gson.version>
-        <!--swagger版本-->
-        <swagger.version>2.2.20</swagger.version>
+        <!--swagger-annotations-jakarta版本-->
+        <swagger-annotations-jakarta.version>2.2.20</swagger-annotations-jakarta.version>
         <!--disruptor版本-->
         <disruptor.version>3.4.4</disruptor.version>
         <!--dubbo版本-->
@@ -102,12 +102,12 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!--mapstruct版本-->
         <mapstruct.version>1.6.0.Beta1</mapstruct.version>
-        <!--mqtt版本-->
-        <mqtt.version>6.2.1</mqtt.version>
+        <!--spring-integration-mqtt版本-->
+        <spring-integration-mqtt.version>6.2.1</spring-integration-mqtt.version>
         <!--log4j2-ttl-thread-context-map版本-->
         <log4j2-ttl-thread-context-map.version>1.4.0</log4j2-ttl-thread-context-map.version>
         <!--transmittable-thread-local版本-->
-        <transmittable-thread-local.version>2.14.4</transmittable-thread-local.version>
+        <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
         <!--mqttv5-client版本-->
         <mqttv5-client.version>1.2.5</mqttv5-client.version>
         <!--mockito版本-->
@@ -165,7 +165,7 @@
             <dependency>
                 <groupId>org.springframework.integration</groupId>
                 <artifactId>spring-integration-mqtt</artifactId>
-                <version>${mqtt.version}</version>
+                <version>${spring-integration-mqtt.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.laokou</groupId>
@@ -225,7 +225,7 @@
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-annotations-jakarta</artifactId>
-                <version>${swagger.version}</version>
+                <version>${swagger-annotations-jakarta.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -355,7 +355,7 @@
             <dependency>
                 <groupId>org.springframework.kafka</groupId>
                 <artifactId>spring-kafka</artifactId>
-                <version>${kafka.version}</version>
+                <version>${spring-kafka.version}</version>
             </dependency>
             <dependency>
                 <groupId>p6spy</groupId>
