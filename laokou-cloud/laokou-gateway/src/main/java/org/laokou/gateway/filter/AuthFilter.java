@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -171,7 +172,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					}
 				}
 				catch (Exception e) {
-					log.error("错误信息：{}", e.getMessage());
+					log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				}
 			}
 			return Mono.just(MapUtil.parseParams(paramMap));

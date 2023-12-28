@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.driver.jdbc.core.driver.ShardingSphereDriverURLProvider;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.PropertyUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.shardingsphere.utils.CryptoUtil;
@@ -119,7 +120,7 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 			}
 		}
 		catch (IOException e) {
-			log.error("错误信息", e);
+			log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 		}
 		return list;
 	}

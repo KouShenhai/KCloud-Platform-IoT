@@ -29,6 +29,7 @@ import org.flowable.engine.RepositoryService;
 import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.flowable.dto.definition.DefinitionInsertCmd;
 import org.springframework.stereotype.Component;
@@ -81,7 +82,7 @@ public class DefinitionInsertCmdExe {
 					.isNew();
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

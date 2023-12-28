@@ -25,6 +25,7 @@ import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -86,7 +87,7 @@ public class TaskStartCmdExe {
 				return new StartCO(instanceId);
 			}
 			catch (Exception e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

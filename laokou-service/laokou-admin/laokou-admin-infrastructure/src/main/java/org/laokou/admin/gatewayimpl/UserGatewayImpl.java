@@ -38,6 +38,7 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -151,7 +152,7 @@ public class UserGatewayImpl implements UserGateway {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -170,7 +171,7 @@ public class UserGatewayImpl implements UserGateway {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -210,7 +211,7 @@ public class UserGatewayImpl implements UserGateway {
 				return userMapper.updateUser(userDO) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -223,7 +224,7 @@ public class UserGatewayImpl implements UserGateway {
 				return userMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

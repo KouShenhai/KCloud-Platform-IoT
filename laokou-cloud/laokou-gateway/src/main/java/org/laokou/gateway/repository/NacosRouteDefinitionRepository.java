@@ -24,6 +24,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
@@ -91,7 +92,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 				log.info("接收到配置变动通知");
 				// 清除缓存
 				reactiveHashOperations.delete(RedisKeyUtil.getRouteDefinitionHashKey())
-					.subscribe(success -> log.info("删除成功"), error -> log.error("删除失败，错误信息", error));
+					.subscribe(success -> log.info("删除成功"), error -> log.error("删除失败，错误信息：{}，详情见日志", LogUtil.error(error.getMessage()), error));
 				// 刷新事件
 				applicationEventPublisher.publishEvent(new RefreshRoutesEvent(this));
 			}
@@ -131,7 +132,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 						else {
 							log.error("新增失败，路由已存在");
 						}
-					}, error -> log.error("新增失败，错误信息", error))
+					}, error -> log.error("新增失败，错误信息：{}，详情见日志", LogUtil.error(error.getMessage()), error))
 			);
 	}
 
@@ -144,7 +145,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			return JacksonUtil.toList(configInfo, RouteDefinition.class);
 		}
 		catch (Exception e) {
-			log.error("错误信息", e);
+			log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 			throw new SystemException(ROUTER_ERROR);
 		}
 	}

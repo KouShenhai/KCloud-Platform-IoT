@@ -32,6 +32,7 @@ import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.domain.annotation.OperateLog;
 import org.laokou.admin.dto.log.domainevent.OperateLogEvent;
 import org.laokou.common.core.utils.*;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.security.utils.UserUtil;
 import org.springframework.core.NamedThreadLocal;
@@ -141,7 +142,7 @@ public class OperateLogAop {
 			return event;
 		}
 		catch (Exception ex) {
-			log.error("错误信息", ex);
+			log.error("错误信息：{}，详情见日志", LogUtil.error(ex.getMessage()), ex);
 			throw ex;
 		}
 		finally {

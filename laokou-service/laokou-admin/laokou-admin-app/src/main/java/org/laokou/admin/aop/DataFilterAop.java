@@ -27,6 +27,7 @@ import org.laokou.auth.domain.user.SuperAdmin;
 import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserUtil;
@@ -64,7 +65,7 @@ public class DataFilterAop {
 				pageQuery.setSqlFilter(getSqlFilter(user, point));
 			}
 			catch (Exception ex) {
-				log.error("错误信息", ex);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(ex.getMessage()), ex);
 			}
 		}
 	}

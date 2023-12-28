@@ -25,6 +25,7 @@ import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.RepositoryService;
 import org.flowable.image.impl.DefaultProcessDiagramGenerator;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.flowable.dto.definition.DefinitionDiagramGetQry;
 import org.springframework.stereotype.Component;
 
@@ -66,7 +67,7 @@ public class DefinitionDiagramGetQryExe {
 				return Result.of(Base64.encodeBase64String(outputStream.toByteArray()));
 			}
 			catch (IOException e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				return Result.of(EMPTY);
 			}
 		}

@@ -27,6 +27,7 @@ import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.mybatisplus.template.TableTemplate;
 import org.springframework.context.ApplicationListener;
@@ -63,7 +64,7 @@ public class LoginLogHandler implements ApplicationListener<LoginLogEvent> {
 				execute(event);
 			}
 			catch (Exception e) {
-				log.error("数据插入失败，错误信息", e);
+				log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 			}
 			finally {
 				DynamicDataSourceContextHolder.clear();

@@ -27,6 +27,7 @@ import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
@@ -87,7 +88,7 @@ public class DeptGatewayImpl implements DeptGateway {
 				return deptMapper.deleteById(id) > 0;
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -107,7 +108,7 @@ public class DeptGatewayImpl implements DeptGateway {
 				return true;
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}
@@ -120,7 +121,7 @@ public class DeptGatewayImpl implements DeptGateway {
 				return deptMapper.insertTable(deptDO);
 			}
 			catch (Exception e) {
-				log.error("错误信息", e);
+				log.error("错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 				r.setRollbackOnly();
 				throw new SystemException(e.getMessage());
 			}

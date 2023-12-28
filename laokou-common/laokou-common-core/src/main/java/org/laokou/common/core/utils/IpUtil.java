@@ -19,6 +19,7 @@ package org.laokou.common.core.utils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.Constant;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
@@ -163,7 +164,7 @@ public class IpUtil {
 			}
 		}
 		catch (NumberFormatException e) {
-			log.error("格式化失败，错误信息", e);
+			log.error("格式化失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 			return null;
 		}
 		return bytes;

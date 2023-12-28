@@ -76,3 +76,6 @@ xxl:
         max: 200
       slow:
         max: 100
+
+log:
+  path: @XXL-JOB-LOG-PATH@

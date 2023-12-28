@@ -22,6 +22,7 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.database.SqlLogMapper;
 import org.laokou.common.mybatisplus.database.dataobject.SqlLogDO;
 import org.laokou.common.mybatisplus.handler.SqlLogEvent;
@@ -55,7 +56,7 @@ public class SqlLogHandler implements ApplicationListener<SqlLogEvent> {
 				execute(event);
 			}
 			catch (Exception e) {
-				log.error("数据插入失败，错误信息：{}", e.getMessage());
+				log.error("数据插入失败，错误信息：{}，详情见日志", LogUtil.error(e.getMessage()), e);
 			}
 		}, taskExecutor);
 	}
