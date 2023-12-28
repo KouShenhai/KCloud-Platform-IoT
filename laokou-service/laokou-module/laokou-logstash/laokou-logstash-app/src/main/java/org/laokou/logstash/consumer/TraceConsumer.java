@@ -39,7 +39,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.laokou.common.i18n.common.Constant.*;
-import static org.laokou.common.i18n.utils.LogUtil.EMPTY_LOG_MSG;
 import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_LOGSTASH_CONSUMER_GROUP;
 import static org.laokou.common.kafka.constant.MqConstant.LAOKOU_TRACE_TOPIC;
 

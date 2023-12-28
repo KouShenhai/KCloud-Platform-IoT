@@ -326,4 +326,9 @@ public interface Constant {
 	 */
 	String UNDEFINED = "undefined";
 
+	/**
+	 * 空日志信息提醒
+	 */
+	String EMPTY_LOG_MSG = "暂无信息";
+
 }
