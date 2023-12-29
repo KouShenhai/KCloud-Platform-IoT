@@ -54,7 +54,7 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 	 * 解决查询缓存转换异常的问题
 	 * @return ObjectMapper
 	 */
-	public static ObjectMapper objectMapper() {
+	private static ObjectMapper objectMapper() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_BAR_MM_BAR_DD_EMPTY_HH_RISK_HH_RISK_SS);
 		// Long类型转String类型
