@@ -87,44 +87,42 @@ public class OAuth2ResourceServerAutoConfig {
 	}
 
 	@NotNull
-	public static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> customizer(Environment env, OAuth2ResourceServerProperties oAuth2ResourceServerProperties) {
+	public static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> customizer(
+			Environment env, OAuth2ResourceServerProperties oAuth2ResourceServerProperties) {
 		Map<String, Set<String>> uriMap = Optional
-				.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
-						env.getProperty(SPRING_APPLICATION_NAME)))
-				.orElseGet(HashMap::new);
-		return request -> request
-				.requestMatchers(HttpMethod.GET,
-						Optional.ofNullable(uriMap.get(HttpMethod.GET.name()))
-								.orElseGet(HashSet::new)
-								.toArray(String[]::new))
-				.permitAll()
-				.requestMatchers(HttpMethod.POST,
-						Optional.ofNullable(uriMap.get(HttpMethod.POST.name()))
-								.orElseGet(HashSet::new)
-								.toArray(String[]::new))
-				.permitAll()
-				.requestMatchers(HttpMethod.PUT,
-						Optional.ofNullable(uriMap.get(HttpMethod.PUT.name()))
-								.orElseGet(HashSet::new)
-								.toArray(String[]::new))
-				.permitAll()
-				.requestMatchers(HttpMethod.DELETE,
-						Optional.ofNullable(uriMap.get(HttpMethod.DELETE.name()))
-								.orElseGet(HashSet::new)
-								.toArray(String[]::new))
-				.permitAll()
-				.requestMatchers(HttpMethod.HEAD,
-						Optional.ofNullable(uriMap.get(HttpMethod.HEAD.name()))
-								.orElseGet(HashSet::new)
-								.toArray(String[]::new))
-				.permitAll()
-				.requestMatchers(HttpMethod.PATCH,
-						Optional.ofNullable(uriMap.get(HttpMethod.PATCH.name()))
-								.orElseGet(HashSet::new)
-								.toArray(String[]::new))
-				.permitAll()
-				.anyRequest()
-				.authenticated();
+			.of(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(),
+					env.getProperty(SPRING_APPLICATION_NAME)))
+			.orElseGet(HashMap::new);
+		return request -> request.requestMatchers(HttpMethod.GET,
+				Optional.ofNullable(uriMap.get(HttpMethod.GET.name())).orElseGet(HashSet::new).toArray(String[]::new))
+			.permitAll()
+			.requestMatchers(HttpMethod.POST,
+					Optional.ofNullable(uriMap.get(HttpMethod.POST.name()))
+						.orElseGet(HashSet::new)
+						.toArray(String[]::new))
+			.permitAll()
+			.requestMatchers(HttpMethod.PUT,
+					Optional.ofNullable(uriMap.get(HttpMethod.PUT.name()))
+						.orElseGet(HashSet::new)
+						.toArray(String[]::new))
+			.permitAll()
+			.requestMatchers(HttpMethod.DELETE,
+					Optional.ofNullable(uriMap.get(HttpMethod.DELETE.name()))
+						.orElseGet(HashSet::new)
+						.toArray(String[]::new))
+			.permitAll()
+			.requestMatchers(HttpMethod.HEAD,
+					Optional.ofNullable(uriMap.get(HttpMethod.HEAD.name()))
+						.orElseGet(HashSet::new)
+						.toArray(String[]::new))
+			.permitAll()
+			.requestMatchers(HttpMethod.PATCH,
+					Optional.ofNullable(uriMap.get(HttpMethod.PATCH.name()))
+						.orElseGet(HashSet::new)
+						.toArray(String[]::new))
+			.permitAll()
+			.anyRequest()
+			.authenticated();
 	}
 
 }

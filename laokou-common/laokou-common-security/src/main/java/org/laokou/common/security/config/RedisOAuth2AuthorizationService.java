@@ -26,30 +26,30 @@ import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 /**
  * @author laokou
  */
-//@Service
+// @Service
 @RequiredArgsConstructor
 public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationService {
 
-    @Override
-    public void save(OAuth2Authorization authorization) {
+	@Override
+	public void save(OAuth2Authorization authorization) {
 
-    }
+	}
 
-    @Override
-    public void remove(OAuth2Authorization authorization) {
+	@Override
+	public void remove(OAuth2Authorization authorization) {
 
-    }
+	}
 
-    @Nullable
-    @Override
-    public OAuth2Authorization findById(String id) {
-        return null;
-    }
+	@Nullable
+	@Override
+	public OAuth2Authorization findById(String id) {
+		return null;
+	}
 
-    @Nullable
-    @Override
-    public OAuth2Authorization findByToken(String token, @Nullable OAuth2TokenType tokenType) {
-        return null;
-    }
+	@Nullable
+	@Override
+	public OAuth2Authorization findByToken(String token, @Nullable OAuth2TokenType tokenType) {
+		return null;
+	}
 
 }

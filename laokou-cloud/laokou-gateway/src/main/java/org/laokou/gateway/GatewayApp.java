@@ -33,7 +33,8 @@ import static org.laokou.common.i18n.common.Constant.IP;
 /**
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = "org.laokou", exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
+@SpringBootApplication(scanBasePackages = "org.laokou",
+		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
 @EnableConfigurationProperties
 @EnableEncryptableProperties
 @EnableDiscoveryClient
