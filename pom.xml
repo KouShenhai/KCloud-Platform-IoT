@@ -77,7 +77,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- 定义公共版本 -->
+            <!-- 定义 common 版本 -->
             <dependency>
                 <groupId>org.laokou</groupId>
                 <artifactId>laokou-common-bom</artifactId>

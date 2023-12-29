@@ -14,18 +14,20 @@
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-auth-infrastructure</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.laokou</groupId>
+                    <artifactId>laokou-auth-domain</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.whvcse</groupId>
             <artifactId>easy-captcha</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-authorization-server</artifactId>
+            <groupId>org.laokou</groupId>
+            <artifactId>laokou-common-security</artifactId>
         </dependency>
     </dependencies>
 

@@ -22,6 +22,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.SneakyThrows;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.laokou.common.nacos.filter.ShutdownFilter;
+import org.laokou.common.security.annotation.EnableSecurity;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
@@ -50,6 +51,7 @@ import static org.laokou.common.i18n.common.Constant.IP;
 @EnableDubbo
 @EnableAsync
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
+@EnableSecurity
 public class AdminApp {
 
 	@SneakyThrows

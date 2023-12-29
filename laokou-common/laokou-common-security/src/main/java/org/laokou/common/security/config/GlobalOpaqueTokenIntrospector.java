@@ -29,6 +29,7 @@ import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
@@ -36,7 +37,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
-import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 import java.time.Instant;
@@ -49,7 +49,7 @@ import static org.laokou.common.i18n.common.BizCode.ACCOUNT_FORCE_KILL;
  * @author laokou
  */
 @Slf4j
-@Component
+@AutoConfiguration
 @RequiredArgsConstructor
 public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 

@@ -112,11 +112,18 @@
         <mqttv5-client.version>1.2.5</mqttv5-client.version>
         <!--mockito版本-->
         <mockito.version>5.8.0</mockito.version>
+        <!--spring-security版本-->
+        <spring-security.version>6.2.1</spring-security.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-core</artifactId>
+                <version>${spring-security.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
