@@ -34,7 +34,7 @@ public class UserUtil {
 	}
 
 	/**
-	 * 用户ID
+	 * 用户ID.
 	 * @return Long
 	 */
 	public static Long getUserId() {
@@ -42,7 +42,7 @@ public class UserUtil {
 	}
 
 	/**
-	 * 用户名
+	 * 用户名.
 	 * @return String
 	 */
 	public static String getUserName() {
@@ -50,7 +50,7 @@ public class UserUtil {
 	}
 
 	/**
-	 * 部门ID
+	 * 部门ID.
 	 * @return Long
 	 */
 	public static Long getDeptId() {
@@ -66,7 +66,7 @@ public class UserUtil {
 	}
 
 	/**
-	 * 租户ID
+	 * 租户ID.
 	 * @return Long
 	 */
 	public static Long getTenantId() {
@@ -74,7 +74,7 @@ public class UserUtil {
 	}
 
 	/**
-	 * 数据源名称
+	 * 数据源名称.
 	 * @return String
 	 */
 	public static String getSourceName() {
