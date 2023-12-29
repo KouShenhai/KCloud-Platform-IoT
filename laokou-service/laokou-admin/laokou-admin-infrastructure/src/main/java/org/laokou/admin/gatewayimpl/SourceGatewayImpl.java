@@ -17,7 +17,6 @@
 
 package org.laokou.admin.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +63,13 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	@Override
 	public Source getById(Long id) {
-		return sourceConvertor.convertEntity(sourceMapper.selectById(id));
+		SourceDO sourceDO = sourceMapper.selectById(id);
+		sourceDO.setUrl("***");
+		sourceDO.setUsername("***");
+		sourceDO.setPassword("***");
+		sourceDO.setDriverClassName("***");
+		sourceDO.setId(null);
+		return sourceConvertor.convertEntity(sourceDO);
 	}
 
 	@Override

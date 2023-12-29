@@ -32,9 +32,9 @@
     <select id="getSourceListFilter" resultType="org.laokou.admin.gatewayimpl.database.dataobject.SourceDO">
         select id
               ,`name`
-              ,driver_class_name
-              ,url
-              ,username
+              ,'***' as driver_class_name
+              ,'***' as url
+              ,'***' as username
         from boot_sys_source
         where del_flag = 0
         <if test="name != null and name != ''">

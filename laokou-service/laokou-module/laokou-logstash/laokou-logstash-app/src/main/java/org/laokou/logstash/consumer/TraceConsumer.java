@@ -17,8 +17,6 @@
 
 package org.laokou.logstash.consumer;
 
-import com.xxl.job.core.context.XxlJobHelper;
-import com.xxl.job.core.handler.annotation.XxlJob;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -33,6 +31,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceIndex;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -59,26 +58,12 @@ public class TraceConsumer {
 	}
 
 	/**
-	 * 每个月最后一天的23：50：00创建下一个月的索引
+	 * 每天23：50：00创建下一个月的索引
 	 */
-	@XxlJob(value = "traceJobHandler")
+	@Scheduled(cron = "0 50 23 * * ?")
 	public void createTraceIndexJob() {
-		// 单个参数
-		String param = XxlJobHelper.getJobParam();
-		log.info("接收调度中心参数：{}", param);
-		LocalDate localDate = StringUtil.isEmpty(param) ? DateUtil.nowDate()
-				: DateUtil.parseDate(param, DateUtil.YYYY_BAR_MM_BAR_DD);
-		localDate = DateUtil.plusDays(DateUtil.getFirstDayOfMonth(localDate), 1);
-		try {
-			log(createIndex(localDate), localDate);
-			XxlJobHelper.handleSuccess("创建索引【{" + getIndexName(localDate) + "}】执行成功");
-			XxlJobHelper.log("创建索引【{" + getIndexName(localDate) + "}】执行成功");
-		}
-		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
-			XxlJobHelper.log("创建索引【{" + getIndexName(localDate) + "}】执行失败");
-			XxlJobHelper.handleFail("创建索引【{" + getIndexName(localDate) + "}】执行失败");
-		}
+		LocalDate localDate = DateUtil.plusDays(DateUtil.getLastDayOfMonth(DateUtil.nowDate()), 1);
+		log(createIndex(localDate), localDate);
 	}
 
 	private void saveIndex(String s) {

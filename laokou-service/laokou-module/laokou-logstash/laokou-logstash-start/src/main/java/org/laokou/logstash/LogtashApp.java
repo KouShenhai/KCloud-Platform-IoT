@@ -24,6 +24,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.net.InetAddress;
 
@@ -36,6 +37,7 @@ import static org.laokou.common.i18n.common.Constant.IP;
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @EnableEncryptableProperties
+@EnableScheduling
 public class LogtashApp {
 
 	@SneakyThrows

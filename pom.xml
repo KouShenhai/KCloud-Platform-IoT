@@ -371,7 +371,7 @@
                     <registryUrl>${docker.repostory}</registryUrl>
                     <pushImage>true</pushImage>
                     <!-- 指定生成的镜像名 推送阿里云镜像仓库用 -->
-                    <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
+                    <imageName>${docker.repostory}/${docker.registry.name}/${project.artifactId}:${project.version}-prod</imageName>
                     <!-- 指定 Dockerfile 路径 , 根据实际情况改动! ${project.basedir}：项目根路径-->
                     <dockerDirectory>${project.basedir}/docker</dockerDirectory>
                     <dockerHost>http://192.168.30.130:2375</dockerHost>
