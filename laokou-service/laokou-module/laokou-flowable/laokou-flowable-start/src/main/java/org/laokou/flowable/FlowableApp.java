@@ -21,6 +21,7 @@ import org.laokou.common.nacos.filter.ShutdownFilter;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -34,7 +35,7 @@ import static org.laokou.common.i18n.common.Constant.IP;
 /**
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = "org.laokou")
+@SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })

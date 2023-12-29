@@ -1013,8 +1013,9 @@ public class ElasticsearchTemplate {
 				.forEach((k, v) -> indexMap.put(k, v.stream().map(AliasMetadata::getAlias).findFirst().orElse(EMPTY)));
 			return indexMap;
 		}
-		catch (IOException e) {
-			throw new RuntimeException(e);
+		catch (Exception e) {
+			log.error("获取索引失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			throw new SystemException("获取索引失败");
 		}
 	}
 
@@ -1030,8 +1031,9 @@ public class ElasticsearchTemplate {
 			indexPropertiesMap.put("settings", JacksonUtil.toJsonStr(toCO(indexName, settings), true));
 			return indexPropertiesMap;
 		}
-		catch (IOException e) {
-			throw new RuntimeException(e);
+		catch (Exception e) {
+			log.error("获取索引属性失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
+			throw new SystemException("获取索引属性失败");
 		}
 	}
 

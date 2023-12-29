@@ -35,8 +35,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 import java.util.TimeZone;
 
 import static org.laokou.common.i18n.utils.DateUtil.Constant.DEFAULT_TIMEZONE;
@@ -70,9 +69,7 @@ public class HttpMessageConverterConfig {
 		// LocalDateTime
 		javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
 		javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
-		List<MediaType> list = new ArrayList<>(1);
-		list.add(MediaType.APPLICATION_JSON);
-		converter.setSupportedMediaTypes(list);
+		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
 		mapper.registerModule(javaTimeModule);
 		converter.setObjectMapper(mapper);
 		log.info("jackson配置加载完毕");

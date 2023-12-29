@@ -41,8 +41,9 @@ public class ObjectUtil {
 	}
 
 	public static <T> T requireNotNull(T obj) {
-		if (obj == null)
+		if (obj == null) {
 			throw new NullPointerException();
+		}
 		return obj;
 	}
 
