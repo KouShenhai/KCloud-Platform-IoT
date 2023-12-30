@@ -31,7 +31,6 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceIndex;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -53,17 +52,17 @@ public class TraceConsumer {
 
 	@KafkaListener(topics = LAOKOU_TRACE_TOPIC, groupId = LAOKOU_LOGSTASH_CONSUMER_GROUP)
 	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
-		messages.parallelStream().forEach(this::saveIndex);
+		//messages.parallelStream().forEach(this::saveIndex);
 		ack.acknowledge();
 	}
 
 	/**
 	 * 每天23：50：00创建下一个月的索引
 	 */
-	@Scheduled(cron = "0 50 23 * * ?")
+	//@Scheduled(cron = "0 50 23 * * ?")
 	public void createTraceIndexJob() {
-		LocalDate localDate = DateUtil.plusDays(DateUtil.getLastDayOfMonth(DateUtil.nowDate()), 1);
-		log(createIndex(localDate), localDate);
+		// LocalDate localDate = DateUtil.plusDays(DateUtil.getLastDayOfMonth(DateUtil.nowDate()), 1);
+		// log(createIndex(localDate), localDate);
 	}
 
 	private void saveIndex(String s) {
