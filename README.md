@@ -24,8 +24,11 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
     <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流"></a>
 </p>
 
+### 🔗 在线体验
+[老寇云平台在线体验（请点击我，境外服务器网络延迟请稍候）](https://www.laokou.org.cn)
+
 ### 🔖 在线文档
-[https://koushenhai.github.io](https://koushenhai.github.io)
+[老寇云平台在线文档（请点击我）](https://koushenhai.github.io)
 
 ### 💪 版本号
 特此说明，与Spring Boot版本保持一致
@@ -260,7 +263,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 KCloud-Platform-Alibaba 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
 
 ### 🔧 参与贡献
-请查看 [CONTRIBUTING.md](CONTRIBUTING.md)  
+请查看 [提交规范（请点击我）](CONTRIBUTING.md)  
 
 ### 👀 项目地址
 Github 后端地址：[KCloud-Platform-Alibaba](https://github.com/KouShenhai/KCloud-Platform-Alibaba)  
@@ -268,6 +271,17 @@ Github 前端地址：[KCloud-Antdv-Alibaba](https://github.com/KouShenhai/KClou
 
 Gtiee 后端地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KCloud-Platform-Alibaba)  
 Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-Antdv-Alibaba)  
+
+### 赞助打赏（用于服务器日常维护）
+<img src="doc/image/wxp.jpg" width="250" height="300" alt="暂无图片">
+<img src="doc/image/zfb.jpg" width="250" height="300" alt="暂无图片">
+<img src="doc/image/gzh.jpg" width="250" height="300" alt="暂无图片">
+<img src="doc/image/zsxq.jpg" width="250" height="300" alt="暂无图片">
+
+### 🙋 技术交流
+<img src="doc/image/wx.png" width="250" height="300" alt="暂无图片">
+<img src="doc/image/wxq.png" width="250" height="300" alt="暂无图片">
+<img src="doc/image/qqq.png" width="250" height="300" alt="暂无图片">
 
 ### 🐭 鸣谢组织
 [Spring社区](https://spring.io)  
@@ -281,9 +295,6 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 
 非常感谢 Jetbrains 提供的开源 License    
 <a href="https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support"><img alt="暂无图片" width="100" height="100" src="doc/image/jb_beam.png"/></a>
-
-### 🙋 技术交流
-<img src="doc/image/wxq.png" width="250" height="300" alt="暂无图片">
 
 ### 🐼 鸣谢个人
 |                                                👤                                                |                                                👤                                                |                                                👤                                                |                                                👤                                                |                                                👤                                                 |                                                👤                                                |
