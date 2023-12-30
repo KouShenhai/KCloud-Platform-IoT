@@ -274,10 +274,10 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 
 ### 🍚 赞助打赏（用于服务器日常维护）
 <div>
-    <img src="doc/image/wxp.jpg" width="205" height="300" alt="暂无图片">
-    <img src="doc/image/zfb.jpg" width="205" height="300" alt="暂无图片">
-    <img src="doc/image/gzh.jpg" width="205" height="300" alt="暂无图片">
-    <img src="doc/image/zsxq.jpg" width="205" height="300" alt="暂无图片">
+    <img src="doc/image/wxp.jpg" width="201" height="300" alt="暂无图片">
+    <img src="doc/image/zfb.jpg" width="201" height="300" alt="暂无图片">
+    <img src="doc/image/gzh.jpg" width="201" height="300" alt="暂无图片">
+    <img src="doc/image/zsxq.jpg" width="201" height="300" alt="暂无图片">
 </div>
 
 ### 🙋 技术交流
