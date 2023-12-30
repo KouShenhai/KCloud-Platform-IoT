@@ -308,6 +308,52 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/2041471?s=64&amp;v=4'>  | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/43296325?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/89563182?s=64&amp;v=4'> |
 |                               [simman](https://github.com/simman)                                |                             [suhengli](https://github.com/suhengli)                              |                            [gitkakafu](https://github.com/gitkakafu)                             |  
 
+### ⛳️ 赞助列表（感谢各位大佬的赞助）
+<table>
+    <tr>
+        <th>时间</th>
+        <th>网名</th>
+        <th>金额/物品</th>
+        <th>备注</th>
+    </tr>
+    <tr>
+        <td>2023/12/22</td>
+        <td>*民</td>
+        <td>服务器</td>
+        <td>无</td>
+    </tr>
+    <tr>
+        <td>2023/12/08</td>
+        <td>*来</td>
+        <td>￥10</td>
+        <td>希望越来越好，一直坚持下去</td>
+    </tr>
+    <tr>
+        <td>2023/12/08</td>
+        <td>*迪</td>
+        <td>￥20</td>
+        <td>越来越好，继续干下去</td>
+    </tr>
+    <tr>
+        <td>2023/08/27</td>
+        <td>*界</td>
+        <td>￥10</td>
+        <td>希望越来越好</td>
+    </tr>
+    <tr>
+        <td>2023/06/29</td>
+        <td>顺</td>
+        <td>￥20</td>
+        <td>希望项目一直做下去就好</td>
+    </tr>
+    <tr>
+        <td>2023/03/27</td>
+        <td>s*e</td>
+        <td>￥10</td>
+        <td>无</td>
+    </tr>
+</table>
+
 ### 🚫 免责声明
 禁止使用本项目从事一切违法犯罪活动。作者不承担任何法律责任，特此声明
 
