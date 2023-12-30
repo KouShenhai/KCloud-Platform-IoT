@@ -273,15 +273,15 @@ Gtiee 后端地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KClou
 Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-Antdv-Alibaba)  
 
 ### 赞助打赏（用于服务器日常维护）
-<img src="doc/image/wxp.jpg" width="250" height="300" alt="暂无图片">
-<img src="doc/image/zfb.jpg" width="250" height="300" alt="暂无图片">
-<img src="doc/image/gzh.jpg" width="250" height="300" alt="暂无图片">
-<img src="doc/image/zsxq.jpg" width="250" height="300" alt="暂无图片">
+<img src="doc/image/wxp.jpg" width="200" height="300" alt="暂无图片">
+<img src="doc/image/zfb.jpg" width="200" height="300" alt="暂无图片">
+<img src="doc/image/gzh.jpg" width="200" height="300" alt="暂无图片">
+<img src="doc/image/zsxq.jpg" width="200" height="300" alt="暂无图片">
 
 ### 🙋 技术交流
-<img src="doc/image/wx.png" width="250" height="300" alt="暂无图片">
-<img src="doc/image/wxq.png" width="250" height="300" alt="暂无图片">
-<img src="doc/image/qqq.png" width="250" height="300" alt="暂无图片">
+<img src="doc/image/wx.png" width="200" height="300" alt="暂无图片">
+<img src="doc/image/wxq.png" width="200" height="300" alt="暂无图片">
+<img src="doc/image/qqq.png" width="200" height="300" alt="暂无图片">
 
 ### 🐭 鸣谢组织
 [Spring社区](https://spring.io)  
