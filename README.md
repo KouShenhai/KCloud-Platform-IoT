@@ -24,8 +24,11 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
     <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流"></a>
 </p>
 
+### 🔗 在线体验
+[老寇云平台在线体验（请点击我，境外服务器网络延迟请稍候）](https://www.laokou.org.cn)
+
 ### 🔖 在线文档
-[https://koushenhai.github.io](https://koushenhai.github.io)
+[老寇云平台在线文档（请点击我）](https://koushenhai.github.io)
 
 ### 💪 版本号
 特此说明，与Spring Boot版本保持一致
@@ -260,7 +263,7 @@ KCloud-Platform-Alibaba（老寇云平台）是一个企业级微服务架构的
 KCloud-Platform-Alibaba 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息  
 
 ### 🔧 参与贡献
-请查看 [CONTRIBUTING.md](CONTRIBUTING.md)  
+请查看 [提交规范（请点击我）](CONTRIBUTING.md)  
 
 ### 👀 项目地址
 Github 后端地址：[KCloud-Platform-Alibaba](https://github.com/KouShenhai/KCloud-Platform-Alibaba)  
@@ -268,6 +271,21 @@ Github 前端地址：[KCloud-Antdv-Alibaba](https://github.com/KouShenhai/KClou
 
 Gtiee 后端地址：[KCloud-Platform-Alibaba](https://gitee.com/laokouyun/KCloud-Platform-Alibaba)  
 Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-Antdv-Alibaba)  
+
+### 🍚 赞助打赏（用于服务器日常维护）
+<div>
+    <img src="doc/image/wxp.jpg" width="201" height="300" alt="暂无图片">
+    <img src="doc/image/zfb.jpg" width="201" height="300" alt="暂无图片">
+    <img src="doc/image/gzh.jpg" width="201" height="300" alt="暂无图片">
+    <img src="doc/image/zsxq.jpg" width="201" height="300" alt="暂无图片">
+</div>
+
+### 🙋 技术交流
+<div>
+    <img src="doc/image/wx.png" width="250" height="300" alt="暂无图片">
+    <img src="doc/image/wxq.png" width="250" height="300" alt="暂无图片">
+    <img src="doc/image/qqq.png" width="250" height="300" alt="暂无图片">
+</div>
 
 ### 🐭 鸣谢组织
 [Spring社区](https://spring.io)  
@@ -282,9 +300,6 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 非常感谢 Jetbrains 提供的开源 License    
 <a href="https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support"><img alt="暂无图片" width="100" height="100" src="doc/image/jb_beam.png"/></a>
 
-### 🙋 技术交流
-<img src="doc/image/wxq.png" width="250" height="300" alt="暂无图片">
-
 ### 🐼 鸣谢个人
 |                                                👤                                                |                                                👤                                                |                                                👤                                                |                                                👤                                                |                                                👤                                                 |                                                👤                                                |
 |:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|
@@ -292,6 +307,52 @@ Gitee 前端地址：[KCloud-Antdv-Alibaba](https://gitee.com/laokouyun/KCloud-A
 |                           [KouShenhai](https://github.com/KouShenhai)                            |                              [liang99](https://github.com/liang99)                               |                           [livk-cloud](https://github.com/livk-cloud)                            |                          [liukefu2050](https://github.com/liukefu2050)                           |                            [HalfPomelo](https://github.com/HalfPomelo)                            |                                [lixin](https://github.com/lixin)                                 |
 | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/2041471?s=64&amp;v=4'>  | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/43296325?s=64&amp;v=4'> | <img height='50' width='50' src='https://avatars.githubusercontent.com/u/89563182?s=64&amp;v=4'> |
 |                               [simman](https://github.com/simman)                                |                             [suhengli](https://github.com/suhengli)                              |                            [gitkakafu](https://github.com/gitkakafu)                             |  
+
+### ⛳️ 赞助列表（感谢各位大佬的赞助）
+<table>
+    <tr>
+        <th>时间</th>
+        <th>网名</th>
+        <th>金额/物品</th>
+        <th>备注</th>
+    </tr>
+    <tr>
+        <td>2023/12/22</td>
+        <td>*民</td>
+        <td>服务器</td>
+        <td>无</td>
+    </tr>
+    <tr>
+        <td>2023/12/08</td>
+        <td>*来</td>
+        <td>￥10</td>
+        <td>希望越来越好，一直坚持下去</td>
+    </tr>
+    <tr>
+        <td>2023/12/08</td>
+        <td>*迪</td>
+        <td>￥20</td>
+        <td>越来越好，继续干下去</td>
+    </tr>
+    <tr>
+        <td>2023/08/27</td>
+        <td>*界</td>
+        <td>￥10</td>
+        <td>希望越来越好</td>
+    </tr>
+    <tr>
+        <td>2023/06/29</td>
+        <td>顺</td>
+        <td>￥20</td>
+        <td>希望项目一直做下去就好</td>
+    </tr>
+    <tr>
+        <td>2023/03/27</td>
+        <td>s*e</td>
+        <td>￥10</td>
+        <td>无</td>
+    </tr>
+</table>
 
 ### 🚫 免责声明
 禁止使用本项目从事一切违法犯罪活动。作者不承担任何法律责任，特此声明
