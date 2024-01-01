@@ -45,7 +45,7 @@
         <!--UserAgentUtils版本-->
         <UserAgentUtils.version>1.21</UserAgentUtils.version>
         <!--jsoup版本-->
-        <jsoup.version>1.17.1</jsoup.version>
+        <jsoup.version>1.17.2</jsoup.version>
         <!--jasypt版本-->
         <jasypt.version>3.0.5</jasypt.version>
         <!--captcha版本-->
