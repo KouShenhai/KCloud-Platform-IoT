@@ -24,7 +24,7 @@
         <!--logback版本-->
         <logback.version>1.2.12</logback.version>
         <!--logstash-logback-encoder版本-->
-        <logstash-logback-encoder.version>7.3</logstash-logback-encoder.version>
+        <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
         <!--druid版本-->
         <druid.version>1.2.20</druid.version>
         <!--jcommander版本-->
