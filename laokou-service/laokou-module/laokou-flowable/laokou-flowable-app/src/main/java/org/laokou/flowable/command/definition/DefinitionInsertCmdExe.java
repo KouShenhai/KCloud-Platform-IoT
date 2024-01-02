@@ -61,7 +61,10 @@ public class DefinitionInsertCmdExe {
 			Process process = bpmnModel.getProcesses().stream().findFirst().orElse(new Process());
 			String key = process.getId();
 			String name = process.getName() + BPMN_FILE_SUFFIX;
-			long count = repositoryService.createDeploymentQuery().deploymentTenantId(UserUtil.getTenantId().toString()).deploymentKey(key).count();
+			long count = repositoryService.createDeploymentQuery()
+				.deploymentTenantId(UserUtil.getTenantId().toString())
+				.deploymentKey(key)
+				.count();
 			if (count > 0) {
 				throw new FlowException("流程已存在，请更换流程图并上传");
 			}

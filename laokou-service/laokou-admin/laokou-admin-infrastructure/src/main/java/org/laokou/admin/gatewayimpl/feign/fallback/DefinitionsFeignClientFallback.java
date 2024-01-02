@@ -32,7 +32,7 @@ public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 
 	@Override
 	public Result<Boolean> insert(MultipartFile file) {
-		throw new FeignException("新增流程失败，请联系管理员");
+		throw new FeignException("新增流程失败");
 	}
 
 	@Override
@@ -42,22 +42,22 @@ public class DefinitionsFeignClientFallback implements DefinitionsFeignClient {
 
 	@Override
 	public Result<Boolean> suspend(String definitionId) {
-		throw new FeignException("挂起流程失败，请联系管理员");
+		throw new FeignException("挂起流程失败");
 	}
 
 	@Override
 	public Result<Boolean> activate(String definitionId) {
-		throw new FeignException("激活流程失败，请联系管理员");
+		throw new FeignException("激活流程失败");
 	}
 
 	@Override
 	public Result<String> diagram(String definitionId) {
-		throw new FeignException("查看流程图失败，请联系管理员");
+		throw new FeignException("查看流程图失败");
 	}
 
 	@Override
 	public Result<Boolean> delete(String deploymentId) {
-		throw new FeignException("删除流程失败，请联系管理员");
+		throw new FeignException("删除流程失败");
 	}
 
 }

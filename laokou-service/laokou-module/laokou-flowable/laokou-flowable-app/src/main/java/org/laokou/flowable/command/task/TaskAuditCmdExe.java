@@ -62,7 +62,10 @@ public class TaskAuditCmdExe {
 			Map<String, Object> values = cmd.getValues();
 			String instanceId = cmd.getInstanceId();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
-			Task task = taskService.createTaskQuery().taskTenantId(UserUtil.getTenantId().toString()).taskId(taskId).singleResult();
+			Task task = taskService.createTaskQuery()
+				.taskTenantId(UserUtil.getTenantId().toString())
+				.taskId(taskId)
+				.singleResult();
 			if (ObjectUtil.isNull(task)) {
 				throw new FlowException("任务不存在");
 			}
