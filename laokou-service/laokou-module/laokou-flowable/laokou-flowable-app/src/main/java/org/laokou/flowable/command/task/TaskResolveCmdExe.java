@@ -30,6 +30,7 @@ import org.laokou.common.i18n.common.exception.FlowException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.dto.task.TaskResolveCmd;
 import org.springframework.stereotype.Component;
 
@@ -52,7 +53,7 @@ public class TaskResolveCmdExe {
 			log.info("处理流程分布式事务 XID：{}", RootContext.getXID());
 			String taskId = cmd.getTaskId();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
-			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+			Task task = taskService.createTaskQuery().taskTenantId(UserUtil.getTenantId().toString()).taskId(taskId).singleResult();
 			if (ObjectUtil.isNull(task)) {
 				throw new FlowException("任务不存在");
 			}
