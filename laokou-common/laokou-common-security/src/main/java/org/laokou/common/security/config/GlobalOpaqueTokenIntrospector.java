@@ -90,7 +90,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			Object principal = ((UsernamePasswordAuthenticationToken) Objects
 				.requireNonNull(oAuth2Authorization.getAttribute(Principal.class.getName()))).getPrincipal();
 			User user = (User) principal;
-			redisUtil.set(userInfoKey, user, expireTime - minTime);
+			redisUtil.set(userInfoKey, user, expireTime - 1);
 			// 解密
 			return decryptInfo(user);
 		}
