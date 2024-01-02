@@ -32,39 +32,39 @@ import java.time.Instant;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class RedisOAuth2Authorization extends Authorization {
 
-    /**
-     * ID
-     */
+	/**
+	 * ID
+	 */
 	private String id;
 
-    /**
-     * 客户端ID
-     */
+	/**
+	 * 客户端ID
+	 */
 	private String registeredClientId;
 
-    /**
-     * 认证用户名
-     */
+	/**
+	 * 认证用户名
+	 */
 	private String principalName;
 
-    /**
-     * 认证类型
-     */
+	/**
+	 * 认证类型
+	 */
 	private String authorizationGrantType;
 
-    /**
-     * 认证范围
-     */
+	/**
+	 * 认证范围
+	 */
 	private String authorizedScopes;
 
-    /**
-     * 认证信息
-     */
+	/**
+	 * 认证信息
+	 */
 	private String attributes;
 
-    /**
-     * 认证状态
-     */
+	/**
+	 * 认证状态
+	 */
 	private String state;
 
 	/**
