@@ -31,6 +31,7 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.dto.definition.DefinitionInsertCmd;
 import org.springframework.stereotype.Component;
 
@@ -60,7 +61,7 @@ public class DefinitionInsertCmdExe {
 			Process process = bpmnModel.getProcesses().stream().findFirst().orElse(new Process());
 			String key = process.getId();
 			String name = process.getName() + BPMN_FILE_SUFFIX;
-			long count = repositoryService.createDeploymentQuery().deploymentKey(key).count();
+			long count = repositoryService.createDeploymentQuery().deploymentTenantId(UserUtil.getTenantId().toString()).deploymentKey(key).count();
 			if (count > 0) {
 				throw new FlowException("流程已存在，请更换流程图并上传");
 			}
@@ -75,6 +76,7 @@ public class DefinitionInsertCmdExe {
 		return transactionalUtil.defaultExecute(r -> {
 			try {
 				return repositoryService.createDeployment()
+					.tenantId(UserUtil.getTenantId().toString())
 					.name(name)
 					.key(key)
 					.addBpmnModel(name, bpmnModel)

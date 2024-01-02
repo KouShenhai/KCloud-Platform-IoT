@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.security.utils.UserUtil;
 import org.laokou.flowable.dto.task.TaskListQry;
 import org.laokou.flowable.dto.task.clientobject.TaskCO;
 import org.laokou.flowable.gatewayimpl.database.TaskMapper;
@@ -48,7 +49,7 @@ public class TaskListQryExe {
 			Long userId = qry.getUserId();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			IPage<TaskDO> page = new Page<>(qry.getPageNum(), qry.getPageSize());
-			IPage<TaskDO> newPage = taskMapper.getTaskList(page, key, userId, name);
+			IPage<TaskDO> newPage = taskMapper.getTaskList(page, key, userId, name, UserUtil.getTenantId());
 			Datas<TaskCO> datas = new Datas<>();
 			datas.setRecords(ConvertUtil.sourceToTarget(newPage.getRecords(), TaskCO.class));
 			datas.setTotal(newPage.getTotal());
