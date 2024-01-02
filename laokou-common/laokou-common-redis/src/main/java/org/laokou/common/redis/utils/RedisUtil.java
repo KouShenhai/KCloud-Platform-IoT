@@ -200,6 +200,10 @@ public class RedisUtil {
 		return redissonClient.getKeys().delete(key) > 0;
 	}
 
+	public void delete(String key, String field) {
+		redissonClient.getMap(key).remove(field);
+	}
+
 	public boolean hasKey(String key) {
 		return Boolean.TRUE.equals(redisTemplate.hasKey(key));
 	}

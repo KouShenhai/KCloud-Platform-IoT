@@ -45,8 +45,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 import static org.laokou.common.i18n.common.Constant.COMMA;
-import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.ACCESS_TOKEN;
-import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.STATE;
+import static org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames.*;
+import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 
 /**
  * @author laokou
@@ -69,11 +69,40 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 			AbstractOAuth2Token accessToken = authorization.getAccessToken().getToken();
 			setToken(accessToken, authorization, ACCESS_TOKEN);
 		}
+		// refresh token
+		if (ObjectUtil.isNotNull(authorization.getRefreshToken())) {
+			AbstractOAuth2Token refreshToken = authorization.getRefreshToken().getToken();
+			setToken(refreshToken, authorization, REFRESH_TOKEN);
+		}
+		// authorization code
+		OAuth2Authorization.Token<OAuth2AuthorizationCode> authorizationCodeToken = authorization.getToken(OAuth2AuthorizationCode.class);
+		if (ObjectUtil.isNotNull(authorizationCodeToken)) {
+			AbstractOAuth2Token authorizationCode = authorizationCodeToken.getToken();
+			setToken(authorizationCode, authorization, CODE);
+		}
+		// oidc id token
+		OAuth2Authorization.Token<OidcIdToken> oidcIdToken = authorization.getToken(OidcIdToken.class);
+		if (ObjectUtil.isNotNull(oidcIdToken)) {
+			AbstractOAuth2Token idToken = oidcIdToken.getToken();
+			setToken(idToken, authorization, ID_TOKEN);
+		}
+		// user code
+		OAuth2Authorization.Token<OAuth2UserCode> userCodeToken = authorization.getToken(OAuth2UserCode.class);
+		if (ObjectUtil.isNotNull(userCodeToken)) {
+			AbstractOAuth2Token userCode = userCodeToken.getToken();
+			setToken(userCode, authorization, USER_CODE);
+		}
+		// device code
+		OAuth2Authorization.Token<OAuth2DeviceCode> deviceCodeToken = authorization.getToken(OAuth2DeviceCode.class);
+		if (ObjectUtil.isNotNull(deviceCodeToken)) {
+			AbstractOAuth2Token deviceCode = deviceCodeToken.getToken();
+			setToken(deviceCode, authorization, DEVICE_CODE);
+		}
 	}
 
 	@Override
 	public void remove(OAuth2Authorization authorization) {
-
+		Assert.isTrue(ObjectUtil.isNotNull(authorization), "authorization is null");
 	}
 
 	@Nullable
@@ -98,10 +127,14 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	private void setToken(AbstractOAuth2Token token, OAuth2Authorization authorization, String type) {
 		Instant issuedAt = ObjectUtil.requireNotNull(token.getIssuedAt());
 		Instant expiresAt = ObjectUtil.requireNotNull(token.getExpiresAt());
+		String tokenValue = token.getTokenValue();
 		long expireTime = ChronoUnit.SECONDS.between(issuedAt, expiresAt);
 		String authorizationHashKey = RedisKeyUtil.getOAuth2AuthorizationHashKey(type);
 		RedisOAuth2Authorization redisOAuth2Authorization = convert(authorization);
-		redisUtil.hSet(authorizationHashKey, token.getTokenValue(), redisOAuth2Authorization, expireTime);
+		if (redisUtil.hasHashKey(authorizationHashKey, tokenValue)) {
+			redisUtil.delete(authorizationHashKey, tokenValue);
+		}
+		redisUtil.hSet(authorizationHashKey, tokenValue, redisOAuth2Authorization, expireTime);
 	}
 
 	@SneakyThrows
