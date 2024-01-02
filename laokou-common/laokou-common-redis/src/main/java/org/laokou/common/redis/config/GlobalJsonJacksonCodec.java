@@ -30,7 +30,6 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.redisson.codec.JsonJacksonCodec;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.security.jackson2.CoreJackson2Module;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -73,8 +72,6 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		// 自动查找并注册相关模块
 		objectMapper.findAndRegisterModules();
-		// Jackson Mixin
-		objectMapper.registerModule(new CoreJackson2Module());
 		return objectMapper;
 	}
 	// @formatter:on

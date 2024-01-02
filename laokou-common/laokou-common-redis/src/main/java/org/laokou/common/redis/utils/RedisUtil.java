@@ -200,6 +200,10 @@ public class RedisUtil {
 		return redissonClient.getKeys().delete(key) > 0;
 	}
 
+	public void delete(String key, String field) {
+		redissonClient.getMap(key).remove(field);
+	}
+
 	public boolean hasKey(String key) {
 		return Boolean.TRUE.equals(redisTemplate.hasKey(key));
 	}
@@ -240,7 +244,7 @@ public class RedisUtil {
 
 	public void hSet(String key, String field, Object value, long expire) {
 		RMap<String, Object> map = redissonClient.getMap(key);
-		map.expireIfNotSet(Duration.ofSeconds(expire));
+		map.expire(Duration.ofSeconds(expire));
 		map.put(field, value);
 	}
 

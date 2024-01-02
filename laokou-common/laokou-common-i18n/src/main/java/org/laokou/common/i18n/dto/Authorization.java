@@ -14,19 +14,11 @@
  * limitations under the License.
  *
  */
-package org.laokou.common.security.annotation;
+package org.laokou.common.i18n.dto;
 
-import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
-import org.laokou.common.security.config.auto.OAuth2ResourceServerAutoConfig;
-import org.laokou.common.security.config.auto.OAuth2SecurityAutoConfig;
-import org.springframework.context.annotation.Import;
-
-import java.lang.annotation.*;
-
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ GlobalOpaqueTokenIntrospector.class, OAuth2SecurityAutoConfig.class, OAuth2ResourceServerAutoConfig.class })
-public @interface EnableSecurity {
+/**
+ * @author laokou
+ */
+public abstract class Authorization extends DTO {
 
 }

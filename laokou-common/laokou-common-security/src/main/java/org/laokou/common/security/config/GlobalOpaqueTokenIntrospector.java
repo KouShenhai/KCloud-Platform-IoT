@@ -31,7 +31,6 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
@@ -77,7 +76,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
-		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = oAuth2Authorization.getAccessToken();
+		OAuth2Authorization.Token<?> accessToken = oAuth2Authorization.getAccessToken();
 		if (ObjectUtil.isNull(accessToken) || !accessToken.isActive()) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
@@ -85,12 +84,13 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		Instant expiresAt = oAuth2Authorization.getAccessToken().getToken().getExpiresAt();
 		Instant nowAt = Instant.now();
 		long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
-		long minTime = 10;
+		// 5秒后过期
+		long minTime = 5;
 		if (expireTime > minTime) {
 			Object principal = ((UsernamePasswordAuthenticationToken) Objects
 				.requireNonNull(oAuth2Authorization.getAttribute(Principal.class.getName()))).getPrincipal();
 			User user = (User) principal;
-			redisUtil.set(userInfoKey, user, expireTime);
+			redisUtil.set(userInfoKey, user, expireTime - 1);
 			// 解密
 			return decryptInfo(user);
 		}

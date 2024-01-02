@@ -65,7 +65,7 @@ public class LogGatewayImpl implements LogGateway {
 	@DataFilter(alias = BOOT_SYS_LOGIN_LOG)
 	@SneakyThrows
 	public Datas<LoginLog> loginList(LoginLog loginLog, PageQuery pageQuery) {
-		final PageQuery page = pageQuery.time().page().ignore();
+		PageQuery page = pageQuery.time().page().ignore();
 		LoginLogDO loginLogDO = loginLogConvertor.toDataObject(loginLog);
 		loginLogDO.setTenantId(UserContextHolder.get().getTenantId());
 		String sourceName = UserContextHolder.get().getSourceName();
