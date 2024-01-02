@@ -54,7 +54,10 @@ public class TaskDelegateCmdExe {
 			String owner = cmd.getUserId().toString();
 			String deleteReason = cmd.getToUserId().toString();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
-			Task task = taskService.createTaskQuery().taskTenantId(UserUtil.getTenantId().toString()).taskId(taskId).singleResult();
+			Task task = taskService.createTaskQuery()
+				.taskTenantId(UserUtil.getTenantId().toString())
+				.taskId(taskId)
+				.singleResult();
 			if (ObjectUtil.isNull(task)) {
 				throw new FlowException("任务不存在");
 			}

@@ -53,7 +53,10 @@ public class TaskResolveCmdExe {
 			log.info("处理流程分布式事务 XID：{}", RootContext.getXID());
 			String taskId = cmd.getTaskId();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
-			Task task = taskService.createTaskQuery().taskTenantId(UserUtil.getTenantId().toString()).taskId(taskId).singleResult();
+			Task task = taskService.createTaskQuery()
+				.taskTenantId(UserUtil.getTenantId().toString())
+				.taskId(taskId)
+				.singleResult();
 			if (ObjectUtil.isNull(task)) {
 				throw new FlowException("任务不存在");
 			}

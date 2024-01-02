@@ -50,7 +50,7 @@ public class DefinitionActiveCmdExe {
 			String definitionId = cmd.getDefinitionId();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
 			ProcessDefinition definition = repositoryService.createProcessDefinitionQuery()
-					.processDefinitionTenantId(UserUtil.getTenantId().toString())
+				.processDefinitionTenantId(UserUtil.getTenantId().toString())
 				.processDefinitionId(definitionId)
 				.singleResult();
 			if (definition.isSuspended()) {

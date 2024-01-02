@@ -54,7 +54,10 @@ public class TaskTransferCmdExe {
 			String owner = cmd.getUserId().toString();
 			String assignee = cmd.getToUserId().toString();
 			DynamicDataSourceContextHolder.push(FLOWABLE);
-			Task task = taskService.createTaskQuery().taskTenantId(UserUtil.getTenantId().toString()).taskId(taskId).singleResult();
+			Task task = taskService.createTaskQuery()
+				.taskTenantId(UserUtil.getTenantId().toString())
+				.taskId(taskId)
+				.singleResult();
 			if (ObjectUtil.isNull(task)) {
 				throw new FlowException("任务不存在");
 			}
