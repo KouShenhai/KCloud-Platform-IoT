@@ -16,7 +16,6 @@
  */
 package org.laokou.common.security.config;
 
-import com.baomidou.dynamic.datasource.annotation.Master;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.domain.user.User;
@@ -31,6 +30,7 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
@@ -57,7 +57,6 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 	private final RedisUtil redisUtil;
 
 	@Override
-	@Master
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
 		String userKillKey = RedisKeyUtil.getUserKillKey(token);
 		if (ObjectUtil.isNotNull(redisUtil.get(userKillKey))) {
@@ -76,12 +75,12 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
-		OAuth2Authorization.Token<?> accessToken = oAuth2Authorization.getAccessToken();
+		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = oAuth2Authorization.getAccessToken();
 		if (ObjectUtil.isNull(accessToken) || !accessToken.isActive()) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED,
 					MessageUtil.getMessage(StatusCode.UNAUTHORIZED));
 		}
-		Instant expiresAt = oAuth2Authorization.getAccessToken().getToken().getExpiresAt();
+		Instant expiresAt = accessToken.getToken().getExpiresAt();
 		Instant nowAt = Instant.now();
 		long expireTime = ChronoUnit.SECONDS.between(nowAt, expiresAt);
 		// 5秒后过期
