@@ -46,6 +46,10 @@ public class ReactiveRedisUtil {
 		return reactiveRedisTemplate.hasKey(key);
 	}
 
+	public Mono<Boolean> hasHashKey(String key, String field) {
+		return redissonReactiveClient.getMap(key).containsKey(field);
+	}
+
 	public Mono<Void> set(String key, Object obj, long expire) {
 		if (expire == -1) {
 			return redissonReactiveClient.getBucket(key).set(obj);

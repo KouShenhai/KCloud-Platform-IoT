@@ -101,8 +101,8 @@ public final class RedisKeyUtil {
 	/**
 	 * IP缓存Key
 	 */
-	public static String getIpCacheKey(String label, String ip) {
-		return label + ":cache:" + ip;
+	public static String getIpCacheHashKey(String type) {
+		return "ip:cache:" + type;
 	}
 
 	/**
