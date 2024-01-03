@@ -66,6 +66,10 @@ spring:
   web:
     resources:
       static-locations: classpath:/static/
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0
+    clean-disabled: false
 xxl:
   job:
     access-token: yRagfkAddGXdTySYTFzhvMguinulMIMSCcXUbljWDhe

@@ -270,6 +270,7 @@ services:
     network_mode: bridge
     depends_on:
       - laokou-register
+      - laokou-admin
   laokou-admin:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.2.0
     container_name: laokou-admin
@@ -317,6 +318,7 @@ services:
     depends_on:
       - laokou-register
       - laokou-seata
+      - laokou-admin
   laokou-logstash:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.2.0
     container_name: laokou-logstash
