@@ -358,6 +358,7 @@ services:
     extra_hosts:
       - "vue.laokou.org:192.168.30.130"
       - "gateway.laokou.org:192.168.30.130"
+      - "nginx.laokou.org:192.168.30.130"
     network_mode: bridge
     depends_on:
       - laokou-admin

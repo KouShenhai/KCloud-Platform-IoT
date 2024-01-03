@@ -57,11 +57,6 @@ public class TableTemplate {
 	}
 
 	@SneakyThrows
-	public static String getUserSqlScript(LocalDateTime localDateTime) {
-		return getContent(localDateTime, "scripts/boot_sys_user.ftl");
-	}
-
-	@SneakyThrows
 	private static String getContent(LocalDateTime localDateTime, String location) {
 		try (InputStream inputStream = ResourceUtil.getResource(location).getInputStream()) {
 			String template = new String(inputStream.readAllBytes());
