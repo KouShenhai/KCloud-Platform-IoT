@@ -107,37 +107,37 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		// access_token
 		if (ObjectUtil.isNotNull(authorization.getAccessToken())) {
 			AbstractOAuth2Token accessToken = authorization.getAccessToken().getToken();
-			redisUtil.delete(RedisKeyUtil.getOAuth2AuthorizationHashKey(ACCESS_TOKEN), accessToken.getTokenValue());
+			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(ACCESS_TOKEN), accessToken.getTokenValue());
 		}
 		// refresh token
 		if (ObjectUtil.isNotNull(authorization.getRefreshToken())) {
 			AbstractOAuth2Token refreshToken = authorization.getRefreshToken().getToken();
-			redisUtil.delete(RedisKeyUtil.getOAuth2AuthorizationHashKey(REFRESH_TOKEN), refreshToken.getTokenValue());
+			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(REFRESH_TOKEN), refreshToken.getTokenValue());
 		}
 		// authorization code
 		OAuth2Authorization.Token<OAuth2AuthorizationCode> authorizationCodeToken = authorization
 			.getToken(OAuth2AuthorizationCode.class);
 		if (ObjectUtil.isNotNull(authorizationCodeToken)) {
 			AbstractOAuth2Token authorizationCode = authorizationCodeToken.getToken();
-			redisUtil.delete(RedisKeyUtil.getOAuth2AuthorizationHashKey(CODE), authorizationCode.getTokenValue());
+			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(CODE), authorizationCode.getTokenValue());
 		}
 		// oidc id token
 		OAuth2Authorization.Token<OidcIdToken> oidcIdToken = authorization.getToken(OidcIdToken.class);
 		if (ObjectUtil.isNotNull(oidcIdToken)) {
 			AbstractOAuth2Token idToken = oidcIdToken.getToken();
-			redisUtil.delete(RedisKeyUtil.getOAuth2AuthorizationHashKey(ID_TOKEN), idToken.getTokenValue());
+			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(ID_TOKEN), idToken.getTokenValue());
 		}
 		// user code
 		OAuth2Authorization.Token<OAuth2UserCode> userCodeToken = authorization.getToken(OAuth2UserCode.class);
 		if (ObjectUtil.isNotNull(userCodeToken)) {
 			AbstractOAuth2Token userCode = userCodeToken.getToken();
-			redisUtil.delete(RedisKeyUtil.getOAuth2AuthorizationHashKey(USER_CODE), userCode.getTokenValue());
+			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(USER_CODE), userCode.getTokenValue());
 		}
 		// device code
 		OAuth2Authorization.Token<OAuth2DeviceCode> deviceCodeToken = authorization.getToken(OAuth2DeviceCode.class);
 		if (ObjectUtil.isNotNull(deviceCodeToken)) {
 			AbstractOAuth2Token deviceCode = deviceCodeToken.getToken();
-			redisUtil.delete(RedisKeyUtil.getOAuth2AuthorizationHashKey(DEVICE_CODE), deviceCode.getTokenValue());
+			redisUtil.hDel(RedisKeyUtil.getOAuth2AuthorizationHashKey(DEVICE_CODE), deviceCode.getTokenValue());
 		}
 	}
 
@@ -168,7 +168,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		String authorizationHashKey = RedisKeyUtil.getOAuth2AuthorizationHashKey(type);
 		RedisOAuth2Authorization redisOAuth2Authorization = convert(authorization);
 		if (redisUtil.hasHashKey(authorizationHashKey, tokenValue)) {
-			redisUtil.delete(authorizationHashKey, tokenValue);
+			redisUtil.hDel(authorizationHashKey, tokenValue);
 		}
 		redisUtil.hSet(authorizationHashKey, tokenValue, redisOAuth2Authorization, expireTime);
 	}

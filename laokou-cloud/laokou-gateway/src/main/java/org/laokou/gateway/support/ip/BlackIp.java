@@ -53,8 +53,8 @@ public class BlackIp implements Ip {
 		if (IpUtil.internalIp(hostAddress)) {
 			return chain.filter(exchange);
 		}
-		String ipCacheKey = RedisKeyUtil.getIpCacheKey(Label.BLACK.getName(), hostAddress);
-		return reactiveRedisUtil.hasKey(ipCacheKey).flatMap(r -> {
+		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(Label.BLACK.getName());
+		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (Boolean.TRUE.equals(r)) {
 				log.error("IP为{}已列入黑名单", hostAddress);
 				return ResponseUtil.response(exchange, Result.fail(IP_BLACK));
