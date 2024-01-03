@@ -112,11 +112,23 @@
         <mqttv5-client.version>1.2.5</mqttv5-client.version>
         <!--mockito版本-->
         <mockito.version>5.8.0</mockito.version>
+        <!--flyway版本-->
+        <flyway.version>10.3.0</flyway.version>
     </properties>
 
     <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-mysql</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
