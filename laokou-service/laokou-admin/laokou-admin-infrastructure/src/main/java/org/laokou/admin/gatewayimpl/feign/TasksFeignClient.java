@@ -15,9 +15,6 @@
  */
 package org.laokou.admin.gatewayimpl.feign;
 
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
 import org.laokou.admin.dto.resource.*;
 import org.laokou.admin.dto.resource.clientobject.AssigneeCO;
 import org.laokou.admin.dto.resource.clientobject.AuditCO;
@@ -27,6 +24,9 @@ import org.laokou.admin.gatewayimpl.feign.factory.TasksFeignClientFallbackFactor
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWABLE;
@@ -43,8 +43,7 @@ public interface TasksFeignClient {
 	 * @param qry
 	 * @return
 	 */
-	@RequestLine("POST /list")
-	@Headers("Content-Type: application/json")
+	@PostMapping("list")
 	Result<Datas<TaskCO>> list(@RequestBody TaskListQry qry);
 
 	/**
@@ -52,8 +51,7 @@ public interface TasksFeignClient {
 	 * @param cmd
 	 * @return
 	 */
-	@RequestLine("POST /audit")
-	@Headers("Content-Type: application/json")
+	@PostMapping("audit")
 	Result<AuditCO> audit(@RequestBody TaskAuditCmd cmd);
 
 	/**
@@ -61,8 +59,7 @@ public interface TasksFeignClient {
 	 * @param cmd
 	 * @return
 	 */
-	@RequestLine("POST /resolve")
-	@Headers("Content-Type: application/json")
+	@PostMapping("resolve")
 	Result<Boolean> resolve(@RequestBody TaskResolveCmd cmd);
 
 	/**
@@ -70,8 +67,7 @@ public interface TasksFeignClient {
 	 * @param cmd
 	 * @return
 	 */
-	@RequestLine("POST /start")
-	@Headers("Content-Type: application/json")
+	@PostMapping("start")
 	Result<StartCO> start(@RequestBody TaskStartCmd cmd);
 
 	/**
@@ -79,16 +75,15 @@ public interface TasksFeignClient {
 	 * @param instanceId
 	 * @return
 	 */
-	@RequestLine("GET /{instanceId}/diagram")
-	Result<String> diagram(@Param("instanceId") String instanceId);
+	@GetMapping("{instanceId}/diagram")
+	Result<String> diagram(@PathVariable("instanceId") String instanceId);
 
 	/**
 	 * 转办任务
 	 * @param cmd
 	 * @return
 	 */
-	@RequestLine("POST /transfer")
-	@Headers("Content-Type: application/json")
+	@PostMapping("transfer")
 	Result<Boolean> transfer(@RequestBody TaskTransferCmd cmd);
 
 	/**
@@ -96,8 +91,7 @@ public interface TasksFeignClient {
 	 * @param cmd
 	 * @return
 	 */
-	@RequestLine("POST /delegate")
-	@Headers("Content-Type: application/json")
+	@PostMapping("delegate")
 	Result<Boolean> delegate(@RequestBody TaskDelegateCmd cmd);
 
 	/**
@@ -105,7 +99,7 @@ public interface TasksFeignClient {
 	 * @param instanceId
 	 * @return
 	 */
-	@RequestLine("GET /{instanceId}/assignee?instanceId={instanceId}")
-	Result<AssigneeCO> assignee(@Param("instanceId") String instanceId);
+	@GetMapping("{instanceId}/assignee")
+	Result<AssigneeCO> assignee(@PathVariable("instanceId") String instanceId);
 
 }

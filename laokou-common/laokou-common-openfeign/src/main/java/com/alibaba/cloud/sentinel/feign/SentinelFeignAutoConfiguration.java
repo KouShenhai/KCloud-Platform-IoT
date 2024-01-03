@@ -34,6 +34,7 @@
 package com.alibaba.cloud.sentinel.feign;
 
 import com.alibaba.csp.sentinel.SphU;
+import feign.Contract;
 import feign.Feign;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -54,8 +55,8 @@ public class SentinelFeignAutoConfiguration {
 	@Scope("prototype")
 	@ConditionalOnMissingBean
 	@ConditionalOnProperty(name = "feign.sentinel.enabled")
-	public Feign.Builder feignSentinelBuilder() {
-		return SentinelFeign.builder();
+	public Feign.Builder feignSentinelBuilder(Contract feignContract) {
+		return SentinelFeign.builder().contract(feignContract);
 	}
 
 }

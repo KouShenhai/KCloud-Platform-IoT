@@ -30,6 +30,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 import java.util.Map;
 
@@ -38,11 +39,13 @@ import static org.laokou.common.i18n.common.Constant.*;
 
 /**
  * openfeign关闭ssl {@link FeignAutoConfiguration}
- *
+ * 开启MVC 请查看 {@link FeignClientsConfiguration}
+ * 默认开启，支持@RequestLine @Header @RequestPart
  * @author laokou
  */
 @Slf4j
 @AutoConfiguration(before = SentinelFeignAutoConfiguration.class)
+@Import(FeignClientsConfiguration.class)
 @RequiredArgsConstructor
 public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
 
@@ -52,17 +55,6 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 	public feign.Logger.Level loggerLevel() {
 		return Logger.Level.NONE;
 	}
-
-	// @formatter:off
-	/**
-	 * 如果开启MVC 请查看 {@link FeignClientsConfiguration}
-	 * 开启支持@RequestLine @Header @RequestPart
-	 */
-	@Bean
-	public Contract feignContract() {
-		return new feign.Contract.Default();
-	}
-	// @formatter:on
 
 	@Override
 	public void apply(RequestTemplate template) {
@@ -76,7 +68,7 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 		template.header(AUTHORIZATION, authorization);
 		template.header(USER_ID, userId);
 		template.header(USER_NAME, username);
-		template.header(TRACE_ID, tenantId);
+		template.header(TENANT_ID, tenantId);
 		final boolean idempotent = IdempotentUtil.isIdempotent();
 		String msg = EMPTY;
 		if (idempotent) {

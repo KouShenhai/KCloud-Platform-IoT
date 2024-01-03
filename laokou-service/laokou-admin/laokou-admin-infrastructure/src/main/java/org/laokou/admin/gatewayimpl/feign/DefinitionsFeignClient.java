@@ -17,20 +17,17 @@
 
 package org.laokou.admin.gatewayimpl.feign;
 
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
 import org.laokou.admin.dto.definition.DefinitionListQry;
 import org.laokou.admin.dto.definition.clientobject.DefinitionCO;
 import org.laokou.admin.gatewayimpl.feign.factory.DefinitionsFeignClientFallbackFactory;
 import org.laokou.common.i18n.dto.Datas;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import static org.laokou.common.openfeign.constant.ServiceConstant.LAOKOU_FLOWABLE;
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 /**
  * @author laokou
@@ -44,8 +41,7 @@ public interface DefinitionsFeignClient {
 	 * @param file 文件
 	 * @return Result<Boolean>
 	 */
-	@RequestLine("POST")
-	@Headers("Content-Type: multipart/form-data")
+	@PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
 	Result<Boolean> insert(@RequestPart("file") MultipartFile file);
 
 	/**
@@ -53,8 +49,7 @@ public interface DefinitionsFeignClient {
 	 * @param qry 查询参数
 	 * @return Result<Datas<DefinitionCO>>
 	 */
-	@RequestLine("POST /list")
-	@Headers("Content-Type: application/json")
+	@PostMapping("list")
 	Result<Datas<DefinitionCO>> list(@RequestBody DefinitionListQry qry);
 
 	/**
@@ -62,35 +57,31 @@ public interface DefinitionsFeignClient {
 	 * @param definitionId 定义ID
 	 * @return Result<Boolean>
 	 */
-	@RequestLine("PUT /{definitionId}/suspend")
-	@Headers("Content-Type: application/json")
-	Result<Boolean> suspend(@Param("definitionId") String definitionId);
+	@PutMapping("{definitionId}/suspend")
+	Result<Boolean> suspend(@PathVariable("definitionId") String definitionId);
 
 	/**
 	 * 激活流程
 	 * @param definitionId 定义ID
 	 * @return Result<Boolean>
 	 */
-	@RequestLine("PUT /{definitionId}/activate")
-	@Headers("Content-Type: application/json")
-	Result<Boolean> activate(@Param("definitionId") String definitionId);
+	@PutMapping("{definitionId}/activate")
+	Result<Boolean> activate(@PathVariable("definitionId") String definitionId);
 
 	/**
 	 * 流程图
 	 * @param definitionId 定义ID
 	 * @return Result<String>
 	 */
-	@RequestLine("GET /{definitionId}/diagram")
-	@Headers("Content-Type: application/json")
-	Result<String> diagram(@Param("definitionId") String definitionId);
+	@GetMapping("{definitionId}/diagram")
+	Result<String> diagram(@PathVariable("definitionId") String definitionId);
 
 	/**
 	 * 删除流程
 	 * @param deploymentId 定义ID
 	 * @return Result<Boolean>
 	 */
-	@RequestLine("DELETE /{deploymentId}")
-	@Headers("Content-Type: application/json")
-	Result<Boolean> delete(@Param("deploymentId") String deploymentId);
+	@DeleteMapping("{deploymentId}")
+	Result<Boolean> delete(@PathVariable("deploymentId") String deploymentId);
 
 }
