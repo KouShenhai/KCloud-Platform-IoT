@@ -35,17 +35,17 @@ public abstract class GlobalException extends RuntimeException {
 
 	private String msg;
 
-	public GlobalException(int code) {
+	protected GlobalException(int code) {
 		this.code = code;
 		this.msg = MessageUtil.getMessage(code);
 	}
 
-	public GlobalException(int code, String msg) {
+	protected GlobalException(int code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}
 
-	public GlobalException(String msg) {
+	protected GlobalException(String msg) {
 		super(msg);
 		this.code = StatusCode.CUSTOM_SERVER_ERROR;
 		this.msg = msg;
