@@ -34,10 +34,10 @@ import java.util.Map;
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class UriTest {
+class UriTest {
 
 	@Test
-	public void test() {
+	void test() {
 		String str = "laokou-admin";
 		Map<String, List<String>> map = new java.util.HashMap<>(
 				Map.of("GET", List.of("/ttt=laokou-admin,laokou-gateway", "/tts=laokou-gateway")));

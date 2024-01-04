@@ -33,7 +33,7 @@ import java.util.Map;
 @Slf4j
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class ElasticsearchTest extends CommonTest {
+class ElasticsearchTest extends CommonTest {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
@@ -44,7 +44,7 @@ public class ElasticsearchTest extends CommonTest {
 	}
 
 	@Test
-	public void searchProperties() {
+	void searchProperties() {
 		Map<String, String> stringStringMap = elasticsearchTemplate.getIndexNames(new String[] { "laokou_resource" });
 		stringStringMap.forEach((k, v) -> log.info("key：{}，value：{}", k, v));
 		Map<String, Object> map = elasticsearchTemplate.getIndexProperties("laokou_resource_202110");

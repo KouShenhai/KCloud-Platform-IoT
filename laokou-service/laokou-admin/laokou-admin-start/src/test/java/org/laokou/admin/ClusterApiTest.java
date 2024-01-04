@@ -35,7 +35,7 @@ import java.util.List;
 @Slf4j
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class ClusterApiTest extends CommonTest {
+class ClusterApiTest extends CommonTest {
 
 	private final ServiceUtil serviceUtil;
 
@@ -46,7 +46,7 @@ public class ClusterApiTest extends CommonTest {
 	}
 
 	@Test
-	public void serviceInstanceTest() {
+	void serviceInstanceTest() {
 		List<ServiceInstance> instances = serviceUtil.getInstances("laokou-admin");
 		log.info("获取数据：{}", JacksonUtil.toJsonStr(instances));
 	}

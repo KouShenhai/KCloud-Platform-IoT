@@ -45,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Slf4j
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class ResourceApiTest extends CommonTest {
+class ResourceApiTest extends CommonTest {
 
 	private static final String API_PREFIX = "/v1/resource/";
 
@@ -56,7 +56,7 @@ public class ResourceApiTest extends CommonTest {
 
 	@Test
 	@SneakyThrows
-	public void resourceSyncApiTest() {
+	void resourceSyncApiTest() {
 		String apiUrl = API_PREFIX + "sync";
 		MvcResult mvcResult = super.mockMvc.perform(post(apiUrl).contentType(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())

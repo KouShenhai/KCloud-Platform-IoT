@@ -31,12 +31,12 @@ import org.springframework.test.context.TestConstructor;
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class MqttTest {
+class MqttTest {
 
 	private final MqttTemplate mqttTemplate;
 
 	@Test
-	public void mqttSenderTest() {
+	void mqttSenderTest() {
 		mqttTemplate.send("test", "123");
 	}
 

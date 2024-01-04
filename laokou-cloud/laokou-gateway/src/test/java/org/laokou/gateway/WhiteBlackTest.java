@@ -31,10 +31,10 @@ import java.util.List;
 @Slf4j
 @RunWith(SpringRunner.class)
 @WebFluxTest
-public class WhiteBlackTest {
+class WhiteBlackTest {
 
 	@Test
-	public void test() {
+	void test() {
 		List<String> list = List.of("127.0.0.1", "192.168.62.1");
 		String str = "192.168.62.1";
 		// 测试白名单
