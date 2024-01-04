@@ -39,7 +39,6 @@ import java.io.LineNumberReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -90,7 +89,7 @@ public class NacosDriverURLProvider implements ShardingSphereDriverURLProvider {
 		List<String> strList = list.stream().filter(i -> i.startsWith(PUBLIC_KEY)).toList();
 		String publicKey = "";
 		if (CollectionUtil.isNotEmpty(strList)) {
-			publicKey = strList.get(0).substring(11).trim();
+			publicKey = strList.getFirst().substring(11).trim();
 		}
 		StringBuilder stringBuilder = new StringBuilder();
 		String finalPublicKey = publicKey;

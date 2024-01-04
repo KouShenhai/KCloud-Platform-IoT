@@ -58,10 +58,6 @@ import static org.laokou.common.i18n.common.Constant.*;
 @RequiredArgsConstructor
 public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
-	private static final String WS_HEADER_NAME = "Upgrade";
-
-	private static final String WS_HEADER_VALUE = "websocket";
-
 	private final ReactiveRedisUtil reactiveRedisUtil;
 
 	public static final Cache<String, Channel> USER_CACHE;
@@ -88,14 +84,13 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
 	@Override
 	public void handlerAdded(ChannelHandlerContext ctx) {
-		log.info("建立连接：{}", ctx.channel().id().asLongText());
+		// log.info("建立连接：{}", ctx.channel().id().asLongText());
 	}
 
 	@Override
 	public void handlerRemoved(ChannelHandlerContext ctx) {
 		// 移除channel
-		String channelId = ctx.channel().id().asLongText();
-		log.info("断开连接：{}", channelId);
+		// log.info("断开连接：{}", ctx.channel().id().asLongText());
 	}
 
 	private String getAuthorization(Map<String, String> paramMap) {
