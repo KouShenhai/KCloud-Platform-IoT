@@ -18,6 +18,7 @@
 package org.laokou.common.shardingsphere.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
@@ -198,7 +199,7 @@ public class CryptoUtil {
 
 		}
 		catch (NoSuchAlgorithmException | NoSuchProviderException e) {
-			e.printStackTrace();
+			log.error("错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 		}
 		return keyPairBytes;
 	}

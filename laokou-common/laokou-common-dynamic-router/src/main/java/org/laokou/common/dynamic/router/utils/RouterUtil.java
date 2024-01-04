@@ -40,7 +40,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import static org.laokou.common.i18n.common.Constant.SPRING_APPLICATION_NAME;
 
@@ -89,10 +88,10 @@ public class RouterUtil {
 			String toPrettyFormat = GsonUtil.toPrettyFormat(routeDefinitions);
 			co.setContent(toPrettyFormat);
 			apiUtil.doConfigInfo(co, token);
-			log.info("服务路由已添加并发布");
+			// log.info("服务路由已添加并发布");
 		}
 		else {
-			log.info("服务路由已存在，无需添加");
+			log.error("服务路由已存在，无需添加");
 		}
 	}
 

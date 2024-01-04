@@ -331,4 +331,14 @@ public interface Constant {
 	 */
 	String EMPTY_LOG_MSG = "暂无信息";
 
+	/**
+	 * ws-key
+	 */
+	String WS_HEADER_NAME = "Upgrade";
+
+	/**
+	 * ws-value
+	 */
+	String WS_HEADER_VALUE = "websocket";
+
 }

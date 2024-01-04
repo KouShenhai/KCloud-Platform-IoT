@@ -38,9 +38,9 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.laokou.common.i18n.common.Constant.*;
 
 /**
- * openfeign关闭ssl {@link FeignAutoConfiguration}
- * 开启MVC 请查看 {@link FeignClientsConfiguration}
- * 默认开启，支持@RequestLine @Header @RequestPart
+ * openfeign关闭ssl {@link FeignAutoConfiguration} 开启MVC 请查看
+ * {@link FeignClientsConfiguration} 默认开启，支持@RequestLine @Header @RequestPart
+ *
  * @author laokou
  */
 @Slf4j
