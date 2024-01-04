@@ -22,6 +22,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.common.utils.DsUtil;
 import org.laokou.admin.config.DefaultConfigProperties;
 import org.laokou.admin.convertor.TenantConvertor;
 import org.laokou.admin.domain.annotation.DataFilter;
@@ -29,6 +30,7 @@ import org.laokou.admin.domain.gateway.TenantGateway;
 import org.laokou.admin.domain.tenant.Tenant;
 import org.laokou.admin.domain.user.SuperAdmin;
 import org.laokou.admin.gatewayimpl.database.DeptMapper;
+import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
@@ -43,8 +45,7 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.Constant.COMMA;
-import static org.laokou.common.i18n.common.Constant.DEFAULT;
+import static org.laokou.common.i18n.common.Constant.*;
 import static org.laokou.common.mybatisplus.constant.DsConstant.BOOT_SYS_TENANT;
 
 /**
@@ -67,11 +68,11 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final TenantConvertor tenantConvertor;
 
+	private final SourceMapper sourceMapper;
+
+	private final DsUtil dsUtil;
+
 	private final DefaultConfigProperties defaultConfigProperties;
-
-	private static final String TENANT_USERNAME = "tenant";
-
-	private static final String TENANT_PASSWORD = "tenant123";
 
 	@Override
 	@DSTransactional(rollbackFor = Exception.class)
@@ -135,6 +136,10 @@ public class TenantGatewayImpl implements TenantGateway {
 				throw new SystemException(e.getMessage());
 			}
 		});
+	}
+
+	private void initTable() {
+		// dsUtil.loadDs();
 	}
 
 	private void insertUser(Long tenantId) {

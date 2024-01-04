@@ -83,7 +83,7 @@ class MybatisPlusTest extends CommonTest {
 		HikariCpConfig hikariCpConfig = new HikariCpConfig();
 		hikariCpConfig.setConnectionTimeout(180000L);
 		properties.setHikari(hikariCpConfig);
-		dsUtil.addDs(DS_NAME, properties, false);
+		dsUtil.addDs(DS_NAME, properties);
 	}
 
 }

@@ -341,4 +341,14 @@ public interface Constant {
 	 */
 	String WS_HEADER_VALUE = "websocket";
 
+	/**
+	 * 租户用户名
+	 */
+	String TENANT_USERNAME = "tenant";
+
+	/**
+	 * 租户密码
+	 */
+	String TENANT_PASSWORD = "tenant123";
+
 }
