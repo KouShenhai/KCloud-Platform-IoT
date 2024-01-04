@@ -26,8 +26,6 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.sensitive.enums.Type;
-import org.laokou.common.sensitive.utils.SensitiveUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -68,13 +66,13 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2BaseAuthen
 	@Override
 	Authentication principal(HttpServletRequest request) {
 		String code = request.getParameter(OAuth2ParameterNames.CODE);
-		log.info("验证码：{}", code);
+		// log.info("验证码：{}", code);
 		if (StringUtil.isEmpty(code)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
 		}
 		String mobile = request.getParameter(MOBILE);
-		log.info("手机：{}", SensitiveUtil.format(Type.MOBILE, mobile));
+		// log.info("手机：{}", SensitiveUtil.format(Type.MOBILE, mobile));
 		if (StringUtil.isEmpty(mobile)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_MOBILE_REQUIRE));
