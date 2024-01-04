@@ -59,9 +59,9 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	@Override
 	public String key(String uuid) {
 		String key = RedisKeyUtil.getUserCaptchaKey(uuid);
-		before(key);
+		// before(key);
 		key = DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
-		after(key);
+		// after(key);
 		return key;
 	}
 

@@ -30,7 +30,7 @@ public abstract class AbstractOAuth2BaseAuthenticationToken extends OAuth2Author
 
 	/**
 	 * Sub-class constructor.
-	 * @param authorizationGrantType
+	 * @param authorizationGrantType the authorization grant type
 	 * @param clientPrincipal the authenticated client principal
 	 * @param additionalParameters the additional parameters
 	 */

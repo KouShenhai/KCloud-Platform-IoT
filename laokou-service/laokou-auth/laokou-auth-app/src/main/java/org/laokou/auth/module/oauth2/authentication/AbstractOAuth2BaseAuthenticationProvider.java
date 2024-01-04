@@ -32,10 +32,11 @@ import org.laokou.auth.domain.user.User;
 import org.laokou.common.core.holder.UserContextHolder;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.IpUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.jasypt.utils.AesUtil;
 import org.laokou.common.mybatisplus.utils.DynamicUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -66,7 +67,10 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 import static org.laokou.auth.common.Constant.TENANT_ID;
@@ -263,7 +267,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				user = userGateway.getUserByUsername(new Auth(encryptName, type));
 			}
 			catch (BadSqlGrammarException e) {
-				log.error("表 boot_sys_user 不存在，错误信息", e);
+				log.error("表 boot_sys_user 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_user 不存在");
 			}
 			if (ObjectUtil.isNull(user)) {
@@ -286,7 +290,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				permissionsList = menuGateway.getPermissions(user);
 			}
 			catch (BadSqlGrammarException e) {
-				log.error("表 boot_sys_menu 不存在，错误信息", e);
+				log.error("表 boot_sys_menu 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_menu 不存在");
 			}
 			if (CollectionUtil.isEmpty(permissionsList)) {
@@ -298,7 +302,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 				deptPaths = deptGateway.getDeptPaths(user);
 			}
 			catch (BadSqlGrammarException e) {
-				log.error("表 boot_sys_dept 不存在，错误信息", e);
+				log.error("表 boot_sys_dept 不存在，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 				throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "表 boot_sys_dept 不存在");
 			}
 			user.setDeptPaths(deptPaths);
@@ -334,7 +338,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 
 	private OAuth2AuthenticationException authenticationException(int code, User user, String type, String ip) {
 		String message = MessageUtil.getMessage(code);
-		log.error("登录失败，状态码：{}，错误信息：{}", code, message);
+		// log.error("登录失败，状态码：{}，错误信息：{}", code, message);
 		loginLogGateway.publish(new LoginLog(user.getId(), user.getUsername(), type, user.getTenantId(), FAIL, message,
 				ip, user.getDeptId(), user.getDeptPath()));
 		throw OAuth2ExceptionHandler.getException(code, message);
@@ -384,7 +388,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 			Class.forName(properties.getDriverClassName());
 		}
 		catch (Exception e) {
-			log.error("加载数据源驱动失败，错误信息", e);
+			log.error("加载数据源驱动失败，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "加载数据源驱动失败");
 		}
 		try {
@@ -394,7 +398,7 @@ public abstract class AbstractOAuth2BaseAuthenticationProvider implements Authen
 					properties.getPassword());
 		}
 		catch (Exception e) {
-			log.error("数据源连接超时，错误信息", e);
+			log.error("数据源连接超时，错误信息：{}，详情见日志", LogUtil.result(e.getMessage()), e);
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR, "数据源连接超时");
 		}
 		finally {

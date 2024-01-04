@@ -73,7 +73,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		}
 		// 判断租户ID是否为空
 		String tenantId = request.getParameter(TENANT_ID);
-		log.info("租户ID：{}", tenantId);
+		// log.info("租户ID：{}", tenantId);
 		if (StringUtil.isEmpty(tenantId)) {
 			throw OAuth2ExceptionHandler.getException(CUSTOM_SERVER_ERROR,
 					ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
@@ -90,7 +90,7 @@ public abstract class AbstractOAuth2BaseAuthenticationConverter implements Authe
 		Map<String, Object> additionalParameters = new HashMap<>(parameters.size());
 		parameters.forEach((key, value) -> {
 			if (!key.equals(OAuth2ParameterNames.GRANT_TYPE) && !key.equals(OAuth2ParameterNames.CLIENT_ID)) {
-				additionalParameters.put(key, value.get(0));
+				additionalParameters.put(key, value.getFirst());
 			}
 		});
 		return convert(clientPrincipal, additionalParameters);
