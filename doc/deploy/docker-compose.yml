@@ -357,7 +357,7 @@ services:
       - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
     extra_hosts:
       - "vue.laokou.org:192.168.30.130"
-      - "gateway.laokou.org:192.168.30.130"
+      - "api.laokou.org:192.168.30.130"
       - "nginx.laokou.org:192.168.30.130"
     network_mode: bridge
     depends_on:

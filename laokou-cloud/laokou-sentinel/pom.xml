@@ -63,6 +63,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -141,6 +147,10 @@
             <version>${system-rules.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -178,8 +188,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>17</source>
+                    <target>17</target>
                     <encoding>UTF-8</encoding>
                     <compilerArgs>
                         <arg>-Xlint:deprecation</arg>
