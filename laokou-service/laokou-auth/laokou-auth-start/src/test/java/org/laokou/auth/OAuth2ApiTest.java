@@ -54,7 +54,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class OAuth2ApiTest {
+class OAuth2ApiTest {
 
 	private static final String USERNAME = "admin";
 
@@ -78,7 +78,7 @@ public class OAuth2ApiTest {
 	}
 
 	@Test
-	public void usernamePasswordAuthApiTest() {
+	void usernamePasswordAuthApiTest() {
 		String captcha = getCaptchasApi();
 		String publicKey = getSecretsApi();
 		String privateKey = RsaUtil.getPrivateKey();

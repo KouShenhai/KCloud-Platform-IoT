@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Slf4j
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class DefinitionsApiTest extends CommonTest {
+class DefinitionsApiTest extends CommonTest {
 
 	private static final String API_PREFIX = "/v1/definitions/";
 
@@ -55,7 +55,7 @@ public class DefinitionsApiTest extends CommonTest {
 
 	@Test
 	@SneakyThrows
-	public void definitionsListTest() {
+	void definitionsListTest() {
 		String apiUrl = API_PREFIX + "list";
 		MvcResult mvcResult = super.mockMvc
 			.perform(post(apiUrl).accept(MediaType.APPLICATION_JSON)

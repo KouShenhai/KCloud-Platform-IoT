@@ -34,12 +34,12 @@ import java.time.Duration;
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-public class CacheTest {
+class CacheTest {
 
 	private final RedisUtil redisUtil;
 
 	@Test
-	public void timeTest() {
+	void timeTest() {
 		String value = "10s";
 		Duration duration = DurationStyle.detectAndParse(value);
 		log.info("获取值：{}", duration.toMillis());
