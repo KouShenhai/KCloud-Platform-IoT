@@ -37,7 +37,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	public User getUserByUsername(Auth auth) {
-		UserDO userDO = userMapper.getUserByUsername(auth.getUsername(), auth.getType());
+		UserDO userDO = userMapper.getUserByUsername(auth.getUsername(), auth.getType(), auth.getKey());
 		return ConvertUtil.sourceToTarget(userDO, User.class);
 	}
 

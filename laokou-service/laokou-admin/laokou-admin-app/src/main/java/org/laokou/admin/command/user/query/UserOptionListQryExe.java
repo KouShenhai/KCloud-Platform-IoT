@@ -26,6 +26,7 @@ import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.jasypt.utils.AesUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class UserOptionListQryExe {
 	@DS(TENANT)
 	@DataFilter(alias = BOOT_SYS_USER)
 	public Result<List<OptionCO>> execute(UserOptionListQry qry) {
-		List<UserDO> list = userMapper.getOptionList(qry);
+		List<UserDO> list = userMapper.getOptionList(qry, AesUtil.getKey());
 		if (CollectionUtil.isEmpty(list)) {
 			return Result.of(new ArrayList<>(0));
 		}

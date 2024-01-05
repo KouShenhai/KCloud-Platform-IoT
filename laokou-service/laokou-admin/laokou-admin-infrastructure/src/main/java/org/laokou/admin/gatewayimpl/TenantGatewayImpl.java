@@ -18,6 +18,7 @@
 package org.laokou.admin.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ import org.laokou.admin.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.gatewayimpl.database.TenantMapper;
 import org.laokou.admin.gatewayimpl.database.UserMapper;
 import org.laokou.admin.gatewayimpl.database.dataobject.DeptDO;
+import org.laokou.admin.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.TenantDO;
 import org.laokou.admin.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.core.utils.IdGenerator;
@@ -121,7 +123,7 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private Boolean insertTenant(TenantDO tenantDO) {
 		tenantMapper.insertTable(tenantDO);
-		insertUser(tenantDO.getId());
+		initTable(tenantDO.getId());
 		return true;
 	}
 
@@ -138,15 +140,22 @@ public class TenantGatewayImpl implements TenantGateway {
 		});
 	}
 
-	private void initTable() {
-		// dsUtil.loadDs();
+	private void initTable(Long tenantId) {
+		try {
+			SourceDO source = sourceMapper.getSourceByTenantId(tenantId);
+			dsUtil.loadDs(source);
+			DynamicDataSourceContextHolder.push(source.getName());
+			// 初始化表
+
+			// 初始化数据
+
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
-	private void insertUser(Long tenantId) {
-		DeptDO deptDO = new DeptDO();
-		deptDO.setTenantId(tenantId);
-		insertDept(deptDO);
-		insertUser(deptDO, tenantId);
+	private void initDB(Long tenantId) {
+		insertUser(insertDept(tenantId), tenantId);
 	}
 
 	private void insertUser(DeptDO deptDO, Long tenantId) {
@@ -167,7 +176,8 @@ public class TenantGatewayImpl implements TenantGateway {
 		}
 	}
 
-	private void insertDept(DeptDO deptDO) {
+	private DeptDO insertDept(Long tenantId) {
+		DeptDO deptDO = new DeptDO();
 		Long id = IdGenerator.defaultSnowflakeId();
 		deptDO.setId(id);
 		deptDO.setName("多租户集团");
@@ -176,7 +186,9 @@ public class TenantGatewayImpl implements TenantGateway {
 		deptDO.setDeptPath(deptDO.getPath());
 		deptDO.setDeptId(deptDO.getId());
 		deptDO.setPid(0L);
+		deptDO.setTenantId(tenantId);
 		deptMapper.insert(deptDO);
+		return deptDO;
 	}
 
 }

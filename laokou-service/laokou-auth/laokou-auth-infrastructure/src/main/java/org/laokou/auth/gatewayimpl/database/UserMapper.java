@@ -36,6 +36,6 @@ public interface UserMapper extends BatchMapper<UserDO> {
 	 * @param type 登录类型
 	 * @return UserDO
 	 */
-	UserDO getUserByUsername(@Param("username") String username, @Param("type") String type);
+	UserDO getUserByUsername(@Param("username") String username, @Param("type") String type, @Param("key")String key);
 
 }
