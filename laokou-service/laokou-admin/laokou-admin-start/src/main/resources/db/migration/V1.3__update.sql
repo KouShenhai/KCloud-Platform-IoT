@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `boot_sys_ip`;
 CREATE TABLE `boot_sys_ip` (
                                `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'ID',
                                `creator` bigint NOT NULL DEFAULT '0' COMMENT '创建人',
